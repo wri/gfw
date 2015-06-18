@@ -103,6 +103,12 @@
     line-clip: false;
     polygon-clip: false;
   }
+  [layer='cog_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
   [layer='gfw2_drc_conc'] {
     polygon-fill: #EC7014;
     line-color: #EC7014;
@@ -137,7 +143,7 @@
     line-clip: false;
     polygon-clip: false;
   }
-  
+
   [layer='can_mining'] {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
@@ -174,9 +180,11 @@
     line-clip: false;
     polygon-clip: false;
   }
-  [layer='geoserver_getfeature'] {
+  [layer='khm_mining'] {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
+    marker-fill: #fd8d3c;
+    marker-line-color: #fff;
     line-clip: false;
     polygon-clip: false;
   }
@@ -292,14 +300,6 @@
     line-opacity: 0;
   }
 
-  [layer='modis_forest_change_copy'] {
-    marker-fill: black;
-    marker-opacity: 0.9;
-    marker-allow-overlap: true;
-    marker-placement: point;
-    marker-type: ellipse;
-    marker-width: 3;
-  }
 
   [layer='quicc_alerts'] {
     marker-fill: black;

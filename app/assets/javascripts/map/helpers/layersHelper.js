@@ -27,6 +27,7 @@ define([
   'map/views/layers/GnqLoggingLayer',
   'map/views/layers/IdnLoggingLayer',
   'map/views/layers/LbrLoggingLayer',
+  'map/views/layers/CogLoggingLayer',
   'map/views/layers/MiningLayer',
   'map/views/layers/CanMiningLayer',
   'map/views/layers/CmrMiningLayer',
@@ -79,6 +80,7 @@ define([
   'map/views/layers/UsaLandCoverLayer',
   'map/views/layers/UsaLandCoverChangeLayer',
   'map/views/layers/GlobalLandCoverLayer',
+  'map/views/layers/BraBiomesLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -114,6 +116,7 @@ define([
   GnqLoggingLayer,
   IdnLoggingLayer,
   LbrLoggingLayer,
+  CogLoggingLayer,
   MiningLayer,
   CanMiningLayer,
   CmrMiningLayer,
@@ -166,6 +169,7 @@ define([
   UsaLandCoverLayer,
   UsaLandCoverChangeLayer,
   GlobalLandCoverLayer,
+  BraBiomesLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -255,6 +259,9 @@ define([
     },
     lbr_logging: {
       view: LbrLoggingLayer
+    },
+    cog_logging: {
+      view: CogLoggingLayer
     },
     mining: {
       view: MiningLayer
@@ -412,6 +419,9 @@ define([
     },
     global_land_cover: {
       view: GlobalLandCoverLayer
+    },
+    bra_biomes: {
+      view: BraBiomesLayer
     },
     nothing: {
     }

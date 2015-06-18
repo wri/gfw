@@ -23,6 +23,10 @@
         <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
       </li>
       {{/if}}
+      <div id="toggleIFL" class="ifl-switch">
+        <span class="label checked">Total area selected</span><span class="onoffswitch"><span></span></span><span class="label">Intact Forest Landscapes</span>
+      </div>
+
     {{else}}
       {{#if forestgain}}
         <li>
@@ -55,8 +59,10 @@
   </ul>
 {{/if}}
 
+
 <footer class="analysis-footer">
   <ul>
+  {{#if downloadVisible}}
     <li>
       {{#if loss}}
         <a class="download-mobile-link" data-type="forest-change" href="http://data.globalforestwatch.org/datasets/93ecbfa0542c42fdaa8454fa42a6cc27" target="_blank">
@@ -87,6 +93,7 @@
         {{/if}}
       {{/if}}
     </li>
+  {{/if}}
     <li id="analysis-delete">
       <svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg>
       <span class="tooltipmap bottom">Discard analysis</span>

@@ -12,9 +12,9 @@ define([
   var MiningLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT cartodb_id, \'mining\' as tablename, the_geom_webmercator, status,company, country, area_ha, name, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName} ',
+      sql: 'SELECT cartodb_id, \'mining\' as tablename, the_geom_webmercator, status, company, country, round(area_ha::float) as area_ha, name, permit as permit_num, mineral as type, province, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName} ',
       infowindow: true,
-      interactivity: 'cartodb_id, tablename, name, status,company, country, area_ha, analysis',
+      interactivity: 'cartodb_id, tablename, name, status, company, country, permit_num, type, province, area_ha, analysis',
       analysis: true
     }
 

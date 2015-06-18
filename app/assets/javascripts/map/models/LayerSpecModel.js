@@ -50,6 +50,7 @@ define([
       "usa_conservation_easements",
       "birdlife",
       "tigers",
+      "bra_biomes",
       "biodiversity_hotspots",
       "protected_areasCDB",
       // FOREST USE
@@ -84,6 +85,7 @@ define([
       "idn_logging",
       "cmr_logging",
       "cod_logging",
+      "cog_logging",
       "logging",
       //STORIES
       "infoamazonia",

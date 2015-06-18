@@ -76,89 +76,9 @@ $w-control: 38px;
           fill: $cGreen;
         }
       }
-      &.toggle-modules{
-        .toggle-on { display: none;}
-        .toggle-off { display: block;}
-        &.active{
-          .toggle-on { display: block;}
-          .toggle-off { display: none;}
-        }
-      }
-    }
-  }
-}
-
-$w-control: 38px;
-.module-mapcontrols {
-  top: 54px;
-  right: 10px;
-  left: auto;
-  bottom: auto;
-
-  @media (min-width: $br-mobileMap){
-    top: auto;
-    right: auto;
-    bottom: 50px;
-    left: 35px;
-  }
-  ul{
-    width: $w-control;
-    @include display-flex();
-    @include flex-wrap(wrap);
-    background: $white;
-    box-shadow: $shadow1;
-    margin: 10px 0 0;
-    &:first-child{
-      margin: 0;
-    }
-
-    @media (min-width: $br-mobileMap){
-      width: $w-control * 2;
-      background: none;
-      box-shadow: none;
-      margin: 0;
-    }
-    li{
-      @include display-flex();
-      @include justify-content(center);
-      @include align-items(center);
-      background: $white;
-      width: $w-control;
-      height: $w-control;
-      position: relative;
-      cursor: pointer;
-      &.hidden{
-        display: none;
-      }
-      @media (max-width: $br-mobileMap - 1){
-        border-top: 1px solid $border;
-        &:first-child{
-          border-top: none;
-        }
-      }
-      @media (min-width: $br-mobileMap){
-        &:nth-child(even){
-          border-left: 1px solid $border;
-        }
-        &:nth-child(n+3){
-          border-top: 1px solid $border;
-        }
-      }
-      svg{
-        fill: $dark;
-        &.hidden{
-          display: none;
-        }
-      }
-
-      &:hover{
-        .tooltipmap{
-          visibility: visible;
-          opacity: 1;
-        }
-      }
-      &:active{
-        background: darken($white,5%);
+      &.disabled{
+        opacity: 0.5;
+        cursor: default;
       }
       &.toggle-modules{
         .toggle-on { display: none;}

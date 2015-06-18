@@ -35,16 +35,6 @@
     padding-right: 0;
     margin: 0;
     background: $white;
-    &.dont-analyze {
-      .cartodb-popup-fixed {
-        display: none !important;
-      }
-      .cartodb-popup-content-wrapper{
-        &.analysis-active{
-          padding: 0px;
-        }
-      }
-    }
     .jspPane {
       padding: 0 !important;
     }
@@ -95,14 +85,22 @@
         border-top: 1px solid $border;
         @include display-flex();
         @include justify-content(space-between);
+        @media (max-width: $br-mobile - 1) {
+          padding: 0 10px;
+        }
+
         .btn{
           width: 100%;
           margin: 15px 1px;
           @media (max-width: $br-mobileMap - 1){
-            width: 100%;
+            font-size: 12px;
             &.subscription-concession{
               display: none;
             }
+          }
+          &.dont-analyze{
+            // display: none !important;
+            opacity: 0.5;
           }
         }
       }
