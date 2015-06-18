@@ -1,8 +1,12 @@
-$basemaps-class: grayscale, terrain, satellite, hybrid, treeheight, landsat;
-$basemaps-img: default, terrain, satellite, roads, tree_height, landsat;
-
+$basemaps-class: grayscale, terrain, satellite, hybrid, treeheight, dark, positron, landsat;
+$basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, landsat;
 .tab-basemaps{
-  >ul{
+  position: relative;
+  .maptype-list{
+    @media (min-width: $br-mobileMap){
+      max-height: 380px;
+      overflow: auto;
+    }
     >li{
       position: relative;
       padding: 0 0 0 80px;
@@ -12,13 +16,9 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, landsat;
         border-top: none;
       }
       &:hover{
-        background: $light;
-        .landsat-years{
-          @include display-flex();
-          min-width: 200px;
-        }
+        background: darken($light,3%);
       }
-      &.selected{ background: $light;}
+      &.selected{ background: darken($light,3%);}
       @for $i from 1 through length($basemaps-img) {
         &.#{nth($basemaps-class, $i)} i {
           @include basemaps-sprite(nth($basemaps-img, $i));
@@ -38,7 +38,7 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, landsat;
         @include transform(translate(0,-50%));
         background: #000;
         border-radius: 50%;
-        border: 1px solid $border;
+        border: 2px solid $border;
 
       }
       .source{
@@ -49,37 +49,50 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, landsat;
         right: 20px;
         @include transform(translate(0,-50%));
       }
-      .landsat-years{
-        display: none;
-        position: absolute;
-        top: 50%;
-        right: 100%;
-        @include transform(translate(0,-50%));
-        background: $white;
-        box-shadow: 0 2px 3px 1px rgba($dark, 0.25);
+    }
+  }
+  .landsat-years{
+    display: none;
+    background: $white;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 2px 3px 1px rgba($dark, 0.25);
+    padding: 10px;
+    @media (min-width: $br-mobileMap){
+      text-align: left;
+      width: auto;
+      position: absolute;
+      bottom: 0%;
+      right: 100%;
+    }
+    &.active{
+      @include display-flex();
+      min-width: 200px;
+    }
+    &:after{
+      content: "";
+      position: absolute;
+      bottom: calc(70px/2 - 12px);
+      right: 0;
+      display: none;
+      @include transform(translate(50%,-50%) rotate(45deg));
+      background: $white;
+      width: 12px;
+      height: 12px;
+      box-shadow: 1px -1px 1px 0px rgba($dark, 0.25);
+      @media (min-width: $br-mobileMap){
+        display: block;
+      }
+    }
+    > div{
+      width: 50%;
+      > li {
+        cursor: pointer;
+        font-size: 12px;
         padding: 10px;
-        &:after{
-          content: "";
-          position: absolute;
-          top: 50%;
-          right: 0;
-          @include transform(translate(50%,-50%) rotate(45deg));
-          background: $white;
-          width: 12px;
-          height: 12px;
-          box-shadow: 1px -1px 1px 0px rgba($dark, 0.25);
-        }
-        > div{
-          width: 50%;
-          > li {
-            cursor: pointer;
-            font-size: 12px;
-            padding: 10px;
-            white-space: nowrap;
-            &:hover{ background: $light;}
-            &.selected{ background: $light;}
-          }
-        }
+        white-space: nowrap;
+        &:hover{ background: darken($light,3%);}
+        &.selected{ background: darken($light,3%);}
       }
     }
   }

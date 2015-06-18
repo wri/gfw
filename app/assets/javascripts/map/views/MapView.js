@@ -11,9 +11,11 @@ define([
   'map/presenters/MapPresenter',
   'map/views/maptypes/grayscaleMaptype',
   'map/views/maptypes/treeheightMaptype',
+  'map/views/maptypes/darkMaptype',
+  'map/views/maptypes/positronMaptype',
   'map/views/maptypes/landsatMaptype',
   'map/helpers/layersHelper'
-], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, landsatMaptype, layersHelper) {
+], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, layersHelper) {
 
   'use strict';
 
@@ -75,11 +77,14 @@ define([
       };
 
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
+
       this._checkDialogs();
 
       this.resize();
       this._setMaptypes();
       this._addListeners();
+      // Node
+      this.createMaptypeNode();
 
     },
 
@@ -109,6 +114,11 @@ define([
         // TODO => No mps here!
         mps.publish('AnalysisTool/analyze-wdpaid', [wdpa]);
       }, this));
+
+      google.maps.event.addListener(this.map, 'maptypeid_changed', _.bind(function() {
+        this.setCredit('Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.');
+      }, this ));
+
 
       this.$overlayMobile.on('click', _.bind(function(){
         this.presenter.closeDialogsMobile();
@@ -340,6 +350,27 @@ define([
       return this.map.getMapTypeId();
     },
 
+    createMaptypeNode: function(){
+      this.creditNode = document.createElement('div');
+      this.creditNode.id = 'credit-control';
+      this.creditNode.index = 0;
+      this.map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(this.creditNode);
+    },
+
+    setCredit: function(credit){
+      var maptype = this.getMapTypeId();
+      if (maptype == 'dark' || maptype == 'positron') {
+        this.creditNode.style.display = 'block';
+        this.creditNode.innerHTML = credit + ' -';
+      }else{
+        this.creditNode.style.display = 'none';
+        this.creditNode.innerHTML = '';
+      }
+    },
+
+
+
+
 
     /**
      * Handles a map center change UI event by dispatching to MapPresenter.
@@ -393,6 +424,8 @@ define([
     _setMaptypes: function() {
       this.map.mapTypes.set('grayscale', grayscaleMaptype());
       this.map.mapTypes.set('treeheight', treeheightMaptype());
+      this.map.mapTypes.set('dark', darkMaptype());
+      this.map.mapTypes.set('positron', positronMaptype());
       for (var i = 1999; i < 2013; i++) {
         this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
       }

@@ -62,16 +62,8 @@ define([
         this._setBaselayer(layerSpec.getBaselayers());
       }
     }, {
-      'AnalysisService/get': function() {
-        this._renderResults({loading: true});
-      }
-    }, {
       'AnalysisService/results': function(results) {
         this._renderResults(results);
-      }
-    }, {
-      'AnalysisResults/unavailable': function() {
-        this._renderResults({unavailable: true});
       }
     }, {
       'AnalysisResults/totalArea': function(area) {
@@ -155,11 +147,9 @@ define([
       // Even if the result is a failure or unavailable message, we render
       // the widget results and keep the polygon.
       this.status.set('analysis', true);
-      if (results.loading) {
-        this.view.renderLoading();
-      } else if (results.unavailable) {
+      if (results.unavailable) {
         mps.publish('Spinner/stop');
-        this.view.renderUnavailable();
+        this.view.renderFailure();
       } else if (results.failure) {
         mps.publish('Spinner/stop');
         this.view.renderFailure();

@@ -12,9 +12,9 @@ define([
   var KhmMiningLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT \'{tableName}\' as tablename, cartodb_id, the_geom_webmercator, area_name as name, round(con_size_h::float) as area_ha, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
+      sql: 'SELECT \'{tableName}\' as tablename, cartodb_id, the_geom_webmercator, area_name as name, round((shape_area::float)/10000) as area_ha,min_name as company, commodity as type, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
       infowindow: true,
-      interactivity: 'cartodb_id, tablename, name, area_ha, analysis',
+      interactivity: 'cartodb_id, tablename, name, company, type, area_ha, analysis',
       analysis: true
     }
     

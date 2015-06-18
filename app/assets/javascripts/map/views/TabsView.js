@@ -95,6 +95,7 @@ define([
       new AnalysisView(this.map);
       new CountriesView(this.map);
       new BasemapsView();
+      new SubscribeView();
     },
 
     toggleTabs: function(e){
