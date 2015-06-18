@@ -138,14 +138,17 @@ define([
           layersToRender.push(layer);
         }
       }, this ));
-
       this.renderIsoLayer(layersToRender);
     },
 
     renderIsoLayer: function(layersToRender){
       this.$layers.html(this.templateIso({ layers: layersToRender }));
-      this.$layers.find('.layers-list').html($('#country-layers .layers-list').html())
+      this._renderHtml();
       this._selectSubIsoLayer();
+    },
+
+    _renderHtml: function(){
+      this.$layers.find('.layers-list').html($('#country-layers .layers-list').html())
     },
 
     _selectSubIsoLayer: function() {
