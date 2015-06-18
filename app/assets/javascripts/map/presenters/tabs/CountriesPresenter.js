@@ -46,7 +46,7 @@ define([
       }
     },{
       'LayerNav/change': function(layerSpec) {
-        this.view.renderIsoLayer(layerSpec);
+        this.view._renderHtml();
       }
     },{
       'Layers/isos': function(layers_iso) {
