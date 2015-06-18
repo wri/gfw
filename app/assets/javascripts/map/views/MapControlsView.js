@@ -72,8 +72,8 @@ define([
 
     setListeners: function(){
       key('f', this.showSearch);
-      key('m', this.zoomIn);
-      key('n', this.zoomOut);
+      key('+', this.zoomIn);
+      key('-', this.zoomOut);
       key('alt+r', this.resetMap);
       key('s', this.shareMap);
       key('h', this.toggleModules);
