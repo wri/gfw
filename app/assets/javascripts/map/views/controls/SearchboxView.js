@@ -104,7 +104,7 @@ define([
         $prevInput = null;
 
         this.$searchbox.find('.search.selected').removeClass('selected');
-        this.$searchbox.find('.search.'+kind).addClass('selected');
+        this.$searchbox.find('.search.'+kind).addClass('selected').focus();
         this.$searchbox.find('.kind').removeClass('selected');
         this.$searchbox.find('*[data-kind="' + kind + '"]').addClass('selected');
       }
