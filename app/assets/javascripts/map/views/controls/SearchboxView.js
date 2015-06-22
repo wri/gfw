@@ -81,8 +81,15 @@ define([
 
     _latLongToDecimal: function(address) {
       var degrees = address || this.$searchbox.find('.degrees input').val();
+      if (degrees.contains(","))
         degrees = degrees.split(",");
-      return this._parseDMS(degrees[1]) + ', ' + this._parseDMS(degrees[0]);
+      else if (degrees.contains("E "))
+        degrees = degrees.split("E ");
+      else if (degrees.contains("W "))
+        degrees = degrees.split("W ");
+      else
+        degrees = degrees.split(" ");
+      return this._parseDMS(degrees[0]) + ', ' + this._parseDMS(degrees[1]);
     },
 
     _setType: function(e, kind) {
@@ -93,7 +100,7 @@ define([
         this.$searchbox.find('.search.selected').removeClass('selected');
 
         $(e.target).parent().find('.selected').removeClass('selected');
-        $target.addClass('selected');
+        $target.addClass('selected').focus();
         this.$searchbox.find('.search.'+$target.data('kind')).addClass('selected');
         $target = null;
       } else if (typeof(kind) === "string") {
