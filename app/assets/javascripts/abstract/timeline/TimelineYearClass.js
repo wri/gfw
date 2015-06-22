@@ -174,7 +174,7 @@ define([
       height = this.options.height - margin.bottom - margin.top;
       yearWidth = width/(this.options.dateRange[1].year() - this.options.dateRange[0].year());
       center = height/2 - 2;
-      handleY = -3;
+      handleY = 14;
       ticks = this.options.dateRange[1].year() - this.options.dateRange[0].year();
 
       // Set xscale

@@ -23,14 +23,15 @@
       right: auto;
       margin-left: -405px; // => calc(itemwith/2); Firefox issue
       @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        width: 57%;
+        right: 35px;
+        left: auto;
       }
 
       &.transform {
         @include transform(translate(-50%,0));
         margin-left: 0;
         @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-          width: 70%;
+          @include transform(translate(0%,0));
         }
       }
     }
