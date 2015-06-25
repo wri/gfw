@@ -37,23 +37,30 @@ define([
      */
     filterCanvasImgdata: function(imgdata, w, h) {
       var components = 4;
-      var start = (moment(this.currentDate[0]).year()-2004)*23+Math.floor(moment(this.currentDate[0]).dayOfYear()/16);
-      var end   = (moment(this.currentDate[1]).year()-2004)*23+Math.floor(moment(this.currentDate[1]).dayOfYear()/16);
-
+      var start = (moment(this.currentDate[0]).year()-2004)*23+Math.ceil((moment(this.currentDate[0]).dayOfYear()-1)/16);
+      if (start<1) start=1;
+      var end   = (moment(this.currentDate[1]).year()-2004)*23+Math.floor((moment(this.currentDate[1]).dayOfYear()-1)/16);
       for(var i=0; i < w; ++i) {
         for(var j=0; j < h; ++j) {
           var pixelPos = (j*w + i) * components;
        // var r = imgdata[pixelPos]; //left here for coherence
           var g = imgdata[pixelPos+1];
           var b = imgdata[pixelPos+2];
-          // var timeLoss = b+(256*g); //old method, just in case
-          var timeLoss = b+g;
+          var timeLoss = b+(256*g); //old method, just in case
+          // var timeLoss=0;
+          if (b>0){
+            timeLoss=b;
+          }else if (g>0){
+            timeLoss=g+255;
+          }
+          //var timeLoss = b+g;
 
-          if (timeLoss > start && timeLoss < end) {
+
+          if (timeLoss >= start && timeLoss <= end) {
             imgdata[pixelPos]     = 220;
             imgdata[pixelPos + 1] = 102;
             imgdata[pixelPos + 2] = 153;
-            // imgdata[pixelPos + 3] = 256;
+            imgdata[pixelPos + 3] = 256;
             if (timeLoss > this.top_date) {
               imgdata[pixelPos]     = 233;
               imgdata[pixelPos + 1] = 189;
