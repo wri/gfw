@@ -608,6 +608,30 @@
         @include logos-sprite(cambridgehover);
       }
     }
+    &.afc{
+      height: 69px; width: 80px; @include logos-sprite(afc);
+      &:hover{
+        @include logos-sprite(afchover);
+      }
+    }
+    &.airbus{
+      height: 30px; width: 130px; @include logos-sprite(airbus);
+      &:hover{
+        @include logos-sprite(airbushover);
+      }
+    }
+    &.ministiere{
+      height: 67px; width: 70px; @include logos-sprite(ministiere);
+      &:hover{
+        @include logos-sprite(ministierehover);
+      }
+    }
+    &.zeroextinction{
+      height: 20px; width: 120px; @include logos-sprite(zeroextinction);
+      &:hover{
+        @include logos-sprite(zeroextinctionhover);
+      }
+    }
 
     &.bobolink {
       height: 53px; width: 105px; @include logos-sprite(bobolink);
