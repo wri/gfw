@@ -19,7 +19,7 @@ define([
       dataMaxZoom: 11,
       //ATTENTION: check config.ru file to get the whole route, reverse proxying here
       //urlTemplate: '/latin-america/Z{z}/{y}/{x}.png'
-      urlTemplate: 'https://s3.amazonaws.com/wri-tiles/latin_decrease_current_near/{z}/{x}/{y}.png'
+      urlTemplate: 'https://s3.amazonaws.com/wri-tiles/latin-decrease-current/{z}/{x}/{y}.png'
 
     },
 
@@ -40,7 +40,6 @@ define([
       var start = (moment(this.currentDate[0]).year()-2004)*23+Math.ceil((moment(this.currentDate[0]).dayOfYear()-1)/16);
       if (start<1) start=1;
       var end   = (moment(this.currentDate[1]).year()-2004)*23+Math.floor((moment(this.currentDate[1]).dayOfYear()-1)/16);
-console.log(moment(this.currentDate[0])._i,start,moment(this.currentDate[1])._i,end,this.top_date);
       for(var i=0; i < w; ++i) {
         for(var j=0; j < h; ++j) {
           var pixelPos = (j*w + i) * components;
