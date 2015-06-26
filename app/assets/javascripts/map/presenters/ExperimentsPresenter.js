@@ -24,6 +24,7 @@ define([
      * Google Experiments.
      */
     _source: function(){
+      var cxApi = cxApi || false;
       if (cxApi) {
         this.variation = (this.variation !== undefined) ? this.variation : cxApi.chooseVariation();
         // this.variation = (this.variation !== undefined) ? this.variation : Math.floor(Math.random()*3);
