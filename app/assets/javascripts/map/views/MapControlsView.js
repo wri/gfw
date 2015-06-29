@@ -163,17 +163,7 @@ define([
 
     // LOCATE ON MAP
     locateMeOnMap: function(){
-      if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          _.bind(function(position) {
-            var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-            this.map.setCenter(pos);
-          }, this ),
-          _.bind(function() {
-            this.presenter.notificate('notif-enable-location');
-          }, this )
-        );
-      }
+      this.presenter.onAutolocate();
     },
 
 

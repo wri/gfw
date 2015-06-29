@@ -70,6 +70,11 @@ define([
       mps.publish('Map/zoom-change', [zoom]);
       mps.publish('Place/update', [{go: false}]);
     },
+
+    onAutolocate: function(){
+      mps.publish('Map/autolocate');
+    },
+
     /**
      * Used by searchbox view to handle a fitbounds.
      *

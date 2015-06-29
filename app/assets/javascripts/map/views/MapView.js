@@ -499,6 +499,21 @@ define([
 
     overlayToggle: function(bool){
       this.$overlayMobile.toggleClass('active', bool);
+    },
+
+    autolocate: function(){
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          _.bind(function(position) {
+            var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+            this.map.setCenter(pos);
+            this.map.setZoom(16);
+          }, this ),
+          _.bind(function() {
+            this.presenter.notificate('notif-enable-location');
+          }, this )
+        );
+      }
     }
 
 
