@@ -91,10 +91,8 @@ $w-control: 38px;
     }
   }
   &.module-mapcontrols-mobile{
-    right: auto;
     top: auto;
     bottom: 110px;
-    left: 10px;
     @media (min-width: $br-mobileMap){
       display: none;
     }
