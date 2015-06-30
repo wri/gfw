@@ -45,6 +45,18 @@ define([
           hidden: true
         });
       }
+    },{
+      'Timeline/toggle' : function(toggle){
+        this.view.toogleTimeline(toggle);
+      }
+    }, {
+      'Layers/toggle': function(toggle) {
+        this.view.toogleTimeline(false);
+      }
+    }, {
+      'Analysis/toggle': function(toggle) {
+        this.view.toogleTimeline(false);
+      }
     }],
 
     // *
@@ -86,6 +98,15 @@ define([
 
     notificate: function(id){
       mps.publish('Notification/open', [id]);
+    },
+
+    openLegend: function() {
+      mps.publish('LegendMobile/open');
+      this.view.toogleTimeline(false);
+    },
+
+    openAnalysis: function(){
+      mps.publish('Analysis/toggle');
     },
 
 

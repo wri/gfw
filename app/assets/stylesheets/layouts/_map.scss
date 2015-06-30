@@ -9,6 +9,22 @@ body,html{
   border: 0;
 }
 
+@media (max-width:$br-mobileMap - 1){
+  .layout-header{
+    top: auto;
+    bottom: 0;
+    .layout-header-top{
+      position: absolute;
+    }
+    .layout-header-bottom {
+      position: fixed;
+    }
+  }
+}
+
+
+
+
 .layout-content {
   margin-bottom: 0;
   position: absolute;

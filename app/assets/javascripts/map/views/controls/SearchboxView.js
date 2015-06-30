@@ -40,6 +40,18 @@ define([
       this.presenter = new Presenter(this);
       _.bindAll(this, 'setAutocomplete', 'onPlaceSelected');
 
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = false;
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = true;
+        },this)
+      });
+
+
       this.render();
       //cacheVars
       this.$input = this.$el.find('input');
@@ -203,6 +215,11 @@ define([
     toggleSearch: function() {
       var hidden = this.model.get('hidden');
       if (hidden) {
+        // This is for android keyboard. It pushes all content up, we want to prevent it
+        if (this.mobile) {
+          console.log('hello');
+          $('html,body').height($(window).height());
+        }
         this.$el.show(0);
         this.$input.focus();
         this.model.set('hidden', false);
@@ -210,6 +227,10 @@ define([
           this.$input.val('');
         }, this),1);
       }else{
+        // This is for android keyboard. It pushes all content up, we want to prevent it
+        if (this.mobile) {
+          $('html,body').height('100%');
+        }
         this.$el.hide(0);
         this.$input.blur();
         this.model.set('hidden', true);

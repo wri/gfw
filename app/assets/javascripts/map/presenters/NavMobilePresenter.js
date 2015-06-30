@@ -59,8 +59,11 @@ define([
       'Layers/toggle' : function(toggle){
         this.view.toogleTimelineClass(false);
       }
+    },{
+      'LegendMobile/open' : function(toggle){
+        this.view.toogleTimelineClass(false);
+      }
     }],
-
     toggleCurrentTab: function(tab, toggle){
       mps.publish(tab+'/toggle', [toggle]);
     },

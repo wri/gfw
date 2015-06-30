@@ -379,6 +379,7 @@
 
   .is-map-page &{
     h1{
+      margin: 0 0 0 10px;
       @media (min-width: $br-mobile){
         width: 60px;
         height: 60px;
