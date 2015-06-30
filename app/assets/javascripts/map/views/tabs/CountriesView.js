@@ -92,6 +92,7 @@ define([
       this.$countrySelect = $('#countries-country-select');
       this.$countryUl = $('#countries-country-ul');
       this.$countryReset = $('#countries-country-reset');
+      this.$countryBack = $('#country-tab-mobile-btn-back');
       this.$countryName = $('#countries-name');
       this.inits();
     },
@@ -105,6 +106,7 @@ define([
           this.presenter.openTab('#countries-tab-button');
         },this), 0);
       }
+      this.$countryReset.on('click', _.bind(this.changeIsoMobile, this));
     },
 
     /**
@@ -278,9 +280,11 @@ define([
         this.$countryName.text(name);
         if(!!this.iso) {
           this.$countryReset.show(0);
+          this.$countryBack.hide(0);
           this.$countryUl.addClass('hidden');
         }else{
           this.$countryReset.hide(0);
+          this.$countryBack.show(0);
           this.$countryUl.removeClass('hidden');
         }
       };

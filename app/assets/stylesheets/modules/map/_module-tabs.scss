@@ -158,14 +158,16 @@ $w-control: 44px;
     @media (max-width: $br-mobileMap - 1){
       position: fixed;
       background: $white;
+      z-index: 2001;
       bottom: 56px;
       left: 0;
       width: 100%;
-      padding: 10px 20px;
+      padding: 10px;
       box-shadow: 0 0px 15px rgba(0,0,0,0.25);
     }
     li{
-      width: 48%;
+      width: 100%;
+      padding: 0 5px;
       .btn{
         width: 100%;
       }
@@ -271,7 +273,9 @@ $w-control: 44px;
     }
     >footer{
       .button-container{
-        margin: 10px 15px 0;
+        @media (min-width: $br-mobileMap){
+          margin: 10px 15px 0;
+        }
       }
     }
   }

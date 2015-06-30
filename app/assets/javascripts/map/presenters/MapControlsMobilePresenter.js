@@ -37,6 +37,14 @@ define([
       'Timeline/toggle' : function(toggle){
         this.view.toogleTimeline(toggle);
       }
+    }, {
+      'Layers/toggle': function(toggle) {
+        this.view.toogleTimeline(false);
+      }
+    }, {
+      'Analysis/toggle': function(toggle) {
+        this.view.toogleTimeline(false);
+      }
     }],
 
     openLegend: function() {

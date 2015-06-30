@@ -32,20 +32,28 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
-      this.model = new NavMobileModel();
-      this.presenter = new Presenter(this);
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
-          this.render();
+          this.model = new NavMobileModel();
+          this.presenter = new Presenter(this);
+          this.render(true);
+        },this)
+      });
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.render(false);
         },this)
       });
 
     },
 
-    render: function () {
-      this.$el.html(this.template());
-
-      this.cacheVars();
+    render: function (bool) {
+      if(bool){
+        this.$el.html(this.template());
+        this.cacheVars();
+      }else{
+        this.$el.html('');
+      }
     },
 
     cacheVars: function(){
@@ -59,14 +67,19 @@ define([
       e && e.preventDefault();
       if (!$(e.currentTarget).hasClass('disabled')) {
         if (!$(e.currentTarget).hasClass('active')) {
-          this.$toggleMobileViews.removeClass('active');
+          this.resetBtns();
           $(e.currentTarget).addClass('active');
           this.presenter.toggleCurrentTab($(e.currentTarget).data('tab'), true);
         }else{
-          this.$toggleMobileViews.removeClass('active');
+          this.resetBtns();
           this.presenter.toggleCurrentTab($(e.currentTarget).data('tab'), false);
         }
       }
+    },
+
+    // Reset buttons
+    resetBtns: function () {
+      this.$toggleMobileViews.removeClass('active');
     },
 
     // Timeline

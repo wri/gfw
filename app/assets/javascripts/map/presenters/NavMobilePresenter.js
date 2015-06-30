@@ -22,12 +22,16 @@ define([
     //  * Application subscriptions.
     //  */
     _subscriptions: [{
-      'Timeline/disabled' :  function(){
+      'Timeline/disabled' : function(){
         this.view.toggleTimelineBtn(true);
       }
     },{
-      'Timeline/enabled' :  function(layerSlug){
+      'Timeline/enabled' : function(layerSlug){
         this.view.toggleTimelineBtn(false);
+      }
+    },{
+      'Tab/closed' : function(){
+        this.view.resetBtns();
       }
     }],
 

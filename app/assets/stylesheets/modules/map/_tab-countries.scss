@@ -45,7 +45,11 @@
           .alone{
             padding: 20px 0 10px;
             line-height: 1.25;
+            font-size: 13px;
           }
+        }
+        .layers-list{
+          border-bottom: none;
         }
       }
       .layers{
@@ -72,6 +76,46 @@
                 content: ' \25CF';
                 font-size: 16px;
                 margin: 0 4px 0 -1px;
+              }
+            }
+          }
+        }
+      }
+      .countries-buttons{
+        @media (max-width: $br-mobileMap - 1){
+
+          margin: 0 -15px;
+        }
+        .button-container{
+          position: relative;
+          bottom: 0;
+          left: 0;
+          box-shadow: none;
+          @media (max-width: $br-mobileMap - 1){
+            padding: 15px 35px 15px 15px;
+            margin: 0;
+            border-bottom: 1px solid $border;
+            &:first-child{
+              padding: 0 35px 12px 15px;
+            }
+          }
+
+          li{
+            @media (max-width: $br-mobileMap - 1){
+              width: auto;
+              padding: 0;
+            }
+            .btn{
+              @media (max-width: $br-mobileMap - 1){
+                font-size: 14px;
+                color: $cGreen;
+                border: none;
+                padding: 0;
+                background: none;
+                &:hover{
+                  background-color: $white;
+                }
+
               }
             }
           }

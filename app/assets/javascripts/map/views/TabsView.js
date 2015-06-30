@@ -152,6 +152,15 @@ define([
       this.$settingsTabButton.removeClass('active');
       this.$tabMobileButtons.removeClass('active');
       this.$tabsMobileContent.removeClass('active');
+      this.presenter.onTabMobileClose();
+    },
+
+    toggleMobileLayers: function(){
+      var $tab = $('#settings-tab-mobile');
+      // this.$tabMobileButtons.removeClass('active');
+      // this.$settingsTabButton.addClass('active');
+      // this.$tabsMobileContent.removeClass('active');
+      $tab.addClass('active');
     },
 
     openTab: function(id, backbutton){
@@ -159,7 +168,7 @@ define([
         $(id).trigger('click');
 
         // To control back buttons
-        if (backbutton) { $(id+'-back').data('tab', null);}
+        // if (backbutton) { $(id+'-back').data('tab', null);}
       }
     }
   });

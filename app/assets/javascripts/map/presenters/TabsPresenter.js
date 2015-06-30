@@ -25,11 +25,19 @@ define([
       'Tab/open': function(id, backbutton) {
         this.view.openTab(id, backbutton);
       }
+    },{
+      'Layers/toggle': function(toggle) {
+        this.view.toggleMobileLayers(toggle);
+      }
     }],
 
     onTabOpen: function(id){
       mps.publish('Tab/opened', [id]);
     },
+
+    onTabMobileClose : function () {
+      mps.publish('Tab/closed');
+    }
 
   });
 

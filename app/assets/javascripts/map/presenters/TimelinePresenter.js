@@ -66,6 +66,14 @@ define([
       'Timeline/toggle': function(toggle) {
         this.view.toggleMobile(toggle);
       }
+    }, {
+      'Layers/toggle': function(toggle) {
+        this.view.toggleMobile(false);
+      }
+    }, {
+      'Analysis/toggle': function(toggle) {
+        this.view.toggleMobile(false);
+      }
     }],
 
     /**
