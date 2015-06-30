@@ -12,9 +12,9 @@ define([
   var IdnLeuserLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT \'idn_leuser\' as tablename, cartodb_id, the_geom_webmercator, name, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
+      sql: 'SELECT \'idn_leuser\' as tablename, cartodb_id, the_geom_webmercator, name,  round(area_ha::float) as area_ha, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
       infowindow: true,
-      interactivity: 'cartodb_id, tablename, name, analysis',
+      interactivity: 'cartodb_id, tablename, name, area_ha, analysis',
       analysis: true
     }
 
