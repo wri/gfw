@@ -30,6 +30,11 @@
         &:after { height: 2px;}
         background: #F7F7F7;
       }
+      &.disabled{
+        button{
+          opacity: 0.5;
+        }
+      }
 
       button{
         @extend %reset-btn;

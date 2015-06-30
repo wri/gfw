@@ -50,17 +50,28 @@ define([
 
     cacheVars: function(){
       this.$toggleMobileViews = this.$el.find('.toggleMobileViews');
+      this.$timelineBtn = $('#timeline-navmobile-btn');
+      this.$layersBtn = $('#layers-navmobile-btn');
+      this.$analysisBtn = $('#analysis-navmobile-btn');
     },
 
     showView: function(e){
       e && e.preventDefault();
-      if (!$(e.currentTarget).hasClass('active')) {
-        this.$toggleMobileViews.removeClass('active');
-        $(e.currentTarget).addClass('active');
-      }else{
-        this.$toggleMobileViews.removeClass('active');
+      if (!$(e.currentTarget).hasClass('disabled')) {
+        if (!$(e.currentTarget).hasClass('active')) {
+          this.$toggleMobileViews.removeClass('active');
+          $(e.currentTarget).addClass('active');
+          this.presenter.toggleCurrentTab($(e.currentTarget).data('tab'), true);
+        }else{
+          this.$toggleMobileViews.removeClass('active');
+          this.presenter.toggleCurrentTab($(e.currentTarget).data('tab'), false);
+        }
       }
+    },
 
+    // Timeline
+    toggleTimelineBtn: function(toggle){
+      this.$timelineBtn.toggleClass('disabled',toggle);
     }
 
   });

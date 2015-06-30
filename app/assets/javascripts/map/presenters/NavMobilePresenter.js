@@ -21,7 +21,19 @@ define([
     // /**
     //  * Application subscriptions.
     //  */
-    _subscriptions: [],
+    _subscriptions: [{
+      'Timeline/disabled' :  function(){
+        this.view.toggleTimelineBtn(true);
+      }
+    },{
+      'Timeline/enabled' :  function(layerSlug){
+        this.view.toggleTimelineBtn(false);
+      }
+    }],
+
+    toggleCurrentTab: function(tab, toggle){
+      mps.publish(tab+'/toggle', [toggle]);
+    }
 
   });
 

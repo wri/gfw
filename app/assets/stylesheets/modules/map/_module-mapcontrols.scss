@@ -93,6 +93,10 @@ $w-control: 38px;
   &.module-mapcontrols-mobile{
     top: auto;
     bottom: 110px;
+    @include transition(all,0.25s,$easeInOutSine);
+    &.timeline-open{
+      @include transform(translate(0,-45px));
+    }
     @media (min-width: $br-mobileMap){
       display: none;
     }

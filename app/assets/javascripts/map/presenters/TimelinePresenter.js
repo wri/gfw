@@ -62,6 +62,10 @@ define([
         }
         this.view.model.set('forceHidden', true);
       }
+    }, {
+      'Timeline/toggle': function(toggle) {
+        this.view.toggleMobile(toggle);
+      }
     }],
 
     /**
@@ -145,7 +149,7 @@ define([
     },
 
     _timelineDisabled: function() {
-      mps.publish('Timeline/disabled', []);
+      mps.publish('Timeline/disabled');
     },
 
     _timelineEnabled: function(layerSlug) {

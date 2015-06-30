@@ -52,6 +52,10 @@ define([
       this.presenter.openLegend();
     },
 
+    toogleTimeline: function(toggle){
+      this.$el.toggleClass('timeline-open',toggle);
+    },
+
     toggleAnalysis: function(){
       if (!this.$el.find('.toggle-analysis').hasClass('disabled')) {
         this.presenter.openAnalysis();

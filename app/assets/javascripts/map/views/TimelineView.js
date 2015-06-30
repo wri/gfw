@@ -58,7 +58,12 @@ define([
       if (this.currentTimeline) {
         return this.currentTimeline.getCurrentDate();
       }
+    },
+
+    toggleMobile: function(toggle){
+      this.$el.find('.widget-box').toggleClass('active',toggle);
     }
+
   });
 
   return TimelineView;

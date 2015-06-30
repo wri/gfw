@@ -33,6 +33,10 @@ define([
       'LocalMode/updateIso' : function(iso,analyze){
         this.view.toogleCountryBtn(iso);
       }
+    },{
+      'Timeline/toggle' : function(toggle){
+        this.view.toogleTimeline(toggle);
+      }
     }],
 
     openLegend: function() {
