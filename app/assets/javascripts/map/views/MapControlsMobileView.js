@@ -27,7 +27,6 @@ define([
 
     events: {
       'click .toggle-legend': 'toggleLegend',
-      'click .toggle-analysis': 'toggleAnalysis',
       'click .toggle-countries': 'toggleCountries',
     },
 

@@ -156,7 +156,7 @@ define([
 
       }
     },{
-      'AnalysisMobile/open': function() {
+      'Analysis/toggle': function() {
         this.view.toggleAnalysis(this.view.$el.hasClass('is-analysis'));
       }
     },{
@@ -483,7 +483,7 @@ define([
       this.view._removeCartodblayer();
       this.view.$el.removeClass('is-analysis');
       if(!this.status.get('dont_analyze')){
-        mps.publish('AnalysisMobile/open')
+        mps.publish('Analysis/toggle')
       }
       // Delete overlay drawn or multipolygon.
       this.view.deleteGeom({

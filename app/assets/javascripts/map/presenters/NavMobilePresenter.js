@@ -38,6 +38,14 @@ define([
         if (!bool)
           this.view.resetBtns();
       }
+    },{
+      'Analysis/toggle': function() {
+        this.view.toogleAnalysisBtn($('#analysis-tab').hasClass('is-analysis'));
+      }
+    },{
+      'AnalysisResults/Delete': function() {
+        this.view.toogleAnalysisBtn(false);
+      }
     }],
 
     toggleCurrentTab: function(tab, toggle){

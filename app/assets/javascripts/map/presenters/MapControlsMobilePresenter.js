@@ -22,14 +22,6 @@ define([
     //  * Application subscriptions.
     //  */
     _subscriptions: [{
-      'AnalysisMobile/open': function() {
-        this.view.toogleAnalysisBtn($('#analysis-tab').hasClass('is-analysis'));
-      }
-    },{
-      'AnalysisResults/Delete': function() {
-        this.view.toogleAnalysisBtn(false);
-      }
-    },{
       'LocalMode/updateIso' : function(iso,analyze){
         this.view.toogleCountryBtn(iso);
       }
@@ -52,7 +44,7 @@ define([
     },
 
     openAnalysis: function(){
-      mps.publish('AnalysisMobile/open');
+      mps.publish('Analysis/toggle');
     },
 
     openCountriesTab: function(){

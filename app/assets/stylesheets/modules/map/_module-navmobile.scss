@@ -30,6 +30,11 @@
         &:after { height: 2px;}
         background: #F7F7F7;
       }
+      &.current{
+        .icon{
+          fill: $cGreen;
+        }
+      }
       &.disabled{
         button{
           opacity: 0.5;

@@ -90,7 +90,7 @@ define([
         this.view._deleteAnalysisView();
       }
     },{
-      'AnalysisMobile/open': function() {
+      'Analysis/toggle': function() {
         this.view.toogleAnalysis($('#analysis-tab').hasClass('is-analysis'));
       }
     },{
@@ -159,7 +159,7 @@ define([
         // Subscribe button just should be activated
         // when a analysis is succesfully rendered.
         this.view.$tab.addClass('is-analysis');
-        mps.publish('AnalysisMobile/open');
+        mps.publish('Analysis/toggle');
         this._setSubscribeButton();
       }
     },

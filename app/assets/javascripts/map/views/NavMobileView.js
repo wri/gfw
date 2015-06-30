@@ -85,6 +85,10 @@ define([
     // Timeline
     toggleTimelineBtn: function(toggle){
       this.$timelineBtn.toggleClass('disabled',toggle);
+    },
+
+    toogleAnalysisBtn: function(toggle){
+      this.$analysisBtn.toggleClass('current',toggle);
     }
 
   });
