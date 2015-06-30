@@ -312,7 +312,7 @@
   background: $white;
   bottom: 0;
   left: 0;
-  z-index: 19;
+  z-index: 22;
   padding: 20px 20px 56px;
   @include transform(translate(0,100%));
   @include transition(all 0.25s $easeInOutSine);

@@ -74,6 +74,10 @@ define([
       'Analysis/toggle': function(toggle) {
         this.view.toggleMobile(false);
       }
+    },{
+      'Overlay/toggle' : function(bool){
+        this.view.toggleMobile(false);
+      }
     }],
 
     /**

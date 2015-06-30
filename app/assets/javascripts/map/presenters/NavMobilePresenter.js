@@ -33,6 +33,11 @@ define([
       'Tab/closed' : function(){
         this.view.resetBtns();
       }
+    },{
+      'Overlay/toggle' : function(bool){
+        if (!bool)
+          this.view.resetBtns();
+      }
     }],
 
     toggleCurrentTab: function(tab, toggle){
