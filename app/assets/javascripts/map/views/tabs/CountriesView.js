@@ -277,7 +277,9 @@ define([
           return country.iso === this.iso;
         }, this ));
         var name = (country) ? country.name + ' Data' : 'Country Data';
+        var shareName = (country) ? country.name : '';
         this.$countryName.text(name);
+        this.presenter.changeNameIso(shareName);
         if(!!this.iso) {
           this.$countryReset.show(0);
           this.$countryBack.hide(0);

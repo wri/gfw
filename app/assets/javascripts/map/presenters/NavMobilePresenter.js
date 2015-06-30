@@ -40,16 +40,33 @@ define([
       }
     },{
       'Analysis/toggle': function() {
+        this.view.toogleTimelineClass(false);
         this.view.toogleAnalysisBtn($('#analysis-tab').hasClass('is-analysis'));
       }
     },{
       'AnalysisResults/Delete': function() {
         this.view.toogleAnalysisBtn(false);
       }
+    },{
+      'Countries/name': function(name,bool) {
+        this.view.toogleCountryBtn(name,bool);
+      }
+    },{
+      'Timeline/toggle' : function(toggle){
+        this.view.toogleTimelineClass(toggle);
+      }
+    },{
+      'Layers/toggle' : function(toggle){
+        this.view.toogleTimelineClass(false);
+      }
     }],
 
     toggleCurrentTab: function(tab, toggle){
       mps.publish(tab+'/toggle', [toggle]);
+    },
+
+    openCountriesTab: function(){
+      mps.publish('Tab/open', ['#country-tab-mobile-btn', true]);
     }
 
   });

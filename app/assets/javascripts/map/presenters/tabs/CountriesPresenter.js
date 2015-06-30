@@ -108,6 +108,10 @@ define([
       mps.publish('Countries/changeIso',[iso,this.status.get('dont_analyze')]);
     },
 
+    changeNameIso: function(name){
+      mps.publish('Countries/name', [name, !!name]);
+    },
+
     openTab: function(id){
       mps.publish('Tab/open',[id]);
     },

@@ -26,7 +26,8 @@ define([
     el: '#module-navmobile',
 
     events: {
-      'click .toggleMobileViews' : 'showView'
+      'click .toggleMobileViews' : 'showView',
+      'click #country-navmobile-btn' : 'toggleCountriesTab'
     },
 
     template: Handlebars.compile(tpl),
@@ -61,6 +62,7 @@ define([
       this.$timelineBtn = $('#timeline-navmobile-btn');
       this.$layersBtn = $('#layers-navmobile-btn');
       this.$analysisBtn = $('#analysis-navmobile-btn');
+      this.$countryBtn = $('#country-navmobile-btn');
     },
 
     showView: function(e){
@@ -89,6 +91,19 @@ define([
 
     toogleAnalysisBtn: function(toggle){
       this.$analysisBtn.toggleClass('current',toggle);
+    },
+
+    toogleCountryBtn: function (name,bool) {
+      this.$countryBtn.toggleClass('active',bool);
+      this.$countryBtn.find('.name').text(name);
+    },
+
+    toggleCountriesTab: function(){
+      this.presenter.openCountriesTab();
+    },
+
+    toogleTimelineClass: function(toggle){
+      this.$countryBtn.toggleClass('timeline-open',toggle);
     }
 
   });

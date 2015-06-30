@@ -27,7 +27,6 @@ define([
 
     events: {
       'click .toggle-legend': 'toggleLegend',
-      'click .toggle-countries': 'toggleCountries',
     },
 
     template: Handlebars.compile(tpl),
@@ -55,30 +54,6 @@ define([
       this.$el.toggleClass('timeline-open',toggle);
     },
 
-    toggleAnalysis: function(){
-      if (!this.$el.find('.toggle-analysis').hasClass('disabled')) {
-        this.presenter.openAnalysis();
-      }
-    },
-
-    toogleAnalysisBtn: function(to){
-      this.$btnAnalysis.toggleClass('active',to);
-      this.$el.toggleClass('analysis',to);
-      $('.widget-timeline').toggleClass('analysis',to);
-    },
-
-    toggleCountries: function(){
-      this.presenter.openCountriesTab();
-    },
-
-    toogleCountryBtn: function(iso,analyze){
-      var to = !!iso.country;
-      this.$btnCountries.toggleClass('active',to);
-    },
-
-    initCustomViews: function(){
-
-    },
   });
 
   return MapControlsMobileView;

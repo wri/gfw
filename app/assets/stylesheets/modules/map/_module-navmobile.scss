@@ -61,4 +61,38 @@
       }
     }
   }
+  .country-navmobile-btn{
+    position: absolute;
+    bottom: 100%;
+    left: 10px;
+    z-index: 20;
+    @include transform(translate(0,-10px));
+    @include transition(all,0.25s,$easeInOutSine);
+    visibility: hidden;
+    opacity: 0;
+    &.active{
+      visibility: visible;
+      opacity: 1;
+    }
+    &.timeline-open{
+      @include transform(translate(0,-55px));
+    }
+    span{
+      display: block;
+      float: left;
+      clear: both;
+      color: $white;
+      background: $dark;
+      padding: 5px;
+      max-width: 150px;
+      &.name{
+        text-transform: uppercase;
+      }
+      &.little{
+        font-size: 10px;
+        padding: 0 5px 5px;
+        color: $cGreen;
+      }
+    }
+  }
 }
