@@ -78,7 +78,7 @@ define([
     renderMobile: function(){
       this.$el.html(this.templateMobile());
       this.$el.removeClass('hide');
-      this.initCustomMobileViews();
+      this.initCustomViews();
     },
 
     initCustomViews: function(){
@@ -86,14 +86,6 @@ define([
       new AnalysisView(this.map);
       new CountriesView(this.map);
       new SubscriptionView(this.map);
-      new BasemapsView();
-      new SubscribeView();
-    },
-
-    initCustomMobileViews: function(){
-      new SpinnerView();
-      new AnalysisView(this.map);
-      new CountriesView(this.map);
       new BasemapsView();
       new SubscribeView();
     },

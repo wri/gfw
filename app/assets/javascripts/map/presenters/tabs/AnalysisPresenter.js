@@ -300,6 +300,10 @@ define([
       mps.publish('Analysis/analyze-iso', [iso, this.status.get('dont_analyze')]);
     },
 
+    setSubscribeIso: function(iso){
+      mps.publish('Subscription/iso', [iso]);
+    },
+
     _analyzeWdpai: function(wdpaid) {
       // Build resource
       var resource = this._buildResource({

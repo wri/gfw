@@ -339,14 +339,12 @@ define([
     },
 
     subscribeCountry: function(){
-      if (this.iso && !this.$countrySButton.hasClass('disabled')) {
+      if (this.iso) {
         var iso = {
           country: this.iso,
           region: this.area
         }
-        this.$countrySButton.addClass('disabled');
-        console.log('subscribe');
-        // this.presenter.setAnalyzeIso(iso);
+        this.presenter.setSubscribeIso(iso);
       }
     },
 
