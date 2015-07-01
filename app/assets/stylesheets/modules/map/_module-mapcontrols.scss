@@ -4,7 +4,8 @@ $w-control: 38px;
   bottom: 110px;
   right: 10px;
   z-index: 21;
-  @include transition(all,0.25s,$easeInOutSine);
+  @include transition(all 0.25s $easeInOutSine);
+
   &.timeline-open{
     @include transform(translate(0,-45px));
   }
@@ -43,6 +44,7 @@ $w-control: 38px;
         @include display-flex();
         @include justify-content(center);
         @include align-items(center);
+        @include transform-origin(50.3%,50.8%);
         width: 100%;
         height: 100%;
       }
@@ -101,7 +103,8 @@ $w-control: 38px;
   &.module-mapcontrols-mobile{
     top: auto;
     bottom: 110px;
-    @include transition(all,0.25s,$easeInOutSine);
+    @include transition(all 0.25s $easeInOutSine);
+
     &.timeline-open{
       @include transform(translate(0,-45px));
     }

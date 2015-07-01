@@ -6,7 +6,7 @@
     height: 45px;
     border-bottom: 1px solid $border;
     @include transform(translate(0,100%));
-    @include transition(all,0.25s,$easeInOutSine);
+    @include transition(all 0.25s $easeInOutSine);
     &.active{
       @include transform(translate(0,0%));
     }

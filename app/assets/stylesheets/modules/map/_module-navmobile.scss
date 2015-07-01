@@ -43,21 +43,41 @@
 
       button{
         @extend %reset-btn;
-        @include display-flex();
-        @include justify-content(center);
-        @include align-items(center);
         text-transform: uppercase;
         width: 100%;
         height: 44px;
         padding: 0;
         color: $dark;
-        font-size: 12px;
+        border: none;
+        // font-size: 12px;
         text-align: center;
-        .icon{
-          width: 22px;
-          height: 22px;
-          fill: $dark;
-          margin: 0 4px 0 0;
+        div{
+          position: relative;
+          float: left;
+          left: 50%;
+          @include transform(translate(-50%,0));
+          span{
+            display: block;
+            line-height: 1.1;
+            text-align: left;
+            padding: 0 0 0 26px;
+            max-width: 80px;
+            font-size: 10px;
+            @media (min-width: 360px){
+              max-width: 84px;
+              font-size: 11px;
+            }
+
+          }
+          .icon{
+            position: absolute;
+            top: 50%;
+            left: 0px;
+            width: 22px;
+            height: 22px;
+            @include transform(translate(0,-50%));
+            fill: $dark;
+          }
         }
       }
     }
@@ -68,7 +88,7 @@
     left: 10px;
     z-index: 20;
     @include transform(translate(0,-10px));
-    @include transition(all,0.25s,$easeInOutSine);
+    @include transition(all 0.25s $easeInOutSine);
     visibility: hidden;
     opacity: 0;
     &.active{
