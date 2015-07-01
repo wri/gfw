@@ -39,6 +39,7 @@ define([
       'change #analysis-country-select' : 'changeIso',
       'change #analysis-region-select' : 'changeArea',
       'click #analysis-country-button' : 'analysisCountry',
+      'click #subscribe-country-button' : 'subscribeCountry',
 
       //other
       'click #data-tab-play' : 'onGifPlay',
@@ -76,6 +77,7 @@ define([
       this.$countrySelect = $('#analysis-country-select');
       this.$regionSelect = $('#analysis-region-select');
       this.$countryButton = $('#analysis-country-button');
+      this.$countrySButton = $('#subscribe-country-button');
 
       //other
       this.$img = $('#data-tab-img');
@@ -333,6 +335,18 @@ define([
         }
         this.$countryButton.addClass('disabled');
         this.presenter.setAnalyzeIso(iso);
+      }
+    },
+
+    subscribeCountry: function(){
+      if (this.iso && !this.$countrySButton.hasClass('disabled')) {
+        var iso = {
+          country: this.iso,
+          region: this.area
+        }
+        this.$countrySButton.addClass('disabled');
+        console.log('subscribe');
+        // this.presenter.setAnalyzeIso(iso);
       }
     },
 

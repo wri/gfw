@@ -50,6 +50,9 @@
         }
         .layers-list{
           border-bottom: none;
+          li{
+            padding-left: 5px;
+          }
         }
       }
       .layers{
@@ -83,7 +86,6 @@
       }
       .countries-buttons{
         @media (max-width: $br-mobileMap - 1){
-
           margin: 0 -15px;
         }
         .button-container{
@@ -91,8 +93,9 @@
           bottom: 0;
           left: 0;
           box-shadow: none;
+          @include justify-content(flex-start);
           @media (max-width: $br-mobileMap - 1){
-            padding: 15px 35px 15px 15px;
+            padding: 18px 35px 18px 15px;
             margin: 0;
             border-bottom: 1px solid $border;
             &:first-child{
@@ -103,7 +106,14 @@
           li{
             @media (max-width: $br-mobileMap - 1){
               width: auto;
-              padding: 0;
+              padding: 0 0 0 15px;
+              margin: 0 0 0 15px;
+              border-left: 1px solid $border;
+              &:first-child{
+                margin: 0;
+                padding: 0;
+                border-left: none;
+              }
             }
             .btn{
               @media (max-width: $br-mobileMap - 1){
