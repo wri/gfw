@@ -217,7 +217,6 @@ define([
       if (hidden) {
         // This is for android keyboard. It pushes all content up, we want to prevent it
         if (this.mobile) {
-          console.log('hello');
           $('html,body').height($(window).height());
         }
         this.$el.show(0);
