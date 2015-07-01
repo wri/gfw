@@ -4,6 +4,8 @@
   width: 100%;
   z-index: 21;
   @media (min-width: $br-mobile){
+    z-index: 101;
+    bottom: 0;
   }
   ul{
     background: $white;
