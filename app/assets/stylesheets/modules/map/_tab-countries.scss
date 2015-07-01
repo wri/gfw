@@ -1,3 +1,4 @@
+$letterW: 20px;
 .tab-countries{
   .countries-content{
     padding: 15px;
@@ -13,14 +14,42 @@
           margin: 0;
         }
       }
-      >ul{
-        margin: -15px;
+      .country-ul-mobile{
+        margin: 0 -15px;
         >li{
           padding: 10px 20px;
-          border-top: 1px solid $border;
+          border-bottom: 1px solid $border;
           font-size: 14px;
-          &:first-child{
-            border-top: none;
+          &:last-child{
+            border-bottom: none;
+          }
+        }
+      }
+      .letters-ul-mobile-box{
+        position: relative;
+        overflow: auto;
+        margin: -15px -15px 0;
+        padding: 15px 0 13px;
+        border-bottom: 1px solid $border;
+        .letters-ul-mobile{
+          width: 27.5 * $letterW;
+          padding: 0px 15px;
+          overflow: hidden;
+          >li{
+            float: left;
+            color: $cGreen;
+            width: $letterW;
+            height: $letterW;
+            line-height: $letterW;
+            text-align: center;
+            text-transform: uppercase;
+            &.disabled{
+              color: $dark;
+              opacity: 0.75;
+            }
+            &.current{
+              font-weight: 500;
+            }
           }
         }
       }
