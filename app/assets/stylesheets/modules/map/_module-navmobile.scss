@@ -35,8 +35,12 @@
         background: #F7F7F7;
       }
       &.current{
-        .icon{
-          fill: $cGreen;
+        button{
+          div{
+            &:after{
+              display: block;
+            }
+          }
         }
       }
       &.disabled{
@@ -60,6 +64,23 @@
           float: left;
           left: 50%;
           @include transform(translate(-50%,0));
+          &:after{
+            content: "1";
+            color: $white;
+            width: 14px;
+            height: 14px;
+            background-color: $cGreen;
+            position: absolute;
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+            display: none;
+            font-size: 10px;
+            line-height: 16px;
+            text-align: center;
+            margin: -7px 0 0 -7px;
+            -webkit-font-smoothing: subpixel-antialiased;
+          }
           span{
             display: block;
             line-height: 1.1;
