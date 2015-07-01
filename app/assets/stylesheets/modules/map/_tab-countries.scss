@@ -95,23 +95,19 @@
           box-shadow: none;
           @include justify-content(flex-start);
           @media (max-width: $br-mobileMap - 1){
-            padding: 18px 35px 18px 15px;
+            padding: 18px 0px 18px 0px;
             margin: 0;
             border-bottom: 1px solid $border;
             &:first-child{
-              padding: 0 35px 12px 15px;
+              padding: 0 0px 12px 0px;
             }
           }
 
           li{
             @media (max-width: $br-mobileMap - 1){
-              width: auto;
-              padding: 0 0 0 15px;
-              margin: 0 0 0 15px;
+              padding: 0;
               border-left: 1px solid $border;
               &:first-child{
-                margin: 0;
-                padding: 0;
                 border-left: none;
               }
             }

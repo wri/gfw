@@ -536,6 +536,10 @@ define([
       this.view.toggleBtn(!!!this.status.get('baselayer'));
     },
 
+    toggleVisibilityAnalysis: function(to){
+      mps.publish('Analysis/visibility', [to]);
+    },
+
     /**
      * Publish a 'Map/fit-bounds' with the bounds
      * from the suplied geojson.

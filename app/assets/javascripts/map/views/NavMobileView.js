@@ -93,6 +93,10 @@ define([
       this.$analysisBtn.toggleClass('current',toggle);
     },
 
+    toggleVisibilityAnalysis: function(toggle){
+      this.$analysisBtn.toggleClass('disabled',toggle);
+    },
+
     toogleCountryBtn: function (name,bool) {
       this.$countryBtn.toggleClass('active',bool);
       this.$countryBtn.find('.name').text(name);

@@ -19,7 +19,7 @@ define([
     },
 
     // /**
-    //  * Application subscriptions.
+    //  * Application subscriptions. 'Analysis/visibility'
     //  */
     _subscriptions: [{
       'Timeline/disabled' : function(){
@@ -42,6 +42,10 @@ define([
       'Analysis/toggle': function() {
         this.view.toogleTimelineClass(false);
         this.view.toogleAnalysisBtn($('#analysis-tab').hasClass('is-analysis'));
+      }
+    },{
+      'Analysis/visibility': function(to) {
+        this.view.toggleVisibilityAnalysis(to);
       }
     },{
       'AnalysisResults/Delete': function() {

@@ -644,11 +644,15 @@ define([
      * BUTTONS.
      */
     toggleBtn: function(to) {
-      if (to) {
-        (this.$button.hasClass('active')) ? this.$button.trigger('click') : null;
-        this.$button.removeClass('in_use').addClass('disabled');
+      if (this.mobile) {
+        this.presenter.toggleVisibilityAnalysis(to);
       }else{
-        this.$button.removeClass('disabled');
+        if (to) {
+          (this.$button.hasClass('active')) ? this.$button.trigger('click') : null;
+          this.$button.removeClass('in_use').addClass('disabled');
+        }else{
+          this.$button.removeClass('disabled');
+        }
       }
       $('.cartodb-popup').toggleClass('dont_analyze', to);
     },
