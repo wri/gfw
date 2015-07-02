@@ -486,9 +486,10 @@ define([
       mps.publish('AnalysisResults/Delete');
       this.view._removeCartodblayer();
       this.view.$el.removeClass('is-analysis');
-      if(!this.status.get('dont_analyze')){
-        mps.publish('Analysis/toggle')
-      }
+      // if(!this.status.get('dont_analyze')){
+      //   console.log('cause');
+      //   mps.publish('Analysis/toggle')
+      // }
       // Delete overlay drawn or multipolygon.
       this.view.deleteGeom({
         overlay: this.status.get('overlay'),

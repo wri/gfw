@@ -338,7 +338,7 @@ define([
     },
 
     _showNotification: function(e){
-      if ($(e.currentTarget).hasClass('disabled') && !$(e.target).hasClass('country-layers-reset')) {
+      if ($(e.currentTarget).hasClass('disabled') && !$(e.target).hasClass('country-layers-reset-mobile')) {
         if($(e.currentTarget).hasClass('iso-detected')){
           this.presenter.notificate('not-country-not-has-layers');
         }else{

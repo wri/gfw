@@ -289,9 +289,10 @@ define([
         if (!!filter) {
           ($(v).data('alpha') == filter) ? $(v).removeClass('hidden') : $(v).addClass('hidden');
         }else{
-          $(v).removeClass('current hidden')
+          $(v).removeClass('current hidden');
         }
       });
+      (! !!filter) ? this.$letters.find('li').removeClass('current') : null;
     },
 
     // Select change iso
@@ -312,6 +313,9 @@ define([
       this.iso = iso.country;
       this.commonIsoChanges();
       this.$countrySelect.val(this.iso).trigger("liszt:updated");
+      if (this.mobile) {
+        this.filterByLetter(null);
+      }
     },
 
     commonIsoChanges: function(){
