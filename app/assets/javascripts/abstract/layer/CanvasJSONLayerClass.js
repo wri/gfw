@@ -12,7 +12,7 @@ define([
   'use strict';
 
   var MAX_MONTHS = 200;
-  var BASE_MONTH = 71;
+  var BASE_MONTH = 72;
 
   var CanvasJSONLayerClass = OverlayLayerClass.extend({
 
