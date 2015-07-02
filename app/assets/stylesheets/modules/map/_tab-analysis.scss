@@ -74,6 +74,9 @@
       background: $white;
       font-family: inherit;
       text-transform: uppercase;
+      option{
+        text-transform: none;
+      }
     }
   }
 }

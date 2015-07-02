@@ -73,7 +73,7 @@ define([
 
     setListeners: function(){
       key('f', this.showSearch);
-      key('+', this.zoomIn);
+      key('=, shift+=, plus, shift+equals', this.zoomIn);
       key('-', this.zoomOut);
       key('alt+r', this.resetMap);
       key('s', this.shareMap);
