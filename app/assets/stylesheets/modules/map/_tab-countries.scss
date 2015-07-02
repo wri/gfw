@@ -27,10 +27,27 @@ $letterW: 20px;
       }
       .letters-ul-mobile-box{
         position: relative;
-        overflow: auto;
         margin: -15px -15px 0;
-        padding: 15px 0 13px;
         border-bottom: 1px solid $border;
+        &:before,&:after{
+          content: "";
+          position: absolute;
+          top: 0;
+          width: 15px;
+          height: 100%;
+        }
+        &:before{
+          left: 0;
+          @include gradient(left,rgba(255,255,255,1),rgba(255,255,255,0));
+        }
+        &:after{
+          right: 0;
+          @include gradient(right,rgba(255,255,255,1),rgba(255,255,255,0));
+        }
+        .scroll-none{
+          overflow: auto;
+          padding: 15px 0 13px;
+        }
         .letters-ul-mobile{
           width: 27.5 * $letterW;
           padding: 0px 15px;

@@ -329,13 +329,13 @@ define([
           this.$countryReset.show(0);
           this.$countryBack.hide(0);
           this.$countryUl.addClass('hidden');
-          this.$letters.parent().addClass('hidden');
+          this.$letters.parents('.letters-ul-mobile-box').addClass('hidden');
           this.filterByLetter(null);
         }else{
           this.$countryReset.hide(0);
           this.$countryBack.show(0);
           this.$countryUl.removeClass('hidden');
-          this.$letters.parent().removeClass('hidden');
+          this.$letters.parents('.letters-ul-mobile-box').removeClass('hidden');
           this.filterByLetter(null);
         }
       };
