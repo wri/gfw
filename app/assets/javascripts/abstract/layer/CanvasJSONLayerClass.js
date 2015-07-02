@@ -12,7 +12,7 @@ define([
   'use strict';
 
   var MAX_MONTHS = 200;
-  var BASE_MONTH = 71;
+  var BASE_MONTH = 72;
 
   var CanvasJSONLayerClass = OverlayLayerClass.extend({
 
@@ -154,7 +154,7 @@ define([
           ctx.fillStyle = '#F69';
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
-        if (cells.deforestation[index] - cells.deforestation[index1] > 0) {
+        if (month >= month_change && cells.deforestation[index] - cells.deforestation[index1] > 0) {
           ctx.fillStyle = 'rgb(233, 189, 21)';
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
