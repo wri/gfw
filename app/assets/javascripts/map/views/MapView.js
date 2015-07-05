@@ -98,6 +98,12 @@ define([
           this.onCenterChange();
         }, this)
       );
+      google.maps.event.addListener(this.map, 'bounds_changed', _.bind(function() {
+        if(!this.center_moved){
+          this.offsetCenter(this.map.getCenter(), 0, 270/2);
+          this.center_moved = true; 
+        }
+      }, this ));
       google.maps.event.addListener(this.map, 'dragend',
         _.bind(function() {
           this.onCenterChange();
@@ -240,20 +246,26 @@ define([
     },
 
     fitBounds: function(bounds) {
+      this.center_moved = false;
       this.map.fitBounds(bounds);
     },
 
 
     offsetCenter: function(latlng,offsetx,offsety) {
-      var map = this.map;
-      var scale = Math.pow(2, map.getZoom());
-      var latlng = new google.maps.LatLng(latlng.lat, latlng.lng);
+
+      // latlng is the apparent centre-point
+      // offsetx is the distance you want that point to move to the right, in pixels
+      // offsety is the distance you want that point to move upwards, in pixels
+      // offset can be negative
+      // offsetx and offsety are both optional
+
+      var scale = Math.pow(2, this.map.getZoom());
       var nw = new google.maps.LatLng(
-          map.getBounds().getNorthEast().lat(),
-          map.getBounds().getSouthWest().lng()
+          this.map.getBounds().getNorthEast().lat(),
+          this.map.getBounds().getSouthWest().lng()
       );
 
-      var worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latlng);
+      var worldCoordinateCenter = this.map.getProjection().fromLatLngToPoint(latlng);
       var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
 
       var worldCoordinateNewCenter = new google.maps.Point(
@@ -261,11 +273,12 @@ define([
           worldCoordinateCenter.y + pixelOffset.y
       );
 
-      var newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+      var newCenter = this.map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
 
-      map.setCenter(newCenter);
+      this.map.setCenter(newCenter);
 
     },
+
 
 
 
@@ -316,12 +329,6 @@ define([
       var ne = projection.fromLatLngToContainerPixel(bounds.getNorthEast());
       return new google.maps.Point( Math.round(10000 * Math.abs(sw.y - ne.y)) / 10000, Math.round(10000 * Math.abs(sw.x - ne.x)) / 10000 );
     },
-
-
-
-
-
-
 
 
 
