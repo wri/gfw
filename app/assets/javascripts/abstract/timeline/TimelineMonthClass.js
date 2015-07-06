@@ -147,7 +147,7 @@ define([
         _.each($options, function(opt,i){
           if (direction) {
             (compare <= i) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
-          }else{
+          } else {
             (compare >= i) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
           }
         });
@@ -227,6 +227,7 @@ define([
           .append('svg')
             .attr('width', width + margin.left + margin.right)
             .attr('height', height + margin.top + margin.bottom)
+            .attr('style','width:'+ (width + margin.left + margin.right) +'px;')
           .append('g')
             .attr('transform', 'translate({0},{1})'.format(margin.left, margin.top));
 
@@ -414,7 +415,7 @@ define([
 
       this._showTipsy();
       this.tooltip
-        .text(date.format('MMM'))
+        .text(date.format('MMM') + ' - ' + date.format('D'))
         .style('left', '{0}px'.format(x));
 
       this.trail
@@ -538,7 +539,7 @@ define([
         .attr('x2', x);
 
       this.tooltip
-        .text(end.format('MMM'))
+        .text(end.format('MMM') + ' - ' + end.format('D'))
         .style('left', '{0}px'.format(x));
 
       // domainsShown keep track of the years already loaded.

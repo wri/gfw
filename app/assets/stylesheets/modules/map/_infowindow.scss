@@ -148,7 +148,7 @@
           line-height: 1.25;
           min-height: 1px;
           clear: both;
-          padding: 0 5px 0 0;
+          padding: 8px 5px 0 0;
           &.no-float{
             width: 100%;
             float: none;
@@ -165,6 +165,7 @@
           float: left;
           line-height: 1.25;
           min-height: 1px;
+          padding: 8px 0 0;
           &.no-float{
             width: 100%;
             float: none;
