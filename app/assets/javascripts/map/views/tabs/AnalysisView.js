@@ -490,6 +490,7 @@ define([
      */
     drawMultipolygon: function(geojson) {
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
+      this.setStyle();
       this.presenter.setMultipolygon(multipolygon, geojson);
     },
     drawCountrypolygon: function(geojson,color) {

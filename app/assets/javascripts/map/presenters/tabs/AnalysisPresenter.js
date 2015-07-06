@@ -306,33 +306,41 @@ define([
 
     _analyzeWdpai: function(wdpaid) {
       // Build resource
-      var resource = this._buildResource({
-        wdpaid: wdpaid,
-        type: 'other'
-      });
 
-      ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Wdpaid: ' + resource.wdpaid);
-      // Get geojson/fit bounds/draw geojson/publish analysis
-      var url = 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from wdpa_protected_areas where wdpaid =' + wdpaid;
-      $.getJSON(url, _.bind(function(data) {
-        if (data.rows.length > 0) {
-          var geojson = {
-            geometry: JSON.parse(data.rows[0].st_asgeojson),
-            properties: {},
-            type: 'Feature'
-          };
+      this.wdpaidBool = (this.wdpaid == wdpaid) ? false : true;
+      this.wdpaid = wdpaid;
 
-          mps.publish('AnalysisResults/totalArea', [{hectares: geojsonUtilsHelper.getHectares(geojson.geometry)}]);
+      if (this.wdpaidBool) {
+        var resource = this._buildResource({
+          wdpaid: wdpaid,
+          type: 'other'
+        });
 
-          this._geojsonFitBounds(geojson);
-          this.view.drawMultipolygon(geojson);
-          resource.geom = geojson;
-          this._publishAnalysis(resource);
+        ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Wdpaid: ' + resource.wdpaid);
+        // Get geojson/fit bounds/draw geojson/publish analysis
+        var url = 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from wdpa_protected_areas where wdpaid =' + wdpaid;
+        $.getJSON(url, _.bind(function(data) {
+          if (data.rows.length > 0) {
+            var geojson = {
+              geometry: JSON.parse(data.rows[0].st_asgeojson),
+              properties: {},
+              type: 'Feature'
+            };
+            mps.publish('AnalysisResults/totalArea', [{hectares: geojsonUtilsHelper.getHectares(geojson.geometry)}]);
 
-        } else {
-          this._publishAnalysis(resource, true);
-        }
-      }, this));
+            this._geojsonFitBounds(geojson);
+            this.view.drawMultipolygon(geojson);
+            resource.geom = geojson;
+            this._publishAnalysis(resource);
+
+            this.wdpaid = null;
+            this.wdpaidBool = true;
+
+          } else {
+            this._publishAnalysis(resource, true);
+          }
+        }, this));
+      }
     },
 
     /**

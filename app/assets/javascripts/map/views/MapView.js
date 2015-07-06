@@ -51,12 +51,14 @@ define([
 
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
+          this.mobile = false;
           this.render(3);
           this.presenter._resizeSetLayers();
         },this)
       });
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
+          this.mobile = true;
           this.render(2);
           this.presenter._resizeSetLayers();
         },this)
@@ -99,9 +101,9 @@ define([
         }, this)
       );
       google.maps.event.addListener(this.map, 'bounds_changed', _.bind(function() {
-        if(!this.center_moved){
+        if(!this.center_moved && this.mobile){
           this.offsetCenter(this.map.getCenter(), 0, 270/2);
-          this.center_moved = true; 
+          this.center_moved = true;
         }
       }, this ));
       google.maps.event.addListener(this.map, 'dragend',
@@ -118,6 +120,7 @@ define([
           return;
         }
         // TODO => No mps here!
+        console.log('wdpa: ',wdpa);
         mps.publish('AnalysisTool/analyze-wdpaid', [wdpa]);
       }, this));
 
