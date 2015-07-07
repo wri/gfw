@@ -18,6 +18,10 @@
         <span class="stats-count" style="color: #6D6DE5;"><strong>{{gainAlerts}}</strong> ha</span>
       </li>
       {{/if}}
+      <li>
+        <span class="stats-title">Total extent<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{threshold}}% <a href="#" class="canopy-button">canopy density</a></span></span>
+        <span class="stats-count" style="color: #97bd3d;"><strong>{{extent}}</strong> ha</span>
+      </li>
       {{#if warning_text}}
       <li>
         <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
