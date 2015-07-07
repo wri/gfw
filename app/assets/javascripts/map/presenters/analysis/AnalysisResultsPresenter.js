@@ -283,11 +283,11 @@ define([
        *   - lossDateRange
        *   - lossAlerts
        *   - gainAlerts
+       *   - extent
        */
       if (layer.slug === 'loss' || layer.slug === 'forestgain') {
         p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
-        p.lossAlerts = 0;
-        p.gainAlerts = 0;
+        p.extent = p.gainAlerts = p.lossAlerts = 0;
         p.threshold  = results.params.thresh || 30;
         p.both = this.status.get('both');
         // The api returns all the loss and gain alerts.
@@ -302,6 +302,7 @@ define([
         }
         p.lossAlerts = (results.loss) ? this.roundNumber(results.loss) : this.roundNumber(p.lossAlerts);
         p.gainAlerts = (results.gain) ? this.roundNumber(results.gain) : this.roundNumber(p.gainAlerts);
+        p.extent     = (results["tree-extent"]) ? this.roundNumber(results["tree-extent"]) : this.roundNumber(p.extent);
 
       }
 
