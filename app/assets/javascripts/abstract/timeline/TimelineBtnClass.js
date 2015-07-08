@@ -132,6 +132,7 @@ define([
         .append('svg')
           .attr('width', width + margin.left + margin.right)
           .attr('height', height + margin.top + margin.bottom)
+          .attr('style','width:'+ (width + margin.left + margin.right) +'px;')
         .append('g')
           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 

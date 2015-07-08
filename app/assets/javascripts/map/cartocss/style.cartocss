@@ -505,10 +505,17 @@
     line-opacity: 1;
   }
   [layer='usa_conservation_easements']{
-  polygon-fill: #1a4075;
-  polygon-opacity: 0.7;
-  line-color: #1a4075;
-  line-width: 0.1;
-  line-opacity: 1;
-}
+    polygon-fill: #1a4075;
+    polygon-opacity: 0.7;
+    line-color: #1a4075;
+    line-width: 0.1;
+    line-opacity: 1;
+  }
+  [layer='idn_leuser']{
+    polygon-fill: #5CA2AA;
+    polygon-opacity: 0.7;
+    line-color: #5CA0AA;
+    line-width: 0.5;
+    line-opacity: 1;
+  }
 }
