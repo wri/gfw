@@ -138,6 +138,7 @@ define([
     },
 
     _getUrl: function(x, y, z) {
+      if (z == 11) console.log(z,x,y)
       return new UriTemplate(this.options.urlTemplate).fillFromObject({x: x, y: y, z: z});
     },
 

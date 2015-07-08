@@ -20,9 +20,6 @@ define([
     }
   });
 
-
-
-
   var Searchbox = Backbone.View.extend({
 
     el: '#control-searchbox',

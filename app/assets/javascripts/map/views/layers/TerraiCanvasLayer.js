@@ -48,6 +48,7 @@ define([
           var b = imgdata[pixelPos+2];
           // var timeLoss = b+(256*g); //old method, just in case, because we like the feeling of nostalgia
           var timeLoss = null;
+
           if (b>0){
             timeLoss=b;
           }else if (g>0){
