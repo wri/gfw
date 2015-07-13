@@ -29,7 +29,7 @@ define([
     initialize: function() {
 
       //Init Vars
-      this.url = 'https://pipes.yahoo.com/pipes/pipe.run?_id=7157ffabdeb1eefc621e8306f56039b9&_render=json';
+      this.url = 'https://gfw-huggin.herokuapp.com/users/1/web_requests/15/keepupdatedgfwrss.json';
       this.items = {};
       mps.publish('Spinner:start');
 

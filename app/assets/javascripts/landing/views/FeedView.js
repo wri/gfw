@@ -29,8 +29,10 @@ define([
 
     loadFeed: function() {
       $.ajax({
-        url: 'https://pipes.yahoo.com/pipes/pipe.run?_id=d79b5dd252a71b6930d4756e801468c4&_render=json',
+        url: 'https://gfw-huggin.herokuapp.com/users/1/web_requests/14/feedviewrss.json',
         type:'GET',
+        dataType: 'jsonp',
+        jsonpCallback: 'callback',
         success: _.bind(function(data){
           this.parse(data.value.items);
         },this)
