@@ -111,7 +111,6 @@ define([
      */
     _updatePlace: function() {
       var route, params;
-
       params = this._destandardizeParams(
         this._getPresenterParams(this._presenters));
 
@@ -201,8 +200,8 @@ define([
       p.lat = p.lat.toFixed(2);
       p.lng = p.lng.toFixed(2);
       p.iso = _.compact(_.values(p.iso)).join('-') || 'ALL';
-      p.begin = p.begin ? p.begin.format('YYYY-MM-DD') : null;
-      p.end = p.end ? p.end.format('YYYY-MM-DD') : null;
+      p.begin = p.begin ? p.begin.utc().format('YYYY-MM-DD') : null;
+      p.end = p.end ? p.end.utc().format('YYYY-MM-DD') : null;
       p.geojson = p.geojson ? encodeURIComponent(p.geojson) : null;
       p.wdpaid = p.wdpaid ? String(p.wdpaid) : null;
       p.threshold = p.threshold ? String(p.threshold) : null;
