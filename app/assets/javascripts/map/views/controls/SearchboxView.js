@@ -20,9 +20,6 @@ define([
     }
   });
 
-
-
-
   var Searchbox = Backbone.View.extend({
 
     el: '#control-searchbox',
@@ -67,13 +64,23 @@ define([
         return (address.includes("º") || address.includes("°")) && (address.includes("'") || address.contains("′")) && (address.includes("W") || address.includes("E")) && (address.includes("N") || address.includes("S"));
       }
       var isDegrees = function(address) {
-        address = address.split(',');
+        if (address.contains('º'))
+          address = address.replace(/º/g,'');
+        if (address.contains('°'))
+          address = address.replace(/°/g,'');
+        if (address.contains(","))
+          address = address.split(",");
+        else
+          address = address.split(" ");
         if (!!address && address.length != 2) return false;
         if (!(~~address[0] != 0 && ~~address[1] != 0)) return false; //avoid mistakes with coordinates, degrees have no letters, so everything must be numbers ~~NaN will be 0
 
         var degrees = new Uint8Array(new ArrayBuffer(2));
-        degrees[0] = ~~address[0].split('.');
-        degrees[1] = ~~address[1].split('.');
+        var aux = new Array(2);
+        aux = address[0].split('.');
+        degrees[0] = Math.abs(aux[0]);
+        aux = address[1].split('.');
+        degrees[1] = Math.abs(aux[0]);
         if (degrees[0] <= 90 && degrees[1] <= 180) {
           return true;
         }
@@ -171,7 +178,14 @@ define([
           var geom = [0,0];
           if (this.$searchbox.find('.search.selected').hasClass('degrees')) {
             geom = this.$searchbox.find('.search.selected input').val();
-            geom = geom.split(",");
+            if (geom.contains('º'))
+              geom = geom.replace(/º/g,'');
+            if (geom.contains('°'))
+              geom = geom.replace(/°/g,'');
+            if (geom.contains(","))
+              geom = geom.split(",");
+            else
+              geom = geom.split(" ");
             this.presenter.setCenter(geom[0],geom[1]);
             geom = null;
             this.toggleSearch();
