@@ -708,36 +708,36 @@
 
 .layout-share-mobile{
   display: block;
-  .is-map-page &{
-    display: none;
-  }
+  // .is-map-page &{
+  //   display: none;
+  // }
   .share-link{
     display: block;
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
-    width: 50px;
-    height: 50px;
+    width: 44px;
+    height: 44px;
     background: $white;
     svg{
       fill: $dark;
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       @include transform(translate(-50%,-50%));
     }
   }
   .menu-section-link{
     position: absolute;
     top: 0;
-    right: 50px;
+    right: 44px;
     border-right: 1px solid $border;
     padding: 0 40px 0 15px;
-    line-height: 52px;
+    line-height: 46px;
     font-size: 14px;
-    height: 50px;
+    height: 44px;
     text-transform: uppercase;
     color: $dark;
     &.active{
@@ -748,15 +748,15 @@
       position: absolute;
       top: 50%;
       right: 0%;
-      width: 25px;
-      height: 25px;
+      width: 22px;
+      height: 22px;
       @include transform(translate(-50%,-50%));
     }
   }
   .menu-section-dropdown{
     display: none;
     position: absolute;
-    top: 50px;
+    top: 44px;
     left: 0;
     padding: 30px 20px;
     background: $light;
