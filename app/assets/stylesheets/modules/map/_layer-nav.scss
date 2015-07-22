@@ -386,6 +386,9 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       em{
         display: block;
         padding: 0 33px 0 23px;
+        @media (min-width: $br-mobileMap){
+          padding: 0px;
+        }
       }
       .onoffradio{
         margin: 1px 6px 0 0;
