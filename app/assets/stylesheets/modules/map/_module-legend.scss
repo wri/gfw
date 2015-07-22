@@ -54,13 +54,16 @@
       }
     }
     h2{
-      padding: 10px 20px;
+      padding: 10px 15px;
       margin: 0 0 15px;
       background: #F0F0F0;
       font-weight: 500;
       color: $dark;
       font-size: 14px;
       text-transform: uppercase;
+      @media (min-width: $br-mobileMap){
+        padding: 10px 20px;
+      }
     }
     // @li
     .category {

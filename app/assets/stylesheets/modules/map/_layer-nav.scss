@@ -230,7 +230,8 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       background: #A300D9;
       color: $white;
       @media (max-width: $br-mobileMap - 1){
-        display: none;
+        background: $white;
+        color: #A300D9;
       }
       &.disabled{
         opacity: 0.25;
@@ -240,9 +241,53 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       }
       &.active{
         opacity: 1;
+        @media (max-width: $br-mobileMap - 1){
+          .category-name{
+            em{
+              display: block;
+            }
+          }
+        }
+
       }
       .category-name{
         color: $white;
+        @media (max-width: $br-mobileMap - 1){
+          color: rgb(207, 127, 236);
+        }
+        em{
+          position: absolute;
+          top: 50%;
+          right: 40px;
+          background: white;
+          border: 1px solid #AAA;
+          padding: 0 5px 0 14px;
+          font-size: 9px;
+          height: 14px;
+          line-height: 14px;
+          border-radius: 14px;
+          color: #AAA;
+          display: none;
+          text-transform: none;
+          @include transform(translate(0,-50%));
+          svg{
+            position: absolute;
+            top: 1px;
+            left: 2px;
+            right: auto;
+            fill: #AAA;
+            width: 10px;
+            height: 10px;
+            @include transition(all,0s);
+            @media (min-width: $br-mobileMap){
+              left: 0;
+              right: 0;
+            }
+          }
+          @media (min-width: $br-mobileMap){
+            display: none;
+          }
+        }
       }
     }
   }

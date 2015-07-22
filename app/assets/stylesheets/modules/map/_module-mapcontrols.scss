@@ -1,13 +1,19 @@
 $w-control: 38px;
 .module-mapcontrols {
-  top: 54px;
+  top: auto;
+  bottom: 110px;
   right: 10px;
   z-index: 21;
-  left: auto;
-  bottom: auto;
+  @include transition(all 0.25s $easeInOutSine);
+
+  &.timeline-open{
+    @include transform(translate(0,-45px));
+  }
+  @media (min-width: $br-mobile){
+    bottom: 60px;
+  }
 
   @media (min-width: $br-mobileMap){
-    top: auto;
     right: auto;
     bottom: 50px;
     left: 35px;
@@ -38,6 +44,14 @@ $w-control: 38px;
       height: $w-control;
       position: relative;
       cursor: pointer;
+      .handler{
+        @include display-flex();
+        @include justify-content(center);
+        @include align-items(center);
+        @include transform-origin(51% 50.1%);
+        width: 100%;
+        height: 100%;
+      }
       &.hidden{
         display: none;
       }
@@ -91,10 +105,13 @@ $w-control: 38px;
     }
   }
   &.module-mapcontrols-mobile{
-    right: auto;
     top: auto;
     bottom: 110px;
-    left: 10px;
+    @include transition(all 0.25s $easeInOutSine);
+
+    &.timeline-open{
+      @include transform(translate(0,-45px));
+    }
     @media (min-width: $br-mobileMap){
       display: none;
     }

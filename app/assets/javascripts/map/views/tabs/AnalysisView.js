@@ -39,6 +39,7 @@ define([
       'change #analysis-country-select' : 'changeIso',
       'change #analysis-region-select' : 'changeArea',
       'click #analysis-country-button' : 'analysisCountry',
+      'click #subscribe-country-button' : 'subscribeCountry',
 
       //other
       'click #data-tab-play' : 'onGifPlay',
@@ -76,6 +77,7 @@ define([
       this.$countrySelect = $('#analysis-country-select');
       this.$regionSelect = $('#analysis-region-select');
       this.$countryButton = $('#analysis-country-button');
+      this.$countrySButton = $('#subscribe-country-button');
 
       //other
       this.$img = $('#data-tab-img');
@@ -336,6 +338,16 @@ define([
       }
     },
 
+    subscribeCountry: function(){
+      if (this.iso) {
+        var iso = {
+          country: this.iso,
+          region: this.area
+        }
+        this.presenter.setSubscribeIso(iso);
+      }
+    },
+
 
 
 
@@ -478,6 +490,7 @@ define([
      */
     drawMultipolygon: function(geojson) {
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
+      this.setStyle();
       this.presenter.setMultipolygon(multipolygon, geojson);
     },
     drawCountrypolygon: function(geojson,color) {
@@ -632,11 +645,15 @@ define([
      * BUTTONS.
      */
     toggleBtn: function(to) {
-      if (to) {
-        (this.$button.hasClass('active')) ? this.$button.trigger('click') : null;
-        this.$button.removeClass('in_use').addClass('disabled');
+      if (this.mobile) {
+        this.presenter.toggleVisibilityAnalysis(to);
       }else{
-        this.$button.removeClass('disabled');
+        if (to) {
+          (this.$button.hasClass('active')) ? this.$button.trigger('click') : null;
+          this.$button.removeClass('in_use').addClass('disabled');
+        }else{
+          this.$button.removeClass('disabled');
+        }
       }
       $('.cartodb-popup').toggleClass('dont_analyze', to);
     },

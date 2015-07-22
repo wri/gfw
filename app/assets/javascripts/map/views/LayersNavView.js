@@ -29,7 +29,8 @@ define([
       'click .wrapped-layer': '_toggleLayerWrap',
       'click .grouped-layers-trigger' : 'toggleLayersGroup',
       'click #country-layers' : '_showNotification',
-      'click #country-layers-reset' : '_resetIso'
+      'click #country-layers-reset' : '_resetIso',
+      'click #country-layers-reset-mobile' : '_resetIso'
     },
 
     initialize: function() {
@@ -337,7 +338,7 @@ define([
     },
 
     _showNotification: function(e){
-      if ($(e.currentTarget).hasClass('disabled')) {
+      if ($(e.currentTarget).hasClass('disabled') && !$(e.target).hasClass('country-layers-reset-mobile')) {
         if($(e.currentTarget).hasClass('iso-detected')){
           this.presenter.notificate('not-country-not-has-layers');
         }else{

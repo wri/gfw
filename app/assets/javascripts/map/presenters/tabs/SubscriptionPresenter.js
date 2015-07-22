@@ -64,6 +64,15 @@ define([
         this.deleteSubscription();
       }
     },{
+      'Subscription/iso': function(iso) {
+        this.openSubscriptionTab(true);
+        this.view._onClickStart();
+        this.view._stopDrawing();
+        this.deleteSubscription();
+        this.view.setStyle();
+        this._subscribeIso(iso);
+      }
+    },{
       'Subscription/analyze-wdpaid': function(wdpaid) {
         this.openSubscriptionTab(true);
         this.view._onClickStart();

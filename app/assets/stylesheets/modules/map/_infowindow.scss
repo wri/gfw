@@ -94,9 +94,6 @@
           margin: 15px 1px;
           @media (max-width: $br-mobileMap - 1){
             font-size: 12px;
-            &.subscription-concession{
-              display: none;
-            }
           }
           &.dont-analyze{
             // display: none !important;
@@ -148,7 +145,7 @@
           line-height: 1.25;
           min-height: 1px;
           clear: both;
-          padding: 0 5px 0 0;
+          padding: 8px 5px 0 0;
           &.no-float{
             width: 100%;
             float: none;
@@ -165,6 +162,7 @@
           float: left;
           line-height: 1.25;
           min-height: 1px;
+          padding: 8px 0 0;
           &.no-float{
             width: 100%;
             float: none;

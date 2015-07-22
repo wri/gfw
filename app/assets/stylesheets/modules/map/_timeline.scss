@@ -1,20 +1,30 @@
 .widget-timeline {
   .widget-box {
-    bottom: 56px;
+    bottom: 100px;
     left: 0;
     width: 100%;
-    height: 44px;
+    height: 45px;
+    border-bottom: 1px solid $border;
+    @include transform(translate(0,100%));
+    @include transition(all 0.25s $easeInOutSine);
+    &.active{
+      @include transform(translate(0,0%));
+    }
     @media (min-width: $br-mobile){
-      bottom: 0px;
-      z-index: 101;
+      bottom: 44px;
+
     }
 
     @media (min-width: $br-mobileMap){
+      z-index: 101;
       bottom: 50px;
       left: auto;
       right: 35px;
       width: auto;
       height: 50px;
+      @include transform(translate(0,0%));
+      @include transition(all,0s,$easeInOutSine);
+      border-bottom: none;
     }
 
     @media (min-width: 1300px){

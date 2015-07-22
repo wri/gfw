@@ -46,6 +46,10 @@ define([
       'Map/set-center': function(lat, lng) {
         this.view.setCenter(lat, lng);
       }
+    },{
+      'Map/autolocate' : function(){
+        this.view.autolocate();
+      }
     }, {
       'Maptype/change': function(maptype) {
         this.view.setMapTypeId(maptype);
@@ -99,6 +103,16 @@ define([
       if (!!place.params.referral) this._publishReferral(place.params.referral);
       this._updateStatusModel(place.params);
       this._setLayers(place.layerSpec.getLayers(), layerOptions);
+
+      // Very weird my friend (if if if if if if)
+      if ((!!place.params.iso && !!place.params.iso.country && place.params.iso.country == 'ALL') && ! !!place.params.wdpaid && ! !!place.params.geojson) {
+        // Init Experiment
+        // this.initExperiment('autolocate');
+        this.view.autolocate();
+      }
+
+
+
     },
 
     /**
@@ -209,9 +223,19 @@ define([
      *
      * @param {string} name of the referral
      */
-     _publishReferral: function (referral) {
+    _publishReferral: function (referral) {
       ga('send', 'event', 'Map', 'Referral', referral);
-     }
+    },
+
+    initExperiment: function(id){
+      mps.publish('Experiment/choose',[id]);
+    },
+    notificate: function(id){
+      mps.publish('Notification/open', [id]);
+    },
+
+
+
 
   });
 
