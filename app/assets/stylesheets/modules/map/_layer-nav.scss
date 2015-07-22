@@ -385,9 +385,9 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     .grouped-layers-trigger{
       em{
         display: block;
-        padding: 0 33px 0 23px;
+        padding: 0px;
         @media (min-width: $br-mobileMap){
-          padding: 0px;
+          padding: 0 33px 0 23px;
         }
       }
       .onoffradio{
