@@ -45,6 +45,18 @@ define([
           hidden: true
         });
       }
+    },{
+      'Timeline/toggle' : function(toggle){
+        this.view.toogleTimeline(toggle);
+      }
+    }, {
+      'Layers/toggle': function(toggle) {
+        this.view.toogleTimeline(false);
+      }
+    }, {
+      'Analysis/toggle': function(toggle) {
+        this.view.toogleTimeline(false);
+      }
     }],
 
     // *
@@ -70,6 +82,11 @@ define([
       mps.publish('Map/zoom-change', [zoom]);
       mps.publish('Place/update', [{go: false}]);
     },
+
+    onAutolocate: function(){
+      mps.publish('Map/autolocate');
+    },
+
     /**
      * Used by searchbox view to handle a fitbounds.
      *
@@ -81,6 +98,15 @@ define([
 
     notificate: function(id){
       mps.publish('Notification/open', [id]);
+    },
+
+    openLegend: function() {
+      mps.publish('LegendMobile/open');
+      this.view.toogleTimeline(false);
+    },
+
+    openAnalysis: function(){
+      mps.publish('Analysis/toggle');
     },
 
 

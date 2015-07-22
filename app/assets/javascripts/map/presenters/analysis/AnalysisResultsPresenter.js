@@ -90,7 +90,7 @@ define([
         this.view._deleteAnalysisView();
       }
     },{
-      'AnalysisMobile/open': function() {
+      'Analysis/toggle': function() {
         this.view.toogleAnalysis($('#analysis-tab').hasClass('is-analysis'));
       }
     },{
@@ -159,7 +159,7 @@ define([
         // Subscribe button just should be activated
         // when a analysis is succesfully rendered.
         this.view.$tab.addClass('is-analysis');
-        mps.publish('AnalysisMobile/open');
+        mps.publish('Analysis/toggle');
         this._setSubscribeButton();
       }
     },
@@ -283,16 +283,17 @@ define([
        *   - lossDateRange
        *   - lossAlerts
        *   - gainAlerts
+       *   - extent
        */
       if (layer.slug === 'loss' || layer.slug === 'forestgain') {
         p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
-        p.lossAlerts = 0;
-        p.gainAlerts = 0;
+        p.extent = p.gainAlerts = p.lossAlerts = 0;
         p.threshold  = results.params.thresh || 30;
         p.both = this.status.get('both');
         // The api returns all the loss and gain alerts.
         if (results.years) {
           p.gainAlerts = results.years[results.years.length-1].gain * 12;
+          p.extent = results.years[results.years.length-1].extent;
           var years = _.range(dateRange[1].diff(dateRange[0], 'years'));
           _.each(years, function(i) {
             var year = _.findWhere(results.years, {year: dateRange[0].year() + i});
@@ -302,6 +303,7 @@ define([
         }
         p.lossAlerts = (results.loss) ? this.roundNumber(results.loss) : this.roundNumber(p.lossAlerts);
         p.gainAlerts = (results.gain) ? this.roundNumber(results.gain) : this.roundNumber(p.gainAlerts);
+        p.extent     = (results["tree-extent"]) ? this.roundNumber(results["tree-extent"]) : this.roundNumber(p.extent);
 
       }
 

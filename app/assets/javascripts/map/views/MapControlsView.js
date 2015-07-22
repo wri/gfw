@@ -40,7 +40,8 @@ define([
       'click .share-map' : 'shareMap',
       'click .locate' : 'locateMeOnMap',
       'click .toggle-modules' : 'toggleModules',
-      'click .toggle-mapcontrols' : 'toggleControls'
+      'click .toggle-mapcontrols' : 'toggleControls',
+      'click .toggle-legend': 'toggleLegend',
     },
 
     template: Handlebars.compile(tpl),
@@ -72,8 +73,8 @@ define([
 
     setListeners: function(){
       key('f', this.showSearch);
-      key('m', this.zoomIn);
-      key('n', this.zoomOut);
+      key('=, shift+=, plus, shift+equals', this.zoomIn);
+      key('-', this.zoomOut);
       key('alt+r', this.resetMap);
       key('s', this.shareMap);
       key('h', this.toggleModules);
@@ -163,17 +164,7 @@ define([
 
     // LOCATE ON MAP
     locateMeOnMap: function(){
-      if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          _.bind(function(position) {
-            var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-            this.map.setCenter(pos);
-          }, this ),
-          _.bind(function() {
-            this.presenter.notificate('notif-enable-location');
-          }, this )
-        );
-      }
+      this.presenter.onAutolocate();
     },
 
 
@@ -188,6 +179,14 @@ define([
 
     toggleControls: function(e){
       this.$toggleButtons.children('.toggle-button').toggleClass('hidden');
+    },
+
+    toggleLegend: function(){
+      this.presenter.openLegend();
+    },
+
+    toogleTimeline: function(toggle){
+      this.$el.toggleClass('timeline-open',toggle);
     },
 
     _generateEmbedUrl: function() {
