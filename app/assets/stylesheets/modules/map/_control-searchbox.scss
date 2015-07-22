@@ -9,7 +9,7 @@
   z-index: 100;
   .search-box{
     position: absolute;
-    top: 74px;
+    top: 110px;
     left: 50%;
     z-index: 1002;
     width: calc(100% - 20px);
@@ -24,20 +24,29 @@
     .searching-kinds {
       display: block;
       position: absolute;
-      top: -19px;
-      left: 2px;
+      bottom: 100%;
+      left: 0px;
       font-size: 80%;
       color: #fff;
       font-weight: 100;
+      z-index: 2;
       .kind {
+        display: block;
         background-color: #c9c9c9;
-        padding: 3px 10px;
+        padding: 10px;
         cursor: pointer;
-        margin: -2px;
-        &:nth-child(even) {
-          border-left:  1px solid white;
-          border-right: 1px solid white;
+        float: left;
+        margin: 0 0 0 2px;
+        @media (min-width: $br-mobileMap){
+          padding: 5px 10px;
         }
+        &:first-child{
+          margin: 0;
+        }
+        // &:nth-child(even) {
+        //   border-left:  1px solid white;
+        //   border-right: 1px solid white;
+        // }
       }
       .selected {
         background-color: #fff;

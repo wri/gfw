@@ -1,3 +1,4 @@
+$letterW: 20px;
 .tab-countries{
   .countries-content{
     padding: 15px;
@@ -13,14 +14,59 @@
           margin: 0;
         }
       }
-      >ul{
-        margin: -15px;
+      .country-ul-mobile{
+        margin: 0 -15px;
         >li{
           padding: 10px 20px;
-          border-top: 1px solid $border;
+          border-bottom: 1px solid $border;
           font-size: 14px;
-          &:first-child{
-            border-top: none;
+          &:last-child{
+            border-bottom: none;
+          }
+        }
+      }
+      .letters-ul-mobile-box{
+        position: relative;
+        margin: -15px -15px 0;
+        border-bottom: 1px solid $border;
+        &:before,&:after{
+          content: "";
+          position: absolute;
+          top: 0;
+          width: 15px;
+          height: 100%;
+        }
+        &:before{
+          left: 0;
+          @include gradient(left,rgba(255,255,255,1),rgba(255,255,255,0));
+        }
+        &:after{
+          right: 0;
+          @include gradient(right,rgba(255,255,255,1),rgba(255,255,255,0));
+        }
+        .scroll-none{
+          overflow: auto;
+          padding: 15px 0 13px;
+        }
+        .letters-ul-mobile{
+          width: 27.5 * $letterW;
+          padding: 0px 15px;
+          overflow: hidden;
+          >li{
+            float: left;
+            color: $cGreen;
+            width: $letterW;
+            height: $letterW;
+            line-height: $letterW;
+            text-align: center;
+            text-transform: uppercase;
+            &.disabled{
+              color: $dark;
+              opacity: 0.75;
+            }
+            &.current{
+              font-weight: 500;
+            }
           }
         }
       }
@@ -45,6 +91,13 @@
           .alone{
             padding: 20px 0 10px;
             line-height: 1.25;
+            font-size: 14px;
+          }
+        }
+        .layers-list{
+          border-bottom: none;
+          li{
+            padding-left: 5px;
           }
         }
       }
@@ -72,6 +125,49 @@
                 content: ' \25CF';
                 font-size: 16px;
                 margin: 0 4px 0 -1px;
+              }
+            }
+          }
+        }
+      }
+      .countries-buttons{
+        @media (max-width: $br-mobileMap - 1){
+          margin: 0 -15px;
+        }
+        .button-container{
+          position: relative;
+          bottom: 0;
+          left: 0;
+          box-shadow: none;
+          @include justify-content(flex-start);
+          @media (max-width: $br-mobileMap - 1){
+            padding: 18px 0px 18px 0px;
+            margin: 0;
+            border-bottom: 1px solid $border;
+            &:first-child{
+              padding: 0 0px 12px 0px;
+            }
+          }
+
+          li{
+            @media (max-width: $br-mobileMap - 1){
+              padding: 0;
+              border-left: 1px solid $border;
+              &:first-child{
+                border-left: none;
+              }
+            }
+            .btn{
+              @media (max-width: $br-mobileMap - 1){
+                font-size: 14px;
+                color: $cGreen;
+                border: none;
+                padding: 0;
+                background: none;
+                &:hover{
+                  background-color: $white;
+                }
+
               }
             }
           }

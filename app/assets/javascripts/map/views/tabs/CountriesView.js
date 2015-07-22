@@ -45,6 +45,8 @@ define([
       'click #countries-country-ul li' : 'changeIsoMobile',
       'click #countries-country-reset' : 'changeIsoMobile',
 
+      'click #countries-letters-ul li' : 'setLetter'
+
     },
 
 
@@ -92,7 +94,9 @@ define([
       this.$countrySelect = $('#countries-country-select');
       this.$countryUl = $('#countries-country-ul');
       this.$countryReset = $('#countries-country-reset');
+      this.$countryBack = $('#country-tab-mobile-btn-back');
       this.$countryName = $('#countries-name');
+      this.$letters = $('#countries-letters-ul');
       this.inits();
     },
 
@@ -105,6 +109,7 @@ define([
           this.presenter.openTab('#countries-tab-button');
         },this), 0);
       }
+      this.$countryReset.on('click', _.bind(this.changeIsoMobile, this));
     },
 
     /**
@@ -226,10 +231,15 @@ define([
 
       if(this.mobile){
         var options = "";
+        var letters = [];
         _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
-          options += '<li data-value="'+ country.iso +'">'+ country.name + '</li>';
+          var letter = country.name.charAt(0).toUpperCase();
+          options += '<li data-value="'+ country.iso +'" data-alpha="'+ letter +'">'+ country.name + '</li>';
+          letters.push(letter);
         }, this ));
+        letters = _.uniq(letters);
         this.$countryUl.html(options);
+        this.setLettersVisibility(letters);
 
       }else{
         //Loop for print options
@@ -245,6 +255,44 @@ define([
           no_results_text: "Oops, nothing found!"
         });
       }
+    },
+
+    // Please refactor
+    setLettersVisibility: function(arr){
+      _.each(this.$letters.find('li'), _.bind(function(v){
+        var alpha = $(v).data('alpha');
+        if (arr.indexOf(alpha) == -1) {
+          $(v).addClass('disabled');
+        }
+      }, this ))
+
+    },
+
+    setLetter: function(e){
+      var current = $(e.currentTarget), filter;
+      if (!current.hasClass('disabled')) {
+        if (current.hasClass('current')) {
+          this.$letters.find('li').removeClass('current');
+          filter = null;
+        }else{
+          this.$letters.find('li').removeClass('current');
+          current.addClass('current');
+          filter = current.data('alpha');
+        }
+        this.filterByLetter(filter)
+      }
+
+    },
+
+    filterByLetter: function(filter){
+      this.$countryUl.find('li').filter(function(k,v){
+        if (!!filter) {
+          ($(v).data('alpha') == filter) ? $(v).removeClass('hidden') : $(v).addClass('hidden');
+        }else{
+          $(v).removeClass('current hidden');
+        }
+      });
+      (! !!filter) ? this.$letters.find('li').removeClass('current') : null;
     },
 
     // Select change iso
@@ -265,6 +313,9 @@ define([
       this.iso = iso.country;
       this.commonIsoChanges();
       this.$countrySelect.val(this.iso).trigger("liszt:updated");
+      if (this.mobile) {
+        this.filterByLetter(null);
+      }
     },
 
     commonIsoChanges: function(){
@@ -275,13 +326,21 @@ define([
           return country.iso === this.iso;
         }, this ));
         var name = (country) ? country.name + ' Data' : 'Country Data';
+        var shareName = (country) ? country.name : '';
         this.$countryName.text(name);
+        this.presenter.changeNameIso(shareName);
         if(!!this.iso) {
           this.$countryReset.show(0);
+          this.$countryBack.hide(0);
           this.$countryUl.addClass('hidden');
+          this.$letters.parents('.letters-ul-mobile-box').addClass('hidden');
+          this.filterByLetter(null);
         }else{
           this.$countryReset.hide(0);
+          this.$countryBack.show(0);
           this.$countryUl.removeClass('hidden');
+          this.$letters.parents('.letters-ul-mobile-box').removeClass('hidden');
+          this.filterByLetter(null);
         }
       };
       this.$countrySelect.val(this.iso).trigger("liszt:updated");

@@ -1,12 +1,3 @@
-<header class="tab-mobile-header">
-  <nav>
-    <ul>
-      <li id="share-tab-button" class="share-mobile"><svg class="icon"><use xlink:href="#icon-control-share"></use></svg></li>
-      <li id="settings-tab-button" class="tab-mobile" data-tab="settings-tab-mobile"><span>Data layers</span><svg class="icon"><use xlink:href="#icon-tab-basemap-mobile"></use></svg></li>
-    </ul>
-  </nav>
-</header>
-
 <div id="tab-spinner" class="spinner2-box"><div id="spinner2" class="spinner2"></div></div>
 
 <div id="settings-tab-mobile" class="tab-mobile-content">
@@ -15,13 +6,13 @@
       <h2>Data layers</h2>
     </header>
     <ul class="tabs-mobile-ul">
-      <li class="tab-mobile" data-tab="layers-tab-mobile"><span>Global data</span></li>
+      <li class="tab-mobile" data-tab="layers-tab-mobile"><span>Layers</span></li>
       <li id="country-tab-mobile-btn" class="tab-mobile" data-tab="country-tab-mobile"><span>Country data</span></li>
       <li class="tab-mobile" data-tab="basemaps-tab-mobile"><span>Basemaps</span></li>
     </ul>
     <footer>
-      <ul class="button-container one">
-        <li><button class="btn green uppercase close-tab-mobile">Go to map</button></li>
+      <ul class="button-container one fixed">
+        <li><button class="btn gray uppercase close-tab-mobile">Back</button></li>
       </ul>
     </footer>
   </article>
@@ -31,8 +22,11 @@
 <div id="country-tab-mobile" class="tab-mobile-content">
   <article>
     <header>
-      <ul class="button-container">
-        <li><button id="country-tab-mobile-btn-back" class="btn gray uppercase tab-mobile tab-mobile-back" data-tab="settings-tab-mobile">Back</button></li>
+      <ul class="button-container fixed">
+        <li>
+          <button id="countries-country-reset" style="display:none;" class="btn gray uppercase">Change country</button>
+          <button id="country-tab-mobile-btn-back" class="btn gray uppercase tab-mobile tab-mobile-back" data-tab="settings-tab-mobile">Back</button>
+        </li>
         <li><button class="btn green uppercase close-tab-mobile">Go to map</button></li>
       </ul>
       <h2 id="countries-name">Country Data</h2>
@@ -45,7 +39,7 @@
 <div id="layers-tab-mobile" class="tab-mobile-content">
   <article>
     <header>
-      <ul class="button-container">
+      <ul class="button-container fixed">
         <li><button class="btn gray uppercase tab-mobile tab-mobile-back" data-tab="settings-tab-mobile">Back</button></li>
         <li><button class="btn green uppercase close-tab-mobile">Go to map</button></li>
       </ul>
@@ -59,7 +53,7 @@
 <div id="basemaps-tab-mobile" class="tab-mobile-content">
   <article>
     <header>
-      <ul class="button-container">
+      <ul class="button-container fixed">
         <li><button class="btn gray uppercase tab-mobile tab-mobile-back" data-tab="settings-tab-mobile">Back</button></li>
         <li><button class="btn green uppercase close-tab-mobile">Go to map</button></li>
       </ul>

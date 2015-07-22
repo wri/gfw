@@ -90,7 +90,7 @@ define([
         this.view._deleteAnalysisView();
       }
     },{
-      'AnalysisMobile/open': function() {
+      'Analysis/toggle': function() {
         this.view.toogleAnalysis($('#analysis-tab').hasClass('is-analysis'));
       }
     },{
@@ -159,7 +159,7 @@ define([
         // Subscribe button just should be activated
         // when a analysis is succesfully rendered.
         this.view.$tab.addClass('is-analysis');
-        mps.publish('AnalysisMobile/open');
+        mps.publish('Analysis/toggle');
         this._setSubscribeButton();
       }
     },
@@ -293,6 +293,7 @@ define([
         // The api returns all the loss and gain alerts.
         if (results.years) {
           p.gainAlerts = results.years[results.years.length-1].gain * 12;
+          p.extent = results.years[results.years.length-1].extent;
           var years = _.range(dateRange[1].diff(dateRange[0], 'years'));
           _.each(years, function(i) {
             var year = _.findWhere(results.years, {year: dateRange[0].year() + i});

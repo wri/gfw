@@ -8,7 +8,7 @@
   max-height: 75%;
   overflow: auto;
   padding: 0px 0 56px;
-  z-index: 19;
+  z-index: 22;
   background: $white;
   @include transition(all 0.25s $easeInOutSine);
   @include transform(translate(0,100%));
@@ -74,6 +74,9 @@
       background: $white;
       font-family: inherit;
       text-transform: uppercase;
+      option{
+        text-transform: none;
+      }
     }
   }
 }
@@ -312,7 +315,7 @@
   background: $white;
   bottom: 0;
   left: 0;
-  z-index: 19;
+  z-index: 22;
   padding: 20px 20px 56px;
   @include transform(translate(0,100%));
   @include transition(all 0.25s $easeInOutSine);
@@ -591,7 +594,7 @@
   background: $white;
   bottom: 0;
   left: 0;
-  z-index: 19;
+  z-index: 23;
   padding: 20px 20px 56px;
   @include transform(translate(0,100%));
   @include transition(all 0.25s $easeInOutSine);
@@ -607,7 +610,7 @@
     left: 0;
     bottom: auto;
     height: 100%;
-    z-index: 21;
+    z-index: 23;
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
