@@ -27,7 +27,7 @@ define([
   'text!map/templates/legend/us_land_cover.handlebars',
   'text!map/templates/legend/global_land_cover.handlebars',
   'text!map/templates/legend/forma.handlebars',
-  'text!map/templates/legend/bra_biomes.handlebars'
+  'text!map/templates/legend/bra_biomes.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL) {
