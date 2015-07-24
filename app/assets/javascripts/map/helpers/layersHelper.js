@@ -84,6 +84,7 @@ define([
   'map/views/layers/IdnLeuserLayer',
   'map/views/layers/ProdesLayer',
   'map/views/layers/ProdesCoverLayer',
+  'map/views/layers/PerPermForestLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -177,6 +178,7 @@ define([
   IdnLeuserLayer,
   ProdesLayer,
   ProdesCoverLayer,
+  PerPermForestLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -440,6 +442,8 @@ define([
     },
     prodes_coverage: {
       view: ProdesCoverLayer
+    per_prod_for: {
+      view: PerPermForestLayer
     },
     nothing: {
     }

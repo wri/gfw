@@ -84,6 +84,7 @@ define([
       "cod_logging",
       "cog_logging",
       "logging",
+      "per_prod_for",
       //STORIES
       "infoamazonia",
       "mongabay",
