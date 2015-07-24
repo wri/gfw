@@ -504,7 +504,7 @@
     line-width: 1.5;
     line-opacity: 1;
   }
-  [layer='verified_carbon_standard'] {
+  [layer='verifed_carbon_standard'] {
     polygon-fill: #247490;
     polygon-opacity: 0.7;
     line-color: #247490;
