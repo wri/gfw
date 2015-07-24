@@ -82,6 +82,7 @@ define([
   'map/views/layers/GlobalLandCoverLayer',
   'map/views/layers/BraBiomesLayer',
   'map/views/layers/IdnLeuserLayer',
+  'map/views/layers/PerPermForestLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -172,6 +173,7 @@ define([
   GlobalLandCoverLayer,
   BraBiomesLayer,
   IdnLeuserLayer,
+  PerPermForestLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -427,6 +429,9 @@ define([
     },
     idn_leuser: {
       view: IdnLeuserLayer
+    },
+    per_prod_for: {
+      view: PerPermForestLayer
     },
     nothing: {
     }

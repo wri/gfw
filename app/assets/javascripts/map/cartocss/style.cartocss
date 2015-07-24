@@ -518,4 +518,12 @@
     line-width: 0.5;
     line-opacity: 1;
   }
+  [layer='per_permanent_production_forests'] {
+   polygon-opacity: 0.7;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 1;
+   polygon-fill: #91b290;
+  }
+
 }
