@@ -23,7 +23,7 @@ define([
 
       this.options = {
         dateRange: [moment(layer.mindate), moment(layer.maxdate)],
-        play: false
+        player: false
       };
 
       ProdesTimeline.__super__.initialize.apply(this, [layer, currentDate]);

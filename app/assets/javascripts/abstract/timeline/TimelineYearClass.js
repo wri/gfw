@@ -177,8 +177,9 @@ define([
       handleY = 14;
       ticks = this.options.dateRange[1].year() - this.options.dateRange[0].year();
 
-      if (! !!this.options.play) {
-        this.$play.hide().parent().css('padding-left', '0')
+      if (! !!this.options.player) {
+        this.$play.addClass('hidden');
+        this.$play.parent().addClass('no-play');
       }
 
       // Set xscale
