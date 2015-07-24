@@ -177,6 +177,10 @@ define([
       handleY = 14;
       ticks = this.options.dateRange[1].year() - this.options.dateRange[0].year();
 
+      if (! !!this.options.play) {
+        this.$play.hide().parent().css('padding-left', '0')
+      }
+
       // Set xscale
       this.xscale = d3.scale.linear()
           .domain([this.options.dateRange[0].year(), this.options.dateRange[1].year()])
