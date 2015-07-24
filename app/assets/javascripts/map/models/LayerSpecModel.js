@@ -99,6 +99,7 @@ define([
       "modis",
       "imazon",
       "forma",
+      "prodes",
       "loss",
       "forestgain"
     ],

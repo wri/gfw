@@ -115,6 +115,156 @@
         </div>
       </div>
     </li>
+    <li id='prodes' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>PRODES deforestation</strong>
+        <i class='expand_arrow'></i>
+        <em class='source_description'>(annual, 30m, Brazilian Amazon, INPE)</em>
+      </div>
+
+      <div class='source_body'>
+
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Deforestation monitoring system for the Brazilian Amazon used by the Brazilian government to establish public policy</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>30 × 30 meters, minimum mapping unit of 6.25 hectares</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Brazilian Amazon</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd><a href='http://landsat.usgs.gov/' target='_blank'>Landsat,</a> supplemented with CBERS, Resourcesat, and UK2-DMC</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Frequency of updates</dt>
+            <dd>Annual</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd>2000–2014</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd>
+              <p>TPRODES only identifies forest clearings of 6.25 hectares or larger, so forest degradation or smaller clearings from fire or selective logging are not detected.</p>
+
+              <p>Frequent cloud cover over areas of the Amazon may change the reported year of deforestation. The year reported is the first year deforestation is identified by analysts, but this does not necessarily correspond to the year of deforestation if the landscape has been covered by clouds in previous years.</p>
+            </dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>License</dt>
+            <dd>Creative Commons BY SA 3.0</dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>The PRODES project monitors clear cut deforestation in the Brazilian Legal Amazon, and has produced annual deforestation rates for the region since 1988. The Brazilian government uses these figures to establish public policy, including defining access to credit in the Amazon biome, establishing deforestation reduction goals, and soliciting funds to reduce deforestation. PRODES historically used Landsat 5 images, but now also incorporates imagery from Landsat 7 and 8, CBERS-2, CBERS-2B, Resourcesat-1, and UK2-DMC. PRODES is operated by the National Institute of Space Research (INPE) in collaboration with the Ministry of the Environment (MMA) and the Brazilian Institute of Environment and Renewable Natural Resources (IBAMA). Since 2002, all PRODES data is publicly available online.</p>
+
+          <p>Input images for each of the 220 Landsat footprints that cover the Brazilian Amazon are selected based on their lack of cloud cover and their capture date. The PRODES system uses the seasonal year, starting on August 1st, to calculate annual deforestation, so images are selected as near to this date as possible (generally from July, August, and September). From 2003 to 2005, analysts used image transformation to determine the components of vegetation, soil, and shadow using the program SPRING. These components were segmented and classified into the classes of forest, non-forest, deforestation in the target year, previous deforestation, clouds, and water, which are then manually corrected by experts. Starting in 2005, a new methodology was implemented which makes use of the open source TerraAmazon platform. The platform allows the PRODES analysis to be more uniform and can incorporate imagery from a variety of satellites. As before, images are selected to be as cloud free as possible. The images are then masked to exclude non-forest, previous deforestation, and water using the previous year’s analysis. Analysts then delineate deforested polygons in the intact forest of the previous year. More information on the methodology can be found on the PRODES website.</p>
+          <p>This data set shows deforestation from 1997-2000, and annual deforestation between 2000 and 2014.</p>
+          
+
+          <p class='credits'><strong>National Institute of Space Research (INPE). “PRODES.” 2014.</p>
+
+          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "http://data.globalforestwatch.org", :class => 'download-mobile-link' %></em></p>
+        </div>
+      </div>
+    </li>
+    <li id='prodes_source' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>PRODES geographic coverage</strong>
+      </div>
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Displays the geographic coverage of PRODES deforestation.</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>Regional</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>This layer displays the geographic coverage of PRODES monitoring, which only covers the Brazilian Amazon.</dd>
+          </dl>
+        </div>
+      </div>
+    </li>
+    <li id='forestgain' class='source-item '>
+      <div class='source_header'>
+        <strong class='source_title'>University of Maryland/Google tree cover gain</strong>
+        <i class='expand_arrow'></i>
+        <em class='source_description'>(12 years, 30m, global)</em>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_download'>
+          <a href='http://www.earthenginepartners.appspot.com/science-2013-global-forest/download.html' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
+        </div>
+
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Identifies areas of tree cover gain</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>30 × 30 meters</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Global land area (excluding Antarctica and other Arctic islands)</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd><a href='http://landsat.usgs.gov/' target='_blank'>Landsat 7 ETM+</a></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Frequency of updates</dt>
+            <dd>Every three years</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd>2001–2012</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Tree cover canopy density</dt>
+            <dd>>50%</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Cautions</dt>
+            <dd>
+              <p>For the purpose of this study, “tree cover” was defined as all vegetation taller than 5 meters in height. “Tree cover” is the biophysical presence of trees and may take the form of natural forests or plantations existing over a range of canopy densities. “Loss” indicates the removal or mortality of tree canopy cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
+
+              <p>When zoomed out (< zoom level 13), pixels of gain are shaded according to the density of gain at the 30 x 30 meter scale. Pixels with darker shading represent areas with a higher concentration of tree cover gain, whereas pixels with lighter shading indicate a lower concentration of tree cover gain. There is no variation in pixel shading when the data is at full resolution (≥ zoom level 13).</p>
+            </dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>This data set measures areas of tree cover gain across all global land (except Antarctica and other Arctic islands) at 30 × 30 meter resolution, displayed as a 12-year cumulative layer. The data were generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a> sensor. Over 600,000 Landsat 7 images were compiled and analyzed using Google Earth Engine, a cloud platform for earth observation and data analysis. The clear land surface observations (30 × 30 meter pixels) in the satellite images were assembled and a supervised learning algorithm was then applied to identify per pixel tree cover gain.</p>
+
+
+
+          <p>Tree cover gain was defined as the establishment of tree canopy at the Landsat pixel scale in an area that previously had no tree cover. Tree cover gain may indicate a number of potential activities, including natural forest growth or the crop rotation cycle of tree plantations. </p>
+
+          <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Science 342 (15 November): 850–53. Data available on-line from: <a href='http://earthenginepartners.appspot.com/science-2013-global-forest' target='_blank'>http://earthenginepartners.appspot.com/science-2013-global-forest</a>.</p>
+
+          <p class='credits'><strong>Suggested citations for data as displayed on GFW:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain Area.” University of Maryland, Google, USGS, and NASA. Accessed through Global Forest Watch on  [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
+
+          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "http://data.globalforestwatch.org/datasets/6c9f379a362e4926ad24b58444f4ba67", :class => 'download-mobile-link' %></em></p>
+        </div>
+      </div>
+    </li>
     <li id='loss' class='source-item'>
       <div class='source_header'>
         <strong class='source_title'>University of Maryland/Google tree cover loss</strong>
@@ -198,75 +348,6 @@
         </div>
       </div>
     </li>
-
-    <li id='forestgain' class='source-item '>
-      <div class='source_header'>
-        <strong class='source_title'>University of Maryland/Google tree cover gain</strong>
-        <i class='expand_arrow'></i>
-        <em class='source_description'>(12 years, 30m, global)</em>
-      </div>
-
-      <div class='source_body'>
-        <div class='source_download'>
-          <a href='http://www.earthenginepartners.appspot.com/science-2013-global-forest/download.html' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
-        </div>
-
-        <div class='source_table'>
-          <dl class='sources_row'>
-            <dt>Function</dt>
-            <dd>Identifies areas of tree cover gain</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>RESOLUTION / SCALE</dt>
-            <dd>30 × 30 meters</dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>Geographic coverage</dt>
-            <dd>Global land area (excluding Antarctica and other Arctic islands)</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>Source data</dt>
-            <dd><a href='http://landsat.usgs.gov/' target='_blank'>Landsat 7 ETM+</a></dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>Frequency of updates</dt>
-            <dd>Every three years</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>Date of content</dt>
-            <dd>2001–2012</dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>Tree cover canopy density</dt>
-            <dd>>50%</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>Cautions</dt>
-            <dd>
-              <p>For the purpose of this study, “tree cover” was defined as all vegetation taller than 5 meters in height. “Tree cover” is the biophysical presence of trees and may take the form of natural forests or plantations existing over a range of canopy densities. “Loss” indicates the removal or mortality of tree canopy cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
-
-              <p>When zoomed out (< zoom level 13), pixels of gain are shaded according to the density of gain at the 30 x 30 meter scale. Pixels with darker shading represent areas with a higher concentration of tree cover gain, whereas pixels with lighter shading indicate a lower concentration of tree cover gain. There is no variation in pixel shading when the data is at full resolution (≥ zoom level 13).</p>
-            </dd>
-          </dl>
-        </div>
-
-        <div class='source_summary'>
-          <h3 class='overview_title'>Overview</h3>
-          <p>This data set measures areas of tree cover gain across all global land (except Antarctica and other Arctic islands) at 30 × 30 meter resolution, displayed as a 12-year cumulative layer. The data were generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a> sensor. Over 600,000 Landsat 7 images were compiled and analyzed using Google Earth Engine, a cloud platform for earth observation and data analysis. The clear land surface observations (30 × 30 meter pixels) in the satellite images were assembled and a supervised learning algorithm was then applied to identify per pixel tree cover gain.</p>
-
-
-
-          <p>Tree cover gain was defined as the establishment of tree canopy at the Landsat pixel scale in an area that previously had no tree cover. Tree cover gain may indicate a number of potential activities, including natural forest growth or the crop rotation cycle of tree plantations. </p>
-
-          <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Science 342 (15 November): 850–53. Data available on-line from: <a href='http://earthenginepartners.appspot.com/science-2013-global-forest' target='_blank'>http://earthenginepartners.appspot.com/science-2013-global-forest</a>.</p>
-
-          <p class='credits'><strong>Suggested citations for data as displayed on GFW:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain Area.” University of Maryland, Google, USGS, and NASA. Accessed through Global Forest Watch on  [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
-
-          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "http://data.globalforestwatch.org/datasets/6c9f379a362e4926ad24b58444f4ba67", :class => 'download-mobile-link' %></em></p>
-        </div>
-      </div>
-    </li>
-
 
     <li id='forma' class='source-item'>
       <div class='source_header'>
