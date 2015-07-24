@@ -442,6 +442,7 @@ define([
     },
     prodes_coverage: {
       view: ProdesCoverLayer
+    },
     per_prod_for: {
       view: PerPermForestLayer
     },
