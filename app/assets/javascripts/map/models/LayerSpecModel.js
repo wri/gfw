@@ -56,6 +56,7 @@ define([
       "idn_leuser",
       // FOREST USE
       "dam_hotspots",
+      "per_prod_for",
       "concesiones_wrapper",
       "concesiones_forestalesNS",
       "concesiones_forestales",
@@ -84,7 +85,6 @@ define([
       "cod_logging",
       "cog_logging",
       "logging",
-      "per_prod_for",
       //STORIES
       "infoamazonia",
       "mongabay",
