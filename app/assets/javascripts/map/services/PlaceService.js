@@ -200,8 +200,8 @@ define([
       p.lat = p.lat.toFixed(2);
       p.lng = p.lng.toFixed(2);
       p.iso = _.compact(_.values(p.iso)).join('-') || 'ALL';
-      p.begin = p.begin ? p.begin.hour(12).utc().format('YYYY-MM-DD') : null;
-      p.end = p.end ? p.end.hour(12).utc().format('YYYY-MM-DD') : null;
+      p.begin = p.begin ? p.begin.hour(1).utc().format('YYYY-MM-DD') : null;
+      p.end = p.end ? p.end.hour(1).utc().format('YYYY-MM-DD') : null;
       p.geojson = p.geojson ? encodeURIComponent(p.geojson) : null;
       p.wdpaid = p.wdpaid ? String(p.wdpaid) : null;
       p.threshold = p.threshold ? String(p.threshold) : null;
