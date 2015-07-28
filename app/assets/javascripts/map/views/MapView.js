@@ -514,7 +514,7 @@ define([
     autolocate: function(){
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
-          if(navigator.geolocation) {
+          if(navigator.geolocation && !this.embed) {
             $('#map-control-locate .handler').addClass('spinner start');
             navigator.geolocation.getCurrentPosition(
               _.bind(function(position) {
