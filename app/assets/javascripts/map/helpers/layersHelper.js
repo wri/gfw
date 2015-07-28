@@ -82,6 +82,9 @@ define([
   'map/views/layers/GlobalLandCoverLayer',
   'map/views/layers/BraBiomesLayer',
   'map/views/layers/IdnLeuserLayer',
+  'map/views/layers/ProdesLayer',
+  'map/views/layers/ProdesCoverLayer',
+  'map/views/layers/PerPermForestLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -91,6 +94,7 @@ define([
   'map/views/timeline/ModisTimeline',
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
+  'map/views/timeline/ProdesTimeline',
 ], function(
   // Layer Views
   LossLayer,
@@ -172,6 +176,9 @@ define([
   GlobalLandCoverLayer,
   BraBiomesLayer,
   IdnLeuserLayer,
+  ProdesLayer,
+  ProdesCoverLayer,
+  PerPermForestLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -180,7 +187,8 @@ define([
   ImazonTimeline,
   ModisTimeline,
   FiresTimeline,
-  TerraiTimeline) {
+  TerraiTimeline,
+  ProdesTimeline) {
 
   'use strict';
 
@@ -427,6 +435,16 @@ define([
     },
     idn_leuser: {
       view: IdnLeuserLayer
+    },
+    prodes: {
+      view: ProdesLayer,
+      timelineView: ProdesTimeline
+    },
+    prodes_coverage: {
+      view: ProdesCoverLayer
+    },
+    per_prod_for: {
+      view: PerPermForestLayer
     },
     nothing: {
     }
