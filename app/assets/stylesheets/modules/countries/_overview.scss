@@ -797,9 +797,13 @@
   position: relative;
   background: #EEEEEE;
   width: 100%;
+  &.is-max{
+    .inner{
+      max-width: 960px;
+    }
+  }
   .inner {
     width: 100%;
-    max-width: 960px;
     overflow: hidden;
     padding: 8px;
     .countries_show & {
