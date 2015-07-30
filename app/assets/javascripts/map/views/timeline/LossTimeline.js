@@ -22,7 +22,8 @@ define([
       this.presenter = new Presenter(this);
 
       this.options = {
-        dateRange: [moment(layer.mindate), moment(layer.maxdate)]
+        dateRange: [moment(layer.mindate), moment(layer.maxdate)],
+        player: true
       };
 
       LossTimeline.__super__.initialize.apply(this, [layer, currentDate]);
