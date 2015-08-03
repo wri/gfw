@@ -163,7 +163,8 @@ define([
             .test(window.navigator.userAgent),
           previewMaxWidth: 132,
           previewMaxHeight: 76,
-          previewCrop: true
+          previewCrop: true,
+          timeout: 3600000
       }).on('fileuploadadd', function (e, data) {
         data.context = $('<div/>').appendTo('#files');
 
