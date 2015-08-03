@@ -11,17 +11,17 @@ define([
   'use strict';
 
   var wmsUrl = 'http://gisserver.socioambiental.org:6080/arcgis/services/raisg/raisg_tis/MapServer/WMSServer?';
-    wmsUrl += 'REQUEST=GetMap&version=1.3.0';
     wmsUrl += '&SERVICE=WMS';
-    wmsUrl += '&LAYERS=3';
-    wmsUrl += '&FORMAT=image/png';
-    wmsUrl += '&TRANSPARENT=true';
-    wmsUrl += '&CRS=EPSG:4326';
+    wmsUrl += '&REQUEST=GetMap';
+    wmsUrl += '&VERSION=1.1.1';
+    wmsUrl += '&LAYERS=0';
     wmsUrl += '&STYLES=polygonSymbolizer';
-    wmsUrl += '&TILED=true';
-    wmsUrl += '&WIDTH=256';
+    wmsUrl += '&FORMAT=image%2Fpng';
+    wmsUrl += '&TRANSPARENT=true';
     wmsUrl += '&HEIGHT=256';
-    wmsUrl += '&sld=http://sampleserver1.arcgisonline.com/arcgis/wms/slds/polygon_polygonSymbolizer.xml';
+    wmsUrl += '&WIDTH=256';
+    wmsUrl += '&SLD=http://localhost:5000/assets/map/cartocss/polygon_polygonSymbolizer.xml';
+    wmsUrl += '&SRS=EPSG%3A3857';
 
   var RaisgLayer = WMSLayerClass.extend({
 
