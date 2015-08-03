@@ -73,6 +73,7 @@ define([
   var WMSLayerClass = OverlayLayerClass.extend({
 
     init: function(layer, options, map) {
+      this.url = this.options.url;
       this.tiles = layer.tileurl;
       this._super(layer, options, map);
       this._setImageMapType(layer);
@@ -86,7 +87,7 @@ define([
 
     _setImageMapType: function(layer) {
       this._imageMaptype = new google.maps.ImageMapType({
-        getTileUrl: this._getTileUrl,
+        getTileUrl: _.bind(this._getTileUrl,this),
         tileSize: this.tileSize,
         name: this.name,
         url: this.tiles
@@ -109,9 +110,8 @@ define([
       if (lLR_Longitude < lUL_Longitude) {
         lLR_Longitude = Math.abs(lLR_Longitude);
       }
-
       var url = this.url;
-      url += "&bbox=" + lUL_Longitude + "," + lUL_Latitude + "," + lLR_Longitude + "," + lLR_Latitude; // set bounding box
+      url += "&BBOX=" + lUL_Longitude + "," + lUL_Latitude + "," + lLR_Longitude + "," + lLR_Latitude; // set bounding box
       return url;
     }
 

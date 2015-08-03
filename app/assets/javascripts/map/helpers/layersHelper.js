@@ -85,6 +85,7 @@ define([
   'map/views/layers/ProdesLayer',
   'map/views/layers/ProdesCoverLayer',
   'map/views/layers/PerPermForestLayer',
+  'map/views/layers/RaisgLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -179,6 +180,7 @@ define([
   ProdesLayer,
   ProdesCoverLayer,
   PerPermForestLayer,
+  RaisgLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -445,6 +447,9 @@ define([
     },
     per_prod_for: {
       view: PerPermForestLayer
+    },
+    raisg: {
+      view: RaisgLayer
     },
     nothing: {
     }
