@@ -172,7 +172,7 @@ define([
         _.each(data.files, function(file) {
           if (file && file.size > 4000000) {
             mps.publish('Notification/open', ['notif-limit-exceed']);
-            data.abort();
+            return;
           } else {
             var filename = that.prettifyFilename(file.name);
             var $thumbnail = $("<li class='thumbnail preview' data-name='"+filename+"' ><div class='filename'>"+ file.name +"</div><div class='spinner'><svg><use xlink:href='#shape-spinner'></use></svg></div></li>");
