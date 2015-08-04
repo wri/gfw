@@ -155,7 +155,7 @@ define([
           dataType: 'json',
           autoUpload: true,
           acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-          maxFileSize: 8000000, // 8 MB
+          maxFileSize: 4000000, // 4 MB
           // Enable image resizing, except for Android and Opera,
           // which actually support image resizing, but fail to
           // send Blob objects via XHR requests:
@@ -171,7 +171,7 @@ define([
         that.filesAdded += _.size(data.files);
 
         _.each(data.files, function(file) {
-          if (file && file.size > 8000000) {
+          if (file && file.size > 4000000) {
             data.abort();
           }else{
             var filename = that.prettifyFilename(file.name);
