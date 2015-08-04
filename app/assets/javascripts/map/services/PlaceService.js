@@ -48,10 +48,9 @@ define([
   'underscore',
   'mps',
   'uri',
-  'moment',
   'map/presenters/PresenterClass',
   'map/services/LayerSpecService'
-], function (_, mps, UriTemplate, moment, PresenterClass, layerSpecService) {
+], function (_, mps, UriTemplate, PresenterClass, layerSpecService) {
 
   'use strict';
 
@@ -173,8 +172,8 @@ define([
       p.lat = _.toNumber(p.lat);
       p.lng = _.toNumber(p.lng);
       p.iso = _.object(['country', 'region'], p.iso.split('-'));
-      p.begin = p.begin ? moment(p.begin) : null;
-      p.end = p.end ? moment(p.end) : null;
+      p.begin = p.begin ? p.begin.format('YYYY-MM-DD') : null;
+      p.end = p.end ? p.end.format('YYYY-MM-DD') : null;
       p.geojson = p.geojson ? JSON.parse(decodeURIComponent(p.geojson)) : null;
       p.wdpaid = p.wdpaid ? _.toNumber(p.wdpaid) : null;
       p.threshold = p.threshold ? _.toNumber(p.threshold) : null;
@@ -200,8 +199,8 @@ define([
       p.lat = p.lat.toFixed(2);
       p.lng = p.lng.toFixed(2);
       p.iso = _.compact(_.values(p.iso)).join('-') || 'ALL';
-      p.begin = p.begin ? p.begin.hour(1).utc().format('YYYY-MM-DD') : null;
-      p.end = p.end ? p.end.hour(1).utc().format('YYYY-MM-DD') : null;
+      p.begin = p.begin ? p.begin.format('YYYY-MM-DD') : null;
+      p.end = p.end ? p.end.format('YYYY-MM-DD') : null;
       p.geojson = p.geojson ? encodeURIComponent(p.geojson) : null;
       p.wdpaid = p.wdpaid ? String(p.wdpaid) : null;
       p.threshold = p.threshold ? String(p.threshold) : null;
