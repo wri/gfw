@@ -169,18 +169,20 @@ define([
         data.context = $('<div/>').appendTo('#files');
 
         that.filesAdded += _.size(data.files);
-
         _.each(data.files, function(file) {
           if (file && file.size > 4000000) {
+            mps.publish('Notification/open', ['notif-limit-exceed']);
             data.abort();
-          }else{
+          } else {
             var filename = that.prettifyFilename(file.name);
             var $thumbnail = $("<li class='thumbnail preview' data-name='"+filename+"' ><div class='filename'>"+ file.name +"</div><div class='spinner'><svg><use xlink:href='#shape-spinner'></use></svg></div></li>");
             $('.thumbnails').append($thumbnail);
             $thumbnail.fadeIn(250);
-            $("form input[type='submit']").addClass('disabled');
-            $("form input[type='submit']").attr('disabled', 'disabled');
-            $("form input[type='submit']").val('Please wait...');
+
+            var $submitButton = $("form input[type='submit']");
+            $submitButton.addClass('disabled');
+            $submitButton.attr('disabled', 'disabled');
+            $submitButton.val('Please wait...');
           }
         });
 
@@ -221,15 +223,20 @@ define([
         });
 
         if (that.filesAdded <= 0) {
-          $("form input[type='submit']").val('Submit story');
-          $("form input[type='submit']").removeClass('disabled');
-          $("form input[type='submit']").attr('disabled', false);
+          var $submitButton = $("form input[type='submit']");
+          $submitButton.val('Submit story');
+          $submitButton.removeClass('disabled');
+          $submitButton.attr('disabled', false);
         }
 
         $('#story_uploads_ids').val(that.uploadsIds.join(','));
         ga('send', 'event', 'Stories', 'New story', 'submit');
       }).on('fileuploadfail', function (e, data){
-        mps.publish('Notification/open', ['notif-limit-exceed']);
+        mps.publish('Notification/open', ['upload-error-server']);
+        var $submitButton = $("form input[type='submit']");
+        $submitButton.val('Submit story');
+        $submitButton.removeClass('disabled');
+        $submitButton.attr('disabled', false);
       });
     },
 
