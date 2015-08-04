@@ -63,10 +63,10 @@ define([
       // Max date range
       this.drMax = this.options.dateRange;
       // Date range
-      this.dr = [moment([this.drMax[0].year()]), moment([this.drMax[1].year() + 1])];
+      this.dr = [moment([moment(this.drMax[0]).year()]), moment([moment(this.drMax[1]).year() + 1])];
 
       // Number months to display
-      this.monthsCount = Math.floor(this.dr[1].diff(this.dr[0],
+      this.monthsCount = Math.floor(moment(this.dr[1]).diff(moment(this.dr[0]),
         'months', true));
 
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
@@ -445,7 +445,7 @@ define([
     },
 
     _dateToDomain: function(d) {
-      return Math.floor(d.diff(this.dr[0],
+      return Math.floor(moment(d).diff(moment(this.dr[0]),
         'months', true));
     },
 
