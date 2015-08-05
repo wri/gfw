@@ -21,11 +21,7 @@ define([
     },
 
     init: function(layer, options, map) {
-<<<<<<< HEAD
-      this.options.cartocss = FormaCartoCSS.replace(/#date_to_change/g,moment(layer.maxdate).subtract(1, 'months').utc().format('YYYYMMDD'));
-=======
       this.options.cartocss = FormaCartoCSS.replace(/#date_to_change/g,moment(layer.maxdate).subtract(2, 'months').utc().format('YYYYMMDD'));
->>>>>>> 7c3889feaa05389c723c75b2d75e2886d3569bf4
       this.presenter = new Presenter(this);
       this.currentDate = options.currentDate || [(layer.mindate), (layer.maxdate)];
       this._super(layer, options, map);

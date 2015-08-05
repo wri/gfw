@@ -511,7 +511,6 @@ define([
       this.$overlayMobile.toggleClass('active', bool);
     },
 
-<<<<<<< HEAD
     autolocate: function(){
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
@@ -532,8 +531,7 @@ define([
           }
         },this)
       });
-=======
->>>>>>> 7c3889feaa05389c723c75b2d75e2886d3569bf4
+    },
 
     // Autolocate
     autolocateQuestion: function() {
