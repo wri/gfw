@@ -511,28 +511,6 @@ define([
       this.$overlayMobile.toggleClass('active', bool);
     },
 
-    autolocate: function(){
-      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
-        match: _.bind(function(){
-          if(navigator.geolocation && !this.embed) {
-            $('#map-control-locate .handler').addClass('spinner start');
-            navigator.geolocation.getCurrentPosition(
-              _.bind(function(position) {
-                var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-                this.map.setCenter(pos);
-                this.map.setZoom(16);
-                $('#map-control-locate .handler').removeClass('spinner start');
-              }, this ),
-              _.bind(function() {
-                this.presenter.notificate('notif-enable-location');
-                $('#map-control-locate .handler').removeClass('spinner start');
-              }, this )
-            );
-          }
-        },this)
-      });
-    },
-
     // Autolocate
     autolocateQuestion: function() {
       if (isMobile.any && !this.embed) {
