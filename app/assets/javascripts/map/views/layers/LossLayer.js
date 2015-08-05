@@ -41,6 +41,10 @@ define([
     filterCanvasImgdata: function(imgdata, w, h, z) {
       var components = 4;
       var exp = z < 11 ? 0.3 + ((z - 3) / 20) : 1;
+      if (! !!this.currentDate[0]._d) {
+        this.currentDate[0] = moment(this.currentDate[0]);
+        this.currentDate[1] = moment(this.currentDate[1]);
+      }
       var yearStart = this.currentDate[0].year();
       var yearEnd = this.currentDate[1].year();
 
