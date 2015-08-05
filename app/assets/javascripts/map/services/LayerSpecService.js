@@ -163,11 +163,11 @@ define([
      */
     _standardizeAttrs: function(layer) {
       if (layer.mindate) {
-        layer.mindate = moment(layer.mindate);
+        layer.mindate = layer.mindate;
       }
 
       if (layer.maxdate) {
-        layer.maxdate = moment(layer.maxdate);
+        layer.maxdate = layer.maxdate;
       }
 
       return layer;

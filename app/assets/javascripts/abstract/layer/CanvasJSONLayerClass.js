@@ -24,7 +24,7 @@ define([
     init: function(layer, options, map) {
       this.tiles = {};
       this.layer = layer;
-      this.top_date = (((this.layer.maxdate.year() - this.layer.mindate.year()) * 12) + this.layer.maxdate.month()) - 2;
+      this.top_date = (((moment(this.layer.maxdate).year()  - moment(this.layer.mindate).year()) * 12) + moment(this.layer.maxdate).month()) - 2;
       this._super(layer, options, map);
       this.getDates();
       this.cartoSQL = new cartodb.SQL({
@@ -223,8 +223,8 @@ define([
     },
 
     getDates: function() {
-      this.startMonth = Math.abs(this.layer.mindate.diff(this.currentDate[0], 'months'));
-      this.endMonth = Math.abs(this.layer.mindate.diff(this.currentDate[1], 'months'));
+      this.startMonth = Math.abs(moment(this.layer.mindate).diff(this.currentDate[0], 'months'));
+      this.endMonth = Math.abs(moment(this.layer.mindate).diff(this.currentDate[1], 'months'));
     }
 
   });
