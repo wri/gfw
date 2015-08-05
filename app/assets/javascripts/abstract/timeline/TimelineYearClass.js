@@ -193,7 +193,10 @@ define([
           .range([0, width - yearWidth])
           .clamp(true);
 
-
+      if (! !!this.currentDate[0]._d) {
+        this.currentDate[0] = moment(this.currentDate[0]);
+        this.currentDate[1] = moment(this.currentDate[1]);
+      }
       this.ext.left = this.xscale(this.currentDate[0].year());
       this.ext.right = this.xscale(this.currentDate[1].year());
 
