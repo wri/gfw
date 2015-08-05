@@ -63,7 +63,7 @@ define([
       // Max date range
       this.drMax = this.options.dateRange;
       // Date range
-      this.dr = [moment([moment(this.drMax[0]).year()]), moment([moment(this.drMax[1]).year() + 1])];
+      this.dr = [[moment(this.drMax[0]).year()], [moment(this.drMax[1]).year() + 1]];
 
       // Number months to display
       this.monthsCount = Math.floor(moment(this.dr[1]).diff(moment(this.dr[0]),
@@ -186,7 +186,7 @@ define([
 
 
     prepareDate: function(month, year){
-      return moment([year, month]);
+      return [year, month];
     },
 
 
@@ -247,7 +247,7 @@ define([
           .select('.domain').remove();
 
       this.svg.selectAll('.tick').filter(function(d) {
-        if (self._domainToDate(d).month() === 0) {
+        if (moment(self._domainToDate(d)).month() === 0) {
           d3.select(this).classed('highlight', true);
         }
       });
@@ -256,7 +256,7 @@ define([
 
       // Years xscale
       this.yearsXscale = d3.time.scale()
-          .domain([this.dr[0].toDate(), this.dr[1].toDate()])
+          .domain([moment(this.dr[0]).toDate(), moment(this.dr[1]).toDate()])
           .range([0, width]);
 
       // Years xaxis
@@ -382,7 +382,7 @@ define([
         if (this.ext.left > x) {return;}
         this.domain.attr('x1', this.ext.left);
         // Set to max handler position when moving mouse fast to the right.
-        if (date.isAfter(this.drMax[1])) {
+        if (date.isAfter(moment(this.drMax[1]))) {
           rounded = this._dateToDomain(this.drMax[1]);
         }
         this.ext.right = this.xscale(rounded);
@@ -415,7 +415,7 @@ define([
 
       this._showTipsy();
       this.tooltip
-        .text(date.format('MMM') + ' - ' + date.format('D'))
+        .text(moment(date).format('MMM') + ' - ' + moment(date).format('D'))
         .style('left', '{0}px'.format(x));
 
       this.trail
@@ -439,13 +439,13 @@ define([
     },
 
     _domainToDate: function(d) {
-      var year = Math.floor(d/12) + this.dr[0].year();
+      var year = Math.floor(d/12) + moment(this.dr[0]).year();
       var month = (d >= 12) ? d - (Math.floor(d/12) * 12) : d;
       return moment([year, month]);
     },
 
     _dateToDomain: function(d) {
-      return Math.floor(moment(d).diff(moment(this.dr[0]),
+      return Math.floor(moment(d).utc().hour(12).diff(moment(this.dr[0]),
         'months', true));
     },
 
