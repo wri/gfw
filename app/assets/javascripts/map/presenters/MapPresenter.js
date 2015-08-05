@@ -84,6 +84,10 @@ define([
       'Overlay/toggle': function(bool) {
         this.view.overlayToggle(bool);
       }
+    }, {
+      'Confirm/autolocate': function(bool) {
+        this.view.autolocateResponse(bool);
+      }
     }],
 
     /**
@@ -106,9 +110,7 @@ define([
 
       // Very weird my friend (if if if if if if)
       if ((!!place.params.iso && !!place.params.iso.country && place.params.iso.country == 'ALL') && ! !!place.params.wdpaid && ! !!place.params.geojson) {
-        // Init Experiment
-        // this.initExperiment('autolocate');
-        this.view.autolocate();
+        this.view.autolocateQuestion();
       }
 
 
