@@ -177,6 +177,11 @@ define([
       handleY = 14;
       ticks = this.options.dateRange[1].year() - this.options.dateRange[0].year();
 
+      if (! !!this.options.player) {
+        this.$play.addClass('hidden');
+        this.$play.parent().addClass('no-play');
+      }
+
       // Set xscale
       this.xscale = d3.scale.linear()
           .domain([this.options.dateRange[0].year(), this.options.dateRange[1].year()])

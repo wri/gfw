@@ -41,6 +41,13 @@
     polygon-clip: false;
   }
 
+[layer='prodes_extent'] {
+    polygon-fill: #f69;
+    polygon-opacity: 0.3;
+    line-width: 1;
+    line-color: #FFF;
+    line-opacity: 0;
+  }
 //deprecated
   [layer='logging'] {
     polygon-fill: #fecc5c;
@@ -497,7 +504,7 @@
     line-width: 1.5;
     line-opacity: 1;
   }
-  [layer='verified_carbon_standard'] {
+  [layer='verifed_carbon_standard'] {
     polygon-fill: #247490;
     polygon-opacity: 0.7;
     line-color: #247490;
@@ -518,4 +525,12 @@
     line-width: 0.5;
     line-opacity: 1;
   }
+  [layer='per_permanent_production_forests'] {
+   polygon-opacity: 0.7;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 1;
+   polygon-fill: #91b290;
+  }
+
 }

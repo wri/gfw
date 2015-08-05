@@ -155,7 +155,7 @@ define([
           dataType: 'json',
           autoUpload: true,
           acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-          maxFileSize: 8000000, // 8 MB
+          maxFileSize: 4000000, // 4 MB
           // Enable image resizing, except for Android and Opera,
           // which actually support image resizing, but fail to
           // send Blob objects via XHR requests:
@@ -163,23 +163,26 @@ define([
             .test(window.navigator.userAgent),
           previewMaxWidth: 132,
           previewMaxHeight: 76,
-          previewCrop: true
+          previewCrop: true,
+          timeout: 3600000
       }).on('fileuploadadd', function (e, data) {
         data.context = $('<div/>').appendTo('#files');
 
         that.filesAdded += _.size(data.files);
-
         _.each(data.files, function(file) {
-          if (file && file.size > 8000000) {
-            data.abort();
-          }else{
+          if (file && file.size > 4000000) {
+            mps.publish('Notification/open', ['notif-limit-exceed']);
+            return;
+          } else {
             var filename = that.prettifyFilename(file.name);
             var $thumbnail = $("<li class='thumbnail preview' data-name='"+filename+"' ><div class='filename'>"+ file.name +"</div><div class='spinner'><svg><use xlink:href='#shape-spinner'></use></svg></div></li>");
             $('.thumbnails').append($thumbnail);
             $thumbnail.fadeIn(250);
-            $("form input[type='submit']").addClass('disabled');
-            $("form input[type='submit']").attr('disabled', 'disabled');
-            $("form input[type='submit']").val('Please wait...');
+
+            var $submitButton = $("form input[type='submit']");
+            $submitButton.addClass('disabled');
+            $submitButton.attr('disabled', 'disabled');
+            $submitButton.val('Please wait...');
           }
         });
 
@@ -220,15 +223,20 @@ define([
         });
 
         if (that.filesAdded <= 0) {
-          $("form input[type='submit']").val('Submit story');
-          $("form input[type='submit']").removeClass('disabled');
-          $("form input[type='submit']").attr('disabled', false);
+          var $submitButton = $("form input[type='submit']");
+          $submitButton.val('Submit story');
+          $submitButton.removeClass('disabled');
+          $submitButton.attr('disabled', false);
         }
 
         $('#story_uploads_ids').val(that.uploadsIds.join(','));
         ga('send', 'event', 'Stories', 'New story', 'submit');
       }).on('fileuploadfail', function (e, data){
-        mps.publish('Notification/open', ['notif-limit-exceed']);
+        mps.publish('Notification/open', ['upload-error-server']);
+        var $submitButton = $("form input[type='submit']");
+        $submitButton.val('Submit story');
+        $submitButton.removeClass('disabled');
+        $submitButton.attr('disabled', false);
       });
     },
 

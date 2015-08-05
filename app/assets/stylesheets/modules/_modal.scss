@@ -165,12 +165,17 @@ $height: auto;
           margin-bottom: 0;
         }
 
-        sup {
-          position: relative;
-          top: -3px;
-          font-size: 80%;
-        }
       }
+    }
+    sup {
+      position: relative;
+      top: -3px;
+      font-size: 80%;
+    }
+    sub {
+      position: relative;
+      top: 2px;
+      font-size: 80%;
     }
     em {
       font-style: italic;

@@ -511,6 +511,7 @@ define([
       this.$overlayMobile.toggleClass('active', bool);
     },
 
+<<<<<<< HEAD
     autolocate: function(){
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
@@ -531,10 +532,40 @@ define([
           }
         },this)
       });
+=======
+>>>>>>> 7c3889feaa05389c723c75b2d75e2886d3569bf4
 
+    // Autolocate
+    autolocateQuestion: function() {
+      if (isMobile.any && !this.embed) {
+        mps.publish('Confirm/ask', ['default', 'autolocate']);
+      }
+    },
+
+    autolocateResponse: function(response) {
+      if (response) {
+        this.autolocate();
+      }
+    },
+
+    autolocate: function(){
+      // window.gfw.config.GFW_MOBILE
+      if(navigator.geolocation) {
+        $('#map-control-locate .handler').addClass('spinner start');
+        navigator.geolocation.getCurrentPosition(
+          _.bind(function(position) {
+            var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+            this.map.setCenter(pos);
+            this.map.setZoom(16);
+            $('#map-control-locate .handler').removeClass('spinner start');
+          }, this ),
+          _.bind(function() {
+            this.presenter.notificate('notif-enable-location');
+            $('#map-control-locate .handler').removeClass('spinner start');
+          }, this )
+        );
+      }
     }
-
-
   });
 
   return MapView;
