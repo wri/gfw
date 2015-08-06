@@ -528,17 +528,18 @@ define([
     autolocate: function(){
       // window.gfw.config.GFW_MOBILE
       if(navigator.geolocation) {
-        $('#map-control-locate').find('.handler').addClass('spinner start');
+        var $locate_handle = $('#map-control-locate').find('.handler');
+        $locate_handle.addClass('spinner start');
         navigator.geolocation.getCurrentPosition(
           _.bind(function(position) {
             var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
             this.map.setCenter(pos);
             this.map.setZoom(16);
-            $('#map-control-locate').find('.handler').removeClass('spinner start');
+            $locate_handle.removeClass('spinner start');
           }, this ),
           _.bind(function() {
             this.presenter.notificate('notif-enable-location');
-            $('#map-control-locate').find('.handler').removeClass('spinner start');
+            $locate_handle.removeClass('spinner start');
           }, this )
         );
       }
