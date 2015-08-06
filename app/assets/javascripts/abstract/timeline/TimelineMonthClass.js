@@ -109,9 +109,15 @@ define([
       this.fillSelects();
     },
 
-    fillSelects: function(){
+    fillSelects: function() {
+      if (! !!this.dateRangeStart._d) {
+        this.dateRangeStart = moment(this.dateRangeStart);
+        this.dateRangeEnd   = moment(this.dateRangeEnd);
+        this.currentDate[0] = moment(this.currentDate[0]);
+        this.currentDate[1] = moment(this.currentDate[1]);
+      }
       var start = this.dateRangeStart.year(),
-          end = this.dateRangeEnd.year(),
+          end   = this.dateRangeEnd.year(),
           range = end - start + 1,
           options = '';
       for (var i = 0; i < range; i++) {
@@ -178,8 +184,8 @@ define([
       }, this ));
 
 
-      var start = this.prepareDate(this.$fromMonth[0].selectedIndex ,this.$from.val());
-      var end = this.prepareDate(this.$toMonth[0].selectedIndex ,this.$to.val());
+      var start = moment(this.prepareDate(this.$fromMonth[0].selectedIndex ,this.$from.val()));
+      var end   = moment(this.prepareDate(this.$toMonth[0].selectedIndex ,this.$to.val()));
 
       this._updateCurrentDate([start, end]);
     },
