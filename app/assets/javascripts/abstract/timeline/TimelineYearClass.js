@@ -117,6 +117,10 @@ define([
       for (var i = 0; i < range; i++) {
         options += '<option value="'+(start + i)+'">'+ (start + i) +'</option>';
       }
+      if (! !!this.currentDate[0]._d) {
+        this.currentDate[0] = moment(this.currentDate[0]);
+        this.currentDate[1] = moment(this.currentDate[1]);
+      }
       this.$from.html(options).val(this.currentDate[0].year());
       this.$to.html(options).val(this.currentDate[1].year() - 1);
       this.setSelects();
