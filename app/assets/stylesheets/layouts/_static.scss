@@ -882,15 +882,31 @@
 .apps_types {
   background-color: #F5F5F5;
   position: relative;
-  top: 16px;
-  .inner {  
+  top: 50px;
+  height: 52px;
+  box-sizing: border-box;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  .inner {
     @include display-flex();
     @include row(flex-start);
     @include flex-direction(flex-start);
     @include justify-content(space-around);
     @include flex-wrap(wrap);
+    @include align-items(center);
+    height: 100%;
     @media (min-width: $br-mobile) {
       @include flex-direction(row);
+    }
+  }
+  span {
+    font-size: 14px;
+    color: #666;
+    box-sizing: border-box;
+    padding: 18px 10px;
+    cursor: pointer;
+    &:hover {
+      color: #444;
     }
   }
 }
@@ -900,6 +916,9 @@
     .source-article{
       padding: 0 20px;
     }
+  }
+  &#applications {
+    padding-top: 50px;
   }
   h2 {
     font-size: 35px;
