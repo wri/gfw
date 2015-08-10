@@ -1,7 +1,7 @@
 /**
- * The Imazon layer presenter.
+ * The Prodes layer presenter.
  *
- * @return ImazonLayerPresenter class
+ * @return ProdesLayerPresenter class
  */
 define([
   'underscore',

@@ -62,7 +62,7 @@ define([
      * @param {Array} currentDate [moment, moment]
      */
     setCurrentDate: function(currentDate) {
-      var hoursDiff = currentDate[1].diff(currentDate[0], 'hours');
+      var hoursDiff = moment(currentDate[1]).diff(currentDate[0], 'hours');
       var dataItem = _.findWhere(data, {hoursDiff: hoursDiff});
       currentDate = [dataItem.start, dataItem.end];
       return currentDate;
