@@ -6,7 +6,7 @@
 
     <li id='canopy' class='source-item first'>
       <div class='source_header'>
-        <strong class='source_title'>Threshold Settings Info Window</strong>
+        <strong class='source_title'>Tree Cover Canopy Density Threshold Settings</strong>
         <i class='expand_arrow'></i>
       </div>
 
@@ -15,8 +15,8 @@
         </div>
 
         <div class='source_table'>
-          <p>Drag the handle to adjust the minimum tree cover canopy (TCC) density for the visualization and analysis of UMD tree cover and tree cover loss. TCC density represents the estimated percent of a UMD pixel that was covered by tree canopy in the year 2000, as determined from the analysis of satellite imagery. For the tree cover loss data, TCC density therefore corresponds to the density of tree cover <u>before</u> loss occurred. For example, if you select 25% as the minimum TCC density, you will only see tree cover loss pixels for which the original tree cover density was greater than 25%.</p>
-          <p>Adjustments to the minimum TCC density only affect UMD tree cover and tree cover loss data layers. This feature does not pertain to UMD tree cover gain or to other GFW data layers or statistics. UMD tree cover gain is displayed with a set minimum TCC density greater than 50%. The minimum TCC density cannot be changed independently for tree cover and tree cover loss. A change made to one data layer will immediately take effect in the other.</p>
+          <p>Drag the handle to adjust the minimum tree cover canopy (TCC) density for the visualization and analysis of Hansen/UMD/Google/USGS/NASA tree cover and tree cover loss. TCC density represents the estimated percent of a pixel that was covered by tree canopy in the year 2000, as determined from the analysis of satellite imagery. For the tree cover loss data, TCC density therefore corresponds to the density of tree cover <u>before</u> loss occurred. For example, if you select 25% as the minimum TCC density, you will only see tree cover loss pixels for which the original tree cover density was greater than 25%.</p>
+          <p>Adjustments to the minimum TCC density only affect Hansen/UMD/Google/USGS/NASA tree cover and tree cover loss data layers. This feature does not pertain to Hansen/UMD/Google/USGS/NASA tree cover gain or to other GFW data layers or statistics. Hansen/UMD/Google/USGS/NASA tree cover gain is displayed with a set minimum TCC density greater than 50%. The minimum TCC density cannot be changed independently for tree cover and tree cover loss. A change made to one data layer will immediately take effect in the other.</p>
           <p>This feature is also available for statistics within the country profiles and rankings. However, the adjustment made to the visualization and analysis through the map view will not be automatically reflected in other areas of the website. To adjust the minimum TCC density within the country and country rankings pages, click on the settings icon.</p>
         </div>
       </div>
@@ -34,9 +34,9 @@
     </li>
     <li id='umd_tree_loss_gain' class='source-item first'>
       <div class='source_header'>
-        <strong class='source_title'>University of Maryland/Google tree cover loss</strong>
+        <strong class='source_title'>Tree cover loss</strong>
         <i class='expand_arrow'></i>
-        <em class='source_description'>(annual, 27.8m, global)</em>
+        <em class='source_description'>(annual, 30m, global, Hansen/UMD/Google/USGS/NASA)</em>
       </div>
 
       <div class='source_body'>
@@ -80,7 +80,7 @@
 
               <p>For the purpose of this study, “tree cover” was defined as all vegetation taller than 5 meters in height. “Tree cover” is the biophysical presence of trees and may take the form of natural forests or plantations existing over a range of canopy densities. “Loss” indicates the removal or mortality of tree canopy cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
               <p>When zoomed out (< zoom level 13), pixels of loss are shaded according to the density of loss at the 30 x 30 meter scale. Pixels with darker shading represent areas with a higher concentration of tree cover loss, whereas pixels with lighter shading indicate a lower concentration of tree cover loss. There is no variation in pixel shading when the data is at full resolution (≥ zoom level 13).</p>
-              <p>A validation assessment of the 2000 – 2012 UMD change data was carried out independently from the mapping exercise at the global and biome (tropical, subtropical, temperate, and boreal) scale. A stratified random sample (for no change, loss, and gain) of 1500 blocks, each 120 × 120 meters, was used as validation data.  The amount of tree cover loss within each block was estimated using Landsat, MODIS, and Google Earth high-resolution imagery and compared to the map. Overall accuracies for loss were over 99% globally and for all biomes. However, since the overall accuracy calculations are positively skewed due to the high percentage of no change pixels, it is also important to assess the accuracy of the change predictions. The user’s accuracy (i.e. the percentage of pixels labelled as tree cover loss that actually lost tree cover) was 87.0% at the global level. At the biome level, user’s accuracies were 87.0%, 79.3%, 88.2%, and 88.0% for the tropical, subtropical, temperate, and boreal biomes, respectively. A separate test was conducted to determine the temporal accuracy of the tree cover loss data. Within the 1500 blocks, the year of the largest drop in annual MODIS NDVI was compared to the year of tree cover loss from the map. The year of disturbance matched for 75.2% of tree cover loss events, and was within one year for 96.7% of tree cover loss events.</p>
+              <p>A validation assessment of the 2000 – 2012 Hansen/UMD/Google/USGS/NASA change data was carried out independently from the mapping exercise at the global and biome (tropical, subtropical, temperate, and boreal) scale. A stratified random sample (for no change, loss, and gain) of 1500 blocks, each 120 × 120 meters, was used as validation data.  The amount of tree cover loss within each block was estimated using Landsat, MODIS, and Google Earth high-resolution imagery and compared to the map. Overall accuracies for loss were over 99% globally and for all biomes. However, since the overall accuracy calculations are positively skewed due to the high percentage of no change pixels, it is also important to assess the accuracy of the change predictions. The user’s accuracy (i.e. the percentage of pixels labelled as tree cover loss that actually lost tree cover) was 87.0% at the global level. At the biome level, user’s accuracies were 87.0%, 79.3%, 88.2%, and 88.0% for the tropical, subtropical, temperate, and boreal biomes, respectively. A separate test was conducted to determine the temporal accuracy of the tree cover loss data. Within the 1500 blocks, the year of the largest drop in annual MODIS NDVI was compared to the year of tree cover loss from the map. The year of disturbance matched for 75.2% of tree cover loss events, and was within one year for 96.7% of tree cover loss events.</p>
             </dd>
           </dl>
         </div>
@@ -201,9 +201,9 @@
     </li>
     <li id='forestgain' class='source-item '>
       <div class='source_header'>
-        <strong class='source_title'>University of Maryland/Google tree cover gain</strong>
+        <strong class='source_title'>Tree cover gain</strong>
         <i class='expand_arrow'></i>
-        <em class='source_description'>(12 years, 30m, global)</em>
+        <em class='source_description'>(12 years, 30m, global, Hansen/UMD/Google/USGS/NASA)</em>
       </div>
 
       <div class='source_body'>
@@ -247,7 +247,7 @@
 
               <p>When zoomed out (< zoom level 13), pixels of gain are shaded according to the density of gain at the 30 x 30 meter scale. Pixels with darker shading represent areas with a higher concentration of tree cover gain, whereas pixels with lighter shading indicate a lower concentration of tree cover gain. There is no variation in pixel shading when the data is at full resolution (≥ zoom level 13).</p>
 
-              <p>A validation assessment of the 2000 – 2012 UMD change data was carried out independently from the mapping exercise at the global and biome (tropical, subtropical, temperate, and boreal) scale. A stratified random sample (for no change, loss, and gain) of 1500 blocks, each 120 × 120 meters, was used as validation data.  The amount of tree cover gain within each block was estimated using Landsat, MODIS, and Google Earth high-resolution imagery and compared to the map. Overall accuracies for gain were over 99.5% globally and for all biomes. However, since the overall accuracy calculations are positively skewed due to the high percentage of no change pixels, it is also important to assess the accuracy of the change predictions. The user’s accuracy (i.e. the percentage of pixels labelled as tree cover gain that actually gained tree cover) was 87.8% at the global level. At the biome level, user’s accuracies were 81.9%, 85.5%, 62.0%, and 76.7% for the tropical, subtropical, temperate, and boreal biomes, respectively.</p>
+              <p>A validation assessment of the 2000 – 2012 Hansen/UMD/Google/USGS/NASA change data was carried out independently from the mapping exercise at the global and biome (tropical, subtropical, temperate, and boreal) scale. A stratified random sample (for no change, loss, and gain) of 1500 blocks, each 120 × 120 meters, was used as validation data.  The amount of tree cover gain within each block was estimated using Landsat, MODIS, and Google Earth high-resolution imagery and compared to the map. Overall accuracies for gain were over 99.5% globally and for all biomes. However, since the overall accuracy calculations are positively skewed due to the high percentage of no change pixels, it is also important to assess the accuracy of the change predictions. The user’s accuracy (i.e. the percentage of pixels labelled as tree cover gain that actually gained tree cover) was 87.8% at the global level. At the biome level, user’s accuracies were 81.9%, 85.5%, 62.0%, and 76.7% for the tropical, subtropical, temperate, and boreal biomes, respectively.</p>
             </dd>
           </dl>
         </div>
@@ -270,9 +270,9 @@
     </li>
     <li id='loss' class='source-item'>
       <div class='source_header'>
-        <strong class='source_title'>University of Maryland/Google tree cover loss</strong>
+        <strong class='source_title'>Tree cover loss</strong>
         <i class='expand_arrow'></i>
-        <em class='source_description'>(annual, 30m, global)</em>
+        <em class='source_description'>(annual, 30m, global, Hansen/UMD/Google/USGS/NASA)</em>
       </div>
 
       <div class='source_body'>
@@ -356,7 +356,7 @@
       <div class='source_header'>
         <strong class='source_title'>Forma alerts</strong>
         <i class='expand_arrow'></i>
-        <em class='source_description'>(monthly, 500m, humid tropics)</em>
+        <em class='source_description'>(monthly, 500m, humid tropics, WRI/CGD)</em>
       </div>
 
       <div class='source_body'>
@@ -550,9 +550,9 @@
     </li>
     <li id='imazon' class='source-item'>
       <div class='source_header'>
-        <strong class='source_title'>Imazon SAD alerts</strong>
+        <strong class='source_title'>SAD alerts</strong>
         <i class='expand_arrow'></i>
-        <em class='source_description'>(monthly, 250m, Brazilian Amazon)</em>
+        <em class='source_description'>(monthly, 250m, Brazilian Amazon, Imazon)</em>
       </div>
 
       <div class='source_body'>
@@ -627,7 +627,7 @@
       <div class='source_header'>
         <strong class='source_title'>QUICC alerts</strong>
         <i class='expand_arrow'></i>
-        <em class='source_description'>(quarterly, 5km, &lt;37 degrees north)</em>
+        <em class='source_description'>(quarterly, 5km, &lt;37 degrees north, NASA)</em>
       </div>
 
       <div class='source_body'>
@@ -702,9 +702,9 @@
     </li>
     <li id='fires' class='source-item'>
       <div class='source_header'>
-        <strong class='source_title'>NASA active fires</strong>
+        <strong class='source_title'>FIRMS active fires</strong>
         <i class='expand_arrow'></i>
-        <em class='source_description'>(daily, 1km, global)</em>
+        <em class='source_description'>(daily, 1km, global, NASA)</em>
       </div>
 
       <div class='source_body'>
@@ -768,7 +768,7 @@
       <div class='source_header'>
         <strong class='source_title'>Terra-i Alerts</strong>
         <i class='expand_arrow'></i>
-        <em class='source_description'>(monthly, 250m, Latin America)</em>
+        <em class='source_description'>(monthly, 250m, Latin America, CIAT)</em>
       </div>
 
       <div class='source_body'>
@@ -3989,12 +3989,12 @@
     <p>Data on the economic value and employment in national forestry sectors are reported from “Contribution of the forestry sector to national economies, 1990-2006” by A. Lebedys. Forest Finance Working Paper FSFM/ACC/08. FAO, Rome. To learn more, <a href='ftp://ftp.fao.org/docrep/fao/011/k4588e/k4588e00.pdf' target='_blank'>download the full report</a>.</p>
     <p><strong>Figures:</strong> type of forest, economic value of the forestry sector, employment, carbon stocks, emissions</p>
 
-    <h3 class='overview_title'>University of Maryland (UMD)/Google</h3>
+    <h3 class='overview_title'>Hansen/UMD/Google/USGS/NASA</h3>
     <p>Figures for tree cover, loss, and gain presented on the country and global overview pages were calculated using tabular data from a 2013 publication, “<a href='http://www.sciencemag.org/content/342/6160/850' target='_blank'>High-Resolution Global Maps of 21st-Century Forest Cover Change</a>" by Hansen <em>et al</em>.</p>
 
     <p>To learn more, visit the <%= link_to 'Forest Change tab', "#{sources_path}#forest_change" %> on the Data page.</p>
 
-    <p><strong>Figures:</strong> UMD/Google circle graphs, 2012 tree cover, all global overview graphs and rankings</p>
+    <p><strong>Figures:</strong> Hansen/UMD/Google/USGA/NASA circle graphs, 2012 tree cover, all global overview graphs and rankings</p>
 
     <h3 class='overview_title'>European Space Agency (GlobCover)</h3>
     <p>Data from the European Space Agency’s GlobCover was used to visualize tree cover on the country pages. As stated on the <a href='http://due.esrin.esa.int/globcover/' target='_blank'>ESA website</a>, GlobCover is an initiative which began in 2005 in partnership with a number of organizations. The aim of the project was to develop a service capable of delivering global composites and land cover maps using input observations from the 300m MERIS sensor on board the ENVISAT satellite mission. ESA makes available the land cover maps, which cover 2 periods: December 2004 - June 2006 and January - December 2009. To learn more, visit the <a href='http://due.esrin.esa.int/globcover/' target='_blank'>GlobCover website</a> or <a href='http://due.esrin.esa.int/globcover/LandCover2009/Globcover2009_V2.3_Global_.zip' target='_blank'>download the 2009 GlobCover map</a>.</p>
@@ -4018,9 +4018,9 @@
 <article id='earth_engine'>
   <h2 class='source_category_title'>GFW on Google Earth Engine</h2>
   <div class='single-source-item'>
-    <p>The following data sets on Global Forest Watch were created using <a href="http://earthengine.google.org" target="_blank">Google Earth Engine</a>, Google's geospatial analysis tool: the University of Maryland/Google's annual tree cover loss, tree cover gain, and tree cover data, and the Landsat base maps.</p>
+    <p>The following data sets on Global Forest Watch were created using <a href="http://earthengine.google.org" target="_blank">Google Earth Engine</a>, Google's geospatial analysis tool: the Hansen/UMD/Google/USGA/NASA annual tree cover loss, tree cover gain, and tree cover data, and the Landsat base maps.</p>
 
-    <p>Additionally, the tropical forest carbon stocks layer is being stored and served from <a href="http://mapsengine.google.com/" target="_blank">Google Maps Engine</a> and styled by Earth Engine, the Imazon SAD data are created using Imazon's algorithms on Earth Engine, and analyses of the University of Maryland/Google data, as well as computations of area, are being performed by Earth Engine.</p>
+    <p>Additionally, the tropical forest carbon stocks layer is being stored and served from <a href="http://mapsengine.google.com/" target="_blank">Google Maps Engine</a> and styled by Earth Engine, the Imazon SAD data are created using Imazon's algorithms on Earth Engine, and analyses of the Hansen/UMD/Google/USGS/NASA data, as well as computations of area, are being performed by Earth Engine.</p>
 
     <p><a href="http://earthengine.google.org/signup" target="_blank">Sign up here</a> to access the full suite of Earth Engine tools and data, including data available on Global Forest Watch, 40+ years of Landsat data, many additional satellite data sets, elevation data, atmospheric data, and data you upload yourself. For information about how to analyze Global Forest Watch data, please visit our <a href="https://sites.google.com/site/earthengineapidocs/global-forest-watch-tutorial" target="_blank">tutorial</a>.</p>
   </div>
