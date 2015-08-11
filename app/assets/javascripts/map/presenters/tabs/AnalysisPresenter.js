@@ -47,7 +47,8 @@ define([
       'imazon': 'imazon-alerts',
       'fires': 'nasa-active-fires',
       'modis': 'quicc-alerts',
-      'terrailoss': 'terrai-alerts'
+      'terrailoss': 'terrai-alerts',
+      'prodes' : 'prodes-alerts'
     },
 
     init: function(view) {
@@ -423,10 +424,9 @@ define([
         dateFormat = 'YYYY-MM-DD';
 
         // period format = 2012-12-23,2013-01-4
-        date[0] = (date[0] != null) ? date[0] : '2001-01-01';
-        date[1] = (date[1] != null) ? date[1] : '2014-12-31';
-        resource.period = '{0},{1}'.format(
-          date[0].format(dateFormat), date[1].format(dateFormat));
+        date[0] = (date[0] != null) ? ((!!date[0]._isAMomentObject) ? date[0] : date[0].substr(0,10)) : '2001-01-01';
+        date[1] = (date[1] != null) ? ((!!date[1]._isAMomentObject) ? date[1] : date[1].substr(0,10)) : '2014-12-31';
+        resource.period = '{0},{1}'.format(date[0].format(dateFormat), date[1].format(dateFormat));
 
         // this is super ugly
         if (baselayer.slug === 'loss') {
@@ -436,7 +436,7 @@ define([
         }
 
         return resource;
-      }else{
+      } else {
         // Append dataset string
         resource.dataset = this.datasets[baselayer.slug];
 

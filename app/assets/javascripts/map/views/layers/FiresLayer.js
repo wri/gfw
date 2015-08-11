@@ -36,9 +36,9 @@ define([
     getQuery: function() {
       var query = new UriTemplate(this.options.sql).fillFromObject({
         tableName: this.layer.table_name,
-        year: this.currentDate[0].year(),
-        month: this.currentDate[0].format('MM'),
-        day: this.currentDate[0].format('DD')
+        year: moment(this.currentDate[0]).year(),
+        month: moment(this.currentDate[0]).format('MM'),
+        day: moment(this.currentDate[0]).format('DD')
       });
 
       return query;

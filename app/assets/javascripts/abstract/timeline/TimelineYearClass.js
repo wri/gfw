@@ -176,10 +176,10 @@ define([
       margin = {top: 0, right: 20, bottom: 0, left: 20};
       width = this.options.width - margin.left - margin.right;
       height = this.options.height - margin.bottom - margin.top;
-      yearWidth = width/(this.options.dateRange[1].year() - this.options.dateRange[0].year());
+      yearWidth = width/(moment(this.options.dateRange[1]).year() - moment(this.options.dateRange[0]).year());
       center = height/2 - 2;
       handleY = 14;
-      ticks = this.options.dateRange[1].year() - this.options.dateRange[0].year();
+      ticks = moment(this.options.dateRange[1]).year() - moment(this.options.dateRange[0]).year();
 
       if (! !!this.options.player) {
         this.$play.addClass('hidden');
@@ -188,12 +188,12 @@ define([
 
       // Set xscale
       this.xscale = d3.scale.linear()
-          .domain([this.options.dateRange[0].year(), this.options.dateRange[1].year()])
+          .domain([moment(this.options.dateRange[0]).year(), moment(this.options.dateRange[1]).year()])
           .range([0, width])
           .clamp(true);
 
       this.xscaleYears = d3.scale.linear()
-          .domain([this.options.dateRange[0].year(), this.options.dateRange[1].year() - 1])
+          .domain([moment(this.options.dateRange[0]).year(), moment(this.options.dateRange[1]).year() - 1])
           .range([0, width - yearWidth])
           .clamp(true);
 

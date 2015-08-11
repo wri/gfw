@@ -48,6 +48,8 @@ define([
       this.$viewFinder = $('#viewfinder');
       this.$overlayMobile = $('#overlay-mobile');
       this.embed = $('body').hasClass('is-embed-action');
+      this.lastValidCenter = null;
+      this.allowedBounds = null;
 
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
@@ -79,6 +81,11 @@ define([
       };
 
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
+      this.allowedBounds = new google.maps.LatLngBounds(
+         new google.maps.LatLng(-85, -180),
+         new google.maps.LatLng(85, 180)
+      ); // why (-85, -180)? Well, because f*ck you, Google: http://stackoverflow.com/questions/5405539/google-maps-v3-why-is-latlngbounds-contains-returning-false
+      this.lastValidCenter = this.map.getCenter();
 
       this._checkDialogs();
 
@@ -397,26 +404,14 @@ define([
     checkBounds: function () {
       if (! !!this.map.getBounds()) return;
 
-      var latNorth = this.map.getBounds().getNorthEast().lat();
-      var latSouth = this.map.getBounds().getSouthWest().lat();
-      var newLat;
-
-      if(latNorth<85 && latSouth>-85)     /* in both side -> it's ok */
+      if (this.allowedBounds.contains(this.map.getCenter())) {
+        // still within valid bounds, so save the last valid position
+        this.lastValidCenter = this.map.getCenter();
         return;
-      else {
-        if(latNorth>85 && latSouth<-85)   /* out both side -> it's ok */
-          return;
-        else {
-            if(latNorth>85)
-              newLat =  this.map.getCenter().lat() - (latNorth-85);   /* too north, centering */
-            if(latSouth<-85)
-              newLat =  this.map.getCenter().lat() - (latSouth+85);   /* too south, centering */
-        }
       }
-      if(newLat) {
-        var newCenter= new google.maps.LatLng( newLat ,this.map.getCenter().lng() );
-        this.map.setCenter(newCenter);
-      }
+
+      // not valid anymore => return to last valid position
+      this.map.panTo(this.lastValidCenter);
     },
 
     /**
@@ -527,17 +522,18 @@ define([
     autolocate: function(){
       // window.gfw.config.GFW_MOBILE
       if(navigator.geolocation) {
-        $('#map-control-locate').find('.handler').addClass('spinner start');
+        var $locate_handle = $('#map-control-locate').find('.handler');
+        $locate_handle.addClass('spinner start');
         navigator.geolocation.getCurrentPosition(
           _.bind(function(position) {
             var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
             this.map.setCenter(pos);
             this.map.setZoom(16);
-            $('#map-control-locate').find('.handler').removeClass('spinner start');
+            $locate_handle.removeClass('spinner start');
           }, this ),
           _.bind(function() {
             this.presenter.notificate('notif-enable-location');
-            $('#map-control-locate').find('.handler').removeClass('spinner start');
+            $locate_handle.removeClass('spinner start');
           }, this )
         );
       }
