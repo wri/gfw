@@ -80,7 +80,7 @@ define([
     },
 
     download: function(event) {
-      if (this._isMobile()) {
+      if (isMobile.any && this._isMobile()) {
         event && event.preventDefault() && event.stopPropagation();
         var href = $(event.currentTarget).attr('href');
         var type = $(event.currentTarget).data('type') || 'default';
