@@ -632,6 +632,12 @@
         @include logos-sprite(zeroextinctionhover);
       }
     }
+    &.raisg{
+      height: 75px; width: 80px; @include logos-sprite(raisg);
+      &:hover{
+        @include logos-sprite(raisghover);
+      }
+    }
 
     &.bobolink {
       height: 53px; width: 105px; @include logos-sprite(bobolink);

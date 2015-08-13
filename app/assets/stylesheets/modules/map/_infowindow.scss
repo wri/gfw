@@ -94,9 +94,6 @@
           margin: 15px 1px;
           @media (max-width: $br-mobileMap - 1){
             font-size: 12px;
-            &.subscription-concession{
-              display: none;
-            }
           }
           &.dont-analyze{
             // display: none !important;

@@ -9,6 +9,22 @@ body,html{
   border: 0;
 }
 
+@media (max-width:$br-mobile - 1){
+  .layout-header{
+    top: auto;
+    bottom: 0;
+    .layout-header-top{
+      position: absolute;
+    }
+    .layout-header-bottom {
+      position: fixed;
+    }
+  }
+}
+
+
+
+
 .layout-content {
   margin-bottom: 0;
   position: absolute;
@@ -207,3 +223,15 @@ body,html{
     color: $dark;
   }
 }
+
+
+@media (max-width:$br-mobile - 1){
+  .gmnoprint, .gm-style-cc {
+    top: 0 !important;
+    bottom: auto !important;
+  }
+  .gm-style .gm-style-cc span, .gm-style .gm-style-cc a, .gm-style .gm-style-mtc div {
+    font-size: 8px !important;
+  }
+}
+

@@ -458,3 +458,26 @@
     background: rgba($dark,0.8);
   }
 }
+
+.scroll-none{
+  -webkit-overflow-scrolling: touch;
+  /* Let's get this party started */
+  &::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background: none;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0px;
+    background: none;
+  }
+}
+
+

@@ -11,16 +11,21 @@
         </div>
         <ul class="layers-list">
           <div id="umd-group" class="layer-group">
-            <span class="group-name grouped-layers-trigger" data-color="#f69"><span class="onoffradio"><span></span></span>Tree cover change <em>(Hansen/UMD/Google/USGS/NASA)</em></span>
+            <span class="group-name grouped-layers-trigger" data-color="#f69">Tree cover change</span>
             <li class="layer" data-layer="loss">
               <span class="onoffswitch"><span></span></span>
               <span class="layer-title">Loss<a href='#' data-source='loss' class='source '><svg><use xlink:href="#shape-info"></use></svg></a></span>
-              <span class="layer-info">(annual, 30m, Global)</span>
+              <span class="layer-info">(annual, 30m, Global, Hansen/UMD/Google/USGS/NASA)</span>
             </li>
             <li class="layer" data-layer="forestgain">
               <span class="onoffswitch"><span></span></span>
               <span class="layer-title">Gain<a href='#' data-source='forestgain' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-              <span class="layer-info">(12 years, 30m, Global)</span>
+              <span class="layer-info">(12 years, 30m, Global, Hansen/UMD/Google/USGS/NASA)</span>
+            </li>
+            <li class="layer" data-layer="prodes">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">PRODES tree cover loss<a href='#' data-source='prodes' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(annual, 30m, Brazilian Amazon, INPE)</span>
             </li>
           </div>
           <div class="layer-group">
@@ -68,11 +73,11 @@
         <ul class="layers-list">
           <li class="layer" data-layer="forest2000">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Tree cover<a href='#' data-source='forest2000' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Tree cover (2000)<a href='#' data-source='forest2000' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
           <li class="layer" data-layer="ifl_2013_deg">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Intact Forest Landscapes<a href='#' data-source='ifl_2013_deg' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Intact Forest Landscapes (2013)<a href='#' data-source='ifl_2013_deg' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
             {{!-- <span class="layer-info">
               <label data-layer="ifl_2000" class="layer wrapped">
                 <span></span>
@@ -86,16 +91,16 @@
           </li>
           <li class="layer" data-layer="pantropical">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Tropical forest carbon stock<a href='#' data-source='pantropical' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Tropical forest carbon stocks (2000)<a href='#' data-source='pantropical' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
           <li class="layer" data-layer="mangrove">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Global mangroves<a href='#' data-source='mangrove' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Mangrove forests<a href='#' data-source='mangrove' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
-          {{!-- <li class="layer" data-layer="global_land_cover">
+          <li class="layer" data-layer="global_land_cover">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">GlobCover – Global landcover (2009)<a href='#' data-source='global_land_cover' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li> --}}
+          </li>
         </ul>
       </div>
     </li>
@@ -112,17 +117,17 @@
             <span class="group-name">Concessions</span>
             <li class="layer" data-layer="logging">
               <span class="onoffswitch"><span></span></span>
-              <span class="layer-title">Managed forests<a href='#' data-source='logging' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-title">Managed forests (select countries)<a href='#' data-source='logging' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
             </li>
             <li class="layer" data-layer="mining">
               <span class="onoffswitch"><span></span></span>
-              <span class="layer-title">Mining<a href='#' data-source='mining' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-title">Mining (select countries)<a href='#' data-source='mining' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
             </li>
             <div class="grouped-layer">
-              <span class="layer-title grouped-layers-trigger" data-color="#c98e6c"><span class="onoffswitch"><span></span></span>Plantations <a href='#' data-source='oil_palm_wood_fiber' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-title grouped-layers-trigger" data-color="#c98e6c"><span class="onoffswitch"><span></span></span> <em>Tree plantations (select countries)</em><a href='#' data-source='oil_palm_wood_fiber' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
               <li class="layer" data-layer="oil_palm">
                 <span class="onoffswitch"><span></span></span>
-                <span class="layer-title">Oil Palm</span>
+                <span class="layer-title">Oil palm</span>
               </li>
               <li class="layer" data-layer="wood_fiber_plantations">
                 <span class="onoffswitch"><span></span></span>
@@ -158,10 +163,10 @@
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Biodiversity hotspots<a href='#' data-source='biodiversity_hotspots' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
-          {{!-- <li class="layer" data-layer="wwf">
+          <li class="layer" data-layer="wwf">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">WWF Terrestrial Ecoregions of the World<a href='#' data-source='wwf' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li> --}}
+          </li>
           <li class="layer" data-layer="birdlife">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">BirdLife Endemic Bird Areas<a href='#' data-source='birdlife' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
@@ -174,10 +179,10 @@
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Tiger Conservation Landscapes<a href='#' data-source='tigers' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
-          {{!-- <li class="layer" data-layer="verified_carbon">
+          <li class="layer" data-layer="verified_carbon">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Verified Carbon Standard project boundaries<a href='#' data-source='verified_carbon' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li> --}}
+          </li>
         </ul>
       </div>
     </li>
@@ -193,15 +198,19 @@
         <ul class="layers-list">
           <li class="layer" data-layer="resource_rights">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Resource rights<a href='#' data-source='resource_rights' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Resource rights (select countries)<a href='#' data-source='resource_rights' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
           <li class="layer" data-layer="land_rights">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Land rights<a href='#' data-source='land_rights' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Land rights (select countries)<a href='#' data-source='land_rights' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
           <li class="layer" data-layer="grump2000">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Population density<a href='#' data-source='grump2000' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Population density (2000)<a href='#' data-source='grump2000' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+          </li>
+          <li class="layer" data-layer="raisg">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">RAISG Indigenous Territories<a href='#' data-source='raisg' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
         </ul>
       </div>
@@ -220,10 +229,10 @@
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">User stories<a href='#' data-source='user_stories' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
-          <li class="layer" data-layer="mongabay">
+{{!--           <li class="layer" data-layer="mongabay">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Mongabay stories<a href='#' data-source='mongabay' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li>
+          </li> --}}
           <li class="layer" data-layer="infoamazonia">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Earth Journalism Network stories<a href='#' data-source='infoamazonia' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>

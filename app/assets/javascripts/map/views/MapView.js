@@ -48,15 +48,19 @@ define([
       this.$viewFinder = $('#viewfinder');
       this.$overlayMobile = $('#overlay-mobile');
       this.embed = $('body').hasClass('is-embed-action');
+      this.lastValidCenter = null;
+      this.allowedBounds = null;
 
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
+          this.mobile = false;
           this.render(3);
           this.presenter._resizeSetLayers();
         },this)
       });
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
+          this.mobile = true;
           this.render(2);
           this.presenter._resizeSetLayers();
         },this)
@@ -77,6 +81,11 @@ define([
       };
 
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
+      this.allowedBounds = new google.maps.LatLngBounds(
+         new google.maps.LatLng(-85, -180),
+         new google.maps.LatLng(85, 180)
+      ); // why (-85, -180)? Well, because f*ck you, Google: http://stackoverflow.com/questions/5405539/google-maps-v3-why-is-latlngbounds-contains-returning-false
+      this.lastValidCenter = this.map.getCenter();
 
       this._checkDialogs();
 
@@ -98,6 +107,12 @@ define([
           this.onCenterChange();
         }, this)
       );
+      google.maps.event.addListener(this.map, 'bounds_changed', _.bind(function() {
+        if(!this.center_moved && this.mobile){
+          this.offsetCenter(this.map.getCenter(), 0, 270/2);
+          this.center_moved = true;
+        }
+      }, this ));
       google.maps.event.addListener(this.map, 'dragend',
         _.bind(function() {
           this.onCenterChange();
@@ -112,6 +127,7 @@ define([
           return;
         }
         // TODO => No mps here!
+        console.log('wdpa: ',wdpa);
         mps.publish('AnalysisTool/analyze-wdpaid', [wdpa]);
       }, this));
 
@@ -240,20 +256,26 @@ define([
     },
 
     fitBounds: function(bounds) {
+      this.center_moved = false;
       this.map.fitBounds(bounds);
     },
 
 
     offsetCenter: function(latlng,offsetx,offsety) {
-      var map = this.map;
-      var scale = Math.pow(2, map.getZoom());
-      var latlng = new google.maps.LatLng(latlng.lat, latlng.lng);
+
+      // latlng is the apparent centre-point
+      // offsetx is the distance you want that point to move to the right, in pixels
+      // offsety is the distance you want that point to move upwards, in pixels
+      // offset can be negative
+      // offsetx and offsety are both optional
+
+      var scale = Math.pow(2, this.map.getZoom());
       var nw = new google.maps.LatLng(
-          map.getBounds().getNorthEast().lat(),
-          map.getBounds().getSouthWest().lng()
+          this.map.getBounds().getNorthEast().lat(),
+          this.map.getBounds().getSouthWest().lng()
       );
 
-      var worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latlng);
+      var worldCoordinateCenter = this.map.getProjection().fromLatLngToPoint(latlng);
       var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
 
       var worldCoordinateNewCenter = new google.maps.Point(
@@ -261,11 +283,12 @@ define([
           worldCoordinateCenter.y + pixelOffset.y
       );
 
-      var newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+      var newCenter = this.map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
 
-      map.setCenter(newCenter);
+      this.map.setCenter(newCenter);
 
     },
+
 
 
 
@@ -316,12 +339,6 @@ define([
       var ne = projection.fromLatLngToContainerPixel(bounds.getNorthEast());
       return new google.maps.Point( Math.round(10000 * Math.abs(sw.y - ne.y)) / 10000, Math.round(10000 * Math.abs(sw.x - ne.x)) / 10000 );
     },
-
-
-
-
-
-
 
 
 
@@ -387,26 +404,14 @@ define([
     checkBounds: function () {
       if (! !!this.map.getBounds()) return;
 
-      var latNorth = this.map.getBounds().getNorthEast().lat();
-      var latSouth = this.map.getBounds().getSouthWest().lat();
-      var newLat;
-
-      if(latNorth<85 && latSouth>-85)     /* in both side -> it's ok */
+      if (this.allowedBounds.contains(this.map.getCenter())) {
+        // still within valid bounds, so save the last valid position
+        this.lastValidCenter = this.map.getCenter();
         return;
-      else {
-        if(latNorth>85 && latSouth<-85)   /* out both side -> it's ok */
-          return;
-        else {
-            if(latNorth>85)
-              newLat =  this.map.getCenter().lat() - (latNorth-85);   /* too north, centering */
-            if(latSouth<-85)
-              newLat =  this.map.getCenter().lat() - (latSouth+85);   /* too south, centering */
-        }
       }
-      if(newLat) {
-        var newCenter= new google.maps.LatLng( newLat ,this.map.getCenter().lng() );
-        this.map.setCenter(newCenter);
-      }
+
+      // not valid anymore => return to last valid position
+      this.map.panTo(this.lastValidCenter);
     },
 
     /**
@@ -501,27 +506,39 @@ define([
       this.$overlayMobile.toggleClass('active', bool);
     },
 
+
+    // Autolocate
+    autolocateQuestion: function() {
+      if (isMobile.any && !this.embed) {
+        mps.publish('Confirm/ask', ['default', 'autolocate']);
+      }
+    },
+
+    autolocateResponse: function(response) {
+      if (response) {
+        this.autolocate();
+      }
+    },
+
     autolocate: function(){
-      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
-        match: _.bind(function(){
-          if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-              _.bind(function(position) {
-                var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-                this.map.setCenter(pos);
-                this.map.setZoom(16);
-              }, this ),
-              _.bind(function() {
-                this.presenter.notificate('notif-enable-location');
-              }, this )
-            );
-          }
-        },this)
-      });
-
+      // window.gfw.config.GFW_MOBILE
+      if(navigator.geolocation) {
+        var $locate_handle = $('#map-control-locate').find('.handler');
+        $locate_handle.addClass('spinner start');
+        navigator.geolocation.getCurrentPosition(
+          _.bind(function(position) {
+            var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+            this.map.setCenter(pos);
+            this.map.setZoom(16);
+            $locate_handle.removeClass('spinner start');
+          }, this ),
+          _.bind(function() {
+            this.presenter.notificate('notif-enable-location');
+            $locate_handle.removeClass('spinner start');
+          }, this )
+        );
+      }
     }
-
-
   });
 
   return MapView;

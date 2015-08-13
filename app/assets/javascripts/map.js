@@ -12,6 +12,7 @@ require([
   'mps',
   'map/router',
   'views/SourceWindowView',
+  'views/SourceBottomView',
   'views/SourceMobileFriendlyView',
   'map/presenters/ExperimentsPresenter',
   'map/services/AnalysisService',
@@ -19,20 +20,20 @@ require([
   'map/services/DataService',
   'map/views/MapView',
   'map/views/MapControlsView',
-  'map/views/MapControlsMobileView',
   'map/views/TabsView',
   'map/views/analysis/AnalysisResultsView',
   'map/views/LayersNavView',
   'map/views/LegendView',
   'map/views/TimelineView',
+  'map/views/NavMobileView',
   'views/HeaderView',
   'views/FooterView',
   'views/NotificationsView',
   'views/DownloadView',
 
   '_string'
-], function($, _, Class, Backbone, chosen, utils, enquire, mps, Router, SourceWindowView, SourceMobileFriendlyView, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
-    MapControlsView, MapControlsMobileView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, HeaderView, FooterView, NotificationsView, DownloadView) {
+], function($, _, Class, Backbone, chosen, utils, enquire, mps, Router, SourceWindowView, SourceBottomView, SourceMobileFriendlyView, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
+    MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, HeaderView, FooterView, NotificationsView, DownloadView) {
 
   'use strict';
 
@@ -76,15 +77,16 @@ require([
       var mapView = new MapView();
 
       new MapControlsView(mapView.map);
-      new MapControlsMobileView();
       new TabsView(mapView.map);
       new AnalysisResultsView();
       new LayersNavView();
       new LegendView();
       new TimelineView();
+      new NavMobileView();
       new FooterView();
       new HeaderView();
       new SourceWindowView();
+      new SourceBottomView();
       new SourceMobileFriendlyView();
       new NotificationsView();
     },

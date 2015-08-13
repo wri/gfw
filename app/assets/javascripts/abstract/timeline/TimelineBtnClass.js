@@ -123,7 +123,7 @@ define([
 
       // Set xscale
       this.xscale = d3.scale.linear()
-          .domain([this.options.dateRange[0].month(), this.options.dateRange[1].month()])
+          .domain([moment(this.options.dateRange[0]).month(), moment(this.options.dateRange[1]).month()])
           .range([0, width])
           .clamp(true);
 

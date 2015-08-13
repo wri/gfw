@@ -40,7 +40,8 @@ define([
       'click .share-map' : 'shareMap',
       'click .locate' : 'locateMeOnMap',
       'click .toggle-modules' : 'toggleModules',
-      'click .toggle-mapcontrols' : 'toggleControls'
+      'click .toggle-mapcontrols' : 'toggleControls',
+      'click .toggle-legend': 'toggleLegend',
     },
 
     template: Handlebars.compile(tpl),
@@ -72,7 +73,7 @@ define([
 
     setListeners: function(){
       key('f', this.showSearch);
-      key('+', this.zoomIn);
+      key('=, shift+=, plus, shift+equals', this.zoomIn);
       key('-', this.zoomOut);
       key('alt+r', this.resetMap);
       key('s', this.shareMap);
@@ -178,6 +179,14 @@ define([
 
     toggleControls: function(e){
       this.$toggleButtons.children('.toggle-button').toggleClass('hidden');
+    },
+
+    toggleLegend: function(){
+      this.presenter.openLegend();
+    },
+
+    toogleTimeline: function(toggle){
+      this.$el.toggleClass('timeline-open',toggle);
     },
 
     _generateEmbedUrl: function() {

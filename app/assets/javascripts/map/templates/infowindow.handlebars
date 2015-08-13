@@ -64,6 +64,10 @@
           <h4>Type:</h4>
           <p>{{content.data.type}}</p>
         {{/if}}
+        {{#if content.data.mineral}}
+          <h4>Mineral:</h4>
+          <p>{{content.data.mineral}}</p>
+        {{/if}}
         {{#if content.data.status}}
           <h4>Status:</h4>
           <p>{{content.data.status}}</p>
@@ -102,16 +106,16 @@
           <p>{{content.data.nat_origin}}</p>
         {{/if}}
         {{#if content.data.estimated_}}
-          <h4>Estimated Annual Carbon Emission Reducction (tons of CO2 equivalent):</h4>
+          <h4>Estimated Annual Carbon Emission Reduction (Tons of CO<sub>2</sub> equivalent):</h4>
           <p>{{content.data.estimated_}}</p>
         {{/if}}
         {{#if content.data.additional}}
           <h4>Additional certifications:</h4>
           <p>{{content.data.additional}}</p>
         {{/if}}
-        {{#if content.data.area_ha}}
-          <h4>Area HA:</h4>
-          <p>{{content.data.area_ha}}</p>
+        {{#if content.data.zone}}
+          <h4>Zone:</h4>
+          <p>{{content.data.zone}}</p>
         {{/if}}
         {{#if content.data.area_hectares}}
           <h4>Area hectares:</h4>
@@ -256,6 +260,18 @@
         {{#if content.data.dataagg}}
           <h4>Data Aggregator:</h4>
           <p>{{content.data.dataagg}}</p>
+        {{/if}}
+        {{#if content.data.doc_legal}}
+          <h4>Legal documentation:</h4>
+          <p>{{content.data.doc_legal}}</p>
+        {{/if}}
+        {{#if content.data.region}}
+          <h4>Region:</h4>
+          <p>{{content.data.region}}</p>
+        {{/if}}
+        {{#if content.data.area_ha}}
+          <h4>Area HA:</h4>
+          <p>{{content.data.area_ha}}</p>
         {{/if}}
       </div>
     </div>

@@ -56,6 +56,7 @@ define([
       "idn_leuser",
       // FOREST USE
       "dam_hotspots",
+      "per_prod_for",
       "concesiones_wrapper",
       "concesiones_forestalesNS",
       "concesiones_forestales",
@@ -99,6 +100,7 @@ define([
       "modis",
       "imazon",
       "forma",
+      "prodes",
       "loss",
       "forestgain"
     ],

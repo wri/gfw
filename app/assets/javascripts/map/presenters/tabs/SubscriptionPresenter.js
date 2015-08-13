@@ -47,7 +47,8 @@ define([
       'imazon': 'imazon-alerts',
       'fires': 'nasa-active-fires',
       'modis': 'quicc-alerts',
-      'terrailoss': 'terrai-alerts'
+      'terrailoss': 'terrai-alerts',
+      'prodes': 'prodes-alerts'
     },
 
     init: function(view) {
@@ -62,6 +63,15 @@ define([
     _subscriptions: [{
       'Subscribe/end': function(options) {
         this.deleteSubscription();
+      }
+    },{
+      'Subscription/iso': function(iso) {
+        this.openSubscriptionTab(true);
+        this.view._onClickStart();
+        this.view._stopDrawing();
+        this.deleteSubscription();
+        this.view.setStyle();
+        this._subscribeIso(iso);
       }
     },{
       'Subscription/analyze-wdpaid': function(wdpaid) {

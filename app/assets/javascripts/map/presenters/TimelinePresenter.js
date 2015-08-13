@@ -62,6 +62,22 @@ define([
         }
         this.view.model.set('forceHidden', true);
       }
+    }, {
+      'Timeline/toggle': function(toggle) {
+        this.view.toggleMobile(toggle);
+      }
+    }, {
+      'Layers/toggle': function(toggle) {
+        this.view.toggleMobile(false);
+      }
+    }, {
+      'Analysis/toggle': function(toggle) {
+        this.view.toggleMobile(false);
+      }
+    },{
+      'Overlay/toggle' : function(bool){
+        this.view.toggleMobile(false);
+      }
     }],
 
     /**
@@ -145,7 +161,7 @@ define([
     },
 
     _timelineDisabled: function() {
-      mps.publish('Timeline/disabled', []);
+      mps.publish('Timeline/disabled');
     },
 
     _timelineEnabled: function(layerSlug) {

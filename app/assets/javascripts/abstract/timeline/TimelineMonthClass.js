@@ -63,10 +63,10 @@ define([
       // Max date range
       this.drMax = this.options.dateRange;
       // Date range
-      this.dr = [moment([this.drMax[0].year()]), moment([this.drMax[1].year() + 1])];
+      this.dr = [[moment(this.drMax[0]).year()], [moment(this.drMax[1]).year() + 1]];
 
       // Number months to display
-      this.monthsCount = Math.floor(this.dr[1].diff(this.dr[0],
+      this.monthsCount = Math.floor(moment(this.dr[1]).diff(moment(this.dr[0]),
         'months', true));
 
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
@@ -109,9 +109,15 @@ define([
       this.fillSelects();
     },
 
-    fillSelects: function(){
+    fillSelects: function() {
+      if (! !!this.dateRangeStart._d) {
+        this.dateRangeStart = moment(this.dateRangeStart);
+        this.dateRangeEnd   = moment(this.dateRangeEnd);
+        this.currentDate[0] = moment(this.currentDate[0]);
+        this.currentDate[1] = moment(this.currentDate[1]);
+      }
       var start = this.dateRangeStart.year(),
-          end = this.dateRangeEnd.year(),
+          end   = this.dateRangeEnd.year(),
           range = end - start + 1,
           options = '';
       for (var i = 0; i < range; i++) {
@@ -178,15 +184,15 @@ define([
       }, this ));
 
 
-      var start = this.prepareDate(this.$fromMonth[0].selectedIndex ,this.$from.val());
-      var end = this.prepareDate(this.$toMonth[0].selectedIndex ,this.$to.val());
+      var start = moment(this.prepareDate(this.$fromMonth[0].selectedIndex ,this.$from.val()));
+      var end   = moment(this.prepareDate(this.$toMonth[0].selectedIndex ,this.$to.val()));
 
       this._updateCurrentDate([start, end]);
     },
 
 
     prepareDate: function(month, year){
-      return moment([year, month]);
+      return [year, month];
     },
 
 
@@ -247,7 +253,7 @@ define([
           .select('.domain').remove();
 
       this.svg.selectAll('.tick').filter(function(d) {
-        if (self._domainToDate(d).month() === 0) {
+        if (moment(self._domainToDate(d)).month() === 0) {
           d3.select(this).classed('highlight', true);
         }
       });
@@ -256,7 +262,7 @@ define([
 
       // Years xscale
       this.yearsXscale = d3.time.scale()
-          .domain([this.dr[0].toDate(), this.dr[1].toDate()])
+          .domain([moment(this.dr[0]).toDate(), moment(this.dr[1]).toDate()])
           .range([0, width]);
 
       // Years xaxis
@@ -382,7 +388,7 @@ define([
         if (this.ext.left > x) {return;}
         this.domain.attr('x1', this.ext.left);
         // Set to max handler position when moving mouse fast to the right.
-        if (date.isAfter(this.drMax[1])) {
+        if (date.isAfter(moment(this.drMax[1]))) {
           rounded = this._dateToDomain(this.drMax[1]);
         }
         this.ext.right = this.xscale(rounded);
@@ -415,7 +421,7 @@ define([
 
       this._showTipsy();
       this.tooltip
-        .text(date.format('MMM') + ' - ' + date.format('D'))
+        .text(moment(date).format('MMM') + ' - ' + moment(date).format('D'))
         .style('left', '{0}px'.format(x));
 
       this.trail
@@ -439,13 +445,13 @@ define([
     },
 
     _domainToDate: function(d) {
-      var year = Math.floor(d/12) + this.dr[0].year();
+      var year = Math.floor(d/12) + moment(this.dr[0]).year();
       var month = (d >= 12) ? d - (Math.floor(d/12) * 12) : d;
       return moment([year, month]);
     },
 
     _dateToDomain: function(d) {
-      return Math.floor(d.diff(this.dr[0],
+      return Math.floor(moment(d).utc().hour(12).diff(moment(this.dr[0]),
         'months', true));
     },
 

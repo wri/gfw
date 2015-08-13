@@ -6,7 +6,9 @@ $w-control: 44px;
   left: 0;
   width: 100%;
   z-index: 22;
+  position: static;
   @media (min-width: $br-mobileMap){
+    position: absolute;
     background: $white;
     top: 110px;
     left: auto;
@@ -38,7 +40,6 @@ $w-control: 44px;
           @media (min-width: $br-mobileMap){
             float: none;
             width: 33.333333%;
-            padding: 0.5em 1.5em;
             &:first-child{
               border-left: none;
             }
@@ -153,8 +154,22 @@ $w-control: 44px;
     margin: 10px 0 0;
     @include display-flex();
     @include justify-content(space-between);
+
+    @media (max-width: $br-mobileMap - 1){
+      &.fixed {
+        position: fixed;
+        background: $white;
+        z-index: 2001;
+        bottom: 56px;
+        left: 0;
+        width: 100%;
+        padding: 10px;
+        border-top: 1px solid $border;
+      }
+    }
     li{
-      width: 48%;
+      width: 100%;
+      padding: 0 5px;
       .btn{
         width: 100%;
       }
@@ -187,13 +202,13 @@ $w-control: 44px;
 
 
 .tab-mobile-content{
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   background: #FFF;
-  z-index: 20;
+  z-index: 23;
   display: none;
-  padding: 65px 0px 76px;
+  padding: 65px 0px 114px;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
@@ -260,7 +275,9 @@ $w-control: 44px;
     }
     >footer{
       .button-container{
-        margin: 10px 15px 0;
+        @media (min-width: $br-mobileMap){
+          margin: 10px 15px 0;
+        }
       }
     }
   }

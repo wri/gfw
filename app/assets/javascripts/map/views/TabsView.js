@@ -30,7 +30,8 @@ define([
       'click .tab' : 'toggleTabs',
       'click .share-mobile' : 'toggleShareMobile',
       'click .tab-mobile' : 'toggleTabsMobile',
-      'click .close-tab-mobile' : 'hideTabsMobile'
+      'click .close-tab-mobile' : 'hideTabsMobile',
+      'click ul' : 'checkForestChangeAvailability'
     },
 
     template: Handlebars.compile(tpl),
@@ -78,7 +79,7 @@ define([
     renderMobile: function(){
       this.$el.html(this.templateMobile());
       this.$el.removeClass('hide');
-      this.initCustomMobileViews();
+      this.initCustomViews();
     },
 
     initCustomViews: function(){
@@ -86,14 +87,6 @@ define([
       new AnalysisView(this.map);
       new CountriesView(this.map);
       new SubscriptionView(this.map);
-      new BasemapsView();
-      new SubscribeView();
-    },
-
-    initCustomMobileViews: function(){
-      new SpinnerView();
-      new AnalysisView(this.map);
-      new CountriesView(this.map);
       new BasemapsView();
       new SubscribeView();
     },
@@ -152,6 +145,15 @@ define([
       this.$settingsTabButton.removeClass('active');
       this.$tabMobileButtons.removeClass('active');
       this.$tabsMobileContent.removeClass('active');
+      this.presenter.onTabMobileClose();
+    },
+
+    toggleMobileLayers: function(){
+      var $tab = $('#settings-tab-mobile');
+      // this.$tabMobileButtons.removeClass('active');
+      // this.$settingsTabButton.addClass('active');
+      // this.$tabsMobileContent.removeClass('active');
+      $tab.addClass('active');
     },
 
     openTab: function(id, backbutton){
@@ -159,7 +161,14 @@ define([
         $(id).trigger('click');
 
         // To control back buttons
-        if (backbutton) { $(id+'-back').data('tab', null);}
+        // if (backbutton) { $(id+'-back').data('tab', null);}
+      }
+    },
+
+    checkForestChangeAvailability: function(e) {
+      // If the user clicks the analysis icon and having this LI item an EVENT POINTER NONE style attribute, what the user actually clicks is the UL
+      if (e.target.tagName === 'UL' && $('#analysis-tab-button').hasClass('disabled')) {
+        mps.publish('Notification/open', ['open-forest-change-layer']);
       }
     }
   });
