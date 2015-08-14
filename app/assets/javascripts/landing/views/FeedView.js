@@ -20,6 +20,7 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
+      return;
       this.loadFeed();
     },
 

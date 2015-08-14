@@ -24,7 +24,6 @@ class ApplicationController < ActionController::Base
     end
 
     def check_terms
-      puts request.original_url.to_s
       if request.original_url.to_s.include? "globalforestwatch.org"
         #Filtering accept terms only in PRO
 

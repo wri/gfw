@@ -14,17 +14,21 @@ class LandingController < ApplicationController
         'title' => i.title,
         'link' => i.link,
         'date' => i.pubDate,
-        'description' => i.description
+        'description' => i.description,
+        'id' => i.gfwid
       })
-      break if @feedview.length > 4
+      break if @feedview.length > 5
     end
     fstories  = RSS::Parser.parse('https://gfw-huggin.herokuapp.com/users/1/web_requests/15/keepupdatedgfwrss.xml')
     fstories.items.each do |i|
+      puts i
       @storiesview.push({
         'title' => i.title,
         'link' => i.link,
         'date' => i.pubDate,
-        'description' => i.description
+        'description' => i.description,
+        'avatar' => '',
+        'id' => i.gfwid
       })
       break if @storiesview.length > 2
     end

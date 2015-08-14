@@ -27,6 +27,7 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
+      return;
 
       //Init Vars
       this.url = 'https://gfw-huggin.herokuapp.com/users/1/web_requests/15/keepupdatedgfwrss.json';
