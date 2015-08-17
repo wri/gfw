@@ -44,7 +44,7 @@ define([
       this.render();
       this.setListeners();
       //Experiment
-      this.presenter.initExperiment('source');
+      //this.presenter.initExperiment('source');
       this.presenter._setVisibility();
     },
 

@@ -241,7 +241,7 @@ define([
         this._renderLegend(categories, options, geographic);
       }
       //Experiment
-      this.presenter.initExperiment('source');
+      //this.presenter.initExperiment('source');
     },
 
     /**

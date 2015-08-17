@@ -53,7 +53,7 @@ define([
     render: function() {
       this.$el.html('').append(this.template());
       //Experiment
-      this.presenter.initExperiment('source');
+      //this.presenter.initExperiment('source');
 
       //Init
       this.$groupedLayers = $('.grouped-layers-trigger');
@@ -324,7 +324,7 @@ define([
 
       this.fixLegibility();
 
-      this.presenter.initExperiment('source');
+      //this.presenter.initExperiment('source');
       this._toggleSelected(this.layers);
     },
 
