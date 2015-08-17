@@ -250,8 +250,15 @@
 
     .layer-colors li {
       margin-bottom: 4px;
+      position: relative;
+      padding: 0 0 0 14px;
       &:last-child {
         margin-bottom: 0;
+      }
+      .circle{
+        position: absolute;
+        top: -2px;
+        left: 0;
       }
     }
 
