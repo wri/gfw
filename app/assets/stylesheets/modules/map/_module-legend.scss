@@ -257,6 +257,8 @@
 
     .layer-colors li {
       margin-bottom: 4px;
+      position: relative;
+      padding: 0 0 0 14px;
       &:last-child {
         margin-bottom: 0;
       }
