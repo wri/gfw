@@ -40,7 +40,8 @@ define([
       'imazon': 'imazon-alerts',
       'fires': 'nasa-active-fires',
       'modis': 'quicc-alerts',
-      'terrailoss': 'terrai-alerts'
+      'terrailoss': 'terrai-alerts',
+      'prodes': 'prodes-alerts'
     },
 
     init: function(view) {
