@@ -14,7 +14,7 @@ define([
     el: '#applicationsNavView',
 
     events: {
-      'click a' : 'onChange',
+      'click a' : 'onFilter',
     },
 
     initialize: function() {
@@ -48,9 +48,6 @@ define([
       this.scrollDocument();
       this.$document.on('scroll',_.bind(this.scrollDocument,this));
       this.$window.on('resize',_.bind(this.calculateOffsets,this));
-
-      mps.subscribe('SourceStatic/change',_.bind(this.scrollTo,this));
-
     },
 
     calculateOffsets: function(){
@@ -97,7 +94,7 @@ define([
       this.lastScroll = scrollTop;
     },
 
-    onChange: function(e) {
+    onFilter: function(e) {
       e && e.preventDefault();
       var id = $(e.currentTarget).attr('href');
       var time = Math.abs(this.$document.scrollTop() - ($(id).offset().top - this.$el.height()))/2;
@@ -111,8 +108,8 @@ define([
     },
 
     updateRoute: function(){
-      var section = this.$linksparents.eq(this.offsetsIndex).children('a').attr('href').replace('#','');
-      mps.publish('SourceStatic/Silentupdate', [{ section:section }]);
+      // var section = this.$linksparents.eq(this.offsetsIndex).children('a').attr('href').replace('#','');
+      // mps.publish('SourceStatic/Silentupdate', [{ section:section }]);
     }
 
   });

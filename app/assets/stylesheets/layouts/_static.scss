@@ -850,40 +850,12 @@
     margin: 0 auto;
     max-width: 1600px;
     background: #F2F2F3;
-    ul{
-      @include row();
-      border-bottom: 1px solid $border;
-      li{
-        @include col(33.33333);
-        a{
-          text-align: center;
-          display: block;
-          padding: 15px 30px;
-          color: $dark;
-          font-size: 14px;
-          text-transform: uppercase;
-          cursor: pointer;
-          text-decoration: none;
-          background: #F2F2F3;
-          &:hover{
-            background: #e5e5e7;
-            color: darken($dark,10%);
-          }
-          &.current {
-            background: $white;
-            color: $dark;
-          }
-        }
-      }
-    }
   }
 }
 
 .apps_types {
   background-color: #F5F5F5;
   position: relative;
-  top: 50px;
-  height: 52px;
   box-sizing: border-box;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
