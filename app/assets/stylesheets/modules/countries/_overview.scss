@@ -61,6 +61,15 @@
     z-index: 300;
   }
 }
+.overview_graph_source {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 310;
+  color: $white;
+  font-size: 12px;
+  padding: 4px;
+}
 
 .tick {
   shape-rendering: optimizeSpeed;
