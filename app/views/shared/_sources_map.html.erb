@@ -171,7 +171,7 @@
 
           <p>Input images for each of the 220 Landsat footprints that cover the Brazilian Amazon are selected based on their lack of cloud cover and their capture date. The PRODES system uses the seasonal year, starting on August 1st, to calculate annual deforestation, so images are selected as near to this date as possible (generally from July, August, and September). From 2003 to 2005, analysts used image transformation to determine the components of vegetation, soil, and shadow using the program SPRING. These components were segmented and classified into the classes of forest, non-forest, deforestation in the target year, previous deforestation, clouds, and water, which are then manually corrected by experts. Starting in 2005, a new methodology was implemented which makes use of the open source TerraAmazon platform. The platform allows the PRODES analysis to be more uniform and can incorporate imagery from a variety of satellites. As before, images are selected to be as cloud free as possible. The images are then masked to exclude non-forest, previous deforestation, and water using the previous year’s analysis. Analysts then delineate deforested polygons in the intact forest of the previous year. More information on the methodology can be found on the PRODES website.</p>
           <p>This data set shows deforestation from 1997-2000, and annual deforestation between 2000 and 2014.</p>
-          
+
 
           <p class='credits'><strong>National Institute of Space Research (INPE). “PRODES.” 2014.</p>
 
@@ -2579,6 +2579,63 @@
         </div>
       </div>
     </li>
+
+    <li id='WMSLayer' class='source-item last'>
+      <div class='source_header'>
+        <strong class='source_title'>Honduras forest type</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function<br /><em>UTILIDAD</em></dt>
+            <dd>Identifies forest type and land cover in Honduras<br /><em>Identifica la cobertura forestal en Honduras</em></dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE<br /><em>RESOLUCIÓN / ESCALA</em></dt>
+            <dd>5 × 5 meters</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage<br /><em>COBERTURA GEOGRÁFICA</em></dt>
+            <dd>Honduras<br /><em>Honduras</em></dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data<br /><em>FUENTE DE LA INFORMACIÓN</em></dt>
+            <dd><a href="http://blackbridge.com/rapideye/">RapidEye</a></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Frequency of updates<br /><em>FRECUENCIA DE ACTUALIZACIÓN</em></dt>
+            <dd>No current plans for updates<br /><em>No programado</em></dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content<br /><em>FECHA DE LOS CONTENIDOS</em></dt>
+            <dd>2013</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions<br /><em>ADVERTENCIAS</em></dt>
+            <dd>The validation of the map was done using field data as well as through a grid of control points spread 3 km apart for the entire country (15,777 points total). The overall accuracy of the map was determined to be 90.9% over all 26 categories, with an accuracy of 95% for the eight forest classes.<br /><em>La validación del mapa se realizó mediante puntos de control en el campo distribuidos  en una malla de  puntos (15,777 puntos de control en total) distribuida sistemáticamente cada 3 km en todo el país. A través de esta validación, se determinó que la precisión  de las 26 categorías, es de 90.9%, y  la precisión de las 8 clases de bosque es de 95%.</em></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3>Overview</h3>
+          <p>This data set is Honduras’ first high-resolution forest and land cover map, produced by the Honduran government agency <a href="http://www.icf.gob.hn/" target="_blank">ICF</a> (National Institute of Conservation and Forest Development, Protected Areas, and Wildlife) with the technical and financial support of <a href="http://www.reddccadgiz.org/" target="_blank">Project REDD/CCAD-GIZ</a>. RapidEye satellite imagery from 2013 was acquired and analyzed to produce a map of the spatial distribution of forest types within the country. In addition to mapping of eight different forest types, the map also portrays the extent and distribution of fifteen categories of human land use.</p>
+          <p>In contrast to earlier forest maps of Honduras, this version expands on other categories of wooded vegetation, including secondary vegetation, coffee and agroforestry areas, and information on trees outside of forests. Pastures and agricultural fields are also aggregated into one category and comprise the second largest land cover class.</p>
+          <p class='credits'><strong>Citation:</strong> “Honduras forest type”. National Institute of Conservation and Forest Development, Protected Areas, and Wildlife (ICF). 2014. Accessed through Global Forest Watch on <%= Date.today.to_s %>. <a href="http://www.globalforestwatch.org">www.globalforestwatch.org</a></p>
+          <p><a href="http://www.geoportal.icf.gob.hn/geoportal/main" target="_blank">See the data in the original webmap here</a></p>
+        </div>
+        <div class='source_summary em'>
+          <h3>RESUMEN</h3>
+          <p>Este conjunto de datos es el primer mapa de alta resolución de bosque y uso de suelo en Honduras, producido por el <a href="http://www.icf.gob.hn/" target="_blank">ICF</a> (Instituto Nacional de Conservación y Desarrollo Forestal, Áreas Protegidas y Vida Silvestre), con el apoyo tecnico y financiero del <a href="http://www.reddccadgiz.org/" target="_blank">Project REDD/CCAD-GIZ</a>. El mapa se generó a partir de imagenes satélites de RapidEye para el año 2013, adquiridas y analizados para producir un mapa de la distribución de los tipos de bosque en el país. Ademas de mapear los ocho tipos del bosque, el mapa también muestra la extensión y la distribución de 15 categorías del uso de suelo.</p>
+          <p>A diferencia de los mapas de bosque anteriores del Honduras, esta versión expande las categorías de vegetación boscosa, incluyendo vegetación secundaria, cafetales y palma africana, así como  información sobre árboles fuera de bosques. Los pastos y cultivos son agregados en una sola categoría, que es la segunda mayor categoría  de uso de suelo en el mapa.</p>
+          <p class='credits'><strong>Citation:</strong> “Mapa Forestal y Cobertura de Suelo de Honduras”. Instituto Nacional de Conservación y Desarrollo Forestal, Áreas Protegidas y Vida Silvestre (ICF). 2014. Accedido a través de Global Forest Watch en <%= Date.today.to_s %>. <a href="http://www.globalforestwatch.org">www.globalforestwatch.org</a></p>
+          <p><a href="http://www.geoportal.icf.gob.hn/geoportal/main" target="_blank">Visualice los datos originales aquí</a></p>
+        </div>
+      </div>
+    </li>
+
+
     <li id='dam_hotspots' class='source-item last'>
       <div class='source_header'>
         <strong class='source_title'>Major dams</strong>
