@@ -250,8 +250,25 @@
 
     .layer-colors li {
       margin-bottom: 4px;
+      position: relative;
+      padding: 0 0 0 14px;
       &:last-child {
         margin-bottom: 0;
+      }
+      .circle{
+        position: absolute;
+        top: -2px;
+        left: 0;
+        &.is-border{
+          //text-shadow: 1px 0 0px #000, -1px 0 0px #000, 0px 1px 0px #000, 0px -1px 0px #000;
+          text-shadow: 0px 0 1px #000;
+        }
+      }
+      i{
+        padding: 4px 0;
+        display: block;
+        font-style: italic;
+        font-size: 11px;
       }
     }
 
