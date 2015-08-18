@@ -98,6 +98,35 @@
   .country-header {
     width: 100%;
     background: #333;
+    position: relative;
+
+    .show_graph_source {
+      position: absolute;
+      top: 42px;
+      left: 0;
+      z-index: 310;
+      width: 100%;
+      text-align: right;
+      color: $white;
+      font-size: 10px;
+      padding: 4px;
+
+      @media (min-width: $br-mobile) {
+        width: auto;
+        text-align: left;
+        font-size: 11px;
+        bottom: 94px;
+        margin: 0 25px;
+        top: auto;
+      }
+
+      @media (min-width: 1050px) {
+        bottom: 0;
+        margin: 0;
+      }
+
+    }
+
 
     .country-header-inner {
       background: #333;
