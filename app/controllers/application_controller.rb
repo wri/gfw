@@ -24,8 +24,13 @@ class ApplicationController < ActionController::Base
     end
 
     def check_terms
-      session[:return_to] = request.fullpath
-      redirect_to accept_terms_path if show_terms?
+      puts request.original_url.to_s
+      if request.original_url.to_s.include? "globalforestwatch.org"
+        #Filtering accept terms only in PRO
+
+        session[:return_to] = request.fullpath
+        redirect_to accept_terms_path if show_terms?
+      end
     end
 
     def show_terms?

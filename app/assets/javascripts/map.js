@@ -12,6 +12,7 @@ require([
   'mps',
   'map/router',
   'views/SourceWindowView',
+  'views/SourceBottomView',
   'views/SourceMobileFriendlyView',
   'map/presenters/ExperimentsPresenter',
   'map/services/AnalysisService',
@@ -31,7 +32,7 @@ require([
   'views/DownloadView',
 
   '_string'
-], function($, _, Class, Backbone, chosen, utils, enquire, mps, Router, SourceWindowView, SourceMobileFriendlyView, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
+], function($, _, Class, Backbone, chosen, utils, enquire, mps, Router, SourceWindowView, SourceBottomView, SourceMobileFriendlyView, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
     MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, HeaderView, FooterView, NotificationsView, DownloadView) {
 
   'use strict';
@@ -85,6 +86,7 @@ require([
       new FooterView();
       new HeaderView();
       new SourceWindowView();
+      new SourceBottomView();
       new SourceMobileFriendlyView();
       new NotificationsView();
     },

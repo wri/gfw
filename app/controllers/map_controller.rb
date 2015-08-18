@@ -5,11 +5,15 @@ class MapController < ApplicationController
   before_filter :validate_url, :only => [:index, :embed]
 
   def index
-    @title = 'Map'
+    @title = 'Interactive Map'
+    @desc = 'Explore the status of forests worldwide by layering data to create custom maps of forest change, cover, and use.'
+    @keywords = 'map, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation'
   end
 
   def embed
-    @title = 'Map'
+    @title = 'Interactive Map'
+    @desc = 'Explore the status of forests worldwide by layering data to create custom maps of forest change, cover, and use.'
+    @keywords = 'map, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation'
   end
 
   private

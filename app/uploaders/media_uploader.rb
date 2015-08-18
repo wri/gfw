@@ -3,8 +3,8 @@
 class MediaUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
-  include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  # include CarrierWave::RMagick
+  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   # storage :file
@@ -36,7 +36,7 @@ class MediaUploader < CarrierWave::Uploader::Base
   # Rotates the image based on the EXIF Orientation
   def fix_exif_rotation
     manipulate! do |img|
-      img.auto_orient!
+      img.auto_orient
       img = yield(img) if block_given?
       img
     end
@@ -45,7 +45,7 @@ class MediaUploader < CarrierWave::Uploader::Base
   # Strips out all embedded information from the image
   def strip
     manipulate! do |img|
-      img.strip!
+      img.strip
       img = yield(img) if block_given?
       img
     end
