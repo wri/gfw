@@ -86,6 +86,8 @@ define([
   'map/views/layers/ProdesCoverLayer',
   'map/views/layers/PerPermForestLayer',
   'map/views/layers/RaisgLayer',
+  'map/views/layers/PlantationsLayerByType',
+  'map/views/layers/PlantationsLayerBySpecies',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -181,6 +183,8 @@ define([
   ProdesCoverLayer,
   PerPermForestLayer,
   RaisgLayer,
+  PlantationsLayerByType,
+  PlantationsLayerBySpecies,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -450,6 +454,12 @@ define([
     },
     raisg: {
       view: RaisgLayer
+    },
+    gfw_plantations_by_type: {
+      view: PlantationsLayerByType
+    },
+    gfw_plantations_by_species: {
+      view: PlantationsLayerBySpecies
     },
     nothing: {
     }
