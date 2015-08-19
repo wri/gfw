@@ -77,6 +77,17 @@ define([
 
     },
 
+    subtitleTemplates: {
+      loss: '(annual, 30m, global, Hansen/UMD/Google/USGS/NASA)',
+      gain: '(12 years, 30m, global, Hansen/UMD/Google/USGS/NASA)',
+      prodes: '(annual, 30m, Brazilian Amazon, INPE)',
+      forma: '(monthly, 500m, humid tropics, WRI/CGD)',
+      terrailoss: '(monthly, 250m, Latin America, CIAT)',
+      imazon: '(monthly, 250m, Brazilian Amazon, Imazon)',
+      modis: '(quarterly, 5km, <37 degrees north, NASA)',
+      fires: '(daily, 1km, global, NASA)'
+    },
+
     options: {
       hidden: true
     },
@@ -146,6 +157,11 @@ define([
             layerTitle: layer.title
           });
         }
+
+        if (this.subtitleTemplates[layer.slug]) {
+          layer.subtitle = this.subtitleTemplates[layer.slug];
+        }
+
         if (layer.iso) {
           var countries = amplify.store('countries');
           iso = layer.iso;
