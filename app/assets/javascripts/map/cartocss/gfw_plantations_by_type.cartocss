@@ -3,6 +3,7 @@
    line-color: #FFF;
    line-width: 0.5;
    line-opacity: 1;
+   polygon-fill: orange;
 }
 
 #gfw_plantations[type_text="Industrial plantation"] {

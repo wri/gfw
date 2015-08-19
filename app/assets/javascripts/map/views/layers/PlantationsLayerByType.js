@@ -5,7 +5,7 @@
  */
 define([
   'abstract/layer/CartoDBLayerClass',
-  'text!map/cartocss/gfw_plantations.cartocss'
+  'text!map/cartocss/gfw_plantations_by_type.cartocss'
 
 ], function(CartoDBLayerClass, plantationsCartocss) {
 
