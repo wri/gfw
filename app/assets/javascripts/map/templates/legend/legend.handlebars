@@ -58,7 +58,9 @@
         {{#each this}}
           <li class="layer">
             <span class="layer-name">
-              <i class="circle" style="color:{{this.title_color}};"></i>{{this.title}}
+              <i class="circle" style="color:{{this.title_color}};"></i>
+                {{this.title}}
+                {{#if this.subtitle}}<span class="subtitle">{{this.subtitle}}</span>{{/if}}
               <a href='#' class='layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
               {{#if this.source}}
               <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>

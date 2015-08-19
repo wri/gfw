@@ -138,6 +138,13 @@
           top: -2px;
           left: 0;
         }
+        .subtitle {
+          font-size: 11px;
+          padding: 5px 8px 0 0px;
+          display: block;
+          color: #AAA;
+          word-wrap: break-word;
+        }
       }
       .layer-sublayer {
         cursor: pointer;
@@ -265,7 +272,7 @@
         }
       }
       i{
-        padding: 4px 0;
+        padding: 0;
         display: block;
         font-style: italic;
         font-size: 11px;
@@ -469,4 +476,17 @@
       margin: 5px 0 0;
     }
   }
+
+
+  /****************************/
+  /* HondurasLayer details */
+  /****************************/
+  .layer-details-honduras-forest {
+    .layer-colors li i {
+      padding: 4px 0;
+    }
+  }
+
+
+
 }
