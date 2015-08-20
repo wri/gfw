@@ -32,7 +32,7 @@ define([
     text:{
       default : {
         title : 'Request a link',
-        description : 'Enter your email to receive a link to download data'
+        description : 'Enter your email address to receive a link to download data'
       },
       'country-stats' : {
         title : 'Request a download link',

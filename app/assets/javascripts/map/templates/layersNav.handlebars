@@ -15,12 +15,12 @@
             <li class="layer" data-layer="loss">
               <span class="onoffswitch"><span></span></span>
               <span class="layer-title">Tree cover loss<a href='#' data-source='loss' class='source '><svg><use xlink:href="#shape-info"></use></svg></a></span>
-              <span class="layer-info">(annual, 30m, Global, Hansen/UMD/Google/USGS/NASA)</span>
+              <span class="layer-info">(annual, 30m, global, Hansen/UMD/Google/USGS/NASA)</span>
             </li>
             <li class="layer" data-layer="forestgain">
               <span class="onoffswitch"><span></span></span>
               <span class="layer-title">Tree cover gain<a href='#' data-source='forestgain' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-              <span class="layer-info">(12 years, 30m, Global, Hansen/UMD/Google/USGS/NASA)</span>
+              <span class="layer-info">(12 years, 30m, global, Hansen/UMD/Google/USGS/NASA)</span>
             </li>
             <li class="layer" data-layer="prodes">
               <span class="onoffradio"><span></span></span>
@@ -55,7 +55,7 @@
             <li class="layer" data-layer="fires">
               <span class="onoffradio"><span></span></span>
               <span class="layer-title">FIRMS active fires<a href='#' data-source='fires' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-              <span class="layer-info">(past 7 days, 1km, global, NASA)</span>
+              <span class="layer-info">(daily, 1km, global, NASA)</span>
             </li>
           </div>
         </ul>
@@ -100,6 +100,20 @@
           <li class="layer" data-layer="global_land_cover">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">GlobCover – Global landcover (2009)<a href='#' data-source='global_land_cover' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+          </li>
+          <li class="wrapped-layer" data-color="#FF0">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Plantations (select countries)<a href='#' data-source='gfw_plantations' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">
+              <label data-layer="gfw_plantations_by_type" class="layer wrapped">
+                <span></span>
+                <input type="radio" />by type
+              </label>
+              <label data-layer="gfw_plantations_by_species" class="layer wrapped">
+                <span></span>
+                <input type="radio" />by species
+              </label>
+            </span>
           </li>
         </ul>
       </div>
