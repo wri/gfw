@@ -146,6 +146,7 @@ define([
             layerTitle: layer.title
           });
         }
+
         if (layer.iso) {
           var countries = amplify.store('countries');
           iso = layer.iso;
@@ -241,7 +242,7 @@ define([
         this._renderLegend(categories, options, geographic);
       }
       //Experiment
-      this.presenter.initExperiment('source');
+      //this.presenter.initExperiment('source');
     },
 
     /**

@@ -9,7 +9,7 @@ class CountriesController < ApplicationController
     @countries = find_countries
     @title = 'Country Profiles'
     @desc = 'Explore country-specific statistics and graphs to see the how forests change and contribute to various sectors.'
-    @keywords = 'list, forest data, visualization, data, national, country, analysis, statistic, tree cover loss, tree cover gain, climate domain, boreal, tropical, subtropical, temperate, deforestation, overview'
+    @keywords = 'GFW, list, forest data, visualization, data, national, country, analysis, statistic, tree cover loss, tree cover gain, climate domain, boreal, tropical, subtropical, temperate, deforestation, overview'
   end
 
   def show
@@ -41,7 +41,7 @@ class CountriesController < ApplicationController
   def overview
     @title = 'Country Rankings'
     @desc = 'Compare tree cover change across countries and climate domains and view global rankings.'
-    @keywords = 'list, forest data, visualization, data, national, country, analysis, statistic, tree cover loss, tree cover gain, climate domain, boreal, tropical, subtropical, temperate, deforestation, deforesters, overview, global'
+    @keywords = 'GFW, list, forest data, visualization, data, national, country, analysis, statistic, tree cover loss, tree cover gain, climate domain, boreal, tropical, subtropical, temperate, deforestation, deforesters, overview, global'
   end
 
   private
