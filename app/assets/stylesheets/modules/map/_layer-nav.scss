@@ -208,7 +208,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           }
         }
         .layers-list {
-          .group-name{
+          .group-name, .grouped-layers-trigger{
             border-left: 3px solid nth($colors, $i);
             @media (min-width: $br-mobileMap){
               border: none;
@@ -383,6 +383,10 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       }
     }
     .grouped-layers-trigger{
+      em{
+        display: block;
+        padding: 0 33px 0 23px;
+      }
       .onoffradio{
         margin: 1px 6px 0 0;
         &.checked{
@@ -409,8 +413,11 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     .grouped-layers-trigger{
       display: block;
       font-size: 13px;
-      padding: 10px 0px 6px 15px;
+      padding: 10px 0px 10px 21px;
       position: relative;
+      @media (min-width: $br-mobileMap){
+        padding: 10px 0px 6px 15px;
+      }
     }
     >li{
       padding: 10px;
@@ -449,6 +456,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       padding: 5px 8px 0 23px;
       display: block;
       color: #AAA;
+      word-wrap: break-word;
       label {
         position: relative;
         float: none;

@@ -13,6 +13,7 @@ gem 'useragent'
 gem 'carrierwave'
 gem 'fog'
 gem 'rmagick', :require => false
+gem 'mini_magick'
 gem 'unf'
 gem 'requirejs-rails'
 gem 'rack-reverse-proxy', :path => "rack-reverse-proxy-0.4.4/", require: "rack/reverse_proxy"
@@ -41,4 +42,4 @@ group :production do
 end
 
 gem 'newrelic_rpm'
-gem 'unicorn'
+gem 'puma'

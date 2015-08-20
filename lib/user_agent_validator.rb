@@ -4,7 +4,7 @@ class UserAgentValidator
   SupportedBrowsers = [
     Browser.new('Safari', '5.0.5'),
     Browser.new('Firefox', '12.0'),
-    Browser.new('Internet Explorer', '10.0'),
+    Browser.new('Internet Explorer', '7.0'),
     Browser.new('Chrome', '19.0.1036.7'),
     Browser.new('Opera', '11.00')
   ]
