@@ -12,7 +12,7 @@ define([
 
   'use strict';
 
-  var InterestingView = Backbone.View.extend({
+  var ApplicationGridView = Backbone.View.extend({
 
     el: '#applicationsGridView',
 
@@ -35,7 +35,7 @@ define([
 
   });
 
-  return InterestingView;
+  return ApplicationGridView;
 
 });
 

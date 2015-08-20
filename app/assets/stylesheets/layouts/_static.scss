@@ -940,13 +940,22 @@
         position: relative;
         padding: 20px;
         padding-left: 100px;
-        border: 1px solid $border;
+        box-shadow: 0 0 0 1px $border;
+        cursor: pointer;
+
+        &:hover{
+          box-shadow: 0 0 0 2px $cGreen;
+        }
+
         .icon{
           position: absolute;
           top: 15px;
           left: 0;
           width: 100px;
           height: 45px;
+          svg{
+            fill: $dark;
+          }
         }
         header{
           width: 100%;
