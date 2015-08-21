@@ -2,40 +2,37 @@
    polygon-opacity: 0.5;
    line-color: #FFF;
    line-width: 0.5;
-   line-opacity: 1;
-   polygon-fill: orange;
+   line-opacity: 0;
+   polygon-fill: transparent;
 }
 
 #gfw_plantations[spec_simp="Oil palm"] {
-  polygon-fill: #49CC4C;
+  polygon-fill: #f44c43;
 }
-#gfw_plantations[spec_simp="Other"] {
-  polygon-fill: #9ECC49;
-}
-#gfw_plantations[spec_simp="Fruit mix"] {
-  polygon-fill: #5CA2D1;
-}
-#gfw_plantations[spec_simp="Hevea (rubber) mix"] {
-  polygon-fill: #63802E;
+#gfw_plantations[spec_simp="Oil palm mix"] {
+  polygon-fill: #f7837d;
 }
 #gfw_plantations[spec_simp="Wood fiber / timber"] {
   polygon-fill: #0F3B82;
 }
 #gfw_plantations[spec_simp="Wood fiber / timber mix"] {
-  polygon-fill: #FFF;
-}
-#gfw_plantations[spec_simp="Other mix"] {
-  polygon-fill: #F00;
-}
-#gfw_plantations[spec_simp="Oil palm mix"] {
-  polygon-fill: #0f0;
-}
-#gfw_plantations[spec_simp="Unknown"] {
-  polygon-fill: #00F;
-}
-#gfw_plantations[spec_simp="Fruit"] {
-  polygon-fill: #FF0;
+  polygon-fill: #1655bb;
 }
 #gfw_plantations[spec_simp="Hevea (rubber)"] {
+  polygon-fill: #00bdbd;
+}
+#gfw_plantations[spec_simp="Hevea (rubber) mix"] {
   polygon-fill: #0FF;
+}
+#gfw_plantations[spec_simp="Fruit"] {
+  polygon-fill: #b2b300;
+}
+#gfw_plantations[spec_simp="Fruit mix"] {
+  polygon-fill: #FF0;
+}
+#gfw_plantations[spec_simp="Other"] {
+  polygon-fill: #9ECC49;
+}
+#gfw_plantations[spec_simp="Other mix"] {
+  polygon-fill: #c1df8b;
 }

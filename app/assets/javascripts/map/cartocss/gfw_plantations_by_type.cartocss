@@ -2,8 +2,8 @@
    polygon-opacity: 0.5;
    line-color: #FFF;
    line-width: 0.5;
-   line-opacity: 1;
-   polygon-fill: orange;
+   line-opacity: 0;
+   polygon-fill: transparent;
 }
 
 #gfw_plantations[type_text="Industrial plantation"] {
