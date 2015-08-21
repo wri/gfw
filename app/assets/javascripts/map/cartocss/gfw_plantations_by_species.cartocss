@@ -16,7 +16,7 @@
   polygon-fill: #0F3B82;
 }
 #gfw_plantations[spec_simp="Wood fiber / timber mix"] {
-  polygon-fill: #1655bb;
+  polygon-fill: #246ee6;
 }
 #gfw_plantations[spec_simp="Hevea (rubber)"] {
   polygon-fill: #00bdbd;
