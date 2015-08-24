@@ -455,10 +455,10 @@ define([
     raisg: {
       view: RaisgLayer
     },
-    gfw_plantations_by_type: {
+    plantations_by_type: {
       view: PlantationsLayerByType
     },
-    gfw_plantations_by_species: {
+    plantations_by_species: {
       view: PlantationsLayerBySpecies
     },
     nothing: {

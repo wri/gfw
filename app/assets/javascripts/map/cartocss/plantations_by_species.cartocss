@@ -6,6 +6,10 @@
    polygon-fill: transparent;
 }
 
+#gfw_plantations[spec_simp="n/a"] {
+  polygon-fill: #FFA500;
+}
+
 #gfw_plantations[spec_simp="Oil palm"] {
   polygon-fill: #f44c43;
 }
