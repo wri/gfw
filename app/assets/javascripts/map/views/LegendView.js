@@ -154,7 +154,7 @@ define([
 
       // Append details template to layer.
       _.each(layers, function(layer) {
-        layer.source = (layer.slug === 'nothing') ? null : layer.slug;
+        layer.source = (layer.slug === 'nothing') ? null : layer.source || layer.slug;
         if (this.detailsTemplates[layer.slug]) {
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
