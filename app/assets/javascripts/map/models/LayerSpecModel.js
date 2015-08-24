@@ -30,8 +30,8 @@ define([
       "ifl_2013_deg",
       "ifl_2000",
       "mangrove",
-      "gfw_plantations_by_type",
-      "gfw_plantations_by_species",
+      "plantations_by_type",
+      "plantations_by_species",
       // PEOPLE
       "resource_rights",
       "cmr_resource_rights",
