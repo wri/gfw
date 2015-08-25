@@ -46,17 +46,24 @@
         {{#if imazon}}
           <li>
             <span class="stats-title">Deforestation alerts ({{dateRange}})</span>
-            <span class="stats-count" style="color: {{layer.title_color}};"><strong>{{defor}}</strong> Ha</span>
+            <span class="stats-count" style="color: {{layer.title_color}};"><strong>{{defor}}</strong> ha</span>
           </li>
           <li>
             <span class="stats-title">Degradation alerts</span>
-            <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{degrad}}</strong> Ha</span>
+            <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{degrad}}</strong> ha</span>
           </li>
         {{else}}
+          {{#if prodes}}
+            <li>
+              <span class="stats-title">Prodes tree cover loss ({{dateRange}})</span>
+              <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> ha</span>
+            </li>
+          {{else}}
           <li>
             <span class="stats-title">Total alerts ({{dateRange}})</span>
             <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> {{alertsName}}</span>
           </li>
+          {{/if}}
         {{/if}}
       {{/if}}
     {{/if}}
