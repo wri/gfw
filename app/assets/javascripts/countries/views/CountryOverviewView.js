@@ -520,21 +520,15 @@ define([
       } else if (this.model.get('graph') === 'domains') {
         $('.countries_list__header__minioverview').show();
         var sql = 'SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +' group by ecozone';
-        // var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
-        // if (!!mode && mode.mode == 'percent') {
-        //   sql = 'SELECT ecozone as name, sum(loss_perc) as total_loss, sum(gain_perc) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +' group by ecozone'
-        // }
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
               markup_list = '';
           var data = json.rows;
           var unit = '%';
           _.each(data, _.bind(function(val, key) {
-            // if (! !!mode || mode.mode == 'total') {
-              val.total_loss = val.total_loss/1000000;
-              val.total_gain = val.total_gain/1000000;
-              unit = 'Mha';
-            // }
+            val.total_loss = val.total_loss/1000000;
+            val.total_gain = val.total_gain/1000000;
+            unit = 'Mha';
 
             markup_list += ['<li>',
                               '<div class="countries_list__minioverview_number countries_list__minioverview huge">',
@@ -551,13 +545,6 @@ define([
           $('.countries_list ul').html(markup_list);
 
           that.model.set('class', 'huge');
-          // if (!!mode && mode.mode == 'percent') {
-          //   $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS DOMAIN</span> <strong>PERCENT DOMAIN</strong>').show();
-          //     $('.overview_graph__title').html('Climate domains ranked in order of greatest percent tree cover loss (2001-2013) relative to tree cover in 2000');
-          // } else {
-            // $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS DOMAIN</strong> <span>PERCENT DOMAIN</span>').show();
-            //   $('.overview_graph__title').html('Climate domains ranked in order of greatest tree cover loss (2001-2013)');
-          // }
           $('.trigger-mode').hide();
           that._reorderRanking();
         }, this ));
@@ -1255,33 +1242,37 @@ define([
       } else if (this.model.get('graph') === 'domains') {
         this._showYears();
 
-        var sql = 'SELECT name, ';
 
-        for(var y = 2001; y < 2013; y++) {
-          sql += 'y'+y+', '
-        }
+        var sql = 'SELECT ecozone as name, loss, year FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30);
+        d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
 
-        sql += 'y2013, GREATEST('
+          var data = _.groupBy(json.rows, function(row){
+            return row.name;
+          });
+          var data_index = 0;
+          var data_arr = [];
+          data = _.each(data, function(domain, i){
+            var domain_obj = {};
 
-        for(var y = 2001; y < 2013; y++) {
-          sql += 'y'+y+', '
-        }
+            domain_obj['name'] = i;
+            domain_obj['max'] = _.max(domain, function(y){return y.loss}).loss;
 
-        sql += 'y2013) as max\
-                FROM countries_domains';
+            _.each(domain, function(y, j){
+              domain_obj['y'+y.year] = y.loss;
+            });
 
-        d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, json) {
-          var data = json.rows;
+            data_arr.push(domain_obj);
+          });
 
           var r_scale = d3.scale.linear()
             .range([5, 30]) // max ball radius
-            .domain([0, d3.max(data, function(d) { return d.max; })])
+            .domain([0, d3.max(data_arr, function(d) { return d.max; })])
 
-          for(var j = 0; j < data.length; j++) {
+          for(var j = 0; j < data_arr.length; j++) {
             var data_ = [],
                 domain = '';
 
-            _.each(data[j], function(val, key) {
+            _.each(data_arr[j], function(val, key) {
               if (key !== 'max') {
                 if (key === 'name') {
                   domain = val.toLowerCase();
