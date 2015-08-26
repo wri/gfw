@@ -51,6 +51,7 @@ $height: auto;
 
   &.iframe{
     width: auto;
+    z-index: 1111;
     .content-wrapper{
       max-height: none;
     }
