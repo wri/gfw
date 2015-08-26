@@ -15,9 +15,6 @@
 #gfw_plantations[type_text="Mosaic of small-sized plantations"] {
    polygon-fill: #9ECC49;
 }
-#gfw_plantations[type_text="Clearning/ very young plantation"] {
-   polygon-fill: #5CA2D1;
-}
 #gfw_plantations[type_text="Clearing/ very young plantation"] {
    polygon-fill: #63802E;
 }
