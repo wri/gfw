@@ -279,6 +279,10 @@ define([
         p.dateRange = _.isArray(results.period) ? results.period[0] : results.period;
       }
 
+      if (layer.slug === 'prodes') {
+        p.dateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
+      }
+
       /**
        * UMD Loss and gain params.
        *   - lossDateRange
