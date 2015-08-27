@@ -209,7 +209,8 @@
     //croshairs
     .map-viewfinder,
     //feedback
-    .feedback-link {
+    .feedback-link,
+    .module-navmobile {
       display: none !important;
     }
   }
@@ -223,8 +224,16 @@
     }
     .widget-timeline{
       .widget-box{
-        bottom: 0px;
+        bottom: 44px;
       }
+    }
+
+    .module-navmobile {
+      bottom: 0;
+    }
+
+    .module-mapcontrols{
+      bottom: 54px;
     }
   }
   //footer
