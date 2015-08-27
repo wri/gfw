@@ -150,6 +150,7 @@
   text-align: center;
   padding: 4px 8px;
   white-space: nowrap;
+  pointer-events: none;
   @include transform(translate(-50%,5px));
   &:after{
     content: "";
