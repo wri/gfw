@@ -14,8 +14,10 @@
     <meta property="og:title" content="<%= @title %> | Global Forest Watch">
     <meta property="og:description" content="<%= @desc %>">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="http://www.globalforestwatch.org/">
+    <meta property="og:url" content="<%= request.original_url %>">
     <meta property="og:image" content="http://www.globalforestwatch.org/assets/backgrounds/home-slider/bg_slide1.png" />
+
+    <link rel="canonical" href="<%= request.original_url %>" />
 
 
     <link href='http://fonts.googleapis.com/css?family=Fira+Sans:400,500,300' rel='stylesheet' type='text/css'>
