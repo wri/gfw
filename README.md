@@ -74,7 +74,7 @@ AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 LAYER_SPEC=layerspec_nuclear_hazard
 ANALYTICS_PROPERTY_ID='UA-XXXXX-X'
-FEEDBACK_MAIL=miguel.barrenechea@simbiotica.es
+FEEDBACK_MAIL=example@gfw.com
 CACHE_VERSION=54
 
 
