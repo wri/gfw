@@ -679,6 +679,22 @@
             &:hover {
               background: #464646;
             }
+            &.disabled{
+              a{
+                cursor: default;
+                opacity: 0.25;
+              }
+              &:hover {
+                background: #333;
+                a{
+                  .sidenav-icon {
+                    svg{
+                      fill: #bebcc2;
+                    }
+                  }
+                }
+              }
+            }
           }
         }
 
