@@ -173,7 +173,8 @@ define([
       'click .umd_options_control' : '_onClickUMDOptions',
       'click .canopy-status em' : '_onClickUMDOptions',
       'click .item.settings' : '_onClickUMDOptions',
-      'click #country-sidebar-button' : 'toggleMobileOptions'
+      'click #country-sidebar-button' : 'toggleMobileOptions',
+      'click .analyze_from_country' : 'analyzeFromCountry'
     },
 
     initialize: function(options) {
@@ -644,6 +645,12 @@ define([
           $gain.html(' Ha');
           $amount_g.html('<span>' + gain_value + '</span>').append($gain);
         });
+    },
+
+    analyzeFromCountry: function(e) {
+      if ($(e.currentTarget).hasClass('disabled')) {
+        e && e.preventDefault();
+      }
     }
 
   });
