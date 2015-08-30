@@ -80,6 +80,9 @@ define([
     },
 
     download: function(event) {
+      if ($(event.currentTarget).hasClass('disabled')) {
+        event && event.preventDefault() && event.stopPropagation();
+      }
       if (isMobile.any && this._isMobile()) {
         event && event.preventDefault() && event.stopPropagation();
         var href = $(event.currentTarget).attr('href');
