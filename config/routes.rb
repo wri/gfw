@@ -6,13 +6,6 @@ Gfw::Application.routes.draw do
     # stories
     # get '/stories' => redirect("/stayinformed/crowdsourced-stories")
 
-    #sources
-    get '/sources/conservation?t=protected_areas' => redirect('http://www.protectedplanet.net/')
-    get '/sources/forest_use?t=oil_palm' => redirect('http://data.globalforestwatch.org/datasets/20398d4dc36e47bd92b559786670f270_0')
-    get '/sources/forest_cover?t=idn_primary' => redirect('http://data.globalforestwatch.org/datasets/b3ac8839275446b5983c0271fddf1e33')
-    get '/sources/forest_change?t=forma' => redirect('http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64')
-
-
     # 2004-2009 era
     get '/english' => redirect('/')
     get '/french' => redirect('/')
