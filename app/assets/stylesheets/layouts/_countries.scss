@@ -192,3 +192,18 @@
     margin-left: 20px;
   }
 }
+
+.country-warning {
+  text-align: center;
+  font-size: 18px;
+  padding: 20px;
+  color: $cGreen;
+  @media only screen and (max-width: 480px) {
+    font-size: 16px;
+    padding: 40px 20px 20px;
+    text-align: left;
+    &.no-pad {
+      padding: 0px 20px 20px;
+    }
+  }
+}
