@@ -26,6 +26,10 @@ class StaticController < ApplicationController
       redirect_to 'http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64'
     when 'protected_areas'
       redirect_to 'http://www.protectedplanet.net/'
+    when 'palm-oil-mills'
+      redirect_to 'http://data.gfw.opendata.arcgis.com/datasets/20398d4dc36e47bd92b559786670f270_0'
+    when 'fires'
+      redirect_to 'https://earthdata.nasa.gov/earth-observation-data/near-real-time/firms'
     else
       @title = 'Download Data'
       @desc = 'Browse and download forest-related data directly through the GFW Open Data Portal.'
