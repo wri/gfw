@@ -87,6 +87,7 @@ define([
       "cod_logging",
       "cog_logging",
       "logging",
+      "raisg",
       //STORIES
       "infoamazonia",
       "mongabay",
