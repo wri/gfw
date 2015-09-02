@@ -115,7 +115,29 @@ define([
       var url = this.url;
       url += "&BBOX=" + lUL_Longitude + "," + lUL_Latitude + "," + lLR_Longitude + "," + lLR_Latitude; // set bounding box
       return url;
-    }
+    },
+
+    addClick: function() {
+      google.maps.event.addListener(this.map, "click", _.bind(function(event) {
+        var zoom = this.map.getZoom();
+        var longitude = event.latLng.lng();
+        var latitude = event.latLng.lat();
+
+        var projectionMap = new MercatorProjection();
+
+        var lPointg = projectionMap.fromLatLngToPoint(event.latLng);
+        var lBPointLg = new google.maps.LatLng(longitude-1, latitude-1);
+        var lBPointRg  = new google.maps.LatLng(longitude+1, latitude+1);
+
+        var lng = lPointg.x;
+        var lat = lPointg.y;
+        var bbox = lBPointLg.lng() + "," + lBPointLg.lat() + "," + lBPointRg.lng() + "," + lBPointRg.lat();
+
+        var url = this.getQuery(lng,lat,bbox);
+        console.log(url);
+
+      }, this ));
+    },
 
   });
   return WMSLayerClass;

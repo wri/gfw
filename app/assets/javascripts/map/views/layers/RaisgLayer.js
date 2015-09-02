@@ -45,16 +45,6 @@ define([
       url: wmsUrl,
       infowindowUrl: wmsInfowindowUrl,
     },
-    addClick: function() {
-      google.maps.event.addListener(this.map, "click", _.bind(function(event) {
-        var longitude = event.latLng.lng();
-        var latitude = event.latLng.lat();
-        var bbox = longitude+','+latitude+','+longitude+','+latitude;
-        var url = this.getQuery(longitude,latitude,bbox);
-        console.log(url);
-
-      }, this ));
-    },
 
     getQuery: function(_longitude, _latitude, _bbox) {
       return new UriTemplate(wmsInfowindowUrl)
