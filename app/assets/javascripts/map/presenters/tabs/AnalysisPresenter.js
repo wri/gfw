@@ -241,6 +241,7 @@ define([
      * @param  {Object} iso {country: {string}, id: {integer}}
      */
     _analyzeIso: function(iso,options) {
+      var baselayer = this.getBaselayer();
       var options = _.extend({}, options);
       this.deleteAnalysis();
       this.view.setSelects(iso, this.status.get('dont_analyze'));
@@ -257,44 +258,52 @@ define([
       resource = this._buildResource(resource);
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Iso: ' + resource.iso.country);
 
-      if (!iso.region) {
-        // Get geojson/fit bounds/draw geojson/publish analysis.
-        countryService.execute(resource.iso, _.bind(function(results) {
-          var objects = _.findWhere(results.topojson.objects, {
-            type: 'MultiPolygon'
-          });
+      if (baselayer.slug !== 'loss') {
+        if (!iso.region) {
+          // Get geojson/fit bounds/draw geojson/publish analysis.
+          countryService.execute(resource.iso, _.bind(function(results) {
+            var objects = _.findWhere(results.topojson.objects, {
+              type: 'MultiPolygon'
+            });
 
-          var geojson = topojson.feature(results.topojson,
-            objects);
-          (options.fit_bounds) ? this._geojsonFitBounds(geojson) : null;
-          mps.publish('Subscribe/geom',[geojson]);
+            var geojson = topojson.feature(results.topojson,
+              objects);
+            (options.fit_bounds) ? this._geojsonFitBounds(geojson) : null;
+            mps.publish('Subscribe/geom',[geojson]);
 
-          if (!this.status.get('dont_analyze')) {
-            this.view.drawCountrypolygon(geojson,'#A2BC28');
-            this.view._removeCartodblayer();
-            this._publishAnalysis(resource);
-          }else{
-            mps.publish('Spinner/stop');
-          }
+            if (!this.status.get('dont_analyze')) {
+              this.view.drawCountrypolygon(geojson,'#A2BC28');
+              this.view._removeCartodblayer();
+              this._publishAnalysis(resource);
+            }else{
+              mps.publish('Spinner/stop');
+            }
 
 
-        },this));
+          },this));
+        } else {
+          regionService.execute(resource, _.bind(function(results) {
+            var geojson = results.features[0];
+            (options.fit_bounds) ? this._geojsonFitBounds(geojson) : null;
+            mps.publish('Subscribe/geom',[geojson]);
+
+            if (!this.status.get('dont_analyze')) {
+              this.view.drawCountrypolygon(geojson,'#A2BC28');
+              this.view._removeCartodblayer();
+              this._publishAnalysis(resource);
+            }else{
+              mps.publish('Spinner/stop');
+            }
+
+          },this));
+        }
       } else {
-        regionService.execute(resource, _.bind(function(results) {
-          var geojson = results.features[0];
-          (options.fit_bounds) ? this._geojsonFitBounds(geojson) : null;
-          mps.publish('Subscribe/geom',[geojson]);
-
-          if (!this.status.get('dont_analyze')) {
-            this.view.drawCountrypolygon(geojson,'#A2BC28');
-            this.view._removeCartodblayer();
-            this._publishAnalysis(resource);
-          }else{
-            mps.publish('Spinner/stop');
-          }
-
-        },this));
+        mps.publish('Spinner/stop');
+        if(!this.status.get('dont_analyze')){
+          this.notificate('not-umd-comming-soon');
+        }
       }
+
     },
 
     setAnalyzeIso: function(iso){
@@ -627,6 +636,10 @@ define([
       }
 
       return p;
+    },
+
+    getBaselayer: function() {
+      return this.status.get('baselayer');
     },
 
     toggleOverlay: function(to){

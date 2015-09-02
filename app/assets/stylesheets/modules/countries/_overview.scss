@@ -833,6 +833,10 @@
     cursor: pointer;
     a {
       color: $dark;
+      &.disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
     }
 
     svg{
