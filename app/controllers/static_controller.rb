@@ -13,25 +13,40 @@ class StaticController < ApplicationController
   def about
     @title = 'About'
     @desc = 'Learn about the ideas and partnerships behind GFW and our outcomes, watch videos, read our data policy, and contact us.'
-    @keywords = 'about, global forest watch, about gfw, history, staff, world resources institute, wri, about gfw commodities, about gfw fires'
+    @keywords = 'GFW, about, global forest watch, about gfw, history, staff, world resources institute, wri, about gfw commodities, about gfw fires'
   end
 
   def data
-    @title = 'Download Data'
-    @desc = 'Browse and download forest-related data directly through the GFW Open Data Portal.'
-    @keywords = 'open data portal, data, sets, browse, download, map, satellite, search data, explore data, forest change, forest cover, conservation, people, forest use, deforestation, land use, landscapes'
+    case params[:t]
+    when 'oil_palm'
+      redirect_to 'http://data.globalforestwatch.org/datasets/20398d4dc36e47bd92b559786670f270_0'
+    when 'idn_primary'
+      redirect_to 'http://data.globalforestwatch.org/datasets/b3ac8839275446b5983c0271fddf1e33'
+    when 'forma'
+      redirect_to 'http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64'
+    when 'protected_areas'
+      redirect_to 'http://www.protectedplanet.net/'
+    when 'palm-oil-mills'
+      redirect_to 'http://data.gfw.opendata.arcgis.com/datasets/20398d4dc36e47bd92b559786670f270_0'
+    when 'fires'
+      redirect_to 'https://earthdata.nasa.gov/earth-observation-data/near-real-time/firms'
+    else
+      @title = 'Download Data'
+      @desc = 'Browse and download forest-related data directly through the GFW Open Data Portal.'
+      @keywords = 'GFW, open data portal, data, sets, browse, download, map, satellite, search data, explore data, forest change, forest cover, conservation, people, forest use, deforestation, land use, landscapes'
+    end
   end
 
   def howto
     @title = 'How To'
     @desc = 'Learn to use the GFW platform with detailed directions on how to harness a wide variety of content and capabilities to suit your interests.'
-    @keywords = 'how to, howto, learn to, instuctions, video, tutorial, tutorials, guidelines, guide, learn, help, platform, website, map, analyze, manual, faqs'
+    @keywords = 'GFW, how to, howto, learn to, instuctions, video, tutorial, tutorials, guidelines, guide, learn, help, platform, website, map, analyze, manual, faqs'
   end
 
   def keep
     @title = 'Stay informed'
     @desc = 'Read the latest news and GFW analysis, sign up to receive alerts, and subscribe to areas of interest.'
-    @keywords = 'stay informed, stories, read, news, blog, newsletter, sign up, publications, browse, updates, keep udated, submit, upload, share'
+    @keywords = 'GFW, stay informed, stories, read, news, blog, newsletter, sign up, publications, browse, updates, keep udated, submit, upload, share'
 
     stories_per_page = 5
 
@@ -59,13 +74,13 @@ class StaticController < ApplicationController
   def getinvolved
     @title = 'Get Involved'
     @desc = 'Contribute to the GFW community by providing data, helping improve GFW, developing your own project, or by joining the discussion about GFW.'
-    @keywords = 'help, join, upload, crowdsource, develop, submit, story, app, report, map, public, open, data, share, improve, apply, small grants, fund, feedback, translations, action'
+    @keywords = 'GFW, help, join, upload, crowdsource, develop, submit, story, app, report, map, public, open, data, share, improve, apply, small grants, fund, feedback, translations, action'
   end
 
   def explore
     @title = 'Explore'
     @desc = 'Browse maps and tools available through GFW, create custom visualizations and analyses, access interactive forest statistics, or download data.'
-    @keywords = 'forests, forest data, forest monitoring, forest landscapes, maps, apps, applications, fires, commodities, open landscape partnership, map, palm oil transparency toolkit, forest atlas, develop your own app, climate, biodiversity, deforestation, mobile, explore, browse, tools'
+    @keywords = 'GFW, forests, forest data, forest monitoring, forest landscapes, maps, apps, applications, fires, commodities, open landscape partnership, map, palm oil transparency toolkit, forest atlas, develop your own app, climate, biodiversity, deforestation, mobile, explore, browse, tools'
   end
 
   def feedback

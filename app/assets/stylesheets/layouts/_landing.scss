@@ -23,6 +23,21 @@
     @media (min-width: $br-mobile) {
       max-height: 620px;
     }
+    .ribbon {
+      display: none;
+      position: absolute;
+      z-index: 1;
+      background-color: #97bd3d;
+      line-height: 40px;
+      box-sizing: border-box;
+      transform: rotate(45deg);
+      width: 450px;
+      text-align: center;
+      right: -140px;
+      top: 115px;
+      color: #fafafa;
+      cursor: pointer;
+    }
   }
 
   nav {

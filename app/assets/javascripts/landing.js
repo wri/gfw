@@ -46,11 +46,17 @@ require([
       new StoriesView();
       new FeedView();
       new TwitterStyleView();
+
+      // this.initSurvey();
+    },
+
+    initSurvey: function() {
       if (! !!amplify.store('survey_improve')) {
         amplify.store('survey_improve', true, { expires: 2628000000 });
         mps.publish('Source/open',['help_improve_GFW']);
       }
     }
+
   });
 
   new LandingPage();

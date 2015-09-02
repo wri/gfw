@@ -3,7 +3,7 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background-color: #AAA;
+  background-color: $cGreen;
   position: relative;
   &:after{
     content: "";
@@ -29,7 +29,7 @@
   }
 
   &:hover{
-    background-color: #777;
+    background-color: darken($cGreen,5%);
   }
   &.default{
     background-color: #AAA;
@@ -42,7 +42,6 @@
   }
   &.green{
     background-color: $cGreen;
-    // box-shadow: 0 0 0 2px $white, 0 0 0 3px $cGreen;
     svg{
       fill: $white;
     }
@@ -151,6 +150,7 @@
   text-align: center;
   padding: 4px 8px;
   white-space: nowrap;
+  pointer-events: none;
   @include transform(translate(-50%,5px));
   &:after{
     content: "";

@@ -14,3 +14,10 @@ use Rack::ReverseProxy do
   reverse_proxy /^\/gfw-assets\/?(.*)$/, "#{ENV['GFW_ASSETS_URL']}$1"
 
 end
+
+if ENV['ACCESS'] == 'private'
+  use Rack::Auth::Basic, "Restricted Area" do |username, password|
+    username == ENV['ACCESS_USER']
+    password  == ENV['ACCESS_PASSWORD']
+  end
+end

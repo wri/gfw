@@ -1,4 +1,5 @@
 <div class="country-header">
+  <div class="show_graph_source">Source: Hansen/UMD/Google/USGS/NASA</div>
   <div class="overview_button_group">
     <div class="inner">
       <div class="share mobile-hide share-link item" data-share-embed-url="<%= request.protocol + request.host_with_port %>/embed/country/<%= @country['iso'] %>" data-share-embed-width="600" data-share-embed-height="420">
@@ -74,8 +75,8 @@
         <div class="country-sidenav">
           <button id="country-sidebar-button"><em>More Options</em> <span class="icon"><svg><use xlink:href="#shape-arrow-down"></use></svg></span></button>
           <ul id="country-sidebar-ul">
-            <li>
-              <a href='<%= map_coords %>/grayscale/loss,forestgain?begin=2001-01-01&end=2014-12-30&threshold=' class='action analyze_from_country' target="_blank" id="url_analysis">
+            <li class="disabled">
+              <a href='<%= map_coords %>/grayscale/loss,forestgain?begin=2001-01-01&end=2014-12-30&threshold=' class='action analyze_from_country disabled' target="_blank" id="url_analysis">
                 <strong>Analyze forest change</strong>
                 <span class="sidenav-icon">
                   <svg>
@@ -104,8 +105,9 @@
                 </span>
               </a>
             </li>
-            <li>
-              <a href="http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/umd_country_stats.xlsx" class="download download-mobile-link" data-type="country-stats">
+            <li class="disabled">
+              <!-- <a href="http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/umd_country_stats.xlsx" class="download download-mobile-link" data-type="country-stats"> -->
+              <a href="#" class="download disabled download-mobile-link">
                 Download tree cover stats
                 <span class="sidenav-icon">
                   <svg>
