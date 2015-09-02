@@ -73,6 +73,7 @@ define([
   var WMSLayerClass = OverlayLayerClass.extend({
 
     init: function(layer, options, map) {
+      this.map = map;
       this.url = this.options.url;
       this.tiles = layer.tileurl;
       this._super(layer, options, map);
@@ -92,6 +93,7 @@ define([
         name: this.name,
         url: this.tiles
       });
+      this.addClick();
     },
 
     _getTileUrl: function(coord, zoom) {
