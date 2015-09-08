@@ -126,15 +126,12 @@ define([
         var projectionMap = new MercatorProjection();
 
         var lPointg = projectionMap.fromLatLngToPoint(event.latLng);
-        var lBPointLg = new google.maps.LatLng(longitude-1, latitude-1);
-        var lBPointRg  = new google.maps.LatLng(longitude+1, latitude+1);
+        var lBPointLg = new google.maps.LatLng(latitude-0.1, longitude-0.1);
+        var lBPointRg  = new google.maps.LatLng(latitude+0.1, longitude+0.1);
 
-        var lng = lPointg.x;
-        var lat = lPointg.y;
         var bbox = lBPointLg.lng() + "," + lBPointLg.lat() + "," + lBPointRg.lng() + "," + lBPointRg.lat();
 
-        var url = this.getQuery(lng,lat,bbox);
-        console.log(url);
+        var url = this.getQuery(lPointg.x,lPointg.y,bbox);
 
       }, this ));
     },

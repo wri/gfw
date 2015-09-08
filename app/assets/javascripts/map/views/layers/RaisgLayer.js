@@ -33,7 +33,7 @@ define([
   wmsInfowindowUrl += '&bbox={bbox}';
   wmsInfowindowUrl += '&width=1044';
   wmsInfowindowUrl += '&height=906';
-  wmsInfowindowUrl += '&format=text/html';
+  wmsInfowindowUrl += '&format=text/xml';
   wmsInfowindowUrl += '&X={longitude}';
   wmsInfowindowUrl += '&Y={latitude}';
   wmsInfowindowUrl += '&query_layers=0';
