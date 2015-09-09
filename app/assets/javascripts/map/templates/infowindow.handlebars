@@ -160,6 +160,14 @@
           <h4>Acquisition date:</h4>
           <p>{{content.data.acq_date}}</p>
         {{/if}}
+        {{#if content.data.year_created}}
+          <h4>Year created:</h4>
+          <p>{{content.data.year_created}}</p>
+        {{/if}}
+        {{#if content.data.date_created}}
+          <h4>Date of creation:</h4>
+          <p>{{content.data.date_created}}</p>
+        {{/if}}
         {{#if content.data.date_create}}
           <h4>Status date:</h4>
           <p>{{content.data.date_create}}</p>
@@ -231,6 +239,10 @@
         {{#if content.data.eholdtyp}}
           <h4>Easement Holder Type:</h4>
           <p>{{content.data.eholdtyp}}</p>
+        {{/if}}
+        {{#if content.data.owner}}
+          <h4>Owner:</h4>
+          <p>{{content.data.owner}}</p>
         {{/if}}
         {{#if content.data.owntype}}
           <h4>Landowner Type:</h4>

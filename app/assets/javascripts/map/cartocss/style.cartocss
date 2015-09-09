@@ -532,5 +532,33 @@
    line-opacity: 1;
    polygon-fill: #91b290;
   }
+  [layer='per_regional_protected_areas'] {
+    polygon-fill: #2167AB;
+  polygon-opacity: 0.7;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+  }
+  [layer='per_private_protected_areas'] {
+   polygon-fill: #94cecb;
+  polygon-opacity: 0.7;
+  line-color: #FFF;
+  line-width: 0;
+  line-opacity: 1;
+  }
+  [layer='per_national_protected_areas'] {
+   polygon-fill: #4d94c4;
+  polygon-opacity: 0.7;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+  }
+  [layer='per_buffer_zones'] {
+   polygon-fill: #82c2ed;
+   polygon-opacity: 0.7;
+   line-color: #5CA2D1;
+   line-width: 0;
+   line-opacity: 1;
+  }
 
 }

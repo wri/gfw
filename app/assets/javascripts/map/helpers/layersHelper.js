@@ -88,6 +88,10 @@ define([
   'map/views/layers/RaisgLayer',
   'map/views/layers/PlantationsLayerByType',
   'map/views/layers/PlantationsLayerBySpecies',
+  'map/views/layers/PerBufferLayer',
+  'map/views/layers/PerNatPALayer',
+  'map/views/layers/PerPrivPALayer',
+  'map/views/layers/PerRegPALayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -185,6 +189,10 @@ define([
   RaisgLayer,
   PlantationsLayerByType,
   PlantationsLayerBySpecies,
+  PerBufferLayer,
+  PerNatPALayer,
+  PerPrivPALayer,
+  PerRegPALayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -460,6 +468,18 @@ define([
     },
     plantations_by_species: {
       view: PlantationsLayerBySpecies
+    },
+    per_buffer: {
+      view: PerBufferLayer
+    },
+    per_nat_pa: {
+      view: PerNatPALayer
+    },
+    per_priv_pa: {
+      view: PerPrivPALayer
+    },
+    per_reg_pa: {
+      view: PerRegPALayer
     },
     nothing: {
     }

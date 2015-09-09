@@ -56,6 +56,10 @@ define([
       "biodiversity_hotspots",
       "protected_areasCDB",
       "idn_leuser",
+      "per_buffer",
+      "per_nat_pa",
+      "per_priv_pa",
+      "per_reg_pa",
       // FOREST USE
       "dam_hotspots",
       "per_prod_for",
