@@ -2,48 +2,59 @@ define([], function() {
 
   var applicationsHelper = [
     {
+      id: 0,
       name: 'GFW Interactive map',
       svg: '#shape-map',
       content: 'View and analyze data on the GFW Interactive Map.',
       href: '/map',
       link_text: 'Open map',
-      classname: 'btn green medium'
+      classname: 'btn green medium',
+      tags: 'forests, data, deforestation, maps'
     },
     {
+      id: 1,
       name: 'Country profiles & rankings',
       svg: '#shape-country',
       content: 'View country-specific data, analyze forest change within a country or subnational jurisdiction, or view country rankings based on forest statistics.',
       href: '/countries',
       link_text: 'View countries',
-      classname: 'btn green medium'
+      classname: 'btn green medium',
+      tags: 'forests, data, deforestation, maps'
     },
     {
+      id: 2,
       name: 'Download data',
       svg: '#shape-download',
       content: 'Browse, learn more about, and download the data displayed on Global Forest Watch.',
       href: 'http://data.globalforestwatch.org',
       link_text: 'Browse data',
-      classname: 'btn green medium mobile-friendly'
+      classname: 'btn green medium mobile-friendly',
+      tags: 'forests, data, deforestation, maps'
     },
     {
+      id: 3,
       name: 'Fires',
       svg: '#shape-fire',
       content: 'Track forest fires and haze in the ASEAN region.',
       href: 'http://fires.globalforestwatch.org/',
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
-      source: 'World Resources Institute'
+      source: 'World Resources Institute',
+      tags: 'data, deforestation, maps, fires'
     },
     {
+      id: 4,
       name: 'Commodities',
       svg: '#shape-commodities',
       content: 'Identify deforestation risk in commodity supply chains.',
       href: 'http://commodities.globalforestwatch.org/',
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
-      source: 'World Resources Institute'
+      source: 'World Resources Institute',
+      tags: 'commodities, data, deforestation, maps'
     },
     {
+      id: 5,
       name: 'Global Forest Watch: Sumatra campaign on Tomnod',
       svg: '#shape-tomnod',
       content: 'Help Global Forest Watch Fires track illegal fires and preserve the health of people and forests in Southeast Asia.',
@@ -52,9 +63,11 @@ define([], function() {
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'Digital Globe',
-      mobile_friendly: 'other'
+      mobile_friendly: 'other',
+      tags: 'forests, data, deforestation, maps'
     },
     {
+      id: 6,
       name: 'Open Landscape Partnership Platform',
       svg: '#shape-landscape',
       content: 'View and analyze ultra-high-resolution satellite imagery (up to 50 centimeters) for select forest landscapes.',
@@ -63,9 +76,11 @@ define([], function() {
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'Transparent World',
-      mobile_friendly: 'other'
+      mobile_friendly: 'other',
+      tags: 'forests, data, deforestation, maps'
     },
     {
+      id: 7,
       name: 'Sustainable Palm Oil Transparency Toolkit (SPOTT)',
       svg: '#shape-spott',
       content: 'Assess oil palm growers on the information that they make publicly available about the sustainability of their operations.',
@@ -74,9 +89,11 @@ define([], function() {
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'Zoological Society of London',
-      mobile_friendly: 'other'
+      mobile_friendly: 'other',
+      tags: 'forests, data, deforestation, maps'
     },
     {
+      id: 8,
       name: 'Monitoring of the Andean Amazon Project (MAAP)',
       svg: '#shape-aca',
       content: 'View information, maps and analysis from a new deforestation monitoring system for the Andean Amazon.',
@@ -85,9 +102,11 @@ define([], function() {
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'Amazon Conservation Association',
-      mobile_friendly: 'other'
+      mobile_friendly: 'other',
+      tags: 'forests, data, deforestation, maps'
     },
     {
+      id: 9,
       name: 'Cameroon Forest Atlas',
       svg: '#shape-CMR',
       content: 'View an interactive map with land-use data for Cameroon.',
@@ -96,9 +115,11 @@ define([], function() {
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Ministry of Forest and Wildlife of Cameroon',
-      mobile_friendly: 'other'
+      mobile_friendly: 'other',
+      tags: 'deforestation, maps'
     },
     {
+      id: 10,
       name: 'Central African Republic Forest Atlas',
       svg: '#shape-CAF',
       content: 'View an interactive map with land-use data for the Central African Republic.',
@@ -107,9 +128,11 @@ define([], function() {
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Ministry of Water, Forests, Hunting, and Fishing of the Central African Republic',
-      mobile_friendly: 'other'
+      mobile_friendly: 'other',
+      tags: 'deforestation, maps'
     },
     {
+      id: 11,
       name: 'Republic of Congo Forest Atlas',
       svg: '#shape-COG',
       content: 'View an interactive map with land-use data for the Congo.',
@@ -118,9 +141,11 @@ define([], function() {
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Ministry of Economy and Sustainable Forestry Development of the Congo',
-      mobile_friendly: 'other'
+      mobile_friendly: 'other',
+      tags: 'forests, data, maps'
     },
     {
+      id: 12,
       name: 'Democratic Republic of Congo Forest Atlas',
       svg: '#shape-COD',
       content: 'View an interactive map with land-use data for the Democratic Republic of the Congo.',
@@ -129,9 +154,11 @@ define([], function() {
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Ministry of Environment, Nature Conservation, and Tourism of the Democratic Republic of the Congo',
-      mobile_friendly: 'other'
+      mobile_friendly: 'other',
+      tags: 'data, deforestation, maps'
     },
     {
+      id: 13,
       name: 'Equatorial Guinea Forest Atlas',
       svg: '#shape-GNQ',
       content: 'View an interactive map with land-use data for Equatorial Guinea.',
@@ -140,9 +167,11 @@ define([], function() {
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Ministry of Agriculture and Forestry of Equatorial Guinea',
-      mobile_friendly: 'other'
+      mobile_friendly: 'other',
+      tags: 'forests, data, deforestation, maps'
     },
     {
+      id: 14,
       name: 'Gabon Forest Atlas',
       svg: '#shape-GAB',
       content: 'View an interactive map with land-use data for Gabon.',
@@ -151,9 +180,11 @@ define([], function() {
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Ministry of the Forest, Environment, and Protection of Natural Resources of Gabon',
-      mobile_friendly: 'other'
+      mobile_friendly: 'other',
+      tags: 'forests, data, maps'
     },
     {
+      id: 15,
       name: 'Develop your own app',
       svg: '#shape-develop',
       content: 'Learn how to develop your own application with Global Forest Watch data.',

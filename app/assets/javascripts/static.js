@@ -15,6 +15,7 @@ require([
   'static/FeedbackView',
   'static/ApplicationsNavView',
   'static/ApplicationsGridView',
+  'static/ApplicationsModalView',
   'views/HeaderView',
   'views/FooterView',
   'views/TermsView',
@@ -23,7 +24,7 @@ require([
   'views/SourceMobileFriendlyView',
 
   '_string'
-], function($, _, Class, Backbone, mps, RouterStatic, CarrouselView, StoriesKeepView, VideoView, SearchView, FeedbackView, ApplicationsNavView, ApplicationsGridView, HeaderView, FooterView, TermsView, SidebarNavView, InterestingView, SourceMobileFriendlyView) {
+], function($, _, Class, Backbone, mps, RouterStatic, CarrouselView, StoriesKeepView, VideoView, SearchView, FeedbackView, ApplicationsNavView, ApplicationsGridView, ApplicationsModalView, HeaderView, FooterView, TermsView, SidebarNavView, InterestingView, SourceMobileFriendlyView) {
   'use strict';
 
   var LandingPage = Class.extend({
@@ -77,6 +78,7 @@ require([
       new FeedbackView();
       new ApplicationsNavView();
       new ApplicationsGridView();
+      new ApplicationsModalView();
     }
   });
 

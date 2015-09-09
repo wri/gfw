@@ -1,6 +1,6 @@
 {{#each applications}}
   <div class="col">
-    <div class="little-card">
+    <div class="little-card" data-id="{{this.id}}">
       <div class="icon"><svg><use xlink:href="{{this.svg}}"></use></svg></div>
       <header>
         <h2>{{this.name}}</h2>
@@ -9,21 +9,3 @@
     </div>
   </div>
 {{/each}}
-
-
-{{!-- {{#each applications}}
-  <div class="col">
-    <div class="card">
-      <header>
-        <h2>{{this.name}}</h2>
-        <div class="icon"><svg><use xlink:href="{{this.svg}}"></use></svg></div>
-      </header>
-      <div class="content">
-        <p>{{this.content}}</p>
-      </div>
-      <footer>
-        <a href="{{this.href}}" class="{{this.classname}}">{{this.link_text}}</a>
-      </footer>
-    </div>
-  </div>
-{{/each}} --}}

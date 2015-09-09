@@ -18,6 +18,10 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    events: {
+      'click .little-card' : 'showAppInfo'
+    },
+
     initialize: function() {
       if (!this.$el.length) {
         return
@@ -31,6 +35,12 @@ define([
 
     render: function(){
       this.$el.html(this.template({ applications: this.helper }));
+    },
+
+    showAppInfo: function(e) {
+      e && e.preventDefault();
+      var id = $(e.currentTarget).data('id');
+      mps.publish('App/show', [id]);
     }
 
   });
