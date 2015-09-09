@@ -47,8 +47,8 @@ define([
       var d = {};
 
       if (data.length < 1) {
-        d.start = date[0].clone();
-        d.end = date[0].clone().add(2, 'month').endOf('month');
+        d.start = moment(date[0]).clone();
+        d.end = moment(date[0]).clone().add(2, 'month').endOf('month');
       } else {
         d.start = _.last(data).end.clone().add(1, 'month').startOf('month');
         d.end = _.last(data).end.clone().add(3, 'month').endOf('month');

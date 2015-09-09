@@ -70,7 +70,7 @@ define([
 
       this.cacheVars();
       //Experiment
-      this.presenter.initExperiment('source');
+      //this.presenter.initExperiment('source');
     },
 
     render: function(){

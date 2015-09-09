@@ -223,3 +223,15 @@ body,html{
     color: $dark;
   }
 }
+
+
+@media (max-width:$br-mobile - 1){
+  .gmnoprint, .gm-style-cc {
+    top: 0 !important;
+    bottom: auto !important;
+  }
+  .gm-style .gm-style-cc span, .gm-style .gm-style-cc a, .gm-style .gm-style-mtc div {
+    font-size: 8px !important;
+  }
+}
+

@@ -30,6 +30,8 @@ define([
       "ifl_2013_deg",
       "ifl_2000",
       "mangrove",
+      "gfw_plantations_by_type",
+      "gfw_plantations_by_species",
       // PEOPLE
       "resource_rights",
       "cmr_resource_rights",
@@ -56,6 +58,7 @@ define([
       "idn_leuser",
       // FOREST USE
       "dam_hotspots",
+      "per_prod_for",
       "concesiones_wrapper",
       "concesiones_forestalesNS",
       "concesiones_forestales",
@@ -99,6 +102,7 @@ define([
       "modis",
       "imazon",
       "forma",
+      "prodes",
       "loss",
       "forestgain"
     ],

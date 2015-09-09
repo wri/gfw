@@ -42,8 +42,28 @@
  		   	 	<priority>0.90</priority>
 	   	</url>
 			<url>
-  			 	<loc>http://www.globalforestwatch.org/sources</loc>
+  			 	<loc>http://data.globalforestwatch.org/</loc>
   				<changefreq>monthly</changefreq>
+ 		   	 	<priority>0.80</priority>
+	   	</url>
+	   		<url>
+  			 	<loc>http://www.globalforestwatch.org/explore</loc>
+  				<changefreq>yearly</changefreq>
+ 		   	 	<priority>0.80</priority>
+	   	</url>
+	   		<url>
+  			 	<loc>http://www.globalforestwatch.org/stayinformed</loc>
+  				<changefreq>yearly</changefreq>
+ 		   	 	<priority>0.80</priority>
+	   	</url>
+	   		<url>
+  			 	<loc>http://www.globalforestwatch.org/getinvolved</loc>
+  				<changefreq>yearly</changefreq>
+ 		   	 	<priority>0.80</priority>
+	   	</url>
+	   		<url>
+  			 	<loc>http://www.globalforestwatch.org/howto</loc>
+  				<changefreq>yearly</changefreq>
  		   	 	<priority>0.80</priority>
 	   	</url>
 			<url>

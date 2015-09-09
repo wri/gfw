@@ -12,10 +12,10 @@ define([
   var CarbonLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT the_geom_webmercator, additional, country, estimated_, project_id, project_na, project_ur, proponent_, sectoral_s, project_pr,  {analysis} AS analysis, \'{tableName}\' AS layer FROM {tableName}',
+      sql: 'SELECT cartodb_id,  \'{tableName}\' tablename, the_geom_webmercator, additional, country, estimated_, project_id, project_na, project_ur, proponent_, sectoral_s, project_pr,  {analysis} AS analysis, \'{tableName}\' AS layer FROM {tableName}',
       infowindow: true,
-      interactivity: 'project_id, country, project_na, project_ur, project_pr, proponent_, estimated_, additional',
-      analysis: false
+      interactivity: 'cartodb_id, tablename, layer,project_id, country, project_na, project_ur, project_pr, proponent_, estimated_, additional, analysis',
+      analysis: true
     }
 
   });

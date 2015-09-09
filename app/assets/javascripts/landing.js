@@ -6,6 +6,7 @@ require([
   'underscore',
   'Class',
   'backbone',
+  'amplify',
   'mps',
   'views/HeaderView',
   'views/FooterView',
@@ -18,7 +19,7 @@ require([
   'landing/views/TwitterStyleView',
   'handlebars',
   '_string',
-], function($, _, Class, Backbone, mps, HeaderView, FooterView, SourceWindowView, SourceMobileFriendlyView, SpinnerView, SlideView, StoriesView, FeedView, TwitterStyleView, Handlebars) {
+], function($, _, Class, Backbone, amplify, mps, HeaderView, FooterView, SourceWindowView, SourceMobileFriendlyView, SpinnerView, SlideView, StoriesView, FeedView, TwitterStyleView, Handlebars) {
   'use strict';
 
   var LandingPage = Class.extend({
@@ -45,6 +46,10 @@ require([
       new StoriesView();
       new FeedView();
       new TwitterStyleView();
+      if (! !!amplify.store('survey_improve')) {
+        amplify.store('survey_improve', true, { expires: 2628000000 });
+        mps.publish('Source/open',['help_improve_GFW']);
+      }
     }
   });
 
