@@ -21,26 +21,19 @@ define([
 
     events: {
       'click .maptype': '_setMaptype',
-      'click .landsat-years li': '_setMaptype',
-      'click .landsatSelector' : 'toggleLandsat',
-      'mouseover .landsat' : 'showLandsat',
-      'mouseout .landsat' : 'hideLandsat'
+      'click section' : '_setParams'
     },
 
     initialize: function() {
       _.bindAll(this, 'selectMaptype');
       this.presenter = new Presenter(this);
       this.render();
-      //Experiment
-      //this.presenter.initExperiment('source');
-      this.cartoAttribution =  'Map tiles by <a href="http://cartodb.com/attributions#Highresolution">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.';
     },
 
     render: function(){
       this.$el.html(this.template());
       this.$maptypeslist = this.$el;
       this.$maptypes = this.$el.find('.maptype');
-      this.$landsatYears = $('.landsat-years');
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.mobile = false;
@@ -73,41 +66,21 @@ define([
      * @param  {string} maptype
      */
     selectMaptype: function(maptype) {
-      // if (maptype == 'positron' || maptype == 'dark') {
-      //   console.log(this.cartoAttribution);
-      //   // debugger;
-      //   var self = this;
-      //   setTimeout(_.bind(function() {
-      //     $('#map').find('.gmnoprint span').ready(function(){
-      //       debugger
-      //       $(this).addClass('showimportant').html(self.cartoAttribution)
-      //     });
-      //   }, self ), 2000);
-      // }
       this.$maptypes.removeClass('selected');
       this.$maptypeslist.find('.' + maptype).addClass('selected');
     },
 
-    showLandsat: function(){
-      if (!this.mobile) {
-        this.$landsatYears.addClass('active');
-      }
-    },
-
-    hideLandsat: function(){
-      if (!this.mobile) {
-        this.$landsatYears.removeClass('active');
-      }
-    },
-
-    toggleLandsat: function(){
-      if (this.mobile) {
-        this.$landsatYears.toggleClass('active');
-      }
+    _setParams: function(e) {
+      var $objTarget = $(e.target).closest('.maptype');
+      var params = JSON.stringify(
+         {
+           'color_filter': $objTarget.find('.color').val(),
+           'cloud': $objTarget.find('.cloud').val(),
+           'mindate': $objTarget.find('.mindate').val(),
+           'maxdate': $objTarget.find('.maxdate').val()
+         });
+      sessionStorage.setItem($objTarget.data('maptype'), params);
     }
-
-
-
   });
 
   return HighresolutionView;
