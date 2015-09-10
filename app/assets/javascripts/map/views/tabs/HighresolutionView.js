@@ -21,7 +21,7 @@ define([
 
     events: {
       'click .maptype': '_setMaptype',
-      'click section' : '_setParams'
+      'click button' : '_setParams'
     },
 
     initialize: function() {
@@ -76,9 +76,10 @@ define([
          {
            'color_filter': $objTarget.find('.color').val(),
            'cloud': $objTarget.find('.cloud').val(),
-           'mindate': $objTarget.find('.mindate').val(),
-           'maxdate': $objTarget.find('.maxdate').val()
+           'mindate': ($objTarget.find('.mindate').val().length > 0) ? $objTarget.find('.mindate').val() : '2000-09-01',
+           'maxdate': ($objTarget.find('.maxdate').val().length > 0) ? $objTarget.find('.maxdate').val() : '2015-09-01'
          });
+      console.log(params)
       sessionStorage.setItem($objTarget.data('maptype'), params);
     }
   });
