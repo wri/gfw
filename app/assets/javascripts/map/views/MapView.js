@@ -14,8 +14,9 @@ define([
   'map/views/maptypes/darkMaptype',
   'map/views/maptypes/positronMaptype',
   'map/views/maptypes/landsatMaptype',
+  'map/views/maptypes/urthecastMapType',
   'map/helpers/layersHelper'
-], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, layersHelper) {
+], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, urthecastMapType, layersHelper) {
 
   'use strict';
 
@@ -431,6 +432,7 @@ define([
       this.map.mapTypes.set('treeheight', treeheightMaptype());
       this.map.mapTypes.set('dark', darkMaptype());
       this.map.mapTypes.set('positron', positronMaptype());
+      this.map.mapTypes.set('urthe', urthecastMapType());
       for (var i = 1999; i < 2013; i++) {
         this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
       }
