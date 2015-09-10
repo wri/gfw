@@ -2,7 +2,7 @@ define([], function() {
 
   var applicationsHelper = [
     {
-      id: 0,
+      id: 1,
       name: 'GFW Interactive map',
       svg: '#shape-map',
       content: 'View and analyze data on the GFW Interactive Map.',
@@ -12,7 +12,7 @@ define([], function() {
       tags: 'forests, data, deforestation, maps'
     },
     {
-      id: 1,
+      id: 2,
       name: 'Country profiles & rankings',
       svg: '#shape-country',
       content: 'View country-specific data, analyze forest change within a country or subnational jurisdiction, or view country rankings based on forest statistics.',
@@ -22,7 +22,7 @@ define([], function() {
       tags: 'forests, data, deforestation, maps'
     },
     {
-      id: 2,
+      id: 3,
       name: 'Download data',
       svg: '#shape-download',
       content: 'Browse, learn more about, and download the data displayed on Global Forest Watch.',
@@ -32,7 +32,7 @@ define([], function() {
       tags: 'forests, data, deforestation, maps'
     },
     {
-      id: 3,
+      id: 4,
       name: 'Fires',
       svg: '#shape-fire',
       content: 'Track forest fires and haze in the ASEAN region.',
@@ -43,7 +43,7 @@ define([], function() {
       tags: 'data, deforestation, maps, fires'
     },
     {
-      id: 4,
+      id: 5,
       name: 'Commodities',
       svg: '#shape-commodities',
       content: 'Identify deforestation risk in commodity supply chains.',
@@ -54,7 +54,7 @@ define([], function() {
       tags: 'commodities, data, deforestation, maps'
     },
     {
-      id: 5,
+      id: 6,
       name: 'Global Forest Watch: Sumatra campaign on Tomnod',
       svg: '#shape-tomnod',
       content: 'Help Global Forest Watch Fires track illegal fires and preserve the health of people and forests in Southeast Asia.',
@@ -67,7 +67,7 @@ define([], function() {
       tags: 'forests, data, deforestation, maps'
     },
     {
-      id: 6,
+      id: 7,
       name: 'Open Landscape Partnership Platform',
       svg: '#shape-landscape',
       content: 'View and analyze ultra-high-resolution satellite imagery (up to 50 centimeters) for select forest landscapes.',
@@ -80,7 +80,7 @@ define([], function() {
       tags: 'forests, data, deforestation, maps'
     },
     {
-      id: 7,
+      id: 8,
       name: 'Sustainable Palm Oil Transparency Toolkit (SPOTT)',
       svg: '#shape-spott',
       content: 'Assess oil palm growers on the information that they make publicly available about the sustainability of their operations.',
@@ -93,7 +93,7 @@ define([], function() {
       tags: 'forests, data, deforestation, maps'
     },
     {
-      id: 8,
+      id: 9,
       name: 'Monitoring of the Andean Amazon Project (MAAP)',
       svg: '#shape-aca',
       content: 'View information, maps and analysis from a new deforestation monitoring system for the Andean Amazon.',
@@ -106,7 +106,7 @@ define([], function() {
       tags: 'forests, data, deforestation, maps'
     },
     {
-      id: 9,
+      id: 10,
       name: 'Cameroon Forest Atlas',
       svg: '#shape-CMR',
       content: 'View an interactive map with land-use data for Cameroon.',
@@ -119,7 +119,7 @@ define([], function() {
       tags: 'deforestation, maps'
     },
     {
-      id: 10,
+      id: 11,
       name: 'Central African Republic Forest Atlas',
       svg: '#shape-CAF',
       content: 'View an interactive map with land-use data for the Central African Republic.',
@@ -132,7 +132,7 @@ define([], function() {
       tags: 'deforestation, maps'
     },
     {
-      id: 11,
+      id: 12,
       name: 'Republic of Congo Forest Atlas',
       svg: '#shape-COG',
       content: 'View an interactive map with land-use data for the Congo.',
@@ -145,7 +145,7 @@ define([], function() {
       tags: 'forests, data, maps'
     },
     {
-      id: 12,
+      id: 13,
       name: 'Democratic Republic of Congo Forest Atlas',
       svg: '#shape-COD',
       content: 'View an interactive map with land-use data for the Democratic Republic of the Congo.',
@@ -158,7 +158,7 @@ define([], function() {
       tags: 'data, deforestation, maps'
     },
     {
-      id: 13,
+      id: 14,
       name: 'Equatorial Guinea Forest Atlas',
       svg: '#shape-GNQ',
       content: 'View an interactive map with land-use data for Equatorial Guinea.',
@@ -171,7 +171,7 @@ define([], function() {
       tags: 'forests, data, deforestation, maps'
     },
     {
-      id: 14,
+      id: 15,
       name: 'Gabon Forest Atlas',
       svg: '#shape-GAB',
       content: 'View an interactive map with land-use data for Gabon.',
@@ -184,7 +184,7 @@ define([], function() {
       tags: 'forests, data, maps'
     },
     {
-      id: 15,
+      id: 16,
       name: 'Develop your own app',
       svg: '#shape-develop',
       content: 'Learn how to develop your own application with Global Forest Watch data.',

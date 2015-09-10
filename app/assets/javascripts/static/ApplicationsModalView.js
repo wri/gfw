@@ -71,13 +71,12 @@ define([
       var current = this.model.get('current');
       switch(dir) {
         case 'left':
-          (current == 0) ? current = this.helper.length - 1 : current--;
+          (current == 1) ? current = this.helper.length - 1 : current--;
         break;
         case 'right':
-          (current == this.helper.length - 1) ? current = 0 : current++;
+          (current == this.helper.length - 1) ? current = 1 : current++;
         break;
       }
-      console.log(current);
       this.model.set('current', current);
     }
 

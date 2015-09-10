@@ -1026,11 +1026,20 @@
   .btn-direction{
     position: absolute;
     top: 50%;
+    @include transform(translate(0,-50%));
     &.is-left{
       right: 100%;
     }
     &.is-right{
       left: 100%;
+    }
+    .icon{
+      padding: 10px;
+      width: 60px;
+      height: 60px;
+      svg{
+        stroke: $white;
+      }
     }
   }
 
