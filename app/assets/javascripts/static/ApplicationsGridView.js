@@ -35,6 +35,7 @@ define([
 
     render: function(){
       this.$el.html(this.template({ applications: this.helper }));
+      mps.publish('App/render');
     },
 
     showAppInfo: function(e) {

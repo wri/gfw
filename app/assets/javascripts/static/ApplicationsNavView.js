@@ -45,14 +45,18 @@ define([
 
     setListeners: function(){
       this.calculateOffsets();
-      this.scrollDocument();
       this.$document.on('scroll',_.bind(this.scrollDocument,this));
       this.$window.on('resize',_.bind(this.calculateOffsets,this));
+      mps.subscribe('App/render', _.bind(function(){
+        this.calculateOffsets();
+      }, this ));
     },
 
     calculateOffsets: function(){
       this.offset = this.$el.offset().top + parseInt(this.$el.css('paddingTop'), 10);
       this.offsetBottom = this.$cut.offset().top - this.$el.height();
+
+
       _.each(this.$links, _.bind(function(link, i){
         var id = $(link).attr('href');
         this.offsets[i] = $(id).offset().top - this.$el.height() - this.padding;
@@ -88,7 +92,6 @@ define([
           (this.offsetsIndex === 0) ? this.offsetsIndex = 0 : this.offsetsIndex--;
         }
       }
-      this.updateRoute();
       this.$links.removeClass('current');
       this.$linksparents.eq(this.offsetsIndex).children('a').addClass('current');
       this.lastScroll = scrollTop;
@@ -107,10 +110,6 @@ define([
       this.$htmlbody.animate({ scrollTop: $(id).offset().top - this.$el.height() }, time);
     },
 
-    updateRoute: function(){
-      // var section = this.$linksparents.eq(this.offsetsIndex).children('a').attr('href').replace('#','');
-      // mps.publish('SourceStatic/Silentupdate', [{ section:section }]);
-    }
 
   });
 
