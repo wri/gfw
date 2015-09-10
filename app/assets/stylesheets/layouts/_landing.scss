@@ -6,7 +6,7 @@
   position: relative;
   z-index: 3;
   @media (min-width: $br-mobile) {
-    margin-top: -60px;
+    top: -60px;
     min-height: 620px;
     padding-bottom: 37.5%;
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
@@ -24,6 +24,7 @@
       max-height: 620px;
     }
     .ribbon {
+      display: none;
       position: absolute;
       z-index: 1;
       background-color: #97bd3d;

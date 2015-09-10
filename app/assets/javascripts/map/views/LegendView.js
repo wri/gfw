@@ -28,8 +28,8 @@ define([
   'text!map/templates/legend/global_land_cover.handlebars',
   'text!map/templates/legend/forma.handlebars',
   'text!map/templates/legend/bra_biomes.handlebars',
-  'text!map/templates/legend/gfw_plantations_by_type.handlebars',
-  'text!map/templates/legend/gfw_plantations_by_species.handlebars',
+  'text!map/templates/legend/plantations_by_type.handlebars',
+  'text!map/templates/legend/plantations_by_species.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl) {
@@ -76,8 +76,8 @@ define([
       us_land_cover_change : Handlebars.compile(us_land_coverTPL),
       forma : Handlebars.compile(formaTPL),
       bra_biomes : Handlebars.compile(bra_biomesTPL),
-      gfw_plantations_by_type: Handlebars.compile(gfwPlantationByTypeTpl),
-      gfw_plantations_by_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      plantations_by_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      plantations_by_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
 
     },
 
@@ -143,7 +143,7 @@ define([
 
       // Append details template to layer.
       _.each(layers, function(layer) {
-        layer.source = (layer.slug === 'nothing') ? null : layer.slug;
+        layer.source = (layer.slug === 'nothing') ? null : layer.source || layer.slug;
         if (this.detailsTemplates[layer.slug]) {
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,

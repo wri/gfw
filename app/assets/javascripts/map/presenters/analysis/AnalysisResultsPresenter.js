@@ -41,7 +41,7 @@ define([
       'fires': 'nasa-active-fires',
       'modis': 'quicc-alerts',
       'terrailoss': 'terrai-alerts',
-      'prodes': 'prodes-alerts'
+      'prodes': 'prodes-loss'
     },
 
     init: function(view) {
@@ -277,6 +277,10 @@ define([
        */
       if (layer.slug === 'fires') {
         p.dateRange = _.isArray(results.period) ? results.period[0] : results.period;
+      }
+
+      if (layer.slug === 'prodes') {
+        p.dateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
       }
 
       /**

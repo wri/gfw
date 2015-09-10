@@ -6,7 +6,7 @@
 
     <li id='canopy' class='source-item first'>
       <div class='source_header'>
-        <strong class='source_title'>Threshold Settings Info Window</strong>
+        <strong class='source_title'>Tree Cover Canopy Density Settings</strong>
         <i class='expand_arrow'></i>
       </div>
 
@@ -15,9 +15,9 @@
         </div>
 
         <div class='source_table'>
-          <p>Drag the handle to adjust the minimum tree cover canopy (TCC) density for the visualization and analysis of UMD tree cover and tree cover loss. TCC density represents the estimated percent of a UMD pixel that was covered by tree canopy in the year 2000, as determined from the analysis of satellite imagery. For the tree cover loss data, TCC density therefore corresponds to the density of tree cover <u>before</u> loss occurred. For example, if you select 25% as the minimum TCC density, you will only see tree cover loss pixels for which the original tree cover density was greater than 25%.</p>
-          <p>Adjustments to the minimum TCC density only affect UMD tree cover and tree cover loss data layers. This feature does not pertain to UMD tree cover gain or to other GFW data layers or statistics. UMD tree cover gain is displayed with a set minimum TCC density greater than 50%. The minimum TCC density cannot be changed independently for tree cover and tree cover loss. A change made to one data layer will immediately take effect in the other.</p>
-          <p>This feature is also available for statistics within the country profiles and rankings. However, the adjustment made to the visualization and analysis through the map view will not be automatically reflected in other areas of the website. To adjust the minimum TCC density within the country and country rankings pages, click on the settings icon.</p>
+          <p>Drag the handle to adjust the minimum tree cover canopy (TCC) density for the visualization and analysis of Hansen/UMD/Google/USGS/NASA tree cover and tree cover loss. TCC density represents the estimated percent of a pixel that was covered by tree canopy in the year 2000, as determined from the analysis of satellite imagery. For the tree cover loss data, TCC density therefore corresponds to the density of tree cover <u>before</u> loss occurred. For example, if you select 25% as the minimum TCC density, you will only see tree cover loss pixels for which the original tree cover density was greater than 25%.</p>
+          <p>Adjustments to the minimum TCC density only affect the tree cover and tree cover loss data layers. This feature does not pertain to Hansen/UMD/Google/USGS/NASA tree cover gain or to other GFW data layers or statistics. Tree cover gain is displayed with a set minimum TCC density greater than 50%. The minimum TCC density cannot be changed independently for tree cover and tree cover loss. A change made to one data layer will immediately take effect in the other.</p>
+          <p>This feature is also available for statistics within the Country Profiles & Rankings. However, the adjustment made to the visualization and analysis through the map view will not be automatically reflected in other areas of the website. To adjust the minimum TCC density within the Country Profiles & Rankings pages, click on the settings icon.</p>
         </div>
       </div>
     </li>
@@ -51,7 +51,7 @@
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE</dt>
-            <dd>0.00025 decimal degrees or approximately 27.8 x 27.8 meters at the equator</dd>
+            <dd>30 × 30 meters</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Geographic coverage</dt>
@@ -59,7 +59,7 @@
           </dl>
           <dl class='sources_row even'>
             <dt>Source data</dt>
-            <dd>Landsat 5 TM, <a href='http://landsat.usgs.gov/' target='_blank'>Landsat 7 ETM+, and Landsat 8 OLI</a></dd>
+            <dd><a href='http://landsat.usgs.gov/index.php' target='_blank'>Landsat</a></dd>
           </dl>
           <dl class='sources_row'>
             <dt>Frequency of updates</dt>
@@ -67,52 +67,48 @@
           </dl>
           <dl class='sources_row even'>
             <dt>Date of content</dt>
-            <dd>2001–2013</dd>
+            <dd>2001–2014</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Tree cover canopy density</dt>
-            <dd>Varies according to selection (click the gear icon on the map to change the minimum tree cover canopy density threshold)</dd>
+            <dd>Varies according to selection (use the legend on the map to change the minimum tree cover canopy density threshold)</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Cautions</dt>
             <dd>
-              <p>This data layer was updated in January 2015 to extend the tree cover loss analysis to 2013. The 2013 data update included new Landsat 8 data (launched in February 2013) as well as re-processed 2010-2012 data from Landsat TM and ETM+, which increased the amount of change that could be detected, resulting in some changes in calculated tree cover loss for 2011 (global increase of 6%) and 2012 (increase of 22%). Calculated tree cover loss for 2001-2010 remains unchanged. The integrated use of the original 2001-2012 (Version 1.0) data and the updated 2011–2013 data (Version 1.1) should be performed with caution.</p>
+              <p>This data layer was updated in January 2015 to extend the tree cover loss analysis to 2013, and in August 2015 to extend the tree cover loss analysis to 2014. The updates include new data for the target year and re-processed data for the previous two years (2011 and 2012 for the 2013 update, 2012 and 2013 for the 2014 update). The re-processing increased the amount of change that could be detected, resulting in some changes in calculated tree cover loss for 2011-2013 compared to the previous versions. Calculated tree cover loss for 2001-2010 remains unchanged. The integrated use of the original 2001-2012 (Version 1.0) data and the updated 2011–2014 (Version 1.1) data should be performed with caution.</p>
 
               <p>For the purpose of this study, “tree cover” was defined as all vegetation taller than 5 meters in height. “Tree cover” is the biophysical presence of trees and may take the form of natural forests or plantations existing over a range of canopy densities. “Loss” indicates the removal or mortality of tree canopy cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
-              <p>When zoomed out (< zoom level 13), pixels of loss are shaded according to the density of loss at the 30 x 30 meter scale. Pixels with darker shading represent areas with a higher concentration of tree cover loss, whereas pixels with lighter shading indicate a lower concentration of tree cover loss. There is no variation in pixel shading when the data is at full resolution (≥ zoom level 13).</p>
 
-              <p>A validation assessment of the 2000 – 2012 UMD change data was carried out independently from the mapping exercise at the global and biome (tropical, subtropical, temperate, and boreal) scale. A stratified random sample (for no change, loss, and gain) of 1500 blocks, each 120 × 120 meters, was used as validation data.  The amount of tree cover loss within each block was estimated using Landsat, MODIS, and Google Earth high-resolution imagery and compared to the map. Overall accuracies for loss were over 99% globally and for all biomes. However, since the overall accuracy calculations are positively skewed due to the high percentage of no change pixels, it is also important to assess the accuracy of the change predictions. The user’s accuracy (i.e. the percentage of pixels labelled as tree cover loss that actually lost tree cover) was 87.0% at the global level. At the biome level, user’s accuracies were 87.0%, 79.3%, 88.2%, and 88.0% for the tropical, subtropical, temperate, and boreal biomes, respectively. A separate test was conducted to determine the temporal accuracy of the tree cover loss data. Within the 1500 blocks, the year of the largest drop in annual MODIS NDVI was compared to the year of tree cover loss from the map. The year of disturbance matched for 75.2% of tree cover loss events, and was within one year for 96.7% of tree cover loss events.</p>
+              <p>When zoomed out (< zoom level 13), pixels of loss are shaded according to the density of loss at the 30 x 30 meter scale. Pixels with darker shading represent areas with a higher concentration of tree cover loss, whereas pixels with lighter shading indicate a lower concentration of tree cover loss. There is no variation in pixel shading when the data is at full resolution (≥ zoom level 13).</p>
             </dd>
           </dl>
         </div>
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>This data set measures areas of tree cover loss across all global land (except Antarctica and other Arctic islands) at approximately 30 × 30 meter resolution. The data were generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a>, and <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a>, and <a href='http://landsat.usgs.gov/landsat8.php' target='_blank'>Landsat 8</a> Operational Land Imager (OLI) sensors. Over 1 million satellite images were processed and analyzed, including over 600,000 Landsat 7 images for the 2000-2012 interval, and approximately 400,000 Landsat 5, 7 and 8 images for the 2010-2013 interval. The clear land surface observations in the satellite images were assembled and a supervised learning algorithm was applied to identify per pixel tree cover loss.</p>
-
-          <p>Tree cover loss is defined as “stand replacement disturbance,” or the complete removal of tree cover canopy at the Landsat pixel scale. Tree cover loss may be the result of human activities, including forestry practices such as timber harvesting or deforestation (the conversion of natural forest to other land uses), as well as natural causes such as disease or storm damage.  Fire is another widespread cause of tree cover loss, and can be either natural or human-induced.</p>
+          <p>This data set measures areas of tree cover loss across all global land (except Antarctica and other Arctic islands) at approximately 30 × 30 meter resolution. The data were generated using multispectral satellite imagery from the <a href="http://landsat.usgs.gov/about_landsat5.php" target="_blank">Landsat 5</a> thematic mapper (TM), the <a href="http://landsat.usgs.gov/science_L7_cpf.php" target="_blank">Landsat 7</a> thematic mapper plus (ETM+), and the <a href="" target="_blank">Landsat 8</a> Operational Land Imager (OLI) sensors. Over 1 million satellite images were processed and analyzed, including over 600,000 Landsat 7 images for the 2000-2012 interval, and approximately 400,000 Landsat 5, 7, and 8 images for updates for the 2011-2014 interval. The clear land surface observations in the satellite images were assembled and a supervised learning algorithm was applied to identify per pixel tree cover loss.</p>
+          <p>Tree cover loss is defined as “stand replacement disturbance,” or the complete removal of tree cover canopy at the Landsat pixel scale. Tree cover loss may be the result of human activities, including forestry practices such as timber harvesting or deforestation (the conversion of natural forest to other land uses), as well as natural causes such as disease or storm damage. Fire is another widespread cause of tree cover loss, and can be either natural or human-induced.</p>
           <p><strong>2015 Update (Version 1.1)</strong></p>
-          <p>This data set was recently updated and now includes a 2013 loss layer and revised layers for 2011 and 2012. The analysis method has been modified in numerous ways, and the update should be seen as part of a transition to a future “version 2.0” of this data set that is more consistent over the entire 2001 and onward period. Key changes include:</p>
+          <p>This data set has been updated twice since its creation, and now includes loss up to 2014. The analysis method has been modified in numerous ways, and the update should be seen as part of a transition to a future “version 2.0” of this data set that is more consistent over the entire 2001 and onward period. Key changes include:</p>
           <ul class="bullets">
-            <li>The use of Landsat 8 data for 2013 and Landsat 5 data for 2010-2011</li>
-            <li>The reprocessing of data from 2011 to 2012 in measuring loss</li>
+            <li>The use of Landsat 8 data for 2013-2014 and Landsat 5 data for 2011-2012</li>
+            <li>The reprocessing of data from the previous two years in measuring loss (2011 and 2012 for the 2013 update, 2012 and 2013 for the 2014 update)</li>
             <li>Improved training data for calibrating the loss model</li>
             <li>Improved per sensor quality assessment models to filter input data</li>
             <li>Improved input spectral features for building and applying the loss model</li>
           </ul>
-          <p>These changes lead to a different and improved detection of global tree cover loss. However, the years preceding 2011 have not yet been reprocessed with the revised analysis methods, and users will notice inconsistencies between versions 1.0 (2001-2012) and 1.1 (2001-2013) as a result. It must also be noted that a full validation of the results incorporating Landsat 8 has not been undertaken. Such an analysis may reveal a more sensitive ability to detect and map forest disturbance using Landsat 8 data. If this is the case then there will be a more fundamental limitation to the consistency of this data set before and after the inclusion of Landsat 8 data. Validation of Landsat 8-incorporated loss detection is planned.</p>
-          <p>Some examples of improved change detection in the 2011–2013 update include the following:</p>
+          <p>These changes lead to a different and improved detection of global tree cover loss. However, the years preceding 2011 have not yet been reprocessed with the revised analysis methods, and users will notice inconsistencies between versions 1.0 (2001-2012) and 1.1 (2011-2014) as a result. It must also be noted that a full validation of the results incorporating Landsat 8 has not been undertaken. Such an analysis may reveal a more sensitive ability to detect and map forest disturbance using Landsat 8 data. If this is the case then there will be a more fundamental limitation to the consistency of this data set before and after the inclusion of Landsat 8 data. Validation of Landsat 8-incorporated loss detection is planned.</p>
+          <p>Some examples of improved change detection in the 2011–2014 update include the following:</p>
           <ul class="bullets">
             <li>Improved detection of boreal forest loss due to fire</li>
             <li>Improved detection of smallholder rotation agricultural clearing in dry and humid tropical forests</li>
             <li>Improved detection of selective logging</li>
           </ul>
-          <p>These are examples of dynamics that may be differentially mapped over the 2001-2013 period in Version 1.1. A version 2.0 reprocessing of the 2001 and onward record is planned, but no delivery date is yet confirmed.</p>
+          <p>These are examples of dynamics that may be differentially mapped over the 2011-2014 period in Version 1.1. A version 2.0 reprocessing of the 2001 and onward record is planned, but no delivery date is yet confirmed.</p>
           <p>The original version 1.0 data remains available for download <a href='http://earthenginepartners.appspot.com/science-2013-global-forest/download_v1.0.html' target='_blank'>here</a>.</p>
           <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Science 342 (15 November): 850–53. Data available online from: <a href='http://earthenginepartners.appspot.com/science-2013-global-forest' target='_blank'>http://earthenginepartners.appspot.com/science-2013-global-forest</a>.</p>
-
-          <p class='credits'><strong>Suggested citations for data as displayed on GFW:</strong>Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain Area.” University of Maryland, Google, USGS, and NASA. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
-
+          <p class='credits'>Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain Area.” University of Maryland, Google, USGS, and NASA. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
           <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "http://data.globalforestwatch.org/datasets/93ecbfa0542c42fdaa8454fa42a6cc27", :class => 'download-mobile-link' %></em></p>
         </div>
       </div>
@@ -154,7 +150,7 @@
           <dl class='sources_row'>
             <dt>Cautions</dt>
             <dd>
-              <p>TPRODES only identifies forest clearings of 6.25 hectares or larger, so forest degradation or smaller clearings from fire or selective logging are not detected.</p>
+              <p>PRODES only identifies forest clearings of 6.25 hectares or larger, so forest degradation or smaller clearings from fire or selective logging are not detected.</p>
 
               <p>Frequent cloud cover over areas of the Amazon may change the reported year of deforestation. The year reported is the first year deforestation is identified by analysts, but this does not necessarily correspond to the year of deforestation if the landscape has been covered by clouds in previous years.</p>
             </dd>
@@ -169,7 +165,7 @@
           <h3 class='overview_title'>Overview</h3>
           <p>The PRODES project monitors clear cut deforestation in the Brazilian Legal Amazon, and has produced annual deforestation rates for the region since 1988. The Brazilian government uses these figures to establish public policy, including defining access to credit in the Amazon biome, establishing deforestation reduction goals, and soliciting funds to reduce deforestation. PRODES historically used Landsat 5 images, but now also incorporates imagery from Landsat 7 and 8, CBERS-2, CBERS-2B, Resourcesat-1, and UK2-DMC. PRODES is operated by the National Institute of Space Research (INPE) in collaboration with the Ministry of the Environment (MMA) and the Brazilian Institute of Environment and Renewable Natural Resources (IBAMA). Since 2002, all PRODES data is publicly available online.</p>
 
-          <p>Input images for each of the 220 Landsat footprints that cover the Brazilian Amazon are selected based on their lack of cloud cover and their capture date. The PRODES system uses the seasonal year, starting on August 1st, to calculate annual deforestation, so images are selected as near to this date as possible (generally from July, August, and September). From 2003 to 2005, analysts used image transformation to determine the components of vegetation, soil, and shadow using the program SPRING. These components were segmented and classified into the classes of forest, non-forest, deforestation in the target year, previous deforestation, clouds, and water, which are then manually corrected by experts. Starting in 2005, a new methodology was implemented which makes use of the open source TerraAmazon platform. The platform allows the PRODES analysis to be more uniform and can incorporate imagery from a variety of satellites. As before, images are selected to be as cloud free as possible. The images are then masked to exclude non-forest, previous deforestation, and water using the previous year’s analysis. Analysts then delineate deforested polygons in the intact forest of the previous year. More information on the methodology can be found on the PRODES website.</p>
+          <p>Input images for each of the 220 Landsat footprints that cover the Brazilian Amazon are selected based on their lack of cloud cover and their capture date. The PRODES system uses the seasonal year, starting on August 1st, to calculate annual deforestation, so images are selected as near to this date as possible (generally from July, August, and September). From 2003 to 2005, analysts used image transformation to determine the components of vegetation, soil, and shadow using the program SPRING. These components were segmented and classified into the classes of forest, non-forest, deforestation in the target year, previous deforestation, clouds, and water, which are then manually corrected by experts. Starting in 2005, a new methodology was implemented which makes use of the open source TerraAmazon platform. The platform allows the PRODES analysis to be more uniform and can incorporate imagery from a variety of satellites. As before, images are selected to be as cloud free as possible. The images are then masked to exclude non-forest, previous deforestation, and water using the previous year’s analysis. Analysts then delineate deforested polygons in the intact forest of the previous year. More information on the methodology can be found on the <a href="http://www.obt.inpe.br/prodes/index.php" target="_blank">PRODES website</a>.</p>
           <p>This data set shows deforestation from 1997-2000, and annual deforestation between 2000 and 2014.</p>
 
 
@@ -269,11 +265,11 @@
         </div>
       </div>
     </li>
-    <li id='loss' class='source-item'>
+    <li id='loss' class='source-item first'>
       <div class='source_header'>
         <strong class='source_title'>University of Maryland/Google tree cover loss</strong>
         <i class='expand_arrow'></i>
-        <em class='source_description'>(annual, 30m, global)</em>
+        <em class='source_description'>(annual, 27.8m, global)</em>
       </div>
 
       <div class='source_body'>
@@ -288,7 +284,7 @@
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE</dt>
-            <dd>0.00025 decimal degrees or approximately 27.8 x 27.8 meters at the equator</dd>
+            <dd>30 × 30 meters</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Geographic coverage</dt>
@@ -296,7 +292,7 @@
           </dl>
           <dl class='sources_row even'>
             <dt>Source data</dt>
-            <dd>Landsat 5 TM, <a href='http://landsat.usgs.gov/' target='_blank'>Landsat 7 ETM+, and Landsat 8 OLI</a></dd>
+            <dd><a href='http://landsat.usgs.gov/index.php' target='_blank'>Landsat</a></dd>
           </dl>
           <dl class='sources_row'>
             <dt>Frequency of updates</dt>
@@ -304,18 +300,19 @@
           </dl>
           <dl class='sources_row even'>
             <dt>Date of content</dt>
-            <dd>2001–2013</dd>
+            <dd>2001–2014</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Tree cover canopy density</dt>
-            <dd>Varies according to selection (click the gear icon on the map to change the minimum tree cover canopy density threshold)</dd>
+            <dd>Varies according to selection (use the legend on the map to change the minimum tree cover canopy density threshold)</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Cautions</dt>
             <dd>
-              <p>This data layer was updated in January 2015 to extend the tree cover loss analysis to 2013. The 2013 data update included new Landsat 8 data (launched in February 2013) as well as re-processed 2010-2012 data from Landsat TM and ETM+, which increased the amount of change that could be detected, resulting in some changes in calculated tree cover loss for 2011 (global increase of 6%) and 2012 (increase of 22%). Calculated tree cover loss for 2001-2010 remains unchanged. The integrated use of the original 2001-2012 (Version 1.0) data and the updated 2011–2013 data (Version 1.1) should be performed with caution.</p>
+              <p>This data layer was updated in January 2015 to extend the tree cover loss analysis to 2013, and in August 2015 to extend the tree cover loss analysis to 2014. The updates include new data for the target year and re-processed data for the previous two years (2011 and 2012 for the 2013 update, 2012 and 2013 for the 2014 update). The re-processing increased the amount of change that could be detected, resulting in some changes in calculated tree cover loss for 2011-2013 compared to the previous versions. Calculated tree cover loss for 2001-2010 remains unchanged. The integrated use of the original 2001-2012 (Version 1.0) data and the updated 2011–2014 (Version 1.1) data should be performed with caution.</p>
 
               <p>For the purpose of this study, “tree cover” was defined as all vegetation taller than 5 meters in height. “Tree cover” is the biophysical presence of trees and may take the form of natural forests or plantations existing over a range of canopy densities. “Loss” indicates the removal or mortality of tree canopy cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
+
               <p>When zoomed out (< zoom level 13), pixels of loss are shaded according to the density of loss at the 30 x 30 meter scale. Pixels with darker shading represent areas with a higher concentration of tree cover loss, whereas pixels with lighter shading indicate a lower concentration of tree cover loss. There is no variation in pixel shading when the data is at full resolution (≥ zoom level 13).</p>
             </dd>
           </dl>
@@ -323,31 +320,28 @@
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>This data set measures areas of tree cover loss across all global land (except Antarctica and other Arctic islands) at approximately 30 × 30 meter resolution. The data were generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a>, and <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a>, and <a href='http://landsat.usgs.gov/landsat8.php' target='_blank'>Landsat 8</a> Operational Land Imager (OLI) sensors. Over 1 million satellite images were processed and analyzed, including over 600,000 Landsat 7 images for the 2000-2012 interval, and approximately 400,000 Landsat 5,7 and 8 images for the 2010-2013 interval . The clear land surface observations in the satellite images were assembled and a supervised learning algorithm was applied to identify per pixel tree cover loss.</p>
-
-          <p>Tree cover loss is defined as “stand replacement disturbance,” or the complete removal of tree cover canopy at the Landsat pixel scale. Tree cover loss may be the result of human activities, including forestry practices such as timber harvesting or deforestation (the conversion of natural forest to other land uses), as well as natural causes such as disease or storm damage.  Fire is another widespread cause of tree cover loss, and can be either natural or human-induced.</p>
+          <p>This data set measures areas of tree cover loss across all global land (except Antarctica and other Arctic islands) at approximately 30 × 30 meter resolution. The data were generated using multispectral satellite imagery from the <a href="http://landsat.usgs.gov/about_landsat5.php" target="_blank">Landsat 5</a> thematic mapper (TM), the <a href="http://landsat.usgs.gov/science_L7_cpf.php" target="_blank">Landsat 7</a> thematic mapper plus (ETM+), and the <a href="" target="_blank">Landsat 8</a> Operational Land Imager (OLI) sensors. Over 1 million satellite images were processed and analyzed, including over 600,000 Landsat 7 images for the 2000-2012 interval, and approximately 400,000 Landsat 5, 7, and 8 images for updates for the 2011-2014 interval. The clear land surface observations in the satellite images were assembled and a supervised learning algorithm was applied to identify per pixel tree cover loss.</p>
+          <p>Tree cover loss is defined as “stand replacement disturbance,” or the complete removal of tree cover canopy at the Landsat pixel scale. Tree cover loss may be the result of human activities, including forestry practices such as timber harvesting or deforestation (the conversion of natural forest to other land uses), as well as natural causes such as disease or storm damage. Fire is another widespread cause of tree cover loss, and can be either natural or human-induced.</p>
           <p><strong>2015 Update (Version 1.1)</strong></p>
-          <p>This data set was recently updated and now includes a 2013 loss layer and revised layers for 2011 and 2012. The analysis method has been modified in numerous ways, and the update should be seen as part of a transition to a future “version 2.0” of this data set that is more consistent over the entire 2001 and onward period. Key changes include:</p>
+          <p>This data set has been updated twice since its creation, and now includes loss up to 2014. The analysis method has been modified in numerous ways, and the update should be seen as part of a transition to a future “version 2.0” of this data set that is more consistent over the entire 2001 and onward period. Key changes include:</p>
           <ul class="bullets">
-            <li>The use of Landsat 8 data for 2013 and Landsat 5 data for 2010-2011</li>
-            <li>The reprocessing of data from 2011 to 2012 in measuring loss</li>
+            <li>The use of Landsat 8 data for 2013-2014 and Landsat 5 data for 2011-2012</li>
+            <li>The reprocessing of data from the previous two years in measuring loss (2011 and 2012 for the 2013 update, 2012 and 2013 for the 2014 update)</li>
             <li>Improved training data for calibrating the loss model</li>
             <li>Improved per sensor quality assessment models to filter input data</li>
             <li>Improved input spectral features for building and applying the loss model</li>
           </ul>
-          <p>These changes lead to a different and improved detection of global tree cover loss. However, the years preceding 2011 have not yet been reprocessed with the revised analysis methods, and users will notice inconsistencies between versions 1.0 (2001-2012) and 1.1 (2001-2013) as a result. It must also be noted that a full validation of the results incorporating Landsat 8 has not been undertaken. Such an analysis may reveal a more sensitive ability to detect and map forest disturbance using Landsat 8 data. If this is the case then there will be a more fundamental limitation to the consistency of this data set before and after the inclusion of Landsat 8 data. Validation of Landsat 8-incorporated loss detection is planned.</p>
-          <p>Some examples of improved change detection in the 2011–2013 update include the following:</p>
+          <p>These changes lead to a different and improved detection of global tree cover loss. However, the years preceding 2011 have not yet been reprocessed with the revised analysis methods, and users will notice inconsistencies between versions 1.0 (2001-2012) and 1.1 (2011-2014) as a result. It must also be noted that a full validation of the results incorporating Landsat 8 has not been undertaken. Such an analysis may reveal a more sensitive ability to detect and map forest disturbance using Landsat 8 data. If this is the case then there will be a more fundamental limitation to the consistency of this data set before and after the inclusion of Landsat 8 data. Validation of Landsat 8-incorporated loss detection is planned.</p>
+          <p>Some examples of improved change detection in the 2011–2014 update include the following:</p>
           <ul class="bullets">
             <li>Improved detection of boreal forest loss due to fire</li>
             <li>Improved detection of smallholder rotation agricultural clearing in dry and humid tropical forests</li>
             <li>Improved detection of selective logging</li>
           </ul>
-          <p>These are examples of dynamics that may be differentially mapped over the 2001-2013 period in Version 1.1. A version 2.0 reprocessing of the 2001 and onward record is planned, but no delivery date is yet confirmed.</p>
+          <p>These are examples of dynamics that may be differentially mapped over the 2011-2014 period in Version 1.1. A version 2.0 reprocessing of the 2001 and onward record is planned, but no delivery date is yet confirmed.</p>
           <p>The original version 1.0 data remains available for download <a href='http://earthenginepartners.appspot.com/science-2013-global-forest/download_v1.0.html' target='_blank'>here</a>.</p>
           <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Science 342 (15 November): 850–53. Data available online from: <a href='http://earthenginepartners.appspot.com/science-2013-global-forest' target='_blank'>http://earthenginepartners.appspot.com/science-2013-global-forest</a>.</p>
-
-          <p class='credits'><strong>Suggested citations for data as displayed on GFW:</strong>Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain Area.” University of Maryland, Google, USGS, and NASA. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
-
+          <p class='credits'>Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain Area.” University of Maryland, Google, USGS, and NASA. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
           <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "http://data.globalforestwatch.org/datasets/93ecbfa0542c42fdaa8454fa42a6cc27", :class => 'download-mobile-link' %></em></p>
         </div>
       </div>
@@ -848,6 +842,7 @@
       <div class='source_header'>
         <strong class='source_title'>Tree cover</strong>
         <i class='expand_arrow'></i>
+        <em class='source_description'>(2000, Hansen/UMD/Google/USGS/NASA)</em>
       </div>
 
       <div class='source_body'>
@@ -958,11 +953,11 @@
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
-            <dd>Identifies the world’s last remaining undisturbed forest areas, large enough to retain all native biodiversity and showing no signs of human activity as of the year 2013 and reduction in their extent from 2000-2013.</dd>
+            <dd>Identifies the world’s last remaining unfragmented forest landscapes, large enough to retain all native biodiversity and showing no signs of human alteration as of the year 2013. This layer also shows the reduction in the extent of Intact Forest Lanscapes from 2000 to 2013.</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE</dt>
-            <dd>Approximately 1:100,000</dd>
+            <dd>Approximately 1:1,000,000</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Geographic coverage</dt>
@@ -974,7 +969,7 @@
           </dl>
           <dl class='sources_row'>
             <dt>Frequency of updates</dt>
-            <dd>2014 update; 2006 original publication</dd>
+            <dd>2015 update; 2008 original publication</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Date of content</dt>
@@ -982,21 +977,21 @@
           </dl>
           <dl class='sources_row'>
             <dt>Cautions</dt>
-            <dd>The world IFL map was created through visual interpretation of Landsat images by experts. The map may contain inaccuracies due to limitations in the spatial resolution of the imagery and lack of ancillary information about local land-use practices in some regions. In addition, the methodology assumes that fire scars in proximity to roads or other infrastructure have been caused by humans, and therefore constitute a form of significant human activity. This assumption could result in an underestimation of  IFL extent in the boreal ecozone. The attribution of forest fires to human influence across boreal forest landscapes is disputed.</dd>
+            <dd>The world IFL map was created through visual interpretation of Landsat images by experts. The map may contain inaccuracies due to limitations in the spatial resolution of the imagery and lack of ancillary information about local land-use practices in some regions. In addition, the methodology assumes that fires in proximity to roads or other infrastructure may have been caused by humans, and therefore constitute a form of anthropogenic disturbance. This assumption could result in an underestimation of IFL extent in the boreal biome.</dd>
           </dl>
         </div>
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>The <a href='http://intactforests.org/' target='_blank'>Intact Forest Landscapes</a> (IFL) data set identifies unbroken expanses of natural ecosystems within the zone of forest extent that show no signs of significant human activity and are large enough that all native biodiversity, including viable populations of wide-ranging species, could be maintained. To map IFL areas, a set of criteria was developed and designed to be globally applicable and easily replicable, the latter to allow for repeated assessments over time as well for verification. IFL areas were defined as unfragmented landscapes, at least 50,000 hectares in size, and with a minimum width of 10 kilometers. These were then mapped and identified from Landsat satellite imagery for the year 2013.</p>
+          <p>The <a href='http://intactforests.org/' target='_blank'>Intact Forest Landscapes</a> (IFL) data set identifies unbroken expanses of natural ecosystems within the zone of forest extent that show no signs of significant human activity and are large enough that all native biodiversity, including viable populations of wide-ranging species, could be maintained. To map IFL areas, a set of criteria was developed and designed to be globally applicable and easily replicable, the latter to allow for repeated assessments over time as well as verification. IFL areas were defined as unfragmented landscapes, at least 50,000 hectares in size, and with a minimum width of 10 kilometers. These were then mapped from Landsat satellite imagery for the year 2000.</p>
 
-          <p>Changes in the extent of IFLs were identified by contrasting the map for 2013 with the analogous map for 2000, adjusted for consistency. Areas identified as “reduction in extent” met the IFL criteria in 2000, but no longer met the criteria in 2013. The main causes of change were industrial activity such as logging and mining, and fragmentation due to infrastructure and new roads, and fires assumed to be caused by humans.</p>
+          <p>Changes in the extent of IFLs were identified within year 2000 IFL boundary using the global wall-to-wall Landsat image composite for year 2013 and the global forest cover loss dataset (Hansen et al., 2013). Areas identified as “reduction in extent” met the IFL criteria in 2000, but no longer met the criteria in 2013. The main causes of change were clearing for agriculture and tree plantations, industrial activity such as logging and mining, fragmentation due to infrastructure and new roads, and fires assumed to be caused by humans.</p>
 
-          <p>This data can be used to assess forest intactness, alteration, and degradation at global and regional scales. More information about the data set and methodology is available on <a href="http://www.intactforests.org">www.intactforests.org</a></p>
+          <p>This data can be used to assess forest intactness, alteration, and degradation at global and regional scales. More information about the data set and methodology is available on  <a href="http://www.intactforests.org">www.intactforests.org</a></p>
 
-          <p class='credits'><strong>Citation:</strong> Potapov, P., A. Yaroshenko, S. Turubanova, M. Dubinin, L. Laestadius, C. Thies, D. Aksenov, A. Egorov, Y. Yesipova, I. Glushkov, M. Karpachevski, A. Kostickova, A. Manisha, E. Tsybikova, and I. Zhuravleva. 2008. “Mapping the World’s Intact Forest Landscapes by Remote Sensing.” <em>Ecology and Society</em> 13, no. 2: Art. 51. www.ecologyandsociety.org/vol13/iss2/art51.</p>
+          <p class='credits'><strong>Citation:</strong> Potapov, P., A. Yaroshenko, S. Turubanova, M. Dubinin, L. Laestadius, C. Thies, D. Aksenov, A. Egorov, Y. Yesipova, I. Glushkov, M. Karpachevski, A. Kostickova, A. Manisha, E. Tsybikova, and I. Zhuravleva. 2008. “Mapping the World’s Intact Forest Landscapes by Remote Sensing.” Ecology and Society 13, no. 2: Art. 51. www.ecologyandsociety.org/vol13/iss2/art51.</p>
 
-          <p class='credits'><strong>Suggested citations for data as displayed on GFW:</strong> Greenpeace, University of Maryland, World Resources Institute and Transparent World. 2014. Intact Forest Landscapes: update and reduction in extent from 2000-2013. Accessed through Global Forest Watch on [date]. www.globalforestwatch.org</p>
+          <p class='credits'><strong>Suggested citation for users:</strong> Greenpeace, University of Maryland, World Resources Institute and Transparent World. “Intact Forest Landscapes. 2000/2013” Accessed through Global Forest Watch on [date]. www.globalforestwatch.org</p>
 
           <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "http://data.globalforestwatch.org/datasets/ab914731bbd04a2298354d71dc5a9f62_0", :class => 'download-mobile-link' %></em></p>
         </div>
@@ -1220,7 +1215,7 @@
 
           <p class='credits'><strong>Citation:</strong> Jin, S., Yang, L., Danielson, P., Homer, C., Fry, J., and Xian, G. 2013. “A comprehensive change detection method for updating the National Land Cover Database to circa 2011.” Remote Sensing of Environment, 132: 159 – 175.</p>
 
-          <p class='read_more hidden'><a href="http://doc.arcgis.com/en/living-atlas/item/?itemId=7c9e622642b14df2aed072f77ae1273c" target="_blank">Learn more or download data</a> </p>
+          <p class='read_more hidden'><a href="http://data.globalforestwatch.org/datasets/c1c0c83f51d646678440e3a69e9db4b2?geometry=-162.6%2C29.629%2C-21.975%2C49.68" target="_blank">Learn more or download data</a> </p>
         </div>
       </div>
     </li>
@@ -1280,7 +1275,7 @@
 
           <p class='credits'><strong>Citation:</strong> Jin, S., Yang, L., Danielson, P., Homer, C., Fry, J., and Xian, G. 2013. <a href="http://www.mrlc.gov/downloadfile2.php?file=Preferred_NLCD11_citation.pdf" target="_blank">A comprehensive change detection method for updating the National Land Cover Database to circa 2011.</a> Remote Sensing of Environment, 132: 159 – 175.</p>
 
-          <p class='read_more hidden'><em><a href="http://doc.arcgis.com/en/living-atlas/item/?itemId=7c9e622642b14df2aed072f77ae1273c" target= "_blank">Learn more or download data</a></em></p>
+          <p class='read_more hidden'><em><a href="http://data.globalforestwatch.org/datasets?q=usa+land+cover+change&sort_by=relevance" target= "_blank">Learn more or download data</a></em></p>
         </div>
       </div>
     </li>
@@ -1338,6 +1333,66 @@
         </div>
       </div>
     </li>
+    <li id='plantations' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Tree Plantations</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Shows the coverage of plantations in select countries</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>Based on 30 × 30 meter data</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Currently available for Brazil, Cambodia, Colombia, Indonesia, Liberia, Malaysia, and Peru</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd><a href="http://landsat.usgs.gov/" target="_blank">Landsat</a>, high resolution imagery from Google Maps, Bing Maps, and Digital Globe where available</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Frequency of updates</dt>
+            <dd></dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd>2001–2013</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd><p>An accuracy assessment found 40% false positives and 18% false negatives for plantations, with an overall accuracy of 79%. Overall accuracies were lowest in Indonesia at 68%.</p> 
+            <p>The accuracies of the species and type labels were not assessed. These fields represent the best guess of the analysts and should not be used for official purposes.</p>
+            <p>A subset of this data set more appropriate for supply chain monitoring can be found on GFW Commodities.</p>
+            </dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>License</dt>
+            <dd><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>This data set was created by <a href="http://www.transparentworld.ru/en/" target="_blank">Transparent World</a>, with the support of Global Forest Watch. Many studies depicting forest cover and forest change cannot distinguish between natural forests and plantations, a common criticism of data sets such as the UMD/ Google forest change layers. This data set attempts to separate plantations from natural forest for seven key countries: Brazil, Cambodia, Colombia, Indonesia, Liberia, Malaysia, and Peru.</p>
+
+          <p>Given the variability of plantations and the spectral similarity to natural forests, this study used visual interpretation of satellite imagery, primarily Landsat, supplemented by high resolution imagery (Google Maps, Bing Maps, or Digital Globe) where available. Analysts hand-digitized plantation boundaries based on several key visual elements, including texture, shape, color, and size. For more information on the methodology used to produce this data set, see the forthcoming WRI Technical Note associated with this project.</p>
+
+          <p>Each polygon is labelled with the plantation type (industrial plantation, medium-sized plantation mosaic with other land use, small-sized plantation mosaic with other land use, clearings/ very young plantations, and plantations established in grasslands) and when possible, the species. A “gr” in front of the species name indicates a group of species, such as pines or fruit. Species is listed as “n/a” for clearings and very young plantations.</p>
+
+          <p class='credits'><strong>Citation:</strong> Transparent World. “Tree Plantations.” 2015. Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org" target="_blank">www.globalforestwatch.org</a> </p>
+
+          <p class='read_more hidden'><a href='http://due.esrin.esa.int/page_globcover.php' target='_blank'>Learn more or download data</a></p>
+        </div>
+      </div>
+    </li>
+
   </ul>
 </article>
 
@@ -3248,7 +3303,7 @@
     </li>
     <li id='verified_carbon' class='source-item last'>
       <div class='source_header'>
-        <strong class='source_title'>Verified Carbon Standard project boundaries</strong>
+        <strong class='source_title'>Verified Carbon Standard project areas</strong>
         <i class='expand_arrow'></i>
       </div>
 
@@ -3273,7 +3328,7 @@
           </dl>
           <dl class='sources_row'>
             <dt>Frequency of updates</dt>
-            <dd>New VCS projects will be added as they become registered under the VCS</dd>
+            <dd>New VCS REDD+ projects will be added on a quarterly basis as they become registered under VCS</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Date of content</dt>
@@ -3281,19 +3336,20 @@
           </dl>
            <dl class='sources_row'>
             <dt>Cautions</dt>
-            <dd>Some boundaries may be for the project group rather than for the individual project.</dd>
+            <dd>Not all VCS REDD+ project areas are included on this map. For a full list of VCS projects and their respective areas, please visit the VCS Project Database.</dd>
           </dl>
         </div>
 
         <div class='source_summary'>
         <h3 class='overview_title'>Overview</h3>
-          <p>The <a href="http://www.v-c-s.org" target="_blank">Verified Carbon Standard</a> (VCS) is the world’s  widely used voluntary greenhouse gas (GHG) emission reduction program. VCS projects are developed across a wide range of sectoral scopes, including those classified within the Agriculture, Forestry and Other Land Use (AFOLU) sector. These projects reduce emissions from forest-related activities around the world and apply innovative GHG accounting methodologies to quantify such emission reductions, which are independently verified and transparently registered.</p>
+          <p>The <a href="http://www.v-c-s.org" target="_blank">Verified Carbon Standard</a> (VCS) is the world’s most widely used voluntary greenhouse gas (GHG) emission reduction program. VCS projects are developed across a wide range of sectoral scopes, including those classified within the Agriculture, Forestry and Other Land Use (AFOLU) sector. These projects reduce emissions from forest-related activities around the world and apply robust GHG accounting methodologies to quantify such emission reductions, which are independently verified and transparently registered.</p>
 
           <p>This layer shows VCS projects categorized as REDD (Reduced Emissions from Deforestation and Forest Degradation), IFM (Improved Forest Management) and ARR (Afforestation, Reforestation and Revegetation).  More detail on the VCS program and these project categories can be found in the <a href="http://www.v-c-s.org/program-documents" target="_blank">VCS Standard and VCS AFOLU Requirements</a> documents.</p>
 
-          <p>In addition to these project activities, more than a dozen national and subnational jurisdictions around the world are applying the <a href="http://www.v-c-s.org/JNR" target="_blank">VCS Jurisdictional and Nested REDD+</a> framework to account for the emission reductions generated by their REDD+ policies and measures. This information will be added in the future as these programs register under the VCS.</p>
+          <p>In addition to these project activities, more than a dozen national and subnational jurisdictions around the world are applying the <a href="http://www.v-c-s.org/JNR" target="_blank">VCS Jurisdictional and Nested REDD+</a>(JNR) framework to account for the emission reductions generated by their REDD+ policies and measures. This information will be added in the future as these programs register under the VCS.</p>
 
-           <p class='credits'><strong>Citation:</strong>The VCS Project Database. 2015. <a href="http://www.vcsprojectdatabase.org" target="_blank">www.vcsprojectdatabase.org</a>.</p>
+           <p class='credits'><strong>Citation:</strong>The VCS Project Database. “Verified Carbon Standard project areas” 2015. <a href="http://www.vcsprojectdatabase.org" target="_blank">www.vcsprojectdatabase.org</a>.</p>
+           <p class='credits'>Accessed through Global Forest Watch on [date].  <a href="http://www.globalforestwatch.org" target="_blank">www.globalforestwatch.org</a>.</p>
           <p class='read_more hidden'><em><a href='http://www.vcsprojectdatabase.org/' target='_blank'>Learn more or request data at VCS Project Database</a></em></p>
         </div>
       </div>
@@ -3430,6 +3486,354 @@
            <p class='credits'><strong>Cita:</strong>Organismo de Supervisión de los Recursos Forestales y de Fauna Silvestre (OSINFOR). Bosques de producción permanente del Perú. 2015</p>
            <p class='credits'>“Bosques de produccion permanente del Perú.” Organismo de Supervisión de los Recursos Forestales y de Fauna Silvestre (OSINFOR). Accedido a través de Global Forest Watch el [fecha]. www.globalforestwatch.org.</p>
           <p class='read_more hidden'>Aprenda más en <a href="www.osinfor.gob.pe" target="_blank">www.osinfor.gob.pe</a> o visualice los datos originales <a href="sisfor.osinfor.gob.pe" target="_blank">sisfor.osinfor.gob.pe</a></p>
+        </div>
+      </div>
+    </li>
+    <li id='per_buffer' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Peru buffer zones</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function<br /><em>UTILIDAD</em></dt>
+            <dd><p>Shows the distribution of buffer zones in Peru.<br /><em>Muestra la distribución de las zonas de amortiguamiento</em></p></dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>
+                RESOLUTION / SCALE<br /><em>Resolución / Escala</em>
+            </dt>
+            <dd>N/A</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>
+            Geographic coverage<br /><em>COBERTURA GEOGRÁFICA</em>
+            </dt>
+            <dd>Peru</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>
+            Source data<br /><em>FUENTE DE LA INFORMACIÓN</em>
+            </dt>
+            <dd><p>National Service for National Protected Areas (SERNANP).<br /><em>Servicio Nacional de Áreas Naturales Protegidas (SERNANP).</em></p>
+            </dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>
+              Frequency of updates<br /><em>FRECUENCIA DE ACTUALIZACIÓN</em>
+            </dt>
+            <dd>
+              <p>Updated when a new buffer zone is established<br /><em>Actualizado cuando una nueva zona de amortiguamiento es establecida</em></p>
+            </dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>
+              Date of content<br /><em>FECHA DE LOS CONTENIDOS</em>
+            </dt>
+            <dd>July 2015<br /><em>Julio 2015</em></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>LICENSE<br /><em>LICENCIA</em>
+            </dt>
+            <dd>
+           May not be modified from the original data.<br /><em>Prohibido modificar la información original.</em>
+            </dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+
+          <p>Buffer zones are areas adjacent to natural protected areas (PAs) that, because of their nature and location, require special treatment to guarantee the conservation of the PA. The activities in the buffer zone should not put the objectives of the PA at risk. All use of natural resources in the buffer zone requires prior approval by SERNANP.</p>
+
+           <p class='credits'><strong>Citation:</strong>“Peru buffer zones”. National Service of Natural Protected Areas (SERNANP). 2015. Accessed through Global Forest Watch on [date]. www.globalforestwatch.com.</p>
+           
+          <p class='read_more hidden'><em>Learn more at <a href="" target="_blank"></a> or visualize the original data at <a href="http://geo.sernanp.gob.pe/geoserver/principal.php" target="_blank">geo.sernanp.gob.pe</a></em></p>
+        </div>
+        <div class='source_summary em'>
+          <h3 class='overview_title'>Resumen</h3>
+
+          <p>Las zonas de amortiguamiento son aquellos espacios adyacentes a las Áreas Naturales Protegidas del SINANPE, que por su naturaleza y ubicación, requieren un tratamiento especial que garantice la conservación del Área Natural Protegida. Las actividades realizadas en las Zonas de Amortiguamiento no deben poner en riesgo el cumplimiento de los fines del Área Natural Protegida. Todo uso de recursos naturales  en las ZA requiere la opinión previa favorable de SERNANP.</p>
+
+           <p class='credits'><strong>Cita:</strong>“Zonas de amortiguamiento del Perú”. Servicio Nacional de Áreas Naturales Protegidas (SERNANP). 2015. Accedido a través de Global Forest Watch en [fecha]. www.globalforestwatch.org</p>
+           
+          <p class='read_more hidden'>Aprenda más en <a href="www.osinfor.gob.pe" target="_blank">www.osinfor.gob.pe</a> o visualice los datos originales <a href="http://geo.sernanp.gob.pe/geoserver/principal.php" target="_blank">geo.sernanp.gob.pe</a></p>
+        </div>
+      </div>
+    </li>
+    <li id='per_nat_pa' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Peru national protected areas</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function<br /><em>UTILIDAD</em></dt>
+            <dd><p>Shows the distribution of national protected areas in Peru.<br /><em>Muestra la distribución de las áreas protegidas a nivel nacional.</em></p></dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>
+                RESOLUTION / SCALE<br /><em>Resolución / Escala</em>
+            </dt>
+            <dd>N/A</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>
+            Geographic coverage<br /><em>COBERTURA GEOGRÁFICA</em>
+            </dt>
+            <dd>Peru</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>
+            Source data<br /><em>FUENTE DE LA INFORMACIÓN</em>
+            </dt>
+            <dd><p>National Service for National Protected Areas (SERNANP).<br /><em>Servicio Nacional de Áreas Naturales Protegidas (SERNANP).</em></p>
+            </dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>
+              Frequency of updates<br /><em>FRECUENCIA DE ACTUALIZACIÓN</em>
+            </dt>
+            <dd>
+              <p>Updated when a national protected area is modified or established.<br /><em>Actualizado cuando un área protegida a nivel regional es establecida o modificada.</em></p>
+            </dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>
+              Date of content<br /><em>FECHA DE LOS CONTENIDOS</em>
+            </dt>
+            <dd>March 2015<br /><em>Marzo 2015</em></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>LICENSE<br /><em>LICENCIA</em>
+            </dt>
+            <dd>
+           May not be modified from the original data<br /><em>Prohibido modificar la información original</em>
+            </dd>
+          </dl>
+        </div>
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+
+          <p>This layer shows protected areas that are managed by the national government, under the jurisdiction of the National Service of Natural Protected Areas (SERNANP). These areas are divided in three categories of use: indirect use, direct use, and reserved zone.</p>
+          
+          <strong>Areas of indirect use</strong>
+          
+          <p>In indirect areas, the extraction of natural resources or other types of environmental modification are not allowed. These areas only permit non-manipulative scientific investigation and tourist, recreational, educational, and cultural activities under regulated conditions. The following are indirect use areas:</p>
+          <ul class='bullets'>
+            <li><strong>National Parks:</strong>  created in areas that represent the large ecological units in the country. In these areas, SERNANP protects the ecological integrity of one or more ecosystems, the associations of wild plants and animals, successional and evolutionary processes, as well as landscape and cultural characteristics. In this areas, hunting, ranching, farming, timber, or mining activities, or any activity that exploits natural resources, cannot be developed.</li>
+            <li><strong>National Sanctuaries:</strong> areas where the habitat of a species or a community of flora or fauna is protected, as natural formations of scientific interest and national importance.</li>
+            <li><strong>Historical Sanctuaries:</strong> areas that in addition to protecting natural values, show the the monumental and archaeological heritage of the country, or are areas where outstanding historical events took place.</li>
+          </ul>
+
+          <strong>Areas of direct use</strong>
+          
+          <p>In direct use areas, the use of natural resources is allowed, primarily by local people, under the guidelines of a Management Plan approved and supervised by the relevant national authority. The following are direct use areas:</p>
+          <ul class='bullets'>
+            <li><strong>National Reserves:</strong> areas dedicated to biodiversity conservation and sustainable use, including commercial use, of wild flora and fauna under management plans, with the exception of commercial forest use for timber</li>
+            <li><strong>Landscape Reserves:</strong> areas where environments with geographical integrity are protected, housing important natural, cultural, and aesthetic values. If the prior zonification allows it, these areas can permit traditional use of natural resources, scientific investigation, tourism, and human settlements. Activities that cause notable changes in the landscape and the value of the area are excluded</li>
+            <li><strong>Protected Forests:</strong> areas that are established to protect important watersheds, the banks of rivers and other water bodies, and stop erosion of fragile lands. In this areas, the use of resources and the development of activities are allowed, provided that those activities do not affect vegetation cover, fragile soils, or water flow.</li>
+            <li><strong>Communal Reserves:</strong>  areas dedicated to the conservation of wild flora and fauna for the benefit of neighboring rural people who are using resources traditionally. The use and commercialization of resources is done under management plans, approved and supervised by the government authority and conducted by the beneficiary populations.</li>
+            <li><strong>Hunting Preserves:</strong> areas dedicated to the use of wild fauna through the regulated practice of sport hunting.</li>
+            <li><strong>Wildlife Refuges:</strong> areas that require active intervention to guarantee the maintenance and recuperation of habitats and populations of particular species. These areas exclude commercial use of natural resources that could significantly change the habitat.</li>
+          </ul>
+
+          <strong>Reserved Zones:</strong>
+          <p>In addition to the above categories, Reserved Zones are established as a transitory category in areas that have the conditions necessary to be considered as a natural protected area, but that require additional study to determine their extension and category, among other things.</p>
+
+           <p class='credits'><strong>Citation:</strong>“Peru national protected areas”. National Service of Natural Protected Areas (SERNANP). 2015. Accessed through Global Forest Watch on [date]. www.globalforestwatch.org</p>
+           
+          <p class='read_more hidden'><em>Learn more at <a href="" target="_blank"></a> or visualize the original data at <a href="http://geo.sernanp.gob.pe/geoserver/principal.php" target="_blank">geo.sernanp.gob.pe</a></em></p>
+        </div>
+        <div class='source_summary em'>
+          <h3 class='overview_title'>Resumen</h3>
+
+          <p>Esta capa muestra aquellas áreas protegidas administrado por el gobierno nacional, bajo la jurisdicción del Servicio Nacional de Áreas Naturales Protegidas (SERNANP). Estas áreas son divididas en tres categorías de uso: uso indirecto, uso directo, y zona reservada.</p>
+          
+          <strong>Áreas de uso indirecto</strong>
+          
+          <p>Las áreas de uso indirecto son aquellas de protección intangible, en las que no se permite la extracción de recursos naturales y ningún tipo de modificación del ambiente natural. Estas áreas solo permiten la investigación científica no manipulativa y actividades turísticas, recreativas, educativas y culturales bajo condiciones debidamente reguladas. Son áreas de uso indirecto:</p>
+          <ul class='bullets'>
+            <li><strong>Parques nacionales:</strong> creados en áreas que constituyen muestras representativas de las grandes unidades ecológicas del país. En ellos se protege la integridad ecológica de uno o más ecosistemas, las asociaciones de flora y fauna silvestre, los procesos sucesionales y evolutivos, así como características paisajísticas y culturales. En ellos no se pueden desarrollar actividades cinegéticas, ganaderas, pastoriles, madereras o mineras, o en general todas aquéllas que supongan la explotación de los recursos naturales.</li>
+            <li><strong>Santuarios nacionales:</strong> áreas donde se protege el hábitat de una especie o una comunidad de flora y fauna, así como formaciones naturales de interés científico y paisajístico y de importancia nacional.</li>
+            <li><strong>Santuarios históricos:</strong>áreas que además de proteger espacios que contienen valores naturales relevantes, constituyen el entorno de muestras del patrimonio monumental y arqueológico del país o son lugares donde se desarrollaron hechos sobresalientes de la historia nacional.</li>
+          </ul>
+
+          <strong>Áreas de uso directo</strong>
+          
+          <p>Son aquellas que permiten el aprovechamiento de recursos naturales, prioritariamente por las poblaciones locales, bajo los lineamientos de un Plan de Manejo aprobado y supervisado por la autoridad nacional competente. Son áreas de uso directo:</p>
+          <ul class='bullets'>
+            <li><strong>Reservas Nacionales:</strong> áreas destinadas a la conservación de la diversidad biológica y la utilización sostenible, incluso comercial, de los recursos de flora y fauna silvestre bajo planes de manejo, con excepción de las actividades de aprovechamiento forestal comercial con fines madereros.</li>
+            <li><strong>Reservas Paisajísticas:</strong> áreas donde se protege ambientes cuya integridad geográfica muestra una relación armoniosa entre el hombre y la naturaleza, albergando por ello importantes valores naturales, culturales y estéticos. Si la zonificación del área así lo prevé, pueden permitirse el uso tradicional de recursos naturales, los usos científicos y turísticos y los asentamientos humanos. Las actividades que signifiquen cambios notables en las características del paisaje y los valores del área están excluidas.</li>
+            <li><strong>Bosques de Protección:</strong> áreas que se establecen para proteger las cuencas altas o colectoras, las riberas de los ríos y de otros cursos de agua y, en general, para proteger contra la erosión a las tierras frágiles que así lo requieran. En ellos se permite el uso de recursos y el desarrollo de actividades que no afecten la cobertura vegetal, los suelos frágiles o cursos de agua.</li>
+            <li><strong>Reservas Comunales:</strong> áreas destinadas a la conservación de la flora y fauna silvestre en beneficio de las poblaciones rurales vecinas las cuales, por realizar un uso tradicional comprobado, tienen preferencia en el uso de los recursos del área. El uso y comercialización de recursos se hace bajo planes de manejo, aprobados y supervisados por la autoridad y conducidos por los mismos beneficiarios.</li>
+            <li><strong>Cotos de Caza:</strong> son áreas destinadas al aprovechamiento de la fauna silvestre a través de la práctica regulada de la caza deportiva.</li>
+            <li><strong>Refugios de Vida Silvestre:</strong> áreas que requieren intervención activa para garantizar el mantenimiento y recuperación de hábitats y poblaciones de determinadas especies. Se excluyen el aprovechamiento comercial de recursos naturales que puedan provocar alteraciones significativas del hábitat.</li>
+          </ul>
+
+          <strong>Zonas Reservadas</strong>
+          <p>Además de las categorías mencionadas, las Zonas Reservadas se establecen de forma transitoria en aquellas áreas que, reuniendo las condiciones para ser consideradas como áreas naturales protegidas, requieren la realización de estudios complementarios para determinar, entre otras cosas, su extensión y categoría.</p>
+
+           <p class='credits'><strong>Citation:</strong>“Zonas de amortiguamiento del Perú”. Servicio Nacional de Áreas Naturales Protegidas (SERNANP). 2015. Accedido a través de Global Forest Watch en [fecha]. www.globalforestwatch.org</p>
+           
+          <p class='read_more hidden'><em>Learn more at <a href="" target="_blank"></a> or visualize the original data at <a href="http://geo.sernanp.gob.pe/geoserver/principal.php" target="_blank">geo.sernanp.gob.pe</a></em></p>
+        </div>
+      </div>
+    </li>
+    <li id='per_priv_pa' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Peru private protected areas</strong>
+        <i class='expand_arrow'></i>
+      </div>
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function<br /><em>UTILIDAD</em></dt>
+            <dd><p>Shows the distribution of privately managed protected areas.<br /><em>Muestra la distribución de áreas naturales protegidas de administración privada</em></p></dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>
+                RESOLUTION / SCALE<br /><em>Resolución / Escala</em>
+            </dt>
+            <dd>N/A</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>
+            Geographic coverage<br /><em>COBERTURA GEOGRÁFICA</em>
+            </dt>
+            <dd>Peru</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>
+            Source data<br /><em>FUENTE DE LA INFORMACIÓN</em>
+            </dt>
+            <dd><p>National Service for National Protected Areas (SERNANP).<br /><em>Servicio Nacional de Áreas Naturales Protegidas (SERNANP).</em></p>
+            </dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>
+              Frequency of updates<br /><em>FRECUENCIA DE ACTUALIZACIÓN</em>
+            </dt>
+            <dd>
+              <p>Updated when a privately managed protected areas is modified or established<br /><em>Actualizado cuando un área protegida de administración privada es establecida o modificada.</em></p>
+            </dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>
+              Date of content<br /><em>FECHA DE LOS CONTENIDOS</em>
+            </dt>
+            <dd>June 2015<br /><em>Junio 2015</em></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>LICENSE<br /><em>LICENCIA</em>
+            </dt>
+            <dd>
+           May not be modified from the original data.<br /><em>Prohibido modificar la información original.</em>
+            </dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+
+          <p>This layer shows conservation areas that are created partially or totally on private property. The environmental, biological, or scenic properties of this land are complementary to the coverage of national PAs, supporting biodiversity conservation and increasing the opportunities for scientific investigation, education, and tourism. Lands located inside of buffer zones are prioritized for private PAs.</p>
+          <p>The recognition of private PAs is based in an agreement between the State and the owner of the land with the objective of conserving biodiversity for a renewable 10+ year period. A breach of the obligations of the agreement on the part of the land owner results in the loss of recognition as a private PA.</p>
+
+           <p class='credits'><strong>Citation:</strong> “Peru private protected areas”. National Service of Natural Protected Areas (SERNANP). 2015. Accessed through Global Forest Watch on [date]. www.globalforestwatch.org.</p>
+           
+          <p class='read_more hidden'><em>Learn more at <a href="" target="_blank"></a> or visualize the original data at <a href="http://geo.sernanp.gob.pe/geoserver/principal.php" target="_blank">geo.sernanp.gob.pe</a></em></p>
+        </div>
+        <div class='source_summary em'>
+          <h3 class='overview_title'>Resumen</h3>
+
+          <p>Esta capa muestra áreas de conservación creadas en parte o en la totalidad de predios de propiedad privada cuyas características ambientales, biológicas, paisajísticas u otras análogas, pueden complementar la cobertura de las Áreas Naturales Protegidas (ANP) nacionales, aportando a la conservación de la diversidad biológica e incrementando la oferta de oportunidades para la investigación científica, la educación y el turismo especializado. Para el reconocimiento del Área de Conservación Privada (ACP) se priorizan aquellos predios ubicados en las zonas de amortiguamiento de las ANP de administración nacional.</p>
+          <p>El reconocimiento de las ACP se basa en un acuerdo entre el Estado y el titular del predio a fin de conservar la diversidad biológica en dicho predio por un período no menor a 10 años renovables. El incumplimiento de las obligaciones de este acuerdo por parte del titular del predio determina la pérdida de su reconocimiento como ACP.</p>
+
+           <p class='credits'><strong>Cita:</strong> “Áreas naturales protegidas de administración privada del Perú”. Servicio Nacional de Áreas Naturales Protegidas (SERNANP). 2015. Accedido a través de Global Forest Watch en [fecha]. www.globalforestwatch.org</p>
+           
+          <p class='read_more hidden'>Aprenda más en <a href="www.osinfor.gob.pe" target="_blank">www.osinfor.gob.pe</a> o visualice los datos originales <a href="http://geo.sernanp.gob.pe/geoserver/principal.php" target="_blank">geo.sernanp.gob.pe</a></p>
+        </div>
+      </div>
+    </li>
+    <li id='per_reg_pa' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Peru regional protected areas</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function<br /><em>UTILIDAD</em></dt>
+            <dd><p>Shows the distribution of regional protected areas.<br /><em>Muestra la distribución de las áreas protegidas a nivel regional</em></p></dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>
+                RESOLUTION / SCALE<br /><em>Resolución / Escala</em>
+            </dt>
+            <dd>N/A</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>
+            Geographic coverage<br /><em>COBERTURA GEOGRÁFICA</em>
+            </dt>
+            <dd>Peru</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>
+            Source data<br /><em>FUENTE DE LA INFORMACIÓN</em>
+            </dt>
+            <dd><p>National Service for National Protected Areas (SERNANP).<br /><em>Servicio Nacional de Áreas Naturales Protegidas (SERNANP).</em></p>
+            </dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>
+              Frequency of updates<br /><em>FRECUENCIA DE ACTUALIZACIÓN</em>
+            </dt>
+            <dd>
+              <p>Updated when a regional protected area is modified or established<br /><em>Actualizado cuando un área protegida a nivel regional es establecida o modificada.</em></p>
+            </dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>
+              Date of content<br /><em>FECHA DE LOS CONTENIDOS</em>
+            </dt>
+            <dd>June 2015<br /><em>Junio 2015</em></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>LICENSE<br /><em>LICENCIA</em>
+            </dt>
+            <dd>
+           May not be modified from the original data.<br /><em>Prohibido modificar la información original.</em>
+            </dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+
+          <p>This layer shows protected areas that are managed by regional governments. The laws established for national protected areas also apply, where relevant, to regional protected areas. Regional protected areas are not divided into categories, but this does not mean that their conservation objectives are all the same.</p>
+          <p>Regional protected areas are managed in coordination with municipalities, native or rural communities, other people that live in the area, and public and private institutions. Administration of regional protected areas can be delegated, with prior permission of the regional government, to individuals with interest and the ability to manage the area.</p>
+          <p>Regional protected areas respect pre-existing rights within their interior, but these activities should be compatible with the goal of national heritage.</p>
+
+           <p class='credits'><strong>Citation:</strong> “Peru regional protected areas”. National Service of Natural Protected Areas (SERNANP). 2015. Accessed through Global Forest Watch on [date]. www.globalforestwatch.org</p>
+           
+          <p class='read_more hidden'><em>Learn more at <a href="" target="_blank"></a> or visualize the original data at <a href="http://geo.sernanp.gob.pe/geoserver/principal.php" target="_blank">geo.sernanp.gob.pe</a></em></p>
+        </div>
+        <div class='source_summary em'>
+          <h3 class='overview_title'>Resumen</h3>
+
+          <p>Esta capa muestra aquellas áreas protegidas administradas por los gobiernos regionales. Las normas establecidas para las áreas de administración nacional se aplican también, en lo que es pertinente, a las ACR. Para este nivel de áreas no existen categorías, aunque ello no significa que sus objetivos de conservación sean siempre los mismos.</p>
+          <p>Las ACR se administran en coordinación con las municipalidades, comunidades campesinas o nativas y demás poblaciones locales que habiten en el área, e instituciones públicas y privadas. La administración de estas áreas protegidas puede delegarse, con la opinión previa favorable del gobierno regional correspondiente, a personas jurídicas de derecho privado que acrediten interés y capacidad de gestión de las mismas.</p>
+          <p>Su establecimiento respeta los derechos de propiedad al interior del área adquiridos con anterioridad, pero su ejercicio debe ser compatible con su carácter de patrimonio de la nación.</p>
+
+           <p class='credits'><strong>Cita:</strong> “Áreas naturales protegidas de administración regional del Perú”. Servicio Nacional de Áreas Naturales Protegidas (SERNANP). 2015. Accedido a través de Global Forest Watch en [fecha]. www.globalforestwatch.org</p>
+           
+          <p class='read_more hidden'>Aprenda más en <a href="www.osinfor.gob.pe" target="_blank">www.osinfor.gob.pe</a> o visualice los datos originales <a href="http://geo.sernanp.gob.pe/geoserver/principal.php" target="_blank">geo.sernanp.gob.pe</a></p>
         </div>
       </div>
     </li>
@@ -3766,7 +4170,7 @@
     </li>
     <li id='cmr_resource_rights' class='source-item last'>
       <div class='source_header'>
-        <strong class='source_title'>Cameroon community forest</strong>
+        <strong class='source_title'>Cameroon community forests</strong>
         <i class='expand_arrow'></i>
       </div>
 

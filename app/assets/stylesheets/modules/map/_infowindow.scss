@@ -117,9 +117,6 @@
         .cartodb-popup-content-inside{
           padding: 20px 20px 10px;
           @include clearfix();
-          @media (max-width: $br-mobile) {
-            padding: 0px 20px;
-          }
         }
         h2,h3,h4,p{
           font-family: "Fira Sans" , Helvetica;

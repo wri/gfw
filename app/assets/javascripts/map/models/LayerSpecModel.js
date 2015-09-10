@@ -30,8 +30,8 @@ define([
       "ifl_2013_deg",
       "ifl_2000",
       "mangrove",
-      "gfw_plantations_by_type",
-      "gfw_plantations_by_species",
+      "plantations_by_type",
+      "plantations_by_species",
       // PEOPLE
       "resource_rights",
       "cmr_resource_rights",
@@ -56,6 +56,10 @@ define([
       "biodiversity_hotspots",
       "protected_areasCDB",
       "idn_leuser",
+      "per_buffer",
+      "per_nat_pa",
+      "per_priv_pa",
+      "per_reg_pa",
       // FOREST USE
       "dam_hotspots",
       "per_prod_for",
@@ -87,6 +91,7 @@ define([
       "cod_logging",
       "cog_logging",
       "logging",
+      "raisg",
       //STORIES
       "infoamazonia",
       "mongabay",

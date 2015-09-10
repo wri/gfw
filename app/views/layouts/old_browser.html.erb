@@ -11,13 +11,16 @@
   <meta name="description" content="<%= @desc %>">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="keywords" content="Map,cartodb,Global,Forest,Watch,monitoring,real-time">
-  <meta name="author" content="Simbiótica">
+  <meta name="author" content="World Resources Institute">
 
   <meta name="DC.title" content="<%= @title %> | Global Forest Watch">
   <meta property="og:title" content="<%= @title %> | Global Forest Watch">
   <meta property="og:description" content="<%= @desc %>">
-  <meta property="og:type" content="Visualization">
-  <meta property="og:url" content="http://www.globalforestwatch.org/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="<%= request.original_url %>">
+  <meta property="og:image" content="http://www.globalforestwatch.org/assets/backgrounds/home-slider/bg_slide1.png" />
+
+  <link rel="canonical" href="<%= request.original_url %>" />
 
   <link href='http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,400italic' rel='stylesheet' type='text/css'>
 

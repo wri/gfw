@@ -22,12 +22,19 @@
     {{/if}}
     <div class="cartodb-popup-content">
       <div class="cartodb-popup-content-inside">
-        {{#if content.data.project_ur}}
-        <h2><a href="{{content.data.project_ur}}" target="_blank">{{content.data.project_name}}</a></h2>
-        <h2><a href="{{content.data.project_ur}}" target="_blank">{{content.data.project_na}}</a></h2>
-        {{else}}
-        <h2>{{content.data.project_name}}</h2>
-        <h2>{{content.data.project_na}}</h2>
+        {{#if content.data.project_name}}
+          {{#if content.data.project_ur}}
+            <h2><a href="{{content.data.project_ur}}" target="_blank">{{content.data.project_name}}</a></h2>
+          {{else}}
+            <h2>{{content.data.project_name}}</h2>
+          {{/if}}
+        {{/if}}
+        {{#if content.data.project_na}}
+          {{#if content.data.project_ur}}
+            <h2><a href="{{content.data.project_ur}}" target="_blank">{{content.data.project_na}}</a></h2>
+          {{else}}
+            <h2>{{content.data.project_na}}</h2>
+          {{/if}}
         {{/if}}
         {{#unless content.data.image}}
           {{#if content.data.name}}
@@ -153,6 +160,14 @@
           <h4>Acquisition date:</h4>
           <p>{{content.data.acq_date}}</p>
         {{/if}}
+        {{#if content.data.year_created}}
+          <h4>Year created:</h4>
+          <p>{{content.data.year_created}}</p>
+        {{/if}}
+        {{#if content.data.date_created}}
+          <h4>Date of creation:</h4>
+          <p>{{content.data.date_created}}</p>
+        {{/if}}
         {{#if content.data.date_create}}
           <h4>Status date:</h4>
           <p>{{content.data.date_create}}</p>
@@ -225,6 +240,10 @@
           <h4>Easement Holder Type:</h4>
           <p>{{content.data.eholdtyp}}</p>
         {{/if}}
+        {{#if content.data.owner}}
+          <h4>Owner:</h4>
+          <p>{{content.data.owner}}</p>
+        {{/if}}
         {{#if content.data.owntype}}
           <h4>Landowner Type:</h4>
           <p>{{content.data.owntype}}</p>
@@ -269,25 +288,21 @@
           <h4>Region:</h4>
           <p>{{content.data.region}}</p>
         {{/if}}
-        {{#if content.data.area_ha}}
-          <h4>Area HA:</h4>
-          <p>{{content.data.area_ha}}</p>
-        {{/if}}
         {{#if content.data.type_text}}
-          <h4>Plantation name:</h4>
+          <h4>Plantation type:</h4>
           <p>{{content.data.type_text}}</p>
         {{/if}}
         {{#if content.data.spec_org}}
-          <h4>Spec org:</h4>
+          <h4>Species:</h4>
           <p>{{content.data.spec_org}}</p>
         {{/if}}
-        {{#if content.data.spec_simp}}
-          <h4>Spec simp:</h4>
-          <p>{{content.data.spec_simp}}</p>
-        {{/if}}
         {{#if content.data.percent}}
-          <h4>Percent:</h4>
+          <h4>Percent plantation coverage:</h4>
           <p>{{content.data.percent}}</p>
+        {{/if}}
+        {{#if content.data.area_ha}}
+          <h4>Area HA:</h4>
+          <p>{{content.data.area_ha}}</p>
         {{/if}}
       </div>
     </div>
