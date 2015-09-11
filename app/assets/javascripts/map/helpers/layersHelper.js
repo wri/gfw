@@ -88,6 +88,8 @@ define([
   'map/views/layers/RaisgLayer',
   'map/views/layers/PlantationsLayerByType',
   'map/views/layers/PlantationsLayerBySpecies',
+  // high resolution maps
+  'map/views/layers/UrthecastLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -185,6 +187,7 @@ define([
   RaisgLayer,
   PlantationsLayerByType,
   PlantationsLayerBySpecies,
+  UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -460,6 +463,9 @@ define([
     },
     plantations_by_species: {
       view: PlantationsLayerBySpecies
+    },
+    urthe: {
+      view: UrthecastLayer
     },
     nothing: {
     }

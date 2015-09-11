@@ -7,7 +7,7 @@ define([
   'underscore',
   'handlebars',
   'enquire',
-  'map/presenters/tabs/BasemapsPresenter',
+  'map/presenters/tabs/HighresolutionPresenter',
   'text!map/templates/tabs/Highresolution.handlebars'
 ], function(_, Handlebars, enquire, Presenter, tpl) {
 
@@ -24,13 +24,8 @@ define([
     },
 
     initialize: function() {
-      _.bindAll(this, 'selectMaptype');
       this.presenter = new Presenter(this);
       this.render();
-    },
-
-    selectMaptype: function(maptype) {
-      return;
     },
 
     render: function(){
@@ -38,7 +33,6 @@ define([
     },
 
     _setMaptype: function(e) {
-      this.presenter.setMaptype('positron');
       this.presenter.setMaptype('urthe');
     },
 

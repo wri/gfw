@@ -16,6 +16,9 @@ define([
     // As you see forestchange layers are the more importants so they will be added to top
     //the order will be Grump, forest cover,Conservation, Forest Use, and People layers and finally  Forest Change layers
     layerOrder: [
+      //high resolution maps
+      "urthe",
+      //-
       "grump2000",
       //FOREST COVER
       "forest2000",
