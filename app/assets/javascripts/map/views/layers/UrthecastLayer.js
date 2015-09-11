@@ -22,7 +22,7 @@ define([
 
   var UrthecastLayer = ImageMaptypeLayerClass.extend({
     options: {
-      urlTemplate:'http://uc.gfw-apis.appspot.com/urthecast/map-tiles/'+params.color_filter+'{/z}{/x}{/y}?cloud_coverage_lte='+params.cloud+'&acquired_gte='+params.mindate+'T00:00:00Z&acquired_lte='+params.maxdate+'T00:00:00Z'
+      urlTemplate:'http://uc.gfw-apis.appspot.com/urthecast/map-tiles/rgb/{/z}{/x}{/y}?cloud_coverage_lte=100&acquired_gte=2000-09-01T00:00:00Z&acquired_lte=2015-09-01T00:00:00Z'
     }
 
   });
