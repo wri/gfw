@@ -32,10 +32,6 @@ define([
       this.$el.html(this.template());
     },
 
-    _setMaptype: function(e) {
-      this.presenter.setMaptype('urthe');
-    },
-
     _setParams: function(e) {
       var $objTarget = $(e.target).closest('.maptype');
       var params = JSON.stringify(
@@ -46,7 +42,6 @@ define([
            'maxdate': ($objTarget.find('.maxdate').val().length > 0) ? $objTarget.find('.maxdate').val() : '2015-09-01'
          });
       sessionStorage.setItem($objTarget.data('maptype'), params);
-      this._setMaptype();
     }
   });
 
