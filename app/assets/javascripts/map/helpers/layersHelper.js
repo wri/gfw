@@ -93,6 +93,8 @@ define([
   'map/views/layers/PerPrivPALayer',
   'map/views/layers/PerRegPALayer',
   'map/views/layers/IdnForMorLayer',
+  // high resolution maps
+  'map/views/layers/UrthecastLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -195,6 +197,7 @@ define([
   PerPrivPALayer,
   PerRegPALayer,
   IdnForMorLayer,
+  UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -485,6 +488,9 @@ define([
     },
     idn_for_mor: {
       view: IdnForMorLayer
+    },
+    urthe: {
+      view: UrthecastLayer
     },
     nothing: {
     }
