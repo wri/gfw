@@ -46,7 +46,10 @@ define([
     },
 
     toggleLayer: function(slug) {
-      this.presenter.toggleLayer(slug);
+      this.presenter.toggleLayer(slug); //this one hide the layer
+      setTimeout(_.bind(function() {
+        this.presenter.toggleLayer(slug); //and this other one, reactivate it with the params
+     },this), 50);
     }
   });
 
