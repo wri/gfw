@@ -51,10 +51,24 @@ define([
      * @return {string}  url  Tile url
      */
     _getUrl: function(tile, zoom) {
+      if (!sessionStorage.getItem('high-resolution')) {
+        var params = {
+         'color_filter': 'rgb',
+         'cloud': '100',
+         'mindate': '2000-09-01',
+         'maxdate': '2015-09-01'
+        }
+      } else {
+        var params = JSON.parse(atob(sessionStorage.getItem('high-resolution')));
+      }
       return new UriTemplate(this.options.urlTemplate).fillFromObject({
         x: tile.x,
         y: tile.y,
-        z: zoom
+        z: zoom,
+        sat: params.color_filter,
+        cloud: params.cloud,
+        mindate: params.mindate,
+        maxdate: params.maxdate
       });
     }
   });

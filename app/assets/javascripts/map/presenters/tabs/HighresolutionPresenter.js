@@ -7,7 +7,8 @@ define([
   'underscore',
   'mps',
   'map/presenters/PresenterClass',
-], function(_, mps, PresenterClass) {
+  'map/services/LayerSpecService'
+], function(_, mps, PresenterClass, layerSpecService) {
 
   'use strict';
 
@@ -18,13 +19,24 @@ define([
       this._super();
     },
 
-    initExperiment: function(id) {
-      mps.publish('Experiment/choose',[id]);
-    },
-
     setMaptype: function(maptype) {
       mps.publish('Maptype/change', [maptype]);
-    }
+    },
+
+    /**
+     * Publish a a Map/toggle-layer.
+     *
+     * @param  {string} layerSlug
+     */
+    toggleLayer: function(layerSlug) {
+      var where = [{slug: layerSlug}];
+
+      layerSpecService.toggle(where,
+        _.bind(function(layerSpec) {
+          mps.publish('LayerNav/change', [layerSpec]);
+          mps.publish('Place/update', [{go: false}]);
+        }, this));
+    },
   });
 
   return HighresolutionPresenter;

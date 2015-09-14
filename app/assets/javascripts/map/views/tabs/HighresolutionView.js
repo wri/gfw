@@ -34,14 +34,19 @@ define([
 
     _setParams: function(e) {
       var $objTarget = $(e.target).closest('.maptype');
-      var params = JSON.stringify(
-         {
+      var params = {
+          'satellite' : $objTarget.data('maptype'),
            'color_filter': $objTarget.find('.color').val(),
            'cloud': $objTarget.find('.cloud').val(),
            'mindate': ($objTarget.find('.mindate').val().length > 0) ? $objTarget.find('.mindate').val() : '2000-09-01',
            'maxdate': ($objTarget.find('.maxdate').val().length > 0) ? $objTarget.find('.maxdate').val() : '2015-09-01'
-         });
-      sessionStorage.setItem($objTarget.data('maptype'), params);
+         };
+      sessionStorage.setItem('high-resolution', btoa(JSON.stringify(params)));
+      this.toggleLayer($objTarget.data('maptype'));
+    },
+
+    toggleLayer: function(slug) {
+      this.presenter.toggleLayer(slug);
     }
   });
 
