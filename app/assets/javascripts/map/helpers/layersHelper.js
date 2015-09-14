@@ -92,6 +92,7 @@ define([
   'map/views/layers/PerNatPALayer',
   'map/views/layers/PerPrivPALayer',
   'map/views/layers/PerRegPALayer',
+  'map/views/layers/IdnForMorLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -193,6 +194,7 @@ define([
   PerNatPALayer,
   PerPrivPALayer,
   PerRegPALayer,
+  IdnForMorLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -480,6 +482,9 @@ define([
     },
     per_reg_pa: {
       view: PerRegPALayer
+    },
+    idn_for_mor: {
+      view: IdnForMorLayer
     },
     nothing: {
     }
