@@ -79,6 +79,7 @@ define([
       "mining",
       "gab_logging",
       "caf_logging",
+      "idn_for_mor",
       "idn_logging",
       "gnq_logging",
       "cmr_logging",

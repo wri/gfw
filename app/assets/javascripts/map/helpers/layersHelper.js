@@ -86,6 +86,13 @@ define([
   'map/views/layers/ProdesCoverLayer',
   'map/views/layers/PerPermForestLayer',
   'map/views/layers/RaisgLayer',
+  'map/views/layers/PlantationsLayerByType',
+  'map/views/layers/PlantationsLayerBySpecies',
+  'map/views/layers/PerBufferLayer',
+  'map/views/layers/PerNatPALayer',
+  'map/views/layers/PerPrivPALayer',
+  'map/views/layers/PerRegPALayer',
+  'map/views/layers/IdnForMorLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -181,6 +188,13 @@ define([
   ProdesCoverLayer,
   PerPermForestLayer,
   RaisgLayer,
+  PlantationsLayerByType,
+  PlantationsLayerBySpecies,
+  PerBufferLayer,
+  PerNatPALayer,
+  PerPrivPALayer,
+  PerRegPALayer,
+  IdnForMorLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -450,6 +464,27 @@ define([
     },
     raisg: {
       view: RaisgLayer
+    },
+    plantations_by_type: {
+      view: PlantationsLayerByType
+    },
+    plantations_by_species: {
+      view: PlantationsLayerBySpecies
+    },
+    per_buffer: {
+      view: PerBufferLayer
+    },
+    per_nat_pa: {
+      view: PerNatPALayer
+    },
+    per_priv_pa: {
+      view: PerPrivPALayer
+    },
+    per_reg_pa: {
+      view: PerRegPALayer
+    },
+    idn_for_mor: {
+      view: IdnForMorLayer
     },
     nothing: {
     }
