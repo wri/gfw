@@ -9,18 +9,28 @@ define([
 
   'use strict';
 
+  var ApplicationsNavModel = Backbone.Model.extend({
+    defaults: {
+      filters: []
+    }
+  })
+
+
   var ApplicationsNavView = Backbone.View.extend({
 
     el: '#applicationsNavView',
 
     events: {
-      'click a' : 'onFilter',
+      'click .app-filter' : 'onFilter',
     },
 
     initialize: function() {
       if (!this.$el.length) {
         return
       }
+
+      this.model = new ApplicationsNavModel();
+
       this.$window = $(window);
       this.$document = $(document);
       this.$htmlbody = $('html,body');
@@ -44,10 +54,10 @@ define([
     },
 
     setListeners: function(){
-      this.calculateOffsets();
-      this.$document.on('scroll',_.bind(this.scrollDocument,this));
-      this.$window.on('resize',_.bind(this.calculateOffsets,this));
+      this.model.on('change:filters', this.changeFilters, this);
       mps.subscribe('App/render', _.bind(function(){
+        this.$document.on('scroll',_.bind(this.scrollDocument,this));
+        this.$window.on('resize',_.bind(this.calculateOffsets,this));
         this.calculateOffsets();
       }, this ));
     },
@@ -55,7 +65,6 @@ define([
     calculateOffsets: function(){
       this.offset = this.$el.offset().top + parseInt(this.$el.css('paddingTop'), 10);
       this.offsetBottom = this.$cut.offset().top - this.$el.height();
-
 
       _.each(this.$links, _.bind(function(link, i){
         var id = $(link).attr('href');
@@ -98,18 +107,20 @@ define([
     },
 
     onFilter: function(e) {
-      e && e.preventDefault();
-      var id = $(e.currentTarget).attr('href');
-      var time = Math.abs(this.$document.scrollTop() - ($(id).offset().top - this.$el.height()))/2;
-      this.$htmlbody.animate({ scrollTop: $(id).offset().top - this.$el.height() }, time);
+      var filters = _.clone(this.model.get('filters'));
+      var filter = $(e.currentTarget).data('filter');
+      if (_.contains(filters, filter)) {
+        filters = _.without(filters, filter);
+      } else {
+        filters.push(filter);
+      }
+      $(e.currentTarget).toggleClass('is-active');
+      this.model.set('filters',filters);
     },
 
-    scrollTo: function(href){
-      var id = '#'+href.section;
-      var time = Math.abs(this.$document.scrollTop() - ($(id).offset().top - this.$el.height()))/2;
-      this.$htmlbody.animate({ scrollTop: $(id).offset().top - this.$el.height() }, time);
-    },
-
+    changeFilters: function () {
+      mps.publish('App/filters', [this.model.get('filters')]);
+    }
 
   });
 

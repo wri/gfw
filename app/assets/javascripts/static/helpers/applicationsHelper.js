@@ -1,4 +1,6 @@
-define([], function() {
+define([
+  'underscore'
+], function(_) {
 
   var applicationsHelper = [
     {
@@ -155,7 +157,7 @@ define([], function() {
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Ministry of Environment, Nature Conservation, and Tourism of the Democratic Republic of the Congo',
       mobile_friendly: 'other',
-      tags: 'data, deforestation, maps'
+      tags: 'data, partners, maps'
     },
     {
       id: 14,
@@ -168,7 +170,7 @@ define([], function() {
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Ministry of Agriculture and Forestry of Equatorial Guinea',
       mobile_friendly: 'other',
-      tags: 'forests, data, deforestation, maps'
+      tags: 'forests, data, satellite, maps'
     },
     {
       id: 15,
@@ -181,7 +183,7 @@ define([], function() {
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Ministry of the Forest, Environment, and Protection of Natural Resources of Gabon',
       mobile_friendly: 'other',
-      tags: 'forests, data, maps'
+      tags: 'forests, data, maps, partners'
     },
     {
       id: 16,
@@ -192,10 +194,22 @@ define([], function() {
       link_text: 'Read more',
       classname: 'btn gray medium',
     },
-
-
   ]
-  return applicationsHelper;
+
+
+  function tagged(arr) {
+    return _.map(arr, function(app){
+      if (app.tags) {
+        app.tags = _.map(app.tags.split(","), function(t){
+          return t.trim();
+        });
+      }
+      return app;
+    })
+  }
+
+
+  return tagged(applicationsHelper);
 
 });
 

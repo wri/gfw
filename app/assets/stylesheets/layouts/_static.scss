@@ -873,12 +873,18 @@
   }
   span {
     font-size: 14px;
-    color: #666;
+    color: $dark;
     box-sizing: border-box;
-    padding: 18px 10px;
+    padding: 10px;
+    margin: 8px 0;
     cursor: pointer;
+    border-radius: 20px;
     &:hover {
-      color: #444;
+      color: #000;
+    }
+    &.is-active {
+      color: $white;
+      background: $dark;
     }
   }
 }

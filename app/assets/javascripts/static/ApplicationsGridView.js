@@ -12,6 +12,13 @@ define([
 
   'use strict';
 
+  var ApplicationGridModel = Backbone.Model.extend({
+    defaults: {
+      filters: []
+    }
+  });
+
+
   var ApplicationGridView = Backbone.View.extend({
 
     el: '#applicationsGridView',
@@ -27,15 +34,39 @@ define([
         return
       }
       //helper
+      this.model = new ApplicationGridModel();
       this.helper = applicationsHelper;
 
       //init
+      this.setListeners();
       this.render();
     },
 
+    setListeners: function() {
+      mps.subscribe('App/filters', _.bind(function(filters){
+        this.model.set('filters', filters);
+      }, this ));
+
+      this.model.on('change:filters', this.render, this);
+
+    },
+
     render: function(){
-      this.$el.html(this.template({ applications: this.helper }));
+      this.$el.html(this.template({ applications: this.parseData() }));
       mps.publish('App/render');
+    },
+
+    parseData: function() {
+      if (!!this.model.get('filters').length) {
+        return _.filter(this.helper, _.bind(function(app){
+          if (!!app.tags) {
+            var filter_found = _.intersection(this.model.get('filters'), app.tags);
+            return !!filter_found.length;
+          }
+        }, this ));
+      } else {
+        return this.helper;
+      }
     },
 
     showAppInfo: function(e) {

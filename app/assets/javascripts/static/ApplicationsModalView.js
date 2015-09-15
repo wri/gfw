@@ -14,7 +14,8 @@ define([
 
   var ApplicationModalModel = Backbone.Model.extend({
     defaults: {
-      current: null
+      current: null,
+      visible: false
     }
   })
 
@@ -35,6 +36,7 @@ define([
         return
       }
       //helper
+      this.$document = $(document);
       this.model = new ApplicationModalModel();
       this.helper = applicationsHelper;
 
@@ -48,10 +50,12 @@ define([
       }, this ));
 
       this.model.on('change:current', this.render, this);
+      this.model.on('change:visible', this.toggleBindings, this);
     },
 
     render: function(){
       this.$el.toggleClass('active',!!this.model.get('current'))
+      this.model.set('visible', !!this.model.get('current'));
       if (!!this.model.get('current')) {
         var app = _.findWhere(this.helper, {id: this.model.get('current')});
         this.$el.html(this.template({ app: app }));
@@ -63,6 +67,32 @@ define([
     close: function(e) {
       e && e.preventDefault();
       this.model.set('current',false);
+    },
+
+    toggleBindings: function() {
+      if (!!this.model.get('visible')) {
+        // document keyup
+        this.$document.on('keyup', _.bind(function(e) {
+          var current = this.model.get('current');
+          switch(e.keyCode) {
+            case 27:
+              this.close();
+            break;
+            case 37:
+              (current == 1) ? current = this.helper.length - 1 : current--;
+              this.model.set('current', current);
+            break;
+            case 39:
+              (current == this.helper.length - 1) ? current = 1 : current++;
+              this.model.set('current', current);
+            break;
+          }
+        },this));
+
+      } else {
+        this.$document.off('keyup');
+      }
+
     },
 
     navigateByArrows: function(e) {
