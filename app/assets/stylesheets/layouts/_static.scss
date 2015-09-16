@@ -875,7 +875,7 @@
     font-size: 14px;
     color: $dark;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 6px 10px;
     margin: 8px 0;
     cursor: pointer;
     border-radius: 20px;
@@ -948,6 +948,8 @@
         padding-left: 100px;
         box-shadow: 0 0 0 1px $border;
         cursor: pointer;
+        @include display-flex();
+        @include align-items(center);
 
         &:hover{
           box-shadow: 0 0 0 2px $cGreen;
@@ -955,10 +957,11 @@
 
         .icon{
           position: absolute;
-          top: 15px;
+          top: 50%;
           left: 0;
           width: 100px;
           height: 45px;
+          @include transform(translate(0,-50%));
           svg{
             fill: $dark;
           }
@@ -970,6 +973,7 @@
             padding: 0;
             text-align: left;
             font-size: 21px;
+            font-weight: 400;
           }
           small {
             color: #AAA;
@@ -1070,14 +1074,11 @@
     .application-modal-header {
       width: 100%;
       position: relative;
-      padding: 20px;
-      padding-left: 100px;
+      padding: 0 20px 20px;
       .icon{
-        position: absolute;
-        top: 15px;
-        left: 0;
-        width: 100px;
-        height: 45px;
+        width: 100%;
+        height: 70px;
+        margin: 0 auto 20px;
         svg{
           fill: $dark;
         }
@@ -1094,17 +1095,25 @@
         small {
           color: #AAA;
           font-size: 10px;
+          line-height: 1.3;
+          padding: 3px 0 0;
         }
       }
     }
     .application-modal-info {
       color: $dark;
       font-size: 13px;
-      padding: 0 25px 20px;
+      padding: 0 20px 20px;
       line-height: 20px;
+
+      .application-modal-info--tags {
+        font-size: 11px;
+        color: #AAA;
+        padding: 5px 0 0;
+      }
     }
     footer{
-      margin: 10px 0 0;
+      margin: 20px 0 0;
       @include display-flex();
       @include justify-content(center);
     }
