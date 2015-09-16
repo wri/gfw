@@ -2,6 +2,20 @@ define([
   'underscore'
 ], function(_) {
 
+  // APP INFO
+  // name: name of the app
+  // svg: svg-id linked to svg icon definitions
+  // content: content that will be shown when you click one app
+  // source: the source of the app
+  // tags: you should choose one of these => forests commodities data deforestation fires indonesia maps palm satellite partners
+
+  // LINK BUTTON
+  // href: link to the app will be shown when you click one app
+  // link_text: text that should appear inside the button
+  // classname: classes that should have the link/button (mobile-friendly should prevent mobile users to leave GFW)
+  // mobile_friendly: other => when you don't know if the app that is requested is mobile optimized. That should change the message
+  // target: '_blank' if you need to open it in a new page
+
   var applicationsHelper = [
     {
       id: 1,
