@@ -11,9 +11,14 @@
     </header>
   </div>
   <div class="application-modal-info">
-    {{app.content}}
+    <p>{{app.content}}</p>
+    {{#if app.tags}}
+    <div class="application-modal-info--tags">
+      Tags: {{#each app.tags}}{{#if @first}}{{this}}{{else}}, {{this}}{{/if}}{{/each}}
+    </ul>
+    {{/if}}
   </div>
   <footer>
-    <a href="{{app.href}}" class="{{app.classname}}">{{app.link_text}}</a>
+    <a href="{{app.href}}" {{#if app.target}}target="_blank"{{/if}} class="{{app.classname}}">{{app.link_text}}</a>
   </footer>
 </div>
