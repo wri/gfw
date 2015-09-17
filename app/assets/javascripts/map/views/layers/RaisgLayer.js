@@ -25,6 +25,8 @@ define([
 
 
   var wmsInfowindowUrl = 'http://gisserver.socioambiental.org:6080/arcgis/services/raisg/raisg_tis/MapServer/WMSServer?';
+
+  wmsInfowindowUrl += '&service=WMS';
   wmsInfowindowUrl += '&version=1.1.1';
   wmsInfowindowUrl += '&request=GetFeatureInfo';
   wmsInfowindowUrl += '&layers=0';

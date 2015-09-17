@@ -5,9 +5,12 @@
  */
 define([
   'underscore',
+  'amplify',
   'uri',
-  'abstract/layer/OverlayLayerClass'
-], function(_, UriTemplate, OverlayLayerClass) {
+  'abstract/layer/OverlayLayerClass',
+  'map/views/layers/CustomInfowindow',
+
+], function(_, amplify, UriTemplate, OverlayLayerClass, CustomInfowindow) {
 
   'use strict';
 
@@ -119,21 +122,80 @@ define([
 
     addClick: function() {
       google.maps.event.addListener(this.map, "click", _.bind(function(event) {
-        var zoom = this.map.getZoom();
-        var longitude = event.latLng.lng();
-        var latitude = event.latLng.lat();
-
         var projectionMap = new MercatorProjection();
+        this.location = {
+          zoom: this.map.getZoom(),
+          latlng: event.latLng,
+          point: projectionMap.fromLatLngToPoint(event.latLng),
+          setBounds: function() {
+            this.boundL = new google.maps.LatLng(this.latlng.lat()-0.1, this.latlng.lng()-0.1);
+            this.boundR = new google.maps.LatLng(this.latlng.lat()+0.1, this.latlng.lng()+0.1);
+          },
+          setBBox: function() {
+            this.bbox = this.boundL.lng() + "," + this.boundL.lat() + "," + this.boundR.lng() + "," + this.boundR.lat();
+          },
+        }
+        this.location.setBounds();
+        this.location.setBBox();
+        this.location.url = this.getQuery(this.location.point.x,this.location.point.y,this.location.bbox);
 
-        var lPointg = projectionMap.fromLatLngToPoint(event.latLng);
-        var lBPointLg = new google.maps.LatLng(latitude-0.1, longitude-0.1);
-        var lBPointRg  = new google.maps.LatLng(latitude+0.1, longitude+0.1);
 
-        var bbox = lBPointLg.lng() + "," + lBPointLg.lat() + "," + lBPointRg.lng() + "," + lBPointRg.lat();
-
-        var url = this.getQuery(lPointg.x,lPointg.y,bbox);
+        $.get('/wms_infowindow_example.xml').done(_.bind(function(xml){
+          if(this.infowindow) {
+            this.infowindow.remove();
+          }
+          var data = this.xmlToJson(xml);
+          var info = data['FeatureInfoResponse']['FIELDS'].attrs;
+          var infoWindowOptions = {
+            offset: [0, 100],
+            infowindowData: {
+              name: info['Nombre'],
+              country: info['País'],
+              area_ha: info['ÁreaOficialha'],
+            }
+          }
+          this.infowindow = new CustomInfowindow(this.location.latlng, this.map, infoWindowOptions);
+        }, this ));
 
       }, this ));
+
+    },
+
+    xmlToJson: function(xml) {
+      // Create the return object
+      var obj = {};
+
+      if (xml.nodeType == 1) { // element
+        // do attributes
+        if (xml.attributes.length > 0) {
+        obj["attrs"] = {};
+          for (var j = 0; j < xml.attributes.length; j++) {
+            var attribute = xml.attributes.item(j);
+            obj["attrs"][attribute.nodeName] = attribute.nodeValue;
+          }
+        }
+      } else if (xml.nodeType == 3) { // text
+        obj = xml.nodeValue;
+      }
+
+      // do children
+      if (xml.hasChildNodes()) {
+        for(var i = 0; i < xml.childNodes.length; i++) {
+          var item = xml.childNodes.item(i);
+          var nodeName = item.nodeName;
+          if (typeof(obj[nodeName]) == "undefined") {
+            obj[nodeName] = this.xmlToJson(item);
+          } else {
+            if (typeof(obj[nodeName].push) == "undefined") {
+              var old = obj[nodeName];
+              obj[nodeName] = [];
+              obj[nodeName].push(old);
+            }
+            obj[nodeName].push(this.xmlToJson(item));
+          }
+        }
+      }
+      return obj;
     },
 
   });
