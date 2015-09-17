@@ -16,6 +16,9 @@ define([
     // As you see forestchange layers are the more importants so they will be added to top
     //the order will be Grump, forest cover,Conservation, Forest Use, and People layers and finally  Forest Change layers
     layerOrder: [
+      //high resolution maps
+      "urthe",
+      //-
       "grump2000",
       //FOREST COVER
       "forest2000",
@@ -56,6 +59,10 @@ define([
       "biodiversity_hotspots",
       "protected_areasCDB",
       "idn_leuser",
+      "per_buffer",
+      "per_nat_pa",
+      "per_priv_pa",
+      "per_reg_pa",
       // FOREST USE
       "dam_hotspots",
       "per_prod_for",
@@ -81,6 +88,7 @@ define([
       "mining",
       "gab_logging",
       "caf_logging",
+      "idn_for_mor",
       "idn_logging",
       "gnq_logging",
       "cmr_logging",
