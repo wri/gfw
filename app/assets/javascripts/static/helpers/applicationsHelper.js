@@ -205,6 +205,19 @@ define([
     },
     {
       id: 16,
+      name: 'Open Foris',
+      svg: '#shape-open-foris',
+      content: 'Free open-source solutions for environmental monitoring',
+      href: 'http://www.openforis.org/',
+      target: true,
+      link_text: 'Launch App',
+      classname: 'btn green medium mobile-friendly',
+      source: 'Forestry Department of the Food and Agriculture Organization of the United Nations',
+      mobile_friendly: 'other',
+      tags: 'forests, data, maps, partners'
+    },
+    {
+      id: 17,
       name: 'GFW Climate',
       svg: '#shape-carbon',
       content: 'Track carbon emissions and removals in forest landscapes.',
@@ -214,7 +227,7 @@ define([
       tags: 'forests, data, maps, partners'
     },
     {
-      id: 17,
+      id: 18,
       name: 'Deforestation Finder App',
       svg: '#shape-landsat',
       content: 'Help make GFW’s tree cover loss alerts more reliable by analyzing satellite images and telling the world what you see.',
@@ -224,7 +237,7 @@ define([
       tags: 'forests, data, maps, partners'
     },
     {
-      id: 18,
+      id: 19,
       name: 'Develop your own app',
       svg: '#shape-develop',
       content: 'Learn how to develop your own application with Global Forest Watch data.',
