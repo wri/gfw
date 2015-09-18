@@ -19,6 +19,10 @@
     {{/if}}
   </div>
   <footer>
+    {{#if app.href}}
     <a href="{{app.href}}" {{#if app.target}}target="_blank"{{/if}} class="{{app.classname}}">{{app.link_text}}</a>
+    {{else}}
+    <span class="{{app.classname}}">{{app.link_text}}</span>
+    {{/if}}
   </footer>
 </div>
