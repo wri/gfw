@@ -862,13 +862,14 @@
   .inner {
     @include display-flex();
     @include row(flex-start);
-    @include flex-direction(flex-start);
-    @include justify-content(space-around);
+    @include justify-content(center);
     @include flex-wrap(wrap);
     @include align-items(center);
     height: 100%;
+    margin: 10px auto;
     @media (min-width: $br-mobile) {
       @include flex-direction(row);
+      max-width: 700px;
     }
   }
   span {
@@ -876,7 +877,7 @@
     color: $dark;
     box-sizing: border-box;
     padding: 6px 10px;
-    margin: 8px 0;
+    margin: 3px 0;
     cursor: pointer;
     border-radius: 20px;
     &:hover {

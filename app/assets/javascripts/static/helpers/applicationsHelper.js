@@ -7,7 +7,8 @@ define([
   // svg: svg-id linked to svg icon definitions
   // content: content that will be shown when you click one app
   // source: the source of the app
-  // tags: you should choose one of these => forests commodities data deforestation fires indonesia maps palm satellite partners
+  // tags: you should choose one of these => africa, asia, boreal-forests, commodities, crowdsourcing, data, fires, global-forest-watch, latin-america, maps, mining, mobile, palm-oil, satellite-imagery
+  //       if you want more than once, please separate them by commas
 
   // LINK BUTTON
   // href: link to the app will be shown when you click one app
@@ -25,6 +26,7 @@ define([
       href: '/map',
       link_text: 'Open map',
       classname: 'btn green medium',
+      source: 'World Resources Institute',
       tags: 'forests, data, deforestation, maps'
     },
     {
@@ -35,6 +37,7 @@ define([
       href: '/countries',
       link_text: 'View countries',
       classname: 'btn green medium',
+      source: 'World Resources Institute',
       tags: 'forests, data, deforestation, maps'
     },
     {
@@ -45,6 +48,7 @@ define([
       href: 'http://data.globalforestwatch.org',
       link_text: 'Browse data',
       classname: 'btn green medium mobile-friendly',
+      source: 'World Resources Institute',
       tags: 'forests, data, deforestation, maps'
     },
     {
@@ -201,6 +205,26 @@ define([
     },
     {
       id: 16,
+      name: 'GFW Climate',
+      svg: '#shape-carbon',
+      content: 'Track carbon emissions and removals in forest landscapes.',
+      link_text: 'Coming soon',
+      classname: 'btn soon',
+      source: 'World Resources Institute',
+      tags: 'forests, data, maps, partners'
+    },
+    {
+      id: 17,
+      name: 'Deforestation Finder App',
+      svg: '#shape-landsat',
+      content: 'Help make GFW’s tree cover loss alerts more reliable by analyzing satellite images and telling the world what you see.',
+      link_text: 'Coming soon',
+      classname: 'btn soon',
+      source: 'World Resources Institute',
+      tags: 'forests, data, maps, partners'
+    },
+    {
+      id: 18,
       name: 'Develop your own app',
       svg: '#shape-develop',
       content: 'Learn how to develop your own application with Global Forest Watch data.',
@@ -209,6 +233,50 @@ define([
       classname: 'btn gray medium',
     },
   ]
+
+// <div class="col">
+//   <div class="card">
+//     <header>
+//       <h2>Climate</h2>
+//       <div class="icon"><svg><use xlink:href="#shape-carbon"></use></svg></div>
+//     </header>
+//     <div class="content">
+//       <p>Track carbon emissions and removals in forest landscapes.</p>
+//     </div>
+//     <footer>
+//       <span class="btn soon">coming soon</span>
+//       <small>Source: World Resources Institute</small>
+//     </footer>
+//     <div class="description">
+//       <div class="additional-info">
+//         <h2>Climate</h2>
+//         <p>Global Forest Watch Climate is a forthcoming tool to track carbon emissions and removals from forest landscapes. With GFW Climate, users will be able to interactively visualize and analyze forest carbon data to generate customized maps and statistics. GFW Climate will provide timely and practical information and tools for those involved in designing forest policies for climate change mitigation.</p>
+//       </div>
+//     </div>
+//   </div>
+// </div>
+// <div class="col">
+//   <div class="card">
+//     <header>
+//       <h2>Deforestation Finder App</h2>
+//       <div class="icon"><svg><use xlink:href="#shape-landsat"></use></svg></div>
+//     </header>
+//     <div class="content">
+//       <p>Help make GFW’s tree cover loss alerts more reliable by analyzing satellite images and telling the world what you see.</p>
+//     </div>
+//     <footer>
+//       <span class="btn soon">coming soon</span>
+//       <small>Source: World Resources Institute</small>
+//     </footer>
+//     <div class="description">
+//       <div class="additional-info">
+//         <h2>Deforestation Finder App</h2>
+//         <p>Sometimes the human eye is more powerful at spotting deforestation than computer algorithms. This simple app displays recent satellite images from areas with recent tree cover loss alerts and asks users to tell us what they see. User contributions can help us figure out which alerts are most concerning and require action on the ground.</p>
+//       </div>
+//     </div>
+//   </div>
+// </div>
+
 
 
   function tagged(arr) {
