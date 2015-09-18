@@ -31,7 +31,7 @@ define([
     },
 
     render: function() {
-      this.$el.html(this.template({today: moment().format('YYYY-MM-DD'), mindate: moment().subtract(1,'month').format('YYYY-MM-DD')}));
+      this.$el.html(this.template({today: moment().format('YYYY-MM-DD'), mindate: moment().subtract(3,'month').format('YYYY-MM-DD')}));
     },
 
     _setParams: function(e) {
