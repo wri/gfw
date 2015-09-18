@@ -12,13 +12,13 @@
         </select>
         </section>
         <section>
-          cloud percentage <input type="range" class='cloud' step="10">
+          cloud percentage <input type="range" class='cloud' step="10" value="20">
         </section>
         <section>
-          acquired date min <input type=date min=2004-09-08 value="2004-09-08" class="mindate">
+          acquired date min <input type=date min=2000-09-08 value="{{mindate}}" class="mindate">
         </section>
         <section>
-          acquired date max <input type=date max=2015-09-08 value="2015-09-08" class="maxdate">
+          acquired date max <input type=date max={{today}} value="{{today}}" class="maxdate">
         </section>
         <button>apply</button>
       </div>

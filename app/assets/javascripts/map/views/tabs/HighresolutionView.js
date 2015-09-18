@@ -7,9 +7,10 @@ define([
   'underscore',
   'handlebars',
   'enquire',
+  'moment',
   'map/presenters/tabs/HighresolutionPresenter',
   'text!map/templates/tabs/Highresolution.handlebars'
-], function(_, Handlebars, enquire, Presenter, tpl) {
+], function(_, Handlebars, enquire, moment, Presenter, tpl) {
 
   'use strict';
 
@@ -29,8 +30,8 @@ define([
       this.render();
     },
 
-    render: function(){
-      this.$el.html(this.template());
+    render: function() {
+      this.$el.html(this.template({today: moment().format('YYYY-MM-DD'), mindate: moment().subtract(1,'month').format('YYYY-MM-DD')}));
     },
 
     _setParams: function(e) {
