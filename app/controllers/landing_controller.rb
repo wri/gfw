@@ -27,6 +27,7 @@ class LandingController < ApplicationController
       if (i.css('media').text.length > 0 && JSON.parse(i.css('media')[0].text)[1])
         img = 'http://gfw2stories.s3.amazonaws.com/uploads/' + JSON.parse(i.css('media')[0].text)[1]['url']
       else
+        # '/assets/' + i.css('category').text + '.png' ||
         img = '/assets/blog-categories/news.png'
       end
       @storiesview.push({
