@@ -1,5 +1,8 @@
 class LandingController < ApplicationController
   layout 'landing'
+  def is_number?(string)
+    true if Float(string) rescue false
+  end
 
   def index
     require 'open-uri'
@@ -8,6 +11,7 @@ class LandingController < ApplicationController
     @keywords = 'forests, forest data, forest monitoring, forest landscapes, maps, gis, visualize, geospatial, forest analysis, forest news, forest alerts, conservation, forest updates, forest watch, analysis, deforestation, deforesting, tree cover loss, explore forests, mapping, trees, forest loss'
     @feedview    = []
     @storiesview = []
+
     fview     = Nokogiri::HTML(open('https://gfw-huggin.herokuapp.com/users/1/web_requests/14/feedviewrss.xml'))
     fview.css('item').each do |i|
       @feedview.push({
@@ -20,13 +24,18 @@ class LandingController < ApplicationController
     end
     fstories  = Nokogiri::HTML(open('https://gfw-huggin.herokuapp.com/users/1/web_requests/15/keepupdatedgfwrss.xml'))
     fstories.css('item').each do |i|
+      if (i.css('media').text.length > 0 && JSON.parse(i.css('media')[0].text)[1])
+        img = 'http://gfw2stories.s3.amazonaws.com/uploads/' + JSON.parse(i.css('media')[0].text)[1]['url']
+      else
+        img = '/assets/blog-categories/news.png'
+      end
       @storiesview.push({
         'title' => i.css('title').text,
         'link' => i.css('link').text,
         'date' => i.css('pubDate').text,
         'description' => i.css('description').text,
-        'avatar' => '',
-        'id' => i.css('gfwid')
+        'avatar' => img,
+        'id' => is_number?(i.css('gfwid').text)? '/stories/'+i.css('gfwid').text : i.css('gfwid').text
       })
       break if @storiesview.length > 2
     end

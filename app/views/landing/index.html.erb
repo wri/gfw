@@ -269,12 +269,8 @@
 	          	<ul id="storiesView" data-limit="3" data-truncate="true">
                 <% @storiesview.each do |item|%>
                   <li>
-                    <a href="<%=item["link"] %>">
-                      <% if item.map %>
-                        <figure><div class="bg" style="background-image: url(<%= item["map"] %>)"></div></figure>
-                      <% else %>
-                        <figure><div class="bg <%= item["avatar"] %>"></div></figure>
-                      <% end %>
+                    <a href="<%=item["id"] %>">
+                        <figure><div class="bg" style="background-image: url(<%= item["avatar"] %>)"></div></figure>
                       <article class="info">
                         <h4><%= item["title"] %></h4>
                         <p><%=item["description"][0..29] %>...</p>
