@@ -43,35 +43,14 @@ define([
            'mindate': ($objTarget.find('.mindate').val().length > 0) ? $objTarget.find('.mindate').val() : '2000-09-01',
            'maxdate': ($objTarget.find('.maxdate').val().length > 0) ? $objTarget.find('.maxdate').val() : '2015-09-01'
          };
-      sessionStorage.setItem('high-resolution', btoa(JSON.stringify(params)));
-
-      this.params_new_url = {};
-      var parts = location.search.substring(1).split('&');
-      for (var i = 0; i < parts.length; i++) {
-        var nv = parts[i].split('=');
-        if (!nv[0]) continue;
-          this.params_new_url[nv[0]] = nv[1] || true;
-      }
-      if (this.params_new_url.hres) {
-        var destination = window.location.search.substring(0, window.location.search.indexOf('&hres='));
-      } else {
-        var destination = window.location.search.toString();
-      }
-      this.params_new_url['hres'] = btoa(JSON.stringify(params));
-      this.params_new_url = destination+'&hres='+this.params_new_url.hres;
-      this.toggleLayer($objTarget.data('maptype'));
+      var b64 = btoa(JSON.stringify(params));
+      sessionStorage.setItem('high-resolution', b64);
+      this.toggleLayer($objTarget.data('maptype'), b64);
     },
 
-    toggleLayer: function(slug) {
-      if (window.location.search.contains('&hres=')) {
-        this.presenter.toggleLayer(slug); //this one hide the layer
-      }
-      setTimeout(_.bind(function() {
-        this.presenter.toggleLayer(slug); //and this other one, reactivate it with the params
-     },this), 50);
-      setTimeout(_.bind(function() {
-        window.history.pushState("object or string", document.title, this.params_new_url);
-      },this), 1500);
+    toggleLayer: function(slug, params) {
+        this.presenter.toggleLayer(slug); //this one hides the layer
+        this.presenter.setHres(params);
     }
   });
 
