@@ -240,11 +240,7 @@
                 <% @feedview.each do |item|%>
                   <li>
                     <a href="<%=item["link"] %>" target="_blank">
-                      <% if item["avatar"] %>
                         <figure class="<%=item["type"] %>"><div style="background-image:url('<%=item["avatar"] %>');"></div></figure>
-                      <% else %>
-                        <figure class="<%=item["type"] %>"><div></div></figure>
-                      <% end %>
                       <div class="info">
                         <p><span><%=item["author"] %></span><%=item["description"][0..49] %>...</p>
                       </div>
