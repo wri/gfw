@@ -14,11 +14,13 @@ class LandingController < ApplicationController
 
     fview     = Nokogiri::HTML(open('https://gfw-huggin.herokuapp.com/users/1/web_requests/14/feedviewrss.xml'))
     fview.css('item').each do |i|
+      puts i
       @feedview.push({
         'title' => i.css('title').text,
         'link' => i.css('link').text,
         'date' => i.css('pubDate').text,
-        'description' => i.css('description').text
+        'description' => i.css('description').text,
+        'author' => i.css('author').text
       })
       break if @feedview.length > 5
     end
