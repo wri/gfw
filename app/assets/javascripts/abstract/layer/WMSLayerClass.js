@@ -78,6 +78,7 @@ define([
     init: function(layer, options, map) {
       this.map = map;
       this.url = this.options.url;
+      this.infowindowUrl = this.options.url;
       this.tiles = layer.tileurl;
       this._super(layer, options, map);
       this._setImageMapType(layer);
@@ -140,7 +141,7 @@ define([
         this.location.url = this.getQuery(this.location.point.x,this.location.point.y,this.location.bbox);
 
 
-        $.get('/wms_infowindow_example.xml').done(_.bind(function(xml){
+        $.get(this.infowindowUrl).done(_.bind(function(xml){
           if(this.infowindow) {
             this.infowindow.remove();
           }
@@ -156,6 +157,15 @@ define([
           }
           this.infowindow = new CustomInfowindow(this.location.latlng, this.map, infoWindowOptions);
         }, this ));
+
+        $.ajax({
+          type:"GET",
+          headers: { 'origin': 'localhost' },
+          url: this.infowindowUrl,
+          success: function(data) {
+            console.log(data)
+          }
+        });
 
       }, this ));
 

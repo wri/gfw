@@ -39,6 +39,7 @@ define([
   wmsInfowindowUrl += '&X={longitude}';
   wmsInfowindowUrl += '&Y={latitude}';
   wmsInfowindowUrl += '&query_layers=0';
+  wmsInfowindowUrl += '&Origin=0';
 
 
   var RaisgLayer = WMSLayerClass.extend({
