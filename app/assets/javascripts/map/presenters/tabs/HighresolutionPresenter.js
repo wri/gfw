@@ -15,7 +15,7 @@ define([
   var StatusModel = Backbone.Model.extend({
     defaults: {
       layers: [],
-      hres: ''
+      hresolution: ''
     }
   });
 
@@ -32,32 +32,37 @@ define([
       mps.publish('Maptype/change', [maptype]);
     },
 
+    updateLayer: function(name) {
+      mps.publish('Layer/update', [name]);
+    },
+
     /**
-     * Set status hres with the passed value.
+     * Set status hresolution with the passed value.
      *
-     * @param {string} value hres
+     * @param {string} value hresolution
      */
     setHres: function(value) {
-      this.status.set('hres', value);
+      this.status.set('hresolution', value);
+      sessionStorage.setItem('high-resolution', value);
       this._publishHres();
     },
 
     /**
-     * Publish 'hres/changed' event with the current hres
+     * Publish 'hresolution/changed' event with the current hresolution
      * and call 'Place/update' to update the url.
      */
     _publishHres: function() {
-      mps.publish('Hres/changed', [this.status.get('hres')]);
+      mps.publish('hresolution/changed', [this.status.get('hresolution')]);
       mps.publish('Place/update', [{go: false}]);
     },
 
     /**
-     * Used by PlaceService to get the current hres value.
+     * Used by PlaceService to get the current hresolution value.
      *
      * @return {Object} high-resolution
      */
     getPlaceParams: function() {
-      return {hres: this.status.get('hres')};
+      return {hresolution: this.status.get('hresolution')};
     },
 
     /**

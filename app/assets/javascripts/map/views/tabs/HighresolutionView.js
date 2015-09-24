@@ -22,7 +22,8 @@ define([
 
     events: {
       'click button' : '_setParams',
-      'change #hres-provider-select' : 'changeProvider'
+      'change #hres-provider-select' : 'changeProvider',
+      'click  .onoffswitch' : 'toggleLayer'
     },
 
     initialize: function() {
@@ -40,26 +41,26 @@ define([
     _setParams: function(e) {
       var $objTarget = $(e.target).closest('.maptype');
       var params = {
-          'satellite' : $objTarget.data('maptype'),
+          'satellite' : $objTarget.data('slug'),
            'color_filter': $objTarget.find('#hres-filter-select').val(),
            'cloud': $objTarget.find('.cloud').val(),
            'mindate': ($objTarget.find('.mindate').val().length > 0) ? $objTarget.find('.mindate').val() : '2000-09-01',
            'maxdate': ($objTarget.find('.maxdate').val().length > 0) ? $objTarget.find('.maxdate').val() : '2015-09-01'
          };
-      var b64 = btoa(JSON.stringify(params));
-      sessionStorage.setItem('high-resolution', b64);
-      this.toggleLayer($objTarget.data('maptype'), b64);
+      this.presenter.setHres(btoa(JSON.stringify(params)));
+      this.presenter.updateLayer($(e.target).closest('.maptype').data('slug'));
     },
 
-    toggleLayer: function(slug, params) {
-        this.presenter.toggleLayer(slug); //this one hides the layer
-        this.presenter.setHres(params);
+    toggleLayer: function(e) {
+      this.$onoffswitch.toggleClass('checked');
+      this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug')); //this one hides the layer
     },
 
     renderVars: function() {
       this.$selects = this.$el.find('.chosen-select');
       this.$hresSelectProvider = $('#hres-provider-select');
       this.$hresSelectFilter   = $('#hres-filter-select');
+      this.$onoffswitch        = $('.onoffswitch');
     },
 
     printSelects: function() {

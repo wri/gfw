@@ -86,5 +86,13 @@ $letterW: 20px;
     section {
       margin: 11px 0 0 0;
     }
+    .onoffswitch {
+      float: right;
+      margin: 1px 0 0 6px;
+      cursor: pointer;
+    }
+    .checked {
+      background: #A0A0A0;
+    }
   }
 }

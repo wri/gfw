@@ -51,7 +51,8 @@ define([
      * @return {string}  url  Tile url
      */
     _getUrl: function(tile, zoom) {
-      if (window.location.search.contains('&hres=')) {
+      var params = {};
+      if (window.location.search.contains('&hresolution=') && window.location.search.indexOf('=', window.location.search.indexOf('&hresolution=') + 13) !== -1) {
         var params_new_url = {};
         var parts = location.search.substring(1).split('&');
         for (var i = 0; i < parts.length; i++) {
@@ -59,18 +60,17 @@ define([
           if (!nv[0]) continue;
             params_new_url[nv[0]] = nv[1] || true;
         }
-        var params = JSON.parse(atob(params_new_url.hres));
+        params = JSON.parse(atob(params_new_url.hresolution));
       }
-      else if (!sessionStorage.getItem('high-resolution')) {
-        var params = {
-         'color_filter': 'rgb',
-         'cloud': '100',
-         'mindate': '2000-09-01',
-         'maxdate': '2015-09-01'
+      else if (!!sessionStorage.getItem('high-resolution')) {
+        params = JSON.parse(atob(sessionStorage.getItem('high-resolution')));
+      }
+      params = {
+         'color_filter': params.color_filter || 'rgb',
+         'cloud': params.cloud || '100',
+         'mindate': params.mindate || '2000-09-01',
+         'maxdate': params.maxdate || '2015-09-01'
         }
-      } else {
-        var params = JSON.parse(atob(sessionStorage.getItem('high-resolution')));
-      }
       return new UriTemplate(this.options.urlTemplate).fillFromObject({
         x: tile.x,
         y: tile.y,
