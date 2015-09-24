@@ -1,99 +1,90 @@
-$basemaps-class: grayscale, terrain, satellite, hybrid, treeheight, dark, positron, landsat;
-$basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, landsat;
-.tab-basemaps{
-  position: relative;
-  .maptype-list{
-    @media (min-width: $br-mobileMap){
-      max-height: 380px;
-      overflow: auto;
+$letterW: 20px;
+.tab-highresolution{
+  .highresolution-content{
+    padding: 15px;
+    @media (min-width: 1500px){
+      padding: 20px;
     }
-    >li{
-      position: relative;
-      padding: 0 0 0 80px;
-      border-top: 1px solid $border;
-      cursor: pointer;
-      &:first-child{
-        border-top: none;
-      }
-      &:hover{
-        background: darken($light,3%);
-      }
-      &.selected{ background: darken($light,3%);}
-      @for $i from 1 through length($basemaps-img) {
-        &.#{nth($basemaps-class, $i)} i {
-          @include basemaps-sprite(nth($basemaps-img, $i));
+    h2 {
+      font-size: 21px;
+      padding: 0 0 15px;
+      text-align: center;
+    }
+    // Select box
+    .select-box{
+      .chzn-container-single{
+        margin: 0 0 5px;
+        &:last-child{
+          margin: 0;
         }
       }
-      span{
-        font-size: 12px;
-        line-height: 70px;
-        text-transform: uppercase;
+      .country-ul-mobile{
+        margin: 0 -15px;
+        >li{
+          padding: 10px 20px;
+          border-bottom: 1px solid $border;
+          font-size: 14px;
+          &:last-child{
+            border-bottom: none;
+          }
+        }
       }
-      i{
-        width: 46px;
-        height: 46px;
-        position: absolute;
-        top: 50%;
-        left: 16px;
-        @include transform(translate(0,-50%));
-        background: #000;
-        border-radius: 50%;
-        border: 2px solid $border;
-
-      }
-      .source{
-        @extend .info-icon;
-        display: block;
-        position: absolute;
-        top: 50%;
-        right: 20px;
-        @include transform(translate(0,-50%));
-      }
-    }
-  }
-  .landsat-years{
-    display: none;
-    background: $white;
-    width: 100%;
-    text-align: center;
-    box-shadow: 0 2px 3px 1px rgba($dark, 0.25);
-    padding: 10px;
-    @media (min-width: $br-mobileMap){
-      text-align: left;
-      width: auto;
-      position: absolute;
-      bottom: 0%;
-      right: 100%;
-    }
-    &.active{
-      @include display-flex();
-      min-width: 200px;
-    }
-    &:after{
-      content: "";
-      position: absolute;
-      bottom: calc(70px/2 - 12px);
-      right: 0;
-      display: none;
-      @include transform(translate(50%,-50%) rotate(45deg));
-      background: $white;
-      width: 12px;
-      height: 12px;
-      box-shadow: 1px -1px 1px 0px rgba($dark, 0.25);
-      @media (min-width: $br-mobileMap){
-        display: block;
+      .letters-ul-mobile-box{
+        position: relative;
+        margin: -15px -15px 0;
+        border-bottom: 1px solid $border;
+        &:before,&:after{
+          content: "";
+          position: absolute;
+          top: 0;
+          width: 15px;
+          height: 100%;
+        }
+        &:before{
+          left: 0;
+          @include gradient(left,rgba(255,255,255,1),rgba(255,255,255,0));
+        }
+        &:after{
+          right: 0;
+          @include gradient(right,rgba(255,255,255,1),rgba(255,255,255,0));
+        }
+        .scroll-none{
+          overflow: auto;
+          padding: 15px 0 13px;
+        }
+        .letters-ul-mobile{
+          width: 27.5 * $letterW;
+          padding: 0px 15px;
+          overflow: hidden;
+          >li{
+            float: left;
+            color: $cGreen;
+            width: $letterW;
+            height: $letterW;
+            line-height: $letterW;
+            text-align: center;
+            text-transform: uppercase;
+            &.disabled{
+              color: $dark;
+              opacity: 0.75;
+            }
+            &.current{
+              font-weight: 500;
+            }
+          }
+        }
       }
     }
-    > div{
-      width: 50%;
-      > li {
-        cursor: pointer;
-        font-size: 12px;
-        padding: 10px;
-        white-space: nowrap;
-        &:hover{ background: darken($light,3%);}
-        &.selected{ background: darken($light,3%);}
-      }
+    > span {
+      display: block;
+      font-size: 11px;
+      color: #999;
+      text-transform: uppercase;
+      padding: 7px 0;
+    }
+    .maptype,
+    section {
+      margin: 11px 0 0 0;
     }
   }
 }
