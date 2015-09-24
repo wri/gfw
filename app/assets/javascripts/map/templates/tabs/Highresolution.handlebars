@@ -1,28 +1,25 @@
 <div class="tab-highresolution">
-  <ul class="maptype-list scroll-dark">
-    <li data-maptype="urthe" class="maptype">
-      <h2>Urthecast map</h2>
+  <div class="highresolution-content">
+    <h2>High Resultion Maps</h2>
+    <select data-placeholder="Select Provider" class="chosen-select default notranslate" id="hres-provider-select"><option></option></select>
+    <div data-maptype="urthe" class="maptype">
       <section>
-        <select class='color'>
-          <option>rgb</option>
-          <option>ndvi</option>
-          <option>evi</option>
-          <option>ndwi</option>
-          <option>false-color-nir</option>
-        </select>
-        </section>
-        <section>
-          cloud percentage <input type="range" class='cloud' step="10" value="30">
-        </section>
-        <section>
-          acquired date min <input type=date min=2000-09-08 value="{{mindate}}" class="mindate">
-        </section>
-        <section>
-          acquired date max <input type=date max={{today}} value="{{today}}" class="maxdate">
-        </section>
-        <button>apply</button>
-      </div>
-    </li>
-  </ul>
-
+        <select data-placeholder="Select Filter" class="chosen-select default notranslate" id="hres-filter-select" ><option></option></select>
+      </section>
+      <section>
+        <span>cloud percentage</span> <input type="range" class='cloud' step="10" value="30">
+      </section>
+      <section>
+        <span>acquired date min</span> <input type=date min=2000-09-08 value="{{mindate}}" class="mindate">
+      </section>
+      <section>
+        <span>acquired date max</span> <input type=date max={{today}} value="{{today}}" class="maxdate">
+      </section>
+      <section>
+        <ul class="button-container one">
+          <li><button id="analysis-country-button" class="btn green uppercase">Apply</button></li>
+        </ul>
+      </section>
+    </div>
+  </div>
 </div>
