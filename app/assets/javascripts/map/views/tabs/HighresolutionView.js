@@ -21,9 +21,12 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click button' : '_setParams',
       'change #hres-provider-select' : 'changeProvider',
-      'click  .onoffswitch' : 'toggleLayer'
+      'click  .onoffswitch' : 'toggleLayer',
+      'oninput #range-clouds' : 'setVisibleRange',
+      'change #range-clouds' : 'setVisibleRange',
+      'change input' : '_setParams',
+      'change select' : '_setParams',
     },
 
     initialize: function() {
@@ -34,11 +37,13 @@ define([
 
     render: function() {
       this.$el.html(this.template({today: moment().format('YYYY-MM-DD'), mindate: moment().subtract(3,'month').format('YYYY-MM-DD')}));
-      this.renderVars();
+      this.cacheVars();
       this.printSelects();
+      if (window.location.search.contains('&hresolution=') && window.location.search.indexOf('=', window.location.search.indexOf('&hresolution=') + 13) !== -1) this.$onoffswitch.toggleClass('checked');
     },
 
     _setParams: function(e) {
+      (! !!this.$onoffswitch.hasClass('checked')) ? this.toggleLayer(e) : null;
       var $objTarget = $(e.target).closest('.maptype');
       var params = {
           'satellite' : $objTarget.data('slug'),
@@ -56,11 +61,13 @@ define([
       this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug')); //this one hides the layer
     },
 
-    renderVars: function() {
+    cacheVars: function() {
       this.$selects = this.$el.find('.chosen-select');
       this.$hresSelectProvider = $('#hres-provider-select');
       this.$hresSelectFilter   = $('#hres-filter-select');
       this.$onoffswitch        = $('.onoffswitch');
+      this.$range              = $('#range-clouds');
+      this.$progress           = $('#progress-clouds');
     },
 
     printSelects: function() {
@@ -99,7 +106,13 @@ define([
         'skybox' : ''
       }
       this.printFilters(providers[$(e.currentTarget).val()]);
-    }
+    },
+
+    setVisibleRange: function(){
+      var width = this.$range.val();
+      this.$progress.width(width + '%')
+    },
+
   });
 
   return HighresolutionView;
