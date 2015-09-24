@@ -21,9 +21,10 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click button' : '_setParams',
       'change #hres-provider-select' : 'changeProvider',
-      'click  .onoffswitch' : 'toggleLayer'
+      'click  .onoffswitch' : 'toggleLayer',
+      'change input' : '_setParams',
+      'change select' : '_setParams'
     },
 
     initialize: function() {

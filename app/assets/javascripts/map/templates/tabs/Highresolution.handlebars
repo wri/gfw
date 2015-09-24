@@ -9,18 +9,21 @@
         <select data-placeholder="Select Filter" class="chosen-select default notranslate" id="hres-filter-select" ><option></option></select>
       </section>
       <section>
-        <span>maximum cloud cover percentage</span> <input type="range" class='cloud' step="10" value="30">
+        <span>maximum cloud cover percentage</span>
+
+        <div class="range-box">
+          <div class="dots"></div>
+          <div id="progress-clouds" class="progress"></div>
+          <input id="range-clouds" type="range" class='cloud' step="10" value="30">
+        </div>
+
+        {{!-- <input type="range" class='cloud' step="10" value="30"> --}}
       </section>
       <section>
         <span>acquired date min</span> <input type=date min=2000-09-08 value="{{mindate}}" class="mindate">
       </section>
       <section>
         <span>acquired date max</span> <input type=date max={{today}} value="{{today}}" class="maxdate">
-      </section>
-      <section>
-        <ul class="button-container one">
-          <li><button id="analysis-country-button" class="btn green uppercase">Apply</button></li>
-        </ul>
       </section>
     </div>
   </div>
