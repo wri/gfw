@@ -59,7 +59,7 @@ define([
           if (!nv[0]) continue;
             params_new_url[nv[0]] = nv[1] || true;
         }
-        var params = btoa(JSON.stringify(params_new_url.hres));
+        var params = JSON.parse(atob(params_new_url.hres));
       }
       else if (!sessionStorage.getItem('high-resolution')) {
         var params = {
