@@ -75,16 +75,16 @@ $letterW: 20px;
         }
       }
     }
-    > span {
-      display: block;
-      font-size: 11px;
-      color: #999;
-      text-transform: uppercase;
-      padding: 7px 0;
-    }
     .maptype,
     section {
       margin: 11px 0 0 0;
+      > span {
+        display: block;
+        font-size: 11px;
+        color: #999;
+        text-transform: uppercase;
+        padding: 7px 0;
+      }
     }
     .onoffswitch {
       float: right;
