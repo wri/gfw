@@ -1,13 +1,15 @@
 <div class="tab-highresolution">
   <div class="highresolution-content">
-    <h2>High Resultion Maps</h2>
-    <select data-placeholder="Select Provider" class="chosen-select default notranslate" id="hres-provider-select"><option></option></select>
-    <div data-maptype="urthe" class="maptype">
+    <h2>Imagery</h2>
+    {{!-- <select data-placeholder="Select Provider" class="chosen-select default notranslate" id="hres-provider-select"><option></option></select> --}}
+
+    <div data-slug="urthe" class="maptype">
+      <h3>Urthecast<span class="onoffswitch"><span></span></span></h3>
       <section>
         <select data-placeholder="Select Filter" class="chosen-select default notranslate" id="hres-filter-select" ><option></option></select>
       </section>
       <section>
-        <span>cloud percentage</span> <input type="range" class='cloud' step="10" value="30">
+        <span>maximum cloud cover percentage</span> <input type="range" class='cloud' step="10" value="30">
       </section>
       <section>
         <span>acquired date min</span> <input type=date min=2000-09-08 value="{{mindate}}" class="mindate">
