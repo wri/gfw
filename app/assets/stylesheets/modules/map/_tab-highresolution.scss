@@ -97,35 +97,23 @@ $letterW: 20px;
     .range-box{
       position: relative;
       height: 10px;
-      width: 75%;
+      width: 100%;
       margin: 0 auto;
       .dots{
         position: absolute;
-        width: 125%;
+        width: 100%;
         height: 100%;
         top: 0;
         left: 50%;
         @include transform(translate(-50%,0));
         margin: 1px 0 0;
         background: image-url('/assets/icons/point.png') repeat-x 1px center;
-        &:after{
-          content: "";
-          position: absolute;
-          top: 50%;
-          right: 0;
-          width: 12.5%;
-          height: 4px;
-          margin: -2px 0 0;
-          cursor: pointer;
-          background: $cGreen;
-          border-radius: 2px;
-        }
       }
       .progress{
         position: absolute;
         top: 50%;
-        right: 0;
-        width: percentage(1 - 1/6*4);
+        left: 0;
+        width: 30%;
         height: 4px;
         margin: -1px 0 0;
         cursor: pointer;
