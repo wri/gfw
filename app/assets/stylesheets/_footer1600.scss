@@ -422,7 +422,7 @@
       }
     }
     &.vizzuality {
-      height: 58px; width: 109px; @include logos-sprite(vizzuality);
+      height: 27px; width: 109px; @include logos-sprite(vizzuality);
       &:hover{
         @include logos-sprite(vizzualityhover);
       }
@@ -643,7 +643,7 @@
       height: 53px; width: 105px; @include logos-sprite(bobolink);
     }
     &.vizzuality-big {
-      height: 58px; width: 109px; @include logos-sprite(vizzuality);
+      height: 27px; width: 109px; @include logos-sprite(vizzuality);
       &:hover{
         @include logos-sprite(vizzualityhover);
       }
