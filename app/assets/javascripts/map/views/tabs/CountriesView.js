@@ -241,7 +241,7 @@ define([
         this.$countryUl.html(options);
         this.setLettersVisibility(letters);
 
-      }else{
+      } else {
         //Loop for print options
         var options = "<option></option>";
         _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
