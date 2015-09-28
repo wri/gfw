@@ -35,11 +35,22 @@ define([
       this.render();
     },
 
+    cacheVars: function() {
+      this.$selects = this.$el.find('.chosen-select');
+      this.$hresSelectProvider = $('#hres-provider-select');
+      this.$hresSelectProFil   = $('#hres-filter-select');
+      this.$hresSelectFilter   = $('#hres-filter-select');
+      this.$onoffswitch        = $('.onoffswitch');
+      this.$range              = $('#range-clouds');
+      this.$progress           = $('#progress-clouds');
+      this.$mindate            = this.$el.find('.mindate');
+      this.$maxdate            = this.$el.find('.maxdate');
+    },
+
     render: function() {
       this.$el.html(this.template({today: moment().format('YYYY-MM-DD'), mindate: moment().subtract(3,'month').format('YYYY-MM-DD')}));
       this.cacheVars();
       this.printSelects();
-      if (window.location.search.contains('&hresolution=') && window.location.search.indexOf('=', window.location.search.indexOf('&hresolution=') + 13) !== -1) this.$onoffswitch.toggleClass('checked');
     },
 
     _setParams: function(e) {
@@ -48,27 +59,31 @@ define([
       var params = {
           'satellite' : $objTarget.data('slug'),
            'color_filter': $objTarget.find('#hres-filter-select').val(),
-           'cloud': $objTarget.find('.cloud').val(),
-           'mindate': ($objTarget.find('.mindate').val().length > 0) ? $objTarget.find('.mindate').val() : '2000-09-01',
-           'maxdate': ($objTarget.find('.maxdate').val().length > 0) ? $objTarget.find('.maxdate').val() : '2015-09-01'
+           'cloud': this.$range.val(),
+           'mindate': (this.$mindate.val().length > 0) ? this.$mindate.val() : '2000-09-01',
+           'maxdate': (this.$maxdate.val().length > 0) ? this.$maxdate.val() : '2015-09-01'
          };
-      this.presenter.setHres(btoa(JSON.stringify(params)));
+      this.presenter.setHres(params);
       this.presenter.updateLayer($(e.target).closest('.maptype').data('slug'));
     },
 
-    toggleLayer: function(e) {
-      this.$onoffswitch.toggleClass('checked');
-      this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug')); //this one hides the layer
+    _fillParams: function(params) {
+      this.$hresSelectProFil.val(params.color_filter).trigger("liszt:updated");;
+      this.$range.val(params.cloud);
+      this.$mindate.val(params.mindate);
+      this.$maxdate.val(params.maxdate);
+      this.setVisibleRange();
     },
 
-    cacheVars: function() {
-      this.$selects = this.$el.find('.chosen-select');
-      this.$hresSelectProvider = $('#hres-provider-select');
-      this.$hresSelectFilter   = $('#hres-filter-select');
-      this.$onoffswitch        = $('.onoffswitch');
-      this.$range              = $('#range-clouds');
-      this.$progress           = $('#progress-clouds');
+    toggleLayer: function(e) {
+      this.switchToggle();
+      this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
     },
+
+    switchToggle: function() {
+      this.$onoffswitch.toggleClass('checked');
+    },
+
 
     printSelects: function() {
       this.printProviders();
