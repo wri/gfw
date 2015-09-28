@@ -89,6 +89,7 @@
       z-index: 1;
       width: calc(100% + 36px);
       margin: 0 0 0 -18px;
+      background: #DDD;
 
       @media (min-width: $br-mobile) {
         margin: 0;
@@ -221,21 +222,6 @@
       &:before {
         background: image-url('svg-icons/arrow-right.svg') center no-repeat;
         @include transform(translate(0px,0));
-      }
-    }
-  }
-
-  .story-content {
-    p {
-      margin-bottom: 10px;
-      font-size: 16px;
-      line-height: 20px;
-      text-align: left;
-      color: #666;
-      @include column-count(1);
-      @media (min-width: $br-mobile) {
-        @include column-count(2);
-        @include column-gap(40px);
       }
     }
   }
@@ -583,7 +569,9 @@
 }
 
 .story-content {
-  margin-bottom: 30px;
+  max-width: 600px;
+  margin: 0 auto 30px;
+
 
   p {
     margin-bottom: 10px;
@@ -591,8 +579,9 @@
     line-height: 20px;
     text-align: left;
     color: #666;
-    @include column-count(2);
-    @include column-gap(20px);
+    word-wrap: break-word;
+    // @include column-count(2);
+    // @include column-gap(20px);
   }
 }
 
