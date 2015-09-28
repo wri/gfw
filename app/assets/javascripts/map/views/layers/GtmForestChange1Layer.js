@@ -19,7 +19,7 @@ define([
   var GtmForestChange1Layer = ImageLayerClass.extend({
 
    options: {
-      urlTemplate: 'https://s3.amazonaws.com/grump-tiles/grump-base{/z}{/x}{/y}.png',
+      urlTemplate: 'https://s3.amazonaws.com/wri-tiles/GTM/guatemala_2001_2006{/z}{/x}{/y}.png',
       dataMaxZoom: 8
     }
 
