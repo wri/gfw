@@ -31,28 +31,26 @@ end %>
 <section class="content-stories">
   <div class="inner">
     <div id="carrousel-stories" class="story-carrousel <% if (!@story.media[1].present? && !@story.media[0]['embed_url'].present?)  %>no-padding<%end%>">
-      <div class="frame">
-        <%= image_tag(static_map("#{@story.lat}, #{@story.lng}", '266x266', 4, true)) %>
-        <span class="mobile_map" style="background-image: url('http://maps.google.com/maps/api/staticmap?zoom=4&size=600x300&markers=icon:/marker_exclamation.png%7C<%=@story.lat %>,<%=@story.lng %>&maptype=terrain&sensor=false&scale=2')"></span>
-      </div>
-      <% if @story.media.size >= 3 %>
+      <% if @story.media.size >= 1 %>
         <a href='#' data-direction="prev" class='btn-nav previous'></a>
         <a href='#' data-direction="next" class='btn-nav next'></a>
       <% end %>
-      <% if (@story.media[1].present? || @story.media[0]['embed_url'].present?)  %>
-        <ul>
-          <% @story.media.each do |media| %>
-            <% if media['embed_url'].present? %>
-              <li class='slide'><%= youtube_embed(media['embed_url']).html_safe %></li>
-            <% end %>
-
-            <% if media['url'].present? %>
-              <li class='slide'><div class="bg" style="background-image: url(<%= "#{ENV['AWS_HOST']}/#{media['url']}" %>);"></div></li>
-            <% end %>
-            <!-- #{ENV['AWS_HOST']} => #{ENV['AWS_HOST']} -->
+      <ul>
+        <% @story.media.each do |media| %>
+          <% if media['embed_url'].present? %>
+            <li class='slide'><%= youtube_embed(media['embed_url']).html_safe %></li>
           <% end %>
-        </ul>
-      <% end %>
+
+          <% if media['url'].present? %>
+            <li class='slide'>
+              <div class="bg full-screen" data-bg="<%= "#{ENV['AWS_HOST']}/#{media['url']}" %>" style="background-image: url(<%= "#{ENV['AWS_HOST']}/#{media['url']}" %>);"></div>
+            </li>
+          <% end %>
+        <% end %>
+        <li class="slide">
+          <div class="bg is-cover" style="background-image: url(<%= static_map("#{@story.lat}, #{@story.lng}", '1600x500', 5, true) %>);"></div>
+        </li>
+      </ul>
       <div id="paginationView" class="main-slider-pagination"></div>
 
     </div>
@@ -70,6 +68,8 @@ end %>
     </div>
   </div>
 </section>
+
+<div id="fullScreenView" class="story-modal"></div>
 
 <%= render 'more_stories' %>
 
