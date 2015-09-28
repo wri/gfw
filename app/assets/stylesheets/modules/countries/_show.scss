@@ -33,6 +33,14 @@
     border-radius: 50%;
     border: 1px solid #bebcc2;
 
+    &.green {
+      svg{
+        fill: $white;
+      }
+      background: $cGreen;
+      border: 1px solid $cGreen;
+    }
+
     &.sidenav-icon {
       display: inline-block;
       position: absolute;
