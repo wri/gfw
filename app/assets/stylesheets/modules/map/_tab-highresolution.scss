@@ -84,6 +84,14 @@ $letterW: 20px;
         color: #999;
         text-transform: uppercase;
         padding: 7px 0;
+        position: relative;
+        .source {
+          @extend .info-icon;
+          display: inline-block;
+          position: absolute;
+          top: 4px;
+          margin: 0 0 0 4px;
+        }
       }
     }
     .onoffswitch {
