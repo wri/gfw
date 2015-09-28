@@ -31,9 +31,12 @@ define([
   'text!map/templates/legend/plantations_by_type.handlebars',
   'text!map/templates/legend/plantations_by_species.handlebars',
   'text!map/templates/legend/oil_palm.handlebars',
+  'text!map/templates/legend/gtm_forest_change.handlebars',
+  'text!map/templates/legend/gtm_forest_cover.handlebars',
+  'text!map/templates/legend/gtm_forest_density.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl) {
 
   'use strict';
 
@@ -79,7 +82,11 @@ define([
       bra_biomes : Handlebars.compile(bra_biomesTPL),
       plantations_by_type: Handlebars.compile(gfwPlantationByTypeTpl),
       plantations_by_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
-      oil_palm: Handlebars.compile(oil_palmTpl)
+      oil_palm: Handlebars.compile(oil_palmTpl),
+      gtm_forest_change1: Handlebars.compile(gtm_forest_changeTpl),
+      gtm_forest_change2: Handlebars.compile(gtm_forest_changeTpl),
+      gtm_forest_cover: Handlebars.compile(gtm_forest_coverTpl),
+      gtm_forest_density: Handlebars.compile(gtm_forest_densityTpl)
 
     },
 

@@ -93,6 +93,10 @@ define([
   'map/views/layers/PerPrivPALayer',
   'map/views/layers/PerRegPALayer',
   'map/views/layers/IdnForMorLayer',
+  'map/views/layers/GtmForestChange1Layer',
+  'map/views/layers/GtmForestChange2Layer',
+  'map/views/layers/GtmForestCoverLayer',
+  'map/views/layers/GtmForestDensityLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -197,6 +201,10 @@ define([
   PerPrivPALayer,
   PerRegPALayer,
   IdnForMorLayer,
+  GtmForestChange1Layer,
+  GtmForestChange2Layer,
+  GtmForestCoverLayer,
+  GtmForestDensityLayer,
   UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
@@ -488,6 +496,18 @@ define([
     },
     idn_for_mor: {
       view: IdnForMorLayer
+    },
+     gtm_forest_change1: {
+      view: GtmForestChange1Layer
+    },
+     gtm_forest_change2: {
+      view: GtmForestChange2Layer
+    },
+     gtm_forest_cover: {
+      view: GtmForestCoverLayer
+    },
+     gtm_forest_density: {
+      view: GtmForestDensityLayer
     },
     urthe: {
       view: UrthecastLayer
