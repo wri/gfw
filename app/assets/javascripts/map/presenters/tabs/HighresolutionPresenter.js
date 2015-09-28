@@ -28,6 +28,12 @@ define([
       mps.publish('Place/register', [this]);
     },
 
+    _subscriptions: [{
+      'Place/go': function(place) {
+        this.status.set('hresolution', place.params.hresolution);
+      }
+    }],
+
     setMaptype: function(maptype) {
       mps.publish('Maptype/change', [maptype]);
     },
