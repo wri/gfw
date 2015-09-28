@@ -15,7 +15,7 @@ define([
   var StatusModel = Backbone.Model.extend({
     defaults: {
       layers: [],
-      hresolution: ''
+      hresolution: null
     }
   });
 
@@ -31,6 +31,10 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         this.status.set('hresolution', place.params.hresolution);
+        if (!! place.params.hresolution) {
+          this.view.switchToggle();
+          this.view._fillParams(JSON.parse(atob(place.params.hresolution)));
+        }
       }
     }],
 
@@ -48,8 +52,8 @@ define([
      * @param {string} value hresolution
      */
     setHres: function(value) {
+      value = btoa(JSON.stringify(value));
       this.status.set('hresolution', value);
-      sessionStorage.setItem('high-resolution', value);
       this._publishHres();
     },
 
