@@ -19,7 +19,7 @@ define([
   var GtmForestCoverLayer = ImageLayerClass.extend({
 
    options: {
-      urlTemplate: 'https://s3.amazonaws.com/grump-tiles/grump-base{/z}{/x}{/y}.png',
+      urlTemplate: 'https://s3.amazonaws.com//wri-tiles/GTM/guatemalaforestcover{/z}{/x}{/y}.png',
       dataMaxZoom: 8
     }
 
