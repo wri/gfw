@@ -6,10 +6,11 @@
     <div data-slug="urthe" class="maptype">
       <h3>Urthecast<span class="onoffswitch"><span></span></span></h3>
       <section>
+        <span>Renderer <a href='#' data-source="hr-renderer" class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
         <select data-placeholder="Select Filter" class="chosen-select default notranslate" id="hres-filter-select" ><option></option></select>
       </section>
       <section>
-        <span>maximum cloud cover percentage</span>
+        <span>Maximum cloud cover percentage <a href='#' data-source="hr-cloud" class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
 
         <div class="range-box">
           <div class="dots"></div>
@@ -20,10 +21,12 @@
         {{!-- <input type="range" class='cloud' step="10" value="30"> --}}
       </section>
       <section>
-        <span>acquired date min</span> <input type=date min=2000-09-08 value="{{mindate}}" class="mindate">
+        <span>Acquired date min <a href='#' data-source="hr-datemin" class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+        <input type=date min=2000-09-08 value="{{mindate}}" class="mindate">
       </section>
       <section>
-        <span>acquired date max</span> <input type=date max={{today}} value="{{today}}" class="maxdate">
+        <span>Acquired date max <a href='#' data-source="hr-datemax" class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+        <input type=date max={{today}} value="{{today}}" class="maxdate">
       </section>
     </div>
   </div>
