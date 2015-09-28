@@ -36,15 +36,17 @@ end %>
         <a href='#' data-direction="next" class='btn-nav next'></a>
       <% end %>
       <ul>
-        <% @story.media.each do |media| %>
-          <% if media['embed_url'].present? %>
-            <li class='slide'><%= youtube_embed(media['embed_url']).html_safe %></li>
-          <% end %>
+        <% if (@story.media[1].present? || @story.media[0]['embed_url'].present?)  %>
+          <% @story.media.each do |media| %>
+            <% if media['embed_url'].present? %>
+              <li class='slide'><%= youtube_embed(media['embed_url']).html_safe %></li>
+            <% end %>
 
-          <% if media['url'].present? %>
-            <li class='slide'>
-              <div class="bg full-screen" data-bg="<%= "#{ENV['AWS_HOST']}/#{media['url']}" %>" style="background-image: url(<%= "#{ENV['AWS_HOST']}/#{media['url']}" %>);"></div>
-            </li>
+            <% if media['url'].present? %>
+              <li class='slide'>
+                <div class="bg full-screen" data-bg="<%= "#{ENV['AWS_HOST']}/#{media['url']}" %>" style="background-image: url(<%= "#{ENV['AWS_HOST']}/#{media['url']}" %>);"></div>
+              </li>
+            <% end %>
           <% end %>
         <% end %>
         <li class="slide">
