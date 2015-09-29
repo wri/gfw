@@ -26,7 +26,7 @@ define([
     defaults: {
       dateRange: [moment([2001]), moment()],
       playSpeed: 400,
-      width: 250,
+      width: 750,
       height: 50
     },
 
@@ -40,7 +40,6 @@ define([
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
-      console.log(this.options)
       this.dateRangeStart = this.options.dateRange[0];
       this.dateRangeEnd = this.options.dateRange[1];
       if (currentDate && currentDate[0]) {
