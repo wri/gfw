@@ -946,10 +946,6 @@
       </div>
 
       <div class='source_body'>
-        <div class='source_download'>
-          <a href='https://wri-01.cartodb.com/tables/degradation_2000_to_2013/public/map ' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
-        </div>
-
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
@@ -1311,11 +1307,9 @@
           <dl class='sources_row'>
             <dt>Cautions</dt>
             <dd>
-            <ul class='bullets'>
-              <li>RData gaps in the MERIS 2009 satellite acquisitions (about 5% of the total data area) were filled using the GlobCover 2005 land cover map.</li>
-              <li>The lack of a short-wave infrared (SWIR) band in the MERIS sensor may result in underestimation of flooded forests. These classes were therefore imported from the 2005 GlobCover land cover map.</li>
-              <li>Delineation between land and water is not exhaustive, especially for inland water bodies, and locations of water may be inaccurate.</li>
-            </ul>
+            <p>Data gaps in the MERIS 2009 satellite acquisitions (about 5% of the total data area) were filled using the GlobCover 2005 land cover map.</p> 
+            <p>The lack of a short-wave infrared (SWIR) band in the MERIS sensor may result in underestimation of flooded forests. These classes were therefore imported from the 2005 GlobCover land cover map.</p> 
+            <p>Delineation between land and water is not exhaustive, especially for inland water bodies, and locations of water may be inaccurate.</p> 
             </dd>
           </dl>
         </div>
@@ -1323,8 +1317,8 @@
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
           <p>GlobCover is a European Space Agency (ESA) initiative which began in 2005 in partnership with the Joint Research Center, European Environmental Agency, UN Food and Agricultural Organization,  UN Environment Programme, Global Observation of Forest Cover and Land Cover Dynamics, and International Geosphere-Biosphere Programme. The aim of the project was to develop a service capable of delivering global composites and land cover maps using observations from the 300 meter MERIS sensor on board the ENVISAT satellite mission. ESA makes land cover maps available covering 2 periods: December 2004 - June 2006 and January - December 2009. GlobCover products come with a thematic legend compatible with the UN Land Cover Classification System (LCCS).</p>
-          <p>Data in this layer was generated using MERIS images which were classified using both a supervised (human-verified) and unsupervised  (automated)classification algorithm applied at two different seasonal time steps to create land cover classes based on both spectral and temporal properties of land cover. The labelling procedure is automated and based on the GlobCover 2005 (V2.2) land cover map. Several decision rules have been defined with the help of international land cover experts to create unique labels for each class. For more information, see <a href="http://due.esrin.esa.int/globcover/">due.esrin.esa.int/globcover/.</a></p>
-          <p class='credits'><strong>Citation:</strong> © ESA 2010 and UCLouvain</p>
+          <p>Data in this layer was generated using MERIS images which were classified using both a supervised (human-verified) and unsupervised  (automated)classification algorithm applied at two different seasonal time steps to create land cover classes based on both spectral and temporal properties of land cover. The labelling procedure is automated and based on the GlobCover 2005 (V2.2) land cover map. Several decision rules have been defined with the help of international land cover experts to create unique labels for each class.</p>
+          <p class='credits'><strong>Citation:</strong> Global Land Cover (GlobCover 2009)." Accessed through Global Forest Watch on [date].<a href="www.globalforestwatch.org" target="_blank">www.globalforestwatch.org</a> </p>
 
           <p class='read_more hidden'><a href='http://due.esrin.esa.int/page_globcover.php' target='_blank'>Learn more or download data</a></p>
         </div>
@@ -1344,7 +1338,7 @@
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE</dt>
-            <dd>Based on 30 × 30 meter data</dd>
+            <dd>Based on 30 × 30 meter data. Scale varies by country.</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Geographic coverage</dt>
@@ -1352,21 +1346,20 @@
           </dl>
           <dl class='sources_row even'>
             <dt>Source data</dt>
-            <dd><a href="http://landsat.usgs.gov/" target="_blank">Landsat</a>, high resolution imagery from Google Maps, Bing Maps, and Digital Globe where available</dd>
+            <dd><a href="http://www.transparentworld.ru/en/" target="_blank">Transparent World</a></dd>
           </dl>
           <dl class='sources_row'>
-            <dt>Frequency of updates</dt>
-            <dd></dd>
+            <dt>Date of content</dt>
+            <dd>2013–2014</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Date of content</dt>
-            <dd>2001–2013</dd>
-          </dl>
-          <dl class='sources_row'>
             <dt>Cautions</dt>
-            <dd><p>An accuracy assessment found 40% false positives and 18% false negatives for plantations, with an overall accuracy of 79%. Overall accuracies were lowest in Indonesia at 68%.</p>
-            <p>The accuracies of the species and type labels were not assessed. These fields represent the best guess of the analysts and should not be used for official purposes.</p>
-            <p>A subset of this data set more appropriate for supply chain monitoring can be found on GFW Commodities.</p>
+            <dd><ul class="bullets">
+            <li>An accuracy assessment found 40% false positives and 18% false negatives for the presence of plantations, with an overall accuracy of 79%. Overall accuracies were lowest in Indonesia at 68%.</li>
+            <li>The accuracies of the species and type labels were not assessed. These fields represent the best guess of the analysts and should not be used for official purposes.</li>
+            <li>Polygons labeled as clearings were bare or had very young vegetation as of 2013 or 2014, but contextual clues suggest that these areas will eventually become tree plantations.</li>
+            <li>A subset of this data set more appropriate for supply chain monitoring can be found on <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities.</a> </li>
+          </ul>
             </dd>
           </dl>
           <dl class='sources_row even'>
@@ -1377,15 +1370,22 @@
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>This data set was created by <a href="http://www.transparentworld.ru/en/" target="_blank">Transparent World</a>, with the support of Global Forest Watch. Many studies depicting forest cover and forest change cannot distinguish between natural forests and plantations, a common criticism of data sets such as the UMD/ Google forest change layers. This data set attempts to separate plantations from natural forest for seven key countries: Brazil, Cambodia, Colombia, Indonesia, Liberia, Malaysia, and Peru.</p>
+          <p>This data set was created by Transparent World, with the support of Global Forest Watch. Many studies depicting forest cover and forest change cannot distinguish between natural forests and plantations. This data set attempts to distinguish tree plantations from natural forest for seven key countries: Brazil, Cambodia, Colombia, Indonesia, Liberia, Malaysia, and Peru.</p>
 
-          <p>Given the variability of plantations and the spectral similarity to natural forests, this study used visual interpretation of satellite imagery, primarily Landsat, supplemented by high resolution imagery (Google Maps, Bing Maps, or Digital Globe) where available. Analysts hand-digitized plantation boundaries based on several key visual elements, including texture, shape, color, and size. For more information on the methodology used to produce this data set, see the forthcoming WRI Technical Note associated with this project.</p>
+          <p>Given the variability of plantations and their spectral similarity to natural forests, this study used visual interpretations of satellite imagery, primarily <a href="http://landsat.usgs.gov/" target="_blank">Landsat</a>, supplemented by high resolution imagery (Google Maps, Bing Maps, or Digital Globe), where available, to locate plantations. Analysts hand-digitized plantation boundaries based on several key visual criteria, including texture, shape, color, and size.</p>
 
-          <p>Each polygon is labelled with the plantation type (industrial plantation, medium-sized plantation mosaic with other land use, small-sized plantation mosaic with other land use, clearings/ very young plantations, and plantations established in grasslands) and when possible, the species. A “gr” in front of the species name indicates a group of species, such as pines or fruit. Species is listed as “n/a” for clearings and very young plantations.</p>
+          <p>Each polygon is labelled with the plantation type and when possible, the species. A “gr” in front of the species name indicates a group of species, such as pines or fruit, where the individual species was not identifiable. The percentage of plantation coverage indicates a rough estimate of the prevalence of plantation within apolygon (as in the case of a mosaic). Types are defined as follows:</p>
+          <p><ul class="bullets">
+            <li><strong>Large industrial plantation:</strong> single plantation units larger than 100 hectares</li>
+            <li><strong>Mosaic of medium-sized plantations:</strong> mosaic of plantation units < 100 hectares embedded within patches of other land use</li>
+            <li><strong>Mosaic of small-sized plantations:</strong> mosaic of plantation units < 10 hectares embedded within patches of other land use.</li>
+            <li><strong>Clearing/ very young plantation:</strong> bare ground with contextual clues suggesting it will become a plantations (shape or pattern of clearing, proximity to other plantations, distinctive road network, etc)</li>
+          </ul></p>
+          <p>For more information on this data set and how it was produced, see the forthcoming WRI Technical Note associated with this project.</p>
 
-          <p class='credits'><strong>Citation:</strong> Transparent World. “Tree Plantations.” 2015. Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org" target="_blank">www.globalforestwatch.org</a> </p>
+          <p class='credits'><strong>Citation:</strong> TTransparent World. “Tree Plantations.” 2015. Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org" target="_blank">www.globalforestwatch.org</a> </p>
 
-          <p class='read_more hidden'><a href='http://due.esrin.esa.int/page_globcover.php' target='_blank'>Learn more or download data</a></p>
+          <p class='read_more hidden'><a href='http://data.globalforestwatch.org/' target='_blank'>Learn more or download data</a></p>
         </div>
       </div>
     </li>
@@ -2002,7 +2002,7 @@
           <p class='credits'><strong>Citation:</strong><a href="Indonesia REDD PLUS Agency.">Indonesia REDD PLUS Agency.</a>“Indonesia forest moratorium”. 2014.</p>
 
 
-          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "http://www.reddplus.go.id/kegiatan/kegiatan-moratorium" %></em></p>
+          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "hhttp://data.globalforestwatch.org/datasets/e1d58822d083492eb54d6e2af463d790_7" %></em></p>
         </div>
       </div>
     </li>

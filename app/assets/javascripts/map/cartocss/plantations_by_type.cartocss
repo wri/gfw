@@ -6,18 +6,15 @@
    polygon-fill: transparent;
 }
 
-#gfw_plantations[type_text="Industrial plantation"] {
-   polygon-fill: #F00;
+#gfw_plantations[type_text="Large industrial plantation"] {
+   polygon-fill: #F84F40;
 }
 #gfw_plantations[type_text="Mosaic of medium-sized plantations"] {
-   polygon-fill: #49CC4C;
+   polygon-fill: #A53ED5;
 }
 #gfw_plantations[type_text="Mosaic of small-sized plantations"] {
-   polygon-fill: #9ECC49;
+   polygon-fill: #33A02C;
 }
 #gfw_plantations[type_text="Clearing/ very young plantation"] {
-   polygon-fill: #63802E;
-}
-#gfw_plantations[type_text="Plantation established in grassland"] {
-   polygon-fill: #0F3B82;
+   polygon-fill: #A6CEE3;
 }
