@@ -9,7 +9,7 @@ define([
   'enquire',
   'moment',
   'map/presenters/tabs/HighresolutionPresenter',
-  'text!map/templates/tabs/Highresolution.handlebars'
+  'text!map/templates/tabs/highresolution.handlebars'
 ], function(_, Handlebars, enquire, moment, Presenter, tpl) {
 
   'use strict';
