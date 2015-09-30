@@ -98,24 +98,29 @@ define([
 
     toggleSearch: function() {
       var hidden = this.model.get('hidden');
+      var type = this.model.get('type');
       if (hidden) {
         // This is for android keyboard. It pushes all content up, we want to prevent it
         if (this.mobile) {
           $('html,body').height($(window).height());
         }
         this.$el.show(0);
-        this.$input.focus();
+        if (type == 'regular') {
+          this.$input.focus();
+          setTimeout(_.bind(function(){
+            this.$input.val('');
+          }, this),1);
+        }
         this.model.set('hidden', false);
-        setTimeout(_.bind(function(){
-          this.$input.val('');
-        }, this),1);
       }else{
         // This is for android keyboard. It pushes all content up, we want to prevent it
         if (this.mobile) {
           $('html,body').height('100%');
         }
         this.$el.hide(0);
-        this.$input.blur();
+        if (type == 'regular') {
+          this.$input.blur();
+        }
         this.model.set('hidden', true);
       }
     },
