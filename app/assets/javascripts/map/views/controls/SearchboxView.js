@@ -71,7 +71,7 @@ define([
 
     setListeners: function() {
       this.$selects.chosen({
-        width: 'auto',
+        width: '40px',
         inherit_select_classes: true,
         disable_search: true,
         display_selected_options: false,
