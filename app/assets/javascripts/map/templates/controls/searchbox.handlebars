@@ -9,27 +9,33 @@
   </div>
   <div class="search coordinates">
     <div id="coord-lat" class="coord-box">
-      <input class="coord-input" name="lat-degrees" type='text'/>º
-      <input class="coord-input" name="lat-minutes" type='text'/>'
-      <input class="coord-input" name="lat-seconds" type='text'/>''
-      <select class="chosen-select default coord-select notranslate" id="coord-lat-cardinal" name="lat-cardinal">
+      <input class="coord-input" name="degrees" type='text' maxlength="3" value="7"/>º
+      <input class="coord-input" name="minutes" type='text' maxlength="2" value="33"/>'
+      <input class="coord-input" name="seconds" type='text' maxlength="4" value="04.2"/>''
+      <select class="chosen-select default coord-select notranslate" id="coord-lat-cardinal" name="cardinal">
         <option>N</option>
         <option>S</option>
       </select>
     </div>
     <div id="coord-lng" class="coord-box">
-      <input class="coord-input" name="lng-degrees" type='text'/>º
-      <input class="coord-input" name="lng-minutes" type='text'/>'
-      <input class="coord-input" name="lng-seconds" type='text'/>''
-      <select class="chosen-select default coord-select notranslate" id="coord-lng-cardinal" name="lng-cardinal">
+      <input class="coord-input" name="degrees" type='text' maxlength="3" value="75"/>º
+      <input class="coord-input" name="minutes" type='text' maxlength="2" value="01"/>'
+      <input class="coord-input" name="seconds" type='text' maxlength="4" value="53.3"/>''
+      <select class="chosen-select default coord-select notranslate" id="coord-lng-cardinal" name="cardinal">
         <option>W</option>
         <option>E</option>
       </select>
     </div>
-    <button class="btn green uppercase">Search</button>
+    <button id="coord-btn" class="btn green uppercase">Search</button>
 
   </div>
   <div class="search degrees">
-    <input type='search' placeholder="E.g.: 38.899189, -77.008082"/>
+    <div class="deg-box">
+      Lat: <input class="deg-input" id="deg-lat" name="deg-lat" type='text' value="-7.56"/>
+    </div>
+    <div class="deg-box">
+      Long: <input class="deg-input" id="deg-lng" name="deg-lng" name="degrees" type='text' value="-75.01"/>
+    </div>
+    <button id="deg-btn" class="btn green uppercase">Search</button>
   </div>
 </div>

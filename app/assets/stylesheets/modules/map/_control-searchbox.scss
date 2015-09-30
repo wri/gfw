@@ -74,25 +74,53 @@
       background: image-url('svg-map/control-search.svg') no-repeat 98.5% center;
       background-size: auto 60%;
     }
-    .coordinates{
+
+    .coordinates, .degrees {
       @include display-flex();
       @include justify-content(space-between);
       @include align-items(center);
       padding: 0 20px;
-      .coord-box {
-        .coord-input {
-          margin: 13px 0 9px;
-          padding: 0;
-          width: 30px;
+    }
+
+    .coord-box , .deg-box {
+      input{
+        padding: 0;
+        outline: 0;
+        border: none;
+        border-bottom: 1px solid $dark;
+        font-size: 18px;
+        border-radius: 0;
+        font-family: inherit;
+        &.coord-input {
           text-align: right;
-          outline: 0;
-          border: none;
-          border-bottom: 1px solid $dark;
-          font-size: 18px;
-          border-radius: 0;
-          font-family: inherit;
+          margin: 13px 0 9px;
+          width: 34px;
+        }
+        &.deg-input {
+          text-align: left;
+          margin: 13px 8px 9px;
+          max-width: 120px;
         }
       }
     }
+    .deg-box {
+      @include display-flex();
+      @include justify-content(space-between);
+      @include align-items(center);
+      .deg-input {
+        margin: 13px 0 9px 0;
+        padding: 0;
+        text-align: left;
+        outline: 0;
+        border: none;
+        border-bottom: 1px solid $dark;
+        font-size: 18px;
+        border-radius: 0;
+        font-family: inherit;
+      }
+    }
+    .coord-input {
+    }
+
   }
 }
