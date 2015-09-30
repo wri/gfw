@@ -1,5 +1,5 @@
 /*global MarkerClusterer*/
-/**
+/*
  * The JSON map layer module.
  * @return JSONLayerClass (extends Class).
  */
