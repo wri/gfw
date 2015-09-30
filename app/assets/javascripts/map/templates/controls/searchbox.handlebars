@@ -5,10 +5,29 @@
     <span class="kind" data-kind="degrees">Decimal degrees</span>
   </span>
   <div class="search regular selected">
-    <input type='search' placeholder="E.g.: 10 G Street NE Suite 800, Washington, DC 20002"/>
+    <input class="search-input" type='search' placeholder="E.g.: 10 G Street NE Suite 800, Washington, DC 20002"/>
   </div>
   <div class="search coordinates">
-    <input type='search' placeholder="E.g.: 38° 53' 57.0798'' E, -77° 0' 29.0953'' N"/>
+    <div id="coord-lat" class="coord-box">
+      <input class="coord-input" name="lat-degrees" type='text'/>º
+      <input class="coord-input" name="lat-minutes" type='text'/>'
+      <input class="coord-input" name="lat-seconds" type='text'/>''
+      <select class="chosen-select default coord-select notranslate" id="coord-lat-cardinal" name="lat-cardinal">
+        <option>N</option>
+        <option>S</option>
+      </select>
+    </div>
+    <div id="coord-lng" class="coord-box">
+      <input class="coord-input" name="lng-degrees" type='text'/>º
+      <input class="coord-input" name="lng-minutes" type='text'/>'
+      <input class="coord-input" name="lng-seconds" type='text'/>''
+      <select class="chosen-select default coord-select notranslate" id="coord-lng-cardinal" name="lng-cardinal">
+        <option>W</option>
+        <option>E</option>
+      </select>
+    </div>
+    <button class="btn green uppercase">Search</button>
+
   </div>
   <div class="search degrees">
     <input type='search' placeholder="E.g.: 38.899189, -77.008082"/>

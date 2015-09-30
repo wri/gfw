@@ -108,6 +108,20 @@
       }
     }
   }
+  &.coord-select {
+    .chzn-single{
+      span {
+        padding-right: 20px;
+      }
+    }
+    .chzn-results {
+      padding: 0;
+      margin: 0;
+      li{
+        padding: 5px 10px;
+      }
+    }
+  }
 }
 
 

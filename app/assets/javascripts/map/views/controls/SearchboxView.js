@@ -52,6 +52,7 @@ define([
       this.render();
       //cacheVars
       this.$input = this.$el.find('input');
+      this.$selects = this.$el.find('.chosen-select');
 
       this.setListeners();
       this.setAutocomplete();
@@ -170,43 +171,52 @@ define([
     },
 
     setListeners: function() {
-      this.$input.on('keyup', _.bind(function(e){
-        if (e.keyCode === 27) {
-          this.model.set('hidden', false);
-          this.toggleSearch();
-        } else if (e.keyCode === 13) {
-          var geom = [0,0];
-          if (this.$searchbox.find('.search.selected').hasClass('degrees')) {
-            geom = this.$searchbox.find('.search.selected input').val();
-            if (geom.contains('º'))
-              geom = geom.replace(/º/g,'');
-            if (geom.contains('°'))
-              geom = geom.replace(/°/g,'');
-            if (geom.contains(","))
-              geom = geom.split(",");
-            else
-              geom = geom.split(" ");
-            this.presenter.setCenter(geom[0],geom[1]);
-            geom = null;
-            this.toggleSearch();
-          } else if (this.$searchbox.find('.search.selected').hasClass('coordinates')) {
-            geom = this._latLongToDecimal(this.$searchbox.find('.coordinates input').val());
-            if (! !!geom) {
-              this.$input[0] = this.$searchbox.find('.search input').val();
-              mps.publish('Notification/open', ['coordinates-not-standard']);
-              this._setType(null,"regular");
-              return;
-            }
-            geom = geom.split(",");
-            this.presenter.setCenter(geom[1],geom[0]);
-          }
-          geom = null;
-          this.toggleSearch();
-        } else {
-          if (! !! e.target.value) return;
-          this.checkSearchType(e.target.value);
-        }
-      }, this ));
+
+      this.$selects.chosen({
+        inherit_select_classes: true,
+        disable_search: true,
+        display_selected_options: false,
+        display_disabled_options: false
+      });
+
+
+      // this.$input.on('keyup', _.bind(function(e){
+      //   if (e.keyCode === 27) {
+      //     this.model.set('hidden', false);
+      //     this.toggleSearch();
+      //   } else if (e.keyCode === 13) {
+      //     var geom = [0,0];
+      //     if (this.$searchbox.find('.search.selected').hasClass('degrees')) {
+      //       geom = this.$searchbox.find('.search.selected input').val();
+      //       if (geom.contains('º'))
+      //         geom = geom.replace(/º/g,'');
+      //       if (geom.contains('°'))
+      //         geom = geom.replace(/°/g,'');
+      //       if (geom.contains(","))
+      //         geom = geom.split(",");
+      //       else
+      //         geom = geom.split(" ");
+      //       this.presenter.setCenter(geom[0],geom[1]);
+      //       geom = null;
+      //       this.toggleSearch();
+      //     } else if (this.$searchbox.find('.search.selected').hasClass('coordinates')) {
+      //       geom = this._latLongToDecimal(this.$searchbox.find('.coordinates input').val());
+      //       if (! !!geom) {
+      //         this.$input[0] = this.$searchbox.find('.search input').val();
+      //         mps.publish('Notification/open', ['coordinates-not-standard']);
+      //         this._setType(null,"regular");
+      //         return;
+      //       }
+      //       geom = geom.split(",");
+      //       this.presenter.setCenter(geom[1],geom[0]);
+      //     }
+      //     geom = null;
+      //     this.toggleSearch();
+      //   } else {
+      //     if (! !! e.target.value) return;
+      //     this.checkSearchType(e.target.value);
+      //   }
+      // }, this ));
 
       google.maps.event.addListener(this.map, 'click',_.bind(function() {
         this.model.set('hidden', false);
