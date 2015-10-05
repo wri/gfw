@@ -27,7 +27,7 @@ define([
       link_text: 'Open map',
       classname: 'btn green medium',
       source: 'World Resources Institute',
-      tags: 'forests, data, deforestation, maps'
+      tags: 'data, fires, global-forest-watch, maps, mining, mobile, palm-oil, satellite-imagery'
     },
     {
       id: 2,
@@ -38,7 +38,7 @@ define([
       link_text: 'View countries',
       classname: 'btn green medium',
       source: 'World Resources Institute',
-      tags: 'forests, data, deforestation, maps'
+      tags: 'boreal-forests, data, global-forest-watch'
     },
     {
       id: 3,
@@ -49,7 +49,7 @@ define([
       link_text: 'Browse data',
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute',
-      tags: 'forests, data, deforestation, maps'
+      tags: 'data, fires, global-forest-watch, maps, mining, palm-oil, satellite-imagery'
     },
     {
       id: 4,
@@ -60,7 +60,7 @@ define([
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute',
-      tags: 'data, deforestation, maps, fires'
+      tags: 'asia, data, fires, global-forest-watch, maps, palm-oil, satellite-imagery'
     },
     {
       id: 5,
@@ -71,7 +71,7 @@ define([
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute',
-      tags: 'commodities, data, deforestation, maps'
+      tags: 'asia, commodities, data, fires, global-forest-watch, maps, mining, palm-oil'
     },
     {
       id: 6,
@@ -84,7 +84,7 @@ define([
       classname: 'btn green medium mobile-friendly',
       source: 'Digital Globe',
       mobile_friendly: 'other',
-      tags: 'forests, data, deforestation, maps'
+      tags: 'asia, crowdsourcing, data, fires, maps, palm-oil, satellite-imagery'
     },
     {
       id: 7,
@@ -97,7 +97,7 @@ define([
       classname: 'btn green medium mobile-friendly',
       source: 'Transparent World',
       mobile_friendly: 'other',
-      tags: 'forests, data, deforestation, maps'
+      tags: 'crowdsourcing, data, maps, satellite-imagery'
     },
     {
       id: 8,
@@ -110,7 +110,7 @@ define([
       classname: 'btn green medium mobile-friendly',
       source: 'Zoological Society of London',
       mobile_friendly: 'other',
-      tags: 'forests, data, deforestation, maps'
+      tags: 'asia, commodities, data, global-forest-watch, maps, palm-oil'
     },
     {
       id: 9,
@@ -123,7 +123,7 @@ define([
       classname: 'btn green medium mobile-friendly',
       source: 'Amazon Conservation Association',
       mobile_friendly: 'other',
-      tags: 'forests, data, deforestation, maps'
+      tags: 'data, latin-america, maps, mining, satellite imagery'
     },
     {
       id: 10,
@@ -136,7 +136,7 @@ define([
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Ministry of Forest and Wildlife of Cameroon',
       mobile_friendly: 'other',
-      tags: 'deforestation, maps'
+      tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
       id: 11,
@@ -149,7 +149,7 @@ define([
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Ministry of Water, Forests, Hunting, and Fishing of the Central African Republic',
       mobile_friendly: 'other',
-      tags: 'deforestation, maps'
+      tags: 'africa, data, global-forest-watch, maps'
     },
     {
       id: 12,
@@ -162,7 +162,7 @@ define([
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Ministry of Economy and Sustainable Forestry Development of the Congo',
       mobile_friendly: 'other',
-      tags: 'forests, data, maps'
+      tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
       id: 13,
@@ -175,7 +175,7 @@ define([
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Ministry of Environment, Nature Conservation, and Tourism of the Democratic Republic of the Congo',
       mobile_friendly: 'other',
-      tags: 'data, partners, maps'
+      tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
       id: 14,
@@ -188,7 +188,7 @@ define([
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Ministry of Agriculture and Forestry of Equatorial Guinea',
       mobile_friendly: 'other',
-      tags: 'forests, data, satellite, maps'
+      tags: 'africa, data, global-forest-watch, maps'
     },
     {
       id: 15,
@@ -201,7 +201,7 @@ define([
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Ministry of the Forest, Environment, and Protection of Natural Resources of Gabon',
       mobile_friendly: 'other',
-      tags: 'forests, data, maps, partners'
+      tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
       id: 16,
@@ -214,7 +214,7 @@ define([
       classname: 'btn green medium mobile-friendly',
       source: 'Forestry Department of the Food and Agriculture Organization of the United Nations',
       mobile_friendly: 'other',
-      tags: 'forests, data, maps, partners'
+      tags: 'crowdsourcing, data, maps, mobile, satellite-imagery'
     },
     {
       id: 17,
@@ -224,7 +224,7 @@ define([
       link_text: 'Coming soon',
       classname: 'btn soon',
       source: 'World Resources Institute',
-      tags: 'forests, data, maps, partners'
+      tags: 'data, global-forest-watch, maps'
     },
     {
       id: 18,
@@ -234,7 +234,7 @@ define([
       link_text: 'Coming soon',
       classname: 'btn soon',
       source: 'World Resources Institute',
-      tags: 'forests, data, maps, partners'
+      tags: 'crowdsourcing, data, maps, mobile, satellite-imagery'
     },
     {
       id: 19,
