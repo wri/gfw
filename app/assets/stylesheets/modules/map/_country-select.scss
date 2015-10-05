@@ -108,6 +108,38 @@
       }
     }
   }
+  &.coord-select {
+    font-size: 18px;
+    .chzn-single{
+      padding: 7px 10px 3px;
+      border: 0;
+      border-bottom: 1px solid $dark;
+      background-color: #555;
+      color: #FFF;
+      span {
+        padding-right: 0px;
+        text-align: center;
+      }
+      div {
+        b {
+          display: none;
+        }
+        display: none;
+      }
+    }
+
+    .chzn-results {
+      padding: 0;
+      margin: 0;
+      li{
+        padding: 10px 0;
+        text-align: center;
+        // &.result-selected {
+        //   display: none;
+        // }
+      }
+    }
+  }
 }
 
 

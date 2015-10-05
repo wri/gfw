@@ -33,11 +33,21 @@
       color: #999;
       border-top: 1px solid #CCC;
       z-index: 100;
+      position: relative;
+      z-index: 300;
     }
     .footer a{
       margin: 0 auto;
       display: block;
       max-width: 300px;
+    }
+    .show_graph_source {
+      font-size: 10px;
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      padding: 4px;
+      color: #FFF;
     }
 
     .left { float: left; }
@@ -57,6 +67,7 @@
   <%= yield %>
 
   <footer class="footer">
+    <div class="show_graph_source">Source: Hansen/UMD/Google/USGS/NASA</div>
   <% if @country %>
     <a class="btn green uppercase full-width" href="http://globalforestwatch.org/country/<%= @country['iso']%>" target="_blank">View on GFW</a>
   <% else %>

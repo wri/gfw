@@ -506,7 +506,6 @@ define([
       this.$overlayMobile.toggleClass('active', bool);
     },
 
-
     // Autolocate
     autolocateQuestion: function() {
       if (isMobile.any && !this.embed) {

@@ -248,7 +248,10 @@ define([
           .ticks(ticks)
           .tickSize(0)
           .tickPadding(0)
-          .tickFormat(function(d) {return String(d); })
+          .tickFormat(_.bind(function(d) {
+            return (d == 2000 && this.name == 'prodes') ? String('1997-2000') : String(d);
+            // return String(d);
+          }, this ))
 
       this.svg.append('g')
           .attr('class', 'xaxis-years')
@@ -317,6 +320,7 @@ define([
         .attr('x2', this.handlers.right.attr('x'));
 
       d3.select('.xaxis-years')
+          .attr('class', 'xaxis-years '+this.name)
           .selectAll('.tick')
           .on('click',_.bind(function(value){
             this.selectYear(value);

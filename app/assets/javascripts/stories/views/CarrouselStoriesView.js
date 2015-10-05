@@ -7,7 +7,8 @@ define([
   'mps',
   'handlebars',
   'text!landing/templates/paginationSlider.handlebars',
-], function($, Backbone, mps, Handlebars, tpl) {
+  'text!stories/templates/storyModal.handlebars',
+], function($, Backbone, mps, Handlebars, tpl, tplModal) {
 
   'use strict';
   //HELPER for handlebars
@@ -58,6 +59,44 @@ define([
     }
   });
 
+  // PAGINATION
+  var FullScreenView = Backbone.View.extend({
+
+    el: '#fullScreenView',
+
+    template: Handlebars.compile(tplModal),
+
+    events: {
+      'click .backdrop' : 'hide',
+      'click .close' : 'close',
+      'click .shadow' : 'close',
+    },
+
+    initialize: function(){
+      this._setListeners();
+    },
+
+    _setListeners: function(){
+      mps.subscribe('slider:fullscreen', _.bind(function(image){
+        this.render(image);
+        this.show();
+      },this));
+    },
+
+    render: function(image){
+      this.$el.html(this.template({img: image }));
+    },
+
+    show: function() {
+      this.$el.addClass('active');
+    },
+
+    close: function() {
+      this.$el.removeClass('active');
+    }
+
+  });
+
 
 
   var CarrouselStoriesView = Backbone.View.extend({
@@ -69,6 +108,7 @@ define([
 
     events: {
       'click .btn-nav' : 'onChange',
+      'click .full-screen' : 'onFullScreen',
     },
 
     initialize: function() {
@@ -84,6 +124,7 @@ define([
 
       //Init Pagination
       this.pagination = new PaginationView({ len: this.len });
+      this.fullscreen = new FullScreenView();
 
 
       // inits
@@ -119,6 +160,11 @@ define([
         break;
       }
       this.setCurrent();
+    },
+
+    onFullScreen: function(e) {
+      var bg = $(e.currentTarget).data('bg');
+      mps.publish('slider:fullscreen',[bg]);
     }
 
   });

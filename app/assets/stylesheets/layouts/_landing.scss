@@ -6,9 +6,10 @@
   position: relative;
   z-index: 3;
   @media (min-width: $br-mobile) {
-    margin-top: -60px;
+    top: -60px;
     min-height: 620px;
     padding-bottom: 37.5%;
+    margin: 0px 0 -35px;
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
       margin-top: 0px;
     }
@@ -24,6 +25,7 @@
       max-height: 620px;
     }
     .ribbon {
+      display: none;
       position: absolute;
       z-index: 1;
       background-color: #97bd3d;
@@ -342,9 +344,9 @@
   &.slide2 { background-image:url('backgrounds/home-slider/bg_slide2.jpg');}
   &.slide3 { background-image:url('backgrounds/home-slider/bg_slide3.png');}
   &.slide4 { background-image:url('backgrounds/home-slider/bg_slide4.jpg');}
-  &.slide5 { background-image:url('backgrounds/home-slider/bg_slide5.jpg');}
+  &.slide5 { background-image:url('http://gfw.blog.s3.amazonaws.com/Carousel/6800195654_c25cfa30a8_o.jpg');}
   &.slide6 { background-image:url('backgrounds/home-slider/bg_slide6.jpg');}
-  &.slide7 { background-image:url('backgrounds/home-slider/bg_slide7.jpg');}
+  &.slide7 { background-image:url('http://gfw.blog.s3.amazonaws.com/Carousel/tomnodforcarousel.jpg');}
 
   aside {
     position: absolute;
@@ -952,6 +954,7 @@
             span {
               color: $cGreen;
               font-weight: 500;
+              display: block;
             }
           }
         }

@@ -80,13 +80,17 @@ define([
     },
 
     download: function(event) {
-      if (isMobile.any && this._isMobile()) {
+      if (!$(event.currentTarget).hasClass('disabled')) {
+        if (isMobile.any && this._isMobile()) {
+          event && event.preventDefault() && event.stopPropagation();
+          var href = $(event.currentTarget).attr('href');
+          var type = $(event.currentTarget).data('type') || 'default';
+          this.model.set('link', href);
+          this.model.set('type', type);
+          this.show();
+        }
+      } else{
         event && event.preventDefault() && event.stopPropagation();
-        var href = $(event.currentTarget).attr('href');
-        var type = $(event.currentTarget).data('type') || 'default';
-        this.model.set('link', href);
-        this.model.set('type', type);
-        this.show();
       }
     },
 

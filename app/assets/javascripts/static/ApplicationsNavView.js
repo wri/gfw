@@ -9,29 +9,37 @@ define([
 
   'use strict';
 
+  var ApplicationsNavModel = Backbone.Model.extend({
+    defaults: {
+      filters: []
+    }
+  })
+
+
   var ApplicationsNavView = Backbone.View.extend({
 
     el: '#applicationsNavView',
 
     events: {
-      'click a' : 'onChange',
+      'click .app-filter' : 'onFilter',
     },
 
     initialize: function() {
       if (!this.$el.length) {
         return
       }
+
+      this.model = new ApplicationsNavModel();
+
       this.$window = $(window);
       this.$document = $(document);
       this.$htmlbody = $('html,body');
-      this.$cut = $('#cut');
+      this.$cutTop = $('#cutTop');
+      this.$cutBottom = $('#cutBottom');
       this.$sideBarBox = $('#wrap-applications');
       this.$cloneNav = $('#clone-nav');
-      this.$linksparents = this.$el.find('li');
-      this.$links = this.$el.find('a');
       this.padding = 40;
       this.offsets = [];
-      this.offsetsIndex = 0;
       this.lastScroll = 0;
 
       if (this.$window.width() >= 850) {
@@ -44,27 +52,26 @@ define([
     },
 
     setListeners: function(){
-      this.calculateOffsets();
-      this.scrollDocument();
+      this.model.on('change:filters', this.changeFilters, this);
+      mps.subscribe('App/render', _.bind(this.initBindings, this));
+    },
+
+    initBindings: function() {
+      this.$document.off('scroll',_.bind(this.scrollDocument,this));
+      this.$window.off('resize',_.bind(this.calculateOffsets,this));
+
       this.$document.on('scroll',_.bind(this.scrollDocument,this));
       this.$window.on('resize',_.bind(this.calculateOffsets,this));
-
-      mps.subscribe('SourceStatic/change',_.bind(this.scrollTo,this));
-
+      this.calculateOffsets();
     },
 
     calculateOffsets: function(){
-      this.offset = this.$el.offset().top + parseInt(this.$el.css('paddingTop'), 10);
-      this.offsetBottom = this.$cut.offset().top - this.$el.height();
-      _.each(this.$links, _.bind(function(link, i){
-        var id = $(link).attr('href');
-        this.offsets[i] = $(id).offset().top - this.$el.height() - this.padding;
-      }, this ));
+      this.offset = this.$cutTop.offset().top + parseInt(this.$el.css('paddingTop'), 10);
+      this.offsetBottom = this.$cutBottom.offset().top - this.$el.height();
     },
 
     scrollDocument: function(e){
       var scrollTop = this.$document.scrollTop();
-      var index = this.offsetsIndex;
       if (scrollTop > this.offset) {
         this.$sideBarBox.addClass('fixed');
         this.firstFixed = false;
@@ -79,40 +86,25 @@ define([
         this.$cloneNav.height(0);
         this.$sideBarBox.removeClass('fixed');
         this.firstFixed = true;
-        this.offsetsIndex = 0;
       }
 
-      if (scrollTop > this.lastScroll) {
-        if (scrollTop > this.offsets[this.offsetsIndex+1]) {
-          this.offsetsIndex++;
-        }
-      }else{
-        if (scrollTop < this.offsets[this.offsetsIndex]) {
-          (this.offsetsIndex === 0) ? this.offsetsIndex = 0 : this.offsetsIndex--;
-        }
-      }
-      this.updateRoute();
-      this.$links.removeClass('current');
-      this.$linksparents.eq(this.offsetsIndex).children('a').addClass('current');
       this.lastScroll = scrollTop;
     },
 
-    onChange: function(e) {
-      e && e.preventDefault();
-      var id = $(e.currentTarget).attr('href');
-      var time = Math.abs(this.$document.scrollTop() - ($(id).offset().top - this.$el.height()))/2;
-      this.$htmlbody.animate({ scrollTop: $(id).offset().top - this.$el.height() }, time);
+    onFilter: function(e) {
+      var filters = _.clone(this.model.get('filters'));
+      var filter = $(e.currentTarget).data('filter');
+      if (_.contains(filters, filter)) {
+        filters = _.without(filters, filter);
+      } else {
+        filters.push(filter);
+      }
+      $(e.currentTarget).toggleClass('is-active');
+      this.model.set('filters',filters);
     },
 
-    scrollTo: function(href){
-      var id = '#'+href.section;
-      var time = Math.abs(this.$document.scrollTop() - ($(id).offset().top - this.$el.height()))/2;
-      this.$htmlbody.animate({ scrollTop: $(id).offset().top - this.$el.height() }, time);
-    },
-
-    updateRoute: function(){
-      var section = this.$linksparents.eq(this.offsetsIndex).children('a').attr('href').replace('#','');
-      mps.publish('SourceStatic/Silentupdate', [{ section:section }]);
+    changeFilters: function () {
+      mps.publish('App/filters', [this.model.get('filters')]);
     }
 
   });
