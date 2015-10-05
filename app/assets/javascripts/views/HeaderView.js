@@ -69,8 +69,8 @@ define([
     },
 
     login: function() {
-      var loginView = LoginView();
-      this.$(el).append(loginView);
+      var loginView = new LoginView().login(event);
+      this.$el.append(loginView.el);
     },
 
     menuOpen: function(e){
