@@ -236,7 +236,18 @@
 	        <div class="feed">
 	          <h3>Get involved</h3>
 	          <div class="timeline-involved tablet">
-	          	<ul id="feedView"></ul>
+	          	<ul id="feedView">
+                <% @feedview.each do |item|%>
+                  <li>
+                    <a href="<%=item["link"] %>" target="_blank">
+                        <figure class="<%=item["type"] %>"><div style="background-image:url('<%=item["avatar"] %>');"></div></figure>
+                      <div class="info">
+                        <p><span><%=item["author"] %></span><%=item["description"][0..49] %>...</p>
+                      </div>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
 	          </div>
 	        </div>
           <div class="button-box">
@@ -251,7 +262,20 @@
 	        <div class="stories">
 	          <h3>Stay informed</h3>
 	          <div class="timeline-stories">
-	          	<ul id="storiesView" data-limit="3" data-truncate="true"></ul>
+	          	<ul id="storiesView" data-limit="3" data-truncate="true">
+                <% @storiesview.each do |item|%>
+                  <li>
+                    <a href="<%=item["id"] %>">
+                        <figure><div class="bg" style="background-image: url(<%= item["avatar"] %>)"></div></figure>
+                      <article class="info">
+                        <h4><%= item["title"] %></h4>
+                        <p><%=item["description"][0..29] %>...</p>
+                        <button class="btn gray medium">More</button>
+                      </article>
+                    </a>
+                  </li>
+                 <% end %>
+              </ul>
 	          </div>
           </div>
           <div class="button-box two">
