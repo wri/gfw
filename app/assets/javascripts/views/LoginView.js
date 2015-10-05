@@ -4,11 +4,12 @@
  * @return LoginView instance (extends Backbone.View).
  */
 define([
+  'Backbone',
   'underscore',
   'handlebars',
   'mps',
   'text!templates/login.handlebars'
-], function(_, Handlebars, mps, tpl) {
+], function(Backbone,_, Handlebars, mps, tpl) {
 
   'use strict';
 
