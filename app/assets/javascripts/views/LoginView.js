@@ -4,7 +4,7 @@
  * @return LoginView instance (extends Backbone.View).
  */
 define([
-  'Backbone',
+  'backbone',
   'underscore',
   'handlebars',
   'mps',
