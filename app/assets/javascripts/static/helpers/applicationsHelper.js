@@ -42,7 +42,7 @@ define([
     },
     {
       id: 3,
-      name: 'Download data',
+      name: 'Open Data Portal',
       svg: '#shape-download',
       content: 'Browse, learn more about, and download the data displayed on Global Forest Watch.',
       href: 'http://data.globalforestwatch.org',
@@ -212,7 +212,7 @@ define([
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
-      source: 'Forestry Department of the Food and Agriculture Organization of the United Nations',
+      source: 'A set of free and open-source software tools that facilitates flexible and efficient data collection, analysis, and reporting',
       mobile_friendly: 'other',
       tags: 'crowdsourcing, data, maps, mobile, satellite-imagery'
     },
@@ -238,6 +238,16 @@ define([
     },
     {
       id: 19,
+      name: 'My Forest Atlas',
+      svg: '#shape-develop',
+      content: 'A tool for building your own online interactive map',
+      link_text: 'Coming soon',
+      classname: 'btn soon',
+      source: 'World Resources Institute',
+      tags: 'crowdsourcing, data, maps, mobile, satellite-imagery'
+    },
+    {
+      id: 20,
       name: 'Develop your own app',
       svg: '#shape-develop',
       content: 'Learn how to develop your own application with Global Forest Watch data.',
@@ -245,50 +255,15 @@ define([
       link_text: 'Read more',
       classname: 'btn gray medium',
     },
+
+
+
+
   ]
 
-// <div class="col">
-//   <div class="card">
-//     <header>
-//       <h2>Climate</h2>
-//       <div class="icon"><svg><use xlink:href="#shape-carbon"></use></svg></div>
-//     </header>
-//     <div class="content">
-//       <p>Track carbon emissions and removals in forest landscapes.</p>
-//     </div>
-//     <footer>
-//       <span class="btn soon">coming soon</span>
-//       <small>Source: World Resources Institute</small>
-//     </footer>
-//     <div class="description">
-//       <div class="additional-info">
-//         <h2>Climate</h2>
-//         <p>Global Forest Watch Climate is a forthcoming tool to track carbon emissions and removals from forest landscapes. With GFW Climate, users will be able to interactively visualize and analyze forest carbon data to generate customized maps and statistics. GFW Climate will provide timely and practical information and tools for those involved in designing forest policies for climate change mitigation.</p>
-//       </div>
-//     </div>
-//   </div>
-// </div>
-// <div class="col">
-//   <div class="card">
-//     <header>
-//       <h2>Deforestation Finder App</h2>
-//       <div class="icon"><svg><use xlink:href="#shape-landsat"></use></svg></div>
-//     </header>
-//     <div class="content">
-//       <p>Help make GFW’s tree cover loss alerts more reliable by analyzing satellite images and telling the world what you see.</p>
-//     </div>
-//     <footer>
-//       <span class="btn soon">coming soon</span>
-//       <small>Source: World Resources Institute</small>
-//     </footer>
-//     <div class="description">
-//       <div class="additional-info">
-//         <h2>Deforestation Finder App</h2>
-//         <p>Sometimes the human eye is more powerful at spotting deforestation than computer algorithms. This simple app displays recent satellite images from areas with recent tree cover loss alerts and asks users to tell us what they see. User contributions can help us figure out which alerts are most concerning and require action on the ground.</p>
-//       </div>
-//     </div>
-//   </div>
-// </div>
+
+
+// Add a card for "My Forest Atlas" (coming soon).  The source is WRI and the descriptive text should say: A tool for building your own online interactive map (text will probably change but this is good enough for now!).  See attached image for preliminary design.
 
 
 
