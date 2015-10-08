@@ -117,7 +117,8 @@ define([
       "forma",
       "prodes",
       "loss",
-      "forestgain"
+      "forestgain",
+      "gfw_landsat_alerts"
     ],
 
     categoryOrder: [

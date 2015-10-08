@@ -97,6 +97,7 @@ define([
   'map/views/layers/GtmForestChange2Layer',
   'map/views/layers/GtmForestCoverLayer',
   'map/views/layers/GtmForestDensityLayer',
+  'map/views/layers/LandsatAlertsLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -205,6 +206,7 @@ define([
   GtmForestChange2Layer,
   GtmForestCoverLayer,
   GtmForestDensityLayer,
+  LandsatAlertsLayer,
   UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
@@ -508,6 +510,9 @@ define([
     },
      gtm_forest_density: {
       view: GtmForestDensityLayer
+    },
+    gfw_landsat_alerts: {
+      view: LandsatAlertsLayer
     },
     urthe: {
       view: UrthecastLayer
