@@ -514,7 +514,8 @@ define([
       view: GtmForestDensityLayer
     },
     gfw_landsat_alerts: {
-      view: LandsatAlertsLayer
+      view: LandsatAlertsLayer,
+      timelineView: LandsatAlertsTimeline
     },
     urthe: {
       view: UrthecastLayer

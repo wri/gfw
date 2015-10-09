@@ -15,7 +15,7 @@ define([
 
   'use strict';
 
-  var ImazonLayer = CartoDBLayerClass.extend({
+  var LandsatAlertsLayer = CartoDBLayerClass.extend({
     options: {
       sql:  "select * from (SELECT cartodb_id, the_geom_webmercator, to_char((date '2014-12-31' + grid_code::int),'mm/dd/yyyy') as dates, \'{tableName}\' as layer, \'{tableName}\' AS name FROM {tableName}) p"+
         'WHERE date BETWEEN to_date(\'{startYear}-{startMonth}\',\'YYYY-MM\') AND to_date(\'{endYear}-{endMonth}\',\'YYYY-MM\')',
