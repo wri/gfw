@@ -17,8 +17,8 @@ define([
 
   var LandsatAlertsLayer = CartoDBLayerClass.extend({
     options: {
-      sql:  "select * from (SELECT cartodb_id, the_geom_webmercator, to_char((date '2014-12-31' + grid_code::int),'mm/dd/yyyy') as dates, \'{tableName}\' as layer, \'{tableName}\' AS name FROM {tableName}) p"+
-        "WHERE grid_code BETWEEN to_date(\'{startYear}-{startMonth}\',\'YYYY-MM\')- DATE '2014-12-31' AND to_date(\'{endYear}-{endMonth}\',\'YYYY-MM\')- DATE '2014-12-31'",
+      sql:  "SELECT cartodb_id, the_geom_webmercator, to_char((date '2014-12-31' + grid_code::int),'mm/dd/yyyy') as dates, \'{tableName}\' as layer, \'{tableName}\' AS name FROM {tableName} "+
+        " WHERE grid_code BETWEEN to_date(\'{startYear}-{startMonth}\',\'YYYY-MM\')- DATE '2014-12-31' AND to_date(\'{endYear}-{endMonth}\',\'YYYY-MM\')- DATE '2014-12-31'",
       cartocss: LandsatAlertsCartoCSS
     },
 
