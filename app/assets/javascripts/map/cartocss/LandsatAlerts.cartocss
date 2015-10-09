@@ -33,6 +33,4 @@
 }
 #gfw_landsat_alerts[grid_code > 260]{
   marker-fill: #E9BD15;
-  marker-width: 0.5;
-  marker-height:0.5;
   }
