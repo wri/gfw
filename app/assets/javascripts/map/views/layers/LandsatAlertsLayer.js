@@ -1,7 +1,7 @@
   /**
  * The LandsatAlerts layer module.
  *
- * @return ImazonLayer class (extends CartoDBLayerClass)
+ * @return LandsatAlertsLayer class (extends CartoDBLayerClass)
  */
 
 
@@ -19,7 +19,7 @@ define([
     options: {
       sql:  "select * from (SELECT cartodb_id, the_geom_webmercator, to_char((date '2014-12-31' + grid_code::int),'mm/dd/yyyy') as dates, \'{tableName}\' as layer, \'{tableName}\' AS name FROM {tableName}) p"+
         'WHERE date BETWEEN to_date(\'{startYear}-{startMonth}\',\'YYYY-MM\') AND to_date(\'{endYear}-{endMonth}\',\'YYYY-MM\')',
-      cartocss: FormaCartoCSS
+      cartocss: LandsatAlertsCartoCSS
     },
 
     init: function(layer, options, map) {
@@ -57,6 +57,6 @@ define([
     }
   });
 
-  return LandsatAlerts;
+  return LandsatAlertsLayer;
 
 });
