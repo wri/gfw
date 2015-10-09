@@ -212,7 +212,7 @@ define([
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
-      source: 'A set of free and open-source software tools that facilitates flexible and efficient data collection, analysis, and reporting',
+      source: 'A set of free and open-source software tools that facilitates flexible and efficient data collection, analysis, and reporting.',
       mobile_friendly: 'other',
       tags: 'crowdsourcing, data, maps, mobile, satellite-imagery'
     },
@@ -228,9 +228,9 @@ define([
     },
     {
       id: 18,
-      name: 'Deforestation Finder App',
+      name: 'Forest Watcher Mobile App',
       svg: '#shape-landsat',
-      content: 'Help make GFW’s tree cover loss alerts more reliable by analyzing satellite images and telling the world what you see.',
+      content: 'This easy-to-use app enables anyone with limited Internet connectivity to find GFW alerts in their forests and upload observations like photos and other data from the field. The Jane Goodall Institute, in partnership with Global Forest Watch, Google, and TouchLab, is currently piloting this app in Uganda to improve local forest monitoring.',
       link_text: 'Coming soon',
       classname: 'btn soon',
       source: 'World Resources Institute',
