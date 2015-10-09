@@ -20,7 +20,7 @@ define([
 
    options: {
       urlTemplate: 'https://s3.amazonaws.com//wri-tiles/GTM/guatemalaforestcover{/z}{/x}{/y}.png',
-      dataMaxZoom: 8
+      dataMaxZoom: 15
     }
 
   });
