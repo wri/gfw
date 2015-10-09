@@ -9,7 +9,7 @@
   marker-fill: #F69;
   marker-allow-overlap: true;
   
-  [zoom=10]{
+  [zoom>8]{
   marker-width: 0.3;
   marker-height:0.3;
   }
@@ -29,7 +29,10 @@
   marker-width: 1.5*('@zoom'-13);
   marker-height:1.5*('@zoom'-13);
   }
-  [grid_code > 260]{
-  marker-fill: #E9BD15;
-  }
+ 
 }
+#gfw_landsat_alerts[grid_code > 260]{
+  marker-fill: #E9BD15;
+  marker-width: 0.5;
+  marker-height:0.5;
+  }
