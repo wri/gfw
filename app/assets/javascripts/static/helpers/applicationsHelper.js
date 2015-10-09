@@ -239,7 +239,7 @@ define([
     {
       id: 19,
       name: 'My Forest Atlas',
-      svg: '#shape-develop',
+      svg: '#shape-my-forest-atlas',
       content: 'A tool for building your own online interactive map',
       link_text: 'Coming soon',
       classname: 'btn soon',
@@ -255,9 +255,6 @@ define([
       link_text: 'Read more',
       classname: 'btn gray medium',
     },
-
-
-
 
   ]
 
