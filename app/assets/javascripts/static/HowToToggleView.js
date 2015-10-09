@@ -28,8 +28,8 @@ define([
       }
 
       //CACHE
-      this.desktop = $('.sources');
-      this.mobile = $('.sources-m');
+      this.desktop = $('.howto-d');
+      this.mobile = $('.howto-m');
 
 
       this.render();
