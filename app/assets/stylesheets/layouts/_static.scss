@@ -365,6 +365,10 @@
     color: $dark;
     h2 {
       font-size: 35px;
+      @media only screen and (min-width: 480px) {
+        padding: 0 210px 0 0;
+      }
+
     }
     h3 {
       font-size: 21px;
@@ -1646,22 +1650,22 @@
 
 .toggle-howto {
   background-color: #97bd3d;
-  color: #eee;
-  width: 222px;
+  color: #fff;
+  width: 200px;
   height: 25px;
-  font-size: 13px;
+  font-size: 10px;
   text-transform: uppercase;
   font-weight: bold;
   position: absolute;
   @include display-flex();
   @include justify-content(space-between);
-  right: 35px;
+  right: 20px;
   top: 3px;
   border-radius: 50px;
   cursor: pointer;
 
   .active {
-    background-color: #eee;
+    background-color: #fff;
     color: #97bd3d;
     border-radius: inherit;
     border: 1px solid #CCCCCC;
@@ -1676,7 +1680,7 @@
   }
   @media only screen and (max-width: 480px) {
     position: relative;
-    margin: 10px auto;
+    margin: 15px 0 0;
     right: auto;
     top: auto;
   }
