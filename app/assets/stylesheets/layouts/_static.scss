@@ -1174,7 +1174,7 @@
     + .source_category_description { margin-top: 10px; }
   }
 
-  .sources{
+  .sources, .sources-m{
     display: block;
     padding: 25px 0 0;
   }
@@ -1643,6 +1643,45 @@
     }
   }
 }
+
+.toggle-howto {
+  background-color: #97bd3d;
+  color: #eee;
+  width: 222px;
+  height: 25px;
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: bold;
+  position: absolute;
+  @include display-flex();
+  @include justify-content(space-between);
+  right: 35px;
+  top: 3px;
+  border-radius: 50px;
+  cursor: pointer;
+
+  .active {
+    background-color: #eee;
+    color: #97bd3d;
+    border-radius: inherit;
+    border: 1px solid #CCCCCC;
+    cursor: default;
+    font-weight: normal;
+  }
+  .toggle-choice {
+    width: 50%;
+    @include display-flex();
+    @include justify-content(center);
+    @include align-items(center);
+  }
+  @media only screen and (max-width: 480px) {
+    position: relative;
+    margin: 10px auto;
+    right: auto;
+    top: auto;
+  }
+}
+
 #feedback-thanks {
   height: 170px;
   @include display-flex();
