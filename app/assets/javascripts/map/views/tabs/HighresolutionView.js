@@ -27,6 +27,7 @@ define([
       'change #range-clouds' : 'setVisibleRange',
       'change input' : '_setParams',
       'change select' : '_setParams',
+      'click button' : '_setParams',
       'click .advanced-controls' : '_toggleAdvanced'
     },
 
