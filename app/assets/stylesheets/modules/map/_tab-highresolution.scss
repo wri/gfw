@@ -130,7 +130,21 @@ $letterW: 20px;
       }
     }
 
-
+    .advanced-controls {
+      cursor: pointer;
+      &:after {
+        content:'►';
+        left: 133px;
+        display: inline-block;
+        position: absolute;
+      }
+      &.active:after {
+        content: '▼';
+      }
+    }
+    .advanced-options {
+      display: none;
+    }
 
     // RANGE INPUT
     input[type=range] {
