@@ -27,6 +27,7 @@ define([
       'change #range-clouds' : 'setVisibleRange',
       'change input' : '_setParams',
       'change select' : '_setParams',
+      'click .advanced-controls' : '_toggleAdvanced'
     },
 
     initialize: function() {
@@ -45,6 +46,8 @@ define([
       this.$progress           = $('#progress-clouds');
       this.$mindate            = this.$el.find('.mindate');
       this.$maxdate            = this.$el.find('.maxdate');
+      this.$advanced_options   = this.$el.find('.advanced-options');
+      this.$advanced_controls  = this.$el.find('.advanced-controls');
     },
 
     render: function() {
@@ -68,7 +71,7 @@ define([
     },
 
     _fillParams: function(params) {
-      this.$hresSelectProFil.val(params.color_filter).trigger("liszt:updated");;
+      this.$hresSelectProFil.val(params.color_filter).trigger("liszt:updated");
       this.$range.val(params.cloud);
       this.$mindate.val(params.mindate);
       this.$maxdate.val(params.maxdate);
@@ -78,6 +81,11 @@ define([
     toggleLayer: function(e) {
       this.switchToggle();
       this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
+    },
+
+    _toggleAdvanced: function(e) {
+      this.$advanced_controls.toggleClass('active');
+      this.$advanced_options.toggle('250');
     },
 
     switchToggle: function() {
@@ -116,7 +124,7 @@ define([
     changeProvider: function(e) {
       return;
       var providers = {
-        'urthe' : '<option value="rgb">RGB (Red Green Blue)</option><option value="ndvi">NDVI (Normalized Difference Vegetation Index)</option><option value="evi">EVI (Enhanced vegetation index)</option><option value="ndwi">NDWI (Normalized Difference Water Index)</option><option value="false-nir">False Color NIR (Near Infra Red)</option>',
+        'urthe' : '<option value="ndvi">NDVI (Normalized Difference Vegetation Index)</option><option value="evi">EVI (Enhanced vegetation index)</option><option value="ndwi">NDWI (Normalized Difference Water Index)</option><option value="false-nir">False Color NIR (Near Infra Red)</option>',
         'digiglobe' : '',
         'skybox' : ''
       }
