@@ -229,11 +229,11 @@ define([
     {
       id: 18,
       name: 'Forest Watcher Mobile App',
-      svg: '#shape-landsat',
+      svg: '#shape-globe-mobile',
       content: 'This easy-to-use app enables anyone with limited Internet connectivity to find GFW alerts in their forests and upload observations like photos and other data from the field. The Jane Goodall Institute, in partnership with Global Forest Watch, Google, and TouchLab, is currently piloting this app in Uganda to improve local forest monitoring.',
       link_text: 'Coming soon',
       classname: 'btn soon',
-      source: 'World Resources Institute',
+      source: 'Jane Goodall Institute, Google, TouchLab, and World Resources Institute',
       tags: 'crowdsourcing, data, maps, mobile, satellite-imagery'
     },
     {
