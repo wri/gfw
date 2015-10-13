@@ -77,7 +77,7 @@ $search-br: 600px;
       background-size: auto 60%;
     }
 
-    .coordinates, .degrees {
+    .coordinates, .degrees, .utm {
       padding: 0 20px 15px;
       @media (min-width: $search-br){
         @include display-flex();
@@ -95,7 +95,7 @@ $search-br: 600px;
       }
     }
 
-    .coord-box , .deg-box {
+    .coord-box , .deg-box, .utm-box {
       @media (max-width: $search-br){
         @include display-flex();
         @include justify-content(space-between);
@@ -123,9 +123,16 @@ $search-br: 600px;
             max-width: 120px;
           }
         }
+        &.utm-input {
+          text-align: left;
+          margin: 13px 8px 9px;
+          @media (min-width: $search-br){
+            max-width: 100px;
+          }
+        }
       }
     }
-    .deg-box {
+    .deg-box, .utm-box {
       @include display-flex();
       @include justify-content(space-between);
       @include align-items(center);
@@ -135,7 +142,7 @@ $search-br: 600px;
           width: auto;
         }
       }
-      .deg-input {
+      .deg-input, .utm-input {
         margin: 13px 0 9px 0;
         padding: 0;
         text-align: left;

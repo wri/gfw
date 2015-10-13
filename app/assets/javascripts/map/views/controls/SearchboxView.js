@@ -192,6 +192,11 @@ define([
     },
 
 
+    // UTM
+    searchByUtm: function() {
+
+    },
+
     // AUTOCOMPLETE
     setAutocomplete: function() {
       this.autocomplete = new google.maps.places.SearchBox(this.$input[0]);
