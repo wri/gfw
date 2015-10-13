@@ -20,7 +20,8 @@ define([
     events: {
       'click #get-started' : 'getStarted',
       'click #go-to-apps' : 'goToApps',
-      'click .gotomap' : 'gotoMap'
+      'click .gotomap' : 'gotoMap',
+      'click .ribbon' : 'startSurvey'
     },
 
     initialize: function() {
@@ -31,7 +32,7 @@ define([
       this.slickSlider();
     },
 
-    slickSlider: function(){
+    slickSlider: function() {
       //INIT
       $('.main-slider-viewport').slick({
         infinite: true,
@@ -62,6 +63,12 @@ define([
     getStarted: function(e){
       e.stopPropagation();
       $(e.currentTarget).toggleClass('active');
+    },
+
+    startSurvey: function() {
+      ga('send', 'event', 'Home', 'Click', 'Survey link in slider');
+      var win = window.open('https://www.surveymonkey.com/s/GFWeval', '_blank');
+      win.focus();
     },
 
     /**

@@ -333,7 +333,58 @@
         </div>
       </div>
     </li>
+<li id='gfw_landsat_alerts' class='source-item last'>
+      <div class='source_header'>
+        <strong class='source_title'>Tree Cover Loss Alerts (weekly, 30m, select countries, Hansen/ UMD)</strong>
+        <i class='expand_arrow'></i>
+      </div>
 
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd> Identifies likely areas of tree cover loss in near-real time</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>0.00025 × 0.00025 degrees (27.8 meters at the Equator)</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Peru, Republic of Congo, and Kalimantan (Indonesia). Eventually will expand to the humid tropics</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd>N/A</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Frequency of updates</dt>
+            <dd> Updated weekly</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd>January 2015 - present</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd><p> While Landsat 7 and 8 satellites together have a revisit period of 8 days, cloud cover majorly limits the availability of imagery, particularly in the wet season. Alert dates represent the instance of detection, though tree cover loss could have taken place earlier and been obscured by clouds.</p>
+ 
+            <p>In this data set, “tree cover” is defined as all vegetation greater than 5 meters in height with greater than 30% canopy cover, and may take the form of natural forests or plantations. “Loss” indicates the removal or mortality of tree cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
+             
+            <p>In Peru, the authors evaluated the data to have 13.5% commission error (false positives), though the value drops to 1% when excluding pixels on the boundaries of other loss and unconfirmed alerts. The data has 33% omission errors, though most of these occur in secondary forests. Omission errors in primary forests fall to 15% when excluding pixels on the boundaries of other loss and unconfirmed alerts</p></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <p>This data set, created by Matt Hansen and his team at the University of Maryland and supported by Global Forest Watch, is the first Landsat-based alert system for tree cover loss. While most previous loss alert products use 250-meter resolution MODIS imagery, these alerts have a 30-meter resolution and thus can detect loss at a much finer scale. The alerts are currently operational for Peru, the Republic of Congo, and Kalimantan in Indonesia, and will eventually be expanded to the rest of the humid tropics.</p>
+          <p>New Landsat 7 and 8 images are downloaded as they are posted online, assessed for cloud cover or poor data quality, and compared to the three previous years of Landsat-derived metrics (including ranks, means, and regressions of red, infrared and shortwave bands, and ranks of NDVI, NBR, and NDWI). The metrics and the latest Landsat image are run through seven decision trees to calculate a median probability of forest disturbance. Pixels with probability >50% are reported as tree cover loss alerts. Alerts remain unconfirmed until three or more out of six consecutive observations are labelled as tree cover loss. For more information on methodology, see here.</p>
+  
+
+          <p class='credits'><strong>Citation:</strong> M. Hansen and University of Maryland. “Tree Cover Loss Alerts.” Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org/" target="_blank">www.globalforestwatch.org</a></p>
+          <p><a href="http://www.osinfor.gob.pe" target="_blank">Learn more or download data</a></p>
+        </div>
+      </div>
+    </li>
     <li id='forma' class='source-item'>
       <div class='source_header'>
         <strong class='source_title'>Forma alerts</strong>
@@ -1289,9 +1340,9 @@
           <dl class='sources_row'>
             <dt>Cautions</dt>
             <dd>
-            <p>Data gaps in the MERIS 2009 satellite acquisitions (about 5% of the total data area) were filled using the GlobCover 2005 land cover map.</p>
-            <p>The lack of a short-wave infrared (SWIR) band in the MERIS sensor may result in underestimation of flooded forests. These classes were therefore imported from the 2005 GlobCover land cover map.</p>
-            <p>Delineation between land and water is not exhaustive, especially for inland water bodies, and locations of water may be inaccurate.</p>
+            <p>Data gaps in the MERIS 2009 satellite acquisitions (about 5% of the total data area) were filled using the GlobCover 2005 land cover map.</p> 
+            <p>The lack of a short-wave infrared (SWIR) band in the MERIS sensor may result in underestimation of flooded forests. These classes were therefore imported from the 2005 GlobCover land cover map.</p> 
+            <p>Delineation between land and water is not exhaustive, especially for inland water bodies, and locations of water may be inaccurate.</p> 
             </dd>
           </dl>
         </div>
@@ -1340,7 +1391,8 @@
             An accuracy assessment found 40% false positives and 18% false negatives for the presence of plantations, with an overall accuracy of 79%. Overall accuracies were lowest in Indonesia at 68%.
             The accuracies of the species and type labels were not assessed. These fields represent the best guess of the analysts and should not be used for official purposes.
             Polygons labeled as clearings were bare or had very young vegetation as of 2013 or 2014, but contextual clues suggest that these areas will eventually become tree plantations.
-            A subset of this data set more appropriate for supply chain monitoring can be found on <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities.</a>
+            A subset of this data set more appropriate for supply chain monitoring can be found on <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities.</a> 
+          
             </dd>
           </dl>
           <dl class='sources_row even'>
@@ -1443,10 +1495,10 @@
 </p>
 
            <p class='credits'><strong>Cita:</strong>“Densidad de la Cobertura Forestal de  Guatemala 2012”. Instituto Nacional de Bosques (INAB). 2015. Accedido por Global Forest Watch en [fecha]. www.globalforestwatch.org</p>
-
+           
           <p class='read_more hidden'><a href="http://data.globalforestwatch.org/datasets?q=guatemala&sort_by=relevance" class="download-mobile-link" target="_blank">Aprenda mas o descargue los datos</a></p>
         </div>
-      </div>
+      </div> 
     </li>
     <li id='gtm_forest_cover' class='source-item'>
        <div class='source_header'>
@@ -1509,7 +1561,7 @@
           <p>This data set comes from the National Institute of Forests ( <a href="http://inab.gob.gt/" target="_blank">INAB</a>) in Guatemala. Through various joint efforts and in coordination with the Inter-institutional Group for Forest Monitoring and the GIZ, INAB obtained 308 high resolution RapidEye (RE) images to cover the entire country.  These images, with a spatial resolution of 5 meters multispectral, were used to detail 16 classes of forest, 21 subtypes of forest, and 16 subtypes of forest by density. For broadleaf, coniferous, and mixed forest, detailed densities (sparse and dense) were differentiated for the first time in Guatemala.</p>
 
           <p>Mangroves were identified at the species level thanks to the database of Project Mangrove, <a href="http://www.servir.net/cobertura_de_mangle_en_guatemala_a%C3%B1o_2012" target="_blank">2012 MARN-CATHALAC</a>, which has registers of four species. For the purposes of this map, un-forested zones were simply designated “No Forest”.</p>
-
+        
            <p class='credits'><strong>Citation:</strong>“Guatemala forest cover density 2012”. National Institute of Forests (INAB). 2015. Accessed through Global Forest Watch on [date]. www.globalforestwatch.org</p>
           <p class='read_more hidden'><em><a href="http://data.globalforestwatch.org/datasets?q=guatemala&sort_by=relevance" class="download-mobile-link" target="_blank">Learn more or download data</a></em></p>
         </div>
@@ -1521,10 +1573,10 @@
           <p>Los manglares se identificaron a nivel de especie gracias a la base de datos del Proyecto Mangle, <a href="http://www.servir.net/cobertura_de_mangle_en_guatemala_a%C3%B1o_2012" target="_blank">2012 MARN-CATHALAC</a>, que posee registros para 4 especies. Para los  fines de este mapa, las zonas no forestales  se denominan como No Bosque.</p>
 
            <p class='credits'><strong>Cita:</strong>“Densidad de la Cobertura Forestal de  Guatemala 2012”. Instituto Nacional de Bosques (INAB). 2015. Accedido por Global Forest Watch en [fecha]. www.globalforestwatch.org</p>
-
+           
           <p class='read_more hidden'><a href="http://data.globalforestwatch.org/datasets?q=guatemala&sort_by=relevance" class="download-mobile-link" target="_blank">Aprenda mas o descargue los datos</a></p>
         </div>
-      </div>
+      </div> 
     </li>
     <li id='gtm_forest_change1' class='source-item'>
          <div class='source_header'>
@@ -1589,7 +1641,7 @@
           <p>The elaboration of national maps of forest cover was based on satellite images from Landsat 5 and 7 as well as ASTER (only for the southwestern section of the country, in the area corresponding to the Landsat image of Path 21 Row 50). The forest cover for Guatemala in 2006 was estimated as 3,866,383 hectares, equivalent to 35.5% of the national territory. The revised value for 2001 is 4,152,051 hectares corresponding to 38.1% of the national territory. These values represent an annual net loss of 48,084 hectares, equivalent to a deforestation rate of - 1.16%. The net annual loss reported is the difference between a gross loss of 101,852 hectares/year and a gain of 53,768 hectares/year.</p>
 
            <p class='credits'><strong>Citation:</strong>“Guatemala forest cover change 2001-2006”. National Institute of Forests (INAB). 2015. Accessed through Global Forest Watch on [date]. www.globalforestwatch.org.</p>
-
+           
           <p class='read_more hidden'><a href="http://data.globalforestwatch.org/datasets?q=guatemala&sort_by=relevance" class="download-mobile-link" target="_blank">Learn more or download data</a></em></p>
         </div>
         <div class='source_summary em'>
@@ -1600,7 +1652,7 @@
           <p>De esta forma,  el mapa nacional de cobertura forestal se generó  en base las imágenes satelitales LANDSAT 5 y 7, así como ASTER (únicamente para la sección del Sur-Occidente del país, en el área correspondiente a la imagen Path 21 Row 50 de la serie LANDSAT). La cobertura forestal para el año 2006 para Guatemala fue estimada en 3,866,383 ha, equivalente a un 35.5% del territorio nacional. El valor revisado para el 2001 es de 4,152,051 ha correspondiente a un 38.1% del territorio nacional. Estos valores representan una pérdida neta anual de 48,084 ha equivalentes a una tasa de deforestación de 1.16%. La pérdida neta anual reportada es la diferencia de una pérdida bruta de 101,852 ha/año y una ganancia de 53,768 ha/año.</p>
 
            <p class='credits'><strong>Cita:</strong>“Dinámica de la cobertura forestal de Guatemala 2001-2006”. Instituto Nacional de Bosques (INAB). 2015. Accedido por Global Forest Watch en [fecha]. www.globalforestwatch.org</p>
-
+           
           <p class='read_more hidden'><a href="http://data.globalforestwatch.org/datasets?q=guatemala&sort_by=relevance" class="download-mobile-link" target="_blank">Aprenda mas o descargue los datos</a></p>
         </div>
       </div>
@@ -1666,7 +1718,7 @@
           <p>This data set comes from the National Institute of Forests (INAB) in Guatemala. Information from Landsat 5 and Landsat 7 was used as the primary source of information, corresponding to 2010, although in certain areas images from 2009 and 2011 were used based on their quality. As secondary sources of information, information from 2006 orthophotos and images for 2010 from the ALOS-PRISM sensor were used.</p>
 
           <p>Forest cover in 2010 for Guatemala was estimated at 3,722,595 hectares, equivalent to 34% of the national land territory. The value for forest cover for 2006, published in May of 2011, was revised and a new estimate of 3,868,708 hectares was obtained. These values represent a net loss of 146,112 hectares of forest, equivalent to a net deforestation rate of -1.0% per year at the national level (with respect to the total existing forest in 2006). The results show that the net rate of deforestation continues falling compared to previous studies (-1.43% for 1991-2001 and -1.16% for 2001-2006) as a result of substantial increases in forest cover gain. However, gross deforestation continues to increase, reaching an area of 132,137 hectares per year for the analyzed time period.</p>
-
+           
            <p >52% of the national forest cover is located inside the Guatemalan System of Protected Areas (SIGAP), which covers a third of the national territory. The remaining 48% of the forest cover is distributed in the other two thirds of the country. In face of this concentration of forest cover inside of Protected Areas, three quarters of the loss during 2006-2010 occurred inside of SIGAP and one quarter outside of SIGAP.</p>
            <p class='credits'><strong>Citation:</strong>“Guatemala forest cover change 2006-2010”. National Institute of Forests (INAB). 2015. Accessed through Global Forest Watch on [date]. www.globalforestwatch.org</p>
           <p class='read_more hidden'><em><a href="http://data.globalforestwatch.org/datasets?q=guatemala&sort_by=relevance" class="download-mobile-link" target="_blank">Learn more or download data</a></em></p>
@@ -2732,7 +2784,7 @@
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function<br /><em>UTILIDAD</em></dt>
-            <dd>Displays boundaries of areas allocated by the forest authority and supervised by the Supervisory Body for Forest and Wildlife Resources (<a href="www.osinfor.gob.pe/portal/index.php">OSINFOR</a>) for timber, non-timber products, conservation, ecotourism, wildlife, afforestation, and reforestation.<br /><em>Muestra las concesiones forestales otorgadas por la autoridad forestal y supervisadas por el Organismo de Supervisión de los Recursos Forestales y de Fauna Silvestre (<a href="www.osinfor.gob.pe/portal/index.php">OSINFOR</a>)  para productos maderables, productos forestales no maderables, conservación, ecoturismo, fauna silvestre, forestación, y reforestación.</em></dd>
+            <dd>Displays boundaries of areas allocated by the forest authority and supervised by the Supervisory Body for Forest and Wildlife Resources (<a href="www.osinfor.gob.pe/portal/index.php">OSINFOR</a>) for timber, non-timber products, conservation, ecotourism, wildlife, afforestation, and reforestation.<br /><em>Muestra las concesiones forestales otorgadas por la autoridad forestal y supervisadas por el Organismo de Supervisión de los Recursos Forestales y de Fauna Silvestre (<a href="www.osinfor.gob.pe/portal/index.php">OSINFOR</a>)  para productos maderables, productos forestales no maderables, conservación, ecoturismo, fauna silvestre, forestación, y reforestación.</em></dd>
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE<br /><em>RESOLUCIÓN / ESCALA</em></dt>
@@ -2762,7 +2814,7 @@
 
         <div class='source_summary'>
           <h3>Overview</h3>
-          <p>Displays boundaries of areas allocated by the forest authority and supervised by the Supervisory Body for Forest and Wildlife Resources (OSINFOR) for timber, non-timber products, conservation, ecotourism, wildlife, afforestation, and reforestation. The concession grants the licensee the exclusive right to the sustainable use of natural resources granted under the conditions and limitations established by the respective title. The concession grants the holder the right to use and enjoy the natural resource granted and, consequently, ownership of the fruits and products extracted.</p>
+          <p>Displays boundaries of areas allocated by the forest authority and supervised by the Supervisory Body for Forest and Wildlife Resources (OSINFOR) for timber, non-timber products, conservation, ecotourism, wildlife, afforestation, and reforestation. The concession grants the licensee the exclusive right to the sustainable use of natural resources granted under the conditions and limitations established by the respective title. The concession grants the holder the right to use and enjoy the natural resource granted and, consequently, ownership of the fruits and products extracted.</p>
           <p>Types of concessions are indicated in the attribute data of each boundary, and include:</p>
           <ul class="bullets">
             <li><strong>Timber Concessions</strong> - Areas granted for timber operations in production forests permanently established in primary or secondary forests. Granted in two categories: between 5,000-10,000 hectares or areas greater than 10,000 hectares, both renewable for up to forty years.</li>
@@ -2788,7 +2840,7 @@
           <p>El tipo de concesión se indica en los datos de atributos de cada polígono, e incluye:</p>
           <ul class="bullets">
             <li><strong>Concesiones Forestales con fines Maderables</strong> - Áreas otorgadas para la extracción maderera en bosques de producción permanente establecidos en bosques primarios o secundarios.  Los títulos otorgados en dos categorías van de 5,000 hasta 10,000 hectáreas, o áreas de más de 10,000 hectáreas hasta 40,000 hectáreas; para ambas categorías el plazo es de hasta cuarenta años y puede renovarse.</li>
-            <li><strong>Concesiones para Productos Forestales no Maderables</strong> - ASon  concesiones cuyo objetivo es contribuir de manera directa a la conservación de especies de flora y fauna silvestre  a través de la protección efectiva y usos compatibles como la investigación, educación, y la restauración  ecológica. No se permite el aprovechamiento forestal maderable.</li>
+            <li><strong>Concesiones para Productos Forestales no Maderables</strong> - ASon  concesiones cuyo objetivo es contribuir de manera directa a la conservación de especies de flora y fauna silvestre  a través de la protección efectiva y usos compatibles como la investigación, educación, y la restauración  ecológica. No se permite el aprovechamiento forestal maderable.</li>
             <li><strong>Concesiones de Conservación</strong> - Son concesiones para el desarrollo de actividades vinculadas a la recreación y el turismo de naturaleza ecológicamente responsables, contribuyendo de este modo a la conservación de la naturaleza, la fauna silvestre, y los valores culturales del sitio, y dando cabida a una participación socioeconómica activa y beneficiosa para las poblaciones locales. No se permite el aprovechamiento forestal maderable con fines comerciales. Estas concesiones tienen vigencia hasta de cuarenta años y pueden ser renovadas, y pueden abarcar una superficie máxima de diez mil hectáreas.</li>
             <li><strong>Concesiones para Ecoturismo</strong> - Tierras de dominio público otorgadas al manejo de fauna silvestre y destinadas al aprovechamiento sostenible de poblaciones de especies autorizadas. Estas concesiones pueden ser por periodos de hasta veinticinco años y pueden ser renovadas.</li>
             <li><strong>Concesiones de Fauna Silvestre</strong> - Public lands granted for wildlife management and aimed at sustainable enjoyment of authorized species. Renewable for up to twenty-five years.</li>
@@ -2816,7 +2868,7 @@
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function<br /><em>UTILIDAD</em></dt>
-            <dd>Displays boundaries of areas allocated by the forest authority and supervised by the Supervisory Body for Forest and Wildlife Resources (<a href="www.osinfor.gob.pe/portal/index.php">OSINFOR</a>) for timber, non-timber products, conservation, ecotourism, wildlife, afforestation, and reforestation.<br /><em>Muestra las concesiones forestales otorgadas por la autoridad forestal y supervisadas por el Organismo de Supervisión de los Recursos Forestales y de Fauna Silvestre (<a href="www.osinfor.gob.pe/portal/index.php">OSINFOR</a>)  para productos maderables, productos forestales no maderables, conservación, ecoturismo, fauna silvestre, forestación, y reforestación.</em></dd>
+            <dd>Displays boundaries of areas allocated by the forest authority and supervised by the Supervisory Body for Forest and Wildlife Resources (<a href="www.osinfor.gob.pe/portal/index.php">OSINFOR</a>) for timber, non-timber products, conservation, ecotourism, wildlife, afforestation, and reforestation.<br /><em>Muestra las concesiones forestales otorgadas por la autoridad forestal y supervisadas por el Organismo de Supervisión de los Recursos Forestales y de Fauna Silvestre (<a href="www.osinfor.gob.pe/portal/index.php">OSINFOR</a>)  para productos maderables, productos forestales no maderables, conservación, ecoturismo, fauna silvestre, forestación, y reforestación.</em></dd>
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE<br /><em>RESOLUCIÓN / ESCALA</em></dt>
@@ -2846,7 +2898,7 @@
 
         <div class='source_summary'>
           <h3>Overview</h3>
-          <p>Displays boundaries of areas allocated by the forest authority and supervised by the Supervisory Body for Forest and Wildlife Resources (OSINFOR) for timber, non-timber products, conservation, ecotourism, wildlife, afforestation, and reforestation. The concession grants the licensee the exclusive right to the sustainable use of natural resources granted under the conditions and limitations established by the respective title. The concession grants the holder the right to use and enjoy the natural resource granted and, consequently, ownership of the fruits and products extracted.</p>
+          <p>Displays boundaries of areas allocated by the forest authority and supervised by the Supervisory Body for Forest and Wildlife Resources (OSINFOR) for timber, non-timber products, conservation, ecotourism, wildlife, afforestation, and reforestation. The concession grants the licensee the exclusive right to the sustainable use of natural resources granted under the conditions and limitations established by the respective title. The concession grants the holder the right to use and enjoy the natural resource granted and, consequently, ownership of the fruits and products extracted.</p>
           <p>Types of concessions are indicated in the attribute data of each boundary, and include:</p>
           <ul class="bullets">
             <li><strong>Timber Concessions</strong> - Areas granted for timber operations in production forests permanently established in primary or secondary forests. Granted in two categories: between 5,000-10,000 hectares or areas greater than 10,000 hectares, both renewable for up to forty years.</li>
@@ -2872,7 +2924,7 @@
           <p>El tipo de concesión se indica en los datos de atributos de cada polígono, e incluye:</p>
           <ul class="bullets">
             <li><strong>Concesiones Forestales con fines Maderables</strong> - Áreas otorgadas para la extracción maderera en bosques de producción permanente establecidos en bosques primarios o secundarios.  Los títulos otorgados en dos categorías van de 5,000 hasta 10,000 hectáreas, o áreas de más de 10,000 hectáreas hasta 40,000 hectáreas; para ambas categorías el plazo es de hasta cuarenta años y puede renovarse.</li>
-            <li><strong>Concesiones para Productos Forestales no Maderables</strong> - ASon  concesiones cuyo objetivo es contribuir de manera directa a la conservación de especies de flora y fauna silvestre  a través de la protección efectiva y usos compatibles como la investigación, educación, y la restauración  ecológica. No se permite el aprovechamiento forestal maderable.</li>
+            <li><strong>Concesiones para Productos Forestales no Maderables</strong> - ASon  concesiones cuyo objetivo es contribuir de manera directa a la conservación de especies de flora y fauna silvestre  a través de la protección efectiva y usos compatibles como la investigación, educación, y la restauración  ecológica. No se permite el aprovechamiento forestal maderable.</li>
             <li><strong>Concesiones de Conservación</strong> - Son concesiones para el desarrollo de actividades vinculadas a la recreación y el turismo de naturaleza ecológicamente responsables, contribuyendo de este modo a la conservación de la naturaleza, la fauna silvestre, y los valores culturales del sitio, y dando cabida a una participación socioeconómica activa y beneficiosa para las poblaciones locales. No se permite el aprovechamiento forestal maderable con fines comerciales. Estas concesiones tienen vigencia hasta de cuarenta años y pueden ser renovadas, y pueden abarcar una superficie máxima de diez mil hectáreas.</li>
             <li><strong>Concesiones para Ecoturismo</strong> - Tierras de dominio público otorgadas al manejo de fauna silvestre y destinadas al aprovechamiento sostenible de poblaciones de especies autorizadas. Estas concesiones pueden ser por periodos de hasta veinticinco años y pueden ser renovadas.</li>
             <li><strong>Concesiones de Fauna Silvestre</strong> - Public lands granted for wildlife management and aimed at sustainable enjoyment of authorized species. Renewable for up to twenty-five years.</li>
@@ -2899,7 +2951,7 @@
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function<br /><em>UTILIDAD</em></dt>
-            <dd>Displays boundaries of areas allocated by the forest authority and supervised by the Supervisory Body for Forest and Wildlife Resources (<a href="www.osinfor.gob.pe/portal/index.php">OSINFOR</a>) for timber, non-timber products, conservation, ecotourism, wildlife, afforestation, and reforestation.<br /><em>Muestra las concesiones forestales otorgadas por la autoridad forestal y supervisadas por el Organismo de Supervisión de los Recursos Forestales y de Fauna Silvestre (<a href="www.osinfor.gob.pe/portal/index.php">OSINFOR</a>)  para productos maderables, productos forestales no maderables, conservación, ecoturismo, fauna silvestre, forestación, y reforestación.</em></dd>
+            <dd>Displays boundaries of areas allocated by the forest authority and supervised by the Supervisory Body for Forest and Wildlife Resources (<a href="www.osinfor.gob.pe/portal/index.php">OSINFOR</a>) for timber, non-timber products, conservation, ecotourism, wildlife, afforestation, and reforestation.<br /><em>Muestra las concesiones forestales otorgadas por la autoridad forestal y supervisadas por el Organismo de Supervisión de los Recursos Forestales y de Fauna Silvestre (<a href="www.osinfor.gob.pe/portal/index.php">OSINFOR</a>)  para productos maderables, productos forestales no maderables, conservación, ecoturismo, fauna silvestre, forestación, y reforestación.</em></dd>
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE<br /><em>RESOLUCIÓN / ESCALA</em></dt>
@@ -2929,7 +2981,7 @@
 
         <div class='source_summary'>
           <h3>Overview</h3>
-          <p>Displays boundaries of areas allocated by the forest authority and supervised by the Supervisory Body for Forest and Wildlife Resources (OSINFOR) for timber, non-timber products, conservation, ecotourism, wildlife, afforestation, and reforestation. The concession grants the licensee the exclusive right to the sustainable use of natural resources granted under the conditions and limitations established by the respective title. The concession grants the holder the right to use and enjoy the natural resource granted and, consequently, ownership of the fruits and products extracted.</p>
+          <p>Displays boundaries of areas allocated by the forest authority and supervised by the Supervisory Body for Forest and Wildlife Resources (OSINFOR) for timber, non-timber products, conservation, ecotourism, wildlife, afforestation, and reforestation. The concession grants the licensee the exclusive right to the sustainable use of natural resources granted under the conditions and limitations established by the respective title. The concession grants the holder the right to use and enjoy the natural resource granted and, consequently, ownership of the fruits and products extracted.</p>
           <p>Types of concessions are indicated in the attribute data of each boundary, and include:</p>
           <ul class="bullets">
             <li><strong>Timber Concessions</strong> - Areas granted for timber operations in production forests permanently established in primary or secondary forests. Granted in two categories: between 5,000-10,000 hectares or areas greater than 10,000 hectares, both renewable for up to forty years.</li>
@@ -2955,7 +3007,7 @@
           <p>El tipo de concesión se indica en los datos de atributos de cada polígono, e incluye:</p>
           <ul class="bullets">
             <li><strong>Concesiones Forestales con fines Maderables</strong> - Áreas otorgadas para la extracción maderera en bosques de producción permanente establecidos en bosques primarios o secundarios.  Los títulos otorgados en dos categorías van de 5,000 hasta 10,000 hectáreas, o áreas de más de 10,000 hectáreas hasta 40,000 hectáreas; para ambas categorías el plazo es de hasta cuarenta años y puede renovarse.</li>
-            <li><strong>Concesiones para Productos Forestales no Maderables</strong> - ASon  concesiones cuyo objetivo es contribuir de manera directa a la conservación de especies de flora y fauna silvestre  a través de la protección efectiva y usos compatibles como la investigación, educación, y la restauración  ecológica. No se permite el aprovechamiento forestal maderable.</li>
+            <li><strong>Concesiones para Productos Forestales no Maderables</strong> - ASon  concesiones cuyo objetivo es contribuir de manera directa a la conservación de especies de flora y fauna silvestre  a través de la protección efectiva y usos compatibles como la investigación, educación, y la restauración  ecológica. No se permite el aprovechamiento forestal maderable.</li>
             <li><strong>Concesiones de Conservación</strong> - Son concesiones para el desarrollo de actividades vinculadas a la recreación y el turismo de naturaleza ecológicamente responsables, contribuyendo de este modo a la conservación de la naturaleza, la fauna silvestre, y los valores culturales del sitio, y dando cabida a una participación socioeconómica activa y beneficiosa para las poblaciones locales. No se permite el aprovechamiento forestal maderable con fines comerciales. Estas concesiones tienen vigencia hasta de cuarenta años y pueden ser renovadas, y pueden abarcar una superficie máxima de diez mil hectáreas.</li>
             <li><strong>Concesiones para Ecoturismo</strong> - Tierras de dominio público otorgadas al manejo de fauna silvestre y destinadas al aprovechamiento sostenible de poblaciones de especies autorizadas. Estas concesiones pueden ser por periodos de hasta veinticinco años y pueden ser renovadas.</li>
             <li><strong>Concesiones de Fauna Silvestre</strong> - Public lands granted for wildlife management and aimed at sustainable enjoyment of authorized species. Renewable for up to twenty-five years.</li>
@@ -3485,7 +3537,7 @@
             <li>Have a definable boundary (e.g., species range, extent of contiguous habitat, etc.)</li>
           </ul>
 
-          <p>Launched in 2005, the Alliance for Zero Extinction (AZE) engages 83 non-governmental biodiversity conservation organizations working to prevent species extinctions. The AZE identifies and safeguards places where species evaluated to be Endangered or Critically Endangered by the <a href="http://www.iucn.org">International Union for Conservation of Nature</a> are restricted to single remaining sites.</p>
+          <p>Launched in 2005, the Alliance for Zero Extinction (AZE) engages 83 non-governmental biodiversity conservation organizations working to prevent species extinctions. The AZE identifies and safeguards places where species evaluated to be Endangered or Critically Endangered by the <a href="http://www.iucn.org">International Union for Conservation of Nature</a> are restricted to single remaining sites.</p>
           <p class='credits'><strong>Citation:</strong>Alliance for Zero Extinction (2010). 2010 AZE Update. <a href="http://www.zeroextinction.org">www.zeroextinction.org</a>.</p>
 
           <p class='read_more hidden'><em><a href='http://www.zeroextinction.org/' target='_blank'>Learn more or request data at Alliance for Zero Extinction</a></em></p>
@@ -5151,3 +5203,6 @@
     </li>
   </ul>
 </article>
+
+
+

@@ -41,16 +41,6 @@
     <!-- header -->
     <%= render 'header' %>
 
-    <!--  indepth message -->
-  <!--   <% if @country['indepth'].present? %>
-    <div class="inner">
-      <div class="inner country-indepth">
-        <h3 class="country-indepth__title">Global Forest Watch does in-depth work in this country.</h3>
-        <p class="country-indepth__body">Find more information <a href="<%= @country['indepth'] %>">here</a></p>
-      </div>
-    </div>
-    <% end %>
-   -->
     <!--  country nav -->
     <div class="country-nav-container">
       <div class="country-nav">
@@ -76,7 +66,7 @@
           <h6>FORMA alerts</h6>
           <div class="section-btn no-cols">
             <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'alerts', width: '600', height: '440' } %>
-            <a href="#" class="info icon circle source" data-source="forma">
+            <a href="#" class="info icon green circle source" data-source="forma">
               <svg>
                 <use xlink:href="#shape-info"></use>
               </svg>
@@ -133,7 +123,7 @@
                   <h6>Type of forests in <%= @country['name'] %></h6>
                   <div class="section-btn">
                     <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'forests-type', width: '250', height: '476'} %>
-                    <a href="#" class="info icon circle source" data-source="forest_type">
+                    <a href="#" class="info icon green circle source" data-source="forest_type">
                       <svg>
                         <use xlink:href="#shape-info"></use>
                       </svg>
@@ -172,7 +162,7 @@
                   <h6>Economic value of <%= @country['name'] %>'s forestry sector</h6>
                   <div class="section-btn">
                     <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'production', width: '600', height: '332'} %>
-                    <a href="#" class="info icon circle source" data-source="gross_value">
+                    <a href="#" class="info icon green circle source" data-source="gross_value">
                       <svg>
                         <use xlink:href="#shape-info"></use>
                       </svg>
@@ -207,7 +197,7 @@
                 <h6>Employment</h6>
                 <div class="section-btn">
                   <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'employment', width: '600', height: '338'} %>
-                  <a href="#" class="info icon circle source" data-source="employment_info">
+                  <a href="#" class="info icon green circle source" data-source="employment_info">
                     <svg>
                       <use xlink:href="#shape-info"></use>
                     </svg>
@@ -251,7 +241,7 @@
                 <h6>Forest tenure</h6>
                 <div class="section-btn">
                   <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'tenure', width: '600', height: '383'} %>
-                  <a href="#" class="info icon circle source" data-source="forest_tenure">
+                  <a href="#" class="info icon green circle source" data-source="forest_tenure">
                     <svg>
                       <use xlink:href="#shape-info"></use>
                     </svg>
@@ -284,7 +274,7 @@
                 <h6>Carbon stocks</h6>
                 <div class="section-btn">
                   <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'carbon_stocks', width: '600', height: '297'} %>
-                  <a href="#" class="info icon circle source" data-source="carbon_stocks">
+                  <a href="#" class="info icon green circle source" data-source="carbon_stocks">
                     <svg>
                       <use xlink:href="#shape-info"></use>
                     </svg>
@@ -309,7 +299,7 @@
                 <h6>CO2 emissions</h6>
                 <div class="section-btn">
                   <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'emissions', width: '600', height: '297'} %>
-                  <a href="#" class="info icon circle source" data-source="emissions">
+                  <a href="#" class="info icon green circle source" data-source="emissions">
                     <svg>
                       <use xlink:href="#shape-info"></use>
                     </svg>
@@ -344,7 +334,7 @@
         <div class="section-info">
           <h6>Conventions</h6>
           <div class="section-btn no-cols">
-            <a href="#" class="info icon circle source" data-source="conventions">
+            <a href="#" class="info icon green circle source" data-source="conventions">
               <svg>
                 <use xlink:href="#shape-info"></use>
               </svg>
@@ -381,7 +371,7 @@
               <div class="section-info">
                 <h6>Forest policy and legislation</h6>
                 <div class="section-btn">
-                  <a href="#" class="info icon circle source" data-source="forest_legislation">
+                  <a href="#" class="info icon green circle source" data-source="forest_legislation">
                     <svg>
                       <use xlink:href="#shape-info"></use>
                     </svg>

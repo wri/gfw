@@ -16,12 +16,19 @@ define([
     // As you see forestchange layers are the more importants so they will be added to top
     //the order will be Grump, forest cover,Conservation, Forest Use, and People layers and finally  Forest Change layers
     layerOrder: [
+      //high resolution maps
+      "urthe",
+      //-
       "grump2000",
       //FOREST COVER
       "forest2000",
       "WMSLayer",
       "global_land_cover",
       "us_land_cover",
+      "gtm_forest_cover",
+      "gtm_forest_density",
+      "gtm_forest_change2",
+      "gtm_forest_change1",
       "us_land_cover_change",
       "colombia_forest_change",
       "intact_forest",
@@ -30,6 +37,8 @@ define([
       "ifl_2013_deg",
       "ifl_2000",
       "mangrove",
+      "plantations_by_type",
+      "plantations_by_species",
       // PEOPLE
       "resource_rights",
       "cmr_resource_rights",
@@ -54,6 +63,10 @@ define([
       "biodiversity_hotspots",
       "protected_areasCDB",
       "idn_leuser",
+      "per_buffer",
+      "per_nat_pa",
+      "per_priv_pa",
+      "per_reg_pa",
       // FOREST USE
       "dam_hotspots",
       "per_prod_for",
@@ -86,6 +99,7 @@ define([
       "cod_logging",
       "cog_logging",
       "logging",
+      "raisg",
       //STORIES
       "infoamazonia",
       "mongabay",
@@ -103,7 +117,8 @@ define([
       "forma",
       "prodes",
       "loss",
-      "forestgain"
+      "forestgain",
+      "gfw_landsat_alerts"
     ],
 
     categoryOrder: [

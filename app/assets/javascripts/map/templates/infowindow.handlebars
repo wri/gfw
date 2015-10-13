@@ -71,6 +71,10 @@
           <h4>Type:</h4>
           <p>{{content.data.type}}</p>
         {{/if}}
+        {{#if content.data.dates}}
+          <h4>Loss alert date:</h4>
+          <p>{{content.data.dates}}</p>
+        {{/if}}
         {{#if content.data.mineral}}
           <h4>Mineral:</h4>
           <p>{{content.data.mineral}}</p>
@@ -160,6 +164,14 @@
           <h4>Acquisition date:</h4>
           <p>{{content.data.acq_date}}</p>
         {{/if}}
+        {{#if content.data.year_created}}
+          <h4>Year created:</h4>
+          <p>{{content.data.year_created}}</p>
+        {{/if}}
+        {{#if content.data.date_created}}
+          <h4>Date of creation:</h4>
+          <p>{{content.data.date_created}}</p>
+        {{/if}}
         {{#if content.data.date_create}}
           <h4>Status date:</h4>
           <p>{{content.data.date_create}}</p>
@@ -232,6 +244,10 @@
           <h4>Easement Holder Type:</h4>
           <p>{{content.data.eholdtyp}}</p>
         {{/if}}
+        {{#if content.data.owner}}
+          <h4>Owner:</h4>
+          <p>{{content.data.owner}}</p>
+        {{/if}}
         {{#if content.data.owntype}}
           <h4>Landowner Type:</h4>
           <p>{{content.data.owntype}}</p>
@@ -275,6 +291,18 @@
         {{#if content.data.region}}
           <h4>Region:</h4>
           <p>{{content.data.region}}</p>
+        {{/if}}
+        {{#if content.data.type_text}}
+          <h4>Plantation type:</h4>
+          <p>{{content.data.type_text}}</p>
+        {{/if}}
+        {{#if content.data.spec_org}}
+          <h4>Species:</h4>
+          <p>{{content.data.spec_org}}</p>
+        {{/if}}
+        {{#if content.data.percent}}
+          <h4>Percent plantation coverage:</h4>
+          <p>{{content.data.percent}}</p>
         {{/if}}
         {{#if content.data.area_ha}}
           <h4>Area HA:</h4>

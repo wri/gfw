@@ -28,9 +28,15 @@ define([
   'text!map/templates/legend/global_land_cover.handlebars',
   'text!map/templates/legend/forma.handlebars',
   'text!map/templates/legend/bra_biomes.handlebars',
+  'text!map/templates/legend/plantations_by_type.handlebars',
+  'text!map/templates/legend/plantations_by_species.handlebars',
+  'text!map/templates/legend/oil_palm.handlebars',
+  'text!map/templates/legend/gtm_forest_change.handlebars',
+  'text!map/templates/legend/gtm_forest_cover.handlebars',
+  'text!map/templates/legend/gtm_forest_density.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl) {
 
   'use strict';
 
@@ -73,7 +79,14 @@ define([
       global_land_cover : Handlebars.compile(global_land_coverTPL),
       us_land_cover_change : Handlebars.compile(us_land_coverTPL),
       forma : Handlebars.compile(formaTPL),
-      bra_biomes : Handlebars.compile(bra_biomesTPL)
+      bra_biomes : Handlebars.compile(bra_biomesTPL),
+      plantations_by_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      plantations_by_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      oil_palm: Handlebars.compile(oil_palmTpl),
+      gtm_forest_change1: Handlebars.compile(gtm_forest_changeTpl),
+      gtm_forest_change2: Handlebars.compile(gtm_forest_changeTpl),
+      gtm_forest_cover: Handlebars.compile(gtm_forest_coverTpl),
+      gtm_forest_density: Handlebars.compile(gtm_forest_densityTpl)
 
     },
 
@@ -139,7 +152,7 @@ define([
 
       // Append details template to layer.
       _.each(layers, function(layer) {
-        layer.source = (layer.slug === 'nothing') ? null : layer.slug;
+        layer.source = (layer.slug === 'nothing') ? null : layer.source || layer.slug;
         if (this.detailsTemplates[layer.slug]) {
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,

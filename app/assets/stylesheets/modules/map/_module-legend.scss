@@ -477,6 +477,23 @@
     }
   }
 
+  /****************************/
+  /* OilPalmLayer details */
+  /****************************/
+  .layer-details-oil {
+    a {
+      color: $orange;
+      &:hover{
+        color: lighten($orange, 10%);
+      }
+    }
+  }
+  .layer-details-grump{
+    .canopy{
+      margin: 5px 0 0;
+    }
+  }
+
 
   /****************************/
   /* HondurasLayer details */

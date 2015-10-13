@@ -13,12 +13,14 @@
       <sld:Title>polygonSymbolizer</sld:Title>
       <sld:FeatureTypeStyle>
         <sld:Rule>
+          <!--
           <ogc:Filter>
             <ogc:PropertyIsNotEqualTo>
               <ogc:PropertyName>pais</ogc:PropertyName>
               <ogc:Literal>Brasil</ogc:Literal>
             </ogc:PropertyIsNotEqualTo>
           </ogc:Filter>
+          -->
           <sld:PolygonSymbolizer>
             <sld:Fill>
               <!-- fill states polygons with RGB color "#FF0000" -->
