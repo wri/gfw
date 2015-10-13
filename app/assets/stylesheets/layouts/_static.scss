@@ -365,6 +365,10 @@
     color: $dark;
     h2 {
       font-size: 35px;
+      @media only screen and (min-width: 480px) {
+        padding: 0 210px 0 0;
+      }
+
     }
     h3 {
       font-size: 21px;
@@ -1279,7 +1283,7 @@
     + .source_category_description { margin-top: 10px; }
   }
 
-  .sources{
+  .sources, .howto-m{
     display: block;
     padding: 25px 0 0;
   }
@@ -1748,6 +1752,45 @@
     }
   }
 }
+
+.toggle-howto {
+  background-color: #97bd3d;
+  color: #fff;
+  width: 200px;
+  height: 25px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  position: absolute;
+  @include display-flex();
+  @include justify-content(space-between);
+  right: 20px;
+  top: 3px;
+  border-radius: 50px;
+  cursor: pointer;
+
+  .active {
+    background-color: #fff;
+    color: #97bd3d;
+    border-radius: inherit;
+    border: 1px solid #CCCCCC;
+    cursor: default;
+    font-weight: normal;
+  }
+  .toggle-choice {
+    width: 50%;
+    @include display-flex();
+    @include justify-content(center);
+    @include align-items(center);
+  }
+  @media only screen and (max-width: 480px) {
+    position: relative;
+    margin: 15px 0 0;
+    right: auto;
+    top: auto;
+  }
+}
+
 #feedback-thanks {
   height: 170px;
   @include display-flex();
