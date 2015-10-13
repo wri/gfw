@@ -16,5 +16,5 @@
    polygon-fill: #33A02C;
 }
 #gfw_plantations[type_text="Clearing/ very young plantation"] {
-   polygon-fill: #A6CEE3;
+   polygon-fill: #a7652a;
 }
