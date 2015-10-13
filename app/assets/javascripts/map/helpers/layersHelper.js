@@ -106,6 +106,7 @@ define([
   'map/views/timeline/LossTimeline',
   'map/views/timeline/FormaTimeline',
   'map/views/timeline/ImazonTimeline',
+  'map/views/timeline/LandsatAlertsTimeline',
   'map/views/timeline/ModisTimeline',
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
@@ -214,6 +215,7 @@ define([
   LossTimeline,
   FormaTimeline,
   ImazonTimeline,
+  LandsatAlertsTimeline,
   ModisTimeline,
   FiresTimeline,
   TerraiTimeline,
@@ -512,7 +514,8 @@ define([
       view: GtmForestDensityLayer
     },
     gfw_landsat_alerts: {
-      view: LandsatAlertsLayer
+      view: LandsatAlertsLayer,
+      timelineView: LandsatAlertsTimeline
     },
     urthe: {
       view: UrthecastLayer
