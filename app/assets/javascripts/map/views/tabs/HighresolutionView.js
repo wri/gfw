@@ -49,6 +49,7 @@ define([
       this.$maxdate            = this.$el.find('.maxdate');
       this.$advanced_options   = this.$el.find('.advanced-options');
       this.$advanced_controls  = this.$el.find('.advanced-controls');
+      this.$apply              = this.$el.find('.btn');
     },
 
     render: function() {
@@ -58,7 +59,11 @@ define([
     },
 
     _setParams: function(e) {
-      (! !!this.$onoffswitch.hasClass('checked')) ? this.toggleLayer(e) : null;
+      if (! !!this.$onoffswitch.hasClass('checked')) {
+        this.toggleLayer(e);
+      } else {
+        this.$apply.removeClass('disabled');
+      }
       var $objTarget = $(e.target).closest('.maptype');
       var params = {
           'satellite' : $objTarget.data('slug'),
@@ -81,6 +86,7 @@ define([
 
     toggleLayer: function(e) {
       this.switchToggle();
+      this.$apply.toggleClass('disabled');
       this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
     },
 
