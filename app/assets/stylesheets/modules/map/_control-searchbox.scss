@@ -83,14 +83,14 @@ $search-br: 600px;
         @include display-flex();
         @include justify-content(space-between);
         @include align-items(center);
-        padding: 0 20px;
+        padding: 0 10px;
       }
       button {
         width: 100%;
         margin: 10px 0 0;
         @media (min-width: $search-br){
           width: auto;
-          margin: 0;
+          margin: 0 0 0 10px;
         }
       }
     }
@@ -128,6 +128,11 @@ $search-br: 600px;
           margin: 13px 8px 9px;
           @media (min-width: $search-br){
             max-width: 100px;
+          }
+          &.is-little {
+            @media (min-width: $search-br){
+              max-width: 44px;
+            }
           }
         }
       }

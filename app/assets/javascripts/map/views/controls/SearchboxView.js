@@ -8,9 +8,10 @@ define([
   'backbone',
   'handlebars',
   'keymaster',
+  'map/helpers/converter',
   'map/presenters/controls/SearchboxPresenter',
   'text!map/templates/controls/searchbox.handlebars'
-], function(_, Backbone, Handlebars, keymaster, Presenter, tpl) {
+], function(_, Backbone, Handlebars, keymaster, UtmConverter, Presenter, tpl) {
 
   'use strict';
 
@@ -31,13 +32,15 @@ define([
       'click' : 'onClick',
       'click .kind' : '_setType',
       'click #coord-btn' : 'searchByCoords',
-      'click #deg-btn' : 'searchByDegs'
+      'click #deg-btn' : 'searchByDegs',
+      'click #utm-btn' : 'searchByUtm',
     },
 
     initialize: function(map) {
       this.map = map;
       this.model = new SearchboxModel();
       this.presenter = new Presenter(this);
+      this.converter = new UtmConverter();
       _.bindAll(this, 'setAutocomplete', 'onPlaceSelected');
 
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
@@ -194,6 +197,28 @@ define([
 
     // UTM
     searchByUtm: function() {
+
+      if (!!$('#utm-lat').val() && $('#utm-lng').val() && $('#utm-zone').val()) {
+        var data = {
+          coord: {
+            x: Number($('#utm-lat').val()),
+            y: Number($('#utm-lng').val()),
+          },
+          zone: Number($('#utm-zone').val()),
+          isSouthern: ($('#utm-lat-cardinal').val() == 's') ? true : false,
+        }
+        var conversion = this.converter.toWgs(data);
+        var lat = conversion.coord.latitude;
+        var lng = conversion.coord.longitude;
+        if (!!lat && !_.isNaN(lat) && !!lng && !_.isNaN(lng)) {
+          this.presenter.setCenter(lat,lng);
+          this.model.set('hidden', false);
+          this.toggleSearch();
+        }
+      } else {
+        console.log('NOTIFICATION:not all the fields filled');
+      }
+
 
     },
 
