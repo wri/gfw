@@ -39,6 +39,7 @@ define([
       "mangrove",
       "plantations_by_type",
       "plantations_by_species",
+      "khm_eco_land_conc",
       // PEOPLE
       "resource_rights",
       "cmr_resource_rights",
@@ -62,6 +63,7 @@ define([
       "bra_biomes",
       "biodiversity_hotspots",
       "protected_areasCDB",
+      "khm_pa",
       "idn_leuser",
       "per_buffer",
       "per_nat_pa",
