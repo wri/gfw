@@ -58,7 +58,7 @@ define([
 
       this.x_scale = d3.scale.linear()
         .range([m, w-m])
-        .domain([2001, 2013]);
+        .domain([2001, 2014]);
 
       this.grid_scale = d3.scale.linear()
         .range([vertical_m, h-vertical_m])
@@ -292,11 +292,11 @@ define([
 
             if (!!mode && mode.mode == 'percent') {
               $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS LOSS</span> <strong>PERCENT LOSS</strong>').show();
-              $('.overview_graph__title').html('Countries with greatest percent loss (2001-2013) relative to tree cover in 2000');
+              $('.overview_graph__title').html('Countries with greatest percent loss (2001-2014) relative to tree cover in 2000');
 
             } else {
               $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS LOSS</strong> <span>PERCENT LOSS</span>').show();
-              $('.overview_graph__title').html('Countries with greatest tree cover loss (2001-2013)');
+              $('.overview_graph__title').html('Countries with greatest tree cover loss (2001-2014)');
             }
           }
 
@@ -519,7 +519,8 @@ define([
         }, this ));
       } else if (this.model.get('graph') === 'domains') {
         $('.countries_list__header__minioverview').show();
-        var sql = 'SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +' group by ecozone';
+        var sql = "SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco where thresh = "+ (this.helper.config.canopy_choice || 30) +" and ecozone !='Water' and ecozone != 'Polar' group by ecozone";
+        // "SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +’ and ecozone !='Water' and ecozone != 'Polar' group by ecozone"
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
               markup_list = '';
@@ -626,7 +627,7 @@ define([
       } else if (this.model.get('graph') === ('percent_loss')) {
         var sql = 'SELECT year, \
                          loss_perc \
-                  FROM   umd_nat \
+                  FROM   umd_nat_final_1 \
                   WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +' \
                          AND iso = \''+ iso +'\'';
 
@@ -657,7 +658,7 @@ define([
         var sql = 'SELECT year, \
                    loss,  \
                    extent_offset extent  \
-                  FROM   umd_nat  \
+                  FROM   umd_nat_final_1  \
                   WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +'  \
                          AND iso = \''+ iso +'\' \
                          AND year > 2000 ';
@@ -733,10 +734,10 @@ define([
     _drawYears: function() {
       var markup_years = '';
 
-      for (var y = 2001; y<=2013; y += 1) {
+      for (var y = 2001; y<=2014; y += 1) {
         var y_ = this.x_scale(y);
 
-        if (y === 2001 || y === 2013) {
+        if (y === 2001 || y === 2014) {
           y_ -= 5;
         } else {
           y_ -= 0;
@@ -999,7 +1000,7 @@ define([
                   } else {
                     l_mha = 'Ha';
                   }
-                  $target.find('.figure').addClass('extent').html(extent.toLocaleString());
+                  $target.find('.figure').addClass('extent').html(Math.round(extent).toLocaleString());
                   $target.find('.unit').html(l_mha);
                 }
               }, this),
@@ -1243,7 +1244,7 @@ define([
         this._showYears();
 
 
-        var sql = 'SELECT ecozone as name, loss, year FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30);
+        var sql = "SELECT ecozone as name, loss, year FROM umd_eco where thresh = " + (this.helper.config.canopy_choice || 30) + " and ecozone !='Water' and ecozone != 'Polar'";
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
 
           var data = _.groupBy(json.rows, function(row){
