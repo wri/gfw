@@ -39,6 +39,7 @@ define([
       "mangrove",
       "plantations_by_type",
       "plantations_by_species",
+      "khm_eco_land_conc",
       // PEOPLE
       "resource_rights",
       "cmr_resource_rights",
