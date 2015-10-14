@@ -98,6 +98,7 @@ define([
   'map/views/layers/GtmForestCoverLayer',
   'map/views/layers/GtmForestDensityLayer',
   'map/views/layers/LandsatAlertsLayer',
+  'map/views/layers/KhmProtectedAreasLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -208,6 +209,7 @@ define([
   GtmForestCoverLayer,
   GtmForestDensityLayer,
   LandsatAlertsLayer,
+  KhmProtectedAreasLayer,
   UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
@@ -517,6 +519,10 @@ define([
       view: LandsatAlertsLayer,
       timelineView: LandsatAlertsTimeline
     },
+    khm_pa: {
+      view: KhmProtectedAreasLayer
+    },
+    
     urthe: {
       view: UrthecastLayer
     },

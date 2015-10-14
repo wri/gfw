@@ -62,6 +62,7 @@ define([
       "bra_biomes",
       "biodiversity_hotspots",
       "protected_areasCDB",
+      "khm_pa",
       "idn_leuser",
       "per_buffer",
       "per_nat_pa",
