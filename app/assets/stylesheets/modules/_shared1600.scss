@@ -443,6 +443,27 @@
   }
 }
 
+.scroll-thin-light{
+  -webkit-overflow-scrolling: touch;
+  /* Let's get this party started */
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    border-radius: 6px;
+    background: $dark;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background: rgba($light,0.8);
+  }
+}
+
 .scroll-dark{
   -webkit-overflow-scrolling: touch;
   /* Let's get this party started */
@@ -463,6 +484,28 @@
     background: rgba($dark,0.8);
   }
 }
+
+.scroll-thin-dark{
+  -webkit-overflow-scrolling: touch;
+  /* Let's get this party started */
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    border-radius: 6px;
+    background: $light;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background: rgba($dark,0.8);
+  }
+}
+
 
 .scroll-none{
   -webkit-overflow-scrolling: touch;

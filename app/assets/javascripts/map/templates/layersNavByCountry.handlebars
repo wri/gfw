@@ -4,7 +4,7 @@
     <div class="category-icon"><svg><use xlink:href="#icon-layer-country"></use></svg></div>
     <span class="category-name">{{country}} LAYERS</span>
   </div>
-  <ul class="layers-list">
+  <ul class="layers-list scroll-thin-dark">
     {{#each layers}}
       <li class="{{#if this.does_wrapper}}wrapped-layer{{else}}layer{{/if}}" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">
         <span class="onoffswitch"><span></span></span>
