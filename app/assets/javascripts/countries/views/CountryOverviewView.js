@@ -519,7 +519,7 @@ define([
         }, this ));
       } else if (this.model.get('graph') === 'domains') {
         $('.countries_list__header__minioverview').show();
-        var sql = "SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco where thresh = "+ (this.helper.config.canopy_choice || 30) +" and ecozone !='Water' and ecozone != 'Polar' group by ecozone";
+        var sql = "SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco_2014 where thresh = "+ (this.helper.config.canopy_choice || 30) +" and ecozone !='Water' and ecozone != 'Polar' group by ecozone";
         // "SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +’ and ecozone !='Water' and ecozone != 'Polar' group by ecozone"
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
@@ -1244,7 +1244,7 @@ define([
         this._showYears();
 
 
-        var sql = "SELECT ecozone as name, loss, year FROM umd_eco where thresh = " + (this.helper.config.canopy_choice || 30) + " and ecozone !='Water' and ecozone != 'Polar'";
+        var sql = "SELECT ecozone as name, loss, year FROM umd_eco_2014 where thresh = " + (this.helper.config.canopy_choice || 30) + " and ecozone !='Water' and ecozone != 'Polar'";
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
 
           var data = _.groupBy(json.rows, function(row){
