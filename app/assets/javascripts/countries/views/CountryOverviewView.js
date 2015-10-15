@@ -1242,29 +1242,26 @@ define([
         });
       } else if (this.model.get('graph') === 'domains') {
         this._showYears();
-
-
-        var sql = "SELECT ecozone as name, loss, year FROM umd_eco_2014 where thresh = " + (this.helper.config.canopy_choice || 30) + " and ecozone !='Water' and ecozone != 'Polar'";
+        var sql = "SELECT ecozone as name, sum(loss), year FROM umd_eco_2014 where thresh = " + (this.helper.config.canopy_choice || 30) + " and ecozone !='Water' and ecozone != 'Polar' group by name, year";
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
-
-          var data = _.groupBy(json.rows, function(row){
+          var data = _.groupBy(_.sortBy(json.rows, function(row){ return row.year}), function(row){
             return row.name;
           });
           var data_index = 0;
           var data_arr = [];
-          data = _.each(data, function(domain, i){
+          _.each(data, function(domain, i){
             var domain_obj = {};
 
             domain_obj['name'] = i;
-            domain_obj['max'] = _.max(domain, function(y){return y.loss}).loss;
+            domain_obj['max'] = _.max(domain, function(y){return y.sum}).sum;
 
             _.each(domain, function(y, j){
-              domain_obj['y'+y.year] = y.loss;
+              domain_obj['y'+y.year] = y.sum;
             });
 
             data_arr.push(domain_obj);
           });
-
+          data_arr = _.sortBy(data_arr, function(row){ return row.name });
           var r_scale = d3.scale.linear()
             .range([5, 30]) // max ball radius
             .domain([0, d3.max(data_arr, function(d) { return d.max; })])
