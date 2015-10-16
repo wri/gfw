@@ -86,13 +86,30 @@ define([
   'map/views/layers/ProdesCoverLayer',
   'map/views/layers/PerPermForestLayer',
   'map/views/layers/RaisgLayer',
+  'map/views/layers/PlantationsLayerByType',
+  'map/views/layers/PlantationsLayerBySpecies',
+  'map/views/layers/PerBufferLayer',
+  'map/views/layers/PerNatPALayer',
+  'map/views/layers/PerPrivPALayer',
+  'map/views/layers/PerRegPALayer',
   'map/views/layers/IdnForMorLayer',
+  'map/views/layers/GtmForestChange1Layer',
+  'map/views/layers/GtmForestChange2Layer',
+  'map/views/layers/GtmForestCoverLayer',
+  'map/views/layers/GtmForestDensityLayer',
+  'map/views/layers/LandsatAlertsLayer',
+  'map/views/layers/KhmProtectedAreasLayer',
+  'map/views/layers/KhmEcoLandLayer',
+  'map/views/layers/UsaForestOwnershipLayer',
+  // high resolution maps
+  'map/views/layers/UrthecastLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
   'map/views/timeline/LossTimeline',
   'map/views/timeline/FormaTimeline',
   'map/views/timeline/ImazonTimeline',
+  'map/views/timeline/LandsatAlertsTimeline',
   'map/views/timeline/ModisTimeline',
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
@@ -182,13 +199,29 @@ define([
   ProdesCoverLayer,
   PerPermForestLayer,
   RaisgLayer,
+  PlantationsLayerByType,
+  PlantationsLayerBySpecies,
+  PerBufferLayer,
+  PerNatPALayer,
+  PerPrivPALayer,
+  PerRegPALayer,
   IdnForMorLayer,
+  GtmForestChange1Layer,
+  GtmForestChange2Layer,
+  GtmForestCoverLayer,
+  GtmForestDensityLayer,
+  LandsatAlertsLayer,
+  KhmProtectedAreasLayer,
+  KhmEcoLandLayer,
+  UsaForestOwnershipLayer,
+  UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
   LossTimeline,
   FormaTimeline,
   ImazonTimeline,
+  LandsatAlertsTimeline,
   ModisTimeline,
   FiresTimeline,
   TerraiTimeline,
@@ -453,8 +486,54 @@ define([
     raisg: {
       view: RaisgLayer
     },
+    plantations_by_type: {
+      view: PlantationsLayerByType
+    },
+    plantations_by_species: {
+      view: PlantationsLayerBySpecies
+    },
+    per_buffer: {
+      view: PerBufferLayer
+    },
+    per_nat_pa: {
+      view: PerNatPALayer
+    },
+    per_priv_pa: {
+      view: PerPrivPALayer
+    },
+    per_reg_pa: {
+      view: PerRegPALayer
+    },
     idn_for_mor: {
       view: IdnForMorLayer
+    },
+     gtm_forest_change1: {
+      view: GtmForestChange1Layer
+    },
+     gtm_forest_change2: {
+      view: GtmForestChange2Layer
+    },
+     gtm_forest_cover: {
+      view: GtmForestCoverLayer
+    },
+     gtm_forest_density: {
+      view: GtmForestDensityLayer
+    },
+    gfw_landsat_alerts: {
+      view: LandsatAlertsLayer,
+      timelineView: LandsatAlertsTimeline
+    },
+    khm_pa: {
+      view: KhmProtectedAreasLayer
+    },
+    khm_eco_land_conc: {
+      view: KhmEcoLandLayer
+    },
+    usa_forest_ownership: {
+      view: UsaForestOwnershipLayer
+    },
+    urthe: {
+      view: UrthecastLayer
     },
     nothing: {
     }

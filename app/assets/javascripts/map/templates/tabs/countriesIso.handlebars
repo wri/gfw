@@ -4,11 +4,15 @@
     <p>Available data sets for this country:</p>
   </div>
 </header>
-<ul class="layers-list">
+<ul class="layers-list scroll-thin-dark">
   {{#each layers}}
     <li class="layer" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">
       <span class="onoffswitch"><span></span></span>
-      <span class="layer-title">{{this.title}} <a href='#' data-source='{{this.slug}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+      <span class="layer-title">
+        {{this.title}}
+        <a href='#' data-source='{{this.slug}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+      </span>
+      {{#if this.subtitle}}<span class="layer-info">{{this.subtitle}}</span>{{/if}}
     {{#if this.does_wrapper}}
       <span class="does_wrapper"></span>
     {{/if}}

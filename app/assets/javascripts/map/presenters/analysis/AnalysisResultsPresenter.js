@@ -41,7 +41,7 @@ define([
       'fires': 'nasa-active-fires',
       'modis': 'quicc-alerts',
       'terrailoss': 'terrai-alerts',
-      'prodes': 'prodes-alerts'
+      'prodes': 'prodes-loss'
     },
 
     init: function(view) {
@@ -64,6 +64,7 @@ define([
       }
     }, {
       'AnalysisService/results': function(results) {
+        console.log(results);
         this._renderResults(results);
       }
     }, {
@@ -279,6 +280,10 @@ define([
         p.dateRange = _.isArray(results.period) ? results.period[0] : results.period;
       }
 
+      if (layer.slug === 'prodes') {
+        p.dateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
+      }
+
       /**
        * UMD Loss and gain params.
        *   - lossDateRange
@@ -293,7 +298,7 @@ define([
         p.both = this.status.get('both');
         // The api returns all the loss and gain alerts.
         if (results.years) {
-          p.gainAlerts = results.years[results.years.length-1].gain * 12;
+          p.gainAlerts = results.years[0].total_gain;
           p.extent = results.years[results.years.length-1].extent;
           var years = _.range(dateRange[1].diff(dateRange[0], 'years'));
           _.each(years, function(i) {
