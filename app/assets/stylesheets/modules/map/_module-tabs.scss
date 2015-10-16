@@ -39,9 +39,12 @@ $w-control: 44px;
           position: relative;
           @media (min-width: $br-mobileMap){
             float: none;
-            width: 20%;
+            width: 33%;
             &:first-child{
               border-left: none;
+            }
+            &:last-child{
+              display: none;
             }
             &:hover{
               background: $light;
