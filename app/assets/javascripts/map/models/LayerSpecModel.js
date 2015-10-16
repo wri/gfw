@@ -40,6 +40,7 @@ define([
       "plantations_by_type",
       "plantations_by_species",
       "khm_eco_land_conc",
+      "usa_forest_ownership",
       // PEOPLE
       "resource_rights",
       "cmr_resource_rights",

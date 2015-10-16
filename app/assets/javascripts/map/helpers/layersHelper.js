@@ -100,6 +100,7 @@ define([
   'map/views/layers/LandsatAlertsLayer',
   'map/views/layers/KhmProtectedAreasLayer',
   'map/views/layers/KhmEcoLandLayer',
+  'map/views/layers/UsaForestOwnershipLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -212,6 +213,7 @@ define([
   LandsatAlertsLayer,
   KhmProtectedAreasLayer,
   KhmEcoLandLayer,
+  UsaForestOwnershipLayer,
   UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
@@ -526,6 +528,9 @@ define([
     },
     khm_eco_land_conc: {
       view: KhmEcoLandLayer
+    },
+    usa_forest_ownership: {
+      view: UsaForestOwnershipLayer
     },
     urthe: {
       view: UrthecastLayer
