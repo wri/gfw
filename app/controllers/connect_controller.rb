@@ -14,8 +14,9 @@ class ConnectController < ApplicationController
 
     def user
       begin
-        response = Typhoeus.get("http://auth.gfw-apis.appspot.com/user/session",
-            headers: {"Accept" => "application/json"}
+        puts cookies[:_eauth]
+        response = Typhoeus.get("http://localhost:8080/user/session",
+            headers: {"Accept" => "application/json","cookie"=>"_eauth="+cookies[:_eauth]}
         )
         if response.success?
             JSON.parse(response.body)
