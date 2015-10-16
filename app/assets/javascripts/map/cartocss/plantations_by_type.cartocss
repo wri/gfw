@@ -1,0 +1,20 @@
+#gfw_plantations {
+   polygon-opacity: 0.5;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 0;
+   polygon-fill: transparent;
+}
+
+#gfw_plantations[type_text="Large industrial plantation"] {
+   polygon-fill: #F84F40;
+}
+#gfw_plantations[type_text="Mosaic of medium-sized plantations"] {
+   polygon-fill: #A53ED5;
+}
+#gfw_plantations[type_text="Mosaic of small-sized plantations"] {
+   polygon-fill: #33A02C;
+}
+#gfw_plantations[type_text="Clearing/ very young plantation"] {
+   polygon-fill: #a7652a;
+}

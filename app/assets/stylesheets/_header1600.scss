@@ -536,7 +536,11 @@
 					position: relative;
 					z-index: 2;
           text-align: center;
-          padding: 20px 40px;
+          padding: 20px 25px;
+
+          @media (min-width: 1050px){
+            padding: 20px 40px;
+          }
 
           &:after{
             content: "";
@@ -570,7 +574,16 @@
           opacity: 0;
           @include transform(translate(-50%,0px));
           @include transition(all 0.15s $easeInOutCubic);
-          min-width: 0;
+          &:after{
+            content: "";
+            display: block;
+            position: absolute;
+            top: 51px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: $cGreen;
+          }
 					li {
             border-top: 1px solid rgba(0,0,0,0.07);
             @for $i from 1 through 10 {

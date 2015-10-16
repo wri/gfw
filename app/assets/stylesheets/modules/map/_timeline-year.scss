@@ -129,6 +129,14 @@
     @media (max-width: $br-mobileMap - 1){
       display: none;
     }
+    &.prodes{
+      .tick:first-child{
+        @include transform(translate(0,2px));
+        text {
+          font-size: 9px;
+        }
+      }
+    }
     text {
       font-size: 11px;
       fill: $dark;
