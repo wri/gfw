@@ -1,4 +1,6 @@
 class ConnectController < ApplicationController
+  layout 'application'
+
   skip_before_filter :check_terms, :only => [:accept_and_redirect]
 
   before_filter :check_terms
