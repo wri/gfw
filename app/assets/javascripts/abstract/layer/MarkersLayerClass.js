@@ -54,7 +54,7 @@ define([
 
       this.markers = _.map(stories, function(story) {
 
-        story.title = _.str.truncate(story.title, 34);
+        story.title = _.str.truncate(story.title, 68);
 
         var markerOptions, infoWindowOptions;
 

@@ -109,7 +109,7 @@
           <p>The original version 1.0 data remains available for download <a href='http://earthenginepartners.appspot.com/science-2013-global-forest/download_v1.0.html' target='_blank'>here</a>.</p>
           <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Science 342 (15 November): 850–53. Data available online from: <a href='http://earthenginepartners.appspot.com/science-2013-global-forest' target='_blank'>http://earthenginepartners.appspot.com/science-2013-global-forest</a>.</p>
           <p class='credits'>Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain Area.” University of Maryland, Google, USGS, and NASA. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
-          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "http://data.globalforestwatch.org/datasets/93ecbfa0542c42fdaa8454fa42a6cc27", :class => 'download-mobile-link' %></em></p>
+          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "http://earthenginepartners.appspot.com/science-2013-global-forest/download_v1.2.html", :class => 'download-mobile-link' %></em></p>
         </div>
       </div>
     </li>
@@ -369,9 +369,9 @@
           <dl class='sources_row'>
             <dt>Cautions</dt>
             <dd><p> While Landsat 7 and 8 satellites together have a revisit period of 8 days, cloud cover majorly limits the availability of imagery, particularly in the wet season. Alert dates represent the instance of detection, though tree cover loss could have taken place earlier and been obscured by clouds.</p>
- 
+
             <p>In this data set, “tree cover” is defined as all vegetation greater than 5 meters in height with greater than 30% canopy cover, and may take the form of natural forests or plantations. “Loss” indicates the removal or mortality of tree cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
-             
+
             <p>In Peru, the authors evaluated the data to have 13.5% commission error (false positives), though the value drops to 1% when excluding pixels on the boundaries of other loss and unconfirmed alerts. The data has 33% omission errors, though most of these occur in secondary forests. Omission errors in primary forests fall to 15% when excluding pixels on the boundaries of other loss and unconfirmed alerts</p></dd>
           </dl>
         </div>
@@ -379,7 +379,7 @@
         <div class='source_summary'>
           <p>This data set, created by Matt Hansen and his team at the University of Maryland and supported by Global Forest Watch, is the first Landsat-based alert system for tree cover loss. While most previous loss alert products use 250-meter resolution MODIS imagery, these alerts have a 30-meter resolution and thus can detect loss at a much finer scale. The alerts are currently operational for Peru, the Republic of Congo, and Kalimantan in Indonesia, and will eventually be expanded to the rest of the humid tropics.</p>
           <p>New Landsat 7 and 8 images are downloaded as they are posted online, assessed for cloud cover or poor data quality, and compared to the three previous years of Landsat-derived metrics (including ranks, means, and regressions of red, infrared and shortwave bands, and ranks of NDVI, NBR, and NDWI). The metrics and the latest Landsat image are run through seven decision trees to calculate a median probability of forest disturbance. Pixels with probability >50% are reported as tree cover loss alerts. Alerts remain unconfirmed until three or more out of six consecutive observations are labelled as tree cover loss. For more information on methodology, see here.</p>
-  
+
 
           <p class='credits'><strong>Citation:</strong> M. Hansen and University of Maryland. “Tree Cover Loss Alerts.” Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org/" target="_blank">www.globalforestwatch.org</a></p>
           <p><a href="http://www.osinfor.gob.pe" target="_blank">Learn more or download data</a></p>
@@ -1225,7 +1225,7 @@
           </dl>
           <dl class='sources_row even'>
             <dt>Cautions</dt>
-            <dd><p>TThis data set contains all of the data that is currently available to Open Development Cambodia (ODC) and is not exhaustive. Projects or areas with publicly known boundaries are mapped as polygons; those without publicly known boundaries are represented as dots on the map. The dots are placed in the center of the closest known geographical area and thus do not represent exact locations. The development landscape is constantly changing, and there are also additional developments for which data is not available.  While ODC takes every effort to ensure that the details in this map are accurate and up to date, some of the projects or areas marked on the map may have since been modified or cancelled since the map was published. Moreover, additional developments may have been approved that are not yet included here.</p>
+            <dd><p>This data set contains all of the data that is currently available to Open Development Cambodia (ODC) and is not exhaustive. Projects or areas with publicly known boundaries are mapped as polygons; those without publicly known boundaries are represented as dots on the map. The dots are placed in the center of the closest known geographical area and thus do not represent exact locations. The development landscape is constantly changing, and there are also additional developments for which data is not available.  While ODC takes every effort to ensure that the details in this map are accurate and up to date, some of the projects or areas marked on the map may have since been modified or cancelled since the map was published. Moreover, additional developments may have been approved that are not yet included here.</p>
             <p>Note: Publicly available information on land area reductions from ELCs does not include maps or spatial data of excisions. Thus, ODC cannot present land area cut in shapes. As a result, ELC projects that are visualized on the interactive map represent the original size.</p></dd>
           </dl>
           <dl class='sources_row'>
@@ -1243,7 +1243,60 @@
           <p>Open Development Cambodia collected the data from a variety of public domain sources such as the government, non-governmental organizations (NGOs), research institutes, company websites, and news reports.</p>
 
           <p class='credits'><strong>Citation:</strong> Open Development Cambodia. “Economic Land Concessions.” Accessed through Global Forest Watch on [date].<a href="http://www.globalforestwatch.org/" target="_blank">www.globalforestwatch.org</a> </p>
-          <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org/datasets/54ec099791644be4b273d9d8a853d452_1' target='_blank'>Learn more or download data</a></em></p>
+          <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org/' target='_blank'>Learn more or download data</a></em></p>
+
+        </div>
+      </div>
+    </li>
+    <li id='usa_forest_ownership' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>USA forest ownership type</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Depicts the spatial distribution of ownership types across forest land in the USA.</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Resolution / Scale</dt>
+            <dd>250 × 250 meters</dd>
+          </dl>
+          <dl class='sources_row'>
+          <dl class='sources_row even'>
+            <dt>Geographic coverage</dt>
+            <dd>Conterminous United States</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Source</dt>
+            <dd>Forest land was identified using a forest probability dataset <a href="http://www.sciencedirect.com/science/article/pii/S0378112712000710" target="_blank">(Wilson et al. 2012)</a>. Public and private ownership types were derived from Forest Inventory and Analysis (FIA) plot data, with federal and state land ownership supplemented with data from the Protected Areas Database of the United States (CBI 2012).</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Frequency of updates</dt>
+            <dd>Irregular</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Date of content</dt>
+            <dd>2009</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Cautions</dt>
+            <dd><p>The data are designed for strategic analysis at a national or regional scale; it is not recommended to use the data for tactical analyses on a sub-regional scale, or for informing local management decisions. Furthermore, map accuracies vary considerably and thus the utility of the data can vary geographically under different ownership patterns.</p></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>License</dt>
+            <dd>Public data set</dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>This data product contains raster data depicting the spatial distribution of forest ownership types in the conterminous United States circa 2009. The data are a modeled representation of forest land by ownership type, and include three types of public ownership: federal, state, and local, as well as three types of private ownership: family (includes individuals and families), corporate, and other private (includes conservation and natural resource organizations, unincorporated partnerships and associations, and Native American tribal lands).</p>
+
+          <p class='credits'><strong>Citation:</strong> Hewes, Jaketon H.; Butler, Brett J.; Liknes, Greg C.; Nelson, Mark D.; Snyder, Stephanie A. 2014. Map of distribution of six forest ownership types in the conterminous United States. [Scale 1: 10,000,000, 1: 34,000,000.] Res. Map NRS-6. Newtown Square, PA: U.S. Department of Agriculture, Forest Service, Northern Research Station.</p>
+          <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org' target='_blank'>Learn more or download data</a></em></p>
 
         </div>
       </div>
@@ -1399,9 +1452,9 @@
           <dl class='sources_row'>
             <dt>Cautions</dt>
             <dd>
-            <p>Data gaps in the MERIS 2009 satellite acquisitions (about 5% of the total data area) were filled using the GlobCover 2005 land cover map.</p> 
-            <p>The lack of a short-wave infrared (SWIR) band in the MERIS sensor may result in underestimation of flooded forests. These classes were therefore imported from the 2005 GlobCover land cover map.</p> 
-            <p>Delineation between land and water is not exhaustive, especially for inland water bodies, and locations of water may be inaccurate.</p> 
+            <p>Data gaps in the MERIS 2009 satellite acquisitions (about 5% of the total data area) were filled using the GlobCover 2005 land cover map.</p>
+            <p>The lack of a short-wave infrared (SWIR) band in the MERIS sensor may result in underestimation of flooded forests. These classes were therefore imported from the 2005 GlobCover land cover map.</p>
+            <p>Delineation between land and water is not exhaustive, especially for inland water bodies, and locations of water may be inaccurate.</p>
             </dd>
           </dl>
         </div>
@@ -1450,8 +1503,8 @@
             An accuracy assessment found 40% false positives and 18% false negatives for the presence of plantations, with an overall accuracy of 79%. Overall accuracies were lowest in Indonesia at 68%.
             The accuracies of the species and type labels were not assessed. These fields represent the best guess of the analysts and should not be used for official purposes.
             Polygons labeled as clearings were bare or had very young vegetation as of 2013 or 2014, but contextual clues suggest that these areas will eventually become tree plantations.
-            A subset of this data set more appropriate for supply chain monitoring can be found on <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities.</a> 
-          
+            A subset of this data set more appropriate for supply chain monitoring can be found on <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities.</a>
+
             </dd>
           </dl>
           <dl class='sources_row even'>
@@ -1555,10 +1608,10 @@
       </p>
 
            <p class='credits'><strong>Cita:</strong>“Densidad de la Cobertura Forestal de  Guatemala 2012”. Instituto Nacional de Bosques (INAB). 2015. Accedido por Global Forest Watch en [fecha]. www.globalforestwatch.org</p>
-           
+
           <p class='read_more hidden'><a href="http://data.globalforestwatch.org/datasets?q=guatemala&sort_by=relevance" class="download-mobile-link" target="_blank">Aprenda mas o descargue los datos</a></p>
         </div>
-      </div> 
+      </div>
     </li>
     <li id='gtm_forest_cover' class='source-item'>
        <div class='source_header'>
@@ -1620,7 +1673,7 @@
           <p>This data set comes from the National Institute of Forests ( <a href="http://inab.gob.gt/" target="_blank">INAB</a>) in Guatemala. Through various joint efforts and in coordination with the Inter-institutional Group for Forest Monitoring and the GIZ, INAB obtained 308 high resolution RapidEye (RE) images to cover the entire country.  These images, with a spatial resolution of 5 meters multispectral, were used to detail 16 classes of forest, 21 subtypes of forest, and 16 subtypes of forest by density. For broadleaf, coniferous, and mixed forest, detailed densities (sparse and dense) were differentiated for the first time in Guatemala.</p>
 
           <p>Mangroves were identified at the species level thanks to the database of Project Mangrove, <a href="http://www.servir.net/cobertura_de_mangle_en_guatemala_a%C3%B1o_2012" target="_blank">2012 MARN-CATHALAC</a>, which has registers of four species. For the purposes of this map, un-forested zones were simply designated “No Forest”.</p>
-        
+
            <p class='credits'><strong>Citation:</strong>“Guatemala forest cover density 2012”. National Institute of Forests (INAB). 2015. Accessed through Global Forest Watch on [date]. www.globalforestwatch.org</p>
           <p class='read_more hidden'><em><a href="http://data.globalforestwatch.org/datasets?q=guatemala&sort_by=relevance" class="download-mobile-link" target="_blank">Learn more or download data</a></em></p>
         </div>
@@ -1632,12 +1685,12 @@
           <p>Los manglares se identificaron a nivel de especie gracias a la base de datos del Proyecto Mangle, <a href="http://www.servir.net/cobertura_de_mangle_en_guatemala_a%C3%B1o_2012" target="_blank">2012 MARN-CATHALAC</a>, que posee registros para 4 especies. Para los  fines de este mapa, las zonas no forestales  se denominan como No Bosque.</p>
 
            <p class='credits'><strong>Cita:</strong>“Densidad de la Cobertura Forestal de  Guatemala 2012”. Instituto Nacional de Bosques (INAB). 2015. Accedido por Global Forest Watch en [fecha]. www.globalforestwatch.org</p>
-           
+
           <p class='read_more hidden'><a href="http://data.globalforestwatch.org/datasets?q=guatemala&sort_by=relevance" class="download-mobile-link" target="_blank">Aprenda mas o descargue los datos</a></p>
         </div>
-      </div> 
+      </div>
     </li>
-    
+
     <li id='gtm_forest_change1' class='source-item'>
       <div class='source_header'>
         <strong class='source_title'>Guatemala forest change</strong>
@@ -1702,7 +1755,7 @@
           <p>The elaboration of national maps of forest cover was based on satellite images from Landsat 5 and 7 as well as ASTER (only for the southwestern section of the country, in the area corresponding to the Landsat image of Path 21 Row 50). The forest cover for Guatemala in 2006 was estimated as 3,866,383 hectares, equivalent to 35.5% of the national territory. The revised value for 2001 is 4,152,051 hectares corresponding to 38.1% of the national territory. These values represent an annual net loss of 48,084 hectares, equivalent to a deforestation rate of - 1.16%. The net annual loss reported is the difference between a gross loss of 101,852 hectares/year and a gain of 53,768 hectares/year.</p>
 
            <p class='credits'><strong>Citation:</strong>“Guatemala forest cover change 2001-2006”. National Institute of Forests (INAB). 2015. Accessed through Global Forest Watch on [date]. www.globalforestwatch.org.</p>
-           
+
           <p class='read_more hidden'><a href="http://data.globalforestwatch.org/datasets?q=guatemala&sort_by=relevance" class="download-mobile-link" target="_blank">Learn more or download data</a></em></p>
         </div>
         <div class='source_summary em'>
@@ -1713,7 +1766,7 @@
           <p>De esta forma,  el mapa nacional de cobertura forestal se generó  en base las imágenes satelitales LANDSAT 5 y 7, así como ASTER (únicamente para la sección del Sur-Occidente del país, en el área correspondiente a la imagen Path 21 Row 50 de la serie LANDSAT). La cobertura forestal para el año 2006 para Guatemala fue estimada en 3,866,383 ha, equivalente a un 35.5% del territorio nacional. El valor revisado para el 2001 es de 4,152,051 ha correspondiente a un 38.1% del territorio nacional. Estos valores representan una pérdida neta anual de 48,084 ha equivalentes a una tasa de deforestación de 1.16%. La pérdida neta anual reportada es la diferencia de una pérdida bruta de 101,852 ha/año y una ganancia de 53,768 ha/año.</p>
 
            <p class='credits'><strong>Cita:</strong>“Dinámica de la cobertura forestal de Guatemala 2001-2006”. Instituto Nacional de Bosques (INAB). 2015. Accedido por Global Forest Watch en [fecha]. www.globalforestwatch.org</p>
-           
+
           <p class='read_more hidden'><a href="http://data.globalforestwatch.org/datasets?q=guatemala&sort_by=relevance" class="download-mobile-link" target="_blank">Aprenda mas o descargue los datos</a></p>
         </div>
       </div>
@@ -1780,7 +1833,7 @@
           <p>This data set comes from the National Institute of Forests (INAB) in Guatemala. Information from Landsat 5 and Landsat 7 was used as the primary source of information, corresponding to 2010, although in certain areas images from 2009 and 2011 were used based on their quality. As secondary sources of information, information from 2006 orthophotos and images for 2010 from the ALOS-PRISM sensor were used.</p>
 
           <p>Forest cover in 2010 for Guatemala was estimated at 3,722,595 hectares, equivalent to 34% of the national land territory. The value for forest cover for 2006, published in May of 2011, was revised and a new estimate of 3,868,708 hectares was obtained. These values represent a net loss of 146,112 hectares of forest, equivalent to a net deforestation rate of -1.0% per year at the national level (with respect to the total existing forest in 2006). The results show that the net rate of deforestation continues falling compared to previous studies (-1.43% for 1991-2001 and -1.16% for 2001-2006) as a result of substantial increases in forest cover gain. However, gross deforestation continues to increase, reaching an area of 132,137 hectares per year for the analyzed time period.</p>
-           
+
            <p >52% of the national forest cover is located inside the Guatemalan System of Protected Areas (SIGAP), which covers a third of the national territory. The remaining 48% of the forest cover is distributed in the other two thirds of the country. In face of this concentration of forest cover inside of Protected Areas, three quarters of the loss during 2006-2010 occurred inside of SIGAP and one quarter outside of SIGAP.</p>
            <p class='credits'><strong>Citation:</strong>“Guatemala forest cover change 2006-2010”. National Institute of Forests (INAB). 2015. Accessed through Global Forest Watch on [date]. www.globalforestwatch.org</p>
           <p class='read_more hidden'><em><a href="http://data.globalforestwatch.org/datasets?q=guatemala&sort_by=relevance" class="download-mobile-link" target="_blank">Learn more or download data</a></em></p>
@@ -3510,7 +3563,7 @@
           <p>Open Development Cambodia collected the data from a variety of public domain sources such as the government, non-governmental organizations (NGOs), research institutes, company websites, and news reports.</p>
 
           <p class='credits'><strong>Citation:</strong> Open Development Cambodia. “Protected Areas.” Accessed through Global Forest Watch on [date].<a href="http://www.globalforestwatch.org/" target="_blank">www.globalforestwatch.org</a> </p>
-          <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org/datasets/54ec099791644be4b273d9d8a853d452_1' target='_blank'>Learn more or download data</a></em></p>
+          <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org/' target='_blank'>Learn more or download data</a></em></p>
 
         </div>
       </div>
@@ -3987,7 +4040,7 @@
           <p>En estas áreas pueden otorgarse derechos para el aprovechamiento de productos diferentes de la madera y fauna silvestre, en tanto no afecten el potencial aprovechable de dichos recursos.</p>
 
            <p class='credits'><strong>Cita:</strong>“Bosques de produccion permanente del Perú.” Organismo de Supervisión de los Recursos Forestales y de Fauna Silvestre (OSINFOR). Accedido a través de Global Forest Watch el [fecha]. www.globalforestwatch.org.</p>
-    
+
           <p class='read_more hidden'>Aprenda más en <a href="http://www.osinfor.gob.pe" target="_blank">www.osinfor.gob.pe</a> o visualice los datos originales <a href="http://sisfor.osinfor.gob.pe" target="_blank">sisfor.osinfor.gob.pe</a></p>
         </div>
       </div>
