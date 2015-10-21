@@ -88,11 +88,16 @@ define([
 
     _getOverlayIndex: function() {
       var index = -1;
-      _.each(this.map.overlayMapTypes.getArray(), _.bind(function(layer, i){
-        if (layer && layer.name === this.getName()) {
-          index = i;
+
+      _.each(this.map.overlayMapTypes.getArray(), function(layer, i) {
+        if (layer) {
+          var layerName = layer.name || layer.options.name;
+          if (layerName === this.getName()) {
+            index = i;
+          }
         }
-      }, this ));
+      }, this);
+
       return index;
     },
 

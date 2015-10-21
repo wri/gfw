@@ -41,8 +41,9 @@ define([
     _getLayer: function() {
       var deferred = new $.Deferred();
 
-      var torqueOptions = _.extend(this.options, {map: this.map}),
-          torqueLayer = new torque.GMapsTorqueLayer(torqueOptions);
+      var torqueOptions = _.extend(this.options, {
+          name: this.name, map: this.map}),
+        torqueLayer = this.torqueLayer = new torque.GMapsTorqueLayer(torqueOptions);
 
       var onTimeChange = function(change) {
         // Torque currently has no "on ready" event, so wait until it
@@ -58,6 +59,11 @@ define([
       torqueLayer.play()
 
       return deferred.promise();
+    },
+
+    removeLayer: function() {
+      this.torqueLayer.setMap(null);
+      this._super();
     }
 
   });
