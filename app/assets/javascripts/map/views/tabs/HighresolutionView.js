@@ -58,21 +58,24 @@ define([
       this.printSelects();
     },
 
+    _getParams: function(e) {
+      var $objTarget = $(e.target).closest('.maptype');
+      return {
+          'satellite' : $objTarget.data('slug'),
+           'color_filter': ($objTarget.find('#hres-filter-select').val().length > 0) ? $objTarget.find('#hres-filter-select').val() : 'rgb',
+           'cloud': this.$range.val(),
+           'mindate': (this.$mindate.val().length > 0) ? this.$mindate.val() : '2000-09-01',
+           'maxdate': (this.$maxdate.val().length > 0) ? this.$maxdate.val() : '2015-09-01'
+         };
+    },
+
     _setParams: function(e) {
       if (! !!this.$onoffswitch.hasClass('checked')) {
         this.toggleLayer(e);
       } else {
         this.$apply.removeClass('disabled');
       }
-      var $objTarget = $(e.target).closest('.maptype');
-      var params = {
-          'satellite' : $objTarget.data('slug'),
-           'color_filter': $objTarget.find('#hres-filter-select').val(),
-           'cloud': this.$range.val(),
-           'mindate': (this.$mindate.val().length > 0) ? this.$mindate.val() : '2000-09-01',
-           'maxdate': (this.$maxdate.val().length > 0) ? this.$maxdate.val() : '2015-09-01'
-         };
-      this.presenter.setHres(params);
+      this.presenter.setHres(this._getParams(e));
       this.presenter.updateLayer($(e.target).closest('.maptype').data('slug'));
     },
 
@@ -87,6 +90,7 @@ define([
     toggleLayer: function(e) {
       this.switchToggle();
       this.$apply.toggleClass('disabled');
+      this.presenter.setHres(this._getParams(e));
       this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
     },
 
