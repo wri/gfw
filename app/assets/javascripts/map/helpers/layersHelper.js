@@ -98,6 +98,7 @@ define([
   'map/views/layers/GtmForestCoverLayer',
   'map/views/layers/GtmForestDensityLayer',
   'map/views/layers/LandsatAlertsLayer',
+  'map/views/layers/LandsatAlertsTorqueLayer',
   'map/views/layers/KhmProtectedAreasLayer',
   'map/views/layers/KhmEcoLandLayer',
   'map/views/layers/UsaForestOwnershipLayer',
@@ -114,6 +115,7 @@ define([
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
   'map/views/timeline/ProdesTimeline',
+  'map/views/timeline/LandsatAlertsTorqueTimeline'
 ], function(
   // Layer Views
   LossLayer,
@@ -211,6 +213,7 @@ define([
   GtmForestCoverLayer,
   GtmForestDensityLayer,
   LandsatAlertsLayer,
+  LandsatAlertsTorqueLayer,
   KhmProtectedAreasLayer,
   KhmEcoLandLayer,
   UsaForestOwnershipLayer,
@@ -225,7 +228,9 @@ define([
   ModisTimeline,
   FiresTimeline,
   TerraiTimeline,
-  ProdesTimeline) {
+  ProdesTimeline,
+  LandsatAlertsTorqueTimeline
+) {
 
   'use strict';
 
@@ -522,6 +527,10 @@ define([
     gfw_landsat_alerts: {
       view: LandsatAlertsLayer,
       timelineView: LandsatAlertsTimeline
+    },
+    gfw_landsat_torque_alerts: {
+      view: LandsatAlertsTorqueLayer,
+      timelineView: LandsatAlertsTorqueTimeline
     },
     khm_pa: {
       view: KhmProtectedAreasLayer
