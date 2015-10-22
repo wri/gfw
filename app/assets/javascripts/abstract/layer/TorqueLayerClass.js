@@ -5,12 +5,17 @@
 define([
   'underscore',
   'abstract/layer/OverlayLayerClass',
+  'map/presenters/TorqueLayerPresenter',
   'text!map/cartocss/default_torque_style.cartocss'
-], function(_, OverlayLayerClass, CARTOCSS) {
+], function(_, OverlayLayerClass, Presenter, CARTOCSS) {
 
   'use strict';
 
   var REQUIRED_OPTIONS = ['table', 'column'];
+
+  var validTorqueStep = function(change) {
+    return (change.time > 0 && !isNaN(change.time));
+  };
 
   var TorqueLayerClass = OverlayLayerClass.extend({
 
@@ -26,7 +31,11 @@ define([
     },
 
     init: function(layer, options, map) {
+      _.bindAll(this, '_handleStart', '_handleTimeStep');
+
       this._validateOptions();
+      this.presenter = new Presenter(this);
+
       this._super(layer, options, map);
     },
 
@@ -45,20 +54,30 @@ define([
           name: this.name, map: this.map}),
         torqueLayer = this.torqueLayer = new torque.GMapsTorqueLayer(torqueOptions);
 
-      var onTimeChange = function(change) {
-        // Torque currently has no "on ready" event, so wait until it
-        // starts spitting out valid step changes
-        if (change.time > 0 && !isNaN(change.time)) {
-          torqueLayer.off('change:time', onTimeChange);
-          deferred.resolve(torqueLayer);
-        }
-      };
-      torqueLayer.on('change:time', onTimeChange);
+      torqueLayer.on('change:time', this._handleStart(deferred));
+      torqueLayer.on('change:time', this._handleTimeStep);
 
       torqueLayer.setMap(this.map);
       torqueLayer.play()
 
       return deferred.promise();
+    },
+
+    _handleTimeStep: function(change) {
+      if (validTorqueStep(change)) {
+        this.presenter.updateTimelineDate(change);
+      }
+    },
+
+    _handleStart: function(deferred) {
+      return function(change) {
+        // Torque currently has no "on ready" event, so wait until it
+        // starts spitting out valid step changes
+        if (validTorqueStep(change)) {
+          this.torqueLayer.off('change:time', this._handleStart);
+          deferred.resolve(this.torqueLayer);
+        }
+      }.bind(this);
     },
 
     removeLayer: function() {
