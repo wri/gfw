@@ -20,9 +20,14 @@ define([
     _subscriptions: [{
       'Timeline/date-change': function(change) {
       },
+      'Timeline/toggle-playing': function() {
+        this.view.toggle();
+      },
       'Timeline/start-playing': function() {
+        this.view.start();
       },
       'Timeline/stop-playing': function() {
+        this.view.stop();
       },
     }],
 

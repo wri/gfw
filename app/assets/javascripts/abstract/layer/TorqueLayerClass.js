@@ -86,6 +86,18 @@ define([
       return handler;
     },
 
+    toggle: function() {
+      this.torqueLayer.toggle();
+    },
+
+    start: function() {
+      this.torqueLayer.play();
+    },
+
+    stop: function() {
+      this.torqueLayer.pause();
+    },
+
     removeLayer: function() {
       this.torqueLayer.setMap(null);
       this._super();

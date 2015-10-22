@@ -29,6 +29,18 @@ define([
       }
     }],
 
+    togglePlaying: function() {
+      mps.publish('Timeline/toggle-playing', []);
+    },
+
+    startPlaying: function() {
+      mps.publish('Timeline/start-playing', []);
+    },
+
+    stopPlaying: function() {
+      mps.publish('Timeline/stop-playing', []);
+    }
+
   });
 
   return TorqueTimelinePresenter;
