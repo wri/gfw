@@ -8,7 +8,7 @@ define([
   var TorqueTimelineSlider = function(options) {
     options = options || {};
 
-    margin = {top: 0, right: 20, bottom: 0, left: 20},
+    margin = {top: 0, right: 10, bottom: 0, left: 10},
     width = options.width - margin.left - margin.right,
     height = options.height - margin.bottom - margin.top,
 
@@ -26,7 +26,7 @@ define([
 
   TorqueTimelineSlider.prototype.setDate = function(date) {
     brush.extent([date, date]);
-    handle.attr("transform", "translate(" + timeScale(date) + ",0)");
+    handle.attr("transform", "translate(" + (timeScale(date)-8) + ",0)");
   };
 
   TorqueTimelineSlider.prototype.setupScales = function() {
@@ -50,7 +50,7 @@ define([
 
   TorqueTimelineSlider.prototype.brushed = function() {
     var value = brush.extent()[0];
-    handle.attr("transform", "translate(" + timeScale(value) + ",0)");
+    handle.attr("transform", "translate(" + (timeScale(value)-8) + ",0)");
 
     var notProgrammaticEvent = (d3.event && d3.event.sourceEvent);
     if (notProgrammaticEvent) {
@@ -69,7 +69,9 @@ define([
       .call(brush);
 
     slider.selectAll(".extent,.resize").remove();
-    slider.select(".background").attr("height", height);
+    slider.select(".background")
+      .attr("height", height)
+      .style("cursor", "col-resize");
 
     handle = slider.append("g")
       .attr("class", "handle")
@@ -79,14 +81,24 @@ define([
       .attr('height', 16)
       .attr('xlink:href', '/assets/svg/dragger2.svg')
       .attr('x', 0)
-      .attr('y', 14);
+      .attr('y', (height / 2) - 8);
 
     slider
       .call(brush.event)
   };
 
+  TorqueTimelineSlider.prototype.setupDomain = function(svg) {
+    svg.select('.slider')
+      .insert('svg:line', ':first-child')
+      .attr('class', 'domain')
+      .attr('x1', 0)
+      .attr('x2', width)
+      .attr('y1', height / 2)
+      .attr('y2', height / 2);
+  };
+
   TorqueTimelineSlider.prototype.render = function() {
-    var svg = d3.select(el).append("svg")
+    var svg = d3.select(el)
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -94,6 +106,7 @@ define([
 
     this.setupBrush();
     this.setupSlider(svg);
+    this.setupDomain(svg);
   };
 
   return TorqueTimelineSlider;

@@ -6,25 +6,22 @@
   .play .stop-icon {
     display: block;
   }
-}
 
+  .domain {
+    stroke: #a1ba42;
+    stroke-width: 4;
+  }
 
-.axis {
-  fill: gray;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-}
+  .timeline-date {
+    width: 100px;
+    padding: 0 5px;
+  }
 
-.axis .halo {
-  stroke: gray;
-  stroke-width: 4px;
-  stroke-linecap: round;
-}
+  .timeline-slider {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-.slider .handle path {
-  stroke: white;
-  stroke-width: 3px;
-  stroke-linecap: round;
-  pointer-events: none;
+    width: 450px;
+  }
 }
