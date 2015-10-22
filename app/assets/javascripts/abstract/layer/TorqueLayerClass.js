@@ -70,14 +70,20 @@ define([
     },
 
     _handleStart: function(deferred) {
-      return function(change) {
+      var handler = function(change) {
         // Torque currently has no "on ready" event, so wait until it
         // starts spitting out valid step changes
         if (validTorqueStep(change)) {
-          this.torqueLayer.off('change:time', this._handleStart);
+          this.torqueLayer.off('change:time', handler);
+
+          this.presenter.animationStarted(
+            this.torqueLayer.getTimeBounds());
+
           deferred.resolve(this.torqueLayer);
         }
       }.bind(this);
+
+      return handler;
     },
 
     removeLayer: function() {

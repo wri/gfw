@@ -20,6 +20,12 @@ define([
 
     _subscriptions: [{
       'Torque/date-change': function(change) {
+        this.view.setCurrentDate(change);
+      },
+
+      'Torque/started': function(bounds) {
+        this.view.setBounds(bounds);
+        this.view.render();
       }
     }],
 

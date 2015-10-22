@@ -20,6 +20,17 @@ define([
       this.presenter = new Presenter(this);
     },
 
+    render: function() {
+      console.log(this.bounds);
+    },
+
+    setBounds: function(bounds) {
+      this.bounds = bounds;
+    },
+
+    setCurrentDate: function(change) {
+    },
+
     getCurrentDate: function() {
       if (this.torqueLayer === undefined) {
         return moment(this.layer.mindate);

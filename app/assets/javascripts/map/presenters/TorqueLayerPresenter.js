@@ -19,8 +19,16 @@ define([
 
     _subscriptions: [{
       'Timeline/date-change': function(change) {
-      }
+      },
+      'Timeline/start-playing': function() {
+      },
+      'Timeline/stop-playing': function() {
+      },
     }],
+
+    animationStarted: function(bounds) {
+      mps.publish('Torque/started', [bounds]);
+    },
 
     updateTimelineDate: function(change) {
       mps.publish('Torque/date-change', [change]);
