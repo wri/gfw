@@ -8,9 +8,14 @@
 define([
   'underscore', 'backbone', 'moment', 'd3', 'handlebars',
   'abstract/timeline/TorqueTimelineSlider',
+  'map/presenters/TorqueTimelinePresenter',
   'text!templates/timelineTorque.handlebars',
-  'map/presenters/TorqueTimelinePresenter'
-], function(_, Backbone, moment, d3, Handlebars, TorqueTimelineSlider, tpl, Presenter) {
+  'text!templates/timelineTorque-controls.handlebars'
+], function(
+  _, Backbone, moment, d3, Handlebars,
+  TorqueTimelineSlider,
+  Presenter,
+  tpl, controlsTpl) {
 
   'use strict';
 
@@ -36,6 +41,7 @@ define([
     className: 'timeline-torque timeline-year',
 
     template: Handlebars.compile(tpl),
+    controlsTemplate: Handlebars.compile(controlsTpl),
 
     events: {
       'click .play': '_toggleState',
@@ -52,12 +58,12 @@ define([
     render: function() {
       if (this.bounds === undefined) { return; }
 
-      this.$el.html(this.template({
-        isRunning: this.status.get('running'),
-        currentDate: this.status.formattedDate()
-      }));
+      this.$el.html(this.template());
 
       $('.timeline-container').html(this.el);
+
+      this.renderControls();
+      this.renderDate();
       this.renderSlider();
 
       this.delegateEvents();
@@ -66,15 +72,23 @@ define([
     },
 
     renderSlider: function() {
-      new TorqueTimelineSlider({
-        startinDate: this.getCurrentDate().toDate(),
-        extent: [moment(this.bounds.start).toDate(),
-          moment(this.bounds.end).toDate()],
-        el: this.$('.timeline-slider')[0],
-        width: 750,
-        height: 50,
-        callback: this.setTorqueDate.bind(this)
-      });
+      if (this.slider === undefined) {
+        this.slider = new TorqueTimelineSlider({
+          startingDate: this.getCurrentDate().toDate(),
+          extent: [moment(this.bounds.start).toDate(),
+            moment(this.bounds.end).toDate()],
+          el: this.$('.timeline-slider')[0],
+          width: 750,
+          height: 50,
+          callback: this.setTorqueDate.bind(this)
+        });
+      }
+    },
+
+    renderControls: function() {
+      this.$('.play').html(this.controlsTemplate({
+        isRunning: this.status.get('running')
+      }));
     },
 
     renderDate: function() {
@@ -85,7 +99,7 @@ define([
       this.presenter.togglePlaying();
 
       this.status.toggleRunning();
-      this.render();
+      this.renderControls();
     },
 
     setBounds: function(bounds) {
@@ -101,6 +115,10 @@ define([
       this.status.set('currentStep', change);
 
       this.renderDate();
+
+      if (this.slider !== undefined) {
+        this.slider.setDate(change.time);
+      }
     },
 
     getCurrentDate: function() {

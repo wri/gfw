@@ -1,5 +1,30 @@
-.widget-timeline .timeline-year.timeline-torque .play {
-  .stop-icon {
+.widget-timeline .timeline-year.timeline-torque {
+  .slider .handle {
+    transform: none;
+  }
+
+  .play .stop-icon {
     display: block;
   }
+}
+
+
+.axis {
+  fill: gray;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.axis .halo {
+  stroke: gray;
+  stroke-width: 4px;
+  stroke-linecap: round;
+}
+
+.slider .handle path {
+  stroke: white;
+  stroke-width: 3px;
+  stroke-linecap: round;
+  pointer-events: none;
 }

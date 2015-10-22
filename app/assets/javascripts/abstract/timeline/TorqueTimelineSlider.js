@@ -3,7 +3,7 @@ define([
 ], function(_, moment, d3) {
 
   var timeScale, brush, margin, width, height, el, extent, callback,
-    handle, startingDate;
+    handle, startingDate, slider;
 
   var TorqueTimelineSlider = function(options) {
     options = options || {};
@@ -22,6 +22,11 @@ define([
     this.render();
 
     return this;
+  };
+
+  TorqueTimelineSlider.prototype.setDate = function(date) {
+    brush.extent([date, date]);
+    handle.attr("transform", "translate(" + timeScale(date) + ",0)");
   };
 
   TorqueTimelineSlider.prototype.setupScales = function() {
@@ -45,22 +50,21 @@ define([
 
   TorqueTimelineSlider.prototype.brushed = function() {
     var value = brush.extent()[0];
+    handle.attr("transform", "translate(" + timeScale(value) + ",0)");
 
-    if (d3.event.sourceEvent) { // not a programmatic event
+    var notProgrammaticEvent = (d3.event && d3.event.sourceEvent);
+    if (notProgrammaticEvent) {
       value = timeScale.invert(d3.mouse(this)[0]);
       brush.extent([value, value]);
-    }
 
-    handle.attr("transform", "translate(" + timeScale(value) + ",0)");
-    console.log(value);
-
-    if (value !== undefined) {
-      callback(value);
+      if (value !== undefined) {
+        callback(value);
+      }
     }
   };
 
   TorqueTimelineSlider.prototype.setupSlider = function(svg) {
-    var slider = svg.append("g")
+    slider = svg.append("g")
       .attr("class", "slider")
       .call(brush);
 
@@ -70,13 +74,12 @@ define([
     handle = slider.append("g")
       .attr("class", "handle")
 
-    handle.append("path")
-      .attr("transform", "translate(0," + height / 2 + ")")
-      .attr("d", "M 0 -20 V 20")
-
-    handle.append('text')
-      .text(0)
-      .attr("transform", "translate(" + (-18) + " ," + (height / 2 - 25) + ")");
+    handle.append('svg:image')
+      .attr('width', 16)
+      .attr('height', 16)
+      .attr('xlink:href', '/assets/svg/dragger2.svg')
+      .attr('x', 0)
+      .attr('y', 14);
 
     slider
       .call(brush.event)
