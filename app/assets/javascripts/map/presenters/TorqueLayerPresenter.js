@@ -18,7 +18,8 @@ define([
     },
 
     _subscriptions: [{
-      'Timeline/date-change': function(change) {
+      'Timeline/date-change': function(date) {
+        this.view.setDate(date);
       },
       'Timeline/toggle-playing': function() {
         this.view.toggle();

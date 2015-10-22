@@ -29,6 +29,10 @@ define([
       }
     }],
 
+    setTorqueDate: function(date) {
+      mps.publish('Timeline/date-change', [date]);
+    },
+
     togglePlaying: function() {
       mps.publish('Timeline/toggle-playing', []);
     },

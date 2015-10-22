@@ -86,6 +86,11 @@ define([
       return handler;
     },
 
+    setDate: function(date) {
+      var step = Math.round(this.torqueLayer.timeToStep(date.getTime()))
+      this.torqueLayer.setStep(step);
+    },
+
     toggle: function() {
       this.torqueLayer.toggle();
     },

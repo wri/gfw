@@ -7,9 +7,10 @@
  */
 define([
   'underscore', 'backbone', 'moment', 'd3', 'handlebars',
+  'abstract/timeline/TorqueTimelineSlider',
   'text!templates/timelineTorque.handlebars',
   'map/presenters/TorqueTimelinePresenter'
-], function(_, Backbone, moment, d3, Handlebars, tpl, Presenter) {
+], function(_, Backbone, moment, d3, Handlebars, TorqueTimelineSlider, tpl, Presenter) {
 
   'use strict';
 
@@ -57,9 +58,23 @@ define([
       }));
 
       $('.timeline-container').html(this.el);
+      this.renderSlider();
+
       this.delegateEvents();
 
       return this;
+    },
+
+    renderSlider: function() {
+      new TorqueTimelineSlider({
+        startinDate: this.getCurrentDate().toDate(),
+        extent: [moment(this.bounds.start).toDate(),
+          moment(this.bounds.end).toDate()],
+        el: this.$('.timeline-slider')[0],
+        width: 750,
+        height: 50,
+        callback: this.setTorqueDate.bind(this)
+      });
     },
 
     renderDate: function() {
@@ -75,6 +90,10 @@ define([
 
     setBounds: function(bounds) {
       this.bounds = bounds;
+    },
+
+    setTorqueDate: function(date) {
+      this.presenter.setTorqueDate(date);
     },
 
     setCurrentDate: function(change) {
