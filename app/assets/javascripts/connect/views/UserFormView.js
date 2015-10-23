@@ -1,0 +1,32 @@
+/**
+ * The UserFormView view.
+ *
+ * @return UserFormView instance (extends Backbone.View).
+ */
+define([
+  'backbone',
+  'handlebars',
+  'mps',
+  'text!templates/userForm.handlebars'
+], function(Backbone, Handlebars, mps, tpl) {
+
+  'use strict';
+
+  var UserFormView = Backbone.View.extend({
+    className: 'user-form',
+    el: '.user-form'
+
+    template: Handlebars.compile(tpl),
+
+    initialize: function(parent) {
+      this.render();
+    },
+
+    render: function() {
+      this.$el.html(this.template(this.model.attributes));
+    }
+  });
+
+  return UserFormView;
+
+});

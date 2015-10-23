@@ -1,5 +1,5 @@
 class ConnectController < ApplicationController
-  layout 'application'
+  layout 'connect'
 
   skip_before_filter :check_terms, :only => [:accept_and_redirect]
 
@@ -17,7 +17,7 @@ class ConnectController < ApplicationController
     def user
       begin
         puts cookies[:_eauth]
-        response = Typhoeus.get("http://localhost:8080/user/session",
+        response = Typhoeus.get("#{ENV['GFW_API_HOST']}/user/session",
             headers: {"Accept" => "application/json","cookie"=>"_eauth="+cookies[:_eauth]}
         )
         if response.success?

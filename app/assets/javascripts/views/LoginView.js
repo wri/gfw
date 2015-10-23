@@ -5,11 +5,10 @@
  */
 define([
   'backbone',
-  'underscore',
   'handlebars',
   'mps',
   'text!templates/login.handlebars'
-], function(Backbone,_, Handlebars, mps, tpl) {
+], function(Backbone, Handlebars, mps, tpl) {
 
   'use strict';
 
@@ -44,7 +43,7 @@ define([
       this.remove();
     },
     render: function() {
-      this.$el.html(this.template());
+      this.$el.html(this.template({apiurl: window.gfw.config.GFW_API_HOST}));
     }
   });
 

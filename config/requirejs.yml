@@ -4,6 +4,7 @@ modules:
   - name: 'landing'
   - name: 'stories'
   - name: 'countries'
+  - name: 'connect'
 
 waitSeconds: 200
 
