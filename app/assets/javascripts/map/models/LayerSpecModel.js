@@ -121,7 +121,8 @@ define([
       "prodes",
       "loss",
       "forestgain",
-      "gfw_landsat_alerts"
+      "gfw_landsat_alerts",
+      "gfw_landsat_torque_alerts"
     ],
 
     categoryOrder: [

@@ -1,0 +1,28 @@
+.widget-timeline .timeline-year.timeline-torque {
+  .slider .handle {
+    transform: none;
+  }
+
+  .play .stop-icon {
+    display: block;
+  }
+
+  .domain {
+    stroke: #a1ba42;
+    stroke-width: 4;
+  }
+
+  .timeline-date {
+    width: 100px;
+    padding: 0 5px;
+    margin-right: 5px;
+  }
+
+  .timeline-slider {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 450px;
+  }
+}
