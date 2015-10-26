@@ -71,6 +71,10 @@
           <h4>Type:</h4>
           <p>{{content.data.type}}</p>
         {{/if}}
+        {{#if content.data.dates}}
+          <h4>Loss alert date:</h4>
+          <p>{{content.data.dates}}</p>
+        {{/if}}
         {{#if content.data.mineral}}
           <h4>Mineral:</h4>
           <p>{{content.data.mineral}}</p>
@@ -155,6 +159,34 @@
         {{#if content.data.confidence}}
           <h4>Confidence:</h4>
           <p>{{content.data.confidence}}</p>
+        {{/if}}
+        {{#if content.data.developer_en}}
+          <h4>Developer:</h4>
+          <p>{{content.data.developer_en}}</p>
+        {{/if}}
+        {{#if content.data.inv_intent}}
+          <h4>Investment intention:</h4>
+          <p>{{content.data.inv_intent}}</p>
+        {{/if}}
+        {{#if content.data.contracting_authority}}
+          <h4>Contracting authority:</h4>
+          <p>{{content.data.contracting_authority}}</p>
+        {{/if}}
+        {{#if content.data.contract_date}}
+          <h4>Contract date:</h4>
+          <p>{{content.data.contract_date}}</p>
+        {{/if}}
+        {{#if content.data.contract_duration}}
+          <h4>Contract duration:</h4>
+          <p>{{content.data.contract_duration}}</p>
+        {{/if}}
+        {{#if content.data.original_size_h}}
+          <h4>Original size:</h4>
+          <p>{{content.data.original_size_h}}</p>
+        {{/if}}
+        {{#if content.data.adjustment_classification}}
+          <h4>Adjustment:</h4>
+          <p>{{content.data.adjustment_classification}}</p>
         {{/if}}
         {{#if content.data.acq_date}}
           <h4>Acquisition date:</h4>
@@ -292,9 +324,9 @@
           <h4>Plantation type:</h4>
           <p>{{content.data.type_text}}</p>
         {{/if}}
-        {{#if content.data.spec_org}}
+        {{#if content.data.spec_simp}}
           <h4>Species:</h4>
-          <p>{{content.data.spec_org}}</p>
+          <p>{{content.data.spec_simp}}</p>
         {{/if}}
         {{#if content.data.percent}}
           <h4>Percent plantation coverage:</h4>

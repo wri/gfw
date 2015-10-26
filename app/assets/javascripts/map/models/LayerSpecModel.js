@@ -39,6 +39,8 @@ define([
       "mangrove",
       "plantations_by_type",
       "plantations_by_species",
+      "khm_eco_land_conc",
+      "usa_forest_ownership",
       // PEOPLE
       "resource_rights",
       "cmr_resource_rights",
@@ -62,6 +64,7 @@ define([
       "bra_biomes",
       "biodiversity_hotspots",
       "protected_areasCDB",
+      "khm_pa",
       "idn_leuser",
       "per_buffer",
       "per_nat_pa",
@@ -117,7 +120,9 @@ define([
       "forma",
       "prodes",
       "loss",
-      "forestgain"
+      "forestgain",
+      "gfw_landsat_alerts",
+      "gfw_landsat_torque_alerts"
     ],
 
     categoryOrder: [

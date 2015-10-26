@@ -9,7 +9,7 @@
           <div class="category-icon"><svg><use xlink:href="#icon-layer-forestchange"></use></svg></div>
           <span class="category-name">FOREST CHANGE</span>
         </div>
-        <ul class="layers-list">
+        <ul class="layers-list scroll-thin-dark">
           <div id="umd-group" class="layer-group">
             <span class="group-name" data-color="#f69">Tree cover change</span>
             <li class="layer" data-layer="loss">
@@ -30,6 +30,16 @@
           </div>
           <div class="layer-group">
             <span class="group-name">Tree cover loss alerts <em>(near real-time)</em></span>
+            <li class="layer" data-layer="gfw_landsat_alerts">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">Tree Cover Loss Alerts<a href='#' data-source='gfw_landsat_alerts' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(weekly, 30m, select countries, Hansen/ UMD)</span>
+            </li>
+            <li class="layer" data-layer="gfw_landsat_torque_alerts">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">Tree Cover Loss Alerts [Torque]<a href='#' data-source='gfw_landsat_alerts' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(weekly, 30m, select countries, Hansen/ UMD)</span>
+            </li>
             <li class="layer" data-layer="forma">
               <span class="onoffradio"><span></span></span>
               <span class="layer-title">FORMA<a href='#' data-source='forma' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
@@ -70,7 +80,7 @@
           <div class="category-icon"><svg><use xlink:href="#icon-layer-forestcover"></use></svg></div>
           <span class="category-name">LAND COVER</span>
         </div>
-        <ul class="layers-list">
+        <ul class="layers-list scroll-thin-dark">
           <li class="layer" data-layer="forest2000">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Tree cover<a href='#' data-source='forest2000' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
@@ -78,7 +88,8 @@
           </li>
           <li class="layer" data-layer="ifl_2013_deg">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Intact forest landscapes 2000/2013<a href='#' data-source='ifl_2013_deg' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Intact forest landscapes<a href='#' data-source='ifl_2013_deg' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(2000/2013)</span>
             {{!-- <span class="layer-info">
               <label data-layer="ifl_2000" class="layer wrapped">
                 <span></span>
@@ -92,7 +103,8 @@
           </li>
           <li class="layer" data-layer="pantropical">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Tropical forest carbon stocks (2000)<a href='#' data-source='pantropical' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Tropical forest carbon stocks<a href='#' data-source='pantropical' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(2000)</span>
           </li>
           <li class="layer" data-layer="mangrove">
             <span class="onoffswitch"><span></span></span>
@@ -129,7 +141,7 @@
           <div class="category-icon"><svg><use xlink:href="#icon-layer-forestuse"></use></svg></div>
           <span class="category-name">LAND USE</span>
         </div>
-        <ul class="layers-list">
+        <ul class="layers-list scroll-thin-dark">
           <div class="layer-group">
             <span class="group-name">Concessions</span>
             <li class="layer" data-layer="logging">
@@ -179,7 +191,7 @@
           <div class="category-icon"><svg><use xlink:href="#icon-layer-conservation"></use></svg></div>
           <span class="category-name">CONSERVATION</span>
         </div>
-        <ul class="layers-list">
+        <ul class="layers-list scroll-thin-dark">
           <li class="layer" data-layer="protected_areasCDB">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Protected areas<a href='#' data-source='protected_areas' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
@@ -221,7 +233,7 @@
           <div class="category-icon"><svg><use xlink:href="#icon-layer-people"></use></svg></div>
           <span class="category-name">PEOPLE</span>
         </div>
-        <ul class="layers-list">
+        <ul class="layers-list scroll-thin-dark">
           <li class="layer" data-layer="resource_rights">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Resource rights<a href='#' data-source='resource_rights' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
@@ -234,7 +246,8 @@
           </li>
           <li class="layer" data-layer="grump2000">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Population density (2000)<a href='#' data-source='grump2000' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Population density<a href='#' data-source='grump2000' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(2000)</span>
           </li>
           <li class="layer" data-layer="raisg">
             <span class="onoffswitch"><span></span></span>
@@ -252,7 +265,7 @@
           <div class="category-icon"><svg><use xlink:href="#icon-layer-stories"></use></svg></div>
           <span class="category-name">STORIES</span>
         </div>
-        <ul class="layers-list">
+        <ul class="layers-list scroll-thin-dark">
           <li class="layer" data-layer="user_stories">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">User stories<a href='#' data-source='user_stories' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>

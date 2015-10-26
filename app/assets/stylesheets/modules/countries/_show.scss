@@ -50,13 +50,14 @@
       -webkit-transform: translate(0, -50%);
       width: 18px;
       height: 18px;
-      border-color: #555;
+      background: $cGreen;
+      border-color: $cGreen;
       svg {
         position: absolute;
         display: inline-block;
         height: 12px;
         width: 12px;
-        fill: #555;
+        fill: $white;
       }
     }
   }

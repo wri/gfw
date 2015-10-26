@@ -111,8 +111,8 @@ define([], function() {
 
   config.GRAPHS = {
     total_loss: {
-      title: "Countries with greatest tree cover loss (2001-2013)",
-      subtitle: "Global tree cover loss, 2001-2013<a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>"
+      title: "Countries with greatest tree cover loss (2001-2014)",
+      subtitle: "Global tree cover loss, 2001-2014<a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>"
     },
     percent_loss: {
       title: "Countries with greatest tree cover gain (2001-2012)",
@@ -127,8 +127,8 @@ define([], function() {
       subtitle: "Tree cover loss relative to tree cover gain by country (2001-2012)<a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>"
     },
     domains: {
-      title: "Climate domains ranked in order of<br />greatest tree cover loss (2001-2013)",
-      subtitle: "Tree cover loss per year by climate domain, 2001-2013<a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>"
+      title: "Climate domains ranked in order of<br />greatest tree cover loss (2001-2014)",
+      subtitle: "Tree cover loss per year by climate domain, 2001-2014<a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>"
     }
   };
 

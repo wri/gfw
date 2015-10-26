@@ -130,13 +130,29 @@ $letterW: 20px;
       }
     }
 
-
+    .advanced-controls {
+      cursor: pointer;
+      &:after {
+        content:'►';
+        left: 133px;
+        display: inline-block;
+        position: absolute;
+      }
+      &.active:after {
+        content: '▼';
+      }
+    }
+    .advanced-options {
+      display: none;
+    }
 
     // RANGE INPUT
     input[type=range] {
       -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
       width: 100%; /* Specific width is required for Firefox. */
       margin: 0;
+      z-index: 0;
+      position: relative;
     }
 
     input[type=range]::-webkit-slider-thumb {

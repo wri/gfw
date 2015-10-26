@@ -27,6 +27,8 @@ define([
       'change #range-clouds' : 'setVisibleRange',
       'change input' : '_setParams',
       'change select' : '_setParams',
+      'click button' : '_setParams',
+      'click .advanced-controls' : '_toggleAdvanced'
     },
 
     initialize: function() {
@@ -36,15 +38,18 @@ define([
     },
 
     cacheVars: function() {
-      this.$selects = this.$el.find('.chosen-select');
+      this.$selects            = this.$el.find('.chosen-select');
       this.$hresSelectProvider = $('#hres-provider-select');
       this.$hresSelectProFil   = $('#hres-filter-select');
       this.$hresSelectFilter   = $('#hres-filter-select');
-      this.$onoffswitch        = $('.onoffswitch');
+      this.$onoffswitch        = this.$el.find('.onoffswitch');
       this.$range              = $('#range-clouds');
       this.$progress           = $('#progress-clouds');
       this.$mindate            = this.$el.find('.mindate');
       this.$maxdate            = this.$el.find('.maxdate');
+      this.$advanced_options   = this.$el.find('.advanced-options');
+      this.$advanced_controls  = this.$el.find('.advanced-controls');
+      this.$apply              = this.$el.find('.btn');
     },
 
     render: function() {
@@ -53,22 +58,29 @@ define([
       this.printSelects();
     },
 
-    _setParams: function(e) {
-      (! !!this.$onoffswitch.hasClass('checked')) ? this.toggleLayer(e) : null;
+    _getParams: function(e) {
       var $objTarget = $(e.target).closest('.maptype');
-      var params = {
+      return {
           'satellite' : $objTarget.data('slug'),
-           'color_filter': $objTarget.find('#hres-filter-select').val(),
+           'color_filter': ($objTarget.find('#hres-filter-select').val().length > 0) ? $objTarget.find('#hres-filter-select').val() : 'rgb',
            'cloud': this.$range.val(),
            'mindate': (this.$mindate.val().length > 0) ? this.$mindate.val() : '2000-09-01',
            'maxdate': (this.$maxdate.val().length > 0) ? this.$maxdate.val() : '2015-09-01'
          };
-      this.presenter.setHres(params);
+    },
+
+    _setParams: function(e) {
+      if (! !!this.$onoffswitch.hasClass('checked')) {
+        this.toggleLayer(e);
+      } else {
+        this.$apply.removeClass('disabled');
+      }
+      this.presenter.setHres(this._getParams(e));
       this.presenter.updateLayer($(e.target).closest('.maptype').data('slug'));
     },
 
     _fillParams: function(params) {
-      this.$hresSelectProFil.val(params.color_filter).trigger("liszt:updated");;
+      this.$hresSelectProFil.val(params.color_filter).trigger("liszt:updated");
       this.$range.val(params.cloud);
       this.$mindate.val(params.mindate);
       this.$maxdate.val(params.maxdate);
@@ -77,11 +89,19 @@ define([
 
     toggleLayer: function(e) {
       this.switchToggle();
+      this.$apply.toggleClass('disabled');
+      this.presenter.setHres(this._getParams(e));
       this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
     },
 
+    _toggleAdvanced: function(e) {
+      this.$advanced_controls.toggleClass('active');
+      this.$advanced_options.toggle('250');
+    },
+
     switchToggle: function() {
-      this.$onoffswitch.toggleClass('checked');
+      // this.$onoffswitch.toggleClass('checked');
+      this.$el.find('.onoffswitch').toggleClass('checked');
     },
 
 
@@ -116,7 +136,7 @@ define([
     changeProvider: function(e) {
       return;
       var providers = {
-        'urthe' : '<option value="rgb">RGB (Red Green Blue)</option><option value="ndvi">NDVI (Normalized Difference Vegetation Index)</option><option value="evi">EVI (Enhanced vegetation index)</option><option value="ndwi">NDWI (Normalized Difference Water Index)</option><option value="false-nir">False Color NIR (Near Infra Red)</option>',
+        'urthe' : '<option value="ndvi">NDVI (Normalized Difference Vegetation Index)</option><option value="evi">EVI (Enhanced vegetation index)</option><option value="ndwi">NDWI (Normalized Difference Water Index)</option><option value="false-nir">False Color NIR (Near Infra Red)</option>',
         'digiglobe' : '',
         'skybox' : ''
       }

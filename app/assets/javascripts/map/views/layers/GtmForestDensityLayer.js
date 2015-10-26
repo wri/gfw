@@ -20,7 +20,7 @@ define([
 
    options: {
       urlTemplate: 'https://s3.amazonaws.com/wri-tiles/GTM/guatemaladensity{/z}{/x}{/y}.png',
-      dataMaxZoom: 8
+      dataMaxZoom: 15
     }
 
   });

@@ -57,9 +57,10 @@
           <article id="view-data" class="source-article">
             <header>
               <h2 class='source_category_title'>Visualize data</h2>
+              <div class="toggle-howto"></div>
               <p>This information pertains only to the GFW Interactive Map and country profiles and rankings. For more advanced forest fire and commodity visualizations, please visit <a href="http://fires.globalforestwatch.org/" target="_blank">GFW Fires</a> and <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities</a>.</p>
             </header>
-            <ul class='sources'>
+            <ul class='sources howto-d'>
               <li id="view-global-data" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>Visualize global data</strong>
@@ -137,12 +138,92 @@
                 </div>
               </li>
             </ul>
+
+            <ul class="howto-m hide">
+              <li id="view-global-data-m" class='source-item first'>
+                <div class='source_header'>
+                  <strong class='source_title'>Visualize global data</strong>
+                  <i class='expand_arrow'></i>
+                </div>
+                <div class='source_body'>
+                  <div class='source_summary'>
+                    <h3 class="overview_title">Visualize global data on the GFW Interactive Map</h3>
+
+                    <p><strong>1.</strong>  Navigate to the <a href="/map" target="_blank">GFW Interactive Map</a>.</p>
+                    <p><strong>2.</strong>  Available data layers are organized by category within the Data Layers drop down menu. Tap on Global Data or Country Data and then search through the categories to select the data layer(s) you want to display. Once the layers are selected, tap Go to Map. Tree cover loss and gain are displayed by default.</p>
+                    <p>
+                      <%= image_tag('howto-screenshots-mobile/img10.png') %>
+                      <%= image_tag('howto-screenshots-mobile/img11-1.png') %>
+                      <%= image_tag('howto-screenshots-mobile/img12.png') %>
+                    </p>
+                    <p><strong>3.</strong>  Tap the information icon next to each layer name to learn more about each data layer. This includes information such as data resolution, frequency, cautions, and a link to learn more or download the data set on the <a class="mobile-friendly" href="http://data.globalforestwatch.org/" target="_blank">Open Data Portal</a>.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img13-1.png') %></p>
+                    <p><strong>4.</strong>  View activated layers by tapping on the data legend on the right-hand side of the map.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img14-1.png') %></p>
+                    <p><strong>5.</strong>  For data layers that cover a limited geographic region, you can turn on “Geographic coverage” in the data legend to see the geographic extent of the data layer on the map.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img51-1.png') %></p>
+                    <p><strong>6.</strong>  For tree cover loss and tree cover extent data layers, you can adjust the tree canopy density of your data display and analysis by tapping on the highlighted percent canopy density within the legend.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img15-1.png') %></p>
+                    <p><strong>7.</strong>  Share your map view, zoom in and out, refresh the page, search the Google base map and geo-locate your position using the buttons along the right side of the map.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img14-2.png') %></p>
+                    <p><strong>8.</strong>  Change the base map to view data with a different map background. Tap on the Data Layers button and then the Basemaps button. Once you select a basemap, tap Return to Map. </p>
+                    <p> <%= image_tag('howto-screenshots-mobile/img11-3.png') %>
+                        <%= image_tag('howto-screenshots-mobile/img16.png') %>
+                    </p>
+
+                    <h3 class="overview_title">Visualize data for different time periods</h3>
+                    <p>For most data layers under the Forest Change tab, the default view shows cumulative data points over the entire study period. However, most of these layers can also be viewed for other specified time periods. The specific time intervals (e.g., annual, monthly, and daily) vary for each data layer.</p>
+                    <p><strong>1.</strong>  Select the Forest Change data layer you want to view.</p>
+                    <p><strong>2.</strong>  On the bottom of the map, locate the timeline and select the period for which you would like to view data.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img17.png') %></p>
+
+                    <h3 class="overview_title">Learn more about individual data points and polygons</h3>
+                    <p>Some data layers allow you to click on individual data points and polygons (i.e., shapes) to view additional information.</p>
+                    <p><strong>1.</strong>  Select a data layer(s) under the Global Data and Country Data tabs.</p>
+                    <p><strong>2.</strong>  Tap on the data point or polygon you want to learn more about and an information window will appear.</p>
+                    <p><strong>4.</strong>  You can analyze Forest Change data within individual points or polygons by tapping on the Analyze button at the bottom of the information window.</p>
+                  </div>
+                </div>
+              </li>
+              <li id="view-country-data-m" class='source-item last'>
+                <div class='source_header'>
+                  <strong class='source_title'>Visualize country data</strong>
+                  <i class='expand_arrow'></i>
+                </div>
+                <div class='source_body'>
+                  <div class='source_summary'>
+                    <h3 class="overview_title">Visualize country data on the GFW Interactive Map</h3>
+                    <p>Global Forest Watch features both global and country data layers. While global layers, such as tree cover loss and protected areas, apply to the entire world or to a large (and transboundary) geographic region, country data layers apply only to a particular country. You can easily view both types of data together on the map.</p>
+                    <p><strong>1.</strong> Navigate to Country Data through the Data Layers button.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img10.png') %>
+                    <%= image_tag('howto-screenshots-mobile/img11-2.png') %></p>
+                    <p><strong>2.</strong> Select a country from the list that appears. If no data is available, try selecting another country by tapping on “change country”.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img18.png') %></p>
+                    <p><strong>3.</strong> If datasets are available for that country, they will appear.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img19.png') %></p>
+                    <p><strong>4.</strong> Tap on the available country data layer you wish to visualize on the map, and then tap Go to Map to view.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img20-1.png') %></p>
+                    <p><strong>5.</strong> Tap the information icons to learn more about each data layer. This includes information such as data resolution, frequency, cautions, and a link to learn more and download the data set on the <a class="mobile-friendly" href="http://data.globalforestwatch.org/" target="_blank">Open Data Portal</a>.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img20-2.png') %>
+                    <%= image_tag('howto-screenshots-mobile/img21.png') %></p>
+                    <p><strong>6.</strong> Learn more about and download country data by tapping “Country Data” or select “Country Profile” to view country statistics.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img20-3.png') %></p>
+                    <p><strong>7.</strong> Change the base map to view data with a different map background.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img11-3.png') %>
+                    <%= image_tag('howto-screenshots-mobile/img16.png') %></p>
+                    <p><strong>8.</strong> Share your map view, zoom in and out, refresh the page, search the Google base map, and geo-locate your position using the buttons along the right side of the map.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img14-2.png') %></p>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </article>
           <article id="view-statistics" class="source-article">
             <header>
               <h2>View statistics</h2>
             </header>
-            <ul class='sources'>
+            <div class="toggle-howto"></div>
+            <ul class='sources howto-d'>
               <li id="view-country-ranking" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>View country rankings</strong>
@@ -186,6 +267,46 @@
                 </div>
               </li>
             </ul>
+
+            <ul class='howto-m hide'>
+              <li id="view-country-ranking-m" class='source-item first'>
+                <div class='source_header'>
+                  <strong class='source_title'>View country ranking</strong>
+                  <i class='expand_arrow'></i>
+                </div>
+                <div class='source_body'>
+                  <div class='source_summary'>
+                    <h3 class="overview_title">View country rankings for tree cover and tree cover loss and gain</h3>
+                    <p><strong>1.</strong> Navigate to the Country Rankings by tapping on the Country icon and then on Country Rankings.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img24.png') %></p>
+                    <p><strong>2.</strong> Use the tabs to navigate through different ranking categories. Click the information icon to learn more about the graph and rankings.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img25-1.png') %></p>
+                    <p><strong>3.</strong> Tap on a country name in the ranking list to access the Country Profile.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img26.png') %><%= image_tag('howto-screenshots-mobile/img27.png') %></p>
+                    <p><strong>4.</strong> Download a table of country statistics, adjust the tree cover canopy density of the data you are viewing, and share the graph using the options above the graph.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img25-2.png') %></p>
+                  </div>
+                </div>
+              </li>
+              <li id="view-country-statistics-m" class='source-item first'>
+                <div class='source_header'>
+                  <strong class='source_title'>View country statistics</strong>
+                  <i class='expand_arrow'></i>
+                </div>
+                <div class='source_body'>
+                  <div class='source_summary'>
+                    <h3 class="overview_title">View national and subnational forest statistics</h3>
+                    <p><strong>1.</strong> Navigate to the Country Profiles</a>.
+                    <p><strong>2.</strong> Select a country from the list that appears. To view statistics and graphs for a subnational jurisdiction (e.g., province, district) tap the “Select Jurisdiction” button located under the country name.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img24-1.png') %>
+                    <%= image_tag('howto-screenshots-mobile/img28.png') %></p>
+                    <p><strong>3.</strong> To view statistics and graphs related to tree cover loss and gain, forest type, economy, land tenure, and more, simply scroll down.</p>
+                    <p><strong>4.</strong> Learn more about or share each statistic and graph by selecting the information or share icons, when available.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img29.png') %>
+                </div>
+              </li>
+            </ul>
+
           </article>
           <article id="analyze-forest-change" class="source-article">
             <header>
@@ -193,7 +314,8 @@
               <p>Choose a category below to learn how to analyze forest change in your area of interest.</p>
               <p>Looking for more advanced commodity or forest and land fire analysis? Visit <a href="http://commodities.globalforestwatch.org/" target='_blank'>GFW Commodities</a> or <a href="http://fires.globalforestwatch.org/" target='_blank'>GFW Fires</a>.</p>
             </header>
-            <ul class='sources'>
+            <div class="toggle-howto"></div>
+            <ul class='sources howto-d'>
               <li id="analyze-user-defined-area" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>Analyze a user-defined area</strong>
@@ -201,7 +323,7 @@
                 </div>
                 <div class='source_body'>
                   <div class='source_summary'>
-                    <p><strong>1.</strong> Enter the <a href="/map" target='_blank'>GFW Interactive Map</a>.
+                    <p><strong>1.</strong> Enter the <a href="/map" target="_blank">GFW Interactive Map</a></a>.
                     <p><strong>2.</strong> Turn on the Forest Change data layer you wish to analyze (e.g., tree cover loss).</p>
                     <p><%= image_tag('howto-screenshots/new_content/image24.png') %></p>
                     <p><strong>3.</strong> Define the time period of your analysis by dragging the handles of the timeline or by selecting a time interval.</p>
@@ -266,13 +388,69 @@
                 </div>
               </li>
             </ul>
+
+            <ul class='howto-m hide'>
+              <li id="analyze-a-country-or-subnational-jurisdiction-m" class='source-item first'>
+                <div class='source_header'>
+                  <strong class='source_title'> Analyze a country or subnational jurisdiction</strong>
+                  <i class='expand_arrow'></i>
+                </div>
+                <div class='source_body'>
+                  <div class='source_summary'>
+                    <p><strong>1.</strong> Enter the <a href="/map" target='_blank'>GFW Interactive Map.
+                    <p><strong>2.</strong> Turn on the Forest Change data layer you wish to analyze (e.g., tree cover loss).</p>
+                    <p>
+                      <%= image_tag('howto-screenshots-mobile/img10.png') %>
+                      <%= image_tag('howto-screenshots-mobile/img11-1.png') %>
+                      <%= image_tag('howto-screenshots-mobile/img12.png') %>
+                    </p>
+                    <p><strong>3.</strong> Define the time period you wish to analyze by selecting a time interval.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/image17-1.png') %></p>
+                    <p><strong>4.</strong> Select the analysis icon on the right-hand side of the map. Choose a Country and a jurisdiction (optional) and tap Analyze.</p>
+                    <p>
+                      <%= image_tag('howto-screenshots-mobile/img17.png') %>
+                      <%= image_tag('howto-screenshots-mobile/img32.png') %>
+                      <%= image_tag('howto-screenshots-mobile/img33.png') %>
+                    </p>
+                    <p><strong>5.</strong> If you want to adjust the type of data you are analyzing, choose a different data layer under the Forest Change tab. Your results will update immediately based on your selection.</p>
+                    <p><strong>6.</strong> You can then download the raw data on the <a class="mobile-friendly" href="http://data.globalforestwatch.org/" target='_blank'>Open Data Portal</a> or discard your analysis.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img33.png') %></p>
+                    <p>NOTE: The Open Data Portal is not optimized for mobile use.</p>
+                    <p>NOTE: You can also analyze forest change within a country from the <a href="/countries">Country Profiles</a>. Once you arrive at the Country Profiles, select a country and, if desired, select a subnational jurisdiction (e.g., state, county, province) using the dropdown menu under the country name. Click “analyze on map” You will then be directed to the map and results will appear for an analysis of tree cover loss and gain.</p>
+
+                    <a class="btn green medium" href='/map' target='_blank'>GFW Interactive Map</a><a href='http://commodities.globalforestwatch.org/' class="btn green medium uppercase">GFW Commodities</a><a href='http://fires.globalforestwatch.org/' class="btn green medium uppercase">GFW Fires</a>
+                  </div>
+                </div>
+              </li>
+              <li id="analyze-a-shape-on-the-map-m" class='source-item first'>
+                <div class='source_header'>
+                  <strong class='source_title'> Analyze a shape on the map</strong>
+                  <i class='expand_arrow'></i>
+                </div>
+                <div class='source_body'>
+                  <div class='source_summary'>
+                    <p><strong>1.</strong> Enter the <a href="/map" target='_blank'>GFW Interactive Map</a>.
+                    <p><strong>2.</strong> Turn on the shape layer you want to analyze (e.g. protected areas).</p>
+                    <p><strong>3.</strong> Turn on the Forest Change data layer you wish to analyze (e.g., tree cover loss).</p>
+                    <p><strong>4.</strong> Define the time period of your analysis by selecting a time interval.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img35.png') %></p>
+                    <p><strong>5.</strong> Tap the individual polygon you want to analyze and select “Analyze”.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img36.png') %><%= image_tag('howto-screenshots-mobile/img38.png') %></p>
+                    <p><strong>6.</strong>  If you want to adjust the type of data you are analyzing, choose a different data layer under the Forest Change tab. Your results will update immediately based on your selection.</p>
+                    <p><strong>7.</strong> You can then download the raw data on the <a class="mobile-friendly" href="http://data.globalforestwatch.org/" target='_blank'>Open Data Portal</a>, discard your analysis or, if you are analyzing FORMA alerts, subscribe to alerts.</p>
+                    <p>Note: the Open Data Portal is not optimized for mobile use.</p>
+                    <p><%= image_tag('howto-screenshots-mobile/img41.png') %><%= image_tag('howto-screenshots-mobile/img44.png') %></p>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </article>
           <article id="subscribe-to-alerts-and-user-stories" class="source-article">
             <header>
               <h2>Subscribe to forest change alerts and user stories</h2>
               <p>Read below to learn how to subscribe to forest change alerts and user stories for your area of interest. When you subscribe to alerts you will be notified of new forest change and user stories in the area you selected via monthly emails. Each email contains new activity detected by GFW’s <a class="mobile-friendly" href="http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64">FORMA</a> , <a href="http://www.terra-i.org/terra-i/data.html" target="_blank">Terra-i</a>, <a href="http://www.imazongeo.org.br/doc/downloads.php">SAD</a>, and <a class="mobile-friendly" href="http://data.globalforestwatch.org/datasets/e7bfe60d90ea4e5aa808eba4723ad3f8_0">QUICC</a> alert systems, in addition to any new <a href="/stayinformed/crowdsourced-stories">stories</a> submitted by users. Please be aware that not all alert systems may cover the area you selected.  To learn more about each system, click on the information icons that appear in the dropdown menu under Forest Change on the <a href="/map">interactive map</a>.</p>
             </header>
-            <ul class='sources'>
+            <ul class='sources howto-d'>
               <li id="subscribe-to-a-user-defined-area" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>Subscribe to a user-defined area</strong>
@@ -342,7 +520,7 @@
               <p>You can define an area of interest on the map by using the drawing tool or selecting an existing polygon (such as a protected area).  Once you have defined an area of interest, you can calculate statistics about the area or subscribe to alerts. If you subscribe to alerts, you will be notified via email when a new tree cover loss alert has been detected, as often as every 30 days. Tree cover loss alerts come from the <a class="mobile-friendly" href="http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64" target="_blank">Forest Monitoring for Action (FORMA)</a> system, which monitors and detects possible tree cover disturbance within 500 × 500 meter pixels in the humid tropical forest biome.</p>
               <p>This information pertains only to the GFW Interactive Map and country profiles. Visit <a href='http://www.commodities.globalforestwatch.org' target='_blank'>GFW Commodities</a> or <a href='http://www.fires.globalforestwatch.org' target='_blank'>GFW Fires</a> for more advanced analysis of areas affected by fires or commodity production.</p>
             </header>
-            <ul class='sources'>
+            <ul class='sources howto-d'>
               <li id="analyze-or-subscribe-to-alerts-for-a-user-defined-area" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>SUBSCRIBE TO ALERTS FOR A USER-DEFINED AREA</strong>
@@ -447,7 +625,8 @@
               <h2>Submit a story</h2>
               <p>Do you have a story to share or do you want to report something you have seen on the ground? The GFW Interactive Map allows you to upload geotagged comments, photos, or videos to the GFW map for everyone to see.</p>
             </header>
-            <div class="content">
+            <div class="toggle-howto"></div>
+            <div class="content howto-d">
               <ul class="faq-list">
                 <li>
                   <p><strong>1.</strong>  Go to the Submit a Story page.</p>
@@ -460,13 +639,33 @@
                 </li>
               </ul>
             </div>
+            <div class="content howto-m hide">
+              <ul class="faq-list">
+                <li>
+                  <p><strong>1.</strong>  Tap the Submit a Story button on the homepage.</p>
+                  <p><%= image_tag('howto-screenshots-mobile/img52.png') %></p>
+                  <p><strong>2.</strong>  Enter your story title and choose a location. You can geolocate yourself using the button on the top right of the map or search for a location using the search box. Name this location and select a date.</p>
+                  <p><%= image_tag('howto-screenshots-mobile/img47.png') %></p>
+                  <p><strong>3.</strong>  Enter your story content in the Details box.</p>
+                  <p><%= image_tag('howto-screenshots-mobile/img48.png') %></p>
+                  <p><strong>4.</strong>  Upload a photo or video file to your story (optional). Maximum upload size is 8MB.</p>
+                  <p><%= image_tag('howto-screenshots-mobile/img49.png') %></p>
+                  <p><strong>5.</strong>  Enter your name (optional) and Email (required).</p>
+                  <p><strong>6.</strong>  Tap “Submit Story”.</p>
+                  <p><%= image_tag('howto-screenshots-mobile/img50.png') %></p>
+                  <p><strong>7.</strong>  See your story immediately by selecting the “user stories” layer on the GFW map.</p>
+                  <a href="/stories/new" class="btn green medium uppercase">Submit a story</a>
+                </li>
+              </ul>
+            </div>
+
           </article>
 
           <article id="faqs" class="source-article">
             <header>
               <h2>Frequently asked questions</h2>
             </header>
-            <ul class='sources'>
+            <ul class='sources howto-d'>
               <li id="who-can-use-global-forest-watch" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>Who can use Global Forest Watch?</strong>
@@ -801,7 +1000,7 @@
                 </div>
               </div>
             </div>
-            <ul class='sources'>
+            <ul class='sources howto-d'>
               <li id="find-data-odp" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>Find data in the Open Data Portal</strong>

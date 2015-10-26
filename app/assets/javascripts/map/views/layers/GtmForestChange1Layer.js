@@ -20,7 +20,7 @@ define([
 
    options: {
       urlTemplate: 'https://s3.amazonaws.com/wri-tiles/GTM/guatemala_2001_2006{/z}{/x}{/y}.png',
-      dataMaxZoom: 8
+      dataMaxZoom: 15
     }
 
   });

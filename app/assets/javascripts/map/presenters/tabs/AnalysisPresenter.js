@@ -272,15 +272,12 @@ define([
           mps.publish('Subscribe/geom',[geojson]);
 
           if (!this.status.get('dont_analyze')) {
-            if (baselayer && baselayer.slug !== 'loss') {
+            if (baselayer) {
               this.view.drawCountrypolygon(geojson,'#A2BC28');
               this.view._removeCartodblayer();
               this._publishAnalysis(resource);
             } else {
               mps.publish('Spinner/stop');
-              if(!this.status.get('dont_analyze')){
-                this.notificate('not-umd-comming-soon');
-              }
             }
           } else {
             mps.publish('Spinner/stop');
@@ -295,15 +292,12 @@ define([
           mps.publish('Subscribe/geom',[geojson]);
 
           if (!this.status.get('dont_analyze')) {
-            if (baselayer && baselayer.slug !== 'loss') {
+            if (baselayer) {
               this.view.drawCountrypolygon(geojson,'#A2BC28');
               this.view._removeCartodblayer();
               this._publishAnalysis(resource);
             } else {
               mps.publish('Spinner/stop');
-              if(!this.status.get('dont_analyze')){
-                this.notificate('not-umd-comming-soon');
-              }
             }
           }else{
             mps.publish('Spinner/stop');
