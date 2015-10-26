@@ -18,8 +18,10 @@ define([
     },
 
     _subscriptions: [{
-      'Timeline/date-change': function(date) {
-        this.view.setDate(date);
+      'Timeline/date-change': function(layerName, date) {
+        if (this.view.getName() === layerName) {
+          this.view.setDate(date);
+        }
       },
       'Timeline/toggle-playing': function() {
         this.view.toggle();

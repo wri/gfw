@@ -30,7 +30,7 @@ define([
     }],
 
     setTorqueDate: function(date) {
-      mps.publish('Timeline/date-change', [date]);
+      mps.publish('Timeline/date-change', [this.view.getName(), date]);
     },
 
     togglePlaying: function() {

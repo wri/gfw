@@ -128,7 +128,11 @@ define([
       }
 
       return currentDate;
-    }
+    },
+
+    getName: function() {
+      return this.layer.slug;
+    },
 
   });
 
