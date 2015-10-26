@@ -38,11 +38,11 @@ define([
     },
 
     cacheVars: function() {
-      this.$selects = this.$el.find('.chosen-select');
+      this.$selects            = this.$el.find('.chosen-select');
       this.$hresSelectProvider = $('#hres-provider-select');
       this.$hresSelectProFil   = $('#hres-filter-select');
       this.$hresSelectFilter   = $('#hres-filter-select');
-      this.$onoffswitch        = $('.onoffswitch');
+      this.$onoffswitch        = this.$el.find('.onoffswitch');
       this.$range              = $('#range-clouds');
       this.$progress           = $('#progress-clouds');
       this.$mindate            = this.$el.find('.mindate');
@@ -100,7 +100,8 @@ define([
     },
 
     switchToggle: function() {
-      this.$onoffswitch.toggleClass('checked');
+      // this.$onoffswitch.toggleClass('checked');
+      this.$el.find('.onoffswitch').toggleClass('checked');
     },
 
 
