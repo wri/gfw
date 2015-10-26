@@ -54,6 +54,7 @@ define([
     setHres: function(value) {
       value = btoa(JSON.stringify(value));
       this.status.set('hresolution', value);
+      sessionStorage.setItem('high-resolution',value);
       this._publishHres();
     },
 
