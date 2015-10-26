@@ -74,7 +74,7 @@ define([
     renderSlider: function() {
       if (this.slider === undefined) {
         this.slider = new TorqueTimelineSlider({
-          startingDate: this.getCurrentDate().toDate(),
+          startingDate: this.getCurrentTimelineDate().toDate(),
           extent: [moment(this.bounds.start).toDate(),
             moment(this.bounds.end).toDate()],
           el: this.$('.timeline-slider svg')[0],
@@ -121,13 +121,16 @@ define([
       }
     },
 
-    getCurrentDate: function() {
-      var currentDate = this.status.get('currentDate');
-      if (!currentDate) {
-        currentDate = moment(this.layer.mindate);
-      }
+    getCurrentTimelineDate: function() {
+      return this.status.get('currentDate') || moment(this.layer.mindate);
+    },
 
-      return currentDate;
+    /*
+     * Despite what the name implies, this actually returns a date
+     * *range*, for use in Place params.
+     */
+    getCurrentDate: function() {
+      return [moment(this.layer.mindate), moment(this.layer.maxdate)];
     },
 
     getName: function() {
