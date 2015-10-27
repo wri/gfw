@@ -7,14 +7,14 @@ define([
   'backbone',
   'handlebars',
   'mps',
-  'text!templates/userForm.handlebars'
+  'text!connect/templates/userForm.handlebars'
 ], function(Backbone, Handlebars, mps, tpl) {
 
   'use strict';
 
   var UserFormView = Backbone.View.extend({
     className: 'user-form',
-    el: '.user-form'
+    el: '.user-form',
 
     template: Handlebars.compile(tpl),
 
@@ -23,7 +23,7 @@ define([
     },
 
     render: function() {
-      this.$el.html(this.template(this.model.attributes));
+      this.$el.html(this.template());
     }
   });
 
