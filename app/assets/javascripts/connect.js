@@ -8,15 +8,12 @@ require([
   'backbone',
   'handlebars',
   'mps',
-  'topojson',
-  'qtip',
-  'scrollit',
   'views/HeaderView',
   'views/FooterView',
   'views/SourceMobileFriendlyView',
   'views/SourceWindowView',
-  'connect/UserForm'
-], function($, _, Class, Backbone, Handlebars, mps, topojson, qtip, scrollit, HeaderView, FooterView, SourceMobileFriendlyView,SourceWindowView, UserForm) {
+  'connect/views/UserFormView'
+], function($, _, Class, Backbone, Handlebars, mps, HeaderView, FooterView, SourceMobileFriendlyView,SourceWindowView, UserFormView) {
   'use strict';
 
   var ConnectPage = Class.extend({
@@ -31,16 +28,13 @@ require([
      * Initialize Landing Views.
      */
     _initViews: function() {
-      alert('test')
       //shared
       new HeaderView();
       new FooterView();
       new SourceMobileFriendlyView();
       new SourceWindowView();
 
-      new UserForm();
-    }
-
+      new UserFormView();
     }
   });
 
