@@ -23,6 +23,11 @@ define([
           this.view.setDate(date);
         }
       },
+      'Timeline/date-range-change': function(layerName, dates) {
+        if (this.view.getName() === layerName) {
+          this.view.setDateRange(dates);
+        }
+      },
       'Timeline/toggle-playing': function() {
         this.view.toggle();
       },

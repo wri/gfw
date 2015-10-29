@@ -6,8 +6,9 @@ define([
   'underscore',
   'abstract/layer/OverlayLayerClass',
   'map/presenters/TorqueLayerPresenter',
-  'text!map/cartocss/default_torque_style.cartocss'
-], function(_, OverlayLayerClass, Presenter, CARTOCSS) {
+  'text!map/cartocss/default_torque_style.cartocss',
+  'text!map/queries/default_torque.sql.hbs',
+], function(_, OverlayLayerClass, Presenter, CARTOCSS, SQL) {
 
   'use strict';
 
@@ -36,6 +37,7 @@ define([
       this._validateOptions();
       this.presenter = new Presenter(this);
 
+      this.options = _.extend(this.options, options);
       this._super(layer, options, map);
     },
 
@@ -47,12 +49,17 @@ define([
       }, this);
     },
 
+    _getSql: function() {
+      var sqlTemplate = Handlebars.compile(SQL);
+      return sqlTemplate(this.options);
+    },
+
     _getLayer: function() {
       var deferred = new $.Deferred();
 
       var torqueOptions = _.extend(this.options, {
-          name: this.name, map: this.map}),
-        torqueLayer = this.torqueLayer = new torque.GMapsTorqueLayer(torqueOptions);
+        name: this.name, map: this.map, sql: this._getSql()});
+      var torqueLayer = this.torqueLayer = new torque.GMapsTorqueLayer(torqueOptions);
 
       torqueLayer.on('change:time', this._handleStart(deferred));
       torqueLayer.on('change:time', this._handleTimeStep);
@@ -84,6 +91,11 @@ define([
       }.bind(this);
 
       return handler;
+    },
+
+    setDateRange: function(dates) {
+      this.options.currentDate = dates;
+      this.torqueLayer.setSQL(this._getSql());
     },
 
     setDate: function(date) {

@@ -29,7 +29,12 @@ define([
       }
     }],
 
+    setTorqueDateRange: function(dates) {
+      mps.publish('Timeline/date-range-change', [this.view.getName(), dates]);
+    },
+
     setTorqueDate: function(date) {
+      this.setTorqueDateRange([date,date]);
       mps.publish('Timeline/date-change', [this.view.getName(), date]);
     },
 

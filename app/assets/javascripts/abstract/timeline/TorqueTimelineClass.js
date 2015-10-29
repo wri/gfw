@@ -130,7 +130,10 @@ define([
      * *range*, for use in Place params.
      */
     getCurrentDate: function() {
-      return [moment(this.layer.mindate), moment(this.layer.maxdate)];
+      return [
+        moment(this.layer.mindate),
+        moment(this.layer.maxdate || undefined)
+      ];
     },
 
     getName: function() {
