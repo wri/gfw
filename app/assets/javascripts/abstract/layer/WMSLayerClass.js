@@ -78,7 +78,6 @@ define([
     init: function(layer, options, map) {
       this.map = map;
       this.url = this.options.url;
-      this.infowindowUrl = this.options.url;
       this.tiles = layer.tileurl;
       this._super(layer, options, map);
       this._setImageMapType(layer);
@@ -138,74 +137,27 @@ define([
         }
         this.location.setBounds();
         this.location.setBBox();
-        this.location.url = this.getQuery(this.location.point.x,this.location.point.y,this.location.bbox);
+        this.location.infowindowUrl = this.getQuery(this.location.latlng.F,this.location.latlng.A);
 
-
-        $.get(this.infowindowUrl).done(_.bind(function(xml){
+        $.get(this.location.infowindowUrl).done(_.bind(function(data) {
           if(this.infowindow) {
             this.infowindow.remove();
           }
-          var data = this.xmlToJson(xml);
-          var info = data['FeatureInfoResponse']['FIELDS'].attrs;
+          var data = JSON.parse(data);
           var infoWindowOptions = {
             offset: [0, 100],
             infowindowData: {
-              name: info['Nombre'],
-              country: info['País'],
-              area_ha: info['ÁreaOficialha'],
+              name: data.features[0].attributes['tis.nombre'],
+              country: data.features[0].attributes['tis.pais'],
+              area_ha: data.features[0].attributes['tis.area_oficial_ha'].toLocaleString(),
             }
           }
           this.infowindow = new CustomInfowindow(this.location.latlng, this.map, infoWindowOptions);
         }, this ));
 
-        $.ajax({
-          type:"GET",
-          headers: { 'origin': 'localhost' },
-          url: this.infowindowUrl,
-          success: function(data) {
-            console.log(data)
-          }
-        });
 
       }, this ));
 
-    },
-
-    xmlToJson: function(xml) {
-      // Create the return object
-      var obj = {};
-
-      if (xml.nodeType == 1) { // element
-        // do attributes
-        if (xml.attributes.length > 0) {
-        obj["attrs"] = {};
-          for (var j = 0; j < xml.attributes.length; j++) {
-            var attribute = xml.attributes.item(j);
-            obj["attrs"][attribute.nodeName] = attribute.nodeValue;
-          }
-        }
-      } else if (xml.nodeType == 3) { // text
-        obj = xml.nodeValue;
-      }
-
-      // do children
-      if (xml.hasChildNodes()) {
-        for(var i = 0; i < xml.childNodes.length; i++) {
-          var item = xml.childNodes.item(i);
-          var nodeName = item.nodeName;
-          if (typeof(obj[nodeName]) == "undefined") {
-            obj[nodeName] = this.xmlToJson(item);
-          } else {
-            if (typeof(obj[nodeName].push) == "undefined") {
-              var old = obj[nodeName];
-              obj[nodeName] = [];
-              obj[nodeName].push(old);
-            }
-            obj[nodeName].push(this.xmlToJson(item));
-          }
-        }
-      }
-      return obj;
     },
 
   });
