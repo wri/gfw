@@ -24,22 +24,7 @@ define([
     wmsUrl += '&SRS=EPSG%3A3857';
 
 
-  var wmsInfowindowUrl = 'http://gisserver.socioambiental.org:6080/arcgis/services/raisg/raisg_tis/MapServer/WMSServer?';
-
-  wmsInfowindowUrl += '&service=WMS';
-  wmsInfowindowUrl += '&version=1.1.1';
-  wmsInfowindowUrl += '&request=GetFeatureInfo';
-  wmsInfowindowUrl += '&layers=0';
-  wmsInfowindowUrl += '&styles=default';
-  wmsInfowindowUrl += '&SRS=EPSG:4326';
-  wmsInfowindowUrl += '&bbox={bbox}';
-  wmsInfowindowUrl += '&width=1044';
-  wmsInfowindowUrl += '&height=906';
-  wmsInfowindowUrl += '&format=text/xml';
-  wmsInfowindowUrl += '&X={longitude}';
-  wmsInfowindowUrl += '&Y={latitude}';
-  wmsInfowindowUrl += '&query_layers=0';
-  wmsInfowindowUrl += '&Origin=0';
+  var wmsInfowindowUrl = 'http://gisserver.socioambiental.org:6080/arcgis/rest/services/raisg/raisg_tis/MapServer/3/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=tis.pais,tis.categoria,tis.nombre,tis.status,tis.etnias,tis.no_habitantes,tis.fuente_data_habitantes,tis.norma,tis.fecha_norma,tis.fecha_ultima_atualizacion_norma,tis.area_oficial_ha,tis.institucionraisg,tis.fuente,tis.fecha_atualizacion_dato,tis.leyenda,tis.codigo_tis&geometryType=esriGeometryPoint&geometry={longitude},{latitude}';
 
 
   var RaisgLayer = WMSLayerClass.extend({
@@ -51,7 +36,7 @@ define([
 
     getQuery: function(_longitude, _latitude, _bbox) {
       return new UriTemplate(wmsInfowindowUrl)
-        .fillFromObject({ longitude: _longitude, latitude: _latitude, bbox: _bbox });
+        .fillFromObject({ longitude: _longitude, latitude: _latitude});
     }
 
 
