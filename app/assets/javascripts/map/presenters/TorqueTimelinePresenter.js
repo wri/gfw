@@ -34,7 +34,6 @@ define([
     },
 
     setTorqueDate: function(date) {
-      this.setTorqueDateRange([date,date]);
       mps.publish('Timeline/date-change', [this.view.getName(), date]);
     },
 
