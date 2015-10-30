@@ -7,13 +7,13 @@
  */
 define([
   'underscore', 'backbone', 'moment', 'd3', 'handlebars',
-  'abstract/timeline/TorqueTimelineSlider',
+  'abstract/timeline/TorqueTimelineSlider', 'abstract/timeline/TorqueTimelineDatePicker',
   'map/presenters/TorqueTimelinePresenter',
   'text!templates/timelineTorque.handlebars',
   'text!templates/timelineTorque-controls.handlebars'
 ], function(
   _, Backbone, moment, d3, Handlebars,
-  TorqueTimelineSlider,
+  TorqueTimelineSlider, TorqueTimelineDatePicker,
   Presenter,
   tpl, controlsTpl) {
 
@@ -64,6 +64,7 @@ define([
 
       this.renderControls();
       this.renderDate();
+      this.renderDatePicker();
       this.renderSlider();
 
       this.delegateEvents();
@@ -93,6 +94,14 @@ define([
 
     renderDate: function() {
       this.$('.timeline-date').html(this.status.formattedDate());
+    },
+
+    renderDatePicker: function() {
+      var datePicker = new TorqueTimelineDatePicker({
+        presenter: this.presenter,
+        dateRange: this.bounds
+      });
+      this.$el.prepend(datePicker.render().el);
     },
 
     _toggleState: function() {

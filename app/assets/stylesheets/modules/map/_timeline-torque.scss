@@ -1,6 +1,30 @@
 .widget-timeline .timeline-year.timeline-torque {
+  padding-left: 10px;
+  width: 900px;
+
+  .timeline-date-pickers {
+    display: inline-block;
+    width: 385px;
+
+    position: relative;
+    top: -22px;
+  }
+
+  .timeline-date-pickers input {
+    width: 100px;
+  }
+
   .slider .handle {
     transform: none;
+  }
+
+  .play {
+    display: inline-block;
+    left: auto;
+  }
+
+  .play:after {
+    right: 100%;
   }
 
   .play .stop-icon {
@@ -19,10 +43,11 @@
   }
 
   .timeline-slider {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: space-between;
 
+    margin-left: 50px;
     width: 450px;
   }
 }

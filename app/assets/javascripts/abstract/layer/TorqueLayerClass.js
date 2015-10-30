@@ -3,12 +3,12 @@
  * @return TorqueLayerClass (extends LayerClass).
  */
 define([
-  'underscore',
+  'underscore', 'moment',
   'abstract/layer/OverlayLayerClass',
   'map/presenters/TorqueLayerPresenter',
   'text!map/cartocss/default_torque_style.cartocss',
   'text!map/queries/default_torque.sql.hbs',
-], function(_, OverlayLayerClass, Presenter, CARTOCSS, SQL) {
+], function(_, moment, OverlayLayerClass, Presenter, CARTOCSS, SQL) {
 
   'use strict';
 
@@ -50,8 +50,12 @@ define([
     },
 
     _getSql: function() {
-      var sqlTemplate = Handlebars.compile(SQL);
-      return sqlTemplate(this.options);
+      var sqlTemplate = Handlebars.compile(SQL),
+          templateOptions = _.extend(this.options, {
+            startDate: moment(this.options.currentDate[0]).toISOString(),
+            endDate: moment(this.options.currentDate[1]).toISOString()
+          });
+      return sqlTemplate(templateOptions);
     },
 
     _getLayer: function() {
