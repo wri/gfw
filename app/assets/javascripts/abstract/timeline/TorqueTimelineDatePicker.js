@@ -6,10 +6,12 @@
 define([
   'underscore', 'backbone', 'moment', 'handlebars', 'picker', 'pickadate',
   'map/presenters/TorqueTimelinePresenter',
+  'map/services/TorqueDateService',
   'text!templates/datePickerTorque.handlebars'
 ], function(
   _, Backbone, moment, Handlebars, Picker, Pickadate,
   Presenter,
+  TorqueDateService,
   tpl) {
 
   'use strict';
@@ -29,12 +31,15 @@ define([
     initialize: function(options) {
       options = options || {};
       this.presenter = options.presenter;
+      this.layer = options.layer;
 
       this.selectedDates = new SelectedDates({
         startDate: moment(options.dateRange.start),
         endDate: moment(options.dateRange.end)
       });
       this.listenTo(this.selectedDates, 'change', this.updateTorque);
+
+      this.retrieveAvailableDates();
     },
 
     render: function() {
@@ -48,14 +53,29 @@ define([
     },
 
     renderPickers: function() {
+      var context = this;
+
       var onPickerRender = function() {
+        // TODO add key for "detection dates"
       };
 
-      var context = this;
+      var onPickerOpen = function() {
+        this.component.disabled = function(dateToVerify) {
+          var date = dateToVerify.obj,
+              dateUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
+          var availableDates = context.getAvailableDates();
+
+          return availableDates.indexOf(dateUTC.getTime()) === -1;
+        };
+
+        this.render();
+      };
+
       this.$('.timeline-date-picker').pickadate({
         selectYears: true,
         selectMonths: true,
         onRender: onPickerRender,
+        onOpen: onPickerOpen,
         onSet: function(event) {
           var id = this.component.$node.attr('id');
           context.selectedDates.set(id, moment(event.select));
@@ -66,6 +86,20 @@ define([
     updateTorque: function() {
       this.presenter.setTorqueDateRange(
         this.selectedDates.getRange());
+    },
+
+    retrieveAvailableDates: function() {
+      this.availableDates = [];
+
+      var torqueDateService = new TorqueDateService(this.layer);
+      torqueDateService.fetchDates().then(function(availableDates) {
+        this.availableDates = availableDates;
+        this.renderPickers();
+      }.bind(this));
+    },
+
+    getAvailableDates: function() {
+      return this.availableDates;
     }
 
   });

@@ -98,6 +98,7 @@ define([
 
     renderDatePicker: function() {
       var datePicker = new TorqueTimelineDatePicker({
+        layer: this.layer,
         presenter: this.presenter,
         dateRange: this.bounds
       });
