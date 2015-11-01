@@ -1,9 +1,3 @@
-/* ==========================================================================
-   $BASE-PICKER
-   ========================================================================== */
-/**
- * Note: the root picker element should *NOT* be styled more than what’s here.
- */
 .picker {
   font-size: 16px;
   text-align: left;
@@ -11,23 +5,36 @@
   color: #000000;
   position: absolute;
   z-index: 10000;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
+
 /**
  * The picker input element.
  */
-.picker__input {
+input.picker__input[type="text"] {
+  font-size: 13px;
+  padding: 0;
+  text-align: center;
+  height: 32px;
   cursor: default;
+  border-color: $cGreen1;
+  border-radius: 20px;
+  color: $cGreen1;
 }
+
 /**
  * When the picker is opened, the input element is “activated”.
  */
-.picker__input.picker__input--active {
-  border-color: #0089ec;
+input.picker__input[type="text"]:hover {
+  cursor: pointer;
 }
+
+input.picker__input[type="text"]:hover,
+input.picker__input[type="text"].picker__input--active {
+  background-color: $cGreen1;
+  color: white;
+}
+
 /**
  * The holder is the only “scrollable” top-level container element.
  */
@@ -41,12 +48,10 @@
  * Classic picker styling for pickadate.js
  * Demo: http://amsul.github.io/pickadate.js
  */
-/**
- * Note: the root picker element should *NOT* be styled more than what’s here.
- */
 .picker {
   width: 100%;
 }
+
 /**
  * The holder is the base of the picker.
  */
@@ -78,9 +83,11 @@
 .picker__frame {
   padding: 1px;
 }
+
 .picker__wrap {
   margin: -1px;
 }
+
 /**
  * When the picker opens...
  */
@@ -224,6 +231,7 @@
   border-right-color: #f5f5f5;
   border-left-color: #f5f5f5;
 }
+
 /**
  * The calendar table of dates
  */

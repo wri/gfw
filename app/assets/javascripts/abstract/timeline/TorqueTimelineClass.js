@@ -76,7 +76,7 @@ define([
           extent: [moment(this.bounds.start).toDate(),
             moment(this.bounds.end).toDate()],
           el: this.$('.timeline-slider svg')[0],
-          width: 350,
+          width: 230,
           height: 50,
           callback: this.setTorqueDate.bind(this)
         });
