@@ -37,9 +37,28 @@
   }
 
   .timeline-date {
-    width: 100px;
-    padding: 0 5px;
-    margin-right: 5px;
+    width: 80px;
+
+    font-size: 12px;
+    color: #97bd3d;
+  }
+
+  .timeline-date-day,
+  .timeline-date-month,
+  .timeline-date-year {
+    display: inline-block;
+  }
+
+  .timeline-date-day {
+    width: 13px;
+  }
+
+  .timeline-date-month {
+    width: 23px;
+  }
+
+  .timeline-date-year {
+    width: 25px;
   }
 
   .timeline-slider {

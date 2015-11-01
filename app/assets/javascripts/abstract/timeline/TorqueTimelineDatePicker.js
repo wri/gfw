@@ -75,6 +75,7 @@ define([
       this.$('.timeline-date-picker').pickadate({
         selectYears: true,
         selectMonths: true,
+        format: 'd mmm yyyy',
         onRender: onPickerRender,
         onOpen: onPickerOpen,
         onSet: function(event) {

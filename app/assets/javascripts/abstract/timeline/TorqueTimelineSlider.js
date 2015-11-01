@@ -8,7 +8,7 @@ define([
   var TorqueTimelineSlider = function(options) {
     options = options || {};
 
-    margin = {top: 0, right: 10, bottom: 0, left: 10},
+    margin = {top: 0, right: 0, bottom: 0, left: 10},
     width = options.width - margin.left - margin.right,
     height = options.height - margin.bottom - margin.top,
 

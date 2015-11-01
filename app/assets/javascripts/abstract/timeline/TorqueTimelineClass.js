@@ -10,12 +10,13 @@ define([
   'abstract/timeline/TorqueTimelineSlider', 'abstract/timeline/TorqueTimelineDatePicker',
   'map/presenters/TorqueTimelinePresenter',
   'text!templates/timelineTorque.handlebars',
-  'text!templates/timelineTorque-controls.handlebars'
+  'text!templates/timelineTorque-controls.handlebars',
+  'text!templates/timelineTorque-date.handlebars'
 ], function(
   _, Backbone, moment, d3, Handlebars,
   TorqueTimelineSlider, TorqueTimelineDatePicker,
   Presenter,
-  tpl, controlsTpl) {
+  tpl, controlsTpl, dateTpl) {
 
   'use strict';
 
@@ -28,11 +29,6 @@ define([
     toggleRunning: function() {
       var running = this.get('running');
       this.set('running', !running);
-    },
-
-    formattedDate: function() {
-      var date = this.get('currentDate');
-      if (date) { return date.format("D MMM YYYY"); }
     }
   });
 
@@ -42,6 +38,7 @@ define([
 
     template: Handlebars.compile(tpl),
     controlsTemplate: Handlebars.compile(controlsTpl),
+    dateTemplate: Handlebars.compile(dateTpl),
 
     events: {
       'click .play': '_toggleState',
@@ -93,7 +90,18 @@ define([
     },
 
     renderDate: function() {
-      this.$('.timeline-date').html(this.status.formattedDate());
+      var date = this.status.get('currentDate');
+      if (!date) { return; }
+
+      var day = date.format('D'),
+          month = date.format('MMM'),
+          year = date.format('YYYY');
+
+      this.$('.timeline-date').html(this.dateTemplate({
+        day: day,
+        month: month,
+        year: year
+      }));
     },
 
     renderDatePicker: function() {
