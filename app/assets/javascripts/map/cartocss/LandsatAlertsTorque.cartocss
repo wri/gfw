@@ -1,0 +1,15 @@
+#layer {
+  comp-op: lighter;
+  marker-fill-opacity: 1;
+  marker-line-color: #FFF;
+  marker-line-width: 0;
+  marker-line-opacity: 1;
+  marker-type: ellipse;
+  marker-width: 1;
+  marker-fill: #F84F40;
+}
+
+#layer[frame-offset=1] {
+ marker-width:3;
+ marker-fill-opacity:0.5;
+}

@@ -8,9 +8,9 @@ define([
   'moment',
   'uri',
   'abstract/layer/TorqueLayerClass',
-  'text!map/cartocss/LandsatAlerts.cartocss',
+  'text!map/cartocss/LandsatAlertsTorque.cartocss',
   'map/presenters/layers/LandsatAlertsLayerPresenter'
-], function(moment, UriTemplate, TorqueLayerClass, LandsatAlertsCartoCSS, Presenter) {
+], function(moment, UriTemplate, TorqueLayerClass, CartoCSS, Presenter) {
 
   'use strict';
 
@@ -19,7 +19,8 @@ define([
     options: {
       table      : 'gfw_landsat_alerts_wkb_short',
       column     : 'date',
-      data_aggregation: 'cumulative'
+      data_aggregation: 'cumulative',
+      cartocss: CartoCSS
     }
 
   });
