@@ -24,6 +24,12 @@ define([
     return this;
   };
 
+  TorqueTimelineSlider.prototype.reScale = function(range) {
+    extent = range.map(function(m) { return m.toDate(); });
+    startingDate = extent[0];
+    this.setupScales();
+  };
+
   TorqueTimelineSlider.prototype.setDate = function(date) {
     brush.extent([date, date]);
     handle.attr("transform", "translate(" + (timeScale(date)-8) + ",0)");

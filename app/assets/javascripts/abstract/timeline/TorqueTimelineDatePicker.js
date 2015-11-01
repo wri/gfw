@@ -32,6 +32,7 @@ define([
       options = options || {};
       this.presenter = options.presenter;
       this.layer = options.layer;
+      this.onChange = options.onChange;
 
       this.selectedDates = new SelectedDates({
         startDate: moment(options.dateRange.start),
@@ -84,8 +85,9 @@ define([
     },
 
     updateTorque: function() {
-      this.presenter.setTorqueDateRange(
-        this.selectedDates.getRange());
+      var dateRange = this.selectedDates.getRange();
+      this.presenter.setTorqueDateRange(dateRange);
+      this.onChange(dateRange)
     },
 
     retrieveAvailableDates: function() {

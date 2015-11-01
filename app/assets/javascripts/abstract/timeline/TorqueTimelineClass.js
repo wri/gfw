@@ -97,10 +97,15 @@ define([
     },
 
     renderDatePicker: function() {
+      var onChange = function(dateRange) {
+        this.slider.reScale(dateRange);
+      };
+
       var datePicker = new TorqueTimelineDatePicker({
         layer: this.layer,
         presenter: this.presenter,
-        dateRange: this.bounds
+        dateRange: this.bounds,
+        onChange: onChange.bind(this)
       });
       this.$el.prepend(datePicker.render().el);
     },
