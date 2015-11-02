@@ -17,7 +17,7 @@ define([
   var LandsatAlertsLayer = TorqueLayerClass.extend({
 
     options: {
-      table      : 'gfw_landsat_alerts_wkb_short',
+      table      : 'gfw_landsat_alerts_test_1',
       column     : 'date',
       data_aggregation: 'cumulative',
       cartocss: CartoCSS
