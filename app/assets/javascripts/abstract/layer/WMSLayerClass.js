@@ -5,9 +5,12 @@
  */
 define([
   'underscore',
+  'amplify',
   'uri',
-  'abstract/layer/OverlayLayerClass'
-], function(_, UriTemplate, OverlayLayerClass) {
+  'abstract/layer/OverlayLayerClass',
+  'map/views/layers/CustomInfowindow',
+
+], function(_, amplify, UriTemplate, OverlayLayerClass, CustomInfowindow) {
 
   'use strict';
 
@@ -73,6 +76,7 @@ define([
   var WMSLayerClass = OverlayLayerClass.extend({
 
     init: function(layer, options, map) {
+      this.map = map;
       this.url = this.options.url;
       this.tiles = layer.tileurl;
       this._super(layer, options, map);
@@ -92,6 +96,7 @@ define([
         name: this.name,
         url: this.tiles
       });
+      this.addClick();
     },
 
     _getTileUrl: function(coord, zoom) {
@@ -113,7 +118,47 @@ define([
       var url = this.url;
       url += "&BBOX=" + lUL_Longitude + "," + lUL_Latitude + "," + lLR_Longitude + "," + lLR_Latitude; // set bounding box
       return url;
-    }
+    },
+
+    addClick: function() {
+      google.maps.event.addListener(this.map, "click", _.bind(function(event) {
+        var projectionMap = new MercatorProjection();
+        this.location = {
+          zoom: this.map.getZoom(),
+          latlng: event.latLng,
+          point: projectionMap.fromLatLngToPoint(event.latLng),
+          setBounds: function() {
+            this.boundL = new google.maps.LatLng(this.latlng.lat()-0.1, this.latlng.lng()-0.1);
+            this.boundR = new google.maps.LatLng(this.latlng.lat()+0.1, this.latlng.lng()+0.1);
+          },
+          setBBox: function() {
+            this.bbox = this.boundL.lng() + "," + this.boundL.lat() + "," + this.boundR.lng() + "," + this.boundR.lat();
+          },
+        }
+        this.location.setBounds();
+        this.location.setBBox();
+        this.location.infowindowUrl = this.getQuery(this.location.latlng.F,this.location.latlng.A);
+
+        $.get(this.location.infowindowUrl).done(_.bind(function(data) {
+          if(this.infowindow) {
+            this.infowindow.remove();
+          }
+          var data = JSON.parse(data);
+          var infoWindowOptions = {
+            offset: [0, 100],
+            infowindowData: {
+              name: data.features[0].attributes['tis.nombre'],
+              country: data.features[0].attributes['tis.pais'],
+              area_ha: data.features[0].attributes['tis.area_oficial_ha'].toLocaleString(),
+            }
+          }
+          this.infowindow = new CustomInfowindow(this.location.latlng, this.map, infoWindowOptions);
+        }, this ));
+
+
+      }, this ));
+
+    },
 
   });
   return WMSLayerClass;
