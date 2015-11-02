@@ -642,35 +642,35 @@
     // *********************
     // Change them with theirs correct logo
     &.genfound {
-      height: 59px; width: 51px; @include logos-sprite(gef);
+      height: 31px; width: 110px; @include logos-sprite(generation);
       &:hover{
-        @include logos-sprite(gefhover);
+        @include logos-sprite(generationhover);
       }
     }
 
     &.mbertoni {
-      height: 40px; width: 110px; @include logos-sprite(mongabay);
+      height: 44px; width: 110px; @include logos-sprite(moises);
       &:hover{
-        @include logos-sprite(mongabayhover);
+        @include logos-sprite(moiseshover);
       }
     }
 
     &.icf {
-      height: 24px; width: 79px; @include logos-sprite(imazon);
+      height: 26px; width: 110px; @include logos-sprite(icf);
       &:hover{
-        @include logos-sprite(imazonhover);
+        @include logos-sprite(icfhover);
       }
     }
+    // *********************
 
     &.urthecast {
-      height: 64px; width: 80px; @include logos-sprite(usaid);
+      height: 23px; width: 110px; @include logos-sprite(urthecast);
       &:hover{
-        @include logos-sprite(usaidhover);
+        @include logos-sprite(urthecasthover);
       }
     }
 
 
-    // *********************
 
     &.bobolink {
       height: 53px; width: 105px; @include logos-sprite(bobolink);
