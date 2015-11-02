@@ -50,11 +50,16 @@ define([
     },
 
     _getSql: function() {
-      var sqlTemplate = Handlebars.compile(SQL),
-          templateOptions = _.extend(this.options, {
-            startDate: moment(this.options.currentDate[0]).toISOString(),
-            endDate: moment(this.options.currentDate[1]).toISOString()
-          });
+      var sqlTemplate = Handlebars.compile(SQL);
+
+      var templateOptions = this.options;
+      if (this.options.currentDate !== undefined) {
+        templateOptions = _.extend(this.options, {
+          startDate: moment(this.options.currentDate[0]).toISOString(),
+          endDate: moment(this.options.currentDate[1]).toISOString()
+        });
+      }
+
       return sqlTemplate(templateOptions);
     },
 

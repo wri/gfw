@@ -46,6 +46,8 @@ define([
 
     initialize: function(layer, currentDate) {
       this.layer = layer;
+      this.currentDate = _.compact(currentDate).map(
+        function(c) { return moment(c); });
 
       this.status = new TimelineStatus();
 
@@ -107,15 +109,16 @@ define([
     renderDatePicker: function() {
       var onChange = function(dateRange) {
         this.slider.reScale(dateRange);
+        this.currentDate = dateRange;
       };
 
-      var datePicker = new TorqueTimelineDatePicker({
+      this.datePicker = new TorqueTimelineDatePicker({
         layer: this.layer,
         presenter: this.presenter,
         dateRange: this.bounds,
         onChange: onChange.bind(this)
       });
-      this.$el.prepend(datePicker.render().el);
+      this.$el.prepend(this.datePicker.render().el);
     },
 
     _toggleState: function() {
@@ -153,15 +156,19 @@ define([
      * *range*, for use in Place params.
      */
     getCurrentDate: function() {
-      return [
-        moment(this.layer.mindate),
-        moment(this.layer.maxdate || undefined)
-      ];
+      if (this.currentDate !== undefined && this.currentDate.length > 0) {
+        return this.currentDate;
+      } else {
+        return [
+          moment(this.layer.mindate),
+          moment(this.layer.maxdate || undefined)
+        ];
+      }
     },
 
     getName: function() {
       return this.layer.slug;
-    },
+    }
 
   });
 

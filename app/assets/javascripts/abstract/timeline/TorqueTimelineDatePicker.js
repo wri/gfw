@@ -87,8 +87,8 @@ define([
 
     updateTorque: function() {
       var dateRange = this.selectedDates.getRange();
+      this.onChange(dateRange);
       this.presenter.setTorqueDateRange(dateRange);
-      this.onChange(dateRange)
     },
 
     retrieveAvailableDates: function() {
