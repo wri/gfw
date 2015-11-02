@@ -73,6 +73,7 @@ define([
       };
 
       this.$('.timeline-date-picker').pickadate({
+        today: 'Jump to Today',
         selectYears: true,
         selectMonths: true,
         format: 'd mmm yyyy',
