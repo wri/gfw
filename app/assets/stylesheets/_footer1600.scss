@@ -639,6 +639,39 @@
       }
     }
 
+    // *********************
+    // Change them with theirs correct logo
+    &.genfound {
+      height: 59px; width: 51px; @include logos-sprite(gef);
+      &:hover{
+        @include logos-sprite(gefhover);
+      }
+    }
+
+    &.mbertoni {
+      height: 40px; width: 110px; @include logos-sprite(mongabay);
+      &:hover{
+        @include logos-sprite(mongabayhover);
+      }
+    }
+
+    &.icf {
+      height: 24px; width: 79px; @include logos-sprite(imazon);
+      &:hover{
+        @include logos-sprite(imazonhover);
+      }
+    }
+
+    &.urthecast {
+      height: 64px; width: 80px; @include logos-sprite(usaid);
+      &:hover{
+        @include logos-sprite(usaidhover);
+      }
+    }
+
+
+    // *********************
+
     &.bobolink {
       height: 53px; width: 105px; @include logos-sprite(bobolink);
     }
