@@ -6,9 +6,6 @@
   position: absolute;
   z-index: 10000;
   user-select: none;
-
-  left: 10px;
-  top: 45px;
 }
 
 input.picker__input[type="text"] {
@@ -43,7 +40,8 @@ input.picker__input[type="text"].picker__input--active {
 
   outline: none;
   position: absolute;
-  bottom: 50px;
+  left: -225px;
+  bottom: 5px;
   background: #ffffff;
   border: 1px solid #aaaaaa;
   border-top-width: 0;
