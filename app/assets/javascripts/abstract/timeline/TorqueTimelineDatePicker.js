@@ -19,6 +19,18 @@ define([
   var SelectedDates = Backbone.Model.extend({
     getRange: function() {
       return [this.get('startDate'), this.get('endDate')];
+    },
+
+    setDate: function(id, date) {
+      if (id === 'startDate') {
+        var otherDate = this.get('endDate');
+        if (date.isAfter(otherDate)) { return; }
+      } else if (id === 'endDate') {
+        var otherDate = this.get('startDate');
+        if (date.isBefore(otherDate)) { return; }
+      }
+
+      this.set(id, date);
     }
   });
 
@@ -61,13 +73,30 @@ define([
       };
 
       var onPickerOpen = function() {
+        // Use disabled dates to highlight what days have data
         this.component.disabled = function(dateToVerify) {
           var date = dateToVerify.obj,
               dateUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
           var availableDates = context.getAvailableDates();
 
-          return availableDates.indexOf(dateUTC.getTime()) === -1;
-        };
+          if (availableDates.indexOf(dateUTC.getTime()) > -1) {
+            // Disabled dates to prevent inverted selected dates
+            //   e.g. picking 6/09 for start, and 4/09 for end
+            var id = this.component.$node.attr('id');
+            date = moment(date);
+
+            if (id === 'startDate') {
+              var endDate = context.selectedDates.get('endDate');
+              return (date.isAfter(endDate));
+            } else if (id === 'endDate') {
+              var startDate = context.selectedDates.get('startDate');
+              return (date.isBefore(startDate));
+            }
+            return false;
+          } else {
+            return true;
+          }
+        }.bind(this);
 
         this.render();
       };
@@ -84,7 +113,7 @@ define([
         onSet: function(event) {
           if (event.select !== undefined) {
             var id = this.component.$node.attr('id');
-            context.selectedDates.set(id, moment(event.select));
+            context.selectedDates.setDate(id, moment(event.select));
           }
         }
       });
