@@ -21,6 +21,7 @@ define([
       'Timeline/date-change': function(layerName, date) {
         if (this.view.getName() === layerName) {
           this.view.setDate(date);
+          this.view.stop();
         }
       },
       'Timeline/date-range-change': function(layerName, dates) {
@@ -41,6 +42,10 @@ define([
 
     animationStarted: function(bounds) {
       mps.publish('Torque/started', [bounds]);
+    },
+
+    animationStopped: function(bounds) {
+      mps.publish('Torque/stopped', []);
     },
 
     updateTimelineDate: function(change) {

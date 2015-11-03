@@ -122,6 +122,7 @@ define([
 
     stop: function() {
       this.torqueLayer.pause();
+      this.presenter.animationStopped();
     },
 
     removeLayer: function() {

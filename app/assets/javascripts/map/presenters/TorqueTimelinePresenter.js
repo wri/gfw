@@ -26,6 +26,10 @@ define([
       'Torque/started': function(bounds) {
         this.view.setBounds(bounds);
         this.view.render();
+      },
+
+      'Torque/stopped': function() {
+        this.view._onTorqueStop();
       }
     }],
 

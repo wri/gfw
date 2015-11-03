@@ -121,6 +121,11 @@ define([
       this.$el.prepend(this.datePicker.render().el);
     },
 
+    _onTorqueStop: function() {
+      this.status.set('running', false);
+      this.renderControls();
+    },
+
     _toggleState: function() {
       this.presenter.togglePlaying();
 
