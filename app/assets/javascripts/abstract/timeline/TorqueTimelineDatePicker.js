@@ -74,6 +74,8 @@ define([
 
       this.$('.timeline-date-picker').pickadate({
         today: 'Jump to Today',
+        min: moment(this.layer.mindate).toDate(),
+        max: moment(this.layer.maxdate).toDate() || moment().toDate(),
         selectYears: true,
         selectMonths: true,
         format: 'd mmm yyyy',
