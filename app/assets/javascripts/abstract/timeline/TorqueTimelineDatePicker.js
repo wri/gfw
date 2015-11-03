@@ -7,12 +7,13 @@ define([
   'underscore', 'backbone', 'moment', 'handlebars', 'picker', 'pickadate',
   'map/presenters/TorqueTimelinePresenter',
   'map/services/TorqueDateService',
-  'text!templates/datePickerTorque.handlebars'
+  'text!templates/datePickerTorque.handlebars',
+  'text!templates/datePickerTorque-legend.handlebars'
 ], function(
   _, Backbone, moment, Handlebars, Picker, Pickadate,
   Presenter,
   TorqueDateService,
-  tpl) {
+  tpl, legendTpl) {
 
   'use strict';
 
@@ -39,6 +40,7 @@ define([
     className: 'timeline-date-pickers',
 
     template: Handlebars.compile(tpl),
+    legendTemplate: Handlebars.compile(legendTpl),
 
     initialize: function(options) {
       options = options || {};
@@ -69,7 +71,8 @@ define([
       var context = this;
 
       var onPickerRender = function() {
-        // TODO add key for "detection dates"
+        var $footer = this.$root.find('.picker__footer');
+        $footer.prepend(context.legendTemplate());
       };
 
       var onPickerOpen = function() {

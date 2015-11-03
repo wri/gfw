@@ -275,13 +275,14 @@ input.picker__input[type="text"].picker__input--active {
 .picker__button--today {
   border: 1px solid #ffffff;
   background: #ffffff;
-  font-size: .8em;
+  font-size: 12px;
   padding: 10px 0;
   width: 33%;
   display: inline-block;
   vertical-align: bottom;
   float: right;
   color: #aaa;
+  text-align: right;
 }
 
 .picker__button--today:hover {
@@ -297,4 +298,20 @@ input.picker__input[type="text"].picker__input--active {
 .picker__button--today[disabled]:hover {
   cursor: default;
   color: #aaa;
+}
+
+.picker__legend--detection {
+  position: relative;
+  font-size: 12px;
+  color: $cGreen1;
+  float: left;
+  padding: 13px 0 10px 10px;
+}
+
+.picker__legend--detection:before {
+  content: '\25CF';
+  font-size: 9px;
+  position: absolute;
+  left: 2px;
+  top: 15px;
 }
