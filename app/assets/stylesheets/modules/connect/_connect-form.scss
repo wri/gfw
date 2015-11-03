@@ -1,10 +1,40 @@
 #my-gfw {
-    margin: 50px;
+    margin: 50px auto;
     display: flex;
     align-items: center;
     flex-direction: column;
+    max-width: 485px;
+    color: #555;
+    h2 {
+      font-size: 37px;
+      margin: 0 0 15px;
+      &:first-letter {
+        text-transform: capitalize;
+      }
+    }
+    p {
+      font-size: 19px;
+      line-height: 25px;
+      text-align: center;
+    }
     form {
+      margin: 30px 0 0;
       display: flex;
       flex-direction: column;
+      label {
+        text-transform: uppercase;
+        font-size: 13px;
+        font-weight: 500;
+        margin: 0 0 8px;
+      }
+      input:not([type="radio"]),
+      select {
+        line-height: 35px;
+        padding: 0 0 0 6px;
+        font-size: 15px;
+        border-radius: 3px;
+        border: 1px solid #CCCCCC;
+        margin: 0 0 25px;
+      }
     }
 }
