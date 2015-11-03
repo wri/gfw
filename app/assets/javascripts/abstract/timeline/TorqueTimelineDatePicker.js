@@ -80,8 +80,10 @@ define([
         onRender: onPickerRender,
         onOpen: onPickerOpen,
         onSet: function(event) {
-          var id = this.component.$node.attr('id');
-          context.selectedDates.set(id, moment(event.select));
+          if (event.select !== undefined) {
+            var id = this.component.$node.attr('id');
+            context.selectedDates.set(id, moment(event.select));
+          }
         }
       });
     },
