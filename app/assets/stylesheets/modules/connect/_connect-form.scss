@@ -56,20 +56,46 @@
         &.-middle {
           width: 100%;
           &:after {
-            top: 21px;
+            top: 16px;
           }
         }
         &:after {
-          content: "▼";
+          content: "";
+          background-color: #555;
+          -webkit-mask-image: url("svg-icons/arrow-down.svg");
+          mask-image: url("svg-icons/arrow-down.svg");
           position: absolute;
-          top: 35px;
+          top: 30px;
           right: 8px;
-          bottom: 0;
-          font-size: 100%;
-          line-height: 10px;
-          padding: 0 7px;
           pointer-events: none;
-          height: 10px;
+          height: 15px;
+          width: 26px;
+          transform: scale(0.6);
+        }
+      }
+      .m-improve-gfw {
+        border: 1px solid #97bd3d;
+        padding: 1.2em;
+        border-radius: 5px;
+        p {
+          font-size: 17px;
+        }
+        span {
+          display: flex;
+          justify-content: space-around;
+          color: #ccc;
+          margin: 15px 0;
+          label {
+            cursor: pointer;
+          }
+        }
+      }
+      .m-buttons {
+        display: flex;
+        justify-content: space-around;
+        margin: 25px 0;
+        .btn {
+          width: 30%;
         }
       }
     }
