@@ -92,7 +92,7 @@ define([
       gtm_forest_density: Handlebars.compile(gtm_forest_densityTpl),
       khm_eco_land_conc: Handlebars.compile(khm_eco_land_concTpl),
       usa_forest_ownership: Handlebars.compile(usa_forest_ownershipTpl),
-      guyra_deforestation:Handlebars.compile(guyra_deforestationTpl),
+      guyra:Handlebars.compile(guyra_deforestationTpl),
 
     },
 

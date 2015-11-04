@@ -548,7 +548,7 @@ define([
     urthe: {
       view: UrthecastLayer
     },
-    guyra_deforestation: {
+    guyra: {
       view: GuyraLayer,
       timelineView: GuyraTimeline
     },

@@ -113,7 +113,7 @@ define([
       "imazon_cover",
       "modis_cover",
       // FOREST CHANGE
-      "guyra_deforestation",
+      "guyra",
       "terrailoss",
       "fires",
       "modis",
