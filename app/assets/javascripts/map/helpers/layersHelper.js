@@ -102,6 +102,7 @@ define([
   'map/views/layers/KhmProtectedAreasLayer',
   'map/views/layers/KhmEcoLandLayer',
   'map/views/layers/UsaForestOwnershipLayer',
+  'map/views/layers/GuyraLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -115,7 +116,8 @@ define([
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
   'map/views/timeline/ProdesTimeline',
-  'map/views/timeline/LandsatAlertsTorqueTimeline'
+  'map/views/timeline/LandsatAlertsTorqueTimeline',
+  'map/views/timeline/GuyraTimeline'
 ], function(
   // Layer Views
   LossLayer,
@@ -217,6 +219,7 @@ define([
   KhmProtectedAreasLayer,
   KhmEcoLandLayer,
   UsaForestOwnershipLayer,
+  GuyraLayer,
   UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
@@ -229,7 +232,8 @@ define([
   FiresTimeline,
   TerraiTimeline,
   ProdesTimeline,
-  LandsatAlertsTorqueTimeline
+  LandsatAlertsTorqueTimeline,
+  GuyraTimeline
 ) {
 
   'use strict';
@@ -544,6 +548,11 @@ define([
     urthe: {
       view: UrthecastLayer
     },
+    guyra_deforestation: {
+      view: GuyraLayer,
+      timelineView: GuyraTimeline
+    },
+    
     nothing: {
     }
   };
