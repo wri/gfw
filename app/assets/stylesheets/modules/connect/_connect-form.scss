@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    max-width: 485px;
+    max-width: 490px;
     color: #555;
     h2 {
       font-size: 37px;
@@ -29,12 +29,48 @@
       }
       input:not([type="radio"]),
       select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
         line-height: 35px;
         padding: 0 0 0 6px;
         font-size: 15px;
         border-radius: 3px;
         border: 1px solid #CCCCCC;
         margin: 0 0 25px;
+      }
+      select {
+        height: 37px;
+        background-color: #fff;
+        color: #aaa;
+        display: block;
+        width: 100%;
+        margin: 6px 0 16px 0;
+      }
+      select::-ms-expand { /* for IE 11 */
+          display: none;
+      }
+      .m-sel-container {
+        position: relative;
+        display: inline-block;
+        &.-middle {
+          width: 100%;
+          &:after {
+            top: 21px;
+          }
+        }
+        &:after {
+          content: "▼";
+          position: absolute;
+          top: 35px;
+          right: 8px;
+          bottom: 0;
+          font-size: 100%;
+          line-height: 10px;
+          padding: 0 7px;
+          pointer-events: none;
+          height: 10px;
+        }
       }
     }
 }
