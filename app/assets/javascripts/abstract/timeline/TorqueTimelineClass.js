@@ -7,15 +7,16 @@
  */
 define([
   'underscore', 'backbone', 'moment', 'd3', 'handlebars',
-  'abstract/timeline/TorqueTimelineSlider',
+  'abstract/timeline/TorqueTimelineSlider', 'abstract/timeline/TorqueTimelineDatePicker',
   'map/presenters/TorqueTimelinePresenter',
   'text!templates/timelineTorque.handlebars',
-  'text!templates/timelineTorque-controls.handlebars'
+  'text!templates/timelineTorque-controls.handlebars',
+  'text!templates/timelineTorque-date.handlebars'
 ], function(
   _, Backbone, moment, d3, Handlebars,
-  TorqueTimelineSlider,
+  TorqueTimelineSlider, TorqueTimelineDatePicker,
   Presenter,
-  tpl, controlsTpl) {
+  tpl, controlsTpl, dateTpl) {
 
   'use strict';
 
@@ -28,11 +29,6 @@ define([
     toggleRunning: function() {
       var running = this.get('running');
       this.set('running', !running);
-    },
-
-    formattedDate: function() {
-      var date = this.get('currentDate');
-      if (date) { return date.format("D MMM YYYY"); }
     }
   });
 
@@ -42,6 +38,7 @@ define([
 
     template: Handlebars.compile(tpl),
     controlsTemplate: Handlebars.compile(controlsTpl),
+    dateTemplate: Handlebars.compile(dateTpl),
 
     events: {
       'click .play': '_toggleState',
@@ -49,6 +46,8 @@ define([
 
     initialize: function(layer, currentDate) {
       this.layer = layer;
+      this.currentDate = _.compact(currentDate).map(
+        function(c) { return moment(c); });
 
       this.status = new TimelineStatus();
 
@@ -64,6 +63,7 @@ define([
 
       this.renderControls();
       this.renderDate();
+      this.renderDatePicker();
       this.renderSlider();
 
       this.delegateEvents();
@@ -74,11 +74,11 @@ define([
     renderSlider: function() {
       if (this.slider === undefined) {
         this.slider = new TorqueTimelineSlider({
-          startingDate: this.getCurrentDate().toDate(),
+          startingDate: this.getCurrentTimelineDate().toDate(),
           extent: [moment(this.bounds.start).toDate(),
             moment(this.bounds.end).toDate()],
           el: this.$('.timeline-slider svg')[0],
-          width: 350,
+          width: 230,
           height: 50,
           callback: this.setTorqueDate.bind(this)
         });
@@ -92,7 +92,38 @@ define([
     },
 
     renderDate: function() {
-      this.$('.timeline-date').html(this.status.formattedDate());
+      var date = this.status.get('currentDate');
+      if (!date) { return; }
+
+      var day = date.format('D'),
+          month = date.format('MMM'),
+          year = date.format('YYYY');
+
+      this.$('.timeline-date').html(this.dateTemplate({
+        day: day,
+        month: month,
+        year: year
+      }));
+    },
+
+    renderDatePicker: function() {
+      var onChange = function(dateRange) {
+        this.slider.reScale(dateRange);
+        this.currentDate = dateRange;
+      };
+
+      this.datePicker = new TorqueTimelineDatePicker({
+        layer: this.layer,
+        presenter: this.presenter,
+        dateRange: this.bounds,
+        onChange: onChange.bind(this)
+      });
+      this.$el.prepend(this.datePicker.render().el);
+    },
+
+    _onTorqueStop: function() {
+      this.status.set('running', false);
+      this.renderControls();
     },
 
     _toggleState: function() {
@@ -121,13 +152,27 @@ define([
       }
     },
 
-    getCurrentDate: function() {
-      var currentDate = this.status.get('currentDate');
-      if (!currentDate) {
-        currentDate = moment(this.layer.mindate);
-      }
+    getCurrentTimelineDate: function() {
+      return this.status.get('currentDate') || moment(this.layer.mindate);
+    },
 
-      return currentDate;
+    /*
+     * Despite what the name implies, this actually returns a date
+     * *range*, for use in Place params.
+     */
+    getCurrentDate: function() {
+      if (this.currentDate !== undefined && this.currentDate.length > 0) {
+        return this.currentDate;
+      } else {
+        return [
+          moment(this.layer.mindate),
+          moment(this.layer.maxdate || undefined)
+        ];
+      }
+    },
+
+    getName: function() {
+      return this.layer.slug;
     }
 
   });

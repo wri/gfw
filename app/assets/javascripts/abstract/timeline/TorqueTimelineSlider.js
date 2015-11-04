@@ -8,7 +8,7 @@ define([
   var TorqueTimelineSlider = function(options) {
     options = options || {};
 
-    margin = {top: 0, right: 10, bottom: 0, left: 10},
+    margin = {top: 0, right: 0, bottom: 0, left: 10},
     width = options.width - margin.left - margin.right,
     height = options.height - margin.bottom - margin.top,
 
@@ -22,6 +22,12 @@ define([
     this.render();
 
     return this;
+  };
+
+  TorqueTimelineSlider.prototype.reScale = function(range) {
+    extent = range.map(function(m) { return m.toDate(); });
+    startingDate = extent[0];
+    this.setupScales();
   };
 
   TorqueTimelineSlider.prototype.setDate = function(date) {

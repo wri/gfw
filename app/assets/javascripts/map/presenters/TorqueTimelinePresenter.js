@@ -26,11 +26,20 @@ define([
       'Torque/started': function(bounds) {
         this.view.setBounds(bounds);
         this.view.render();
+      },
+
+      'Torque/stopped': function() {
+        this.view._onTorqueStop();
       }
     }],
 
+    setTorqueDateRange: function(dates) {
+      mps.publish('Timeline/date-range-change', [this.view.getName(), dates]);
+      mps.publish('Place/update', [{go: false}]);
+    },
+
     setTorqueDate: function(date) {
-      mps.publish('Timeline/date-change', [date]);
+      mps.publish('Timeline/date-change', [this.view.getName(), date]);
     },
 
     togglePlaying: function() {

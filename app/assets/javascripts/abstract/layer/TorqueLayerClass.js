@@ -3,11 +3,12 @@
  * @return TorqueLayerClass (extends LayerClass).
  */
 define([
-  'underscore',
+  'underscore', 'moment',
   'abstract/layer/OverlayLayerClass',
   'map/presenters/TorqueLayerPresenter',
-  'text!map/cartocss/default_torque_style.cartocss'
-], function(_, OverlayLayerClass, Presenter, CARTOCSS) {
+  'text!map/cartocss/default_torque_style.cartocss',
+  'text!map/queries/default_torque.sql.hbs',
+], function(_, moment, OverlayLayerClass, Presenter, CARTOCSS, SQL) {
 
   'use strict';
 
@@ -36,6 +37,7 @@ define([
       this._validateOptions();
       this.presenter = new Presenter(this);
 
+      this.options = _.extend(this.options, options);
       this._super(layer, options, map);
     },
 
@@ -47,12 +49,26 @@ define([
       }, this);
     },
 
+    _getSql: function() {
+      var sqlTemplate = Handlebars.compile(SQL);
+
+      var templateOptions = this.options;
+      if (this.options.currentDate !== undefined) {
+        templateOptions = _.extend(this.options, {
+          startDate: moment(this.options.currentDate[0]).toISOString(),
+          endDate: moment(this.options.currentDate[1]).toISOString()
+        });
+      }
+
+      return sqlTemplate(templateOptions);
+    },
+
     _getLayer: function() {
       var deferred = new $.Deferred();
 
       var torqueOptions = _.extend(this.options, {
-          name: this.name, map: this.map}),
-        torqueLayer = this.torqueLayer = new torque.GMapsTorqueLayer(torqueOptions);
+        name: this.name, map: this.map, sql: this._getSql()});
+      var torqueLayer = this.torqueLayer = new torque.GMapsTorqueLayer(torqueOptions);
 
       torqueLayer.on('change:time', this._handleStart(deferred));
       torqueLayer.on('change:time', this._handleTimeStep);
@@ -86,6 +102,11 @@ define([
       return handler;
     },
 
+    setDateRange: function(dates) {
+      this.options.currentDate = dates;
+      this.torqueLayer.setSQL(this._getSql());
+    },
+
     setDate: function(date) {
       var step = Math.round(this.torqueLayer.timeToStep(date.getTime()))
       this.torqueLayer.setStep(step);
@@ -101,6 +122,7 @@ define([
 
     stop: function() {
       this.torqueLayer.pause();
+      this.presenter.animationStopped();
     },
 
     removeLayer: function() {
