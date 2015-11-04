@@ -1,12 +1,11 @@
 .widget-timeline .timeline-year.timeline-torque {
   padding-left: 10px;
-  width: 735px;
 
   .timeline-date-pickers {
     display: inline-flex;
     align-items: center;
 
-    width: 350px;
+    min-width: 350px;
     height: 50px;
 
     font-size: 11px;
