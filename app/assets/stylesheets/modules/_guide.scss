@@ -1,0 +1,68 @@
+.guideMask {
+    background-color: #000;
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    opacity: 0;
+}
+.guideBubble {
+    position: absolute;
+    width: 250px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 10px rgba(0,0,0,.4);
+}
+.guideBubble .intro {
+    padding-bottom: 10px;
+    margin-left: 20px;
+}
+.guideBubble .step {
+    position: absolute;
+    left: 5px;
+    text-align: center;
+    font-weight: bold;
+    top: 8px;
+    background-color: #BBB;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    line-height: 20px;
+}
+.guideBubble-arrow {
+    border: 5px solid white;
+    content:'';
+    position: absolute;
+}
+.guideBubble-arrow.top {
+    top: -10px;
+    border-top-color:transparent;
+    border-right-color:transparent;
+    border-bottom-color:white;
+    border-left-color:transparent;
+}
+.guideBubble-arrow.right {
+    right: -10px;
+    top: 10px;
+    border-top-color:transparent;
+    border-right-color:transparent;
+    border-bottom-color:transparent;
+    border-left-color:white;
+}
+.guideBubble-arrow.bottom {
+    bottom: -10px;
+    border-top-color:white;
+    border-right-color:transparent;
+    border-bottom-color:transparent;
+    border-left-color:transparent;
+}
+.guideBubble-arrow.left {
+    left: -10px;
+    top: 10px;
+    border-top-color:transparent;
+    border-right-color:white;
+    border-bottom-color:transparent;
+    border-left-color:transparent;
+}
