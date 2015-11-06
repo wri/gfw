@@ -111,6 +111,7 @@ define([
       "mongabay",
       "user_stories",
       // FOREST CHANGE
+      "gfw_landsat_alerts_coverage",
       "terraicanvas_cover",
       "forma_cover",
       "imazon_cover",

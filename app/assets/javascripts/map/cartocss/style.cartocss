@@ -48,6 +48,13 @@
     line-color: #FFF;
     line-opacity: 0;
   }
+[layer='gfw_landsat_alerts_extent'] {
+    polygon-fill: #f69;
+    polygon-opacity: 0.3;
+    line-width: 1;
+    line-color: #FFF;
+    line-opacity: 0;
+  }
 //deprecated
   [layer='logging'] {
     polygon-fill: #fecc5c;
