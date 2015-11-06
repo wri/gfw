@@ -639,8 +639,6 @@
       }
     }
 
-    // *********************
-    // Change them with theirs correct logo
     &.genfound {
       height: 31px; width: 110px; @include logos-sprite(generation);
       &:hover{
@@ -661,7 +659,6 @@
         @include logos-sprite(icfhover);
       }
     }
-    // *********************
 
     &.urthecast {
       height: 23px; width: 110px; @include logos-sprite(urthecast);
@@ -670,7 +667,12 @@
       }
     }
 
-
+    &.rtrs {
+      height: 80px; width: 46px; @include logos-sprite(rtrs);
+      &:hover{
+        @include logos-sprite(rtrshover);
+      }
+    }
 
     &.bobolink {
       height: 53px; width: 105px; @include logos-sprite(bobolink);
