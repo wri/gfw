@@ -102,6 +102,7 @@ define([
   'map/views/layers/GtmForestDensityLayer',
   'map/views/layers/LandsatAlertsLayer',
   'map/views/layers/LandsatAlertsTorqueLayer',
+  'map/views/layers/LandsatAlertsCoverLayer',
   'map/views/layers/KhmProtectedAreasLayer',
   'map/views/layers/KhmEcoLandLayer',
   'map/views/layers/UsaForestOwnershipLayer',
@@ -222,6 +223,7 @@ define([
   GtmForestDensityLayer,
   LandsatAlertsLayer,
   LandsatAlertsTorqueLayer,
+  LandsatAlertsCoverLayer,
   KhmProtectedAreasLayer,
   KhmEcoLandLayer,
   UsaForestOwnershipLayer,
@@ -550,6 +552,10 @@ define([
     gfw_landsat_torque_alerts: {
       view: LandsatAlertsTorqueLayer,
       timelineView: LandsatAlertsTorqueTimeline
+    },
+    
+    gfw_landsat_alerts_coverage: {
+      view: LandsatAlertsCoverLayer
     },
     khm_pa: {
       view: KhmProtectedAreasLayer
