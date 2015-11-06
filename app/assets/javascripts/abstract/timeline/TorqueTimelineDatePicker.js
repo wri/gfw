@@ -59,6 +59,7 @@ define([
 
     render: function() {
       this.$el.html(this.template({
+        title: this.layer.title,
         startDate: this.selectedDates.get('startDate'),
         endDate: this.selectedDates.get('endDate')
       }));
