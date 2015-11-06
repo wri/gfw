@@ -76,6 +76,7 @@ define([
       "concesiones_wrapper",
       "concesiones_forestalesNS",
       "concesiones_forestales",
+      "mys_wood_fiber",
       "idn_wood_fiber",
       "cog_wood_fiber",
       "gab_wood_fiber",
@@ -84,6 +85,7 @@ define([
       "lbr_oil_palm",
       "cmr_oil_palm",
       "idn_oil_palm",
+      "mys_oil_palm",
       "oil_palm",
       "can_mining",
       "col_mining",
@@ -101,6 +103,7 @@ define([
       "cmr_logging",
       "cod_logging",
       "cog_logging",
+      "mys_logging",
       "logging",
       "raisg",
       //STORIES

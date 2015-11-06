@@ -28,6 +28,7 @@ define([
   'map/views/layers/IdnLoggingLayer',
   'map/views/layers/LbrLoggingLayer',
   'map/views/layers/CogLoggingLayer',
+  'map/views/layers/MysLoggingLayer',
   'map/views/layers/MiningLayer',
   'map/views/layers/CanMiningLayer',
   'map/views/layers/CmrMiningLayer',
@@ -41,10 +42,12 @@ define([
   'map/views/layers/LbrOilPalmLayer',
   'map/views/layers/CmrOilPalmLayer',
   'map/views/layers/IdnOilPalmLayer',
+  'map/views/layers/MysOilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
   'map/views/layers/GabWoodFiberPlantationsLayer',
   'map/views/layers/CogWoodFiberPlantationsLayer',
   'map/views/layers/IdnWoodFiberPlantationsLayer',
+  'map/views/layers/MysWoodFiberPlantationsLayer',
   'map/views/layers/ProtectedAreasLayer',
   'map/views/layers/ProtectedAreasCDBLayer',
   'map/views/layers/BiodiversityHotspotsLayer',
@@ -145,6 +148,7 @@ define([
   IdnLoggingLayer,
   LbrLoggingLayer,
   CogLoggingLayer,
+  MysLoggingLayer,
   MiningLayer,
   CanMiningLayer,
   CmrMiningLayer,
@@ -158,10 +162,12 @@ define([
   LbrOilPalmLayer,
   CmrOilPalmLayer,
   IdnOilPalmLayer,
+  MysOilPalmLayer,
   WoodFiberPlantationsLayer,
   GabWoodFiberPlantationsLayer,
   CogWoodFiberPlantationsLayer,
   IdnWoodFiberPlantationsLayer,
+  MysWoodFiberPlantationsLayer,
   ProtectedAreasLayer,
   ProtectedAreasCDBLayer,
   BiodiversityHotspotsLayer,
@@ -319,6 +325,9 @@ define([
     cog_logging: {
       view: CogLoggingLayer
     },
+    mys_logging: {
+      view: MysLoggingLayer
+    },
     mining: {
       view: MiningLayer
     },
@@ -358,6 +367,9 @@ define([
     idn_oil_palm: {
       view: IdnOilPalmLayer
     },
+    mys_oil_palm: {
+      view: MysOilPalmLayer
+    },
     wood_fiber_plantations: {
       view: WoodFiberPlantationsLayer
     },
@@ -369,6 +381,9 @@ define([
     },
     idn_wood_fiber: {
       view: IdnWoodFiberPlantationsLayer
+    },
+    mys_wood_fiber: {
+      view: MysWoodFiberPlantationsLayer
     },
     protected_areas: {
       view: ProtectedAreasLayer
