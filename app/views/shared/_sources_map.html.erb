@@ -337,7 +337,7 @@
       <div class='source_header'>
         <strong class='source_title'>GLAD Tree Cover Loss Alerts</strong>
         <i class='expand_arrow'></i>
-        <em class='source_description'>(weekly, 30m, select countries, GLAD/ UMD)</em>
+        <em class='source_description'>(weekly, 30m, select countries, UMD/ GLAD)</em>
       </div>
 
       <div class='source_body'>
@@ -355,8 +355,8 @@
             <dd>Peru, Republic of Congo, and Kalimantan (Indonesia). In the future will expand to cover the humid tropics</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Source data</dt>
-            <dd>Hansen, M.C., Krylov, A., Tyukavina, A., Potapov, P.V., Turubanova, S., Zutta, B., Ifo, S., Margono, B., and Stolle, F. Near-real time forest disturbance alerts using Landsat data. Environmental Research Letters, in review.</dd>
+            <dt>Source</dt>
+            <dd>Hansen, M.C., Krylov, A., Tyukavina, A., Potapov, P.V., Turubanova, S., Zutta, B., Ifo, S., Margono, B., and Stolle, F. Near-real time forest disturbance alerts using Landsat data. <i>Environmental Research Letters</i>, in review.</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Frequency of updates</dt>
@@ -368,7 +368,7 @@
           </dl>
           <dl class='sources_row'>
             <dt>Cautions</dt>
-            <dd><p>While Landsat 7 and 8 satellites together have a revisit period of 8 days, cloud cover can majorly limit the availability of imagery, particularly in the wet season. Alert dates represent the instance of detection, though tree cover loss could have taken place earlier, possibly weeks earlier, due to persistent cloud cover.</p>
+            <dd><p>While Landsat 7 and 8 satellites together have a revisit period of 8 days, cloud cover can majorly limit the availability of imagery, particularly in the wet season. Alert dates represent the instance of detection, though tree cover loss could have taken place weeks earlier due to persistent cloud cover.</p>
 
             <p>In this data set, “tree cover” is defined as all vegetation greater than 5 meters in height with greater than 60% canopy cover, and may take the form of natural forests or plantations. “Loss” indicates the removal or mortality of >=50% of tree cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
 
@@ -380,11 +380,66 @@
           <p>This data set, created by the <a href="http://glad.geog.umd.edu/" target="_blank">GLAD</a> (Global Land Analysis & Discovery) lab at the University of Maryland and supported by Global Forest Watch, is the first Landsat-based alert system for tree cover loss. While most existing loss alert products use 250-meter resolution MODIS imagery, these alerts have a 30-meter resolution and thus can detect loss at a much finer spatial scale. The alerts are currently operational for Peru, the Republic of Congo, and Kalimantan in Indonesia, and will eventually be expanded to the rest of the humid tropics.</p>
           <p>New Landsat 7 and 8 images are downloaded as they are posted online at USGS EROS, assessed for cloud cover or poor data quality, and compared to the three previous years of Landsat-derived metrics (including ranks, means, and regressions of red, infrared and shortwave bands, and ranks of NDVI, NBR, and NDWI). The metrics and the latest Landsat image are run through seven decision trees to calculate a median probability of forest disturbance. Pixels with probability >50% are reported as tree cover loss alerts. Alerts remain unconfirmed until two or more out of four consecutive observations are labelled as tree cover loss. For more information on methodology, see the forthcoming Environmental Research Letters paper.</p>
 
-
-          <p class='credits'><strong>Citation:</strong>Hansen, M.C., Krylov, A., Tyukavina, A., Potapov, P.V., Turubanova, S., Zutta, B., Ifo, S., Margono, B., and Stolle, F., Near-real time forest disturbance alerts using Landsat data, Environmental Research Letters, in review. Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org/" target="_blank">www.globalforestwatch.org</a></p>
-          <p class='credits'>GLAD/UMD, accessed through <a href="http://www.globalforestwatch.org/" target="_blank">Global Forest Watch</a></p>
+          <p class='credits'><strong>Source: </strong>GLAD/UMD, accessed through <a href="http://www.globalforestwatch.org/" target="_blank">Global Forest Watch</a></p>
+          <p class='credits'><strong>Citation: </strong>Hansen, M.C., Krylov, A., Tyukavina, A., Potapov, P.V., Turubanova, S., Zutta, B., Ifo, S., Margono, B., and Stolle, F., Near-real time forest disturbance alerts using Landsat data. <i>Environmental Research Letters, in review.</i> Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org/" target="_blank">www.globalforestwatch.org</a></p>
           
-          <p><a href="http://www.osinfor.gob.pe" target="_blank">Learn more or download data</a></p>
+          
+          <p><a href="http://data.globalforestwatch.org/" target="_blank">Learn more or download data</a></p>
+        </div>
+      </div>
+    </li>
+    <li id='gfw_landsat_torque_alerts' class='source-item last'>
+      <div class='source_header'>
+        <strong class='source_title'>GLAD Tree Cover Loss Alerts</strong>
+        <i class='expand_arrow'></i>
+        <em class='source_description'>(weekly, 30m, select countries, UMD/ GLAD)</em>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Identifies areas of likely tree cover loss in near-real time</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>30 × 30 meters</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Peru, Republic of Congo, and Kalimantan (Indonesia). In the future will expand to cover the humid tropics</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source</dt>
+            <dd>Hansen, M.C., Krylov, A., Tyukavina, A., Potapov, P.V., Turubanova, S., Zutta, B., Ifo, S., Margono, B., and Stolle, F. Near-real time forest disturbance alerts using Landsat data. <i>Environmental Research Letters</i>, in review.</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Frequency of updates</dt>
+            <dd>Updated weekly</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd>January 2015 - present</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd><p>While Landsat 7 and 8 satellites together have a revisit period of 8 days, cloud cover can majorly limit the availability of imagery, particularly in the wet season. Alert dates represent the instance of detection, though tree cover loss could have taken place weeks earlier due to persistent cloud cover.</p>
+
+            <p>In this data set, “tree cover” is defined as all vegetation greater than 5 meters in height with greater than 60% canopy cover, and may take the form of natural forests or plantations. “Loss” indicates the removal or mortality of >=50% of tree cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
+
+            <p>In Peru, where the alert system was first prototyped, the authors evaluated the data to have 13.5% commission error (false positives), though the value drops to 1% when excluding pixels on the boundaries of other loss and unconfirmed alerts. The data has 33% omission errors, though most of these occur in secondary forests where tree cover and other vegetation are more difficult to distinguish. Omission errors in primary forests fall to 17% when excluding pixels on the boundaries of other loss, suggesting that most of the omissions happen on the edges of loss patches.</p></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <p>This data set, created by the <a href="http://glad.geog.umd.edu/" target="_blank">GLAD</a> (Global Land Analysis & Discovery) lab at the University of Maryland and supported by Global Forest Watch, is the first Landsat-based alert system for tree cover loss. While most existing loss alert products use 250-meter resolution MODIS imagery, these alerts have a 30-meter resolution and thus can detect loss at a much finer spatial scale. The alerts are currently operational for Peru, the Republic of Congo, and Kalimantan in Indonesia, and will eventually be expanded to the rest of the humid tropics.</p>
+          <p>New Landsat 7 and 8 images are downloaded as they are posted online at USGS EROS, assessed for cloud cover or poor data quality, and compared to the three previous years of Landsat-derived metrics (including ranks, means, and regressions of red, infrared and shortwave bands, and ranks of NDVI, NBR, and NDWI). The metrics and the latest Landsat image are run through seven decision trees to calculate a median probability of forest disturbance. Pixels with probability >50% are reported as tree cover loss alerts. Alerts remain unconfirmed until two or more out of four consecutive observations are labelled as tree cover loss. For more information on methodology, see the forthcoming Environmental Research Letters paper.</p>
+
+          <p class='credits'><strong>Source: </strong>GLAD/UMD, accessed through <a href="http://www.globalforestwatch.org/" target="_blank">Global Forest Watch</a></p>
+          <p class='credits'><strong>Citation: </strong>Hansen, M.C., Krylov, A., Tyukavina, A., Potapov, P.V., Turubanova, S., Zutta, B., Ifo, S., Margono, B., and Stolle, F., Near-real time forest disturbance alerts using Landsat data. <i>Environmental Research Letters, in review.</i> Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org/" target="_blank">www.globalforestwatch.org</a></p>
+          
+          
+          <p><a href="http://data.globalforestwatch.org/" target="_blank">Learn more or download data</a></p>
         </div>
       </div>
     </li>
@@ -1497,8 +1552,8 @@
             <dd>Global</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Source data</dt>
-            <dd><a href="http://earth.esa.int/instruments/meris/" target="_blank">MERIS</a></dd>
+            <dt>Source</dt>
+            <dd><a href="http://earth.esa.int/instruments/meris/" target="_blank">© ESA 2010 and UCLouvain</a></dd>
           </dl>
           <dl class='sources_row'>
             <dt>Frecuency of updates</dt>
@@ -2292,6 +2347,10 @@
             <dt>Cautions</dt>
             <dd>This map is known to be incomplete and was created from various sources, including Environmental Impact Assessments (EIAs) and State Forestry Department (SFD) 2010 maps.</dd>
           </dl>
+          <dl class='sources_row even'>
+            <dt>License</dt>
+            <dd><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></dd>
+          </dl>
         </div>
 
         <div class='source_summary'>
@@ -2561,7 +2620,7 @@
           <h3 class='overview_title'>Overview</h3>
           <p>The mining sector in Cambodia is mostly undeveloped, and active mining enterprises are typically small-scale quarries producing materials for construction, such as laterite, marble, granite, limestone, gravel and sand. There are also thousands of artisanal miners recovering gold and gemstones, often on a seasonal or part-time basis. There is no industrial-scale extraction of minerals, although many exploration licenses have been granted to mining companies and some have reported promising finds of gold. The mining law states that all mining in “national cultural, historical and heritage sites” is prohibited, and mining activities in “protected, reserved or restricted” areas can only be carried out with written permission of the authority responsible. The 2002 Law on Forestry allows mining within the permanent forest estate, however, any proposed mining operation must be the subject of a ‘prior study-evaluation’ by the Ministry of Agriculture, Forestry and Fisheries (MAFF). The legality of mining operations on lands traditionally managed by indigenous people requires clarification.</p>
           <p>This dataset contains data for mining licenses in Cambodia with contract dates starting from 1995 to 2014. Due to the lack of publicly available information, this dataset does not include information on implementation status of mines or change in ownership of mining licenses.</p>
-          <p>LOpen Development Cambodia collected the data from a variety of public domain sources such as the government, non-governmental organizations (NGOs), research institutes, company websites, and news reports.</p>
+          <p>Open Development Cambodia collected the data from a variety of public domain sources such as the government, non-governmental organizations (NGOs), research institutes, company websites, and news reports.</p>
 
           <p class='credits'><strong>Citation:</strong> Open Development Cambodia. “Mining Licenses.” Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org/" target="_blank"></a>www.globalforestwatch.org</p>
 
@@ -3026,9 +3085,9 @@
     </li>
     <li id='mys_wood_fiber' class='source-item'>
       <div class='source_header'>
-        <strong class='source_title'>Sarawak Licenses for Planted Forests</strong>
+        <strong class='source_title'>Sarawak Licenses for Planted Forests (LPFs)</strong>
         <i class='expand_arrow'></i>
-        <em class='source_description'>(LPFs)</em>
+        <em class='source_description'></em>
       </div>
 
       <div class='source_body'>
@@ -3048,7 +3107,7 @@
           </dl>
           <dl class='sources_row even'>
             <dt>Date of content</dt>
-            <dd>2010</dd>
+            <dd>2011</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Cautions</dt>
@@ -4815,9 +4874,9 @@
       <div class='source_body'>
         <div class='source_summary'>
         <h3 class='overview_title'>Overview</h3>
-          <p><a href="http://raisg.socioambiental.org/" target="_blank">RAISG</a> is a network of organizations with the goal of sharing georeferenced socioeconomic data throughout the Amazon Basin. This data set shows the boundaries of indigenous territories in Bolivia, the Brazilian Amazon, the Colombian Amazon, Ecuador, French Guiana, Guyana, the Peruvian Amazon, Suriname, and the Venezuelan Amazon.  The territories are devided into four categories of legal recognition:  "Traditional occupation without legal recognition", "Proposed territorial reserve", "Territorial reserve or intangible zone" and "Recognized indigenous land". Unfortunately, RAISG data is not downloadable or analyzable on Global Forest Watch at this time. To see the data in the original web map, click <a href="http://www3.socioambiental.org/raisg2015/" target="_blank">here.</a></p>
+          <p><a href="http://raisg.socioambiental.org/" target="_blank">RAISG</a> is a network of organizations with the goal of sharing georeferenced socioeconomic data throughout the Amazon Basin. This data set shows the boundaries of indigenous territories in Bolivia, the Brazilian Amazon, the Colombian Amazon, Ecuador, French Guiana, Guyana, the Peruvian Amazon, Suriname, and the Venezuelan Amazon.  The territories are devided into four categories of legal recognition:  "Traditional occupation without legal recognition", "Proposed territorial reserve", "Territorial reserve or intangible zone" and "Recognized indigenous land".</a></p>
           <p class='credits'><strong>Credit:</strong>RAISG. “Amazon basin indigenous territories”. Accessed through Global Forest Watch on [date]. <a href=" www.globalforestwatch.org." target="_blank"> www.globalforestwatch.org.</a></p>
-          <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org/datasets/81135c2ad89e4ae2ad94fe7fae4237ec_1' class="download-mobile-link" target='_blank'>Learn more and download data</a></em></p>
+          <p class='read_more hidden'><em><a href='http://www3.socioambiental.org/raisg2015/' class="download-mobile-link" target='_blank'>Visualize the data on the RAISG platform</a></em></p>
         </div>
       </div>
     </li>
