@@ -12,21 +12,37 @@ class ConnectController < ApplicationController
     @user = user
   end
 
-  private
+  def login
+    check_cookie
+    @title = 'My GFW'
+    @desc = 'Explore the status of forests worldwide by layering data to create custom maps of forest change, cover, and use.'
+    @keywords = 'GFW, map, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation'
+    @apiurl = ENV['GFW_API_HOST']
+  end
 
+  private
     def user
       begin
-        puts cookies[:_eauth]
         response = Typhoeus.get("#{ENV['GFW_API_HOST']}/user/session",
             headers: {"Accept" => "application/json","cookie"=>"_eauth="+cookies[:_eauth]}
         )
         if response.success?
+          if response.body.length > 0
             JSON.parse(response.body)
-        else
-          nil
+          else
+            redirect_to '/my_gfw-login'
+          end
         end
       rescue Exception => e
         Rails.logger.error "Error retrieving twitter status: #{e}"
+      end
+    end
+
+    def check_cookie
+      if cookies[:_eauth].nil?
+        nil
+      else
+        redirect_to '/my_gfw'
       end
     end
 end
