@@ -53,6 +53,7 @@ define([
       "bra_land_rights",
       "can_land_rights",
       "cri_land_rights",
+      "nzl_land_rights",
       // CONSERVATION
       "biodiversity_hotspots",
       "verified_carbon",

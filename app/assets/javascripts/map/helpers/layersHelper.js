@@ -62,6 +62,7 @@ define([
   'map/views/layers/BraLandRightsLayer',
   'map/views/layers/CanLandRightsLayer',
   'map/views/layers/CriLandRightsLayer',
+  'map/views/layers/NzlLandRightsLayer',
   'map/views/layers/UserStoriesLayer',
   'map/views/layers/MongabayStoriesLayer',
   'map/views/layers/InfoamazoniaStoriesLayer',
@@ -183,6 +184,7 @@ define([
   BraLandRightsLayer,
   CanLandRightsLayer,
   CriLandRightsLayer,
+  NzlLandRightsLayer,
   UserStoriesLayer,
   MongabayStoriesLayer,
   InfoamazoniaStoriesLayer,
@@ -428,6 +430,9 @@ define([
     },
     cri_land_rights: {
       view: CriLandRightsLayer
+    },
+    nzl_land_rights: {
+      view: NzlLandRightsLayer
     },
     user_stories: {
       view: UserStoriesLayer
