@@ -92,6 +92,14 @@ define([
   'map/views/layers/RaisgLayer',
   'map/views/layers/PlantationsLayerByType',
   'map/views/layers/PlantationsLayerBySpecies',
+  'map/views/layers/BraPlantationsLayerByType',
+  'map/views/layers/BraPlantationsLayerBySpecies',
+  'map/views/layers/PerPlantationsLayerByType',
+  'map/views/layers/PerPlantationsLayerBySpecies',
+  'map/views/layers/LbrPlantationsLayerByType',
+  'map/views/layers/LbrPlantationsLayerBySpecies',
+  'map/views/layers/ColPlantationsLayerByType',
+  'map/views/layers/ColPlantationsLayerBySpecies',
   'map/views/layers/PerBufferLayer',
   'map/views/layers/PerNatPALayer',
   'map/views/layers/PerPrivPALayer',
@@ -214,6 +222,14 @@ define([
   RaisgLayer,
   PlantationsLayerByType,
   PlantationsLayerBySpecies,
+  BraPlantationsLayerByType,
+  BraPlantationsLayerBySpecies,
+  PerPlantationsLayerByType,
+  PerPlantationsLayerBySpecies,
+  LbrPlantationsLayerByType,
+  LbrPlantationsLayerBySpecies,
+  ColPlantationsLayerByType,
+  ColPlantationsLayerBySpecies,
   PerBufferLayer,
   PerNatPALayer,
   PerPrivPALayer,
@@ -522,6 +538,30 @@ define([
     },
     plantations_by_species: {
       view: PlantationsLayerBySpecies
+    },
+    bra_plantations_type: {
+      view: BraPlantationsLayerByType
+    },
+    bra_plantations_species: {
+      view: BraPlantationsLayerBySpecies
+    },
+    per_plantations_type: {
+      view: PerPlantationsLayerByType
+    },
+    per_plantations_species: {
+      view: PerPlantationsLayerBySpecies
+    },
+    lbr_plantations_type: {
+      view: LbrPlantationsLayerByType
+    },
+    lbr_plantations_species: {
+      view: LbrPlantationsLayerBySpecies
+    },
+    col_plantations_type: {
+      view: ColPlantationsLayerByType
+    },
+    col_plantations_species: {
+      view: ColPlantationsLayerBySpecies
     },
     per_buffer: {
       view: PerBufferLayer
