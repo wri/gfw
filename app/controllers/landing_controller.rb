@@ -14,7 +14,6 @@ class LandingController < ApplicationController
 
     fview     = Nokogiri::HTML(open('https://gfw-huggin.herokuapp.com/users/1/web_requests/14/feedviewrss.xml'))
     fview.css('item').each do |i|
-      puts i
       @feedview.push({
         'title' => i.css('title').text,
         'link' => (i.css('gfwid').text.length > 0)? '/stories/'+i.css('gfwid').text : 'https://groups.google.com/forum/#!forum/globalforestwatch',
