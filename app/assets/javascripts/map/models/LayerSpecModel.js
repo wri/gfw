@@ -39,6 +39,14 @@ define([
       "mangrove",
       "plantations_by_type",
       "plantations_by_species",
+      "bra_plantations_by_type",
+      "bra_plantations_by_species",
+      "per_plantations_by_type",
+      "per_plantations_by_species",
+      "lbr_plantations_by_type",
+      "lbr_plantations_by_species",
+      "col_plantations_by_type",
+      "col_plantations_by_species",
       "khm_eco_land_conc",
       "usa_forest_ownership",
       // PEOPLE
@@ -53,6 +61,7 @@ define([
       "bra_land_rights",
       "can_land_rights",
       "cri_land_rights",
+      "nzl_land_rights",
       // CONSERVATION
       "biodiversity_hotspots",
       "verified_carbon",

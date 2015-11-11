@@ -62,6 +62,7 @@ define([
   'map/views/layers/BraLandRightsLayer',
   'map/views/layers/CanLandRightsLayer',
   'map/views/layers/CriLandRightsLayer',
+  'map/views/layers/NzlLandRightsLayer',
   'map/views/layers/UserStoriesLayer',
   'map/views/layers/MongabayStoriesLayer',
   'map/views/layers/InfoamazoniaStoriesLayer',
@@ -91,6 +92,16 @@ define([
   'map/views/layers/RaisgLayer',
   'map/views/layers/PlantationsLayerByType',
   'map/views/layers/PlantationsLayerBySpecies',
+  'map/views/layers/BraPlantationsLayerByType',
+  'map/views/layers/BraPlantationsLayerBySpecies',
+  'map/views/layers/PerPlantationsLayerByType',
+  'map/views/layers/PerPlantationsLayerBySpecies',
+  'map/views/layers/LbrPlantationsLayerByType',
+  'map/views/layers/LbrPlantationsLayerBySpecies',
+  'map/views/layers/ColPlantationsLayerByType',
+  'map/views/layers/ColPlantationsLayerBySpecies',
+  'map/views/layers/KhmPlantationsLayerByType',
+  'map/views/layers/KhmPlantationsLayerBySpecies',
   'map/views/layers/PerBufferLayer',
   'map/views/layers/PerNatPALayer',
   'map/views/layers/PerPrivPALayer',
@@ -183,6 +194,7 @@ define([
   BraLandRightsLayer,
   CanLandRightsLayer,
   CriLandRightsLayer,
+  NzlLandRightsLayer,
   UserStoriesLayer,
   MongabayStoriesLayer,
   InfoamazoniaStoriesLayer,
@@ -212,6 +224,16 @@ define([
   RaisgLayer,
   PlantationsLayerByType,
   PlantationsLayerBySpecies,
+  BraPlantationsLayerByType,
+  BraPlantationsLayerBySpecies,
+  PerPlantationsLayerByType,
+  PerPlantationsLayerBySpecies,
+  LbrPlantationsLayerByType,
+  LbrPlantationsLayerBySpecies,
+  ColPlantationsLayerByType,
+  ColPlantationsLayerBySpecies,
+  KhmPlantationsLayerByType,
+  KhmPlantationsLayerBySpecies,
   PerBufferLayer,
   PerNatPALayer,
   PerPrivPALayer,
@@ -429,6 +451,9 @@ define([
     cri_land_rights: {
       view: CriLandRightsLayer
     },
+    nzl_land_rights: {
+      view: NzlLandRightsLayer
+    },
     user_stories: {
       view: UserStoriesLayer
     },
@@ -517,6 +542,36 @@ define([
     },
     plantations_by_species: {
       view: PlantationsLayerBySpecies
+    },
+    bra_plantations_type: {
+      view: BraPlantationsLayerByType
+    },
+    bra_plantations_species: {
+      view: BraPlantationsLayerBySpecies
+    },
+    per_plantations_type: {
+      view: PerPlantationsLayerByType
+    },
+    per_plantations_species: {
+      view: PerPlantationsLayerBySpecies
+    },
+    lbr_plantations_type: {
+      view: LbrPlantationsLayerByType
+    },
+    lbr_plantations_species: {
+      view: LbrPlantationsLayerBySpecies
+    },
+    col_plantations_type: {
+      view: ColPlantationsLayerByType
+    },
+    col_plantations_species: {
+      view: ColPlantationsLayerBySpecies
+    },
+    khm_plantations_type: {
+      view: KhmPlantationsLayerByType
+    },
+    khm_plantations_species: {
+      view: KhmPlantationsLayerBySpecies
     },
     per_buffer: {
       view: PerBufferLayer
