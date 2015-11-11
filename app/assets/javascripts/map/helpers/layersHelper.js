@@ -100,6 +100,8 @@ define([
   'map/views/layers/LbrPlantationsLayerBySpecies',
   'map/views/layers/ColPlantationsLayerByType',
   'map/views/layers/ColPlantationsLayerBySpecies',
+  'map/views/layers/KhmPlantationsLayerByType',
+  'map/views/layers/KhmPlantationsLayerBySpecies',
   'map/views/layers/PerBufferLayer',
   'map/views/layers/PerNatPALayer',
   'map/views/layers/PerPrivPALayer',
@@ -230,6 +232,8 @@ define([
   LbrPlantationsLayerBySpecies,
   ColPlantationsLayerByType,
   ColPlantationsLayerBySpecies,
+  KhmPlantationsLayerByType,
+  KhmPlantationsLayerBySpecies,
   PerBufferLayer,
   PerNatPALayer,
   PerPrivPALayer,
@@ -562,6 +566,12 @@ define([
     },
     col_plantations_species: {
       view: ColPlantationsLayerBySpecies
+    },
+    khm_plantations_type: {
+      view: KhmPlantationsLayerByType
+    },
+    khm_plantations_species: {
+      view: KhmPlantationsLayerBySpecies
     },
     per_buffer: {
       view: PerBufferLayer
