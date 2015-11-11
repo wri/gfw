@@ -22,6 +22,7 @@ define([
       interactivity: 'cartodb_id, name',
       infowindow: false,
       cartodb_logo: false,
+      raster: false,
       analysis: false
     },
 
@@ -39,7 +40,9 @@ define([
         sublayers: [{
           sql: this.getQuery(),
           cartocss: this.options.cartocss,
-          interactivity: this.options.interactivity
+          interactivity: this.options.interactivity,
+          raster: this.options.raster,
+          raster_band: this.options.raster_band
         }]
       };
 
