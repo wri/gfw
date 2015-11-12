@@ -1,11 +1,11 @@
 #layer {
-  comp-op: lighter;
+  comp-op: overlay;
   marker-fill-opacity: 1;
   marker-type: ellipse;
-  marker-width: 0.5;
   marker-fill: #FF6699;
+  marker-width: 0.5;
 
-  [zoom=15] {
+  [zoom>12] {
     marker-width: 1;
   }
 }
