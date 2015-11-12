@@ -25,7 +25,7 @@ define([
       cartocss: CARTOCSS,
       cartodb_logo: false,
       countby: 'count(cartodb_id)',
-      resolution: 2,
+      resolution: 1,
       steps: 256,
       blendmode  : 'lighter',
       animationDuration: 30
