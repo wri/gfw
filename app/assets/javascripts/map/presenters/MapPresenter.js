@@ -36,7 +36,8 @@ define([
       }
     }, {
       'LayerNav/change': function(layerSpec) {
-        this._setLayers(layerSpec.getLayers());
+        this._setLayers(layerSpec);
+        this._fitToLayers(layerSpec.getLayers());
       }
     }, {
       'Map/fit-bounds': function(bounds) {
@@ -96,25 +97,16 @@ define([
      * @param  {Object} place PlaceService's place object
      */
     _onPlaceGo: function(place) {
-      var layerOptions = {};
-      this._setMapOptions(
-        _.pick(place.params,
-          'zoom', 'maptype', 'lat', 'lng', 'fitbounds', 'geojson', 'dont_scroll'));
+      this._setMapOptions(place);
 
-      if (place.params.begin && place.params.end) {
-        layerOptions.currentDate = [place.params.begin, place.params.end];
-      }
       if (!!place.params.referral) this._publishReferral(place.params.referral);
       this._updateStatusModel(place.params);
-      this._setLayers(place.layerSpec.getLayers(), layerOptions);
+      this._setLayers(place.layerSpec, place.params);
 
       // Very weird my friend (if if if if if if)
       if ((!!place.params.iso && !!place.params.iso.country && place.params.iso.country == 'ALL') && ! !!place.params.wdpaid && ! !!place.params.geojson) {
         this.view.autolocateQuestion();
       }
-
-
-
     },
 
     /**
@@ -140,17 +132,31 @@ define([
     /**
      * Set the map layers to match the suplied layers
      * and the current layer options status.
-     *
-     * @param {object} layers Layers object
      */
-    _setLayers: function(layers, layerOptions) {
+    _setLayers: function(layerSpec, params) {
+      var options = _.pick(this.status.toJSON(), 'threshold');
+      if (params && params.begin && params.end) {
+        options.currentDate = [params.begin, params.end];
+      }
+
       // Get layer options. We need the currentDate just when loading
       // a layer first time from url. When changing between layers
       // there is no date so it will be set to the default layer date.
-      var options = _.extend(_.pick(this.status.toJSON(),
-        'threshold'), layerOptions);
+      var layers = layerSpec.getLayers();
       this.status.set('layers',layers);
       this.view.setLayers(layers, options);
+    },
+
+    _fitToLayers: function(layers) {
+      var layersToFit = _.where(_.values(layers), {fit_to_geom: true}),
+          // Always fit to the most recent layer
+          layerToFit = layersToFit[layersToFit.length - 1];
+
+      var southWest = new google.maps.LatLng(layerToFit.ymin, layerToFit.xmin),
+          northEast = new google.maps.LatLng(layerToFit.ymax, layerToFit.xmax),
+          bounds = new google.maps.LatLngBounds(southWest, northEast);
+
+      this.view.fitBounds(bounds);
     },
 
     /**
@@ -159,10 +165,13 @@ define([
      *
      * @param {Object} params Map params from the place object.
      */
-    _setMapOptions: function(params) {
+    _setMapOptions: function(place) {
+      var params = place.params;
+
       if (params.fitbounds) {
         this.view.fitBounds(geojsonUtilsHelper.getBoundsFromGeojson(params.geojson))
       }
+
       if (!!params.dont_scroll) {
         $('#module-map-controls').addClass('active');
       }
