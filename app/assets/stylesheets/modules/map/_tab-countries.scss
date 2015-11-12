@@ -96,6 +96,8 @@ $letterW: 20px;
         }
         .layers-list{
           border-bottom: none;
+          overflow-y: auto;
+          max-height: 250px;
           li{
             padding-left: 5px;
           }
