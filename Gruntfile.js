@@ -22,17 +22,6 @@ module.exports = function(grunt) {
       }
     },
 
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc',
-        reporter: require('jshint-stylish')
-      },
-      all: [
-        'Gruntfile.js',
-        '<%= root.app %>/javascripts/map/{,*/}{,*/}{,*/}*.js'
-      ]
-    },
-
     jasmine: {
       test: {
         options: {
@@ -60,12 +49,11 @@ module.exports = function(grunt) {
         spawn: false
       },
       test: {
-        files: '<%= jshint.all %>',
+        files: [
+          'Gruntfile.js',
+          '<%= root.app %>/javascripts/map/{,*/}{,*/}{,*/}*.js'
+        ],
         tasks: ['jasmine']
-      },
-      scripts: {
-        files: '<%= jshint.all %>',
-        tasks: ['jshint']
       }
     }
 
@@ -73,13 +61,11 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [
     'connect:server',
-    'jasmine',
-    'jshint'
+    'jasmine'
   ]);
 
   grunt.registerTask('default', [
     'connect:server',
-    'jshint',
     'jasmine',
     'watch'
   ]);

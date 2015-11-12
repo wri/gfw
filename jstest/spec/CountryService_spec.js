@@ -1,6 +1,6 @@
 define([
   'map/services/CountryService',
-  'helpers/api_responses',
+  '../helpers/api_responses.js',
 ], function(service) {
 
   /* global describe, it, expect, beforeEach, jasmine, spyOn */
