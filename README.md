@@ -88,6 +88,17 @@ $ foreman start
 
 Oh, and you should probably launch the [gfw-api](https://github.com/wri/gfw-api) [dev_apperver.py](https://github.com/wri/gfw-api#developing) before you try to visit the site on your local machine.
 
+## Tests
+
+### Front-end
+
+We have a few Javascript tests in `jstest/` which you can (read: should)
+run with Grunt:
+
+```
+grunt test
+```
+
 # License
 
 The MIT License (MIT)

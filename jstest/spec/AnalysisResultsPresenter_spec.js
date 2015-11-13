@@ -3,9 +3,9 @@
  */
 define([
   'underscore',
-  'map/presenters/AnalysisResultsPresenter',
-  'helpers/analysis_service_response',
-  'helpers/layers'
+  'map/presenters/analysis/AnalysisResultsPresenter',
+  '../helpers/analysis_service_response.js',
+  '../helpers/layers.js'
 ], function(_, Presenter) {
   'use strict';
 
@@ -20,7 +20,9 @@ define([
         renderAnalysis: jasmine.createSpy(),
         renderFailure: jasmine.createSpy(),
         renderUnavailable: jasmine.createSpy(),
-        renderLoading: jasmine.createSpy()
+        renderLoading: jasmine.createSpy(),
+        $tab: { addClass: jasmine.createSpy() },
+        toggleSubscribeButton: jasmine.createSpy()
       };
 
       // Subscribe wont be called and events won't be triggered.
@@ -37,9 +39,11 @@ define([
       it('presenter.status is defined correctly', function() {
         expect(presenter.status).toBeDefined();
         expect(presenter.status.toJSON()).toEqual({
-          layerSpec: null,
+          baselayer: null,
+          both: false,
           analysis: false,
-          isoTotalArea: null
+          isoTotalArea: null,
+          resource: null
         });
       });
     });
@@ -54,9 +58,6 @@ define([
       afterEach(function() {
         expect(presenter.status.set).toHaveBeenCalledWith('analysis', true);
         expect(presenter.status.set.calls.count()).toEqual(1);
-
-        expect(viewSpy.model.set).toHaveBeenCalledWith('boxHidden', false);
-        expect(viewSpy.model.set.calls.count()).toEqual(1);
       });
 
       it('should render analysis a valid supplied resource', function() {
@@ -71,29 +72,7 @@ define([
 
       it('should render unavailable message from a unvalid resource', function() {
         presenter._renderResults({unavailable: true});
-        expect(viewSpy.renderUnavailable.calls.count()).toEqual(1);
-      });
-
-      it('should render a spinning gif when loading', function() {
-        presenter._renderResults({loading: true});
-        expect(viewSpy.renderLoading.calls.count()).toEqual(1);
-      });
-    });
-
-    describe('_renderAnalysis()', function() {
-      beforeEach(function() {
-        spyOn(presenter, '_getLayerFromDatasetId').and.returnValue(layers.fires);
-        presenter._renderAnalysis(AnalysisServiceResponse.fires);
-      });
-
-      it('should get the layer object from status.layerSpec', function() {
-        expect(presenter._getLayerFromDatasetId).toHaveBeenCalledWith(
-          AnalysisServiceResponse.fires.meta.id);
-        expect(presenter._getLayerFromDatasetId.calls.count()).toEqual(1);
-      });
-
-      it('should call view.renderAnalysis after getting results html params succesfully', function() {
-        expect(viewSpy.renderAnalysis.calls.count()).toEqual(1);
+        expect(viewSpy.renderFailure.calls.count()).toEqual(1);
       });
     });
 
@@ -104,7 +83,9 @@ define([
 
       it('should set status.analysis to false and hide the widget', function() {
         expect(presenter.status.set).toHaveBeenCalledWith('analysis', false);
-        expect(presenter.status.set.calls.count()).toEqual(1);
+        expect(presenter.status.set).toHaveBeenCalledWith('iso', null);
+        expect(presenter.status.set).toHaveBeenCalledWith('resource', null);
+        expect(presenter.status.set.calls.count()).toEqual(3);
 
         expect(viewSpy.model.set).toHaveBeenCalledWith('boxHidden', true);
         expect(viewSpy.model.set.calls.count()).toEqual(1);

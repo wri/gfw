@@ -2,7 +2,7 @@
  * Unit tests for the UMDLossLayerPresenter class.
  */
 define([
-  'map/presenters/UMDLossLayerPresenter',
+  'map/presenters/layers/UMDLossLayerPresenter',
   'mps',
   'underscore'
 ], function(UMDLossLayerPresenter, mps, _) {

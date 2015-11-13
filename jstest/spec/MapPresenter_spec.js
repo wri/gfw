@@ -5,7 +5,7 @@ define([
   'underscore',
   'mps',
   'map/presenters/MapPresenter',
-  'helpers/baselayers'
+  '../helpers/baselayers.js'
 ], function(_, mps, Presenter) {
 
   describe('MapPresenter', function() {
@@ -52,7 +52,9 @@ define([
       it('presenter.status is defined correctly', function() {
         expect(presenter.status).toBeDefined();
         expect(presenter.status.toJSON()).toEqual({
-          threshold: null
+          threshold: null,
+          layers: null,
+          dont_scroll: null
         });
       });
     });
@@ -93,7 +95,9 @@ define([
         presenter._updateStatusModel(place.params);
 
         expect(presenter.status.toJSON()).toEqual({
-          threshold: 70
+          threshold: 70,
+          dont_scroll: null,
+          layers: null
         });
       });
     });

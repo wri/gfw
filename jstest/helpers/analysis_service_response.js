@@ -1,11 +1,11 @@
 var AnalysisServiceResponse = {
   fires: {
     "apis": {
-      "national": window.gfw.config.GFW_API_HOST + "/nasa-active-fires/admin{/iso}{?period,download,bust,dev}",
-      "subnational": window.gfw.config.GFW_API_HOST + "/nasa-active-fires/admin{/iso}{/id1}{?period,download,bust,dev}",
-      "use": window.gfw.config.GFW_API_HOST + "/nasa-active-fires/use/{/name}{/id}{?period,download,bust,dev}",
-      "wdpa": window.gfw.config.GFW_API_HOST + "/nasa-active-fires/wdpa/{/id}{?period,download,bust,dev}",
-      "world": window.gfw.config.GFW_API_HOST + "/nasa-active-fires{?period,geojson,download,bust,dev}"
+      "national": "http://localhost/nasa-active-fires/admin{/iso}{?period,download,bust,dev}",
+      "subnational": "http://localhost/nasa-active-fires/admin{/iso}{/id1}{?period,download,bust,dev}",
+      "use": "http://localhost/nasa-active-fires/use/{/name}{/id}{?period,download,bust,dev}",
+      "wdpa": "http://localhost/nasa-active-fires/wdpa/{/id}{?period,download,bust,dev}",
+      "world": "http://localhost/nasa-active-fires{?period,geojson,download,bust,dev}"
     },
     "download_urls": {
       "csv": "http://wri-01.cartodb.com/api/v2/sql?q=TODO&format=csv",
