@@ -23,6 +23,9 @@ class ConnectController < ApplicationController
   private
     def user
       begin
+        if !cookies[:_eauth]
+            redirect_to '/my_gfw-login'
+        end
         response = Typhoeus.get("#{ENV['GFW_API_HOST']}/user/session",
             headers: {"Accept" => "application/json","cookie"=>"_eauth="+cookies[:_eauth]}
         )
@@ -30,7 +33,7 @@ class ConnectController < ApplicationController
           if response.body.length > 0
             JSON.parse(response.body)
           else
-            redirect_to '/my_gfw-login'
+            nil
           end
         end
       rescue Exception => e
