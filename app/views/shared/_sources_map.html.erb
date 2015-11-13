@@ -335,32 +335,32 @@
     </li>
 <li id='gfw_landsat_alerts' class='source-item last'>
       <div class='source_header'>
-        <strong class='source_title'>Tree Cover Loss Alerts </strong>
+        <strong class='source_title'>GLAD Tree Cover Loss Alerts</strong>
         <i class='expand_arrow'></i>
-        <em class='source_description'>(weekly, 30m, select countries, Hansen/ UMD)</em>
+        <em class='source_description'>(weekly, 30m, select countries, UMD/ GLAD)</em>
       </div>
 
       <div class='source_body'>
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
-            <dd> Identifies likely areas of tree cover loss in near-real time</dd>
+            <dd>Identifies areas of likely tree cover loss in near-real time</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE</dt>
-            <dd>0.00025 × 0.00025 degrees (27.8 meters at the Equator)</dd>
+            <dd>30 × 30 meters</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Geographic coverage</dt>
-            <dd>Peru, Republic of Congo, and Kalimantan (Indonesia). Eventually will expand to the humid tropics</dd>
+            <dd>Peru, Republic of Congo, and Kalimantan (Indonesia). In the future will expand to cover the humid tropics</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Source data</dt>
-            <dd>N/A</dd>
+            <dt>Source</dt>
+            <dd>Hansen, M.C., Krylov, A., Tyukavina, A., Potapov, P.V., Turubanova, S., Zutta, B., Ifo, S., Margono, B., and Stolle, F. Near-real time forest disturbance alerts using Landsat data. <em>Environmental Research Letters</em>, in review.</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Frequency of updates</dt>
-            <dd> Updated weekly</dd>
+            <dd>Updated weekly</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Date of content</dt>
@@ -368,21 +368,135 @@
           </dl>
           <dl class='sources_row'>
             <dt>Cautions</dt>
-            <dd><p> While Landsat 7 and 8 satellites together have a revisit period of 8 days, cloud cover majorly limits the availability of imagery, particularly in the wet season. Alert dates represent the instance of detection, though tree cover loss could have taken place earlier and been obscured by clouds.</p>
+            <dd><p>While Landsat 7 and 8 satellites together have a revisit period of 8 days, cloud cover can majorly limit the availability of imagery, particularly in the wet season. Alert dates represent the instance of detection, though tree cover loss could have taken place weeks earlier due to persistent cloud cover.</p>
 
-            <p>In this data set, “tree cover” is defined as all vegetation greater than 5 meters in height with greater than 30% canopy cover, and may take the form of natural forests or plantations. “Loss” indicates the removal or mortality of tree cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
+            <p>In this data set, “tree cover” is defined as all vegetation greater than 5 meters in height with greater than 60% canopy cover, and may take the form of natural forests or plantations. “Loss” indicates the removal or mortality of >=50% of tree cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
 
-            <p>In Peru, the authors evaluated the data to have 13.5% commission error (false positives), though the value drops to 1% when excluding pixels on the boundaries of other loss and unconfirmed alerts. The data has 33% omission errors, though most of these occur in secondary forests. Omission errors in primary forests fall to 15% when excluding pixels on the boundaries of other loss and unconfirmed alerts</p></dd>
+            <p>In Peru, where the alert system was first prototyped, the authors evaluated the data to have 13.5% commission error (false positives), though the value drops to 1% when excluding pixels on the boundaries of other loss and unconfirmed alerts. The data has 33% omission errors, though most of these occur in secondary forests where tree cover and other vegetation are more difficult to distinguish. Omission errors in primary forests fall to 17% when excluding pixels on the boundaries of other loss, suggesting that most of the omissions happen on the edges of loss patches.</p></dd>
           </dl>
         </div>
 
         <div class='source_summary'>
-          <p>This data set, created by Matt Hansen and his team at the University of Maryland and supported by Global Forest Watch, is the first Landsat-based alert system for tree cover loss. While most previous loss alert products use 250-meter resolution MODIS imagery, these alerts have a 30-meter resolution and thus can detect loss at a much finer scale. The alerts are currently operational for Peru, the Republic of Congo, and Kalimantan in Indonesia, and will eventually be expanded to the rest of the humid tropics.</p>
-          <p>New Landsat 7 and 8 images are downloaded as they are posted online, assessed for cloud cover or poor data quality, and compared to the three previous years of Landsat-derived metrics (including ranks, means, and regressions of red, infrared and shortwave bands, and ranks of NDVI, NBR, and NDWI). The metrics and the latest Landsat image are run through seven decision trees to calculate a median probability of forest disturbance. Pixels with probability >50% are reported as tree cover loss alerts. Alerts remain unconfirmed until three or more out of six consecutive observations are labelled as tree cover loss. For more information on methodology, see here.</p>
+          <p>This data set, created by the <a href="http://glad.geog.umd.edu/" target="_blank">GLAD</a> (Global Land Analysis & Discovery) lab at the University of Maryland and supported by Global Forest Watch, is the first Landsat-based alert system for tree cover loss. While most existing loss alert products use 250-meter resolution MODIS imagery, these alerts have a 30-meter resolution and thus can detect loss at a much finer spatial scale. The alerts are currently operational for Peru, the Republic of Congo, and Kalimantan in Indonesia, and will eventually be expanded to the rest of the humid tropics.</p>
+          <p>New Landsat 7 and 8 images are downloaded as they are posted online at USGS EROS, assessed for cloud cover or poor data quality, and compared to the three previous years of Landsat-derived metrics (including ranks, means, and regressions of red, infrared and shortwave bands, and ranks of NDVI, NBR, and NDWI). The metrics and the latest Landsat image are run through seven decision trees to calculate a median probability of forest disturbance. Pixels with probability >50% are reported as tree cover loss alerts. Alerts remain unconfirmed until two or more out of four consecutive observations are labelled as tree cover loss. For more information on methodology, see the forthcoming Environmental Research Letters paper.</p>
+
+          <p class='credits'><strong>Source: </strong>GLAD/UMD, accessed through <a href="http://www.globalforestwatch.org/" target="_blank">Global Forest Watch</a></p>
+          <p class='credits'><strong>Citation: </strong>Hansen, M.C., Krylov, A., Tyukavina, A., Potapov, P.V., Turubanova, S., Zutta, B., Ifo, S., Margono, B., and Stolle, F., Near-real time forest disturbance alerts using Landsat data. <em>Environmental Research Letters, in review.</em> Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org/" target="_blank">www.globalforestwatch.org</a></p>
+          
+          
+          <p><a href="http://data.globalforestwatch.org/" target="_blank">Learn more or download data</a></p>
+        </div>
+      </div>
+    </li>
+    <li id='gfw_landsat_torque_alerts' class='source-item last'>
+      <div class='source_header'>
+        <strong class='source_title'>GLAD Tree Cover Loss Alerts</strong>
+        <i class='expand_arrow'></i>
+        <em class='source_description'>(weekly, 30m, select countries, UMD/ GLAD)</em>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Identifies areas of likely tree cover loss in near-real time</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>30 × 30 meters</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Peru, Republic of Congo, and Kalimantan (Indonesia). In the future will expand to cover the humid tropics</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source</dt>
+            <dd>Hansen, M.C., Krylov, A., Tyukavina, A., Potapov, P.V., Turubanova, S., Zutta, B., Ifo, S., Margono, B., and Stolle, F. Near-real time forest disturbance alerts using Landsat data. <em>Environmental Research Letters</em>, in review.</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Frequency of updates</dt>
+            <dd>Updated weekly</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd>January 2015 - present</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd><p>While Landsat 7 and 8 satellites together have a revisit period of 8 days, cloud cover can majorly limit the availability of imagery, particularly in the wet season. Alert dates represent the instance of detection, though tree cover loss could have taken place weeks earlier due to persistent cloud cover.</p>
+
+            <p>In this data set, “tree cover” is defined as all vegetation greater than 5 meters in height with greater than 60% canopy cover, and may take the form of natural forests or plantations. “Loss” indicates the removal or mortality of >=50% of tree cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
+
+            <p>In Peru, where the alert system was first prototyped, the authors evaluated the data to have 13.5% commission error (false positives), though the value drops to 1% when excluding pixels on the boundaries of other loss and unconfirmed alerts. The data has 33% omission errors, though most of these occur in secondary forests where tree cover and other vegetation are more difficult to distinguish. Omission errors in primary forests fall to 17% when excluding pixels on the boundaries of other loss, suggesting that most of the omissions happen on the edges of loss patches.</p></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <p>This data set, created by the <a href="http://glad.geog.umd.edu/" target="_blank">GLAD</a> (Global Land Analysis & Discovery) lab at the University of Maryland and supported by Global Forest Watch, is the first Landsat-based alert system for tree cover loss. While most existing loss alert products use 250-meter resolution MODIS imagery, these alerts have a 30-meter resolution and thus can detect loss at a much finer spatial scale. The alerts are currently operational for Peru, the Republic of Congo, and Kalimantan in Indonesia, and will eventually be expanded to the rest of the humid tropics.</p>
+          <p>New Landsat 7 and 8 images are downloaded as they are posted online at USGS EROS, assessed for cloud cover or poor data quality, and compared to the three previous years of Landsat-derived metrics (including ranks, means, and regressions of red, infrared and shortwave bands, and ranks of NDVI, NBR, and NDWI). The metrics and the latest Landsat image are run through seven decision trees to calculate a median probability of forest disturbance. Pixels with probability >50% are reported as tree cover loss alerts. Alerts remain unconfirmed until two or more out of four consecutive observations are labelled as tree cover loss. For more information on methodology, see the forthcoming Environmental Research Letters paper.</p>
+
+          <p class='credits'><strong>Source: </strong>GLAD/UMD, accessed through <a href="http://www.globalforestwatch.org/" target="_blank">Global Forest Watch</a></p>
+          <p class='credits'><strong>Citation: </strong>Hansen, M.C., Krylov, A., Tyukavina, A., Potapov, P.V., Turubanova, S., Zutta, B., Ifo, S., Margono, B., and Stolle, F., Near-real time forest disturbance alerts using Landsat data. <em>Environmental Research Letters, in review.</em> Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org/" target="_blank">www.globalforestwatch.org</a></p>
+          
+          
+          <p><a href="http://data.globalforestwatch.org/" target="_blank">Learn more or download data</a></p>
+        </div>
+      </div>
+    </li>
+    <li id='gfw_landsat_alerts_source' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>GLAD ALERTS GEOGRAPHIC COVERAGE</strong>
+      </div>
+      <div class='source_body'>
+        <p>This layer displays the geographic coverage of GLAD alerts, which currently span Peru, Republic of the Congo, and Kalimantan (Indonesia)</p>
+      </div>
+    </li>
+    <li id='guyra' class='source-item last'>
+      <div class='source_header'>
+        <strong class='source_title'>Gran Chaco deforestation</strong>
+        <i class='expand_arrow'></i>
+        <em class='source_description'>(monthly, 30m, Gran Chaco, Guyra)</em>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd></dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd></dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Frequency of updates</dt>
+            <dd></dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd><p></p></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <p></p>
+          <p></p>
 
 
-          <p class='credits'><strong>Citation:</strong> M. Hansen and University of Maryland. “Tree Cover Loss Alerts.” Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org/" target="_blank">www.globalforestwatch.org</a></p>
-          <p><a href="http://www.osinfor.gob.pe" target="_blank">Learn more or download data</a></p>
+          <p class='credits'><strong>Citation:</strong><a href="http://www.globalforestwatch.org/" target="_blank">www.globalforestwatch.org</a></p>
+          <p><a href="" target="_blank">Learn more or download data</a></p>
         </div>
       </div>
     </li>
@@ -1243,7 +1357,7 @@
           <p>Open Development Cambodia collected the data from a variety of public domain sources such as the government, non-governmental organizations (NGOs), research institutes, company websites, and news reports.</p>
 
           <p class='credits'><strong>Citation:</strong> Open Development Cambodia. “Economic Land Concessions.” Accessed through Global Forest Watch on [date].<a href="http://www.globalforestwatch.org/" target="_blank">www.globalforestwatch.org</a> </p>
-          <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org/' target='_blank'>Learn more or download data</a></em></p>
+          <p class='read_more hidden'><em><a href='http://www.opendevelopmentcambodia.net/company-profiles/economic-land-concessions/' target='_blank'>Learn more or download data</a></em></p>
 
         </div>
       </div>
@@ -1296,7 +1410,7 @@
           <p>This data product contains raster data depicting the spatial distribution of forest ownership types in the conterminous United States circa 2009. The data are a modeled representation of forest land by ownership type, and include three types of public ownership: federal, state, and local, as well as three types of private ownership: family (includes individuals and families), corporate, and other private (includes conservation and natural resource organizations, unincorporated partnerships and associations, and Native American tribal lands).</p>
 
           <p class='credits'><strong>Citation:</strong> Hewes, Jaketon H.; Butler, Brett J.; Liknes, Greg C.; Nelson, Mark D.; Snyder, Stephanie A. 2014. Map of distribution of six forest ownership types in the conterminous United States. [Scale 1: 10,000,000, 1: 34,000,000.] Res. Map NRS-6. Newtown Square, PA: U.S. Department of Agriculture, Forest Service, Northern Research Station.</p>
-          <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org' target='_blank'>Learn more or download data</a></em></p>
+          <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org/datasets?q=USA+Forest+Ownership&sort_by=relevance' target='_blank'>Learn more or download data</a></em></p>
 
         </div>
       </div>
@@ -1418,9 +1532,9 @@
     </li>
     <li id='global_land_cover' class='source-item'>
       <div class='source_header'>
-        <strong class='source_title'>Global Land Cover</strong>
+        <strong class='source_title'>Land cover</strong>
         <i class='expand_arrow'></i>
-        <em class='source_description'>(GlobCover, 2009)</em>
+        <em class='source_description'>(2009)</em>
       </div>
 
       <div class='source_body'>
@@ -1438,8 +1552,8 @@
             <dd>Global</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Source data</dt>
-            <dd><a href="http://earth.esa.int/instruments/meris/" target="_blank">MERIS</a></dd>
+            <dt>Source</dt>
+            <dd>© ESA 2010 and UCLouvain</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Frecuency of updates</dt>
@@ -1531,6 +1645,331 @@
           <p class='credits'><strong>Citation:</strong> Transparent World. “Tree Plantations.” 2015. Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org" target="_blank">www.globalforestwatch.org</a> </p>
 
           <p class='read_more hidden'><a href='http://data.globalforestwatch.org/' target='_blank'>Learn more or download data</a></p>
+        </div>
+      </div>
+    </li>
+    <li id='bra_plantation_wrapper' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Tree Plantations</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Shows the coverage of plantations in select countries</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>Based on 30 × 30 meter data. Scale varies by country.</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Currently available for Brazil, Cambodia, Colombia, Indonesia, Liberia, Malaysia, and Peru</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd><a href="http://www.transparentworld.ru/en/" target="_blank">Transparent World</a></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Date of content</dt>
+            <dd>2013–2014</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Cautions</dt>
+            <dd>
+            An accuracy assessment found 40% false positives and 18% false negatives for the presence of plantations, with an overall accuracy of 79%. Overall accuracies were lowest in Indonesia at 68%.
+            The accuracies of the species and type labels were not assessed. These fields represent the best guess of the analysts and should not be used for official purposes.
+            Polygons labeled as clearings were bare or had very young vegetation as of 2013 or 2014, but contextual clues suggest that these areas will eventually become tree plantations.
+            A subset of this data set more appropriate for supply chain monitoring can be found on <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities.</a>
+
+            </dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>License</dt>
+            <dd><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>This data set was created by Transparent World, with the support of Global Forest Watch. Many studies depicting forest cover and forest change cannot distinguish between natural forests and plantations. This data set attempts to distinguish tree plantations from natural forest for seven key countries: Brazil, Cambodia, Colombia, Indonesia, Liberia, Malaysia, and Peru.</p>
+
+          <p>Given the variability of plantations and their spectral similarity to natural forests, this study used visual interpretations of satellite imagery, primarily <a href="http://landsat.usgs.gov/" target="_blank">Landsat</a>, supplemented by high resolution imagery (Google Maps, Bing Maps, or Digital Globe), where available, to locate plantations. Analysts hand-digitized plantation boundaries based on several key visual criteria, including texture, shape, color, and size.</p>
+
+          <p>Each polygon is labelled with the plantation type and when possible, the species. A “gr” in front of the species name indicates a group of species, such as pines or fruit, where the individual species was not identifiable. The percentage of plantation coverage indicates a rough estimate of the prevalence of plantation within apolygon (as in the case of a mosaic). Types are defined as follows:</p>
+          <p><ul class="bullets">
+            <li><strong>Large industrial plantation:</strong> single plantation units larger than 100 hectares</li>
+            <li><strong>Mosaic of medium-sized plantations:</strong> mosaic of plantation units < 100 hectares embedded within patches of other land use</li>
+            <li><strong>Mosaic of small-sized plantations:</strong> mosaic of plantation units < 10 hectares embedded within patches of other land use.</li>
+            <li><strong>Clearing/ very young plantation:</strong> bare ground with contextual clues suggesting it will become a plantations (shape or pattern of clearing, proximity to other plantations, distinctive road network, etc)</li>
+          </ul></p>
+          <p>For more information on this data set and how it was produced, see the forthcoming WRI Technical Note associated with this project.</p>
+
+          <p class='credits'><strong>Citation:</strong> Transparent World. “Tree Plantations.” 2015. Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org" target="_blank">www.globalforestwatch.org</a> </p>
+
+          <p class='read_more hidden'><a href='http://gfw2-data.s3.amazonaws.com/country/bra/zip/bra_plantations.zip' target='_blank'>Learn more or download data</a></p>
+        </div>
+      </div>
+    </li>
+    <li id='per_plantation_wrapper' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Tree Plantations</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Shows the coverage of plantations in select countries</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>Based on 30 × 30 meter data. Scale varies by country.</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Currently available for Brazil, Cambodia, Colombia, Indonesia, Liberia, Malaysia, and Peru</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd><a href="http://www.transparentworld.ru/en/" target="_blank">Transparent World</a></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Date of content</dt>
+            <dd>2013–2014</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Cautions</dt>
+            <dd>
+            An accuracy assessment found 40% false positives and 18% false negatives for the presence of plantations, with an overall accuracy of 79%. Overall accuracies were lowest in Indonesia at 68%.
+            The accuracies of the species and type labels were not assessed. These fields represent the best guess of the analysts and should not be used for official purposes.
+            Polygons labeled as clearings were bare or had very young vegetation as of 2013 or 2014, but contextual clues suggest that these areas will eventually become tree plantations.
+            A subset of this data set more appropriate for supply chain monitoring can be found on <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities.</a>
+
+            </dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>License</dt>
+            <dd><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>This data set was created by Transparent World, with the support of Global Forest Watch. Many studies depicting forest cover and forest change cannot distinguish between natural forests and plantations. This data set attempts to distinguish tree plantations from natural forest for seven key countries: Brazil, Cambodia, Colombia, Indonesia, Liberia, Malaysia, and Peru.</p>
+
+          <p>Given the variability of plantations and their spectral similarity to natural forests, this study used visual interpretations of satellite imagery, primarily <a href="http://landsat.usgs.gov/" target="_blank">Landsat</a>, supplemented by high resolution imagery (Google Maps, Bing Maps, or Digital Globe), where available, to locate plantations. Analysts hand-digitized plantation boundaries based on several key visual criteria, including texture, shape, color, and size.</p>
+
+          <p>Each polygon is labelled with the plantation type and when possible, the species. A “gr” in front of the species name indicates a group of species, such as pines or fruit, where the individual species was not identifiable. The percentage of plantation coverage indicates a rough estimate of the prevalence of plantation within apolygon (as in the case of a mosaic). Types are defined as follows:</p>
+          <p><ul class="bullets">
+            <li><strong>Large industrial plantation:</strong> single plantation units larger than 100 hectares</li>
+            <li><strong>Mosaic of medium-sized plantations:</strong> mosaic of plantation units < 100 hectares embedded within patches of other land use</li>
+            <li><strong>Mosaic of small-sized plantations:</strong> mosaic of plantation units < 10 hectares embedded within patches of other land use.</li>
+            <li><strong>Clearing/ very young plantation:</strong> bare ground with contextual clues suggesting it will become a plantations (shape or pattern of clearing, proximity to other plantations, distinctive road network, etc)</li>
+          </ul></p>
+          <p>For more information on this data set and how it was produced, see the forthcoming WRI Technical Note associated with this project.</p>
+
+          <p class='credits'><strong>Citation:</strong> Transparent World. “Tree Plantations.” 2015. Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org" target="_blank">www.globalforestwatch.org</a> </p>
+
+          <p class='read_more hidden'><a href='http://gfw2-data.s3.amazonaws.com/country/per/zip/per_plantations.zip' target='_blank'>Learn more or download data</a></p>
+        </div>
+      </div>
+    </li>
+    <li id='lbr_plantation_wrapper' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Tree Plantations</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Shows the coverage of plantations in select countries</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>Based on 30 × 30 meter data. Scale varies by country.</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Currently available for Brazil, Cambodia, Colombia, Indonesia, Liberia, Malaysia, and Peru</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd><a href="http://www.transparentworld.ru/en/" target="_blank">Transparent World</a></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Date of content</dt>
+            <dd>2013–2014</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Cautions</dt>
+            <dd>
+            An accuracy assessment found 40% false positives and 18% false negatives for the presence of plantations, with an overall accuracy of 79%. Overall accuracies were lowest in Indonesia at 68%.
+            The accuracies of the species and type labels were not assessed. These fields represent the best guess of the analysts and should not be used for official purposes.
+            Polygons labeled as clearings were bare or had very young vegetation as of 2013 or 2014, but contextual clues suggest that these areas will eventually become tree plantations.
+            A subset of this data set more appropriate for supply chain monitoring can be found on <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities.</a>
+
+            </dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>License</dt>
+            <dd><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>This data set was created by Transparent World, with the support of Global Forest Watch. Many studies depicting forest cover and forest change cannot distinguish between natural forests and plantations. This data set attempts to distinguish tree plantations from natural forest for seven key countries: Brazil, Cambodia, Colombia, Indonesia, Liberia, Malaysia, and Peru.</p>
+
+          <p>Given the variability of plantations and their spectral similarity to natural forests, this study used visual interpretations of satellite imagery, primarily <a href="http://landsat.usgs.gov/" target="_blank">Landsat</a>, supplemented by high resolution imagery (Google Maps, Bing Maps, or Digital Globe), where available, to locate plantations. Analysts hand-digitized plantation boundaries based on several key visual criteria, including texture, shape, color, and size.</p>
+
+          <p>Each polygon is labelled with the plantation type and when possible, the species. A “gr” in front of the species name indicates a group of species, such as pines or fruit, where the individual species was not identifiable. The percentage of plantation coverage indicates a rough estimate of the prevalence of plantation within apolygon (as in the case of a mosaic). Types are defined as follows:</p>
+          <p><ul class="bullets">
+            <li><strong>Large industrial plantation:</strong> single plantation units larger than 100 hectares</li>
+            <li><strong>Mosaic of medium-sized plantations:</strong> mosaic of plantation units < 100 hectares embedded within patches of other land use</li>
+            <li><strong>Mosaic of small-sized plantations:</strong> mosaic of plantation units < 10 hectares embedded within patches of other land use.</li>
+            <li><strong>Clearing/ very young plantation:</strong> bare ground with contextual clues suggesting it will become a plantations (shape or pattern of clearing, proximity to other plantations, distinctive road network, etc)</li>
+          </ul></p>
+          <p>For more information on this data set and how it was produced, see the forthcoming WRI Technical Note associated with this project.</p>
+
+          <p class='credits'><strong>Citation:</strong> Transparent World. “Tree Plantations.” 2015. Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org" target="_blank">www.globalforestwatch.org</a> </p>
+
+          <p class='read_more hidden'><a href='http://gfw2-data.s3.amazonaws.com/country/lbr/zip/lbr_plantations.zip' target='_blank'>Learn more or download data</a></p>
+        </div>
+      </div>
+    </li>
+    <li id='col_plantation_wrapper' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Tree Plantations</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Shows the coverage of plantations in select countries</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>Based on 30 × 30 meter data. Scale varies by country.</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Currently available for Brazil, Cambodia, Colombia, Indonesia, Liberia, Malaysia, and Peru</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd><a href="http://www.transparentworld.ru/en/" target="_blank">Transparent World</a></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Date of content</dt>
+            <dd>2013–2014</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Cautions</dt>
+            <dd>
+            An accuracy assessment found 40% false positives and 18% false negatives for the presence of plantations, with an overall accuracy of 79%. Overall accuracies were lowest in Indonesia at 68%.
+            The accuracies of the species and type labels were not assessed. These fields represent the best guess of the analysts and should not be used for official purposes.
+            Polygons labeled as clearings were bare or had very young vegetation as of 2013 or 2014, but contextual clues suggest that these areas will eventually become tree plantations.
+            A subset of this data set more appropriate for supply chain monitoring can be found on <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities.</a>
+
+            </dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>License</dt>
+            <dd><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>This data set was created by Transparent World, with the support of Global Forest Watch. Many studies depicting forest cover and forest change cannot distinguish between natural forests and plantations. This data set attempts to distinguish tree plantations from natural forest for seven key countries: Brazil, Cambodia, Colombia, Indonesia, Liberia, Malaysia, and Peru.</p>
+
+          <p>Given the variability of plantations and their spectral similarity to natural forests, this study used visual interpretations of satellite imagery, primarily <a href="http://landsat.usgs.gov/" target="_blank">Landsat</a>, supplemented by high resolution imagery (Google Maps, Bing Maps, or Digital Globe), where available, to locate plantations. Analysts hand-digitized plantation boundaries based on several key visual criteria, including texture, shape, color, and size.</p>
+
+          <p>Each polygon is labelled with the plantation type and when possible, the species. A “gr” in front of the species name indicates a group of species, such as pines or fruit, where the individual species was not identifiable. The percentage of plantation coverage indicates a rough estimate of the prevalence of plantation within apolygon (as in the case of a mosaic). Types are defined as follows:</p>
+          <p><ul class="bullets">
+            <li><strong>Large industrial plantation:</strong> single plantation units larger than 100 hectares</li>
+            <li><strong>Mosaic of medium-sized plantations:</strong> mosaic of plantation units < 100 hectares embedded within patches of other land use</li>
+            <li><strong>Mosaic of small-sized plantations:</strong> mosaic of plantation units < 10 hectares embedded within patches of other land use.</li>
+            <li><strong>Clearing/ very young plantation:</strong> bare ground with contextual clues suggesting it will become a plantations (shape or pattern of clearing, proximity to other plantations, distinctive road network, etc)</li>
+          </ul></p>
+          <p>For more information on this data set and how it was produced, see the forthcoming WRI Technical Note associated with this project.</p>
+
+          <p class='credits'><strong>Citation:</strong> Transparent World. “Tree Plantations.” 2015. Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org" target="_blank">www.globalforestwatch.org</a> </p>
+
+          <p class='read_more hidden'><a href='http://gfw2-data.s3.amazonaws.com/country/col/zip/col_plantations.zip' target='_blank'>Learn more or download data</a></p>
+        </div>
+      </div>
+    </li>
+    <li id='khm_plantation_wrapper' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Tree Plantations</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Shows the coverage of plantations in select countries</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>Based on 30 × 30 meter data. Scale varies by country.</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Currently available for Brazil, Cambodia, Colombia, Indonesia, Liberia, Malaysia, and Peru</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd><a href="http://www.transparentworld.ru/en/" target="_blank">Transparent World</a></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Date of content</dt>
+            <dd>2013–2014</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Cautions</dt>
+            <dd>
+            An accuracy assessment found 40% false positives and 18% false negatives for the presence of plantations, with an overall accuracy of 79%. Overall accuracies were lowest in Indonesia at 68%.
+            The accuracies of the species and type labels were not assessed. These fields represent the best guess of the analysts and should not be used for official purposes.
+            Polygons labeled as clearings were bare or had very young vegetation as of 2013 or 2014, but contextual clues suggest that these areas will eventually become tree plantations.
+            A subset of this data set more appropriate for supply chain monitoring can be found on <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities.</a>
+
+            </dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>License</dt>
+            <dd><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>This data set was created by Transparent World, with the support of Global Forest Watch. Many studies depicting forest cover and forest change cannot distinguish between natural forests and plantations. This data set attempts to distinguish tree plantations from natural forest for seven key countries: Brazil, Cambodia, Colombia, Indonesia, Liberia, Malaysia, and Peru.</p>
+
+          <p>Given the variability of plantations and their spectral similarity to natural forests, this study used visual interpretations of satellite imagery, primarily <a href="http://landsat.usgs.gov/" target="_blank">Landsat</a>, supplemented by high resolution imagery (Google Maps, Bing Maps, or Digital Globe), where available, to locate plantations. Analysts hand-digitized plantation boundaries based on several key visual criteria, including texture, shape, color, and size.</p>
+
+          <p>Each polygon is labelled with the plantation type and when possible, the species. A “gr” in front of the species name indicates a group of species, such as pines or fruit, where the individual species was not identifiable. The percentage of plantation coverage indicates a rough estimate of the prevalence of plantation within apolygon (as in the case of a mosaic). Types are defined as follows:</p>
+          <p><ul class="bullets">
+            <li><strong>Large industrial plantation:</strong> single plantation units larger than 100 hectares</li>
+            <li><strong>Mosaic of medium-sized plantations:</strong> mosaic of plantation units < 100 hectares embedded within patches of other land use</li>
+            <li><strong>Mosaic of small-sized plantations:</strong> mosaic of plantation units < 10 hectares embedded within patches of other land use.</li>
+            <li><strong>Clearing/ very young plantation:</strong> bare ground with contextual clues suggesting it will become a plantations (shape or pattern of clearing, proximity to other plantations, distinctive road network, etc)</li>
+          </ul></p>
+          <p>For more information on this data set and how it was produced, see the forthcoming WRI Technical Note associated with this project.</p>
+
+          <p class='credits'><strong>Citation:</strong> Transparent World. “Tree Plantations.” 2015. Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org" target="_blank">www.globalforestwatch.org</a> </p>
+
+          <p class='read_more hidden'><a href='http://gfw2-data.s3.amazonaws.com/country/khm/zip/khm_plantations.zip' target='_blank'>Learn more or download data</a></p>
         </div>
       </div>
     </li>
@@ -2204,7 +2643,55 @@
         </div>
       </div>
     </li>
+    <li id='mys_logging' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Sarawak Logging Concessions</strong>
+        <i class='expand_arrow'></i>
+      </div>
 
+      <div class='source_body'>
+
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd> Shows the distribution of forest timber licenses (logging concessions) in Sarawak</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Geographic coverage</dt>
+            <dd>Sarawak, Malaysia</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Source data</dt>
+            <dd>Earthsight Investigations & Global Witness</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd>2010</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd>This map is known to be incomplete and was created from various sources, including Environmental Impact Assessments (EIAs) and State Forestry Department (SFD) 2010 maps.</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>License</dt>
+            <dd><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>This map was created from two State Forestry Department (SFD) 2010 maps, supplemented by information from Environmental Impact Assessments (EIAs) for re-entry logging by specific licensees. Where not already identified in available SFD maps, names of licensees associated with individual numbered licenses have (where possible) been obtained from company documents and regional perspective maps from EIAs.</p>
+          <p>Permit issuance dates and official areas in hectares are from various sources, including EIAs. Identities of corporate groupings to which individual licensee companies belong are based on various sources, including EIAs and official company documents.</p>
+          <p>This map does not include Timber Licenses in Sarikei, Betong, Sri Aman, Samarahan and Kuching Divisions in the west of Sarawak, though there are known to be few such licenses in those Divisions. It is possible that some licenses shown on this map may have expired or been amended since 2010; other new licenses not shown here may also have been created. Individual licensees may also have joined or split from the named corporate groups. This map also does not include 'Belian Timber' Licenses.</p>
+          <p>A number of the Timber Licenses are split into non-contiguous parts. In some cases separate boundary entries are given for each part; these are annotated 'Part 1' etc in the title. These 'Part' are not official names, but rather naming conventions used in the GIS cleaning of the data.</p>
+
+          <p class='credits'><strong>Citation: </strong>Earthsights Investigations and Global Witness. “Sarawak Logging Concessions”. Accessed through Global Forest Watch on [date].<a href="http://www.globalforestwatch.org" target="_blank"> www.globalforestwatch.org</a></p>
+
+
+          <p class='read_more hidden'><em><a href="http://data.globalforestwatch.org/datasets/" class="download-mobile-link" target="_blank">Learn more or download data</a></em></p>
+        </div>
+      </div>
+    </li>
     <li id='mining' class='source-item'>
       <div class='source_header'>
         <strong class='source_title'>Mining</strong>
@@ -2423,14 +2910,49 @@
       </div>
 
       <div class='source_body'>
-        <div class='source_summary'>
-        <h3 class='overview_title'>Overview</h3>
-          <p>This data set displays the boundaries and locations of mining licenses in Cambodia. Data were compiled from MIME, company websites, and other contract data. This data set is a combination of the primary, secondary and partial data sets provided by Open Development Cambodia. To learn more, please visit <a href="https://OpenDevCam.net">OpenDevCam.net</a>.</p>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>This data shows the location of known Mining Concessions in Cambodia</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Geographic coverage</dt>
+            <dd>Cambodia</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Source data</dt>
+            <dd><a href='https://cambodia.opendevelopmentmekong.net/' target='_blank'>Open Development Cambodia</a></dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Frequency of updates</dt>
+            <dd>Monthly (if public domain information is available)</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Date of content</dt>
+            <dd>1995-2014</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Cautions</dt>
+            <dd><p>This data set contains all of the data that is currently available to Open Development Cambodia (ODC) and is not exhaustive. Projects or areas with publicly known boundaries are mapped as polygons; those without publicly known boundaries are represented as dots on the map. The dots are placed in the center of the closest known geographical area and thus do not represent exact locations. The development landscape is constantly changing, and there are also additional developments for which data is not available.  While ODC takes every effort to ensure that the details in this map are accurate and up to date, some of the projects or areas marked on the map may have since been modified or cancelled since the map was published. Moreover, additional developments may have been approved that are not yet included here.</p></dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>License</dt>
+            <dd><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY SA 4.0</a></dd>
+          </dl>
+        </div>
 
-           <p class='credits'><strong>Credit:</strong>Open Development Cambodia, 2014.</p>
-          <p class='read_more hidden'><em><a href='http://www.opendevelopmentcambodia.net/odc_main_category/extractive-industries-2/?post_type=download_maps' class="download-mobile-link" target='_blank'>Learn more and download data</a></em></p>
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>The mining sector in Cambodia is mostly undeveloped, and active mining enterprises are typically small-scale quarries producing materials for construction, such as laterite, marble, granite, limestone, gravel and sand. There are also thousands of artisanal miners recovering gold and gemstones, often on a seasonal or part-time basis. There is no industrial-scale extraction of minerals, although many exploration licenses have been granted to mining companies and some have reported promising finds of gold. The mining law states that all mining in “national cultural, historical and heritage sites” is prohibited, and mining activities in “protected, reserved or restricted” areas can only be carried out with written permission of the authority responsible. The 2002 Law on Forestry allows mining within the permanent forest estate, however, any proposed mining operation must be the subject of a ‘prior study-evaluation’ by the Ministry of Agriculture, Forestry and Fisheries (MAFF). The legality of mining operations on lands traditionally managed by indigenous people requires clarification.</p>
+          <p>This dataset contains data for mining licenses in Cambodia with contract dates starting from 1995 to 2014. Due to the lack of publicly available information, this dataset does not include information on implementation status of mines or change in ownership of mining licenses.</p>
+          <p>Open Development Cambodia collected the data from a variety of public domain sources such as the government, non-governmental organizations (NGOs), research institutes, company websites, and news reports.</p>
+
+          <p class='credits'><strong>Citation:</strong> Open Development Cambodia. “Mining Licenses.” Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org/" target="_blank"></a>www.globalforestwatch.org</p>
+
+          <p class='read_more hidden'><a href="http://www.opendevelopmentcambodia.net/company-profiles/concessions-of-mining/" target="_blank">Learn more or download data</a></p>
         </div>
       </div>
+      
     </li>
     <li id="oil_palm_wood_fiber" class="source-item">
       <div class='source_header'>
@@ -2704,6 +3226,55 @@
         </div>
       </div>
     </li>
+    <li id='mys_oil_palm' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Sarawak oil palm concessions</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Shows the coverage of oil palm concessions in Sarawak, where information is available</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Geographic coverage</dt>
+            <dd>Sarawak, Malaysia</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Source data</dt>
+            <dd>SADIA, Aidenvironment & Earthsight Investigations</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd>2010</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd>This map is known to be incomplete and some of the boundaries imprecise. Oil palm concessions which were issued or published EIAs after 2010 are not included. Boundaries drawn from EIA reports have not been mapped precisely, and so may not match with clearance and planting visible in satellite imagery. Boundaries and associated information relating to those concessions which are included may also have changed since the source information was published.</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>License</dt>
+            <dd><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>This data set provides the boundaries of known oil palm concessions for the state of Sarawak, Malaysia, and was compiled from available public documents. Where available, associated information provided with this data set includes licensee name, permit number (Operational Ticket), corporate grouping, permit date, and official license area. This data set also includes areas under License for Planted Forest (LPF) agreements where oil palm has been planted for one rotation, where available</p>
+          <p>The data set combines the boundaries of oil palm licenses obtained from Environmental Impact Assessment (EIA) reports for individual oil palm and LPF concessions (spanning various dates) and a regional State Forestry Department map from 2010 for northern Sarawak. The information drawn from oil palm EIA reports was compiled by Aidenvironment and SADIA, and combined with the other information by Earthsight Investigations. Licenses (and licensee subsidiaries) have been attributed to major corporate groups based on published company records and secondary sources.
+          </p>
+          <p>A number of the oil palm concession licenses are split into non-contiguous parts. In some cases separate boundary entries are given for each part; these are annotated 'Part 1' etc in the title. These 'Parts' are not official names, but rather naming conventions used in the GIS cleaning of the data.</p>
+          
+          <p class='credits'><strong>Citation: </strong>SADIA, Aidenvironment & Earthsight Investigations. “Sarawak oil palm concessions”. Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org" target="_blank"> www.globalforestwatch.org</a></p>
+
+
+          <p class='read_more hidden'><em><a href="http://data.globalforestwatch.org/datasets/" class="download-mobile-link" target="_blank">Learn more or download data</a></em></p>
+        </div>
+      </div>
+    </li>
     <li id='wood_fiber_plantations' class='source-item last'>
       <div class='source_header'>
         <strong class='source_title'>Wood Fiber Plantations</strong>
@@ -2837,7 +3408,57 @@
         </div>
       </div>
     </li>
+    <li id='mys_wood_fiber' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Sarawak Licenses for Planted Forests (LPF<span>s</span>)</strong>
+        <i class='expand_arrow'></i>
+        <em class='source_description'></em>
+      </div>
 
+      <div class='source_body'>
+
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Shows the distribution of Licenses for Planted Forests (generally for timber trees) in Sarawak</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Geographic coverage</dt>
+            <dd>Sarawak, Malaysia</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Source data</dt>
+            <dd>Earthsight Investigations & Global Witness</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd>2011</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd>Timber plantation licenses issued after January 2011 are not included on this map. Licenses and boundaries which are included may also have been cancelled or amended since that date. Ownership of individual licensees may also have changed since the date when such attribution information was obtained. Official total areas and plantable areas may also have changed..</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>License</dt>
+            <dd><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>This data set provides the boundaries of known Licenses for Planted Forests (LPFs) within Sarawak, Malaysia. LPFs have a maximum tenure of 60 years, and must be over 1,000 hectares in size. Though they are designed for the purpose of planting of timber trees (mostly acacia), licensees are permitted to plant a portion of their licensed area with oil palm trees for a single rotation.</p>
+          <p>The data set combines the boundaries of LPFs issued up to and included on the Sarawak Forestry Department (SFD) LPF map published 11th Jan 2011. Precise boundaries were sourced from regional SFD maps from 2010 and from Environmental Impact Assessment (EIA) reports for individual concessions.
+          </p>
+          <p>Licenses (and licensee subsidiaries) have been attributed to major corporate groups based on published company records and secondary sources. Where information on the areas within LPFs allotted for oil palm is available, the boundaries of these areas have been plotted and included in the separate dataset on oil palm concessions in Sarawak. Information on the permit issuance date, official total area in hectares, and plantable area in hectares for LPF licenses has been obtained directly from EIA reports or from secondary sources which have drawn on such reports. Information on area of each LPF license planted up to 2012 (where provided) has been obtained from official published reports or websites of relevant companies.</p>
+          <p>It should be noted that it is common for LPF licenses to overlap with current Timber Licenses (see separate logging concession dataset for Sarawak). In such instances, LPF clearance and planting only proceeds in individual zones within the LPF when the Timber License holder has completed its own activities.</p>
+          
+          <p class='credits'><strong>Citation: </strong>Earthsight Investigations & Global Witness. “Sarawak Licenses for Planted Forests”. Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org" target="_blank"> www.globalforestwatch.org</a></p>
+
+
+          <p class='read_more hidden'><em><a href="http://data.globalforestwatch.org/datasets/" class="download-mobile-link" target="_blank">Learn more or download data</a></em></p>
+        </div>
+      </div>
+    </li>
     <li id='idn_leuser' class='source-item last'>
       <div class='source_header'>
         <strong class='source_title'>Indonesia Leuser Ecosystem</strong>
@@ -3569,7 +4190,7 @@
           <p>Open Development Cambodia collected the data from a variety of public domain sources such as the government, non-governmental organizations (NGOs), research institutes, company websites, and news reports.</p>
 
           <p class='credits'><strong>Citation:</strong> Open Development Cambodia. “Protected Areas.” Accessed through Global Forest Watch on [date].<a href="http://www.globalforestwatch.org/" target="_blank">www.globalforestwatch.org</a> </p>
-          <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org/' target='_blank'>Learn more or download data</a></em></p>
+          <p class='read_more hidden'><em><a href='http://www.opendevelopmentcambodia.net/natural_resource/protected-areas/' target='_blank'>Learn more or download data</a></em></p>
 
         </div>
       </div>
@@ -4530,39 +5151,47 @@
     </li>
     <li id='raisg' class='source-item last'>
       <div class='source_header'>
-        <strong class='source_title'>RAISG Indigenous Territories</strong>
+        <strong class='source_title'>Amazon basin indigenous territories</strong>
         <i class='expand_arrow'></i>
+        <em class='source_description'>(RAISG)</em>
       </div>
       <div class='source_body'>
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
-            <dd>Displays boundaries of areas over which indigenous peoples or local communities enjoy rights to the land and certain resources</dd>
+            <dd>Displays boundaries of areas over which indigenous peoples or local communities enjoy rights to the land and certain resources in the Amazon Basin</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>RESOLUTION / SCALE</dt>
+            <dt>Geographic coverage</dt>
+            <dd>Bolivia, the Brazilian Amazon, the Colombian Amazon, Ecuador, French Guiana, Guyana, the Peruvian Amazon, Suriname, and the Venezuelan Amazon</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Source data</dt>
+            <dd><p>Data is aggregated by RAISG - the Amazon Socio-environmental Georeferenced Information Network. Partner organizations from each country contribute the data.</p> 
+            <p>Bolivia: Friends of Nature Foundation (FAN), 2013</p>
+            <p>Brazil: Instituto Socioambiental (ISA), 2013</p>
+            <p>Colombia: Gaia Amazonas Foundation (FGA), 2012</p>
+            <p>Ecuador: Ecociencia, 2012</p>
+            <p>French Guiana: Regional Office of the Environment (DIREN), 2009</p>
+            <p>Guyana: Instituto Socioambiental (ISA), 2009</p>
+            <p>Peru: Institute of the Common Good (IBC), 2013</p>
+            <p>Suriname: Amazon Conservation Team (ACT), 2009</p>
+            <p>Venezuela: ECOSIG, 2009</p></dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Frequency of updates</dt>
             <dd>Varies by country</dd>
           </dl>
           <dl class='sources_row'>
-            <dt>Geographic coverage</dt>
-            <dd>Currently available for Australia, Brazil, Canada, Costa Rica, New Zealand, Panama, and the Amazon basin</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>Source data</dt>
-            <dd>Generally based on a combination of sources, including government agencies, NGOs and other organizations. For information on country-specific concessions data please refer to the Data page.</dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>Frequency of updates</dt>
-            <dd>Variable, depending on government agencies in each country and other data providers</dd>
-          </dl>
-          <dl class='sources_row even'>
             <dt>Date of content</dt>
             <dd>Varies by country</dd>
           </dl>
-          <dl class='sources_row'>
+          <dl class='sources_row even'>
             <dt>Cautions</dt>
             <dd>
-              <p>Some data sets displayed on Global Forest Watch include land and resource rights governed by customary tenure systems but that are not recognized by national laws.</p>
+              <p>Some countries provide data for the entire country (Bolivia, Ecuador, French Guiana, Guyana, and Suriname), while others only provide land rights datafor the Amazon portion of their country (Brazil, Colombia, Peru, and Venezuela).</p>
+
+              <p>Unfortunately, RAISG data is not downloadable or analyzable on Global Forest Watch at this time.</p>
             </dd>
           </dl>
         </div>
@@ -4570,14 +5199,9 @@
       <div class='source_body'>
         <div class='source_summary'>
         <h3 class='overview_title'>Overview</h3>
-          <p>T“Land Rights” refers to areas over which indigenous peoples or local communities enjoy rights to the land and certain resources, whether legally recognized or not. The exact nature of these land rights varies among tenure type and country.</p>
-          <p>The land rights data on GFW, while displayed as a single layer, is assembled on a country-by-country basis from multiple sources.</p>
-
-          <p> Land rights data displayed on the GFW website vary from country to country by date and data sources. Data may come from government agencies, NGOs, or other organizations. Data for the Amazon is aggregated by the Amazon Socio-environmental Georeferenced Information Network (RAISG).</p>
-          <p>For more information on the Amazon basin data sets, please visit the RAISG data portal. Unfortunately, RAISG data is not downloadable or analyzable on Global Forest Watch at this time. See the <a href='http://data.globalforestwatch.org/datasets/e22b22b3525c46f3b35548daf6289903_0' target='_blank'>Open Data Portal</a> for details on data sets contributed by individual countries.</p>
-          <p>If you are aware of land rights data for additional countries, please email us <a href="mailto:gfw@wri.org" target="_blank">here.</a></p>
-          <p class='credits'><strong>Credit:</strong>“Land Rights.” World Resources Institute. Accessed through Global Forest Watch on [date].<a href=" www.globalforestwatch.org." target="_blank"> www.globalforestwatch.org.</a></p>
-          <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org/datasets/81135c2ad89e4ae2ad94fe7fae4237ec_1' class="download-mobile-link" target='_blank'>Learn more and download data</a></em></p>
+          <p><a href="http://raisg.socioambiental.org/" target="_blank">RAISG</a> is a network of organizations with the goal of sharing georeferenced socioeconomic data throughout the Amazon Basin. This data set shows the boundaries of indigenous territories in Bolivia, the Brazilian Amazon, the Colombian Amazon, Ecuador, French Guiana, Guyana, the Peruvian Amazon, Suriname, and the Venezuelan Amazon.  The territories are devided into four categories of legal recognition:  "Traditional occupation without legal recognition", "Proposed territorial reserve", "Territorial reserve or intangible zone" and "Recognized indigenous land".</a></p>
+          <p class='credits'><strong>Credit:</strong>RAISG. “Amazon basin indigenous territories”. Accessed through Global Forest Watch on [date]. <a href=" www.globalforestwatch.org." target="_blank"> www.globalforestwatch.org.</a></p>
+          <p class='read_more hidden'><em><a href='http://www3.socioambiental.org/raisg2015/' class="download-mobile-link" target='_blank'>Visualize the data on the RAISG platform</a></em></p>
         </div>
       </div>
     </li>
@@ -4656,6 +5280,22 @@
 
            <p class='credits'><strong>Credit:</strong>El Observatorio del Desarrollo, Universidad de Costa Rica</p>
           <p class='read_more hidden'><em><a href='http://www.pueblosindigenas.odd.ucr.ac.cr' target='_blank'>Learn more and download data</a></em></p>
+        </div>
+      </div>
+    </li>
+    <li id='nzl_land_rights' class='source-item last'>
+      <div class='source_header'>
+        <strong class='source_title'>New Zealand aboriginal lands</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_summary'>
+        <h3 class='overview_title'>Overview</h3>
+          <p>This data set displays the boundaries of areas designated as Māori Lands. These areas include both Māori freehold lands and Māori customary lands. Māori customary lands belong to the Crown but are communally held by Māori in accordance with customary values and practices, generally referred to as tikanga Māori. Māori freehold lands are Māori customary lands that have been converted, through application to the Māori Land Court, to the titled, private possession of Māori individuals or small groups (fewer than five owners). Most Māori land falls under the category of Māori freehold land. The Native Lands Act of 1862 created the Māori Land Court, which oversees the administration of freehold land titles.</p>
+
+           <p class='credits'><strong>Credit:</strong></p>
+          <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org/datasets/23787c59d8f8485e9ef9ae033eb3e9d8_4' target='_blank'>Learn more and download data</a></em></p>
         </div>
       </div>
     </li>

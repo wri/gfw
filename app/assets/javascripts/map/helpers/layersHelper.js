@@ -28,6 +28,7 @@ define([
   'map/views/layers/IdnLoggingLayer',
   'map/views/layers/LbrLoggingLayer',
   'map/views/layers/CogLoggingLayer',
+  'map/views/layers/MysLoggingLayer',
   'map/views/layers/MiningLayer',
   'map/views/layers/CanMiningLayer',
   'map/views/layers/CmrMiningLayer',
@@ -41,10 +42,12 @@ define([
   'map/views/layers/LbrOilPalmLayer',
   'map/views/layers/CmrOilPalmLayer',
   'map/views/layers/IdnOilPalmLayer',
+  'map/views/layers/MysOilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
   'map/views/layers/GabWoodFiberPlantationsLayer',
   'map/views/layers/CogWoodFiberPlantationsLayer',
   'map/views/layers/IdnWoodFiberPlantationsLayer',
+  'map/views/layers/MysWoodFiberPlantationsLayer',
   'map/views/layers/ProtectedAreasLayer',
   'map/views/layers/ProtectedAreasCDBLayer',
   'map/views/layers/BiodiversityHotspotsLayer',
@@ -59,6 +62,7 @@ define([
   'map/views/layers/BraLandRightsLayer',
   'map/views/layers/CanLandRightsLayer',
   'map/views/layers/CriLandRightsLayer',
+  'map/views/layers/NzlLandRightsLayer',
   'map/views/layers/UserStoriesLayer',
   'map/views/layers/MongabayStoriesLayer',
   'map/views/layers/InfoamazoniaStoriesLayer',
@@ -88,6 +92,16 @@ define([
   'map/views/layers/RaisgLayer',
   'map/views/layers/PlantationsLayerByType',
   'map/views/layers/PlantationsLayerBySpecies',
+  'map/views/layers/BraPlantationsLayerByType',
+  'map/views/layers/BraPlantationsLayerBySpecies',
+  'map/views/layers/PerPlantationsLayerByType',
+  'map/views/layers/PerPlantationsLayerBySpecies',
+  'map/views/layers/LbrPlantationsLayerByType',
+  'map/views/layers/LbrPlantationsLayerBySpecies',
+  'map/views/layers/ColPlantationsLayerByType',
+  'map/views/layers/ColPlantationsLayerBySpecies',
+  'map/views/layers/KhmPlantationsLayerByType',
+  'map/views/layers/KhmPlantationsLayerBySpecies',
   'map/views/layers/PerBufferLayer',
   'map/views/layers/PerNatPALayer',
   'map/views/layers/PerPrivPALayer',
@@ -99,9 +113,11 @@ define([
   'map/views/layers/GtmForestDensityLayer',
   'map/views/layers/LandsatAlertsLayer',
   'map/views/layers/LandsatAlertsTorqueLayer',
+  'map/views/layers/LandsatAlertsCoverLayer',
   'map/views/layers/KhmProtectedAreasLayer',
   'map/views/layers/KhmEcoLandLayer',
   'map/views/layers/UsaForestOwnershipLayer',
+  'map/views/layers/GuyraLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -115,7 +131,8 @@ define([
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
   'map/views/timeline/ProdesTimeline',
-  'map/views/timeline/LandsatAlertsTorqueTimeline'
+  'map/views/timeline/LandsatAlertsTorqueTimeline',
+  'map/views/timeline/GuyraTimeline'
 ], function(
   // Layer Views
   LossLayer,
@@ -143,6 +160,7 @@ define([
   IdnLoggingLayer,
   LbrLoggingLayer,
   CogLoggingLayer,
+  MysLoggingLayer,
   MiningLayer,
   CanMiningLayer,
   CmrMiningLayer,
@@ -156,10 +174,12 @@ define([
   LbrOilPalmLayer,
   CmrOilPalmLayer,
   IdnOilPalmLayer,
+  MysOilPalmLayer,
   WoodFiberPlantationsLayer,
   GabWoodFiberPlantationsLayer,
   CogWoodFiberPlantationsLayer,
   IdnWoodFiberPlantationsLayer,
+  MysWoodFiberPlantationsLayer,
   ProtectedAreasLayer,
   ProtectedAreasCDBLayer,
   BiodiversityHotspotsLayer,
@@ -174,6 +194,7 @@ define([
   BraLandRightsLayer,
   CanLandRightsLayer,
   CriLandRightsLayer,
+  NzlLandRightsLayer,
   UserStoriesLayer,
   MongabayStoriesLayer,
   InfoamazoniaStoriesLayer,
@@ -203,6 +224,16 @@ define([
   RaisgLayer,
   PlantationsLayerByType,
   PlantationsLayerBySpecies,
+  BraPlantationsLayerByType,
+  BraPlantationsLayerBySpecies,
+  PerPlantationsLayerByType,
+  PerPlantationsLayerBySpecies,
+  LbrPlantationsLayerByType,
+  LbrPlantationsLayerBySpecies,
+  ColPlantationsLayerByType,
+  ColPlantationsLayerBySpecies,
+  KhmPlantationsLayerByType,
+  KhmPlantationsLayerBySpecies,
   PerBufferLayer,
   PerNatPALayer,
   PerPrivPALayer,
@@ -214,9 +245,11 @@ define([
   GtmForestDensityLayer,
   LandsatAlertsLayer,
   LandsatAlertsTorqueLayer,
+  LandsatAlertsCoverLayer,
   KhmProtectedAreasLayer,
   KhmEcoLandLayer,
   UsaForestOwnershipLayer,
+  GuyraLayer,
   UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
@@ -229,7 +262,8 @@ define([
   FiresTimeline,
   TerraiTimeline,
   ProdesTimeline,
-  LandsatAlertsTorqueTimeline
+  LandsatAlertsTorqueTimeline,
+  GuyraTimeline
 ) {
 
   'use strict';
@@ -315,6 +349,9 @@ define([
     cog_logging: {
       view: CogLoggingLayer
     },
+    mys_logging: {
+      view: MysLoggingLayer
+    },
     mining: {
       view: MiningLayer
     },
@@ -354,6 +391,9 @@ define([
     idn_oil_palm: {
       view: IdnOilPalmLayer
     },
+    mys_oil_palm: {
+      view: MysOilPalmLayer
+    },
     wood_fiber_plantations: {
       view: WoodFiberPlantationsLayer
     },
@@ -365,6 +405,9 @@ define([
     },
     idn_wood_fiber: {
       view: IdnWoodFiberPlantationsLayer
+    },
+    mys_wood_fiber: {
+      view: MysWoodFiberPlantationsLayer
     },
     protected_areas: {
       view: ProtectedAreasLayer
@@ -407,6 +450,9 @@ define([
     },
     cri_land_rights: {
       view: CriLandRightsLayer
+    },
+    nzl_land_rights: {
+      view: NzlLandRightsLayer
     },
     user_stories: {
       view: UserStoriesLayer
@@ -497,6 +543,36 @@ define([
     plantations_by_species: {
       view: PlantationsLayerBySpecies
     },
+    bra_plantations_type: {
+      view: BraPlantationsLayerByType
+    },
+    bra_plantations_species: {
+      view: BraPlantationsLayerBySpecies
+    },
+    per_plantations_type: {
+      view: PerPlantationsLayerByType
+    },
+    per_plantations_species: {
+      view: PerPlantationsLayerBySpecies
+    },
+    lbr_plantations_type: {
+      view: LbrPlantationsLayerByType
+    },
+    lbr_plantations_species: {
+      view: LbrPlantationsLayerBySpecies
+    },
+    col_plantations_type: {
+      view: ColPlantationsLayerByType
+    },
+    col_plantations_species: {
+      view: ColPlantationsLayerBySpecies
+    },
+    khm_plantations_type: {
+      view: KhmPlantationsLayerByType
+    },
+    khm_plantations_species: {
+      view: KhmPlantationsLayerBySpecies
+    },
     per_buffer: {
       view: PerBufferLayer
     },
@@ -532,6 +608,10 @@ define([
       view: LandsatAlertsTorqueLayer,
       timelineView: LandsatAlertsTorqueTimeline
     },
+    
+    gfw_landsat_alerts_coverage: {
+      view: LandsatAlertsCoverLayer
+    },
     khm_pa: {
       view: KhmProtectedAreasLayer
     },
@@ -544,6 +624,11 @@ define([
     urthe: {
       view: UrthecastLayer
     },
+    guyra: {
+      view: GuyraLayer,
+      timelineView: GuyraTimeline
+    },
+    
     nothing: {
     }
   };

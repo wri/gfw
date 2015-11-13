@@ -66,6 +66,7 @@ Gfw::Application.configure do
   # Require JS
   # config.requirejs.loader = :almond
   config.requirejs.logical_asset_filter += [/\.handlebars$/]
+  config.requirejs.logical_asset_filter += [/\.hbs$/]
   config.requirejs.logical_asset_filter += [/\.cartocss$/]
 
   # Ignore bad email addresses and do not raise email delivery errors.

@@ -639,6 +639,41 @@
       }
     }
 
+    &.genfound {
+      height: 31px; width: 110px; @include logos-sprite(generation);
+      &:hover{
+        @include logos-sprite(generationhover);
+      }
+    }
+
+    &.mbertoni {
+      height: 44px; width: 110px; @include logos-sprite(moises);
+      &:hover{
+        @include logos-sprite(moiseshover);
+      }
+    }
+
+    &.icf {
+      height: 26px; width: 110px; @include logos-sprite(icf);
+      &:hover{
+        @include logos-sprite(icfhover);
+      }
+    }
+
+    &.urthecast {
+      height: 23px; width: 110px; @include logos-sprite(urthecast);
+      &:hover{
+        @include logos-sprite(urthecasthover);
+      }
+    }
+
+    &.rtrs {
+      height: 80px; width: 46px; @include logos-sprite(rtrs);
+      &:hover{
+        @include logos-sprite(rtrshover);
+      }
+    }
+
     &.bobolink {
       height: 53px; width: 105px; @include logos-sprite(bobolink);
     }

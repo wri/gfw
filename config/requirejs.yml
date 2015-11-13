@@ -34,6 +34,8 @@ paths:
   simplePagination: "jquery.simplePagination/jquery.simplePagination"
   keymaster: "keymaster/keymaster"
   enquire: "enquire/dist/enquire"
+  picker: "pickadate/lib/picker"
+  pickadate: "pickadate/lib/picker.date"
 
   #countries
   scrollit: "ScrollIt.js/scrollIt"
@@ -99,6 +101,14 @@ shim:
     exports: "UriTemplate"
   handlebars:
     exports: "Handlebars"
+  picker:
+    deps:
+      - "jquery"
+  pickadate:
+    deps:
+      - "jquery"
+      - "picker"
+    exports: "DatePicker"
 
 
   geojson:

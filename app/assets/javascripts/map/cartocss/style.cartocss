@@ -48,6 +48,13 @@
     line-color: #FFF;
     line-opacity: 0;
   }
+[layer='gfw_landsat_alerts_extent'] {
+    polygon-fill: #f69;
+    polygon-opacity: 0.3;
+    line-width: 1;
+    line-color: #FFF;
+    line-opacity: 0;
+  }
 //deprecated
   [layer='logging'] {
     polygon-fill: #fecc5c;
@@ -111,6 +118,12 @@
     polygon-clip: false;
   }
   [layer='cog_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='mys_logging'] {
     polygon-fill: #fecc5c;
     line-color: #B38E3B;
     line-clip: false;
@@ -235,6 +248,12 @@
     line-clip: false;
     polygon-clip: false;
   }
+  [layer='mys_oil_palm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
 
   [layer='caf_lc_1'] {
     polygon-fill: #fe9929;
@@ -293,6 +312,12 @@
   }
 
   [layer='gab_wood_fiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='mys_wood_fiber'] {
     polygon-fill: #e6adb9;
     line-color: #e6adb9;
     line-clip: false;
@@ -435,6 +460,13 @@
     line-opacity: 1;
   }
   [layer='cri_land_rights'] {
+    polygon-fill: #4d658f;
+    polygon-opacity: 0.7;
+    line-color: #4d658f;
+    line-width: 1;
+    line-opacity: 1;
+  }
+  [layer='nzl_land_rights'] {
     polygon-fill: #4d658f;
     polygon-opacity: 0.7;
     line-color: #4d658f;

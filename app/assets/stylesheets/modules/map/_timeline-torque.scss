@@ -1,6 +1,34 @@
 .widget-timeline .timeline-year.timeline-torque {
+  padding-left: 10px;
+
+  .timeline-date-pickers {
+    display: inline-flex;
+    align-items: center;
+
+    min-width: 350px;
+    height: 50px;
+
+    font-size: 11px;
+
+    float: left;
+  }
+
+  .timeline-date-pickers input {
+    width: 100px;
+    margin: 0 10px;
+  }
+
   .slider .handle {
     transform: none;
+  }
+
+  .play {
+    display: inline-block;
+    left: auto;
+  }
+
+  .play:after {
+    right: 100%;
   }
 
   .play .stop-icon {
@@ -13,16 +41,40 @@
   }
 
   .timeline-date {
-    width: 100px;
-    padding: 0 5px;
-    margin-right: 5px;
+    width: 80px;
+
+    font-size: 12px;
+    color: #97bd3d;
+  }
+
+  .timeline-date-day,
+  .timeline-date-month,
+  .timeline-date-year {
+    display: inline-block;
+  }
+
+  .timeline-date-day {
+    width: 13px;
+  }
+
+  .timeline-date-month {
+    width: 23px;
+  }
+
+  .timeline-date-year {
+    width: 25px;
   }
 
   .timeline-slider {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: space-between;
 
-    width: 450px;
+    margin-left: 40px;
+    width: 330px;
+  }
+
+  .timeline-slider svg {
+    width: 240px;
   }
 }
