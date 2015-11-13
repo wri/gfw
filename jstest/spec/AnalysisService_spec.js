@@ -5,7 +5,7 @@ define([
   'underscore',
   'mps',
   'map/services/AnalysisService',
-  'helpers/api_responses',
+  '../helpers/api_responses.js',
 ], function(_, mps, service) {
 
   /* global describe, it, expect, afterEach, beforeEach, jasmine, spyOn */
