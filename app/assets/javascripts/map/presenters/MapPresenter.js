@@ -152,6 +152,8 @@ define([
           // Always fit to the most recent layer
           layerToFit = layersToFit[layersToFit.length - 1];
 
+      if (layerToFit === undefined) { return; }
+
       var southWest = new google.maps.LatLng(layerToFit.ymin, layerToFit.xmin),
           northEast = new google.maps.LatLng(layerToFit.ymax, layerToFit.xmax),
           bounds = new google.maps.LatLngBounds(southWest, northEast);
