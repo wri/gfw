@@ -132,6 +132,7 @@ define([
       "modis",
       "imazon",
       "forma",
+      "forma_250",
       "prodes",
       "loss",
       "forestgain",
