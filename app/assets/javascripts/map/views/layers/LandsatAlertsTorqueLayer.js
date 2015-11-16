@@ -20,6 +20,7 @@ define([
       table      : 'gfw_landsat_alerts_test_1',
       column     : 'date',
       data_aggregation: 'cumulative',
+      resolution: 0.25,
       cartocss: CartoCSS
     }
 
