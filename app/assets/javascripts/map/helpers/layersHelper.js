@@ -119,6 +119,7 @@ define([
   'map/views/layers/KhmEcoLandLayer',
   'map/views/layers/UsaForestOwnershipLayer',
   'map/views/layers/GuyraLayer',
+  'map/views/layers/LoggingRoadsLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -253,6 +254,7 @@ define([
   KhmEcoLandLayer,
   UsaForestOwnershipLayer,
   GuyraLayer,
+  LoggingRoadsLayer,
   UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
@@ -635,6 +637,9 @@ define([
     guyra: {
       view: GuyraLayer,
       timelineView: GuyraTimeline
+    },
+    logging_roads: {
+      view: LoggingRoadsLayer,
     },
     
     nothing: {
