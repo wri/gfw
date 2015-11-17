@@ -17,7 +17,7 @@ define([
   var LandsatAlertsLayer = TorqueLayerClass.extend({
 
     options: {
-      table      : 'gfw_landsat_alerts_test_1',
+      table      : 'umd_alerts_agg',
       column     : 'date',
       data_aggregation: 'cumulative',
       resolution: 0.25,
