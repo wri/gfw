@@ -114,6 +114,7 @@ define([
       "cog_logging",
       "mys_logging",
       "logging",
+      "logging_roads",
       "raisg",
       //STORIES
       "infoamazonia",
