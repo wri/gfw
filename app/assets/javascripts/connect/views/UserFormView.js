@@ -15,6 +15,10 @@ define([
   var UserFormView = Backbone.View.extend({
     className: 'user-form',
     el: '.user-form',
+    events: {
+      'click #sendform' : '_submit',
+      'click #skipform' : '_destroy'
+    },
 
     template: Handlebars.compile(tpl),
 
@@ -23,7 +27,15 @@ define([
     },
 
     render: function() {
-      this.$el.html(this.template());
+      this.$el.html(this.template({'action': window.gfw.config.GFW_API_HOST+'/user/setuser'}));
+    },
+
+    _submit: function() {
+      this.$el.find('form').submit();
+    },
+
+    _destroy: function() {
+
     }
   });
 

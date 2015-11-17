@@ -1,28 +1,28 @@
 <h2>your profile information</h2>
 <p>This information is optional but it will help us learning how you use Global Forest Watch and how to improve it.</p>
-<form>
+<form method="POST" action="{{action}}">
   <label>name</label>
-  <input type="text" placeholder="Your name">
+  <input type="text" placeholder="Your name" name="name">
   <label>email</label>
-  <input type="email" placeholder="Your email">
+  <input type="email" placeholder="Your email" name="email">
   <label>organization / profession / job title</label>
-  <input type="text" placeholder="Your organization / profession / job title">
+  <input type="text" placeholder="Your organization / profession / job title" name="job">
   <label class="m-sel-container">sector
-    <select><option>Choose your sector</option></select>
+    <select name="sector"><option>Choose your sector</option></select>
   </label>
   <label class="m-sel-container">primary responsibility
-    <select><option>Choose your primary responsibilities</option></select>
+    <select name="responsibility"t><option>Choose your primary responsibilities</option></select>
   </label>
   <label class="m-sel-container">location
-    <select><option>Country</option></select>
-    <span class="m-sel-container -middle"><select><option>State/department/province</option></select></span>
+    <select name="country"><option>Country</option></select>
+    <span class="m-sel-container -middle"><select name="state"><option>State/department/province</option></select></span>
   </label>
   <input type="text" placeholder="City">
   <label class="m-sel-container">gender
-    <select><option>Choose your gender</option></select>
+    <select name="gender"><option>Choose your gender</option></select>
   </label>
   <label class="m-sel-container">how do you use or plan to use global forest watch?
-    <select><option>Choose multiple options</option></select>
+    <select name="use"><option>Choose multiple options</option></select>
   </label>
 
   <div class="m-improve-gfw">
@@ -33,7 +33,7 @@
     </span>
   </div>
   <div class="m-buttons">
-    <a id="subscriptionBtn" class="btn green uppercase">continue</a>
-    <a id="subscriptionBtn" class="btn gray uppercase">skip</a>
+    <a id="sendform" class="btn green uppercase">continue</a>
+    <a id="skipform" class="btn gray uppercase">skip</a>
   </div>
 </form>
