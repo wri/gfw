@@ -94,6 +94,7 @@ define([
 
           this.presenter.animationStarted(
             this.torqueLayer.getTimeBounds());
+          this.stop();
 
           deferred.resolve(this.torqueLayer);
         }
