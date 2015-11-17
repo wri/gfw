@@ -415,7 +415,7 @@
   }
 
   //deprecated
-  [layer='land_rights'] {
+  [layer='gfw_land_rights_1'] {
    polygon-opacity: 0.65;
    line-width: 0.15;
    line-opacity: 1;
