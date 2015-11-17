@@ -12,9 +12,9 @@ define([
   var LandRightsLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT the_geom_webmercator, cartodb_id, name, country, legal_term, legal_reco as legal_recognition, ROUND(area_ha::text::float) AS area_ha, \'{tableName}\' AS tablename,  \'{tableName}\' as layer, {analysis} AS analysis FROM {tableName}',
+      sql: "with land_rights as (SELECT cartodb_id, the_geom_webmercator, name, category, doc_status , country, data_src FROM gfw_land_rights_1 union SELECT (cartodb_id+100000) as cartodb_id, the_geom_webmercator, name, category, doc_status, country, data_src FROM gfw_land_rights_pt) select cartodb_id, the_geom_webmercator, name, category, doc_status, country, data_src source, 'land_rights' AS tablename, 'land_rights' as layer, {analysis} AS analysis from land_rights",
       infowindow: true,
-      interactivity: 'cartodb_id, tablename, layer, name, country, legal_term, legal_recognition, area_ha, analysis',
+      interactivity: 'cartodb_id, tablename, layer, name, country, source, doc_status, analysis',
       analysis: true
     }
 
