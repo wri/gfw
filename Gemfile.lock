@@ -328,7 +328,7 @@ DEPENDENCIES
   requirejs-rails
   rmagick
   rspec-rails (~> 2.0)
-  sass-rails (~> 4.0.0)
+  sass-rails (~> 4.0.3)
   shoulda-matchers
   show_me_the_cookies
   typhoeus

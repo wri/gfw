@@ -39,6 +39,14 @@ define([
       "mangrove",
       "plantations_by_type",
       "plantations_by_species",
+      "bra_plantations_by_type",
+      "bra_plantations_by_species",
+      "per_plantations_by_type",
+      "per_plantations_by_species",
+      "lbr_plantations_by_type",
+      "lbr_plantations_by_species",
+      "col_plantations_by_type",
+      "col_plantations_by_species",
       "khm_eco_land_conc",
       "usa_forest_ownership",
       // PEOPLE
@@ -53,6 +61,7 @@ define([
       "bra_land_rights",
       "can_land_rights",
       "cri_land_rights",
+      "nzl_land_rights",
       // CONSERVATION
       "biodiversity_hotspots",
       "verified_carbon",
@@ -76,6 +85,7 @@ define([
       "concesiones_wrapper",
       "concesiones_forestalesNS",
       "concesiones_forestales",
+      "mys_wood_fiber",
       "idn_wood_fiber",
       "cog_wood_fiber",
       "gab_wood_fiber",
@@ -84,6 +94,7 @@ define([
       "lbr_oil_palm",
       "cmr_oil_palm",
       "idn_oil_palm",
+      "mys_oil_palm",
       "oil_palm",
       "can_mining",
       "col_mining",
@@ -101,6 +112,7 @@ define([
       "cmr_logging",
       "cod_logging",
       "cog_logging",
+      "mys_logging",
       "logging",
       "raisg",
       //STORIES
@@ -108,11 +120,13 @@ define([
       "mongabay",
       "user_stories",
       // FOREST CHANGE
+      "gfw_landsat_alerts_coverage",
       "terraicanvas_cover",
       "forma_cover",
       "imazon_cover",
       "modis_cover",
       // FOREST CHANGE
+      "guyra",
       "terrailoss",
       "fires",
       "modis",
@@ -121,7 +135,8 @@ define([
       "prodes",
       "loss",
       "forestgain",
-      "gfw_landsat_alerts"
+      "gfw_landsat_alerts",
+      "gfw_landsat_torque_alerts"
     ],
 
     categoryOrder: [

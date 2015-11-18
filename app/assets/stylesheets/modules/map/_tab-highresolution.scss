@@ -151,6 +151,8 @@ $letterW: 20px;
       -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
       width: 100%; /* Specific width is required for Firefox. */
       margin: 0;
+      z-index: 0;
+      position: relative;
     }
 
     input[type=range]::-webkit-slider-thumb {
