@@ -1,0 +1,29 @@
+#gfw_land_rights_1 {
+   polygon-opacity: 0.65;
+   line-width: 0.15;
+   line-opacity: 1;
+   marker-width:7.5;
+   marker-opacity:0.65;
+   marker-line-width:0;
+
+    [doc_status="Formal documentation"] {
+     polygon-fill: #4d658f;
+    line-color: #4d658f;
+    marker-fill:#4d658f;
+  }
+      [doc_status="In process of documentation"] {
+     polygon-fill: #4d658f;
+    line-color: #4d658f;
+     marker-fill:#4d658f;
+  }
+    [doc_status="Formal land petition"] {
+     polygon-fill: #5CA2D1;
+    line-color: #5CA2D1;
+     marker-fill:#5CA2D1;
+  }
+    [doc_status="Occupied or used without formal land petition"] {
+     polygon-fill: #5CA2D1;
+     line-color: #5CA2D1;
+     marker-fill:#5CA2D1;
+  }
+}
