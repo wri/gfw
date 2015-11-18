@@ -27,7 +27,7 @@ define([
     },
 
     render: function() {
-      this.$el.html(this.template({'action': window.gfw.config.GFW_API_HOST+'/user/setuser'}));
+      this.$el.html(this.template({'action': window.gfw.config.GFW_API_HOST+'/user/setuser','redirect':window.location.href}));
     },
 
     _submit: function() {

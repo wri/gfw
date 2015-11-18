@@ -33,8 +33,12 @@ class ConnectController < ApplicationController
           if response.body.length > 0
             JSON.parse(response.body)
           else
-            nil
+            redirect_to '/my_gfw-login'
           end
+        else 
+          puts 'something went wrong, retrying...'
+          sleep(30)
+          user
         end
       rescue Exception => e
         Rails.logger.error "Error retrieving twitter status: #{e}"
