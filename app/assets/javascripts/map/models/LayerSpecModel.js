@@ -114,6 +114,7 @@ define([
       "cog_logging",
       "mys_logging",
       "logging",
+      "logging_roads",
       "raisg",
       //STORIES
       "infoamazonia",
@@ -132,6 +133,7 @@ define([
       "modis",
       "imazon",
       "forma",
+      "forma_250",
       "prodes",
       "loss",
       "forestgain",

@@ -6,6 +6,7 @@ define([
   'map/views/layers/LossLayer',
   'map/views/layers/ForestGainLayer',
   'map/views/layers/FormaLayer',
+  'map/views/layers/Forma250Layer',
   'map/views/layers/FormaCoverLayer',
   'map/views/layers/ImazonLayer',
   'map/views/layers/ImazonCoverLayer',
@@ -118,6 +119,8 @@ define([
   'map/views/layers/KhmEcoLandLayer',
   'map/views/layers/UsaForestOwnershipLayer',
   'map/views/layers/GuyraLayer',
+  'map/views/layers/LoggingRoadsLayer',
+  'map/views/layers/RusHcvLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -125,6 +128,7 @@ define([
   // Layers timelines
   'map/views/timeline/LossTimeline',
   'map/views/timeline/FormaTimeline',
+  'map/views/timeline/Forma250Timeline',
   'map/views/timeline/ImazonTimeline',
   'map/views/timeline/LandsatAlertsTimeline',
   'map/views/timeline/ModisTimeline',
@@ -138,6 +142,7 @@ define([
   LossLayer,
   ForestGainLayer,
   FormaLayer,
+  Forma250Layer,
   FormaCoverLayer,
   ImazonLayer,
   ImazonCoverLayer,
@@ -250,12 +255,15 @@ define([
   KhmEcoLandLayer,
   UsaForestOwnershipLayer,
   GuyraLayer,
+  LoggingRoadsLayer,
+  RusHcvLayer,
   UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
   LossTimeline,
   FormaTimeline,
+  Forma250Timeline,
   ImazonTimeline,
   LandsatAlertsTimeline,
   ModisTimeline,
@@ -279,6 +287,10 @@ define([
     forma: {
       view: FormaLayer,
       timelineView: FormaTimeline
+    },
+    forma_250: {
+      view: Forma250Layer,
+      timelineView: Forma250Timeline
     },
     forma_cover: {
       view: FormaCoverLayer
@@ -627,6 +639,12 @@ define([
     guyra: {
       view: GuyraLayer,
       timelineView: GuyraTimeline
+    },
+    logging_roads: {
+      view: LoggingRoadsLayer,
+    },
+    rus_hcv: {
+      view: RusHcvLayer,
     },
     
     nothing: {

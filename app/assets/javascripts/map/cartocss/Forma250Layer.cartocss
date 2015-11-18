@@ -8,17 +8,12 @@
   marker-height: 0.25;
   marker-fill: #F69;
 
-  [zoom=11] {
-    marker-width: 0.375;
-    marker-height: 0.375;
-  }
-
-  [zoom=12] {
+  [zoom>=10] {
     marker-width: 0.75;
     marker-height: 0.75;
   }
 
-  [zoom=13] {
+  [zoom>13] {
     marker-width: 1.5;
     marker-height: 1.5;
   }
