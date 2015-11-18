@@ -64,7 +64,6 @@ define([
       }
     }, {
       'AnalysisService/results': function(results) {
-        console.log(results);
         this._renderResults(results);
       }
     }, {
