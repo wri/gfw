@@ -27,17 +27,6 @@
     <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
     <%= stylesheet_link_tag "map", :media => "all" %>
     <%= csrf_meta_tags %>
-    <script>
-        var gfw = window.gfw = {
-          config: {
-            GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>",
-            GFW_MOBILE: 1000
-          },
-          cacheVersion: "<%= ENV['CACHE_VERSION'] %>",
-          layer_spec: "<%= ENV['LAYER_SPEC'] %>"
-        };
-    </script>
-
   </head>
 
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
