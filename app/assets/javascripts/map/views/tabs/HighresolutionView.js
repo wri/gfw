@@ -27,7 +27,7 @@ define([
       'change #range-clouds' : 'setVisibleRange',
       'change input' : '_setParams',
       'change select' : '_setParams',
-      'click button' : '_setParams',
+      'click button' : '_triggerChanges',
       'click .advanced-controls' : '_toggleAdvanced'
     },
 
@@ -75,7 +75,11 @@ define([
       } else {
         this.$apply.removeClass('disabled');
       }
+      this.$apply.addClass('green').removeClass('grey');
       this.presenter.setHres(this._getParams(e));
+    },
+
+    _triggerChanges: function(e) {
       this.presenter.updateLayer($(e.target).closest('.maptype').data('slug'));
     },
 
