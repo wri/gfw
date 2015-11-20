@@ -115,6 +115,7 @@ $letterW: 20px;
         left: 50%;
         @include transform(translate(-50%,0));
         margin: 1px 0 0;
+        z-index: 1;
         background: image-url('/assets/icons/point.png') repeat-x 1px center;
       }
       .progress{
@@ -127,6 +128,7 @@ $letterW: 20px;
         cursor: pointer;
         background: $cGreen;
         border-radius: 2px;
+        z-index: 2;
       }
     }
 
@@ -153,6 +155,8 @@ $letterW: 20px;
       margin: 0;
       z-index: 0;
       position: relative;
+      z-index: 2;
+      background: transparent;
     }
 
     input[type=range]::-webkit-slider-thumb {
