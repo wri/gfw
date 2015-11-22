@@ -137,7 +137,7 @@ define([
         }
         this.location.setBounds();
         this.location.setBBox();
-        this.location.infowindowUrl = this.getQuery(this.location.latlng.F,this.location.latlng.A);
+        this.location.infowindowUrl = this.getQuery(this.location.latlng.K,this.location.latlng.G);
 
         $.get(this.location.infowindowUrl).done(_.bind(function(data) {
           if(this.infowindow) {
