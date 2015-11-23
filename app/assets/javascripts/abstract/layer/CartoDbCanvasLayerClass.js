@@ -1,7 +1,12 @@
 define([
-  'abstract/layer/CanvasLayerClass',
-  'map/services/CartoDbLayerService'
-], function(CanvasLayerClass, CartoDbLayerService) {
+  'moment',
+  'abstract/layer/CanvasLayerClass', 'helpers/canvasCartoCSSHelper', 'map/services/CartoDbLayerService',
+  'text!map/queries/default_cartodb_canvas.sql.hbs'
+], function(
+  moment,
+  CanvasLayerClass, canvasCartoCSSHelper, CartoDbLayerService,
+  SQL
+)  {
 
   'use strict';
 
@@ -18,27 +23,11 @@ define([
     _getLayer: function() {
       var deferred = new $.Deferred();
 
-      var config = {
-        version: "1.2.0",
-        layers: [{
-          type: "cartodb",
-          options: {
-            sql: this._getSQL(),
-            cartocss: this._getCartoCSS(),
-            cartocss_version: "2.3.0"
-          }
-        }]
-      };
+      var configService = new CartoDbLayerService(
+        this._getSQL(), this._getCartoCSS());
 
-      var url = 'http://wri-01.cartodb.com/api/v1/map?stat_tag=API';
       var context = this;
-      $.ajax({
-        url: url,
-        type: 'POST',
-        data: JSON.stringify(config),
-        contentType:"application/json; charset=utf-8",
-        dataType: 'json'
-      }).then(function(config) {
+      configService.fetchLayerConfig().then(function(config) {
         context.options.urlTemplate = 'https://' + config.cdn_url.https + '/wri-01/api/v1/map/' + config.layergroupid + '{/z}{/x}{/y}.png32';
         deferred.resolve(context);
       });
@@ -47,33 +36,17 @@ define([
     },
 
     _getCartoCSS: function() {
-      var cssRules = ["#layer { marker-width: 1; marker-line-width: 0; marker-allow-overlap: true;"];
-
       var startDate = moment('2015-01-01'),
           endDate = moment();
 
-      var currDate = startDate.clone().startOf('day');
-      while(currDate.diff(endDate) < 0) {
-        var formattedDate = currDate.format('YYYY-MM-DD'),
-            dayOfYear = currDate.dayOfYear();
-
-        var rgb;
-        if (dayOfYear > 255) {
-          rgb = "0," + (dayOfYear % 255) + ", 0, 1";
-        } else {
-          rgb = dayOfYear + ", 0, 0, 1";
-        }
-
-        cssRules.push("[date=\"" + formattedDate + "\"] { marker-fill: rgba(" + rgb + "); }");
-        currDate = currDate.add('days', 1);
-      }
-
-      console.log( cssRules.join(" ") + "}");
-      return cssRules.join(" ") + "}";
+      return canvasCartoCSSHelper.generateDaily('date', startDate, endDate);
     },
 
     _getSQL: function() {
-      return "SELECT cartodb_id, the_geom, the_geom_webmercator, to_char(date, 'YYYY-MM-DD') AS date FROM umd_alerts_agg";
+      var template = Handlebars.compile(SQL),
+          sql = template({currentDate: this.options.currentDate});
+
+      return sql;
     },
 
     filterCanvasImgdata: function() {

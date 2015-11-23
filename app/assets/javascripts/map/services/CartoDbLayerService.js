@@ -7,28 +7,36 @@ define([
 
   var REQUEST_ID = 'CartoDbLayerService:fetchLayerConfig';
 
+  var URL = 'http://wri-01.cartodb.com/api/v1/map?stat_tag=API';
+
   var CartoDbLayerService = Class.extend({
 
-    init: function(options) {
-      this.options = options || {};
+    init: function(sql, cartocss) {
+      this.config = {
+        version: "1.2.0",
+        layers: [{
+          type: "cartodb",
+          options: {
+            sql: sql,
+            cartocss: cartocss,
+            cartocss_version: "2.3.0"
+          }
+        }]
+      };
+
       this._defineRequests();
     },
 
     _defineRequests: function() {
       var config = {
         cache: {type: 'persist', duration: 1, unit: 'days'},
-        url: this._getUrl(),
+        url: URL,
         type: 'POST',
-        dataType: 'jsonp'
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8'
       };
 
       ds.define(REQUEST_ID, config);
-    },
-
-    _getUrl: function() {
-      var url = 'http://wri-01.cartodb.com/api/v1/map?stat_tag=API';
-
-      return url;
     },
 
     fetchLayerConfig: function() {
@@ -36,12 +44,11 @@ define([
 
       var config = {
         resourceId: REQUEST_ID,
-        data: this.options.config,
+        data: JSON.stringify(this.config),
         success: deferred.resolve,
         error: deferred.reject
       };
 
-      debugger
       ds.request(config);
 
       return deferred.promise();
