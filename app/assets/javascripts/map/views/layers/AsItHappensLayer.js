@@ -5,11 +5,98 @@
 define([
   'moment',
   'abstract/layer/CartoDbCanvasLayerClass',
-], function(moment, CartoDbCanvasLayerClass) {
+  'map/presenters/TorqueLayerPresenter'
+], function(moment, CartoDbCanvasLayerClass, Presenter) {
 
   'use strict';
 
   var AsItHappensLayer = CartoDbCanvasLayerClass.extend({
+
+    init: function(layer, options, map) {
+      this.presenter = new Presenter(this);
+      this._super(layer, options, map);
+
+      this.options.animationDuration = 30;
+    },
+
+    _getLayer: function() {
+      var promise = CartoDbCanvasLayerClass.prototype._getLayer.call(this);
+      promise.then(function() {
+        this._setupAnimation();
+        this.start();
+      }.bind(this));
+      return promise;
+    },
+
+    _setupAnimation: function() {
+      var startDate = moment(this.currentDate[0]),
+          endDate = moment(this.currentDate[1]),
+          numberOfDays = Math.abs(startDate.diff(endDate)) / 1000 / 3600 / 24;
+
+      this.dayOffset = 1;
+      this.animationOptions = {
+        interval: (this.options.animationDuration / numberOfDays) * 1000
+      };
+
+      this.presenter.animationStarted({
+        start: startDate,
+        end: endDate
+      });
+    },
+
+    setDateRange: function(dates) {
+      this.currentDate = dates;
+      this._setupAnimation();
+      this.start();
+    },
+
+    setDate: function(date) {
+      this.stop();
+      this.presenter.animationStopped();
+
+      var startDate = moment(this.currentDate[0]);
+      this.dayOffset = moment(date).dayOfYear() - startDate.dayOfYear();
+
+      var newTime = startDate.clone().add('days', this.dayOffset);
+      this.renderTime(newTime);
+    },
+
+    renderTime: function(time) {
+      this.presenter.updateTimelineDate({time: time});
+      this.timelineExtent = [moment(this.currentDate[0]), time];
+      this.updateTiles();
+    },
+
+    start: function() {
+      if (this.animationInterval !== undefined) { this.stop(); }
+
+      var startDate = moment(this.currentDate[0]),
+          endDate = moment(this.currentDate[1]);
+
+      this.animationInterval = setInterval(function() {
+        var newTime = startDate.clone().add('days', this.dayOffset);
+
+        if (newTime.diff(endDate) < 0) {
+          this.renderTime(newTime);
+          this.dayOffset += 1;
+        } else {
+          this.dayOffset = 1;
+        }
+      }.bind(this), this.animationOptions.interval);
+    },
+
+    stop: function() {
+      clearInterval(this.animationInterval);
+      delete this.animationInterval;
+    },
+
+    toggle: function() {
+      if (this.animationInterval !== undefined) {
+        this.stop();
+      } else {
+        this.start();
+      }
+    },
 
     /*
      * Takes an array of RGBA values for a map tile.
@@ -20,13 +107,10 @@ define([
      *
      */
     filterCanvasImgdata: function(imgdata, w, h, z) {
-      if (!moment.isMoment(this.currentDate[0])) {
-        this.currentDate[0] = moment(this.currentDate[0]);
-        this.currentDate[1] = moment(this.currentDate[1]);
-      }
+      if (this.timelineExtent === undefined) { return; }
 
-      var startDay = this.currentDate[0].dayOfYear();
-      var endDay = this.currentDate[1].dayOfYear();
+      var startDay = this.timelineExtent[0].dayOfYear();
+      var endDay = this.timelineExtent[1].dayOfYear();
 
       var exp = z < 11 ? 0.3 + ((z - 3) / 20) : 1;
       var scale = d3.scale.pow()

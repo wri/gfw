@@ -1,0 +1,36 @@
+marker-fill-opacity: 1;
+marker-line-width: 0;
+marker-placement: point;
+marker-width: 1;
+marker-height: 1;
+marker-allow-overlap: true;
+
+[zoom=13] {
+  marker-width: 1.5;
+  marker-height: 1.5;
+}
+
+[zoom=14]{
+  marker-width: 3;
+  marker-height: 3;
+}
+
+[zoom=15]{
+  marker-width: 6;
+  marker-height: 6;
+}
+
+[zoom=16]{
+  marker-width: 12;
+  marker-height: 12;
+}
+
+[zoom=17]{
+  marker-width: 24;
+  marker-height: 24;
+}
+
+[zoom>=18]{
+  marker-width: 48;
+  marker-height: 48;
+}

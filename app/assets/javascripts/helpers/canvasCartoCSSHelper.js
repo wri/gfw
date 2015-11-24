@@ -1,11 +1,12 @@
 define([
-  'moment'
-], function(moment) {
+  'moment',
+  'text!map/cartocss/default_canvas_style.cartocss'
+], function(moment, defaultCss) {
 
   var canvasCartoCSSHelper = {
 
     generateDaily: function(columnName, startDate, endDate) {
-      var css = "#layer { marker-width: 1; marker-line-width: 0; marker-allow-overlap: true;";
+      var css = "#layer { " + defaultCss;
 
       startDate = moment(startDate);
       endDate = moment(endDate);

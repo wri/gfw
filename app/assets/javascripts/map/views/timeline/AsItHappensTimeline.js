@@ -2,8 +2,9 @@
  * The UMD/GLAd Alerts timeline.
  */
 define([
+  'moment',
   'abstract/timeline/TorqueTimelineClass'
-], function(TorqueTimelineClass) {
+], function(moment, TorqueTimelineClass) {
 
   'use strict';
 
