@@ -33,9 +33,15 @@ define([
           endDate = moment(this.currentDate[1]),
           numberOfDays = Math.abs(startDate.diff(endDate)) / 1000 / 3600 / 24;
 
-      this.dayOffset = 1;
+      var fps = 60,
+          duration = this.options.animationDuration,
+          frameCount = fps * duration,
+          numberOfDays = Math.abs(startDate.diff(endDate)) / 1000 / 3600 / 24,
+          daysPerFrame = numberOfDays / frameCount;
+
       this.animationOptions = {
-        interval: (this.options.animationDuration / numberOfDays) * 1000
+        numberOfDays: numberOfDays,
+        daysPerFrame: daysPerFrame
       };
 
       this.presenter.animationStarted({
@@ -54,11 +60,10 @@ define([
       this.stop();
       this.presenter.animationStopped();
 
-      var startDate = moment(this.currentDate[0]);
-      this.dayOffset = moment(date).dayOfYear() - startDate.dayOfYear();
+      this.startDate = moment(date);
+      this.currentOffset = this.roundedOffset = this.startDate.dayOfYear() - moment(this.currentDate[0]).dayOfYear();
 
-      var newTime = startDate.clone().add('days', this.dayOffset);
-      this.renderTime(newTime);
+      this.renderTime(this.startDate);
     },
 
     renderTime: function(time) {
@@ -70,23 +75,38 @@ define([
     start: function() {
       if (this.animationInterval !== undefined) { this.stop(); }
 
-      var startDate = moment(this.currentDate[0]),
-          endDate = moment(this.currentDate[1]);
+      if (this.startDate === undefined) {
+        this.startDate = moment(this.currentDate[0]);
+      }
 
-      this.animationInterval = setInterval(function() {
-        var newTime = startDate.clone().add('days', this.dayOffset);
+      if (this.currentOffset === undefined) {
+        this.currentOffset = 1;
+        this.roundedOffset = 0;
+      }
 
-        if (newTime.diff(endDate) < 0) {
-          this.renderTime(newTime);
-          this.dayOffset += 1;
-        } else {
-          this.dayOffset = 1;
+      var step = function(timestamp) {
+        if (this.currentOffset > this.animationOptions.numberOfDays) {
+          this.currentOffset = 1;
+          this.roundedOffset = 0;
+          this.startDate = moment(this.currentDate[0]);
         }
-      }.bind(this), this.animationOptions.interval);
+
+        if (Math.round(this.currentOffset) > this.roundedOffset) {
+          this.startDate.add('days', 1);
+          this.renderTime(this.startDate);
+          this.roundedOffset = Math.round(this.currentOffset);
+        }
+
+        this.currentOffset += this.animationOptions.daysPerFrame;
+
+        this.animationInterval = window.requestAnimationFrame(step);
+      }.bind(this);
+
+      this.animationInterval = window.requestAnimationFrame(step);
     },
 
     stop: function() {
-      clearInterval(this.animationInterval);
+      window.cancelAnimationFrame(this.animationInterval);
       delete this.animationInterval;
     },
 

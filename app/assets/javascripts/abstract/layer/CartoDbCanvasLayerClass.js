@@ -1,10 +1,12 @@
 define([
   'moment',
-  'abstract/layer/CanvasLayerClass', 'helpers/canvasCartoCSSHelper', 'map/services/CartoDbLayerService',
+  'abstract/layer/CanvasLayerClass', 'helpers/canvasCartoCSSHelper',
+  'map/services/CartoDbLayerService', 'map/services/CartoDbSQLService',
   'text!map/queries/default_cartodb_canvas.sql.hbs'
 ], function(
   moment,
-  CanvasLayerClass, canvasCartoCSSHelper, CartoDbLayerService,
+  CanvasLayerClass, canvasCartoCSSHelper,
+  CartoDbLayerService, CartoDbSQLService,
   SQL
 )  {
 
@@ -36,8 +38,8 @@ define([
     },
 
     _getCartoCSS: function() {
-      var startDate = moment('2015-01-01'),
-          endDate = moment();
+      var startDate = moment(this.layer.mindate),
+          endDate = moment(this.layer.maxdate || undefined);
 
       return canvasCartoCSSHelper.generateDaily('date', startDate, endDate);
     },
