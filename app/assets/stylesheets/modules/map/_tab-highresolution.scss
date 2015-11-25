@@ -93,6 +93,14 @@ $letterW: 20px;
           margin: 0 0 0 4px;
         }
       }
+      h3 {
+        display: inline;
+      }
+      .info-mapsource {
+        display: inline-block;
+        position: relative;
+        top: -3px; 
+      }
     }
     .onoffswitch {
       float: right;
