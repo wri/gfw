@@ -148,6 +148,10 @@ define([
       var startDay = this.timelineExtent[0].dayOfYear();
       var endDay = this.timelineExtent[1].dayOfYear();
 
+      // For normalising the intensity values
+      // As it is stored in RGB (0..255), the intensity (opacity) is
+      // outside the standard range of 0..1, and thus needs to be
+      // rescaled.
       var exp = z < 11 ? 0.3 + ((z - 3) / 20) : 1;
       var scale = d3.scale.pow()
         .exponent(exp)
