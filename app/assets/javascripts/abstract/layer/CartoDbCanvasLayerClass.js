@@ -1,12 +1,12 @@
 define([
   'moment',
   'abstract/layer/CanvasLayerClass', 'helpers/canvasCartoCSSHelper',
-  'map/services/CartoDbLayerService', 'map/services/CartoDbSQLService',
+  'map/services/CartoDbLayerService',
   'text!map/queries/default_cartodb_canvas.sql.hbs'
 ], function(
   moment,
   CanvasLayerClass, canvasCartoCSSHelper,
-  CartoDbLayerService, CartoDbSQLService,
+  CartoDbLayerService,
   SQL
 )  {
 
