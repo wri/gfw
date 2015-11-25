@@ -30,8 +30,7 @@ define([
 
     _setupAnimation: function() {
       var startDate = moment(this.currentDate[0]),
-          endDate = moment(this.currentDate[1]),
-          numberOfDays = Math.abs(startDate.diff(endDate)) / 1000 / 3600 / 24;
+          endDate = moment(this.currentDate[1]);
 
       var fps = 60,
           duration = this.options.animationDuration,
@@ -118,6 +117,23 @@ define([
       }
     },
 
+    _drawCanvasImage: function(canvasData) {
+      var canvas = canvasData.canvas,
+          ctx = canvas.getContext('2d'),
+          image = canvasData.image;
+
+      var x = canvasData.x,
+          y = canvasData.y,
+          z = canvasData.z;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0);
+
+      var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      this.filterCanvasImgdata(I.data, canvas.width, canvas.height, z);
+      ctx.putImageData(I, 0, 0);
+    },
+
     /*
      * Takes an array of RGBA values for a map tile.
      *
@@ -148,7 +164,7 @@ define([
           // occurred, where `doy <= 255`
           var dayOfLoss = imgdata[pixelPos];
           if (dayOfLoss == 0 && imgdata[pixelPos+1] !== 0) {
-            // The G channel representst the day of year that an alert
+            // The G channel represents the day of year that an alert
             // occurred, where `doy > 255`
             dayOfLoss = imgdata[pixelPos+1] + 255;
           }
