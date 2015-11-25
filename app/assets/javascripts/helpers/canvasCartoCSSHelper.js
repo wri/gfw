@@ -6,29 +6,56 @@ define([
   var canvasCartoCSSHelper = {
 
     generateDaily: function(columnName, startDate, endDate) {
-      var css = "#layer { " + defaultCss;
+      var CONFIDENCE_VALUES = [2,3,null];
 
       startDate = moment(startDate);
       endDate = moment(endDate);
 
+      var rules = [];
+
       var currDate = startDate.clone().startOf('day');
       while(currDate.diff(endDate) < 1) {
-        var formattedDate = currDate.format('YYYY-MM-DD'),
-            dayOfYear = currDate.dayOfYear();
+        var formattedDate = currDate.format('YYYY-MM-DD');
 
-        var rgb;
-        if (dayOfYear > 255) {
-          rgb = "0, " + (dayOfYear % 255) + ", 0, 1";
-        } else {
-          rgb = dayOfYear + ", 0, 0, 1";
-        }
+        CONFIDENCE_VALUES.forEach(function(confidence) {
+          var rule = {
+            date: formattedDate,
+            confidence: confidence
+          };
 
-        css += " [date=\"" + formattedDate + "\"] { marker-fill: rgba(" + rgb + "); }";
+          var dayOfYear = currDate.dayOfYear();
+          if (dayOfYear > 255) {
+            rule.rgb = "0, " + (dayOfYear % 255) + ", " + (confidence || 0) + ", 1";
+          } else {
+            rule.rgb = dayOfYear + ", 0, " + (confidence || 0) + ", 1";
+          }
+
+          rules.push(rule);
+        });
 
         currDate = currDate.add('days', 1);
       }
 
-      css += " }";
+      var formattedRules = rules.map(function(rule) {
+        if (rule.confidence !== null) {
+          rule.confidence = '"'+rule.confidence+'"';
+        }
+
+        return [
+          "[date=\"" + rule.date + "\"]",
+          "[confi=" + rule.confidence + "] {",
+          "  marker-fill: rgba(" + rule.rgb + ");",
+          "}"
+        ].join(" ");
+      });
+
+      var css = [
+        "#layer {",
+          defaultCss.replace(/(\r\n|\n|\r)/gm,""),
+          formattedRules.join(" "),
+        "}"
+      ].join(" ");
+
       return css;
     }
 

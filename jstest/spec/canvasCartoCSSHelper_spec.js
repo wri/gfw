@@ -20,13 +20,15 @@ define([
         });
 
         it('generates cartocss with default layer rules', function() {
-          var cssRegex = new RegExp("^#layer { marker-width: 1; marker-line-width: 0; marker-allow-overlap: true;");
-          expect(css).toMatch(cssRegex);
+          var expectedCss = "#layer { marker-fill-opacity: 1;marker-line-width: 0;marker-placement: point;marker-width: 1;marker-height: 1;marker-allow-overlap: true";
+          console.log(css);
+          console.log(expectedCss);
+          expect(css.indexOf(expectedCss)).toBeGreaterThan(-1);
         });
 
         it('generates cartocss with a rule for each day', function() {
-          var expectedCss = "#layer { marker-width: 1; marker-line-width: 0; marker-allow-overlap: true; [date=\"2015-01-01\"] { marker-fill: rgba(1, 0, 0, 1); } [date=\"2015-01-02\"] { marker-fill: rgba(2, 0, 0, 1); } }";
-          expect(css).toEqual(expectedCss);
+          var expectedCss = "[date=\"2015-01-01\"] { marker-fill: rgba(1, 0, 0, 1); } [date=\"2015-01-02\"] { marker-fill: rgba(2, 0, 0, 1); } }";
+          expect(css.indexOf(expectedCss)).toBeGreaterThan(0);
         });
       });
 

@@ -22,8 +22,9 @@ define([
       ];
 
       beforeEach(function() {
-        var currentDate = ['2015-01-01', '2015-10-14'];
-        layer = new AsItHappensLayer({}, { currentDate: currentDate });
+        var dates = [moment('2015-01-01'), moment('2015-10-14')];
+        layer = new AsItHappensLayer({}, {currentDate: dates});
+        layer.timelineExtent = dates;
         layer.filterCanvasImgdata(imageData, 3, 3, 10);
       });
 
