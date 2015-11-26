@@ -11,10 +11,10 @@ define([
 
   'use strict';
 
-  var Forma250Layer = TorqueLayerClass.extend({
+  var BrazilForma250Layer = TorqueLayerClass.extend({
 
     options: {
-      table: 'peru_250_daily',
+      table: 'brazil_250_daily',
       column: 'date',
       data_aggregation: 'cumulative',
       cartocss: CartoCSS
@@ -22,6 +22,6 @@ define([
 
   });
 
-  return Forma250Layer;
+  return BrazilForma250Layer;
 
 });
