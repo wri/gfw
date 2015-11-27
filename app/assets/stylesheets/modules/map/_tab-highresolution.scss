@@ -93,6 +93,14 @@ $letterW: 20px;
           margin: 0 0 0 4px;
         }
       }
+      h3 {
+        display: inline;
+      }
+      .info-mapsource {
+        display: inline-block;
+        position: relative;
+        top: -3px; 
+      }
     }
     .onoffswitch {
       float: right;
@@ -107,6 +115,17 @@ $letterW: 20px;
       height: 10px;
       width: 100%;
       margin: 0 auto;
+      ul {
+        display: flex;
+        font-size: 10px;
+        color: #97bd3d;
+        font-weight: 500;
+        justify-content: space-between;
+        li {
+            width: 15px;
+            text-align: center;
+        }
+      }
       .dots{
         position: absolute;
         width: 100%;

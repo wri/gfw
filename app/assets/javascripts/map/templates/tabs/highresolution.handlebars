@@ -4,7 +4,7 @@
     {{!-- <select data-placeholder="Select Provider" class="chosen-select default notranslate" id="hres-provider-select"><option></option></select> --}}
 
     <div data-slug="urthe" class="maptype">
-      <h3>Urthecast<span class="onoffswitch"><span></span></span></h3>
+      <h3>UrtheCast<span class="onoffswitch"><span></span></span></h3><span class="info-mapsource"><a href='#' data-source="hr-urthecast" class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
       <span class="advanced-controls">Open Advanced Settings</span>
       <article class="advanced-options">
         <section>
@@ -14,12 +14,13 @@
         <section>
           <span>Maximum cloud cover percentage <a href='#' data-source="hr-cloud" class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           <div class="range-box">
+            <ul><li>0%</li><li>10</li><li>20</li><li>30</li><li>40</li><li>50%</li><li>60</li><li>70</li><li>80</li><li>90</li><li>100%</li></ul>
+          </div>
+          <div class="range-box">
             <div class="dots"></div>
             <div id="progress-clouds" class="progress"></div>
             <input id="range-clouds" type="range" class='cloud' step="10" value="30">
           </div>
-
-          {{!-- <input type="range" class='cloud' step="10" value="30"> --}}
         </section>
       </article>
       <section>
