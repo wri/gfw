@@ -127,6 +127,7 @@ define([
   'map/views/layers/UsaForestOwnershipLayer',
   'map/views/layers/GuyraLayer',
   'map/views/layers/LoggingRoadsLayer',
+  'map/views/layers/LoggingRoadsCoverLayer',
   'map/views/layers/RusHcvLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
@@ -269,6 +270,7 @@ define([
   UsaForestOwnershipLayer,
   GuyraLayer,
   LoggingRoadsLayer,
+  LoggingRoadsCoverLayer,
   RusHcvLayer,
   UrthecastLayer,
   // Layer dialog templates
@@ -678,6 +680,10 @@ define([
     },
     logging_roads: {
       view: LoggingRoadsLayer,
+    },
+    
+    logging_roads_coverage: {
+      view: LoggingRoadsCoverLayer,
     },
     rus_hcv: {
       view: RusHcvLayer,

@@ -598,4 +598,11 @@
     line-width: 1;
     line-opacity: 1;
   }
+  [layer='logging_roads_extent'] {
+    polygon-fill: #B2D26E;
+    polygon-opacity: 0.3;
+    line-width: 1;
+    line-color: #FFF;
+    line-opacity: 0;
+  }
 }
