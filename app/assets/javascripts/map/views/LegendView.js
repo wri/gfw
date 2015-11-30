@@ -39,9 +39,10 @@ define([
   'text!map/templates/legend/guyra_deforestation.handlebars',
   'text!map/templates/legend/logging_roads.handlebars',
   'text!map/templates/legend/rus_hrv.handlebars',
+  'text!map/templates/legend/raisg_land_rights.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl, rus_hrvTpl) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl, rus_hrvTpl, raisg_land_rightsTpl) {
 
   'use strict';
 
@@ -91,12 +92,16 @@ define([
       lbr_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
       col_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
       khm_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      idn_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      mys_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
       plantations_by_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
       bra_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
       per_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
       lbr_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
       col_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
       khm_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      idn_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      mys_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
       oil_palm: Handlebars.compile(oil_palmTpl),
       gtm_forest_change1: Handlebars.compile(gtm_forest_changeTpl),
       gtm_forest_change2: Handlebars.compile(gtm_forest_changeTpl),
@@ -107,6 +112,7 @@ define([
       guyra:Handlebars.compile(guyra_deforestationTpl),
       logging_roads:Handlebars.compile(logging_roadsTpl),
       rus_hcv:Handlebars.compile(rus_hrvTpl),
+      raisg:Handlebars.compile(raisg_land_rightsTpl),
 
     },
 

@@ -107,6 +107,10 @@ define([
   'map/views/layers/ColPlantationsLayerBySpecies',
   'map/views/layers/KhmPlantationsLayerByType',
   'map/views/layers/KhmPlantationsLayerBySpecies',
+  'map/views/layers/IdnPlantationsLayerByType',
+  'map/views/layers/IdnPlantationsLayerBySpecies',
+  'map/views/layers/MysPlantationsLayerByType',
+  'map/views/layers/MysPlantationsLayerBySpecies',
   'map/views/layers/PerBufferLayer',
   'map/views/layers/PerNatPALayer',
   'map/views/layers/PerPrivPALayer',
@@ -123,6 +127,7 @@ define([
   'map/views/layers/UsaForestOwnershipLayer',
   'map/views/layers/GuyraLayer',
   'map/views/layers/LoggingRoadsLayer',
+  'map/views/layers/LoggingRoadsCoverLayer',
   'map/views/layers/RusHcvLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
@@ -245,6 +250,10 @@ define([
   ColPlantationsLayerBySpecies,
   KhmPlantationsLayerByType,
   KhmPlantationsLayerBySpecies,
+  IdnPlantationsLayerByType,
+  IdnPlantationsLayerBySpecies,
+  MysPlantationsLayerByType,
+  MysPlantationsLayerBySpecies,
   PerBufferLayer,
   PerNatPALayer,
   PerPrivPALayer,
@@ -261,6 +270,7 @@ define([
   UsaForestOwnershipLayer,
   GuyraLayer,
   LoggingRoadsLayer,
+  LoggingRoadsCoverLayer,
   RusHcvLayer,
   UrthecastLayer,
   // Layer dialog templates
@@ -605,6 +615,18 @@ define([
     khm_plantations_species: {
       view: KhmPlantationsLayerBySpecies
     },
+    idn_plantations_type: {
+      view: IdnPlantationsLayerByType
+    },
+    idn_plantations_species: {
+      view: IdnPlantationsLayerBySpecies
+    },
+    mys_plantations_type: {
+      view: MysPlantationsLayerByType
+    },
+    mys_plantations_species: {
+      view: MysPlantationsLayerBySpecies
+    },
     per_buffer: {
       view: PerBufferLayer
     },
@@ -658,6 +680,10 @@ define([
     },
     logging_roads: {
       view: LoggingRoadsLayer,
+    },
+    
+    logging_roads_coverage: {
+      view: LoggingRoadsCoverLayer,
     },
     rus_hcv: {
       view: RusHcvLayer,
