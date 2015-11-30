@@ -142,7 +142,7 @@ define([
       "loss",
       "forestgain",
       "gfw_landsat_alerts",
-      "gfw_landsat_torque_alerts"
+      "umd_as_it_happens"
     ],
 
     categoryOrder: [

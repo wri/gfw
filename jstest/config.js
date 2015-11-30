@@ -55,6 +55,7 @@ require.config({
     store: '../../../vendor/assets/javascripts/store',
     Class: '../../../vendor/assets/bower_components/Class.js/Class',
     jasmine: "../../../vendor/assets/bower_components/jasmine",
+    sinon: "../../../vendor/assets/bower_components/sinon/lib/sinon",
     helpers: "helpers",
     utils: "map/utils",
     abstract: "abstract",

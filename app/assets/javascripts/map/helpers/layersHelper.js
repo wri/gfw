@@ -116,7 +116,7 @@ define([
   'map/views/layers/GtmForestChange2Layer',
   'map/views/layers/GtmForestCoverLayer',
   'map/views/layers/GtmForestDensityLayer',
-  'map/views/layers/LandsatAlertsTorqueLayer',
+  'map/views/layers/AsItHappensLayer',
   'map/views/layers/LandsatAlertsCoverLayer',
   'map/views/layers/KhmProtectedAreasLayer',
   'map/views/layers/KhmEcoLandLayer',
@@ -137,7 +137,7 @@ define([
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
   'map/views/timeline/ProdesTimeline',
-  'map/views/timeline/LandsatAlertsTorqueTimeline',
+  'map/views/timeline/AsItHappensTimeline',
   'map/views/timeline/GuyraTimeline'
 ], function(
   // Layer Views
@@ -254,7 +254,7 @@ define([
   GtmForestChange2Layer,
   GtmForestCoverLayer,
   GtmForestDensityLayer,
-  LandsatAlertsTorqueLayer,
+  AsItHappensLayer,
   LandsatAlertsCoverLayer,
   KhmProtectedAreasLayer,
   KhmEcoLandLayer,
@@ -274,7 +274,7 @@ define([
   FiresTimeline,
   TerraiTimeline,
   ProdesTimeline,
-  LandsatAlertsTorqueTimeline,
+  AsItHappensTimeline,
   GuyraTimeline
 ) {
 
@@ -632,9 +632,9 @@ define([
      gtm_forest_density: {
       view: GtmForestDensityLayer
     },
-    gfw_landsat_torque_alerts: {
-      view: LandsatAlertsTorqueLayer,
-      timelineView: LandsatAlertsTorqueTimeline
+    umd_as_it_happens: {
+      view: AsItHappensLayer,
+      timelineView: AsItHappensTimeline
     },
     
     gfw_landsat_alerts_coverage: {
