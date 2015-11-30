@@ -6,8 +6,6 @@ define([
   var canvasCartoCSSHelper = {
 
     generateDaily: function(columnName, startDate, endDate) {
-      var CONFIDENCE_VALUES = [2,3,null];
-
       startDate = moment(startDate);
       endDate = moment(endDate);
 
@@ -17,33 +15,25 @@ define([
       while(currDate.diff(endDate) < 1) {
         var formattedDate = currDate.format('YYYY-MM-DD');
 
-        CONFIDENCE_VALUES.forEach(function(confidence) {
-          var rule = {
-            date: formattedDate,
-            confidence: confidence
-          };
+        var rule = {
+          date: formattedDate
+        };
 
-          var dayOfYear = currDate.dayOfYear();
-          if (dayOfYear > 255) {
-            rule.rgb = "0, " + (dayOfYear % 255) + ", " + (confidence || 0) + ", 1";
-          } else {
-            rule.rgb = dayOfYear + ", 0, " + (confidence || 0) + ", 1";
-          }
+        var dayOfYear = currDate.dayOfYear();
+        if (dayOfYear > 255) {
+          rule.rgb = "0, " + (dayOfYear % 255) + ", 0, 1";
+        } else {
+          rule.rgb = dayOfYear + ", 0, 0, 1";
+        }
 
-          rules.push(rule);
-        });
+        rules.push(rule);
 
         currDate = currDate.add('days', 1);
       }
 
       var formattedRules = rules.map(function(rule) {
-        if (rule.confidence !== null) {
-          rule.confidence = '"'+rule.confidence+'"';
-        }
-
         return [
-          "[date=\"" + rule.date + "\"]",
-          "[confi=" + rule.confidence + "] {",
+          "[date=\"" + rule.date + "\"] {",
           "  marker-fill: rgba(" + rule.rgb + ");",
           "}"
         ].join(" ");

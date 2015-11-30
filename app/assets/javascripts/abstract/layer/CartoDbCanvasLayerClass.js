@@ -46,7 +46,9 @@ define([
 
     _getSQL: function() {
       var template = Handlebars.compile(SQL),
-          sql = template({currentDate: this.options.currentDate});
+          sql = template({
+            table: 'umd_alerts_agg'
+          });
 
       return sql;
     },
