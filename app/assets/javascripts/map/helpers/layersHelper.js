@@ -116,7 +116,6 @@ define([
   'map/views/layers/GtmForestChange2Layer',
   'map/views/layers/GtmForestCoverLayer',
   'map/views/layers/GtmForestDensityLayer',
-  'map/views/layers/LandsatAlertsLayer',
   'map/views/layers/LandsatAlertsTorqueLayer',
   'map/views/layers/LandsatAlertsCoverLayer',
   'map/views/layers/KhmProtectedAreasLayer',
@@ -134,7 +133,6 @@ define([
   'map/views/timeline/FormaTimeline',
   'map/views/timeline/Forma250Timeline',
   'map/views/timeline/ImazonTimeline',
-  'map/views/timeline/LandsatAlertsTimeline',
   'map/views/timeline/ModisTimeline',
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
@@ -256,7 +254,6 @@ define([
   GtmForestChange2Layer,
   GtmForestCoverLayer,
   GtmForestDensityLayer,
-  LandsatAlertsLayer,
   LandsatAlertsTorqueLayer,
   LandsatAlertsCoverLayer,
   KhmProtectedAreasLayer,
@@ -273,7 +270,6 @@ define([
   FormaTimeline,
   Forma250Timeline,
   ImazonTimeline,
-  LandsatAlertsTimeline,
   ModisTimeline,
   FiresTimeline,
   TerraiTimeline,
@@ -635,10 +631,6 @@ define([
     },
      gtm_forest_density: {
       view: GtmForestDensityLayer
-    },
-    gfw_landsat_alerts: {
-      view: LandsatAlertsLayer,
-      timelineView: LandsatAlertsTimeline
     },
     gfw_landsat_torque_alerts: {
       view: LandsatAlertsTorqueLayer,
