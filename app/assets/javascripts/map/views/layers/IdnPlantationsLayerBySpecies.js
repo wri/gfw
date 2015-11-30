@@ -11,7 +11,7 @@ define([
 
   'use strict';
 
-  var KhmPlantationsLayerBySpecies = CartoDBLayerClass.extend({
+  var IdnPlantationsLayerBySpecies = CartoDBLayerClass.extend({
 
     options: {
       sql: 'SELECT the_geom_webmercator, cartodb_id, type_text, spec_org, spec_simp, round(area_ha::numeric,1) as area_ha, percent, \'{tableName}\' AS tablename, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}',
@@ -24,6 +24,6 @@ define([
 
   });
 
-  return KhmPlantationsLayerBySpecies;
+  return IdnPlantationsLayerBySpecies;
 
 });

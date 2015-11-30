@@ -47,6 +47,12 @@ define([
       "lbr_plantations_by_species",
       "col_plantations_by_type",
       "col_plantations_by_species",
+      "khm_plantations_by_type",
+      "khm_plantations_by_species",
+      "idn_plantations_by_type",
+      "idn_plantations_by_species",
+      "mys_plantations_by_type",
+      "mys_plantations_by_species",
       "khm_eco_land_conc",
       "usa_forest_ownership",
       // PEOPLE
