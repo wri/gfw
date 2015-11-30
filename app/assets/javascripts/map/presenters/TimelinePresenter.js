@@ -148,7 +148,7 @@ define([
       var timeline = this.status.get('timeline');
       if (!timeline) {return;}
 
-      if (timeline.presenter !== undefined) {
+      if (timeline.presenter && timeline.presenter.unsubscribe) {
         timeline.presenter.unsubscribe();
       }
 
