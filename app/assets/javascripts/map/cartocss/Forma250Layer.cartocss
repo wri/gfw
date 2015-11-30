@@ -4,8 +4,8 @@
   marker-line-width: 0;
   marker-placement: point;
   marker-type: rectangle;
-  marker-width: 0.25;
-  marker-height: 0.25;
+  marker-width: 0.5;
+  marker-height: 0.5;
   marker-fill: #F69;
 
   [zoom>=10] {
