@@ -6,7 +6,11 @@ define([
   'map/views/layers/LossLayer',
   'map/views/layers/ForestGainLayer',
   'map/views/layers/FormaLayer',
-  'map/views/layers/Forma250Layer',
+  'map/views/layers/PeruForma250Layer',
+  'map/views/layers/IndonesiaForma250Layer',
+  'map/views/layers/BrazilForma250Layer',
+  'map/views/layers/LaosForma250Layer',
+  'map/views/layers/DrcForma250Layer',
   'map/views/layers/FormaCoverLayer',
   'map/views/layers/ImazonLayer',
   'map/views/layers/ImazonCoverLayer',
@@ -112,7 +116,6 @@ define([
   'map/views/layers/GtmForestChange2Layer',
   'map/views/layers/GtmForestCoverLayer',
   'map/views/layers/GtmForestDensityLayer',
-  'map/views/layers/LandsatAlertsLayer',
   'map/views/layers/AsItHappensLayer',
   'map/views/layers/LandsatAlertsCoverLayer',
   'map/views/layers/KhmProtectedAreasLayer',
@@ -130,7 +133,6 @@ define([
   'map/views/timeline/FormaTimeline',
   'map/views/timeline/Forma250Timeline',
   'map/views/timeline/ImazonTimeline',
-  'map/views/timeline/LandsatAlertsTimeline',
   'map/views/timeline/ModisTimeline',
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
@@ -142,7 +144,11 @@ define([
   LossLayer,
   ForestGainLayer,
   FormaLayer,
-  Forma250Layer,
+  PeruForma250Layer,
+  IndonesiaForma250Layer,
+  BrazilForma250Layer,
+  LaosForma250Layer,
+  DrcForma250Layer,
   FormaCoverLayer,
   ImazonLayer,
   ImazonCoverLayer,
@@ -248,7 +254,6 @@ define([
   GtmForestChange2Layer,
   GtmForestCoverLayer,
   GtmForestDensityLayer,
-  LandsatAlertsLayer,
   AsItHappensLayer,
   LandsatAlertsCoverLayer,
   KhmProtectedAreasLayer,
@@ -265,7 +270,6 @@ define([
   FormaTimeline,
   Forma250Timeline,
   ImazonTimeline,
-  LandsatAlertsTimeline,
   ModisTimeline,
   FiresTimeline,
   TerraiTimeline,
@@ -288,8 +292,24 @@ define([
       view: FormaLayer,
       timelineView: FormaTimeline
     },
-    forma_250: {
-      view: Forma250Layer,
+    peru_forma_250: {
+      view: PeruForma250Layer,
+      timelineView: Forma250Timeline
+    },
+    brazil_forma_250: {
+      view: BrazilForma250Layer,
+      timelineView: Forma250Timeline
+    },
+    indonesia_forma_250: {
+      view: IndonesiaForma250Layer,
+      timelineView: Forma250Timeline
+    },
+    laos_forma_250: {
+      view: LaosForma250Layer,
+      timelineView: Forma250Timeline
+    },
+    drc_forma_250: {
+      view: DrcForma250Layer,
       timelineView: Forma250Timeline
     },
     forma_cover: {
@@ -611,10 +631,6 @@ define([
     },
      gtm_forest_density: {
       view: GtmForestDensityLayer
-    },
-    gfw_landsat_alerts: {
-      view: LandsatAlertsLayer,
-      timelineView: LandsatAlertsTimeline
     },
     umd_as_it_happens: {
       view: AsItHappensLayer,

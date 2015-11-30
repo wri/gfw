@@ -35,14 +35,9 @@
           </div>
           <div class="layer-group">
             <span class="group-name">Tree cover loss alerts <em>(near real-time)</em></span>
-            <li class="layer" data-layer="gfw_landsat_alerts">
-              <span class="onoffradio"><span></span></span>
-              <span class="layer-title">GLAD Tree Cover Loss Alerts<a href='#' data-source='gfw_landsat_alerts' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-              <span class="layer-info">(weekly, 30m, select countries, UMD/ GLAD)</span>
-            </li>
             <li class="layer" data-layer="umd_as_it_happens">
               <span class="onoffradio"><span></span></span>
-              <span class="layer-title">GLAD Tree Cover Loss Alerts [Torque]<a href='#' data-source='gfw_landsat_alerts' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-title">GLAD Tree Cover Loss Alerts<a href='#' data-source='gfw_landsat_alerts' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
               <span class="layer-info">(weekly, 30m, select countries, UMD/ GLAD)</span>
             </li>
             <li class="layer" data-layer="forma">
@@ -50,10 +45,32 @@
               <span class="layer-title">FORMA<a href='#' data-source='forma' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
               <span class="layer-info">(monthly, 500m, humid tropics, WRI/CGD)</span>
             </li>
-            <li class="layer" data-layer="forma_250">
+            <li class="wrapped-layer">
               <span class="onoffradio"><span></span></span>
               <span class="layer-title">FORMA 250<a href='#' data-source='forma' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
               <span class="layer-info">(daily, 250m, humid tropics, WRI/CGD)</span>
+              <span class="layer-info">
+                <label data-layer="brazil_forma_250" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />Brazil
+                </label>
+                <label data-layer="drc_forma_250" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />Democratic Republic of Congo
+                </label>
+                <label data-layer="indonesia_forma_250" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />Indonesia
+                </label>
+                <label data-layer="laos_forma_250" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />Laos
+                </label>
+                <label data-layer="peru_forma_250" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />Peru
+                </label>
+              </span>
             </li>
             <li class="layer" data-layer="terrailoss">
               <span class="onoffradio"><span></span></span>
