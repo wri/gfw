@@ -15,7 +15,7 @@ gem 'fog'
 gem 'rmagick', :require => false
 gem 'mini_magick'
 gem 'unf'
-gem 'requirejs-rails', '0.9.5'
+gem 'requirejs-rails'
 gem 'rack-reverse-proxy', :path => "rack-reverse-proxy-0.4.4/", require: "rack/reverse_proxy"
 
 group :development, :test do
