@@ -72,6 +72,8 @@ define([
     },
 
     welcome: function() {
+      if (window.location.hostname === 'localhost') { return; }
+
       console.info('%c .', "background-image: url('http://www.globalforestwatch.org/assets/logo-new.png'); width: 85px; height: 90px; float:left;font-size:82px; color: transparent;");
       console.info('%cWelcome to GFW ', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;font-size: 15px;");
       console.info('%cIn case you\'re interested in the code of this website ', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;");

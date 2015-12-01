@@ -892,8 +892,9 @@
     }
 
     .section-info {
+      @include clearfix();
       margin-bottom: 12px;
-      padding-bottom: 15px;
+      padding-bottom: 10px;
       font-size: 14px;
       color: $dark;
       font-weight: 500;
@@ -905,6 +906,7 @@
       .section-btn {
         position: absolute;
         right: 0px;
+        top: 0;
       }
 
       .share {

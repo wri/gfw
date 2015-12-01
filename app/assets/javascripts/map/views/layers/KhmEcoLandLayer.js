@@ -14,9 +14,9 @@ define([
   var KhmEcoLandLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: "SELECT \'{tableName}\' as tablename, cartodb_id, the_geom_webmercator,adjustment as adjustment_classification, developer_ as developer_en, round((original_s::float)/10000) as original_size_h, contractin as contracting_authority,contract_d as contract_duration, inv_intent, contract_1 as contract_date, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}" ,
+      sql: "SELECT \'{tableName}\' as tablename, cartodb_id, the_geom_webmercator,adjustment as adjustment_classification, developer_ as name, contractin as contracting_authority,contract_d as contract_duration, inv_intent, contract_1 as contract_date, \'{tableName}\' AS layer, {analysis} AS analysis, original_s as original_size_h FROM {tableName}" ,
       infowindow: true,
-      interactivity: 'cartodb_id, tablename, developer_en,adjustment_classification, contracting_authority, contract_duration, inv_intent, contract_date, original_size_h, analysis',
+      interactivity: 'cartodb_id, tablename, name,adjustment_classification, contracting_authority, contract_duration, inv_intent, contract_date, original_size_h, analysis',
       cartocss: khm_EcoLandCartoCSS,
       analysis: true
     }
