@@ -254,7 +254,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
-    requirejs-rails (0.9.9)
+    requirejs-rails (0.9.5)
       railties (>= 3.1.1)
     rmagick (2.15.4)
     rspec-collection_matchers (1.1.2)
@@ -349,7 +349,7 @@ DEPENDENCIES
   rack-reverse-proxy!
   rails (= 4.0.4)
   rails_12factor
-  requirejs-rails
+  requirejs-rails (= 0.9.5)
   rmagick
   rspec-rails (~> 2.0)
   sass-rails (>= 4.0.3)
