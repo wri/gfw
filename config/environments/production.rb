@@ -65,13 +65,9 @@ Gfw::Application.configure do
 
   # Require JS
   # config.requirejs.loader = :almond
-  # config.requirejs.logical_asset_filter += [/\.handlebars$/]
-  # config.requirejs.logical_asset_filter += [/\.hbs$/]
-  # config.requirejs.logical_asset_filter += [/\.cartocss$/]
-
-  config.requirejs.logical_path_patterns += [/\.handlebars$/]
-  config.requirejs.logical_path_patterns += [/\.hbs$/]
-  config.requirejs.logical_path_patterns += [/\.cartocss$/]
+  config.requirejs.logical_asset_filter += [/\.handlebars$/]
+  config.requirejs.logical_asset_filter += [/\.hbs$/]
+  config.requirejs.logical_asset_filter += [/\.cartocss$/]
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
