@@ -58,11 +58,18 @@
               <span class="stats-title">Prodes tree cover loss ({{dateRange}})</span>
               <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> ha</span>
             </li>
-          {{else}}
+        {{else}}
+          {{#if guyra}}
+          <li>
+            <span class="stats-title">Grand Chaco tree cover loss:</span>
+            <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> ha</span>
+          </li>
+        {{else}}
           <li>
             <span class="stats-title">Total alerts ({{dateRange}})</span>
             <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> {{alertsName}}</span>
           </li>
+            {{/if}}
           {{/if}}
         {{/if}}
       {{/if}}
