@@ -295,6 +295,88 @@
   }
 }
 
+
+.apps-submenu {
+  position: absolute;
+  background: $white;
+  box-shadow: $shadow1;
+  z-index: 1;
+  left: 0;
+  top: 100%;
+  @include transform(translate(0,5px));
+  visibility: hidden;
+  opacity: 0;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  width: 450px;
+  li {
+    width: 33.33333333%;
+    border-left: 1px solid $border;
+    &:nth-child(3n+1) {
+      border-left: none;
+    }
+    &:nth-child(n+4) {
+      border-top: 1px solid $border;
+    }
+    a {
+      display: block;
+      padding-bottom: 100%;
+      position: relative;
+      &:hover, &.current  {
+        background: #f7f7f7;
+        &.shape-world .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        &.shape-country .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        &.shape-fire .nav-item-wrap .nav-item-wrap-center svg{ fill: $red;}
+        &.shape-commodities .nav-item-wrap .nav-item-wrap-center svg{ fill: $orange;}
+        &.shape-blog .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        &.shape-climate .nav-item-wrap .nav-item-wrap-center svg{ fill: $blue;}
+        &.shape-data .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        &.shape-develop .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        svg {
+          fill: $cGreen;
+        }
+      }
+      .nav-item-wrap {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+
+        .nav-item-wrap-center {
+          position: absolute;
+          width: 100%;
+          top: 50%;
+          left: 0;
+          transform: translate(0,-33px);
+
+          svg{
+            fill: #b6b6ba;
+            display: block;
+            width: 32px;
+            height: 32px;
+            margin: 0px auto 10px;
+          }
+
+          span{
+            font-size: 12px;
+            display: block;
+            padding: 0 10px;
+            color: $dark;
+            text-transform: uppercase;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
 // INTERESTING SECTION
 .interesting-section{
   padding: 20px 0;
