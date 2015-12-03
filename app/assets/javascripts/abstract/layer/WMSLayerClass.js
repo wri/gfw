@@ -150,8 +150,9 @@ define([
               name: data.features[0].attributes['tis.nombre'],
               country: data.features[0].attributes['tis.pais'],
               status: data.features[0].attributes['tis.leyenda'],
-              date_create: data.features[0].attributes['tis.fecha_atualizacion_dato'],
+              date_create: data.features[0].attributes['tis.fecha_norma'],
               area_ha: data.features[0].attributes['tis.area_oficial_ha'].toLocaleString(),
+              category:data.features[0].attributes['tis.categoria'],
               source: data.features[0].attributes['tis.fuente'],
             }
           }
