@@ -130,6 +130,7 @@ define([
       "gfw_landsat_alerts_coverage",
       "terraicanvas_cover",
       "forma_cover",
+      "forma_250_cover",
       "imazon_cover",
       "modis_cover",
       // FOREST CHANGE
