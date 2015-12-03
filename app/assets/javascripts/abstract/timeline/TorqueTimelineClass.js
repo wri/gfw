@@ -23,7 +23,7 @@ define([
   var TimelineStatus = Backbone.Model.extend({
     defaults: {
       currentDate: null,
-      running: true
+      running: false
     },
 
     toggleRunning: function() {
