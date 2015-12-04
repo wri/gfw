@@ -344,6 +344,8 @@
   li {
     width: 33.33333333%;
     border-left: 1px solid $border;
+    position: relative;
+    z-index: 2;
     &:nth-child(3n+1) {
       border-left: none;
     }
