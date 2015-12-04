@@ -302,14 +302,20 @@
   box-shadow: $shadow1;
   z-index: 1;
   left: 0;
-  top: 100%;
-  @include transform(translate(0,5px));
+  bottom: 100%;
   visibility: hidden;
   opacity: 0;
   -webkit-backface-visibility: hidden;
-  display: flex;
-  flex-wrap: wrap;
-  width: 450px;
+  @include display-flex();
+  @include flex-wrap(wrap);
+  width: 100%;
+  @media (min-width: $br-mobile){
+    width: 450px;
+    bottom: auto;
+    top: 100%;
+    @include transform(translate(0,5px));
+  }
+
   li {
     width: 33.33333333%;
     border-left: 1px solid $border;
@@ -324,7 +330,7 @@
       padding-bottom: 100%;
       position: relative;
       &:hover, &.current  {
-        background: #f7f7f7;
+        // WHAT is this?????? Believe me, there wasn't another option.
         &.shape-world .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
         &.shape-country .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
         &.shape-fire .nav-item-wrap .nav-item-wrap-center svg{ fill: $red;}
@@ -336,6 +342,9 @@
         svg {
           fill: $cGreen;
         }
+      }
+      &.current {
+        background: #f7f7f7;
       }
       .nav-item-wrap {
         position: absolute;
@@ -611,3 +620,9 @@
 }
 
 
+.txlive-langselector.txlive-langselector-bottomleft {
+  display: none;
+  @media (min-width: $br-mobile){
+    display: block;
+  }
+}

@@ -94,8 +94,14 @@
             &:first-child {
               margin: 0;
             }
+            &:hover {
+              .apps-submenu{
+                opacity: 1;
+                visibility: visible;
+              }
+            }
           }
-          &:hover {
+          &.is-active {
             .apps-submenu{
               opacity: 1;
               visibility: visible;

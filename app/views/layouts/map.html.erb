@@ -30,6 +30,8 @@
   </head>
 
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
+    <%= render 'shared/svg_icons_header' %>
+    <%= render 'shared/svg_icons_footer' %>
 
     <%= yield %>
     <a class="feedback-link" href="/getinvolved/provide-feedback"><span>Feedback</span></a>
