@@ -15,15 +15,12 @@ define([
     init: function(layer, options, map) {
       this.presenter = new Presenter(this);
       this._super(layer, options, map);
-
-      this.options.animationDuration = 30;
     },
 
     _getLayer: function() {
       var promise = CartoDbCanvasLayerClass.prototype._getLayer.call(this);
       promise.then(function() {
         this._setupAnimation();
-        this.start();
       }.bind(this));
       return promise;
     },
@@ -33,7 +30,7 @@ define([
           endDate = moment(this.currentDate[1]);
 
       var fps = 60,
-          duration = this.options.animationDuration,
+          duration = 30,
           frameCount = fps * duration,
           numberOfDays = Math.abs(startDate.diff(endDate)) / 1000 / 3600 / 24,
           daysPerFrame = numberOfDays / frameCount;
@@ -79,7 +76,8 @@ define([
       }
 
       if (this.currentOffset === undefined) {
-        this.currentOffset = 1;
+        this.renderTime(moment(this.currentDate[1]));
+        this.currentOffset = moment(this.currentDate[1]).dayOfYear();
         this.roundedOffset = 0;
       }
 
@@ -143,7 +141,10 @@ define([
      *
      */
     filterCanvasImgdata: function(imgdata, w, h, z) {
-      if (this.timelineExtent === undefined) { return; }
+      if (this.timelineExtent === undefined) {
+        this.timelineExtent = [moment(this.currentDate[0]),
+          moment(this.currentDate[1])];
+      }
 
       var startDay = this.timelineExtent[0].dayOfYear();
       var endDay = this.timelineExtent[1].dayOfYear();

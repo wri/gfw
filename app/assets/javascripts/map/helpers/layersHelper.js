@@ -12,6 +12,7 @@ define([
   'map/views/layers/LaosForma250Layer',
   'map/views/layers/DrcForma250Layer',
   'map/views/layers/FormaCoverLayer',
+  'map/views/layers/Forma250CoverLayer',
   'map/views/layers/ImazonLayer',
   'map/views/layers/ImazonCoverLayer',
   'map/views/layers/ModisLayer',
@@ -156,6 +157,7 @@ define([
   LaosForma250Layer,
   DrcForma250Layer,
   FormaCoverLayer,
+  Forma250CoverLayer,
   ImazonLayer,
   ImazonCoverLayer,
   ModisLayer,
@@ -326,6 +328,9 @@ define([
     },
     forma_cover: {
       view: FormaCoverLayer
+    },
+    forma_250_cover: {
+      view: Forma250CoverLayer
     },
     imazon: {
       view: ImazonLayer,
