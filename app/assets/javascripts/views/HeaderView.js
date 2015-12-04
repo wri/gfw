@@ -18,9 +18,10 @@ define([
 
     events: {
       'click #btn-menu' : 'toggleMenu',
+      'click #btnAppsMenu' : 'toggleAppMenu',
       'click .share-link' : 'shareOpen',
       'click .menu-section-link' : 'menuOpen',
-      'click  #connect-my-gfw' : 'login'
+      'click  #connect-my-gfw' : 'login',
     },
 
     initialize: function() {
@@ -32,6 +33,8 @@ define([
       this.$footer = $('#footerMenu');
       this.$siteMap = $('#siteMap');
       this.$mobileMenu = $('#mobileMenu');
+      this.$appsMenu = $('#appsSubmenu');
+      this.$btnAppsMenu = $('#btnAppsMenu');
       this.$translate = $('#google_translate_element');
 
       this.createMenu();
@@ -50,6 +53,21 @@ define([
         this.$htmlbody.removeClass('active').animate({ scrollTop: this.scrollTop }, 0);
         this.$el.removeClass('active');
         this.$navMobile.removeClass('active');
+      }
+    },
+
+    toggleAppMenu: function(e){
+      e && e.preventDefault();
+      $(e.currentTarget).toggleClass('active');
+      if ($(e.currentTarget).hasClass('active')) {
+        this.scrollTop = this.$document.scrollTop();
+        this.$htmlbody.addClass('active');
+        this.$appsMenu.addClass('active');
+        this.$btnAppsMenu.find('.shape-apps').children('.icon').toggle();
+      }else{
+        this.$htmlbody.removeClass('active').animate({ scrollTop: this.scrollTop }, 0);
+        this.$appsMenu.removeClass('active');
+        this.$btnAppsMenu.find('.shape-apps').children('.icon').toggle();
       }
     },
 

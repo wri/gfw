@@ -295,6 +295,122 @@
   }
 }
 
+
+.apps-submenu {
+  position: fixed;
+  background: $white;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: calc(100% - 55px);
+  visibility: hidden;
+  opacity: 0;
+  -webkit-backface-visibility: hidden;
+  @include display-flex();
+  @include flex-wrap(wrap);
+  @media (min-width: $br-mobile){
+    box-shadow: $shadow1;
+    position: absolute;
+    width: 450px;
+    height: auto;
+    bottom: auto;
+    top: 100%;
+    @include transform(translate(0,5px));
+  }
+  &.active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &:after {
+    content: "";
+    display: none;
+    position: absolute;
+    top: -5px;
+    left: 57px;
+    @include transform(rotate(45deg));
+    background: $white;
+    width: 10px;
+    height: 10px;
+    border: 1px solid $border;
+    border-bottom: none;
+    border-right: none;
+    @media (min-width: $br-mobile){
+      display: block;
+    }
+  }
+
+  li {
+    width: 33.33333333%;
+    border-left: 1px solid $border;
+    &:nth-child(3n+1) {
+      border-left: none;
+    }
+    &:nth-child(n+4) {
+      border-top: 1px solid $border;
+    }
+    a {
+      display: block;
+      padding-bottom: 100%;
+      position: relative;
+      &:hover, &.current  {
+        // WHAT is this?????? Believe me, there wasn't another option.
+        &.shape-world .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        &.shape-country .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        &.shape-fire .nav-item-wrap .nav-item-wrap-center svg{ fill: $red;}
+        &.shape-commodities .nav-item-wrap .nav-item-wrap-center svg{ fill: $orange;}
+        &.shape-blog .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        &.shape-climate .nav-item-wrap .nav-item-wrap-center svg{ fill: $blue;}
+        &.shape-data .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        &.shape-develop .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        svg {
+          fill: $cGreen;
+        }
+      }
+      &.current {
+        background: #f7f7f7;
+      }
+      .nav-item-wrap {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+
+        .nav-item-wrap-center {
+          position: absolute;
+          width: 100%;
+          top: 50%;
+          left: 0;
+          transform: translate(0,-33px);
+
+          svg{
+            fill: #b6b6ba;
+            display: block;
+            width: 32px;
+            height: 32px;
+            margin: 0px auto 10px;
+          }
+
+          span{
+            font-size: 12px;
+            display: block;
+            padding: 0 10px;
+            color: $dark;
+            text-transform: uppercase;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
 // INTERESTING SECTION
 .interesting-section{
   padding: 20px 0;
@@ -529,3 +645,9 @@
 }
 
 
+.txlive-langselector.txlive-langselector-bottomleft {
+  display: none;
+  @media (min-width: $br-mobile){
+    display: block;
+  }
+}

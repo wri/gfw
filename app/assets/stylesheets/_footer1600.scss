@@ -35,7 +35,8 @@
       padding: 0px;
     }
     .apps-footer {
-    	padding: 20px 0;
+    	padding: 50px 0;
+      margin: 0 0 50px;
     	border-bottom: 1px solid #E5E5DF;
     	ul {
     		@include row(space-between);
@@ -43,7 +44,7 @@
     			width: 16.666666%;
     			a {
     				display: block;
-    				padding: 20px;
+    				padding: 0 20px;
     				text-decoration: none;
 	    			svg {
 	    				display: block;
@@ -51,31 +52,23 @@
 	    				width: 30px;
 	    				margin: 0 auto;
               float: none;
-	    				fill: #555555;
+	    				fill: $dark;
 	    			}
 	    			h3 {
 	    				text-transform: uppercase;
 	    				text-align: center;
 	    				font-size: 12px;
-	    				padding: 5px 0 0;
-	    				color: #555555;
+	    				padding: 18px 0 2px;
+	    				color: $dark;
+              display: inline-block;
+              position: relative;
+              left: 50%;
+              border-bottom: 2px solid transparent;
+              @include transform(translate(-50%,0));
               @include transition(all .25s $easeInOutCubic);
 	    			}
 	    			&:hover {
-              &.fire{
-                svg{ fill: $red; }
-                h3{ color: $red; }
-              }
-              &.commodities{
-                svg{ fill: $orange; }
-                h3{ color: $orange; }
-              }
-              &.climate{
-                svg{ fill: $blue; }
-                h3{ color: $blue; }
-              }
-	    				svg { fill: $cGreen; }
-	    				h3 { color: $cGreen; }
+	    				h3 { border-color: $dark; ; }
 	    			}
     			}
     		}
@@ -90,14 +83,14 @@
     		.col {
     			width: 25%;
     			a {
-    				color: #555555;
+    				color: $dark;
     				&:hover{
     					text-decoration: underline;
     				}
     			}
     			h3 {
     				font-size: 14px;
-    				color: #555555;
+    				color: $dark;
     				text-transform: uppercase;
     				padding: 0 0 15px;
     				font-weight: 500;
@@ -119,7 +112,7 @@
       }
     	h4{
     		font-size: 14px;
-    		color: #555555;
+    		color: $dark;
     		padding: 0 0 15px;
         text-align: center;
         font-weight: 500;
