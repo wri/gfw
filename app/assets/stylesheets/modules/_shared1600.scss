@@ -297,23 +297,48 @@
 
 
 .apps-submenu {
-  position: absolute;
+  position: fixed;
   background: $white;
-  box-shadow: $shadow1;
   z-index: 1;
   left: 0;
-  bottom: 100%;
+  top: 0;
+  width: 100%;
+  height: calc(100% - 55px);
   visibility: hidden;
   opacity: 0;
   -webkit-backface-visibility: hidden;
   @include display-flex();
   @include flex-wrap(wrap);
-  width: 100%;
   @media (min-width: $br-mobile){
+    box-shadow: $shadow1;
+    position: absolute;
     width: 450px;
+    height: auto;
     bottom: auto;
     top: 100%;
     @include transform(translate(0,5px));
+  }
+  &.active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &:after {
+    content: "";
+    display: none;
+    position: absolute;
+    top: -5px;
+    left: 57px;
+    @include transform(rotate(45deg));
+    background: $white;
+    width: 10px;
+    height: 10px;
+    border: 1px solid $border;
+    border-bottom: none;
+    border-right: none;
+    @media (min-width: $br-mobile){
+      display: block;
+    }
   }
 
   li {

@@ -87,6 +87,15 @@
         >li {
           float: left;
           height: 55px;
+          &.active {
+            background: $white;
+            // .shape-apps {
+            //   display: none;
+            // }
+            // .shape-close {
+            //   display: block;
+            // }
+          }
           @media (min-width: $br-mobile){
             height: 25px;
             width: 25px;
@@ -99,12 +108,6 @@
                 opacity: 1;
                 visibility: visible;
               }
-            }
-          }
-          &.is-active {
-            .apps-submenu{
-              opacity: 1;
-              visibility: visible;
             }
           }
           >a,.link {
@@ -302,21 +305,29 @@
         padding: 0;
         width: auto;
       }
-      >div{
-        >ul {
-          >li {
-            >a,.link {
-              &:hover  {
-                .tooltip1{
-                  visibility: visible;
-                  opacity: 1;
+      @media (min-width: $br-mobile){
+        >div{
+          >ul {
+            >li {
+              >a,.link {
+                &:hover  {
+                  &.shape-apps{
+                    .tooltip1{
+                      visibility: hidden;
+                      opacity: 0;
+                    }
+                  }
+                  .tooltip1{
+                    visibility: visible;
+                    opacity: 1;
+                  }
                 }
-                // @include transform(scale(1.25));
               }
             }
           }
         }
       }
+
     }
     &.second-nav {
       float: right;

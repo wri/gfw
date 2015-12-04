@@ -7,11 +7,15 @@
           <span class="tooltip1 dark">Home</span>
         </a>
       </li>
-      <li class="nav-item">
+      <li id="btnAppsMenu" class="nav-item">
 
-        <a class="shape-apps" href="/"><svg class="icon shape-apps"><use xlink:href="#icon-h-apps"></use></svg></a>
+        <a class="shape-apps" href="/">
+          <svg class="icon shape-apps"><use xlink:href="#icon-h-apps"></use></svg>
+          <svg class="icon shape-close" style="display:none;"><use xlink:href="#icon-h-close"></use></svg>
+          <span class="tooltip1 dark">Apps</span>
+        </a>
 
-        <ul class="apps-submenu">
+        <ul id="appsSubmenu" class="apps-submenu">
           <li class="nav-item">
             <a class="shape-world <% if controller?("map") %>current<% end %>" href="/map">
               <div class="nav-item-wrap">
