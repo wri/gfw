@@ -97,7 +97,7 @@ define([
     _defineRequests: function() {
       var datasets = [
         'forma-alerts', 'umd-loss-gain', 'imazon-alerts', 'nasa-active-fires',
-        'quicc-alerts', 'terrai-alerts', 'prodes-loss','guyra-loss'
+        'quicc-alerts', 'terrai-alerts', 'prodes-loss', 'loss-by-type'
       ];
 
       // Defines requests for each dataset (e.g., forma-alerts) and type (e.g.
@@ -134,7 +134,10 @@ define([
      */
     _urls: function(dataset) {
       var types = ['world', 'national', 'subnational', 'use', 'wdpa'];
-      var params = {'umd-loss-gain': '{thresh}'}[dataset] || '';
+      var params = {
+        'umd-loss-gain': '{thresh}',
+        'loss-by-type': '{aggregate_by}',
+      }[dataset] || '';
       var ids = _.map(types,
         function(type) {
           return  _.str.sprintf('%s:%s', dataset, type);
