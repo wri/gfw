@@ -71,9 +71,6 @@ define([
          'mindate': params.mindate || '2000-09-01',
          'maxdate': params.maxdate || '2015-09-01'
         }
-      if (zoom > 13 ) {
-        zoom = 13;
-      }
       return new UriTemplate(this.options.urlTemplate).fillFromObject({
         x: tile.x,
         y: tile.y,

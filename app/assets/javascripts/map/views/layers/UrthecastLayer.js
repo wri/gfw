@@ -4,12 +4,12 @@
  * @return UrthecastLayer class (extends CartoDBLayerClass)
  */
 define([
-  'abstract/layer/ImageMaptypeLayerClass',
-], function(ImageMaptypeLayerClass) {
+  'abstract/layer/ImageLayerClass',
+], function(ImageLayerClass) {
 
   'use strict';
 
-  var UrthecastLayer = ImageMaptypeLayerClass.extend({
+  var UrthecastLayer = ImageLayerClass.extend({
     options: {
       urlTemplate:'http://uc.gfw-apis.appspot.com/urthecast/map-tiles{/sat}{/z}{/x}{/y}?cloud_coverage_lte={cloud}&acquired_gte={mindate}T00:00:00Z&acquired_lte={maxdate}T00:00:z00Z',
       dataMaxZoom: 13
