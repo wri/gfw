@@ -59,8 +59,8 @@ define([
     },
 
     toggleAppMenu: function(e){
-      e && e.preventDefault();
       if (this.mobile) {
+        e && e.preventDefault();
         $(e.currentTarget).toggleClass('active');
         if ($(e.currentTarget).hasClass('active')) {
           this.scrollTop = this.$document.scrollTop();
