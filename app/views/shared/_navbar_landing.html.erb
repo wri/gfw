@@ -110,12 +110,6 @@
           </li>
         </ul>
       </li>
-      <li class="nav-item">
-        <a class="shape-blog" href="http://blog.globalforestwatch.org">
-          <svg class="icon shape-blog"><use xlink:href="#icon-h-blog"></use></svg>
-          <span class="tooltip1 dark">Blog</span>
-        </a>
-      </li>
     </ul>
   </div>
   <button class="btn-menu mobile-show" id="btn-menu">
@@ -128,6 +122,12 @@
   <div>
     <ul>
       <li class="nav-item">
+        <a href="http://blog.globalforestwatch.org">
+          <svg class="icon shape-blog"><use xlink:href="#icon-h-blog"></use></svg>
+          <span>Blog</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a href="/howto" class="link <% if controller?("static") && action?("howto") %>current<% end %>">
           <svg class="icon"><use xlink:href="#icon-h-howto"></use></svg>
           <span>How to</span>
@@ -137,7 +137,7 @@
         <a href="http://data.globalforestwatch.org/" class="link <% if controller?("static") && action?("data") %>current<% end %>">
           <div class="home_data link">
             <svg class="icon"><use xlink:href="#icon-h-downloaddata"></use></svg>
-            <span>Download data</span>
+            <span>Open Data Portal</span>
           </div>
         </a>
       </li>
