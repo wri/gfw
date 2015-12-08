@@ -136,7 +136,7 @@ define([
       var types = ['world', 'national', 'subnational', 'use', 'wdpa'];
       var params = {
         'umd-loss-gain': '{thresh}',
-        'loss-by-type': '{aggregate_by}',
+        'loss-by-type': '?aggregate_by={aggregate_by}',
       }[dataset] || '';
       var ids = _.map(types,
         function(type) {

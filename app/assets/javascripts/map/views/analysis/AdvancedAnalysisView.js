@@ -1,7 +1,7 @@
 define([
   'underscore',
   'handlebars',
-  'map/presenters/analysis/AnalysisResultsPresenter',
+  'map/presenters/analysis/AdvancedAnalysisResultsPresenter',
   'text!map/templates/analysis/advancedAnalysisResults.handlebars',
 ], function(_, Handlebars, Presenter, tpl) {
 
@@ -17,8 +17,13 @@ define([
       'click .close' : 'close'
     },
 
-    initialize: function() {
+    initialize: function(options) {
+      options = options || {};
+      this.resource = options.resource;
+
       this.presenter = new Presenter(this);
+      this.presenter.requestAnalysis();
+
       this.render();
     },
 

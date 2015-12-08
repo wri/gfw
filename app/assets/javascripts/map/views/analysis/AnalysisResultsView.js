@@ -124,7 +124,8 @@ define([
 
     _showAdvancedAnalysis: function(e) {
       e && e.preventDefault();
-      new AdvancedAnalysisView();
+      new AdvancedAnalysisView({
+        resource: this.presenter.status.get('resource')});
     },
 
     setDownloadLink: function(layer){
