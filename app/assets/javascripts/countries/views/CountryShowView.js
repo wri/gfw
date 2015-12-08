@@ -171,7 +171,10 @@ define([
 
         new ForestTenureGraph({
           data: tenures,
-          el: $('.country-tenure .line-graph')
+          el: $('.country-tenure .line-graph'),
+          valueFormatter: function(d) {
+            return d['percent']/1000000 + 'Mha';
+          }
         });
       });
     },

@@ -10,6 +10,7 @@ define([
 
   var ForestTenureGraph = Class.extend({
     init: function(options) {
+      this.options = options;
       this.data = options.data;
 
       this.el = options.el[0];
@@ -91,9 +92,7 @@ define([
         .data(this.data)
         .enter()
         .append('text')
-        .text(function(d) {
-          return d['percent']/1000000 + 'Mha';
-        })
+        .text(this.options.valueFormatter)
         .attr('class', function(d, i) {
           return 'units ' + CLASSES[i];
         })

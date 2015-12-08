@@ -65,4 +65,39 @@
       }
     }
   }
+
+  .line-graph {
+    font-weight: normal;
+    text-transform: uppercase;
+
+    circle {
+      stroke-width: 2px;
+      stroke: #f5f5f5;
+    }
+
+    text {
+
+      font-size: 12px;
+    }
+
+    .units {
+      font-weight: 500;
+    }
+
+    .one {
+      fill: #75B22E;
+    }
+
+    .two {
+      fill: #AAC700;
+    }
+
+    .three {
+      fill: #AC0;
+    }
+
+    .four {
+      fill: #FFD24D;
+    }
+  }
 }

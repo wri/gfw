@@ -3,7 +3,8 @@ define([
   'handlebars',
   'map/presenters/analysis/AdvancedAnalysisResultsPresenter',
   'text!map/templates/analysis/advancedAnalysisResults.handlebars',
-], function(_, Handlebars, Presenter, tpl) {
+  'countries/abstract/ForestTenureGraph'
+], function(_, Handlebars, Presenter, tpl, ForestTenureGraph) {
 
   'use strict';
 
@@ -29,6 +30,30 @@ define([
 
     render: function() {
       this.$el.html(this.template());
+    },
+
+    _renderResults: function(results) {
+      var tenures = [{
+        name: 'Public lands administered by the government',
+        percent: 150000000
+      }, {
+        name: 'Public lands reserved for communities and indigenous groups',
+        percent: 3000000
+      }, {
+        name: 'Private lands owned by communities and indigenous groups',
+        percent: 10000000
+      }, {
+        name: 'Private lands owned by firms and individuals',
+        percent: 430000
+      }];
+
+      new ForestTenureGraph({
+        data: tenures,
+        el: this.$('.line-graph'),
+        valueFormatter: function(d) {
+          return d['percent']/1000000 + 'Mha';
+        }
+      });
     },
 
     close: function(e) {
