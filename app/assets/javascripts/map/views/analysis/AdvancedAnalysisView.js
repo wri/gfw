@@ -33,6 +33,12 @@ define([
     },
 
     _renderResults: function(results) {
+      results = _.omit(results, 'params', 'meta');
+
+      if (_.isEmpty(results)) {
+        return this._renderFailure();
+      }
+
       var tenures = [{
         name: 'Public lands administered by the government',
         percent: 150000000
@@ -54,6 +60,11 @@ define([
           return d['percent']/1000000 + 'Mha';
         }
       });
+    },
+
+    _renderFailure: function() {
+      this.$('.no-data').show();
+      this.$('.line-graph').hide();
     },
 
     close: function(e) {

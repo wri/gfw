@@ -19,7 +19,7 @@
 }
 
 .advanced-analysis-content {
-  width: 300px;
+  width: 450px;
   padding: 20px;
   position: absolute;
   top: 50%;
@@ -39,6 +39,17 @@
       padding: 0 0 10px;
       text-align: center;
     }
+  }
+
+  .no-data {
+    width: 100%;
+    font-size: 16px;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 10px 0;
+    background: #f2f2f2;
+    color: #666;
+    font-style: italic;
   }
 
   .close {
@@ -76,7 +87,6 @@
     }
 
     text {
-
       font-size: 12px;
     }
 
