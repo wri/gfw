@@ -15,12 +15,10 @@ define([
   'countries/models/CountryShowModel',
   'countries/helpers/CountryHelper',
   'views/NotificationsView',
-
-
-], function($, Backbone, _, d3, mps, scrollit, SourceWindowView, DownloadView, CountryHeaderView, ShareView, CountryShowModel, CountryHelper, NotificationsView) {
+  'countries/abstract/ForestTenureGraph'
+], function($, Backbone, _, d3, mps, scrollit, SourceWindowView, DownloadView, CountryHeaderView, ShareView, CountryShowModel, CountryHelper, NotificationsView, ForestTenureGraph) {
 
   'use strict';
-
 
   var CountryShowView = Backbone.View.extend({
     el: '#countryShowView',
@@ -140,143 +138,41 @@ define([
     },
 
     _drawTenure: function() {
-      var sql = ['SELECT tenure_government, tenure_owned, tenure_owned_individuals,',
-                 'tenure_reserved, GREATEST(tenure_government, tenure_owned,',
-                                          'tenure_owned_individuals,',
-                                          'tenure_owned_individuals,',
-                                          'tenure_reserved) as max',
-                 "FROM gfw2_countries WHERE iso = '" + this.country.get('iso') + "'"].join(' ');
+      var sql = ['SELECT tenure_government,',
+                   'tenure_owned, tenure_owned_individuals, tenure_reserved',
+                 'FROM gfw2_countries',
+                 'WHERE iso = \'' + this.country.get('iso') + '\''
+                ].join(' ');
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+ sql, function(json) {
-        var data = json.rows[0],
-            h = 0;
+        var data = json.rows[0];
+        var tenures = [{
+          name: 'Public lands administered by the government',
+          percent: data.tenure_government
+        }, {
+          name: 'Public lands reserved for communities and indigenous groups',
+          percent: data.tenure_reserved
+        }, {
+          name: 'Private lands owned by communities and indigenous groups',
+          percent: data.tenure_owned
+        }, {
+          name: 'Private lands owned by firms and individuals',
+          percent: data.tenure_owned_individuals
+        }];
 
-        var x_extent = [0, data.max],
-            x_scale = d3.scale.linear()
-                        .range([0, 500])
-                        .domain(x_extent);
-
-        var origins = [],
-            aggr = 0,
-            klass = ['one', 'two', 'three', 'four']
-
-        var tenures = [
-          {
-            name: 'Public lands administered by the government',
-            percent: data.tenure_government
-          },
-          {
-            name: 'Public lands reserved for communities and indigenous groups',
-            percent: data.tenure_reserved
-          },
-          {
-            name: 'Private lands owned by communities and indigenous groups',
-            percent: data.tenure_owned
-          },
-          {
-            name: 'Private lands owned by firms and individuals',
-            percent: data.tenure_owned_individuals
-          }
-        ];
-
-        var tenures_ord = [];
-
-        _.each(tenures, function(tenure, i) {
-          if (tenure['percent'] !== null && tenure['percent'] !== 0) {
-            h += 50;
-
-            tenures_ord.push({
-              name: tenure['name'],
-              percent: tenure['percent']
-            });
-          }
+        tenures = _.filter(tenures, function(tenure) {
+          return tenure['percent'] > 0;
         });
 
-        if (tenures_ord.length === 0) {
+        if (tenures.length === 0) {
           $('.country-tenure .coming-soon').show();
           return;
         }
 
-        var svg = d3.select('.country-tenure .line-graph')
-          .append('svg')
-          .attr('height', h);
-
-        var svgWidth = $(svg[0]).outerWidth();
-        var svgMaxWidth = svgWidth - 80;
-
-        // add lines
-        svg.selectAll('rect')
-          .data(tenures_ord)
-          .enter()
-          .append('rect')
-          .attr('class', function(d, i) {
-            return klass[i];
-          })
-          .attr('x', function() {
-            return x_scale(0);
-          })
-          .attr('y', function(d, i) {
-            return 25 + (50 * i);
-          })
-          .attr('width', function(d) {
-            var width = x_scale(d['percent']);
-            return width > svgMaxWidth ? svgMaxWidth : width;
-          })
-          .attr('height', 4)
-          .attr('rx', 2)
-          .attr('ry', 2);
-
-        // add balls
-        svg.selectAll('circle')
-          .data(tenures_ord)
-          .enter()
-          .append('svg:circle')
-          .attr('class', function(d, i) {
-            return klass[i];
-          })
-          .attr('cx', function(d, i) {
-            var x = x_scale(d['percent']);
-            return x > svgMaxWidth ? svgMaxWidth : x;
-          })
-          .attr('cy', function(d, i) {
-            return 27 + (50 * i);
-          })
-          .attr('r', 5);
-
-        // add values
-        svg.selectAll('.units')
-          .data(tenures_ord)
-          .enter()
-          .append('text')
-          .text(function(d) {
-            return d['percent']/1000000 + 'Mha';
-          })
-          .attr('class', function(d, i) {
-            return 'units ' + klass[i];
-          })
-          .attr('x', function(d, i) {
-            var x = x_scale(d['percent'])+10;
-            return x > (svgMaxWidth + 10) ? (svgMaxWidth + 10) : x;
-          })
-          .attr('y', function(d, i) {
-            return 31 + (50 * i);
-          });
-
-        // add legend
-        svg.selectAll('.legend')
-          .data(tenures_ord)
-          .enter()
-          .append('text')
-          .text(function(d) {
-            return d['name'];
-          })
-          .attr('class', function(d, i) {
-            return 'legend ' + klass[i];
-          })
-          .attr('x', 0)
-          .attr('y', function(d, i) {
-            return 15 + (50 * i);
-          });
+        new ForestTenureGraph({
+          data: tenures,
+          el: $('.country-tenure .line-graph')
+        });
       });
     },
 
