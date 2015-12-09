@@ -341,6 +341,12 @@
     }
   }
 
+  &.is-map {
+    &:after {
+      background: #f7f7f7;
+    }
+  }
+
   li {
     width: 33.33333333%;
     border-left: 1px solid $border;

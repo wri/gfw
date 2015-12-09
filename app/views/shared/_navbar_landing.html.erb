@@ -15,7 +15,7 @@
           <span class="tooltip1 dark">Apps</span>
         </a>
 
-        <ul id="appsSubmenu" class="apps-submenu">
+        <ul id="appsSubmenu" class="apps-submenu <% if controller?("map") %>is-map<% end %>">
           <li class="nav-item">
             <a class="shape-world <% if controller?("map") %>current<% end %>" href="/map">
               <div class="nav-item-wrap">
@@ -45,7 +45,7 @@
                 </div>
               </div>
             </a>
-          </li> -->       
+          </li> -->
           <li class="nav-item">
             <a class="shape-fire mobile-friendly" href="http://fires.globalforestwatch.org/" >
               <div class="nav-item-wrap">
