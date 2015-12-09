@@ -524,6 +524,7 @@
   }
 }
 
+// Feedback
 .feedback-link {
   display: none;
   position: fixed;
@@ -535,6 +536,7 @@
   color: $dark;
   text-decoration: none;
   padding: 8px;
+  cursor: pointer;
   @include transform(rotate(90deg) translate(50%,0));
   @include transform-origin(100%,0);
   &:hover {
