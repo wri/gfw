@@ -22,7 +22,7 @@ $height: auto;
       opacity: 1;
       visibility: visible;
       @media (min-width: $br-mobile){
-        transform: translate(-50%,-50%);
+        @include transform(translate(-50%,-50%));
       }
     }
   }
@@ -67,7 +67,7 @@ $height: auto;
       width: $width;
       height: $height;
       min-height: 100px;
-      transform: translate(-50%,-60%);
+      @include transform(translate(-50%,-60%));
     }
 
     .modal-close {
@@ -85,7 +85,7 @@ $height: auto;
         left: 50%;
         width: 50%;
         height: 50%;
-        transform: translate(-50%,-50%);
+        @include transform(translate(-50%,-50%));
       }
     }
   }
@@ -182,11 +182,11 @@ $height: auto;
     margin: 15px 0;
     position: relative;
     left: 50%;
-    transform: translate(-50%,0);
+    @include transform(translate(-50%,0));
     float: left;
     padding: 4px;
-    display: flex;
-    justify-content: center;
+    @include display-flex();
+    @include justify-content(center);
     border: 1px solid $cGreen;
     border-radius: 45px;
 
