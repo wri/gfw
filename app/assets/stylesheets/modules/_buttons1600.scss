@@ -205,3 +205,20 @@
     background: $cGreen;
   }
 }
+
+
+.m-btncontainer {
+  @include display-flex();
+  @include align-items(center);
+  &.is-center {
+    @include justify-content(center);
+  }
+  &.is-steps {
+    .btn {
+      display: none;
+      &.is-active {
+        display: block;
+      }
+    }
+  }
+}

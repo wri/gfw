@@ -6,3 +6,7 @@
 .is-clearfix, .clearfix {
   @include clearfix;
 }
+
+.is-no-scroll {
+  overflow: hidden;
+}
