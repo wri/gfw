@@ -10,8 +10,6 @@ define([
 
   var AdvancedAnalysisView = Backbone.View.extend({
 
-    el: '#advanced-analysis',
-
     template: Handlebars.compile(tpl),
 
     events: {
@@ -24,12 +22,12 @@ define([
 
       this.presenter = new Presenter(this);
       this.presenter.requestAnalysis();
-
-      this.render();
     },
 
     render: function() {
       this.$el.html(this.template());
+
+      return this;
     },
 
     _renderResults: function(results) {
