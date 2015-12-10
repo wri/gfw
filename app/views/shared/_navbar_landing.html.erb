@@ -47,6 +47,14 @@
         </ul>
       </li>
       <li class="nav-item">
+        <a href="/my_gfw" class="link">
+          <span>My GFW</span>
+        </a>
+        <ul class="submenu-tooltip top">
+          <li><a href="#" id="connect-my-gfw">Log in</a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
         <div class="link">
           <form action="/search">
             <svg class="icon"><use xlink:href="#shape-search"></use></svg>
@@ -58,3 +66,15 @@
     </ul>
   </div>
 </nav>
+<script>
+  if (! !!window.gfw) {
+    var gfw = window.gfw = {
+      config: {
+        GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>",
+        GFW_MOBILE: 1000
+      },
+      cacheVersion: "<%= ENV['CACHE_VERSION'] %>",
+      layer_spec: "<%= ENV['LAYER_SPEC'] %>"
+    };
+  }
+</script>

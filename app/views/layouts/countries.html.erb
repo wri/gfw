@@ -30,10 +30,6 @@
     <%= controller_stylesheet_link_tag %>
     <%= yield :js %>
     <%= csrf_meta_tags %>
-    <script>
-        var gfw = window.gfw = {};
-        window.gfw.config = { GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>" };
-    </script>
 
   </head>
   <% content_for :headerMobile do %>

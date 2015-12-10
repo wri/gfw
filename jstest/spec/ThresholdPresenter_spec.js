@@ -3,8 +3,8 @@
  */
 define([
   'underscore',
-  'map/presenters/ThresholdPresenter',
-  'helpers/layers'
+  'map/presenters/controls/ThresholdPresenter',
+  '../helpers/layers.js'
 ], function(_, Presenter) {
 
   describe('ThresholdPresenter', function() {
@@ -12,7 +12,7 @@ define([
 
     beforeEach(function() {
       viewSpy = {
-        update: jasmine.createSpy(),
+        updatePresenter: jasmine.createSpy(),
         model: {
           set: jasmine.createSpy()
         }
@@ -34,7 +34,7 @@ define([
         expect(presenter.status).toBeDefined();
         expect(presenter.status.toJSON()).toEqual({
           layers: [],
-          threshold: 10
+          threshold: 30
         });
       });
     });
@@ -48,8 +48,8 @@ define([
       });
 
       it('Initialize threshold wigdet correctly', function() {
-        expect(presenter.view.update).toHaveBeenCalled();
-        expect(presenter.view.update).toHaveBeenCalledWith(40);
+        expect(presenter.view.updatePresenter).toHaveBeenCalled();
+        expect(presenter.view.updatePresenter).toHaveBeenCalledWith(40);
       });
     });
 

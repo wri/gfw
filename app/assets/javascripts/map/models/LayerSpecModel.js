@@ -47,6 +47,12 @@ define([
       "lbr_plantations_by_species",
       "col_plantations_by_type",
       "col_plantations_by_species",
+      "khm_plantations_by_type",
+      "khm_plantations_by_species",
+      "idn_plantations_by_type",
+      "idn_plantations_by_species",
+      "mys_plantations_by_type",
+      "mys_plantations_by_species",
       "khm_eco_land_conc",
       "usa_forest_ownership",
       // PEOPLE
@@ -114,6 +120,7 @@ define([
       "cog_logging",
       "mys_logging",
       "logging",
+      "logging_roads",
       "raisg",
       //STORIES
       "infoamazonia",
@@ -123,6 +130,7 @@ define([
       "gfw_landsat_alerts_coverage",
       "terraicanvas_cover",
       "forma_cover",
+      "forma_250_cover",
       "imazon_cover",
       "modis_cover",
       // FOREST CHANGE
@@ -132,11 +140,16 @@ define([
       "modis",
       "imazon",
       "forma",
+      "peru_forma_250",
+      "brazil_forma_250",
+      "laos_forma_250",
+      "indonesia_forma_250",
+      "drc_forma_250",
       "prodes",
       "loss",
       "forestgain",
       "gfw_landsat_alerts",
-      "gfw_landsat_torque_alerts"
+      "umd_as_it_happens"
     ],
 
     categoryOrder: [

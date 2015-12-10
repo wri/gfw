@@ -402,7 +402,6 @@
 })( jQuery );
 
 var gfw = window.gfw = {};
-
 window.gfw.config = { GFW_API_HOST: "gfw-apis.appspot.com" };
 window.gfw.core = {};
 window.gfw.ui = {};

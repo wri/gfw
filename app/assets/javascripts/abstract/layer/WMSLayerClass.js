@@ -137,7 +137,7 @@ define([
         }
         this.location.setBounds();
         this.location.setBBox();
-        this.location.infowindowUrl = this.getQuery(this.location.latlng.F,this.location.latlng.A);
+        this.location.infowindowUrl = this.getQuery(this.location.latlng.K,this.location.latlng.G);
 
         $.get(this.location.infowindowUrl).done(_.bind(function(data) {
           if(this.infowindow) {
@@ -149,7 +149,10 @@ define([
             infowindowData: {
               name: data.features[0].attributes['tis.nombre'],
               country: data.features[0].attributes['tis.pais'],
+              status: data.features[0].attributes['tis.leyenda'],
+              date_create: data.features[0].attributes['tis.fecha_atualizacion_dato'],
               area_ha: data.features[0].attributes['tis.area_oficial_ha'].toLocaleString(),
+              source: data.features[0].attributes['tis.fuente'],
             }
           }
           this.infowindow = new CustomInfowindow(this.location.latlng, this.map, infoWindowOptions);
