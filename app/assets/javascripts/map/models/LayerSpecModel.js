@@ -22,6 +22,7 @@ define([
       "grump2000",
       //FOREST COVER
       "forest2000",
+      "cod_primary_forest_wgs",
       "WMSLayer",
       "global_land_cover",
       "us_land_cover",

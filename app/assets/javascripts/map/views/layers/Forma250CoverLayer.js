@@ -5,14 +5,15 @@
  */
 define([
   'abstract/layer/CartoDBLayerClass',
-], function(CartoDBLayerClass) {
+  'text!map/cartocss/forma_250.cartocss'
+], function(CartoDBLayerClass, CartoCSS) {
 
   'use strict';
 
   var Forma250CoverLayer = CartoDBLayerClass.extend({
 
     options: {
-      cartocss: '#layer { polygon-fill: #FF6699; polygon-opacity: 0.2; line-width: 0; }',
+      cartocss: CartoCSS,
       sql: 'SELECT cartodb_id, the_geom, the_geom_webmercator, iso, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName}'
     }
 

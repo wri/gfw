@@ -47,6 +47,7 @@ textarea {
 
 textarea {
   height: 182px;
+  max-width: 100%;
 }
 
 .field {
@@ -83,6 +84,64 @@ textarea {
           width: 100%;
           margin: 2px 0 5px;
         }
+      }
+    }
+  }
+}
+
+.radio-box {
+  @include clearfix();
+  @include display-flex();
+  @include justify-content(center);
+  padding: 15px 0;
+
+  .custom-radio {
+    margin: 0 0 0 20px;
+    &:first-child {
+      margin: 0;
+    }
+  }
+
+  label {
+    font-weight: 400;
+    text-transform: none;
+    position: relative;
+    padding-left: 25px;
+    line-height: 28px;
+    cursor: pointer;
+
+    span{
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      border: 1px solid $dark;
+      border-radius: 50%;
+      @include transform(translate(0,-50%));
+      &:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50%;
+        height: 50%;
+        border-radius: 50%;
+        background: $cGreen;
+        display: none;
+        @include transform(translate(-50%,-50%));
+      }
+    }
+  }
+
+  input[type=radio] {
+    display: none;
+  }
+
+  input[type=radio]:checked + label {
+    span{
+      &:after {
+        display: block;
       }
     }
   }

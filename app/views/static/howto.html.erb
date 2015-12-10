@@ -45,6 +45,7 @@
           <li><%= link_to 'Analyze forest change', "#{howto_path}/analyze-forest-change", :"data-slug" => 'analyze-forest-change', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item analyze-forest-change' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Subscribe to alerts and user stories', "#{howto_path}/subscribe-to-alerts-and-user-stories", :"data-slug" => 'subscribe-to-alerts-and-user-stories', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item subscribe-to-alerts-and-user-stories' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Submit a story', "#{howto_path}/submit-a-story", :"data-slug" => 'submit-a-story', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item submit-a-story' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li class="no-transform"><%= link_to 'GFW CLIMATE', "#{howto_path}/gfw-climate", :"data-slug" => 'gfw-climate', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item gfw-climate' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li class="no-transform"><%= link_to 'OPEN DATA PORTAL', "#{howto_path}/odp", :"data-slug" => 'odp', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item odp' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li class="no-transform"><%= link_to 'FAQs', "#{howto_path}/faqs", :"data-slug" => 'faqs', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item faqs' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'TRAINING MODULES', "#{howto_path}/training-modules", :"data-slug" => 'training-modules', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item training-modules' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
@@ -987,6 +988,26 @@
             </ul>
           </article>
 
+          <article id="gfw-climate" class="source-article">
+            <header>
+              <h2 class='source_category_title'>GFW Climate</h2>
+            </header>
+            <div class="content">
+              <div class="video-box">
+                <div class="player">
+                  <iframe width="560" height="315" src="https://www.youtube.com/embed/x0XKNAj6Cos" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+              <div class="video-box">
+                <div class="player">
+                  <iframe width="560" height="315" src="https://www.youtube.com/embed/P_-0NRTHZyM" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+          </article>
+
+
+
           <article id="odp" class="source-article">
             <header>
               <h2 class='source_category_title'>Open Data Portal</h2>
@@ -1069,7 +1090,7 @@
                   <div class='source_summary'>
                     <p>Raster refers to a type of spatial data, which defines space by pixels, or equally sized cells arranged by rows and columns. Each pixel contains a single attribute value and its coordinate location. Pixel values correspond to real-world features such as the year tree cover was lost, or the percent of canopy cover in that location.</p>
                     <h3 class="overview_title">Steps to download raster data in the ODP:</h3>
-                    <p><strong>1. Find and open a raster data set</strong> in the Open Data Portal, for example, <a class="download-mobile-link" href="http://data.globalforestwatch.org/datasets/93ecbfa0542c42fdaa8454fa42a6cc27">tree cover loss</a>.</p>
+                    <p><strong>1. Find and open a raster data set</strong> in the Open Data Portal, for example, <a class="download-mobile-link" href="http://earthenginepartners.appspot.com/science-2013-global-forest">tree cover loss</a>.</p>
                     <p><strong>2.</strong> Since <strong>global data sets cannot be downloaded</strong> for the entire world, use the interactive web-map to zoom in on your area of interest. The extent of the web-map will determine the extent of your data, when downloaded.</p>
                     <p><%= image_tag('howto-screenshots/odp/image14.jpg') %></p>
                     <p><strong>3. Select "DOWNLOAD DATASET"</strong> and choose one of the data types under the “Download Filtered Dataset” section. The TIFF format is encoded with raster values and is spatially referenced so you can add it to a GIS.</p>

@@ -130,6 +130,7 @@ define([
   'map/views/layers/LoggingRoadsLayer',
   'map/views/layers/LoggingRoadsCoverLayer',
   'map/views/layers/RusHcvLayer',
+  'map/views/layers/DrcPrimaryForestLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -274,6 +275,7 @@ define([
   LoggingRoadsLayer,
   LoggingRoadsCoverLayer,
   RusHcvLayer,
+  DrcPrimaryForestLayer,
   UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
@@ -692,6 +694,9 @@ define([
     },
     rus_hcv: {
       view: RusHcvLayer,
+    },
+    cod_primary_forest_wgs: {
+      view: DrcPrimaryForestLayer
     },
     
     nothing: {
