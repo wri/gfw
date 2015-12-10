@@ -75,31 +75,30 @@
       >ul {
         min-width: 470px;
         width: 100%;
-        padding: 0 5px;
         height: 55px;
+        padding: 0;
 
         @media (min-width: $br-mobile){
           width: auto;
           min-width: 0;
           margin: 0;
+          padding: 0 5px;
           height: auto;
         }
         >li {
           float: left;
           height: 55px;
+          border-left: 1px solid transparent;
+          border-right: 1px solid transparent;
           &.active {
             background: $white;
-            // .shape-apps {
-            //   display: none;
-            // }
-            // .shape-close {
-            //   display: block;
-            // }
+            border-color: $border;
           }
           @media (min-width: $br-mobile){
             height: 25px;
             width: 25px;
             margin: 0 0 0 20px;
+            border: none;
             &:first-child {
               margin: 0;
             }
@@ -158,7 +157,7 @@
               top: auto;
               left: auto;
               text-align: center;
-              padding: 0;
+              padding: 2px 0 0;
               font-size: 10px;
               @include transform(translate(0,20px));
               &:after {
@@ -203,31 +202,6 @@
                 margin: 0 auto;
               }
             }
-
-            // &.shape-world{
-            //   svg{
-            //     @include transform(translate(-50%,0) scale(0.9));
-            //     @media (min-width: $br-mobile){
-            //       position: relative;
-            //       top: auto;
-            //       left: auto;
-            //       @include transform(scale(0.9));
-            //     }
-            //   }
-            // }
-
-            // &:hover, &.current  {
-            //   &.shape-house { svg{ fill: $cGreen;} }
-            //   &.shape-world { svg{ fill: $cGreen;} }
-            //   &.shape-country { svg{ fill: $cGreen;} }
-            //   &.shape-fire { svg{ fill: $red;} }
-            //   &.shape-commodities { svg{ fill: $orange;} }
-            //   &.shape-blog { svg{ fill: $cGreen;} }
-            //   &.shape-climate { svg{ fill: $blue;} }
-            //   svg {
-            //     fill: $cGreen;
-            //   }
-            // }
           }
         }
       }
@@ -253,7 +227,7 @@
         font-size: 10px;
         text-transform: uppercase;
         position: relative;
-        top: -2px;
+        top: 0px;
       }
       &:after{
         content: "";
