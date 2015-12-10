@@ -104,7 +104,7 @@
               margin: 0;
             }
             &:hover {
-              .apps-submenu{
+              .home-submenu, .apps-submenu{
                 opacity: 1;
                 visibility: visible;
               }
@@ -147,24 +147,25 @@
             .tooltip1{
               margin: 0;
               line-height: normal;
-              @media (max-width: $br-mobile - 1){
-                display: block;
-                position: relative;
-                background: none;
-                box-shadow: none;
-                z-index: 1;
-                visibility: visible;
-                opacity: 1;
-                color: $dark;
-                top: auto;
-                left: auto;
-                text-align: center;
-                padding: 0;
-                font-size: 10px;
-                @include transform(translate(0,20px));
-                &:after{
-                  display: none;
-                }
+              display: block;
+              position: relative;
+              background: none;
+              box-shadow: none;
+              z-index: 1;
+              visibility: visible;
+              opacity: 1;
+              color: $dark;
+              top: auto;
+              left: auto;
+              text-align: center;
+              padding: 0;
+              font-size: 10px;
+              @include transform(translate(0,20px));
+              &:after {
+                display: none;
+              }
+              @media (min-width: $br-mobile){
+                display: none;
               }
             }
 
@@ -304,6 +305,7 @@
       @media (min-width: $br-mobile){
         padding: 0;
         width: auto;
+        position: static;
       }
       @media (min-width: $br-mobile){
         >div{
