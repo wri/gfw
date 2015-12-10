@@ -45,6 +45,7 @@
           <li><%= link_to 'Analyze forest change', "#{howto_path}/analyze-forest-change", :"data-slug" => 'analyze-forest-change', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item analyze-forest-change' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Subscribe to alerts and user stories', "#{howto_path}/subscribe-to-alerts-and-user-stories", :"data-slug" => 'subscribe-to-alerts-and-user-stories', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item subscribe-to-alerts-and-user-stories' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Submit a story', "#{howto_path}/submit-a-story", :"data-slug" => 'submit-a-story', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item submit-a-story' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li class="no-transform"><%= link_to 'GFW CLIMATE', "#{howto_path}/gfw-climate", :"data-slug" => 'gfw-climate', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item gfw-climate' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li class="no-transform"><%= link_to 'OPEN DATA PORTAL', "#{howto_path}/odp", :"data-slug" => 'odp', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item odp' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li class="no-transform"><%= link_to 'FAQs', "#{howto_path}/faqs", :"data-slug" => 'faqs', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item faqs' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'TRAINING MODULES', "#{howto_path}/training-modules", :"data-slug" => 'training-modules', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item training-modules' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
@@ -86,8 +87,6 @@
                     <p><strong>6.</strong>  Change the base map to view data with a different map background.</p>
                     <p><%= image_tag('howto-screenshots/new_content/image8.png') %></p>
                     <a class="btn green medium" href='/map' target='_blank'>GFW Interactive Map</a>
-                    <a class="btn green medium" href='http://fires.globalforestwatch.org/' target='_blank'>GFW Fires</a>
-                    <a class="btn green medium" href='http://commodities.globalforestwatch.org/' target='_blank'>GFW Commodities</a>
                     <h3 class="overview_title">Visualize data as a time series</h3>
                     <p>For most data layers under the Forest Change tab, the default view shows cumulative data points over the entire study period. However, most of these layers can also be viewed as a time series. The specific time intervals (e.g., annual, monthly, daily) vary for each data layer.</p>
                     <p><strong>1.</strong>  Select the Forest Change data layer you want to view as a time series.</p>
@@ -337,7 +336,7 @@
                     <p><strong>8.</strong> You can then download the raw data on the <a class="mobile-friendly" href="http://data.globalforestwatch.org/" target='_blank'>Open Data Portal</a>, discard your analysis or subscribe to alerts.</p>
                     <p><%= image_tag('howto-screenshots/new_content/image28.png') %></p>
 
-                    <a class="btn green medium" href='/map' target='_blank'>GFW Interactive Map</a><a href='http://commodities.globalforestwatch.org/' class="btn green medium uppercase">GFW Commodities</a><a href='http://fires.globalforestwatch.org/' class="btn green medium uppercase">GFW Fires</a>
+                    <a class="btn green medium" href='/map' target='_blank'>GFW Interactive Map</a>
                   </div>
                 </div>
               </li>
@@ -361,7 +360,7 @@
                     <p><%= image_tag('howto-screenshots/new_content/image28.png') %></p>
                     <p>NOTE: You can also analyze forest change within a country from the <a href="/countries">Country Profiles</a>. Once you arrive at the Country Profiles, select a country and, if desired, select a subnational jurisdiction (e.g., state, county, province) using the dropdown menu under the country name. Click “analyze on map” You will then be directed to the map and results will appear for an analysis of tree cover loss and gain.</p>
 
-                    <a class="btn green medium" href='/map' target='_blank'>GFW Interactive Map</a><a href='http://commodities.globalforestwatch.org/' class="btn green medium uppercase">GFW Commodities</a><a href='http://fires.globalforestwatch.org/' class="btn green medium uppercase">GFW Fires</a>
+                    <a class="btn green medium" href='/map' target='_blank'>GFW Interactive Map</a>
                   </div>
                 </div>
               </li>
@@ -989,6 +988,26 @@
             </ul>
           </article>
 
+          <article id="gfw-climate" class="source-article">
+            <header>
+              <h2 class='source_category_title'>GFW Climate</h2>
+            </header>
+            <div class="content">
+              <div class="video-box">
+                <div class="player">
+                  <iframe width="560" height="315" src="https://www.youtube.com/embed/x0XKNAj6Cos" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+              <div class="video-box">
+                <div class="player">
+                  <iframe width="560" height="315" src="https://www.youtube.com/embed/P_-0NRTHZyM" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+          </article>
+
+
+
           <article id="odp" class="source-article">
             <header>
               <h2 class='source_category_title'>Open Data Portal</h2>
@@ -1071,7 +1090,7 @@
                   <div class='source_summary'>
                     <p>Raster refers to a type of spatial data, which defines space by pixels, or equally sized cells arranged by rows and columns. Each pixel contains a single attribute value and its coordinate location. Pixel values correspond to real-world features such as the year tree cover was lost, or the percent of canopy cover in that location.</p>
                     <h3 class="overview_title">Steps to download raster data in the ODP:</h3>
-                    <p><strong>1. Find and open a raster data set</strong> in the Open Data Portal, for example, <a class="download-mobile-link" href="http://data.globalforestwatch.org/datasets/93ecbfa0542c42fdaa8454fa42a6cc27">tree cover loss</a>.</p>
+                    <p><strong>1. Find and open a raster data set</strong> in the Open Data Portal, for example, <a class="download-mobile-link" href="http://earthenginepartners.appspot.com/science-2013-global-forest">tree cover loss</a>.</p>
                     <p><strong>2.</strong> Since <strong>global data sets cannot be downloaded</strong> for the entire world, use the interactive web-map to zoom in on your area of interest. The extent of the web-map will determine the extent of your data, when downloaded.</p>
                     <p><%= image_tag('howto-screenshots/odp/image14.jpg') %></p>
                     <p><strong>3. Select "DOWNLOAD DATASET"</strong> and choose one of the data types under the “Download Filtered Dataset” section. The TIFF format is encoded with raster values and is spatially referenced so you can add it to a GIS.</p>

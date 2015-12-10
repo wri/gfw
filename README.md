@@ -1,6 +1,8 @@
 # What is Global Forest Watch?
 
-[Global Forest Watch](http://www.globalforestwatch.org/) (GFW) is a dynamic online forest monitoring and alert system that empowers people everywhere to better manage forests.
+[Global Forest Watch](http://www.globalforestwatch.org/) (GFW) is a
+dynamic online forest monitoring and alert system that empowers people
+everywhere to better manage forests.
 
 This repository contains the GFW web app.
 
@@ -12,7 +14,9 @@ The GFW web app rides on [Ruby on Rails](http://rubyonrails.org).
 
 ## OS X Yosemite (10.10) Setup
 
-First make sure you have [Xcode](https://developer.apple.com/xcode) and [Command Line Tools](https://developer.apple.com/downloads/index.action) installed.
+First make sure you have [Xcode](https://developer.apple.com/xcode) and
+[Command Line Tools](https://developer.apple.com/downloads/index.action)
+installed.
 
 Next install [Homebrew](http://brew.sh), the OS X package manager:
 
@@ -20,7 +24,9 @@ Next install [Homebrew](http://brew.sh), the OS X package manager:
 $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-We recommend managing your Ruby installation through [rbenv](https://github.com/sstephenson/rbenv). It's just an easy way to run multiple Ruby versions for different applications:
+We recommend managing your Ruby installation through
+[rbenv](https://github.com/sstephenson/rbenv). It's just an easy way to
+run multiple Ruby versions for different applications:
 
 ```bash
 $ brew update
@@ -48,7 +54,8 @@ Now let's install Ruby on Rails:
 $ sudo gem install rails
 ```
 
-Aaaaand now use [Bundler](http://bundler.io/), a rubygem manager, to install all the gem depenencies for the app:
+Aaaaand now use [Bundler](http://bundler.io/), a rubygem manager, to
+install all the gem depenencies for the app:
 
 ```bash
 $ bundle install
@@ -76,17 +83,38 @@ LAYER_SPEC=layerspec_nuclear_hazard
 ANALYTICS_PROPERTY_ID='UA-XXXXX-X'
 FEEDBACK_MAIL=example@gfw.com
 CACHE_VERSION=54
-
-
 ```
 
-Last step. For real. Start the app server and access it at [http://0.0.0.0:5000](http://0.0.0.0:5000):
+Last step. For real. Start the app server and access it at
+[http://0.0.0.0:5000](http://0.0.0.0:5000):
 
 ```bash
 $ foreman start
 ```
 
-Oh, and you should probably launch the [gfw-api](https://github.com/wri/gfw-api) [dev_apperver.py](https://github.com/wri/gfw-api#developing) before you try to visit the site on your local machine.
+Oh, and you should probably launch the
+[gfw-api](https://github.com/wri/gfw-api)
+[dev_apperver.py](https://github.com/wri/gfw-api#developing) before you
+try to visit the site on your local machine.
+
+## Layers
+
+Map layers, somewhat unsurprisingly, are an important part of GFW. As
+such, the config and code supporting them can be a bit complex. Check
+out the [layer documentation](docs/layers) for more information. If the
+component you're working on isn't in there, please write some
+documentation when you're done! 💞
+
+## Tests
+
+### Front-end
+
+We have a few Javascript tests in `jstest/` which you can (read: should)
+run with Grunt:
+
+```
+grunt test
+```
 
 # License
 

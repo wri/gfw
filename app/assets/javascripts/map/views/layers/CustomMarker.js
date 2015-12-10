@@ -46,9 +46,17 @@ define([
 
       div.appendChild(img);
 
-      // Trigger click event
+      // Trigger mouse events
       google.maps.event.addDomListener(div, 'click', _.bind(function() {
         google.maps.event.trigger(this, 'click');
+      }, this));
+
+      google.maps.event.addDomListener(div, 'mouseover', _.bind(function() {
+        google.maps.event.trigger(this, 'mouseover');
+      }, this));
+
+      google.maps.event.addDomListener(div, 'mouseout', _.bind(function() {
+        google.maps.event.trigger(this, 'mouseout');
       }, this));
 
       // Then add the overlay to the DOM

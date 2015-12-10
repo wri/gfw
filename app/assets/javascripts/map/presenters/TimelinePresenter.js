@@ -148,6 +148,10 @@ define([
       var timeline = this.status.get('timeline');
       if (!timeline) {return;}
 
+      if (timeline.presenter && timeline.presenter.unsubscribe) {
+        timeline.presenter.unsubscribe();
+      }
+
       if (timeline.stopAnimation) {
         timeline.stopAnimation();
       }

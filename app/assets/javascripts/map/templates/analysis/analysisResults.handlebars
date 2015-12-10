@@ -58,11 +58,18 @@
               <span class="stats-title">Prodes tree cover loss ({{dateRange}})</span>
               <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> ha</span>
             </li>
-          {{else}}
+        {{else}}
+          {{#if guyra}}
+          <li>
+            <span class="stats-title">Grand Chaco tree cover loss:</span>
+            <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> ha</span>
+          </li>
+        {{else}}
           <li>
             <span class="stats-title">Total alerts ({{dateRange}})</span>
             <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> {{alertsName}}</span>
           </li>
+            {{/if}}
           {{/if}}
         {{/if}}
       {{/if}}
@@ -76,7 +83,7 @@
   {{#if downloadVisible}}
     <li>
       {{#if loss}}
-        <a class="download-mobile-link" data-type="forest-change" href="http://data.globalforestwatch.org/datasets/93ecbfa0542c42fdaa8454fa42a6cc27" target="_blank">
+        <a class="download-mobile-link" data-type="forest-change" href="http://earthenginepartners.appspot.com/science-2013-global-forest" target="_blank">
           <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
           <span class="tooltipmap bottom">Download data</span>
         </a>

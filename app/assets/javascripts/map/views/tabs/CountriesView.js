@@ -181,10 +181,7 @@ define([
     },
 
     toggleLayerWrap: function(e){
-      // I don't why and how it works that. I'm going to comment it. It seems to be unuseful
-      // if ($(e.target).parent().siblings().hasClass('selected')) return;
-
-      if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source') && !$(e.target).hasClass('layer')) {
+      if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source') && !$(e.target).hasClass('layer') && !$(e.target).parents('.wrapped').hasClass('layer')) {
         var $li = $(e.currentTarget);
         var layerSlug = $li.data('layer');
         $('#country-layers [data-layer="'+layerSlug+'"]:first').click();

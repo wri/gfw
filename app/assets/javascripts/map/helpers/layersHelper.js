@@ -6,7 +6,13 @@ define([
   'map/views/layers/LossLayer',
   'map/views/layers/ForestGainLayer',
   'map/views/layers/FormaLayer',
+  'map/views/layers/PeruForma250Layer',
+  'map/views/layers/IndonesiaForma250Layer',
+  'map/views/layers/BrazilForma250Layer',
+  'map/views/layers/LaosForma250Layer',
+  'map/views/layers/DrcForma250Layer',
   'map/views/layers/FormaCoverLayer',
+  'map/views/layers/Forma250CoverLayer',
   'map/views/layers/ImazonLayer',
   'map/views/layers/ImazonCoverLayer',
   'map/views/layers/ModisLayer',
@@ -102,6 +108,10 @@ define([
   'map/views/layers/ColPlantationsLayerBySpecies',
   'map/views/layers/KhmPlantationsLayerByType',
   'map/views/layers/KhmPlantationsLayerBySpecies',
+  'map/views/layers/IdnPlantationsLayerByType',
+  'map/views/layers/IdnPlantationsLayerBySpecies',
+  'map/views/layers/MysPlantationsLayerByType',
+  'map/views/layers/MysPlantationsLayerBySpecies',
   'map/views/layers/PerBufferLayer',
   'map/views/layers/PerNatPALayer',
   'map/views/layers/PerPrivPALayer',
@@ -111,13 +121,16 @@ define([
   'map/views/layers/GtmForestChange2Layer',
   'map/views/layers/GtmForestCoverLayer',
   'map/views/layers/GtmForestDensityLayer',
-  'map/views/layers/LandsatAlertsLayer',
-  'map/views/layers/LandsatAlertsTorqueLayer',
+  'map/views/layers/AsItHappensLayer',
   'map/views/layers/LandsatAlertsCoverLayer',
   'map/views/layers/KhmProtectedAreasLayer',
   'map/views/layers/KhmEcoLandLayer',
   'map/views/layers/UsaForestOwnershipLayer',
   'map/views/layers/GuyraLayer',
+  'map/views/layers/LoggingRoadsLayer',
+  'map/views/layers/LoggingRoadsCoverLayer',
+  'map/views/layers/RusHcvLayer',
+  'map/views/layers/DrcPrimaryForestLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -125,20 +138,26 @@ define([
   // Layers timelines
   'map/views/timeline/LossTimeline',
   'map/views/timeline/FormaTimeline',
+  'map/views/timeline/Forma250Timeline',
   'map/views/timeline/ImazonTimeline',
-  'map/views/timeline/LandsatAlertsTimeline',
   'map/views/timeline/ModisTimeline',
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
   'map/views/timeline/ProdesTimeline',
-  'map/views/timeline/LandsatAlertsTorqueTimeline',
+  'map/views/timeline/AsItHappensTimeline',
   'map/views/timeline/GuyraTimeline'
 ], function(
   // Layer Views
   LossLayer,
   ForestGainLayer,
   FormaLayer,
+  PeruForma250Layer,
+  IndonesiaForma250Layer,
+  BrazilForma250Layer,
+  LaosForma250Layer,
+  DrcForma250Layer,
   FormaCoverLayer,
+  Forma250CoverLayer,
   ImazonLayer,
   ImazonCoverLayer,
   ModisLayer,
@@ -234,6 +253,10 @@ define([
   ColPlantationsLayerBySpecies,
   KhmPlantationsLayerByType,
   KhmPlantationsLayerBySpecies,
+  IdnPlantationsLayerByType,
+  IdnPlantationsLayerBySpecies,
+  MysPlantationsLayerByType,
+  MysPlantationsLayerBySpecies,
   PerBufferLayer,
   PerNatPALayer,
   PerPrivPALayer,
@@ -243,26 +266,29 @@ define([
   GtmForestChange2Layer,
   GtmForestCoverLayer,
   GtmForestDensityLayer,
-  LandsatAlertsLayer,
-  LandsatAlertsTorqueLayer,
+  AsItHappensLayer,
   LandsatAlertsCoverLayer,
   KhmProtectedAreasLayer,
   KhmEcoLandLayer,
   UsaForestOwnershipLayer,
   GuyraLayer,
+  LoggingRoadsLayer,
+  LoggingRoadsCoverLayer,
+  RusHcvLayer,
+  DrcPrimaryForestLayer,
   UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
   LossTimeline,
   FormaTimeline,
+  Forma250Timeline,
   ImazonTimeline,
-  LandsatAlertsTimeline,
   ModisTimeline,
   FiresTimeline,
   TerraiTimeline,
   ProdesTimeline,
-  LandsatAlertsTorqueTimeline,
+  AsItHappensTimeline,
   GuyraTimeline
 ) {
 
@@ -280,8 +306,31 @@ define([
       view: FormaLayer,
       timelineView: FormaTimeline
     },
+    peru_forma_250: {
+      view: PeruForma250Layer,
+      timelineView: Forma250Timeline
+    },
+    brazil_forma_250: {
+      view: BrazilForma250Layer,
+      timelineView: Forma250Timeline
+    },
+    indonesia_forma_250: {
+      view: IndonesiaForma250Layer,
+      timelineView: Forma250Timeline
+    },
+    laos_forma_250: {
+      view: LaosForma250Layer,
+      timelineView: Forma250Timeline
+    },
+    drc_forma_250: {
+      view: DrcForma250Layer,
+      timelineView: Forma250Timeline
+    },
     forma_cover: {
       view: FormaCoverLayer
+    },
+    forma_250_cover: {
+      view: Forma250CoverLayer
     },
     imazon: {
       view: ImazonLayer,
@@ -573,6 +622,18 @@ define([
     khm_plantations_species: {
       view: KhmPlantationsLayerBySpecies
     },
+    idn_plantations_type: {
+      view: IdnPlantationsLayerByType
+    },
+    idn_plantations_species: {
+      view: IdnPlantationsLayerBySpecies
+    },
+    mys_plantations_type: {
+      view: MysPlantationsLayerByType
+    },
+    mys_plantations_species: {
+      view: MysPlantationsLayerBySpecies
+    },
     per_buffer: {
       view: PerBufferLayer
     },
@@ -600,13 +661,9 @@ define([
      gtm_forest_density: {
       view: GtmForestDensityLayer
     },
-    gfw_landsat_alerts: {
-      view: LandsatAlertsLayer,
-      timelineView: LandsatAlertsTimeline
-    },
-    gfw_landsat_torque_alerts: {
-      view: LandsatAlertsTorqueLayer,
-      timelineView: LandsatAlertsTorqueTimeline
+    umd_as_it_happens: {
+      view: AsItHappensLayer,
+      timelineView: AsItHappensTimeline
     },
     
     gfw_landsat_alerts_coverage: {
@@ -627,6 +684,19 @@ define([
     guyra: {
       view: GuyraLayer,
       timelineView: GuyraTimeline
+    },
+    logging_roads: {
+      view: LoggingRoadsLayer,
+    },
+    
+    logging_roads_coverage: {
+      view: LoggingRoadsCoverLayer,
+    },
+    rus_hcv: {
+      view: RusHcvLayer,
+    },
+    cod_primary_forest_wgs: {
+      view: DrcPrimaryForestLayer
     },
     
     nothing: {

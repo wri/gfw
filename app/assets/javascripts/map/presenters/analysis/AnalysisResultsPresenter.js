@@ -41,7 +41,8 @@ define([
       'fires': 'nasa-active-fires',
       'modis': 'quicc-alerts',
       'terrailoss': 'terrai-alerts',
-      'prodes': 'prodes-loss'
+      'prodes': 'prodes-loss',
+      'guyra': 'guyra-loss'
     },
 
     init: function(view) {

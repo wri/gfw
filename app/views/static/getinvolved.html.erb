@@ -62,6 +62,9 @@
                     <h3>Code</h3>
                     <p>The Global Forest Watch website and public API are both collaborative and open-source projects hosted on <a href="https://github.com/" target="_blank">GitHub</a>. If you would like to access or contribute to our source code, please visit <a href="https://github.com/Vizzuality/gfw" target="_blank">GFW on GitHub</a>, where you can send pull requests to our website repository or API repository. All Global Forest Watch source code is released under the MIT License (MIT).</p>
                     <a class="btn gray uppercase medium" href="https://github.com/Vizzuality/gfw" target="_blank">Website Repository</a>
+                    <a class="btn gray uppercase medium" href="https://github.com/wri/gfw-commodities-app" target="_blank">Commodities</a>
+                    <a class="btn gray uppercase medium" href="https://github.com/wri/gfw-fires-app" target="_blank">Fires</a>
+                    <a class="btn gray uppercase medium" href="https://github.com/Vizzuality/gfw-climate" target="_blank">Climate</a>
                   </li>
                   <li>
                     <h3>Coming soon</h3>
@@ -335,11 +338,11 @@
                     <div class="radio-box">
                       <div class="custom-radio">
                         <%= radio_button_tag(:signup, true) %>
-                        <%= label_tag(:signup_true, "Yes, sign me up.") %>
+                        <%= label_tag(:signup_true, "<span></span> Yes, sign me up.".html_safe) %>
                       </div>
                       <div class="custom-radio">
                         <%= radio_button_tag(:signup, false, checked = true) %>
-                        <%= label_tag(:signup_false, "No thanks.") %>
+                        <%= label_tag(:signup_false, "<span></span> No thanks.".html_safe) %>
                       </div>
                     </div>
                     <p>

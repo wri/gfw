@@ -281,3 +281,97 @@
 #khm_plantations[spec_simp="Wood fiber / timber mix"] {
   polygon-fill: #246ee6;
 }
+
+#idn_plantations {
+   polygon-opacity: 0.5;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 0;
+   polygon-fill: transparent;
+}
+#idn_plantations[spec_simp="Fruit"] {
+  polygon-fill: #b2b300;
+}
+#idn_plantations[spec_simp="Fruit mix"] {
+  polygon-fill: #FF0;
+}
+#idn_plantations[spec_simp="Hevea (rubber)"] {
+  polygon-fill: #00bdbd;
+}
+#idn_plantations[spec_simp="Oil palm"] {
+  polygon-fill: #f44c43;
+}
+#idn_plantations[spec_simp="Oil palm mix"] {
+  polygon-fill: #f7837d;
+}
+#idn_plantations[spec_simp="Other"] {
+  polygon-fill: #9ECC49;
+}
+#idn_plantations[spec_simp="Other mix"] {
+  polygon-fill: #c1df8b;
+}
+#idn_plantations[spec_simp="Recently cleared"] {
+  polygon-fill: #A53ED5;
+}
+#idn_plantations[spec_simp="Rubber"] {
+  polygon-fill: #11002F;
+}
+#idn_plantations[spec_simp="Rubber mix"] {
+  polygon-fill: #0FF;
+}
+#idn_plantations[spec_simp="Unknown"] {
+  polygon-fill: #b5b0b0;
+}
+#idn_plantations[spec_simp="Wood fiber / timber"] {
+  polygon-fill: #0F3B82;
+}
+#idn_plantations[spec_simp="Wood fiber / timber mix"] {
+  polygon-fill: #246ee6;
+}
+
+#mys_plantations {
+   polygon-opacity: 0.5;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 0;
+   polygon-fill: transparent;
+}
+#mys_plantations[spec_simp="Fruit"] {
+  polygon-fill: #b2b300;
+}
+#mys_plantations[spec_simp="Fruit mix"] {
+  polygon-fill: #FF0;
+}
+#mys_plantations[spec_simp="Hevea (rubber)"] {
+  polygon-fill: #00bdbd;
+}
+#mys_plantations[spec_simp="Oil palm"] {
+  polygon-fill: #f44c43;
+}
+#mys_plantations[spec_simp="Oil palm mix"] {
+  polygon-fill: #f7837d;
+}
+#mys_plantations[spec_simp="Other"] {
+  polygon-fill: #9ECC49;
+}
+#mys_plantations[spec_simp="Other mix"] {
+  polygon-fill: #c1df8b;
+}
+#mys_plantations[spec_simp="Recently cleared"] {
+  polygon-fill: #A53ED5;
+}
+#mys_plantations[spec_simp="Rubber"] {
+  polygon-fill: #11002F;
+}
+#mys_plantations[spec_simp="Rubber mix"] {
+  polygon-fill: #0FF;
+}
+#mys_plantations[spec_simp="Unknown"] {
+  polygon-fill: #b5b0b0;
+}
+#mys_plantations[spec_simp="Wood fiber / timber"] {
+  polygon-fill: #0F3B82;
+}
+#mys_plantations[spec_simp="Wood fiber / timber mix"] {
+  polygon-fill: #246ee6;
+}
