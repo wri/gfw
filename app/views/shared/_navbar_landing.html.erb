@@ -1,30 +1,18 @@
 <nav class="first-nav">
   <div class="scroll-none">
     <ul>
-      <li class="nav-item mobile-hide">
-        <div class="shape-house link <% if controller?("landing") %>current<% end %>">
-          <svg class="icon shape-house"><use xlink:href="#icon-h-home"></use></svg>
-          <span class="tooltip1 dark">Home</span>
-        </div>
-
-        <%= render 'shared/home_menu' %>
-      </li>
-      <li id="btnAppsMenu" class="nav-item">
-
-        <div class="shape-apps link">
-          <svg class="icon shape-apps"><use xlink:href="#icon-h-apps"></use></svg>
-          <svg class="icon shape-close" style="display:none;"><use xlink:href="#icon-h-close"></use></svg>
-          <span class="tooltip1 dark">Apps</span>
-        </div>
-
-        <%= render 'shared/apps_menu' %>
-
-      </li>
+      <li class="nav-item"><a class="shape-house <% if controller?("landing") %>current<% end %>" href="/"><svg class="icon shape-house"><use xlink:href="#shape-house"></use></svg><span class="tooltip1 dark">Home</span></a></li>
+      <li class="nav-item"><a class="shape-world <% if controller?("map") %>current<% end %>" href="/map"><svg class="icon shape-world"><use xlink:href="#shape-world"></use></svg><span class="tooltip1 dark"><em class="mobile-hide">GFW Interactive</em> Map</span></a></li>
+      <li class="nav-item"><a class="shape-country <% if controller?("countries") %>current<% end %>" href="/countries"><svg class="icon shape-country"><use xlink:href="#shape-country"></use></svg><span class="tooltip1 dark">Country <em class="mobile-hide">profiles & rankings</em></span></a></li>
+      <li class="nav-item"><a class="shape-blog" href="http://blog.globalforestwatch.org/"><svg class="icon shape-blog"><use xlink:href="#shape-blog"></use></svg><span class="tooltip1 dark">Blog</span></a></li>
+      <li class="nav-item"><a class="shape-fire mobile-friendly" href="http://fires.globalforestwatch.org/" ><svg class="icon shape-fire"><use xlink:href="#shape-fire"></use></svg><span class="tooltip1 dark">Fires</span></a></li>
+      <li class="nav-item"><a class="shape-commodities mobile-friendly" href="http://commodities.globalforestwatch.org/" ><svg class="icon shape-commodities"><use xlink:href="#shape-commodities"></use></svg><span class="tooltip1 dark">Commodities</span></a></li>
+      <li class="nav-item"><a class="shape-climate mobile-friendly" href="http://climate.globalforestwatch.org/" ><svg class="icon shape-climate"><use xlink:href="#shape-climate"></use></svg><span class="tooltip1 dark">Climate</span></a></li>
     </ul>
   </div>
   <button class="btn-menu mobile-show" id="btn-menu">
-    <svg class="icon hamburguer"><use xlink:href="#icon-h-menu"></use></svg>
-    <svg class="icon close"><use xlink:href="#icon-h-close"></use></svg>
+    <svg class="icon hamburguer"><use xlink:href="#shape-hamburger"></use></svg>
+    <svg class="icon close"><use xlink:href="#shape-close"></use></svg>
     <span>Menu</span>
   </button>
 </nav>
@@ -32,28 +20,34 @@
   <div>
     <ul>
       <li class="nav-item">
-        <a href="http://blog.globalforestwatch.org">
-          <svg class="icon shape-blog"><use xlink:href="#icon-h-blog"></use></svg>
-          <span>Blog</span>
-        </a>
-      </li>
-      <li class="nav-item">
         <a href="/howto" class="link <% if controller?("static") && action?("howto") %>current<% end %>">
-          <svg class="icon"><use xlink:href="#icon-h-howto"></use></svg>
+          <svg class="icon"><use xlink:href="#shape-help"></use></svg>
           <span>How to</span>
         </a>
       </li>
       <li class="nav-item">
         <a href="http://data.globalforestwatch.org/" class="link <% if controller?("static") && action?("data") %>current<% end %>">
           <div class="home_data link">
-            <svg class="icon"><use xlink:href="#icon-h-downloaddata"></use></svg>
-            <span>Open Data Portal</span>
+            <svg class="icon"><use xlink:href="#shape-download"></use></svg>
+            <span>Download data</span>
           </div>
         </a>
       </li>
+      <li class="nav-item">
+        <div class="link">
+          <svg class="icon"><use xlink:href="#shape-hamburger"></use></svg>
+          <span>Menu</span>
+        </div>
+        <ul class="submenu-tooltip top">
+          <li><a href="/explore">Explore</a></li>
+          <li><a href="/stayinformed">Stay informed</a></li>
+          <li><a href="/getinvolved">Get involved</a></li>
+          <li><a href="/howto">How to</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </li>
       <!-- <li class="nav-item">
         <a href="/my_gfw" class="link">
-          <svg class="icon"><use xlink:href="#icon-h-mygfw"></use></svg>
           <span>My GFW</span>
         </a>
         <ul class="submenu-tooltip top">
@@ -63,7 +57,7 @@
       <li class="nav-item">
         <div class="link">
           <form action="/search">
-            <svg class="icon"><use xlink:href="#icon-h-search"></use></svg>
+            <svg class="icon"><use xlink:href="#shape-search"></use></svg>
             <input type="text" name="query" id="search-input" placeholder="Search GFW website">
           </form>
         </div>
