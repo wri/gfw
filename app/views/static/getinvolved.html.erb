@@ -338,11 +338,11 @@
                     <div class="radio-box">
                       <div class="custom-radio">
                         <%= radio_button_tag(:signup, true) %>
-                        <%= label_tag(:signup_true, "Yes, sign me up.") %>
+                        <%= label_tag(:signup_true, "<span></span> Yes, sign me up.".html_safe) %>
                       </div>
                       <div class="custom-radio">
                         <%= radio_button_tag(:signup, false, checked = true) %>
-                        <%= label_tag(:signup_false, "No thanks.") %>
+                        <%= label_tag(:signup_false, "<span></span> No thanks.".html_safe) %>
                       </div>
                     </div>
                     <p>
