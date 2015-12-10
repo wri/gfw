@@ -348,7 +348,8 @@
     text-align: center;
     font-weight: 500;
     padding: 0 0 40px;
-    span {
+    a {
+      color: $cGreen;
       display: inline-block;
       border-bottom: 2px solid $cGreen;
     }
