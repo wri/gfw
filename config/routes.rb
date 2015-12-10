@@ -51,8 +51,8 @@ Gfw::Application.routes.draw do
 
   # static
   get '/data' => redirect("sources")
-  get '/sources' => 'static#data'
-  get '/sources(/:section)' => 'static#data'
+  get '/sources' => redirect("http://data.globalforestwatch.org/")
+  get '/sources(/:section)' => redirect("sources")
   get '/my_gfw' => 'connect#index'
   get '/my_gfw-login' => 'connect#login'
 

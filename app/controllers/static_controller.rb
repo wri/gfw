@@ -16,27 +16,6 @@ class StaticController < ApplicationController
     @keywords = 'GFW, about, global forest watch, about gfw, history, staff, world resources institute, wri, about gfw commodities, about gfw fires'
   end
 
-  def data
-    case params[:t]
-    when 'oil_palm'
-      redirect_to 'http://data.globalforestwatch.org/datasets/20398d4dc36e47bd92b559786670f270_0'
-    when 'idn_primary'
-      redirect_to 'http://data.globalforestwatch.org/datasets/b3ac8839275446b5983c0271fddf1e33'
-    when 'forma'
-      redirect_to 'http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64'
-    when 'protected_areas'
-      redirect_to 'http://www.protectedplanet.net/'
-    when 'palm-oil-mills'
-      redirect_to 'http://data.gfw.opendata.arcgis.com/datasets/20398d4dc36e47bd92b559786670f270_0'
-    when 'fires'
-      redirect_to 'https://earthdata.nasa.gov/earth-observation-data/near-real-time/firms'
-    else
-      @title = 'Download Data'
-      @desc = 'Browse and download forest-related data directly through the GFW Open Data Portal.'
-      @keywords = 'GFW, open data portal, data, sets, browse, download, map, satellite, search data, explore data, forest change, forest cover, conservation, people, forest use, deforestation, land use, landscapes'
-    end
-  end
-
   def howto
     @title = 'How To'
     @desc = 'Learn to use the GFW platform with detailed directions on how to harness a wide variety of content and capabilities to suit your interests.'
