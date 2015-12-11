@@ -4,50 +4,50 @@
 }
 
 #r[time<2001] {
-   line-color: #A6CEE3;
+   line-color: #162016;
 }
 #r[time=2001] {
-   line-color: #1F78B4;
+   line-color: #30462B;
 }
 #r[time=2002] {
-   line-color: #B2DF8A;
+   line-color: #30462B;
 }
 #r[time=2003] {
-   line-color: #33A02C;
+   line-color: #30462B;
 }
 #r[time=2004] {
-   line-color: #FB9A99;
+   line-color: #465C3E;
 }
 #r[time=2005] {
-   line-color: #E31A1C;
+   line-color: #465C3E;
 }
 #r[time=2006] {
-   line-color: #FDBF6F;
+   line-color: #465C3E;
 }
 #r[time=2007] {
-   line-color: #FF7F00;
+   line-color: #5F7654;
 }
 #r[time=2008] {
-   line-color: #CAB2D6;
+   line-color: #5F7654;
 }
 #r[time=2009] {
-   line-color: #6A3D9A;
+   line-color: #5F7654;
 }
 #r[time=2010] {
-   line-color: #ffff99;
+   line-color: #7A926D;
 }
 #r[time=2011] {
-   line-color: #b15928;
+   line-color: #7A926D;
 }
 #r[time=2012] {
-   line-color: #66bbbc;
+   line-color: #7A926D;
 }
 #r[time=2013] {
-   line-color: #ea73dd;
+   line-color: #99B388;
 }
 #r[time=2014] {
-   line-color: #cbed70;
+   line-color: #99B388;
 }
 #r {
-   line-color: #DDDDDD;
+   line-color: #BEDEAA;
 }
