@@ -22,7 +22,7 @@ define([
         'click  .js-btn-submit'                    : 'actionSubmit',
         'click  .js-btn-close'                     : 'actionClose',
 
-        'change .js-radio-box input'               : 'onChange',
+        'change .js-radio-box input'               : 'changeRequire',
       });
     },
 
@@ -60,27 +60,41 @@ define([
     },
 
     actionSubmit: function(e) {
-      //Check if any input are filled.
-      if (!!this.$textarea.val() || !!this.$email.val()) {
-        $.ajax({
-          url: '/feedback',
-          data: this.serializeObject(this.$form.serializeArray()),
-          success: _.bind(function() {
-            this.changeStep(3);
-          }, this )
-        })
+      //Check if any input are filled. Should we use a plugin?
+      if (this.$email.hasClass('required')) {
+        if (!!this.$textarea.val() && this.validateEmail(this.$email.val())) {
+          this.actionSend();
+        } else {
+          alert('Please, fill the email and the feedback textarea to continue. Be sure that the email format is correct');
+        }
+      } else {
+        if (!!this.$textarea.val()) {
+          this.actionSend();
+        } else {
+          alert('Please, fill the feedback textarea to continue');
+        }
       }
-
     },
 
     actionClose: function(e) {
       this.hide();
     },
 
+    actionSend: function(){
+      $.ajax({
+        url: '/feedback',
+        data: this.serializeObject(this.$form.serializeArray()),
+        success: _.bind(function() {
+          this.changeStep(3);
+        }, this )
+      });
+    },
+
+
     // Changes
     changeRequire: function(e) {
       e && e.preventDefault();
-      ($(e.currentTarget).val() === 'true') ? this.$email.attr('required', true) : this.$email.removeAttr('required');
+      ($(e.currentTarget).val() === 'true') ? this.$email.addClass('required') : this.$email.removeClass('required');
     },
 
     changeStep: function(step) {
@@ -118,8 +132,12 @@ define([
           }
       });
       return o;
-    }
+    },
 
+    validateEmail: function(email){
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
 
 
   });

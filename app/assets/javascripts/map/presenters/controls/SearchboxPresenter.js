@@ -23,7 +23,7 @@ define([
      */
     _subscriptions: [{
       'MapControlsSearch/show': function() {
-        this.view.toggleSearch();
+        this.view.model.toggleVisibility();
       }
     }],
 
