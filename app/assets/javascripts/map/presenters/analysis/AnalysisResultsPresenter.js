@@ -42,7 +42,8 @@ define([
       'modis': 'quicc-alerts',
       'terrailoss': 'terrai-alerts',
       'prodes': 'prodes-loss',
-      'guyra': 'guyra-loss'
+      'guyra': 'guyra-loss',
+      'forest2000': 'umd-loss-gain'
     },
 
     init: function(view) {
