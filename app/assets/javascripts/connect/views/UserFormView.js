@@ -23,7 +23,7 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function(parent) {
-      this.render();
+      // this.render();
     },
 
     render: function() {
