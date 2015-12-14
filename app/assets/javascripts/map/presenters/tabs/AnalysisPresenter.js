@@ -444,7 +444,7 @@ define([
         resource.period = '{0},{1}'.format(date[0].format(dateFormat), date[1].format(dateFormat));
 
         // this is super ugly
-        if (baselayer.slug === 'loss') {
+        if (baselayer.slug === 'loss' || baselayer.slug === 'forest2000') {
           resource.thresh = '?thresh=' + ((this.status.get('threshold') === null) ? 30 :  this.status.get('threshold'));
         } else {
           delete resource.thresh;
