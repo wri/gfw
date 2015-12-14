@@ -40,6 +40,7 @@ define([
     },
 
     execute: function(iso, successCb, failureCb) {
+      debugger
       var config = {resourceId: this.requestId, data: {iso: iso},
         success: successCb, error: failureCb};
 
