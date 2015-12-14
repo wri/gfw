@@ -249,6 +249,19 @@ define([
     },
     {
       id: 20,
+      name: 'Logging Roads',
+      svg: '#shape-logging-roads',
+      content: 'View and help document the spread of logging roads across the Congo Basin region of Central Africa',
+      href: 'http://loggingroads.org/',
+      target: true,
+      link_text: 'Launch App',
+      classname: 'btn green medium mobile-friendly',
+      source: 'World Resources Institute and Moabi',
+      mobile_friendly: 'other',
+      tags: 'crowdsourcing, maps, satellite imagery, Africa, data, Global Forest Watch, logging'
+    },
+    {
+      id: 21,
       name: 'Develop your own app',
       svg: '#shape-develop',
       content: 'Learn how to develop your own application with Global Forest Watch data.',
