@@ -134,6 +134,7 @@ define([
       "forma_250_cover",
       "imazon_cover",
       "modis_cover",
+      "gran_chaco_extent",
       // FOREST CHANGE
       "guyra",
       "terrailoss",
