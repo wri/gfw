@@ -100,3 +100,33 @@
       }
     }
 }
+#subscriptionList {
+  width: 150%;
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 120px;
+    box-shadow: 0 1px 0 #e6e6e6;
+    .-s-name {
+      display: block;
+    }
+    .-s-actions {
+      > span {
+        padding: 0 10px;
+        box-shadow: -1px 0 0 #e6e6e6 inset;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        span::first-letter {
+          text-transform: capitalize
+        }
+      }
+    }
+    svg {
+      width: 15px;
+      height: 15px;
+      margin: 0 7px;
+    }
+  }
+}
