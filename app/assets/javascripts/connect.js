@@ -13,8 +13,9 @@ require([
   'views/SourceMobileFriendlyView',
   'views/SourceWindowView',
   'views/FeedbackModalView',
-  'connect/views/UserFormView'
-], function($, _, Class, Backbone, Handlebars, mps, HeaderView, FooterView, SourceMobileFriendlyView,SourceWindowView, FeedbackModalView, UserFormView) {
+  'connect/views/UserFormView',
+  'connect/views/SubscriptionListView'
+], function($, _, Class, Backbone, Handlebars, mps, HeaderView, FooterView, SourceMobileFriendlyView,SourceWindowView, FeedbackModalView, UserFormView, SubscriptionListView) {
   'use strict';
 
   var ConnectPage = Class.extend({
@@ -36,6 +37,7 @@ require([
       new SourceWindowView();
       new FeedbackModalView();
 
+      new SubscriptionListView();
       new UserFormView();
     }
   });
