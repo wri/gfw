@@ -3,7 +3,7 @@ define([
   'jquery'
 ], function(Class, $) {
 
-	var CONVERTER_URL = "http://ogre.adc4gis.com/convert";
+  var CONVERTER_URL = "http://ogre.adc4gis.com/convert";
 
   var ShapefileService = Class.extend({
 
@@ -15,17 +15,17 @@ define([
     toGeoJSON: function() {
       var deferred = $.Deferred();
 
-			var xhr = new XMLHttpRequest();
-			xhr.open("POST", CONVERTER_URL, true);
-			xhr.onreadystatechange = function() {
-				if (xhr.readyState == 4 && xhr.status == 200) {
-					deferred.resolve(JSON.parse(xhr.responseText));
-				}
-			};
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", CONVERTER_URL, true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          deferred.resolve(JSON.parse(xhr.responseText));
+        }
+      };
 
       var formData = new FormData();
       formData.append('upload', this.shapefile);
-			xhr.send(formData);
+      xhr.send(formData);
 
       return deferred.promise();
     }
