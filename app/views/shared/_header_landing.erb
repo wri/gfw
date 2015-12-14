@@ -4,11 +4,7 @@ if (! !!location.hostname.includes('globalforestwatch.org'))
 </script>
 <script type="text/javascript" src="//cdn.transifex.com/live.js"></script>
 <header id="headerView" class="layout-header">
-  <div class="layout-header-top">
-  	<div class="inner">
-  		<%= render 'shared/navbar_landing' %>
-  	</div>
-  </div>
+  <div id="headerGFW"></div>
   <div class="layout-header-bottom">
   	<div class="inner">
   		<%= render 'shared/navbar2_landing' %>
@@ -21,3 +17,15 @@ if (! !!location.hostname.includes('globalforestwatch.org'))
     <% end %>
   </div>
 </header>
+<script>
+  if (! !!window.gfw) {
+    var gfw = window.gfw = {
+      config: {
+        GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>",
+        GFW_MOBILE: 1000
+      },
+      cacheVersion: "<%= ENV['CACHE_VERSION'] %>",
+      layer_spec: "<%= ENV['LAYER_SPEC'] %>"
+    };
+  }
+</script>
