@@ -47,7 +47,7 @@ define([
     _getSQL: function() {
       var template = Handlebars.compile(SQL),
           sql = template({
-            table: 'umd_alerts_agg'
+            table: 'umd_alerts_agg_rast'
           });
 
       return sql;
