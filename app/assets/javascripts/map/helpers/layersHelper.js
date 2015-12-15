@@ -131,6 +131,8 @@ define([
   'map/views/layers/LoggingRoadsCoverLayer',
   'map/views/layers/RusHcvLayer',
   'map/views/layers/DrcPrimaryForestLayer',
+  'map/views/layers/GuyraCoverLayer',
+  'map/views/layers/MysPALayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -276,6 +278,8 @@ define([
   LoggingRoadsCoverLayer,
   RusHcvLayer,
   DrcPrimaryForestLayer,
+  GuyraCoverLayer,
+  MysPALayer,
   UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
@@ -688,7 +692,6 @@ define([
     logging_roads: {
       view: LoggingRoadsLayer,
     },
-    
     logging_roads_coverage: {
       view: LoggingRoadsCoverLayer,
     },
@@ -698,7 +701,12 @@ define([
     cod_primary_forest_wgs: {
       view: DrcPrimaryForestLayer
     },
-    
+    guyra_coverage: {
+      view: GuyraCoverLayer
+    },
+    mys_protected_areas: {
+      view:  MysPALayer
+    },    
     nothing: {
     }
   };

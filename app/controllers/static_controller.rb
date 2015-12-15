@@ -5,6 +5,8 @@ class StaticController < ApplicationController
   respond_to :html
   respond_to :json, :only => :keepstories
 
+  LEGACY_SOURCES = YAML.load_file(
+    Rails.root.join('config', 'legacy_sources.yml'))
 
   def terms
     @title = 'Terms of Service'
@@ -17,24 +19,27 @@ class StaticController < ApplicationController
   end
 
   def data
-    case params[:t]
-    when 'oil_palm'
-      redirect_to 'http://data.globalforestwatch.org/datasets/20398d4dc36e47bd92b559786670f270_0'
-    when 'idn_primary'
-      redirect_to 'http://data.globalforestwatch.org/datasets/b3ac8839275446b5983c0271fddf1e33'
-    when 'forma'
-      redirect_to 'http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64'
+    section = params[:section]
+    source  = params[:t]
+    section = LEGACY_SOURCES[section]
+    data_id = section[source] unless section.nil?
+
+    case source
     when 'protected_areas'
-      redirect_to 'http://www.protectedplanet.net/'
+      url = 'http://www.protectedplanet.net/'
     when 'palm-oil-mills'
-      redirect_to 'http://data.gfw.opendata.arcgis.com/datasets/20398d4dc36e47bd92b559786670f270_0'
+      url = 'http://data.gfw.opendata.arcgis.com/datasets/20398d4dc36e47bd92b559786670f270_0'
     when 'fires'
-      redirect_to 'https://earthdata.nasa.gov/earth-observation-data/near-real-time/firms'
-    else
-      @title = 'Download Data'
-      @desc = 'Browse and download forest-related data directly through the GFW Open Data Portal.'
-      @keywords = 'GFW, open data portal, data, sets, browse, download, map, satellite, search data, explore data, forest change, forest cover, conservation, people, forest use, deforestation, land use, landscapes'
+      url = 'https://earthdata.nasa.gov/earth-observation-data/near-real-time/firms'
     end
+
+    if data_id.nil?
+      url = 'http://data.globalforestwatch.org/'
+    else
+      url = "http://data.globalforestwatch.org/datasets/#{data_id}"
+    end
+
+    redirect_to url
   end
 
   def howto

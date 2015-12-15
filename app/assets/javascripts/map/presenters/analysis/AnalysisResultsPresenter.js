@@ -42,7 +42,8 @@ define([
       'modis': 'quicc-alerts',
       'terrailoss': 'terrai-alerts',
       'prodes': 'prodes-loss',
-      'guyra': 'guyra-loss'
+      'guyra': 'guyra-loss',
+      'forest2000': 'umd-loss-gain'
     },
 
     init: function(view) {
@@ -65,7 +66,6 @@ define([
       }
     }, {
       'AnalysisService/results': function(results) {
-        console.log(results);
         this._renderResults(results);
       }
     }, {
@@ -292,7 +292,7 @@ define([
        *   - gainAlerts
        *   - extent
        */
-      if (layer.slug === 'loss' || layer.slug === 'forestgain') {
+      if (layer.slug === 'loss' || layer.slug === 'forestgain' || layer.slug === 'forestgain' || layer.slug === 'forest2000') {
         p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
         p.extent = p.gainAlerts = p.lossAlerts = 0;
         p.threshold  = results.params.thresh || 30;
