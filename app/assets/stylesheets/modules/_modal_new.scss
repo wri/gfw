@@ -297,8 +297,18 @@ $height: auto;
 }
 
 // EXCEPTIONS
-.feedback-tester {
-  padding: 20px;
-  border: 1px solid $cGreen;
-  border-radius: 2px;
+.feedback-form {
+  > * {
+    display: block;
+    margin: 10px 0 0;
+    &:first-child {
+      margin: 0;
+    }
+  }
+
+  .feedback-tester {
+    padding: 20px;
+    border: 1px solid $cGreen;
+    border-radius: 2px;
+  }
 }
