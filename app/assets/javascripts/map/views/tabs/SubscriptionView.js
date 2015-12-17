@@ -31,6 +31,12 @@ define([
 
       //default
       'click #get-started-subscription' : '_onClickStart',
+      'dragenter #drop-shape' : '_toggleDropHighlight',
+      'dragleave #drop-shape' : '_toggleDropHighlight',
+      'drop #drop-shape' : '_onShapeDropped',
+      'dragover #drop-shape': function(ev) {
+              ev.preventDefault();
+          },
 
       //draw
       'click #start-subscription' : '_onClickSubscription',
@@ -318,6 +324,13 @@ define([
       this.$defaultSubscription.hide(0);
     },
 
+    _toggleDropHighlight: function(e) {
+      $(e.target).toggleClass('moving');
+    },
+
+    _onShapeDropped: function(){
+      debugger
+    },
 
 
 
