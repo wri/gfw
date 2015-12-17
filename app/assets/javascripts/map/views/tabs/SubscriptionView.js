@@ -9,8 +9,9 @@ define([
   'amplify',
   'chosen',
   'map/presenters/tabs/SubscriptionPresenter',
+  'map/services/ShapefileService',
   'text!map/templates/tabs/subscription.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, tpl) {
+], function(_, Handlebars, amplify, chosen, Presenter, ShapefileService, tpl) {
 
   'use strict';
 
@@ -31,12 +32,6 @@ define([
 
       //default
       'click #get-started-subscription' : '_onClickStart',
-      'dragenter #drop-shape' : '_toggleDropHighlight',
-      'dragleave #drop-shape' : '_toggleDropHighlight',
-      'drop #drop-shape' : '_onShapeDropped',
-      'dragover #drop-shape': function(ev) {
-              ev.preventDefault();
-          },
 
       //draw
       'click #start-subscription' : '_onClickSubscription',
@@ -58,6 +53,7 @@ define([
       this.model = new SubscriptionModel();
       this.render();
       this.setListeners();
+      this.setDropable();
     },
 
     cacheVars: function(){
@@ -90,6 +86,26 @@ define([
 
     setListeners: function(){
 
+    },
+
+    setDropable: function() {
+
+      var dropable = document.getElementById('drop-shape');
+      dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
+      dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
+      dropable.ondrop = function (e) {
+        e.preventDefault();
+        var file = e.dataTransfer.files[0],
+            reader = new FileReader();
+        reader.onload = function (event) {
+          var shapeService = new ShapefileService({
+            shapefile : event.target.result
+          });
+          shapeService.toGeoJSON();
+        };
+        reader.readAsDataURL(file);
+        return false;
+      };
     },
 
     render: function(){
@@ -323,16 +339,6 @@ define([
     _onClickStart: function(){
       this.$defaultSubscription.hide(0);
     },
-
-    _toggleDropHighlight: function(e) {
-      $(e.target).toggleClass('moving');
-    },
-
-    _onShapeDropped: function(){
-      debugger
-    },
-
-
 
 
     /**
