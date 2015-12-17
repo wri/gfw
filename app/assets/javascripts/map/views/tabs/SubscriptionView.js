@@ -89,21 +89,19 @@ define([
     },
 
     setDropable: function() {
-
       var dropable = document.getElementById('drop-shape');
       dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
       dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
       dropable.ondrop = function (e) {
         e.preventDefault();
-        var file = e.dataTransfer.files[0],
-            reader = new FileReader();
-        reader.onload = function (event) {
-          var shapeService = new ShapefileService({
-            shapefile : event.target.result
-          });
-          shapeService.toGeoJSON();
-        };
-        reader.readAsDataURL(file);
+
+        var file = e.dataTransfer.files[0];
+        var shapeService = new ShapefileService({
+          shapefile : file });
+        shapeService.toGeoJSON().then(function() {
+          // OH YEEEEEEEEEAH
+        });
+
         return false;
       };
     },
