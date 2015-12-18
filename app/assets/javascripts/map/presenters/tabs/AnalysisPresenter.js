@@ -170,6 +170,10 @@ define([
       'Dialogs/close': function() {
         this.view.toggleAnalysis(true);
       }
+    }, {
+      'Analysis/upload':function(geojson) {
+        this._analyzeGeojson(geojson,{draw: false});
+      }
     }],
 
     openAnalysisTab: function(open){
