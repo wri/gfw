@@ -10,9 +10,10 @@ define([
   'chosen',
   'map/presenters/tabs/AnalysisPresenter',
   'map/services/ShapefileService',
+  'helpers/geojsonUtilsHelper',
   'text!map/templates/tabs/analysis.handlebars',
   'text!map/templates/tabs/analysis-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, ShapefileService, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, Presenter, ShapefileService, geojsonUtilsHelper, tpl, tplMobile) {
 
   'use strict';
 
