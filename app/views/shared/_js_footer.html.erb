@@ -47,5 +47,26 @@
     a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
   }
 
+  // Jaco UX monitor
+  (function(e, t) {
+     var n = "JacoRecorder";
+     (function(e, t, r, i) {
+         if (!r.__VERSION) {
+             function s(e, t) {
+                 e[t] = function() {
+                     e.q.push([ t ].concat(Array.prototype.slice.call(arguments, 0)));
+                 };
+             }
+             e[n] = r, r.q = [];
+             var o = [ "init", "identify", "startRecording", "stopRecording", "removeUserTracking", "setUserInfo", "exec" ];
+             for (var u = 0; u < o.length; u++) s(r, o[u]);
+             r.__VERSION = .9, r.__INIT_TIME = 1 * new Date;
+             var a = t.createElement("script");
+             a.async = !0, a.setAttribute("crossorigin", "anonymous"), a.src = i;
+             var f = t.getElementsByTagName("head")[0];
+             f.appendChild(a);
+         }
+     })(e, t, e[n] || [], "//bo.getjaco.com/build/recorder.js");
+  })(window, document), JacoRecorder.init("578cbf2c-2942-434c-9e8f-741a16984acf", {});
 
 </script>
