@@ -6,8 +6,8 @@
 }
 
 #mys_protected_areas[status="Gazetted"] {
-   polygon-fill: #A6CEE3;
+   polygon-fill: #1F78B4;
 }
 #mys_protected_areas[status="Proposed"] {
-   polygon-fill: #1F78B4;
+   polygon-fill: #A6CEE3;
 }
