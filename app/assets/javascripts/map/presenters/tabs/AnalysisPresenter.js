@@ -172,7 +172,6 @@ define([
       }
     }, {
       'Analysis/upload': function(geojson) {
-        debugger
         this._analyzeGeojson(geojson,{draw: true});
       }
     }],
