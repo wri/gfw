@@ -5,11 +5,10 @@
  */
 define([
   'underscore', 'handlebars', 'amplify', 'chosen', 'mps', 'turf',
+  'map/views/tabs/SubscriptionUploadView',
   'map/presenters/tabs/SubscriptionPresenter',
-  'map/services/ShapefileService',
-  'helpers/geojsonUtilsHelper',
   'text!map/templates/tabs/subscription.handlebars'
-], function(_, Handlebars, amplify, chosen, mps, turf, Presenter, ShapefileService, geojsonUtilsHelper, tpl) {
+], function(_, Handlebars, amplify, chosen, mps, turf, SubscriptionUploadView, Presenter, tpl) {
 
   'use strict';
 
@@ -50,8 +49,7 @@ define([
       this.presenter = new Presenter(this);
       this.model = new SubscriptionModel();
       this.render();
-      this.setListeners();
-      this.setDropable();
+      this.setDroppable();
     },
 
     cacheVars: function(){
@@ -82,33 +80,11 @@ define([
 
     },
 
-    setListeners: function(){
-
-    },
-
-    setDropable: function() {
-      var dropable = document.getElementById('drop-shape');
-      dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
-      dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
-      dropable.ondrop = function (e) {
-        e.preventDefault();
-
-        var file = e.dataTransfer.files[0];
-        var shapeService = new ShapefileService({
-          shapefile : file });
-        shapeService.toGeoJSON().then(function(data) {
-          var combinedFeature = data.features.reduce(function(previous, current) {
-            return turf.union(previous, current);
-          });
-          mps.publish('Subscription/upload', [combinedFeature.geometry]);
-
-          this.drawMultipolygon(combinedFeature);
-          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(combinedFeature);
-          this.map.fitBounds(bounds);
-        }.bind(this));
-
-        return false;
-      }.bind(this);
+    setDroppable: function() {
+      new SubscriptionUploadView({
+        el: this.$('.dropable'),
+        map: this.map
+      });
     },
 
     render: function(){

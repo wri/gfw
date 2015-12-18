@@ -1,0 +1,12 @@
+{{#if availableFeatures.length}}
+  {{#if multipleFeatures}}
+    Select from {{availableFeatures.length}} features on the map, or subscribe to all.
+  {{/if}}
+
+  <button id="start-subscription" class="btn green uppercase">
+    Subscribe {{#if selectedFeatures.length}}to {{selectedFeatures.length}} features{{/if}}
+  </button>
+{{else}}
+  <div id="drop-shape" class="shape-droppable">drop a custom shapefile anywhere</div>
+  <a href='#' data-source="drop-shapefile" class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+{{/if}}
