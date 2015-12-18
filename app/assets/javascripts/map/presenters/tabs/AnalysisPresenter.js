@@ -171,8 +171,9 @@ define([
         this.view.toggleAnalysis(true);
       }
     }, {
-      'Analysis/upload':function(geojson) {
-        this._analyzeGeojson(geojson,{draw: false});
+      'Analysis/upload': function(geojson) {
+        debugger
+        this._analyzeGeojson(geojson,{draw: true});
       }
     }],
 
