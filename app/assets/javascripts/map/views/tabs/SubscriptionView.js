@@ -102,7 +102,7 @@ define([
           shapefile : file });
         shapeService.toGeoJSON().then(function(data) {
           var features = data.features[0];
-          mps.publish('Subscription/upload', [feature.geometry]);
+          mps.publish('Subscription/upload', [features.geometry]);
 
           this.drawMultipolygon(features);
           var bounds = geojsonUtilsHelper.getBoundsFromGeojson(features);
