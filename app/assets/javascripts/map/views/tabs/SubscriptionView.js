@@ -4,16 +4,12 @@
  * @return SubscriptionView instance (extends Backbone.View).
  */
 define([
-  'underscore',
-  'handlebars',
-  'amplify',
-  'chosen',
-  'mps',
+  'underscore', 'handlebars', 'amplify', 'chosen', 'mps', 'turf',
   'map/presenters/tabs/SubscriptionPresenter',
   'map/services/ShapefileService',
   'helpers/geojsonUtilsHelper',
   'text!map/templates/tabs/subscription.handlebars'
-], function(_, Handlebars, amplify, chosen, mps, Presenter, ShapefileService, geojsonUtilsHelper, tpl) {
+], function(_, Handlebars, amplify, chosen, mps, turf, Presenter, ShapefileService, geojsonUtilsHelper, tpl) {
 
   'use strict';
 
@@ -101,11 +97,13 @@ define([
         var shapeService = new ShapefileService({
           shapefile : file });
         shapeService.toGeoJSON().then(function(data) {
-          var features = data.features[0];
-          mps.publish('Subscription/upload', [features.geometry]);
+          var combinedFeature = data.features.reduce(function(previous, current) {
+            return turf.union(previous, current);
+          });
+          mps.publish('Subscription/upload', [combinedFeature.geometry]);
 
-          this.drawMultipolygon(features);
-          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(features);
+          this.drawMultipolygon(combinedFeature);
+          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(combinedFeature);
           this.map.fitBounds(bounds);
         }.bind(this));
 
