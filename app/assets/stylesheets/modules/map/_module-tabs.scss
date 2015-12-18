@@ -308,14 +308,25 @@ $w-control: 44px;
     @include transform(translate(-50%,-50%));
   }
 }
-#drop-shape {
-    border: 1px dashed #88aa37;
-    display: flex;
-    height: 30px;
-    justify-content: center;
-    align-items: center;
-    &.moving {
-      background-color: aliceblue;
-      border-width: 2px;
-    }
+.dropable {
+  .shape-droppable {
+      border: 1px dashed #88aa37;
+      display: inline-flex;
+      height: 30px;
+      justify-content: center;
+      align-items: center;
+      width: 90%;
+      &.moving {
+        background-color: aliceblue;
+        border-width: 2px;
+      }
+  }
+  .source{
+    @extend .info-icon;
+    display: inline-block;
+    top: 2px;
+    right: -5px;
+    position: relative;
+    cursor: pointer;
+  }
 }

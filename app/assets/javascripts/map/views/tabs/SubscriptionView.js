@@ -11,8 +11,9 @@ define([
   'mps',
   'map/presenters/tabs/SubscriptionPresenter',
   'map/services/ShapefileService',
+  'helpers/geojsonUtilsHelper',
   'text!map/templates/tabs/subscription.handlebars'
-], function(_, Handlebars, amplify, chosen, mps, Presenter, ShapefileService, tpl) {
+], function(_, Handlebars, amplify, chosen, mps, Presenter, ShapefileService, geojsonUtilsHelper, tpl) {
 
   'use strict';
 
@@ -100,11 +101,16 @@ define([
         var shapeService = new ShapefileService({
           shapefile : file });
         shapeService.toGeoJSON().then(function(data) {
-          mps.publish('Subscription/upload', [data.features[0].geometry]);
-        });
+          var features = data.features[0];
+          mps.publish('Subscription/upload', [features.geometry]);
+
+          this.drawMultipolygon(features);
+          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(features);
+          this.map.fitBounds(bounds);
+        }.bind(this));
 
         return false;
-      };
+      }.bind(this);
     },
 
     render: function(){
