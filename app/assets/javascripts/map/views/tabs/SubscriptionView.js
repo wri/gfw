@@ -8,10 +8,11 @@ define([
   'handlebars',
   'amplify',
   'chosen',
+  'mps',
   'map/presenters/tabs/SubscriptionPresenter',
   'map/services/ShapefileService',
   'text!map/templates/tabs/subscription.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, ShapefileService, tpl) {
+], function(_, Handlebars, amplify, chosen, mps, Presenter, ShapefileService, tpl) {
 
   'use strict';
 
@@ -98,8 +99,8 @@ define([
         var file = e.dataTransfer.files[0];
         var shapeService = new ShapefileService({
           shapefile : file });
-        shapeService.toGeoJSON().then(function() {
-          // OH YEEEEEEEEEAH
+        shapeService.toGeoJSON().then(function(data) {
+          mps.publish('Subscription/upload', [data.features[0].geometry]);
         });
 
         return false;
