@@ -4,16 +4,11 @@
  * @return SubscriptionView instance (extends Backbone.View).
  */
 define([
-  'underscore',
-  'handlebars',
-  'amplify',
-  'chosen',
-  'mps',
+  'underscore', 'handlebars', 'amplify', 'chosen', 'mps', 'turf',
+  'map/views/tabs/SubscriptionShapefileUploadView',
   'map/presenters/tabs/SubscriptionPresenter',
-  'map/services/ShapefileService',
-  'helpers/geojsonUtilsHelper',
   'text!map/templates/tabs/subscription.handlebars'
-], function(_, Handlebars, amplify, chosen, mps, Presenter, ShapefileService, geojsonUtilsHelper, tpl) {
+], function(_, Handlebars, amplify, chosen, mps, turf, SubscriptionShapefileUploadView, Presenter, tpl) {
 
   'use strict';
 
@@ -53,9 +48,9 @@ define([
       this.map = map;
       this.presenter = new Presenter(this);
       this.model = new SubscriptionModel();
+
       this.render();
-      this.setListeners();
-      this.setDropable();
+      this.createDropZone();
     },
 
     cacheVars: function(){
@@ -83,34 +78,28 @@ define([
 
       //delete
       this.timeout = null;
-
     },
 
-    setListeners: function(){
+    createDropZone: function() {
+      var uploadView;
 
-    },
+      var onSelect = function(feature) {
+        mps.publish('Subscription/upload', [feature.geometry]);
+        this.clearMap();
+      };
 
-    setDropable: function() {
-      var dropable = document.getElementById('drop-shape');
-      dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
-      dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
-      dropable.ondrop = function (e) {
-        e.preventDefault();
-
-        var file = e.dataTransfer.files[0];
-        var shapeService = new ShapefileService({
-          shapefile : file });
-        shapeService.toGeoJSON().then(function(data) {
-          var features = data.features[0];
-          mps.publish('Subscription/upload', [features.geometry]);
-
-          this.drawMultipolygon(features);
-          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(features);
-          this.map.fitBounds(bounds);
-        }.bind(this));
-
-        return false;
+      var onCancel = function() {
+        this.render();
+        uploadView.setElement(this.$('#draw-tab-s'));
+        this._onClickStart();
       }.bind(this);
+
+      uploadView = new SubscriptionShapefileUploadView({
+        el: '#draw-tab-s',
+        map: this.map,
+        onCancel: onCancel,
+        onSelect: onSelect
+      });
     },
 
     render: function(){

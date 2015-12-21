@@ -1,0 +1,26 @@
+{{#if availableFeatures.length}}
+  <div class="dropable file-selected">
+    <a href="#" id="cancel">Cancel</a>
+    <header>
+      <h2>
+        {{#if multipleFeatures}}
+          Select from {{availableFeatures.length}} features on the map, or
+          subscribe to all
+        {{else}}
+          Review your geometry and subscribe
+        {{/if}}
+      </h2>
+    </header>
+
+    <p>
+      <button id="continue" class="btn green uppercase">
+        Subscribe {{#if selectedFeatures.length}}to {{selectedFeatures.length}} features{{/if}}
+      </button>
+    </p>
+  </div>
+{{else}}
+  <div class="dropable">
+    <div id="drop-shape" class="shape-droppable">Or drop a custom shapefile here</div>
+    <a href='#' data-source="drop-shapefile" class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+  </div>
+{{/if}}
