@@ -19,6 +19,7 @@ define([
 
     init: function(layer, options, map) {
       this.tiles = {};
+      this.layer_slug = layer.slug;
       this._super(layer, options, map);
     },
 
@@ -69,6 +70,7 @@ define([
       // var currentMap = document.getElementById('map');
       if(zoomLT7) {
         document.getElementById('disclaimer-zoom').setAttribute('style', 'display:block');
+        if (this.layer_slug == 'urthe') {return;}
         // currentMap.classList.add("urthecast-incorrect-zoom");
       } else {
         document.getElementById('disclaimer-zoom').setAttribute('style', 'display:none');
