@@ -66,7 +66,14 @@ define([
       [].forEach.call(document.getElementsByClassName('toggleUrtheCast'), function(toggle) {
         zoomLT7 ? toggle.style.display = 'none' : toggle.style.display = 'block';
       });
-      zoomLT7 ? document.getElementById('disclaimer-zoom').setAttribute('style', 'display:block') : document.getElementById('disclaimer-zoom').setAttribute('style', 'display:none');
+      // var currentMap = document.getElementById('map');
+      if(zoomLT7) {
+        document.getElementById('disclaimer-zoom').setAttribute('style', 'display:block');
+        // currentMap.classList.add("urthecast-incorrect-zoom");
+      } else {
+        document.getElementById('disclaimer-zoom').setAttribute('style', 'display:none');
+        // currentMap.classList.remove("urthecast-incorrect-zoom");
+      }
       var zsteps = this._getZoomSteps(zoom);
 
       var url = this._getUrl.apply(this,
