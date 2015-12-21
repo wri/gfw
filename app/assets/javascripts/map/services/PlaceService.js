@@ -112,6 +112,7 @@ define([
       var route, params;
       params = this._destandardizeParams(
         this._getPresenterParams(this._presenters));
+      if (params.geojson && params.geojson.length > 1024) { return; } // prevent long shapefiles
       route = this._getRoute(params);
       this.router.navigateTo(route, {silent: true});
     },

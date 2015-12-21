@@ -112,6 +112,10 @@ define([
           }
         }
       },
+    }, {
+      'Subscription/upload':function(geojson) {
+        this._subscribeGeojson(geojson,{draw: false});
+      }
     }],
 
     openSubscriptionTab: function(open){

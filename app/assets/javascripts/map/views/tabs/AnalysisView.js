@@ -9,9 +9,11 @@ define([
   'amplify',
   'chosen',
   'map/presenters/tabs/AnalysisPresenter',
+  'map/services/ShapefileService',
+  'helpers/geojsonUtilsHelper',
   'text!map/templates/tabs/analysis.handlebars',
   'text!map/templates/tabs/analysis-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, Presenter, ShapefileService, geojsonUtilsHelper, tpl, tplMobile) {
 
   'use strict';
 
@@ -63,7 +65,7 @@ define([
           this.renderMobile();
         },this)
       });
-
+      this.setDropable();
     },
 
     cacheVars: function(){
@@ -94,6 +96,29 @@ define([
 
     setListeners: function(){
 
+    },
+
+    setDropable: function() {
+      var dropable = document.getElementById('drop-shape-analysis');
+      dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
+      dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
+      dropable.ondrop = function (e) {
+        e.preventDefault();
+
+        var file = e.dataTransfer.files[0];
+        var shapeService = new ShapefileService({
+          shapefile : file });
+        shapeService.toGeoJSON().then(function(data) {
+          var features = data.features[0];
+          mps.publish('Analysis/upload', [features.geometry]);
+
+          this.drawMultipolygon(features);
+          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(features);
+          this.map.fitBounds(bounds);
+        }.bind(this));
+
+        return false;
+      }.bind(this);
     },
 
     render: function(){

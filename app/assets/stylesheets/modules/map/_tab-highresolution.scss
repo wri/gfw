@@ -1,4 +1,13 @@
 $letterW: 20px;
+#disclaimer-zoom {
+  display: none;
+  margin: 15px 0;
+  font-size: 13px;
+  color: #777; 
+  strong {
+    color: #555;
+  }
+}
 .tab-highresolution{
   .highresolution-content{
     padding: 15px;
