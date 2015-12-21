@@ -133,6 +133,7 @@ define([
   'map/views/layers/DrcPrimaryForestLayer',
   'map/views/layers/GuyraCoverLayer',
   'map/views/layers/MysPALayer',
+  'map/views/layers/IdnPeatLandsLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -280,6 +281,7 @@ define([
   DrcPrimaryForestLayer,
   GuyraCoverLayer,
   MysPALayer,
+  IdnPeatLandsLayer,
   UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
@@ -706,7 +708,11 @@ define([
     },
     mys_protected_areas: {
       view:  MysPALayer
-    },    
+    }, 
+    idn_peat_lands: {
+      view:  IdnPeatLandsLayer
+    },
+    
     nothing: {
     }
   };
