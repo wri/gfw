@@ -83,33 +83,31 @@ define([
     },
 
     _drawCanvasImage: function(canvasData) {
-      var canvas = canvasData.canvas;
-      var image = canvasData.image;
-      var x = canvasData.x;
-      var y = canvasData.y;
-      var z = canvasData.z;
+      "use asm";
+      var canvas = canvasData.canvas,
+          ctx    = canvas.getContext('2d'),
+          image  = canvasData.image,
+          zsteps = this._getZoomSteps(canvasData.z) |0; // force 32bit int type
 
-      var ctx = canvas.getContext('2d');
-      var zsteps = this._getZoomSteps(z);
+      ctx.clearRect(0, 0, 256, 256);                    // this will allow us to sum up the dots when the timeline is running
 
       if (zsteps < 0) {
         ctx.drawImage(image, 0, 0);
-      } else {
-        ctx.imageSmoothingEnabled = false;
+      } else {                                          // over the maxzoom, we'll need to scale up each tile
+
+        ctx.imageSmoothingEnabled = false;              // disable pic enhancement
         ctx.mozImageSmoothingEnabled = false;
-        ctx.webkitImageSmoothingEnabled = false;
 
-        var srcX = 256 / Math.pow(2, zsteps) * (x % Math.pow(2, zsteps));
-        var srcY = 256 / Math.pow(2, zsteps) * (y % Math.pow(2, zsteps));
-        var srcW = 256 / Math.pow(2, zsteps);
-        var srcH = 256 / Math.pow(2, zsteps);
+        // tile scaling
+        var srcX = (256 / Math.pow(2, zsteps) * (canvasData.x % Math.pow(2, zsteps))) |0,
+            srcY = (256 / Math.pow(2, zsteps) * (canvasData.y % Math.pow(2, zsteps))) |0,
+            srcW = (256 / Math.pow(2, zsteps)) |0,
+            srcH = (256 / Math.pow(2, zsteps)) |0;
 
-        ctx.clearRect(0, 0, 256, 256);
         ctx.drawImage(image, srcX, srcY, srcW, srcH, 0, 0, 256, 256);
       }
-
       var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      this.filterCanvasImgdata(I.data, canvas.width, canvas.height, z);
+      this.filterCanvasImgdata(I.data, canvas.width, canvas.height, canvasData.z);
       ctx.putImageData(I, 0, 0);
     },
 
