@@ -431,7 +431,7 @@ define([
       this.map.mapTypes.set('treeheight', treeheightMaptype());
       this.map.mapTypes.set('dark', darkMaptype());
       this.map.mapTypes.set('positron', positronMaptype());
-      for (var i = 1999; i < 2013; i++) {
+      for (var i = 1999; i < 2015; i++) {
         this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
       }
     },
