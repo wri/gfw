@@ -5,16 +5,16 @@
       <h2>
         {{#if multipleFeatures}}
           Select from {{availableFeatures.length}} features on the map, or
-          subscribe to all
+          analyse all
         {{else}}
-          Review your geometry and subscribe
+          Review your geometry and run analysis
         {{/if}}
       </h2>
     </header>
 
     <p>
       <button id="continue" class="btn green uppercase">
-        Subscribe {{#if selectedFeatures.length}}to {{selectedFeatures.length}} features{{/if}}
+        Analyse {{#if selectedFeatures.length}} {{selectedFeatures.length}} features{{/if}}
       </button>
     </p>
   </div>

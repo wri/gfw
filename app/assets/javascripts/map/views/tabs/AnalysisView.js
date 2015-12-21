@@ -4,16 +4,14 @@
  * @return AnalysisView instance (extends Backbone.View).
  */
 define([
-  'underscore',
-  'handlebars',
-  'amplify',
-  'chosen',
+  'underscore', 'handlebars', 'amplify', 'chosen',
+  'map/views/tabs/AnalysisShapefileUploadView',
   'map/presenters/tabs/AnalysisPresenter',
   'map/services/ShapefileService',
   'helpers/geojsonUtilsHelper',
   'text!map/templates/tabs/analysis.handlebars',
   'text!map/templates/tabs/analysis-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, ShapefileService, geojsonUtilsHelper, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, AnalysisShapefileUploadView, Presenter, ShapefileService, geojsonUtilsHelper, tpl, tplMobile) {
 
   'use strict';
 
@@ -53,6 +51,7 @@ define([
       this.map = map;
       this.presenter = new Presenter(this);
       this.model = new AnalysisModel();
+
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.mobile = false;
@@ -65,7 +64,8 @@ define([
           this.renderMobile();
         },this)
       });
-      this.setDropable();
+
+      this.createDropZone();
     },
 
     cacheVars: function(){
@@ -91,34 +91,31 @@ define([
 
       //delete
       this.timeout = null;
-
     },
 
-    setListeners: function(){
+    createDropZone: function() {
+      var uploadView;
 
-    },
+      var onSelect = function(feature) {
+        this.clearMap();
 
-    setDropable: function() {
-      var dropable = document.getElementById('drop-shape-analysis');
-      dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
-      dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
-      dropable.ondrop = function (e) {
-        e.preventDefault();
+        mps.publish('Analysis/upload', [feature.geometry]);
 
-        var file = e.dataTransfer.files[0];
-        var shapeService = new ShapefileService({
-          shapefile : file });
-        shapeService.toGeoJSON().then(function(data) {
-          var features = data.features[0];
-          mps.publish('Analysis/upload', [features.geometry]);
+        var bounds = geojsonUtilsHelper.getBoundsFromGeojson(feature);
+        this.map.fitBounds(bounds);
+      };
 
-          this.drawMultipolygon(features);
-          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(features);
-          this.map.fitBounds(bounds);
-        }.bind(this));
-
-        return false;
+      var onCancel = function() {
+        this.render();
+        uploadView.setElement(this.$('#draw-tab'));
       }.bind(this);
+
+      uploadView = new AnalysisShapefileUploadView({
+        el: '#draw-tab',
+        map: this.map,
+        onCancel: onCancel,
+        onSelect: onSelect
+      });
     },
 
     render: function(){

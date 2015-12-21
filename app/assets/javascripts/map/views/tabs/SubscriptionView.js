@@ -5,10 +5,10 @@
  */
 define([
   'underscore', 'handlebars', 'amplify', 'chosen', 'mps', 'turf',
-  'map/views/tabs/SubscriptionUploadView',
+  'map/views/tabs/SubscriptionShapefileUploadView',
   'map/presenters/tabs/SubscriptionPresenter',
   'text!map/templates/tabs/subscription.handlebars'
-], function(_, Handlebars, amplify, chosen, mps, turf, SubscriptionUploadView, Presenter, tpl) {
+], function(_, Handlebars, amplify, chosen, mps, turf, SubscriptionShapefileUploadView, Presenter, tpl) {
 
   'use strict';
 
@@ -48,8 +48,9 @@ define([
       this.map = map;
       this.presenter = new Presenter(this);
       this.model = new SubscriptionModel();
+
       this.render();
-      this.setDroppable();
+      this.createDropZone();
     },
 
     cacheVars: function(){
@@ -77,13 +78,27 @@ define([
 
       //delete
       this.timeout = null;
-
     },
 
-    setDroppable: function() {
-      new SubscriptionUploadView({
-        el: this.$('.dropable'),
-        map: this.map
+    createDropZone: function() {
+      var uploadView;
+
+      var onSelect = function(feature) {
+        mps.publish('Subscription/upload', [feature.geometry]);
+        this.clearMap();
+      };
+
+      var onCancel = function() {
+        this.render();
+        uploadView.setElement(this.$('#draw-tab-s'));
+        this._onClickStart();
+      }.bind(this);
+
+      uploadView = new SubscriptionShapefileUploadView({
+        el: '#draw-tab-s',
+        map: this.map,
+        onCancel: onCancel,
+        onSelect: onSelect
       });
     },
 
