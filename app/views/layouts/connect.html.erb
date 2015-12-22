@@ -30,7 +30,7 @@
     <%= controller_stylesheet_link_tag %>
     <%= yield :js %>
     <%= csrf_meta_tags %>
-    <script id="loader-gfw" data-current=".shape-mygfw" src="http://www.globalforestwatch.org/gfw-assets"></script>
+    <script id="loader-gfw" data-current=".shape-mygfw" src="https://rawgit.com/simbiotica/gfw_assets/cf507395d7651585d531fa6e025dbd3c5299c8c2/js/build/production.js"></script>
   </head>
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
     <%= render 'layouts/svg_icons' %>
