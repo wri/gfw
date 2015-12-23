@@ -7,6 +7,7 @@ class HomeController < ApplicationController
     @circles = load_circles
     @title = I18n.translate 'home.index.title'
     @desc = 'Global Forest Watch (GFW) is a dynamic online forest monitoring and alert system that empowers people everywhere to better manage forests.'
+    @loggedin = !!cookies[:_eauth]
   end
 
   def accept_and_redirect
