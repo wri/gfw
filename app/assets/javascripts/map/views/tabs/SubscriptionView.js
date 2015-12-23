@@ -12,8 +12,9 @@ define([
   'map/presenters/tabs/SubscriptionPresenter',
   'map/services/ShapefileService',
   'helpers/geojsonUtilsHelper',
-  'text!map/templates/tabs/subscription.handlebars'
-], function(_, Handlebars, amplify, chosen, mps, Presenter, ShapefileService, geojsonUtilsHelper, tpl) {
+  'text!map/templates/tabs/subscription.handlebars',
+  'text!map/templates/tabs/loginbefore.handlebars'
+], function(_, Handlebars, amplify, chosen, mps, Presenter, ShapefileService, geojsonUtilsHelper, tpl, tpllogin) {
 
   'use strict';
 
@@ -26,7 +27,8 @@ define([
 
     el: '#subscription-tab',
 
-    template: Handlebars.compile(tpl),
+    template:       Handlebars.compile(tpl),
+    template_login: Handlebars.compile(tpllogin),
 
     events: {
       //tabs
@@ -92,29 +94,35 @@ define([
 
     setDropable: function() {
       var dropable = document.getElementById('drop-shape');
-      dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
-      dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
-      dropable.ondrop = function (e) {
-        e.preventDefault();
+      if (dropable) {
+        dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
+        dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
+        dropable.ondrop = function (e) {
+          e.preventDefault();
 
-        var file = e.dataTransfer.files[0];
-        var shapeService = new ShapefileService({
-          shapefile : file });
-        shapeService.toGeoJSON().then(function(data) {
-          var features = data.features[0];
-          mps.publish('Subscription/upload', [features.geometry]);
+          var file = e.dataTransfer.files[0];
+          var shapeService = new ShapefileService({
+            shapefile : file });
+          shapeService.toGeoJSON().then(function(data) {
+            var features = data.features[0];
+            mps.publish('Subscription/upload', [features.geometry]);
 
-          this.drawMultipolygon(features);
-          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(features);
-          this.map.fitBounds(bounds);
-        }.bind(this));
+            this.drawMultipolygon(features);
+            var bounds = geojsonUtilsHelper.getBoundsFromGeojson(features);
+            this.map.fitBounds(bounds);
+          }.bind(this));
 
-        return false;
-      }.bind(this);
+          return false;
+        }.bind(this);
+      }
     },
 
     render: function(){
-      this.$el.html(this.template());
+      if (!$('body').hasClass('user-is-loggedin-true')) {
+        this.$el.html(this.template_login());
+      } else {
+        this.$el.html(this.template());
+      }
       this.cacheVars();
       this.inits();
     },

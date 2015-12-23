@@ -8,6 +8,7 @@ class SearchController < ApplicationController
       @result = result
       @query = params[:query]
       @page = params[:page]
+      @loggedin = !!cookies[:_eauth]
       @total = @result['queries']['request'][0]['totalResults'].to_i
 
     end

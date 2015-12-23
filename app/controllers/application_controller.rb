@@ -7,10 +7,12 @@ class ApplicationController < ActionController::Base
   before_action :check_browser
 
   def not_found
+    @loggedin = !!cookies[:_eauth]
     raise ActionController::RoutingError.new('Not Found')
   end
 
   def accept_terms
+    @loggedin = !!cookies[:_eauth]
     session[:return_to] = params[:return_to] unless params[:return_to].nil?
     @title = 'Terms of Service'
   end
@@ -18,12 +20,14 @@ class ApplicationController < ActionController::Base
   private
 
     def check_browser
+      @loggedin = !!cookies[:_eauth]
       unless UserAgentValidator.user_agent_supported? request.user_agent
         redirect_to "/notsupportedbrowser"
       end
     end
 
     def check_terms
+      @loggedin = !!cookies[:_eauth]
       if request.original_url.to_s.include? "globalforestwatch.org"
         #Filtering accept terms only in PRO
 
