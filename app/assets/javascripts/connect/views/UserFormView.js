@@ -7,9 +7,10 @@ define([
   'backbone',
   'handlebars',
   'mps',
+  'moment',
   'text!connect/templates/userForm.handlebars',
   'text!connect/templates/subscriptionList.handlebars'
-], function(Backbone, Handlebars, mps, tpl_form, tpl_list) {
+], function(Backbone, Handlebars, mps, moment, tpl_form, tpl_list) {
 
   'use strict';
 
@@ -27,12 +28,41 @@ define([
 
     initialize: function(parent) {
       this.render();
+      this.renderSubscriptionList();
       this.cachevars();
     },
 
     render: function() {
       this.$el.find('.user-form').html(this.template_form({'action': window.gfw.config.GFW_API_HOST+'/user/setuser','redirect':window.location.href}));
       this.$el.find('.subscription-list').html(this.template_list());
+    },
+
+    renderSubscriptionList: function() {
+      var renderList = function(subscriptions) {
+        subscriptions = subscriptions.map(function(subscription) {
+          if (subscription.created !== undefined) {
+            subscription.created = moment(subscription.created).
+              format('dddd, YYYY-MM-D, h:mm a');
+          }
+
+          subscription.params.geom = JSON.stringify(subscription.params.geom);
+
+          return subscription;
+        });
+
+        this.$el.find('.subscription-list').html(this.template_list({
+          subscriptions: subscriptions
+        }));
+      }.bind(this);
+
+      $.ajax({
+        type: 'GET',
+        url: window.gfw.config.GFW_API_HOST + '/user/subscriptions',
+        crossDomain: true,
+        xhrFields: { withCredentials: true },
+        dataType: 'json',
+        success: renderList
+      });
     },
 
     cachevars: function() {
