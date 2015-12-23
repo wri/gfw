@@ -3,13 +3,26 @@
   <div class="steps current">
     <header>
       <h2>Subscribe to alerts</h2>
-      <p>Enter your email below to subscribe to monthly forest change alerts and user stories for this area</p>
+      {{#if email}}
+        <p>
+          Subscribe to monthly forest change alerts and user stories for
+          this area
+        </p>
+      {{else}}
+        <p>
+          Enter your email below to subscribe to monthly forest change
+          alerts and user stories for this area
+        </p>
+      {{/if}}
     </header>
 
     <div class="content">
       <ul class="button-container one">
         <li>
-          <input class="field" type="email" id="areaEmail" placeHolder="Enter your email">
+          {{#unless email}}
+            <input class="field" type="email" id="areaEmail" placeHolder="Enter your email">
+          {{/unless}}
+
           <button class="btn green uppercase" id="subscribe">Subscribe</button>
         </li>
       </ul>

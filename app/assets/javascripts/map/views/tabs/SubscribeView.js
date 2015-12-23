@@ -12,22 +12,34 @@ define([
 ], function(Backbone, _, Handlebars, Presenter, tpl) {
   'use strict';
 
-  var SubscribeModel = Backbone.Model.extend({
-    defaults: {
-      hidden: true
+  var getCookie = function(name) {
+    var value = '; ' + document.cookie;
+    var parts = value.split('; ' + name + '=');
+    if (parts.length === 2) { return parts.pop().split(';').shift(); }
+  };
+
+  var User = Backbone.Model.extend({
+    url: window.gfw.config.GFW_API_HOST + '/user/session',
+
+    loadFromCookie: function() {
+      var authCookie = getCookie('_eauth');
+
+      if (authCookie !== undefined) {
+        this.set('cookie', authCookie);
+        this.fetch({
+          xhrFields: {
+            withCredentials: true
+          }
+        });
+      }
     }
   });
-
 
   var SubscribeView = Backbone.View.extend({
 
     el: '#analysis-subscribe',
 
     template: Handlebars.compile(tpl),
-
-    /**
-     * Map layer slugs with subscription url topics.
-     */
 
     events: {
       'click .close-icon' : 'hide',
@@ -36,12 +48,22 @@ define([
 
     initialize: function(){
       this.presenter = new Presenter(this);
+
+      this.user = new User();
+      this.listenTo(this.user, 'sync', this.render);
+      this.user.loadFromCookie();
+
       this.render();
     },
 
     render: function(){
-      this.$el.html(this.template());
+      this.$el.html(this.template({
+        email: this.user.get('email')
+      }));
+
       this.cacheVars();
+
+      return this;
     },
 
     cacheVars: function(){
@@ -61,7 +83,6 @@ define([
       this.nextStep(0);
       this.presenter.hide();
     },
-
 
     subscribeAlerts: function() {
       var email = this.$el.find('#areaEmail').val();
@@ -85,12 +106,11 @@ define([
           type: 'POST',
           url: window.gfw.config.GFW_API_HOST + 'subscribe',
           crossDomain: true,
+          xhrFields: { withCredentials: true },
           data: JSON.stringify(data),
           dataType: 'json',
           success: _.bind(this._successSubscription, this),
-          error: _.bind(function(responseData, textStatus, errorThrown) {
-            this.remove();
-          }, this)
+          error: this.remove.bind(this)
         });
       }else{
         this.presenter.notificate('email-incorrect');
