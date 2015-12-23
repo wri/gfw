@@ -37,7 +37,7 @@ require([
       new SourceWindowView();
       new FeedbackModalView();
 
-      new SubscriptionListView();
+      // new SubscriptionListView();
       new UserFormView();
     }
   });
