@@ -29,6 +29,7 @@ define([
     initialize: function(parent) {
       this.render();
       this.renderSubscriptionList();
+      this.renderUserInfo();
       this.cachevars();
     },
 
@@ -62,6 +63,32 @@ define([
         xhrFields: { withCredentials: true },
         dataType: 'json',
         success: renderList
+      });
+    },
+
+    renderUserInfo: function() {
+      var userInfo = function(info) {
+        info = JSON.parse(info);
+        info = info[info.length-1];
+        this.$el.find('.user-form').html(this.template_form({
+          name: info['name'],
+          email: info['email'],
+          job: info['job'],
+          sector: info['sector'],
+          country: info['country'],
+          state: info['state'],
+          use: info['use'],
+          responsibilities: info['responsibilities']
+        }));
+      }.bind(this);
+
+      $.ajax({
+        type: 'GET',
+        url: window.gfw.config.GFW_API_HOST + '/user/getuser',
+        crossDomain: true,
+        xhrFields: { withCredentials: true },
+        dataType: 'json',
+        success: userInfo
       });
     },
 
