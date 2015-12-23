@@ -27,11 +27,18 @@ define([
 
     initialize: function(parent) {
       this.render();
+      this.cachevars();
     },
 
     render: function() {
       this.$el.find('.user-form').html(this.template_form({'action': window.gfw.config.GFW_API_HOST+'/user/setuser','redirect':window.location.href}));
       this.$el.find('.subscription-list').html(this.template_list());
+    },
+
+    cachevars: function() {
+      this.$tabs           = this.$el.find('.tabs h3');
+      this.$content_form   = this.$el.find('.content-form');
+      this.$tabs_contents  = this.$content_form.find('.tab-content');
     },
 
     _submit: function() {
@@ -43,8 +50,14 @@ define([
     },
 
     _toggleTab: function(e) {
-      if ($(e.target).hasClass('current')) return;
-      console.log(e)
+      var $ev = $(e.target);
+      if ($ev.hasClass('current')) return;
+
+      this.$tabs_contents.hide();
+      $('#activate-'+ $ev.data('tab')).show();
+
+      this.$tabs.removeClass('current');
+      $ev.addClass('current');
     }
   });
 
