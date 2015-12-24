@@ -27,10 +27,16 @@ define([
     template_list: Handlebars.compile(tpl_list),
 
     initialize: function(parent) {
+      this.storeUserInfoOnBar();
       this.render();
       this.renderSubscriptionList();
       this.renderUserInfo();
       this.cachevars();
+    },
+
+    storeUserInfoOnBar: function() {
+      localStorage.setItem('userSocialInfo', JSON.stringify(window.userinfo));
+      window.user = null;
     },
 
     render: function() {
