@@ -33,7 +33,7 @@ define([
       this.guide = $("body").guide();
 
       // Layers module
-      this.guide.addStep("#layers-menu", guideTexts.layersmenu,{
+      this.guide.addStep(".categories-list", guideTexts.layersmenu,{
         position: 'bottom'
       });
 
@@ -91,7 +91,9 @@ define([
 
       // How to module
       this.guide.addStep(".shape-howto", guideTexts.howto, {
-        position: 'bottom'
+        position: 'bottom',
+        margin: 2
+
       });
     },
 

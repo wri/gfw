@@ -15,9 +15,9 @@
             steps,
             position,
 
-            prevButton = $("<button/>").addClass("btn gray").html("Prev"),
-            nextButton = $("<button/>").addClass("btn green").html("Next"),
-            arrow = $("<div/>").addClass("guideBubble-arrow").addClass("top"),
+            prevButton = $("<button/>").addClass("btn uppercase gray").html("Prev"),
+            nextButton = $("<button/>").addClass("btn uppercase green").html("Next"),
+            arrow = $("<div/>").addClass("guideBubble-arrow"),
 
             gotoStep = function(i) {
                 if (steps[i].options && steps[i].options.callfront) {
@@ -54,7 +54,7 @@
             },
             positionMask = function(i) {
                 var element = steps[i].element,
-                    margin = (steps[i].options && steps[i].options.margin) ? steps[i].options.margin : options.margin,
+                    margin = (steps[i].options && steps[i].options.margin != undefined) ? steps[i].options.margin : options.margin,
                     attrs = getElementAttrs(element),
                     top = attrs.top,
                     left = attrs.left,
@@ -85,13 +85,16 @@
             },
             positionBubble = function(i) {
                 var element = steps[i].element,
-                    margin = (steps[i].options && steps[i].options.margin) ? steps[i].options.margin : options.margin,
+                    margin = (steps[i].options && steps[i].options.margin != undefined) ? steps[i].options.margin : options.margin,
                     position = (steps[i].options && steps[i].options.position) ? steps[i].options.position : 'top',
                     top = element.offset().top,
                     left = element.offset().left,
                     width = element.outerWidth(),
                     height = element.outerHeight(),
                     css = {};
+
+                $(".step", bubble).html(i + 1);
+                $(".intro", bubble).html(steps[i].intro);
 
                 switch(position) {
                     case 'top':
@@ -102,24 +105,24 @@
                     break;
                     case 'left':
                         css = {
-                            top: top + "px",
+                            top: top - margin + "px",
                             left: left + (-bubble.outerWidth()) - margin - 10 + "px"
                         }
                     break;
                     case 'bottom':
                         css = {
                             top: top + height + margin + 10 + "px",
-                            left: left + (width/2) + "px"
+                            left: left + (width/2) - (bubble.outerWidth()/2) + "px"
                         }
                     break;
                     case 'right':
                         css = {
-                            top: top + "px",
+                            top: top - margin + "px",
                             left: left + width + margin + 10 + "px"
                         }
                     break;
                 }
-
+                arrow.removeClass().addClass("guideBubble-arrow " + position),
                 bubble.animate(css, 0, function() {
                     scrollIntoView();
                     if (steps[i].options.callback) {
@@ -127,8 +130,6 @@
                     }
                 });
 
-                $(".step", bubble).html(i + 1);
-                $(".intro", bubble).html(steps[i].intro);
                 prevButton.removeClass("disabled");
                 nextButton.removeClass("disabled");
 
@@ -186,7 +187,16 @@
                 zIndex = getMaximumZIndex();
                 topMask.add(bottomMask).add(leftMask).add(rightMask).css("z-index", zIndex + 2);
                 transparentMask.css('z-index', zIndex + 1);
-                bubble.css("z-index", zIndex + 2).html("").append(arrow).append($("<div/>").addClass("step").html("1")).append($("<div/>").addClass("intro")).append($("<div/>").addClass("btn-group pull-right").append(prevButton).append(nextButton));
+                bubble
+                  .css("z-index", zIndex + 2)
+                  .html("")
+                  .append(arrow)
+                  .append($("<div/>").addClass("guide-navigation")
+                    .append($("<div/>").addClass("step").html("1"))
+                    .append($("<div/>").addClass("btn-group pull-right")
+                      .append(prevButton)
+                      .append(nextButton)))
+                  .append($("<div/>").addClass("intro"));
 
                 prevButton.on("click", function() {
                     if (!$(this).hasClass("disabled")) {
