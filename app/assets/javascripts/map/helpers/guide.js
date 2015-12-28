@@ -9,6 +9,7 @@
             bottomMask = $("<div/>").addClass("guideMask"),
             leftMask = $("<div/>").addClass("guideMask"),
             rightMask = $("<div/>").addClass("guideMask"),
+            transparentMask = $("<div/>").addClass("guideMaskTransparent"),
             bubble = $("<div/>").addClass("guideBubble"),
             holdingSteps,
             steps,
@@ -155,6 +156,7 @@
             },
             clearGuide = function() {
                 bubble.detach();
+                transparentMask.detach();
                 topMask.add(bottomMask).add(leftMask).add(rightMask).animate({
                     opacity: 0
                 }, 500, function() {
@@ -182,8 +184,8 @@
                 holdingSteps = [];
                 position = -1;
                 zIndex = getMaximumZIndex();
-
-                topMask.add(bottomMask).add(leftMask).add(rightMask).css("z-index", zIndex + 1);
+                topMask.add(bottomMask).add(leftMask).add(rightMask).css("z-index", zIndex + 2);
+                transparentMask.css('z-index', zIndex + 1);
                 bubble.css("z-index", zIndex + 2).html("").append(arrow).append($("<div/>").addClass("step").html("1")).append($("<div/>").addClass("intro")).append($("<div/>").addClass("btn-group pull-right").append(prevButton).append(nextButton));
 
                 prevButton.on("click", function() {
@@ -210,7 +212,7 @@
                         });
                     },
                     start: function() {
-                        container.append(topMask, bottomMask, leftMask, rightMask);
+                        container.append(topMask, bottomMask, leftMask, rightMask, transparentMask);
                         container.append(bubble);
                         topMask.add(bottomMask).add(leftMask).add(rightMask).animate({
                             opacity: 0.5
