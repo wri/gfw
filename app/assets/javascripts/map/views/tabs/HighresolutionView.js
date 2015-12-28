@@ -31,8 +31,9 @@ define([
       'click .advanced-controls' : '_toggleAdvanced'
     },
 
-    initialize: function() {
+    initialize: function(map) {
       this.presenter = new Presenter(this);
+      this.map = map;
       this.params_new_url;
       this.render();
     },
@@ -50,17 +51,41 @@ define([
       this.$advanced_options   = this.$el.find('.advanced-options');
       this.$advanced_controls  = this.$el.find('.advanced-controls');
       this.$apply              = this.$el.find('.btn');
+      this.$disclaimer         = this.$el.find('#disclaimer-zoom');
     },
 
     render: function() {
       this.$el.html(this.template({today: moment().format('YYYY-MM-DD'), mindate: moment().subtract(3,'month').format('YYYY-MM-DD')}));
       this.cacheVars();
+      this.setListeners();
       this.printSelects();
+    },
+
+    setListeners: function() {
+      google.maps.event.addListener(this.map, 'zoom_changed',
+        _.bind(function() {
+          this.setZoomConditions(this.map.getZoom());
+        }, this)
+      );
+    },
+
+    setZoomConditions: function(zoom) {
+      this.zoom = zoom;
+      if(this.zoom >= 7) {
+        this.$disclaimer.hide(0);
+      } else {
+        if (!!this.$onoffswitch.hasClass('checked')) {
+          this.$onoffswitch.click();
+        }
+        this.$disclaimer.show(0);
+      }
+
     },
 
     _getParams: function(e) {
       var $objTarget = $(e.target).closest('.maptype');
       return {
+          'zoom' : this.zoom,
           'satellite' : $objTarget.data('slug'),
            'color_filter': ($objTarget.find('#hres-filter-select').val().length > 0) ? $objTarget.find('#hres-filter-select').val() : 'rgb',
            'cloud': this.$range.val(),
@@ -75,7 +100,7 @@ define([
       } else {
         this.$apply.removeClass('disabled');
       }
-      this.$apply.addClass('green').removeClass('grey');
+      this.$apply.addClass('green').removeClass('gray');
       this.presenter.setHres(this._getParams(e));
     },
 
@@ -92,10 +117,19 @@ define([
     },
 
     toggleLayer: function(e) {
-      this.switchToggle();
-      this.$apply.toggleClass('disabled');
-      this.presenter.setHres(this._getParams(e));
-      this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
+      if (this.zoom >= 7) {
+        this.switchToggle();
+        this.$apply.toggleClass('disabled');
+        this.presenter.setHres(this._getParams(e));
+        this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
+      } else {
+        if (!!this.$onoffswitch.hasClass('checked')) {
+          this.switchToggle();
+          this.$apply.toggleClass('disabled');
+          this.presenter.setHres(this._getParams(e));
+          this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
+        }
+      }
     },
 
     _toggleAdvanced: function(e) {
