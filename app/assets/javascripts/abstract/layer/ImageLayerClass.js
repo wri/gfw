@@ -64,17 +64,8 @@ define([
      */
     getTile: function(coord, zoom, ownerDocument) {
       var zoomLT7 = (zoom < 7);
-      [].forEach.call(document.getElementsByClassName('toggleUrtheCast'), function(toggle) {
-        zoomLT7 ? toggle.style.display = 'none' : toggle.style.display = 'block';
-      });
-      // var currentMap = document.getElementById('map');
       if(zoomLT7) {
-        document.getElementById('disclaimer-zoom').setAttribute('style', 'display:block');
         if (this.layer_slug == 'urthe') {return;}
-        // currentMap.classList.add("urthecast-incorrect-zoom");
-      } else {
-        document.getElementById('disclaimer-zoom').setAttribute('style', 'display:none');
-        // currentMap.classList.remove("urthecast-incorrect-zoom");
       }
       var zsteps = this._getZoomSteps(zoom);
 

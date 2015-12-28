@@ -32,8 +32,11 @@ define([
       'Place/go': function(place) {
         this.status.set('hresolution', place.params.hresolution);
         if (!! place.params.hresolution) {
-          this.view.switchToggle();
-          this.view._fillParams(JSON.parse(atob(place.params.hresolution)));
+          var params = JSON.parse(atob(place.params.hresolution));
+          if (params.zoom >= 7) {
+            this.view.switchToggle();
+            this.view._fillParams(params);
+          }
         }
       }
     }],
