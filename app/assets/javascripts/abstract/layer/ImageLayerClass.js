@@ -19,6 +19,7 @@ define([
 
     init: function(layer, options, map) {
       this.tiles = {};
+      this.layer_slug = layer.slug;
       this._super(layer, options, map);
     },
 
@@ -26,6 +27,29 @@ define([
       var deferred = new $.Deferred();
       deferred.resolve(this);
       return deferred.promise();
+    },
+
+    _getParams: function() {
+      var params = {};
+      if (window.location.search.contains('&hresolution=') && window.location.search.indexOf('=', window.location.search.indexOf('&hresolution=') + 13) !== -1) {
+        var params_new_url = {};
+        var parts = location.search.substring(1).split('&');
+        for (var i = 0; i < parts.length; i++) {
+          var nv = parts[i].split('=');
+          if (!nv[0]) continue;
+            params_new_url[nv[0]] = nv[1] || true;
+        }
+        params = JSON.parse(atob(params_new_url.hresolution));
+      }
+      else if (!!sessionStorage.getItem('high-resolution')) {
+        params = JSON.parse(atob(sessionStorage.getItem('high-resolution')));
+      }
+      return params = {
+         'color_filter': params.color_filter || 'rgb',
+         'cloud':        params.cloud        || '100',
+         'mindate':      params.mindate      || '2000-09-01',
+         'maxdate':      params.maxdate      || '2015-09-01'
+        }
     },
 
     /**
@@ -39,10 +63,23 @@ define([
      * @return {div}     div           Tile div
      */
     getTile: function(coord, zoom, ownerDocument) {
+      var zoomLT7 = (zoom < 7);
+      [].forEach.call(document.getElementsByClassName('toggleUrtheCast'), function(toggle) {
+        zoomLT7 ? toggle.style.display = 'none' : toggle.style.display = 'block';
+      });
+      // var currentMap = document.getElementById('map');
+      if(zoomLT7) {
+        document.getElementById('disclaimer-zoom').setAttribute('style', 'display:block');
+        if (this.layer_slug == 'urthe') {return;}
+        // currentMap.classList.add("urthecast-incorrect-zoom");
+      } else {
+        document.getElementById('disclaimer-zoom').setAttribute('style', 'display:none');
+        // currentMap.classList.remove("urthecast-incorrect-zoom");
+      }
       var zsteps = this._getZoomSteps(zoom);
 
       var url = this._getUrl.apply(this,
-        this._getTileCoords(coord.x, coord.y, zoom));
+        this._getTileCoords(coord.x, coord.y, zoom,this._getParams()));
 
       var image = new Image();
       image.src = url;
@@ -80,11 +117,20 @@ define([
       return z - this.options.dataMaxZoom;
     },
 
-    _getUrl: function(x, y, z) {
-      return new UriTemplate(this.options.urlTemplate).fillFromObject({x: x, y: y, z: z});
+    _getUrl: function(x, y, z, params) {
+
+      return new UriTemplate(this.options.urlTemplate).fillFromObject({
+        x: x,
+        y: y,
+        z: z,
+        sat: params.color_filter,
+        cloud: params.cloud,
+        mindate: params.mindate,
+        maxdate: params.maxdate
+      });
     },
 
-    _getTileCoords: function(x, y, z) {
+    _getTileCoords: function(x, y, z, params) {
       if (z > this.options.dataMaxZoom) {
         x = Math.floor(x / (Math.pow(2, z - this.options.dataMaxZoom)));
         y = Math.floor(y / (Math.pow(2, z - this.options.dataMaxZoom)));
@@ -98,7 +144,7 @@ define([
         }
       }
 
-      return [x, y, z];
+      return [x, y, z, params];
     }
   });
 

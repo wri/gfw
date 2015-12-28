@@ -103,6 +103,10 @@
           <h4>Permit Num:</h4>
           <p>{{content.data.permit_num}}</p>
         {{/if}}
+        {{#if content.data.permit_date}}
+          <h4>Permit Date:</h4>
+          <p>{{content.data.permit_date}}</p>
+        {{/if}}
 
 				{{#if content.data.project_pr}}
           <h4>Project Proponent :</h4>
@@ -178,10 +182,10 @@
         {{/if}}
         {{#if content.data.contract_duration}}
           <h4>Contract duration:</h4>
-          <p>{{content.data.contract_duration}}</p>
+          <p>{{content.data.contract_duration}} years</p>
         {{/if}}
         {{#if content.data.original_size_h}}
-          <h4>Original size:</h4>
+          <h4>Original size ha:</h4>
           <p>{{content.data.original_size_h}}</p>
         {{/if}}
         {{#if content.data.adjustment_classification}}
@@ -215,6 +219,10 @@
         {{#if content.data.biome}}
           <h4>Biome:</h4>
           <p>{{content.data.biome}}</p>
+        {{/if}}
+        {{#if content.data.doc_status}}
+          <h4>Status:</h4>
+          <p>{{content.data.doc_status}}</p>
         {{/if}}
         {{#if content.data.source}}
           <h4>Source:</h4>

@@ -5,7 +5,7 @@ define([
   'underscore',
   'mps',
   'map/presenters/MapPresenter',
-  'helpers/baselayers'
+  '../helpers/baselayers.js'
 ], function(_, mps, Presenter) {
 
   describe('MapPresenter', function() {
@@ -52,7 +52,9 @@ define([
       it('presenter.status is defined correctly', function() {
         expect(presenter.status).toBeDefined();
         expect(presenter.status.toJSON()).toEqual({
-          threshold: null
+          threshold: null,
+          layers: null,
+          dont_scroll: null
         });
       });
     });
@@ -71,8 +73,7 @@ define([
       it('Should call _setMapOptions with correct params', function() {
         expect(presenter._setMapOptions).toHaveBeenCalled();
         expect(presenter._setMapOptions.calls.count()).toEqual(1);
-        expect(presenter._setMapOptions).toHaveBeenCalledWith(_.pick(place.params,
-          'zoom', 'maptype', 'lat', 'lng'));
+        expect(presenter._setMapOptions).toHaveBeenCalledWith(place);
       });
 
       it('Should call _updateStatusModel with place params', function() {
@@ -81,10 +82,10 @@ define([
         expect(presenter._updateStatusModel).toHaveBeenCalledWith(place.params);
       });
 
-      it('Should call _setLayers with layers object', function() {
+      it('Should call _setLayers with layers spec and params', function() {
         expect(presenter._setLayers).toHaveBeenCalled();
         expect(presenter._setLayers.calls.count()).toEqual(1);
-        expect(presenter._setLayers).toHaveBeenCalledWith(baselayers, {currentDate: [2001, 2002]});
+        expect(presenter._setLayers).toHaveBeenCalledWith(place.layerSpec, place.params);
       });
     });
 
@@ -93,15 +94,16 @@ define([
         presenter._updateStatusModel(place.params);
 
         expect(presenter.status.toJSON()).toEqual({
-          threshold: 70
+          threshold: 70,
+          dont_scroll: null,
+          layers: null
         });
       });
     });
 
     describe('_setMapOptions()', function() {
       it('Should call view.setOptions', function() {
-        presenter._setMapOptions(_.pick(place.params,
-          'zoom', 'maptype', 'lat', 'lng'));
+        presenter._setMapOptions(place);
         expect(presenter.view.setOptions).toHaveBeenCalled();
         expect(presenter.view.setOptions.calls.count()).toEqual(1);
       });

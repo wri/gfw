@@ -4,10 +4,11 @@
  * @return SharePreviewView instance (extends Backbone.View).
  */
 define([
+  'backbone',
   'underscore',
   'handlebars',
   'text!templates/share_iframe.handlebars'
-], function(_, Handlebars, tpl) {
+], function(Backbone, _, Handlebars, tpl) {
 
   'use strict';
 

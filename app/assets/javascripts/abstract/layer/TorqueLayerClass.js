@@ -25,10 +25,10 @@ define([
       cartocss: CARTOCSS,
       cartodb_logo: false,
       countby: 'count(cartodb_id)',
-      resolution: 2,
+      resolution: 1,
       steps: 256,
       blendmode  : 'lighter',
-      animationDuration: 30
+      animationDuration: 5
     },
 
     init: function(layer, options, map) {
@@ -80,8 +80,18 @@ define([
     },
 
     _handleTimeStep: function(change) {
+      if (this.atStart === true) {
+        this.atStart = false;
+        return;
+      }
+
       if (validTorqueStep(change)) {
         this.presenter.updateTimelineDate(change);
+
+        var timeBounds = this.torqueLayer.getTimeBounds();
+        if (change.step === timeBounds.steps-1) {
+          this.stop();
+        }
       }
     },
 
@@ -92,8 +102,13 @@ define([
         if (validTorqueStep(change)) {
           this.torqueLayer.off('change:time', handler);
 
-          this.presenter.animationStarted(
-            this.torqueLayer.getTimeBounds());
+          var timeBounds = this.torqueLayer.getTimeBounds();
+          this.presenter.animationStarted(timeBounds);
+
+          this.atStart = true;
+          this.torqueLayer.setStep(timeBounds.steps);
+
+          this.stop();
 
           deferred.resolve(this.torqueLayer);
         }

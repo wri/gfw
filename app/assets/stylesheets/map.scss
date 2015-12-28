@@ -33,6 +33,9 @@
 @import "modules/icons1600";
 @import "modules/slick1600";
 @import "modules/notifications";
+@import "modules/modal";
+@import "modules/modal_new";
+@import "modules/form";
 
 
 @import
@@ -45,9 +48,6 @@
   // Modules
   "modules/notice",
   "modules/navbar",
-  "modules/feedback",
-  "modules/form",
-  "modules/modal",
   "modules/dialog",
   "modules/guide",
 

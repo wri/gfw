@@ -27,23 +27,15 @@
     <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
     <%= stylesheet_link_tag "map", :media => "all" %>
     <%= csrf_meta_tags %>
-    <script>
-        var gfw = window.gfw = {
-          config: {
-            GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>",
-            GFW_MOBILE: 1000
-          },
-          cacheVersion: "<%= ENV['CACHE_VERSION'] %>",
-          layer_spec: "<%= ENV['LAYER_SPEC'] %>"
-        };
-    </script>
-
+    <script id="loader-gfw" data-current=".shape-map" src="http://www.globalforestwatch.org/gfw-assets"></script>
   </head>
 
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
+    <%= render 'shared/svg_icons_header' %>
+    <%= render 'shared/svg_icons_footer' %>
 
     <%= yield %>
-    <a class="feedback-link" href="/getinvolved/provide-feedback"><span>Feedback</span></a>
+    <%= render 'shared/feedback' %>
 
     <div class="backdrop"></div>
 
@@ -51,7 +43,7 @@
     <%= render 'shared/notifications' %>
 
     <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA&v=3.12" %>
-    <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/3.13.6/cartodb.js" %>
+    <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/3.15.8/cartodb.js" %>
     <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.mod.torque.js" %>
     <script src="//www.google-analytics.com/cx/api.js"></script>
 

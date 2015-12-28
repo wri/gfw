@@ -75,6 +75,17 @@ define([
     },
     {
       id: 6,
+      name: 'Climate',
+      svg: '#shape-climate',
+      content: 'Track carbon emissions and removals in forest landscapes.',
+      href: 'http://climate.globalforestwatch.org/',
+      link_text: 'Launch App',
+      classname: 'btn green medium mobile-friendly',
+      source: 'World Resources Institute',
+      tags: 'data, global-forest-watch, maps'
+    },
+    {
+      id: 7,
       name: 'Global Forest Watch: Sumatra campaign on Tomnod',
       svg: '#shape-tomnod',
       content: 'Help Global Forest Watch Fires track illegal fires and preserve the health of people and forests in Southeast Asia.',
@@ -87,7 +98,7 @@ define([
       tags: 'asia, crowdsourcing, data, fires, maps, palm-oil, satellite-imagery'
     },
     {
-      id: 7,
+      id: 8,
       name: 'Open Landscape Partnership Platform',
       svg: '#shape-landscape',
       content: 'View and analyze ultra-high-resolution satellite imagery (up to 50 centimeters) for select forest landscapes.',
@@ -100,7 +111,7 @@ define([
       tags: 'crowdsourcing, data, maps, satellite-imagery'
     },
     {
-      id: 8,
+      id: 9,
       name: 'Sustainable Palm Oil Transparency Toolkit (SPOTT)',
       svg: '#shape-spott',
       content: 'Assess oil palm growers on the information that they make publicly available about the sustainability of their operations.',
@@ -113,7 +124,7 @@ define([
       tags: 'asia, commodities, data, global-forest-watch, maps, palm-oil'
     },
     {
-      id: 9,
+      id: 10,
       name: 'Monitoring of the Andean Amazon Project (MAAP)',
       svg: '#shape-aca',
       content: 'View information, maps and analysis from a new deforestation monitoring system for the Andean Amazon.',
@@ -126,11 +137,11 @@ define([
       tags: 'data, latin-america, maps, mining, satellite imagery'
     },
     {
-      id: 10,
+      id: 11,
       name: 'Cameroon Forest Atlas',
       svg: '#shape-CMR',
       content: 'View an interactive map with land-use data for Cameroon.',
-      href: 'http://www.wri.org/applications/maps/forestatlas/cmr/index.htm#v=atlas&l=fr',
+      href: 'http://cmr.forest-atlas.org',
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
@@ -139,11 +150,11 @@ define([
       tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
-      id: 11,
+      id: 12,
       name: 'Central African Republic Forest Atlas',
       svg: '#shape-CAF',
       content: 'View an interactive map with land-use data for the Central African Republic.',
-      href: 'http://www.wri.org/tools/atlas/map.php?maptheme=car',
+      href: 'http://caf.forest-atlas.org',
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
@@ -152,11 +163,11 @@ define([
       tags: 'africa, data, global-forest-watch, maps'
     },
     {
-      id: 12,
+      id: 13,
       name: 'Republic of Congo Forest Atlas',
       svg: '#shape-COG',
       content: 'View an interactive map with land-use data for the Congo.',
-      href: 'http://www.wri.org/tools/atlas/map.php?maptheme=congoforest',
+      href: 'http://cog.forest-atlas.org',
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
@@ -165,11 +176,11 @@ define([
       tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
-      id: 13,
+      id: 14,
       name: 'Democratic Republic of Congo Forest Atlas',
       svg: '#shape-COD',
       content: 'View an interactive map with land-use data for the Democratic Republic of the Congo.',
-      href: 'http://www.wri.org/applications/maps/forestatlas/cod/index.htm#v=atlas&l=fr',
+      href: 'http://cod.forest-atlas.org',
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
@@ -178,11 +189,11 @@ define([
       tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
-      id: 14,
+      id: 15,
       name: 'Equatorial Guinea Forest Atlas',
       svg: '#shape-GNQ',
       content: 'View an interactive map with land-use data for Equatorial Guinea.',
-      href: 'http://www.wri.org/applications/maps/forestatlas/gnq/index.htm#v=atlas&l=es',
+      href: 'http://gnq.forest-atlas.org',
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
@@ -191,11 +202,11 @@ define([
       tags: 'africa, data, global-forest-watch, maps'
     },
     {
-      id: 15,
+      id: 16,
       name: 'Gabon Forest Atlas',
       svg: '#shape-GAB',
       content: 'View an interactive map with land-use data for Gabon.',
-      href: 'http://www.wri.org/applications/maps/forestatlas/gab/index.htm#v=atlas&l=fr&init=y',
+      href: 'http://gab.forest-atlas.org',
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
@@ -204,7 +215,7 @@ define([
       tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
-      id: 16,
+      id: 17,
       name: 'Open Foris',
       svg: '#shape-open-foris',
       content: 'A set of free and open-source software tools that facilitates flexible and efficient data collection, analysis, and reporting.',
@@ -215,16 +226,6 @@ define([
       source: 'Forestry Department of the Food and Agriculture Organization of the United Nations',
       mobile_friendly: 'other',
       tags: 'crowdsourcing, data, maps, mobile, satellite-imagery'
-    },
-    {
-      id: 17,
-      name: 'GFW Climate',
-      svg: '#shape-carbon',
-      content: 'Track carbon emissions and removals in forest landscapes.',
-      link_text: 'Coming soon',
-      classname: 'btn soon',
-      source: 'World Resources Institute',
-      tags: 'data, global-forest-watch, maps'
     },
     {
       id: 18,
@@ -248,6 +249,19 @@ define([
     },
     {
       id: 20,
+      name: 'Logging Roads',
+      svg: '#shape-logging-roads',
+      content: 'View and help document the spread of logging roads across the Congo Basin region of Central Africa',
+      href: 'http://loggingroads.org/',
+      target: true,
+      link_text: 'Launch App',
+      classname: 'btn green medium mobile-friendly',
+      source: 'World Resources Institute and Moabi',
+      mobile_friendly: 'other',
+      tags: 'crowdsourcing, maps, satellite imagery, Africa, data, Global Forest Watch, logging'
+    },
+    {
+      id: 21,
       name: 'Develop your own app',
       svg: '#shape-develop',
       content: 'Learn how to develop your own application with Global Forest Watch data.',

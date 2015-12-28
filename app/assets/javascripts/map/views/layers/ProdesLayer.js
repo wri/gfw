@@ -45,7 +45,7 @@ define([
       var query = new UriTemplate(this.options.sql).fillFromObject({
         tableName: this.layer.table_name,
         startYear: this.currentDate[0].format('YYYY'),
-        endYear: this.currentDate[1].format('YYYY')
+        endYear: this.currentDate[1].format('YYYY')-1
       });
       return query;
     }

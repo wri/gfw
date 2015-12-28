@@ -3,7 +3,7 @@ ruby '2.1.5'
 
 gem 'rails', '4.0.4'
 gem 'jquery-rails'
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails', '~> 4.0.3'
 gem 'compass-rails', '1.1.2'
 gem 'compass-flexbox'
 gem 'uglifier', '>= 1.3.0'
@@ -15,7 +15,7 @@ gem 'fog'
 gem 'rmagick', :require => false
 gem 'mini_magick'
 gem 'unf'
-gem 'requirejs-rails'
+gem 'requirejs-rails', '0.9.5'
 gem 'rack-reverse-proxy', :path => "rack-reverse-proxy-0.4.4/", require: "rack/reverse_proxy"
 
 group :development, :test do

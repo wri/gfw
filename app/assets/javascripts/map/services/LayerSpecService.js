@@ -19,7 +19,7 @@ define([
       forbidCombined: {
         forest_clearing: {
           except: [
-            ['loss', 'forestgain']
+            ['loss', 'forestgain', 'forest2000']
           ]
         },
         geographic_coverage: {}

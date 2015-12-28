@@ -48,7 +48,9 @@ define([
       'fires': 'nasa-active-fires',
       'modis': 'quicc-alerts',
       'terrailoss': 'terrai-alerts',
-      'prodes' : 'prodes-loss'
+      'prodes': 'prodes-loss',
+      'guyra': 'guyra-loss',
+      'forest2000': 'umd-loss-gain'
     },
 
     init: function(view) {
@@ -167,6 +169,10 @@ define([
     }, {
       'Dialogs/close': function() {
         this.view.toggleAnalysis(true);
+      }
+    }, {
+      'Analysis/upload': function(geojson) {
+        this._analyzeGeojson(geojson,{draw: true});
       }
     }],
 
@@ -442,7 +448,7 @@ define([
         resource.period = '{0},{1}'.format(date[0].format(dateFormat), date[1].format(dateFormat));
 
         // this is super ugly
-        if (baselayer.slug === 'loss') {
+        if (baselayer.slug === 'loss' || baselayer.slug === 'forest2000') {
           resource.thresh = '?thresh=' + ((this.status.get('threshold') === null) ? 30 :  this.status.get('threshold'));
         } else {
           delete resource.thresh;

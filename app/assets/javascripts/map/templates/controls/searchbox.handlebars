@@ -43,20 +43,22 @@
   </div>
 
   <div class="search utm">
-    {{!-- {"coord":{"x":345196.1971905405,"y":5811540.431764047},"zone":55,"isSouthern":true} --}}
     <div class="utm-box">
-      <span>North:</span> <input class="utm-input" id="utm-lat" name="utm-lat" type='text' />
+      <span>East:</span>
+      <input class="utm-input" id="utm-easting" name="utm-easting" type='text'>
     </div>
     <div class="utm-box">
-      <span>East:</span> <input class="utm-input" id="utm-lng" name="utm-lng" type='text' />
+      <span>North:</span>
+      <input class="utm-input" id="utm-northing" name="utm-northing" type='text'>
     </div>
     <div class="utm-box is-little">
-      <span>Zone:</span> <input class="utm-input" id="utm-zone" name="utm-zone" type='text' maxlength="3"/>
+      <span>Zone:</span>
+      <input class="utm-input" id="utm-zone" name="utm-zone" type='text' maxlength="3">
     </div>
     <div class="utm-box">
-      <select class="chosen-select default coord-select notranslate" id="utm-lat-cardinal" name="utm-cardinal">
-        <option value="n">N</option>
-        <option value="s">S</option>
+      <select class="chosen-select default coord-select notranslate" id="utm-hemisphere" name="utm-hemisphere">
+        <option value="">N</option>
+        <option value="+south">S</option>
       </select>
     </div>
 

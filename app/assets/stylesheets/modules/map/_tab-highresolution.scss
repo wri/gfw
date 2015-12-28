@@ -1,4 +1,13 @@
 $letterW: 20px;
+#disclaimer-zoom {
+  display: none;
+  margin: 15px 0;
+  font-size: 13px;
+  color: #777; 
+  strong {
+    color: #555;
+  }
+}
 .tab-highresolution{
   .highresolution-content{
     padding: 15px;
@@ -93,6 +102,14 @@ $letterW: 20px;
           margin: 0 0 0 4px;
         }
       }
+      h3 {
+        display: inline;
+      }
+      .info-mapsource {
+        display: inline-block;
+        position: relative;
+        top: -3px; 
+      }
     }
     .onoffswitch {
       float: right;
@@ -107,6 +124,17 @@ $letterW: 20px;
       height: 10px;
       width: 100%;
       margin: 0 auto;
+      ul {
+        display: flex;
+        font-size: 10px;
+        color: #97bd3d;
+        font-weight: 500;
+        justify-content: space-between;
+        li {
+            width: 15px;
+            text-align: center;
+        }
+      }
       .dots{
         position: absolute;
         width: 100%;
@@ -115,6 +143,7 @@ $letterW: 20px;
         left: 50%;
         @include transform(translate(-50%,0));
         margin: 1px 0 0;
+        z-index: 1;
         background: image-url('/assets/icons/point.png') repeat-x 1px center;
       }
       .progress{
@@ -127,6 +156,7 @@ $letterW: 20px;
         cursor: pointer;
         background: $cGreen;
         border-radius: 2px;
+        z-index: 2;
       }
     }
 
@@ -153,6 +183,8 @@ $letterW: 20px;
       margin: 0;
       z-index: 0;
       position: relative;
+      z-index: 2;
+      background: transparent;
     }
 
     input[type=range]::-webkit-slider-thumb {

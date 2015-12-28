@@ -53,6 +53,8 @@ Gfw::Application.routes.draw do
   get '/data' => redirect("sources")
   get '/sources' => 'static#data'
   get '/sources(/:section)' => 'static#data'
+  get '/my_gfw' => 'connect#index'
+  get '/my_gfw-login' => 'connect#login'
 
   # get '/stayinformed' => redirect('stayinformed/crowdsourced-stories')
   get '/stayinformed' => 'static#keep'

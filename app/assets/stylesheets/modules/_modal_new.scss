@@ -1,0 +1,314 @@
+$width: 500px;
+$height: auto;
+
+// Layout
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  width: 100%;
+  height: 100%;
+  display: none;
+  &.is-active {
+    display: block;
+
+    .modal-backdrop {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-window {
+      opacity: 1;
+      visibility: visible;
+      @media (min-width: $br-mobile){
+        @include transform(translate(-50%,-50%));
+      }
+    }
+  }
+
+  &.is-huge {
+    .modal-window {
+      width: 820px;
+      height: 80%;
+      .modal-wrapper {
+        padding: 0;
+        max-height: none;
+      }
+    }
+  }
+
+
+  .modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s $easeInOutSine;
+  }
+
+  .modal-window {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0s $easeInOutSine;
+
+    @media (min-width: $br-mobile){
+      left: 50%; top: 50%;
+      width: $width;
+      height: $height;
+      min-height: 100px;
+      @include transform(translate(-50%,-60%));
+    }
+
+    .modal-close {
+      display: block;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: 40px;
+      height: 40px;
+      z-index: 20;
+
+      svg{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50%;
+        height: 50%;
+        @include transform(translate(-50%,-50%));
+      }
+    }
+  }
+}
+
+
+// Styles
+.modal-backdrop {
+  background: rgba(0,0,0,0.25);
+}
+
+.modal-window {
+  background: $white;
+  border: none;
+  box-shadow: $shadow1;
+
+  // GRADIENTS
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: calc(100% - 8px);
+    left: 0;
+  }
+
+  &:before {
+    top: 0;
+    @include gradient(top,rgba(255,255,255,1),rgba(255,255,255,0));
+  }
+
+  &:after {
+    bottom: 0;
+    @include gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+  }
+
+  // MODAL CLOSE BTN
+  .modal-close {
+    svg{
+      fill: $dark;
+    }
+
+    &:hover {
+      svg {
+        fill: darken($dark,10%);
+      }
+    }
+  }
+
+  // MODAL WRAPPER
+  .modal-wrapper{
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    max-height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    @media (min-width: $br-mobile){
+      max-height: 450px;
+    }
+    .modal-content {
+      height: auto;
+      width: 100%;
+      outline: none;
+
+      font-size: 15px;
+      color: $dark;
+    }
+  }
+}
+
+// MODAL HEADER
+.modal-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: $white;
+  z-index: 2;
+  @include clearfix();
+  // GRADIENTS
+  .gradient {
+    content: "";
+    position: absolute;
+    height: 15px;
+    width: 100%;
+    left: 0;
+    top: 100%;
+    @include gradient(top,rgba(255,255,255,1),rgba(255,255,255,0));
+  }
+
+  ul{
+    margin: 15px 0;
+    position: relative;
+    left: 50%;
+    @include transform(translate(-50%,0));
+    float: left;
+    padding: 4px;
+    @include display-flex();
+    @include justify-content(center);
+    border: 1px solid $cGreen;
+    border-radius: 45px;
+
+    li{
+      font-size: 19px;
+      padding: 10px 20px 7px;
+      color: $dark;
+      cursor: pointer;
+      font-weight: 500;
+      border-radius: 40px;
+      &:hover {
+        background: darken($white,1%);
+      }
+      &.is-active {
+        color: $white;
+        background: $cGreen;
+      }
+    }
+  }
+}
+
+// MODAL FOOTER
+.modal-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: $white;
+  z-index: 2;
+  padding: 15px 0;
+  @include clearfix();
+  // GRADIENTS
+  .gradient {
+    content: "";
+    position: absolute;
+    height: 15px;
+    width: calc(100% - 10px);
+    left: 0;
+    bottom: 100%;
+    border-bottom: 1px solid $border;
+    @include gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+  }
+
+}
+
+.modal-content {
+  font-size: 13px;
+  h2 {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 300;
+    color: $dark;
+    padding: 0 0 20px;
+  }
+
+  h3 {
+    font-size: 21px;
+    font-weight: 400;
+    strong {
+      font-weight: 500;
+    }
+  }
+  .bullets  {
+    list-style-type: disc;
+    color: $dark;
+    > li{
+      list-style-type: disc;
+      padding: 10px 0 0;
+      margin-left: 20px;
+      line-height: 1.25;
+      &:first-child{
+        padding: 0;
+      }
+    }
+  }
+
+  li { list-style: none;}
+
+  p {
+    line-height: 1.25;
+    a:not(.btn){
+      color: $cGreen;
+      &:hover{
+        color: darken($cGreen,5%);
+      }
+    }
+  }
+
+}
+
+.modal-steps {
+  padding: 20px 20px 70px;
+  > li {
+    display: none;
+    &.is-active {
+      display: block;
+    }
+    .modal-step-content {
+      padding: 20px 0 0;
+      > * {
+        margin: 15px 0 0;
+        &:first-child {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+// EXCEPTIONS
+.feedback-form {
+  > * {
+    display: block;
+    margin: 10px 0 0;
+    &:first-child {
+      margin: 0;
+    }
+  }
+
+  .feedback-tester {
+    padding: 20px;
+    border: 1px solid $cGreen;
+    border-radius: 2px;
+  }
+}
