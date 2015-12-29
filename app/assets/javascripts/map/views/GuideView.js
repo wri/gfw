@@ -44,7 +44,8 @@ define([
 
       // Controls module
       this.guide.addStep("#module-map-controls", guideTexts.mapcontrols, {
-        position: 'right'
+        position: 'right',
+        align: 'bottom'
       });
 
       // Country tab

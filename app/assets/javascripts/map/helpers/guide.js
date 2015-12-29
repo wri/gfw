@@ -86,6 +86,7 @@
             positionBubble = function(i) {
                 var element = steps[i].element,
                     margin = (steps[i].options && steps[i].options.margin != undefined) ? steps[i].options.margin : options.margin,
+                    align = (steps[i].options && steps[i].options.align != undefined) ? steps[i].options.align : null,
                     position = (steps[i].options && steps[i].options.position) ? steps[i].options.position : 'top',
                     top = element.offset().top,
                     left = element.offset().left,
@@ -117,12 +118,19 @@
                     break;
                     case 'right':
                         css = {
-                            top: top - margin + "px",
+                            top: (align == 'bottom') ? top + margin - Math.abs(height - bubble.outerHeight()) + "px" : top - margin + "px",
                             left: left + width + margin + 10 + "px"
                         }
                     break;
                 }
-                arrow.removeClass().addClass("guideBubble-arrow " + position),
+                // Arrow
+                if(!!align) {
+                  arrow.removeClass().addClass("guideBubble-arrow " + position+'-'+align);
+                } else {
+                  arrow.removeClass().addClass("guideBubble-arrow " + position);
+                }
+
+                // Bubble
                 bubble.animate(css, 0, function() {
                     scrollIntoView();
                     if (steps[i].options.callback) {
