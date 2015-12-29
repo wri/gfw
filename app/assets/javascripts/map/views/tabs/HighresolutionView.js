@@ -84,14 +84,17 @@ define([
 
     _getParams: function(e) {
       var $objTarget = $(e.target).closest('.maptype');
-      return {
+      if(!!this.$onoffswitch.hasClass('checked')) {
+        return {
           'zoom' : this.zoom,
           'satellite' : $objTarget.data('slug'),
-           'color_filter': ($objTarget.find('#hres-filter-select').val().length > 0) ? $objTarget.find('#hres-filter-select').val() : 'rgb',
-           'cloud': this.$range.val(),
-           'mindate': (this.$mindate.val().length > 0) ? this.$mindate.val() : '2000-09-01',
-           'maxdate': (this.$maxdate.val().length > 0) ? this.$maxdate.val() : '2015-09-01'
-         };
+          'color_filter': ($objTarget.find('#hres-filter-select').val().length > 0) ? $objTarget.find('#hres-filter-select').val() : 'rgb',
+          'cloud': this.$range.val(),
+          'mindate': (this.$mindate.val().length > 0) ? this.$mindate.val() : '2000-09-01',
+          'maxdate': (this.$maxdate.val().length > 0) ? this.$maxdate.val() : '2015-09-01'
+        };
+      }
+      return null;
     },
 
     _setParams: function(e) {
