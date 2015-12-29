@@ -33,7 +33,7 @@ define([
       this.guide = $("body").guide();
 
       // Layers module
-      this.guide.addStep("#layers-menu", guideTexts.layersmenu,{
+      this.guide.addStep(".categories-list", guideTexts.layersmenu,{
         position: 'bottom'
       });
 
@@ -44,7 +44,8 @@ define([
 
       // Controls module
       this.guide.addStep("#module-map-controls", guideTexts.mapcontrols, {
-        position: 'right'
+        position: 'right',
+        align: 'bottom'
       });
 
       // Country tab
@@ -91,7 +92,9 @@ define([
 
       // How to module
       this.guide.addStep(".shape-howto", guideTexts.howto, {
-        position: 'bottom'
+        position: 'bottom',
+        margin: 2
+
       });
     },
 
