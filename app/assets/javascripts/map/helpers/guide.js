@@ -130,17 +130,17 @@
                     }
                 });
 
-                prevButton.removeClass("disabled");
-                nextButton.removeClass("disabled");
-
-                if (!position) {
-                    prevButton.addClass("disabled");
+                // Handle buttons
+                if (i==0) {
+                  prevButton.hide(0);
+                } else {
+                  prevButton.show(0)
                 }
 
-                if (position==(steps.length-1)) {
-                    nextButton.html("Close").addClass("btn-danger");
+                if (i==(steps.length-1)) {
+                    nextButton.html("Finish")
                 } else {
-                    nextButton.html("Next").removeClass("btn-danger");
+                    nextButton.html("Next")
                 }
 
 
