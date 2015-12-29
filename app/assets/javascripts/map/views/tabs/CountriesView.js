@@ -360,6 +360,7 @@ define([
           }, this ),
           error: function(error){
             console.log(error);
+            mps.publish('Spinner/stop')
           }
         });
       }else{
