@@ -6328,7 +6328,7 @@
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE</dt>
-            <dd>5 meters for Theia images, 15 meters (pansharpened) for Landsat 8 images</dd>
+            <dd>5 meters for Theia images, 15 meters (pansharpened) for Landsat 8 images, 22 meters for Deimos-1 images</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Geographic coverage</dt>
@@ -6348,9 +6348,7 @@
           </dl>
           <dl class='sources_row'>
             <dt>Cautions</dt>
-            <dd>
-              <p>Images are only available through zoom level 15 (Theia), 14 (Landsat – RGB), or 13 (Landsat – other renderers).</p>
-            </dd>
+            <dd></dd>
           </dl>
           <dl class='sources_row even'>
             <dt>License</dt>
@@ -6360,7 +6358,7 @@
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>This layer shows satellite imagery from the Landsat 8 OLI/TIRS sensor (15 meter resolution) and the ISS Theia sensor (5 meter resolution), provided by UrtheCast. The most recent image for an area is shown, though the date range can be modified in the menu. The images are only viewable up to a certain zoom level – 14 for Landsat images and 15 for Theia images. Users can also change the renderer and maximum cloud cover percentage by toggling advanced tools in the menu. The maximum cloud percentage sets the threshold for excluding cloudy images. Images are presented in RGB color (true color) by default, but can also be rendered as other color composites or indices, including NDVI, EVI, NDWI, and false color NIR.</p>
+          <p>This layer shows satellite imagery from the ISS Theia sensor (5 meter resolution), the Landsat 8 OLI/TIRS sensor (15 meter resolution), and the Deimos-1 SLIM6-22 sensor (22 meter resolution), all provided by UrtheCast. The most recent image for an area is shown, though the date range can be modified in the menu. Users can also change the renderer and maximum cloud cover percentage by toggling advanced tools in the menu. The maximum cloud percentage sets the threshold for excluding cloudy images. Images are presented in RGB color (true color) by default, but can also be rendered as other color composites or indices, including NDVI, EVI, NDWI, and false color NIR.</p>
 
 
           <p class='credits'>UrtheCast Products © Copyright UrtheCast – All Rights Reserved</p>
@@ -6380,7 +6378,7 @@
           <p>Satellites can “see” wavelengths of light that the human eye cannot detect, but that can give more information about the Earth’s surface. UrtheCast provides the following renderings of the images:
           <ul class='bullets'><li><strong>RGB (Red Green Blue):</strong> uses information on red, green, and blue light to show the Earth as humans see it.</li>
           <li><strong>Normalized Difference Vegetation Index (NDVI):</strong> uses information on red and infrared light to estimate the health of vegetation. This index is mapped from a white to green hue, where green pixels indicate good crop health and white pixels indicate poor crop health or an absence of vegetation.</li>
-          <li><strong>Enhanced Vegetation Index (EVI):</strong> another vegetation index using red and infrared information. It is more sensitive to variations in canopy structure than NDVI, and is better at controlling background noise.</li>
+          <li><strong>Enhanced Vegetation Index (EVI):</strong> another vegetation index using red and infrared information. It is more sensitive to variations in canopy structure than NDVI, and is better at controlling background noise. EVI is not available for Deimos-1 imagery.</li>
           <li><strong>Normalized Difference Water Index (NDWI):</strong> uses information on green and infrared light to help detect the presence of water in vegetation. The calculated pixel values range from blue to brown - where blue indicates the presence of water, and brown indicates dryer land. It is another tool to determine crop health and condition.</li>
           <li><strong>False color NIR (Near infrared):</strong> shows near infrared light as red, and visible light as green and blue. Vegetation reflects infrared light, so it generally shows up as bright red.</li>
           </ul></p>
