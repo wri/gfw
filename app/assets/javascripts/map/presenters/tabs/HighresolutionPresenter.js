@@ -55,9 +55,14 @@ define([
      * @param {string} value hresolution
      */
     setHres: function(value) {
-      value = btoa(JSON.stringify(value));
+      if (!!value) {
+        value = btoa(JSON.stringify(value));
+        sessionStorage.setItem('high-resolution',value);
+      } else {
+        sessionStorage.removeItem('high-resolution');
+      }
+
       this.status.set('hresolution', value);
-      sessionStorage.setItem('high-resolution',value);
       this._publishHres();
     },
 
