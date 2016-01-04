@@ -296,6 +296,102 @@
 }
 
 
+.home-submenu {
+  position: fixed;
+  background: $white;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: calc(100% - 55px);
+  visibility: hidden;
+  opacity: 0;
+  padding: 40px 0;
+  -webkit-backface-visibility: hidden;
+  @media (min-width: $br-mobile){
+    box-shadow: $shadow1;
+    position: absolute;
+    width: 100%;
+    height: auto;
+    bottom: auto;
+    top: 25px;
+    @include transform(translate(0,5px));
+  }
+  &.active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &:after {
+    content: "";
+    display: none;
+    position: absolute;
+    top: -5px;
+    left: 12px;
+    @include transform(rotate(45deg));
+    background: $white;
+    width: 10px;
+    height: 10px;
+    border: 1px solid $border;
+    border-bottom: none;
+    border-right: none;
+    @media (min-width: $br-mobile){
+      display: block;
+    }
+  }
+
+  // Children
+  > h2 {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: $cGreen;
+    text-align: center;
+    font-weight: 500;
+    padding: 0 0 40px;
+    a {
+      color: $cGreen;
+      display: inline-block;
+      border-bottom: 2px solid $cGreen;
+    }
+  }
+
+  > ul {
+    @include display-flex();
+    @include justify-content(space-between);
+    > li {
+      width: 20%;
+      padding: 0 25px;
+      border-left: 1px solid $border;
+      &:first-child {
+        border-left: none;
+      }
+      a {
+        color: $dark;
+        &:hover {
+          color: $cGreen;
+        }
+
+      }
+      h3 {
+        font-size: 12px;
+        text-transform: uppercase;
+        font-weight: 500;
+        margin: 0 0 10px;
+      }
+      > ul {
+        li {
+          font-size: 11px;
+          margin: 10px 0 0;
+          &:first-child {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+
 .apps-submenu {
   position: fixed;
   background: $white;
@@ -315,7 +411,7 @@
     width: 450px;
     height: auto;
     bottom: auto;
-    top: 100%;
+    top: 25px;
     @include transform(translate(0,5px));
   }
   &.active {
@@ -341,6 +437,12 @@
     }
   }
 
+  &.is-map {
+    &:after {
+      background: #f7f7f7;
+    }
+  }
+
   li {
     width: 33.33333333%;
     border-left: 1px solid $border;
@@ -358,14 +460,15 @@
       position: relative;
       &:hover, &.current  {
         // WHAT is this?????? Believe me, there wasn't another option.
-        &.shape-world .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
-        &.shape-country .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
-        &.shape-fire .nav-item-wrap .nav-item-wrap-center svg{ fill: $red;}
+        &.shape-world       .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        &.shape-country     .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        &.shape-fire        .nav-item-wrap .nav-item-wrap-center svg{ fill: $red;}
         &.shape-commodities .nav-item-wrap .nav-item-wrap-center svg{ fill: $orange;}
-        &.shape-blog .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
-        &.shape-climate .nav-item-wrap .nav-item-wrap-center svg{ fill: $blue;}
-        &.shape-data .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
-        &.shape-develop .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        &.shape-blog        .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        &.shape-climate     .nav-item-wrap .nav-item-wrap-center svg{ fill: $blue;}
+        &.shape-data        .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        &.shape-develop     .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
+        &.shape-all-apps    .nav-item-wrap .nav-item-wrap-center svg{ fill: $cGreen;}
         svg {
           fill: $cGreen;
         }
@@ -517,6 +620,7 @@
   }
 }
 
+// Feedback
 .feedback-link {
   display: none;
   position: fixed;
@@ -528,6 +632,7 @@
   color: $dark;
   text-decoration: none;
   padding: 8px;
+  cursor: pointer;
   @include transform(rotate(90deg) translate(50%,0));
   @include transform-origin(100%,0);
   &:hover {

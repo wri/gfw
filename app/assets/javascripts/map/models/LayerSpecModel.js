@@ -56,6 +56,7 @@ define([
       "mys_plantations_by_species",
       "khm_eco_land_conc",
       "usa_forest_ownership",
+      "idn_peat_lands",
       // PEOPLE
       "resource_rights",
       "cmr_resource_rights",
@@ -134,6 +135,7 @@ define([
       "forma_250_cover",
       "imazon_cover",
       "modis_cover",
+      "gran_chaco_extent",
       // FOREST CHANGE
       "guyra",
       "terrailoss",

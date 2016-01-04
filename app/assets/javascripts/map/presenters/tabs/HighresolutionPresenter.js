@@ -32,8 +32,11 @@ define([
       'Place/go': function(place) {
         this.status.set('hresolution', place.params.hresolution);
         if (!! place.params.hresolution) {
-          this.view.switchToggle();
-          this.view._fillParams(JSON.parse(atob(place.params.hresolution)));
+          var params = JSON.parse(atob(place.params.hresolution));
+          if (params.zoom >= 7) {
+            this.view.switchToggle();
+            this.view._fillParams(params);
+          }
         }
       }
     }],
@@ -52,9 +55,14 @@ define([
      * @param {string} value hresolution
      */
     setHres: function(value) {
-      value = btoa(JSON.stringify(value));
+      if (!!value) {
+        value = btoa(JSON.stringify(value));
+        sessionStorage.setItem('high-resolution',value);
+      } else {
+        sessionStorage.removeItem('high-resolution');
+      }
+
       this.status.set('hresolution', value);
-      sessionStorage.setItem('high-resolution',value);
       this._publishHres();
     },
 

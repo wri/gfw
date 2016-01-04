@@ -308,4 +308,32 @@ $w-control: 44px;
     @include transform(translate(-50%,-50%));
   }
 }
-
+.dropable {
+  margin: 30px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .shape-droppable {
+      border: 1px dashed #88aa37;
+      display: inline-flex;
+      height: 60px;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 90%;
+      font-size: 21px;
+      line-height: 25px;
+      font-weight: 300;
+      &.moving {
+        background-color: aliceblue;
+        border-width: 2px;
+      }
+  }
+  .source{
+    @extend .info-icon;
+    display: inline-block;
+    right: -5px;
+    position: relative;
+    cursor: pointer;
+  }
+}

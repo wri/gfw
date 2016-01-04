@@ -49,7 +49,8 @@ define([
       'modis': 'quicc-alerts',
       'terrailoss': 'terrai-alerts',
       'prodes': 'prodes-loss',
-      'guyra': 'guyra-loss'
+      'guyra': 'guyra-loss',
+      'forest2000': 'umd-loss-gain'
     },
 
     init: function(view) {
@@ -111,6 +112,10 @@ define([
           }
         }
       },
+    }, {
+      'Subscription/upload':function(geojson) {
+        this._subscribeGeojson(geojson,{draw: false});
+      }
     }],
 
     openSubscriptionTab: function(open){
@@ -316,7 +321,7 @@ define([
           date[0].format(dateFormat), date[1].format(dateFormat));
 
         // this is super ugly
-        if (baselayer.slug === 'loss') {
+        if (baselayer.slug === 'loss' || baselayer.slug === 'forest2000') {
           resource.thresh = '?thresh=' + ((this.status.get('threshold') === null) ? 30 :  this.status.get('threshold'));
         } else {
           delete resource.thresh;

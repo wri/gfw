@@ -89,7 +89,7 @@ define([
       new CountriesView(this.map);
       new SubscriptionView(this.map);
       new BasemapsView();
-      new HighresolutionView();
+      new HighresolutionView(this.map);
       new SubscribeView();
     },
 

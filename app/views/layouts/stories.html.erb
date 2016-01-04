@@ -30,6 +30,7 @@
     <%= controller_stylesheet_link_tag %>
     <%= yield :js %>
     <%= csrf_meta_tags %>
+    <script id="loader-gfw" src="http://www.globalforestwatch.org/gfw-assets"></script>
   </head>
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
     <%= render 'layouts/svg_icons' %>
@@ -45,7 +46,7 @@
         </div>
         <%= render 'shared/footer_landing' %>
     </div>
-    <a class="feedback-link" href="/getinvolved/provide-feedback"><span>Feedback</span></a>
+    <%= render 'shared/feedback' %>
     <!-- Javascript -->
     <script src="//maps.googleapis.com/maps/api/js?libraries=drawing,places&sensor=false"></script>
     <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>

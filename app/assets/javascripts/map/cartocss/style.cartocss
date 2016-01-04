@@ -41,7 +41,14 @@
     polygon-clip: false;
   }
 
-[layer='prodes_extent'] {
+[layer='gran_chaco_extent'] {
+    polygon-fill: #f69;
+    polygon-opacity: 0.3;
+    line-width: 1;
+    line-color: #FFF;
+    line-opacity: 0;
+  }
+  [layer='prodes_extent'] {
     polygon-fill: #f69;
     polygon-opacity: 0.3;
     line-width: 1;

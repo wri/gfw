@@ -325,7 +325,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         position: absolute;
         bottom: 0;
         left: 0;
-        width: 100%;
+        width: calc(100% - 10px);
         height: 10px;
         @include gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
       }
@@ -345,7 +345,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           position: absolute;
           top: calc(100% + 4px);
           left: 0;
-          width: 100%;
+          width: calc(100% - 10px);
           height: 10px;
           @include gradient(top,rgba(255,255,255,1),rgba(255,255,255,0));
         }
