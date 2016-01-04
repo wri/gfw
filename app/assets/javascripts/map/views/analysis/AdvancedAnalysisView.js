@@ -2,9 +2,10 @@ define([
   'underscore',
   'handlebars',
   'map/presenters/analysis/AdvancedAnalysisResultsPresenter',
+  'map/views/tabs/SpinnerView',
   'text!map/templates/analysis/advancedAnalysisResults.handlebars',
   'countries/abstract/ForestTenureGraph'
-], function(_, Handlebars, Presenter, tpl, ForestTenureGraph) {
+], function(_, Handlebars, Presenter, SpinnerView, tpl, ForestTenureGraph) {
 
   'use strict';
 
@@ -27,10 +28,16 @@ define([
     render: function() {
       this.$el.html(this.template());
 
+      new SpinnerView({
+        el: this.$('#advanced-analysis-spinner')
+      }).start();
+
       return this;
     },
 
     _renderResults: function(results) {
+      this._hideSpinner();
+
       results = _.omit(results, 'params', 'meta');
 
       if (_.isEmpty(results)) {
@@ -53,7 +60,12 @@ define([
       });
     },
 
+    _hideSpinner: function() {
+      this.$('#advanced-analysis-spinner').hide();
+    },
+
     _renderFailure: function() {
+      this._hideSpinner();
       this.$('.no-data').show();
       this.$('.line-graph').hide();
     },

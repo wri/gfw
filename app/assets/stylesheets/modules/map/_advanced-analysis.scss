@@ -43,6 +43,21 @@
     }
   }
 
+  .spinner2-box.active,
+  .spinner2-box {
+    position: relative;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+
+    .spinner2 {
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
+    }
+  }
+
   .no-data {
     width: 100%;
     display: none;
