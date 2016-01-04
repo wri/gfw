@@ -102,6 +102,20 @@ class StaticController < ApplicationController
     YourMailer.feedback(feedback,signup,email).deliver
   end
 
+  def feedback_jsonp
+    signup   = params["signup"]
+    email    = params["email"]
+    feedback = params["feedback"]
+    YourMailer.feedback(feedback,signup,email).deliver
+    respond_to do |format|
+      format.js do
+
+        render :json => true, :callback => params[:callback]
+      end
+    end
+
+  end
+
   def old
     @title = "Oops, your browser isn't supported."
     render layout: 'old_browser'
