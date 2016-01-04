@@ -3,6 +3,8 @@ define([
   'text!map/cartocss/default_canvas_style.cartocss'
 ], function(moment, defaultCss) {
 
+  'use strict';
+
   var canvasCartoCSSHelper = {
 
     generateDaily: function(columnName, startDate, endDate) {
@@ -19,11 +21,12 @@ define([
           date: formattedDate
         };
 
+        var yearOffset = currDate.year() - 2015;
         var dayOfYear = currDate.dayOfYear();
         if (dayOfYear > 255) {
-          rule.rgb = "0, " + (dayOfYear % 255) + ", 0, 1";
+          rule.rgb = '0, ' + (dayOfYear % 255) + ', ' + yearOffset + ', 1';
         } else {
-          rule.rgb = dayOfYear + ", 0, 0, 1";
+          rule.rgb = dayOfYear + ', 0, ' + yearOffset + ', 1';
         }
 
         rules.push(rule);
@@ -33,18 +36,18 @@ define([
 
       var formattedRules = rules.map(function(rule) {
         return [
-          "[date=\"" + rule.date + "\"] {",
-          "  marker-fill: rgba(" + rule.rgb + ");",
-          "}"
-        ].join(" ");
+          '[date=\'' + rule.date + '\'] {',
+          '  marker-fill: rgba(' + rule.rgb + ');',
+          '}'
+        ].join(' ');
       });
 
       var css = [
-        "#layer {",
-          defaultCss.replace(/(\r\n|\n|\r)/gm,""),
-          formattedRules.join(" "),
-        "}"
-      ].join(" ");
+        '#layer {',
+          defaultCss.replace(/(\r\n|\n|\r)/gm,''),
+          formattedRules.join(' '),
+        '}'
+      ].join(' ');
 
       return css;
     }
