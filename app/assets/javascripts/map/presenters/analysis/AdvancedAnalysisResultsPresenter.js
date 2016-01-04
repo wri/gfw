@@ -16,6 +16,10 @@ define([
 
     _subscriptions: [{
       'AnalysisService/results': function(results) {
+        if (results.failure !== undefined) {
+          return this.view._renderFailure();
+        }
+
         if (results.meta.id === 'loss-by-type') {
           this.view._renderResults(results);
         }

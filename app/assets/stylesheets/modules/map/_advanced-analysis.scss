@@ -20,6 +20,7 @@
 
 .advanced-analysis-content {
   width: 450px;
+  max-height: 350px;
   padding: 20px;
   position: absolute;
   top: 50%;
@@ -28,6 +29,7 @@
   background: $white;
   @include transform(translate(-50%,-50%));
   pointer-events: all;
+  overflow: hidden;
 
   header {
     text-align: center;
@@ -43,6 +45,7 @@
 
   .no-data {
     width: 100%;
+    display: none;
     font-size: 16px;
     text-transform: uppercase;
     text-align: center;
@@ -80,6 +83,12 @@
   .line-graph {
     font-weight: normal;
     text-transform: uppercase;
+    max-height: 295px;
+    overflow: scroll;
+
+    svg {
+      height: auto;
+    }
 
     circle {
       stroke-width: 2px;
@@ -94,20 +103,10 @@
       font-weight: 500;
     }
 
-    .one {
-      fill: #75B22E;
-    }
-
-    .two {
-      fill: #AAC700;
-    }
-
-    .three {
+    circle,
+    text,
+    rect {
       fill: #AC0;
-    }
-
-    .four {
-      fill: #FFD24D;
     }
   }
 }

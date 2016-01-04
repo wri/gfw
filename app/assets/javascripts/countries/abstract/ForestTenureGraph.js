@@ -27,7 +27,7 @@ define([
 
     render: function() {
       this._drawLines();
-      this._drawLines();
+      this._drawLineEnds();
       this._drawValues();
       this._drawLegend();
     },
@@ -36,7 +36,7 @@ define([
       var max = _.max(_.pluck(this.data, 'percent'));
       var extent = [0, max];
       this.scale = d3.scale.linear()
-        .range([0, 500])
+        .range([5, 300])
         .domain(extent);
     },
 
@@ -55,7 +55,7 @@ define([
           return CLASSES[i];
         })
         .attr('x', function() {
-          return this.scale(0);
+          return 0;
         }.bind(this))
         .attr('y', function(d, i) {
           return 25 + (50 * i);

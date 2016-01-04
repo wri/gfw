@@ -37,25 +37,18 @@ define([
         return this._renderFailure();
       }
 
-      var tenures = [{
-        name: 'Public lands administered by the government',
-        percent: 150000000
-      }, {
-        name: 'Public lands reserved for communities and indigenous groups',
-        percent: 3000000
-      }, {
-        name: 'Private lands owned by communities and indigenous groups',
-        percent: 10000000
-      }, {
-        name: 'Private lands owned by firms and individuals',
-        percent: 430000
-      }];
+      results = _.map(results, function(value, key) {
+        return {
+          name: key,
+          percent: value
+        };
+      });
 
       new ForestTenureGraph({
-        data: tenures,
+        data: results,
         el: this.$('.line-graph'),
         valueFormatter: function(d) {
-          return d['percent']/1000000 + 'Mha';
+          return d['percent'] + ' ha';
         }
       });
     },
