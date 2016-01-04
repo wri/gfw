@@ -98,6 +98,12 @@ define([
           mps.publish('Place/update', [{go: false}]);
         }, this));
     },
+
+    notificate: function(id){
+      mps.publish('Notification/open', [id]);
+    },
+
+
   });
 
   return HighresolutionPresenter;

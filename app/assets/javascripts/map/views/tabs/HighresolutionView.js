@@ -131,6 +131,8 @@ define([
           this.$apply.toggleClass('disabled');
           this.presenter.setHres(this._getParams(e));
           this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
+        } else {
+          this.presenter.notificate('not-zoom-not-reached');
         }
       }
     },
