@@ -6,7 +6,7 @@
 define([
   'underscore',
   'uri',
-  'abstract/layer/OverlayLayerClass'
+  'abstract/layer/OverlayLayerClass',
 ], function(_, UriTemplate, OverlayLayerClass) {
 
   'use strict';
@@ -21,6 +21,9 @@ define([
       this.tiles = {};
       this.layer_slug = layer.slug;
       this._super(layer, options, map);
+      if (!!this.options.infowindow) {
+        this.addClick();
+      }
     },
 
     _getLayer: function() {
@@ -109,12 +112,21 @@ define([
     },
 
     _getUrl: function(x, y, z, params) {
-
       return new UriTemplate(this.options.urlTemplate).fillFromObject({
         x: x,
         y: y,
         z: z,
         sat: params.color_filter,
+        cloud: params.cloud,
+        mindate: params.mindate,
+        maxdate: params.maxdate
+      });
+    },
+
+    _getInfoWindowUrl: function(params) {
+      return new UriTemplate(this.options.urlInfoWindow).fillFromObject({
+        lng: params.lng,
+        lat: params.lat,
         cloud: params.cloud,
         mindate: params.mindate,
         maxdate: params.maxdate
