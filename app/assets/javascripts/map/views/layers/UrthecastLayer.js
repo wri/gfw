@@ -60,7 +60,7 @@ define([
           infowindowData: {
             acquired: moment(data['acquired']).format("YYYY-MM-DD"),
             platform: data['platform'],
-            sensor_platform: data['platform'],
+            sensor_platform: data['sensor_platform'],
             cloud_coverage: data['cloud_coverage']
           }
         }
@@ -86,6 +86,12 @@ define([
       }
 
       this.multipolygon = this.map.data.addGeoJson(multipolygon_todraw)[0];
+      if (this.listener) {
+        google.maps.event.removeListener(this.listener, 'click');
+      }
+      this.listener = this.map.data.addListener("click", function(e){
+        google.maps.event.trigger(this.map, 'click', e);
+      }.bind(this));
       this.setStyle();
     },
 
