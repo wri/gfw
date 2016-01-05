@@ -515,6 +515,9 @@ define([
      */
     drawMultipolygon: function(geojson) {
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
+      this.map.data.addListener("click", function(e){
+          google.maps.event.trigger(this.map, 'click', e);
+      }.bind(this));
       this.setStyle();
       this.presenter.setMultipolygon(multipolygon, geojson);
     },
@@ -522,6 +525,9 @@ define([
       var geojson = this.setGeojson(geojson,color);
       this.setStyle();
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
+      this.map.data.addListener("click", function(e){
+          google.maps.event.trigger(this.map, 'click', e);
+      }.bind(this));
       this.presenter.setMultipolygon(multipolygon, geojson);
     },
 
