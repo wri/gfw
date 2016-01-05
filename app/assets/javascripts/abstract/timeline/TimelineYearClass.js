@@ -249,8 +249,8 @@ define([
           .tickSize(0)
           .tickPadding(0)
           .tickFormat(_.bind(function(d) {
-            return (d == 2000 && this.name == 'prodes') ? String('1997-2000') : String(d);
-            // return String(d);
+            // return (d == 2000 && this.name == 'prodes') ? String('1997-2000') : String(d);
+            return String(d);
           }, this ))
 
       this.svg.append('g')
