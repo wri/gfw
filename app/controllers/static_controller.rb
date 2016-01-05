@@ -105,7 +105,9 @@ class StaticController < ApplicationController
     signup   = params["signup"]
     email    = params["email"]
     feedback = params["feedback"]
-    YourMailer.feedback(feedback,signup,email).deliver
+    hostname = params["hostname"]
+
+    YourMailer.feedback(feedback,signup,email,hostname).deliver
     @loggedin = !!cookies[:_eauth]
   end
 
