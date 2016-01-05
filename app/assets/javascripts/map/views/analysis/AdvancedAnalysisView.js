@@ -73,6 +73,7 @@ define([
     close: function(e) {
       e && e.preventDefault();
       this.remove();
+      this.presenter.unsubscribe();
     }
 
   });
