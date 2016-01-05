@@ -8,9 +8,10 @@ define([
   'handlebars',
   'mps',
   'moment',
+  'map/models/UserModel',
   'text!connect/templates/userForm.handlebars',
   'text!connect/templates/subscriptionList.handlebars'
-], function(Backbone, Handlebars, mps, moment, tpl_form, tpl_list) {
+], function(Backbone, Handlebars, mps, moment, User, tpl_form, tpl_list) {
 
   'use strict';
 
@@ -26,14 +27,23 @@ define([
     template_form: Handlebars.compile(tpl_form),
     template_list: Handlebars.compile(tpl_list),
 
-    initialize: function(parent) {
+    initialize: function() {
+      this.user = new User();
+      this.listenTo(this.user, 'sync', this.render);
+      this.user.loadFromCookie();
+
       this.render();
       this.renderSubscriptionList();
       this.cachevars();
     },
 
     render: function() {
-      this.$el.find('.user-form').html(this.template_form({'action': window.gfw.config.GFW_API_HOST+'/user/setuser','redirect':window.location.href}));
+      this.$el.find('.user-form').html(this.template_form({
+        action: window.gfw.config.GFW_API_HOST+'/user',
+        redirect: window.location.href,
+        user: this.user.toJSON()
+      }));
+
       this.$el.find('.subscription-list').html(this.template_list());
     },
 
@@ -75,13 +85,9 @@ define([
       this.$el.find('form').submit();
     },
 
-    _destroy: function() {
-
-    },
-
     _toggleTab: function(e) {
       var $ev = $(e.target);
-      if ($ev.hasClass('current')) return;
+      if ($ev.hasClass('current')) { return; }
 
       this.$tabs_contents.hide();
       $('#activate-'+ $ev.data('tab')).show();
