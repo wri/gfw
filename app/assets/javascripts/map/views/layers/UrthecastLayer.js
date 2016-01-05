@@ -46,7 +46,6 @@ define([
         var url = this._getInfoWindowUrl(options);
 
         $.get(url).done(_.bind(function(data) {
-          var data = JSON.parse(data)
           this.removeInfoWindow();
           this.setInfoWindow(data.payload[0], event);
         }, this ));
