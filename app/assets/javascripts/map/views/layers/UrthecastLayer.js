@@ -14,8 +14,8 @@ define([
 
   var UrthecastLayer = ImageLayerClass.extend({
     options: {
-      urlTemplate:'http://uc.gfw-apis.appspot.com/urthecast/map-tiles{/sat}{/z}{/x}{/y}?cloud_coverage_lte={cloud}&acquired_gte={mindate}T00:00:00Z&acquired_lte={maxdate}T00:00:z00Z',
-      urlInfoWindow: 'http://uc.gfw-apis.appspot.com/urthecast/archive/scenes/?geometry_intersects=POINT({lng}+{lat})&cloud_coverage_lte={cloud}&tiled_lte={tileddate}',
+      urlTemplate:'http://uc.gfw-apis.appspot.com/urthecast/map-tiles{/sat}{/z}{/x}{/y}?cloud_coverage_lte={cloud}&acquired_gte={mindate}&acquired_lte={maxdate}T00:00:z00Z',
+      urlInfoWindow: 'http://uc.gfw-apis.appspot.com/urthecast/archive/scenes/?geometry_intersects=POINT({lng}+{lat})&cloud_coverage_lte={cloud}&tiled_lte={tileddate}&acquired_gte={mindate}&acquired_lte={maxdate}',
       dataMaxZoom: 13,
       infowindowImagelayer: true
     },
@@ -25,8 +25,8 @@ define([
         lng: params.lng,
         lat: params.lat,
         cloud: params.cloud,
-        // mindate: params.mindate,
-        // maxdate: params.maxdate,
+        mindate: moment(params.mindate).format("YYYY-MM-DD"),
+        maxdate: moment(params.maxdate).format("YYYY-MM-DD"),
         tileddate: params.tileddate
       });
     },
@@ -54,18 +54,20 @@ define([
 
     setInfoWindow: function (_data, event) {
       var data = _data;
-      var infoWindowOptions = {
-        offset: [0, 100],
-        infowindowData: {
-          acquired: moment(data['acquired']).format("YYYY-MM-DD"),
-          platform: data['platform'],
-          sensor_platform: data['platform'],
-          cloud_coverage: data['cloud_coverage']
+      if (!!data) {
+        var infoWindowOptions = {
+          offset: [0, 100],
+          infowindowData: {
+            acquired: moment(data['acquired']).format("YYYY-MM-DD"),
+            platform: data['platform'],
+            sensor_platform: data['platform'],
+            cloud_coverage: data['cloud_coverage']
+          }
         }
+        this.infowindow = new CustomInfowindow(event.latLng, this.map, infoWindowOptions);
+        this.removeMultipolygon();
+        this.drawMultipolygon(data.geometry);
       }
-      this.infowindow = new CustomInfowindow(event.latLng, this.map, infoWindowOptions);
-      this.removeMultipolygon();
-      this.drawMultipolygon(data.geometry);
     },
 
     removeInfoWindow: function() {
