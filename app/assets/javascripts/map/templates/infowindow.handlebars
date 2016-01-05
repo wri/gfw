@@ -348,13 +348,17 @@
           <h4>Acquisition date:</h4>
           <p>{{content.data.acquired}}</p>
         {{/if}}
-        {{#if content.data.satellite_id}}
-          <h4>Satellite id:</h4>
-          <p>{{content.data.satellite_id}}</p>
+        {{#if content.data.platform}}
+          <h4>Platform:</h4>
+          <p>{{content.data.platform}}</p>
         {{/if}}
         {{#if content.data.sensor_platform}}
           <h4>Sensor platform:</h4>
           <p>{{content.data.sensor_platform}}</p>
+        {{/if}}
+        {{#if content.data.cloud_coverage}}
+          <h4>Cloud coverage:</h4>
+          <p>{{content.data.cloud_coverage}}%</p>
         {{/if}}
       </div>
     </div>
