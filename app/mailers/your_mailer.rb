@@ -1,8 +1,9 @@
 class YourMailer < ActionMailer::Base
-  def feedback(feedback,signup,email)
+  def feedback(feedback,signup,email,hostname)
     @feedback = feedback.present? ? feedback : nil
     @email = email.present? ? email : nil
     @signup = signup
+    @hostname = hostname.present? ? hostname : nil
 
     mail :subject => "GFW Feedback",
          :to      => ENV["FEEDBACK_MAIL"],
