@@ -2,8 +2,9 @@ define([
   'jquery',
   'underscore',
   'handlebars',
+  'mps',
   'text!map/templates/infowindow.handlebars'
-], function($, _, Handlebars, tpl) {
+], function($, _, Handlebars, mps, tpl) {
 
   'use strict';
 
@@ -91,6 +92,7 @@ define([
       this.div_ = null;
     }
     this.setMap(null);
+    mps.publish('Infowindow/close');
   };
 
   CustomInfowindow.prototype.getPosition = function() {
