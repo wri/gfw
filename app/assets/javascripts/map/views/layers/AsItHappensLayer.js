@@ -3,10 +3,10 @@
  */
 
 define([
-  'moment',
+  'moment', 'd3',
   'abstract/layer/CartoDbCanvasLayerClass',
   'map/presenters/TorqueLayerPresenter'
-], function(moment, CartoDbCanvasLayerClass, Presenter) {
+], function(moment, d3, CartoDbCanvasLayerClass, Presenter) {
 
   'use strict';
 
@@ -81,7 +81,7 @@ define([
         this.roundedOffset = 0;
       }
 
-      var step = function(timestamp) {
+      var step = function() {
         if (this.currentOffset > this.animationOptions.numberOfDays) {
           this.currentOffset = 1;
           this.roundedOffset = 0;
@@ -120,15 +120,11 @@ define([
           ctx = canvas.getContext('2d'),
           image = canvasData.image;
 
-      var x = canvasData.x,
-          y = canvasData.y,
-          z = canvasData.z;
-
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(image, 0, 0);
 
       var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      this.filterCanvasImgdata(I.data, canvas.width, canvas.height, z);
+      this.filterCanvasImgdata(I.data, canvas.width, canvas.height, canvasData.z);
       ctx.putImageData(I, 0, 0);
     },
 
@@ -146,8 +142,10 @@ define([
           moment(this.currentDate[1])];
       }
 
-      var startDay = this.timelineExtent[0].dayOfYear();
-      var endDay = this.timelineExtent[1].dayOfYear();
+      var startDay = this.timelineExtent[0].dayOfYear(),
+          startYear = this.timelineExtent[0].year();
+      var endYear = this.timelineExtent[1].year(),
+          endDay = this.timelineExtent[1].dayOfYear() + ((endYear - 2015) * 365);
 
       // For normalising the intensity values
       // As it is stored in RGB (0..255), the intensity (opacity) is
@@ -165,21 +163,23 @@ define([
           var pixelPos = (j * w + i) * pixelComponents;
           var intensity = 255;
 
+          // The B channel represents the year than an alert occurred
+          var yearOfLoss = imgdata[pixelPos+2] + 2015;
           // The R channel represents the day of the year that an alert
-          // occurred, where `doy <= 255`
+          // occurred, where `day <= 255`
           var dayOfLoss = imgdata[pixelPos];
-          if (dayOfLoss == 0 && imgdata[pixelPos+1] !== 0) {
+          if (dayOfLoss === 0 && imgdata[pixelPos+1] !== 0) {
             // The G channel represents the day of year that an alert
-            // occurred, where `doy > 255`
+            // occurred, where `day > 255`
             dayOfLoss = imgdata[pixelPos+1] + 255;
           }
 
-          if (dayOfLoss >= startDay && dayOfLoss < endDay) {
+          if (dayOfLoss >= startDay && yearOfLoss >= startYear && dayOfLoss <= endDay && yearOfLoss <= endYear) {
             // Arbitrary values to get the correct colours
             imgdata[pixelPos] = 220;
             imgdata[pixelPos + 1] = (72 - z) + 102 - (3 * scale(intensity) / z);
-            imgdata[pixelPos + 2] = (33 - z) + 153 - ((intensity) / z);
-            imgdata[pixelPos + 3] = 255;
+            imgdata[pixelPos + 2] = (33 - z) + 153 - (intensity / z);
+            //imgdata[pixelPos + 3] = 255;
           } else {
             imgdata[pixelPos + 3] = 0;
           }

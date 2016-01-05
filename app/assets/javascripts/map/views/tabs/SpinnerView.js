@@ -38,8 +38,8 @@ define([
     render: function(){
       var $spinner = this.$el.find('#spinner2');
       var τ = 2 * Math.PI;
-      var width = $spinner.width();
-      var height = $spinner.height();
+      var width = $spinner.width() || 50;
+      var height = $spinner.height() || 50;
       this.arc = d3.svg.arc()
           .innerRadius(width/2 - 5)
           .outerRadius(width/2)

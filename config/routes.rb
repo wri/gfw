@@ -64,6 +64,7 @@ Gfw::Application.routes.draw do
   get '/getinvolved' => 'static#getinvolved'
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'
+  get '/feedback_jsonp' => 'static#feedback_jsonp'
 
   # howto
   get '/howto' => 'static#howto'

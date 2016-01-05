@@ -6,7 +6,7 @@
 define([
   'underscore',
   'uri',
-  'abstract/layer/OverlayLayerClass'
+  'abstract/layer/OverlayLayerClass',
 ], function(_, UriTemplate, OverlayLayerClass) {
 
   'use strict';
@@ -109,7 +109,6 @@ define([
     },
 
     _getUrl: function(x, y, z, params) {
-
       return new UriTemplate(this.options.urlTemplate).fillFromObject({
         x: x,
         y: y,
