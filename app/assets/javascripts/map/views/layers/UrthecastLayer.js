@@ -57,9 +57,10 @@ define([
       var infoWindowOptions = {
         offset: [0, 100],
         infowindowData: {
-          acquired: data['acquired'],
-          satellite_id: data['satellite_id'],
-          sensor_platform: data['sensor_platform'],
+          acquired: moment(data['acquired']).format("YYYY-MM-DD"),
+          platform: data['platform'],
+          sensor_platform: data['platform'],
+          cloud_coverage: data['cloud_coverage']
         }
       }
       this.infowindow = new CustomInfowindow(event.latLng, this.map, infoWindowOptions);
