@@ -1,47 +1,56 @@
-/**
- * Application entry point.
- */
 require([
-  'jquery',
-  'underscore',
-  'Class',
-  'backbone',
-  'handlebars',
-  'mps',
-  'views/HeaderView',
-  'views/FooterView',
-  'views/SourceMobileFriendlyView',
-  'views/SourceWindowView',
-  'views/FeedbackModalView',
+  'jquery', 'underscore', 'backbone',
   'connect/views/UserFormView',
   'connect/views/SubscriptionListView'
-], function($, _, Class, Backbone, Handlebars, mps, HeaderView, FooterView, SourceMobileFriendlyView,SourceWindowView, FeedbackModalView, UserFormView, SubscriptionListView) {
+], function($, _, Backbone, UserFormView, SubscriptionListView) {
+
   'use strict';
 
-  var ConnectPage = Class.extend({
+  var ConnectView = Backbone.View.extend({
+    el: '#my-gfw',
 
-    $el: $('body'),
-
-    init: function() {
-      this._initViews();
+    events: {
+      'click .tabs h3'  : '_toggleTab'
     },
 
-    /**
-     * Initialize Landing Views.
-     */
-    _initViews: function() {
-      //shared
-      new HeaderView();
-      new FooterView();
-      new SourceMobileFriendlyView();
-      new SourceWindowView();
-      new FeedbackModalView();
+    initialize: function() {
+      this.subViews = {};
+      this.availableViews = {
+        profile: UserFormView,
+        subscriptions: SubscriptionListView
+      };
 
-      // new SubscriptionListView();
-      new UserFormView();
+      this.render();
+    },
+
+    render: function() {
+      if (_.isEmpty(this.subViews)) {
+        this._showView('profile');
+      }
+
+      return this;
+    },
+
+    _toggleTab: function(e) {
+      var $el = $(e.target);
+      if ($el.hasClass('current')) { return; }
+      this.$('.tabs h3').removeClass('current');
+      $el.addClass('current');
+
+      var selectedTab = $el.data('tab');
+      this._showView(selectedTab);
+    },
+
+    _showView: function(viewName) {
+      if (this.subViews[viewName] === undefined) {
+        this.subViews[viewName] = new this.availableViews[viewName]();
+        this.subViews[viewName].render();
+      }
+      this.$('#current-tab').html(this.subViews[viewName].el);
+      this.subViews[viewName].delegateEvents();
     }
   });
 
-  new ConnectPage();
+  new ConnectView();
 
 });

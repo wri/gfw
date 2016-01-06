@@ -1,44 +1,61 @@
-/**
- * The UserFormView view.
- *
- * @return UserFormView instance (extends Backbone.View).
- */
 define([
-  'backbone',
-  'handlebars',
-  'mps',
+  'backbone', 'handlebars', 'moment',
   'text!connect/templates/subscriptionList.handlebars'
-], function(Backbone, Handlebars, mps, tpl) {
+], function(Backbone, Handlebars, moment, tpl) {
 
   'use strict';
 
-  var UserFormView = Backbone.View.extend({
+  var getCookie = function(name) {
+    var value = '; ' + document.cookie;
+    var parts = value.split('; ' + name + '=');
+    if (parts.length === 2) { return parts.pop().split(';').shift(); }
+  };
+
+  var Subscriptions = Backbone.Collection.extend({
+
+    url: window.gfw.config.GFW_API_HOST + '/user/subscriptions',
+
+    loadFromCookie: function() {
+      var authCookie = getCookie('_eauth');
+
+      if (authCookie !== undefined) {
+        this.fetch({ xhrFields: { withCredentials: true } });
+      }
+    }
+  });
+
+  var SubscriptionListView = Backbone.View.extend({
     className: 'user-form',
-    el: '.user-form',
-    events: {
-      'click #sendform' : '_submit',
-      'click #skipform' : '_destroy'
-    },
 
     template: Handlebars.compile(tpl),
 
-    initialize: function(parent) {
+    initialize: function() {
+      this.subscriptions = new Subscriptions();
+      this.listenTo(this.subscriptions, 'sync', this.render);
+      this.subscriptions.loadFromCookie();
+
       this.render();
     },
 
     render: function() {
-      this.$el.html(this.template({'action': window.gfw.config.GFW_API_HOST+'/user/setuser','redirect':window.location.href}));
-    },
+      var subscriptions = this.subscriptions.toJSON();
+      subscriptions = subscriptions.map(function(subscription) {
+        if (subscription.created !== undefined) {
+          subscription.created = moment(subscription.created).
+            format('dddd, YYYY-MM-D, h:mm a');
+        }
 
-    _submit: function() {
-      this.$el.find('form').submit();
-    },
+        subscription.params.geom = JSON.stringify(subscription.params.geom);
 
-    _destroy: function() {
+        return subscription;
+      });
 
+      this.$el.html(this.template({
+        subscriptions: subscriptions
+      }));
     }
   });
 
-  return UserFormView;
+  return SubscriptionListView;
 
 });

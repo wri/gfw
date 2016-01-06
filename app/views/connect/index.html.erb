@@ -1,24 +1,19 @@
 <section class="header-static">
-    <div class="inner">
-      <header>
-        <h2>My GFW</h2>
-        <h3>Welcome, <%=@user['name']%> <img src="<%=@user['raw']['image']['url']%>" class="twitter-header-profile-img"> </h3>
-      </header>
-    </div>
-</section>
-<section class='section'>
-  <div class="inner" id="my-gfw">
-  	<div class="tabs">
-  		<h3 data-tab="profile" class="current">My profile</h3>
-  		<h3 data-tab="form">Subscription list</h3>
-  	</div>
-  	<div class="content-form">
-  		<div id="activate-profile" class="user-form current tab-content"></div>
-  		<div id="activate-form" 	 class="subscription-list tab-content"></div>
-  	</div>
+  <div class="inner">
+    <header>
+      <h2>My GFW</h2>
+    </header>
   </div>
 </section>
-<script type="text/javascript">
-  //set user
-  window.userinfo = { name : '<%=@user['name']%>', picture_url : '<%=@user['raw']['image']['url']%>'};
-</script>
+
+<section class='section'>
+  <div class="inner" id="my-gfw">
+    <div class="tabs">
+      <h3 data-tab="profile" class="current">My profile</h3>
+      <h3 data-tab="subscriptions">Subscription list</h3>
+    </div>
+
+    <div class="content-form" id="current-tab">
+    </div>
+  </div>
+</section>
