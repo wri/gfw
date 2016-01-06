@@ -13,7 +13,7 @@ define([
 
   var Subscriptions = Backbone.Collection.extend({
 
-    url: window.gfw.config.GFW_API_HOST + '/user/subscriptions',
+    url: window.gfw.config.GFW_API_HOST + '/v2/subscriptions',
 
     loadFromCookie: function() {
       var authCookie = getCookie('_eauth');
