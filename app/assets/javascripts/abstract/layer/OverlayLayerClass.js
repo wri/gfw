@@ -6,8 +6,9 @@
 define([
   'Class',
   'underscore',
+  'mps',
   'map/views/layers/CustomInfowindow'
-], function(Class, _, CustomInfowindow) {
+], function(Class, _, mps, CustomInfowindow) {
 
   'use strict';
 
@@ -26,6 +27,13 @@ define([
       this.name = layer.slug;
       this.tileSize = new google.maps.Size(256, 256);
       this.options = _.extend({}, this.defaults, this.options || {});
+      this.setListeners();
+    },
+
+    setListeners: function() {
+      mps.subscribe('Infowindow/close', _.bind(function(){
+        this.removeMultipolygon();
+      }, this ))
     },
 
     addLayer: function(position, success) {
@@ -34,6 +42,10 @@ define([
         if (this.options.infowindow && this.options.interactivity) {
           this.setInfowindow(layer);
         }
+        if (!!this.options.infowindowImagelayer) {
+          this.addClick();
+        }
+
         success();
       }, this));
 
@@ -42,6 +54,7 @@ define([
     removeLayer: function() {
       var overlayIndex = this._getOverlayIndex();
       this.removeInfowindow();
+      this.removeMultipolygon();
       if (overlayIndex > -1) {
         google.maps.event.clearListeners(this.map, 'click');
         this.map.overlayMapTypes.setAt(overlayIndex, null);
@@ -83,6 +96,12 @@ define([
     removeInfowindow: function() {
       if (this.infowindow) {
         this.infowindow.remove();
+      }
+    },
+
+    removeMultipolygon: function() {
+      if (!!this.multipolygon) {
+        this.map.data.remove(this.multipolygon);
       }
     },
 

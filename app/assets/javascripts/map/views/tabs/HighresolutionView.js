@@ -31,8 +31,9 @@ define([
       'click .advanced-controls' : '_toggleAdvanced'
     },
 
-    initialize: function() {
+    initialize: function(map) {
       this.presenter = new Presenter(this);
+      this.map = map;
       this.params_new_url;
       this.render();
     },
@@ -50,23 +51,50 @@ define([
       this.$advanced_options   = this.$el.find('.advanced-options');
       this.$advanced_controls  = this.$el.find('.advanced-controls');
       this.$apply              = this.$el.find('.btn');
+      this.$disclaimer         = this.$el.find('#disclaimer-zoom');
     },
 
     render: function() {
       this.$el.html(this.template({today: moment().format('YYYY-MM-DD'), mindate: moment().subtract(3,'month').format('YYYY-MM-DD')}));
       this.cacheVars();
+      this.setListeners();
       this.printSelects();
+    },
+
+    setListeners: function() {
+      google.maps.event.addListener(this.map, 'zoom_changed',
+        _.bind(function() {
+          this.setZoomConditions(this.map.getZoom());
+        }, this)
+      );
+    },
+
+    setZoomConditions: function(zoom) {
+      this.zoom = zoom;
+      if(this.zoom >= 7) {
+        this.$disclaimer.hide(0);
+      } else {
+        if (!!this.$onoffswitch.hasClass('checked')) {
+          this.$onoffswitch.click();
+        }
+        this.$disclaimer.show(0);
+      }
+
     },
 
     _getParams: function(e) {
       var $objTarget = $(e.target).closest('.maptype');
-      return {
+      if(!!this.$onoffswitch.hasClass('checked')) {
+        return {
+          'zoom' : this.zoom,
           'satellite' : $objTarget.data('slug'),
-           'color_filter': ($objTarget.find('#hres-filter-select').val().length > 0) ? $objTarget.find('#hres-filter-select').val() : 'rgb',
-           'cloud': this.$range.val(),
-           'mindate': (this.$mindate.val().length > 0) ? this.$mindate.val() : '2000-09-01',
-           'maxdate': (this.$maxdate.val().length > 0) ? this.$maxdate.val() : '2015-09-01'
-         };
+          'color_filter': ($objTarget.find('#hres-filter-select').val().length > 0) ? $objTarget.find('#hres-filter-select').val() : 'rgb',
+          'cloud': this.$range.val(),
+          'mindate': (this.$mindate.val().length > 0) ? this.$mindate.val() : '2000-09-01',
+          'maxdate': (this.$maxdate.val().length > 0) ? this.$maxdate.val() : '2015-09-01'
+        };
+      }
+      return null;
     },
 
     _setParams: function(e) {
@@ -75,7 +103,7 @@ define([
       } else {
         this.$apply.removeClass('disabled');
       }
-      this.$apply.addClass('green').removeClass('grey');
+      this.$apply.addClass('green').removeClass('gray');
       this.presenter.setHres(this._getParams(e));
     },
 
@@ -92,10 +120,21 @@ define([
     },
 
     toggleLayer: function(e) {
-      this.switchToggle();
-      this.$apply.toggleClass('disabled');
-      this.presenter.setHres(this._getParams(e));
-      this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
+      if (this.zoom >= 7) {
+        this.switchToggle();
+        this.$apply.toggleClass('disabled');
+        this.presenter.setHres(this._getParams(e));
+        this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
+      } else {
+        if (!!this.$onoffswitch.hasClass('checked')) {
+          this.switchToggle();
+          this.$apply.toggleClass('disabled');
+          this.presenter.setHres(this._getParams(e));
+          this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
+        } else {
+          this.presenter.notificate('not-zoom-not-reached');
+        }
+      }
     },
 
     _toggleAdvanced: function(e) {
@@ -127,7 +166,7 @@ define([
     printProviders: function() {
       var options = '<option value="urthe">Urthecast</option><option value="digiglobe">Digital Globe</option><option value="skybox">Skybox</option>';
       this.$hresSelectProvider.append(options);
-      this.$hresSelectFilter.append('<option value="rgb">RGB (Red Green Blue)</option><option value="ndvi">NDVI (Normalized Difference Vegetation Index)</option><option value="evi">EVI (Enhanced vegetation index)</option><option value="ndwi">NDWI (Normalized Difference Water Index)</option><option value="false-nir">False Color NIR (Near Infra Red)</option>'); //temporary hardcoded
+      this.$hresSelectFilter.append('<option value="rgb">RGB (Red Green Blue)</option><option value="ndvi">NDVI (Normalized Difference Vegetation Index)</option><option value="evi">EVI (Enhanced vegetation index)</option><option value="ndwi">NDWI (Normalized Difference Water Index)</option><option value="false-color-nir">False Color NIR (Near Infra Red)</option>'); //temporary hardcoded
 
     },
 

@@ -346,7 +346,7 @@
   &.slide4 { background-image:url('backgrounds/home-slider/bg_slide4.jpg');}
   &.slide5 { background-image:url('http://gfw.blog.s3.amazonaws.com/Carousel/22109811392_813e7092fc_o.jpg');}
   &.slide6 { background-image:url('backgrounds/home-slider/bg_slide6.jpg');}
-  &.slide7 { background-image:url('http://gfw.blog.s3.amazonaws.com/Carousel/Palm%20Oil%20Mill%20Data%20Cropped.jpg');}
+  &.slide7 { background-image:url('backgrounds/home-slider/Palm-Oil-Mill-Data.jpg');}
 
   aside {
     position: absolute;
@@ -859,7 +859,7 @@
         position: relative;
         margin: 20px 0 0;
         @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
-          width: 19%;
+          width: 15.8%;
           height: auto;
           margin: 0 0 0 1%;
           float: left;

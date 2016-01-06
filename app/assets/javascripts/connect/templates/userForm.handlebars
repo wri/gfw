@@ -12,19 +12,19 @@
   <input type="email" placeholder="Your email" name="email" value="{{user.email}}">
 
   <label>organization / profession / job title</label>
-  <input type="text" placeholder="Your organization / profession / job title" name="job">
+  <input type="text" placeholder="Your organization / profession / job title" name="job" value="{{user.job}}">
 
   <label class="m-sel-container">sector
-    <select name="sector"><option>Choose your sector</option></select>
+    <input placeholder="Your sector" name="sector" value="{{user.sector}}">
   </label>
 
   <label class="m-sel-container">primary responsibility
-    <select name="responsibility"t><option>Choose your primary responsibilities</option></select>
+    <input name="responsibility" placeholder="Your primary responsibilities" value="{{user.responsibilities}}">
   </label>
 
   <label class="m-sel-container">location
-    <select name="country"><option>Country</option></select>
-    <span class="m-sel-container -middle"><select name="state"><option>State/department/province</option></select></span>
+    <input name="country" placeholder="Your country" value="{{user.country}}">
+    <input name="state" placeholder="State/department/province" value="{{user.state}}">
   </label>
 
   <input type="text" placeholder="City">
@@ -34,7 +34,7 @@
   </label>
 
   <label class="m-sel-container">how do you use or plan to use global forest watch?
-    <select name="use"><option>Choose multiple options</option></select>
+    <input name="use" placeholder="" value="{{use}}">
   </label>
 
   <div class="m-improve-gfw">

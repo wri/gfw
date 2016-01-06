@@ -34,6 +34,7 @@ define([
 
       this.render();
       this.renderSubscriptionList();
+      this.renderUserInfo();
       this.cachevars();
     },
 

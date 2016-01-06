@@ -14,7 +14,11 @@
   	</div>
   	<div class="content-form">
   		<div id="activate-profile" class="user-form current tab-content"></div>
-  		<div id="activate-form" 	class="subscription-list tab-content"></div>
+  		<div id="activate-form" 	 class="subscription-list tab-content"></div>
   	</div>
   </div>
 </section>
+<script type="text/javascript">
+  //set user
+  window.userinfo = { name : '<%=@user['name']%>', picture_url : '<%=@user['raw']['image']['url']%>'};
+</script>
