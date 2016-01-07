@@ -1,14 +1,16 @@
 define([
   'backbone', 'handlebars', 'moment',
   'connect/collections/Subscriptions',
+  'connect/views/SubscriptionListItemDeleteConfirmView',
   'text!connect/templates/subscriptionListItem.handlebars'
-], function(Backbone, Handlebars, moment, Subscriptions, tpl) {
+], function(Backbone, Handlebars, moment, Subscriptions, SubscriptionListItemDeleteConfirmView, tpl) {
 
   'use strict';
 
   var SubscriptionListItemView = Backbone.View.extend({
     events: {
-      'click .subscriptions-delete-item': 'destroy',
+      'click .subscriptions-delete-item': 'confirmDestroy',
+
       'click h4': 'editName',
       'blur h4': 'saveName',
       'keyup h4': 'handleNameKeyUp'
@@ -28,7 +30,7 @@ define([
       subscription.params.geom = JSON.stringify(subscription.params.geom);
       if (subscription.created !== undefined) {
         subscription.created = moment(subscription.created).
-          format('dddd, YYYY-MM-D, h:mm a');
+          format('dddd, YYYY-MM-DD, h:mm a');
       }
 
       this.$el.html(this.template(subscription));
@@ -36,9 +38,18 @@ define([
       return this;
     },
 
-    destroy: function(event) {
+    confirmDestroy: function(event) {
       event.preventDefault();
 
+      var confirmView = new SubscriptionListItemDeleteConfirmView({
+        subscription: this.subscription});
+      this.$el.append(confirmView.render().el);
+      this.listenTo(confirmView, 'confirmed', function() {
+        this.destroy();
+      }.bind(this));
+    },
+
+    destroy: function() {
       this.subscription.destroy({
          success: this.remove.bind(this)});
     },
