@@ -35,6 +35,7 @@ define([
       this.presenter = new Presenter(this);
       this.map = map;
       this.params_new_url;
+      this.previousZoom;
       this.render();
     },
 
@@ -76,16 +77,20 @@ define([
 
     setZoomConditions: function(zoom) {
       this.zoom = zoom;
+      if (isNaN(this.previousZoom)) this.previousZoom = zoom;
       this.$currentZoom.text(zoom);
       if(this.zoom >= 7) {
         this.$disclaimer.hide(0);
       } else {
+        if (this.previousZoom >= 7) {
+            this.presenter.notificate('not-zoom-not-reached');
+        }
         if (!!this.$onoffswitch.hasClass('checked')) {
           this.$onoffswitch.click();
         }
         this.$disclaimer.show(0);
       }
-
+      this.previousZoom = zoom;
     },
 
     _getParams: function(e) {
