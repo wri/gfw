@@ -20,6 +20,10 @@ define([
       infowindowImagelayer: true
     },
 
+    init: function(layer, options, map) {
+      this._super(layer, options, map);
+    },
+
     _getInfoWindowUrl: function(params) {
       return new UriTemplate(this.options.urlInfoWindow).fillFromObject({
         lng: params.lng,
@@ -29,6 +33,30 @@ define([
         maxdate: moment(params.maxdate).format("YYYY-MM-DD"),
         tileddate: params.tileddate
       });
+    },
+
+    _getParams: function() {
+      var params = {};
+      if (window.location.search.contains('&hresolution=') && window.location.search.indexOf('=', window.location.search.indexOf('&hresolution=') + 13) !== -1) {
+        var params_new_url = {};
+        var parts = location.search.substring(1).split('&');
+        for (var i = 0; i < parts.length; i++) {
+          var nv = parts[i].split('=');
+          if (!nv[0]) continue;
+            params_new_url[nv[0]] = nv[1] || true;
+        }
+        params = JSON.parse(atob(params_new_url.hresolution));
+        mps.publish('Tab/open', ['#hd-tab-button']);
+      }
+      else if (!!sessionStorage.getItem('high-resolution')) {
+        params = JSON.parse(atob(sessionStorage.getItem('high-resolution')));
+      }
+      return params = {
+         'color_filter': params.color_filter || 'rgb',
+         'cloud':        params.cloud        || '100',
+         'mindate':      params.mindate      || '2000-09-01',
+         'maxdate':      params.maxdate      || '2015-09-01'
+        }
     },
 
     addClick: function() {
