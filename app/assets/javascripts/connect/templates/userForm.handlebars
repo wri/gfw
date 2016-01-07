@@ -49,10 +49,12 @@
     </span>
   </div>
 
-  <input type="text" name="redirect" value="{{redirect}}" class="hidden" >
-
   <div class="m-buttons">
-    <a id="sendform" class="btn green uppercase">continue</a>
-    <a id="skipform" class="btn gray uppercase">skip</a>
+    {{#if user.email}}
+      <a id="submit" class="btn green uppercase">submit</a>
+    {{else}}
+      <a id="submit" class="btn green uppercase">continue</a>
+      <a id="skip" class="btn gray uppercase">skip</a>
+    {{/if}}
   </div>
 </form>

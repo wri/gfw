@@ -29,7 +29,7 @@ define([
 
       this.user = new User();
       this.listenTo(this.user, 'sync', this.render);
-      this.user.loadFromCookie();
+      this.user.fetch();
 
       this.render();
     },

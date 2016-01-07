@@ -4,22 +4,21 @@ define([
 
   'use strict';
 
-  var getCookie = function(name) {
-    var value = '; ' + document.cookie;
-    var parts = value.split('; ' + name + '=');
-    if (parts.length === 2) { return parts.pop().split(';').shift(); }
-  };
-
   var User = Backbone.Model.extend({
     url: window.gfw.config.GFW_API_HOST + '/user',
 
-    loadFromCookie: function() {
-      var authCookie = getCookie('_eauth');
+    sync: function(method, model, options) {
+      options || (options = {});
 
-      if (authCookie !== undefined) {
-        this.set('cookie', authCookie);
-        this.fetch({ xhrFields: { withCredentials: true } });
+      if (!options.crossDomain) {
+        options.crossDomain = true;
       }
+
+      if (!options.xhrFields) {
+        options.xhrFields = {withCredentials:true};
+      }
+
+      return Backbone.sync.call(this, method, model, options);
     }
   });
 
