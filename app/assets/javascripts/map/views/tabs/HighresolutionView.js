@@ -52,10 +52,15 @@ define([
       this.$advanced_controls  = this.$el.find('.advanced-controls');
       this.$apply              = this.$el.find('.btn');
       this.$disclaimer         = this.$el.find('#disclaimer-zoom');
+      this.$currentZoom        = this.$el.find('#currentZoom');
     },
 
     render: function() {
-      this.$el.html(this.template({today: moment().format('YYYY-MM-DD'), mindate: moment().subtract(3,'month').format('YYYY-MM-DD')}));
+      this.$el.html(this.template({
+        today: moment().format('YYYY-MM-DD'),
+        mindate: moment().subtract(3,'month').format('YYYY-MM-DD'),
+        zoom: this.map.getZoom()
+      }));
       this.cacheVars();
       this.setListeners();
       this.printSelects();
@@ -71,6 +76,7 @@ define([
 
     setZoomConditions: function(zoom) {
       this.zoom = zoom;
+      this.$currentZoom.text(zoom);
       if(this.zoom >= 7) {
         this.$disclaimer.hide(0);
       } else {
@@ -189,7 +195,7 @@ define([
     setVisibleRange: function(){
       var width = this.$range.val();
       this.$progress.width(width + '%')
-    },
+    }
 
   });
 
