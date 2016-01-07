@@ -1,14 +1,15 @@
 #gran_chaco_deforestation{
   polygon-fill: #f265d1;
-  polygon-opacity: 1;
   line-color: #f265d1;
+  polygon-opacity: 1;
+  
   [zoom>5]{
     line-width: 0.1;
-  	line-opacity: 1;} 
+    line-opacity: 1;} 
   [zoom<6]{
     line-width: 0.05;
-  	line-opacity: 1;}
-  [time>#date_to_change]{
+    line-opacity: 1;} 
+  [year = year_to_change][month>month_to_change]{
     polygon-fill: #FFCC00;
     line-color: #FFCC00;
     [zoom>5]{
@@ -16,6 +17,8 @@
       line-opacity: 1;} 
     [zoom<6]{
       line-width: 0.4;
-      line-opacity: 1;}
-  } 
+      line-opacity: 1;} 
+    }
+  
+  
 }
