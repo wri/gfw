@@ -1,3 +1,26 @@
+<% content_for :header do %>
+  <h1><a href="/">Global Forest Watch</a></h1>
+  <nav id="nav-mobile">
+    <form class="mobile-show" action="/search">
+      <svg class="icon"><use xlink:href="#shape-search"></use></svg>
+      <input type="text" name="query" id="search-input" placeholder="Search GFW website">
+    </form>
+    <div id="google_translate_element_box2"></div>
+    <div id="mobileMenu"></div>
+    <ul class="mobile-hide">
+      <li>
+        <a href="/explore">My Subscriptions</a>
+      </li>
+      <li>
+        <a href="/explore">My Stories</a>
+      </li>
+      <li>
+        <a href="/explore">My Reports</a>
+      </li>
+    </ul>
+  </nav>
+<% end %>
+
 <section class="header-static">
   <div class="inner">
     <header>
@@ -7,13 +30,6 @@
 </section>
 
 <section class='section'>
-  <div class="inner" id="my-gfw">
-    <div class="tabs">
-      <h3 data-tab="profile" class="current">My profile</h3>
-      <h3 data-tab="subscriptions">Subscription list</h3>
-    </div>
-
-    <div class="content-form" id="current-tab">
-    </div>
+  <div class="user-profile inner" id="profile">
   </div>
 </section>

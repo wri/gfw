@@ -25,8 +25,6 @@ define([
   });
 
   var SubscriptionListView = Backbone.View.extend({
-    className: 'user-form',
-
     template: Handlebars.compile(tpl),
 
     initialize: function() {

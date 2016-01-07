@@ -7,7 +7,7 @@ define([
   'use strict';
 
   var UserFormView = Backbone.View.extend({
-    className: 'user-form',
+    className: 'user-form content-form',
 
     events: {
       'click #sendform' : '_submit'
