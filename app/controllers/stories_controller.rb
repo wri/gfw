@@ -13,7 +13,6 @@ class StoriesController < ApplicationController
   respond_to :json, :only => :index
 
   def index
-    @loggedin = !!cookies[:_eauth]
     if params['for_map']
       respond_with @stories
       return
@@ -25,14 +24,12 @@ class StoriesController < ApplicationController
 
   def show
     @title = @story.title.capitalize
-    @loggedin = !!cookies[:_eauth]
   end
 
   def new
     @url = stories_path
     @story = Api::Story.new
     @title = I18n.translate 'stories.new.title'
-    @loggedin = !!cookies[:_eauth]
   end
 
   def edit
@@ -42,7 +39,6 @@ class StoriesController < ApplicationController
 
   def create
     @story = Api::Story.new(params[:story])
-    @loggedin = !!cookies[:_eauth]
     if @story.valid?
       response = @story.create(params[:story])
 

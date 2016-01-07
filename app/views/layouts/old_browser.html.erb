@@ -29,7 +29,7 @@
   <%= yield :js %>
   <%= csrf_meta_tags %>
 </head>
-<body class='<%= "#{controller_name} #{action_name}" %> user-is-loggedin-<%= @loggedin %>'>
+<body class='<%= "#{controller_name} #{action_name}" %>'>
   <%= yield :title %>
   <div class="not-supported">
     <h1>Global Forest Watch</h1>
