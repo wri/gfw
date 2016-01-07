@@ -8,11 +8,18 @@ define([
   'handlebars',
   'enquire',
   'moment',
+  'mps',
+  'picker',
+  'pickadate',
   'map/presenters/tabs/HighresolutionPresenter',
   'text!map/templates/tabs/highresolution.handlebars'
-], function(_, Handlebars, enquire, moment, Presenter, tpl) {
+], function(_, Handlebars, enquire, moment, mps, picker, pickadate, Presenter, tpl) {
 
   'use strict';
+
+  var SelectedDates = Backbone.Model.extend({
+    // left blank on puropose, max min dates
+  });
 
   var HighresolutionView = Backbone.View.extend({
 
@@ -36,6 +43,10 @@ define([
       this.map = map;
       this.params_new_url;
       this.previousZoom;
+      this.selectedDates = new SelectedDates({
+        startDateUC: moment().format('DD-MM-YYYY'),
+        endDateUC: moment().subtract(3,'month').format('DD-MM-YYYY'),
+      });
       this.render();
     },
 
@@ -58,11 +69,12 @@ define([
 
     render: function() {
       this.$el.html(this.template({
-        today: moment().format('YYYY-MM-DD'),
-        mindate: moment().subtract(3,'month').format('YYYY-MM-DD'),
+        today: moment().format('DD-MM-YYYY'),
+        mindate: moment().subtract(3,'month').format('DD-MM-YYYY'),
         zoom: this.map.getZoom()
       }));
       this.cacheVars();
+      this.renderPickers();
       this.setListeners();
       this.printSelects();
     },
@@ -200,7 +212,49 @@ define([
     setVisibleRange: function(){
       var width = this.$range.val();
       this.$progress.width(width + '%')
-    }
+    },
+
+    renderPickers: function() {
+      var context = this;
+
+      var onPickerOpen = function() {
+        this.render();
+      };
+
+      var startHRdate = $('.timeline-date-picker-start').pickadate({
+        today: 'Jump to Today',
+        min: moment('2013').toDate(),
+        max: moment().toDate(),
+        selectYears: true,
+        selectMonths: true,
+        format: 'dd-mm-yyyy',
+        formatSubmit: 'dd-mm-yyyy',
+        onOpen: onPickerOpen,
+        onSet: function(event) {
+          if ( event.select ) {
+            endHRdate_picker.set('min', startHRdate_picker.get('select'))    
+          }
+        }
+      }),
+      startHRdate_picker = startHRdate.pickadate('picker');
+
+      var endHRdate = $('.timeline-date-picker-end').pickadate({
+        today: 'Jump to Today',
+        min: moment().subtract(3,'month').format('DD-MM-YYYY'),
+        max: moment().toDate(),
+        selectYears: true,
+        selectMonths: true,
+        format: 'dd-mm-yyyy',
+        formatSubmit: 'dd-mm-yyyy',
+        onOpen: onPickerOpen,
+        onSet: function(event) {
+          if ( event.select ) {
+            startHRdate_picker.set('max', endHRdate_picker.get('select'))
+          }
+        }
+      });
+      var endHRdate_picker = endHRdate.pickadate('picker');
+    },
 
   });
 

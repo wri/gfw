@@ -26,11 +26,11 @@
       </article>
       <section>
         <span>Acquired date minimum <a href='#' data-source="hr-datemin" class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-        <input type=date min=2013-01-01 value="{{mindate}}" class="mindate">
+        <input data-value="{{mindate}}" id="startDateUC" class="timeline-date-picker-start mindate" type="text" readonly="">
       </section>
       <section>
         <span>Acquired date maximum <a href='#' data-source="hr-datemax" class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-        <input type=date max={{today}} value="{{today}}" class="maxdate">
+        <input data-value="{{today}}" id="endDateUC" class="timeline-date-picker-end maxdate" type="text" readonly="">
       </section>
       <section>
         <ul class="button-container one">

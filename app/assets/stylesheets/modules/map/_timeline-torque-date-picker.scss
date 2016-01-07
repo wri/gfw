@@ -234,7 +234,17 @@ input.picker__input[type="text"].picker__input--active {
   bottom: -2px;
   right: 18px;
 }
+.highresolution-content {
+  .picker__day:after {
+    content: none;
+  }
+  .picker--opened .picker__holder {
+    top: -170px;
+    position: relative;
+    left: -370px;
+  }
 
+}
 .picker__day:hover {
   cursor: pointer;
   background: #eee;
