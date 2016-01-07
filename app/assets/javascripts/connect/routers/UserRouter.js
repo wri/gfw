@@ -1,8 +1,8 @@
 define([
-  'jquery', 'backbone',
+  'jquery', 'backbone', 'underscore',
   'connect/views/UserFormView',
   'connect/views/SubscriptionListView'
-], function($, Backbone, UserFormView, SubscriptionListView) {
+], function($, Backbone, _, UserFormView, SubscriptionListView) {
 
   'use strict';
 
@@ -16,13 +16,18 @@ define([
 
     availableViews: {
       'my_gfw': UserFormView,
-      'my_gfw/subscriptions': SubscriptionListView
+      'subscriptions': SubscriptionListView
     },
 
-    showView: function(viewName) {
+    showView: function(routeName) {
+      var viewName = _.last(_.compact(routeName.split('/')));
+
       this.subViews = this.subViews || {};
       if (this.subViews[viewName] === undefined) {
-        this.subViews[viewName] = new this.availableViews[viewName]();
+        var view = this.availableViews[viewName];
+        if (view === undefined) { return; }
+
+        this.subViews[viewName] = new view();
         this.subViews[viewName].render();
       }
 
