@@ -137,8 +137,7 @@ define([
     _fillParams: function(params) {
       this.$hresSelectProFil.val(params.color_filter).trigger("liszt:updated");
       this.$range.val(params.cloud);
-      this.$mindate.val(params.mindate);
-      this.$maxdate.val(params.maxdate);
+      this.renderPickers(params.mindate, params.maxdate);
       this.setVisibleRange();
     },
 
@@ -214,7 +213,7 @@ define([
       this.$progress.width(width + '%')
     },
 
-    renderPickers: function() {
+    renderPickers: function(minABSdate, maxABSdate) {
       var context = this;
 
       var onPickerOpen = function() {
@@ -261,6 +260,11 @@ define([
         }
       });
       var endHRdate_picker = endHRdate.pickadate('picker');
+
+      if (minABSdate && maxABSdate) {
+        startHRdate_picker.set('select',  moment(minABSdate).toDate());
+        endHRdate_picker.set('select',  moment(maxABSdate).toDate());
+      }
     },
 
   });
