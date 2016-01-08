@@ -58,8 +58,8 @@ define([
       this.$onoffswitch        = this.$el.find('.onoffswitch');
       this.$range              = $('#range-clouds');
       this.$progress           = $('#progress-clouds');
-      this.$mindate            = this.$el.find('.mindate');
-      this.$maxdate            = this.$el.find('.maxdate');
+      this.$mindate            = this.$el.find("input[name='snd__mindate_submit']");
+      this.$maxdate            = this.$el.find("input[name='snd__maxdate_submit']");
       this.$advanced_options   = this.$el.find('.advanced-options');
       this.$advanced_controls  = this.$el.find('.advanced-controls');
       this.$apply              = this.$el.find('.btn');
@@ -73,8 +73,8 @@ define([
         mindate: moment().subtract(3,'month').format('DD-MM-YYYY'),
         zoom: this.map.getZoom()
       }));
-      this.cacheVars();
       this.renderPickers();
+      this.cacheVars();
       this.setListeners();
       this.printSelects();
     },
@@ -221,14 +221,20 @@ define([
         this.render();
       };
 
+      var TODAY         = moment().toDate(),
+          TODAY_TEXT    = 'Jump to Today',
+          FORMAT        = 'dddd, dd mmm, yyyy',
+          FORMATSUBMIT  = 'yyyy-mm-dd';
+
       var startHRdate = $('.timeline-date-picker-start').pickadate({
-        today: 'Jump to Today',
+        today: TODAY_TEXT,
         min: moment('2013').toDate(),
-        max: moment().toDate(),
+        max: TODAY,
         selectYears: true,
         selectMonths: true,
-        format: 'dd-mm-yyyy',
-        formatSubmit: 'dd-mm-yyyy',
+        format: FORMAT,
+        formatSubmit: FORMATSUBMIT,
+        hiddenPrefix: 'snd__mindate',
         onOpen: onPickerOpen,
         onSet: function(event) {
           if ( event.select ) {
@@ -239,13 +245,14 @@ define([
       startHRdate_picker = startHRdate.pickadate('picker');
 
       var endHRdate = $('.timeline-date-picker-end').pickadate({
-        today: 'Jump to Today',
-        min: moment().subtract(3,'month').format('DD-MM-YYYY'),
-        max: moment().toDate(),
+        today: TODAY_TEXT,
+        min: moment().subtract(3,'month').toDate(),
+        max: TODAY,
         selectYears: true,
         selectMonths: true,
-        format: 'dd-mm-yyyy',
-        formatSubmit: 'dd-mm-yyyy',
+        format: FORMAT,
+        formatSubmit: FORMATSUBMIT,
+        hiddenPrefix: 'snd__maxdate',
         onOpen: onPickerOpen,
         onSet: function(event) {
           if ( event.select ) {
