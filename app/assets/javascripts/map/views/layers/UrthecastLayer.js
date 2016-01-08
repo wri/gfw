@@ -58,9 +58,9 @@ define([
         var infoWindowOptions = {
           offset: [0, 100],
           infowindowData: {
-            acquired: moment(data['acquired']).format("YYYY-MM-DD"),
+            acquired: moment(data['acquired']).format("MMMM Do, YYYY"),
             platform: data['platform'],
-            sensor_platform: data['sensor_platform'],
+            sensor_platform: data['sensor_platform'].toUpperCase(),
             cloud_coverage: (data['cloud_coverage']) ? data['cloud_coverage'] : '0'
           }
         }
