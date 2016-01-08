@@ -238,8 +238,8 @@ input.picker__input[type="text"].picker__input--active {
   .picker__day:after {
     content: none;
   }
-  .picker--opened .picker__holder {
-    top: -170px;
+  .picker .picker__holder {
+    top: -260px;
     position: relative;
     left: -370px;
   }
