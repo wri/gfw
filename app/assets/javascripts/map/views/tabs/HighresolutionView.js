@@ -138,8 +138,14 @@ define([
     _fillParams: function(params) {
       this.$hresSelectProFil.val(params.color_filter).trigger("liszt:updated");
       this.$range.val(params.cloud);
-      this.renderPickers(params.mindate, params.maxdate);
       this.setVisibleRange();
+      this.zoom = params.zoom;
+      var that = this;
+      this.params = params;
+      window.setTimeout(_.bind(function(params) {
+        this.renderPickers(this.params.mindate, this.params.maxdate);
+        this.params = null;
+      },this), 250)
     },
 
     toggleLayer: function(e) {
