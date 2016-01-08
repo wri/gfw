@@ -61,7 +61,7 @@ define([
             acquired: moment(data['acquired']).format("YYYY-MM-DD"),
             platform: data['platform'],
             sensor_platform: data['sensor_platform'],
-            cloud_coverage: data['cloud_coverage']
+            cloud_coverage: (data['cloud_coverage']) ? data['cloud_coverage'] : '0'
           }
         }
         this.infowindow = new CustomInfowindow(event.latLng, this.map, infoWindowOptions);
