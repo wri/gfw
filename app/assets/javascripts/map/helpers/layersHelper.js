@@ -134,6 +134,7 @@ define([
   'map/views/layers/GuyraCoverLayer',
   'map/views/layers/MysPALayer',
   'map/views/layers/IdnPeatLandsLayer',
+  'map/views/layers/RaisgMiningLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -282,6 +283,8 @@ define([
   GuyraCoverLayer,
   MysPALayer,
   IdnPeatLandsLayer,
+  RaisgMiningLayer,
+  //highres layers
   UrthecastLayer,
   // Layer dialog templates
   // loss_dialog,
@@ -592,6 +595,9 @@ define([
     raisg: {
       view: RaisgLayer
     },
+    raisg_mining: {
+      view: RaisgMiningLayer
+    },
     plantations_by_type: {
       view: PlantationsLayerByType
     },
@@ -712,7 +718,6 @@ define([
     idn_peat_lands: {
       view:  IdnPeatLandsLayer
     },
-    
     nothing: {
     }
   };
