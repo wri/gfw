@@ -107,6 +107,7 @@ define([
 
     _getParams: function(e) {
       var $objTarget = $(e.target).closest('.maptype');
+      mps.publish('Tab/open', ['#hd-tab-button']);
       if(!!this.$onoffswitch.hasClass('checked')) {
         return {
           'zoom' : this.zoom,
