@@ -70,7 +70,7 @@ define([
     render: function() {
       this.$el.html(this.template({
         today: moment().format('DD-MM-YYYY'),
-        mindate: moment().subtract(3,'month').format('DD-MM-YYYY'),
+        mindate: moment().subtract(3,'month').format('YYYY-MM-DD'),
         zoom: this.map.getZoom()
       }));
       this.renderPickers();
