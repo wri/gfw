@@ -132,6 +132,7 @@ define([
 
     _triggerChanges: function(e) {
       this.presenter.updateLayer($(e.target).closest('.maptype').data('slug'));
+      this.$apply.removeClass('green').addClass('gray');
     },
 
     _fillParams: function(params) {
