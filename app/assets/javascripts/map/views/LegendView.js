@@ -42,9 +42,10 @@ define([
   'text!map/templates/legend/raisg_land_rights.handlebars',
   'text!map/templates/legend/mysPA.handlebars',
   'text!map/templates/legend/idn_peat.handlebars',
+  'text!map/templates/legend/raisg_mining.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl, rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl, rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl,raisg_miningTpl) {
 
   'use strict';
 
@@ -117,6 +118,7 @@ define([
       raisg:Handlebars.compile(raisg_land_rightsTpl),
       mys_protected_areas:Handlebars.compile(mysPATpl),
       idn_peat_lands:Handlebars.compile(idn_peatTpl),
+      raisg_mining:Handlebars.compile(raisg_miningTpl),
     },
 
     options: {

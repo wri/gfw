@@ -147,13 +147,16 @@ define([
           var infoWindowOptions = {
             offset: [0, 100],
             infowindowData: {
-              name: data.features[0].attributes['tis.nombre'],
-              country: data.features[0].attributes['tis.pais'],
-              status: data.features[0].attributes['tis.leyenda'],
+              name: data.features[0].attributes['tis.nombre']|| data.features[0].attributes['nombre'],
+              country: data.features[0].attributes['tis.pais']|| data.features[0].attributes['pais'],
+              status: data.features[0].attributes['tis.leyenda']|| data.features[0].attributes['situacion'],
               date_create: data.features[0].attributes['tis.fecha_norma'],
-              area_ha: data.features[0].attributes['tis.area_oficial_ha'].toLocaleString(),
+              area_ha: data.features[0].attributes['tis.area_oficial_ha']|| data.features[0].attributes['area_oficial_ha'],
               category:data.features[0].attributes['tis.categoria'],
               source: data.features[0].attributes['tis.fuente'],
+              company: data.features[0].attributes['cia'],
+              substance: data.features[0].attributes['tipo_minerio'],
+
             }
           }
           this.infowindow = new CustomInfowindow(this.location.latlng, this.map, infoWindowOptions);
