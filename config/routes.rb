@@ -54,7 +54,6 @@ Gfw::Application.routes.draw do
   get '/sources' => 'static#data'
   get '/sources(/:section)' => 'static#data'
 
-  get '/my_gfw/login' => 'connect#login', as: 'user_login'
   get '/my_gfw/' => 'connect#index', as: 'user_index'
   get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
 

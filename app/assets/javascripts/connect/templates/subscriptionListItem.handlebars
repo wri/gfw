@@ -1,6 +1,12 @@
 <tr>
   <td>
-    <h4>{{name}}</h4>
+    <h4>
+      {{#if name}}
+        {{name}}
+      {{else}}
+        <em>Unnamed Subscription</em>
+      {{/if}}
+    </h4>
     <h5>{{created}}</h5>
   </td>
 

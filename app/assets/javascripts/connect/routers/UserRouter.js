@@ -1,8 +1,9 @@
 define([
   'jquery', 'backbone', 'underscore',
+  'map/models/UserModel',
   'connect/views/UserFormView',
   'connect/views/SubscriptionListView'
-], function($, Backbone, _, UserFormView, SubscriptionListView) {
+], function($, Backbone, _, User, UserFormView, SubscriptionListView) {
 
   'use strict';
 
@@ -12,6 +13,31 @@ define([
 
     routes: {
       '*path': 'showView'
+    },
+
+    initialize: function() {
+      this.checkLoggedIn();
+      this.setupNavbar();
+    },
+
+    checkLoggedIn: function() {
+      this.user = new User();
+      this.user.fetch().fail(function() {
+        location.href = '/';
+      });
+    },
+
+    setupNavbar: function() {
+      // Force nav links to navigate, rather than doing a browser page
+      // reload
+      var context = this;
+      $('#user-profile-nav').on('click', 'a', function(event) {
+        event.preventDefault();
+        var root = location.protocol + '//' + location.host + '/',
+            href = _.last($(this).prop('href').split(root));
+
+        context.navigate(href, {trigger: true});
+      });
     },
 
     availableViews: {
@@ -24,10 +50,10 @@ define([
 
       this.subViews = this.subViews || {};
       if (this.subViews[viewName] === undefined) {
-        var view = this.availableViews[viewName];
-        if (view === undefined) { return; }
+        var View = this.availableViews[viewName];
+        if (View === undefined) { return; }
 
-        this.subViews[viewName] = new view();
+        this.subViews[viewName] = new View();
         this.subViews[viewName].render();
       }
 
