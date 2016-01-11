@@ -100,6 +100,7 @@ define([
 
     setDropable: function() {
       var dropable = document.getElementById('drop-shape-analysis');
+      if (!dropable) return;
       dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
       dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
       dropable.ondrop = function (e) {

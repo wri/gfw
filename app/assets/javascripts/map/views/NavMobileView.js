@@ -63,6 +63,7 @@ define([
       this.$layersBtn = $('#layers-navmobile-btn');
       this.$analysisBtn = $('#analysis-navmobile-btn');
       this.$countryBtn = $('#country-navmobile-btn');
+      this.$hresBtn = $('#hres-navmobile-btn');
     },
 
     showView: function(e){
@@ -92,7 +93,10 @@ define([
     toogleAnalysisBtn: function(toggle){
       this.$analysisBtn.toggleClass('current',toggle);
     },
-
+    
+    toogleHresBtn: function(toggle){
+      this.$hresBtn.toggleClass('current',toggle);
+    },
     toggleVisibilityAnalysis: function(toggle){
       this.$analysisBtn.toggleClass('disabled',toggle);
     },

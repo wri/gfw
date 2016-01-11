@@ -55,13 +55,14 @@ define([
     setInfoWindow: function (_data, event) {
       var data = _data;
       if (!!data) {
+        console.log(data)
         var infoWindowOptions = {
           offset: [0, 100],
           infowindowData: {
             acquired: moment(data['acquired']).format("MMMM Do, YYYY"),
-            platform: data['platform'],
+            platform: data['platform'].toUpperCase(),
             sensor_platform: data['sensor_platform'].toUpperCase(),
-            cloud_coverage: (data['cloud_coverage']) ? data['cloud_coverage'] : '0'
+            cloud_coverage: (data['cloud_coverage']) ? Math.ceil( data['cloud_coverage'] * 10) / 10 : '0'
           }
         }
         this.infowindow = new CustomInfowindow(event.latLng, this.map, infoWindowOptions);
