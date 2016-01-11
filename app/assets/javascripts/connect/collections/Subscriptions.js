@@ -1,11 +1,14 @@
 define([
- 'backbone'
-], function(Backbone) {
+  'backbone',
+  'connect/models/Subscription'
+], function(Backbone, Subscription) {
 
   'use strict';
 
-  var User = Backbone.Model.extend({
-    url: window.gfw.config.GFW_API_HOST + '/user',
+  var Subscriptions = Backbone.Collection.extend({
+    model: Subscription,
+
+    url: window.gfw.config.GFW_API_HOST + '/v2/subscriptions',
 
     sync: function(method, model, options) {
       options || (options = {});
@@ -22,6 +25,6 @@ define([
     }
   });
 
-  return User;
+  return Subscriptions;
 
 });

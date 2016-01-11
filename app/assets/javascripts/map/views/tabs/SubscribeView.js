@@ -29,7 +29,7 @@ define([
 
       this.user = new User();
       this.listenTo(this.user, 'sync', this.render);
-      this.user.loadFromCookie();
+      this.user.fetch();
 
       this.render();
     },
@@ -82,7 +82,7 @@ define([
       if (this.validateEmail(email)) {
         $.ajax({
           type: 'POST',
-          url: window.gfw.config.GFW_API_HOST + '/subscribe',
+          url: window.gfw.config.GFW_API_HOST + '/v2/subscriptions',
           crossDomain: true,
           xhrFields: { withCredentials: true },
           data: JSON.stringify(data),

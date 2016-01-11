@@ -70,6 +70,7 @@ define([
       "can_land_rights",
       "cri_land_rights",
       "nzl_land_rights",
+      "raisg",
       // CONSERVATION
       "biodiversity_hotspots",
       "verified_carbon",
@@ -87,7 +88,7 @@ define([
       "per_nat_pa",
       "per_priv_pa",
       "per_reg_pa",
-      // FOREST USE
+      // Land USE
       "dam_hotspots",
       "per_prod_for",
       "concesiones_wrapper",
@@ -123,7 +124,7 @@ define([
       "mys_logging",
       "logging",
       "logging_roads",
-      "raisg",
+      "raisg_mining",
       //STORIES
       "infoamazonia",
       "mongabay",

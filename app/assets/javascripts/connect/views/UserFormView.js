@@ -7,10 +7,10 @@ define([
   'use strict';
 
   var UserFormView = Backbone.View.extend({
-    className: 'user-form',
+    className: 'user-form content-form',
 
     events: {
-      'click #sendform' : '_submit'
+      'click #submit' : '_submit'
     },
 
     template: Handlebars.compile(tpl),
@@ -18,7 +18,7 @@ define([
     initialize: function() {
       this.user = new User();
       this.listenTo(this.user, 'sync', this.render);
-      this.user.loadFromCookie();
+      this.user.fetch();
 
       this.render();
     },
@@ -32,7 +32,15 @@ define([
     },
 
     _submit: function() {
-      this.$('form').submit();
+      var formValues = this.$('form').
+        serializeArray().
+        reduce(function(prev, curr) {
+          prev[curr.name] = curr.value;
+          return prev;
+        }, {});
+
+      this.user.set(formValues);
+      this.user.save();
     }
   });
 

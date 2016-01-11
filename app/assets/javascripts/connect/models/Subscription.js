@@ -4,8 +4,8 @@ define([
 
   'use strict';
 
-  var User = Backbone.Model.extend({
-    url: window.gfw.config.GFW_API_HOST + '/user',
+  var Subscription = Backbone.Model.extend({
+    idAttribute: 'key',
 
     sync: function(method, model, options) {
       options || (options = {});
@@ -22,6 +22,6 @@ define([
     }
   });
 
-  return User;
+  return Subscription;
 
 });

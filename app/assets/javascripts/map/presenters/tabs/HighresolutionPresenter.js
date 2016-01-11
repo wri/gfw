@@ -35,8 +35,10 @@ define([
           var params = JSON.parse(atob(place.params.hresolution));
           if (params.zoom >= 7) {
             this.view.switchToggle();
-            this.view._fillParams(params);
           }
+          this.view._fillParams(params);
+        } else {
+          this.toggleLayer(null, place.params.sublayers[0]);
         }
       }
     }],
@@ -89,8 +91,9 @@ define([
      *
      * @param  {string} layerSlug
      */
-    toggleLayer: function(layerSlug) {
-      var where = [{slug: layerSlug}];
+    toggleLayer: function(layerSlug, id) {
+
+      var where = layerSlug ? [{slug: layerSlug}] : [{id: id}];
 
       layerSpecService.toggle(where,
         _.bind(function(layerSpec) {

@@ -10,7 +10,6 @@ class StaticController < ApplicationController
 
   def terms
     @title = 'Terms of Service'
-    @loggedin = !!cookies[:_eauth]
   end
 
   def about
@@ -18,7 +17,6 @@ class StaticController < ApplicationController
     @desc = 'Learn about the ideas and partnerships behind GFW and our outcomes, watch videos, read our data policy, and contact us.'
     @keywords = 'GFW, about, global forest watch, about gfw, history, staff, world resources institute, wri, about gfw commodities, about gfw fires'
     @currentNavigation = '.shape-about'
-    @loggedin = !!cookies[:_eauth]
   end
 
   def data
@@ -50,7 +48,6 @@ class StaticController < ApplicationController
     @desc = 'Learn to use the GFW platform with detailed directions on how to harness a wide variety of content and capabilities to suit your interests.'
     @keywords = 'GFW, how to, howto, learn to, instuctions, video, tutorial, tutorials, guidelines, guide, learn, help, platform, website, map, analyze, manual, faqs'
     @currentNavigation = '.shape-howto'
-    @loggedin = !!cookies[:_eauth]
   end
 
   def keep
@@ -58,7 +55,6 @@ class StaticController < ApplicationController
     @desc = 'Read the latest news and GFW analysis, sign up to receive alerts, and subscribe to areas of interest.'
     @keywords = 'GFW, stay informed, stories, read, news, blog, newsletter, sign up, publications, browse, updates, keep udated, submit, upload, share'
     @currentNavigation = '.shape-keep'
-    @loggedin = !!cookies[:_eauth]
 
     stories_per_page = 5
 
@@ -88,7 +84,6 @@ class StaticController < ApplicationController
     @desc = 'Contribute to the GFW community by providing data, helping improve GFW, developing your own project, or by joining the discussion about GFW.'
     @keywords = 'GFW, help, join, upload, crowdsource, develop, submit, story, app, report, map, public, open, data, share, improve, apply, small grants, fund, feedback, translations, action'
     @currentNavigation = '.shape-getinvolved'
-    @loggedin = !!cookies[:_eauth]
   end
 
   def explore
@@ -96,7 +91,6 @@ class StaticController < ApplicationController
     @desc = 'Browse maps and tools available through GFW, create custom visualizations and analyses, access interactive forest statistics, or download data.'
     @keywords = 'GFW, forests, forest data, forest monitoring, forest landscapes, maps, apps, applications, fires, commodities, open landscape partnership, map, palm oil transparency toolkit, forest atlas, develop your own app, climate, biodiversity, deforestation, mobile, explore, browse, tools'
     @currentNavigation = '.shape-all-apps'
-    @loggedin = !!cookies[:_eauth]
   end
 
   def feedback
@@ -107,7 +101,6 @@ class StaticController < ApplicationController
     feedback = params["feedback"]
 
     YourMailer.feedback(feedback,signup,email).deliver
-    @loggedin = !!cookies[:_eauth]
   end
 
   def feedback_jsonp
@@ -128,7 +121,6 @@ class StaticController < ApplicationController
 
   def old
     @title = "Oops, your browser isn't supported."
-    @loggedin = !!cookies[:_eauth]
     render layout: 'old_browser'
   end
 

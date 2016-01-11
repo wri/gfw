@@ -118,11 +118,7 @@ define([
     },
 
     render: function(){
-      if (!$('body').hasClass('user-is-loggedin-true')) {
-        this.$el.html(this.template_login());
-      } else {
-        this.$el.html(this.template());
-      }
+      this.$el.html(this.template());
       this.cacheVars();
       this.inits();
     },

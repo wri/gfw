@@ -10,7 +10,6 @@ class CountriesController < ApplicationController
     @title = 'Country Profiles'
     @desc = 'Explore country-specific statistics and graphs to see the how forests change and contribute to various sectors.'
     @keywords = 'GFW, list, forest data, visualization, data, national, country, analysis, statistic, tree cover loss, tree cover gain, climate domain, boreal, tropical, subtropical, temperate, deforestation, overview'
-    @loggedin = !!cookies[:_eauth]
   end
 
   def show
@@ -22,7 +21,6 @@ class CountriesController < ApplicationController
 
     @employees = @country['employment']
     @conventions = %w(cbd unfccc kyoto unccd itta cites ramsar world_heritage nlbi ilo)
-    @loggedin = !!cookies[:_eauth]
 
     blog_story = Api::Blog.find_by_country(@country)
     @blog_story = blog_story.present? ? blog_story : nil
@@ -44,7 +42,6 @@ class CountriesController < ApplicationController
     @title = 'Country Rankings'
     @desc = 'Compare tree cover change across countries and climate domains and view global rankings.'
     @keywords = 'GFW, list, forest data, visualization, data, national, country, analysis, statistic, tree cover loss, tree cover gain, climate domain, boreal, tropical, subtropical, temperate, deforestation, deforesters, overview, global'
-    @loggedin = !!cookies[:_eauth]
   end
 
   private
