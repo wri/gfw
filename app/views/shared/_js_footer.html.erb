@@ -73,7 +73,6 @@
   // print user info
     $(function() {
         if (!!localStorage.getItem('userSocialInfo')) {
-          debugger
           var user = JSON.parse(sessionStorage.getItem('userSocialInfo'));
           $('#headerGfw').find('.shape-mygfw span').text('user.name');
         }
