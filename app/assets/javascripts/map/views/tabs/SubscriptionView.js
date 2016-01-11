@@ -94,27 +94,26 @@ define([
 
     setDropable: function() {
       var dropable = document.getElementById('drop-shape');
-      if (dropable) {
-        dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
-        dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
-        dropable.ondrop = function (e) {
-          e.preventDefault();
+      if (!dropable) return;
+      dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
+      dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
+      dropable.ondrop = function (e) {
+        e.preventDefault();
 
-          var file = e.dataTransfer.files[0];
-          var shapeService = new ShapefileService({
-            shapefile : file });
-          shapeService.toGeoJSON().then(function(data) {
-            var features = data.features[0];
-            mps.publish('Subscription/upload', [features.geometry]);
+        var file = e.dataTransfer.files[0];
+        var shapeService = new ShapefileService({
+          shapefile : file });
+        shapeService.toGeoJSON().then(function(data) {
+          var features = data.features[0];
+          mps.publish('Subscription/upload', [features.geometry]);
 
-            this.drawMultipolygon(features);
-            var bounds = geojsonUtilsHelper.getBoundsFromGeojson(features);
-            this.map.fitBounds(bounds);
-          }.bind(this));
+          this.drawMultipolygon(features);
+          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(features);
+          this.map.fitBounds(bounds);
+        }.bind(this));
 
-          return false;
-        }.bind(this);
-      }
+        return false;
+      }.bind(this);
     },
 
     render: function(){
