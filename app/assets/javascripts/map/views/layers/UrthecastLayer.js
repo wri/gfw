@@ -55,7 +55,6 @@ define([
     setInfoWindow: function (_data, event) {
       var data = _data;
       if (!!data) {
-        console.log(data)
         var infoWindowOptions = {
           offset: [0, 100],
           infowindowData: {
