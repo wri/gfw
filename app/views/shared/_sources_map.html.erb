@@ -142,7 +142,7 @@
           </dl>
           <dl class='sources_row even'>
             <dt>Date of content</dt>
-            <dd>2000–2014</dd>
+            <dd>2001–2015</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Cautions</dt>
@@ -163,10 +163,10 @@
           <p>The PRODES project monitors clear cut deforestation in the Brazilian Legal Amazon, and has produced annual deforestation rates for the region since 1988. The Brazilian government uses these figures to establish public policy, including defining access to credit in the Amazon biome, establishing deforestation reduction goals, and soliciting funds to reduce deforestation. PRODES historically used Landsat 5 images, but now also incorporates imagery from Landsat 7 and 8, CBERS-2, CBERS-2B, Resourcesat-1, and UK2-DMC. PRODES is operated by the National Institute of Space Research (INPE) in collaboration with the Ministry of the Environment (MMA) and the Brazilian Institute of Environment and Renewable Natural Resources (IBAMA). Since 2002, all PRODES data is publicly available online.</p>
 
           <p>Input images for each of the 220 Landsat footprints that cover the Brazilian Amazon are selected based on their lack of cloud cover and their capture date. The PRODES system uses the seasonal year, starting on August 1st, to calculate annual deforestation, so images are selected as near to this date as possible (generally from July, August, and September). From 2003 to 2005, analysts used image transformation to determine the components of vegetation, soil, and shadow using the program SPRING. These components were segmented and classified into the classes of forest, non-forest, deforestation in the target year, previous deforestation, clouds, and water, which are then manually corrected by experts. Starting in 2005, a new methodology was implemented which makes use of the open source TerraAmazon platform. The platform allows the PRODES analysis to be more uniform and can incorporate imagery from a variety of satellites. As before, images are selected to be as cloud free as possible. The images are then masked to exclude non-forest, previous deforestation, and water using the previous year’s analysis. Analysts then delineate deforested polygons in the intact forest of the previous year. More information on the methodology can be found on the <a href="http://www.obt.inpe.br/prodes/index.php" target="_blank">PRODES website</a>.</p>
-          <p>This data set shows deforestation from 1997-2000, and annual deforestation between 2000 and 2014.</p>
+          <p>This data set shows annual deforestation between 2001 and 2015.</p>
 
 
-          <p class='credits'><strong>National Institute of Space Research (INPE). “PRODES.” 2014.</p>
+          <p class='credits'><strong>National Institute of Space Research (INPE). “PRODES.” 2015.</p>
 
           <p class='read_more hidden'><em><a href="http://data.globalforestwatch.org" class="download-mobile-link" target="_blank">Learn more or download data</a></em></p>
         </div>
@@ -508,6 +508,14 @@
 
           <p class='read_more hidden'><a href="http://data.globalforestwatch.org" class="download-mobile-link" target="_blank">Aprenda mas o descargue los datos</a></p>
         </div>
+      </div>
+    </li>
+     <li id='guyra_source' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>GRAN CHACO DEFORESTATION GEOGRAPHIC COVERAGE</strong>
+      </div>
+      <div class='source_body'>
+        <p>This layer displays the geographic coverage of the Gran Chaco deforestation data.</p>
       </div>
     </li>
     <li id='forma' class='source-item'>
@@ -1054,20 +1062,19 @@
     </li>
     <li id='pantropical' class='source-item'>
       <div class='source_header'>
-        <strong class='source_title'>Tropical forest carbon stocks </strong>
+        <strong class='source_title'>Aboveground Live Woody Biomass density</strong>
         <i class='expand_arrow'></i>
-        <em class='source_description'>(2000)</em>
       </div>
 
       <div class='source_body'>
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
-            <dd>Shows total carbon stock values in live biomass across the tropics</dd>
+            <dd>Shows carbon density values of aboveground live woody biomass across the tropics.</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE</dt>
-            <dd>1 × 1 kilometer (100 ha)</dd>
+            <dd>30 m.</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Geographic coverage</dt>
@@ -1075,29 +1082,79 @@
           </dl>
           <dl class='sources_row even'>
             <dt>Source data</dt>
-            <dd><a href='http://icesat.gsfc.nasa.gov/icesat/glas.php' target='_blank'>ICESAT GLAS Lidar</a> and other radar satellite imagery</dd>
+            <dd>ICEsat GLAS lidar, MODIS, Landsat, ground measurements.</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Date of content</dt>
-            <dd>Early 2000s</dd>
+            <dd>2000</dd>
           </dl>
           <dl class='sources_row even'>
+            <dt>Tree cover canopy density</dt>
+            <dd>Varies according to selection (use the legend on the map to change the minimum tree cover canopy density threshold)</dd>
+          </dl>
+           <dl class='sources_row'>
             <dt>Cautions</dt>
-            <dd>The forest above and below ground biomass were produced at 1 × 1 kilometer (100 ha) spatial resolution. The values for each pixel (1 × 1 km) refer to the biomass of forests remaining within the pixel and can be used directly to estimate total carbon stock in forests within one pixel. Along with the biomass values, there is an error map at the same spatial resolution providing the uncertainty in biomass estimation. It is recommended that both biomass and uncertainty values be used together for carbon assessments and verifications. The map will provide accurate estimates of total carbon stock and carbon density when aggregated to large areas (5,000-10,000 ha) for project and regional level assessments. The biomass value of a single pixel may have large uncertainty when compared with small plots for verification.</dd>
+            <dd>It is recommended that both aboveground carbon density and uncertainty values be used together for carbon assessments and verification. The map will provide accurate estimates of aboveground carbon stock and aboveground carbon density when aggregated to large areas (5,000 to 10,000 ha) for project and regional level assessments. The biomass density value of a single pixel may have large uncertainty when compared with small plots for verification.</dd>
+          </dl>
+           <dl class='sources_row even'>
+            <dt>License</dt>
+            <dd>Creative Commons CC BY 4.0 </dd>
           </dl>
         </div>
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>The Tropical Forest Carbon Stocks data layer shows a “benchmark” map of biomass carbon stocks for more than 2.5 billion hectares of forests on three continents, encompassing all tropical forests, for the early 2000s. Researchers from NASA’s <a href='http://www.jpl.nasa.gov/' target='_blank'>Jet Propulsion Laboratory (JPL)</a> and <a href='http://www.winrock.org/' target='_blank'>Winrock International</a> developed the layer by collecting data from more than 4,000 in situ inventory plots, plus optical and microwave imagery (1 km resolution) to extrapolate the amount of calculated carbon stocks from forests distributed over the South American, Southeast Asia, and the sub-Saharan African regions. Further data on tree height and landscape characteristics across the tropics were derived using satellite light detection and ranging (Lidar) data from the <a href='http://icesat.gsfc.nasa.gov/icesat/glas.php' target='_blank'>ICESAT GLAS Lidar</a>. This data set also helps illustrate regional patterns and provides methodologically comparable estimates of carbon stocks for 75 developing countries where previous assessments were either poor or incomplete.</p>
+          <p>This is a higher resolution data product that expands upon the methodology presented in Baccini et al. (2012) to generate a pan-tropical map of aboveground live woody biomass density at 30 m resolution for circa the year 2000. Along with the carbon density values, there is an error map at the same spatial resolution providing the uncertainty in aboveground carbon density estimation. These maps allow for the co-location of biomass estimates with Hansen et al. (2013, v1.0) tree cover loss estimates at similar spatial resolution. The statistical relationship derived between ground-based measurements of forest biomass density and co-located Geoscience Laser Altimeter System (GLAS) LiDAR waveform metrics as described by Baccini et al. (2012) were used to estimate the biomass density of more than 40,000 GLAS footprints throughout the tropics. Then, using randomForest models, the GLAS-derived estimates of biomass density were correlated to continuous, gridded variables including Landsat 7 ETM+ satellite imagery and products (e.g., reflectance), elevation, and biophysical variables. By using continuous gridded datasets as inputs to the randomForest models, a wall-to-wall 30 m resolution map of aboveground woody biomass density across the tropics was produced as well as the associated uncertainty layer. The uncertainty layer takes into account the errors from allometric equations, LiDAR based model, and randomForest model. All the errors are propagated to the final biomass estimate. A detailed description of the work will be reported in a new paper under preparation.</p>
 
-          <p class='credits'><strong>Citation:</strong> Saatchi, S.S., N.L. Harris, S. Brown, M. Lefsky, E. Mitchard, W. Salas, B. Zutta, W. Buermann, S. Lewis, S. Hagen, S. Petrova, L. White, M. Silman, and A. Morel. 2011. “<a href='http://www.pnas.org/content/108/24/9899.full' target='_blank'>Benchmark map of forest carbon stocks in tropical regions across three continents</a>.” <em>Proceedings of the National Academy of Sciences</em> vol 108, no. 24, pp 9899-9904. DOI: 10.1073/pnas.1019576108.</p>
+          <p class='credits'><strong>Citation:</strong> Baccini A., W. Walker, L. Carvahlo, M. Farina, D. Sulla-Menashe, R. Houghton (2015). Tropical forests are a net carbon source based on new measurements of gain and loss. In review. Accessed through Global Forest Watch Climate on [date].  <a href="http://climate.globalforestwatch.org" target="_blank">climate.globalforestwatch.org</a></p>
 
-          <p class='read_more'><em>Learn more or download data at the <a href='http://www.pnas.org/content/suppl/2011/05/24/1019576108.DCSupplemental' target='_blank'>NASA Jet Propulsion Laboratory website</a>.</em></p>
+          <p class='read_more hidden'><a href='http://data.globalforestwatch.org/' target='_blank'>Learn more or download data</a></p>
         </div>
       </div>
     </li>
+    <li id='idn_peat_lands' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Peat lands</strong>
+        <i class='expand_arrow'></i>
+        <em class='source_description'>(Indonesia, 2011)</em>
+      </div>
 
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Displays the location and depth of peat in Indonesia</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>1:250,000 scale.</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Indonesia</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd>Ministry of Agriculture</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Date of content</dt>
+            <dd>2011</dd>
+          </dl>
+
+
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>This layer shows the location of peat lands in Indonesia, classified by depth. The data is available by province from the <a href="http://bbsdlp.litbang.pertanian.go.id/index.php?option=com_phocadownload&view=category&id=32:peta-lahan-gambut-indonesia&Itemid=185" target="_blank">Ministry of Agriculture</a>, and was prepared by the World Resources Institute.</p>
+
+          <p class='credits'><strong>Citation:</strong> Ministry of Agriculture. “Indonesia peat lands.” Accessed through Global Forest Watch on [date].  <a href="http://www.globalforestwatch.org" target="_blank">www.globalforestwatch.org</a> </p>
+
+          <p class='read_more hidden'><a href='http://data.globalforestwatch.org/' target='_blank'>Learn more or download data</a></p>
+        </div>
+      </div>
+    </li>
     <li id='ifl_2013_deg' class='source-item'>
       <div class='source_header'>
         <strong class='source_title'>Intact Forest Landscapes</strong>
@@ -2988,7 +3045,75 @@
         </div>
       </div>
     </li>
+    <li id='raisg_mining' class='source-item last'>
+      <div class='source_header'>
+        <strong class='source_title'>Amazon basin mining concessions</strong>
+        <i class='expand_arrow'></i>
+        <em class='source_description'>(RAISG)</em>
+      </div>
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Displays boundaries of mining concessions in the Amazon Basin</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Geographic coverage</dt>
+            <dd>Bolivia, the Brazilian Amazon, the Colombian Amazon, the Ecuadorian Amazon, Guyana, the Peruvian Amazon, Suriname, and Venezuela</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Source data</dt>
+            <dd><p>Data is aggregated by <a href="http://raisg.socioambiental.org/" target="_blank">RAISG</a> - the Amazon Socio-environmental Georeferenced Information Network. Partner organizations from each country contribute the data.</p>
+            <p>Bolivia: SERGEOTECMIN, 2005</p>
+            <p>Brazil: Departamento Nacional da Produção Mineral-DNPM, 2011</p>
+            <p>Colombia: Catastro Minero Colombiano, 2010</p>
+            <p>Ecuador: Ministerio de Recursos Naturales no Renovables, 2010</p>
+            <p>Guyana: Guyana Geology and Mines Commission, 2009</p>
+            <p>Peru: MINEM, 2011</p>
+            <p>Suriname: Natural Resource and Environmental Assessment - NARENA</p>
+            <p>Venezuela: Ministerio de Energía y Minas, 2009</p></dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Frequency of updates</dt>
+            <dd>Varies by country</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Date of content</dt>
+            <dd>Varies by country</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Cautions</dt>
+            <dd>
+              <p>Some countries provide data for the entire country (Bolivia, Guyana, Suriname, Venezuela), while others only provide land rights data for the Amazon portion of their country (Brazil, Colombia, Ecuador, Peru).</p>
 
+              <p>Unfortunately, RAISG data is not downloadable or analyzable on Global Forest Watch at this time.</p>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class='source_body'>
+        <div class='source_summary'>
+        <h3 class='overview_title'>Overview</h3>
+          <p><a href="http://raisg.socioambiental.org/" target="_blank">RAISG</a> is a network of organizations with the goal of sharing georeferenced socioeconomic data throughout the Amazon Basin. This data set shows the boundaries of mining concessions in Bolivia, the Brazilian Amazon, the Colombian Amazon, the Ecuadorian Amazon, Guyana, the Peruvian Amazon, Suriname, and Venezuela.  The territories are classified according to their status: potential, in application, exploration, exploitation/ exploration, exploitation, and unknown. Unfortunately, RAISG data is not downloadable or analyzable on Global Forest Watch at this time. To see the data in the original web map, click <a href="http://www3.socioambiental.org/raisg2015/" target="_blank">here</a>.</a></p>
+          <p class='credits'><strong>Credit:</strong>RAISG. “Mining Concessions of the Amazon Basin”. Accessed through Global Forest Watch on [date].. <a href=" www.globalforestwatch.org." target="_blank"> www.globalforestwatch.org.</a></p>
+          <p class='read_more hidden'><em><a href='http://www3.socioambiental.org/raisg2015/' class="download-mobile-link" target='_blank'>Visualize the data on the RAISG platform</a></em></p>
+        </div>
+      </div>
+    </li>
+    <li id='aus_land_rights' class='source-item last'>
+      <div class='source_header'>
+        <strong class='source_title'>Australia Aboriginal freehold lands</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_summary'>
+        <h3 class='overview_title'>Overview</h3>
+          <p>The inalienable Aboriginal freehold lands data set represents boundary and attribute information for land parcels, granted to incorporated Aboriginal groups through the Aboriginal Land Rights (Northern Territory) Act of 1976, which are greater than 40 hectares. Aboriginal land is private property owned under special freehold title. It is inalienable, meaning it cannot be bought, acquired, or forfeited. The inalienable Aboriginal freehold is granted as a communal title (where land is held collectively by a group, rather than by individuals), and is the strongest form of title in Australia. This title gives Aboriginal groups the power to control the direction and pace of development on their land. The data set only includes Aboriginal lands that are officially registered. More information is available at: <a href='http://www.ga.gov.au/metadata-gateway/metadata/record/42339/' target='_blank'> http://www.ga.gov.au/metadata-gateway/metadata/record/42339/</a>.</p>
+          <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org/datasets/81135c2ad89e4ae2ad94fe7fae4237ec_1' class="download-mobile-link" target='_blank'>Learn more and download data</a></em></p>
+        </div>
+      </div>
+    </li>
     <li id='can_mining' class='source-item last'>
       <div class='source_header'>
         <strong class='source_title'>Canada mining permits</strong>
@@ -4028,7 +4153,7 @@
           </dl>
           <dl class='sources_row even'>
             <dt>Date of content</dt>
-            <dd>2011</dd>
+            <dd>2014</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Cautions</dt>
@@ -5440,16 +5565,25 @@
           </dl>
           <dl class='sources_row'>
             <dt>Source data</dt>
-            <dd><p>Data is aggregated by RAISG - the Amazon Socio-environmental Georeferenced Information Network. Partner organizations from each country contribute the data.</p>
-            <p>Bolivia: Friends of Nature Foundation (FAN), 2013</p>
-            <p>Brazil: Instituto Socioambiental (ISA), 2013</p>
-            <p>Colombia: Gaia Amazonas Foundation (FGA), 2012</p>
-            <p>Ecuador: Ecociencia, 2012</p>
-            <p>French Guiana: Regional Office of the Environment (DIREN), 2009</p>
-            <p>Guyana: Instituto Socioambiental (ISA), 2009</p>
-            <p>Peru: Institute of the Common Good (IBC), 2013</p>
-            <p>Suriname: Amazon Conservation Team (ACT), 2009</p>
-            <p>Venezuela: ECOSIG, 2009</p></dd>
+            <dd><p>Data is aggregated by <a href="http://raisg.socioambiental.org/" target="_blank">RAISG</a> - the Amazon Socio-environmental Georeferenced Information Network. Partner organizations from each country contribute the data.</p>
+            <p>Bolivia:</p>
+            <p>Partner: Friends of Nature Foundation (<a href="http://www.fan-bo.org/" target="_blank">FAN</a>), 2013</p><p>Source: Instituto Nacional de Reforma Agraria - INRA, 2013 e Sistema Nacional de Información para el Desarollo - SNID</p>
+            <p>Brazil:</p>
+            <p>Partner: Instituto Socioambiental (<a href="http://www.socioambiental.org/pt-br" target="_blank">ISA</a>), 2013</p><p>Source: Instituto Socioambiental/ISA</p>
+            <p>Colombia:</p>
+            <p>Partner: Gaia Amazonas Foundation (<a href="http://gaiaamazonas.org/" target="_blank">FGA</a>), 2012</p><p>Source: INCODER</p>
+            <p>Ecuador:</p>
+            <p>Partner: <a href="http://www.ecociencia.org/inicio/index.php" target="_blank">Ecociencia</a> , 2012</p><p>Source:  Ecociência, 2013; GAD Sucumbíos,2014; MAE,2012.</p>
+            <p>French Guiana:</p>
+            <p>Partner: Instituto Socioambiental (<a href="http://www.socioambiental.org/pt-br" target="_blank">ISA</a>), 2009</p><p>Source: Direction Régionale de l'Environnement de Guyane, 2007</p>
+            <p>Guyana:</p>
+            <p>Partner: Instituto Socioambiental (<a href="http://www.socioambiental.org/pt-br" target="_blank">ISA</a>), 2009</p><p>Source:  Indigenous Affair/Government of Guyana</p>
+            <p>Peru:</p>
+            <p>Partner: Institute of the Common Good (<a href="http://www.ibcperu.org/" target="_blank">IBC</a>), 2013</p><p>Source: ACPC, AIDESEP, CEDIA, CIPTA, FENAMAD, GEF/PNUD, GEF/PNUD-IBC, GOREL, GORESAM,IBC, IBC - ACPC, IBC - AIDESEP, IBC - PETT, INDEPA, PETT, PFS-IRG 2002, WWF.</p>
+            <p>Suriname:</p>
+            <p>Partner: Amazon Conservation Team (<a href="http://www.act-suriname.org/" target="_blank">ACT</a>), 2009</p><p>Source: Amazon Conservation Team (<a href="http://www.act-suriname.org/" target="_blank">ACT</a>)</p>
+            <p>Venezuela:</p>
+            <p>Partner: Provita, 2015</p><p>Source: OIPUS-OPIJKA-CIAG-UNEG 2008 /  OIPUS-WATANIBA 2011 / OIPUS-OPUHC-Wataniba-Provita 2014-2015;STCND/DGPOA/MPPA 2014;Ministerio del Poder Popular para la Salud, mapa, 2007;ISA, HUTUKARA, WATANIBA, HORONAMI, 2014, Comunidades, Tierra y Hábitat Yanomami Brasil-Venezuela,KUYUJANI, KUYUJANI ORIGINARIO, KUYUNU, WATANIBA, PROVITA, 2014-2015  Proyecto BABA</p></dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Frequency of updates</dt>
@@ -5472,7 +5606,7 @@
       <div class='source_body'>
         <div class='source_summary'>
         <h3 class='overview_title'>Overview</h3>
-          <p><a href="http://raisg.socioambiental.org/" target="_blank">RAISG</a> is a network of organizations with the goal of sharing georeferenced socioeconomic data throughout the Amazon Basin. This data set shows the boundaries of indigenous territories in Bolivia, the Brazilian Amazon, the Colombian Amazon, Ecuador, French Guiana, Guyana, the Peruvian Amazon, Suriname, and the Venezuelan Amazon.  The territories are devided into four categories of legal recognition:  "Traditional occupation without legal recognition", "Proposed territorial reserve", "Territorial reserve or intangible zone" and "Recognized indigenous land".</a></p>
+          <p><a href="http://raisg.socioambiental.org/" target="_blank">RAISG</a> iis a network of organizations with the goal of sharing georeferenced socioeconomic data throughout the Amazon Basin. This data set shows the boundaries of indigenous territories in Bolivia, the Brazilian Amazon, the Colombian Amazon, Ecuador, French Guiana, Guyana, the Peruvian Amazon, Suriname, and the Venezuelan Amazon.  The territories are devided into four categories of legal recognition:  "Traditional occupation without legal recognition", "Proposed territorial reserve", "Territorial reserve or intangible zone" and "Recognized indigenous land". Unfortunately, RAISG data is not downloadable or analyzable on Global Forest Watch at this time. To see the data in the original web map, click <a href="http://www3.socioambiental.org/raisg2015/" target="_blank"></a></a></p>
           <p class='credits'><strong>Credit:</strong>RAISG. “Amazon basin indigenous territories”. Accessed through Global Forest Watch on [date]. <a href=" www.globalforestwatch.org." target="_blank"> www.globalforestwatch.org.</a></p>
           <p class='read_more hidden'><em><a href='http://www3.socioambiental.org/raisg2015/' class="download-mobile-link" target='_blank'>Visualize the data on the RAISG platform</a></em></p>
         </div>
@@ -6171,6 +6305,7 @@
       <div class="mobile-hide">
         <p class='first'>Use the tabs above the map to turn on GFW's global data layers. Click the information icons in the drop down menus to learn more about each data set.</p>
         <p>Please note that some global layers, such as those under the "Forest Use" and "People" tabs, contain data for a select number of countries and are not truly "global" in nature. Rather, these data sets are a compilation of individual country data aggregated into joint layers (e.g., oil palm concessions).</p>
+        <p><%= image_tag('backgrounds/view_existing_global_data.gif', class: 'img-max') %></p>
       </div>
       <div class="mobile-show">
         <p>Return to the data layers menu and select "Global data" to turn on one of GFW's global data layers on the map. Click the information icons in the drop down menus to learn more about each data set.</p>
@@ -6214,7 +6349,23 @@
     </div>
   </div>
 </article>
+<article id="drop-shapefile">
+  <div class='source_header'>
+    <strong class='source_title'>UPLOAD A CUSTOM SHAPEFILE</strong>
+    <i class='expand_arrow'></i>
+  </div>
 
+  <div class='source_body'>
+    <div class='source_summary'>
+      <p class='first'>Drop a file on the designated area to analyse it or subscribe to it.</p>
+      <p>List of supported file formats:</p>
+      <ul class='bullets'>
+        <li>Unzipped: .bna, .csv, .dxf, .gtx, .txt, json, .geojson, .rss, .georss, .xml, .gml, .gmt, . gpx, .itf, .kml, .kmz</li>
+        <li>Zipped: .shp, dbf, .shx, .gml, .xsd, .itf, .ili, .tab, .map, .id, .dat, .vrt</li>
+      </ul>
+    </div>
+  </div>
+</article>
 <article id="near_real_time">
   <div class='source_header'>
     <strong class='source_title'>Forest change alerts</strong>
@@ -6255,7 +6406,7 @@
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE</dt>
-            <dd>5 meters for Theia images, 15 meters (pansharpened) for Landsat 8 images</dd>
+            <dd>5 meters for Theia images, 15 meters (pansharpened) for Landsat 8 images, 22 meters for Deimos-1 images</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Geographic coverage</dt>
@@ -6274,12 +6425,6 @@
             <dd>January 2013 – present</dd>
           </dl>
           <dl class='sources_row'>
-            <dt>Cautions</dt>
-            <dd>
-              <p>Images are only available through zoom level 15 (Theia), 14 (Landsat – RGB), or 13 (Landsat – other renderers).</p>
-            </dd>
-          </dl>
-          <dl class='sources_row even'>
             <dt>License</dt>
             <dd><a href="https://developers.urthecast.com/eula" target="_blank">End User License Agreement</a></dd>
           </dl>
@@ -6287,7 +6432,7 @@
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>This layer shows satellite imagery from the Landsat 8 OLI/TIRS sensor (15 meter resolution) and the ISS Theia sensor (5 meter resolution), provided by UrtheCast. The most recent image for an area is shown, though the date range can be modified in the menu. The images are only viewable up to a certain zoom level – 14 for Landsat images and 15 for Theia images. Users can also change the renderer and maximum cloud cover percentage by toggling advanced tools in the menu. The maximum cloud percentage sets the threshold for excluding cloudy images. Images are presented in RGB color (true color) by default, but can also be rendered as other color composites or indices, including NDVI, EVI, NDWI, and false color NIR.</p>
+          <p>This layer shows satellite imagery from the ISS Theia sensor (5 meter resolution), the Landsat 8 OLI/TIRS sensor (15 meter resolution), and the Deimos-1 SLIM6-22 sensor (22 meter resolution), all provided by UrtheCast. The most recent image for an area is shown, though the date range can be modified in the menu. Users can also change the renderer and maximum cloud cover percentage by toggling advanced tools in the menu. The maximum cloud percentage sets the threshold for excluding cloudy images. Images are presented in RGB color (true color) by default, but can also be rendered as other color composites or indices, including NDVI, EVI, NDWI, and false color NIR.</p>
 
 
           <p class='credits'>UrtheCast Products © Copyright UrtheCast – All Rights Reserved</p>
@@ -6307,7 +6452,7 @@
           <p>Satellites can “see” wavelengths of light that the human eye cannot detect, but that can give more information about the Earth’s surface. UrtheCast provides the following renderings of the images:
           <ul class='bullets'><li><strong>RGB (Red Green Blue):</strong> uses information on red, green, and blue light to show the Earth as humans see it.</li>
           <li><strong>Normalized Difference Vegetation Index (NDVI):</strong> uses information on red and infrared light to estimate the health of vegetation. This index is mapped from a white to green hue, where green pixels indicate good crop health and white pixels indicate poor crop health or an absence of vegetation.</li>
-          <li><strong>Enhanced Vegetation Index (EVI):</strong> another vegetation index using red and infrared information. It is more sensitive to variations in canopy structure than NDVI, and is better at controlling background noise.</li>
+          <li><strong>Enhanced Vegetation Index (EVI):</strong> another vegetation index using red and infrared information. It is more sensitive to variations in canopy structure than NDVI, and is better at controlling background noise. EVI is not available for Deimos-1 imagery.</li>
           <li><strong>Normalized Difference Water Index (NDWI):</strong> uses information on green and infrared light to help detect the presence of water in vegetation. The calculated pixel values range from blue to brown - where blue indicates the presence of water, and brown indicates dryer land. It is another tool to determine crop health and condition.</li>
           <li><strong>False color NIR (Near infrared):</strong> shows near infrared light as red, and visible light as green and blue. Vegetation reflects infrared light, so it generally shows up as bright red.</li>
           </ul></p>

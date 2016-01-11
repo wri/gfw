@@ -99,6 +99,7 @@ class StaticController < ApplicationController
     signup   = params["signup"]
     email    = params["email"]
     feedback = params["feedback"]
+
     YourMailer.feedback(feedback,signup,email).deliver
   end
 
@@ -107,6 +108,7 @@ class StaticController < ApplicationController
     email    = params["email"]
     feedback = params["feedback"]
     hostname = params["hostname"]
+
     YourMailer.feedback(feedback,signup,email,hostname).deliver
     respond_to do |format|
       format.js do

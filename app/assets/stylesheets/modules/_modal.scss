@@ -266,6 +266,9 @@ $height: auto;
       font-size: 90%;
     }
     .source_summary{
+      .img-max {
+        max-width: 100%;
+      }
       // margin: 0 0 15px;
     }
   }

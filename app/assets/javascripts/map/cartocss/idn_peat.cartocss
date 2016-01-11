@@ -1,0 +1,11 @@
+#idn_peat {
+  	raster-opacity:1; 
+  	raster-colorizer-default-mode: linear; 
+  	raster-colorizer-default-color: transparent; 
+  	raster-colorizer-epsilon: 0.02; 
+  	raster-colorizer-stops: 
+    	stop(1, #FFFFCC)
+      stop(2, #A1DAB4)
+      stop(3, #41B6C4)
+      stop(4, #2C7FB8)
+      stop(5, #253494)}

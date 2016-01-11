@@ -1,9 +1,21 @@
 $letterW: 20px;
-.tab-highresolution{
+#disclaimer-zoom {
+  display: none;
+  margin: 15px 0;
+  font-size: 13px;
+  color: $red;
+  strong {
+    color: #555;
+  }
+}
+.tab-highresolution {
   .highresolution-content{
     padding: 15px;
+    max-height: 350px;
+    overflow-y: auto;
     @media (min-width: 1500px){
       padding: 20px;
+      max-height: 400px;
     }
     h2 {
       font-size: 21px;
@@ -99,7 +111,7 @@ $letterW: 20px;
       .info-mapsource {
         display: inline-block;
         position: relative;
-        top: -3px; 
+        top: -3px;
       }
     }
     .onoffswitch {
@@ -329,5 +341,15 @@ $letterW: 20px;
     input[type=range]:focus::-ms-fill-upper {
       background: #367ebd;
     }
+  }
+}
+.tab-mobile-content .tab-highresolution .maptype {
+   h3 {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 25px;
+  }
+  .info-mapsource {
+    top: -20px;
   }
 }

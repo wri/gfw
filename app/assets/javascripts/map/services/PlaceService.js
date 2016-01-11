@@ -65,7 +65,7 @@ define([
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geojson,wdpaid,begin,end,threshold,dont_analyze,hresolution}',
+    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geojson,wdpaid,begin,end,threshold,dont_analyze,hresolution,tour}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -112,6 +112,7 @@ define([
       var route, params;
       params = this._destandardizeParams(
         this._getPresenterParams(this._presenters));
+      if (params.geojson && params.geojson.length > 1024) { return; } // prevent long shapefiles
       route = this._getRoute(params);
       this.router.navigateTo(route, {silent: true});
     },
@@ -179,6 +180,7 @@ define([
       p.subscribe_alerts = (p.subscribe_alerts === 'subscribe') ? true : null;
       p.referral = p.referral;
       p.hresolution = p.hresolution;
+      p.tour = p.tour;
       return p;
     },
 
@@ -205,6 +207,7 @@ define([
       p.wdpaid = p.wdpaid ? String(p.wdpaid) : null;
       p.threshold = p.threshold ? String(p.threshold) : null;
       p.hresolution = p.hresolution;
+      p.tour = p.tour;
       return p;
     },
 

@@ -758,3 +758,8 @@
     display: block;
   }
 }
+.user-is-loggedin-true {
+  .m-header-item.shape-mygfw svg {
+    background-color: rgba(151, 189, 61, 0.3);
+  }
+}

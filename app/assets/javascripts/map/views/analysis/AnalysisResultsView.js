@@ -7,9 +7,10 @@ define([
   'underscore',
   'handlebars',
   'map/presenters/analysis/AnalysisResultsPresenter',
+  'map/views/analysis/AdvancedAnalysisView',
   'text!map/templates/analysis/analysisResults.handlebars',
   'text!map/templates/analysis/analysisResultsFailure.handlebars',
-], function(_, Handlebars, Presenter, tpl, failureTpl) {
+], function(_, Handlebars, Presenter, AdvancedAnalysisView, tpl, failureTpl) {
 
   'use strict';
 
@@ -18,7 +19,6 @@ define([
       boxHidden: true
     }
   });
-
 
   var AnalysisResultsView = Backbone.View.extend({
 
@@ -35,6 +35,7 @@ define([
       'click #analysis-subscribe': '_subscribe',
       'click .dropdown-button' :'_toggleDownloads',
       'click .canopy-button' : '_showCanopy',
+      'click .advanced-analysis-button' : '_showAdvancedAnalysis',
       'click .close' : 'toogleAnalysis',
       'click #toggleIFL' : 'toogleIFL'
     },
@@ -76,7 +77,6 @@ define([
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + this.params.layer.title);
     },
 
-
     /**
      * Render failure analysis request message.
      */
@@ -92,7 +92,6 @@ define([
       this.params.warning_text = (this.$analysisTab.find('li.active').data('analysis') === 'draw-tab');
       this.params.downloadVisible = ((this.params.loss || this.params.forestgain) && this.mobile) ? false : true;
       this.params.url = this.setDownloadLink(params.layer.slug);
-
     },
 
     _deleteAnalysis: function() {
@@ -123,6 +122,14 @@ define([
       this.presenter.showCanopy();
     },
 
+    _showAdvancedAnalysis: function(e) {
+      e && e.preventDefault();
+
+      var view = new AdvancedAnalysisView({
+        resource: this.presenter.status.get('resource')});
+      $('#advanced-analysis').html(view.render().el);
+    },
+
     setDownloadLink: function(layer){
       var links = {
         'loss' : 'http://data.globalforestwatch.org/datasets/93ecbfa0542c42fdaa8454fa42a6cc27',
@@ -149,7 +156,6 @@ define([
       $(e.currentTarget).find('.onoffswitch').toggleClass('checked');
       this.$switchIFLabels.toggleClass('checked')
     }
-
 
   });
 
