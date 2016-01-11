@@ -30,11 +30,9 @@ require([
   'views/FooterView',
   'views/NotificationsView',
   'views/DownloadView',
-  'views/FeedbackModalView',
-
   '_string'
 ], function($, _, Class, Backbone, chosen, utils, enquire, mps, Router, SourceWindowView, SourceBottomView, SourceMobileFriendlyView, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
-    MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, HeaderView, FooterView, NotificationsView, DownloadView, FeedbackModalView) {
+    MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, HeaderView, FooterView, NotificationsView, DownloadView) {
 
   'use strict';
 
@@ -90,7 +88,6 @@ require([
       new SourceBottomView();
       new SourceMobileFriendlyView();
       new NotificationsView();
-      new FeedbackModalView();
     },
 
     /**
