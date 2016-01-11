@@ -1,27 +1,27 @@
-/**
- * The SubscribeView module.
- *
- * @return SubscribeView class (extends Backbone.View).
- */
 define([
   'backbone',
   'underscore',
   'handlebars',
   'map/models/UserModel',
   'map/presenters/tabs/SubscribePresenter',
+  'connect/models/Subscription',
   'text!map/templates/tabs/subscribe.handlebars'
-], function(Backbone, _, Handlebars, User, Presenter, tpl) {
+], function(Backbone, _, Handlebars, User, Presenter, Subscription, tpl) {
+
   'use strict';
 
   var SubscribeView = Backbone.View.extend({
 
-    el: '#analysis-subscribe',
+    id: 'subscription-modal',
+    className: 'modal',
 
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .close-icon' : 'hide',
-      'click #subscribe': 'subscribeAlerts',
+      'click .modal-close' : 'hide',
+      'click .modal-backdrop' : 'hide',
+      'click #showName': 'askForName',
+      'click #subscribe': 'subscribe',
     },
 
     initialize: function(){
@@ -36,78 +36,93 @@ define([
 
     render: function(){
       this.$el.html(this.template({
-        email: this.user.get('email')
+        email: this.user.get('email'),
+        loggedIn: this.user.isLoggedIn()
       }));
-
-      this.cacheVars();
 
       return this;
     },
 
-    cacheVars: function(){
-      this.$content = this.$el.find('.analysis-subscribe-content');
-      this.$steps = this.$el.find('.steps');
-    },
-
     show: function(options){
-      this.analysisResource = options.analysisResource;
-      this.$el.addClass('active');
-      this.$content.addClass('active');
+      this.createSubscription(options.analysisResource);
+      this.currentStep = 0;
+
+      this.$el.addClass('is-active');
     },
 
-    hide: function(){
-      this.$el.removeClass('active');
-      this.$content.removeClass('active');
-      this.nextStep(0);
+    hide: function(event) {
+      if (event !== undefined && event.preventDefault) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      this.$el.removeClass('is-active');
+      this.render();
       this.presenter.hide();
     },
 
-    subscribeAlerts: function() {
-      var email = this.$el.find('#areaEmail').val();
-      var topic = 'Subscribe to alerts';
+    createSubscription: function(analysisResource) {
+      this.subscription = new Subscription({
+        topic: 'Subscribe to alerts',
+        name: this.$el.find('#subscriptionName').val()
+      });
 
-      var data = {
-        topic: topic,
-        email: email
-      };
-
-      ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + data.topic + ', Email: ' + data.email);
-
-      if (this.analysisResource.type === 'geojson') {
-        data.geom = JSON.parse(this.analysisResource.geojson);
-      }else{
-        data.geom = (this.analysisResource.geom) ? this.analysisResource.geom.geometry : this.presenter.geom_for_subscription;
+      var geom;
+      if (analysisResource.type === 'geojson') {
+        geom = JSON.parse(analysisResource.geojson);
+      } else {
+        if (analysisResource.geom) {
+          geom = analysisResource.geom.geometry;
+        } else {
+          geom = this.presenter.geom_for_subscription;
+        }
       }
 
-      if (this.validateEmail(email)) {
-        $.ajax({
-          type: 'POST',
-          url: window.gfw.config.GFW_API_HOST + '/v2/subscriptions',
-          crossDomain: true,
-          xhrFields: { withCredentials: true },
-          data: JSON.stringify(data),
-          dataType: 'json',
-          success: _.bind(this._successSubscription, this),
-          error: this.remove.bind(this)
-        });
-      }else{
+      this.subscription.set('geom', geom);
+    },
+
+    askForName: function() {
+      this.subscription.set('email',
+        this.$el.find('#subscriptionEmail').val());
+
+      if (this.subscription.hasValidEmail()) {
+        this.nextStep();
+      } else {
         this.presenter.notificate('email-incorrect');
       }
     },
 
-    validateEmail: function(email){
-      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
+    subscribe: function() {
+      window.ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' +
+        this.subscription.get('topic') + ', Email: ' + this.subscription.get('email'));
+
+      this.subscription.set('email',
+        this.$el.find('#subscriptionName').val());
+
+      this.subscription.save().
+        then(this.onSave.bind(this)).
+        fail(this.hide.bind(this));
     },
 
-    _successSubscription: function(data, textStatus, jqXHR) {
+    onSave: function() {
       this.presenter.subscribeEnd();
-      this.nextStep(1);
+      this.nextStep();
     },
 
-    nextStep: function(index){
-      this.$steps.removeClass('current')
-      this.$steps.eq(index).addClass('current');
+    nextStep: function(index) {
+      if (this.currentStep === undefined) {
+        this.currentStep = 0;
+      }
+
+      if (index !== undefined && _.isNumber(index)) {
+        this.currentStep = index;
+      } else {
+        this.currentStep += 1;
+      }
+
+      var $steps = this.$('.steps');
+      $steps.removeClass('current');
+      $steps.eq(this.currentStep).addClass('current');
     }
 
   });
