@@ -95,11 +95,11 @@ define([
       if(this.zoom >= 7) {
         this.$disclaimer.hide(0);
       } else {
-        if (this.previousZoom >= 7) {
-            this.presenter.notificate('not-zoom-not-reached');
-        }
         if (!!this.$onoffswitch.hasClass('checked')) {
           this.$onoffswitch.click();
+          if (this.previousZoom >= 7) {
+              this.presenter.notificate('not-zoom-not-reached');
+          }
         }
         this.$disclaimer.show(0);
       }
