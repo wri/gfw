@@ -7,33 +7,11 @@ define([
   'backbone',
   'underscore',
   'handlebars',
+  'map/models/UserModel',
   'map/presenters/tabs/SubscribePresenter',
   'text!map/templates/tabs/subscribe.handlebars'
-], function(Backbone, _, Handlebars, Presenter, tpl) {
+], function(Backbone, _, Handlebars, User, Presenter, tpl) {
   'use strict';
-
-  var getCookie = function(name) {
-    var value = '; ' + document.cookie;
-    var parts = value.split('; ' + name + '=');
-    if (parts.length === 2) { return parts.pop().split(';').shift(); }
-  };
-
-  var User = Backbone.Model.extend({
-    url: window.gfw.config.GFW_API_HOST + '/user/session',
-
-    loadFromCookie: function() {
-      var authCookie = getCookie('_eauth');
-
-      if (authCookie !== undefined) {
-        this.set('cookie', authCookie);
-        this.fetch({
-          xhrFields: {
-            withCredentials: true
-          }
-        });
-      }
-    }
-  });
 
   var SubscribeView = Backbone.View.extend({
 
@@ -51,7 +29,7 @@ define([
 
       this.user = new User();
       this.listenTo(this.user, 'sync', this.render);
-      this.user.loadFromCookie();
+      this.user.fetch();
 
       this.render();
     },
@@ -104,7 +82,7 @@ define([
       if (this.validateEmail(email)) {
         $.ajax({
           type: 'POST',
-          url: window.gfw.config.GFW_API_HOST + '/subscribe',
+          url: window.gfw.config.GFW_API_HOST + '/v2/subscriptions',
           crossDomain: true,
           xhrFields: { withCredentials: true },
           data: JSON.stringify(data),

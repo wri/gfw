@@ -1,19 +1,24 @@
-<h3>GFW</h2>
+<section class="header-static">
+  <div class="inner">
+    <header>
+      <h2>My Subscriptions</h2>
+    </header>
+  </div>
+</section>
 
-<ul id="subscriptionList">
-  {{#each subscriptions}}
-    <li>
-      <div class="-s-info">
-        <span class="-s-date">{{created}}</span>
-      </div>
-      <div class="-s-actions">
-        <span>
-          <svg><use xlink:href="#icon-h-map"></use></svg>
-          <span><a href="/map/3/15.00/27.00/ALL/grayscale/loss,forestgain?geojson={{params.geom}}">view on map</a></span>
-        </span>
-        <span><svg><use xlink:href="#shape-share"></use></svg><span>share</span></span>
-        <span><svg><use xlink:href="#icon-analysis-remove"></use></svg><span>delete</span></span>
-      </div>
-    </li>
-  {{/each}}
-</ul>
+<section class='section'>
+  <div class="user-profile inner">
+    <div class="tabs">
+      <h3 class="current">GFW</h3>
+      <h3>GFW Fires</h3>
+      <h3>Commodities</h3>
+    </div>
+
+    <div class="content-form user-subscriptions">
+      <table>
+        <tbody id="user-subscriptions-table-body">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
