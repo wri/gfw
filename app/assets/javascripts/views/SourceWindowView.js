@@ -109,6 +109,10 @@ define([
         url: 'http://54.88.79.102/gfw-sync/metadata/gfw_oil_palm',
         success: function(data) {
           console.log(data);
+        },
+
+        error: function(error) {
+          console.log(error);
         }
       })
     },
