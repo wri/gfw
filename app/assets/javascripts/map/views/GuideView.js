@@ -7,10 +7,11 @@ define([
   'underscore',
   'handlebars',
   'enquire',
+  'cookie',
   'map/helpers/guide',
   'map/helpers/guidetexts',
   'map/presenters/GuidePresenter',
-], function(_, Handlebars, enquire, guide, guideTexts, GuidePresenter) {
+], function(_, Handlebars, enquire, Cookies, guide, guideTexts, GuidePresenter) {
 
   'use strict';
 
@@ -24,13 +25,19 @@ define([
     initialize: function() {
       this.presenter = new GuidePresenter(this);
       $(window).load(_.bind(function() {
-        this.initTour();
+        setTimeout(function(){
+          this.initTour();
+        }.bind(this), 1000)
       }, this));
-
     },
 
     setTour: function() {
       this.guide = $("body").guide();
+
+      // Intro
+      this.guide.addStep("", guideTexts.intro,{
+        position: 'center'
+      });
 
       // Layers module
       this.guide.addStep(".categories-list", guideTexts.layersmenu,{
@@ -100,8 +107,15 @@ define([
 
     initTour: function() {
       if (!!this.presenter.status.get('tour')) {
-        this.guide.start();
+        this.askForTour();
+      } else if(!this.presenter.status.get('tour') && !Cookies.get('tour')) {
+        this.askForTour();
       }
+    },
+
+    askForTour: function() {
+      Cookies.set('tour', true, { expires: 365 });
+      this.guide.start();
     }
 
   });
