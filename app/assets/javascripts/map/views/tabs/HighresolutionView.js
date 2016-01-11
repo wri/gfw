@@ -30,6 +30,7 @@ define([
     events: {
       'change #hres-provider-select' : 'changeProvider',
       'click  .onoffswitch' : 'toggleLayer',
+      'click  .maptype h3' : 'toggleLayerName',
       'oninput #range-clouds' : 'setVisibleRange',
       'change #range-clouds' : 'setVisibleRange',
       'change input' : '_setParams',
@@ -165,6 +166,11 @@ define([
           this.presenter.notificate('not-zoom-not-reached');
         }
       }
+    },
+
+    toggleLayerName: function(e) {
+      if (! !!document.getElementsByClassName('tab-mobile-content')[0]) return;
+      this.toggleLayer(e);
     },
 
     _toggleAdvanced: function(e) {

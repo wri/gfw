@@ -245,6 +245,11 @@ input.picker__input[type="text"].picker__input--active {
   }
 
 }
+.tab-mobile-content {
+  .picker .picker__holder {
+    left: 0;
+  }
+}
 .picker__day:hover {
   cursor: pointer;
   background: #eee;
