@@ -1,10 +1,10 @@
 define([
-  'moment',
+  'moment', 'handlebars',
   'abstract/layer/CanvasLayerClass', 'helpers/canvasCartoCSSHelper',
   'map/services/CartoDbLayerService',
   'text!map/queries/default_cartodb_canvas.sql.hbs'
 ], function(
-  moment,
+  moment, Handlebars,
   CanvasLayerClass, canvasCartoCSSHelper,
   CartoDbLayerService,
   SQL
@@ -47,7 +47,7 @@ define([
     _getSQL: function() {
       var template = Handlebars.compile(SQL),
           sql = template({
-            table: 'umd_alerts_agg'
+            table: 'umd_alerts_agg_rast'
           });
 
       return sql;

@@ -6,7 +6,7 @@
 define([
   'underscore',
   'uri',
-  'abstract/layer/OverlayLayerClass'
+  'abstract/layer/OverlayLayerClass',
 ], function(_, UriTemplate, OverlayLayerClass) {
 
   'use strict';
@@ -19,6 +19,7 @@ define([
 
     init: function(layer, options, map) {
       this.tiles = {};
+      this.layer_slug = layer.slug;
       this._super(layer, options, map);
     },
 
@@ -30,7 +31,7 @@ define([
 
     _getParams: function() {
       var params = {};
-      if (window.location.search.contains('&hresolution=') && window.location.search.indexOf('=', window.location.search.indexOf('&hresolution=') + 13) !== -1) {
+      if (window.location.search.contains('hresolution=') && window.location.search.indexOf('=', window.location.search.indexOf('hresolution=') + 11) !== -1) {
         var params_new_url = {};
         var parts = location.search.substring(1).split('&');
         for (var i = 0; i < parts.length; i++) {
@@ -62,6 +63,10 @@ define([
      * @return {div}     div           Tile div
      */
     getTile: function(coord, zoom, ownerDocument) {
+      var zoomLT7 = (zoom < 7);
+      if(zoomLT7) {
+        if (this.layer_slug == 'urthe') {return;}
+      }
       var zsteps = this._getZoomSteps(zoom);
 
       var url = this._getUrl.apply(this,
@@ -104,7 +109,6 @@ define([
     },
 
     _getUrl: function(x, y, z, params) {
-
       return new UriTemplate(this.options.urlTemplate).fillFromObject({
         x: x,
         y: y,

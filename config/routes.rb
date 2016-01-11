@@ -53,8 +53,9 @@ Gfw::Application.routes.draw do
   get '/data' => redirect("sources")
   get '/sources' => 'static#data'
   get '/sources(/:section)' => 'static#data'
-  get '/my_gfw' => 'connect#index'
-  get '/my_gfw-login' => 'connect#login'
+
+  get '/my_gfw/' => 'connect#index', as: 'user_index'
+  get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
 
   # get '/stayinformed' => redirect('stayinformed/crowdsourced-stories')
   get '/stayinformed' => 'static#keep'
@@ -64,6 +65,7 @@ Gfw::Application.routes.draw do
   get '/getinvolved' => 'static#getinvolved'
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'
+  get '/feedback_jsonp' => 'static#feedback_jsonp'
 
   # howto
   get '/howto' => 'static#howto'

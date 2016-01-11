@@ -123,12 +123,10 @@ define([
       }, this));
 
       google.maps.event.addListener(this.map, 'click', _.bind(function(wdpa) {
-        if (!(!!wdpa.wdpaid)) {
-          return;
+        if (!!wdpa && !!wdpa.wdpaid) {
+          // TODO => No mps here!
+          mps.publish('AnalysisTool/analyze-wdpaid', [wdpa]);
         }
-        // TODO => No mps here!
-        console.log('wdpa: ',wdpa);
-        mps.publish('AnalysisTool/analyze-wdpaid', [wdpa]);
       }, this));
 
       google.maps.event.addListener(this.map, 'maptypeid_changed', _.bind(function() {
@@ -431,7 +429,7 @@ define([
       this.map.mapTypes.set('treeheight', treeheightMaptype());
       this.map.mapTypes.set('dark', darkMaptype());
       this.map.mapTypes.set('positron', positronMaptype());
-      for (var i = 1999; i < 2013; i++) {
+      for (var i = 1999; i < 2015; i++) {
         this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
       }
     },

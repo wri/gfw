@@ -56,6 +56,7 @@ define([
       "mys_plantations_by_species",
       "khm_eco_land_conc",
       "usa_forest_ownership",
+      "idn_peat_lands",
       // PEOPLE
       "resource_rights",
       "cmr_resource_rights",
@@ -69,6 +70,7 @@ define([
       "can_land_rights",
       "cri_land_rights",
       "nzl_land_rights",
+      "raisg",
       // CONSERVATION
       "biodiversity_hotspots",
       "verified_carbon",
@@ -86,7 +88,7 @@ define([
       "per_nat_pa",
       "per_priv_pa",
       "per_reg_pa",
-      // FOREST USE
+      // Land USE
       "dam_hotspots",
       "per_prod_for",
       "concesiones_wrapper",
@@ -122,7 +124,7 @@ define([
       "mys_logging",
       "logging",
       "logging_roads",
-      "raisg",
+      "raisg_mining",
       //STORIES
       "infoamazonia",
       "mongabay",
@@ -134,6 +136,7 @@ define([
       "forma_250_cover",
       "imazon_cover",
       "modis_cover",
+      "gran_chaco_extent",
       // FOREST CHANGE
       "guyra",
       "terrailoss",

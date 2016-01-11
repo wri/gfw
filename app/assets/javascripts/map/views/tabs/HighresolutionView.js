@@ -8,11 +8,18 @@ define([
   'handlebars',
   'enquire',
   'moment',
+  'mps',
+  'picker',
+  'pickadate',
   'map/presenters/tabs/HighresolutionPresenter',
   'text!map/templates/tabs/highresolution.handlebars'
-], function(_, Handlebars, enquire, moment, Presenter, tpl) {
+], function(_, Handlebars, enquire, moment, mps, picker, pickadate, Presenter, tpl) {
 
   'use strict';
+
+  var SelectedDates = Backbone.Model.extend({
+    // left blank on puropose, max min dates
+  });
 
   var HighresolutionView = Backbone.View.extend({
 
@@ -23,6 +30,7 @@ define([
     events: {
       'change #hres-provider-select' : 'changeProvider',
       'click  .onoffswitch' : 'toggleLayer',
+      'click  .maptype h3' : 'toggleLayerName',
       'oninput #range-clouds' : 'setVisibleRange',
       'change #range-clouds' : 'setVisibleRange',
       'change input' : '_setParams',
@@ -31,9 +39,15 @@ define([
       'click .advanced-controls' : '_toggleAdvanced'
     },
 
-    initialize: function() {
+    initialize: function(map) {
       this.presenter = new Presenter(this);
+      this.map = map;
       this.params_new_url;
+      this.previousZoom;
+      this.selectedDates = new SelectedDates({
+        startDateUC: moment().format('DD-MM-YYYY'),
+        endDateUC: moment().subtract(3,'month').format('DD-MM-YYYY'),
+      });
       this.render();
     },
 
@@ -45,28 +59,67 @@ define([
       this.$onoffswitch        = this.$el.find('.onoffswitch');
       this.$range              = $('#range-clouds');
       this.$progress           = $('#progress-clouds');
-      this.$mindate            = this.$el.find('.mindate');
-      this.$maxdate            = this.$el.find('.maxdate');
+      this.$mindate            = this.$el.find("input[name='snd__mindate_submit']");
+      this.$maxdate            = this.$el.find("input[name='snd__maxdate_submit']");
       this.$advanced_options   = this.$el.find('.advanced-options');
       this.$advanced_controls  = this.$el.find('.advanced-controls');
       this.$apply              = this.$el.find('.btn');
+      this.$disclaimer         = this.$el.find('#disclaimer-zoom');
+      this.$currentZoom        = this.$el.find('#currentZoom');
     },
 
     render: function() {
-      this.$el.html(this.template({today: moment().format('YYYY-MM-DD'), mindate: moment().subtract(3,'month').format('YYYY-MM-DD')}));
+      this.$el.html(this.template({
+        today: moment().format('DD-MM-YYYY'),
+        mindate: moment().subtract(3,'month').format('YYYY-MM-DD'),
+        zoom: this.map.getZoom()
+      }));
+      this.renderPickers();
       this.cacheVars();
+      this.setListeners();
       this.printSelects();
+    },
+
+    setListeners: function() {
+      google.maps.event.addListener(this.map, 'zoom_changed',
+        _.bind(function() {
+          this.setZoomConditions(this.map.getZoom());
+        }, this)
+      );
+    },
+
+    setZoomConditions: function(zoom) {
+      this.zoom = zoom;
+      if (isNaN(this.previousZoom)) this.previousZoom = zoom;
+      this.$currentZoom.text(zoom);
+      if(this.zoom >= 7) {
+        this.$disclaimer.hide(0);
+      } else {
+        if (!!this.$onoffswitch.hasClass('checked')) {
+          this.$onoffswitch.click();
+          if (this.previousZoom >= 7) {
+              this.presenter.notificate('not-zoom-not-reached');
+          }
+        }
+        this.$disclaimer.show(0);
+      }
+      this.previousZoom = zoom;
     },
 
     _getParams: function(e) {
       var $objTarget = $(e.target).closest('.maptype');
-      return {
+      mps.publish('Tab/open', ['#hd-tab-button']);
+      if(!!this.$onoffswitch.hasClass('checked')) {
+        return {
+          'zoom' : this.zoom,
           'satellite' : $objTarget.data('slug'),
-           'color_filter': ($objTarget.find('#hres-filter-select').val().length > 0) ? $objTarget.find('#hres-filter-select').val() : 'rgb',
-           'cloud': this.$range.val(),
-           'mindate': (this.$mindate.val().length > 0) ? this.$mindate.val() : '2000-09-01',
-           'maxdate': (this.$maxdate.val().length > 0) ? this.$maxdate.val() : '2015-09-01'
-         };
+          'color_filter': ($objTarget.find('#hres-filter-select').val().length > 0) ? $objTarget.find('#hres-filter-select').val() : 'rgb',
+          'cloud': this.$range.val(),
+          'mindate': (this.$mindate.val().length > 0) ? this.$mindate.val() : '2000-09-01',
+          'maxdate': (this.$maxdate.val().length > 0) ? this.$maxdate.val() : '2015-09-01'
+        };
+      }
+      return null;
     },
 
     _setParams: function(e) {
@@ -75,27 +128,49 @@ define([
       } else {
         this.$apply.removeClass('disabled');
       }
-      this.$apply.addClass('green').removeClass('grey');
+      this.$apply.addClass('green').removeClass('gray');
       this.presenter.setHres(this._getParams(e));
     },
 
     _triggerChanges: function(e) {
       this.presenter.updateLayer($(e.target).closest('.maptype').data('slug'));
+      this.$apply.removeClass('green').addClass('gray');
     },
 
     _fillParams: function(params) {
       this.$hresSelectProFil.val(params.color_filter).trigger("liszt:updated");
       this.$range.val(params.cloud);
-      this.$mindate.val(params.mindate);
-      this.$maxdate.val(params.maxdate);
       this.setVisibleRange();
+      this.zoom = params.zoom;
+      var that = this;
+      this.params = params;
+      window.setTimeout(_.bind(function(params) {
+        this.renderPickers(this.params.mindate, this.params.maxdate);
+        this.params = null;
+      },this), 250)
     },
 
     toggleLayer: function(e) {
-      this.switchToggle();
-      this.$apply.toggleClass('disabled');
-      this.presenter.setHres(this._getParams(e));
-      this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
+      if (this.zoom >= 7) {
+        this.switchToggle();
+        this.$apply.toggleClass('disabled');
+        this.presenter.setHres(this._getParams(e));
+        this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
+      } else {
+        if (!!this.$onoffswitch.hasClass('checked')) {
+          this.switchToggle();
+          this.$apply.toggleClass('disabled');
+          this.presenter.setHres(this._getParams(e));
+          this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
+        } else {
+          this.presenter.notificate('not-zoom-not-reached');
+        }
+      }
+    },
+
+    toggleLayerName: function(e) {
+      if (! !!document.getElementsByClassName('tab-mobile-content')[0]) return;
+      this.toggleLayer(e);
     },
 
     _toggleAdvanced: function(e) {
@@ -127,7 +202,7 @@ define([
     printProviders: function() {
       var options = '<option value="urthe">Urthecast</option><option value="digiglobe">Digital Globe</option><option value="skybox">Skybox</option>';
       this.$hresSelectProvider.append(options);
-      this.$hresSelectFilter.append('<option value="rgb">RGB (Red Green Blue)</option><option value="ndvi">NDVI (Normalized Difference Vegetation Index)</option><option value="evi">EVI (Enhanced vegetation index)</option><option value="ndwi">NDWI (Normalized Difference Water Index)</option><option value="false-nir">False Color NIR (Near Infra Red)</option>'); //temporary hardcoded
+      this.$hresSelectFilter.append('<option value="rgb">RGB (Red Green Blue)</option><option value="ndvi">NDVI (Normalized Difference Vegetation Index)</option><option value="evi">EVI (Enhanced vegetation index)</option><option value="ndwi">NDWI (Normalized Difference Water Index)</option><option value="false-color-nir">False Color NIR (Near Infra Red)</option>'); //temporary hardcoded
 
     },
 
@@ -150,6 +225,60 @@ define([
     setVisibleRange: function(){
       var width = this.$range.val();
       this.$progress.width(width + '%')
+    },
+
+    renderPickers: function(minABSdate, maxABSdate) {
+      var context = this;
+
+      var onPickerOpen = function() {
+        this.render();
+      };
+
+      var TODAY         = moment().toDate(),
+          TODAY_TEXT    = 'Jump to Today',
+          FORMAT        = 'dddd, dd mmm, yyyy',
+          FORMATSUBMIT  = 'yyyy-mm-dd';
+
+      var startHRdate = $('.timeline-date-picker-start').pickadate({
+        today: TODAY_TEXT,
+        min: moment('2013').toDate(),
+        max: TODAY,
+        selectYears: true,
+        selectMonths: true,
+        format: FORMAT,
+        formatSubmit: FORMATSUBMIT,
+        hiddenPrefix: 'snd__mindate',
+        onOpen: onPickerOpen,
+        onSet: function(event) {
+          if ( event.select ) {
+            endHRdate_picker.set('min', startHRdate_picker.get('select'))    
+          }
+        }
+      }),
+      startHRdate_picker = startHRdate.pickadate('picker');
+
+      var endHRdate = $('.timeline-date-picker-end').pickadate({
+        today: TODAY_TEXT,
+        min: moment().subtract(3,'month').toDate(),
+        max: TODAY,
+        selectYears: true,
+        selectMonths: true,
+        format: FORMAT,
+        formatSubmit: FORMATSUBMIT,
+        hiddenPrefix: 'snd__maxdate',
+        onOpen: onPickerOpen,
+        onSet: function(event) {
+          if ( event.select ) {
+            startHRdate_picker.set('max', endHRdate_picker.get('select'))
+          }
+        }
+      });
+      var endHRdate_picker = endHRdate.pickadate('picker');
+
+      if (minABSdate && maxABSdate) {
+        startHRdate_picker.set('select',  moment(minABSdate).toDate());
+        endHRdate_picker.set('select',  moment(maxABSdate).toDate());
+      }
     },
 
   });

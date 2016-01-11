@@ -182,9 +182,11 @@ define([
         return;
       }
 
-      var params = this._getAnalysisResource(results, layer);
-      this.view.renderAnalysis(params);
-      mps.publish('Place/update', [{go: false}]);
+      if (_.values(this.datasets).indexOf(results.meta.id) > -1) {
+        var params = this._getAnalysisResource(results, layer);
+        this.view.renderAnalysis(params);
+        mps.publish('Place/update', [{go: false}]);
+      }
     },
 
     /**

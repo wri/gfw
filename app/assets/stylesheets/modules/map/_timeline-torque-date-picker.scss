@@ -108,7 +108,7 @@ input.picker__input[type="text"].picker__input--active {
 .picker__select--month,
 .picker__select--year {
   border: 1px solid #b7b7b7;
-  height: 2em;
+  height: 3em;
   padding: .5em;
   margin-left: .25em;
   margin-right: .25em;
@@ -234,7 +234,22 @@ input.picker__input[type="text"].picker__input--active {
   bottom: -2px;
   right: 18px;
 }
+.highresolution-content {
+  .picker__day:after {
+    content: none;
+  }
+  .picker .picker__holder {
+    top: -260px;
+    position: relative;
+    left: -370px;
+  }
 
+}
+.tab-mobile-content {
+  .picker .picker__holder {
+    left: 0;
+  }
+}
 .picker__day:hover {
   cursor: pointer;
   background: #eee;
