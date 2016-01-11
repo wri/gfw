@@ -1,53 +1,53 @@
 #r {
-   line-width: 1;
-   line-opacity: 0.7;
+   line-width: 1.5;
+   line-opacity: 1;
 }
 
 #r[time<2001] {
-   line-color: #162016;
+   line-color: #193219;
 }
 #r[time=2001] {
-   line-color: #30462B;
+   line-color: #CC973E;
 }
 #r[time=2002] {
-   line-color: #30462B;
+   line-color: #CC973E;
 }
 #r[time=2003] {
-   line-color: #30462B;
+   line-color: #CC973E;
 }
 #r[time=2004] {
-   line-color: #465C3E;
+   line-color: #C56228;
 }
 #r[time=2005] {
-   line-color: #465C3E;
+   line-color: #C56228;
 }
 #r[time=2006] {
-   line-color: #465C3E;
+   line-color: #C56228;
 }
 #r[time=2007] {
-   line-color: #5F7654;
+   line-color: #A3752A;
 }
 #r[time=2008] {
-   line-color: #5F7654;
+   line-color: #A3752A;
 }
 #r[time=2009] {
-   line-color: #5F7654;
+   line-color: #A3752A;
 }
 #r[time=2010] {
-   line-color: #7A926D;
+   line-color: #83A03C;
 }
 #r[time=2011] {
-   line-color: #7A926D;
+   line-color: #83A03C;
 }
 #r[time=2012] {
-   line-color: #7A926D;
+   line-color: #83A03C;
 }
 #r[time=2013] {
-   line-color: #99B388;
+   line-color: #B1D135;
 }
 #r[time=2014] {
-   line-color: #99B388;
+   line-color: #B1D135;
 }
 #r {
-   line-color: #BEDEAA;
+   line-color: #BFBEBE;
 }

@@ -32,8 +32,13 @@ define([
       'Place/go': function(place) {
         this.status.set('hresolution', place.params.hresolution);
         if (!! place.params.hresolution) {
-          this.view.switchToggle();
-          this.view._fillParams(JSON.parse(atob(place.params.hresolution)));
+          var params = JSON.parse(atob(place.params.hresolution));
+          if (params.zoom >= 7) {
+            this.view.switchToggle();
+          }
+          this.view._fillParams(params);
+        } else {
+          this.toggleLayer(null, place.params.sublayers[0]);
         }
       }
     }],
@@ -52,9 +57,14 @@ define([
      * @param {string} value hresolution
      */
     setHres: function(value) {
-      value = btoa(JSON.stringify(value));
+      if (!!value) {
+        value = btoa(JSON.stringify(value));
+        sessionStorage.setItem('high-resolution',value);
+      } else {
+        sessionStorage.removeItem('high-resolution');
+      }
+
       this.status.set('hresolution', value);
-      sessionStorage.setItem('high-resolution',value);
       this._publishHres();
     },
 
@@ -81,8 +91,9 @@ define([
      *
      * @param  {string} layerSlug
      */
-    toggleLayer: function(layerSlug) {
-      var where = [{slug: layerSlug}];
+    toggleLayer: function(layerSlug, id) {
+
+      var where = layerSlug ? [{slug: layerSlug}] : [{id: id}];
 
       layerSpecService.toggle(where,
         _.bind(function(layerSpec) {
@@ -90,6 +101,12 @@ define([
           mps.publish('Place/update', [{go: false}]);
         }, this));
     },
+
+    notificate: function(id){
+      mps.publish('Notification/open', [id]);
+    },
+
+
   });
 
   return HighresolutionPresenter;

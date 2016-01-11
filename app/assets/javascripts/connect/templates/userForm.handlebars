@@ -1,40 +1,73 @@
-<h2>your profile information</h2>
-<p>This information is optional but it will help us learning how you use Global Forest Watch and how to improve it.</p>
-<form method="POST" action="{{action}}">
-  <label>name</label>
-  <input type="text" placeholder="Your name" name="name">
-  <label>email</label>
-  <input type="email" placeholder="Your email" name="email">
-  <label>organization / profession / job title</label>
-  <input type="text" placeholder="Your organization / profession / job title" name="job">
-  <label class="m-sel-container">sector
-    <select name="sector"><option>Choose your sector</option></select>
-  </label>
-  <label class="m-sel-container">primary responsibility
-    <select name="responsibility"t><option>Choose your primary responsibilities</option></select>
-  </label>
-  <label class="m-sel-container">location
-    <select name="country"><option>Country</option></select>
-    <span class="m-sel-container -middle"><select name="state"><option>State/department/province</option></select></span>
-  </label>
-  <input type="text" placeholder="City">
-  <label class="m-sel-container">gender
-    <select name="gender"><option>Choose your gender</option></select>
-  </label>
-  <label class="m-sel-container">how do you use or plan to use global forest watch?
-    <select name="use"><option>Choose multiple options</option></select>
-  </label>
+<section class="header-static">
+  <div class="inner">
+    <header>
+      <h2>My GFW</h2>
+    </header>
+  </div>
+</section>
 
-  <div class="m-improve-gfw">
-    <p>Interested in testing new features and helping to improve Global Forest Watch? Sign up to become an official tester!</p>
-    <span>
-      <label><input type="radio" name="sign_up" value="yes" />Yes, sign me up</label>
-      <label><input type="radio" name="sign_up" value="no" />No thanks</label>
-    </span>
+<section class='section'>
+  <div class="user-profile inner">
+    <h2>Your profile information</h2>
+    <p>
+      This information is optional but it will help us learning how you use
+      Global Forest Watch and how to improve it.
+    </p>
+
+    <form method="POST" action="{{action}}">
+      <label>name</label>
+      <input type="text" placeholder="Your name" name="name" value="{{user.name}}">
+
+      <label>email</label>
+      <input type="email" placeholder="Your email" name="email" value="{{user.email}}">
+
+      <label>organization / profession / job title</label>
+      <input type="text" placeholder="Your organization / profession / job title" name="job" value="{{user.job}}">
+
+      <label class="m-sel-container">sector
+        <input placeholder="Your sector" name="sector" value="{{user.sector}}">
+      </label>
+
+      <label class="m-sel-container">
+        primary responsibility
+        <select></select>
+      </label>
+
+      <label class="m-sel-container">location
+        <input name="country" placeholder="Your country" value="{{user.country}}">
+        <input name="state" placeholder="State/department/province" value="{{user.state}}">
+      </label>
+
+      <input type="text" placeholder="City">
+
+      <label class="m-sel-container">gender
+        <select name="gender"><option>Male</option><option>Female</option></select>
+      </label>
+
+      <label class="m-sel-container">how do you use or plan to use global forest watch?
+        <input name="use" placeholder="" value="{{use}}">
+      </label>
+
+      <div class="m-improve-gfw">
+        <p>
+          Interested in testing new features and helping to improve Global
+          Forest Watch? Sign up to become an official tester!
+        </p>
+
+        <span>
+          <label><input type="radio" name="sign_up" value="yes" />Yes, sign me up</label>
+          <label><input type="radio" name="sign_up" value="no" />No thanks</label>
+        </span>
+      </div>
+
+      <div class="m-buttons">
+        {{#if user.email}}
+          <a id="submit" class="btn green uppercase">submit</a>
+        {{else}}
+          <a id="submit" class="btn green uppercase">continue</a>
+          <a id="skip" class="btn gray uppercase">skip</a>
+        {{/if}}
+      </div>
+    </form>
   </div>
-  <input type="text" name="redirect" value="{{redirect}}" class="hidden" >
-  <div class="m-buttons">
-    <a id="sendform" class="btn green uppercase">continue</a>
-    <a id="skipform" class="btn gray uppercase">skip</a>
-  </div>
-</form>
+</section>

@@ -15,12 +15,15 @@ define([
 
   var GuyraLayer = CartoDBLayerClass.extend({
     options: {
-      sql:  "SELECT cartodb_id, the_geom_webmercator,time, to_date(time::text, 'YYYYMM') as date, \'{tableName}\' as layer, \'{tableName}\' AS name FROM {tableName} WHERE to_date(time::text, 'YYYYMM') BETWEEN to_date(\'{startYear}-{startMonth}\',\'YYYY-MM\') AND to_date(\'{endYear}-{endMonth}\',\'YYYY-MM\')",
+      sql:  "SELECT cartodb_id, the_geom_webmercator, date, month, year, '{tableName}' as layer, '{tableName}' AS name FROM {tableName} WHERE date BETWEEN to_date('{startYear}-{startMonth}','YYYY-MM') AND to_date('{endYear}-{endMonth}','YYYY-MM')",
       cartocss: GuyraCartoCSS
     },
 
     init: function(layer, options, map) {
-      this.options.cartocss = GuyraCartoCSS.replace(/#date_to_change/g,moment(layer.maxdate).subtract(2, 'months').utc().format('YYYYMM'));
+      var mapObj={month_to_change: moment(layer.maxdate).subtract(3, 'months').utc().format('MM'), year_to_change: moment(layer.maxdate).utc().format('YYYY')}
+
+      this.options.cartocss = GuyraCartoCSS.replace(/month_to_change|year_to_change/g, function(matched){return mapObj[matched]});
+      
       this.presenter = new Presenter(this);
       this.currentDate = options.currentDate || [(layer.mindate), (layer.maxdate)];
       this._super(layer, options, map);

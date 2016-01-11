@@ -107,7 +107,10 @@
           <h4>Permit Date:</h4>
           <p>{{content.data.permit_date}}</p>
         {{/if}}
-
+        {{#if content.data.substance}}
+          <h4>Substance:</h4>
+          <p>{{content.data.substance}}%</p>
+        {{/if}}
 				{{#if content.data.project_pr}}
           <h4>Project Proponent :</h4>
           <p><a href="{{content.data.proponent_}}" target="_blank">{{content.data.project_pr}}</a></p>
@@ -343,6 +346,22 @@
         {{#if content.data.area_ha}}
           <h4>Area HA:</h4>
           <p>{{content.data.area_ha}}</p>
+        {{/if}}
+        {{#if content.data.acquired}}
+          <h4>Acquisition date:</h4>
+          <p>{{content.data.acquired}}</p>
+        {{/if}}
+        {{#if content.data.platform}}
+          <h4>Platform:</h4>
+          <p>{{content.data.platform}}</p>
+        {{/if}}
+        {{#if content.data.sensor_platform}}
+          <h4>Sensor platform:</h4>
+          <p>{{content.data.sensor_platform}}</p>
+        {{/if}}
+        {{#if content.data.cloud_coverage}}
+          <h4>Cloud coverage:</h4>
+          <p>{{content.data.cloud_coverage}}%</p>
         {{/if}}
       </div>
     </div>

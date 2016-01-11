@@ -1,0 +1,13 @@
+#mys_protected_areas {
+   polygon-opacity: 0.7;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 1;
+}
+
+#mys_protected_areas[status="Gazetted"] {
+   polygon-fill: #1F78B4;
+}
+#mys_protected_areas[status="Proposed"] {
+   polygon-fill: #A6CEE3;
+}

@@ -90,6 +90,16 @@ body,html{
   &.is-loaded {
     opacity: 1;
   }
+  &.urthecast-incorrect-zoom {
+    &:after {
+      content: "";
+      display: block;
+      background-image: url(backgrounds/urthecastDisclaimer.png);
+      position: absolute;
+      height: 100%;
+      width: 100%;
+    }
+  }
 }
 
 #zoom_controls,
