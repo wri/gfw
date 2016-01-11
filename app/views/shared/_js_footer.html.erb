@@ -70,4 +70,11 @@
        })(e, t, e[n] || [], "//bo.getjaco.com/build/recorder.js");
     })(window, document), JacoRecorder.init("578cbf2c-2942-434c-9e8f-741a16984acf", {});
   }
+  // print user info
+    $(function() {
+        if (!!localStorage.getItem('userSocialInfo')) {
+          var user = JSON.parse(sessionStorage.getItem('userSocialInfo'));
+          $('#headerGfw').find('.shape-mygfw span').text('user.name');
+        }
+    });
 </script>
