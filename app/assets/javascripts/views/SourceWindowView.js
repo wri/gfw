@@ -97,9 +97,20 @@ define([
       var data_slug = $(e.currentTarget).data('source');
       var data_iframe = $(e.currentTarget).data('iframe');
       (data_iframe) ? this.$sourceWindow.addClass('iframe') : this.$sourceWindow.removeClass('iframe');
-      this.$content.html($('#' + data_slug).clone());
-      ga('send', 'event', document.title.replace('| Global Forest Watch',''), 'Info', data_slug);
-      return this;
+
+      this.callAPI(data_slug);
+    //   this.$content.html($('#' + data_slug).clone());
+    //   ga('send', 'event', document.title.replace('| Global Forest Watch',''), 'Info', data_slug);
+    //   return this;
+    },
+
+    callAPI: function(slug) {
+      $.ajax({
+        url: 'http://54.88.79.102/gfw-sync/metadata/gfw_oil_palm',
+        success: function(data) {
+          console.log(data);
+        }
+      })
     },
 
     showByParam: function(data_slug,link){
