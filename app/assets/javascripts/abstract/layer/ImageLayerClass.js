@@ -31,7 +31,7 @@ define([
 
     _getParams: function() {
       var params = {};
-      if (window.location.search.contains('&hresolution=') && window.location.search.indexOf('=', window.location.search.indexOf('&hresolution=') + 13) !== -1) {
+      if (window.location.search.contains('hresolution=') && window.location.search.indexOf('=', window.location.search.indexOf('hresolution=') + 11) !== -1) {
         var params_new_url = {};
         var parts = location.search.substring(1).split('&');
         for (var i = 0; i < parts.length; i++) {
