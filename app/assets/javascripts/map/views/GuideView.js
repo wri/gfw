@@ -23,9 +23,9 @@ define([
 
     initialize: function() {
       this.presenter = new GuidePresenter(this);
-      $(window).load(_.delay(_.bind(function() {
+      $(window).load(_.bind(function() {
         this.initTour();
-      }, this), 1000));
+      }, this));
 
     },
 

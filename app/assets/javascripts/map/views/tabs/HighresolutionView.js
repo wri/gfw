@@ -130,6 +130,7 @@ define([
       }
       this.$apply.addClass('green').removeClass('gray');
       this.presenter.setHres(this._getParams(e));
+      this._triggerChanges(e);
     },
 
     _triggerChanges: function(e) {
