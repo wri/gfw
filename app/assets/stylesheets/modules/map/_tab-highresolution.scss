@@ -8,7 +8,7 @@ $letterW: 20px;
     color: #555;
   }
 }
-.tab-highresolution{
+.tab-highresolution {
   .highresolution-content{
     padding: 15px;
     max-height: 350px;
@@ -341,5 +341,15 @@ $letterW: 20px;
     input[type=range]:focus::-ms-fill-upper {
       background: #367ebd;
     }
+  }
+}
+.tab-mobile-content .tab-highresolution .maptype {
+   h3 {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 25px;
+  }
+  .info-mapsource {
+    top: -20px;
   }
 }
