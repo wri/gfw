@@ -12,7 +12,6 @@ require([
   'views/FooterView',
   'views/SourceWindowView',
   'views/SourceMobileFriendlyView',
-  'views/FeedbackModalView',
   'landing/views/SpinnerView',
   'landing/views/SlideView',
   'landing/views/StoriesView',
@@ -20,7 +19,7 @@ require([
   'landing/views/TwitterStyleView',
   'handlebars',
   '_string',
-], function($, _, Class, Backbone, amplify, mps, HeaderView, FooterView, SourceWindowView, SourceMobileFriendlyView, FeedbackModalView, SpinnerView, SlideView, StoriesView, FeedView, TwitterStyleView, Handlebars) {
+], function($, _, Class, Backbone, amplify, mps, HeaderView, FooterView, SourceWindowView, SourceMobileFriendlyView, SpinnerView, SlideView, StoriesView, FeedView, TwitterStyleView, Handlebars) {
   'use strict';
 
   var LandingPage = Class.extend({
@@ -40,7 +39,7 @@ require([
       new FooterView();
       new SourceWindowView();
       new SourceMobileFriendlyView();
-      new FeedbackModalView();
+
 
       //landing
       new SpinnerView();
