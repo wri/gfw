@@ -13,7 +13,6 @@ class StoriesController < ApplicationController
   respond_to :json, :only => :index
 
   def index
-
     if params['for_map']
       respond_with @stories
       return
@@ -40,7 +39,6 @@ class StoriesController < ApplicationController
 
   def create
     @story = Api::Story.new(params[:story])
-
     if @story.valid?
       response = @story.create(params[:story])
 
