@@ -43,9 +43,6 @@ $w-control: 44px;
             &:first-child{
               border-left: none;
             }
-            &:last-child{
-              display: none;
-            }
             &:hover{
               background: $light;
               .tooltipmap{
