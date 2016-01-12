@@ -130,6 +130,7 @@ define([
       }
       this.$apply.addClass('green').removeClass('gray');
       this.presenter.setHres(this._getParams(e));
+      ga('send', 'event', 'Map', 'Settings', 'Urthecast');
       this._triggerChanges(e);
     },
 
