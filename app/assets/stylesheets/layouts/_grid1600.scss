@@ -5,6 +5,9 @@
   overflow-x: hidden;
   @include clearfix();
   background: $white;
+  @media (min-width: $br-mobile){
+    overflow-x: visible;
+  }
 }
 
 .inner {
