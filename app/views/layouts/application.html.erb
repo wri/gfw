@@ -30,7 +30,7 @@
     <%= controller_stylesheet_link_tag %>
     <%= yield :js %>
     <%= csrf_meta_tags %>
-    <script id="loader-gfw" data-current="<%= @currentNavigation %>" src="https://rawgit.com/simbiotica/gfw_assets/cf507395d7651585d531fa6e025dbd3c5299c8c2/js/build/production.js"></script>
+    <script id="loader-gfw" data-current="<%= @currentNavigation %>" src="http://www.globalforestwatch.org/gfw-assets"></script>
   </head>
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
     <%= render 'layouts/svg_icons' %>
@@ -44,7 +44,7 @@
         </div>
         <%= render 'shared/footer_landing' %>
     </div>
-    <%= render 'shared/feedback' %>
+    
     <!-- Javascript -->
     <script src="//maps.googleapis.com/maps/api/js?libraries=drawing,places&sensor=false"></script>
     <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>

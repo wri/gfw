@@ -36,6 +36,7 @@ paths:
   enquire: "enquire/dist/enquire"
   picker: "pickadate/lib/picker"
   pickadate: "pickadate/lib/picker.date"
+  cookie: "js-cookie/src/js.cookie"
 
   #countries
   scrollit: "ScrollIt.js/scrollIt"

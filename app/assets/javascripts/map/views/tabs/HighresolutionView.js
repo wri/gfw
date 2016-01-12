@@ -8,11 +8,18 @@ define([
   'handlebars',
   'enquire',
   'moment',
+  'mps',
+  'picker',
+  'pickadate',
   'map/presenters/tabs/HighresolutionPresenter',
   'text!map/templates/tabs/highresolution.handlebars'
-], function(_, Handlebars, enquire, moment, Presenter, tpl) {
+], function(_, Handlebars, enquire, moment, mps, picker, pickadate, Presenter, tpl) {
 
   'use strict';
+
+  var SelectedDates = Backbone.Model.extend({
+    // left blank on puropose, max min dates
+  });
 
   var HighresolutionView = Backbone.View.extend({
 
@@ -23,6 +30,7 @@ define([
     events: {
       'change #hres-provider-select' : 'changeProvider',
       'click  .onoffswitch' : 'toggleLayer',
+      'click  .maptype h3' : 'toggleLayerName',
       'oninput #range-clouds' : 'setVisibleRange',
       'change #range-clouds' : 'setVisibleRange',
       'change input' : '_setParams',
@@ -35,6 +43,11 @@ define([
       this.presenter = new Presenter(this);
       this.map = map;
       this.params_new_url;
+      this.previousZoom;
+      this.selectedDates = new SelectedDates({
+        startDateUC: moment().format('DD-MM-YYYY'),
+        endDateUC: moment().subtract(3,'month').format('DD-MM-YYYY'),
+      });
       this.render();
     },
 
@@ -46,16 +59,22 @@ define([
       this.$onoffswitch        = this.$el.find('.onoffswitch');
       this.$range              = $('#range-clouds');
       this.$progress           = $('#progress-clouds');
-      this.$mindate            = this.$el.find('.mindate');
-      this.$maxdate            = this.$el.find('.maxdate');
+      this.$mindate            = this.$el.find("input[name='snd__mindate_submit']");
+      this.$maxdate            = this.$el.find("input[name='snd__maxdate_submit']");
       this.$advanced_options   = this.$el.find('.advanced-options');
       this.$advanced_controls  = this.$el.find('.advanced-controls');
       this.$apply              = this.$el.find('.btn');
       this.$disclaimer         = this.$el.find('#disclaimer-zoom');
+      this.$currentZoom        = this.$el.find('#currentZoom');
     },
 
     render: function() {
-      this.$el.html(this.template({today: moment().format('YYYY-MM-DD'), mindate: moment().subtract(3,'month').format('YYYY-MM-DD')}));
+      this.$el.html(this.template({
+        today: moment().format('DD-MM-YYYY'),
+        mindate: moment().subtract(3,'month').format('YYYY-MM-DD'),
+        zoom: this.map.getZoom()
+      }));
+      this.renderPickers();
       this.cacheVars();
       this.setListeners();
       this.printSelects();
@@ -71,19 +90,25 @@ define([
 
     setZoomConditions: function(zoom) {
       this.zoom = zoom;
+      if (isNaN(this.previousZoom)) this.previousZoom = zoom;
+      this.$currentZoom.text(zoom);
       if(this.zoom >= 7) {
         this.$disclaimer.hide(0);
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
           this.$onoffswitch.click();
+          if (this.previousZoom >= 7) {
+              this.presenter.notificate('not-zoom-not-reached');
+          }
         }
         this.$disclaimer.show(0);
       }
-
+      this.previousZoom = zoom;
     },
 
     _getParams: function(e) {
       var $objTarget = $(e.target).closest('.maptype');
+      mps.publish('Tab/open', ['#hd-tab-button']);
       if(!!this.$onoffswitch.hasClass('checked')) {
         return {
           'zoom' : this.zoom,
@@ -105,18 +130,25 @@ define([
       }
       this.$apply.addClass('green').removeClass('gray');
       this.presenter.setHres(this._getParams(e));
+      this._triggerChanges(e);
     },
 
     _triggerChanges: function(e) {
       this.presenter.updateLayer($(e.target).closest('.maptype').data('slug'));
+      this.$apply.removeClass('green').addClass('gray');
     },
 
     _fillParams: function(params) {
       this.$hresSelectProFil.val(params.color_filter).trigger("liszt:updated");
       this.$range.val(params.cloud);
-      this.$mindate.val(params.mindate);
-      this.$maxdate.val(params.maxdate);
       this.setVisibleRange();
+      this.zoom = params.zoom;
+      var that = this;
+      this.params = params;
+      window.setTimeout(_.bind(function(params) {
+        this.renderPickers(this.params.mindate, this.params.maxdate);
+        this.params = null;
+      },this), 250)
     },
 
     toggleLayer: function(e) {
@@ -135,6 +167,12 @@ define([
           this.presenter.notificate('not-zoom-not-reached');
         }
       }
+      ga('send', 'event', 'Map', 'Toggle', 'Urthecast');
+    },
+
+    toggleLayerName: function(e) {
+      if (! !!document.getElementsByClassName('tab-mobile-content')[0]) return;
+      this.toggleLayer(e);
     },
 
     _toggleAdvanced: function(e) {
@@ -177,6 +215,7 @@ define([
     },
 
     changeProvider: function(e) {
+      ga('send', 'event', 'Map', 'Settings', 'Urthecast advanced renderer');
       return;
       var providers = {
         'urthe' : '<option value="ndvi">NDVI (Normalized Difference Vegetation Index)</option><option value="evi">EVI (Enhanced vegetation index)</option><option value="ndwi">NDWI (Normalized Difference Water Index)</option><option value="false-nir">False Color NIR (Near Infra Red)</option>',
@@ -188,7 +227,64 @@ define([
 
     setVisibleRange: function(){
       var width = this.$range.val();
-      this.$progress.width(width + '%')
+      this.$progress.width(width + '%');
+      ga('send', 'event', 'Map', 'Settings', 'Urthecast advanced cloud');
+    },
+
+    renderPickers: function(minABSdate, maxABSdate) {
+      var context = this;
+
+      var onPickerOpen = function() {
+        this.render();
+      };
+
+      var TODAY         = moment().toDate(),
+          TODAY_TEXT    = 'Jump to Today',
+          FORMAT        = 'dddd, dd mmm, yyyy',
+          FORMATSUBMIT  = 'yyyy-mm-dd';
+
+      var startHRdate = $('.timeline-date-picker-start').pickadate({
+        today: TODAY_TEXT,
+        min: moment('2013').toDate(),
+        max: TODAY,
+        selectYears: true,
+        selectMonths: true,
+        format: FORMAT,
+        formatSubmit: FORMATSUBMIT,
+        hiddenPrefix: 'snd__mindate',
+        onOpen: onPickerOpen,
+        onSet: function(event) {
+          if ( event.select ) {
+            endHRdate_picker.set('min', startHRdate_picker.get('select'));
+            ga('send', 'event', 'Map', 'Settings', 'Urthecast dates');  
+          }
+        }
+      }),
+      startHRdate_picker = startHRdate.pickadate('picker');
+
+      var endHRdate = $('.timeline-date-picker-end').pickadate({
+        today: TODAY_TEXT,
+        min: moment().subtract(3,'month').toDate(),
+        max: TODAY,
+        selectYears: true,
+        selectMonths: true,
+        format: FORMAT,
+        formatSubmit: FORMATSUBMIT,
+        hiddenPrefix: 'snd__maxdate',
+        onOpen: onPickerOpen,
+        onSet: function(event) {
+          if ( event.select ) {
+            startHRdate_picker.set('max', endHRdate_picker.get('select'));
+            ga('send', 'event', 'Map', 'Settings', 'Urthecast dates');
+          }
+        }
+      });
+      var endHRdate_picker = endHRdate.pickadate('picker');
+
+      if (minABSdate && maxABSdate) {
+        startHRdate_picker.set('select',  moment(minABSdate).toDate());
+        endHRdate_picker.set('select',  moment(maxABSdate).toDate());
+      }
     },
 
   });
