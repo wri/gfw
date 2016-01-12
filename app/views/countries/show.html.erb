@@ -168,7 +168,10 @@
                     </a>
                   </div>
                 </div>
-
+                <script type="text/javascript">
+                var country = <%= raw(@country.to_json) %>;
+                console.log(country);
+                </script>
                 <div class="section-content">
                   <% if @country['gva'].present? && @country['gva'] > 0 %>
                   <h3 class="section-title">
