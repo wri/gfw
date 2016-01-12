@@ -167,6 +167,7 @@ define([
           this.presenter.notificate('not-zoom-not-reached');
         }
       }
+      ga('send', 'event', 'Map', 'Toggle', 'Urthecast');
     },
 
     toggleLayerName: function(e) {
