@@ -44,7 +44,7 @@ define([
     },
 
     _redirect: function() {
-                        var match,
+      var match,
         pl     = /\+/g,
         search = /([^&=]+)=?([^&]*)/g,
         decode = function (s) { return decodeURIComponent(s.replace(pl, ' ')); },

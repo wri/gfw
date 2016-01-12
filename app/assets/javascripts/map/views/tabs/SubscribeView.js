@@ -1,25 +1,24 @@
 define([
-  'backbone',
-  'underscore',
-  'handlebars',
+  'backbone', 'underscore', 'handlebars', 'moment',
   'map/models/UserModel',
   'map/presenters/tabs/SubscribePresenter',
   'connect/models/Subscription',
   'text!map/templates/tabs/subscribe.handlebars'
-], function(Backbone, _, Handlebars, User, Presenter, Subscription, tpl) {
+], function(Backbone, _, Handlebars, moment, User, Presenter, Subscription, tpl) {
 
   'use strict';
 
   var SubscribeView = Backbone.View.extend({
 
     id: 'subscription-modal',
-    className: 'modal',
+    className: 'subscription-modal',
 
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .modal-close' : 'hide',
-      'click .modal-backdrop' : 'hide',
+      'click .subscription-modal-close': 'hide',
+      'click .subscription-modal-backdrop': 'hide',
+      'click #returnToMap': 'hide',
       'click #showName': 'askForName',
       'click #subscribe': 'subscribe',
     },
@@ -37,8 +36,10 @@ define([
     render: function(){
       this.$el.html(this.template({
         email: this.user.get('email'),
-        loggedIn: this.user.isLoggedIn()
+        loggedIn: this.user.isLoggedIn(),
+        date: moment().format('MMM D, YYYY')
       }));
+      this.setupAuthLinks();
 
       return this;
     },
@@ -61,10 +62,18 @@ define([
       this.presenter.hide();
     },
 
+    setupAuthLinks: function() {
+      var apiHost = window.gfw.config.GFW_API_HOST;
+
+      this.$('.subscription-sign-in').each(function() {
+        var $link = $(this);
+        $link.attr('href', apiHost + $link.attr('href'));
+      });
+    },
+
     createSubscription: function(analysisResource) {
       this.subscription = new Subscription({
-        topic: 'Subscribe to alerts',
-        name: this.$el.find('#subscriptionName').val()
+        topic: 'Subscribe to alerts'
       });
 
       var geom;
@@ -96,7 +105,7 @@ define([
       window.ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' +
         this.subscription.get('topic') + ', Email: ' + this.subscription.get('email'));
 
-      this.subscription.set('email',
+      this.subscription.set('name',
         this.$el.find('#subscriptionName').val());
 
       this.subscription.save().
