@@ -38,7 +38,6 @@ define([
 
     setListeners: function() {
       mps.subscribe('Howto/toggle', _.bind(function(mobile){
-        console.log(mobile);
         this.toggleStates(mobile);
       }, this ))
     },

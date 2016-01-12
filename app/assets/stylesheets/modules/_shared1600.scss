@@ -620,31 +620,6 @@
   }
 }
 
-// Feedback
-.feedback-link {
-  display: none;
-  position: fixed;
-  top: 50%;
-  right: 0;
-  z-index: 250;
-  background: #FFD24D;
-  text-transform: uppercase;
-  color: $dark;
-  text-decoration: none;
-  padding: 8px;
-  cursor: pointer;
-  @include transform(rotate(90deg) translate(50%,0));
-  @include transform-origin(100%,0);
-  &:hover {
-    background: darken(#FFD24D,5%);
-  }
-  @media (min-width: $br-mobile){
-    display: block;
-  }
-
-}
-
-
 .scroll-light{
   -webkit-overflow-scrolling: touch;
   /* Let's get this party started */
