@@ -93,12 +93,13 @@ define([
       if (isNaN(this.previousZoom)) this.previousZoom = zoom;
       this.$currentZoom.text(zoom);
       if(this.zoom >= 7) {
+        this.presenter.notificateClose();
         this.$disclaimer.hide(0);
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
           this.$onoffswitch.click();
           if (this.previousZoom >= 7) {
-              this.presenter.notificate('not-zoom-not-reached');
+            this.presenter.notificate('not-zoom-not-reached');
           }
         }
         this.$disclaimer.show(0);
@@ -256,7 +257,7 @@ define([
         onSet: function(event) {
           if ( event.select ) {
             endHRdate_picker.set('min', startHRdate_picker.get('select'));
-            ga('send', 'event', 'Map', 'Settings', 'Urthecast dates');  
+            ga('send', 'event', 'Map', 'Settings', 'Urthecast dates');
           }
         }
       }),

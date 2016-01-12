@@ -106,6 +106,10 @@ define([
       mps.publish('Notification/open', [id]);
     },
 
+    notificateClose: function(id){
+      mps.publish('Notification/close');
+    },
+
 
   });
 
