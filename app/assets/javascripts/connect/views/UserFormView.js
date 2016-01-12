@@ -10,7 +10,8 @@ define([
     className: 'user-form content-form',
 
     events: {
-      'click #submit' : '_submit'
+      'click #submit' : '_submit',
+      'click #skip': '_redirect'
     },
 
     template: Handlebars.compile(tpl),
