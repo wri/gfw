@@ -34,7 +34,7 @@ define([
         this.geom_for_subscription = geom;
       }
     },{
-      'Tab/opened': function(id) {
+      'Tab/opened': function() {
         this.view.hide();
       }
     }],
@@ -49,8 +49,7 @@ define([
 
     notificate: function(id){
       mps.publish('Notification/open', [id]);
-    },
-
+    }
 
   });
 
