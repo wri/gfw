@@ -106,6 +106,18 @@
       }
     }
   }
+  &.red {
+    color: $white;
+    background: $red;
+    &:hover {
+      background: darken($red,10%);
+    }
+    &.disabled{
+      &:hover {
+        background: $red;
+      }
+    }
+  }
   &.light {
     color: $white;
     background: #CBCCBF;

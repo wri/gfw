@@ -59,16 +59,17 @@ define([
         match: _.bind(function(){
           this.mobile = false;
           this.render();
+          this.cacheVars();
         },this)
       });
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.mobile = true;
           this.renderMobile();
+          this.cacheVars();
         },this)
       });
 
-      this.cacheVars();
       //Experiment
       //this.presenter.initExperiment('source');
     },
@@ -104,11 +105,6 @@ define([
       // countries
       this.setStyle(0.45);
       this.getCountries();
-      if (!this.embed) {
-        setTimeout(_.bind(function(){
-          this.presenter.openTab('#countries-tab-button');
-        },this), 0);
-      }
       this.$countryReset.on('click', _.bind(this.changeIsoMobile, this));
     },
 

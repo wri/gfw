@@ -28,15 +28,15 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'change #hres-provider-select' : 'changeProvider',
-      'click  .onoffswitch' : 'toggleLayer',
-      'click  .maptype h3' : 'toggleLayerName',
-      'oninput #range-clouds' : 'setVisibleRange',
-      'change #range-clouds' : 'setVisibleRange',
-      'change input' : '_setParams',
-      'change select' : '_setParams',
-      'click button' : '_triggerChanges',
-      'click .advanced-controls' : '_toggleAdvanced'
+      'click  .chzn-results'      : 'changeProvider',
+      'click  .onoffswitch'       : 'toggleLayer',
+      'click  .maptype h3'        : 'toggleLayerName',
+      'oninput #range-clouds'     : 'setVisibleRange',
+      'change #range-clouds'      : 'setVisibleRange',
+      'change input'              : '_setParams',
+      'change select'             : '_setParams',
+      'click button'              : '_triggerChanges',
+      'click .advanced-controls'  : '_toggleAdvanced'
     },
 
     initialize: function(map) {
@@ -93,12 +93,13 @@ define([
       if (isNaN(this.previousZoom)) this.previousZoom = zoom;
       this.$currentZoom.text(zoom);
       if(this.zoom >= 7) {
+        this.presenter.notificateClose();
         this.$disclaimer.hide(0);
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
           this.$onoffswitch.click();
           if (this.previousZoom >= 7) {
-              this.presenter.notificate('not-zoom-not-reached');
+            this.presenter.notificate('not-zoom-not-reached');
           }
         }
         this.$disclaimer.show(0);
@@ -108,7 +109,6 @@ define([
 
     _getParams: function(e) {
       var $objTarget = $(e.target).closest('.maptype');
-      mps.publish('Tab/open', ['#hd-tab-button']);
       if(!!this.$onoffswitch.hasClass('checked')) {
         return {
           'zoom' : this.zoom,
@@ -130,6 +130,7 @@ define([
       }
       this.$apply.addClass('green').removeClass('gray');
       this.presenter.setHres(this._getParams(e));
+      this._triggerChanges(e);
     },
 
     _triggerChanges: function(e) {
@@ -166,6 +167,7 @@ define([
           this.presenter.notificate('not-zoom-not-reached');
         }
       }
+      ga('send', 'event', 'Map', 'Toggle', 'Urthecast');
     },
 
     toggleLayerName: function(e) {
@@ -213,6 +215,7 @@ define([
     },
 
     changeProvider: function(e) {
+      ga('send', 'event', 'Map', 'Settings', 'Urthecast advanced renderer');
       return;
       var providers = {
         'urthe' : '<option value="ndvi">NDVI (Normalized Difference Vegetation Index)</option><option value="evi">EVI (Enhanced vegetation index)</option><option value="ndwi">NDWI (Normalized Difference Water Index)</option><option value="false-nir">False Color NIR (Near Infra Red)</option>',
@@ -224,7 +227,8 @@ define([
 
     setVisibleRange: function(){
       var width = this.$range.val();
-      this.$progress.width(width + '%')
+      this.$progress.width(width + '%');
+      ga('send', 'event', 'Map', 'Settings', 'Urthecast advanced cloud');
     },
 
     renderPickers: function(minABSdate, maxABSdate) {
@@ -251,7 +255,8 @@ define([
         onOpen: onPickerOpen,
         onSet: function(event) {
           if ( event.select ) {
-            endHRdate_picker.set('min', startHRdate_picker.get('select'))    
+            endHRdate_picker.set('min', startHRdate_picker.get('select'));
+            ga('send', 'event', 'Map', 'Settings', 'Urthecast dates');
           }
         }
       }),
@@ -269,7 +274,8 @@ define([
         onOpen: onPickerOpen,
         onSet: function(event) {
           if ( event.select ) {
-            startHRdate_picker.set('max', endHRdate_picker.get('select'))
+            startHRdate_picker.set('max', endHRdate_picker.get('select'));
+            ga('send', 'event', 'Map', 'Settings', 'Urthecast dates');
           }
         }
       });

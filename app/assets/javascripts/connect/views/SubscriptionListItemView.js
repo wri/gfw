@@ -57,13 +57,11 @@ define([
     editName: function(event) {
       var $el = $(event.currentTarget);
       if (!$el.hasClass('editing')) {
-        var width = $el.width(),
-            value = this.subscription.get('name');
+        var value = this.subscription.get('name');
 
         $el.addClass('editing').
           html('<input />').
           find('input').val(value).
-          width(width).
           focus();
       }
     },
@@ -80,11 +78,11 @@ define([
 
     saveName: function(event) {
       var $el = $(event.currentTarget);
-			if ($el.hasClass('editing')) {
-				var old_value = this.subscription.get('name'),
-						new_value = $el.find('input').val();
+      if ($el.hasClass('editing')) {
+        var old_value = this.subscription.get('name'),
+            new_value = $el.find('input').val();
 
-				this.subscription.save('name', new_value, {
+        this.subscription.save('name', new_value, {
           wait: true,
           silent: true,
           success: this.resetName.bind(this),

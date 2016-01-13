@@ -12,17 +12,25 @@ define([
 
     initialize: function() {
       this.subscriptions = new Subscriptions();
-      this.listenTo(this.subscriptions, 'sync', this.render);
+      this.listenTo(this.subscriptions, 'sync remove', this.render);
       this.subscriptions.fetch();
 
       this.render();
     },
 
     render: function() {
-      this.$el.html(this.template());
+      this.$el.html(this.template({
+        subscriptions: this.subscriptions.toJSON()
+      }));
+
+      var sortedSubscriptions = new Subscriptions(
+        this.subscriptions.sortBy(function(subscription) {
+          return -moment(subscription.get('created')).unix();
+        })
+      );
 
       var $tableBody = this.$('#user-subscriptions-table-body');
-      this.subscriptions.each(function(subscription) {
+      sortedSubscriptions.each(function(subscription) {
         var view = new SubscriptionListItemView({
           subscription: subscription});
         $tableBody.append(view.el);

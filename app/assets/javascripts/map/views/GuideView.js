@@ -7,10 +7,11 @@ define([
   'underscore',
   'handlebars',
   'enquire',
+  'cookie',
   'map/helpers/guide',
   'map/helpers/guidetexts',
   'map/presenters/GuidePresenter',
-], function(_, Handlebars, enquire, guide, guideTexts, GuidePresenter) {
+], function(_, Handlebars, enquire, Cookies, guide, guideTexts, GuidePresenter) {
 
   'use strict';
 
@@ -24,22 +25,42 @@ define([
     initialize: function() {
       this.presenter = new GuidePresenter(this);
       $(window).load(_.bind(function() {
-        this.initTour();
+        setTimeout(function(){
+          this.initTour();
+        }.bind(this), 1000)
       }, this));
-
     },
 
     setTour: function() {
       this.guide = $("body").guide();
 
+      // Intro
+      this.guide.addStep("", guideTexts.intro,{
+        position: 'center'
+      });
+
       // Layers module
-      this.guide.addStep(".categories-list", guideTexts.layersmenu,{
-        position: 'bottom'
+      this.guide.addStep(".categories-list", guideTexts.layersmenu_1,{
+        position: 'bottom',
+        callfront: function() {
+          $('#layersnav-forest-change').removeClass('tour-active');
+        }
+      });
+
+      // Layers module
+      this.guide.addStep("#layersnav-forest-change", guideTexts.layersmenu_2,{
+        position: 'right',
+        callfront: function() {
+          $('#layersnav-forest-change').addClass('tour-active');
+        }
       });
 
       // Legend module
       this.guide.addStep("#module-legend", guideTexts.legend,{
-        position: 'right'
+        position: 'right',
+        callfront: function() {
+          $('#layersnav-forest-change').removeClass('tour-active');
+        }
       });
 
       // Controls module
@@ -66,19 +87,27 @@ define([
       });
 
       // Subscription tab
-      this.guide.addStep("#module-tabs", guideTexts.subscriptiontab, {
-        position: 'left',
-        callfront: function() {
-          $('#get-started-subscription').click();
-          $('#subscription-tab-button').removeClass('active').click();
-        }
-      });
+      // this.guide.addStep("#module-tabs", guideTexts.subscriptiontab, {
+      //   position: 'left',
+      //   callfront: function() {
+      //     $('#get-started-subscription').click();
+      //     $('#subscription-tab-button').removeClass('active').click();
+      //   }
+      // });
 
       // Basemap tab
       this.guide.addStep("#module-tabs", guideTexts.basemaptab, {
         position: 'left',
         callfront: function() {
           $('#basemaps-tab-button').removeClass('active').click();
+        }
+      });
+
+      // High resolution tab
+      this.guide.addStep("#module-tabs", guideTexts.hrestab, {
+        position: 'left',
+        callfront: function() {
+          $('#hd-tab-button').removeClass('active').click();
         }
       });
 
@@ -100,8 +129,15 @@ define([
 
     initTour: function() {
       if (!!this.presenter.status.get('tour')) {
-        this.guide.start();
+        this.askForTour();
+      } else if(!this.presenter.status.get('tour') && !Cookies.get('tour')) {
+        this.askForTour();
       }
+    },
+
+    askForTour: function() {
+      Cookies.set('tour', true, { expires: 365 });
+      this.guide.start();
     }
 
   });

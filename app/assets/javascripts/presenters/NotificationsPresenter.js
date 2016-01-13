@@ -24,6 +24,9 @@ define([
     _subscriptions: [{
       'Notification/open': function(source) {
         this.view.show(source);
+      },
+      'Notification/close': function() {
+        this.view.hide();
       }
     }]
   });
