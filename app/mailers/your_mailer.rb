@@ -6,7 +6,6 @@ class YourMailer < ActionMailer::Base
     @hostname = hostname.present? ? hostname : nil
 
     emails = get_mails(@hostname)
-    puts emails
 
     mail :subject => "GFW Feedback",
          :to      => emails,
@@ -21,7 +20,7 @@ class YourMailer < ActionMailer::Base
         when 'fires.globalforestwatch.org' then ['SMinnemeyer@wri.org', 'gfw@wri.org']
         when 'commodities.globalforestwatch.org' then ['slake@wri.org', 'gfw@wri.org']
         when 'climate.globalforestwatch.org' then ['cciciarelli@wri.org', 'gfw@wri.org']
-        else ['barrenechea.miguel@gmail.com', 'miguel.barrenechea@vizzuality.com']
+        else ['abarrett@wri.org', 'gfw@wri.org']
       end
     end
 end
