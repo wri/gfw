@@ -2501,3 +2501,61 @@
 .country-download-modal {
   position: fixed;
 }
+
+
+
+.section-content {
+  .plantations-section {
+    @include display-flex();
+    @include justify-content(space-between);
+    > li {
+      width: 45%;
+    }
+    .plantations-box {
+      padding: 20px 0 13px;
+      border-top: 2px solid $border;
+      &:first-child {
+        border-top: none;
+      }
+      p {
+        text-transform: uppercase;
+        font-size: 12px;
+
+        &.plantations-text {
+          max-width: 170px;
+        }
+
+        &.plantations-year {
+          font-weight: 500;
+          font-size: 24px;
+          color: $dark;
+          margin: 0 0 5px;
+        }
+
+        &.plantations-loss {
+          font-weight: 500;
+          font-size: 21px;
+          color: $cGreen;
+          text-transform: none;
+          margin: 15px 0 0;
+          @media (min-width: $br-mobile) {
+            font-size: 36px;
+          }
+        }
+
+        &.plantations-percentage {
+          font-weight: 500;
+          font-size: 21px;
+          color: #CCC;
+          margin: 10px 0;
+          @media (min-width: $br-mobile) {
+            font-size: 24px;
+          }
+
+        }
+      }
+    }
+  }
+}
+
+
