@@ -2,8 +2,9 @@ define([
   'jquery', 'backbone', 'underscore',
   'map/models/UserModel',
   'connect/views/UserFormView',
-  'connect/views/SubscriptionListView'
-], function($, Backbone, _, User, UserFormView, SubscriptionListView) {
+  'connect/views/SubscriptionListView',
+  'views/NotificationsView'
+], function($, Backbone, _, User, UserFormView, SubscriptionListView, NotificationsView) {
 
   'use strict';
 
@@ -18,6 +19,7 @@ define([
     initialize: function() {
       this.checkLoggedIn();
       this.setupNavbar();
+      new NotificationsView();
     },
 
     checkLoggedIn: function() {

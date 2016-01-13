@@ -88,10 +88,21 @@
     select {
       height: 37px;
       background-color: #fff;
-      color: #aaa;
       display: block;
       width: 100%;
       margin: 6px 0 16px 0;
+    }
+
+    select:not([multiple]) option:first-of-type {
+      color: #aaa;
+    }
+
+    select[multiple] option {
+      color: #aaa;
+    }
+
+    select option:checked {
+      color: #000;
     }
 
     select::-ms-expand { /* for IE 11 */
