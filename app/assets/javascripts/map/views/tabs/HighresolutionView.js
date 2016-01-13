@@ -28,15 +28,15 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'change #hres-provider-select' : 'changeProvider',
-      'click  .onoffswitch' : 'toggleLayer',
-      'click  .maptype h3' : 'toggleLayerName',
-      'oninput #range-clouds' : 'setVisibleRange',
-      'change #range-clouds' : 'setVisibleRange',
-      'change input' : '_setParams',
-      'change select' : '_setParams',
-      'click button' : '_triggerChanges',
-      'click .advanced-controls' : '_toggleAdvanced'
+      'click  .chzn-results'      : 'changeProvider',
+      'click  .onoffswitch'       : 'toggleLayer',
+      'click  .maptype h3'        : 'toggleLayerName',
+      'oninput #range-clouds'     : 'setVisibleRange',
+      'change #range-clouds'      : 'setVisibleRange',
+      'change input'              : '_setParams',
+      'change select'             : '_setParams',
+      'click button'              : '_triggerChanges',
+      'click .advanced-controls'  : '_toggleAdvanced'
     },
 
     initialize: function(map) {
