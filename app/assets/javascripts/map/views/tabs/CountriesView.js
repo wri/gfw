@@ -105,11 +105,6 @@ define([
       // countries
       this.setStyle(0.45);
       this.getCountries();
-      if (!this.embed) {
-        setTimeout(_.bind(function(){
-          this.presenter.openTab('#countries-tab-button');
-        },this), 0);
-      }
       this.$countryReset.on('click', _.bind(this.changeIsoMobile, this));
     },
 
