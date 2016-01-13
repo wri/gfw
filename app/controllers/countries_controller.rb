@@ -60,7 +60,7 @@ class CountriesController < ApplicationController
       unless iso.blank?
         iso = iso.downcase
         response = Typhoeus.get(
-            "#{ENV['GFW_API_HOST']}/countries/#{iso}",
+            "#{ENV['GFW_API_HOST']}/countries/#{iso}?thresh=30",
             headers: {"Accept" => "application/json"}
         )
         if response.success? and (response.body.length > 0)
