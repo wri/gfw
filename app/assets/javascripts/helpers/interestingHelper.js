@@ -89,6 +89,7 @@ define([], function() {
       description: 'Help improve GFW by submitting feedback or by signing up to become an official GFW tester.',
       link: '/getinvolved/provide-feedback',
       button_text: 'Submit feedback',
+      adittionalClass: 'feedback-link'
     },
     contact_us: {
       title: 'Contact us',

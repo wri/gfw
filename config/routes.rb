@@ -43,6 +43,8 @@ Gfw::Application.routes.draw do
     get '/about/users' => redirect("/about")
     get '/about/small_grants_fund' => redirect("/getinvolved/apply-to-the-small-grants-fund")
     get '/about/testers' => redirect("/about")
+    get '/getinvolved/provide-feedback' => redirect("/getinvolved")
+
 
   resources :stories
 
