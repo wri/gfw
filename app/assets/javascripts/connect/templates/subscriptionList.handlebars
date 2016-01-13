@@ -7,18 +7,34 @@
 </section>
 
 <section class='section'>
-  <div class="user-profile inner">
+  <div class="subscription-list">
     <div class="tabs">
-      <h3 class="current">GFW</h3>
-      <h3>GFW Fires</h3>
-      <h3>Commodities</h3>
+      <div class="inner">
+        <h3 class="current">GFW</h3>
+        <h3>GFW Fires</h3>
+        <h3>Commodities</h3>
+      </div>
     </div>
 
-    <div class="content-form user-subscriptions">
-      <table>
-        <tbody id="user-subscriptions-table-body">
-        </tbody>
-      </table>
+    <div class="content-form user-subscriptions inner">
+      {{#if subscriptions.length}}
+        <table>
+          <tbody id="user-subscriptions-table-body">
+          </tbody>
+        </table>
+      {{else}}
+        <div class="user-subscriptions-empty">
+          <h4>You don't have any subscriptions yet</h4>
+          <h5>
+            Visit the map to subscribe to forest change alerts for your
+            area of interest.
+          </h5>
+
+          <p>
+            <a href="/map" class="btn green uppercase">Go to the map</a>
+          </p>
+        </div>
+      {{/if}}
     </div>
   </div>
 </section>

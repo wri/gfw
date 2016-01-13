@@ -12,14 +12,16 @@ define([
 
     initialize: function() {
       this.subscriptions = new Subscriptions();
-      this.listenTo(this.subscriptions, 'sync', this.render);
+      this.listenTo(this.subscriptions, 'sync remove', this.render);
       this.subscriptions.fetch();
 
       this.render();
     },
 
     render: function() {
-      this.$el.html(this.template());
+      this.$el.html(this.template({
+        subscriptions: this.subscriptions.toJSON()
+      }));
 
       var sortedSubscriptions = new Subscriptions(
         this.subscriptions.sortBy(function(subscription) {
