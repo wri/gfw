@@ -193,9 +193,8 @@ define([
       // this.deleteAnalysis();
 
       //Open analysis tab
-      if ((!this.status.get('dont_analyze') && (params.iso.country && params.iso.country !== 'ALL')) || (params.analyze || params.geojson || params.wdpaid)) {
-        // Is this necessary?
-        // mps.publish('Tab/open', ['#analysis-tab-button']);
+      if ((!this.status.get('dont_analyze') && ! !!params.tab && (params.iso.country && params.iso.country !== 'ALL')) || (params.analyze || params.geojson || params.wdpaid)) {
+        mps.publish('Tab/open', ['#analysis-tab-button']);
       }
 
       //Select analysis type by params given
