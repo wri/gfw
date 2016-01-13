@@ -112,10 +112,6 @@ define([
       mps.publish('Countries/name', [name, !!name]);
     },
 
-    openTab: function(id){
-      mps.publish('Tab/open',[id]);
-    },
-
     initExperiment: function(id){
       mps.publish('Experiment/choose',[id]);
     },

@@ -1,13 +1,11 @@
 .user-profile {
-  margin: 0px auto;
+  margin: 60px auto 0 auto;
   display: flex;
   align-items: center;
   flex-direction: column;
   color: #555;
 
-  .user-form {
-    max-width: 490px;
-  }
+  width: 600px;
 
   .tabs {
     width: 120%;
@@ -68,6 +66,10 @@
       font-size: 13px;
       font-weight: 500;
       margin: 0 0 8px;
+
+      &.-middle {
+        margin-top: -15px;
+      }
     }
 
     input:not([type="radio"]),
@@ -102,6 +104,7 @@
 
       &.-middle {
         width: 100%;
+        margin-top: -15px;
 
         &:after {
           top: 16px;
@@ -123,6 +126,15 @@
       }
     }
 
+    .m-multi-sel-container {
+      position: relative;
+      display: inline-block;
+
+      select {
+        height: 60px;
+      }
+    }
+
     .m-improve-gfw {
       border: 1px solid #97bd3d;
       padding: 1.2em;
@@ -140,6 +152,10 @@
         label {
           cursor: pointer;
         }
+      }
+
+      input {
+        margin-right: 10px;
       }
     }
 

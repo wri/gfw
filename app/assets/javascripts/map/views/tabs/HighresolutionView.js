@@ -28,15 +28,15 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'change #hres-provider-select' : 'changeProvider',
-      'click  .onoffswitch' : 'toggleLayer',
-      'click  .maptype h3' : 'toggleLayerName',
-      'oninput #range-clouds' : 'setVisibleRange',
-      'change #range-clouds' : 'setVisibleRange',
-      'change input' : '_setParams',
-      'change select' : '_setParams',
-      'click button' : '_triggerChanges',
-      'click .advanced-controls' : '_toggleAdvanced'
+      'click  .chzn-results'      : 'changeProvider',
+      'click  .onoffswitch'       : 'toggleLayer',
+      'click  .maptype h3'        : 'toggleLayerName',
+      'oninput #range-clouds'     : 'setVisibleRange',
+      'change #range-clouds'      : 'setVisibleRange',
+      'change input'              : '_setParams',
+      'change select'             : '_setParams',
+      'click button'              : '_triggerChanges',
+      'click .advanced-controls'  : '_toggleAdvanced'
     },
 
     initialize: function(map) {
@@ -93,12 +93,13 @@ define([
       if (isNaN(this.previousZoom)) this.previousZoom = zoom;
       this.$currentZoom.text(zoom);
       if(this.zoom >= 7) {
+        this.presenter.notificateClose();
         this.$disclaimer.hide(0);
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
           this.$onoffswitch.click();
           if (this.previousZoom >= 7) {
-              this.presenter.notificate('not-zoom-not-reached');
+            this.presenter.notificate('not-zoom-not-reached');
           }
         }
         this.$disclaimer.show(0);
@@ -108,7 +109,6 @@ define([
 
     _getParams: function(e) {
       var $objTarget = $(e.target).closest('.maptype');
-      mps.publish('Tab/open', ['#hd-tab-button']);
       if(!!this.$onoffswitch.hasClass('checked')) {
         return {
           'zoom' : this.zoom,
@@ -256,7 +256,7 @@ define([
         onSet: function(event) {
           if ( event.select ) {
             endHRdate_picker.set('min', startHRdate_picker.get('select'));
-            ga('send', 'event', 'Map', 'Settings', 'Urthecast dates');  
+            ga('send', 'event', 'Map', 'Settings', 'Urthecast dates');
           }
         }
       }),
