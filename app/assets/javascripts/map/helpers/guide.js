@@ -226,6 +226,12 @@
                 },3000);
 
             },
+
+            clearStates = function() {
+              $('#layersnav-forest-change').removeClass('tour-active');
+
+            },
+
             getMaximumZIndex = function() {
                 var max = 0;
                 $("*").each(function() {
@@ -276,6 +282,7 @@
 
               topMask.add(bottomMask).add(leftMask).add(rightMask).on("click", function() {
                 clearGuide();
+                clearStates();
               });
 
               container.append(tourButton);
@@ -301,7 +308,7 @@
                     var attrs = (!!step.selector) ? getElementAttrs($(step.selector)) : {};
                     // if the element has width or height we get ;
                     steps.push({
-                      element: (!!step.selector && attrs.width!=0 && attrs.height!=0) ? $(step.selector) : null,
+                      element: (!!step.selector) ? $(step.selector) : null,
                       selector: (!!step.selector) ? step.selector : null,
                       intro: step.intro,
                       options: step.options
