@@ -8,6 +8,17 @@ define([
 
   'use strict';
 
+  var TOPICS = {
+    loss: 'alerts/treeloss',
+    forestgain: 'alerts/treegain',
+    forma: 'alerts/forma',
+    imazon: 'alerts/sad',
+    modis: 'alerts/quicc',
+    terrailoss: 'alerts/terra',
+    prodes: 'alerts/prodes',
+    guyra: 'alerts/guyra'
+  };
+
   var SubscribeView = Backbone.View.extend({
 
     id: 'subscription-modal',
@@ -45,7 +56,7 @@ define([
     },
 
     show: function(options){
-      this.createSubscription(options.analysisResource);
+      this.createSubscription(options);
       this.currentStep = 0;
 
       this.$el.addClass('is-active');
@@ -71,12 +82,13 @@ define([
       });
     },
 
-    createSubscription: function(analysisResource) {
+    createSubscription: function(options) {
       this.subscription = new Subscription({
-        topic: 'Subscribe to alerts'
+        topic: TOPICS[options.layer.slug] || options.layer.title
       });
 
-      var geom;
+      var geom,
+          analysisResource = options.analysisResource;
       if (analysisResource.type === 'geojson') {
         geom = JSON.parse(analysisResource.geojson);
       } else {
