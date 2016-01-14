@@ -134,6 +134,7 @@ define([
   'map/views/layers/GuyraCoverLayer',
   'map/views/layers/MysPALayer',
   'map/views/layers/IdnPeatLandsLayer',
+  'map/views/layers/MysPeatLandsLayer',
   'map/views/layers/RaisgMiningLayer',
   'map/views/layers/PerMiningLayer',
   'map/views/layers/MexMiningLayer',
@@ -286,6 +287,7 @@ define([
   GuyraCoverLayer,
   MysPALayer,
   IdnPeatLandsLayer,
+  MysPeatLandsLayer,
   RaisgMiningLayer,
   PerMiningLayer,
   MexMiningLayer,
@@ -720,7 +722,10 @@ define([
     },
     mys_protected_areas: {
       view:  MysPALayer
-    }, 
+    },
+    mys_peat_lands: {
+      view:  MysPeatLandsLayer
+    },
     idn_peat_lands: {
       view:  IdnPeatLandsLayer
     },
