@@ -135,6 +135,9 @@ define([
   'map/views/layers/MysPALayer',
   'map/views/layers/IdnPeatLandsLayer',
   'map/views/layers/RaisgMiningLayer',
+  'map/views/layers/PerMiningLayer',
+  'map/views/layers/MexMiningLayer',
+  'map/views/layers/BraMiningLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -284,6 +287,9 @@ define([
   MysPALayer,
   IdnPeatLandsLayer,
   RaisgMiningLayer,
+  PerMiningLayer,
+  MexMiningLayer,
+  BraMiningLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -718,6 +724,18 @@ define([
     idn_peat_lands: {
       view:  IdnPeatLandsLayer
     },
+    mex_mining: {
+      view:  MexMiningLayer
+    },
+    
+    per_mining: {
+      view:  PerMiningLayer
+    },
+    
+    bra_mining: {
+      view:  BraMiningLayer
+    },
+    
     nothing: {
     }
   };
