@@ -2551,7 +2551,23 @@
           @media (min-width: $br-mobile) {
             font-size: 24px;
           }
+        }
+      }
+      .plantations-trees {
+        position: relative;
+        .mask {
+          background: image-url('countries/tree-mask.svg');
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+        }
 
+        .bar {
+          position: relative;
+          z-index: 0;
+          height: 25px;
+          background: $cGreen;
         }
       }
     }
