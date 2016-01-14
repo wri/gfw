@@ -109,7 +109,7 @@
         {{/if}}
         {{#if content.data.substance}}
           <h4>Substance:</h4>
-          <p>{{content.data.substance}}%</p>
+          <p>{{content.data.substance}}</p>
         {{/if}}
 				{{#if content.data.project_pr}}
           <h4>Project Proponent :</h4>
@@ -198,6 +198,10 @@
         {{#if content.data.acq_date}}
           <h4>Acquisition date:</h4>
           <p>{{content.data.acq_date}}</p>
+        {{/if}}
+        {{#if content.data.year}}
+          <h4>Year:</h4>
+          <p>{{content.data.year}}</p>
         {{/if}}
         {{#if content.data.year_created}}
           <h4>Year created:</h4>
