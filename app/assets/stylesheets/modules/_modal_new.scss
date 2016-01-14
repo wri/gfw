@@ -147,6 +147,11 @@ $height: auto;
     @media (min-width: $br-mobile){
       max-height: 450px;
     }
+
+    &.has-footer {
+      border-bottom: 66px solid transparent;
+    }
+
     .modal-content {
       height: auto;
       width: 100%;
@@ -166,7 +171,9 @@ $height: auto;
   width: 100%;
   background: $white;
   z-index: 2;
+  padding: 20px;
   @include clearfix();
+
   // GRADIENTS
   .gradient {
     content: "";
@@ -199,6 +206,7 @@ $height: auto;
       border-radius: 40px;
       &:hover {
         background: darken($white,1%);
+        text-decoration: underline;
       }
       &.is-active {
         color: $white;
@@ -229,26 +237,11 @@ $height: auto;
     border-bottom: 1px solid $border;
     @include gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
   }
-
 }
 
 .modal-content {
   font-size: 13px;
-  h2 {
-    text-align: center;
-    font-size: 32px;
-    font-weight: 300;
-    color: $dark;
-    padding: 0 0 20px;
-  }
 
-  h3 {
-    font-size: 21px;
-    font-weight: 400;
-    strong {
-      font-weight: 500;
-    }
-  }
   .bullets  {
     list-style-type: disc;
     color: $dark;
@@ -274,9 +267,9 @@ $height: auto;
       }
     }
   }
-
 }
 
+// Steps
 .modal-steps {
   padding: 20px 20px 70px;
   > li {
@@ -296,19 +289,132 @@ $height: auto;
   }
 }
 
-// EXCEPTIONS
-.feedback-form {
-  > * {
+// Source template
+.modal-source {
+
+  // Title
+  .modal-title {
     display: block;
+    font-weight: 500;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: $dark;
+  }
+
+  // Subtitle
+  .modal-subtitle {
+    display: block;
+    margin-top: 5px;
+    font-size: 13px;
+    line-height: 1.2;
+    color: #999;
+  }
+
+  // Table
+  .modal-table {
     margin: 10px 0 0;
-    &:first-child {
-      margin: 0;
+    border: 1px solid $border;
+    @media (min-width: $br-mobile){
+      border: none;
+      border-top: 1px solid $border;
+    }
+
+    .modal-row {
+      width: 100%;
+      @media (min-width: $br-mobile){
+        display: table;
+        &:nth-child(even) {
+          background: #F2F2F3;
+        }
+      }
+
+
+      dt {
+        padding: 10px;
+        font-weight: 500;
+        font-size: 11px;
+        text-transform: uppercase;
+        background: #F2F2F3;
+        @media (min-width: $br-mobile){
+          display: table-cell;
+          width: 120px;
+          border-bottom: 1px solid $border;
+          background: none;
+        }
+      }
+
+      dd {
+        padding: 10px;
+        font-size: 13px;
+        @media (min-width: $br-mobile){
+          display: table-cell;
+          padding: 10px 10px 10px 15px;
+          border-left: 1px solid $border;
+          border-bottom: 1px solid $border;
+        }
+
+        a {
+          color: $cGreen;
+          &:hover {
+            color: darken($cGreen,5%);
+          }
+        }
+
+        p {
+          margin-bottom: 10px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          sup {
+            position: relative;
+            top: -3px;
+            font-size: 80%;
+          }
+        }
+      }
+
+      em {
+        font-style: italic;
+      }
     }
   }
 
-  .feedback-tester {
-    padding: 20px;
-    border: 1px solid $cGreen;
-    border-radius: 2px;
+  // Overview
+  .modal-overview {
+    color: $dark;
+    margin: 20px 0 0;
+
+    h3 {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    p {
+      font-size: 13px;
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
   }
+
+  // Credits
+  .modal-credits {
+    color: $dark;
+    margin: 20px 0 0;
+
+    h3 {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    p {
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 10px;
+      margin-top: 5px;
+    }
+
+  }
+
 }
