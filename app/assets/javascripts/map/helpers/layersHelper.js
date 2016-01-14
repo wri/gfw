@@ -134,6 +134,7 @@ define([
   'map/views/layers/GuyraCoverLayer',
   'map/views/layers/MysPALayer',
   'map/views/layers/IdnPeatLandsLayer',
+  'map/views/layers/MysPeatLandsLayer',
   'map/views/layers/RaisgMiningLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
@@ -283,6 +284,7 @@ define([
   GuyraCoverLayer,
   MysPALayer,
   IdnPeatLandsLayer,
+  MysPeatLandsLayer,
   RaisgMiningLayer,
   //highres layers
   UrthecastLayer,
@@ -714,7 +716,10 @@ define([
     },
     mys_protected_areas: {
       view:  MysPALayer
-    }, 
+    },
+    mys_peat_lands: {
+      view:  MysPeatLandsLayer
+    },
     idn_peat_lands: {
       view:  IdnPeatLandsLayer
     },

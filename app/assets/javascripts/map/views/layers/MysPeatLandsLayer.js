@@ -1,4 +1,3 @@
-
 /**
  * idn_peat_lands
  *
@@ -11,7 +10,7 @@ define([
 
   'use strict';
 
-  var IdnPeatLandsLayer = CartoDBLayerClass.extend({
+  var MysPeatLandsLayer = CartoDBLayerClass.extend({
 
     options: {
       sql: "SELECT the_raster_webmercator, \'{tableName}\' as tablename, \'{tableName}\' layer FROM {tableName}",
@@ -25,6 +24,6 @@ define([
   
   });
 
-  return IdnPeatLandsLayer;
+  return MysPeatLandsLayer;
 
 });
