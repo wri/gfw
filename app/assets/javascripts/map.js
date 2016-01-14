@@ -11,6 +11,7 @@ require([
   'enquire',
   'mps',
   'map/router',
+  'views/SourceModalView',
   'views/SourceWindowView',
   'views/SourceBottomView',
   'views/SourceMobileFriendlyView',
@@ -32,7 +33,7 @@ require([
   'views/NotificationsView',
   'views/DownloadView',
   '_string'
-], function($, _, Class, Backbone, chosen, utils, enquire, mps, Router, SourceWindowView, SourceBottomView, SourceMobileFriendlyView, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
+], function($, _, Class, Backbone, chosen, utils, enquire, mps, Router, SourceModalView, SourceWindowView, SourceBottomView, SourceMobileFriendlyView, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
     MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, GuideView, HeaderView, FooterView, NotificationsView, DownloadView) {
 
   'use strict';
@@ -73,7 +74,6 @@ require([
       // Google Experiments
       new ExperimentsPresenter();
 
-
       var mapView = new MapView();
 
       new MapControlsView(mapView.map);
@@ -85,7 +85,8 @@ require([
       new NavMobileView();
       new FooterView();
       new HeaderView();
-      new SourceWindowView();
+      new SourceModalView();
+      // new SourceWindowView();
       new SourceBottomView();
       new SourceMobileFriendlyView();
       new NotificationsView();
