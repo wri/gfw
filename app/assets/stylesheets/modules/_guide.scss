@@ -57,6 +57,9 @@
     font-size: 14px;
     color: $dark;
     line-height: 1.4;
+    strong {
+      font-weight: 500;
+    }
   }
 }
 
