@@ -843,10 +843,14 @@
     color: $cGreen;
   }
   .country-alerts,
+  .country-alerts-section,
   .country-production,
   .country-tenure,
   .country-employment,
-  .country-forests-type {
+  .country-forests-type,
+  .country-loss_outside_plantations,
+  .country-carbon_stocks,
+  .country-emissions {
     .coming-soon {
       width: 100%;
       font-size: 16px;

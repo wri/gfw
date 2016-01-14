@@ -270,7 +270,6 @@
           <div class="left-col">
 
             <!-- left col -->
-            <% if @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>
             <section class="country-carbon_stocks carbon-text <%= 'wide' unless @country['emissions'].present? && @country['emissions'] != 0 %>">
               <div class="section-info section-share">
                 <h6>Carbon stocks</h6>
@@ -283,19 +282,22 @@
                   </a>
                 </div>
               </div>
-              <div class="section-content">
-                <h3 class='section-title'>This country has <span class="highlight"><%= number_with_delimiter(@country['carbon_stocks']) %> million metric tons of carbon stocks</span> in living forest biomass.</h3>
-              </div>
+              <% if @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>
+                <div class="section-content">
+                  <h3 class='section-title'>This country has <span class="highlight"><%= number_with_delimiter(@country['carbon_stocks']) %> million metric tons of carbon stocks</span> in living forest biomass.</h3>
+                </div>
+              <% else %>
+                <div class='coming-soon'><span>No data available</span></div>
+              <% end %>
             </section>
-            <% end %>
+
 
           </div>
 
           <div class="right-col">
 
             <!-- right col -->
-            <% if @country['emissions'].present? && @country['emissions'] != 0 %>
-            <section class="emissions-text <%= 'wide' unless @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>">
+            <section class="country-emissions emissions-text <%= 'wide' unless @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>">
 
               <div class="section-info section-share">
                 <h6>CO2 emissions</h6>
@@ -309,17 +311,21 @@
                 </div>
               </div>
 
-               <% precission = (@country['emissions'].abs.to_i < 0.1) ? 2 : 1 %>
 
-              <div class="section-content">
-                <% if @country['emissions'] > 0 %>
-                  <h3 class='section-title'>According to FAO data, <span class="highlight"><%= number_to_percentage(@country['emissions'], precision: precission) %> of GHG emissions</span> in this country came from land-use change and forestry in 2011.</h3>
-                <% else %>
-                  <h3 class='section-title'>According to FAO data, land-use change and forestry sequestered <span class="highlight"><%= number_to_percentage(@country['emissions'].abs, precision: precission) %> of this country’s GHG emissions</span> in 2011.</h3>
-                <% end %>
-              </div>
+              <% if @country['emissions'].present? && @country['emissions'] != 0 %>
+                <% precission = (@country['emissions'].abs.to_i < 0.1) ? 2 : 1 %>
+                <div class="section-content">
+                  <% if @country['emissions'] > 0 %>
+                    <h3 class='section-title'>According to FAO data, <span class="highlight"><%= number_to_percentage(@country['emissions'], precision: precission) %> of GHG emissions</span> in this country came from land-use change and forestry in 2011.</h3>
+                  <% else %>
+                    <h3 class='section-title'>According to FAO data, land-use change and forestry sequestered <span class="highlight"><%= number_to_percentage(@country['emissions'].abs, precision: precission) %> of this country’s GHG emissions</span> in 2011.</h3>
+                  <% end %>
+                </div>
+              <% else %>
+                <div class='coming-soon'><span>No data available</span></div>
+
+              <% end %>
             </section>
-            <% end %>
 
           </div>
 
@@ -339,8 +345,7 @@
           <div class="left-col">
 
             <!-- left col -->
-            <% if @country['loss_outside_plantations'].present? %>
-            <section class="country-loss_outside_plantations carbon-text <%= 'wide' unless @country['emissions'].present? && @country['emissions'] != 0 %>">
+            <section class="country-loss_outside_plantations">
               <div class="section-info section-share">
                 <h6>HECTARES OF LOSS OUTSIDE OF PLANTATIONS</h6>
                 <div class="section-btn">
@@ -352,33 +357,36 @@
                   </a>
                 </div>
               </div>
-              <div class="section-content">
-                <ul class="plantations-section">
-                  <% @country['loss_outside_plantations'].each  do |data|%>
-                    <li>
-                      <div class="plantations-box">
-                        <p class="plantations-year"><%= data['year'] %></p>
-                        <p class="plantations-text">Loss outside plantations</p>
-                        <p class="plantations-loss"><%= number_with_delimiter(data['loss_outside'].round) %> Ha</p>
-                      </div>
-                      <div class="plantations-box">
-                        <p class="plantations-text">Percent of total tree cover loss</p>
-                        <p class="plantations-percentage"><%= data['perc_loss_outside'].round(2) %>%</p>
-                        <div class="plantations-trees">
-                          <div class="mask">
-                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                          </div>
-                          <div class="bar">
-                            <div style="width: <%= data['perc_loss_outside'].round(2); %>%;"></div>
+              <% if @country['loss_outside_plantations'].present? %>
+                <div class="section-content">
+                  <ul class="plantations-section">
+                    <% @country['loss_outside_plantations'].each  do |data|%>
+                      <li>
+                        <div class="plantations-box">
+                          <p class="plantations-year"><%= data['year'] %></p>
+                          <p class="plantations-text">Loss outside plantations</p>
+                          <p class="plantations-loss"><%= number_with_delimiter(data['loss_outside'].round) %> Ha</p>
+                        </div>
+                        <div class="plantations-box">
+                          <p class="plantations-text">Percent of total tree cover loss</p>
+                          <p class="plantations-percentage"><%= data['perc_loss_outside'].round(2) %>%</p>
+                          <div class="plantations-trees">
+                            <div class="mask">
+                              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                            </div>
+                            <div class="bar">
+                              <div style="width: <%= data['perc_loss_outside'].round(2); %>%;"></div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </li>
-                  <% end %>
-                </ul>
-              </div>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
+                <% else %>
+                <div class="coming-soon">No data available</div>
+              <% end %>
             </section>
-            <% end %>
 
           </div>
 
