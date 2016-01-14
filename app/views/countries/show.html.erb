@@ -365,8 +365,12 @@
                         <p class="plantations-text">Percent of total tree cover loss</p>
                         <p class="plantations-percentage"><%= data['perc_loss_outside'].round(2) %>%</p>
                         <div class="plantations-trees">
-                          <div class="mask"></div>
-                          <div class="bar" style="width: <%= data['perc_loss_outside'].round(2); %>%;"></div>
+                          <div class="mask">
+                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                          </div>
+                          <div class="bar">
+                            <div style="width: <%= data['perc_loss_outside'].round(2); %>%;"></div>
+                          </div>
                         </div>
                       </div>
                     </li>
