@@ -115,7 +115,7 @@
 }
 
 .guideTourButton {
-  display: block;
+  display: none;
   position: fixed;
   top: 50%;
   right: 0;
@@ -130,6 +130,10 @@
   cursor: pointer;
   fill: $dark;
   cursor: pointer;
+
+  @media (min-width: $br-mobileMap){
+    display: block;
+  }
 
   &:hover {
     background: darken(#FFD24D,5%);
