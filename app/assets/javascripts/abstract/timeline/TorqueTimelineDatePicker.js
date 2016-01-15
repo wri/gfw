@@ -118,7 +118,6 @@ define([
           if (event.select !== undefined) {
             var id = this.component.$node.attr('id');
             context.selectedDates.setDate(id, moment(event.select));
-            context.presenter.setTorqueDate(context.selectedDates.getRange());
           }
         }
       });
