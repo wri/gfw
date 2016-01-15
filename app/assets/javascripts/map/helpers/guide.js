@@ -11,6 +11,8 @@
             rightMask = $("<div/>").addClass("guideMask"),
             transparentMask = $("<div/>").addClass("guideMaskTransparent"),
             bubble = $("<div/>").addClass("guideBubble"),
+            tourButton = $("<div/>").addClass('guideTourButton')
+                                    .html('<span class="tooltipmap left">Tour</span><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-tutorial"></use></svg>'),
             holdingSteps,
             steps,
             position,
@@ -216,7 +218,12 @@
                     opacity: 0
                 }, 500, function() {
                     topMask.add(bottomMask).add(leftMask).add(rightMask).detach();
-                })
+                });
+
+                tourButton.addClass('is-pulse');
+                setTimeout(function(){
+                  tourButton.removeClass('is-pulse');
+                },3000);
 
             },
             getMaximumZIndex = function() {
@@ -263,10 +270,15 @@
                   nextStep();
                 }
               });
+              tourButton.on("click", function(e) {
+                guide.start();
+              }.bind(this));
 
               topMask.add(bottomMask).add(leftMask).add(rightMask).on("click", function() {
                 clearGuide();
               });
+
+              container.append(tourButton);
 
               return {
                 addStep: function(selector, introduction, options) {
@@ -299,6 +311,29 @@
                 }
               }
             },
+
+            start: function() {
+              container.append(topMask, bottomMask, leftMask, rightMask, transparentMask);
+              container.append(bubble);
+              topMask.add(bottomMask).add(leftMask).add(rightMask).animate({
+                opacity: 0.5
+              }, 500);
+              position = -1;
+              steps = [];
+
+              $.each(holdingSteps, function(i, step) {
+                var attrs = (!!step.selector) ? getElementAttrs($(step.selector)) : {};
+                // if the element has width or height we get ;
+                steps.push({
+                  element: (!!step.selector) ? $(step.selector) : null,
+                  selector: (!!step.selector) ? step.selector : null,
+                  intro: step.intro,
+                  options: step.options
+                });
+              });
+              nextStep();
+            }
+
 
         }
     }();
