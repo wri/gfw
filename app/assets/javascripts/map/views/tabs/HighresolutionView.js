@@ -66,6 +66,7 @@ define([
       this.$apply              = this.$el.find('.btn');
       this.$disclaimer         = this.$el.find('#disclaimer-zoom');
       this.$currentZoom        = this.$el.find('#currentZoom');
+      this.$UC_Icon            = $('#uc-logo-map');
     },
 
     render: function() {
@@ -183,6 +184,7 @@ define([
     switchToggle: function() {
       // this.$onoffswitch.toggleClass('checked');
       this.$el.find('.onoffswitch').toggleClass('checked');
+      this.toggleIconUrthe();
     },
 
 
@@ -286,6 +288,10 @@ define([
         endHRdate_picker.set('select',  moment(maxABSdate).toDate());
       }
     },
+
+    toggleIconUrthe: function() {
+      this.$UC_Icon.toggle();
+    }
 
   });
 
