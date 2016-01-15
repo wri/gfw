@@ -246,7 +246,6 @@
                 });
                 return max;
             },
-
             arrowNavigation = function() {
               $(document).on('keyup.tour-arrows', function(e) {
                 switch(e.keyCode) {
@@ -315,6 +314,7 @@
                   });
                 },
                 start: function() {
+                  ga('send', 'event', 'Map','Walk Through','Start');
                   container.append(topMask, bottomMask, leftMask, rightMask, transparentMask);
                   container.append(bubble);
                   topMask.add(bottomMask).add(leftMask).add(rightMask).animate({
@@ -333,6 +333,7 @@
                       options: step.options
                     });
                   });
+                  arrowNavigation();
                   nextStep();
                 }
               }
@@ -358,8 +359,8 @@
                   options: step.options
                 });
               });
-              nextStep();
               arrowNavigation();
+              nextStep();
             }
 
 
