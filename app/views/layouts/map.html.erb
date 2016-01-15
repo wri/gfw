@@ -27,7 +27,10 @@
     <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
     <%= stylesheet_link_tag "map", :media => "all" %>
     <%= csrf_meta_tags %>
-    <script id="loader-gfw" data-current=".shape-map" src="http://staging.globalforestwatch.org/gfw-assets"></script>
+    <% unless action_name == 'embed' %>
+      <script id="loader-gfw" data-current=".shape-map" src="http://staging.globalforestwatch.org/gfw-assets"></script>
+    <% end %>
+
   </head>
 
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
@@ -35,7 +38,7 @@
     <%= render 'shared/svg_icons_footer' %>
 
     <%= yield %>
-    
+
 
     <div class="backdrop"></div>
 
