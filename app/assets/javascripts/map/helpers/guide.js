@@ -361,7 +361,6 @@
               });
               arrowNavigation();
               nextStep();
-              arrowNavigation();
             }
 
 
