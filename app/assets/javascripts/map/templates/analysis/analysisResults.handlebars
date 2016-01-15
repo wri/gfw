@@ -73,18 +73,25 @@
                 <span class="stats-title">Grand Chaco tree cover loss:</span>
                 <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> ha</span>
               </li>
-            {{else}}
-              {{#if extent}}
+              {{else}}
+                {{#if umd_as_it_happens}}
                 <li>
-                  <span class="stats-title">Tree cover (2000)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{threshold}}% <a href="#" class="canopy-button">canopy density</a></span></span>
-                  <span class="stats-count" style="color: #97bd3d;"><strong>{{extent}}</strong> ha</span>
+                  <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
+                  <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong></span>
                 </li>
                 {{else}}
-                <li>
-                  <span class="stats-title">Total alerts ({{dateRange}})</span>
-                  <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> {{alertsName}}</span>
-                </li>
-              {{/if}}
+                {{#if extent}}
+                  <li>
+                    <span class="stats-title">Tree cover (2000)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{threshold}}% <a href="#" class="canopy-button">canopy density</a></span></span>
+                    <span class="stats-count" style="color: #97bd3d;"><strong>{{extent}}</strong> ha</span>
+                  </li>
+                  {{else}}
+                  <li>
+                    <span class="stats-title">Total alerts ({{dateRange}})</span>
+                    <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> {{alertsName}}</span>
+                  </li>
+                {{/if}}
+              {{/if}} 
             {{/if}}
           {{/if}}
         {{/if}} 

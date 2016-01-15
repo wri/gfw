@@ -1,57 +1,91 @@
 define([
-  'Class', 'uri',
+  'Class', 'uri', 'bluebird',
   'map/services/DataService'
-], function (Class, UriTemplate, ds) {
+], function (Class, UriTemplate, Promise, ds) {
 
   'use strict';
 
-  var REQUEST_ID = 'CartoDbLayerService:fetchLayerConfig';
+  var MAP_REQUEST_ID = 'CartoDbLayerService:fetchLayerMap',
+      SQL_REQUEST_ID = 'CartoDbLayerService:fetchLayerDates';
 
-  var URL = 'http://wri-01.cartodb.com/api/v1/map?stat_tag=API';
+  var SQL_URL = 'https://wri-01.cartodb.com/api/v2/sql{?q}',
+      MAP_URL = 'http://wri-01.cartodb.com/api/v1/map?stat_tag=API';
 
   var CartoDbLayerService = Class.extend({
 
-    init: function(sql, cartocss) {
-      this.config = {
-        version: "1.2.0",
-        layers: [{
-          type: "cartodb",
-          options: {
-            sql: sql,
-            cartocss: cartocss,
-            cartocss_version: "2.3.0"
-          }
-        }]
-      };
+    init: function(options) {
+      this.sql = options.sql;
+      this.cartocss = options.cartocss;
+      this.dateAttribute = options.dateAttribute;
+      this.table = options.table;
 
       this._defineRequests();
     },
 
     _defineRequests: function() {
-      var config = {
+      ds.define(MAP_REQUEST_ID, {
         cache: {type: 'persist', duration: 1, unit: 'days'},
-        url: URL,
+        url: MAP_URL,
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8'
-      };
+      });
 
-      ds.define(REQUEST_ID, config);
+      var sql = 'SELECT MIN('+this.dateAttribute+') AS min_date, MAX('+this.dateAttribute+') AS max_date FROM '+this.table,
+          url = new UriTemplate(SQL_URL).fillFromObject({q: sql});
+      ds.define(SQL_REQUEST_ID, {
+        cache: {type: 'persist', duration: 1, unit: 'days'},
+        url: url,
+        type: 'GET'
+      });
     },
 
     fetchLayerConfig: function() {
-      var deferred = new $.Deferred();
+      return Promise.all([
+         this.fetchLayerDates(),
+         this.fetchLayerMap()
+      ]);
+    },
 
-      var config = {
-        resourceId: REQUEST_ID,
-        data: JSON.stringify(this.config),
-        success: deferred.resolve,
-        error: deferred.reject
+    fetchLayerMap: function() {
+      return new Promise(function(resolve, reject) {
+
+      var layerConfig = {
+        version: '1.2.0',
+        layers: [{
+          type: 'cartodb',
+          options: {
+            sql: this.sql,
+            cartocss: this.cartocss,
+            cartocss_version: '2.3.0'
+          }
+        }]
       };
 
-      ds.request(config);
+      var requestConfig = {
+        resourceId: MAP_REQUEST_ID,
+        data: JSON.stringify(layerConfig),
+        success: resolve,
+        error: reject
+      };
 
-      return deferred.promise();
+      ds.request(requestConfig);
+
+      }.bind(this));
+    },
+
+    fetchLayerDates: function() {
+      return new Promise(function(resolve, reject) {
+
+      var requestConfig = {
+        resourceId: SQL_REQUEST_ID,
+        success: resolve,
+        error: reject
+      };
+
+      ds.request(requestConfig);
+
+      });
     }
 
   });
