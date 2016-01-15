@@ -94,7 +94,6 @@ define([
     toggleLayer: function(layerSlug, id) {
 
       var where = layerSlug ? [{slug: layerSlug}] : [{id: id}];
-
       layerSpecService.toggle(where,
         _.bind(function(layerSpec) {
           mps.publish('LayerNav/change', [layerSpec]);

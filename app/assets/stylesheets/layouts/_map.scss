@@ -176,6 +176,9 @@ body,html{
     margin-left: 15px;
     position: relative;
     top: 3px;
+    &.uc-logo {
+      display: none;
+    }
   }
 
   img {
