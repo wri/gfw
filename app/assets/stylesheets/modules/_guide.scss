@@ -57,6 +57,9 @@
     font-size: 14px;
     color: $dark;
     line-height: 1.4;
+    strong {
+      font-weight: 500;
+    }
   }
 }
 
@@ -108,5 +111,43 @@
   }
   &.center {
     display: none;
+  }
+}
+
+.guideTourButton {
+  display: none;
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 102;
+  height: 32px;
+  width: 32px;
+  background: #FFD24D;
+  @include transform(translate(0,-50%));
+  @include transform-origin(50%,0%);
+  margin: 65px 0 0;
+  padding: 2px;
+  cursor: pointer;
+  fill: $dark;
+  cursor: pointer;
+
+  @media (min-width: $br-mobileMap){
+    display: block;
+  }
+
+  &:hover {
+    background: darken(#FFD24D,5%);
+    .tooltipmap {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &.is-pulse {
+    @include animation(pulse_animation2,0.75s,4,$easeInOutSine);
+    .tooltipmap {
+      opacity: 1;
+      visibility: visible;
+    }
   }
 }

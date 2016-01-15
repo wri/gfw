@@ -181,6 +181,23 @@
       border-style: solid;
     }
   }
+  &.left{
+    bottom: auto;
+    top: 50%;
+    left: 0;
+    margin: 0 0 0 -7px;
+    @include transform(translate(-100%,-50%));
+    &:after{
+      top: 50%;
+      bottom: auto;
+      right: 0;
+      left: auto;
+      @include transform(translate(50%,-50%) rotate(45deg));
+      border-width: 1px 1px 0 0;
+      border-color: lighten($border,5%) lighten($border,5%) transparent transparent;
+      border-style: solid;
+    }
+  }
 }
 
 .tooltip2{

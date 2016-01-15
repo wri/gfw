@@ -843,10 +843,14 @@
     color: $cGreen;
   }
   .country-alerts,
+  .country-alerts-section,
   .country-production,
   .country-tenure,
   .country-employment,
-  .country-forests-type {
+  .country-forests-type,
+  .country-loss_outside_plantations,
+  .country-carbon_stocks,
+  .country-emissions {
     .coming-soon {
       width: 100%;
       font-size: 16px;
@@ -2501,3 +2505,110 @@
 .country-download-modal {
   position: fixed;
 }
+
+
+
+.section-content {
+  .plantations-section {
+    @include display-flex();
+    @include justify-content(space-between);
+    > li {
+      width: 45%;
+    }
+    .plantations-box {
+      padding: 20px 0 13px;
+      border-top: 2px solid $border;
+      &:first-child {
+        border-top: none;
+      }
+      p {
+        text-transform: uppercase;
+        font-size: 12px;
+
+        &.plantations-text {
+          max-width: 170px;
+        }
+
+        &.plantations-year {
+          font-weight: 500;
+          font-size: 24px;
+          color: $dark;
+          margin: 0 0 5px;
+        }
+
+        &.plantations-loss {
+          font-weight: 500;
+          font-size: 21px;
+          color: $cGreen;
+          text-transform: none;
+          margin: 15px 0 0;
+          @media (min-width: $br-mobile) {
+            font-size: 32px;
+          }
+          @media (min-width: $br-tablet) {
+            font-size: 36px;
+          }
+        }
+
+        &.plantations-percentage {
+          font-weight: 500;
+          font-size: 21px;
+          color: #CCC;
+          margin: 10px 0;
+          @media (min-width: $br-mobile) {
+            font-size: 24px;
+          }
+        }
+      }
+      .plantations-trees {
+        position: relative;
+        width: 150px;
+        display: none;
+        @media (min-width: $br-mobile) {
+          display: block;
+        }
+        @media (min-width: $br-tablet) {
+          width: 210px;
+        }
+
+        .mask {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          @include display-flex();
+          @include justify-content(flex-start);
+          span {
+            display: block;
+            width: 15px;
+            background: image-url('countries/tree-mask.svg') center no-repeat;
+            background-size: contain;
+            @media (min-width: $br-tablet) {
+              width: 21px;
+            }
+          }
+        }
+
+        .bar {
+          position: relative;
+          z-index: 0;
+          height: 22px;
+          @media (min-width: $br-tablet) {
+            height: 31px;
+          }
+          background: #CCC;
+          div{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: $cGreen;
+          }
+        }
+      }
+    }
+  }
+}
+
+

@@ -138,7 +138,7 @@ define([
     askForTour: function() {
       Cookies.set('tour', true, { expires: 365 });
       this.guide.start();
-    }
+    },
 
   });
 

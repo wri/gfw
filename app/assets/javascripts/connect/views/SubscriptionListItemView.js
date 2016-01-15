@@ -27,6 +27,7 @@ define([
     render: function() {
       var subscription = this.subscription.toJSON();
 
+      subscription.topic = this.subscription.formattedTopic();
       subscription.params.geom = JSON.stringify(subscription.params.geom);
       if (subscription.created !== undefined) {
         subscription.created = moment(subscription.created).

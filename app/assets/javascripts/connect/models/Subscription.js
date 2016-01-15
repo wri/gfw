@@ -4,6 +4,18 @@ define([
 
   'use strict';
 
+  var DATASETS = {
+    'alerts/forma': 'FORMA',
+    'alerts/terra': 'Terra-i',
+    'alerts/sad': 'SAD',
+    'alerts/quicc': 'QUICC',
+    'alerts/treeloss': 'Tree cover loss',
+    'alerts/treegain': 'Tree cover gain',
+    'alerts/prodes': 'PRODES deforestation',
+    'alerts/guyra': 'Gran Chaco deforestation',
+    'alerts/landsat': 'Landsat'
+  };
+
   var Subscription = Backbone.Model.extend({
     idAttribute: 'key',
 
@@ -21,6 +33,10 @@ define([
       }
 
       return Backbone.sync.call(this, method, model, options);
+    },
+
+    formattedTopic: function() {
+      return DATASETS[this.get('topic')] || this.get('topic');
     },
 
     hasValidEmail: function() {
