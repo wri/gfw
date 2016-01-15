@@ -86,14 +86,14 @@ define([
         }
       });
 
-      // Subscription tab
-      // this.guide.addStep("#module-tabs", guideTexts.subscriptiontab, {
-      //   position: 'left',
-      //   callfront: function() {
-      //     $('#get-started-subscription').click();
-      //     $('#subscription-tab-button').removeClass('active').click();
-      //   }
-      // });
+      //Subscription tab
+      this.guide.addStep("#module-tabs", guideTexts.subscriptiontab, {
+        position: 'left',
+        callfront: function() {
+          $('#get-started-subscription').click();
+          $('#subscription-tab-button').removeClass('active').click();
+        }
+      });
 
       // Basemap tab
       this.guide.addStep("#module-tabs", guideTexts.basemaptab, {
