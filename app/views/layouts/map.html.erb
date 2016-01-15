@@ -31,6 +31,7 @@
     <% if !is_embed %>
       <script id="loader-gfw" data-current=".shape-map" src="http://staging.globalforestwatch.org/gfw-assets"></script>
     <% end %>
+
   </head>
 
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
@@ -39,7 +40,7 @@
     <%= render 'shared/js_config' %>
 
     <%= yield %>
-    
+
 
     <div class="backdrop"></div>
 
