@@ -9,13 +9,12 @@ define([
       SQL_REQUEST_ID = 'CartoDbLayerService:fetchLayerDates';
 
   var SQL_URL = 'https://wri-01.cartodb.com/api/v2/sql{?q}',
-      MAP_URL = 'http://wri-01.cartodb.com/api/v1/map?stat_tag=API';
+      MAP_URL = 'https://wri-01.cartodb.com/api/v1/map/named/';
 
   var CartoDbLayerService = Class.extend({
 
     init: function(options) {
-      this.sql = options.sql;
-      this.cartocss = options.cartocss;
+      this.namedMap = options.namedMap;
       this.dateAttribute = options.dateAttribute;
       this.table = options.table;
 
@@ -25,7 +24,7 @@ define([
     _defineRequests: function() {
       ds.define(MAP_REQUEST_ID, {
         cache: {type: 'persist', duration: 1, unit: 'days'},
-        url: MAP_URL,
+        url: MAP_URL + this.namedMap,
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8'
@@ -51,15 +50,7 @@ define([
       return new Promise(function(resolve, reject) {
 
       var layerConfig = {
-        version: '1.2.0',
-        layers: [{
-          type: 'cartodb',
-          options: {
-            sql: this.sql,
-            cartocss: this.cartocss,
-            cartocss_version: '2.3.0'
-          }
-        }]
+        table: this.table
       };
 
       var requestConfig = {

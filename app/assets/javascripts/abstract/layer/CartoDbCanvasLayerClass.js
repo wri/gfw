@@ -1,13 +1,11 @@
 define([
   'moment', 'handlebars',
-  'abstract/layer/CanvasLayerClass', 'helpers/canvasCartoCSSHelper',
-  'map/services/CartoDbLayerService',
-  'text!map/queries/default_cartodb_canvas.sql.hbs'
+  'abstract/layer/CanvasLayerClass',
+  'map/services/CartoDbLayerService'
 ], function(
   moment, Handlebars,
-  CanvasLayerClass, canvasCartoCSSHelper,
-  CartoDbLayerService,
-  SQL
+  CanvasLayerClass,
+  CartoDbLayerService
 )  {
 
   'use strict';
@@ -26,10 +24,9 @@ define([
       var deferred = new $.Deferred();
 
       var configService = new CartoDbLayerService({
-        sql: this._getSQL(),
-        cartocss: this._getCartoCSS(),
         dateAttribute: 'date',
-        table: this.table
+        table: this.table,
+        namedMap: 'gfw_as_it_happens'
       });
 
       var context = this;
@@ -45,22 +42,6 @@ define([
       });
 
       return deferred.promise();
-    },
-
-    _getCartoCSS: function() {
-      var startDate = moment(this.layer.mindate),
-          endDate = moment(this.layer.maxdate || undefined);
-
-      return canvasCartoCSSHelper.generateDaily('date', startDate, endDate);
-    },
-
-    _getSQL: function() {
-      var template = Handlebars.compile(SQL),
-          sql = template({
-            table: this.table
-          });
-
-      return sql;
     },
 
     animationOptions: {
