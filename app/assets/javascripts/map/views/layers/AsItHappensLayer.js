@@ -12,120 +12,11 @@ define([
 
   var AsItHappensLayer = CartoDbCanvasLayerClass.extend({
 
+    table: 'umd_alerts_agg_rast',
+
     init: function(layer, options, map) {
       this.presenter = new Presenter(this);
       this._super(layer, options, map);
-    },
-
-    _getLayer: function() {
-      var promise = CartoDbCanvasLayerClass.prototype._getLayer.call(this);
-      promise.then(function() {
-        this._setupAnimation();
-      }.bind(this));
-      return promise;
-    },
-
-    _setupAnimation: function() {
-      var startDate = moment(this.currentDate[0]),
-          endDate = moment(this.currentDate[1]);
-
-      var fps = 60,
-          duration = 30,
-          frameCount = fps * duration,
-          numberOfDays = Math.abs(startDate.diff(endDate)) / 1000 / 3600 / 24,
-          daysPerFrame = numberOfDays / frameCount;
-
-      this.animationOptions = {
-        numberOfDays: numberOfDays,
-        daysPerFrame: daysPerFrame
-      };
-
-      this.presenter.animationStarted({
-        start: startDate,
-        end: endDate
-      });
-    },
-
-    setDateRange: function(dates) {
-      this.currentDate = dates;
-      this._setupAnimation();
-      this.start();
-    },
-
-    setDate: function(date) {
-      this.stop();
-      this.presenter.animationStopped();
-
-      this.startDate = moment(date);
-      this.currentOffset = this.roundedOffset = this.startDate.dayOfYear() - moment(this.currentDate[0]).dayOfYear();
-
-      this.renderTime(this.startDate);
-    },
-
-    renderTime: function(time) {
-      this.presenter.updateTimelineDate({time: time});
-      this.timelineExtent = [moment(this.currentDate[0]), time];
-      this.updateTiles();
-    },
-
-    start: function() {
-      if (this.animationInterval !== undefined) { this.stop(); }
-
-      if (this.startDate === undefined) {
-        this.startDate = moment(this.currentDate[0]);
-      }
-
-      if (this.currentOffset === undefined) {
-        this.renderTime(moment(this.currentDate[1]));
-        this.currentOffset = moment(this.currentDate[1]).dayOfYear();
-        this.roundedOffset = 0;
-      }
-
-      var step = function() {
-        if (this.currentOffset > this.animationOptions.numberOfDays) {
-          this.currentOffset = 1;
-          this.roundedOffset = 0;
-          this.startDate = moment(this.currentDate[0]);
-        }
-
-        if (Math.round(this.currentOffset) > this.roundedOffset) {
-          this.startDate.add('days', 1);
-          this.renderTime(this.startDate);
-          this.roundedOffset = Math.round(this.currentOffset);
-        }
-
-        this.currentOffset += this.animationOptions.daysPerFrame;
-
-        this.animationInterval = window.requestAnimationFrame(step);
-      }.bind(this);
-
-      this.animationInterval = window.requestAnimationFrame(step);
-    },
-
-    stop: function() {
-      window.cancelAnimationFrame(this.animationInterval);
-      delete this.animationInterval;
-    },
-
-    toggle: function() {
-      if (this.animationInterval !== undefined) {
-        this.stop();
-      } else {
-        this.start();
-      }
-    },
-
-    _drawCanvasImage: function(canvasData) {
-      var canvas = canvasData.canvas,
-          ctx = canvas.getContext('2d'),
-          image = canvasData.image;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(image, 0, 0);
-
-      var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      this.filterCanvasImgdata(I.data, canvas.width, canvas.height, canvasData.z);
-      ctx.putImageData(I, 0, 0);
     },
 
     /*
@@ -179,7 +70,6 @@ define([
             imgdata[pixelPos] = 220;
             imgdata[pixelPos + 1] = (72 - z) + 102 - (3 * scale(intensity) / z);
             imgdata[pixelPos + 2] = (33 - z) + 153 - (intensity / z);
-            //imgdata[pixelPos + 3] = 255;
           } else {
             imgdata[pixelPos + 3] = 0;
           }
