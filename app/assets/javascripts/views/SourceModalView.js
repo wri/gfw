@@ -23,24 +23,24 @@ define([
     },
 
     parse: function(response) {
-      var data = {
-        function_: response['Function'] || null,
-        cautions: response['Cautions'] || null,
-        citation: response['Citation'] || null,
-        license: response['License'] || null,
-        tags: response['Tags'] || null,
-        overview: response['Overview'] || null,
-        title: response['Title'] || null,
-        source: response['Source'] || null,
-        frequency_of_updates: response['Frequency of Updates'] || null,
-        translated_overview: response['Translated Overview'] || null,
-        translated_title: response['Translated_Title'] || null,
-        resolution: response['Resolution'] || null,
-        geographic_coverage: response['Geographic Coverage'] || null,
-        date_of_content: response['Date of Content'] || null,
-        link_to_odp: 'http://earthenginepartners.appspot.com/science-2013-global-forest/download_v1.2.html'
-      }
-      return data;
+      // var data = {
+      //   function_: response['Function'] || null,
+      //   cautions: response['Cautions'] || null,
+      //   citation: response['Citation'] || null,
+      //   license: response['License'] || null,
+      //   tags: response['Tags'] || null,
+      //   overview: response['Overview'] || null,
+      //   title: response['Title'] || null,
+      //   source: response['Source'] || null,
+      //   frequency_of_updates: response['Frequency of Updates'] || null,
+      //   translated_overview: response['Translated Overview'] || null,
+      //   translated_title: response['Translated_Title'] || null,
+      //   resolution: response['Resolution'] || null,
+      //   geographic_coverage: response['Geographic Coverage'] || null,
+      //   date_of_content: response['Date of Content'] || null,
+      //   link_to_odp: 'http://earthenginepartners.appspot.com/science-2013-global-forest/download_v1.2.html'
+      // }
+      return response;
     }
   });
 

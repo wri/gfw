@@ -5,17 +5,17 @@
   <a href="#" class="modal-close">
     <svg><use xlink:href="#shape-close"></use></svg>
   </a>
-  <div class="modal-wrapper scroll-dark {{#if link_to_odp}}has-footer{{/if}}">
+  <div class="modal-wrapper scroll-dark {{#if learn_more_or_download_data}}has-footer{{/if}}">
     <div class="modal-content">
       <div class='modal-source'>
 
         <h2 class='modal-title'>{{{title}}}</h2>
-        <h3 class="modal-subtitle">(We don't receive it from the API)</h3>
+        <h3 class="modal-subtitle">{{{subtitle}}}</h3>
 
         <div class="modal-table">
           <dl class='modal-row'>
             <dt>Function</dt>
-            <dd>{{{function_}}}</dd>
+            <dd>{{{function}}}</dd>
           </dl>
           <dl class='modal-row'>
             <dt>RESOLUTION / SCALE</dt>
@@ -26,7 +26,7 @@
             <dd>{{{geographic_coverage}}}</dd>
           </dl>
           <dl class='modal-row'>
-            <dt>Source data (Is this correct?)</dt>
+            <dt>Source data</dt>
             <dd>{{{source}}}</dd>
           </dl>
           <dl class='modal-row'>
@@ -54,11 +54,11 @@
         </div>
       </div>
     </div>
-    {{#if link_to_odp}}
+    {{#if learn_more_or_download_data}}
       <div class="modal-footer">
         <div class="m-btncontainer is-center">
           {{!-- <a href="{{link_to_odp}}" class="download-mobile-link">Learn more or download data</a> --}}
-          <a href="{{link_to_odp}}" target="_blank" class="btn green uppercase download-mobile-link">(We don't receive it from the API)</a>
+          <a href="{{learn_more_or_download_data}}" target="_blank" class="btn green uppercase download-mobile-link">Learn more or download data</a>
         </div>
       </div>
     {{/if}}
