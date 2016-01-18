@@ -1,7 +1,7 @@
 /**º
- * The SearchboxPresenter class for the SearchboxPresenter view.
+ * The ToggleModulesPresenter class for the ToggleModulesPresenter view.
  *º
- * @return SearchboxPresenter class.
+ * @return ToggleModulesPresenter class.
  */
 define([
   'underscore',
@@ -11,7 +11,7 @@ define([
 
   'use strict';
 
-  var SearchboxPresenter = PresenterClass.extend({
+  var ToggleModulesPresenter = PresenterClass.extend({
 
     init: function(view) {
       this.view = view;
@@ -22,11 +22,11 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'MapControlsToggleModules/toggle': function() {
-        this.view.toggleModules();
+      'MapControlsToggleModules/toggle': function(hide) {
+        this.view.toggleModules(hide);
       }
     }],
   });
 
-  return SearchboxPresenter;
+  return ToggleModulesPresenter;
 });

@@ -19,8 +19,19 @@ define([
       this.$modulesToggle = $('.module-toggle');
     },
 
-    toggleModules: function(){
-      this.$modulesToggle.toggleClass('hide');
+    toggleModules: function(hide) {
+      this.$modulesToggle.each(function(i, el) {
+        var $el = $(el);
+
+        // check the element hasn't been hidden because there is no layer ON.
+        if ($el.hasClass('hide-no-layers')) return;
+
+        if (!!hide && !!hide.hide) {
+          $el.addClass('hide');
+        } else {
+          $el.removeClass('hide');
+        }
+      })
     },
 
   });
