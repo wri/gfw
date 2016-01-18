@@ -370,7 +370,7 @@
             font-size: 24px;
             font-weight: 500;
             margin-top: 6px;
-            color: #97bd3d;
+            color: $lossColor;
             display: inline-block;
             .total-loss-ha {
               display: inline-block;
@@ -507,12 +507,12 @@
           }
 
           .graph-amount,
-          .graph-gain-amount,
           .total-loss {
             font-size: 30px;
             font-weight: 500;
-            color: $cGreen;
+            color: $lossColor;
           }
+
           .graph-amount {
             font-size: 23px;
           }
@@ -520,6 +520,7 @@
             text-align: center;
             position: relative;
             top: -12px;
+            color: $gainColor;
             @media (min-width: $br-mobile) {
               text-align: left;
             }
@@ -1006,7 +1007,7 @@
   } // global sections
 
   .forma-graph path {
-    stroke: $cGreen;
+    stroke: $lossColor;
     stroke-width: 4px;
     fill: none;
   }
@@ -1028,14 +1029,14 @@
   .forma-marker {
     stroke: white;
     stroke-width: 2px;
-    fill: $cGreen;
+    fill: $lossColor;
   }
 
   .graph-tooltip {
     position: absolute;
     width: 150px;
     height: 78px;
-    background: $cGreen;
+    background: $lossColor;
     @include box-sizing(border-box);
     padding: 12px 10px;
     border-radius: 5px;
@@ -1075,7 +1076,7 @@
 
       border-top: 8px solid transparent;
       border-bottom: 8px solid transparent;
-      border-left: 8px solid $cGreen;
+      border-left: 8px solid $lossColor;
 
       right: -8px;
       margin: auto;
@@ -1095,7 +1096,7 @@
     }
 
     .legend-title {
-      color: $cGreen;
+      color: $lossColor;
       font-size: 14px;
       font-weight: 500;
       margin-bottom: 3px;
@@ -1111,6 +1112,9 @@
     #formaAlertsContent {
       h3 {
         text-transform: none;
+        .highlight {
+          color: $lossColor;
+        }
       }
       .btn-rdn-primary {
         margin: 0;
@@ -2539,7 +2543,7 @@
         &.plantations-loss {
           font-weight: 500;
           font-size: 21px;
-          color: $cGreen;
+          color: $lossColor;
           text-transform: none;
           margin: 15px 0 0;
           @media (min-width: $br-mobile) {
@@ -2553,7 +2557,7 @@
         &.plantations-percentage {
           font-weight: 500;
           font-size: 21px;
-          color: #CCC;
+          color: #B93B65;
           margin: 10px 0;
           @media (min-width: $br-mobile) {
             font-size: 24px;
@@ -2596,14 +2600,14 @@
           @media (min-width: $br-tablet) {
             height: 31px;
           }
-          background: #CCC;
+          background: $lossColor;
           div{
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: $cGreen;
+            background: #B93B65;
           }
         }
       }
