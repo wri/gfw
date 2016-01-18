@@ -390,6 +390,44 @@
       </div>
     </section>
 
+    <!-- reforestation stocks -->
+    <section class="country-section" data-scroll-index='5'>
+      <div class="inner">
+
+        <div class="section-content">
+
+          <div class="left-col">
+
+            <!-- forest reforestation -->
+            <a href="#" id="reforestation" class="anchor-country-info"></a>
+            <section class="country-reforestation" data-scroll-index='2'>
+                <div class="section-info section-share">
+                  <h6>Reforestation</h6>
+                  <div class="section-btn">
+                    <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'reforestation', width: '600', height: '332'} %>
+                    <a href="#" class="info icon green circle source" data-source="reforestation">
+                      <svg>
+                        <use xlink:href="#shape-info"></use>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+                <div class="section-content">
+                  <% if @country['reforestation'].present? %>
+                  <h3 class="section-title">
+                    In 2010, the rate of reforestation was <span class="highlight"><%= gva_to_human(@country['reforestation'][0]['reforestation_rate'])%> Ha</span>
+                  </h3>
+                  <% else %>
+                  <div class="coming-soon">No data available</div>
+                  <% end %>
+                </div>
+            </section>
+          </div>
+          <div class="right-col">
+        </div>
+      </div>
+    </section>
+
     <!-- conventions -->
     <section class='country-section country-conventions-section' data-scroll-index='6'>
       <div class='inner'>
