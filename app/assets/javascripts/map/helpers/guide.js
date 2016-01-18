@@ -43,7 +43,7 @@
             prevStep = function() {
                 position--;
                 if (position<0) {
-                    position = steps.length - 1;
+                    position = 0;
                 }
                 gotoStep(position);
             },
@@ -225,6 +225,8 @@
                   tourButton.removeClass('is-pulse');
                 },3000);
 
+                $(document).off('keyup.tour-arrows');
+
             },
 
             clearStates = function() {
@@ -241,6 +243,19 @@
                     }
                 });
                 return max;
+            },
+
+            arrowNavigation = function() {
+              $(document).on('keyup.tour-arrows', function(e) {
+                switch(e.keyCode) {
+                  case 37:
+                    prevStep();
+                  break;
+                  case 39:
+                    nextStep();
+                  break;
+                }
+              })
             }
 
 
@@ -339,6 +354,7 @@
                 });
               });
               nextStep();
+              arrowNavigation();
             }
 
 
