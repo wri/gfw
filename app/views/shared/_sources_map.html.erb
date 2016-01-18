@@ -6404,25 +6404,9 @@
             <dt>Function</dt>
             <dd>Shows up-to-date, high-resolution satellite imagery</dd>
           </dl>
-          <dl class='sources_row even'>
-            <dt>RESOLUTION / SCALE</dt>
-            <dd>5 meters for Theia images, 15 meters (pansharpened) for Landsat 8 images, 22 meters for Deimos-1 images</dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>Geographic coverage</dt>
-            <dd>Global</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>Source data</dt>
-            <dd><a href='https://www.urthecast.com/' target='_blank'>UrtheCast</a></dd>
-          </dl>
           <dl class='sources_row'>
             <dt>Frequency of updates</dt>
             <dd>Daily as cloud-free imagery becomes available</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>Date of content</dt>
-            <dd>January 2013 – present</dd>
           </dl>
           <dl class='sources_row'>
             <dt>License</dt>
@@ -6432,7 +6416,57 @@
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>This layer shows satellite imagery from the ISS Theia sensor (5 meter resolution), the Landsat 8 OLI/TIRS sensor (15 meter resolution), and the Deimos-1 SLIM6-22 sensor (22 meter resolution), all provided by UrtheCast. The most recent image for an area is shown, though the date range can be modified in the menu. Users can also change the renderer and maximum cloud cover percentage by toggling advanced tools in the menu. The maximum cloud percentage sets the threshold for excluding cloudy images. Images are presented in RGB color (true color) by default, but can also be rendered as other color composites or indices, including NDVI, EVI, NDWI, and false color NIR.</p>
+          <p>This layer shows recent satellite imagery, provided via an API from <a href="https://www.urthecast.com/" target="_blank">UrtheCast</a>. The images displayed come from a variety of sensors, listed below.</p>
+          <table class="modal-table">
+            <thead>
+              <tr>
+                <th class="no-border"></th>
+                <th>Theia</th>
+                <th>Landsat 8</th>
+                <th>Deimos-1</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-header">Owner</td>
+                <td>UrtheCast</td>
+                <td>USGS</td>
+                <td>UrtheCast</td>
+              </tr>
+              <tr>
+                <td class="td-header">Platform</td>
+                <td>ISS</td>
+                <td>Landsat 8</td>
+                <td>Deimos-1</td>
+              </tr>
+              <tr>
+                <td class="td-header">Resolution</td>
+                <td>5 m</td>
+                <td>15 m (pansharpened) for RGB, 30 m for other renderers</td>
+                <td>22 m</td>
+              </tr>
+              <tr>
+                <td class="td-header">Revisit Time</td>
+                <td>1-2x / month</td>
+                <td>every 16 days</td>
+                <td>every 3 days</td>
+              </tr>
+              <tr>
+                <td class="td-header">Minimum Date</td>
+                <td>March 2014</td>
+                <td>January 2013</td>
+                <td>January 2013</td>
+              </tr>
+              <tr>
+                <td class="td-header">Geographic Coverage</td>
+                <td>Global</td>
+                <td>Global</td>
+                <td>Contiguous United States</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>Click on an image to see the capture date and sensor name. The most recent image for an area is shown, though the date range can be modified in the menu. Users can also change the renderer and maximum cloud cover percentage by toggling advanced tools in the menu. The maximum cloud percentage sets the threshold for excluding cloudy images. Images are presented in RGB color (true color) by default, but can also be rendered as other color composites or indices, including NDVI, EVI, NDWI, and false color NIR.</p>
 
 
           <p class='credits'>UrtheCast Products © Copyright UrtheCast – All Rights Reserved</p>

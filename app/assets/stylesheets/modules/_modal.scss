@@ -329,6 +329,28 @@ $height: auto;
     margin-bottom: 20px;
   }
 
+  .modal-table {
+    border-collapse: collapse;
+    font-size: 11px;
+    margin: 20px 0;
+    width: 100%;
+
+    th, .td-header {
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    td,th {
+      border: 1px solid $border;
+      padding: 10px;
+      line-height: 1.125;
+
+      &.no-border {
+        border: none;
+      }
+    }
+  }
+
   .forest_change .source_category_title {
     color: #F69;
     border-bottom-color: #F69;
