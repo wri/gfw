@@ -174,7 +174,7 @@ define([
       var $tooltip = $button.find('.tooltipmap');
       $button.toggleClass('active');
       ($button.hasClass('active')) ? $tooltip.text('Show windows (h)') : $tooltip.text('Hide windows (h)') ;
-      mps.publish('MapControlsToggleModules/toggle');
+      mps.publish('MapControlsToggleModules/toggle',[{hide: $button.hasClass('active')}]);
     },
 
     toggleControls: function(e){
