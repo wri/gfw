@@ -122,6 +122,7 @@ define([
   'map/views/layers/GtmForestCoverLayer',
   'map/views/layers/GtmForestDensityLayer',
   'map/views/layers/AsItHappensLayer',
+  'map/views/layers/AsItHappensRasterLayer',
   'map/views/layers/LandsatAlertsCoverLayer',
   'map/views/layers/KhmProtectedAreasLayer',
   'map/views/layers/KhmEcoLandLayer',
@@ -275,6 +276,7 @@ define([
   GtmForestCoverLayer,
   GtmForestDensityLayer,
   AsItHappensLayer,
+  AsItHappensRasterLayer,
   LandsatAlertsCoverLayer,
   KhmProtectedAreasLayer,
   KhmEcoLandLayer,
@@ -685,7 +687,10 @@ define([
       view: AsItHappensLayer,
       timelineView: AsItHappensTimeline
     },
-    
+    umd_as_it_happens_raster: {
+      view: AsItHappensRasterLayer,
+      timelineView: AsItHappensTimeline
+    },
     gfw_landsat_alerts_coverage: {
       view: LandsatAlertsCoverLayer
     },
