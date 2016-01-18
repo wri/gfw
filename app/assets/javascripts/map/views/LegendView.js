@@ -149,6 +149,7 @@ define([
 
     toogleModule: function(){
       this.$el.toggleClass('hide', this.model.get('hidden'));
+      this.$el.toggleClass('hide-no-layers', this.model.get('hidden'));
     },
 
     toogleEmbedLegend: function(e){
