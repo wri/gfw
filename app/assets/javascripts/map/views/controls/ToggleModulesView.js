@@ -19,8 +19,12 @@ define([
       this.$modulesToggle = $('.module-toggle');
     },
 
-    toggleModules: function(){
-      this.$modulesToggle.toggleClass('hide');
+    toggleModules: function(hide) {
+      if (!!hide && !!hide.hide) {
+        this.$modulesToggle.addClass('hide');
+      } else {
+        this.$modulesToggle.removeClass('hide');
+      }
     },
 
   });

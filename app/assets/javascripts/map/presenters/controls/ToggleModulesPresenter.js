@@ -22,8 +22,8 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'MapControlsToggleModules/toggle': function() {
-        this.view.toggleModules();
+      'MapControlsToggleModules/toggle': function(hide) {
+        this.view.toggleModules(hide);
       }
     }],
   });
