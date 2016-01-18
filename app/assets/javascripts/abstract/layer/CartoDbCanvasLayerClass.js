@@ -1,13 +1,11 @@
 define([
   'moment', 'handlebars',
-  'abstract/layer/CanvasLayerClass', 'helpers/canvasCartoCSSHelper',
-  'map/services/CartoDbLayerService',
-  'text!map/queries/default_cartodb_canvas.sql.hbs'
+  'abstract/layer/CanvasLayerClass',
+  'map/services/CartoDbLayerService'
 ], function(
   moment, Handlebars,
-  CanvasLayerClass, canvasCartoCSSHelper,
-  CartoDbLayerService,
-  SQL
+  CanvasLayerClass,
+  CartoDbLayerService
 )  {
 
   'use strict';
@@ -26,10 +24,9 @@ define([
       var deferred = new $.Deferred();
 
       var configService = new CartoDbLayerService({
-        sql: this._getSQL(),
-        cartocss: this._getCartoCSS(),
         dateAttribute: 'date',
-        table: this.table
+        table: this.table,
+        namedMap: 'gfw_as_it_happens'
       });
 
       var context = this;
@@ -47,37 +44,17 @@ define([
       return deferred.promise();
     },
 
-    _getCartoCSS: function() {
-      var startDate = moment(this.layer.mindate),
-          endDate = moment(this.layer.maxdate || undefined);
-
-      return canvasCartoCSSHelper.generateDaily('date', startDate, endDate);
-    },
-
-    _getSQL: function() {
-      var template = Handlebars.compile(SQL),
-          sql = template({
-            table: this.table
-          });
-
-      return sql;
+    animationOptions: {
+      duration: 15000,
+      currentOffset: 0
     },
 
     _setupAnimation: function() {
       var startDate = moment(this.currentDate[0]),
           endDate = moment(this.currentDate[1]);
 
-      var fps = 60,
-          duration = 30,
-          frameCount = fps * duration,
-          numberOfDays = Math.abs(startDate.diff(endDate)) / 1000 / 3600 / 24,
-          daysPerFrame = numberOfDays / frameCount;
-
-      this.animationOptions = {
-        numberOfDays: numberOfDays,
-        daysPerFrame: daysPerFrame
-      };
-
+      this.numberOfDays = Math.abs(startDate.diff(endDate)) / 1000 / 3600 / 24;
+      this.animationOptions.currentOffset = 0;
       this.presenter.animationStarted({
         start: startDate,
         end: endDate
@@ -94,10 +71,16 @@ define([
       this.stop();
       this.presenter.animationStopped();
 
-      this.startDate = moment(date);
-      this.currentOffset = this.roundedOffset = this.startDate.dayOfYear() - moment(this.currentDate[0]).dayOfYear();
 
-      this.renderTime(this.startDate);
+      var newDate = moment(date);
+      this.setOffsetFromDate(newDate);
+      this.renderTime(newDate);
+    },
+
+    setOffsetFromDate: function(date) {
+      var startDate = moment(this.currentDate[0]),
+          daysFromStart = Math.abs(startDate.diff(date)) / 1000 / 3600 / 24;
+      this.animationOptions.currentOffset = (daysFromStart / this.numberOfDays) * this.animationOptions.duration;
     },
 
     renderTime: function(time) {
@@ -109,35 +92,26 @@ define([
     start: function() {
       if (this.animationInterval !== undefined) { this.stop(); }
 
-      if (this.startDate === undefined) {
-        this.startDate = moment(this.currentDate[0]);
-      }
-
-      if (this.currentOffset === undefined) {
-        this.renderTime(moment(this.currentDate[1]));
-        this.currentOffset = moment(this.currentDate[1]).dayOfYear();
-        this.roundedOffset = 0;
-      }
+      var startDate = moment(this.currentDate[0]),
+          lastTimestamp = +new Date();
 
       var step = function() {
-        if (this.currentOffset > this.animationOptions.numberOfDays) {
-          this.currentOffset = 1;
-          this.roundedOffset = 0;
-          this.startDate = moment(this.currentDate[0]);
-        }
+        var now = +new Date(),
+            dt = now - lastTimestamp;
+        this.animationOptions.currentOffset += dt;
 
-        if (Math.round(this.currentOffset) > this.roundedOffset) {
-          this.startDate.add('days', 1);
-          this.renderTime(this.startDate);
-          this.roundedOffset = Math.round(this.currentOffset);
-        }
+        var duration = this.animationOptions.duration,
+            currentOffset = this.animationOptions.currentOffset,
+            daysToAdd = ((currentOffset % duration)/duration)*this.numberOfDays,
+            currentDate = startDate.clone().add('days', daysToAdd);
 
-        this.currentOffset += this.animationOptions.daysPerFrame;
+        this.renderTime(currentDate);
 
+        lastTimestamp = now;
         this.animationInterval = window.requestAnimationFrame(step);
       }.bind(this);
 
-      this.animationInterval = window.requestAnimationFrame(step);
+      step();
     },
 
     stop: function() {
