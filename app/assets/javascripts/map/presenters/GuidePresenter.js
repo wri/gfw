@@ -48,6 +48,7 @@ define([
       var params = place.params;
       this.status.set('tour', (!!params.tour) ? true : null);
       this.view.setTour();
+      this.view.initTour();
     }
 
   });
