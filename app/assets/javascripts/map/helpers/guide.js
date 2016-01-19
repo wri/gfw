@@ -276,6 +276,7 @@
                 .html("")
                 .append(arrow)
                 .append($("<div/>").addClass("guide-navigation")
+                  .append($("<span/>").addClass("skip-tour close").html('<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg>'))
                   .append($("<div/>").addClass("step").html("1"))
                   .append($("<div/>").addClass("btn-group pull-right")
                     // .append(skipButton)
