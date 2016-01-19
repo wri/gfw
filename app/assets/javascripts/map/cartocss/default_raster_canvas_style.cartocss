@@ -1,5 +1,5 @@
 raster-opacity: 1;
-raster-scaling: near;
+raster-scaling: fast;
 raster-colorizer-default-mode: discrete;
 raster-colorizer-default-color: transparent;
 raster-colorizer-epsilon: 0.41;
