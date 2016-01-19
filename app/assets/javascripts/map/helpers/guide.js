@@ -35,6 +35,7 @@
             nextStep = function() {
                 position++;
                 if (position>=steps.length) {
+                    ga('send', 'event', 'Map','Walk Through','Finish');
                     clearGuide();
                 } else {
                     gotoStep(position);
@@ -125,6 +126,7 @@
 
                 $('.skip-tour').off('click').on('click', function(e){
                   e && e.preventDefault();
+                  ga('send', 'event', 'Map','Walk Through','Skip');
                   clearGuide();
                 });
 
@@ -296,6 +298,7 @@
               }.bind(this));
 
               topMask.add(bottomMask).add(leftMask).add(rightMask).on("click", function() {
+                ga('send', 'event', 'Map','Walk Through','Give Up');
                 clearGuide();
                 clearStates();
               });
@@ -335,6 +338,7 @@
             },
 
             start: function() {
+              ga('send', 'event', 'Map','Walk Through','Start');
               container.append(topMask, bottomMask, leftMask, rightMask, transparentMask);
               container.append(bubble);
               topMask.add(bottomMask).add(leftMask).add(rightMask).animate({
