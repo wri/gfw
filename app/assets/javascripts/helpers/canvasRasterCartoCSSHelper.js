@@ -29,7 +29,6 @@ define([
       var css = [
         '#layer {',
           defaultCss.replace(/(\r\n|\n|\r)/gm,''),
-          'raster-colorizer-stops:', rules.join(' '), ';',
         '}'
       ].join(' ');
 
