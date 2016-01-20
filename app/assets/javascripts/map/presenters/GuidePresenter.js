@@ -47,8 +47,10 @@ define([
     _onPlaceGo: function(place) {
       var params = place.params;
       this.status.set('tour', (!!params.tour) ? true : null);
-      this.view.setTour();
-      this.view.initTour();
+      $(window).load(function(){
+        this.view.setTour();
+        this.view.initTour();
+      }.bind(this));
     }
 
   });
