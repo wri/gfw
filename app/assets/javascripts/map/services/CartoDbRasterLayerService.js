@@ -5,16 +5,17 @@ define([
 
   'use strict';
 
-  var MAP_REQUEST_ID = 'CartoDbLayerService:fetchLayerMap',
-      SQL_REQUEST_ID = 'CartoDbLayerService:fetchLayerDates';
+  var MAP_REQUEST_ID = 'CartoDbLayerService:fetchRasterLayerMap',
+      SQL_REQUEST_ID = 'CartoDbLayerService:fetchRasterLayerDates';
 
   var SQL_URL = 'https://wri-01.cartodb.com/api/v2/sql{?q}',
-      MAP_URL = 'https://wri-01.cartodb.com/api/v1/map/named/';
+      MAP_URL = 'http://wri-01.cartodb.com/api/v1/map?stat_tag=API';
 
-  var CartoDbLayerService = Class.extend({
+  var CartoDbRasterLayerService = Class.extend({
 
     init: function(options) {
-      this.namedMap = options.namedMap;
+      this.sql = options.sql;
+      this.cartocss = options.cartocss;
       this.dateAttribute = options.dateAttribute;
       this.table = options.table;
 
@@ -24,7 +25,7 @@ define([
     _defineRequests: function() {
       ds.define(MAP_REQUEST_ID, {
         cache: {type: 'persist', duration: 1, unit: 'days'},
-        url: MAP_URL + this.namedMap,
+        url: MAP_URL,
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8'
@@ -50,7 +51,18 @@ define([
       return new Promise(function(resolve, reject) {
 
       var layerConfig = {
-        table: this.table
+        version: '1.2.0',
+        layers: [{
+          type: 'cartodb',
+          options: {
+            sql: this.sql,
+            cartocss: this.cartocss,
+            cartocss_version: '2.3.0',
+            geom_column: 'the_raster_webmercator',
+            geom_type: 'raster',
+            raster_band: 1
+          }
+        }]
       };
 
       var requestConfig = {
@@ -81,6 +93,6 @@ define([
 
   });
 
-  return CartoDbLayerService;
+  return CartoDbRasterLayerService;
 
 });

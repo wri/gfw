@@ -24,11 +24,6 @@ define([
 
     initialize: function() {
       this.presenter = new GuidePresenter(this);
-      $(window).load(_.bind(function() {
-        setTimeout(function(){
-          this.initTour();
-        }.bind(this), 1000)
-      }, this));
     },
 
     setTour: function() {
@@ -136,7 +131,7 @@ define([
     },
 
     askForTour: function() {
-      Cookies.set('tour', true, { expires: 365 });
+      Cookies.set('tour', true, { expires: 90 });
       this.guide.start();
     },
 

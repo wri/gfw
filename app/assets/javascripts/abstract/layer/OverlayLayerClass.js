@@ -42,9 +42,6 @@ define([
         if (this.options.infowindow && this.options.interactivity) {
           this.setInfowindow(layer);
         }
-        if (!!this.options.infowindowImagelayer) {
-          this.addClick();
-        }
 
         success();
       }, this));
@@ -56,6 +53,9 @@ define([
       this.removeInfowindow();
       this.removeMultipolygon();
       if (overlayIndex > -1) {
+        if (!!this.clearEvents) {
+          this.clearEvents();
+        };
         google.maps.event.clearListeners(this.map, 'click');
         this.map.overlayMapTypes.setAt(overlayIndex, null);
         // this.map.overlayMapTypes.removeAt(overlayIndex);
@@ -123,6 +123,14 @@ define([
     getName: function() {
       return this.name;
     },
+
+    notificate: function(id)  {
+      mps.publish('Notification/open', [id]);
+    },
+
+    hidenotification: function()  {
+      mps.publish('Notification/close');
+    }
 
   });
 

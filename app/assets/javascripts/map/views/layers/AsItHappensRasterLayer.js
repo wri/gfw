@@ -3,30 +3,66 @@
  */
 
 define([
-  'moment', 'd3',
-  'abstract/layer/CartoDbCanvasLayerClass',
-  'map/presenters/TorqueLayerPresenter'
-], function(moment, d3, CartoDbCanvasLayerClass, Presenter) {
+  'moment', 'd3', 'handlebars',
+  'helpers/canvasRasterCartoCSSHelper',
+  'map/services/CartoDbRasterLayerService',
+  'map/views/layers/AsItHappensLayer',
+  'map/presenters/TorqueLayerPresenter',
+  'text!map/queries/default_raster_cartodb_canvas.sql.hbs'
+], function(
+  moment, d3, Handlebars,
+  canvasCartoCSSHelper,
+  CartoDbRasterLayerService,
+  AsItHappensLayer,
+  Presenter, SQL) {
 
   'use strict';
 
-  var AsItHappensLayer = CartoDbCanvasLayerClass.extend({
+  var AsItHappensRasterLayer = AsItHappensLayer.extend({
 
     table: 'umd_alerts_agg_rast',
 
-    init: function(layer, options, map) {
-      this.presenter = new Presenter(this);
-      this._super(layer, options, map);
+    _getLayer: function() {
+      var deferred = new $.Deferred();
+
+      var configService = new CartoDbRasterLayerService({
+        sql: this._getSQL(),
+        cartocss: this._getCartoCSS(),
+        dateAttribute: 'date',
+        table: this.table
+      });
+
+      var context = this;
+      configService.fetchLayerConfig().then(function(config) {
+        var dates = config[0],
+        layerConfig = config[1];
+
+        context.currentDate[1] = moment(dates.rows[0].max_date);
+
+        context.options.urlTemplate = 'https://' + layerConfig.cdn_url.https + '/wri-01/api/v1/map/' + layerConfig.layergroupid + '{/z}{/x}{/y}.png32';
+        context._setupAnimation();
+        deferred.resolve(context);
+      });
+
+      return deferred.promise();
     },
 
-    /*
-     * Takes an array of RGBA values for a map tile.
-     *
-     * Assuming that the day of the year is encoded in the R and G
-     * channels, this method hides any pixels whose day of the year is
-     * not within the current range selected by the user/timeline.
-     *
-     */
+    _getCartoCSS: function() {
+      var startDate = moment(this.layer.mindate),
+      endDate = moment(this.layer.maxdate || undefined);
+
+      return canvasCartoCSSHelper.generateDaily('date', startDate, endDate);
+    },
+
+    _getSQL: function() {
+      var template = Handlebars.compile(SQL),
+      sql = template({
+        table: this.table
+      });
+
+      return sql;
+    },
+
     filterCanvasImgdata: function(imgdata, w, h, z) {
       if (this.timelineExtent === undefined) {
         this.timelineExtent = [moment(this.currentDate[0]),
@@ -54,8 +90,6 @@ define([
           var pixelPos = (j * w + i) * pixelComponents;
           var intensity = 255;
 
-          // The B channel represents the year than an alert occurred
-          var yearOfLoss = imgdata[pixelPos+2] + 2015;
           // The R channel represents the day of the year that an alert
           // occurred, where `day <= 255`
           var dayOfLoss = imgdata[pixelPos];
@@ -65,7 +99,7 @@ define([
             dayOfLoss = imgdata[pixelPos+1] + 255;
           }
 
-          if (dayOfLoss >= startDay && yearOfLoss >= startYear && dayOfLoss <= endDay && yearOfLoss <= endYear) {
+          if (dayOfLoss >= startDay && dayOfLoss <= endDay) {
             // Arbitrary values to get the correct colours
             imgdata[pixelPos] = 220;
             imgdata[pixelPos + 1] = (72 - z) + 102 - (3 * scale(intensity) / z);
@@ -79,6 +113,6 @@ define([
 
   });
 
-  return AsItHappensLayer;
+  return AsItHappensRasterLayer;
 
 });

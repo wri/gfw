@@ -154,35 +154,52 @@
             </section>
           </div>
           <div class="right-col">
-            <!-- forest production -->
-            <a href="#" id="production" class="anchor-country-info"></a>
-            <section class="country-production" data-scroll-index='2'>
-                <div class="section-info section-share">
-                  <h6>Economic value of <%= @country['name'] %>'s forestry sector</h6>
-                  <div class="section-btn">
-                    <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'production', width: '600', height: '332'} %>
-                    <a href="#" class="info icon green circle source" data-source="gross_value">
-                      <svg>
-                        <use xlink:href="#shape-info"></use>
-                      </svg>
-                    </a>
-                  </div>
+            <!-- left col -->
+            <section class="country-loss_outside_plantations">
+              <div class="section-info section-share">
+                <h6>HECTARES OF LOSS OUTSIDE OF PLANTATIONS</h6>
+                <div class="section-btn">
+                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'loss_outside_plantations', width: '600', height: '400'} %>
+                  <a href="#" class="info icon green circle source" data-source="loss_outside_plantations">
+                    <svg>
+                      <use xlink:href="#shape-info"></use>
+                    </svg>
+                  </a>
                 </div>
-                <script type="text/javascript">
-                var country = <%= raw(@country.to_json) %>;
-                console.log(country);
-                </script>
+              </div>
+              <% if @country['loss_outside_plantations'].present? %>
                 <div class="section-content">
-                  <% if @country['gva'].present? && @country['gva'] > 0 %>
-                  <h3 class="section-title">
-                    The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2011, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> of the GDP.</span>
-                  </h3>
-                  <% else %>
-                  <div class="coming-soon">No data available</div>
-                  <% end %>
+                  <ul class="plantations-section">
+                    <% @country['loss_outside_plantations'].each  do |data|%>
+                      <li>
+                        <div class="plantations-box">
+                          <p class="plantations-year"><%= data['year'] %></p>
+                          <p class="plantations-text">Loss outside plantations</p>
+                          <p class="plantations-loss"><%= number_with_delimiter(data['loss_outside'].round) %> Ha</p>
+                        </div>
+                        <div class="plantations-box">
+                          <p class="plantations-text">Percent of total tree cover loss</p>
+                          <p class="plantations-percentage"><%= data['perc_loss_outside'].round(0) %>%</p>
+                          <div class="plantations-trees">
+                            <div class="mask">
+                              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                            </div>
+                            <div class="bar">
+                              <div style="width: <%= data['perc_loss_outside'].round(2); %>%;"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    <% end %>
+                  </ul>
                 </div>
+                <% else %>
+                <div class="coming-soon">No data available</div>
+              <% end %>
             </section>
+
           </div>
+
         </section>
       </div>
     </section>
@@ -344,54 +361,30 @@
 
           <div class="left-col">
 
-            <!-- left col -->
-            <section class="country-loss_outside_plantations">
-              <div class="section-info section-share">
-                <h6>HECTARES OF LOSS OUTSIDE OF PLANTATIONS</h6>
-                <div class="section-btn">
-                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'loss_outside_plantations', width: '600', height: '297'} %>
-                  <a href="#" class="info icon green circle source" data-source="loss_outside_plantations">
-                    <svg>
-                      <use xlink:href="#shape-info"></use>
-                    </svg>
-                  </a>
+            <!-- forest production -->
+            <a href="#" id="production" class="anchor-country-info"></a>
+            <section class="country-production" data-scroll-index='2'>
+                <div class="section-info section-share">
+                  <h6>Economic value of <%= @country['name'] %>'s forestry sector</h6>
+                  <div class="section-btn">
+                    <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'production', width: '600', height: '332'} %>
+                    <a href="#" class="info icon green circle source" data-source="gross_value">
+                      <svg>
+                        <use xlink:href="#shape-info"></use>
+                      </svg>
+                    </a>
+                  </div>
                 </div>
-              </div>
-              <% if @country['loss_outside_plantations'].present? %>
                 <div class="section-content">
-                  <ul class="plantations-section">
-                    <% @country['loss_outside_plantations'].each  do |data|%>
-                      <li>
-                        <div class="plantations-box">
-                          <p class="plantations-year"><%= data['year'] %></p>
-                          <p class="plantations-text">Loss outside plantations</p>
-                          <p class="plantations-loss"><%= number_with_delimiter(data['loss_outside'].round) %> Ha</p>
-                        </div>
-                        <div class="plantations-box">
-                          <p class="plantations-text">Percent of total tree cover loss</p>
-                          <p class="plantations-percentage"><%= data['perc_loss_outside'].round(2) %>%</p>
-                          <div class="plantations-trees">
-                            <div class="mask">
-                              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                            </div>
-                            <div class="bar">
-                              <div style="width: <%= data['perc_loss_outside'].round(2); %>%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    <% end %>
-                  </ul>
+                  <% if @country['gva'].present? && @country['gva'] > 0 %>
+                  <h3 class="section-title">
+                    The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2011, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> of the GDP.</span>
+                  </h3>
+                  <% else %>
+                  <div class="coming-soon">No data available</div>
+                  <% end %>
                 </div>
-                <% else %>
-                <div class="coming-soon">No data available</div>
-              <% end %>
             </section>
-
-          </div>
-
-          <div class="right-col">
-
           </div>
         </div>
       </div>

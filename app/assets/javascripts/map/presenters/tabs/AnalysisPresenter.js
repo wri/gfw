@@ -50,7 +50,8 @@ define([
       'terrailoss': 'terrai-alerts',
       'prodes': 'prodes-loss',
       'guyra': 'guyra-loss',
-      'forest2000': 'umd-loss-gain'
+      'forest2000': 'umd-loss-gain',
+      'umd_as_it_happens':'glad-alerts',
     },
 
     init: function(view) {
