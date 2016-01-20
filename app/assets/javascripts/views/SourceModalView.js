@@ -5,9 +5,10 @@ define([
   'handlebars',
   'uri',
   'views/ModalView',
-  'text!templates/sourceModal.handlebars'
+  'text!templates/sourceModal.handlebars',
+  'text!templates/sourceModalStatic.handlebars'
 
-], function($,Backbone, _, Handlebars, UriTemplate, ModalView, tpl) {
+], function($,Backbone, _, Handlebars, UriTemplate, ModalView, tpl, tplStatic) {
 
   var SourceModel = Backbone.Model.extend({
 
@@ -23,23 +24,6 @@ define([
     },
 
     parse: function(response) {
-      // var data = {
-      //   function_: response['Function'] || null,
-      //   cautions: response['Cautions'] || null,
-      //   citation: response['Citation'] || null,
-      //   license: response['License'] || null,
-      //   tags: response['Tags'] || null,
-      //   overview: response['Overview'] || null,
-      //   title: response['Title'] || null,
-      //   source: response['Source'] || null,
-      //   frequency_of_updates: response['Frequency of Updates'] || null,
-      //   translated_overview: response['Translated Overview'] || null,
-      //   translated_title: response['Translated_Title'] || null,
-      //   resolution: response['Resolution'] || null,
-      //   geographic_coverage: response['Geographic Coverage'] || null,
-      //   date_of_content: response['Date of Content'] || null,
-      //   link_to_odp: 'http://earthenginepartners.appspot.com/science-2013-global-forest/download_v1.2.html'
-      // }
       return response;
     }
   });
@@ -51,6 +35,7 @@ define([
     className: "modal",
 
     template: Handlebars.compile(tpl),
+    templateStatic: Handlebars.compile(tplStatic),
 
     initialize: function() {
       // Inits
@@ -70,10 +55,12 @@ define([
       return this;
     },
 
+    // Fetch model when click
     sourceClick: function(e) {
       e && e.preventDefault() && e.stopPropagation();
+      var slug = $(e.currentTarget).data('source');
       this.sourceModel = new SourceModel({
-        slug: 'tree_cover_loss',
+        slug: slug,
       });
       this.sourceModel.fetch({
         update:true,
@@ -81,18 +68,25 @@ define([
         success: this.sourceSuccess.bind(this),
         error: this.sourceError.bind(this),
       });
-
-      // this.showBySource($(e.currentTarget).data('source'));
     },
 
     sourceSuccess: function() {
       this.$el.html(this.template(this.sourceModel.toJSON()));
       this.show();
+      ga('send', 'event', document.title.replace('| Global Forest Watch',''), 'Info', this.sourceModel.get('slug'));
     },
 
     sourceError: function(error) {
-      console.log(error);
-    }
+      this.sourceStatic();
+    },
+
+    // Fetch content when click fails
+    sourceStatic: function() {
+      var $clone = $('#' + this.sourceModel.get('slug')).clone();
+      console.log($clone);
+      this.$el.html(this.templateStatic({ clone: $clone.html() }));
+      this.show()
+    },
 
   });
 

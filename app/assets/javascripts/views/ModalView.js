@@ -13,6 +13,7 @@ define([
   var ModalView = Backbone.View.extend({
 
     events: {
+      'click .modal-backdrop' : 'hide',
       'click .modal-close' : 'hide'
     },
 
