@@ -56,6 +56,7 @@ define([
       var image = new Image();
       image.src = url;
       image.className += this.name;
+
       image.onerror = function() {
         this.style.display = 'none';
       };
