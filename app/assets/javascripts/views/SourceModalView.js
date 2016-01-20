@@ -83,9 +83,12 @@ define([
     // Fetch content when click fails
     sourceStatic: function() {
       var $clone = $('#' + this.sourceModel.get('slug')).clone();
-      console.log($clone);
-      this.$el.html(this.templateStatic({ clone: $clone.html() }));
-      this.show()
+      if (!!$clone.length) {
+        this.$el.html(this.templateStatic({ clone: $clone.html() }));
+        this.show()
+      } else {
+        console.error('The id you are searching for does not exist');
+      }
     },
 
   });
