@@ -85,6 +85,7 @@ define([
                 sublayer, \
                 table_name, \
                 source, \
+                source_json, \
                 category_color, \
                 category_slug, \
                 category_name, \
