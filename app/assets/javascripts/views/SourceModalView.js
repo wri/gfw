@@ -13,7 +13,7 @@ define([
 
   var SourceModel = Backbone.Model.extend({
 
-    _uriTemplate: 'http://54.88.79.102/gfw-sync/metadata/{slug}',
+    _uriTemplate: window.gfw.config.GFW_API_HOST + '/metadata/{slug}',
 
     initialize: function(options) {
       this.options = _.extend({}, options);
