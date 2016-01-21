@@ -26,7 +26,7 @@ define([
       var configService = new CartoDbLayerService({
         dateAttribute: 'date',
         table: this.table,
-        namedMap: 'gfw_as_it_happens'
+        namedMap: 'gfw_glad_as_it_happens'
       });
 
       var context = this;

@@ -59,14 +59,12 @@ define([
         match: _.bind(function(){
           this.mobile = false;
           this.render();
-          this.cacheVars();
         },this)
       });
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.mobile = true;
           this.renderMobile();
-          this.cacheVars();
         },this)
       });
 
@@ -76,9 +74,11 @@ define([
 
     render: function(){
       this.$el.html(this.template());
+      this.cacheVars();
     },
     renderMobile: function(){
       this.$el.html(this.templateMobile());
+      this.cacheVars();
     },
 
     cacheVars: function(){

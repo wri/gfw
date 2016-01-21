@@ -35,6 +35,7 @@
             nextStep = function() {
                 position++;
                 if (position>=steps.length) {
+                    ga('send', 'event', 'Map','Walk Through','Finish');
                     clearGuide();
                 } else {
                     gotoStep(position);
@@ -125,6 +126,7 @@
 
                 $('.skip-tour').off('click').on('click', function(e){
                   e && e.preventDefault();
+                  ga('send', 'event', 'Map','Walk Through','Skip');
                   clearGuide();
                 });
 
@@ -244,7 +246,6 @@
                 });
                 return max;
             },
-
             arrowNavigation = function() {
               $(document).on('keyup.tour-arrows', function(e) {
                 switch(e.keyCode) {
@@ -274,6 +275,7 @@
                 .html("")
                 .append(arrow)
                 .append($("<div/>").addClass("guide-navigation")
+                  .append($("<span/>").addClass("skip-tour close").html('<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg>'))
                   .append($("<div/>").addClass("step").html("1"))
                   .append($("<div/>").addClass("btn-group pull-right")
                     // .append(skipButton)
@@ -296,6 +298,7 @@
               }.bind(this));
 
               topMask.add(bottomMask).add(leftMask).add(rightMask).on("click", function() {
+                ga('send', 'event', 'Map','Walk Through','Give Up');
                 clearGuide();
                 clearStates();
               });
@@ -311,6 +314,7 @@
                   });
                 },
                 start: function() {
+                  ga('send', 'event', 'Map','Walk Through','Start');
                   container.append(topMask, bottomMask, leftMask, rightMask, transparentMask);
                   container.append(bubble);
                   topMask.add(bottomMask).add(leftMask).add(rightMask).animate({
@@ -329,12 +333,14 @@
                       options: step.options
                     });
                   });
+                  arrowNavigation();
                   nextStep();
                 }
               }
             },
 
             start: function() {
+              ga('send', 'event', 'Map','Walk Through','Start');
               container.append(topMask, bottomMask, leftMask, rightMask, transparentMask);
               container.append(bubble);
               topMask.add(bottomMask).add(leftMask).add(rightMask).animate({
@@ -353,8 +359,8 @@
                   options: step.options
                 });
               });
-              nextStep();
               arrowNavigation();
+              nextStep();
             }
 
 

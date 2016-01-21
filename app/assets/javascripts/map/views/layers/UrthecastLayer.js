@@ -16,8 +16,14 @@ define([
     options: {
       urlTemplate:'http://uc.gfw-apis.appspot.com/urthecast/map-tiles{/sat}{/z}{/x}{/y}?cloud_coverage_lte={cloud}&acquired_gte={mindate}&acquired_lte={maxdate}T23:59:z00Z',
       urlInfoWindow: 'http://uc.gfw-apis.appspot.com/urthecast/archive/scenes/?geometry_intersects=POINT({lng}+{lat})&cloud_coverage_lte={cloud}&tiled_lte={tileddate}&acquired_gte={mindate}&acquired_lte={maxdate}&sort=-acquired',
+      urlBounds: 'http://uc.gfw-apis.appspot.com/urthecast/archive/scenes/?cloud_coverage_lte={cloud}&tiled_lte={tileddate}&acquired_gte={mindate}&acquired_lte={maxdate}&geometry_intersects={geo}&sort=-acquired',
       dataMaxZoom: 13,
       infowindowImagelayer: true
+    },
+
+    init: function(layer, options, map) {
+      this._super(layer, options, map);
+      this.addEvents();
     },
 
     _getParams: function() {
@@ -35,12 +41,13 @@ define([
       else if (!!sessionStorage.getItem('high-resolution')) {
         params = JSON.parse(atob(sessionStorage.getItem('high-resolution')));
       }
-      return params = {
+      params = {
          'color_filter': params.color_filter || 'rgb',
          'cloud':        params.cloud        || '100',
          'mindate':      params.mindate      || '2000-09-01',
          'maxdate':      params.maxdate      || '2015-09-01'
         }
+      return params;
     },
 
     _getInfoWindowUrl: function(params) {
@@ -54,27 +61,75 @@ define([
       });
     },
 
-    addClick: function() {
-      google.maps.event.addListener(this.map, "click", _.bind(function(event) {
-        // Set Date
-        var today = moment();
-        var tomorrow = today.add('days', 1);
-
-        // Set options to get the url of the api
-        var options = _.extend({}, this._getParams(), {
-          lng: event.latLng.lng(),
-          lat: event.latLng.lat(),
-          tileddate: moment(tomorrow).format("YYYY-MM-DD"),
-        });
-        var url = this._getInfoWindowUrl(options);
-
-        $.get(url).done(_.bind(function(data) {
-          this.removeInfoWindow();
-          this.setInfoWindow(data.payload[0], event);
-        }, this ));
-      }, this ));
+    _getBoundsUrl: function(params) {
+      return new UriTemplate(this.options.urlBounds).fillFromObject({
+        geo: params.geo,
+        cloud: params.cloud,
+        mindate: moment(params.mindate).format("YYYY-MM-DD"),
+        maxdate: moment(params.maxdate).format("YYYY-MM-DD"),
+        tileddate: params.tileddate
+      });
     },
 
+
+    // TILES
+    getTile: function(coord, zoom, ownerDocument) {
+
+      if(zoom < 7) {
+        return;
+      }
+      var zsteps = this._getZoomSteps(zoom);
+      var srcX = 256 * (coord.x % Math.pow(2, zsteps));
+      var srcY = 256 * (coord.y % Math.pow(2, zsteps));
+      var widthandheight = (zsteps > 0) ? 256 * Math.pow(2, zsteps) : this.tileSize.width + 'px';
+
+      var url = this._getUrl.apply(this,
+        this._getTileCoords(coord.x, coord.y, zoom,this._getParams()));
+
+      // Image to render
+      var image = new Image();
+      image.src = url;
+      image.className += this.name;
+      image.style.position = 'absolute';
+      image.style.top      = -srcY + 'px';
+      image.style.left     = -srcX + 'px';
+      image.style.width = '100%';
+      image.style.height = '100%';
+
+      // Loader
+      var loader = ownerDocument.createElement('div');
+      loader.className += 'loader spinner start';
+      loader.style.position = 'absolute';
+      loader.style.top      = '50%';
+      loader.style.left     = '50%';
+      loader.style.border = '4px solid #FFF';
+      loader.style.borderRadius = '50%';
+      loader.style.borderTopColor = '#555';
+
+      // Wwrap the loader and the image
+      var div = ownerDocument.createElement('div');
+      div.appendChild(image);
+      div.appendChild(loader);
+      div.style.width = widthandheight;
+      div.style.height = widthandheight;
+      div.style.position = 'relative';
+      div.style.overflow = 'hidden';
+      div.className += this.name;
+
+      image.onload = function() {
+        div.removeChild(loader);
+      };
+
+      image.onerror = function() {
+        div.removeChild(loader)
+        this.style.display = 'none';
+      };
+
+      return div;
+    },
+
+
+    // INFOWINDOW
     setInfoWindow: function (_data, event) {
       var data = _data;
       if (!!data) {
@@ -99,9 +154,72 @@ define([
       }
     },
 
-    /**
-     * Set geojson style.
-     */
+
+
+    // MAP EVENTS
+    addEvents: function() {
+      this.idleevent = google.maps.event.addListener(this.map, "idle", _.bind(this.onDragEnd, this ));
+      this.clickevent = google.maps.event.addListener(this.map, "click", _.bind(this.onClickEvent, this ));
+      this.dragendevent = google.maps.event.addListener(this.map, "dragend", _.bind(this.onDragEnd, this ));
+    },
+
+    clearEvents: function() {
+      google.maps.event.clearListeners(this.map, 'dragend')
+    },
+
+    onDragEnd: function() {
+      // // Set Date
+      var today = moment();
+      var tomorrow = today.add('days', 1);
+
+      // // Set options to get the url of the api
+      var options = _.extend({}, this._getParams(), {
+        geo: this.getBoundsPolygon(),
+        tileddate: moment(tomorrow).format("YYYY-MM-DD"),
+      });
+      var url = this._getBoundsUrl(options);
+      this.hidenotification();
+      $.get(url).done(_.bind(function(data) {
+        if (!!data && !!data.payload && !data.payload.length) {
+          this.notificate('not-no-images-urthecast');
+        }
+      }, this ));
+    },
+
+    onClickEvent: function(event) {
+      // Set Date
+      var today = moment();
+      var tomorrow = today.add('days', 1);
+
+      // Set options to get the url of the api
+      var options = _.extend({}, this._getParams(), {
+        lng: event.latLng.lng(),
+        lat: event.latLng.lat(),
+        tileddate: moment(tomorrow).format("YYYY-MM-DD"),
+      });
+      var url = this._getInfoWindowUrl(options);
+
+      $.get(url).done(_.bind(function(data) {
+        this.removeInfoWindow();
+        this.setInfoWindow(data.payload[0], event);
+      }, this ));
+    },
+
+
+
+    // HELPERS
+    setStyle: function() {
+      this.map.data.setStyle(_.bind(function(feature){
+        var strokeColor = (feature.getProperty('color')) ? feature.getProperty('color') : '#A2BC28';
+        return ({
+          strokeWeight: 2,
+          fillOpacity: 0,
+          fillColor: '#FFF',
+          strokeColor: strokeColor
+        });
+      }, this ));
+    },
+
     drawMultipolygon: function(geom) {
       var multipolygon_todraw = {
         type: "Feature",
@@ -118,17 +236,26 @@ define([
       this.setStyle();
     },
 
-    setStyle: function() {
-      this.map.data.setStyle(_.bind(function(feature){
-        var strokeColor = (feature.getProperty('color')) ? feature.getProperty('color') : '#A2BC28';
-        return ({
-          strokeWeight: 2,
-          fillOpacity: 0,
-          fillColor: '#FFF',
-          strokeColor: strokeColor
-        });
-      }, this ));
-    },
+    getBoundsPolygon: function() {
+      var bounds = this.map.getBounds(),
+          nlat = bounds.getNorthEast().lat(),
+          nlng = bounds.getNorthEast().lng(),
+          slat = bounds.getSouthWest().lat(),
+          slng = bounds.getSouthWest().lng();
+
+      // Define the LngLat coordinates for the polygon.
+      var boundsJson = {
+        "type": "Polygon",
+        "coordinates":[[
+          [slng,nlat],
+          [nlng,nlat],
+          [nlng,slat],
+          [slng,slat],
+          [slng,nlat]
+        ]]
+      }
+      return JSON.stringify(boundsJson);
+    }
 
   });
 
