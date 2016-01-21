@@ -242,14 +242,17 @@ $height: auto;
 .modal-content {
   font-size: 13px;
 
-  .bullets  {
+  ul {
     list-style-type: disc;
     color: $dark;
+    font-size: 13px;
+
     > li{
       list-style-type: disc;
       padding: 10px 0 0;
       margin-left: 20px;
       line-height: 1.25;
+
       &:first-child{
         padding: 0;
       }
