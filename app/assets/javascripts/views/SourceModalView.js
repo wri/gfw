@@ -5,10 +5,11 @@ define([
   'handlebars',
   'uri',
   'views/ModalView',
+  'presenters/SourceModalPresenter',
   'text!templates/sourceModal.handlebars',
   'text!templates/sourceModalStatic.handlebars'
 
-], function($,Backbone, _, Handlebars, UriTemplate, ModalView, tpl, tplStatic) {
+], function($,Backbone, _, Handlebars, UriTemplate, ModalView, SourceModalPresenter, tpl, tplStatic) {
 
   var SourceModel = Backbone.Model.extend({
 
@@ -40,6 +41,7 @@ define([
     initialize: function() {
       // Inits
       this.constructor.__super__.initialize.apply(this);
+      this.presenter = new SourceModalPresenter(this);
       this.render();
       this._initVars();
       this.setListeners();
@@ -77,17 +79,18 @@ define([
     },
 
     sourceError: function(error) {
-      this.sourceStatic();
+      console.info('The id you are searching for does not exist in the API');
+      this.sourceStatic(this.sourceModel.get('slug'));
     },
 
     // Fetch content when click fails
-    sourceStatic: function() {
-      var $clone = $('#' + this.sourceModel.get('slug')).clone();
+    sourceStatic: function(slug) {
+      var $clone = $('#' + slug).clone();
       if (!!$clone.length) {
         this.$el.html(this.templateStatic({ clone: $clone.html() }));
         this.show()
       } else {
-        console.error('The id you are searching for does not exist');
+        console.info('The id you are searching for does not exist');
       }
     },
 

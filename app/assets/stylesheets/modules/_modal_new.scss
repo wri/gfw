@@ -373,6 +373,10 @@ $height: auto;
             font-size: 80%;
           }
         }
+
+        pre {
+          white-space: normal;
+        }
       }
 
       em {
@@ -414,9 +418,7 @@ $height: auto;
       margin-bottom: 10px;
       margin-top: 5px;
     }
-
   }
-
 }
 
 
@@ -428,7 +430,7 @@ $height: auto;
 
 
 
-// OLD ones
+// OLD styles
 .modal {
   .modal-content {
     // TABLE
