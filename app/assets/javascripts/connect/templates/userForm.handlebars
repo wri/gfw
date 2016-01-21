@@ -6,7 +6,7 @@
   </div>
 </section>
 
-<section class='section'>
+<section class="section" id="user-profile">
   <div class="user-profile inner">
     <h2>Your profile information</h2>
     <p>
@@ -18,7 +18,12 @@
       <label>Name</label>
       <input type="text" placeholder="Your name" name="name" value="{{user.name}}">
 
-      <label>Email</label>
+      <label>
+        Email
+        {{#if errors.email}}
+          <span class="my-gfw-form-error">{{errors.email}}</span>
+        {{/if}}
+      </label>
       <input type="email" placeholder="Your email" name="email" value="{{user.email}}">
 
       <label class="m-sel-container">
@@ -351,6 +356,10 @@
           <label><input type="radio" name="sign_up" value="yes" />Yes, sign me up</label>
           <label><input type="radio" name="sign_up" value="no" />No thanks</label>
         </span>
+
+        {{#if errors.sign_up}}
+          <p class="my-gfw-form-error">{{errors.sign_up}}</p>
+        {{/if}}
       </div>
 
       <div class="m-buttons">
