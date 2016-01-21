@@ -79,21 +79,6 @@ define([
       this.model.set('hidden', false);
     },
 
-    showBySource: function(cloneId) {
-      // this.$el.toggleClass('iframe', !!$(e.currentTarget).data('iframe'));
-      this.$content.html($('#' + cloneId).clone());
-
-      this.model.set('hidden', false);
-
-      this.$contentWrapper.animate({ scrollTop: 0 }, 0);
-
-      // if ( $(e.currentTarget).hasClass('is-temporary-disabled') ) {
-      //   this.$el.addClass('launching-soon');
-      // }
-
-      return this;
-    }
-
   });
 
   return ModalView;
