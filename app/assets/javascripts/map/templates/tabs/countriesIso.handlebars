@@ -10,7 +10,11 @@
       <span class="onoffswitch"><span></span></span>
       <span class="layer-title">
         {{this.title}}
-        <a href='#' data-source='{{this.slug}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+        {{#if this.source_json}}
+          <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+        {{else}}
+          <a href='#' data-source='{{this.slug}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+        {{/if}}
       </span>
       {{#if this.subtitle}}<span class="layer-info">{{this.subtitle}}</span>{{/if}}
     {{#if this.does_wrapper}}

@@ -21,8 +21,12 @@
                 {{this.title}}
                 {{#if this.subtitle}}<span class="subtitle">{{this.subtitle}}</span>{{/if}}
                 <a href='#' class='layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
-                {{#if this.source}}
-                <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                {{#if this.source_json}}
+                  <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                {{else}}
+                  {{#if this.source}}
+                    <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                  {{/if}}
                 {{/if}}
               </span>
               {{#if this.detailsTpl}}
@@ -64,8 +68,12 @@
                 {{this.title}}
                 {{#if this.subtitle}}<span class="subtitle">{{this.subtitle}}</span>{{/if}}
               <a href='#' class='layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
-              {{#if this.source}}
-              <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+              {{#if this.source_json}}
+                <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+              {{else}}
+                {{#if this.source}}
+                  <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                {{/if}}
               {{/if}}
             </span>
             {{#if this.detailsTpl}}
