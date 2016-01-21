@@ -6,10 +6,8 @@ define([
   'backbone',
   'underscore',
   'mps',
-  'handlebars',
   'presenters/SourceWindowPresenter',
-  'text!templates/sourcewindow.handlebars',
-], function($,Backbone, _,mps, Handlebars, Presenter, tpl) {
+], function($,Backbone, _,mps, Presenter) {
 
   'use strict';
 
@@ -22,8 +20,6 @@ define([
   var SourceWindowView = Backbone.View.extend({
 
     el: 'body',
-
-    template: Handlebars.compile(tpl),
 
     events: {
       'click .source' : 'show',
@@ -101,45 +97,9 @@ define([
       var data_slug = $(e.currentTarget).data('source');
       var data_iframe = $(e.currentTarget).data('iframe');
       (data_iframe) ? this.$sourceWindow.addClass('iframe') : this.$sourceWindow.removeClass('iframe');
-
-      this.callAPI(data_slug);
-      // this.$content.html($('#' + data_slug).clone());
+      this.$content.html($('#' + data_slug).clone());
       ga('send', 'event', document.title.replace('| Global Forest Watch',''), 'Info', data_slug);
       return this;
-    },
-
-    callAPI: function(slug) {
-      $.ajax({
-        url: 'http://54.88.79.102/gfw-sync/metadata/tree_cover_loss',
-        success: function(data) {
-          console.log(data);
-          var data = this.parse(data);
-          this.$content.html(this.template(data));
-        }.bind(this),
-
-        error: function(error) {
-          console.log(error);
-        }
-      })
-    },
-
-    parse: function(data) {
-      return {
-        function_: data['Function'],
-        cautions: data['Cautions'],
-        citation: data['Citation'],
-        license: data['License'],
-        tags: data['Tags'],
-        overview: data['Overview'],
-        title: data['Title'],
-        source: data['Source'],
-        frequency_of_updates: data['Frequency of Updates'],
-        translated_overview: data['Translated Overview'],
-        translated_title: data['Translated_Title'],
-        resolution: data['Resolution'],
-        geographic_coverage: data['Geographic Coverage'],
-        date_of_content: data['Date of Content'],
-      }
     },
 
     showByParam: function(data_slug,link){
