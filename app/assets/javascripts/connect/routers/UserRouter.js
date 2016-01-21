@@ -61,6 +61,10 @@ define([
 
       this.el.html(this.subViews[viewName].el);
       this.subViews[viewName].delegateEvents();
+
+      var $nav = $('#user-profile-nav');
+      $nav.find('a').removeClass('current');
+      $nav.find('#my-gfw-nav-'+viewName).addClass('current');
     }
 
   });
