@@ -42,7 +42,8 @@ define([
     className: 'user-form content-form',
 
     events: {
-      'click #submit' : '_submit',
+      'change select': '_handleSelectChange',
+      'click #submit': '_submit',
       'click #skip': '_redirect'
     },
 
@@ -76,10 +77,30 @@ define([
       selectFields.forEach(function(field) {
         var $select = this.$('select[name="'+field+'"]');
         $select.val(attributes[field]);
+
+        var selected = $select.val() || [];
+        if (selected.indexOf('Other') > -1) {
+          var $input = $select.siblings('input');
+          $input.show();
+          $input.val(_.last(attributes[field]));
+        }
       }.bind(this));
 
       this.$('input[value="' + attributes.sign_up + '"]').
         prop('checked', true);
+    },
+
+    _handleSelectChange: function(event) {
+      var $el = this.$(event.currentTarget),
+          $input = $el.siblings('input');
+
+      var selected = $el.val() || [];
+      if (selected.indexOf('Other') > -1) {
+        $input.show();
+      } else {
+        $input.hide();
+        $input.val('');
+      }
     },
 
     _submit: function() {
