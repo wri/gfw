@@ -1,3 +1,14 @@
+#user-profile-nav {
+  li {
+    &:hover {
+      .tooltipmap {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+}
+
 .user-profile {
   margin: 60px auto 0 auto;
   display: flex;
@@ -177,6 +188,15 @@
     }
   }
 
+  .user-subscriptions-how-to-subscribe {
+    background-image: image-url("my_gfw/how-to-subscribe.png");
+    background-size: 100%;
+
+    margin-bottom: 20px;
+    width: 541px;
+    height: 354px;
+  }
+
   table {
     width: 100%;
 
@@ -250,6 +270,14 @@
     h3 {
       padding: 0 2%;
       cursor: pointer;
+      position: relative;
+
+      &:hover {
+        .tooltipmap {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
 
       &.current {
         background: white;
