@@ -226,6 +226,7 @@ $height: auto;
   z-index: 2;
   padding: 15px 0;
   @include clearfix();
+  border-top: 1px solid $border;
   // GRADIENTS
   .gradient {
     content: "";
