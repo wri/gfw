@@ -13,9 +13,9 @@ define([
   var PerMiningLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT \'{tableName}\' as tablename, cartodb_id, the_geom_webmercator, round(hectareas::float) as area_ha, nombre as name, titularref as company, fec_form::text as date, status, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
+      sql: 'SELECT \'{tableName}\' as tablename, cartodb_id, the_geom_webmercator, round(hectareas::float) as area_ha, nombre as name, titularref as company, fec_form::text as date_create, status, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
       infowindow: true,
-      interactivity: 'cartodb_id, tablename, name,  area_ha, company, date, status, analysis',
+      interactivity: 'cartodb_id, tablename, name,  area_ha, company, date_create, status, analysis',
       analysis: true,
       cartocss: mining_by_typeCartocss
     }
