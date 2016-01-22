@@ -38,7 +38,7 @@
 
   position: relative;
   width: 475px;
-  height: 325px;
+  height: 285px;
   padding: 30px 50px;
 }
 
@@ -118,8 +118,8 @@
 
 .subscription-authentication {
   margin-top: 20px;
-  height: 100%;
   width: 100%;
+  height: 165px;
 
   display: flex;
   align-items: center;
@@ -131,14 +131,31 @@
     display: block;
     height: 50px;
     text-align: center;
+
+    position: relative;
   }
 
   li a {
     color: white;
+    text-transform: uppercase;
+    font-size: 14px;
+
     width: 100%;
-    display: inline-block;
     height: 100%;
-    padding: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  li a svg {
+    fill: white;
+
+    position: absolute;
+    top: 7px;
+    left: 15px;
+
+    width: 18px;
+    height: 35px;
   }
 
   .subscription-sign-in-twitter {
@@ -152,4 +169,10 @@
   .subscription-sign-in-google {
     background-color: #da4735;
   }
+}
+
+.subscription-successful {
+  width: 64px;
+  height: 64px;
+  background: image-url('subscriptions/success.svg');
 }
