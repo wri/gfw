@@ -53,6 +53,7 @@ define([
         this._stickynav();
         this._drawTenure();
         this._drawForestsType();
+        this._drawForestCertification();
         this._drawFormaAlerts();
         this._initFormaDropdown();
       // }
@@ -242,6 +243,69 @@ define([
           .style('font-size', '13px');
       });
     },
+
+
+    _drawForestCertification: function() {
+      var graph = '.forest_certification-graph';
+      var $graph = $('.forest_certification-graph');
+      var $certification = $('.country-forest_certification');
+      var data = _.pluck($graph.data('json'), 'value');
+      data.shift()
+
+      var sumData = _.reduce(data, function(memo, num){ return memo + num; }, 0);
+
+      if (sumData === 0) {
+        $certification.find('.coming-soon').show();
+        return;
+      }
+
+
+      // Parse data
+      data = _.map(data, function(d, i){
+        return Math.round(d * 100);
+      });
+
+      $certification.find('.forest_certification-legends').show();
+
+      var width = 225,
+          height = 225,
+          radius = Math.min(width, height) / 2,
+          colors = ['#819515', '#A1BA42', '#DDDDDD'],
+          labelColors = ['white', 'white', '#555'];
+
+      var pie = d3.layout.pie()
+          .sort(null);
+
+      var arc = d3.svg.arc() // create <path> elements for using arc data
+          .innerRadius(radius - 67)
+          .outerRadius(radius)
+
+      var svg = d3.select(".forest_certification-graph")
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .attr("style", 'min-width:' + width + ';min-height:' + height)
+          .append("g")
+          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+      var path = svg.selectAll("path")
+          .data(pie(data));
+
+      path.enter().append("path")
+        .attr("fill", function(d, i) { return colors[i]; })
+        .attr("d", arc);
+
+      path.enter().append('text')
+        .attr('transform', function(d) { var c = arc.centroid(d); return 'translate(' + (c[0]-12) + ',' + (c[1]+8) + ')'})
+        .text(function(d) {
+          if (d.data > 0) return d.data + '%'
+        })
+        .attr('fill', function(d, i) { return labelColors[i]; } )
+        .attr('class', 'notranslate')
+        .style('font-size', '13px');
+    },
+
+
 
     _drawFormaAlerts: function() {
       var that = this;

@@ -851,7 +851,9 @@
   .country-forests-type,
   .country-loss_outside_plantations,
   .country-carbon_stocks,
-  .country-emissions {
+  .country-emissions,
+  .country-forest_certification,
+  .country-reforestation {
     .coming-soon {
       width: 100%;
       font-size: 16px;
@@ -864,7 +866,8 @@
     }
   }
   .country-tenure,
-  .country-forests-type {
+  .country-forests-type,
+  .country-forest_certification {
     .coming-soon {
       display: none;
     }
@@ -876,7 +879,8 @@
       float: right;
     }
   }
-  .country-forests-type {
+  .country-forests-type,
+  .country-forest_certification {
     @media (min-width: $br-mobile) {
       .right-col {
         position: relative;
@@ -1142,7 +1146,7 @@
     }
   } // country-alerts-section
 
-  .forest-type-legends {
+  .forest-type-legends, .forest_certification-legends {
     font-size: 14px;
     display: none;
     margin-top: 10px;

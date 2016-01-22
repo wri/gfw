@@ -209,15 +209,11 @@
       <div class="inner">
         <section class="section-content">
           <div class="left-col">
-            <script type="text/javascript">
-            var country = <%= raw(@country.to_json) %>;
-            console.log(country);
-            </script>
-            <!-- forest type -->
+            <!-- forest certification -->
             <a href="#" id="forest_certification" class="anchor-country-info"></a>
             <section class="country-forest_certification" data-scroll-index='2'>
               <div class="section-info section-share">
-                <h6>Type of forests in <%= @country['name'] %></h6>
+                <h6>Forest certification</h6>
                 <div class="section-btn">
                   <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'forest_certification', width: '250', height: '476'} %>
                   <a href="#" class="info icon green circle source" data-source="forest_type">
@@ -229,9 +225,10 @@
               </div>
 
               <div class="section-content">
+                <div class="coming-soon">No data available</div>
                 <% if @country['forest_certification'].present? %>
                   <div class="left-col">
-                    <div class="forest-type-legends">
+                    <div class="forest_certification-legends">
                       <ul class="legends-list">
                         <li><span class="primary"></span>FSC</li>
                         <li><span class="regenerated"></span>PEF</li>
@@ -240,7 +237,7 @@
                     </div>
                   </div>
                   <div class="right-col">
-                    <div class="forest_certification-graph"></div>
+                    <div class="forest_certification-graph" data-json="<%= @country['forest_certification'].to_json %>"></div>
                   </div>
                 <% else %>
                   <div class="coming-soon">No data available</div>
@@ -465,7 +462,7 @@
                   </div>
                 </div>
                 <div class="section-content">
-                  <% if @country['reforestation'].present? %>
+                  <% if @country['reforestation'].present? && @country['reforestation'][0]['reforestation_rate'].present? %>
                   <h3 class="section-title">
                     In 2010, the rate of reforestation was <span class="highlight"><%= gva_to_human(@country['reforestation'][0]['reforestation_rate'])%> Ha</span>
                   </h3>
