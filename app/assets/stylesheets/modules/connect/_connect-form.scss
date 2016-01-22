@@ -1,3 +1,14 @@
+#user-profile-nav {
+  li {
+    &:hover {
+      .tooltipmap {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+}
+
 .user-profile {
   margin: 60px auto 0 auto;
   display: flex;
@@ -110,6 +121,11 @@
       select {
         height: 60px;
       }
+
+      em {
+        font-style: italic;
+        margin-left: 5px;
+      }
     }
 
     .m-improve-gfw {
@@ -170,6 +186,15 @@
       color: #555;
       margin-bottom: 20px;
     }
+  }
+
+  .user-subscriptions-how-to-subscribe {
+    background-image: image-url("my_gfw/how-to-subscribe.png");
+    background-size: 100%;
+
+    margin-bottom: 20px;
+    width: 541px;
+    height: 354px;
   }
 
   table {
@@ -245,6 +270,14 @@
     h3 {
       padding: 0 2%;
       cursor: pointer;
+      position: relative;
+
+      &:hover {
+        .tooltipmap {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
 
       &.current {
         background: white;
@@ -308,4 +341,21 @@
       width: 45%;
     }
   }
+}
+
+.my-gfw-spinner {
+  padding: 40px 0;
+}
+
+.my-gfw-form-error {
+  color: #BF0C0C;
+  text-transform: none;
+}
+
+label .my-gfw-form-error {
+  margin-left: 10px;
+}
+
+p.my-gfw-form-error {
+  font-weight: 500;
 }

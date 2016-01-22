@@ -53,7 +53,7 @@ define([
       this.subViews = this.subViews || {};
       if (this.subViews[viewName] === undefined) {
         var View = this.availableViews[viewName];
-        if (View === undefined) { return; }
+        if (View === undefined) { this.show404(); }
 
         this.subViews[viewName] = new View();
         this.subViews[viewName].render();
@@ -61,6 +61,14 @@ define([
 
       this.el.html(this.subViews[viewName].el);
       this.subViews[viewName].delegateEvents();
+
+      var $nav = $('#user-profile-nav');
+      $nav.find('a').removeClass('current');
+      $nav.find('#my-gfw-nav-'+viewName).addClass('current');
+    },
+
+    show404: function() {
+      window.location = '/404';
     }
 
   });
