@@ -17,7 +17,14 @@ define([
       urlTemplate:'http://uc.gfw-apis.appspot.com/urthecast/map-tiles{/sat}{/z}{/x}{/y}?cloud_coverage_lte={cloud}&acquired_gte={mindate}&acquired_lte={maxdate}T23:59:z00Z',
       urlInfoWindow: 'http://uc.gfw-apis.appspot.com/urthecast/archive/scenes/?geometry_intersects=POINT({lng}+{lat})&cloud_coverage_lte={cloud}&tiled_lte={tileddate}&acquired_gte={mindate}&acquired_lte={maxdate}&sort=-acquired',
       urlBounds: 'http://uc.gfw-apis.appspot.com/urthecast/archive/scenes/?cloud_coverage_lte={cloud}&tiled_lte={tileddate}&acquired_gte={mindate}&acquired_lte={maxdate}&geometry_intersects={geo}&sort=-acquired',
-      dataMaxZoom: 13,
+      dataMaxZoom: {
+        'rgb': 14,
+        'ndvi': 13,
+        'evi': 13,
+        'ndwi': 13,
+        'false-color-nir' : 13
+      },
+
       infowindowImagelayer: true
     },
 
@@ -81,7 +88,7 @@ define([
       var zsteps = this._getZoomSteps(zoom);
       var srcX = 256 * (coord.x % Math.pow(2, zsteps));
       var srcY = 256 * (coord.y % Math.pow(2, zsteps));
-      var widthandheight = (zsteps > 0) ? 256 * Math.pow(2, zsteps) : this.tileSize.width + 'px';
+      var widthandheight = (zsteps > 0) ? 256 * Math.pow(2, zsteps) + 'px' : this.tileSize.width + 'px';
 
       var url = this._getUrl.apply(this,
         this._getTileCoords(coord.x, coord.y, zoom,this._getParams()));
@@ -126,6 +133,24 @@ define([
       };
 
       return div;
+    },
+
+    _getTileCoords: function(x, y, z, params) {
+      var maxZoom = this.options.dataMaxZoom[params['color_filter']];
+      if (z > maxZoom) {
+        x = Math.floor(x / (Math.pow(2, z - maxZoom)));
+        y = Math.floor(y / (Math.pow(2, z - maxZoom)));
+        z = maxZoom;
+      } else {
+        y = (y > Math.pow(2, z) ? y % Math.pow(2, z) : y);
+        if (x >= Math.pow(2, z)) {
+          x = x % Math.pow(2, z);
+        } else if (x < 0) {
+          x = Math.pow(2, z) - Math.abs(x);
+        }
+      }
+
+      return [x, y, z, params];
     },
 
 
@@ -255,7 +280,13 @@ define([
         ]]
       }
       return JSON.stringify(boundsJson);
-    }
+    },
+
+    _getZoomSteps: function(z) {
+      var params = this._getParams();
+      return z - this.options.dataMaxZoom[params['color_filter']];
+    },
+
 
   });
 
