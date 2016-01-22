@@ -10,7 +10,6 @@
     <div id="default" class="analysis-tab-content default results-hide active">
       <header>
         <h2>Choose analysis type to calculate forest change statistics</h2>
-        <div class="dropable">
       </header>
     </div>
     <div id="draw-tab" class="analysis-tab-content draw-tab results-hide">
@@ -24,7 +23,20 @@
         <li class="hidden"><button id="done-analysis" class="btn green uppercase">Analyze</button></li>
       </ul>
       <div class="dropable">
-        <div id="drop-shape-analysis" class="shape-droppable">Or drop a custom shapefile here</div>
+        <div id="drop-shape-analysis" class="shape-droppable">
+          <div class="drop-shape-text">
+            Or drop a custom shapefile here
+          </div>
+
+          <div class="spinner3 drop-shape-loading">
+            <svg width="50" height="50">
+              <g>
+              <path class="background" d="M0,25A25,25 0 1,1 0,-25A25,25 0 1,1 0,25M0,20A20,20 0 1,0 0,-20A20,20 0 1,0 0,20Z"></path>
+              <path class="foreground" d="M1.5308084989341915e-15,-25A25,25 0 0,1 25,0L20,0A20,20 0 0,0 1.2246467991473533e-15,-20Z"></path>
+              </g>
+            </svg>
+          </div>
+        </div>
         <a href='#' data-source="drop-shapefile" class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
       </div>
     </div>
