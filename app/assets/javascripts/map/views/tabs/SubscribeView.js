@@ -84,7 +84,8 @@ define([
 
     createSubscription: function(options) {
       this.subscription = new Subscription({
-        topic: TOPICS[options.layer.slug] || options.layer.title
+        topic: TOPICS[options.layer.slug] || options.layer.title,
+        url: this._getUrl()
       });
 
       var geom,
@@ -144,6 +145,10 @@ define([
       var $steps = this.$('.steps');
       $steps.removeClass('current');
       $steps.eq(this.currentStep).addClass('current');
+    },
+
+    _getUrl: function() {
+      return window.location.href.replace('subscription-tab', 'analysis-tab');
     }
 
   });
