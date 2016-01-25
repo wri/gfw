@@ -57,6 +57,7 @@ define([
       this.view = view;
       this.status = new StatusModel();
       this._super();
+      mps.publish('Place/register', [this]);
     },
 
     /**
@@ -374,6 +375,8 @@ define([
      */
     _publishSubscribe: function(resource) {
       this.status.set('resource', resource);
+      mps.publish('Place/update', [{go: false}]);
+
       var options = {
         analysisResource: this.status.get('resource'),
         layer: this.status.get('baselayer')
