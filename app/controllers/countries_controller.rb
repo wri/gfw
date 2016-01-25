@@ -25,12 +25,10 @@ class CountriesController < ApplicationController
     blog_story = Api::Blog.find_by_country(@country)
     @blog_story = blog_story.present? ? blog_story : nil
 
-    response = Typhoeus.get("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20mongabaydb%20WHERE%20position('#{@country['name'].downcase}'%20in%20keywords)%20%3C%3E%200", headers: { "Accept" => "application/json" })
-
+        
+    response = Typhoeus.get("https://wri-01.cartodb.com/api/v2/sql?q=with%20r%20as%20((select%20the_geom_webmercator%20from%0Agadm2_countries%20where%20iso%3Dupper('#{@country['iso'].downcase}')))%20SELECT%20f.the_geom%2C%20author%2C%20date%2C%20image%2C%20lat%2Clon%2Ctitle%20FROM%20mongabay%20f%2C%20r%20WHERE%20st_intersects(f.the_geom_webmercator%2Cr.the_geom_webmercator)%20order%20by%20date%3A%3Adate%20desc", headers: { "Accept" => "application/json" })
     @mongabay_story = if response.success?
-                        Rails.cache.fetch 'mongabay_story', expires_in: 1.day do
-                          JSON.parse(response.body)['rows'][0]
-                        end
+                        JSON.parse(response.body)['rows'][0]
                       else
                         nil
                       end
@@ -60,7 +58,7 @@ class CountriesController < ApplicationController
       unless iso.blank?
         iso = iso.downcase
         response = Typhoeus.get(
-            "#{ENV['GFW_API_HOST']}/countries/#{iso}",
+            "#{ENV['GFW_API_HOST']}/countries/#{iso}?thresh=30",
             headers: {"Accept" => "application/json"}
         )
         if response.success? and (response.body.length > 0)
