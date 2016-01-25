@@ -9,11 +9,12 @@ define([
   'amplify',
   'chosen',
   'mps',
+  'turf',
   'map/presenters/tabs/SubscriptionPresenter',
   'map/services/ShapefileService',
   'helpers/geojsonUtilsHelper',
   'text!map/templates/tabs/subscription.handlebars'
-], function(_, Handlebars, amplify, chosen, mps, Presenter, ShapefileService, geojsonUtilsHelper, tpl) {
+], function(_, Handlebars, amplify, chosen, mps, turf, Presenter, ShapefileService, geojsonUtilsHelper, tpl) {
 
   'use strict';
 
@@ -91,25 +92,40 @@ define([
     },
 
     setDropable: function() {
-      var dropable = document.getElementById('drop-shape');
+      var dropable = document.getElementById('drop-shape-subscription');
       if (!dropable) return;
+
       dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
       dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
       dropable.ondrop = function (e) {
         e.preventDefault();
 
         var file = e.dataTransfer.files[0];
-        var shapeService = new ShapefileService({
-          shapefile : file });
-        shapeService.toGeoJSON().then(function(data) {
-          var features = data.features[0];
-          mps.publish('Subscription/upload', [features.geometry]);
 
-          this.drawMultipolygon(features);
-          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(features);
+        var FILE_SIZE_LIMIT = 1000000,
+            sizeMessage = 'The selected Shapefile is quite large and uploading it might result in browser instability. Do you want to continue?';
+        if (file.size > FILE_SIZE_LIMIT && !window.confirm(sizeMessage)) {
+          $(dropable).removeClass('moving');
+          return;
+        }
+
+        this.$('.drop-shape-text').hide();
+        this.$('.drop-shape-loading').show();
+
+        var shapeService = new ShapefileService({ shapefile : file });
+        shapeService.toGeoJSON().then(function(data) {
+          var combinedFeatures = data.features.reduce(turf.union);
+          mps.publish('Subscription/upload', [combinedFeatures.geometry]);
+
+          this.drawMultipolygon(combinedFeatures);
+          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(combinedFeatures);
           this.map.fitBounds(bounds);
+
+          this.$('.drop-shape-text').show();
+          this.$('.drop-shape-loading').hide();
         }.bind(this));
 
+        $(dropable).removeClass('moving');
         return false;
       }.bind(this);
     },
