@@ -82,7 +82,7 @@ define([
     // TILES
     getTile: function(coord, zoom, ownerDocument) {
 
-      if(zoom < 7) {
+      if(zoom < 5) {
         return;
       }
       var zsteps = this._getZoomSteps(zoom);
@@ -203,8 +203,8 @@ define([
         tileddate: moment(tomorrow).format("YYYY-MM-DD"),
       });
       var url = this._getBoundsUrl(options);
-      this.hidenotification();
       $.get(url).done(_.bind(function(data) {
+        this.hidenotification();
         if (!!data && !!data.payload && !data.payload.length) {
           this.notificate('not-no-images-urthecast');
         }
