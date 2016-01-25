@@ -60,9 +60,12 @@ define([
     // Fetch model when click
     sourceClick: function(e) {
       e && e.preventDefault() && e.stopPropagation();
-      var slug = $(e.currentTarget).data('source');
+      // current
+      this.$current = $(e.currentTarget);
+      this.$current.find('svg').attr('class','spinner start');
+
       this.sourceModel = new SourceModel({
-        slug: slug,
+        slug: this.$current.data('source'),
       });
       this.sourceModel.fetch({
         update:true,
@@ -73,12 +76,14 @@ define([
     },
 
     sourceSuccess: function() {
+      this.$current.find('svg').attr('class','');
       this.$el.html(this.template(this.sourceModel.toJSON()));
       this.show();
       ga('send', 'event', document.title.replace('| Global Forest Watch',''), 'Info', this.sourceModel.get('slug'));
     },
 
     sourceError: function(error) {
+      this.$current.find('svg').attr('class','');
       console.info('The id you are searching for does not exist in the API');
       this.sourceStatic(this.sourceModel.get('slug'));
     },
