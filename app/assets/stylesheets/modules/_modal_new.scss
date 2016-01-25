@@ -409,6 +409,10 @@ $height: auto;
     color: $dark;
     margin: 20px 0 0;
 
+    &.is-italic {
+      font-style: italic;
+    }
+
     h3 {
       font-size: 16px;
       font-weight: 500;
