@@ -246,6 +246,30 @@
             </section>
           </div>
           <div class="right-col">
+            <!-- forest certification -->
+            <a href="#" id="burned_forests" class="anchor-country-info"></a>
+            <section class="country-burned_forests" data-scroll-index='2'>
+              <div class="section-info section-share">
+                <h6>Burned forest</h6>
+                <div class="section-btn">
+                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'burned_forests', width: '250', height: '476'} %>
+                  <a href="#" class="info icon green circle source" data-source="forest_type">
+                    <svg>
+                      <use xlink:href="#shape-info"></use>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <div class="section-content">
+                <% if @country['burned_forests'].present? %>
+                  <div class="burned_forests-graph" data-json="<%= @country['burned_forests'].to_json %>"></div>
+                  <div class="coming-soon">No data available</div>
+                <% else %>
+                  <div class="coming-soon">No data available</div>
+                <% end %>
+              </div>
+            </section>
 
           </div>
         </section>

@@ -55,6 +55,7 @@ define([
         this._drawForestsType();
         this._drawForestCertification();
         this._drawFormaAlerts();
+        this._drawBurnedForests();
         this._initFormaDropdown();
       // }
     },
@@ -463,6 +464,154 @@ define([
           });
 
       });
+    },
+
+    _drawBurnedForests: function() {
+      var that = this;
+
+      var $el = $('.country-burned_forests');
+      var $graph = $('.burned_forests-graph');
+      var $comingSoon = $el.find('.coming-soon');
+      var json = $graph.data('json');
+
+      if (!json.length) {
+        $comingSoon.show(0);
+        return;
+      }
+      // Dimensions variables
+      var width     = 500,
+          height    = 160,
+          h         = 130, // maxHeight
+          radius    = width / 2,
+          gridLinesCount = 7;
+      var marginTop = 20,
+          paddingTop = 10,
+          marginLeft = 20;
+
+      // Init graph
+      var graph = d3.select('.burned_forests-graph')
+        .append('svg:svg')
+        .attr('class', 'line')
+        .attr('width', width)
+        .attr('height', height);
+
+      // Add dashed lines grid
+      var gridLineY = h + paddingTop;
+      for (var i = 0; i < gridLinesCount; i++) {
+        graph.append('svg:line')
+          .attr('x1', 0)
+          .attr('y1', gridLineY)
+          .attr('x2', width)
+          .attr('y2', gridLineY)
+          .style('stroke-dasharray', ('2, 3'))
+          .style('stroke', function() { return (i == 0) ? '#333' : '#CCC'; } );
+
+        gridLineY -= (h + paddingTop)/(gridLinesCount-1);
+      };
+
+      var x_scale = d3.scale.linear()
+        .domain([0, json.length - 1])
+        .range([0, width - 40]);
+
+      var xAxis = d3.svg.axis()
+                    .scale(x_scale)
+                    .tickFormat(function(d, i){
+                      return json[d].year;
+                    })
+      graph.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate("+ marginLeft +"," + (height - marginTop) + ")")
+        .call(xAxis);
+
+
+      var max = d3.max(json, function(d) { return parseFloat(d.area_burned_forest); });
+      if (max === d3.min(json, function(d) { return parseFloat(d.area_burned_forest); })) {
+        h = h/2;
+      }
+
+      var y_scale = d3.scale.linear()
+        .domain([0, max])
+        .range([0, h]);
+
+      var line = d3.svg.line()
+        .x(function(d, i) { return x_scale(i); })
+        .y(function(d, i) { return h + paddingTop - marginTop - y_scale(d.area_burned_forest); })
+        .interpolate("linear");
+
+      var cx = width - 40 + marginLeft;
+      var cy = h - y_scale(json[json.length - 1].area_burned_forest) + paddingTop;
+
+      var tooltip = d3.select('.burned_forests-graph')
+        .append('div')
+        .attr('class', 'burned_forests-tooltip')
+        .style('visibility', 'hidden')
+
+      var amount = tooltip
+        .append('div')
+        .attr('class', 'graph-amount')
+        .text('21,123')
+
+      tooltip
+        .append('div')
+        .attr('class', 'graph-date')
+        .text('Ha in ')
+
+      var tooltipDate = tooltip.select('.graph-date')
+        .append('div')
+        .attr('class', 'date')
+        .text('November 2012');
+
+      graph.append('svg:path')
+        .attr('transform', 'translate(' + marginLeft + ',' + marginTop + ')')
+        .attr('d', line(json));
+
+      var positioner = graph.append('svg:line')
+        .attr('x1', 0)
+        .attr('y1', 0)
+        .attr('x2', 0)
+        .attr('y2', h + paddingTop)
+        .style('visibility', 'hidden')
+        .style('stroke', '#aaa');
+
+      var marker = graph.append('svg:circle')
+        .attr('class', 'burned_forests-marker')
+        .attr('cx', cx)
+        .attr('cy', cy)
+        .attr('r', 5);
+
+
+      graph
+        .on("mouseout", function() {
+          positioner.style("visibility", "hidden");
+          tooltip.style("visibility", "hidden");
+        })
+        .on("mouseover", function() {
+          positioner.style("visibility", "visible");
+          tooltip.style("visibility", "visible");
+        })
+        .on('mousemove', function(d) {
+          var index = Math.round(x_scale.invert(d3.mouse(this)[0]));
+          if (json[index]) {
+            var cx = x_scale(index),
+                cy = h - y_scale(json[index].area_burned_forest) + paddingTop,
+                year = json[index].year;
+
+            marker
+              .attr('cx', cx + marginLeft)
+              .attr('cy', cy);
+
+            positioner
+              .attr('x1', cx + marginLeft)
+              .attr('x2', cx + marginLeft);
+
+            amount.text(that.helper.formatNumber(json[index].area_burned_forest || 0));
+            tooltipDate.text(year);
+            tooltip.style("top", "-20px").style("left", (cx - 150) + "px");
+          }
+
+        });
+
+
     },
 
     _openDropdown: function(e) {

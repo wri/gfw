@@ -853,7 +853,8 @@
   .country-carbon_stocks,
   .country-emissions,
   .country-forest_certification,
-  .country-reforestation {
+  .country-reforestation,
+  .country-burned_forests {
     .coming-soon {
       width: 100%;
       font-size: 16px;
@@ -867,7 +868,8 @@
   }
   .country-tenure,
   .country-forests-type,
-  .country-forest_certification {
+  .country-forest_certification,
+  .country-burned_forests {
     .coming-soon {
       display: none;
     }
@@ -1145,6 +1147,110 @@
       }
     }
   } // country-alerts-section
+
+  .country-burned_forests {
+    .burned_forests-graph path {
+      stroke: $cGreen;
+      stroke-width: 4px;
+      fill: none;
+    }
+    .burned_forests_dropdown-menu {
+      display: none;
+    }
+
+    .burned_forests-graph .axis path {
+      stroke: transparent;
+      stroke-width: 0;
+      fill: none;
+    }
+
+    .burned_forests-graph {
+      position: relative;
+      height: 160px;
+      .embed &{
+        display: block;
+        width: 500px;
+        margin: 0 auto;
+      }
+    }
+
+    .burned_forests-marker {
+      stroke: white;
+      stroke-width: 2px;
+      fill: $cGreen;
+    }
+
+    .burned_forests-tooltip {
+      position: absolute;
+      width: 150px;
+      height: 78px;
+      background: $cGreen;
+      @include box-sizing(border-box);
+      padding: 12px 10px;
+      border-radius: 5px;
+      text-align: center;
+      z-index: 10;
+      pointer-events: none;
+
+      .graph-amount,
+      .graph-gain-amount,
+      .total-loss {
+        font-size: 26px;
+        color: white;
+        margin-bottom: 4px;
+        display: block;
+      }
+
+      .graph-date,
+      .graph-gain-total,
+      .total-loss-ha {
+        font-size: 12px;
+        color: $dark;
+        .date {
+          margin-top: 2px;
+          display: inline-block;
+          font-size: 14px;
+        }
+      }
+
+      @include box-shadow(#ddd 2px 2px 10px);
+
+      &:before {
+        content:'';
+        display:block;
+        width:0;
+        height:0;
+        position:absolute;
+
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 8px solid $cGreen;
+
+        right: -8px;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+      }
+    }
+
+    .burned_forests-alerts-legend {
+      margin: 5px 0 25px 0;
+
+      span {
+        color: #666666;
+        font-size: 13px;
+        font-weight: 300;
+        display: block;
+      }
+
+      .legend-title {
+        color: $cGreen;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 3px;
+      }
+    }
+  }
 
   .forest-type-legends, .forest_certification-legends {
     font-size: 14px;
