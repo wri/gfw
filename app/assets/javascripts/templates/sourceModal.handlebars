@@ -10,43 +10,65 @@
       <div class='modal-source'>
 
         <h2 class='modal-title'>{{{title}}}</h2>
-        <h3 class="modal-subtitle">{{{subtitle}}}</h3>
+        {{#if subtitle}}<h3 class="modal-subtitle">{{{subtitle}}}</h3>{{/if}}
 
         <div class="modal-table">
-          <dl class='modal-row'>
-            <dt>Function</dt>
-            <dd>{{{function}}}</dd>
-          </dl>
-          <dl class='modal-row'>
-            <dt>RESOLUTION / SCALE</dt>
-            <dd>{{{resolution}}}</dd>
-          </dl>
-          <dl class='modal-row'>
-            <dt>Geographic coverage</dt>
-            <dd>{{{geographic_coverage}}}</dd>
-          </dl>
-          <dl class='modal-row'>
-            <dt>Source data</dt>
-            <dd>{{{source}}}</dd>
-          </dl>
-          <dl class='modal-row'>
-            <dt>Frequency of updates</dt>
-            <dd>{{{frequency_of_updates}}}</dd>
-          </dl>
-          <dl class='modal-row'>
-            <dt>Date of content</dt>
-            <dd>{{{date_of_content}}}</dd>
-          </dl>
-          <dl class='modal-row'>
-            <dt>Cautions</dt>
-            <dd>{{{cautions}}}</dd>
-          </dl>
+          {{#if function}}
+            <dl class='modal-row'>
+              <dt>Function</dt>
+              <dd>{{{function}}}</dd>
+            </dl>
+          {{/if}}
+          {{#if resolution}}
+            <dl class='modal-row'>
+              <dt>RESOLUTION / SCALE</dt>
+              <dd>{{{resolution}}}</dd>
+            </dl>
+          {{/if}}
+          {{#if geographic_coverage}}
+            <dl class='modal-row'>
+              <dt>Geographic coverage</dt>
+              <dd>{{{geographic_coverage}}}</dd>
+            </dl>
+          {{/if}}
+          {{#if source}}
+            <dl class='modal-row'>
+              <dt>Source</dt>
+              <dd>{{{source}}}</dd>
+            </dl>
+          {{/if}}
+          {{#if frequency_of_updates}}
+            <dl class='modal-row'>
+              <dt>Frequency of updates</dt>
+              <dd>{{{frequency_of_updates}}}</dd>
+            </dl>
+          {{/if}}
+          {{#if date_of_content}}
+            <dl class='modal-row'>
+              <dt>Date of content</dt>
+              <dd>{{{date_of_content}}}</dd>
+            </dl>
+          {{/if}}
+          {{#if cautions}}
+            <dl class='modal-row'>
+              <dt>Cautions</dt>
+              <dd>{{{cautions}}}</dd>
+            </dl>
+          {{/if}}
         </div>
 
         <div class="modal-overview">
           <h3>Overview</h3>
           {{{overview}}}
         </div>
+
+        {{#if translated_overview}}
+          <div class="modal-overview is-italic">
+            <h3>Descripción</h3>
+            {{{translated_overview}}}
+          </div>
+        {{/if}}
+
 
         <div class="modal-credits">
           <h3>Citation:</h3>

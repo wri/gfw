@@ -93,13 +93,13 @@ define([
       this.zoom = zoom;
       if (isNaN(this.previousZoom)) this.previousZoom = zoom;
       this.$currentZoom.text(zoom);
-      if(this.zoom >= 7) {
+      if(this.zoom >= 5) {
         this.presenter.notificateClose();
         this.$disclaimer.hide(0);
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
           this.$onoffswitch.click();
-          if (this.previousZoom >= 7) {
+          if (this.previousZoom >= 5) {
             this.presenter.notificate('not-zoom-not-reached');
           }
         }
@@ -153,7 +153,7 @@ define([
     },
 
     toggleLayer: function(e) {
-      if (this.zoom >= 7) {
+      if (this.zoom >= 5) {
         this.switchToggle();
         this.$apply.toggleClass('disabled');
         this.presenter.setHres(this._getParams(e));

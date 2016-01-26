@@ -44,10 +44,6 @@ define([
      * @return {div}     div           Tile div
      */
     getTile: function(coord, zoom, ownerDocument) {
-      var zoomLT7 = (zoom < 7);
-      if(zoomLT7) {
-        if (this.layer_slug == 'urthe') {return;}
-      }
       var zsteps = this._getZoomSteps(zoom);
 
       var url = this._getUrl.apply(this,

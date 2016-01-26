@@ -620,8 +620,8 @@
             <li class='column three last'>
               <% if @mongabay_story.present? %>
                 <strong class='column-title'>Mongabay stories</strong>
-                <h3 class='story-title'><a href="<%= @mongabay_story['loc'] %>"><%= truncate(@mongabay_story['title'], :length => 80) %></a></h3>
-                <p class='story-content'><%= truncate(@mongabay_story['description'], :length => 300) %> <%= link_to('more', @mongabay_story['loc'], :target => '_blank') %></p>
+                <h3 class='story-title'><%= truncate(@mongabay_story['title'], :length => 80) %></h3>
+                <p class='story-content'><%= @mongabay_story['author'].html_safe %></p>
                 <p>See more on the <%= link_to 'map', "#{map_path}/3/15.00/27.00/ALL/grayscale/loss,forestgain/586", :target => '_blank' %></p>
               <% end %>
             </li>

@@ -226,6 +226,7 @@ $height: auto;
   z-index: 2;
   padding: 15px 0;
   @include clearfix();
+  border-top: 1px solid $border;
   // GRADIENTS
   .gradient {
     content: "";
@@ -242,14 +243,17 @@ $height: auto;
 .modal-content {
   font-size: 13px;
 
-  .bullets  {
+  ul {
     list-style-type: disc;
     color: $dark;
+    font-size: 13px;
+
     > li{
       list-style-type: disc;
       padding: 10px 0 0;
       margin-left: 20px;
       line-height: 1.25;
+
       &:first-child{
         padding: 0;
       }
@@ -389,6 +393,10 @@ $height: auto;
   .modal-overview {
     color: $dark;
     margin: 20px 0 0;
+
+    &.is-italic {
+      font-style: italic;
+    }
 
     h3 {
       font-size: 16px;
