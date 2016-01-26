@@ -59,6 +59,71 @@
         </div>
       </div>
     </section>
+    <!-- graph -->
+    <section class="country-section country-graph-section country-forest_certification" data-scroll-index='2' style="display:none">
+      <div class="inner">
+        <section class="section-content">
+
+            <!-- forest certification -->
+            <a href="#" id="forest_certification" class="anchor-country-info"></a>
+            <section class="country-forest_certification" data-scroll-index='2'>
+              <div class="section-info section-share">
+                <h6>Forest certification</h6>
+                <div class="section-btn">
+                  <a href="#" class="info icon green circle source" data-source="forest_type">
+                    <svg>
+                      <use xlink:href="#shape-info"></use>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <div class="section-content">
+                <div class="coming-soon">No data available</div>
+                <% if @country['forest_certification'].present? %>
+                  <div class="left-col">
+                    <div class="forest_certification-legends">
+                      <ul class="legends-list">
+                        <li><span class="primary"></span>FSC</li>
+                        <li><span class="regenerated"></span>PEF</li>
+                        <li><span class="planted"></span>Other</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="right-col">
+                    <div class="forest_certification-graph" data-json="<%= @country['forest_certification'].to_json %>"></div>
+                  </div>
+                <% else %>
+                  <div class="coming-soon">No data available</div>
+                <% end %>
+              </div>
+            </section>
+        </section>
+      </div>
+    </section>
+
+    <section class="country-section country-burned_forests" data-scroll-index='2' style="display:none">
+      <div class="inner">
+        <!-- burned forest -->
+        <a href="#" id="burned_forests" class="anchor-country-info"></a>
+        <section class="country-burned_forests" data-scroll-index='2'>
+          <div class="section-info section-share">
+            <h6>Burned forest</h6>
+          </div>
+
+          <div class="section-content">
+            <% if @country['burned_forests'].present? %>
+              <div class="burned_forests-graph" data-json="<%= @country['burned_forests'].to_json %>"></div>
+              <div class="coming-soon">No data available</div>
+            <% else %>
+              <div class="coming-soon">No data available</div>
+            <% end %>
+          </div>
+        </section>
+      </div>
+    </section>
+
+
 
     <!-- forest type -->
     <section class="country-section country-forests-type" data-scroll-index='1' style="display:none">
@@ -197,7 +262,7 @@
     </section>
     <% end %>
 
-    <section class="country-section country-graph-section" data-scroll-index='2'>
+    <section class="country-section country-loss_outside_plantations country-graph-section" data-scroll-index='2' style="display:none">
       <div class="inner">
         <section class="section-content">
           <div class="right-col">
@@ -240,6 +305,35 @@
           </div>
 
         </section>
+      </div>
+    </section>
+    <!-- reforestation stocks -->
+    <section class="country-section country-reforestation" data-scroll-index='5' style="display:none">
+      <div class="inner">
+
+        <div class="section-content">
+
+          <div class="left-col">
+
+            <!-- forest reforestation -->
+            <a href="#" id="reforestation" class="anchor-country-info"></a>
+            <section class="country-reforestation" data-scroll-index='2'>
+                <div class="section-info section-share">
+                  <h6>Reforestation</h6>
+                </div>
+                <div class="section-content">
+                  <% if @country['reforestation'].present? && @country['reforestation'][0]['reforestation_rate'].present? %>
+                  <h3 class="section-title">
+                    In 2010, the rate of reforestation was <span class="highlight"><%= gva_to_human(@country['reforestation'][0]['reforestation_rate'])%> Ha</span>
+                  </h3>
+                  <% else %>
+                  <div class="coming-soon">No data available</div>
+                  <% end %>
+                </div>
+            </section>
+          </div>
+          <div class="right-col">
+        </div>
       </div>
     </section>
 
