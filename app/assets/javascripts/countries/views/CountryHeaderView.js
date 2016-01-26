@@ -360,7 +360,7 @@ define([
     },
 
     _updateData: function(area_id) {
-      var url     = window.gfw.config.GFW_API_HOST + 'countries/' + this.country.get('iso'),
+      var url     = window.gfw.config.GFW_API_HOST + 'countries/' + this.country.get('iso').toLowerCase(),
           canopy  = this.helper.config.canopy_choice || 30,
           $cnp_op = $('.umd_options_control').find('.sidenav-icon'),
           $target = $('.tree-numbers'),
