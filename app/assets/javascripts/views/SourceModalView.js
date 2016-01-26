@@ -79,6 +79,7 @@ define([
       this.$current.find('svg').attr('class','');
       this.$el.html(this.template(this.sourceModel.toJSON()));
       this.show();
+      this.setTargetOfLinks();
       ga('send', 'event', document.title.replace('| Global Forest Watch',''), 'Info', this.sourceModel.get('slug'));
     },
 
@@ -93,11 +94,16 @@ define([
       var $clone = $('#' + slug).clone();
       if (!!$clone.length) {
         this.$el.html(this.templateStatic({ clone: $clone.html() }));
-        this.show()
+        this.show();
+        this.setTargetOfLinks();
       } else {
         console.info('The id you are searching for does not exist');
       }
     },
+
+    setTargetOfLinks: function() {
+      this.$el.find('a').attr('target', '_blank');
+    }
 
   });
 
