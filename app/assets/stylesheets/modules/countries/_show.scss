@@ -2508,12 +2508,13 @@
 
     .country-graph-section {
 
-      .forests-type-graph {
+      .forests-type-graph, .forest_certification-graph {
         margin: 0 0 25px 0;
+        width: 225px;
+        height: 225px;
 
         svg {
           display: block;
-          width: 225px;
           margin: 0 auto;
         }
       }
