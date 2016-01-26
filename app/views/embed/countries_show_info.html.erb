@@ -197,6 +197,52 @@
     </section>
     <% end %>
 
+    <section class="country-section country-loss_outside_plantations country-graph-section" data-scroll-index='2' style="display:none">
+      <div class="inner">
+        <section class="section-content">
+          <div class="right-col">
+            <!-- left col -->
+            <section class="country-loss_outside_plantations">
+              <div class="section-info section-share">
+                <h6>HECTARES OF LOSS OUTSIDE OF PLANTATIONS</h6>
+              </div>
+              <% if @country['loss_outside_plantations'].present? %>
+                <div class="section-content">
+                  <ul class="plantations-section">
+                    <% @country['loss_outside_plantations'].each  do |data|%>
+                      <li>
+                        <div class="plantations-box">
+                          <p class="plantations-year"><%= data['year'] %></p>
+                          <p class="plantations-text">Loss outside plantations</p>
+                          <p class="plantations-loss"><%= number_with_delimiter(data['loss_outside'].round) %> Ha</p>
+                        </div>
+                        <div class="plantations-box">
+                          <p class="plantations-text">Percent of total tree cover loss</p>
+                          <p class="plantations-percentage"><%= data['perc_loss_outside'].round(0) %>%</p>
+                          <div class="plantations-trees">
+                            <div class="mask">
+                              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                            </div>
+                            <div class="bar">
+                              <div style="width: <%= data['perc_loss_outside'].round(2); %>%;"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
+                <% else %>
+                <div class="coming-soon">No data available</div>
+              <% end %>
+            </section>
+
+          </div>
+
+        </section>
+      </div>
+    </section>
+
 
 
   </div>
