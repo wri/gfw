@@ -27,13 +27,14 @@ require([
   'map/views/TimelineView',
   'map/views/NavMobileView',
   'map/views/GuideView',
+  'connect/views/UserFormModalView',
   'views/HeaderView',
   'views/FooterView',
   'views/NotificationsView',
   'views/DownloadView',
   '_string'
 ], function($, _, Class, Backbone, chosen, utils, enquire, mps, Router, SourceModalView, SourceBottomView, SourceMobileFriendlyView, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
-    MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, GuideView, HeaderView, FooterView, NotificationsView, DownloadView) {
+    MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, GuideView, UserFormModalView, HeaderView, FooterView, NotificationsView, DownloadView) {
 
   'use strict';
 
@@ -90,7 +91,7 @@ require([
       new NotificationsView();
       new GuideView();
 
-
+      $('body').append(new UserFormModalView().el);
     },
 
     /**

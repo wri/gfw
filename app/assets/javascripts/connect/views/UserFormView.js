@@ -43,13 +43,15 @@ define([
 
     events: {
       'change select': '_handleSelectChange',
-      'click #submit': '_submit',
-      'click #skip': '_redirect'
+      'click #submit': '_submit'
     },
 
     template: Handlebars.compile(tpl),
 
-    initialize: function() {
+    initialize: function(options) {
+      options = options || {};
+      this.isModal = options.isModal;
+
       this.user = new User();
       this.listenTo(this.user, 'sync', this.render);
       this.user.fetch();
@@ -64,7 +66,8 @@ define([
         action: window.gfw.config.GFW_API_HOST+'/user',
         redirect: window.location.href,
         user: this.user.toJSON(),
-        errors: this.validator.messages
+        errors: this.validator.messages,
+        isModal: this.isModal
       }));
 
       this._renderSelectedOptions();
@@ -104,6 +107,9 @@ define([
     },
 
     _submit: function() {
+      this.$('#submit').hide();
+      this.$('.profile-loading').show();
+
       var formValues = this.$('form').
         serializeArray().
         reduce(function(prev, curr) {
@@ -118,7 +124,7 @@ define([
 
       this.user.set(formValues);
       if (this.validator.isValid(this.user)) {
-        this.user.save().then(this._redirect);
+        this.user.save().then(this._redirect.bind(this));
       } else {
         this.render();
         mps.publish('Notification/open', ['my-gfw-profile-errors']);
@@ -142,6 +148,7 @@ define([
         window.location.href = urlParams.redirect;
       } else {
         mps.publish('Notification/open', ['my-gfw-profile-saved']);
+        this.trigger('saved');
         window.scrollTo(0,0);
       }
     }

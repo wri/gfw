@@ -1,3 +1,4 @@
+{{#unless isModal}}
 <section class="header-static">
   <div class="inner">
     <header>
@@ -5,21 +6,24 @@
     </header>
   </div>
 </section>
+{{/unless}}
 
 <section class="section" id="user-profile">
   <div class="user-profile inner">
+    {{#unless isModal}}
     <h2>Your profile information</h2>
     <p>
       This information is optional but it will help us to learn how you
       use Global Forest Watch and how to improve it.
     </p>
+    {{/unless}}
 
     <form method="POST" action="{{action}}">
       <label>Name</label>
       <input type="text" placeholder="Your name" name="name" value="{{user.name}}">
 
       <label>
-        Email
+        Email <em>(required)</em>
         {{#if errors.email}}
           <span class="my-gfw-form-error">{{errors.email}}</span>
         {{/if}}
@@ -371,8 +375,16 @@
           <a id="submit" class="btn green uppercase">Submit</a>
         {{else}}
           <a id="submit" class="btn green uppercase">Continue</a>
-          <a id="skip" class="btn gray uppercase">Or Skip</a>
         {{/if}}
+
+        <div class="spinner3 small profile-loading">
+          <svg>
+            <g>
+              <path class="background" d="M0,25A25,25 0 1,1 0,-25A25,25 0 1,1 0,25M0,20A20,20 0 1,0 0,-20A20,20 0 1,0 0,20Z"></path>
+              <path class="foreground" d="M1.5308084989341915e-15,-25A25,25 0 0,1 25,0L20,0A20,20 0 0,0 1.2246467991473533e-15,-20Z"></path>
+            </g>
+          </svg>
+        </div>
       </div>
     </form>
   </div>
