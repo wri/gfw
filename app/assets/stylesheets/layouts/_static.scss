@@ -952,8 +952,12 @@
         @include display-flex();
         @include align-items(center);
 
-        &:hover{
+        &:not(.is-disabled):hover{
           box-shadow: 0 0 0 2px $cGreen;
+        }
+
+        &.is-disabled {
+          cursor: default;
         }
 
         .icon{
@@ -980,11 +984,11 @@
             color: #AAA;
             font-size: 10px;
           }
+          .is-coming-soon {
+            color: #AAA;
+          }
         }
       }
-
-
-
     }
   }
 }
