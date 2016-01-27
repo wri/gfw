@@ -27,9 +27,9 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .subscription-modal-close': 'hide',
-      'click .subscription-modal-backdrop': 'hide',
-      'click #returnToMap': 'hide',
+      'click .subscription-modal-close': 'close',
+      'click .subscription-modal-backdrop': 'close',
+      'click #returnToMap': 'close',
       'click #showName': 'askForName',
       'click #subscribe': 'subscribe',
     },
@@ -62,7 +62,7 @@ define([
       this.$el.addClass('is-active');
     },
 
-    hide: function(event) {
+    close: function(event) {
       if (event !== undefined && event.preventDefault) {
         event.preventDefault();
         event.stopPropagation();
@@ -70,7 +70,6 @@ define([
 
       this.$el.removeClass('is-active');
       this.render();
-      this.presenter.hide();
     },
 
     setupAuthLinks: function() {
@@ -83,13 +82,15 @@ define([
     },
 
     createSubscription: function(options) {
+      var analysisResource = options.analysisResource;
+
       this.subscription = new Subscription({
         topic: TOPICS[options.layer.slug] || options.layer.title,
         url: this._getUrl()
       });
+      this.subscription.set(analysisResource);
 
-      var geom,
-          analysisResource = options.analysisResource;
+      var geom;
       if (analysisResource.type === 'geojson') {
         geom = JSON.parse(analysisResource.geojson);
       } else {
@@ -99,7 +100,6 @@ define([
           geom = this.presenter.geom_for_subscription;
         }
       }
-
       this.subscription.set('geom', geom);
     },
 
@@ -123,7 +123,7 @@ define([
 
       this.subscription.save().
         then(this.onSave.bind(this)).
-        fail(this.hide.bind(this));
+        fail(this.close.bind(this));
     },
 
     onSave: function() {

@@ -193,11 +193,6 @@ define([
     _handlePlaceGo: function(params) {
       // this.deleteAnalysis();
 
-      //Open analysis tab
-      if ((!this.status.get('dont_analyze') && ! !!params.tab && (params.iso.country && params.iso.country !== 'ALL')) || (params.analyze || params.geojson || params.wdpaid)) {
-        mps.publish('Tab/open', ['#analysis-tab-button']);
-      }
-
       //Select analysis type by params given
       if (params.analyze && params.name === 'map') {
         this.view.onClickAnalysis();
@@ -471,7 +466,6 @@ define([
         resource.thresh = '?thresh=' + this.status.get('threshold');
 
         return resource;
-
       }
     },
 

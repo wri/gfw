@@ -4,11 +4,7 @@
  * @return SubscriptionPresenter class.
  */
 define([
-  'map/presenters/PresenterClass',
-  'underscore',
-  'backbone',
-  'mps',
-  'topojson',
+  'map/presenters/PresenterClass', 'underscore', 'backbone', 'mps', 'topojson',
   'helpers/geojsonUtilsHelper',
   'map/services/CountryService',
   'map/services/RegionService'
@@ -69,6 +65,7 @@ define([
         this.status.set('date', [place.params.begin, place.params.end]);
         this.status.set('threshold', place.params.threshold);
         this.status.set('dont_analyze', place.params.dont_analyze);
+        this._handlePlaceGo(place.params);
       }
     }, {
       'Subscribe/end': function(options) {
@@ -124,12 +121,63 @@ define([
       'Subscription/upload':function(geojson) {
         this._subscribeGeojson(geojson,{draw: false});
       }
+    }, {
+      'Subscribe/end': function() {
+        this.view._stopDrawing();
+      }
     }],
 
-    openSubscriptionTab: function(open){
+    openSubscriptionTab: function() {
       mps.publish('Tab/open', ['#subscription-tab-button']);
     },
 
+    _handlePlaceGo: function(params) {
+      this.openSubscriptionTab();
+      var areaIsSelected = (params.iso.country || params.geojson || params.wdpaid);
+
+      if (areaIsSelected) {
+        this.view._onClickStart();
+
+        if (params.geojson) {
+          var resource = {
+            geojson: JSON.stringify(params.geojson),
+            type: 'geojson'
+          };
+          resource = this._buildResource(resource);
+          this.status.set('resource', resource);
+
+          this.view.openTab('geojson');
+          this.view._onClickSubscription();
+
+          this.deleteMultiPoligon();
+          this.view.setSelects({country: null, region: null});
+          this.view.model.set('is_drawing', true);
+          var overlay = this.view.drawPaths(
+            geojsonUtilsHelper.geojsonToPath(params.geojson));
+          this.view._onOverlayComplete({
+            type: 'polygon',
+            overlay: overlay
+          });
+
+          return;
+        }
+
+        if (params.wdpaid) {
+          this._showWdpa(params.wdpaid);
+          return;
+        }
+
+        if (params.iso.country && params.iso.country !== 'ALL') {
+          this.view.openTab('iso');
+          this._showIso(params.iso);
+        }
+
+        if (params.sublayers.length > 0) {
+          this.view.openTab('other');
+          return;
+        }
+      }
+    },
 
     _setBaselayer: function(baselayers) {
       var baselayer;
@@ -144,21 +192,16 @@ define([
       this.status.set('baselayer', baselayer);
     },
 
-    /**
-     * Analyzes a geojson object.
-     *
-     * @param  {[type]} geojson [description]
-     */
-    _subscribeGeojson: function(geojson, options) {
+    _showGeojson: function(geojson, options) {
       options = options || {draw: true};
+
       this.view.setStyle();
-      // Build resource
       var resource = {
         geojson: JSON.stringify(geojson),
         type: 'geojson'
       };
       resource = this._buildResource(resource);
-
+      this.status.set('resource', resource);
 
       // Draw geojson if needed.
       if (options.draw) {
@@ -166,7 +209,17 @@ define([
           geojsonUtilsHelper.geojsonToPath(geojson));
       }
 
-      // Publish analysis
+      return resource;
+    },
+
+    /**
+     * Analyzes a geojson object.
+     *
+     * @param  {[type]} geojson [description]
+     */
+    _subscribeGeojson: function(geojson, options) {
+      var resource = this._showGeojson(geojson, options);
+
       ga('send', 'event', 'Map', 'Subscription', 'Layer: ' + resource.dataset + ', Polygon: true');
       this._publishSubscribe(resource);
     },
@@ -176,7 +229,9 @@ define([
      *
      * @param  {Object} iso {country: {string}, id: {integer}}
      */
-    _subscribeIso: function(iso) {
+    _showIso: function(iso, callback) {
+      callback = callback || function(){};
+
       this.deleteSubscription();
       this.view.setStyle();
       this.view.setSelects(iso, this.status.get('dont_analyze'));
@@ -207,9 +262,9 @@ define([
 
           // Show subscription dialog
           resource.geom = geojson;
-          this._publishSubscribe(resource);
+          this.status.set('resource', resource);
 
-
+          callback(resource);
         },this));
       } else {
         regionService.execute(resource, _.bind(function(results) {
@@ -219,17 +274,24 @@ define([
 
           // Show subscription dialog
           resource.geom = geojson;
-          this._publishSubscribe(resource);
+          this.status.set('resource', resource);
 
+          callback(resource);
         },this));
       }
+    },
+
+    _subscribeIso: function(iso) {
+      this._showIso(iso, this._publishSubscribe.bind(this));
     },
 
     setSubscriptionIso: function(iso){
       this._subscribeIso(iso);
     },
 
-    _subscribeWdpai: function(wdpaid) {
+    _showWdpa: function(wdpaid, callback) {
+      callback = callback || function(){};
+
       // Build resource
       var resource = this._buildResource({
         wdpaid: wdpaid,
@@ -250,12 +312,17 @@ define([
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
           resource.geom = geojson;
-          this._publishSubscribe(resource);
-
+          this.status.set('resource', resource);
+          callback(resource);
         } else {
-          this._publishSubscribe(resource, true);
+          this.status.set('resource', resource);
+          callback(resource, true);
         }
       }, this));
+    },
+
+    _subscribeWdpai: function(wdpaid) {
+      this._showWdpa(wdpaid, this._publishSubscribe.bind(this));
     },
 
     /**
@@ -272,12 +339,12 @@ define([
 
       ga('send', 'event', 'Map', 'Subscription', 'Layer: ' + resource.dataset + ', ConcessionLayer: ' + resource.use + ', ConcessionId: ' + resource.useid);
 
-      var url = function() {
-        if (!!concessionsSql[layerSlug])
-          return concessionsSql[layerSlug].format(useid);
-        else
-          return 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from '+ layerSlug +' where cartodb_id =' + useid;
-      }();
+      var url;
+      if (!!concessionsSql[layerSlug]) {
+        url = concessionsSql[layerSlug].format(useid);
+      } else {
+        url = 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from '+ layerSlug +' where cartodb_id =' + useid;
+      }
 
       $.getJSON(url, _.bind(function(data) {
         if (data.rows.length > 0) {
@@ -290,8 +357,9 @@ define([
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
           resource.geom = geojson;
-          this._publishSubscribe(resource);
+          this.status.set('resource', resource);
 
+          this._publishSubscribe(resource);
         } else {
           this._publishSubscribe(resource, true);
         }
@@ -307,7 +375,6 @@ define([
       var paths = overlay.getPath().getArray();
       var geojson = geojsonUtilsHelper.pathToGeojson(paths);
 
-      this.view.setEditable(overlay, false);
       this._subscribeGeojson(geojson, {draw: false});
     },
 
@@ -316,7 +383,6 @@ define([
      * from the current status.
      */
     _buildResource: function(resource) {
-      mps.publish('Spinner/start');
       var date, dateFormat;
       var baselayer = this.status.get('baselayer');
 
@@ -349,7 +415,7 @@ define([
         }
 
         return resource;
-      }else{
+      } else {
         // Append dataset string
         resource.dataset = this.datasets[baselayer.slug];
 
@@ -364,7 +430,6 @@ define([
         resource.thresh = '?thresh=' + this.status.get('threshold');
 
         return resource;
-
       }
     },
 
@@ -373,8 +438,7 @@ define([
      *
      * @param  {Object} resource The analysis resource
      */
-    _publishSubscribe: function(resource) {
-      this.status.set('resource', resource);
+    _publishSubscribe: function() {
       mps.publish('Place/update', [{go: false}]);
 
       var options = {
@@ -382,7 +446,6 @@ define([
         layer: this.status.get('baselayer')
       };
 
-      mps.publish('Spinner/stop');
       mps.publish('Subscribe/show', [options]);
       this.view.$el.addClass('is-subscribing');
     },
@@ -407,11 +470,12 @@ define([
         multipolygon: null
       });
 
-      this.view.$el.removeClass('is-subscribing')
+      this.view.$el.removeClass('is-subscribing');
+      mps.publish('Place/update', [{go: false}]);
     },
 
     resetIsos: function(){
-      mps.publish('LocalMode/updateIso', [{country:null, region:null}])
+      mps.publish('LocalMode/updateIso', [{country:null, region:null}]);
     },
 
     /**
@@ -449,6 +513,11 @@ define([
       e.overlay.type = e.type;
       e.overlay.setEditable(true);
       this.setOverlay(e.overlay);
+
+      var paths = e.overlay.getPath().getArray(),
+          geojson = geojsonUtilsHelper.pathToGeojson(paths);
+      this._showGeojson(geojson, {draw: false});
+      mps.publish('Place/update', [{go: false}]);
     },
 
     setOverlay: function(overlay) {
@@ -493,8 +562,7 @@ define([
 
     notificate: function(id){
       mps.publish('Notification/open', [id]);
-    },
-
+    }
 
   });
 

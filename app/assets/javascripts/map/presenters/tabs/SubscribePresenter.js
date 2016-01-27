@@ -33,17 +33,9 @@ define([
       'Subscribe/geom': function(geom) {
         this.geom_for_subscription = geom;
       }
-    },{
-      'Tab/opened': function() {
-        this.view.hide();
-      }
     }],
 
     subscribeEnd: function(){
-      mps.publish('Subscribe/end');
-    },
-
-    hide: function(){
       mps.publish('Subscribe/end');
     },
 
