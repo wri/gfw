@@ -38,6 +38,9 @@ $height: auto;
     }
   }
 
+  .is-italic {
+    font-style: italic;
+  }
 
   .modal-backdrop {
     position: absolute;
@@ -393,10 +396,6 @@ $height: auto;
   .modal-overview {
     color: $dark;
     margin: 20px 0 0;
-
-    &.is-italic {
-      font-style: italic;
-    }
 
     h3 {
       font-size: 16px;
