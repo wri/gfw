@@ -26,7 +26,7 @@
     "underscore.string": "~2.3.3",
     "handlebars": "~1.3.0",
     "amplify": "~1.1.2",
-    "topojson": "~1.6.15",
+    "topojson": "1.6.20",
     "gmaps-markerclusterer-plus": "~2.1.1",
     "Class.js": "~1.0.0",
     "uri-templates": "~0.1.5",
