@@ -16,7 +16,14 @@
           {{#if function}}
             <dl class='modal-row'>
               <dt>Function</dt>
-              <dd>{{{function}}}</dd>
+              <dd>
+                {{{function}}}
+                {{#if translated_function}}
+                  <div class="is-italic">
+                    {{{translated_function}}}
+                  </div>
+                {{/if}}
+              </dd>
             </dl>
           {{/if}}
           {{#if resolution}}
