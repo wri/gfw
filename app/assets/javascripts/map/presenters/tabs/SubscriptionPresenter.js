@@ -132,6 +132,8 @@ define([
     },
 
     _handlePlaceGo: function(params) {
+      if (params.tab !== 'subscription-tab') { return; }
+
       this.openSubscriptionTab();
       var areaIsSelected = (params.iso.country || params.geojson || params.wdpaid);
 
@@ -158,6 +160,10 @@ define([
             type: 'polygon',
             overlay: overlay
           });
+
+          if (params.subscribe) {
+            this._publishSubscribe(resource);
+          }
 
           return;
         }

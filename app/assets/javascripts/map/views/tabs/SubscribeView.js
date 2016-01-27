@@ -56,6 +56,10 @@ define([
     },
 
     show: function(options){
+      if (!this.user.isLoggedIn()) {
+        this.presenter.convertToSubscriptionTab();
+      }
+
       this.createSubscription(options);
       this.currentStep = 0;
 
@@ -70,6 +74,7 @@ define([
 
       this.$el.removeClass('is-active');
       this.render();
+      this.presenter.updateUrl();
     },
 
     setupAuthLinks: function() {
