@@ -4,16 +4,12 @@
  * @return SubscriptionView instance (extends Backbone.View).
  */
 define([
-  'underscore',
-  'handlebars',
-  'amplify',
-  'chosen',
-  'mps',
+  'backbone', 'underscore', 'handlebars', 'amplify', 'chosen', 'mps', 'turf',
   'map/presenters/tabs/SubscriptionPresenter',
   'map/services/ShapefileService',
   'helpers/geojsonUtilsHelper',
   'text!map/templates/tabs/subscription.handlebars'
-], function(_, Handlebars, amplify, chosen, mps, Presenter, ShapefileService, geojsonUtilsHelper, tpl) {
+], function(Backbone, _, Handlebars, amplify, chosen, mps, turf, Presenter, ShapefileService, geojsonUtilsHelper, tpl) {
 
   'use strict';
 
@@ -54,7 +50,6 @@ define([
       this.presenter = new Presenter(this);
       this.model = new SubscriptionModel();
       this.render();
-      this.setListeners();
       this.setDropable();
     },
 
@@ -86,30 +81,41 @@ define([
 
     },
 
-    setListeners: function(){
-
-    },
-
     setDropable: function() {
-      var dropable = document.getElementById('drop-shape');
-      if (!dropable) return;
+      var dropable = document.getElementById('drop-shape-subscription');
+      if (!dropable) { return; }
+
       dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
       dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
       dropable.ondrop = function (e) {
         e.preventDefault();
 
         var file = e.dataTransfer.files[0];
-        var shapeService = new ShapefileService({
-          shapefile : file });
-        shapeService.toGeoJSON().then(function(data) {
-          var features = data.features[0];
-          mps.publish('Subscription/upload', [features.geometry]);
 
-          this.drawMultipolygon(features);
-          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(features);
+        var FILE_SIZE_LIMIT = 1000000,
+            sizeMessage = 'The selected Shapefile is quite large and uploading it might result in browser instability. Do you want to continue?';
+        if (file.size > FILE_SIZE_LIMIT && !window.confirm(sizeMessage)) {
+          $(dropable).removeClass('moving');
+          return;
+        }
+
+        this.$('.drop-shape-text').hide();
+        this.$('.drop-shape-loading').show();
+
+        var shapeService = new ShapefileService({ shapefile : file });
+        shapeService.toGeoJSON().then(function(data) {
+          var combinedFeatures = data.features.reduce(turf.union);
+          mps.publish('Subscription/upload', [combinedFeatures.geometry]);
+
+          this.drawMultipolygon(combinedFeatures);
+          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(combinedFeatures);
           this.map.fitBounds(bounds);
+
+          this.$('.drop-shape-text').show();
+          this.$('.drop-shape-loading').hide();
         }.bind(this));
 
+        $(dropable).removeClass('moving');
         return false;
       }.bind(this);
     },
@@ -143,19 +149,16 @@ define([
         this.$tabsContent.removeClass('active');
         $('#'+tab).addClass('active');
 
-        // prevent changes between tabs without reset drawing
-        if (this.model.get('is_drawing')) {
-          this._stopDrawing();
-          this.presenter.deleteSubscription();
-        }
-      }else{
+        this._stopDrawing();
+        this.presenter.deleteSubscription();
+      } else {
         this.$deletebtn = $('#analysis-delete');
         clearTimeout(this.timeout);
         this.$deletebtn.addClass('pulse');
         this.presenter.notificate('not-delete-analysis');
         this.timeout = setTimeout(_.bind(function(){
           this.$deletebtn.removeClass('pulse');
-        }, this ),3000)
+        }, this ),3000);
       }
     },
 
@@ -164,15 +167,15 @@ define([
       switch(type){
         case 'geojson':
           current = '#draw-tab-button';
-          $('#draw-tab-button').removeClass('disabled').trigger('click');
+          this.$('#draw-tab-button').removeClass('disabled').trigger('click');
         break;
         case 'iso':
           current = '#country-tab-button';
-          $('#country-tab-button').removeClass('disabled').trigger('click');
+          this.$('#country-tab-button').removeClass('disabled').trigger('click');
         break;
         case 'other':
           current = '#data-tab-button';
-          $('#data-tab-button').removeClass('disabled').trigger('click');
+          this.$('#data-tab-button').removeClass('disabled').trigger('click');
         break;
       }
       this.fixTab(current);
@@ -183,7 +186,6 @@ define([
       this.$tabs.addClass('disabled');
       $(current).removeClass('disabled');
     },
-
 
     /**
      * Set geojson style.
@@ -218,10 +220,6 @@ define([
       return geojson;
     },
 
-
-
-
-
     /**
      * COUNTRY
      */
@@ -243,13 +241,13 @@ define([
             console.log(error);
           }
         });
-      }else{
-        this.printCountries()
+      } else {
+        this.printCountries();
       }
     },
 
     getSubCountries: function(){
-      this.$regionSelect.attr('disabled', true).trigger("liszt:updated");
+      this.$regionSelect.attr('disabled', true).trigger('liszt:updated');
       var sql = ["SELECT gadm_1_all.cartodb_id, gadm_1_all.iso, gadm2_provinces_simple.id_1, gadm2_provinces_simple.name_1 as name_1 FROM gadm_1_all, gadm2_provinces_simple where gadm_1_all.iso = '"+this.iso+"' AND gadm2_provinces_simple.iso = '"+this.iso+"' AND gadm2_provinces_simple.id_1 = gadm_1_all.id_1 order by id_1 asc"];
       $.ajax({
         url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
@@ -271,8 +269,8 @@ define([
       this.countries = amplify.store('countries');
 
       //Loop for print options
-      var options = "<option></option>";
-      _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
+      var options = '<option></option>';
+      _.each(_.sortBy(this.countries, function(country){ return country.name; }), _.bind(function(country){
         options += '<option value="'+ country.iso +'">'+ country.name + '</option>';
       }, this ));
       this.$countrySelect.append(options);
@@ -280,18 +278,17 @@ define([
         width: '100%',
         allow_single_deselect: true,
         inherit_select_classes: true,
-        no_results_text: "Oops, nothing found!"
+        no_results_text: 'Oops, nothing found!'
       });
     },
 
-    printSubareas: function(subareas){
-      var subareas = subareas;
-      var options = "<option></option>";
-      _.each(_.sortBy(subareas, function(area){ return area.name_1 }), _.bind(function(area, i){
+    printSubareas: function(subareas) {
+      var options = '<option></option>';
+      _.each(_.sortBy(subareas, function(area){ return area.name_1; }), _.bind(function(area) {
         options += '<option value="'+ area.id_1 +'">'+ area.name_1 + '</option>';
       }, this ));
       this.$regionSelect.empty().append(options).removeAttr('disabled');
-      this.$regionSelect.val(this.area).trigger("liszt:updated");
+      this.$regionSelect.val(this.area).trigger('liszt:updated');
     },
 
     // Select change iso
@@ -299,17 +296,29 @@ define([
       this.iso = $(e.currentTarget).val();
       this.$countryButton.removeClass('disabled');
       this.area = null;
-      if(this.iso) {
-        this.getSubCountries()
-      }else{
+      if (this.iso) {
+        this.getSubCountries();
+      } else {
         this.presenter.deleteSubscription();
         this.presenter.resetIsos();
-        this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
+        this.$regionSelect.val(null).attr('disabled', true).trigger('liszt:updated');
       }
     },
+
     changeArea: function(e){
+      mps.publish('Spinner/start');
+
       this.area = $(e.currentTarget).val();
       this.$countryButton.removeClass('disabled');
+
+      var iso = {
+        country: this.iso,
+        region: this.area
+      };
+
+      this.presenter._showIso(iso, function() {
+        mps.publish('Spinner/stop');
+      });
     },
 
     // For autoselect country and region when youn reload page
@@ -317,35 +326,26 @@ define([
       this.iso = iso.country;
       this.area = iso.region;
 
-      this.$countrySelect.val(this.iso).trigger("liszt:updated");
+      this.$countrySelect.val(this.iso).trigger('liszt:updated');
       if (this.iso) {
         this.getSubCountries();
-        if (!dont_analyze) {
-          this.$countryButton.addClass('disabled');
-        }
-      }else{
+      } else {
         this.$countryButton.removeClass('disabled');
-        this.$regionSelect.val(this.area).attr('disabled', true).trigger("liszt:updated")
+        this.$regionSelect.val(this.area).attr('disabled', true).trigger('liszt:updated');
       }
     },
 
     subscriptionCountry: function(){
-      if (this.iso && !this.$countryButton.hasClass('disabled')) {
-        var iso = {
-          country: this.iso,
-          region: this.area
-        }
-        this.$countryButton.addClass('disabled');
-        this.presenter.setSubscriptionIso(iso);
-      }
+      var iso = {
+        country: this.iso,
+        region: this.area
+      };
+      this.presenter.setSubscriptionIso(iso);
     },
-
-
 
     _onClickStart: function(){
       this.$defaultSubscription.hide(0);
     },
-
 
     /**
      * DRAWING
@@ -359,10 +359,11 @@ define([
         this.toggleUseBtn(true);
         this._startDrawingManager();
         this.presenter.startDrawing();
-      }else{
+      } else {
         ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
         this._stopDrawing();
         this.presenter.deleteSubscription();
+        mps.publish('Place/update', [{go: false}]);
       }
     },
 
@@ -373,7 +374,6 @@ define([
     _onClickDone: function() {
       if (!this.$done.hasClass('disabled')) {
         ga('send', 'event', 'Map', 'Analysis', 'Click: done');
-        this._stopDrawing();
         this.presenter.doneDrawing();
       }
     },
@@ -430,8 +430,11 @@ define([
 
     _resetDrawing: function(){
       this.model.set('is_drawing', false);
-      if(this.$infowindows)
+
+      if(this.$infowindows) {
         this.$infowindows.hide(0).removeClass('hidden');
+      }
+
       if (this.drawingManager) {
         this.drawingManager.setDrawingMode(null);
         this.drawingManager.setMap(null);
@@ -471,6 +474,8 @@ define([
 
       overlay.setMap(this.map);
       this.presenter.setOverlay(overlay);
+
+      return overlay;
     },
 
     /**
@@ -482,14 +487,14 @@ define([
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
       this.presenter.setMultipolygon(multipolygon, geojson);
     },
-    drawCountrypolygon: function(geojson,color) {
-      var geojson = this.setGeojson(geojson,color);
+
+    drawCountrypolygon: function(geojson, color) {
+      geojson = this.setGeojson(geojson,color);
+
       this.setStyle();
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
       this.presenter.setMultipolygon(multipolygon, geojson);
     },
-
-
 
     /**
      * BUTTONS.
@@ -498,7 +503,7 @@ define([
       if (to) {
         (this.$button.hasClass('active')) ? this.$button.trigger('click') : null;
         this.$button.removeClass('in_use').addClass('disabled');
-      }else{
+      } else {
         this.$button.removeClass('disabled');
       }
       $('.cartodb-popup').toggleClass('dont_analyze', to);
@@ -515,8 +520,6 @@ define([
       this.$done.parent().toggleClass('hidden', to);
     },
 
-
-
     // OTHER
     onGifPlay: function(){
       this.$play.addClass('hidden');
@@ -531,13 +534,10 @@ define([
       var img = new Image();
       img.src = url;
       return url;
-    },
-
-
-
-
+    }
 
   });
+
   return SubscriptionView;
 
 });

@@ -1,3 +1,4 @@
+{{#unless isModal}}
 <section class="header-static">
   <div class="inner">
     <header>
@@ -5,20 +6,28 @@
     </header>
   </div>
 </section>
+{{/unless}}
 
-<section class='section'>
+<section class="section" id="user-profile">
   <div class="user-profile inner">
+    {{#unless isModal}}
     <h2>Your profile information</h2>
     <p>
       This information is optional but it will help us to learn how you
       use Global Forest Watch and how to improve it.
     </p>
+    {{/unless}}
 
     <form method="POST" action="{{action}}">
       <label>Name</label>
       <input type="text" placeholder="Your name" name="name" value="{{user.name}}">
 
-      <label>Email</label>
+      <label>
+        Email <em>(required)</em>
+        {{#if errors.email}}
+          <span class="my-gfw-form-error">{{errors.email}}</span>
+        {{/if}}
+      </label>
       <input type="email" placeholder="Your email" name="email" value="{{user.email}}">
 
       <label class="m-sel-container">
@@ -34,7 +43,7 @@
       </label>
 
       <label class="m-multi-sel-container">
-        Primary Responsibilities
+        Primary Responsibilities <em>(Select all that apply)</em>
         <select multiple name="job">
           <option>Technical staff</option>
           <option>Researcher</option>
@@ -53,6 +62,8 @@
           <option>Sustainability officer</option>
           <option>Other</option>
         </select>
+
+        <input type="text" name="job" placeholder="Other" class="hidden">
       </label>
 
       <label class="m-sel-container">
@@ -318,7 +329,7 @@
       </label>
 
       <label class="m-multi-sel-container">
-        How do you use or plan to use Global Forest Watch?
+        How do you use or plan to use Global Forest Watch? <em>(Select all that apply)</em>
         <select multiple name="use">
           <option>Obtain maps and data on tree cover</option>
           <option>Obtain maps and data on land use</option>
@@ -339,6 +350,8 @@
           <option>Compare GFW data with data that is not on the website</option>
           <option>Other</option>
         </select>
+
+        <input type="text" name="use" placeholder="Other" class="hidden">
       </label>
 
       <div class="m-improve-gfw">
@@ -351,6 +364,10 @@
           <label><input type="radio" name="sign_up" value="yes" />Yes, sign me up</label>
           <label><input type="radio" name="sign_up" value="no" />No thanks</label>
         </span>
+
+        {{#if errors.sign_up}}
+          <p class="my-gfw-form-error">{{errors.sign_up}}</p>
+        {{/if}}
       </div>
 
       <div class="m-buttons">
@@ -358,8 +375,16 @@
           <a id="submit" class="btn green uppercase">Submit</a>
         {{else}}
           <a id="submit" class="btn green uppercase">Continue</a>
-          <a id="skip" class="btn gray uppercase">Or Skip</a>
         {{/if}}
+
+        <div class="spinner3 small profile-loading">
+          <svg>
+            <g>
+              <path class="background" d="M0,25A25,25 0 1,1 0,-25A25,25 0 1,1 0,25M0,20A20,20 0 1,0 0,-20A20,20 0 1,0 0,20Z"></path>
+              <path class="foreground" d="M1.5308084989341915e-15,-25A25,25 0 0,1 25,0L20,0A20,20 0 0,0 1.2246467991473533e-15,-20Z"></path>
+            </g>
+          </svg>
+        </div>
       </div>
     </form>
   </div>

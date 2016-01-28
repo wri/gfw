@@ -1,5 +1,22 @@
+.user-form {
+  .header-static {
+    margin-bottom: 60px;
+  }
+}
+
+#user-profile-nav {
+  li {
+    &:hover {
+      .tooltipmap {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+}
+
 .user-profile {
-  margin: 60px auto 0 auto;
+  margin: 0 auto 0 auto;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -27,11 +44,20 @@
     display: flex;
     flex-direction: column;
 
+    .profile-loading {
+      display: none;
+    }
+
     label {
       text-transform: uppercase;
       font-size: 13px;
       font-weight: 500;
       margin: 0 0 8px;
+
+      em {
+        font-style: italic;
+        margin-left: 5px;
+      }
 
       &.-middle {
         margin-top: -15px;
@@ -172,6 +198,15 @@
     }
   }
 
+  .user-subscriptions-how-to-subscribe {
+    background-image: image-url("my_gfw/how-to-subscribe.png");
+    background-size: 100%;
+
+    margin-bottom: 20px;
+    width: 541px;
+    height: 354px;
+  }
+
   table {
     width: 100%;
 
@@ -245,6 +280,14 @@
     h3 {
       padding: 0 2%;
       cursor: pointer;
+      position: relative;
+
+      &:hover {
+        .tooltipmap {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
 
       &.current {
         background: white;
@@ -308,4 +351,21 @@
       width: 45%;
     }
   }
+}
+
+.my-gfw-spinner {
+  padding: 40px 0;
+}
+
+.my-gfw-form-error {
+  color: #BF0C0C;
+  text-transform: none;
+}
+
+label .my-gfw-form-error {
+  margin-left: 10px;
+}
+
+p.my-gfw-form-error {
+  font-weight: 500;
 }

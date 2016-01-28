@@ -16,6 +16,7 @@ define([
     init: function(view) {
       this.view = view;
       this._super();
+      mps.publish('Place/register', [this]);
     },
 
     /**
@@ -27,15 +28,11 @@ define([
       }
     }, {
       'Subscribe/hide': function() {
-        this.view.hide();
+        this.view.close();
       }
     },{
       'Subscribe/geom': function(geom) {
         this.geom_for_subscription = geom;
-      }
-    },{
-      'Tab/opened': function() {
-        this.view.hide();
       }
     }],
 
@@ -43,8 +40,31 @@ define([
       mps.publish('Subscribe/end');
     },
 
-    hide: function(){
-      mps.publish('Subscribe/end');
+    updateUrl: function() {
+      mps.publish('Place/update', [{go: false}]);
+    },
+
+    // Converts the current URL to be a subscription tab
+    convertToSubscriptionTab: function() {
+      this.tab = 'subscription-tab';
+      mps.publish('Place/update', [{go: false}]);
+    },
+
+    /**
+     * Used by PlaceService to get the current iso/geom params.
+     *
+     * @return {object} iso/geom params
+     */
+    getPlaceParams: function() {
+      var p = {};
+
+      if (this.tab) {
+        p.tab = this.tab;
+        p.subscribe = true;
+        delete this.tab;
+      }
+
+      return p;
     },
 
     notificate: function(id){

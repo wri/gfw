@@ -191,12 +191,7 @@ define([
      * @param  {Object} params Place params
      */
     _handlePlaceGo: function(params) {
-      // this.deleteAnalysis();
-
-      //Open analysis tab
-      if ((!this.status.get('dont_analyze') && ! !!params.tab && (params.iso.country && params.iso.country !== 'ALL')) || (params.analyze || params.geojson || params.wdpaid)) {
-        mps.publish('Tab/open', ['#analysis-tab-button']);
-      }
+      if (params.tab !== 'analysis-tab') { return; }
 
       //Select analysis type by params given
       if (params.analyze && params.name === 'map') {
@@ -471,7 +466,6 @@ define([
         resource.thresh = '?thresh=' + this.status.get('threshold');
 
         return resource;
-
       }
     },
 
@@ -641,6 +635,10 @@ define([
         p.geojson = encodeURIComponent(resource.geojson);
       } else if (resource.wdpaid) {
         p.wdpaid = resource.wdpaid;
+      }
+
+      if (this.status.get('tab')) {
+        p.tab = this.status.get('tab');
       }
 
       return p;
