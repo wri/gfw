@@ -98,6 +98,7 @@ define([
         this.setTargetOfLinks();
       } else {
         console.info('The id you are searching for does not exist');
+        this.presenter.notificate('not-no-metadata')
       }
     },
 

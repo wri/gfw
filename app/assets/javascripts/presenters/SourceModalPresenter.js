@@ -25,7 +25,12 @@ define([
       'Source/open': function(source) {
         this.view.sourceStatic(source);
       }
-    }]
+    }],
+
+    notificate: function(id){
+      mps.publish('Notification/open', [id]);
+    },
+
   });
 
   return SourceModalPresenter;
