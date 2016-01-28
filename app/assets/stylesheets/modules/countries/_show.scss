@@ -1302,7 +1302,7 @@
         width: 100%;
       }
     }
-    .section-content .left-col .section-title {
+    .section-content .right-col .section-title {
       @extend .clearfix;
       margin-bottom: 10px;
       font-size: 47px;
@@ -2522,7 +2522,7 @@
 
     .country-employment {
       .section-content {
-        .left-col {
+        .right-col {
           .employment {
             margin-bottom: 25px;
           }
