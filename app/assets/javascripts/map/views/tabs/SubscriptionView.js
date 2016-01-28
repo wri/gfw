@@ -329,10 +329,6 @@ define([
       this.$countrySelect.val(this.iso).trigger('liszt:updated');
       if (this.iso) {
         this.getSubCountries();
-
-        if (!dont_analyze) {
-          this.$countryButton.addClass('disabled');
-        }
       } else {
         this.$countryButton.removeClass('disabled');
         this.$regionSelect.val(this.area).attr('disabled', true).trigger('liszt:updated');
@@ -340,14 +336,11 @@ define([
     },
 
     subscriptionCountry: function(){
-      if (this.iso && !this.$countryButton.hasClass('disabled')) {
-        var iso = {
-          country: this.iso,
-          region: this.area
-        };
-        this.$countryButton.addClass('disabled');
-        this.presenter.setSubscriptionIso(iso);
-      }
+      var iso = {
+        country: this.iso,
+        region: this.area
+      };
+      this.presenter.setSubscriptionIso(iso);
     },
 
     _onClickStart: function(){

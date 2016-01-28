@@ -177,11 +177,6 @@ define([
           this.view.openTab('iso');
           this._showIso(params.iso);
         }
-
-        if (params.sublayers.length > 0) {
-          this.view.openTab('other');
-          return;
-        }
       }
     },
 
