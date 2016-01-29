@@ -1,8 +1,22 @@
 marker-fill-opacity: 1;
 marker-line-width: 0;
 marker-placement: point;
-marker-allow-overlap: false;
+marker-allow-overlap: true;
 marker-width: [intensity];
+
+[zoom=7] {
+ marker-allow-overlap: true;
+  marker-width: [intensity]*1.15;
+}
+[zoom=8] {
+ marker-allow-overlap: true;
+  marker-width: [intensity]*1.3;
+}
+[zoom=9] {
+ marker-allow-overlap: true;
+  marker-width: [intensity]*1.5;
+}
+
 
 [zoom=13] {
   marker-width: 1.5;
