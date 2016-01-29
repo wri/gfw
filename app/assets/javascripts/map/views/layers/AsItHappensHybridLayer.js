@@ -124,10 +124,10 @@ define([
             // The R channel represents the day of the year that an alert
             // occurred, where `day <= 255`
             var dayOfLoss = imgdata[pixelPos];
-            if (dayOfLoss === 0 && imgdata[pixelPos+1] !== 0) {
+            if (imgdata[pixelPos+1] > 0) {
               // The G channel represents the day of year that an alert
               // occurred, where `day > 255`
-              dayOfLoss = imgdata[pixelPos+1] + 255;
+              dayOfLoss = imgdata[pixelPos+1] + (dayOfLoss * 255);
             }
 
             if (dayOfLoss >= startDay && dayOfLoss <= endDay) {
