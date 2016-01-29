@@ -40,7 +40,7 @@ define([
 
       var dateConfigService = new CartoDbLayerDateService({
         dateAttribute: 'date',
-        table: this.table });
+        table: 'ov_9_umd_alerts_agg_hybrid' });
 
       var context = this;
       dateConfigService.fetchLayerConfig().then(function(dates) {
@@ -163,7 +163,6 @@ define([
               imgdata[pixelPos] = 220;
               imgdata[pixelPos + 1] = (72 - z) + 102 - (3 * scale(intensity) / z);
               imgdata[pixelPos + 2] = (33 - z) + 153 - (intensity / z);
-              imgdata[pixelPos + 3] = 255;
             } else {
               imgdata[pixelPos + 3] = 0;
             }
