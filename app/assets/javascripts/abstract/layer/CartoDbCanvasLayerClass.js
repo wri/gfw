@@ -1,15 +1,11 @@
 define([
-  'jquery', 'moment', 'handlebars', 'uri', 'bluebird',
+  'moment', 'handlebars', 'bluebird',
   'abstract/layer/CanvasLayerClass',
-  'helpers/canvasCartoCSSHelper',
-  'map/services/CartoDbLayerDateService', 'map/services/CartoDbLayerService', 'map/services/CartoDbNamedMapService',
-  'text!map/queries/default_cartodb_canvas.sql.hbs'
+  'map/services/CartoDbNamedMapService', 'map/services/CartoDbLayerDateService'
 ], function(
-  $, moment, Handlebars, UriTemplate, Promise,
+  moment, Handlebars, Promise,
   CanvasLayerClass,
-  canvasCartoCSSHelper,
-  CartoDbLayerDateService, CartoDbLayerService, CartoDbNamedMapService,
-  SQL
+  CartoDbNamedMapService, CartoDbLayerDateService
 )  {
 
   'use strict';
@@ -22,17 +18,6 @@ define([
         [moment(layer.mindate || undefined), moment()];
 
       this._super(layer, options, map);
-    },
-
-    _getUrl: function(x, y, z) {
-      var url;
-      if (z > 9) {
-        url = this.options.rasterUrlTemplate;
-      } else {
-        url = this.options.pointsUrlTemplate;
-      }
-
-      return new UriTemplate(url).fillFromObject({x: x, y: y, z: z});
     },
 
     _getLayer: function() {
@@ -48,41 +33,16 @@ define([
 
         var namedMapConfigService = new CartoDbNamedMapService({
           table: context.table,
-          namedMap: 'gfw_glad_as_it_happens_hybrid' });
-        var pointsConfigService = new CartoDbLayerService(
-          context._getSQL(), context._getCartoCSS());
+          namedMap: 'gfw_glad_as_it_happens' });
 
-        return Promise.all([
-          pointsConfigService.fetchLayerConfig(),
-          namedMapConfigService.fetchLayerConfig(),
-        ]);
-      }).then(function(layerConfig) {
-        var pointsConfig = layerConfig[0],
-            namedMapConfig = layerConfig[1];
-
-        context.options.rasterUrlTemplate = 'https://' + namedMapConfig.cdn_url.https + '/wri-01/api/v1/map/' + namedMapConfig.layergroupid + '{/z}{/x}{/y}.png32';
-        context.options.pointsUrlTemplate = 'https://' + pointsConfig.cdn_url.https + '/wri-01/api/v1/map/' + pointsConfig.layergroupid + '{/z}{/x}{/y}.png32';
-
+        return namedMapConfigService.fetchLayerConfig();
+      }).then(function(namedMapConfig) {
+        context.options.urlTemplate = 'https://' + namedMapConfig.cdn_url.https + '/wri-01/api/v1/map/' + namedMapConfig.layergroupid + '{/z}{/x}{/y}.png32';
         context._setupAnimation();
-
         resolve(context);
       });
 
       }.bind(this));
-    },
-
-    _getCartoCSS: function() {
-      var startDate = moment('2015-01-01'),
-          endDate = moment();
-
-      return canvasCartoCSSHelper.generateDaily('date', startDate, endDate);
-    },
-
-    _getSQL: function() {
-      var template = Handlebars.compile(SQL),
-          sql = template({table: 'umd_alerts_agg_hybrid'});
-
-      return sql;
     },
 
     animationOptions: {
