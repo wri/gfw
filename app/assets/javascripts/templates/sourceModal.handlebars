@@ -5,7 +5,7 @@
   <a href="#" class="modal-close">
     <svg><use xlink:href="#shape-close"></use></svg>
   </a>
-  <div class="modal-wrapper scroll-dark {{#if learn_more_or_download_data}}has-footer{{/if}}">
+  <div class="modal-wrapper scroll-dark {{#if download_data}}has-footer{{/if}}">
     <div class="modal-content">
       <div class='modal-source'>
 
@@ -70,10 +70,12 @@
           {{/if}}
         </div>
 
-        <div class="modal-overview">
-          <h3>Overview</h3>
-          {{{overview}}}
-        </div>
+        {{#if overview}}
+          <div class="modal-overview">
+            <h3>Overview</h3>
+            {{{overview}}}
+          </div>
+        {{/if}}
 
         {{#if translated_overview}}
           <div class="modal-overview is-italic">
@@ -82,18 +84,27 @@
           </div>
         {{/if}}
 
+        {{#if citation}}
+          <div class="modal-credits">
+            <h3>Citation:</h3>
+            {{{citation}}}
+          </div>
+        {{/if}}
 
-        <div class="modal-credits">
-          <h3>Citation:</h3>
-          {{{citation}}}
-        </div>
+        {{#if learn_more}}
+          <div class="modal-overview">
+            <div class="m-btncontainer is-center">
+              <a class="btn gray uppercase" href="{{learn_more}}" target="_blank">Learn more</a>
+            </div>
+          </div>
+        {{/if}}
+
       </div>
     </div>
-    {{#if learn_more_or_download_data}}
+    {{#if download_data}}
       <div class="modal-footer">
         <div class="m-btncontainer is-center">
-          {{!-- <a href="{{link_to_odp}}" class="download-mobile-link">Learn more or download data</a> --}}
-          <a href="{{learn_more_or_download_data}}" target="_blank" class="btn green uppercase download-mobile-link">Learn more or download data</a>
+          <a href="{{download_data}}" target="_blank" class="btn green uppercase download-mobile-link">Download data</a>
         </div>
       </div>
     {{/if}}
