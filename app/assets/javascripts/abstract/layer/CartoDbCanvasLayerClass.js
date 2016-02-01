@@ -15,7 +15,7 @@ define([
       options = options || {};
 
       this.currentDate = options.currentDate ||
-        [moment(layer.mindate || undefined), moment()];
+        [moment.utc(layer.mindate || undefined), moment.utc()];
 
       this._super(layer, options, map);
     },
@@ -29,7 +29,7 @@ define([
 
       var context = this;
       dateConfigService.fetchLayerConfig().then(function(dates) {
-        context.currentDate[1] = moment(dates.max_date);
+        context.currentDate[1] = moment.utc(dates.max_date);
 
         var namedMapConfigService = new CartoDbNamedMapService({
           table: context.table,
@@ -51,8 +51,8 @@ define([
     },
 
     _setupAnimation: function() {
-      var startDate = moment(this.currentDate[0]),
-          endDate = moment(this.currentDate[1]);
+      var startDate = moment.utc(this.currentDate[0]),
+          endDate = moment.utc(this.currentDate[1]);
 
       this.numberOfDays = Math.abs(startDate.diff(endDate)) / 1000 / 3600 / 24;
       this.animationOptions.currentOffset = 0;
@@ -73,27 +73,27 @@ define([
       this.presenter.animationStopped();
 
 
-      var newDate = moment(date);
+      var newDate = moment.utc(date);
       this.setOffsetFromDate(newDate);
       this.renderTime(newDate);
     },
 
     setOffsetFromDate: function(date) {
-      var startDate = moment(this.currentDate[0]),
+      var startDate = moment.utc(this.currentDate[0]),
           daysFromStart = Math.abs(startDate.diff(date)) / 1000 / 3600 / 24;
       this.animationOptions.currentOffset = (daysFromStart / this.numberOfDays) * this.animationOptions.duration;
     },
 
     renderTime: function(time) {
       this.presenter.updateTimelineDate({time: time});
-      this.timelineExtent = [moment(this.currentDate[0]), time];
+      this.timelineExtent = [moment.utc(this.currentDate[0]), time];
       this.updateTiles();
     },
 
     start: function() {
       if (this.animationInterval !== undefined) { this.stop(); }
 
-      var startDate = moment(this.currentDate[0]),
+      var startDate = moment.utc(this.currentDate[0]),
           lastTimestamp = +new Date();
 
       var step = function() {

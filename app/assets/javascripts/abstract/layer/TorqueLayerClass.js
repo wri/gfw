@@ -3,12 +3,12 @@
  * @return TorqueLayerClass (extends LayerClass).
  */
 define([
-  'underscore', 'moment',
+  'underscore', 'moment', 'handlebars',
   'abstract/layer/OverlayLayerClass',
   'map/presenters/TorqueLayerPresenter',
   'text!map/cartocss/default_torque_style.cartocss',
   'text!map/queries/default_torque.sql.hbs',
-], function(_, moment, OverlayLayerClass, Presenter, CARTOCSS, SQL) {
+], function(_, moment, Handlebars, OverlayLayerClass, Presenter, CARTOCSS, SQL) {
 
   'use strict';
 
@@ -41,10 +41,10 @@ define([
       this._super(layer, options, map);
     },
 
-    _validateOptions: function(options) {
+    _validateOptions: function() {
       REQUIRED_OPTIONS.forEach(function(option_name) {
         if (!this.options.hasOwnProperty(option_name)) {
-          throw new Error("Missing " + option_name + " option");
+          throw new Error('Missing ' + option_name + ' option');
         }
       }, this);
     },
@@ -55,8 +55,8 @@ define([
       var templateOptions = this.options;
       if (this.options.currentDate !== undefined) {
         templateOptions = _.extend(this.options, {
-          startDate: moment(this.options.currentDate[0]).toISOString(),
-          endDate: moment(this.options.currentDate[1]).toISOString()
+          startDate: moment.utc(this.options.currentDate[0]).toISOString(),
+          endDate: moment.utc(this.options.currentDate[1]).toISOString()
         });
       }
 
@@ -74,7 +74,7 @@ define([
       torqueLayer.on('change:time', this._handleTimeStep);
 
       torqueLayer.setMap(this.map);
-      torqueLayer.play()
+      torqueLayer.play();
 
       return deferred.promise();
     },
@@ -123,7 +123,7 @@ define([
     },
 
     setDate: function(date) {
-      var step = Math.round(this.torqueLayer.timeToStep(date.getTime()))
+      var step = Math.round(this.torqueLayer.timeToStep(date.getTime()));
       this.torqueLayer.setStep(step);
     },
 

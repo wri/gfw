@@ -47,7 +47,7 @@ define([
     initialize: function(layer, currentDate) {
       this.layer = layer;
       this.currentDate = _.compact(currentDate).map(
-        function(c) { return moment(c); });
+        function(c) { return moment.utc(c); });
 
       this.status = new TimelineStatus();
 
@@ -74,8 +74,8 @@ define([
     renderSlider: function() {
       this.slider = new TorqueTimelineSlider({
         startingDate: this.getCurrentTimelineDate().toDate(),
-        extent: [moment(this.bounds.start).toDate(),
-          moment(this.bounds.end).toDate()],
+        extent: [moment.utc(this.bounds.start).toDate(),
+          moment.utc(this.bounds.end).toDate()],
         el: this.$('.timeline-slider svg')[0],
         width: 230,
         height: 50,
@@ -140,7 +140,7 @@ define([
     },
 
     setCurrentDate: function(change) {
-      this.status.set('currentDate', moment(change.time));
+      this.status.set('currentDate', moment.utc(change.time));
       this.status.set('currentStep', change);
 
       this.renderDate();
@@ -151,7 +151,7 @@ define([
     },
 
     getCurrentTimelineDate: function() {
-      return this.status.get('currentDate') || moment(this.layer.mindate);
+      return this.status.get('currentDate') || moment.utc(this.layer.mindate);
     },
 
     /*
@@ -163,8 +163,8 @@ define([
         return this.currentDate;
       } else {
         return [
-          moment(this.layer.mindate),
-          moment(this.layer.maxdate || undefined)
+          moment.utc(this.layer.mindate),
+          moment.utc(this.layer.maxdate || undefined)
         ];
       }
     },

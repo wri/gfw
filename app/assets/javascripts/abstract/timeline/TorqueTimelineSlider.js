@@ -45,7 +45,7 @@ define([
   TorqueTimelineSlider.prototype.setupBrush = function() {
     var startingExtent = [startingDate, startingDate];
     if (!startingDate) {
-      startingExtent = [moment(0).toDate(), moment(0).toDate()];
+      startingExtent = [moment.utc(0).toDate(), moment.utc(0).toDate()];
     }
 
     brush = d3.svg.brush()
