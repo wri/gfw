@@ -432,6 +432,14 @@ define([
         panControl: false,
         map: this.map
       });
+
+      $(document).on('keyup.drawing', function(e){
+        if (e.keyCode == 27) {
+          this._stopDrawing();
+          this.presenter.deleteAnalysis();
+        }
+      }.bind(this));
+
       // cache cartodb infowindows
       this.$infowindows = $('.cartodb-infowindow');
       this.$infowindows.addClass('hidden');
@@ -463,6 +471,9 @@ define([
       // buttons clases
       this.toggleUseBtn(false);
       this.toggleDoneBtn(true);
+      // Remove binds
+      $(document).off('keyup.drawing');
+
     },
 
     _resetDrawing: function(){
