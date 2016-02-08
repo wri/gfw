@@ -169,13 +169,21 @@ define([
         }
 
         if (params.wdpaid) {
-          this._showWdpa(params.wdpaid);
+          this._showWdpa(params.wdpaid, function(resource) {
+            if (params.subscribe) {
+              this._publishSubscribe(resource);
+            }
+          }.bind(this));
           return;
         }
 
         if (params.iso.country && params.iso.country !== 'ALL') {
           this.view.openTab('iso');
-          this._showIso(params.iso);
+          this._showIso(params.iso, function(resource) {
+            if (params.subscribe) {
+              this._publishSubscribe(resource);
+            }
+          }.bind(this));
         }
       }
     },
