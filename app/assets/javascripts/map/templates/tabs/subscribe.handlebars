@@ -4,6 +4,17 @@
     <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg>
   </a>
 
+  <div class="subscription-spinner-container">
+    <div class="spinner3 my-gfw-spinner">
+      <svg width="50" height="50">
+        <g>
+          <path class="background" d="M0,25A25,25 0 1,1 0,-25A25,25 0 1,1 0,25M0,20A20,20 0 1,0 0,-20A20,20 0 1,0 0,20Z"></path>
+          <path class="foreground" d="M1.5308084989341915e-15,-25A25,25 0 0,1 25,0L20,0A20,20 0 0,0 1.2246467991473533e-15,-20Z"></path>
+        </g>
+      </svg>
+    </div>
+  </div>
+
   {{#if loggedIn}}
     <div class="steps current">
       <header>
@@ -58,14 +69,6 @@
       <label for="subscriptionName">{{date}}</label>
     </div>
 
-    <div class="spinner3 small" id="subscribe-saving-spinner">
-      <svg>
-        <g>
-          <path class="background" d="M0,12.5A12.5,12.5 0 1,1 0,-12.5A12.5,12.5 0 1,1 0,12.5M0,7.5A7.5,7.5 0 1,0 0,-7.5A7.5,7.5 0 1,0 0,7.5Z"></path>
-          <path class="foreground" d="M7.654042494670958e-16,-12.5A12.5,12.5 0 0,1 12.5,0L7.5,0A7.5,7.5 0 0,0 4.592425496802575e-16,-7.5Z"></path>
-        </g>
-      </svg>
-    </div>
     <button class="btn green uppercase" id="subscribe">Save</button>
   </div>
 

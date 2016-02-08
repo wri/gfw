@@ -175,6 +175,23 @@
   }
 }
 
+.subscription-spinner-container {
+  visibility: hidden;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 10;
+  background: rgba(255,255,255,0.5);
+}
+
 .subscription-successful {
   width: 64px;
   height: 64px;

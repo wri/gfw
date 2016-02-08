@@ -60,6 +60,11 @@ define([
         this.presenter.convertToSubscriptionTab();
       }
 
+      if (_.isEmpty(this.user.get('email'))) {
+        this.showSpinner();
+        this.user.fetch();
+      }
+
       this.createSubscription(options);
       this.currentStep = 0;
 
@@ -75,6 +80,14 @@ define([
       this.$el.removeClass('is-active');
       this.render();
       this.presenter.updateUrl();
+    },
+
+    showSpinner: function() {
+      this.$('.subscription-spinner-container').css('visibility', 'visible');
+    },
+
+    hideSpinner: function() {
+      this.$('.subscription-spinner-container').css('visibility', 'hidden');
     },
 
     setupAuthLinks: function() {
@@ -120,8 +133,7 @@ define([
     },
 
     subscribe: function() {
-      this.$('#subscribe-saving-spinner').show();
-      this.$('#subscribe').hide();
+      this.showSpinner();
 
       window.ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' +
         this.subscription.get('topic') + ', Email: ' + this.subscription.get('email'));
@@ -135,6 +147,7 @@ define([
     },
 
     onSave: function() {
+      this.hideSpinner();
       this.presenter.subscribeEnd();
       this.nextStep();
     },
