@@ -29,7 +29,7 @@ define([
         })
       );
 
-      var $tableBody = this.$('#user-subscriptions-table-body');
+      var $tableBody = this.$('#my-gfw-subscriptions-table-body');
       sortedSubscriptions.each(function(subscription) {
         var view = new SubscriptionListItemView({
           subscription: subscription});

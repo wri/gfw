@@ -39,7 +39,7 @@ define([
   });
 
   var UserFormView = Backbone.View.extend({
-    className: 'user-form content-form',
+    className: 'my-gfw-profile-form content-form',
 
     events: {
       'change select': '_handleSelectChange',

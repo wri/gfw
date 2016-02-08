@@ -1,0 +1,176 @@
+.my-gfw-subscription-container {
+  .tabs {
+    width: 100%;
+    background: #EEE;
+
+    .inner {
+      display: flex;
+      align-items: center;
+      height: 50px;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      padding: 0 2%;
+      cursor: pointer;
+      position: relative;
+
+      &:hover {
+        .tooltipmap {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+
+      &.current {
+        background: white;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        cursor: default;
+      }
+    }
+  }
+
+  .content-form {
+    .tab-content {
+      display: none;
+
+      &.current {
+        display: block;
+      }
+    }
+  }
+}
+
+.my-gfw-subscriptions-list-container {
+  padding: 50px 0;
+}
+
+.my-gfw-subscriptions-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h4 {
+    color: #262626;
+    font-size: 30px;
+    font-weight: 200;
+    margin-bottom: 10px;
+  }
+
+  h5 {
+    color: #555;
+    margin-bottom: 20px;
+  }
+}
+
+.my-gfw-subscriptions-how-to-subscribe {
+  background-image: image-url("my_gfw/how-to-subscribe.png");
+  background-size: 100%;
+
+  margin-bottom: 20px;
+  width: 541px;
+  height: 354px;
+}
+
+.my-gfw-subscriptions-list {
+  width: 100%;
+
+  h4 {
+    color: #262626;
+    font-size: 20px;
+  }
+
+  h4.editing input {
+    width: 100%;
+    font-size: 20px;
+    color: #262626;
+  }
+
+  h5 {
+    font-weight: 200;
+    color: #9f9f9f;
+    font-size: 14px;
+  }
+
+  tr {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 120px;
+
+    td {
+      border-right: 1px solid #e6e6e6;
+      padding: 0 10px;
+      height: 40px;
+      width: 100%;
+
+      a {
+        color: #666;
+      }
+    }
+
+    td+td {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 225px;
+    }
+
+    td:last-of-type {
+      border-right: 0;
+      justify-content: flex-start;
+    }
+
+    svg {
+      width: 15px;
+      height: 15px;
+      margin: -4px 7px 0 7px;
+    }
+  }
+}
+
+.my-gfw-subscription-delete-modal {
+  header {
+    text-align: center;
+    margin-bottom: 15px;
+
+    h2 {
+      color: #262626;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    h3 {
+      font-weight: 200;
+      color: #9f9f9f;
+      font-size: 14px;
+      margin: 0;
+    }
+  }
+
+  .modal-window {
+    width: 450px;
+  }
+
+  .modal-content {
+    text-align: center;
+    padding: 30px 50px;
+    line-height: 2em;
+  }
+
+  h3 {
+    margin-bottom: 30px;
+  }
+
+  .delete-button-container {
+    display: flex;
+    justify-content: space-around;
+
+    a {
+      width: 45%;
+    }
+  }
+}

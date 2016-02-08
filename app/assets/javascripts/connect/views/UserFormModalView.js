@@ -9,13 +9,13 @@ define([
 
   var UserFormModalView = Backbone.View.extend({
 
-    className: 'profile-modal',
+    className: 'my-gfw-profile-modal',
 
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .profile-modal-close': 'close',
-      'click .profile-modal-backdrop': 'close'
+      'click .my-gfw-profile-modal-close': 'close',
+      'click .my-gfw-profile-modal-backdrop': 'close'
     },
 
     initialize: function() {

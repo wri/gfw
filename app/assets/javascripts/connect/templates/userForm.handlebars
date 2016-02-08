@@ -9,7 +9,7 @@
 {{/unless}}
 
 <section class="section" id="user-profile">
-  <div class="user-profile inner">
+  <div class="my-gfw-profile inner">
     {{#unless isModal}}
     <h2>Your profile information</h2>
     <p>
@@ -18,7 +18,7 @@
     </p>
     {{/unless}}
 
-    <form method="POST" action="{{action}}">
+    <form class="my-gfw-profile-form" method="POST" action="{{action}}">
       <label>Name</label>
       <input type="text" placeholder="Your name" name="name" value="{{user.name}}">
 
@@ -384,7 +384,7 @@
           <a id="submit" class="btn green uppercase">Continue</a>
         {{/if}}
 
-        <div class="spinner3 profile-loading">
+        <div class="spinner3">
           <svg>
             <g>
               <path class="background" d="M0,25A25,25 0 1,1 0,-25A25,25 0 1,1 0,25M0,20A20,20 0 1,0 0,-20A20,20 0 1,0 0,20Z"></path>

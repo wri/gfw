@@ -7,7 +7,7 @@
 </section>
 
 <section class='section'>
-  <div class="subscription-list">
+  <div class="my-gfw-subscription-container">
     <div class="tabs">
       <div class="inner">
         <h3 class="current">GFW</h3>
@@ -22,21 +22,21 @@
       </div>
     </div>
 
-    <div class="content-form user-subscriptions inner">
+    <div class="content-form my-gfw-subscriptions-list-container inner">
       {{#if subscriptions.length}}
-        <table>
-          <tbody id="user-subscriptions-table-body">
+        <table class="my-gfw-subscriptions-list">
+          <tbody id="my-gfw-subscriptions-table-body">
           </tbody>
         </table>
       {{else}}
-        <div class="user-subscriptions-empty">
+        <div class="my-gfw-subscriptions-empty">
           <h4>You don't have any subscriptions yet</h4>
           <h5>
             Visit the map to subscribe to forest change alerts for your
             area of interest.
           </h5>
 
-          <div class="user-subscriptions-how-to-subscribe"></div>
+          <div class="my-gfw-subscriptions-how-to-subscribe"></div>
 
           <p>
             <a href="/map" class="btn green uppercase">Go to the map</a>

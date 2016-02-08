@@ -10,7 +10,7 @@ define([
 
   var UserRouter = Backbone.Router.extend({
 
-    el: $('#profile'),
+    el: $('.my-gfw-container'),
 
     routes: {
       '*path': 'showView'
@@ -33,7 +33,7 @@ define([
       // Force nav links to navigate, rather than doing a browser page
       // reload
       var context = this;
-      $('#user-profile-nav').on('click', 'a', function(event) {
+      $('.my-gfw-nav').on('click', 'a', function(event) {
         event.preventDefault();
         var root = location.protocol + '//' + location.host + '/',
             href = _.last($(this).prop('href').split(root));
@@ -62,7 +62,7 @@ define([
       this.el.html(this.subViews[viewName].el);
       this.subViews[viewName].delegateEvents();
 
-      var $nav = $('#user-profile-nav');
+      var $nav = $('.my-gfw-nav');
       $nav.find('a').removeClass('current');
       $nav.find('#my-gfw-nav-'+viewName).addClass('current');
     },

@@ -1,0 +1,169 @@
+.my-gfw-profile-form {
+  .header-static {
+    margin-bottom: 60px;
+  }
+}
+
+.my-gfw-profile {
+  margin: 0 auto 0 auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: #555;
+
+  width: 600px;
+
+  h2 {
+    font-size: 37px;
+    margin: 0 0 15px;
+
+    &:first-letter {
+      text-transform: capitalize;
+    }
+  }
+
+  p {
+    font-size: 19px;
+    line-height: 25px;
+    text-align: center;
+  }
+}
+
+.my-gfw-profile-form {
+  margin: 30px 0 0;
+  display: flex;
+  flex-direction: column;
+
+  .spinner3 {
+    display: none;
+  }
+
+  label {
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0 0 8px;
+
+    em {
+      font-style: italic;
+      margin-left: 5px;
+    }
+
+    &.-middle {
+      margin-top: -15px;
+    }
+  }
+
+  input:not([type="radio"]),
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    line-height: 35px;
+    padding: 0 0 0 6px;
+    font-size: 15px;
+    border-radius: 3px;
+    border: 1px solid #CCCCCC;
+    margin: 0 0 25px;
+  }
+
+  select {
+    height: 37px;
+    background-color: #fff;
+    display: block;
+    width: 100%;
+    margin: 6px 0 16px 0;
+  }
+
+  select:not([multiple]) option:first-of-type {
+    color: #aaa;
+  }
+
+  select[multiple] option {
+    color: #aaa;
+  }
+
+  select option:checked {
+    color: #000;
+  }
+
+  select::-ms-expand { /* for IE 11 */
+    display: none;
+  }
+
+  .m-sel-container {
+    position: relative;
+    display: inline-block;
+
+    &.-middle {
+      width: 100%;
+      margin-top: -15px;
+
+      &:after {
+        top: 16px;
+      }
+    }
+
+    &:after {
+      content: "";
+      background-color: #555;
+      -webkit-mask-image: url("svg-icons/arrow-down.svg");
+      mask-image: url("svg-icons/arrow-down.svg");
+      position: absolute;
+      top: 30px;
+      right: 8px;
+      pointer-events: none;
+      height: 15px;
+      width: 26px;
+      transform: scale(0.6);
+    }
+  }
+
+  .m-multi-sel-container {
+    position: relative;
+    display: inline-block;
+
+    select {
+      height: 60px;
+    }
+  }
+
+  .m-improve-gfw {
+    margin-bottom: 25px;
+  }
+
+  .m-newsletter,
+  .m-improve-gfw {
+    border: 1px solid #97bd3d;
+    padding: 1.2em;
+    border-radius: 5px;
+
+    p {
+      font-size: 17px;
+    }
+
+    span {
+      display: flex;
+      justify-content: space-around;
+      color: #ccc;
+      margin: 15px 0;
+      label {
+        cursor: pointer;
+      }
+    }
+
+    input {
+      margin-right: 10px;
+    }
+  }
+
+  .m-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 25px 0;
+
+    .btn {
+      width: 30%;
+    }
+  }
+}
