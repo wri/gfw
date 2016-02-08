@@ -120,6 +120,9 @@ define([
     },
 
     subscribe: function() {
+      this.$('#subscribe-saving-spinner').show();
+      this.$('#subscribe').hide();
+
       window.ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' +
         this.subscription.get('topic') + ', Email: ' + this.subscription.get('email'));
 

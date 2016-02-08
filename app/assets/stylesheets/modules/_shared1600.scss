@@ -114,6 +114,17 @@
     transform: translate(25px, 25px) rotate(-90deg);
   }
 
+  &.small {
+    svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    g {
+      transform: translate(12.5px, 12.5px) rotate(-90deg);
+    }
+  }
+
   .background {
     fill: rgb(255, 255, 255);
     stroke: rgb(204, 204, 204);
