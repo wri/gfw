@@ -245,7 +245,11 @@ $height: auto;
 .modal-content {
   font-size: 13px;
 
-  .bullets  {
+  strong {
+    font-weight: 500;
+  }
+
+  ul {
     list-style-type: disc;
     color: $dark;
     > li{
@@ -253,6 +257,11 @@ $height: auto;
       padding: 10px 0 0;
       margin-left: 20px;
       line-height: 1.25;
+
+      > p {
+        margin: 0;
+      }
+
       &:first-child{
         padding: 0;
       }
@@ -263,6 +272,9 @@ $height: auto;
 
   p {
     line-height: 1.25;
+    margin-bottom: 10px;
+    margin-top: 10px;
+
     a:not(.btn){
       color: $cGreen;
       &:hover{
@@ -400,8 +412,6 @@ $height: auto;
 
     p {
       font-size: 13px;
-      margin-bottom: 10px;
-      margin-top: 10px;
     }
   }
 
