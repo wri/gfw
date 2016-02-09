@@ -19,7 +19,9 @@ define([
     },
 
     render: function() {
+      var calledAfterSync = arguments.length > 0;
       this.$el.html(this.template({
+        showSpinner: !calledAfterSync && this.subscriptions.length === 0,
         subscriptions: this.subscriptions.toJSON()
       }));
 
