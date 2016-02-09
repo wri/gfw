@@ -144,11 +144,11 @@
   color: $dark;
   font-weight: 400;
   font-size: 12px;
-  line-height: normal;
+  line-height: 1.25;
   bottom: 100%;
   left: 50%;
   text-align: center;
-  padding: 4px 8px;
+  padding: 6px 8px;
   white-space: nowrap;
   pointer-events: none;
   @include transform(translate(-50%,5px));
