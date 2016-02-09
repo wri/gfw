@@ -60,7 +60,7 @@ define([
         this.presenter.convertToSubscriptionTab();
       }
 
-      if (_.isEmpty(this.user.get('email'))) {
+      if (this.user.get('id') && _.isEmpty(this.user.get('email'))) {
         this.showSpinner();
         this.user.fetch();
       }
