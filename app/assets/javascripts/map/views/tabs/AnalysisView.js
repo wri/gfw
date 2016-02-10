@@ -11,9 +11,11 @@ define([
   'map/presenters/tabs/AnalysisPresenter',
   'map/services/ShapefileService',
   'helpers/geojsonUtilsHelper',
+  'map/views/tabs/SpinnerView',
   'text!map/templates/tabs/analysis.handlebars',
   'text!map/templates/tabs/analysis-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, ShapefileService, geojsonUtilsHelper, tpl, tplMobile) {
+
+], function(_, Handlebars, amplify, chosen, Presenter, ShapefileService, geojsonUtilsHelper, SpinnerView, tpl, tplMobile) {
 
   'use strict';
 
@@ -142,6 +144,7 @@ define([
     },
 
     inits: function(){
+      this.spinner = new SpinnerView();
       // countries
       this.setStyle();
       this.getCountries();
