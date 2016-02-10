@@ -42,6 +42,9 @@ define([
         if (this.options.infowindow && this.options.interactivity) {
           this.setInfowindow(layer);
         }
+        if (this.options.urlBounds) {
+          this.checkForImagesInBounds();
+        }
 
         success();
       }, this));
