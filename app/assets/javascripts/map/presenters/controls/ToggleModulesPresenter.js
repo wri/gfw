@@ -25,6 +25,10 @@ define([
       'MapControlsToggleModules/toggle': function(hide) {
         this.view.toggleModules(hide);
       }
+    }, {
+      'LayerNav/change': function() {
+        this.view.toggleModules(true);
+      }
     }],
   });
 
