@@ -30,6 +30,10 @@ define([
   var SpinnerView = Backbone.View.extend({
     el: '#tab-spinner',
 
+    events: {
+      'click #spinner2-close' : 'cancel'
+    },
+
     initialize: function(){
       this.presenter = new Presenter(this);
       this.render();
@@ -70,8 +74,6 @@ define([
       this.$foreground = this.$el.find('.foreground');
       this.count = 0;
       this.rotate();
-
-
     },
 
     rotate: function(){
@@ -93,6 +95,10 @@ define([
 
     stop: function(){
       this.$el.removeClass('active');
+    },
+
+    cancel: function() {
+      this.presenter.cancel();
     }
 
 

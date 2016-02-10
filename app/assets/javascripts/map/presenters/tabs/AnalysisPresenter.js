@@ -98,8 +98,6 @@ define([
     }, {
       'AnalysisTool/analyze-wdpaid': function(wdpaid) {
         this.openAnalysisTab(true);
-        this.view._stopDrawing();
-        this.deleteAnalysis();
         this._analyzeWdpai(wdpaid.wdpaid, { fit_bounds: true });
       }
     }, {
@@ -110,8 +108,6 @@ define([
           return;
         }
         this.openAnalysisTab(true);
-        this.view._stopDrawing();
-        this.deleteAnalysis();
         this._analyzeConcession(useid, layerSlug);
       }
     }, {
@@ -174,6 +170,12 @@ define([
     }, {
       'Analysis/upload': function(geojson) {
         this._analyzeGeojson(geojson,{draw: true});
+      }
+    }, {
+      'Spinner/cancel': function() {
+        mps.publish('AnalysisService/cancel', []);
+        mps.publish('AnalysisResults/delete-analysis', []);
+        mps.publish('Place/update', [{go: false}]);
       }
     }],
 
@@ -505,6 +507,7 @@ define([
      * Deletes the current analysis.
      */
     deleteAnalysis: function() {
+      mps.publish('Spinner/stop');
       mps.publish('AnalysisResults/Delete');
       this.view._removeCartodblayer();
       this.view.$el.removeClass('is-analysis');

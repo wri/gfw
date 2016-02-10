@@ -31,6 +31,10 @@ define([
       }
     }],
 
+    cancel: function() {
+      mps.publish('Spinner/cancel');
+    }
+
   });
 
   return SpinnerTabsPresenter;
