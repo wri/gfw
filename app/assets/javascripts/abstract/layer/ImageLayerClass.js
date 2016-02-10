@@ -94,7 +94,8 @@ define([
         sat: params.color_filter,
         cloud: params.cloud,
         mindate: params.mindate,
-        maxdate: params.maxdate
+        maxdate: params.maxdate,
+        sensor_platform: params.sensor_platform
       });
     },
 
