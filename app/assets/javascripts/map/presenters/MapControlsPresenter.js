@@ -57,6 +57,10 @@ define([
       'Analysis/toggle': function(toggle) {
         this.view.toogleTimeline(false);
       }
+    }, {
+      'LayerNav/change': function() {
+        this.view.removeToogleActive();
+      }
     }],
 
     // *
