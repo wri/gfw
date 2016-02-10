@@ -245,6 +245,10 @@ $height: auto;
 .modal-content {
   font-size: 13px;
 
+  br {
+    display: none;
+  }
+
   strong {
     font-weight: 500;
   }
