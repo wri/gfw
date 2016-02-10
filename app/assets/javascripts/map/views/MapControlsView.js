@@ -177,6 +177,10 @@ define([
       mps.publish('MapControlsToggleModules/toggle',[{hide: $button.hasClass('active')}]);
     },
 
+    removeToogleActive: function() {
+      this.$el.find('.toggle-modules').removeClass('active');
+    },
+
     toggleControls: function(e){
       this.$toggleButtons.children('.toggle-button').toggleClass('hidden');
     },
