@@ -216,7 +216,7 @@
                 <h6>Burned forest</h6>
                 <div class="section-btn">
                   <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'burned_forests', width: '520', height: '350'} %>
-                  <a href="#" class="info icon green circle source" data-source="forest_type">
+                  <a href="#" class="info icon green circle source" data-source="burned_forests_source">
                     <svg>
                       <use xlink:href="#shape-info"></use>
                     </svg>
@@ -239,10 +239,10 @@
             <a href="#" id="forest_certification" class="anchor-country-info"></a>
             <section class="country-forest_certification" data-scroll-index='2'>
               <div class="section-info section-share">
-                <h6>Forest certification</h6>
+                <h6>International Forest Certification</h6>
                 <div class="section-btn">
                   <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'forest_certification', width: '250', height: '515'} %>
-                  <a href="#" class="info icon green circle source" data-source="forest_type">
+                  <a href="#" class="info icon green circle source" data-source="forest_certification_source">
                     <svg>
                       <use xlink:href="#shape-info"></use>
                     </svg>
@@ -258,7 +258,7 @@
                     <div class="forest_certification-legends">
                       <ul class="legends-list">
                         <li><span class="primary"></span>FSC</li>
-                        <li><span class="regenerated"></span>PEF</li>
+                        <li><span class="regenerated"></span>PEFC</li>
                         <li><span class="planted"></span>Other</li>
                       </ul>
                     </div>
@@ -393,7 +393,7 @@
                   <h6>Reforestation</h6>
                   <div class="section-btn">
                     <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'reforestation', width: '600', height: '272'} %>
-                    <a href="#" class="info icon green circle source" data-source="reforestation">
+                    <a href="#" class="info icon green circle source" data-source="reforestation_source">
                       <svg>
                         <use xlink:href="#shape-info"></use>
                       </svg>
