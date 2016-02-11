@@ -13,6 +13,7 @@ define([
   var ModalView = Backbone.View.extend({
 
     events: {
+      'click .modal-backdrop' : 'hide',
       'click .modal-close' : 'hide'
     },
 
@@ -39,12 +40,6 @@ define([
     },
 
     _initBindings: function() {
-      // this.mobile = (this.$window.width() > 850) ? false : true;
-      // this.scrollTop = this.$document.scrollTop();
-      // if(this.mobile) {
-      //   this.$htmlbody.addClass('active');
-      //   this.$htmlbody.animate({ scrollTop: this.scrollTop },0);
-      // }
       // document keyup
       this.$document.on('keyup', _.bind(function(e) {
         if (e.keyCode === 27) {
@@ -58,10 +53,6 @@ define([
     },
 
     _stopBindings: function() {
-      // if(this.mobile) {
-      //   this.$htmlbody.removeClass('active');
-      //   this.$htmlbody.animate({ scrollTop: this.scrollTop },0);
-      // }
       this.$document.off('keyup');
       this.$backdrop.off('click');
     },
@@ -87,21 +78,6 @@ define([
       e && e.preventDefault() && e.stopPropagation();
       this.model.set('hidden', false);
     },
-
-    showBySource: function(cloneId) {
-      // this.$el.toggleClass('iframe', !!$(e.currentTarget).data('iframe'));
-      this.$content.html($('#' + cloneId).clone());
-
-      this.model.set('hidden', false);
-
-      this.$contentWrapper.animate({ scrollTop: 0 }, 0);
-
-      // if ( $(e.currentTarget).hasClass('is-temporary-disabled') ) {
-      //   this.$el.addClass('launching-soon');
-      // }
-
-      return this;
-    }
 
   });
 
