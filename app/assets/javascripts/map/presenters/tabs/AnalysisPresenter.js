@@ -5,14 +5,11 @@
  */
 define([
   'map/presenters/PresenterClass',
-  'underscore',
-  'backbone',
-  'mps',
-  'topojson',
+  'underscore', 'backbone', 'mps', 'topojson', 'bluebird',
   'helpers/geojsonUtilsHelper',
   'map/services/CountryService',
   'map/services/RegionService'
-], function(PresenterClass, _, Backbone, mps, topojson, geojsonUtilsHelper, countryService, regionService) {
+], function(PresenterClass, _, Backbone, mps, topojson, Promise, geojsonUtilsHelper, countryService, regionService) {
 
   'use strict';
 
@@ -184,7 +181,6 @@ define([
       }
     },
 
-
     /**
      * Handles a Place/go.
      *
@@ -193,21 +189,39 @@ define([
     _handlePlaceGo: function(params) {
       if (params.tab !== 'analysis-tab') { return; }
 
-      //Select analysis type by params given
+      var subscribe = function() {
+        if (params.subscribe) {
+          this._subscribeAnalysis();
+        }
+      }.bind(this);
+
       if (params.analyze && params.name === 'map') {
         this.view.onClickAnalysis();
       } else if (params.iso.country && params.iso.country !== 'ALL') {
         if (params.geojson) {
-          this._analyzeIso(params.iso);
-          this._analyzeGeojson(params.geojson);
-        }else{
-          this._analyzeIso(params.iso);
+          Promise.all([
+            this._analyzeIso(params.iso),
+            this._analyzeGeojson(params.geojson)
+          ]).then(subscribe);
+        } else {
+          this._analyzeIso(params.iso).then(subscribe);
         }
       } else if (params.geojson) {
-        this._analyzeGeojson(params.geojson);
+        this._analyzeGeojson(params.geojson).then(subscribe);
       } else if (params.wdpaid) {
-        this._analyzeWdpai(params.wdpaid);
+        this._analyzeWdpai(params.wdpaid).then(subscribe);
+      } else if (params.use && params.useid) {
+        this._analyzeConcession(params.useid, params.use).then(subscribe);
       }
+    },
+
+    _subscribeAnalysis: function() {
+      var options = {
+        analysisResource: this.status.get('resource'),
+        layer: this.status.get('baselayer')
+      };
+
+      mps.publish('Subscribe/show', [options]);
     },
 
     /**
@@ -235,6 +249,8 @@ define([
       // Publish analysis
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Polygon: true');
       this._publishAnalysis(resource);
+
+      return Promise.resolve(resource);
     },
 
     /**
@@ -242,9 +258,11 @@ define([
      *
      * @param  {Object} iso {country: {string}, id: {integer}}
      */
-    _analyzeIso: function(iso,options) {
+    _analyzeIso: function(iso, options) {
+      return new Promise(function(resolve) {
+
       var baselayer = this.getBaselayer();
-      var options = _.extend({}, options);
+      var options = options || {};
       this.deleteAnalysis();
       this.view.setSelects(iso, this.status.get('dont_analyze'));
       mps.publish('LocalMode/updateIso', [iso, this.status.get('dont_analyze')]);
@@ -260,7 +278,6 @@ define([
       resource = this._buildResource(resource);
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Iso: ' + resource.iso.country);
 
-
       if (!iso.region) {
         // Get geojson/fit bounds/draw geojson/publish analysis.
         countryService.execute(resource.iso, _.bind(function(results) {
@@ -270,7 +287,7 @@ define([
 
           var geojson = topojson.feature(results.topojson,
             objects);
-          (options.fit_bounds) ? this._geojsonFitBounds(geojson) : null;
+          this._geojsonFitBounds(geojson);
           mps.publish('Subscribe/geom',[geojson]);
 
           if (!this.status.get('dont_analyze')) {
@@ -278,6 +295,26 @@ define([
               this.view.drawCountrypolygon(geojson,'#A2BC28');
               this.view._removeCartodblayer();
               this._publishAnalysis(resource);
+              resolve(resource);
+            } else {
+              mps.publish('Spinner/stop');
+            }
+          } else {
+            mps.publish('Spinner/stop');
+          }
+        },this));
+      } else {
+        regionService.execute(resource, _.bind(function(results) {
+          var geojson = results.features[0];
+          this._geojsonFitBounds(geojson);
+          mps.publish('Subscribe/geom',[geojson]);
+
+          if (!this.status.get('dont_analyze')) {
+            if (baselayer) {
+              this.view.drawCountrypolygon(geojson,'#A2BC28');
+              this.view._removeCartodblayer();
+              this._publishAnalysis(resource);
+              resolve(resource);
             } else {
               mps.publish('Spinner/stop');
             }
@@ -285,28 +322,10 @@ define([
             mps.publish('Spinner/stop');
           }
 
-
-        },this));
-      } else {
-        regionService.execute(resource, _.bind(function(results) {
-          var geojson = results.features[0];
-          (options.fit_bounds) ? this._geojsonFitBounds(geojson) : null;
-          mps.publish('Subscribe/geom',[geojson]);
-
-          if (!this.status.get('dont_analyze')) {
-            if (baselayer) {
-              this.view.drawCountrypolygon(geojson,'#A2BC28');
-              this.view._removeCartodblayer();
-              this._publishAnalysis(resource);
-            } else {
-              mps.publish('Spinner/stop');
-            }
-          }else{
-            mps.publish('Spinner/stop');
-          }
-
         },this));
       }
+
+      }.bind(this));
     },
 
     setAnalyzeIso: function(iso){
@@ -319,9 +338,9 @@ define([
     },
 
     _analyzeWdpai: function(wdpaid, options) {
-      var options = _.extend({}, options);
-      // Build resource
+      return new Promise(function(resolve) {
 
+      var options = options || {};
 
       this.wdpaidBool = (this.wdpaid == wdpaid) ? false : true;
       this.wdpaid = wdpaid;
@@ -344,19 +363,21 @@ define([
             };
             mps.publish('AnalysisResults/totalArea', [{hectares: geojsonUtilsHelper.getHectares(geojson.geometry)}]);
 
-            (options.fit_bounds) ? this._geojsonFitBounds(geojson) : null;
+            this._geojsonFitBounds(geojson);
             this.view.drawMultipolygon(geojson);
-            // resource.geom = geojson;
             this._publishAnalysis(resource);
+            resolve(resource);
 
             this.wdpaid = null;
             this.wdpaidBool = true;
-
           } else {
             this._publishAnalysis(resource, true);
+            resolve(resource);
           }
         }, this));
       }
+
+      }.bind(this));
     },
 
     /**
@@ -365,6 +386,8 @@ define([
      * @param  {integer} useid Carto db id
      */
     _analyzeConcession: function(useid, layerSlug) {
+      return new Promise(function(resolve) {
+
       var resource = this._buildResource({
         useid: useid,
         use: layerSlug,
@@ -373,12 +396,12 @@ define([
 
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', ConcessionLayer: ' + resource.use + ', ConcessionId: ' + resource.useid);
 
-      var url = function() {
-        if (!!concessionsSql[layerSlug])
-          return concessionsSql[layerSlug].format(useid);
-        else
-          return 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from '+ layerSlug +' where cartodb_id =' + useid;
-      }();
+      var url;
+      if (!!concessionsSql[layerSlug]) {
+        url = concessionsSql[layerSlug].format(useid);
+      } else {
+        url = 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from '+ layerSlug +' where cartodb_id =' + useid;
+      }
 
       $.getJSON(url, _.bind(function(data) {
         if (data.rows.length > 0) {
@@ -394,11 +417,14 @@ define([
           this.view.drawMultipolygon(geojson);
           resource.geom = geojson;
           this._publishAnalysis(resource);
-
+          resolve(resource);
         } else {
           this._publishAnalysis(resource, true);
+          resolve(resource);
         }
       }, this));
+
+      }.bind(this));
     },
 
     /**
@@ -635,6 +661,9 @@ define([
         p.geojson = encodeURIComponent(resource.geojson);
       } else if (resource.wdpaid) {
         p.wdpaid = resource.wdpaid;
+      } else if (resource.use && resource.useid) {
+        p.use = resource.use;
+        p.useid = resource.useid;
       }
 
       if (this.status.get('tab')) {
