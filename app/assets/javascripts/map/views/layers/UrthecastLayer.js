@@ -225,7 +225,7 @@ define([
           if (!!data && !!data.payload && !data.payload.length) {
             this.notificate('not-no-images-urthecast');
           }
-        }, this ));        
+        }, this ));
       }
     },
 
@@ -281,7 +281,7 @@ define([
 
     getBoundsPolygon: function() {
       var bounds = this.map.getBounds();
-      if (!!bounds) {      
+      if (!!bounds) {
         var nlat = bounds.getNorthEast().lat(),
             nlng = bounds.getNorthEast().lng(),
             slat = bounds.getSouthWest().lat(),

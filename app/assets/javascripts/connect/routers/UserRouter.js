@@ -66,6 +66,10 @@ define([
       this.el.html(this.subViews[viewName].el);
       this.subViews[viewName].delegateEvents();
 
+      if (this.subViews[viewName].show !== undefined) {
+        this.subViews[viewName].show();
+      }
+
       var $nav = $('.my-gfw-nav');
       $nav.find('a').removeClass('current');
       $nav.find('#my-gfw-nav-'+viewName).addClass('current');

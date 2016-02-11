@@ -1,9 +1,9 @@
 define([
-  'backbone', 'handlebars', 'moment',
+  'backbone', 'handlebars', 'underscore', 'moment', 'mps', 'map/utils',
   'connect/collections/Subscriptions',
   'connect/views/SubscriptionListItemView',
   'text!connect/templates/subscriptionList.handlebars'
-], function(Backbone, Handlebars, moment, Subscriptions, SubscriptionListItemView, tpl) {
+], function(Backbone, Handlebars, _, moment, mps, utils, Subscriptions, SubscriptionListItemView, tpl) {
 
   'use strict';
 
@@ -37,6 +37,13 @@ define([
           subscription: subscription});
         $tableBody.append(view.el);
       });
+    },
+
+    show: function() {
+      var urlParams = _.parseUrl();
+      if (urlParams.subscription_confirmed === 'true') {
+        mps.publish('Notification/open', ['my-gfw-subscription-confirmed']);
+      }
     }
   });
 

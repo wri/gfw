@@ -10,14 +10,13 @@ define([
   'map/presenters/TabsPresenter',
   'map/views/tabs/AnalysisView',
   'map/views/tabs/CountriesView',
-  'map/views/tabs/SubscriptionView',
   'map/views/tabs/BasemapsView',
   'map/views/tabs/HighresolutionView',
   'map/views/tabs/SubscribeView',
   'views/ShareView',
   'text!map/templates/tabs.handlebars',
   'text!map/templates/tabs-mobile.handlebars'
-], function(_, Handlebars, d3, Presenter, AnalysisView, CountriesView, SubscriptionView, BasemapsView, HighresolutionView, SubscribeView, ShareView, tpl, tplMobile) {
+], function(_, Handlebars, d3, Presenter, AnalysisView, CountriesView, BasemapsView, HighresolutionView, SubscribeView, ShareView, tpl, tplMobile) {
 
   'use strict';
 
@@ -86,8 +85,6 @@ define([
       new CountriesView(this.map);
       new BasemapsView();
       new HighresolutionView(this.map);
-
-      new SubscriptionView(this.map);
 
       var subscribeView = new SubscribeView();
       $('body').append(subscribeView.el);

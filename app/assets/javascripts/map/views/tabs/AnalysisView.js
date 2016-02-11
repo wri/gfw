@@ -8,7 +8,7 @@ define([
   'map/presenters/tabs/AnalysisPresenter',
   'map/services/ShapefileService',
   'helpers/geojsonUtilsHelper',
-  'map/views/tabs/SpinnerView',  
+  'map/views/tabs/SpinnerView',
   'text!map/templates/tabs/analysis.handlebars',
   'text!map/templates/tabs/analysis-mobile.handlebars'
 ], function(_, Handlebars, amplify, chosen, turf, Presenter, ShapefileService, geojsonUtilsHelper, SpinnerView, tpl, tplMobile) {
