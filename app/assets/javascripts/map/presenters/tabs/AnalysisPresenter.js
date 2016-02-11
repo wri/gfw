@@ -95,7 +95,21 @@ define([
     }, {
       'AnalysisTool/analyze-wdpaid': function(wdpaid) {
         this.openAnalysisTab(true);
-        this._analyzeWdpai(wdpaid.wdpaid, { fit_bounds: true });
+        this._analyzeWdpai(wdpaid.wdpaid, { analyze: true, fit_bounds: true });
+      }
+    }, {
+      'Subscription/analyze-concession': function(useid, layerSlug, wdpaid) {
+        var subscribe = function(resource) {
+          this.status.set('resource', resource);
+          mps.publish('Place/update', [{go: false}]);
+          this._subscribeAnalysis();
+        }.bind(this);
+
+        if (wdpaid && wdpaid != "") {
+          this._analyzeWdpai(wdpaid, {analyze: false}).then(subscribe);
+        } else {
+          this._analyzeConcession(useid, layerSlug, {analyze: false}).then(subscribe);
+        }
       }
     }, {
       'AnalysisTool/analyze-concession': function(useid, layerSlug, wdpaid) {
@@ -239,6 +253,7 @@ define([
         geojson: JSON.stringify(geojson),
         type: 'geojson'
       };
+      mps.publish('Spinner/start');
       resource = this._buildResource(resource);
 
 
@@ -277,6 +292,7 @@ define([
       if (iso.region) {
         resource.id1 = iso.region;
       }
+      mps.publish('Spinner/start');
       resource = this._buildResource(resource);
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Iso: ' + resource.iso.country);
 
@@ -342,12 +358,16 @@ define([
     _analyzeWdpai: function(wdpaid, options) {
       return new Promise(function(resolve) {
 
-      var options = options || {};
+      options = options || {analyze: true};
 
       this.wdpaidBool = (this.wdpaid == wdpaid) ? false : true;
       this.wdpaid = wdpaid;
 
       if (this.wdpaidBool) {
+        if (options.analyze === true) {
+          mps.publish('Spinner/start');
+        }
+
         var resource = this._buildResource({
           wdpaid: wdpaid,
           type: 'other'
@@ -367,13 +387,17 @@ define([
 
             this._geojsonFitBounds(geojson);
             this.view.drawMultipolygon(geojson);
-            this._publishAnalysis(resource);
+            if (options.analyze === true) {
+              this._publishAnalysis(resource);
+            }
             resolve(resource);
 
             this.wdpaid = null;
             this.wdpaidBool = true;
           } else {
-            this._publishAnalysis(resource, true);
+            if (options.analyze === true) {
+              this._publishAnalysis(resource, true);
+            }
             resolve(resource);
           }
         }, this));
@@ -387,8 +411,14 @@ define([
      *
      * @param  {integer} useid Carto db id
      */
-    _analyzeConcession: function(useid, layerSlug) {
+    _analyzeConcession: function(useid, layerSlug, options) {
       return new Promise(function(resolve) {
+
+      options = options || { analyze: true };
+
+      if (options.analyze === true) {
+        mps.publish('Spinner/start');
+      }
 
       var resource = this._buildResource({
         useid: useid,
@@ -418,10 +448,15 @@ define([
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
           resource.geom = geojson;
-          this._publishAnalysis(resource);
+
+          if (options.analyze === true) {
+            this._publishAnalysis(resource);
+          }
           resolve(resource);
         } else {
-          this._publishAnalysis(resource, true);
+          if (options.analyze === true) {
+            this._publishAnalysis(resource, true);
+          }
           resolve(resource);
         }
       }, this));
@@ -447,7 +482,6 @@ define([
      * from the current status.
      */
     _buildResource: function(resource) {
-      mps.publish('Spinner/start');
       var date, dateFormat;
       var baselayer = this.status.get('baselayer');
 
