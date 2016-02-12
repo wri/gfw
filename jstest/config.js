@@ -56,6 +56,7 @@ require.config({
     Class: '../../../vendor/assets/bower_components/Class.js/Class',
     jasmine: "../../../vendor/assets/bower_components/jasmine",
     sinon: "../../../vendor/assets/bower_components/sinon/lib/sinon",
+    bluebird: "../../../vendor/assets/bower_components/bluebird/js/browser/bluebird",
     helpers: "helpers",
     utils: "map/utils",
     abstract: "abstract",
