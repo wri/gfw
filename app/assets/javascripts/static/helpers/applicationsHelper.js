@@ -262,6 +262,16 @@ define([
     },
     {
       id: 21,
+      name: 'Water',
+      svg: '#shape-water',
+      content: 'View critical watershed information, understand type and severity of threats such as forest changes to watershed health, and screen for cost-effective, sustainable solutions.',
+      link_text: 'Coming soon',
+      classname: 'btn soon',
+      source: 'World Resources Institute',
+      tags: 'data, global-forest-watch, maps'
+    },
+    {
+      id: 22,
       name: 'Develop your own app',
       svg: '#shape-develop',
       content: 'Learn how to develop your own application with Global Forest Watch data.',
