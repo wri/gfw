@@ -25,8 +25,7 @@ define([
 
       var requestConfig = {
         resourceId: GET_REQUEST_ID,
-        success: resolve,
-        error: reject
+        success: resolve
       };
 
       ds.request(requestConfig);
@@ -61,6 +60,6 @@ define([
 
   });
 
-  return GeostoreService;
+  return new GeostoreService();
 
 });

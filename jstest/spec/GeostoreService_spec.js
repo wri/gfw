@@ -41,7 +41,7 @@ define([
       it('gets geojson from the server for the given ID', function(done) {
         var expectedGeojson = {a: 'b'};
 
-        new GeostoreService().get('ABCD').then(function(geojson) {
+        GeostoreService.get('ABCD').then(function(geojson) {
           expect(geojson).toEqual(expectedGeojson);
           done();
         }).catch(done);
@@ -54,7 +54,7 @@ define([
 
     describe('.save', function() {
       it('saves the given geojson to the server', function(done) {
-        new GeostoreService().save({}).then(function(id) {
+        GeostoreService.save({}).then(function(id) {
           expect(id).toEqual('ABCD');
           done();
         }).catch(done);

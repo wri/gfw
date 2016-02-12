@@ -100,7 +100,8 @@ define([
     },
 
     createSubscription: function(options) {
-      var analysisResource = options.analysisResource;
+      var analysisResource = options.analysisResource,
+          geostoreId = options.geostore;
 
       this.subscription = new Subscription({
         topic: TOPICS[options.layer.slug] || options.layer.title,
@@ -108,17 +109,21 @@ define([
       });
       this.subscription.set(analysisResource);
 
-      var geom;
-      if (analysisResource.type === 'geojson') {
-        geom = JSON.parse(analysisResource.geojson);
-      } else {
-        if (analysisResource.geom) {
-          geom = analysisResource.geom.geometry;
+      if (analysisResource) {
+        var geom;
+        if (analysisResource.type === 'geojson') {
+          geom = JSON.parse(analysisResource.geojson);
         } else {
-          geom = this.presenter.geom_for_subscription;
+          if (analysisResource.geom) {
+            geom = analysisResource.geom.geometry;
+          } else {
+            geom = this.presenter.geom_for_subscription;
+          }
         }
+        this.subscription.set('geom', geom);
+      } else if (geostoreId) {
+        this.subscription.set('geostore_id', geostoreId);
       }
-      this.subscription.set('geom', geom);
     },
 
     askForName: function() {
