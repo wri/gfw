@@ -56,10 +56,6 @@ define([
     },
 
     show: function(options){
-      if (!this.user.isLoggedIn()) {
-        this.presenter.convertToSubscriptionTab();
-      }
-
       if (this.user.get('id') && _.isEmpty(this.user.get('email'))) {
         this.showSpinner();
         this.user.fetch();
