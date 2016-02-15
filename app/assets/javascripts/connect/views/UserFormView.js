@@ -80,13 +80,16 @@ define([
 
       selectFields.forEach(function(field) {
         var $select = this.$('select[name="'+field+'"]');
-        $select.val(attributes[field]);
 
-        var selected = $select.val() || [];
-        if (selected.indexOf('Other') > -1) {
-          var $input = $select.siblings('input');
-          $input.show();
-          $input.val(_.last(attributes[field]));
+        if (!_.isEmpty(attributes[field])) {
+          $select.val(attributes[field]);
+
+          var selected = $select.val() || [];
+          if (selected.indexOf('Other') > -1) {
+            var $input = $select.siblings('input');
+            $input.show();
+            $input.val(_.last(attributes[field]));
+          }
         }
       }.bind(this));
 
