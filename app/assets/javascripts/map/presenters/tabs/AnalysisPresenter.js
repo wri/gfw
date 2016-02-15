@@ -256,6 +256,8 @@ define([
      * @param  {[type]} geojson [description]
      */
     _analyzeGeojson: function(geojson, options) {
+      return new Promise(function(resolve) {
+
       options = options || {draw: true};
 
       // Build resource
@@ -275,8 +277,9 @@ define([
       // Publish analysis
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Polygon: true');
       this._publishAnalysis(resource);
+      resolve();
 
-      return Promise.resolve(resource);
+      }.bind(this));
     },
 
     _saveAndAnalyzeGeojson: function(geojson, options) {
