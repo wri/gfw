@@ -31,7 +31,7 @@ define([
 
       var userForm = new UserFormView({ isModal: true });
       this.listenTo(userForm, 'saved', this.close);
-      this.$('.profile-modal-content').html(userForm.el);
+      this.$('.my-gfw-profile-modal-content').html(userForm.el);
 
       return this;
     },
