@@ -225,6 +225,9 @@ define([
       mps.publish('Place/update', [{go: false}]);
     },
 
+    refreshAnalysis: function() {
+      mps.publish('AnalysisService/refresh', []);
+    },
 
     /**
      * Set total area for countries, protected areas or forest use layers

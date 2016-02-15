@@ -119,10 +119,15 @@ define([
     _subscribe: function() {
       mps.subscribe('AnalysisService/get', _.bind(function(config) {
         this.execute(config);
+        this.config = config;
       }, this));
 
       mps.subscribe('AnalysisService/cancel', _.bind(function() {
         this._abortRequest();
+      }, this));
+
+      mps.subscribe('AnalysisService/refresh', _.bind(function() {
+        this.execute(this.config);
       }, this));
     },
 
