@@ -99,6 +99,10 @@ define([
         this.deleteAnalysis();
       }
     }, {
+      'AnalysisService/refresh': function() {
+        mps.publish('Spinner/start');
+      }
+    }, {
       'AnalysisTool/analyze-wdpaid': function(wdpaid) {
         this.openAnalysisTab(true);
         this._analyzeWdpai(wdpaid.wdpaid, { analyze: true, fit_bounds: true });

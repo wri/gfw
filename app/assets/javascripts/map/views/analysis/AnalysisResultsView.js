@@ -37,7 +37,8 @@ define([
       'click .canopy-button' : '_showCanopy',
       'click .advanced-analysis-button' : '_showAdvancedAnalysis',
       'click .close' : 'toogleAnalysis',
-      'click #toggleIFL' : 'toogleIFL'
+      'click #toggleIFL' : 'toogleIFL',
+      'click #btn-analysis-refresh' : 'refreshAnalysis'
     },
 
     initialize: function() {
@@ -155,6 +156,10 @@ define([
     toogleIFL: function(e){
       $(e.currentTarget).find('.onoffswitch').toggleClass('checked');
       this.$switchIFLabels.toggleClass('checked')
+    },
+
+    refreshAnalysis: function() {
+      this.presenter.refreshAnalysis();
     }
 
   });
