@@ -1,13 +1,13 @@
 define([
   'jquery', 'backbone', 'underscore',
   'map/models/UserModel',
-  'connect/views/UserFormView', 'connect/views/SubscriptionListView',
-  'views/NotificationsView', 'views/HeaderView', 'views/FooterView'
+  'connect/views/UserFormView', 'connect/views/SubscriptionListView', 'connect/views/LoginView',
+  'views/NotificationsView'
 ], function(
   $, Backbone, _,
   User,
-  UserFormView, SubscriptionListView,
-  NotificationsView, HeaderView, FooterView) {
+  UserFormView, SubscriptionListView, LoginView,
+  NotificationsView) {
 
   'use strict';
 
@@ -20,17 +20,25 @@ define([
     },
 
     initialize: function() {
-      this.checkLoggedIn();
       this.setupNavbar();
-
       new NotificationsView();
+    },
+
+    execute: function(callback, args) {
+      if (!this.alreadyLoggedIn) {
+        this.checkLoggedIn().then(function() {
+          if (callback) { callback.apply(this, args); }
+        }.bind(this)).fail(function() {
+          this.showView('login_modal');
+        }.bind(this));
+      } else {
+        if (callback) { callback.apply(this, args); }
+      }
     },
 
     checkLoggedIn: function() {
       this.user = new User();
-      this.user.fetch().fail(function() {
-        location.href = '/';
-      });
+      return this.user.fetch();
     },
 
     setupNavbar: function() {
@@ -48,7 +56,8 @@ define([
 
     availableViews: {
       'my_gfw': UserFormView,
-      'subscriptions': SubscriptionListView
+      'subscriptions': SubscriptionListView,
+      'login_modal': LoginView
     },
 
     showView: function(routeName) {
