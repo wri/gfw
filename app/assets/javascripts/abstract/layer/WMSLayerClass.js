@@ -137,14 +137,14 @@ define([
         }
         this.location.setBounds();
         this.location.setBBox();
-        this.location.infowindowUrl = this.getQuery(this.location.latlng.K,this.location.latlng.G);
+        this.location.infowindowUrl = this.getQuery(this.location.latlng.lng(),this.location.latlng.lat());
 
         $.get(this.location.infowindowUrl).done(_.bind(function(data) {
           if(this.infowindow) {
             this.infowindow.remove();
           }
           var data = JSON.parse(data);
-          if (!!data.features[0]) {
+          if (!!data && !!data.features && !!data.features[0]) {          
             var infoWindowOptions = {
               offset: [0, 100],
               infowindowData: {
