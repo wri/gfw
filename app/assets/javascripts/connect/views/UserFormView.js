@@ -43,6 +43,7 @@ define([
 
     events: {
       'change select': '_handleSelectChange',
+      'change input': '_handleInputChange',
       'click #submit': '_submit'
     },
 
@@ -93,7 +94,17 @@ define([
         prop('checked', true);
     },
 
+    _enableSubmit: function() {
+      this.$('#submit').removeClass('disabled');
+    },
+
+    _handleInputChange: function(event) {
+      this._enableSubmit();
+    },
+
     _handleSelectChange: function(event) {
+      this._enableSubmit();
+
       var $el = this.$(event.currentTarget),
           $input = $el.siblings('input');
 
