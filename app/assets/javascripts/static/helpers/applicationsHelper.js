@@ -267,7 +267,7 @@ define([
       content: 'View critical watershed information, understand type and severity of threats such as forest changes to watershed health, and screen for cost-effective, sustainable solutions.',
       link_text: 'Coming soon',
       classname: 'btn soon',
-      source: 'World Resources Institute',
+      source: 'World Resources Institute and Aqueduct',
       tags: 'data, global-forest-watch, maps'
     },
     {
