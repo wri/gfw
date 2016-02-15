@@ -89,10 +89,14 @@
     color: #262626;
   }
 
-  h5 {
+  ul {
     font-weight: 200;
     color: #9f9f9f;
     font-size: 14px;
+
+    li {
+      margin-bottom: 2px;
+    }
   }
 
   tr {

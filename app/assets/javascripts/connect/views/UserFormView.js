@@ -43,6 +43,7 @@ define([
 
     events: {
       'change select': '_handleSelectChange',
+      'change input': '_handleInputChange',
       'click #submit': '_submit'
     },
 
@@ -79,13 +80,16 @@ define([
 
       selectFields.forEach(function(field) {
         var $select = this.$('select[name="'+field+'"]');
-        $select.val(attributes[field]);
 
-        var selected = $select.val() || [];
-        if (selected.indexOf('Other') > -1) {
-          var $input = $select.siblings('input');
-          $input.show();
-          $input.val(_.last(attributes[field]));
+        if (!_.isEmpty(attributes[field])) {
+          $select.val(attributes[field]);
+
+          var selected = $select.val() || [];
+          if (selected.indexOf('Other') > -1) {
+            var $input = $select.siblings('input');
+            $input.show();
+            $input.val(_.last(attributes[field]));
+          }
         }
       }.bind(this));
 
@@ -93,7 +97,17 @@ define([
         prop('checked', true);
     },
 
+    _enableSubmit: function() {
+      this.$('#submit').removeClass('disabled');
+    },
+
+    _handleInputChange: function(event) {
+      this._enableSubmit();
+    },
+
     _handleSelectChange: function(event) {
+      this._enableSubmit();
+
       var $el = this.$(event.currentTarget),
           $input = $el.siblings('input');
 
