@@ -44,12 +44,6 @@ define([
       mps.publish('Place/update', [{go: false}]);
     },
 
-    // Converts the current URL to be a subscription tab
-    convertToSubscriptionTab: function() {
-      this.tab = 'subscription-tab';
-      mps.publish('Place/update', [{go: false}]);
-    },
-
     /**
      * Used by PlaceService to get the current iso/geom params.
      *
