@@ -444,48 +444,39 @@
 
 
   // FOOTER ANALYSIS
-  .analysis-footer{
+  .analysis-footer {
     margin: 10px 0 0;
-    border-top: 1px solid $border;
+
     @media (min-width: 1500px){
       margin: 15px 0 0;
     }
 
     >ul{
+      margin-top: 10px;
       @include row();
+
       >li{
         width: 100%;
         position: relative;
         padding: 10px 0;
         cursor: pointer;
-        @media (max-width: $br-mobileMap - 1){
-          &#analysis-subscribe{
-            // display: none;
-          }
-          .tooltipmap{
-            opacity: 1;
-            visibility: visible;
-            position: relative;
-            @include transform(none);
-            left: 0;
-            top: 0;
-            box-shadow: none;
-            background: none;
-            font-size: 11px;
-            text-align: center;
-            display: block;
-            white-space: normal;
-            line-height: 1;
-            &:after{
-              display: none;
-            }
-          }
-        }
 
-        &:hover{
-          .tooltipmap{
-            opacity: 1;
-            visibility: visible;
+        .tooltipmap{
+          opacity: 1;
+          visibility: visible;
+          position: relative;
+          @include transform(none);
+          left: 0;
+          top: 0;
+          box-shadow: none;
+          background: none;
+          font-size: 11px;
+          text-align: center;
+          display: block;
+          white-space: normal;
+          line-height: 1;
+          &:after{
+            display: none;
           }
         }
 
@@ -499,21 +490,11 @@
           svg{
             @include animation(pulse_animation,0.75s,4,$easeInOutSine);
           }
+
           .tooltipmap{
             opacity: 1;
             visibility: visible;
           }
-        }
-
-        &:after{
-          content: "";
-          height: 50%;
-          width: 1px;
-          background: $border;
-          position: absolute;
-          top: 50%;
-          left: 0;
-          @include transform(translate(0,-50%));
         }
 
         &:first-child{
@@ -521,6 +502,7 @@
             display: none;
           }
         }
+
         svg{
           fill: $dark;
           width: 18px;
@@ -540,6 +522,7 @@
 
           }
         }
+
         .download-dropdown {
           text-align: left;
           width: 90px;
@@ -553,9 +536,11 @@
           background-color: $white;
           border-radius: 3px;
           box-shadow: $shadow1;
+
           &.hidden{
             display: none;
           }
+
           &:after{
             content: "";
             display: block;
@@ -577,12 +562,17 @@
             display: block;
             border-bottom: 1px solid #f2f2f2;
             color: $cGreen;
+
             &:hover{
               background-color: darken($white,2.5%);
             }
           }
         }
       }
+    }
+
+    .analysis-subscribe {
+      width: 100%;
     }
   }
 }
