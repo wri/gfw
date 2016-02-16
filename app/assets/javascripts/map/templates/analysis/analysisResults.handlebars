@@ -108,20 +108,20 @@
       {{#if loss}}
         <a class="download-mobile-link" data-type="forest-change" href="http://earthenginepartners.appspot.com/science-2013-global-forest" target="_blank">
           <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
-          <span class="tooltipmap bottom">Download data</span>
+          <span class="tip">Download data</span>
         </a>
       {{else}}
         {{#if forestgain}}
           <a class="download-mobile-link" data-type="forest-change" href="http://data.globalforestwatch.org/datasets/6c9f379a362e4926ad24b58444f4ba67" target="_blank">
             <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
-            <span class="tooltipmap bottom">Download data</span>
+            <span class="tip">Download data</span>
           </a>
         {{else}}
           <div>
             <div class="dropdown-button">
               <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
             </div>
-            <span class="tooltipmap bottom">Download and export data</span>
+            <span class="tip">Download and export data</span>
             <ul class="download-dropdown hidden">
               <li><a class="download-mobile-link" data-type="forest-change" href="{{download.svg}}" target="_blank">SVG</a></li>
               <li><a class="download-mobile-link" data-type="forest-change" href="{{download.geojson}}" target="_blank">GeoJSON</a></li>
@@ -137,11 +137,11 @@
   {{/if}}
     <li id="analysis-delete">
       <svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg>
-      <span class="tooltipmap bottom">Discard analysis</span>
+      <span class="tip">Discard analysis</span>
     </li>
     <li id="analysis-subscribe">
       <svg class="icon"><use xlink:href="#icon-analysis-alerts"></use></svg>
-      <span class="tooltipmap bottom">Subscribe</span>
+      <span class="tip">Subscribe</span>
     </li>
   </ul>
 </footer>
