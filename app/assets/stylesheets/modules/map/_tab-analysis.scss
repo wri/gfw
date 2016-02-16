@@ -80,17 +80,26 @@
     }
   }
 }
+
 .tab-analysis, .tab-subscription{
+
   .is-subscribing &{
     min-height: 250px;
   }
+
+  .is-analysis &{
+    max-height: 60.1vh;
+    overflow: auto;  
+
+  }
+  
   nav{
     display: block;
     ul{
       @include display-flex();
       li{
         width: 100%;
-        padding: 8px 6px;
+        padding: 8px 4px;
         text-transform: uppercase;
         text-align: center;
         font-size: 12px;
@@ -461,23 +470,14 @@
         padding: 10px 0;
         cursor: pointer;
 
-        .tooltipmap{
-          opacity: 1;
-          visibility: visible;
-          position: relative;
-          @include transform(none);
-          left: 0;
-          top: 0;
-          box-shadow: none;
-          background: none;
-          font-size: 11px;
+        .tip{
+          font-size: 10px;
+          padding: 4px 4px 0;
           text-align: center;
+          text-transform: uppercase;
           display: block;
-          white-space: normal;
-          line-height: 1;
-          &:after{
-            display: none;
-          }
+          line-height: 1;  
+          color: $dark;        
         }
 
         &.disabled{

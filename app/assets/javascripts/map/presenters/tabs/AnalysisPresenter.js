@@ -565,6 +565,7 @@ define([
      * @param  {Object} resource The analysis resource
      */
     _publishAnalysis: function(resource, failed) {
+      mps.publish('Spinner/start');
       this.status.set('resource', resource);
       // this._setAnalysisBtnVisibility();
       mps.publish('Place/update', [{go: false}]);
@@ -620,10 +621,6 @@ define([
       });
 
       this._setAnalysisBtnVisibility();
-    },
-
-    resetIsos: function(){
-      mps.publish('LocalMode/updateIso', [{country:null, region:null}])
     },
 
     /**
