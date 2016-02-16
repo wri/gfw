@@ -156,9 +156,7 @@ define([
       "loss",
       "forestgain",
       "gfw_landsat_alerts",
-      "umd_as_it_happens",
-      "umd_as_it_happens_raster",
-      "umd_as_it_happens_hybrid"
+      "umd_as_it_happens"
     ],
 
     categoryOrder: [
