@@ -78,6 +78,30 @@
 .my-gfw-subscriptions-list {
   width: 100%;
 
+  .subscription-unconfirmed {
+    position: relative;
+    float: left;
+
+    svg {
+      margin-top: 1px;
+      margin-left: 0;
+    }
+
+    .tooltipmap {
+      width: 200px;
+      white-space: normal;
+      top: 20px;
+    }
+  }
+
+  .subscription-unconfirmed:hover {
+    .tooltipmap {
+      display: block;
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
   h4 {
     color: #262626;
     font-size: 20px;

@@ -1,5 +1,16 @@
 <tr>
   <td>
+    {{#unless confirmed}}
+    <div class="subscription-unconfirmed">
+      <svg class="icon" width="16px" height="16px">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-warning"></use>
+      </svg>
+      <span class="tooltipmap bottom">
+        Subscription has not been confirmed, check your inbox for the email
+      </span>
+    </div>
+    {{/unless}}
+
     <h4>
       {{#if name}}
         {{name}}
@@ -10,7 +21,7 @@
 
     <ul>
       <li>Dataset: {{topic}}</li>
-      <li>Date of subscription: {{created}}</li>
+      <li>Date of subscription: {{created}} UTC</li>
     </ul>
   </td>
 
