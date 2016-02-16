@@ -1,26 +1,25 @@
-<tr>
-  <td>
-    <h4>
-      {{#if name}}
-        {{name}}
-      {{else}}
-        <em>Unnamed Subscription</em>
-      {{/if}}
-    </h4>
+<td>
+  <h4>
+    {{#if name}}
+      {{name}}
+    {{else}}
+      <em>Unnamed Subscription</em>
+    {{/if}}
+  </h4>
 
-    <ul>
-      <li>Dataset: {{topic}}</li>
-      <li>Date of subscription: {{created}}</li>
-    </ul>
-  </td>
+  <ul>
+    <li>Dataset: {{topic}}</li>
+    <li>Date of subscription: {{created}}</li>
+  </ul>
+</td>
 
-  <td>
-    <svg><use xlink:href="#icon-h-map"></use></svg>
-    <span><a href="{{url}}">View on Map</a></span>
-  </td>
+<td>
+  <svg><use xlink:href="#icon-h-map"></use></svg>
+  <span><a href="{{url}}" target="_blank">View on Map</a></span>
+</td>
 
-  <td>
-    <svg><use xlink:href="#icon-analysis-remove"></use></svg>
-    <a href="#" class="subscriptions-delete-item">Delete</a>
-  </td>
-</tr>
+<td>
+  <svg><use xlink:href="#icon-analysis-remove"></use></svg>
+  <a href="#" class="subscriptions-delete-item">Delete</a>
+</td>
+

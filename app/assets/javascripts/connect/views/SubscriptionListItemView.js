@@ -16,6 +16,8 @@ define([
       'keyup h4': 'handleNameKeyUp'
     },
 
+    tagName: 'tr',
+
     template: Handlebars.compile(tpl),
 
     initialize: function(options) {

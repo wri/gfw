@@ -44,6 +44,7 @@
 }
 
 .my-gfw-subscriptions-list-container {
+  @include clearfix();
   padding: 50px 0;
 }
 
@@ -54,7 +55,7 @@
   align-items: center;
 
   h4 {
-    color: #262626;
+    color: $dark;
     font-size: 30px;
     font-weight: 200;
     margin-bottom: 10px;
@@ -77,16 +78,24 @@
 
 .my-gfw-subscriptions-list {
   width: 100%;
+  font-size: 14px;
 
   h4 {
-    color: #262626;
-    font-size: 20px;
+    color: $dark;
+    font-size: 21px;
+    margin: 0 0 5px;
+    @media (min-width:$br-mobile){
+      line-height: 39px;
+    }
+
   }
 
   h4.editing input {
     width: 100%;
-    font-size: 20px;
-    color: #262626;
+    font-size: 21px;
+    color: $dark;
+    font-family: inherit;
+    border: none;
   }
 
   ul {
@@ -95,24 +104,37 @@
     font-size: 14px;
 
     li {
-      margin-bottom: 2px;
+      margin-top: 5px;
     }
   }
 
   tr {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 120px;
+    @include display-flex;
+    @include justify-content(space-between);
+    @include align-items(stretch);
+    padding: 20px 0;
+    border-top: 1px solid $border;
+    @media (min-width:$br-mobile){
+      padding: 35px 0;
+    }
+
+    &:first-child {
+      border-top: none;
+    }
 
     td {
-      border-right: 1px solid #e6e6e6;
-      padding: 0 10px;
-      height: 40px;
+      border-right: 1px solid $border;
+      padding: 0 15px;
       width: 100%;
+      @media (min-width:$br-mobile){
+        padding: 0 30px;
+      }
 
       a {
-        color: #666;
+        color: $dark;
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
 
@@ -120,18 +142,20 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 225px;
+      width: auto;
+      white-space: nowrap;
     }
 
-    td:last-of-type {
+    td:first-of-type, td:last-of-type {
       border-right: 0;
-      justify-content: flex-start;
+      @include justify-content(flex-start);
     }
 
     svg {
       width: 15px;
       height: 15px;
-      margin: -4px 7px 0 7px;
+      margin: -4px 7px 0 0px;
+      fill: $dark;
     }
   }
 }
@@ -142,7 +166,7 @@
     margin-bottom: 15px;
 
     h2 {
-      color: #262626;
+      color: $dark;
       font-size: 20px;
       margin-bottom: 5px;
     }
