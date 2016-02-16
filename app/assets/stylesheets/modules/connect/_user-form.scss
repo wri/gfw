@@ -6,12 +6,16 @@
 
 .my-gfw-profile {
   margin: 0 auto 0 auto;
+  padding: 0 20px;
   display: flex;
   align-items: center;
   flex-direction: column;
-  color: #555;
+  color: $dark;
+  max-width: 600px;
+  @media (min-width:$br-mobile){
+    padding: 0;
+  }
 
-  width: 600px;
 
   h2 {
     font-size: 37px;
@@ -26,7 +30,9 @@
     font-size: 16px;
     margin-bottom: 15px;
     line-height: 25px;
-    text-align: center;
+    @media (min-width:$br-mobile){
+      text-align: center;
+    }
   }
 }
 
@@ -102,7 +108,7 @@
 
     &:after {
       content: "";
-      background-color: #555;
+      background-color: $dark;
       -webkit-mask-image: url("svg-icons/arrow-down.svg");
       mask-image: url("svg-icons/arrow-down.svg");
       position: absolute;
