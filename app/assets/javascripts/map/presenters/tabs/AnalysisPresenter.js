@@ -544,10 +544,6 @@ define([
       this._setAnalysisBtnVisibility();
     },
 
-    resetIsos: function(){
-      mps.publish('LocalMode/updateIso', [{country:null, region:null}])
-    },
-
     /**
      * Set the status.baselayer from layerSpec.
      *
