@@ -9,7 +9,7 @@ define([
 
   var SubscriptionListModel = Backbone.Model.extend({
     defaults: {
-      perpage: 2,
+      perpage: 10,
       page: 1
     }
   });
@@ -43,8 +43,9 @@ define([
           });
           $tableBody.append(view.el);
         });
-
-        this.initPaginate();
+        if (this.subscriptions.length/this.model.get('perpage') > 1) {
+          this.initPaginate();
+        }
       }
     },
 
