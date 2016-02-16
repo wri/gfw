@@ -39,11 +39,6 @@ define([
       'LocalMode/updateIso': function(iso) {
         this.view.updateIso(iso);
       }
-    }, {
-      'AnalysisResults/delete-analysis': function() {
-        var iso = { country: null, region: null}
-        this.view.updateIso(iso);
-      }
     }],
 
     initExperiment: function(id){

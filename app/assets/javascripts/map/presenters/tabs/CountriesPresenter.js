@@ -53,10 +53,6 @@ define([
         this.view.getIsoLayers(layers_iso);
       }
     },{
-      'AnalysisResults/delete-analysis': function() {
-        this.changeIso({country: null, area:null});
-      }
-    },{
       'Analysis/analyze-iso': function(iso,to) {
         this.status.set('iso', iso);
         this.setAnalyze(to);
