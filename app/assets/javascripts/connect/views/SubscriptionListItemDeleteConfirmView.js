@@ -10,7 +10,7 @@ define([
       'click #confirm-delete': 'confirm',
       'click #cancel-delete': 'cancel',
       'click .modal-backdrop': 'cancel',
-      'click .modal-close': 'cancel',
+      'click .modal-close': 'cancel'
     },
 
     className: 'my-gfw-subscription-delete-modal',
