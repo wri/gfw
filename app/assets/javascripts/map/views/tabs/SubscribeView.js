@@ -16,7 +16,8 @@ define([
     modis: 'alerts/quicc',
     terrailoss: 'alerts/terra',
     prodes: 'alerts/prodes',
-    guyra: 'alerts/guyra'
+    guyra: 'alerts/guyra',
+    umd_as_it_happens: 'alerts/glad'
   };
 
   var SubscribeView = Backbone.View.extend({
