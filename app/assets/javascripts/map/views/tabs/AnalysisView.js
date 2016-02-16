@@ -342,7 +342,6 @@ define([
         this.getSubCountries()
       }else{
         this.presenter.deleteAnalysis();
-        this.presenter.resetIsos();
         this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
       }
     },
