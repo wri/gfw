@@ -115,22 +115,37 @@ define([
 
       var pixelComponents = 4; // RGBA
 
+      return imgdata;
       if (z > 9) {
         for(var i = 0; i < w; ++i) {
           for(var j = 0; j < h; ++j) {
             var pixelPos = (j * w + i) * pixelComponents;
             var intensity = 255;
 
-            // The R channel represents the day of the year that an alert
-            // occurred, where `day <= 255`
-            var dayOfLoss = imgdata[pixelPos];
-            if (imgdata[pixelPos+1] > 0) {
-              // The G channel represents the day of year that an alert
-              // occurred, where `day > 255`
-              dayOfLoss = imgdata[pixelPos+1] + (dayOfLoss * 255);
+            var yearOfLoss, dayOfLoss;
+            if (imgdata[pixelPos] > 0) {
+              if (imgdata[pixelPos+1] === 0) {
+                yearOfLoss = 2015;
+                dayOfLoss  = imgdata[pixelPos];
+                // year 1, day 1-255
+              } else {
+                yearOfLoss = 2016;
+                dayOfLoss  = imgdata[pixelPos] + 144;
+                // year 2, day 145-365
+              }
+            } else {
+              if (imgdata[pixelPos+1] <= 110) {
+                yearOfLoss = 2015;
+                dayOfLoss  = imgdata[pixelPos+1] + 255;
+                // year 1, day 255-365
+              } else {
+                yearOfLoss = 2016;
+                dayOfLoss  = imgdata[pixelPos+1] - 110;
+                // year 2, day 1-144
+              }
             }
 
-            if (dayOfLoss >= startDay && dayOfLoss <= endDay) {
+            if (dayOfLoss >= startDay && yearOfLoss >= startYear && dayOfLoss <= endDay && yearOfLoss <= endYear) {
               // Arbitrary values to get the correct colours
               imgdata[pixelPos] = 220;
               imgdata[pixelPos + 1] = (72 - z) + 102 - (3 * scale(intensity) / z);
