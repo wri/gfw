@@ -163,24 +163,21 @@
 .my-gfw-subscription-delete-modal {
   header {
     text-align: center;
-    margin-bottom: 15px;
+    padding: 15px;
+    border-bottom: 1px solid $border;
 
     h2 {
       color: $dark;
-      font-size: 20px;
+      font-size: 21px;
       margin-bottom: 5px;
+      font-weight: 300;
     }
 
     h3 {
-      font-weight: 200;
       color: #9f9f9f;
       font-size: 14px;
       margin: 0;
     }
-  }
-
-  .modal-window {
-    width: 450px;
   }
 
   .modal-content {
@@ -190,7 +187,9 @@
   }
 
   h3 {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    line-height: 1.25;
+    font-size: 18px;    
   }
 
   .delete-button-container {
