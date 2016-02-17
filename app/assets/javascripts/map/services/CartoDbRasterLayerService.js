@@ -1,23 +1,18 @@
 define([
-  'Class', 'uri', 'bluebird',
+  'Class', 'bluebird',
   'map/services/DataService'
-], function (Class, UriTemplate, Promise, ds) {
+], function (Class, Promise, ds) {
 
   'use strict';
 
-  var MAP_REQUEST_ID = 'CartoDbLayerService:fetchRasterLayerMap',
-      SQL_REQUEST_ID = 'CartoDbLayerService:fetchRasterLayerDates';
-
-  var SQL_URL = 'https://wri-01.cartodb.com/api/v2/sql{?q}',
-      MAP_URL = 'http://wri-01.cartodb.com/api/v1/map?stat_tag=API';
+  var MAP_REQUEST_ID = 'CartoDbLayerService:fetchRasterLayerMap';
+  var MAP_URL = 'http://wri-01.cartodb.com/api/v1/map?stat_tag=API';
 
   var CartoDbRasterLayerService = Class.extend({
 
-    init: function(options) {
-      this.sql = options.sql;
-      this.cartocss = options.cartocss;
-      this.dateAttribute = options.dateAttribute;
-      this.table = options.table;
+    init: function(sql, cartocss) {
+      this.sql = sql;
+      this.cartocss = cartocss;
 
       this._defineRequests();
     },
@@ -30,24 +25,9 @@ define([
         dataType: 'json',
         contentType: 'application/json; charset=utf-8'
       });
-
-      var sql = 'SELECT MIN('+this.dateAttribute+') AS min_date, MAX('+this.dateAttribute+') AS max_date FROM '+this.table,
-          url = new UriTemplate(SQL_URL).fillFromObject({q: sql});
-      ds.define(SQL_REQUEST_ID, {
-        cache: {type: 'persist', duration: 1, unit: 'days'},
-        url: url,
-        type: 'GET'
-      });
     },
 
     fetchLayerConfig: function() {
-      return Promise.all([
-         this.fetchLayerDates(),
-         this.fetchLayerMap()
-      ]);
-    },
-
-    fetchLayerMap: function() {
       return new Promise(function(resolve, reject) {
 
       var layerConfig = {
@@ -75,20 +55,6 @@ define([
       ds.request(requestConfig);
 
       }.bind(this));
-    },
-
-    fetchLayerDates: function() {
-      return new Promise(function(resolve, reject) {
-
-      var requestConfig = {
-        resourceId: SQL_REQUEST_ID,
-        success: resolve,
-        error: reject
-      };
-
-      ds.request(requestConfig);
-
-      });
     }
 
   });

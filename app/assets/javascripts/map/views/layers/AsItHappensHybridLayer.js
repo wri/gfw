@@ -3,21 +3,23 @@ define([
   'helpers/canvasCartoCSSHelper',
   'abstract/layer/CartoDbCanvasLayerClass',
   'map/presenters/TorqueLayerPresenter',
-  'map/services/CartoDbLayerDateService', 'map/services/CartoDbLayerService', 'map/services/CartoDbNamedMapService',
-  'text!map/queries/default_cartodb_canvas.sql.hbs'
+  'map/services/CartoDbLayerDateService', 'map/services/CartoDbLayerService', 'map/services/CartoDbRasterLayerService',
+  'text!map/queries/as_it_happens_hybrid.sql.hbs', 'text!map/queries/as_it_happens_hybrid_raster.sql.hbs',
+  'text!map/cartocss/as_it_happens_hybrid_raster.cartocss',
 ], function(
   moment, d3, Handlebars, UriTemplate,
   canvasCartoCSSHelper,
   CartoDbCanvasLayerClass,
   Presenter,
-  CartoDbLayerDateService, CartoDbLayerService, CartoDbNamedMapService,
-  SQL) {
+  CartoDbLayerDateService, CartoDbLayerService, CartoDbRasterLayerService,
+  SQL, rasterSQL,
+  rasterCartoCSS) {
 
   'use strict';
 
   var AsItHappensHybridLayer = CartoDbCanvasLayerClass.extend({
 
-    table: 'umd_alerts_agg_rast',
+    table: 'umd_alerts_agg_hybrid',
 
     init: function(layer, options, map) {
       this.presenter = new Presenter(this);
@@ -46,23 +48,16 @@ define([
       dateConfigService.fetchLayerConfig().then(function(dates) {
         context.currentDate[1] = moment(dates.max_date);
 
-        var namedMapConfigService = new CartoDbNamedMapService({
-          table: context.table,
-          namedMap: 'gfw_glad_as_it_happens_hybrid' });
-        var pointsConfigService = new CartoDbLayerService(
-          context._getSQL(), context._getCartoCSS());
-
         return Promise.all([
-          pointsConfigService.fetchLayerConfig(),
-          namedMapConfigService.fetchLayerConfig(),
+          context.getPointsLayerConfig(),
+          context.getRasterLayerConfig()
         ]);
       }).then(function(layerConfig) {
         var pointsConfig = layerConfig[0],
-            namedMapConfig = layerConfig[1];
+            rasterConfig = layerConfig[1];
 
-        context.options.rasterUrlTemplate = 'https://' + namedMapConfig.cdn_url.https + '/wri-01/api/v1/map/' + namedMapConfig.layergroupid + '{/z}{/x}{/y}.png32';
+        context.options.rasterUrlTemplate = 'https://' + rasterConfig.cdn_url.https + '/wri-01/api/v1/map/' + rasterConfig.layergroupid + '{/z}{/x}{/y}.png32';
         context.options.pointsUrlTemplate = 'https://' + pointsConfig.cdn_url.https + '/wri-01/api/v1/map/' + pointsConfig.layergroupid + '{/z}{/x}{/y}.png32';
-
         context._setupAnimation();
 
         resolve(context);
@@ -71,18 +66,22 @@ define([
       }.bind(this));
     },
 
-    _getCartoCSS: function() {
+    getPointsLayerConfig: function() {
       var startDate = moment('2015-01-01'),
-          endDate = moment();
+          endDate = moment(),
+          cartoCSS = canvasCartoCSSHelper.generateDaily('date', startDate, endDate);
 
-      return canvasCartoCSSHelper.generateDaily('date', startDate, endDate);
+      var sqlTemplate = Handlebars.compile(SQL),
+          sql = sqlTemplate({table: this.table});
+
+      var pointsConfigService = new CartoDbLayerService(sql, cartoCSS);
+      return pointsConfigService.fetchLayerConfig();
     },
 
-    _getSQL: function() {
-      var template = Handlebars.compile(SQL),
-          sql = template({table: 'umd_alerts_agg_hybrid'});
-
-      return sql;
+    getRasterLayerConfig: function() {
+      var rasterConfigService = new CartoDbRasterLayerService(
+        rasterSQL, rasterCartoCSS);
+      return rasterConfigService.fetchLayerConfig();
     },
 
     /*
@@ -114,8 +113,9 @@ define([
         .domain([0,256])
         .range([0,256]);
 
+      var pixelComponents = 4; // RGBA
+
       if (z > 9) {
-        var pixelComponents = 4; // RGBA
         for(var i = 0; i < w; ++i) {
           for(var j = 0; j < h; ++j) {
             var pixelPos = (j * w + i) * pixelComponents;
@@ -141,7 +141,6 @@ define([
           }
         }
       } else {
-        var pixelComponents = 4; // RGBA
         for(var i = 0; i < w; ++i) {
           for(var j = 0; j < h; ++j) {
             var pixelPos = (j * w + i) * pixelComponents;

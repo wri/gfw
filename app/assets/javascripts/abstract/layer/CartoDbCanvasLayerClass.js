@@ -1,11 +1,9 @@
 define([
-  'moment', 'handlebars', 'bluebird',
-  'abstract/layer/CanvasLayerClass',
-  'map/services/CartoDbNamedMapService', 'map/services/CartoDbLayerDateService'
+  'moment',
+  'abstract/layer/CanvasLayerClass'
 ], function(
-  moment, Handlebars, Promise,
-  CanvasLayerClass,
-  CartoDbNamedMapService, CartoDbLayerDateService
+  moment,
+  CanvasLayerClass
 )  {
 
   'use strict';
@@ -21,28 +19,7 @@ define([
     },
 
     _getLayer: function() {
-      return new Promise(function(resolve) {
-
-      var dateConfigService = new CartoDbLayerDateService({
-        dateAttribute: 'date',
-        table: this.table });
-
-      var context = this;
-      dateConfigService.fetchLayerConfig().then(function(dates) {
-        context.currentDate[1] = moment.utc(dates.max_date);
-
-        var namedMapConfigService = new CartoDbNamedMapService({
-          table: context.table,
-          namedMap: 'gfw_glad_as_it_happens' });
-
-        return namedMapConfigService.fetchLayerConfig();
-      }).then(function(namedMapConfig) {
-        context.options.urlTemplate = 'https://' + namedMapConfig.cdn_url.https + '/wri-01/api/v1/map/' + namedMapConfig.layergroupid + '{/z}{/x}{/y}.png32';
-        context._setupAnimation();
-        resolve(context);
-      });
-
-      }.bind(this));
+      throw new Error('_getLayer must be implemented');
     },
 
     animationOptions: {
