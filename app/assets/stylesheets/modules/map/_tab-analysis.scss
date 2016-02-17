@@ -212,10 +212,23 @@
 //DRAW TAB
 .analysis-tab-content.draw-tab,
 .subscription-tab-content.draw-tab{
+
+  .p-center {
+    text-align: center;
+    padding: 10px 0;      
+  }
+
   .image{
     position: relative;
     max-width: 50%;
     margin: 20px auto;
+    display: none;
+  
+    @media (min-height: 645px){
+      display: block;
+    }
+
+
 
     div{
       position: relative;
