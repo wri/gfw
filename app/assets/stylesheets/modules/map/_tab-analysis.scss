@@ -453,16 +453,17 @@
 
 
   // FOOTER ANALYSIS
-  .analysis-footer{
+  .analysis-footer {
     margin: 10px 0 0;
-    border-top: 1px solid $border;
+
     @media (min-width: 1500px){
       margin: 15px 0 0;
     }
 
     >ul{
+      margin-top: 10px;
       @include row();
-      
+
       >li{
         width: 100%;
         position: relative;
@@ -489,17 +490,11 @@
           svg{
             @include animation(pulse_animation,0.75s,4,$easeInOutSine);
           }
-        }
 
-        &:after{
-          content: "";
-          height: 50%;
-          width: 1px;
-          background: $border;
-          position: absolute;
-          top: 50%;
-          left: 0;
-          @include transform(translate(0,-50%));
+          .tooltipmap{
+            opacity: 1;
+            visibility: visible;
+          }
         }
 
         &:first-child{
@@ -507,6 +502,7 @@
             display: none;
           }
         }
+
         svg{
           fill: $dark;
           width: 18px;
@@ -526,6 +522,7 @@
 
           }
         }
+
         .download-dropdown {
           text-align: left;
           width: 90px;
@@ -539,9 +536,11 @@
           background-color: $white;
           border-radius: 3px;
           box-shadow: $shadow1;
+
           &.hidden{
             display: none;
           }
+
           &:after{
             content: "";
             display: block;
@@ -563,12 +562,17 @@
             display: block;
             border-bottom: 1px solid #f2f2f2;
             color: $cGreen;
+
             &:hover{
               background-color: darken($white,2.5%);
             }
           }
         }
       }
+    }
+
+    .analysis-subscribe {
+      width: 100%;
     }
   }
 }

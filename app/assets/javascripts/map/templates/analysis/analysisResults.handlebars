@@ -23,9 +23,9 @@
         <span class="stats-count" style="color: #97bd3d;"><strong>{{extent}}</strong> ha</span>
       </li>
 
-			<li>
+      <li>
         <a href="#" class="advanced-analysis-button">View Advanced Analysis</a>
-			</li>
+      </li>
 
       {{#if warning_text}}
       <li>
@@ -102,8 +102,10 @@
 
 
 <footer class="analysis-footer">
+  <button id="analysis-subscribe" class="btn green uppercase analysis-subscribe">Subscribe</button>
+
   <ul>
-  {{#if downloadVisible}}
+    {{#if downloadVisible}}
     <li>
       {{#if loss}}
         <a class="download-mobile-link" data-type="forest-change" href="http://earthenginepartners.appspot.com/science-2013-global-forest" target="_blank">
@@ -134,14 +136,11 @@
         {{/if}}
       {{/if}}
     </li>
-  {{/if}}
+    {{/if}}
+
     <li id="analysis-delete">
       <svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg>
       <span class="tip">Discard analysis</span>
-    </li>
-    <li id="analysis-subscribe">
-      <svg class="icon"><use xlink:href="#icon-analysis-alerts"></use></svg>
-      <span class="tip">Subscribe</span>
     </li>
   </ul>
 </footer>

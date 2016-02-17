@@ -107,7 +107,10 @@ define([
       this.$el.addClass('hidden');
     },
 
-    _subscribe: function() {
+    _subscribe: function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+
       this.presenter.subscribeAnalysis();
       ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + this.params.layer.title);
     },

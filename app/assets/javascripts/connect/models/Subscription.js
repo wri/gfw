@@ -9,11 +9,12 @@ define([
     'alerts/terra': 'Terra-i',
     'alerts/sad': 'SAD',
     'alerts/quicc': 'QUICC',
-    'alerts/treeloss': 'Tree cover loss',
-    'alerts/treegain': 'Tree cover gain',
-    'alerts/prodes': 'PRODES deforestation',
-    'alerts/guyra': 'Gran Chaco deforestation',
-    'alerts/landsat': 'Landsat'
+    'alerts/treeloss': 'Tree Cover Loss',
+    'alerts/treegain': 'Tree Cover Gain',
+    'alerts/prodes': 'PRODES Deforestation',
+    'alerts/guyra': 'Gran Chaco Deforestation',
+    'alerts/landsat': 'Landsat',
+    'alerts/glad': 'GLAD Tree Cover Loss Alerts'
   };
 
   var Subscription = Backbone.Model.extend({
