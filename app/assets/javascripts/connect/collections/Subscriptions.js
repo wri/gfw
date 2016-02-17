@@ -1,7 +1,8 @@
 define([
   'backbone',
+  'moment',
   'connect/models/Subscription'
-], function(Backbone, Subscription) {
+], function(Backbone, moment, Subscription) {
 
   'use strict';
 
@@ -9,6 +10,10 @@ define([
     model: Subscription,
 
     url: window.gfw.config.GFW_API_HOST + '/v2/subscriptions',
+
+    comparator: function(subscription) {
+      return -moment(subscription.get('created')).unix()
+    },
 
     sync: function(method, model, options) {
       options || (options = {});

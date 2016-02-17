@@ -1,37 +1,36 @@
-<tr>
-  <td>
-    {{#unless confirmed}}
-    <div class="subscription-unconfirmed">
-      <svg class="icon" width="16px" height="16px">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-warning"></use>
-      </svg>
-      <span class="tooltipmap bottom">
-        Subscription has not been confirmed, check your inbox for the email
-      </span>
-    </div>
-    {{/unless}}
+<td>
+  {{#unless confirmed}}
+  <div class="subscription-unconfirmed">
+    <svg class="icon" width="16px" height="16px">
+      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-warning"></use>
+    </svg>
+    <span class="tooltipmap bottom">
+      Subscription has not been confirmed, check your inbox for the email
+    </span>
+  </div>
+  {{/unless}}
 
-    <h4>
-      {{#if name}}
-        {{name}}
-      {{else}}
-        <em>Unnamed Subscription</em>
-      {{/if}}
-    </h4>
+  <h4>
+    {{#if name}}
+      {{name}}
+    {{else}}
+      <em>Unnamed Subscription</em>
+    {{/if}}
+  </h4>
 
-    <ul>
-      <li>Dataset: {{topic}}</li>
-      <li>Date of subscription: {{created}} UTC</li>
-    </ul>
-  </td>
+  <ul>
+    <li>Dataset: {{topic}}</li>
+    <li>Date of subscription: {{created}} UTC</li>
+  </ul>
+</td>
 
-  <td>
-    <svg><use xlink:href="#icon-h-map"></use></svg>
-    <span><a href="{{url}}">View on Map</a></span>
-  </td>
+<td>
+  <svg><use xlink:href="#icon-h-map"></use></svg>
+  <span><a href="{{url}}" target="_blank">View on Map</a></span>
+</td>
 
-  <td>
-    <svg><use xlink:href="#icon-analysis-remove"></use></svg>
-    <a href="#" class="subscriptions-delete-item">Delete</a>
-  </td>
-</tr>
+<td>
+  <svg><use xlink:href="#icon-analysis-remove"></use></svg>
+  <a href="#" class="subscriptions-delete-item">Delete</a>
+</td>
+
