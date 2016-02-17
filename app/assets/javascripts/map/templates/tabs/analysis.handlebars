@@ -22,10 +22,11 @@
         <li><button id="start-analysis" class="btn green uppercase">Start drawing</button></li>
         <li class="hidden"><button id="done-analysis" class="btn green uppercase">Analyze</button></li>
       </ul>
+      <p class="p-center">or</p>
       <div class="dropable">
         <div id="drop-shape-analysis" class="shape-droppable">
           <div class="drop-shape-text">
-            Or drop a custom shapefile here
+            Drop a custom shapefile <a href='#' data-source="drop-shapefile" class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
           </div>
 
           <div class="spinner3 drop-shape-loading">
@@ -37,7 +38,7 @@
             </svg>
           </div>
         </div>
-        <a href='#' data-source="drop-shapefile" class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+        
       </div>
     </div>
     <div id="country-tab" class="analysis-tab-content country-tab">
