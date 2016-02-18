@@ -61,7 +61,7 @@ define([
       this.playing = false;
 
       // Max date range
-      this.drMax = this.options.dateRange;
+      this.drMax = this.options.dateRange.map(function(dr) { return moment(dr); });
       // Date range
       this.dr = [[moment(this.drMax[0]).year()], [moment(this.drMax[1]).year() + 1]];
 
