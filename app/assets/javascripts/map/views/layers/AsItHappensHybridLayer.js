@@ -115,8 +115,7 @@ define([
 
       var pixelComponents = 4; // RGBA
 
-      return imgdata;
-      if (z > 9) {
+      if (z > 10) {
         for(var i = 0; i < w; ++i) {
           for(var j = 0; j < h; ++j) {
             var pixelPos = (j * w + i) * pixelComponents;
@@ -127,21 +126,17 @@ define([
               if (imgdata[pixelPos+1] === 0) {
                 yearOfLoss = 2015;
                 dayOfLoss  = imgdata[pixelPos];
-                // year 1, day 1-255
               } else {
                 yearOfLoss = 2016;
                 dayOfLoss  = imgdata[pixelPos] + 144;
-                // year 2, day 145-365
               }
             } else {
               if (imgdata[pixelPos+1] <= 110) {
                 yearOfLoss = 2015;
                 dayOfLoss  = imgdata[pixelPos+1] + 255;
-                // year 1, day 255-365
               } else {
                 yearOfLoss = 2016;
                 dayOfLoss  = imgdata[pixelPos+1] - 110;
-                // year 2, day 1-144
               }
             }
 
@@ -162,7 +157,11 @@ define([
             var intensity = 255;
 
             // The B channel represents the year than an alert occurred
-            var yearOfLoss = imgdata[pixelPos+2] + 2015;
+            var yearOfLoss = 2016;
+            if (imgdata[pixelPos+2] === 0) {
+              yearOfLoss = 2015;
+            }
+
             // The R channel represents the day of the year that an alert
             // occurred, where `day <= 255`
             var dayOfLoss = imgdata[pixelPos];
