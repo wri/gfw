@@ -92,30 +92,20 @@ define([
 
     },
 
-    setListeners: function(){
-
-    },
-
     setDropable: function() {
-      var dropable = document.getElementById('drop-shape-analysis');
+      var dropable = document.getElementById('drop-shape-analysis'),
+          fileSelector = document.getElementById('analysis-file-upload');
       if (!dropable) { return; }
 
-      dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
-      dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
-      dropable.ondrop = function (e) {
-        e.preventDefault();
-
-        var file = e.dataTransfer.files[0];
-
+      var handleUpload = function(file) {
         var FILE_SIZE_LIMIT = 1000000,
-            sizeMessage = 'The selected Shapefile is quite large and uploading it might result in browser instability. Do you want to continue?';
+            sizeMessage = 'The selected file is quite large and uploading it might result in browser instability. Do you want to continue?';
         if (file.size > FILE_SIZE_LIMIT && !window.confirm(sizeMessage)) {
           $(dropable).removeClass('moving');
           return;
         }
 
-        this.$('.drop-shape-text').hide();
-        this.$('.drop-shape-loading').show();
+        mps.publish('Spinner/start', []);
 
         var shapeService = new ShapefileService({ shapefile: file });
         shapeService.toGeoJSON().then(function(data) {
@@ -126,14 +116,29 @@ define([
           this.drawMultipolygon(combinedFeatures);
           var bounds = geojsonUtilsHelper.getBoundsFromGeojson(combinedFeatures);
           this.map.fitBounds(bounds);
-
-          this.$('.drop-shape-text').show();
-          this.$('.drop-shape-loading').hide();
         }.bind(this));
 
         $(dropable).removeClass('moving');
-        return false;
       }.bind(this);
+
+      fileSelector.addEventListener('change', function() {
+        var file = this.files[0];
+        handleUpload(file);
+      });
+
+      dropable.addEventListener('click', function() {
+        $(fileSelector).trigger('click');
+      });
+
+      dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
+      dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
+      dropable.ondrop = function (e) {
+        e.preventDefault();
+        var file = e.dataTransfer.files[0];
+        handleUpload(file);
+        return false;
+      };
+
     },
 
     render: function(){
