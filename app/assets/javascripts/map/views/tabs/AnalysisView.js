@@ -123,7 +123,9 @@ define([
 
       fileSelector.addEventListener('change', function() {
         var file = this.files[0];
-        handleUpload(file);
+        if (file) {
+          handleUpload(file);
+        }
       });
 
       dropable.addEventListener('click', function() {
