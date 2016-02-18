@@ -115,7 +115,7 @@ define([
 
       var pixelComponents = 4; // RGBA
 
-      if (z > 10) {
+      if (z > 8) {
         for(var i = 0; i < w; ++i) {
           for(var j = 0; j < h; ++j) {
             var pixelPos = (j * w + i) * pixelComponents;
@@ -138,6 +138,10 @@ define([
                 yearOfLoss = 2016;
                 dayOfLoss  = imgdata[pixelPos+1] - 110;
               }
+            }
+
+            if (yearOfLoss > startYear) {
+              dayOfLoss = dayOfLoss + ((yearOfLoss - 2015) * 365);
             }
 
             if (dayOfLoss >= startDay && yearOfLoss >= startYear && dayOfLoss <= endDay && yearOfLoss <= endYear) {
@@ -169,6 +173,10 @@ define([
               // The G channel represents the day of year that an alert
               // occurred, where `day > 255`
               dayOfLoss = imgdata[pixelPos+1] + 255;
+            }
+
+            if (yearOfLoss > startYear) {
+              dayOfLoss = dayOfLoss + ((yearOfLoss - 2015) * 365);
             }
 
             if (dayOfLoss >= startDay && yearOfLoss >= startYear && dayOfLoss <= endDay && yearOfLoss <= endYear) {

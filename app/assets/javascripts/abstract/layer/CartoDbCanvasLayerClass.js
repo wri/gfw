@@ -28,8 +28,15 @@ define([
     },
 
     _setupAnimation: function() {
-      var startDate = moment.utc(this.currentDate[0]),
-          endDate = moment.utc(this.currentDate[1]);
+      var startDate = this.currentDate[0];
+      if (!moment.isMoment(startDate)) {
+        startDate = moment.utc(startDate);
+      }
+
+      var endDate = this.currentDate[1];
+      if (!moment.isMoment(endDate)) {
+        endDate = moment.utc(endDate);
+      }
 
       this.numberOfDays = Math.abs(startDate.diff(endDate)) / 1000 / 3600 / 24;
       this.animationOptions.currentOffset = 0;
@@ -48,7 +55,6 @@ define([
     setDate: function(date) {
       this.stop();
       this.presenter.animationStopped();
-
 
       var newDate = moment.utc(date);
       this.setOffsetFromDate(newDate);
