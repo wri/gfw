@@ -12,9 +12,9 @@ define([
   var PerNatPALayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT cartodb_id, the_geom_webmercator, anp_nomb as name, anp_arle as area_ha, category, use, anp_fecrea as date_created, \'{tableName}\' AS tablename, {analysis} AS analysis, \'{tableName}\' AS layer FROM {tableName}',
+      sql: 'SELECT cartodb_id, the_geom_webmercator, anp_nomb as name, anp_arle as area_ha, anp_cate as category, anp_fecrea as date_created, \'{tableName}\' AS tablename, {analysis} AS analysis, \'{tableName}\' AS layer FROM {tableName}',
       infowindow: true,
-      interactivity: 'cartodb_id, tablename, name, category, use, date_created, area_ha, analysis',
+      interactivity: 'cartodb_id, tablename, name, category, date_created, area_ha, analysis',
       analysis: true
     }
 
