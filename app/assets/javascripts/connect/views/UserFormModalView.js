@@ -29,9 +29,9 @@ define([
     render: function() {
       this.$el.html(this.template());
 
-      var userForm = new UserFormView({ isModal: true });
-      this.listenTo(userForm, 'saved', this.close);
-      this.$('.my-gfw-profile-modal-content').html(userForm.el);
+      this.userForm = new UserFormView({ isModal: true });
+      this.listenTo(this.userForm, 'saved', this.close);
+      this.$('.my-gfw-profile-modal-content').html(this.userForm.el);
 
       return this;
     },
@@ -56,8 +56,8 @@ define([
       this.$el.removeClass('is-active');
       this.render();
 
-      this.user.set('is_new', false);
-      this.user.save();
+      this.userForm.user.set('is_new', false);
+      this.userForm.user.save();
     }
 
   });
