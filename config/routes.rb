@@ -135,7 +135,5 @@ Gfw::Application.routes.draw do
 
   root 'landing#index'
 
-
-
-
+  get '/glad', to: redirect('/map/3/15.00/27.00/ALL/grayscale/umd_as_it_happens?tab=countries-tab&begin=2015-01-01&end=2016-02-19')
 end
