@@ -46,7 +46,9 @@ define([
 
       var context = this;
       dateConfigService.fetchLayerConfig().then(function(dates) {
-        context.currentDate[1] = moment(dates.max_date);
+        if (context.currentDate[1] === undefined) {
+          context.currentDate[1] = moment(dates.max_date);
+        }
 
         return Promise.all([
           context.getPointsLayerConfig(),

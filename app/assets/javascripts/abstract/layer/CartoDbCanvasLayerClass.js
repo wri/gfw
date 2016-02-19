@@ -13,7 +13,7 @@ define([
       options = options || {};
 
       this.currentDate = options.currentDate ||
-        [moment.utc(layer.mindate || undefined), moment.utc()];
+        [moment.utc(layer.mindate || undefined), (layer.maxdate || undefined)];
 
       this._super(layer, options, map);
     },
