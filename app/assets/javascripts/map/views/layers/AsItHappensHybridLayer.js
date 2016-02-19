@@ -46,8 +46,9 @@ define([
 
       var context = this;
       dateConfigService.fetchLayerConfig().then(function(dates) {
+        context.maxDate = moment(dates.max_date);
         if (context.currentDate[1] === undefined) {
-          context.currentDate[1] = moment(dates.max_date);
+          context.currentDate[1] = context.maxDate;
         }
 
         return Promise.all([
@@ -105,25 +106,20 @@ define([
       var endYear = this.timelineExtent[1].year(),
           endDay = this.timelineExtent[1].dayOfYear() + ((endYear - 2015) * 365);
 
-      // For normalising the intensity values
-      // As it is stored in RGB (0..255), the intensity (opacity) is
-      // outside the standard range of 0..1, and thus needs to be
-      // rescaled.
-      var exp = z < 11 ? 0.3 + ((z - 3) / 20) : 1;
-      var scale = d3.scale.pow()
-        .exponent(exp)
-        .domain([0,256])
-        .range([0,256]);
+      var recentRangeStart = this.maxDate.clone().subtract(7, 'days'),
+          recentRangeStartDay = recentRangeStart.dayOfYear(),
+          recentRangeStartYear = recentRangeStart.year();
+      var recentRangeEnd = this.maxDate.clone(),
+          recentRangeEndYear = recentRangeEnd.year(),
+          recentRangeEndDay = recentRangeEnd.dayOfYear() + ((recentRangeEndYear - 2015) * 365);
 
       var pixelComponents = 4; // RGBA
 
-      if (z > 8) {
-        for(var i = 0; i < w; ++i) {
-          for(var j = 0; j < h; ++j) {
-            var pixelPos = (j * w + i) * pixelComponents;
-            var intensity = 255;
-
-            var yearOfLoss, dayOfLoss;
+      for(var i = 0; i < w; ++i) {
+        for(var j = 0; j < h; ++j) {
+          var pixelPos = (j * w + i) * pixelComponents;
+          var yearOfLoss, dayOfLoss;
+          if (z > 8) {
             if (imgdata[pixelPos] > 0) {
               if (imgdata[pixelPos+1] === 0) {
                 yearOfLoss = 2015;
@@ -141,27 +137,7 @@ define([
                 dayOfLoss  = imgdata[pixelPos+1] - 110;
               }
             }
-
-            if (yearOfLoss > startYear) {
-              dayOfLoss = dayOfLoss + ((yearOfLoss - 2015) * 365);
-            }
-
-            if (dayOfLoss >= startDay && yearOfLoss >= startYear && dayOfLoss <= endDay && yearOfLoss <= endYear) {
-              // Arbitrary values to get the correct colours
-              imgdata[pixelPos] = 220;
-              imgdata[pixelPos + 1] = (72 - z) + 102 - (3 * scale(intensity) / z);
-              imgdata[pixelPos + 2] = (33 - z) + 153 - (intensity / z);
-            } else {
-              imgdata[pixelPos + 3] = 0;
-            }
-          }
-        }
-      } else {
-        for(var i = 0; i < w; ++i) {
-          for(var j = 0; j < h; ++j) {
-            var pixelPos = (j * w + i) * pixelComponents;
-            var intensity = 255;
-
+          } else {
             // The B channel represents the year than an alert occurred
             var yearOfLoss = 2016;
             if (imgdata[pixelPos+2] === 0) {
@@ -176,19 +152,24 @@ define([
               // occurred, where `day > 255`
               dayOfLoss = imgdata[pixelPos+1] + 255;
             }
+          }
 
-            if (yearOfLoss > startYear) {
-              dayOfLoss = dayOfLoss + ((yearOfLoss - 2015) * 365);
-            }
+          if (yearOfLoss > startYear) {
+            dayOfLoss = dayOfLoss + ((yearOfLoss - 2015) * 365);
+          }
 
-            if (dayOfLoss >= startDay && yearOfLoss >= startYear && dayOfLoss <= endDay && yearOfLoss <= endYear) {
-              // Arbitrary values to get the correct colours
-              imgdata[pixelPos] = 220;
-              imgdata[pixelPos + 1] = (72 - z) + 102 - (3 * scale(intensity) / z);
-              imgdata[pixelPos + 2] = (33 - z) + 153 - (intensity / z);
+          if (dayOfLoss >= startDay && yearOfLoss >= startYear && dayOfLoss <= endDay && yearOfLoss <= endYear) {
+            if (dayOfLoss >= recentRangeStartDay && yearOfLoss >= recentRangeStartYear && dayOfLoss <= recentRangeEndDay && yearOfLoss <= recentRangeEndYear) {
+              imgdata[pixelPos] = 219;
+              imgdata[pixelPos + 1] = 168;
+              imgdata[pixelPos + 2] = 0;
             } else {
-              imgdata[pixelPos + 3] = 0;
+              imgdata[pixelPos] = 220;
+              imgdata[pixelPos + 1] = 102;
+              imgdata[pixelPos + 2] = 153;
             }
+          } else {
+            imgdata[pixelPos + 3] = 0;
           }
         }
       }
