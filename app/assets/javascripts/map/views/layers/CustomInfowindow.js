@@ -30,7 +30,7 @@ define([
 
   CustomInfowindow.prototype.draw = function() {
     // Check if the div has been created.
-    var div = this.div_, closeButton, analyseButton;
+    var div = this.div_, closeButton, analyseButton, popup;
 
     if (!div) {
       // Create a overlay text DIV
@@ -41,7 +41,8 @@ define([
       div.style.width = this.options.width + 'px';
 
       div.innerHTML = this.options.infowindowContent || this.template({content: {data: this.options.infowindowData}});
-
+      
+      popup = $(div).find('.cartodb-popup')[0];
       closeButton = $(div).find('.close')[0];
       analyseButton = $(div).find('.analyse')[0];
 
@@ -50,6 +51,16 @@ define([
         if (! $(ev.currentTarget).hasClass('story-infowindow')) {
           ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
         }
+      }, this));
+
+      google.maps.event.addDomListener(popup, 'mouseover', _.bind(function(ev) {
+        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+        this.disableScrollwheel();
+      }, this));
+
+      google.maps.event.addDomListener(popup, 'mouseout', _.bind(function(ev) {
+        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+        this.enableScrollwheel();
       }, this));
 
       if (closeButton) {
@@ -98,6 +109,15 @@ define([
   CustomInfowindow.prototype.getPosition = function() {
     return this.latlng_;
   };
+
+  CustomInfowindow.prototype.enableScrollwheel = function() {
+    if(this.map) this.map.setOptions({ scrollwheel: true });
+  };
+
+  CustomInfowindow.prototype.disableScrollwheel = function() {
+    if(this.map) this.map.setOptions({ scrollwheel: false });
+  };
+
 
   return CustomInfowindow;
 
