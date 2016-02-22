@@ -44,6 +44,16 @@ define([
       mps.publish('Place/update', [{go: false}]);
     },
 
+    setSubscribeState: function() {
+      this.subscribe = true;
+      this.updateUrl();
+    },
+
+    unSetSubscribeState: function() {
+      delete this.subscribe;
+      this.updateUrl();
+    },
+
     /**
      * Used by PlaceService to get the current iso/geom params.
      *
@@ -52,11 +62,7 @@ define([
     getPlaceParams: function() {
       var p = {};
 
-      if (this.tab) {
-        p.tab = this.tab;
-        p.subscribe = true;
-        delete this.tab;
-      }
+      p.subscribe = this.subscribe;
 
       return p;
     },

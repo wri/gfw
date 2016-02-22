@@ -307,6 +307,7 @@ define([
       this.deleteAnalysis();
       this.view.setSelects(iso, this.status.get('dont_analyze'));
       mps.publish('LocalMode/updateIso', [iso, this.status.get('dont_analyze')]);
+      this.status.unset('geostore');
 
       // Build resource
       var resource = {
@@ -386,6 +387,7 @@ define([
 
       this.wdpaidBool = (this.wdpaid == wdpaid) ? false : true;
       this.wdpaid = wdpaid;
+      this.status.unset('geostore');
 
       if (this.wdpaidBool) {
         if (options.analyze === true) {
@@ -407,15 +409,15 @@ define([
               properties: {},
               type: 'Feature'
             };
-            mps.publish('AnalysisResults/totalArea', [{hectares: geojsonUtilsHelper.getHectares(geojson.geometry)}]);
 
-            this._geojsonFitBounds(geojson);
-            this.view.drawMultipolygon(geojson);
             if (options.analyze === true) {
+              mps.publish('AnalysisResults/totalArea', [{hectares: geojsonUtilsHelper.getHectares(geojson.geometry)}]);
+              this._geojsonFitBounds(geojson);
+              this.view.drawMultipolygon(geojson);
               this._publishAnalysis(resource);
             }
-            resolve(resource);
 
+            resolve(resource);
             this.wdpaid = null;
             this.wdpaidBool = true;
           } else {
@@ -444,6 +446,7 @@ define([
         mps.publish('Spinner/start');
       }
 
+      this.status.unset('geostore');
       var resource = this._buildResource({
         useid: useid,
         use: layerSlug,

@@ -62,6 +62,10 @@ define([
         this.user.fetch();
       }
 
+      if (!this.user.isLoggedIn()) {
+        this.presenter.setSubscribeState();
+      }
+
       this.createSubscription(options);
       this.currentStep = 0;
 
@@ -76,6 +80,7 @@ define([
 
       this.$el.removeClass('is-active');
       this.render();
+      this.presenter.unSetSubscribeState();
       this.presenter.updateUrl();
     },
 
