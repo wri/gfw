@@ -13,23 +13,23 @@ define([
   'use strict';
 
   var data = [{
-    start: moment().subtract(8, 'days'),
-    end: moment().subtract(24, 'hours'),
+    start: moment().subtract(7, 'days').utc(),
+    end: moment().utc(),
     label: 'Past week',
     hoursDiff: 168
   },{
-    start: moment().subtract(96, 'hours'),
-    end: moment().subtract(24, 'hours'),
+    start: moment().subtract(3, 'days').utc(),
+    end: moment().utc(),
     label: 'Past 72 hours',
     hoursDiff: 72
   },{
-    start: moment().subtract(72, 'hours'),
-    end: moment().subtract(24, 'hours'),
+    start: moment().subtract(2, 'days').utc(),
+    end: moment().utc(),
     label: 'Past 48 hours',
     hoursDiff: 48
   },{
-    start: moment().subtract(48, 'hours'),
-    end: moment().subtract(24, 'hours'),
+    start: moment().subtract(1, 'days').utc(),
+    end: moment().utc(),
     label: 'Past 24 hours',
     hoursDiff: 24
   }];
