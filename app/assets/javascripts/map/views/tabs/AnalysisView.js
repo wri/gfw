@@ -123,12 +123,13 @@ define([
 
       fileSelector.addEventListener('change', function() {
         var file = this.files[0];
-        if (file) {
-          handleUpload(file);
-        }
+        if (file) { handleUpload(file); }
       });
 
-      dropable.addEventListener('click', function() {
+      dropable.addEventListener('click', function(event) {
+        var $el = $(event.target);
+        if ($el.hasClass('source')) { return true; }
+
         $(fileSelector).trigger('click');
       });
 

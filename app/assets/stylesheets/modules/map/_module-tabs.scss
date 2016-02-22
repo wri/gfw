@@ -349,11 +349,27 @@ $w-control: 44px;
     }
   }
 
+  .drop-shape-text {
+    height: 36px;
+    width: 243px;
+    padding: 0 9px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .drop-shape-text span {
+    display: block;
+    width: 175px;
+    line-height: 1em;
+    padding-top: 1px;
+    font-size: 13px;
+  }
+
   .source{
     @extend .info-icon;
     display: inline-block;
-    top: 2px;
-    position: relative;
     cursor: pointer;
   }
 }
