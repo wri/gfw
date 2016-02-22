@@ -16,7 +16,7 @@ define([
 
   var FiresLayer = CartoDBLayerClass.extend({
     options: {
-      sql: 'SELECT the_geom_webmercator, acq_time,  COALESCE(to_char(acq_date, \'DD Mon, YYYY\')) as acq_date, confidence, brightness, longitude, latitude FROM global_7d WHERE acq_date > \'{year}-{month}-{day}\' AND CAST(confidence AS INT) > 30',
+      sql: 'SELECT the_geom_webmercator, acq_time,  COALESCE(to_char(acq_date, \'DD Mon, YYYY\')) as acq_date, confidence, brightness, longitude, latitude FROM global_7d WHERE acq_date >= \'{year}-{month}-{day}\' AND CAST(confidence AS INT) > 30',
       cartocss: global7dCartoCSS,
       interactivity: 'acq_time, acq_date, confidence, brightness, longitude, latitude',
       infowindow: true
@@ -28,7 +28,7 @@ define([
 
       // Default to 48 hours
       this.setCurrentDate(options.currentDate ||
-        [moment().subtract(48, 'hours'), moment().subtract(24, 'hours')]);
+        [moment().subtract(24, 'hours'), moment()]);
 
       this._super(layer, options, map);
     },
