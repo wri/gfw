@@ -70,6 +70,8 @@ define([
       this.currentStep = 0;
 
       this.$el.addClass('is-active');
+
+      this.presenter.updateUrl();
     },
 
     close: function(event) {
@@ -82,6 +84,10 @@ define([
       this.render();
       this.presenter.unSetSubscribeState();
       this.presenter.updateUrl();
+    },
+
+    isOpen: function() {
+      return this.$el.hasClass('is-active');
     },
 
     showSpinner: function() {

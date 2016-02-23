@@ -62,6 +62,10 @@ define([
     getPlaceParams: function() {
       var p = {};
 
+      if (this.view.isOpen()) {
+        p.tab = 'analysis-tab';
+      }
+
       p.subscribe = this.subscribe;
 
       return p;

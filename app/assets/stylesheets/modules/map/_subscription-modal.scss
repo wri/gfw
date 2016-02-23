@@ -73,6 +73,12 @@
       width: 300px;
     }
 
+    h3 {
+      font-weight: 200;
+      line-height: 1.5em;
+      margin-top: 15px;
+    }
+
     p {
       margin-top: 20px;
       color: #555;
@@ -112,6 +118,10 @@
       text-align: center;
       font-weight: 200;
       line-height: 1.5em;
+    }
+
+    strong {
+      font-weight: 400;
     }
   }
 }
