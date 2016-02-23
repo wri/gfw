@@ -223,6 +223,10 @@ define([
 
       if (params.analyze && params.name === 'map') {
         this.view.onClickAnalysis();
+      } else if (params.wdpaid) {
+        this._analyzeWdpai(params.wdpaid).then(subscribe);
+      } else if (params.use && params.useid) {
+        this._analyzeConcession(params.useid, params.use).then(subscribe);
       } else if (params.iso && params.iso.country && params.iso.country !== 'ALL') {
         if (params.geojson) {
           Promise.all([
@@ -234,10 +238,6 @@ define([
         }
       } else if (params.geojson) {
         this._analyzeGeojson(params.geojson).then(subscribe);
-      } else if (params.wdpaid) {
-        this._analyzeWdpai(params.wdpaid).then(subscribe);
-      } else if (params.use && params.useid) {
-        this._analyzeConcession(params.useid, params.use).then(subscribe);
       } else if (params.geostore) {
         this.status.set('geostore', params.geostore);
         subscribe();
