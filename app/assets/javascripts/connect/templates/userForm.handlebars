@@ -22,8 +22,7 @@
 
     <p>
       Help us help you!  Tell us who you are and how you use Global Forest
-      Watch so we can better meet your needs.  Only your email address is
-      required.
+      Watch so we can better meet your needs.
     </p>
 
     <form class="my-gfw-profile-form" method="POST" action="{{action}}">
@@ -31,7 +30,7 @@
       <input type="text" placeholder="Your name" name="name" value="{{user.name}}">
 
       <label>
-        Email <em>(required)</em>
+        Email
         {{#if errors.email}}
           <span class="my-gfw-form-error">{{errors.email}}</span>
         {{/if}}

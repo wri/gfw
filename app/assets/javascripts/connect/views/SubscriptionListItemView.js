@@ -10,7 +10,6 @@ define([
   var SubscriptionListItemView = Backbone.View.extend({
     events: {
       'click .subscriptions-delete-item': 'confirmDestroy',
-
       'click h4': 'editName',
       'blur h4': 'saveName',
       'keyup h4': 'handleNameKeyUp'
@@ -29,6 +28,7 @@ define([
     render: function() {
       var subscription = this.subscription.toJSON();
 
+      subscription.confirmationUrl = this.confirmationUrl();
       subscription.topic = this.subscription.formattedTopic();
       subscription.params.geom = JSON.stringify(subscription.params.geom);
       if (subscription.created !== undefined) {
@@ -39,6 +39,11 @@ define([
       this.$el.html(this.template(subscription));
 
       return this;
+    },
+
+    confirmationUrl: function() {
+      return window.gfw.config.GFW_API_HOST + '/v2/subscriptions/' +
+        this.subscription.id + '/send_confirmation';
     },
 
     confirmDestroy: function(event) {

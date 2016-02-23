@@ -1,11 +1,15 @@
 <td>
   {{#unless confirmed}}
   <div class="subscription-unconfirmed">
-    <svg class="icon" width="16px" height="16px">
-      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-warning"></use>
-    </svg>
+    <a href="{{confirmationUrl}}">
+      <svg class="icon" width="16px" height="16px">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-warning"></use>
+      </svg>
+    </a>
+
     <span class="tooltipmap bottom">
-      Subscription has not been confirmed, check your inbox for the email
+      Subscription has not been confirmed, click here to resend the
+      confirmation email
     </span>
   </div>
   {{/unless}}

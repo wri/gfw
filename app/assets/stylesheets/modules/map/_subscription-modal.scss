@@ -42,6 +42,10 @@
   padding: 30px 50px;
 }
 
+.subscription-modal-unauthenticated {
+  height: 375px;
+}
+
 .subscription-modal-close {
   display: block;
   position: absolute;
@@ -71,6 +75,12 @@
     h2 {
       font-size: 24px;
       width: 300px;
+    }
+
+    h3 {
+      font-weight: 200;
+      line-height: 1.5em;
+      margin-top: 15px;
     }
 
     p {
@@ -112,6 +122,10 @@
       text-align: center;
       font-weight: 200;
       line-height: 1.5em;
+    }
+
+    strong {
+      font-weight: 400;
     }
   }
 }
