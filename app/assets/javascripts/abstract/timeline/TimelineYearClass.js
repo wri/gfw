@@ -40,8 +40,8 @@ define([
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
-      this.dateRangeStart = this.options.dateRange[0];
-      this.dateRangeEnd = this.options.dateRange[1];
+      this.dateRangeStart = this.options.dateRange[0].utc();
+      this.dateRangeEnd = this.options.dateRange[1].utc();
       if (currentDate && currentDate[0]) {
         this.currentDate = currentDate;
       } else {
