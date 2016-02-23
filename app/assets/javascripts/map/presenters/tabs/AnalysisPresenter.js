@@ -14,6 +14,17 @@ define([
 
   'use strict';
 
+  var SUBSCRIPTION_ALLOWED = [
+    'loss',
+    'forestgain',
+    'forma',
+    'imazon',
+    'terrailoss',
+    'prodes',
+    'guyra',
+    'umd_as_it_happens'
+  ];
+
   var StatusModel = Backbone.Model.extend({
     defaults: {
       baselayer: null,
@@ -197,6 +208,15 @@ define([
         mps.publish('AnalysisService/cancel', []);
         mps.publish('AnalysisResults/delete-analysis', []);
         mps.publish('Place/update', [{go: false}]);
+      }
+    }, {
+      'Infowindow/toggleSubscribeButton': function() {
+        var baselayer = this.status.get('baselayer').slug;
+        if (SUBSCRIPTION_ALLOWED.indexOf(baselayer) === -1) {
+          $('#subscriptionBtn').addClass('disabled');
+        } else {
+          $('#subscriptionBtn').removeClass('disabled');
+        }
       }
     }],
 
