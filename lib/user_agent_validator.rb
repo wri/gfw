@@ -6,7 +6,8 @@ class UserAgentValidator
     Browser.new('Firefox', '12.0'),
     Browser.new('Internet Explorer', '7.0'),
     Browser.new('Chrome', '19.0.1036.7'),
-    Browser.new('Opera', '11.00')
+    Browser.new('Opera', '11.00'),
+    Browser.new('Edge', '12.00')
   ]
 
   SupportedSnippetCollectors = [
