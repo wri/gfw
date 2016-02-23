@@ -8,13 +8,6 @@ define([
 
   var UserFormValidator = Class.extend({
     validations: {
-      email: {
-        message: 'Please enter your email address',
-        validator: function(user) {
-          return !(_.isEmpty(user.get('email')));
-        }
-      },
-
       sign_up: {
         message: 'Please enter your email to sign up as an official tester',
         validator: function(user) {
