@@ -11,7 +11,7 @@ $search-br: 600px;
   z-index: 102;
   .search-box{
     position: absolute;
-    top: 110px;
+    top: 160px;
     left: 50%;
     z-index: 1002;
     width: calc(100% - 20px);
@@ -39,9 +39,11 @@ $search-br: 600px;
         padding: 10px;
         cursor: pointer;
         float: left;
-        margin: 0 0 0 2px;
+        width: 50%;
         @media (min-width: $br-mobileMap){
+          margin: 0 0 0 2px;
           padding: 5px 10px;
+          width: auto;
         }
         &:first-child{
           margin: 0;
