@@ -66,12 +66,12 @@ define([
         this.presenter.setSubscribeState();
       }
 
-      this.createSubscription(options);
-      this.currentStep = 0;
-
       this.$el.addClass('is-active');
 
       this.presenter.updateUrl();
+
+      this.createSubscription(options);
+      this.currentStep = 0;
     },
 
     close: function(event) {
