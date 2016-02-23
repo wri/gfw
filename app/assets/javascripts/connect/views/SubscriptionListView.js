@@ -54,6 +54,9 @@ define([
       if (urlParams.subscription_confirmed === 'true') {
         mps.publish('Notification/open', ['my-gfw-subscription-confirmed']);
       }
+      if (urlParams.subscription_confirmation_sent === 'true') {
+        mps.publish('Notification/open', ['my-gfw-subscription-confirmation-sent']);
+      }
       if (urlParams.unsubscribed === 'true') {
         mps.publish('Notification/open', ['my-gfw-subscription-deleted']);
       }
