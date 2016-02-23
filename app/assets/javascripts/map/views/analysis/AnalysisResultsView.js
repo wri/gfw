@@ -75,6 +75,7 @@ define([
       this.$el.html(this.template(this.params)).removeClass('hidden');
       this._cacheSelector();
       this.$resultsHide.addClass('hidden');
+      this.presenter.toggleSubscribeButton();
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + this.params.layer.title);
     },
 
@@ -110,6 +111,8 @@ define([
     _subscribe: function(event) {
       event.preventDefault();
       event.stopPropagation();
+
+      if ($(event.target).hasClass('disabled')) { return; }
 
       this.presenter.subscribeAnalysis();
       ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + this.params.layer.title);

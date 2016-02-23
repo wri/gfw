@@ -211,11 +211,11 @@ define([
       }
     }, {
       'Infowindow/toggleSubscribeButton': function() {
-        var baselayer = this.status.get('baselayer').slug;
-        if (SUBSCRIPTION_ALLOWED.indexOf(baselayer) === -1) {
-          $('#subscriptionBtn').addClass('disabled');
-        } else {
+        var baselayer = this.status.get('baselayer');
+        if (baselayer && SUBSCRIPTION_ALLOWED.indexOf(baselayer.slug) > -1) {
           $('#subscriptionBtn').removeClass('disabled');
+        } else {
+          $('#subscriptionBtn').addClass('disabled');
         }
       }
     }],
