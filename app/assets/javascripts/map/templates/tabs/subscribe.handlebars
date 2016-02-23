@@ -1,5 +1,5 @@
 <div class="subscription-modal-backdrop"></div>
-<div class="subscription-modal-window">
+<div class="subscription-modal-window {{#unless loggedIn}}subscription-modal-unauthenticated{{/unless}}">
   <a href="#" class="subscription-modal-close">
     <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg>
   </a>

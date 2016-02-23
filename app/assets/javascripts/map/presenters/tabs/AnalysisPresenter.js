@@ -395,7 +395,7 @@ define([
         }
 
         var resource = this._buildResource({
-          wdpaid: wdpaid,
+          wdpaid: _.toNumber(wdpaid),
           type: 'other'
         });
 
@@ -448,7 +448,7 @@ define([
 
       this.status.unset('geostore');
       var resource = this._buildResource({
-        useid: useid,
+        useid: _.toNumber(useid),
         use: layerSlug,
         type: 'other'
       });

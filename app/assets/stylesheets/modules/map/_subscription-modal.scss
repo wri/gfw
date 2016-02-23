@@ -38,8 +38,12 @@
 
   position: relative;
   width: 475px;
-  height: 375px;
+  height: 315px;
   padding: 30px 50px;
+}
+
+.subscription-modal-unauthenticated {
+  height: 375px;
 }
 
 .subscription-modal-close {
