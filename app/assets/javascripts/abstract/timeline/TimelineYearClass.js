@@ -576,7 +576,7 @@ define([
       // give time to finish animations.
       setTimeout(function() {
         var startYear = Math.round(this.xscale.invert(this.handlers.left.attr('x')));
-        var endYear = Math.ceil(this.xscale.invert(this.handlers.right.attr('x')));
+        var endYear = Math.round(this.xscale.invert(this.handlers.right.attr('x')));
 
         this.updateCurrentDate([moment([startYear]), moment([endYear])]);
       }.bind(this), 100);
