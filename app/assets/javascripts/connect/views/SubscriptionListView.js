@@ -1,9 +1,9 @@
 define([
-  'backbone', 'handlebars', 'underscore', 'moment', 'mps', 'map/utils', 'simplePagination',
+  'jquery', 'backbone', 'handlebars', 'underscore', 'mps', 'map/utils', 'simplePagination',
   'connect/collections/Subscriptions',
   'connect/views/SubscriptionListItemView',
   'text!connect/templates/subscriptionList.handlebars'
-], function(Backbone, Handlebars, _, moment, mps, utils, simplePagination, Subscriptions, SubscriptionListItemView, tpl) {
+], function($, Backbone, Handlebars, _, mps, utils, simplePagination, Subscriptions, SubscriptionListItemView, tpl) {
 
   'use strict';
 
@@ -61,7 +61,6 @@ define([
 
     initPaginate: function(){
       var options = this.getPaginateOptions();
-      // pagination
       this.$paginationContainer = $('#my-gfw-subscriptions-pagination');
       this.$paginationContainer.pagination(options);
     },
@@ -86,8 +85,9 @@ define([
           this.model.set('page', pageNumber);
           this.$paginationContainer.pagination('drawPage', pageNumber);
           this.render();
-        }.bind(this)        
-      }
+          window.scrollTo(0,0);
+        }.bind(this)
+      };
     }
 
   });
