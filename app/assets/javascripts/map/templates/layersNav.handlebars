@@ -35,22 +35,17 @@
           </div>
           <div class="layer-group">
             <span class="group-name">Tree cover loss alerts <em>(near real-time)</em></span>
-            {{!-- <li class="layer" data-layer="umd_as_it_happens">
+            <li class="layer" data-layer="umd_as_it_happens">
               <span class="onoffradio"><span></span></span>
               <span class="layer-title">GLAD Tree Cover Loss Alerts<a href='#' data-source='umd_landsat_alerts' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-              <span class="layer-info">(weekly, 30m, select countries, UMD/ GLAD)</span>
+              <span class="layer-info">(weekly, 30m, select countries, UMD/GLAD)</span>
             </li>
-            <li class="layer" data-layer="gfw_landsat_torque_alerts">
-              <span class="onoffradio"><span></span></span>
-              <span class="layer-title">GLAD Tree Cover Loss Alerts [Raster]<a href='#' data-source='umd_landsat_alerts' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-              <span class="layer-info">(weekly, 30m, select countries, UMD/ GLAD)</span>
-            </li> --}}
             <li class="layer" data-layer="forma">
               <span class="onoffradio"><span></span></span>
               <span class="layer-title">FORMA<a href='#' data-source='forma' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
               <span class="layer-info">(quarterly, 500m, humid tropics, WRI/CGD)</span>
             </li>
-            {{!-- <li class="wrapped-layer">
+            <li class="wrapped-layer">
               <span class="onoffradio"><span></span></span>
               <span class="layer-title">FORMA 250<a href='#' data-source='forma' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
               <span class="layer-info">(daily, 250m, humid tropics, WRI/CGD)</span>
@@ -76,7 +71,7 @@
                   <input type="radio" />Peru
                 </label>
               </span>
-            </li> --}}
+            </li>
             <li class="layer" data-layer="terrailoss">
               <span class="onoffradio"><span></span></span>
               <span class="layer-title">Terra-i<a href='#' data-source='terra_i_alerts' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
@@ -142,7 +137,7 @@
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Mangrove forests<a href='#' data-source='global_mangroves' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
-           <li class="layer" data-layer="global_land_cover">
+          <li class="layer" data-layer="global_land_cover">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Land cover<a href='#' data-source='global_landcover' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
             <span class="layer-info">(2009)</span>
@@ -185,6 +180,11 @@
               <span class="onoffswitch"><span></span></span>
               <span class="layer-title">Mining<a href='#' data-source='gfw_mining' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
               <span class="layer-info">(select countries)</span>
+            </li>
+            <li class="layer" data-layer="raisg_mining">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Amazon basin mining concessions <a href='#' data-source='raisg_mining' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(RAISG)</span>
             </li>
             <li class="layer" data-layer="oil_palm">
               <span class="onoffswitch"><span></span></span>
@@ -229,11 +229,10 @@
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Biodiversity hotspots<a href='#' data-source='biodiversity_hotspots' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
-{{!--           <li class="layer" data-layer="wwf">
+          <li class="layer" data-layer="wwf">
             <span class="onoffswitch"><span></span></span>
-
             <span class="layer-title">WWF Terrestrial Ecoregions of the World<a href='#' data-source='wwf_terrestrial_ecoregions' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li> --}}
+          </li>
           <li class="layer" data-layer="birdlife">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">BirdLife Endemic Bird Areas<a href='#' data-source='endemic_bird_areas' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
@@ -247,11 +246,10 @@
             <span class="layer-title">Tiger Conservation Landscapes<a href='#' data-source='tiger_conservation_landscapes' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
 
-{{!--           <li class="layer" data-layer="verified_carbon">
+          <li class="layer" data-layer="verified_carbon">
             <span class="onoffswitch"><span></span></span>
-
             <span class="layer-title">Verified Carbon Standard project areas<a href='#' data-source='verified_carbon_standard' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li> --}}
+
         </ul>
       </div>
     </li>
