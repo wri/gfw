@@ -10,11 +10,12 @@ define([
   var SubscriptionListItemView = Backbone.View.extend({
     events: {
       'click .subscriptions-delete-item': 'confirmDestroy',
-
       'click h4': 'editName',
       'blur h4': 'saveName',
       'keyup h4': 'handleNameKeyUp'
     },
+
+    tagName: 'tr',
 
     template: Handlebars.compile(tpl),
 
@@ -27,6 +28,8 @@ define([
     render: function() {
       var subscription = this.subscription.toJSON();
 
+      subscription.confirmationUrl = this.confirmationUrl();
+      subscription.topic = this.subscription.formattedTopic();
       subscription.params.geom = JSON.stringify(subscription.params.geom);
       if (subscription.created !== undefined) {
         subscription.created = moment(subscription.created).
@@ -36,6 +39,11 @@ define([
       this.$el.html(this.template(subscription));
 
       return this;
+    },
+
+    confirmationUrl: function() {
+      return window.gfw.config.GFW_API_HOST + '/v2/subscriptions/' +
+        this.subscription.id + '/send_confirmation';
     },
 
     confirmDestroy: function(event) {
@@ -57,13 +65,11 @@ define([
     editName: function(event) {
       var $el = $(event.currentTarget);
       if (!$el.hasClass('editing')) {
-        var width = $el.width(),
-            value = this.subscription.get('name');
+        var value = this.subscription.get('name');
 
         $el.addClass('editing').
           html('<input />').
           find('input').val(value).
-          width(width).
           focus();
       }
     },
@@ -80,11 +86,11 @@ define([
 
     saveName: function(event) {
       var $el = $(event.currentTarget);
-			if ($el.hasClass('editing')) {
-				var old_value = this.subscription.get('name'),
-						new_value = $el.find('input').val();
+      if ($el.hasClass('editing')) {
+        var old_value = this.subscription.get('name'),
+            new_value = $el.find('input').val();
 
-				this.subscription.save('name', new_value, {
+        this.subscription.save('name', new_value, {
           wait: true,
           silent: true,
           success: this.resetName.bind(this),

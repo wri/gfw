@@ -14,9 +14,9 @@ define([
 
   var UrthecastLayer = ImageLayerClass.extend({
     options: {
-      urlTemplate:'http://uc.gfw-apis.appspot.com/urthecast/map-tiles{/sat}{/z}{/x}{/y}?cloud_coverage_lte={cloud}&acquired_gte={mindate}&acquired_lte={maxdate}T23:59:59Z',
-      urlInfoWindow: 'http://uc.gfw-apis.appspot.com/urthecast/archive/scenes/?geometry_intersects=POINT({lng}+{lat})&cloud_coverage_lte={cloud}&tiled_lte={tileddate}&acquired_gte={mindate}&acquired_lte={maxdate}&sort=-acquired',
-      urlBounds: 'http://uc.gfw-apis.appspot.com/urthecast/archive/scenes/?cloud_coverage_lte={cloud}&tiled_lte={tileddate}&acquired_gte={mindate}&acquired_lte={maxdate}&geometry_intersects={geo}&sort=-acquired',
+      urlTemplate:'http://uc.gfw-apis.appspot.com/urthecast/map-tiles{/sat}{/z}{/x}{/y}?cloud_coverage_lte={cloud}&acquired_gte={mindate}&acquired_lte={maxdate}T23:59:59Z&sensor_platform={sensor_platform}',
+      urlInfoWindow: 'http://uc.gfw-apis.appspot.com/urthecast/archive/scenes/?geometry_intersects=POINT({lng}+{lat})&cloud_coverage_lte={cloud}&tiled_lte={tileddate}&acquired_gte={mindate}&acquired_lte={maxdate}&sort=-acquired&sensor_platform={sensor_platform}',
+      urlBounds: 'http://uc.gfw-apis.appspot.com/urthecast/archive/scenes/?cloud_coverage_lte={cloud}&tiled_lte={tileddate}&acquired_gte={mindate}&acquired_lte={maxdate}&geometry_intersects={geo}&sort=-acquired&sensor_platform={sensor_platform}',
       dataMaxZoom: {
         'rgb': 14,
         'ndvi': 13,
@@ -52,9 +52,23 @@ define([
          'color_filter': params.color_filter || 'rgb',
          'cloud':        params.cloud        || '100',
          'mindate':      params.mindate      || '2000-09-01',
-         'maxdate':      params.maxdate      || '2015-09-01'
+         'maxdate':      params.maxdate      || '2015-09-01',
+         'sensor_platform' : params.sensor_platform || 'theia,landsat-8,deimos-1'
         }
       return params;
+    },
+
+    _getUrl: function(x, y, z, params) {
+      return new UriTemplate(this.options.urlTemplate).fillFromObject({
+        x: x,
+        y: y,
+        z: z,
+        sat: params.color_filter,
+        cloud: params.cloud,
+        mindate: params.mindate,
+        maxdate: params.maxdate,
+        sensor_platform: params.sensor_platform
+      });
     },
 
     _getInfoWindowUrl: function(params) {
@@ -64,7 +78,8 @@ define([
         cloud: params.cloud,
         mindate: moment(params.mindate).format("YYYY-MM-DD"),
         maxdate: moment(params.maxdate).format("YYYY-MM-DD"),
-        tileddate: params.tileddate
+        tileddate: params.tileddate,
+        sensor_platform: params.sensor_platform
       });
     },
 
@@ -74,7 +89,8 @@ define([
         cloud: params.cloud,
         mindate: moment(params.mindate).format("YYYY-MM-DD"),
         maxdate: moment(params.maxdate).format("YYYY-MM-DD"),
-        tileddate: params.tileddate
+        tileddate: params.tileddate,
+        sensor_platform: params.sensor_platform
       });
     },
 
@@ -82,7 +98,7 @@ define([
     // TILES
     getTile: function(coord, zoom, ownerDocument) {
 
-      if(zoom < 7) {
+      if(zoom < 5) {
         return;
       }
       var zsteps = this._getZoomSteps(zoom);
@@ -183,32 +199,34 @@ define([
 
     // MAP EVENTS
     addEvents: function() {
-      this.idleevent = google.maps.event.addListener(this.map, "idle", _.bind(this.onDragEnd, this ));
       this.clickevent = google.maps.event.addListener(this.map, "click", _.bind(this.onClickEvent, this ));
-      this.dragendevent = google.maps.event.addListener(this.map, "dragend", _.bind(this.onDragEnd, this ));
+      this.dragendevent = google.maps.event.addListener(this.map, "dragend", _.bind(this.checkForImagesInBounds, this ));
     },
 
     clearEvents: function() {
       google.maps.event.clearListeners(this.map, 'dragend')
     },
 
-    onDragEnd: function() {
+    checkForImagesInBounds: function() {
       // // Set Date
       var today = moment();
       var tomorrow = today.add('days', 1);
+      var geo = this.getBoundsPolygon();
 
-      // // Set options to get the url of the api
-      var options = _.extend({}, this._getParams(), {
-        geo: this.getBoundsPolygon(),
-        tileddate: moment(tomorrow).format("YYYY-MM-DD"),
-      });
-      var url = this._getBoundsUrl(options);
-      this.hidenotification();
-      $.get(url).done(_.bind(function(data) {
-        if (!!data && !!data.payload && !data.payload.length) {
-          this.notificate('not-no-images-urthecast');
-        }
-      }, this ));
+      if (!!geo) {
+        // Set options to get the url of the api
+        var options = _.extend({}, this._getParams(), {
+          geo: geo,
+          tileddate: moment(tomorrow).format("YYYY-MM-DD"),
+        });
+        var url = this._getBoundsUrl(options);
+        $.get(url).done(_.bind(function(data) {
+          this.hidenotification();
+          if (!!data && !!data.payload && !data.payload.length) {
+            this.notificate('not-no-images-urthecast');
+          }
+        }, this ));
+      }
     },
 
     onClickEvent: function(event) {
@@ -262,31 +280,33 @@ define([
     },
 
     getBoundsPolygon: function() {
-      var bounds = this.map.getBounds(),
-          nlat = bounds.getNorthEast().lat(),
-          nlng = bounds.getNorthEast().lng(),
-          slat = bounds.getSouthWest().lat(),
-          slng = bounds.getSouthWest().lng();
+      var bounds = this.map.getBounds();
+      if (!!bounds) {
+        var nlat = bounds.getNorthEast().lat(),
+            nlng = bounds.getNorthEast().lng(),
+            slat = bounds.getSouthWest().lat(),
+            slng = bounds.getSouthWest().lng();
 
-      // Define the LngLat coordinates for the polygon.
-      var boundsJson = {
-        "type": "Polygon",
-        "coordinates":[[
-          [slng,nlat],
-          [nlng,nlat],
-          [nlng,slat],
-          [slng,slat],
-          [slng,nlat]
-        ]]
+        // Define the LngLat coordinates for the polygon.
+        var boundsJson = {
+          "type": "Polygon",
+          "coordinates":[[
+            [slng,nlat],
+            [nlng,nlat],
+            [nlng,slat],
+            [slng,slat],
+            [slng,nlat]
+          ]]
+        }
+        return JSON.stringify(boundsJson);
       }
-      return JSON.stringify(boundsJson);
+      return null;
     },
 
     _getZoomSteps: function(z) {
       var params = this._getParams();
       return z - this.options.dataMaxZoom[params['color_filter']];
     },
-
 
   });
 

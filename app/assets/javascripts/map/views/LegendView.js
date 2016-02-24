@@ -43,9 +43,11 @@ define([
   'text!map/templates/legend/mysPA.handlebars',
   'text!map/templates/legend/idn_peat.handlebars',
   'text!map/templates/legend/raisg_mining.handlebars',
+  'text!map/templates/legend/per_mining.handlebars',
+  'text!map/templates/legend/glad.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl, rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl,raisg_miningTpl) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl, rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl) {
 
   'use strict';
 
@@ -117,8 +119,13 @@ define([
       rus_hcv:Handlebars.compile(rus_hrvTpl),
       raisg:Handlebars.compile(raisg_land_rightsTpl),
       mys_protected_areas:Handlebars.compile(mysPATpl),
+      mys_peat_lands:Handlebars.compile(idn_peatTpl),
       idn_peat_lands:Handlebars.compile(idn_peatTpl),
       raisg_mining:Handlebars.compile(raisg_miningTpl),
+      bra_mining:Handlebars.compile(raisg_miningTpl),
+      per_mining:Handlebars.compile(per_miningTpl),
+      umd_as_it_happens:Handlebars.compile(gladTpl),
+      
     },
 
     options: {

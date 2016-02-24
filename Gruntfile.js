@@ -17,7 +17,7 @@ module.exports = function(grunt) {
     connect: {
       server: {
         options: {
-          port : 8000
+          port : 9090
         }
       }
     },
@@ -28,7 +28,7 @@ module.exports = function(grunt) {
           specs: [
             '<%= root.test %>/spec/*_spec.js',
           ],
-          host: 'http://127.0.0.1:8000/',
+          host: 'http://127.0.0.1:9090/',
           helpers: '<%= root.test %>/helpers/*.js',
           outfile: '<%= root.test %>/SpecRunner.html',
           keepRunner: true,

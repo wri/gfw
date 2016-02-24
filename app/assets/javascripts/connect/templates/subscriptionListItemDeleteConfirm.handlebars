@@ -1,14 +1,26 @@
 <div class="modal is-active">
-	<div class="modal-backdrop"></div>
-	<div class="modal-window">
-		<a href="#" class="modal-close">
-			<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg>
-		</a>
-		<div class="modal-wrapper">
-			<div class="modal-content">
-        <a href="#" id="cancel-delete">Cancel</a>
-        <a href="#" id="confirm-delete">Confirm</a>
-			</div>
-		</div>
-	</div>
+  <div class="modal-backdrop"></div>
+  <div class="modal-window">
+    <a href="#" class="modal-close">
+      <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg>
+    </a>
+    <div class="modal-wrapper">
+      <header>
+        <h2>Delete this subscription</h2>
+        <h3>{{#if name}}{{name}},{{/if}} {{created}}</h3>
+      </header>
+
+      <div class="modal-content">
+        <h3>
+          This will delete the subscription from your profile. Are you
+          sure?
+        </h3>
+
+        <div class="delete-button-container">
+          <a href="#" class="btn gray uppercase" id="cancel-delete">Cancel</a>
+          <a href="#" class="btn red uppercase" id="confirm-delete">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

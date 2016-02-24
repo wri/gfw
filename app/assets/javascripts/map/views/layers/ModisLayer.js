@@ -28,8 +28,14 @@ define([
       _.bindAll(this, 'setCurrentDate');
       this.presenter = new Presenter(this);
       this._super(layer, options, map);
-      this.setCurrentDate(options.currentDate ||
-        [moment(this.layer.maxdate).subtract('months', 2), moment(this.layer.maxdate)]);
+
+      if (!_.isEmpty(options.currentDate)) {
+        this.setCurrentDate([moment(options.currentDate[0]),
+          moment(options.currentDate[1])]);
+      } else {
+        this.setCurrentDate([moment(this.layer.maxdate).subtract('months', 2),
+          moment(this.layer.maxdate)]);
+      }
     },
 
     /**

@@ -6,9 +6,8 @@ define([
   'backbone',
   'underscore',
   'mps',
-  'views/ShareView',
-  'views/LoginView'
-], function($,Backbone, _,mps, ShareView, LoginView) {
+  'views/ShareView'
+], function($,Backbone, _,mps, ShareView) {
 
   'use strict';
 
@@ -20,8 +19,7 @@ define([
       'click #btn-menu' : 'toggleMenu',
       'click #btnAppsMenu' : 'toggleAppMenu',
       'click .share-link' : 'shareOpen',
-      'click .menu-section-link' : 'menuOpen',
-      'click #connect-my-gfw' : 'login',
+      'click .menu-section-link' : 'menuOpen'
     },
 
     initialize: function() {
@@ -90,11 +88,6 @@ define([
     shareOpen: function(event){
       var shareView = new ShareView().share(event);
       this.$el.append(shareView.el);
-    },
-
-    login: function() {
-      var loginView = new LoginView().login(event);
-      this.$el.append(loginView.el);
     },
 
     menuOpen: function(e){

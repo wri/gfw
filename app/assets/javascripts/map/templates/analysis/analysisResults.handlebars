@@ -22,6 +22,11 @@
         <span class="stats-title">Total extent<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{threshold}}% <a href="#" class="canopy-button">canopy density</a></span></span>
         <span class="stats-count" style="color: #97bd3d;"><strong>{{extent}}</strong> ha</span>
       </li>
+
+      <li>
+        <a href="#" class="advanced-analysis-button">View Advanced Analysis</a>
+      </li>
+
       {{#if warning_text}}
       <li>
         <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
@@ -68,18 +73,25 @@
                 <span class="stats-title">Grand Chaco tree cover loss:</span>
                 <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> ha</span>
               </li>
-            {{else}}
-              {{#if extent}}
+              {{else}}
+                {{#if umd_as_it_happens}}
                 <li>
-                  <span class="stats-title">Total extent<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{threshold}}% <a href="#" class="canopy-button">canopy density</a></span></span>
-                  <span class="stats-count" style="color: #97bd3d;"><strong>{{extent}}</strong> ha</span>
+                  <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
+                  <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong></span>
                 </li>
                 {{else}}
-                <li>
-                  <span class="stats-title">Total alerts ({{dateRange}})</span>
-                  <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> {{alertsName}}</span>
-                </li>
-              {{/if}}
+                {{#if extent}}
+                  <li>
+                    <span class="stats-title">Tree cover (2000)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{threshold}}% <a href="#" class="canopy-button">canopy density</a></span></span>
+                    <span class="stats-count" style="color: #97bd3d;"><strong>{{extent}}</strong> ha</span>
+                  </li>
+                  {{else}}
+                  <li>
+                    <span class="stats-title">Total alerts ({{dateRange}})</span>
+                    <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> {{alertsName}}</span>
+                  </li>
+                {{/if}}
+              {{/if}} 
             {{/if}}
           {{/if}}
         {{/if}} 
@@ -90,8 +102,10 @@
 
 
 <footer class="analysis-footer">
+  <button id="analysis-subscribe" class="btn green uppercase analysis-subscribe">Subscribe</button>
+
   <ul>
-  {{#if downloadVisible}}
+    {{#if downloadVisible}}
     <li>
       {{#if loss}}
         <a class="download-mobile-link" data-type="forest-change" href="http://earthenginepartners.appspot.com/science-2013-global-forest" target="_blank">
@@ -122,14 +136,11 @@
         {{/if}}
       {{/if}}
     </li>
-  {{/if}}
+    {{/if}}
+
     <li id="analysis-delete">
       <svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg>
       <span class="tip">Discard analysis</span>
-    </li>
-    <li id="analysis-subscribe">
-      <svg class="icon"><use xlink:href="#icon-analysis-alerts"></use></svg>
-      <span class="tip">Subscribe</span>
     </li>
   </ul>
 </footer>

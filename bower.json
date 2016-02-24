@@ -45,7 +45,9 @@
     "enquire": "~2.1.2",
     "pickadate": "~3.5.6",
     "proj4": "~2.3.12",
-    "js-cookie": "~2.1.0"
+    "js-cookie": "~2.1.0",
+    "bluebird": "~3.1.1",
+    "turf": "~2.0.2"
   },
   "resolutions": {
     "jquery": "1.11.1"

@@ -16,7 +16,7 @@ define([
     start: moment().subtract(7, 'days').utc(),
     end: moment().utc(),
     label: 'Past week',
-    hoursDiff: 168
+    hoursDiff: 24 * 7
   },{
     start: moment().subtract(3, 'days').utc(),
     end: moment().utc(),
@@ -40,7 +40,7 @@ define([
       this.presenter = new Presenter(this);
 
       this.options = {
-        dateRange: [moment().subtract(8, 'days'), moment()],
+        dateRange: [moment().subtract(7, 'days'), moment()],
         width: 550,
         tickWidth: 110,
         tipsy: false

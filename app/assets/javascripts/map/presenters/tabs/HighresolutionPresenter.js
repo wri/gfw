@@ -33,7 +33,7 @@ define([
         this.status.set('hresolution', place.params.hresolution);
         if (!! place.params.hresolution) {
           var params = JSON.parse(atob(place.params.hresolution));
-          if (params.zoom >= 7) {
+          if (params.zoom >= 5) {
             this.view.switchToggle();
           }
           this.view._fillParams(params);
@@ -94,7 +94,6 @@ define([
     toggleLayer: function(layerSlug, id) {
 
       var where = layerSlug ? [{slug: layerSlug}] : [{id: id}];
-
       layerSpecService.toggle(where,
         _.bind(function(layerSpec) {
           mps.publish('LayerNav/change', [layerSpec]);

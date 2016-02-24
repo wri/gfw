@@ -18,7 +18,7 @@ define([
     },
 
     _subscriptions: [{
-      'Timeline/date-change': function(layerName, date) {
+      'TorqueTimeline/date-change': function(layerName, date) {
         if (this.view.getName() === layerName) {
           this.view.setDate(date);
           this.view.stop();

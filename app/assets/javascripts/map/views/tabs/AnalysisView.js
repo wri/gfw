@@ -4,18 +4,14 @@
  * @return AnalysisView instance (extends Backbone.View).
  */
 define([
-  'underscore',
-  'handlebars',
-  'amplify',
-  'chosen',
+  'underscore', 'handlebars', 'amplify', 'chosen', 'turf',
   'map/presenters/tabs/AnalysisPresenter',
   'map/services/ShapefileService',
   'helpers/geojsonUtilsHelper',
   'map/views/tabs/SpinnerView',
   'text!map/templates/tabs/analysis.handlebars',
   'text!map/templates/tabs/analysis-mobile.handlebars'
-
-], function(_, Handlebars, amplify, chosen, Presenter, ShapefileService, geojsonUtilsHelper, SpinnerView, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, turf, Presenter, ShapefileService, geojsonUtilsHelper, SpinnerView, tpl, tplMobile) {
 
   'use strict';
 
@@ -96,32 +92,56 @@ define([
 
     },
 
-    setListeners: function(){
-
-    },
-
     setDropable: function() {
-      var dropable = document.getElementById('drop-shape-analysis');
-      if (!dropable) return;
+      var dropable = document.getElementById('drop-shape-analysis'),
+          fileSelector = document.getElementById('analysis-file-upload');
+      if (!dropable) { return; }
+
+      var handleUpload = function(file) {
+        var FILE_SIZE_LIMIT = 1000000,
+            sizeMessage = 'The selected file is quite large and uploading it might result in browser instability. Do you want to continue?';
+        if (file.size > FILE_SIZE_LIMIT && !window.confirm(sizeMessage)) {
+          $(dropable).removeClass('moving');
+          return;
+        }
+
+        mps.publish('Spinner/start', []);
+
+        var shapeService = new ShapefileService({ shapefile: file });
+        shapeService.toGeoJSON().then(function(data) {
+          var combinedFeatures = data.features.reduce(turf.union);
+
+          mps.publish('Analysis/upload', [combinedFeatures.geometry]);
+
+          this.drawMultipolygon(combinedFeatures);
+          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(combinedFeatures);
+          this.map.fitBounds(bounds);
+        }.bind(this));
+
+        $(dropable).removeClass('moving');
+      }.bind(this);
+
+      fileSelector.addEventListener('change', function() {
+        var file = this.files[0];
+        if (file) { handleUpload(file); }
+      });
+
+      dropable.addEventListener('click', function(event) {
+        var $el = $(event.target);
+        if ($el.hasClass('source')) { return true; }
+
+        $(fileSelector).trigger('click');
+      });
+
       dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
       dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
       dropable.ondrop = function (e) {
         e.preventDefault();
-
         var file = e.dataTransfer.files[0];
-        var shapeService = new ShapefileService({
-          shapefile : file });
-        shapeService.toGeoJSON().then(function(data) {
-          var features = data.features[0];
-          mps.publish('Analysis/upload', [features.geometry]);
-
-          this.drawMultipolygon(features);
-          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(features);
-          this.map.fitBounds(bounds);
-        }.bind(this));
-
+        handleUpload(file);
         return false;
-      }.bind(this);
+      };
+
     },
 
     render: function(){
