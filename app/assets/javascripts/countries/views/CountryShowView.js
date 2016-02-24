@@ -474,7 +474,7 @@ define([
       var $comingSoon = $el.find('.coming-soon');
       var json = $graph.data('json');
 
-      if (!json.length) {
+      if (! !!json || !json.length) {
         $comingSoon.show(0);
         return;
       }
