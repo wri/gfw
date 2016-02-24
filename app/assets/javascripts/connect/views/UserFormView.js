@@ -37,6 +37,7 @@ define([
     events: {
       'change select': '_handleSelectChange',
       'change input': '_handleInputChange',
+      'keyup input': '_handleInputChange',
       'click #submit': '_submit'
     },
 

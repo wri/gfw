@@ -57,22 +57,26 @@ define([
       return this;
     },
 
-    show: function(options){
-      if (this.user.get('id') && _.isEmpty(this.user.get('email'))) {
+    refreshEmail: function() {
+      if (_.isEmpty(this.user.get('email'))) {
         this.showSpinner();
         this.user.fetch();
       }
+    },
+
+    show: function(options){
+      this.refreshEmail();
 
       if (!this.user.isLoggedIn()) {
         this.presenter.setSubscribeState();
       }
 
       this.$el.addClass('is-active');
-
       this.presenter.updateUrl();
 
       this.createSubscription(options);
       this.currentStep = 0;
+
       this.render();
     },
 

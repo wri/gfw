@@ -1,9 +1,9 @@
 define([
-  'backbone', 'handlebars',
+  'backbone', 'handlebars', 'mps',
   'map/models/UserModel',
   'connect/views/UserFormView',
   'text!connect/templates/userFormModal.handlebars'
-], function(Backbone, Handlebars, User, UserFormView, tpl) {
+], function(Backbone, Handlebars, mps, User, UserFormView, tpl) {
 
   'use strict';
 
@@ -55,6 +55,8 @@ define([
 
       this.$el.removeClass('is-active');
       this.render();
+
+      mps.publish('Subscribe/reload', []);
 
       this.userForm.user.set('is_new', false);
       this.userForm.user.save();
