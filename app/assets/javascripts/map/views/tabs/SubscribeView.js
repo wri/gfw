@@ -50,7 +50,7 @@ define([
         email: this.user.get('email'),
         loggedIn: this.user.isLoggedIn(),
         date: moment().format('MMM D, YYYY'),
-        dataset: this.subscription && this.subscription.formattedTopic()
+        dataset: this.subscription && this.subscription.formattedTopic().long_title
       }));
       this.setupAuthLinks();
 
