@@ -28,7 +28,7 @@ define([
 
     _getUrl: function(x, y, z) {
       var url;
-      if (z > 9) {
+      if (z > 8) {
         url = this.options.rasterUrlTemplate;
       } else {
         url = this.options.pointsUrlTemplate;
