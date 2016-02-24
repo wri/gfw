@@ -5,16 +5,46 @@ define([
   'use strict';
 
   var DATASETS = {
-    'alerts/forma': 'FORMA',
-    'alerts/terra': 'Terra-i',
-    'alerts/sad': 'SAD',
-    'alerts/quicc': 'QUICC',
-    'alerts/treeloss': 'Tree Cover Loss',
-    'alerts/treegain': 'Tree Cover Gain',
-    'alerts/prodes': 'PRODES Deforestation',
-    'alerts/guyra': 'Gran Chaco Deforestation',
-    'alerts/landsat': 'Landsat',
-    'alerts/glad': 'GLAD Tree Cover Loss Alerts'
+    'alerts/terra': {
+      title: 'Terra-i',
+      long_title: 'monthly Terra-i tree cover loss alerts',
+      sub_title: 'monthly, 250m, Latin America, CIAT'
+    },
+    'alerts/sad': {
+      title: 'SAD',
+      long_title: 'monthly SAD tree cover loss alerts',
+      sub_title: 'monthly, 250m, Brazilian Amazon, Imazon'
+    },
+    'alerts/quicc': {
+      title: 'QUICC',
+      long_title: 'quarterly QUICC tree cover loss alerts',
+      sub_title: 'quarterly, 5km, &lt;37 degrees north, NASA'
+    },
+    'alerts/treeloss': {
+      title: 'Tree cover loss',
+      long_title: 'annual tree cover loss data',
+      sub_title: 'annual, 30m, global, Hansen/UMD/Google/USGS/NASA'
+    },
+    'alerts/treegain': {
+      title: 'Tree cover gain',
+      long_title: '12-year tree cover gain data',
+      sub_title: '12 years, 30m, global, Hansen/UMD/Google/USGS/NASA'
+    },
+    'alerts/prodes': {
+      title: 'PRODES deforestation',
+      long_title: 'annual PRODES deforestation data',
+      sub_title: 'annual, 30m, Brazilian Amazon, INPE'
+    },
+    'alerts/guyra': {
+      title: 'Gran Chaco deforestation',
+      long_title: 'monthly Gran Chaco deforestation data',
+      sub_title: 'monthly, 30m, Gran Chaco, Guyra'
+    },
+    'alerts/glad': {
+      title: 'GLAD Tree Cover Loss Alerts',
+      long_title: 'weekly GLAD tree cover loss alerts',
+      sub_title: 'weekly, 30m, select countries, UMD/GLAD'
+    }
   };
 
   var Subscription = Backbone.Model.extend({
@@ -36,8 +66,8 @@ define([
       return Backbone.sync.call(this, method, model, options);
     },
 
-    formattedTopic: function() {
-      return DATASETS[this.get('topic')] || this.get('topic');
+    formattedTopic: function(options) {
+      return DATASETS[this.get('topic')];
     },
 
     hasValidEmail: function() {
