@@ -49,7 +49,8 @@ define([
       this.$el.html(this.template({
         email: this.user.get('email'),
         loggedIn: this.user.isLoggedIn(),
-        date: moment().format('MMM D, YYYY')
+        date: moment().format('MMM D, YYYY'),
+        dataset: this.subscription && this.subscription.formattedTopic()
       }));
       this.setupAuthLinks();
 
@@ -72,6 +73,7 @@ define([
 
       this.createSubscription(options);
       this.currentStep = 0;
+      this.render();
     },
 
     close: function(event) {
