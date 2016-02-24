@@ -947,7 +947,7 @@ define([
             query  = 'SELECT sum(gain) from umd_nat_final_1';
 
         if (!!mode && mode.mode == 'percent') {
-          query = 'SELECT sum(gain)/extent_2000 as sum from umd_nat_final_1  where thresh = 50 AND extent_2000 > 10 group by extent_2000';
+          query = 'SELECT sum(gain_perc) as sum from umd_nat_final_1  where thresh = 50 AND extent_2000 > 10';
         }
         $.ajax({
               url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
@@ -958,7 +958,7 @@ define([
                 g_mha = l_mha = 'Mha';
 
                 if (!!mode && mode.mode == 'percent') {
-                  $target.find('.figure').removeClass('extent').html((gain*100).toLocaleString());
+                  $target.find('.figure').removeClass('extent').html((gain).toLocaleString());
                   $target.find('.unit').html('%');
                 } else {
                   if (gain.toString().length >= 7) {
