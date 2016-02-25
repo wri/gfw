@@ -49,7 +49,7 @@
             <li data-scroll-nav='2'><a href="#">Forest<br>type</a></li>
             <!--<li><a href="#" data-scroll-nav='2'>State of the forest</a></li>-->
             <li data-scroll-nav='3'><a href="#">People<br>& Economy</a></li>
-            <li data-scroll-nav='4'><a href="#">Tenure<br>& Laws</a></li>
+            <li data-scroll-nav='3'><a href="#">Tenure<br>& Laws</a></li>
             <li data-scroll-nav='5'><a href="#">Climate Change</a></li>
             <li data-scroll-nav='6'><a href="#">International agreements</a></li>
           </ul>
@@ -179,7 +179,7 @@
                         </div>
                         <div class="plantations-box">
                           <p class="plantations-text">Percent of total tree cover loss</p>
-                          <p class="plantations-percentage"><%= data['perc_loss_outside'].round(0) %>%</p>
+                          <p class="plantations-percentage"><%= data['perc_loss_outside'].round(2) %>%</p>
                           <div class="plantations-trees">
                             <div class="mask">
                               <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
@@ -193,7 +193,7 @@
                     <% end %>
                   </ul>
                 </div>
-              <% else %>
+                <% else %>
                 <div class="coming-soon">No data available</div>
               <% end %>
             </section>
@@ -204,111 +204,11 @@
       </div>
     </section>
 
-    <!-- graph -->
-    <section class="country-section country-graph-section" data-scroll-index='2'>
-      <div class="inner">
-        <section class="section-content">
-          <div class="left-col">
-            <!-- burned forests -->
-            <a href="#" id="burned_forests" class="anchor-country-info"></a>
-            <section class="country-burned_forests" data-scroll-index='2'>
-              <div class="section-info section-share">
-                <h6>Burned forest</h6>
-                <div class="section-btn">
-                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'burned_forests', width: '520', height: '350'} %>
-                  <a href="#" class="info icon green circle source" data-source="burned_forests_source">
-                    <svg>
-                      <use xlink:href="#shape-info"></use>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-
-              <div class="section-content">
-                <% if @country['burned_forests'].present? %>
-                  <div class="burned_forests-graph" data-json="<%= @country['burned_forests'].to_json %>"></div>
-                  <div class="coming-soon">No data available</div>
-                <% else %>
-                  <div class="coming-soon">No data available</div>
-                <% end %>
-              </div>
-            </section>
-          </div>
-          <div class="right-col">
-            <!-- forest certification -->
-            <a href="#" id="forest_certification" class="anchor-country-info"></a>
-            <section class="country-forest_certification" data-scroll-index='2'>
-              <div class="section-info section-share">
-                <h6>International Forest Certification</h6>
-                <div class="section-btn">
-                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'forest_certification', width: '250', height: '515'} %>
-                  <a href="#" class="info icon green circle source" data-source="forest_certification_source">
-                    <svg>
-                      <use xlink:href="#shape-info"></use>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-
-              <div class="section-content">
-                <% if @country['forest_certification'].present? %>
-                  <h3 class="section-title">The Total Area of Certified Forest in 2014 was <span class="highlight"><%= number_with_delimiter(@country['forest_certification'][0]['value']) %> Ha </span></h3>
-                  <div class="left-col">
-                    <div class="forest_certification-legends">
-                      <ul class="legends-list">
-                        <li><span class="primary"></span>FSC</li>
-                        <li><span class="regenerated"></span>PEFC</li>
-                        <li><span class="planted"></span>Other</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="right-col">
-                    <div class="forest_certification-graph" data-json="<%= @country['forest_certification'].to_json %>"></div>
-                  </div>
-                <% else %>
-                  <div class="coming-soon">No data available</div>
-                <% end %>
-              </div>
-            </section>
-          </div>
-        </section>
-      </div>
-    </section>
-
-
     <!-- employment -->
     <section class="country-section country-employment-section" data-scroll-index='3'>
       <div class="inner">
         <section class="section-content">
           <div class="left-col">
-
-            <!-- forest production -->
-            <a href="#" id="production" class="anchor-country-info"></a>
-            <section class="country-production" data-scroll-index='2'>
-                <div class="section-info section-share">
-                  <h6>Economic value of <%= @country['name'] %>'s forestry sector</h6>
-                  <div class="section-btn">
-                    <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'production', width: '600', height: '332'} %>
-                    <a href="#" class="info icon green circle source" data-source="gross_value">
-                      <svg>
-                        <use xlink:href="#shape-info"></use>
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-                <div class="section-content">
-                  <% if @country['gva'].present? && @country['gva'] > 0 %>
-                  <h3 class="section-title">
-                    The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2011, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> of the GDP.</span>
-                  </h3>
-                  <% else %>
-                  <div class="coming-soon">No data available</div>
-                  <% end %>
-                </div>
-            </section>
-          </div>
-
-          <div class="right-col">
             <!-- employment -->
             <a href="#" id="employment" class="anchor-country-info"></a>
             <section class="country-employment" data-scroll-index='3'>
@@ -352,17 +252,7 @@
               </div>
             </section>
           </div>
-        </section>
-      </div>
-    </section>
-
-    <!-- carbon stocks -->
-    <section class="country-section" data-scroll-index='4'>
-      <div class="inner">
-
-        <div class="section-content">
-
-          <div class="left-col">
+          <div class="right-col">
             <!-- tenure -->
             <a href="#" id="tenure" class="anchor-country-info"></a>
             <section class="country-tenure" data-scroll-index='4'>
@@ -384,35 +274,7 @@
               </div>
             </section>
           </div>
-
-          <div class="right-col">
-
-            <!-- forest reforestation -->
-            <a href="#" id="reforestation" class="anchor-country-info"></a>
-            <section class="country-reforestation" data-scroll-index='2'>
-                <div class="section-info section-share">
-                  <h6>Reforestation</h6>
-                  <div class="section-btn">
-                    <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'reforestation', width: '600', height: '272'} %>
-                    <a href="#" class="info icon green circle source" data-source="reforestation_source">
-                      <svg>
-                        <use xlink:href="#shape-info"></use>
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-                <div class="section-content">
-                  <% if @country['reforestation'].present? && @country['reforestation'][0]['reforestation_rate'].present? %>
-                  <h3 class="section-title">
-                    In 2010, the rate of reforestation was <span class="highlight"><%= gva_to_human(@country['reforestation'][0]['reforestation_rate'])%> Ha</span>
-                  </h3>
-                  <% else %>
-                  <div class="coming-soon">No data available</div>
-                  <% end %>
-                </div>
-            </section>
-          </div>
-        </div>
+        </section>
       </div>
     </section>
 
@@ -423,6 +285,7 @@
         <div class="section-content">
 
           <div class="left-col">
+
             <!-- left col -->
             <section class="country-carbon_stocks carbon-text <%= 'wide' unless @country['emissions'].present? && @country['emissions'] != 0 %>">
               <div class="section-info section-share">
@@ -444,8 +307,12 @@
                 <div class='coming-soon'><span>No data available</span></div>
               <% end %>
             </section>
+
+
           </div>
+
           <div class="right-col">
+
             <!-- right col -->
             <section class="country-emissions emissions-text <%= 'wide' unless @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>">
 
@@ -477,6 +344,47 @@
               <% end %>
             </section>
 
+          </div>
+
+        </div>
+
+
+
+      </div>
+    </section>
+
+    <!-- carbon stocks -->
+    <section class="country-section" data-scroll-index='5'>
+      <div class="inner">
+
+        <div class="section-content">
+
+          <div class="left-col">
+
+            <!-- forest production -->
+            <a href="#" id="production" class="anchor-country-info"></a>
+            <section class="country-production" data-scroll-index='2'>
+                <div class="section-info section-share">
+                  <h6>Economic value of <%= @country['name'] %>'s forestry sector</h6>
+                  <div class="section-btn">
+                    <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'production', width: '600', height: '332'} %>
+                    <a href="#" class="info icon green circle source" data-source="gross_value">
+                      <svg>
+                        <use xlink:href="#shape-info"></use>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+                <div class="section-content">
+                  <% if @country['gva'].present? && @country['gva'] > 0 %>
+                  <h3 class="section-title">
+                    The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2011, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> of the GDP.</span>
+                  </h3>
+                  <% else %>
+                  <div class="coming-soon">No data available</div>
+                  <% end %>
+                </div>
+            </section>
           </div>
         </div>
       </div>
