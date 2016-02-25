@@ -21,7 +21,8 @@ define([
     'terrailoss',
     'prodes',
     'guyra',
-    'umd_as_it_happens'
+    'umd_as_it_happens',
+    'modis'
   ];
 
   var StatusModel = Backbone.Model.extend({
