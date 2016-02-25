@@ -13,8 +13,7 @@ define([
 
     sync: function(method, model, options) {
       options || (options = {});
-      // not ready to be seen on PRO
-      return false;
+
       if (!options.crossDomain) {
         options.crossDomain = true;
       }
