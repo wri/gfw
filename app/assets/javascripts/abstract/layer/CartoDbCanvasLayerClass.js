@@ -1,13 +1,9 @@
 define([
-  'moment', 'handlebars',
-  'abstract/layer/CanvasLayerClass', 'helpers/canvasCartoCSSHelper',
-  'map/services/CartoDbLayerService',
-  'text!map/queries/default_cartodb_canvas.sql.hbs'
+  'moment',
+  'abstract/layer/CanvasLayerClass'
 ], function(
-  moment, Handlebars,
-  CanvasLayerClass, canvasCartoCSSHelper,
-  CartoDbLayerService,
-  SQL
+  moment,
+  CanvasLayerClass
 )  {
 
   'use strict';
@@ -17,40 +13,115 @@ define([
       options = options || {};
 
       this.currentDate = options.currentDate ||
-        [moment(layer.mindate || undefined), moment()];
+        [moment.utc(layer.mindate || undefined), (layer.maxdate || undefined)];
 
       this._super(layer, options, map);
     },
 
     _getLayer: function() {
-      var deferred = new $.Deferred();
+      throw new Error('_getLayer must be implemented');
+    },
 
-      var configService = new CartoDbLayerService(
-        this._getSQL(), this._getCartoCSS());
+    animationOptions: {
+      duration: 15000,
+      currentOffset: 0
+    },
 
-      var context = this;
-      configService.fetchLayerConfig().then(function(config) {
-        context.options.urlTemplate = 'https://' + config.cdn_url.https + '/wri-01/api/v1/map/' + config.layergroupid + '{/z}{/x}{/y}.png32';
-        deferred.resolve(context);
+    _setupAnimation: function() {
+      var startDate = this.currentDate[0];
+      if (!moment.isMoment(startDate)) {
+        startDate = moment.utc(startDate);
+      }
+
+      var endDate = this.currentDate[1];
+      if (!moment.isMoment(endDate)) {
+        endDate = moment.utc(endDate);
+      }
+
+      this.numberOfDays = Math.abs(startDate.diff(endDate)) / 1000 / 3600 / 24;
+      this.animationOptions.currentOffset = 0;
+      this.presenter.animationStarted({
+        start: startDate,
+        end: endDate
       });
-
-      return deferred.promise();
     },
 
-    _getCartoCSS: function() {
-      var startDate = moment(this.layer.mindate),
-          endDate = moment(this.layer.maxdate || undefined);
-
-      return canvasCartoCSSHelper.generateDaily('date', startDate, endDate);
+    setDateRange: function(dates) {
+      this.currentDate = dates;
+      this._setupAnimation();
+      this.start();
     },
 
-    _getSQL: function() {
-      var template = Handlebars.compile(SQL),
-          sql = template({
-            table: 'umd_alerts_agg_rast'
-          });
+    setDate: function(date) {
+      this.stop();
+      this.presenter.animationStopped();
 
-      return sql;
+      var newDate = moment.utc(date);
+      this.setOffsetFromDate(newDate);
+      this.renderTime(newDate);
+    },
+
+    setOffsetFromDate: function(date) {
+      var startDate = moment.utc(this.currentDate[0]),
+          daysFromStart = Math.abs(startDate.diff(date)) / 1000 / 3600 / 24;
+      this.animationOptions.currentOffset = (daysFromStart / this.numberOfDays) * this.animationOptions.duration;
+    },
+
+    renderTime: function(time) {
+      this.presenter.updateTimelineDate({time: time});
+      this.timelineExtent = [moment.utc(this.currentDate[0]), time];
+      this.updateTiles();
+    },
+
+    start: function() {
+      if (this.animationInterval !== undefined) { this.stop(); }
+
+      var startDate = moment.utc(this.currentDate[0]),
+          lastTimestamp = +new Date();
+
+      var step = function() {
+        var now = +new Date(),
+            dt = now - lastTimestamp;
+        this.animationOptions.currentOffset += dt;
+
+        var duration = this.animationOptions.duration,
+            currentOffset = this.animationOptions.currentOffset,
+            daysToAdd = ((currentOffset % duration)/duration)*this.numberOfDays,
+            currentDate = startDate.clone().add('days', daysToAdd);
+
+        this.renderTime(currentDate);
+
+        lastTimestamp = now;
+        this.animationInterval = window.requestAnimationFrame(step);
+      }.bind(this);
+
+      step();
+    },
+
+    stop: function() {
+      window.cancelAnimationFrame(this.animationInterval);
+      delete this.animationInterval;
+    },
+
+    toggle: function() {
+      if (this.animationInterval !== undefined) {
+        this.stop();
+      } else {
+        this.start();
+      }
+    },
+
+    _drawCanvasImage: function(canvasData) {
+      var canvas = canvasData.canvas,
+          ctx = canvas.getContext('2d'),
+          image = canvasData.image;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0);
+
+      var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      this.filterCanvasImgdata(I.data, canvas.width, canvas.height, canvasData.z);
+      ctx.putImageData(I, 0, 0);
     },
 
     filterCanvasImgdata: function() {

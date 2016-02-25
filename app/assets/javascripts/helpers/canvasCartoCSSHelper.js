@@ -24,9 +24,9 @@ define([
         var yearOffset = currDate.year() - 2015;
         var dayOfYear = currDate.dayOfYear();
         if (dayOfYear > 255) {
-          rule.rgb = '0, ' + (dayOfYear % 255) + ', ' + yearOffset + ', 1';
+          rule.rgb = '0, ' + (dayOfYear % 255) + ', ' + yearOffset;
         } else {
-          rule.rgb = dayOfYear + ', 0, ' + yearOffset + ', 1';
+          rule.rgb = dayOfYear + ', 0, ' + yearOffset;
         }
 
         rules.push(rule);
@@ -37,7 +37,7 @@ define([
       var formattedRules = rules.map(function(rule) {
         return [
           '[date=\'' + rule.date + '\'] {',
-          '  marker-fill: rgba(' + rule.rgb + ');',
+          '  marker-fill: rgb(' + rule.rgb + ');',
           '}'
         ].join(' ');
       });

@@ -44,10 +44,6 @@ define([
      * @return {div}     div           Tile div
      */
     getTile: function(coord, zoom, ownerDocument) {
-      var zoomLT7 = (zoom < 7);
-      if(zoomLT7) {
-        if (this.layer_slug == 'urthe') {return;}
-      }
       var zsteps = this._getZoomSteps(zoom);
 
       var url = this._getUrl.apply(this,
@@ -98,7 +94,8 @@ define([
         sat: params.color_filter,
         cloud: params.cloud,
         mindate: params.mindate,
-        maxdate: params.maxdate
+        maxdate: params.maxdate,
+        sensor_platform: params.sensor_platform
       });
     },
 

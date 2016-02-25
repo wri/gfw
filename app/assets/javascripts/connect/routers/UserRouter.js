@@ -1,37 +1,51 @@
 define([
   'jquery', 'backbone', 'underscore',
   'map/models/UserModel',
-  'connect/views/UserFormView',
-  'connect/views/SubscriptionListView'
-], function($, Backbone, _, User, UserFormView, SubscriptionListView) {
+  'connect/views/UserFormView', 'connect/views/SubscriptionListView', 'connect/views/LoginView',
+  'views/NotificationsView'
+], function(
+  $, Backbone, _,
+  User,
+  UserFormView, SubscriptionListView, LoginView,
+  NotificationsView) {
 
   'use strict';
 
   var UserRouter = Backbone.Router.extend({
 
-    el: $('#profile'),
+    el: $('.my-gfw-container'),
 
     routes: {
       '*path': 'showView'
     },
 
     initialize: function() {
-      this.checkLoggedIn();
       this.setupNavbar();
+      new NotificationsView();
+    },
+
+    execute: function(callback, args) {
+      if (!this.alreadyLoggedIn) {
+        this.checkLoggedIn().then(function() {
+          if (callback) { callback.apply(this, args); }
+        }.bind(this)).fail(function() {
+          this.showView('login_modal');
+        }.bind(this));
+      } else {
+        if (callback) { callback.apply(this, args); }
+      }
     },
 
     checkLoggedIn: function() {
       this.user = new User();
-      this.user.fetch().fail(function() {
-        location.href = '/';
-      });
+      return this.user.fetch();
     },
 
     setupNavbar: function() {
       // Force nav links to navigate, rather than doing a browser page
       // reload
       var context = this;
-      $('#user-profile-nav').on('click', 'a', function(event) {
+      $('.my-gfw-nav').on('click', 'a', function(event) {
         event.preventDefault();
         var root = location.protocol + '//' + location.host + '/',
             href = _.last($(this).prop('href').split(root));
@@ -42,7 +56,8 @@ define([
 
     availableViews: {
       'my_gfw': UserFormView,
-      'subscriptions': SubscriptionListView
+      'subscriptions': SubscriptionListView,
+      'login_modal': LoginView
     },
 
     showView: function(routeName) {
@@ -51,7 +66,7 @@ define([
       this.subViews = this.subViews || {};
       if (this.subViews[viewName] === undefined) {
         var View = this.availableViews[viewName];
-        if (View === undefined) { return; }
+        if (View === undefined) { this.show404(); }
 
         this.subViews[viewName] = new View();
         this.subViews[viewName].render();
@@ -59,6 +74,18 @@ define([
 
       this.el.html(this.subViews[viewName].el);
       this.subViews[viewName].delegateEvents();
+
+      if (this.subViews[viewName].show !== undefined) {
+        this.subViews[viewName].show();
+      }
+
+      var $nav = $('.my-gfw-nav');
+      $nav.find('a').removeClass('current');
+      $nav.find('#my-gfw-nav-'+viewName).addClass('current');
+    },
+
+    show404: function() {
+      window.location = '/404';
     }
 
   });

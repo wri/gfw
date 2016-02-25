@@ -205,8 +205,8 @@ define([
       if (!el) {
         el = this.tickG.filter(function(d) {
           var dformat = 'DD-MM-YYYY';
-          return (d.start.format(dformat) === date.start.format(dformat) &&
-            d.end.format(dformat) === date.end.format(dformat));
+          return (d.start.format(dformat) === moment(date.start).format(dformat) &&
+            d.end.format(dformat) === moment(date.end).format(dformat));
         }).node();
       }
 
@@ -239,8 +239,8 @@ define([
     },
 
     _getTooltipText: function(date) {
-      return '{0}-{1} {2}'.format(date.start.format('MMM'),
-        date.end.format('MMM'), date.end.year());
+      return '{0}-{1} {2}'.format(moment(date.start).format('MMM'),
+        date.end.format('MMM'), moment(date.end).year());
     },
 
     /**

@@ -1,16 +1,19 @@
 define([
- 'backbone'
-], function(Backbone) {
+ 'backbone', 'underscore'
+], function(Backbone, _) {
 
   'use strict';
 
   var User = Backbone.Model.extend({
     url: window.gfw.config.GFW_API_HOST + '/user',
 
+    isLoggedIn: function() {
+      return !_.isEmpty(this.attributes);
+    },
+
     sync: function(method, model, options) {
       options || (options = {});
-      // not ready to be seen on PRO
-      return false;
+
       if (!options.crossDomain) {
         options.crossDomain = true;
       }

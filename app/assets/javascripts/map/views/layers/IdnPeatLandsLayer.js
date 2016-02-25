@@ -14,7 +14,7 @@ define([
   var IdnPeatLandsLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT *, \'{tableName}\' as tablename, \'{tableName}\' as layer FROM {tableName}',
+      sql: "SELECT the_raster_webmercator, \'{tableName}\' as tablename, \'{tableName}\' layer FROM {tableName}",
       cartocss: idn_peatCartoCSS,
       infowindow: false,
       analysis: false,

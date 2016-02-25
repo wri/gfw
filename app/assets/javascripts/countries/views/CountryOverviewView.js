@@ -317,7 +317,7 @@ define([
 
         var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_final_1 umd, gfw2_countries c WHERE umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
         if (!!mode && mode.mode == 'percent')
-            sql = 'SELECT (gain*12/extent_2000)*100 as ratio, country as name, c.iso as iso, c.enabled, u.iso as iso2 from umd_nat_final_1 u, gfw2_countries c  WHERE thresh = 50 AND c.iso = u.iso AND extent_2000 > 10  group by ratio, country, u.iso, c.iso, c.enabled order by ratio desc ';
+            sql = 'SELECT (u.gain*12/u.extent_2000)*100 as ratio, country as name, c.iso as iso, c.enabled, u.iso as iso2 from umd_nat_final_1 u, gfw2_countries c  WHERE thresh = 50 AND u.gain IS NOT NULL AND c.iso = u.iso AND extent_2000 > 10  group by ratio, country, u.iso, c.iso, c.enabled order by ratio desc ';
         if (e) {
           sql += 'OFFSET 10';
         } else {
@@ -946,7 +946,7 @@ define([
             query  = 'SELECT sum(gain) from umd_nat_final_1';
 
         if (!!mode && mode.mode == 'percent') {
-          query = 'SELECT sum(gain)/extent_2000 as sum from umd_nat_final_1  where thresh = 50 group by extent_2000';
+          query = 'SELECT sum(gain_perc) as sum from umd_nat_final_1  where thresh = 50 AND extent_2000 > 10';
         }
         $.ajax({
               url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
@@ -957,7 +957,7 @@ define([
                 g_mha = l_mha = 'Mha';
 
                 if (!!mode && mode.mode == 'percent') {
-                  $target.find('.figure').removeClass('extent').html((gain*100).toLocaleString());
+                  $target.find('.figure').removeClass('extent').html((gain).toLocaleString());
                   $target.find('.unit').html('%');
                 } else {
                   if (gain.toString().length >= 7) {
