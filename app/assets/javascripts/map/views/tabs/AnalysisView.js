@@ -348,11 +348,13 @@ define([
       this.area = null;
       if(this.iso) {
         this.getSubCountries()
-      }else{
+      } else {
         this.presenter.deleteAnalysis();
+        this.$countryButton.addClass('disabled');
         this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
       }
     },
+
     changeArea: function(e){
       this.area = $(e.currentTarget).val();
       this.$countryButton.removeClass('disabled');
