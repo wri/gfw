@@ -90,6 +90,7 @@ define([
       this.render();
       this.presenter.unSetSubscribeState();
       this.presenter.updateUrl();
+      this.presenter.subscribeEnd();
     },
 
     isOpen: function() {
@@ -167,7 +168,6 @@ define([
 
     onSave: function() {
       this.hideSpinner();
-      this.presenter.subscribeEnd();
       this.nextStep();
     },
 

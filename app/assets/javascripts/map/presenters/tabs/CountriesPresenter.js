@@ -45,6 +45,10 @@ define([
         this.view.setSelects(iso);
       }
     },{
+      'Subscribe/clearIso': function() {
+        this.status.set('iso', {});
+      }
+    },{
       'LayerNav/change': function(layerSpec) {
         this.view._renderHtml();
       }
