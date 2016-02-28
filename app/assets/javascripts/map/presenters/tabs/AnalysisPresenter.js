@@ -402,7 +402,6 @@ define([
       if (baselayer) {
         this.status.set('dont_analyze', false);
         this.status.set('resource', resource);
-        debugger
         mps.publish('Place/update', [{go: false}]);
         this._subscribeAnalysis();
       }
@@ -535,6 +534,35 @@ define([
 
       this.view.setEditable(overlay, false);
       this._saveAndAnalyzeGeojson(geojson, {draw: false});
+    },
+
+    doneDrawingSubscribe: function() {
+      var overlay = this.status.get('overlay');
+      var paths = overlay.getPath().getArray();
+      var geojson = geojsonUtilsHelper.pathToGeojson(paths);
+
+      this.view.setEditable(overlay, false);
+
+      mps.publish('Spinner/start');
+      GeostoreService.save(geojson).then(function(geostoreId) {
+        mps.publish('Spinner/stop');
+        this.status.set('geostore', geostoreId);
+
+        var resource = {
+          geojson: JSON.stringify(geojson),
+          type: 'geojson'
+        };
+        resource = this._buildResource(resource);
+
+        var baselayer = this.getBaselayer();
+
+        if (baselayer) {
+          this.status.set('dont_analyze', false);
+          this.status.set('resource', resource);
+          mps.publish('Place/update', [{go: false}]);
+          this._subscribeAnalysis();
+        }
+      }.bind(this));
     },
 
     /**
