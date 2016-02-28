@@ -570,7 +570,10 @@ define([
         var baselayer = this.getBaselayer();
 
         if (baselayer) {
+<<<<<<< 3dca7c7ee0de442b5704bd9287eb7cacb9bdfdbd
           this.status.set('subscribe_only', true);
+=======
+>>>>>>> Allow subscriptions with analyses
           this.status.set('dont_analyze', false);
           this.status.set('resource', resource);
           mps.publish('Place/update', [{go: false}]);
