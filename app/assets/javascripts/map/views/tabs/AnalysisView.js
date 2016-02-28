@@ -34,6 +34,7 @@ define([
       //draw
       'click #start-analysis' : '_onClickAnalysis',
       'click #done-analysis' : '_onClickDone',
+      'click #done-subscribe' : '_onClickDoneSubscribe',
 
       //countries
       'change #analysis-country-select' : 'changeIso',
@@ -71,6 +72,7 @@ define([
       //draw
       this.$start = $('#start-analysis');
       this.$done = $('#done-analysis');
+      this.$doneSubscribe = $('#done-subscribe');
 
       //country
       this.$selects = this.$el.find('.chosen-select');
@@ -435,6 +437,15 @@ define([
       }
     },
 
+    _onClickDoneSubscribe: function() {
+      if (!this.$doneSubscribe.hasClass('disabled')) {
+        ga('send', 'event', 'Map', 'Analysis', 'Click: done');
+        this._stopDrawing();
+        this.presenter.doneDrawingSubscribe();
+        this.toggleAnalysis(true);
+      }
+    },
+
     /**
      * Star drawing manager and add an overlaycomplete
      * listener.
@@ -707,6 +718,7 @@ define([
     toggleDoneBtn: function(to){
       $('#draw-analysis').toggleClass('one', to);
       this.$done.parent().toggleClass('hidden', to);
+      this.$doneSubscribe.parent().toggleClass('hidden', to);
     },
 
     // OTHER
