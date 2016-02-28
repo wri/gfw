@@ -194,6 +194,11 @@ define([
     },{
       'Subscribe/end' : function(){
         this.view.setStyle();
+        if (this.status.get('subscribe_only') === true) {
+          this.status.set('subscribe_only', false);
+          this.deleteAnalysis();
+          mps.publish('Place/update', [{go: false}]);
+        }
       }
     }, {
       'Dialogs/close': function() {
@@ -400,8 +405,10 @@ define([
       resource = this._buildResource(resource);
 
       if (baselayer) {
+        this.status.set('subscribe_only', true);
         this.status.set('dont_analyze', false);
         this.status.set('resource', resource);
+        mps.publish('LocalMode/updateIso', [iso, this.status.get('dont_analyze')]);
         mps.publish('Place/update', [{go: false}]);
         this._subscribeAnalysis();
       }
@@ -557,6 +564,7 @@ define([
         var baselayer = this.getBaselayer();
 
         if (baselayer) {
+          this.status.set('subscribe_only', true);
           this.status.set('dont_analyze', false);
           this.status.set('resource', resource);
           mps.publish('Place/update', [{go: false}]);
@@ -682,6 +690,7 @@ define([
       });
 
       this._setAnalysisBtnVisibility();
+      mps.publish('Subscribe/clearIso', []);
     },
 
     /**
