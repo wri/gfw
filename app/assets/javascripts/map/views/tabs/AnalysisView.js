@@ -345,12 +345,14 @@ define([
     changeIso: function(e){
       this.iso = $(e.currentTarget).val();
       this.$countryButton.removeClass('disabled');
+      this.$countrySButton.removeClass('disabled');
       this.area = null;
       if(this.iso) {
         this.getSubCountries()
       } else {
         this.presenter.deleteAnalysis();
         this.$countryButton.addClass('disabled');
+        this.$countrySButton.addClass('disabled');
         this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
       }
     },
@@ -358,6 +360,7 @@ define([
     changeArea: function(e){
       this.area = $(e.currentTarget).val();
       this.$countryButton.removeClass('disabled');
+      this.$countrySButton.removeClass('disabled');
     },
 
     // For autoselect country and region when youn reload page
@@ -370,9 +373,11 @@ define([
         this.getSubCountries();
         if (!dont_analyze) {
           this.$countryButton.addClass('disabled');
+          this.$countrySButton.addClass('disabled');
         }
-      }else{
+      } else {
         this.$countryButton.removeClass('disabled');
+        this.$countrySButton.removeClass('disabled');
         this.$regionSelect.val(this.area).attr('disabled', true).trigger("liszt:updated")
       }
     },
@@ -382,29 +387,21 @@ define([
         var iso = {
           country: this.iso,
           region: this.area
-        }
+        };
         this.$countryButton.addClass('disabled');
         this.presenter.setAnalyzeIso(iso);
       }
     },
 
     subscribeCountry: function(){
-      if (this.iso) {
+      if (this.iso && !this.$countrySButton.hasClass('disabled')) {
         var iso = {
           country: this.iso,
           region: this.area
-        }
-        this.presenter.setSubscribeIso(iso);
+        };
+        this.presenter.subscribeIso(iso);
       }
     },
-
-
-
-
-
-
-
-
 
     /**
      * DRAWING
@@ -567,22 +564,6 @@ define([
       this.presenter.setMultipolygon(multipolygon, geojson);
     },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // COUNTRY MASK
     drawMaskCountry: function(geojson, iso){
       this.mask = cartodb.createLayer(this.map, {
@@ -700,14 +681,6 @@ define([
       // }
     },
 
-
-
-
-
-
-
-
-
     /**
      * BUTTONS.
      */
@@ -736,8 +709,6 @@ define([
       this.$done.parent().toggleClass('hidden', to);
     },
 
-
-
     // OTHER
     onGifPlay: function(){
       this.$play.addClass('hidden');
@@ -752,11 +723,7 @@ define([
       var img = new Image();
       img.src = url;
       return url;
-    },
-
-
-
-
+    }
 
   });
   return AnalysisView;

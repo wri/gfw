@@ -397,13 +397,26 @@ define([
       }.bind(this));
     },
 
+    subscribeIso: function(iso) {
+      var baselayer = this.getBaselayer();
+      this.status.unset('geostore');
+
+      var resource = { iso: iso.country, type: 'iso' };
+      if (iso.region) { resource.id1 = iso.region; }
+      resource = this._buildResource(resource);
+
+      if (baselayer) {
+        this.status.set('dont_analyze', false);
+        this.status.set('resource', resource);
+        debugger
+        mps.publish('Place/update', [{go: false}]);
+        this._subscribeAnalysis();
+      }
+    },
+
     setAnalyzeIso: function(iso){
       this.status.set('dont_analyze', null);
       mps.publish('Analysis/analyze-iso', [iso, this.status.get('dont_analyze')]);
-    },
-
-    setSubscribeIso: function(iso){
-      mps.publish('Subscription/iso', [iso]);
     },
 
     _analyzeWdpai: function(wdpaid, options) {
@@ -629,10 +642,7 @@ define([
       mps.publish('AnalysisResults/Delete');
       this.view._removeCartodblayer();
       this.view.$el.removeClass('is-analysis');
-      // if(!this.status.get('dont_analyze')){
-      //   console.log('cause');
-      //   mps.publish('Analysis/toggle')
-      // }
+
       // Delete overlay drawn or multipolygon.
       this.view.deleteGeom({
         overlay: this.status.get('overlay'),
@@ -662,7 +672,7 @@ define([
       if (baselayers['loss']) {
         baselayer = baselayers['loss'];
         this.status.set('both', (baselayers['forestgain']) ? true : false);
-      }else{
+      } else {
         baselayer = baselayers[_.first(_.intersection(
           _.pluck(baselayers, 'slug'),
           _.keys(this.datasets)))];
