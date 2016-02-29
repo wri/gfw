@@ -378,8 +378,8 @@ define([
           this.$countrySButton.addClass('disabled');
         }
       } else {
-        this.$countryButton.removeClass('disabled');
-        this.$countrySButton.removeClass('disabled');
+        this.$countryButton.addClass('disabled');
+        this.$countrySButton.addClass('disabled');
         this.$regionSelect.val(this.area).attr('disabled', true).trigger("liszt:updated")
       }
     },
