@@ -72,34 +72,55 @@ define([
       var context = this;
 
       var onPickerRender = function() {
-        var $footer = this.$root.find('.picker__footer');
-        $footer.prepend(context.legendTemplate());
-      };
+        var pickerContext = this;
 
-      var onPickerOpen = function() {
-        // Use disabled dates to highlight what days have data
-        this.component.disabled = function(dateToVerify) {
-          var date = dateToVerify.obj,
+        this.$root.find('.picker__day').each(function() {
+          var $el = $(this);
+
+          var date = new Date($el.data('pick')),
               dateUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
           var availableDates = context.getAvailableDates();
 
           if (availableDates.indexOf(dateUTC.getTime()) > -1) {
             // Disabled dates to prevent inverted selected dates
             //   e.g. picking 6/09 for start, and 4/09 for end
-            var id = this.component.$node.attr('id');
+            var id = pickerContext.component.$node.attr('id');
             date = moment(date);
 
             if (id === 'startDate') {
               var endDate = context.selectedDates.get('endDate');
-              return (date.isAfter(endDate));
+              if (!date.isAfter(endDate)) {
+                $el.addClass('picker__has_data');
+              }
             } else if (id === 'endDate') {
               var startDate = context.selectedDates.get('startDate');
-              return (date.isBefore(startDate));
+              if (!date.isBefore(startDate)) {
+                $el.addClass('picker__has_data');
+              }
             }
-            return false;
-          } else {
-            return true;
+
+            $el.addClass('picker__has_data');
           }
+        });
+
+        var $footer = this.$root.find('.picker__footer');
+        $footer.prepend(context.legendTemplate());
+      };
+
+      var onPickerOpen = function() {
+        this.component.disabled = function(dateToVerify) {
+          var date = moment(dateToVerify.obj);
+          var id = this.component.$node.attr('id');
+
+          if (id === 'startDate') {
+            var endDate = context.selectedDates.get('endDate');
+            return (date.isAfter(endDate));
+          } else if (id === 'endDate') {
+            var startDate = context.selectedDates.get('startDate');
+            return (date.isBefore(startDate));
+          }
+
+          return false;
         }.bind(this);
 
         this.render();
