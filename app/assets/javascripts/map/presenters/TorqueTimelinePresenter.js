@@ -23,6 +23,10 @@ define([
         this.view.setCurrentDate(change);
       },
 
+      'Torque/date-range-change': function(date) {
+        this.view.currentDate = date;
+      },
+
       'Torque/started': function(bounds) {
         if (this.view.bounds !== undefined) {
           this.view.status.set('running', true);

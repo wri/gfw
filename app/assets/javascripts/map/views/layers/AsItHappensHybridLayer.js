@@ -1,5 +1,5 @@
 define([
-  'moment', 'd3', 'handlebars', 'uri',
+  'moment', 'd3', 'handlebars', 'uri', 'mps',
   'helpers/canvasCartoCSSHelper',
   'abstract/layer/CartoDbCanvasLayerClass',
   'map/presenters/TorqueLayerPresenter',
@@ -7,7 +7,7 @@ define([
   'text!map/queries/as_it_happens_hybrid.sql.hbs', 'text!map/queries/as_it_happens_hybrid_raster.sql.hbs',
   'text!map/cartocss/as_it_happens_hybrid_raster.cartocss',
 ], function(
-  moment, d3, Handlebars, UriTemplate,
+  moment, d3, Handlebars, UriTemplate, mps,
   canvasCartoCSSHelper,
   CartoDbCanvasLayerClass,
   Presenter,
@@ -49,6 +49,8 @@ define([
         context.maxDate = moment(dates.max_date);
         if (context.currentDate[1] === undefined) {
           context.currentDate[1] = context.maxDate;
+          mps.publish('Torque/date-range-change', [context.currentDate]);
+          mps.publish('Place/update', [{go: false}]);
         }
 
         return Promise.all([
