@@ -7,11 +7,10 @@ define([
   'underscore',
   'backbone',
   'handlebars',
-  'keymaster',
   'proj4',
   'map/presenters/controls/SearchboxPresenter',
   'text!map/templates/controls/searchbox.handlebars'
-], function(_, Backbone, Handlebars, keymaster, proj4, Presenter, tpl) {
+], function(_, Backbone, Handlebars, proj4, Presenter, tpl) {
 
   'use strict';
 
@@ -202,13 +201,8 @@ define([
         }
 
         if (place.geometry.location && !place.geometry.viewport) {
-          var index = [];
-          for (var x in place.geometry.location) {
-             index.push(x);
-          }
-
-          this.presenter.setCenter(place.geometry.location[index[0]],
-            place.geometry.location[index[1]]);
+          this.presenter.setCenter(place.geometry.location.lat(),
+            place.geometry.location.lng());
         }
 
         this.model.set('hidden', false);
