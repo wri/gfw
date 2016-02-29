@@ -103,16 +103,16 @@ define([
           moment(this.currentDate[1])];
       }
 
+      var startYear = this.timelineExtent[0].year(),
+          endYear = this.timelineExtent[1].year();
       var startDay = this.timelineExtent[0].dayOfYear(),
-          startYear = this.timelineExtent[0].year();
-      var endYear = this.timelineExtent[1].year(),
           endDay = this.timelineExtent[1].dayOfYear() + ((endYear - 2015) * 365);
 
       var recentRangeStart = this.maxDate.clone().subtract(7, 'days'),
-          recentRangeStartDay = recentRangeStart.dayOfYear(),
           recentRangeStartYear = recentRangeStart.year();
       var recentRangeEnd = this.maxDate.clone(),
-          recentRangeEndYear = recentRangeEnd.year(),
+          recentRangeEndYear = recentRangeEnd.year();
+      var recentRangeStartDay = recentRangeStart.dayOfYear() + ((recentRangeEndYear - 2015) * 365),
           recentRangeEndDay = recentRangeEnd.dayOfYear() + ((recentRangeEndYear - 2015) * 365);
 
       var pixelComponents = 4; // RGBA
@@ -156,9 +156,7 @@ define([
             }
           }
 
-          if (yearOfLoss > startYear) {
-            dayOfLoss = dayOfLoss + ((yearOfLoss - 2015) * 365);
-          }
+          dayOfLoss = dayOfLoss + ((yearOfLoss - 2015) * 365);
 
           if (dayOfLoss >= startDay && yearOfLoss >= startYear && dayOfLoss <= endDay && yearOfLoss <= endYear) {
             if (dayOfLoss >= recentRangeStartDay && yearOfLoss >= recentRangeStartYear && dayOfLoss <= recentRangeEndDay && yearOfLoss <= recentRangeEndYear) {
