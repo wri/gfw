@@ -1,16 +1,18 @@
 define([
-  'underscore', 'moment', 'd3'
-], function(_, moment, d3) {
+  'moment', 'd3'
+], function(moment, d3) {
 
-  var timeScale, brush, margin, width, height, el, extent, callback,
+  'use strict';
+
+  var svg, timeScale, brush, margin, width, height, el, extent, callback,
     handle, startingDate, slider;
 
   var TorqueTimelineSlider = function(options) {
     options = options || {};
 
-    margin = {top: 0, right: 0, bottom: 0, left: 10},
-    width = options.width - margin.left - margin.right,
-    height = options.height - margin.bottom - margin.top,
+    margin = {top: 0, right: 0, bottom: 0, left: 10};
+    width = options.width - margin.left - margin.right;
+    height = options.height - margin.bottom - margin.top;
 
     el = options.el;
     callback = options.callback;
@@ -32,7 +34,8 @@ define([
 
   TorqueTimelineSlider.prototype.setDate = function(date) {
     brush.extent([date, date]);
-    handle.attr("transform", "translate(" + (timeScale(date)-8) + ",0)");
+    handle.attr('transform', 'translate(' + (timeScale(date)-8) + ',0)');
+    svg.select('.played_domain').attr('x2', timeScale(date));
   };
 
   TorqueTimelineSlider.prototype.setupScales = function() {
@@ -51,12 +54,12 @@ define([
     brush = d3.svg.brush()
       .x(timeScale)
       .extent([startingDate, startingDate])
-      .on("brush", this.brushed);
+      .on('brush', this.brushed);
   };
 
   TorqueTimelineSlider.prototype.brushed = function() {
     var value = brush.extent()[0];
-    handle.attr("transform", "translate(" + (timeScale(value)-8) + ",0)");
+    handle.attr('transform', 'translate(' + (timeScale(value)-8) + ',0)');
 
     var notProgrammaticEvent = (d3.event && d3.event.sourceEvent);
     if (notProgrammaticEvent) {
@@ -69,18 +72,18 @@ define([
     }
   };
 
-  TorqueTimelineSlider.prototype.setupSlider = function(svg) {
-    slider = svg.append("g")
-      .attr("class", "slider")
+  TorqueTimelineSlider.prototype.setupSlider = function() {
+    slider = svg.append('g')
+      .attr('class', 'slider')
       .call(brush);
 
-    slider.selectAll(".extent,.resize").remove();
-    slider.select(".background")
-      .attr("height", height)
-      .style("cursor", "col-resize");
+    slider.selectAll('.extent,.resize').remove();
+    slider.select('.background')
+      .attr('height', height)
+      .style('cursor', 'col-resize');
 
-    handle = slider.append("g")
-      .attr("class", "handle")
+    handle = slider.append('g')
+      .attr('class', 'handle');
 
     handle.append('svg:image')
       .attr('width', 16)
@@ -89,11 +92,18 @@ define([
       .attr('x', 0)
       .attr('y', (height / 2) - 8);
 
-    slider
-      .call(brush.event)
+    slider.call(brush.event);
   };
 
-  TorqueTimelineSlider.prototype.setupDomain = function(svg) {
+  TorqueTimelineSlider.prototype.setupDomain = function() {
+    svg.select('.slider')
+      .insert('svg:line', ':first-child')
+      .attr('class', 'played_domain')
+      .attr('x1', 0)
+      .attr('x2', 0)
+      .attr('y1', height / 2)
+      .attr('y2', height / 2);
+
     svg.select('.slider')
       .insert('svg:line', ':first-child')
       .attr('class', 'domain')
@@ -104,15 +114,15 @@ define([
   };
 
   TorqueTimelineSlider.prototype.render = function() {
-    var svg = d3.select(el)
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    svg = d3.select(el)
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     this.setupBrush();
-    this.setupSlider(svg);
-    this.setupDomain(svg);
+    this.setupSlider();
+    this.setupDomain();
   };
 
   return TorqueTimelineSlider;
