@@ -43,10 +43,9 @@ define([
         type: 'POST'
       });
 
-      var params = { geojson: geojson };
       var requestConfig = {
         resourceId: SAVE_REQUEST_ID,
-        data: JSON.stringify(params),
+        data: JSON.stringify(geojson),
         success: function(response) {
           resolve(response.id);
         },
