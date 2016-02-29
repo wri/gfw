@@ -48,8 +48,10 @@ define([
 
     setDateRange: function(dates) {
       this.currentDate = dates;
+      this.presenter.updateTimelineDate({time: dates[0]});
+      delete this.timelineExtent;
       this._setupAnimation();
-      this.start();
+      this.updateTiles();
     },
 
     setDate: function(date) {
@@ -101,6 +103,7 @@ define([
     stop: function() {
       window.cancelAnimationFrame(this.animationInterval);
       delete this.animationInterval;
+      this.presenter.animationStopped();
     },
 
     toggle: function() {
