@@ -13,6 +13,15 @@
           <select data-placeholder="RGB (Red Green Blue)" class="chosen-select default notranslate" id="hres-filter-select" ><option></option></select>
         </section>
         <section>
+          <span>Sensor <a href='#' data-source="hr-sensor" class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+          <select data-placeholder="All sensors" class="chosen-select default notranslate" id="hres-filter-sensor" >
+            <option value="landsat-8,theia,deimos-1">All sensors</option>
+            <option value="landsat-8">Landsat 8</option>
+            <option value="theia">Theia</option>
+            <option value="deimos-1">Deimos 1</option>
+          </select>
+        </section>
+        <section>
           <span>Maximum cloud cover percentage <a href='#' data-source="hr-cloud" class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           <div class="range-box">
             <ul><li>0%</li><li>10</li><li>20</li><li>30</li><li>40</li><li>50</li><li>60</li><li>70</li><li>80</li><li>90</li><li>100%</li></ul>
