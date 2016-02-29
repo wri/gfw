@@ -52,6 +52,7 @@ define([
       delete this.timelineExtent;
       this._setupAnimation();
       this.updateTiles();
+      this.presenter.animationStopped();
     },
 
     setDate: function(date) {
@@ -103,7 +104,6 @@ define([
     stop: function() {
       window.cancelAnimationFrame(this.animationInterval);
       delete this.animationInterval;
-      this.presenter.animationStopped();
     },
 
     toggle: function() {
