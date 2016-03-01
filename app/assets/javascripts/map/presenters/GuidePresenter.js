@@ -14,6 +14,7 @@ define([
   var StatusModel = Backbone.Model.extend({
     defaults: {
       tour: null,
+
     }
   });
 
@@ -46,12 +47,19 @@ define([
 
     _onPlaceGo: function(place) {
       var params = place.params;
-      this.status.set('tour', (!!params.tour) ? true : null);
+      this.status.set('tour',params.tour);
 
       setTimeout(function(){      
-        this.view.setTour();
+        switch(params.tour) {
+          case 'glad':
+            this.view.setGladTour();
+          break;
+          default:
+            this.view.setDefaultTour();
+          break;
+        }
         this.view.initTour();
-      }.bind(this),0)
+      }.bind(this),250)
 
     }
 
