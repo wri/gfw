@@ -27,6 +27,8 @@ define([
 
         if (allowCancel === false) {
           this.view.$el.find('button').hide();
+        } else {
+          this.view.$el.show('button').hide();
         }
       }
     }, {
