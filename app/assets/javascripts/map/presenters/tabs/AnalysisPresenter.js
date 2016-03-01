@@ -559,7 +559,7 @@ define([
 
       this.view.setEditable(overlay, false);
 
-      mps.publish('Spinner/start');
+      mps.publish('Spinner/start', [false]);
       GeostoreService.save(geojson).then(function(geostoreId) {
         mps.publish('Spinner/stop');
         this.status.set('geostore', geostoreId);
