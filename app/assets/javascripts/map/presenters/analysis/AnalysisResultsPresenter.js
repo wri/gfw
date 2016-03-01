@@ -26,7 +26,6 @@ define([
 
   var SUBSCRIPTION_ALLOWED = [
     'loss',
-    'forestgain',
     'imazon',
     'terrailoss',
     'prodes',
