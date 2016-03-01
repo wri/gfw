@@ -458,9 +458,7 @@ define([
     _onClickDoneSubscribe: function() {
       if (!this.$doneSubscribe.hasClass('disabled')) {
         ga('send', 'event', 'Map', 'Analysis', 'Click: done');
-        this._stopDrawing();
         this.presenter.doneDrawingSubscribe();
-        this.toggleAnalysis(true);
       }
     },
 

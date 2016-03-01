@@ -90,7 +90,12 @@ define([
       this.render();
       this.presenter.unSetSubscribeState();
       this.presenter.updateUrl();
-      this.presenter.subscribeEnd();
+
+      if (this.subscription.isNew()) {
+        this.presenter.subscribeCancel();
+      } else {
+        this.presenter.subscribeEnd();
+      }
     },
 
     isOpen: function() {

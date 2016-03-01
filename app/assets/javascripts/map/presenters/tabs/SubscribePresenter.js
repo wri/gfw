@@ -44,6 +44,10 @@ define([
       mps.publish('Subscribe/end');
     },
 
+    subscribeCancel: function(){
+      mps.publish('Subscribe/cancel');
+    },
+
     updateUrl: function() {
       mps.publish('Place/update', [{go: false}]);
     },
