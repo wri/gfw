@@ -16,7 +16,6 @@ define([
 
   var SUBSCRIPTION_ALLOWED = [
     'loss',
-    'forestgain',
     'imazon',
     'terrailoss',
     'prodes',
@@ -91,6 +90,10 @@ define([
         var baselayer = this.status.get('baselayer');
         var both = this.status.get('both');
         this._setBaselayer(layerSpec.getBaselayers());
+
+        this.view.toggleCountrySubscribeBtn();
+        this.view.toggleDoneSubscribeBtn();
+
         if (this.status.get('baselayer') != baselayer) {
           this._updateAnalysis();
           this.openAnalysisTab();
@@ -812,13 +815,17 @@ define([
     },
 
     toggleOverlay: function(to){
-      mps.publish('Overlay/toggle', [to])
+      mps.publish('Overlay/toggle', [to]);
     },
 
     notificate: function(id){
       mps.publish('Notification/open', [id]);
     },
 
+    layerAvailableForSubscription: function() {
+      var baselayer = this.status.get('baselayer');
+      return (baselayer && SUBSCRIPTION_ALLOWED.indexOf(baselayer.slug) > -1);
+    }
 
   });
 
