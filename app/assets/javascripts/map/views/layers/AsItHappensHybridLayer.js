@@ -158,8 +158,8 @@ define([
 
           dayOfLoss = dayOfLoss + ((yearOfLoss - 2015) * 365);
 
-          if (dayOfLoss >= startDay && yearOfLoss >= startYear && dayOfLoss <= endDay && yearOfLoss <= endYear) {
-            if (dayOfLoss >= recentRangeStartDay && yearOfLoss >= recentRangeStartYear && dayOfLoss <= recentRangeEndDay && yearOfLoss <= recentRangeEndYear) {
+          if (dayOfLoss >= startDay && dayOfLoss <= endDay) {
+            if (dayOfLoss >= recentRangeStartDay && dayOfLoss <= recentRangeEndDay) {
               imgdata[pixelPos] = 219;
               imgdata[pixelPos + 1] = 168;
               imgdata[pixelPos + 2] = 0;
