@@ -195,12 +195,18 @@ define([
         this.view.toggleAnalysis(this.view.$el.hasClass('is-analysis'));
       }
     },{
+      'Subscribe/cancel' : function(){
+        this.status.set('subscribe_only', false);
+      }
+    }, {
       'Subscribe/end' : function(){
         this.view.setStyle();
         if (this.status.get('subscribe_only') === true) {
           this.status.set('subscribe_only', false);
           this.deleteAnalysis();
           mps.publish('Place/update', [{go: false}]);
+          this.view.toggleAnalysis(true);
+          this.view._stopDrawing();
         }
       }
     }, {
