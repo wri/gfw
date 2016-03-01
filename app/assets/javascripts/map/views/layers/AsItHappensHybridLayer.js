@@ -105,7 +105,7 @@ define([
 
       var startYear = this.timelineExtent[0].year(),
           endYear = this.timelineExtent[1].year();
-      var startDay = this.timelineExtent[0].dayOfYear(),
+      var startDay = this.timelineExtent[0].dayOfYear() + ((startYear - 2015) * 365),
           endDay = this.timelineExtent[1].dayOfYear() + ((endYear - 2015) * 365);
 
       var recentRangeStart = this.maxDate.clone().subtract(7, 'days'),
