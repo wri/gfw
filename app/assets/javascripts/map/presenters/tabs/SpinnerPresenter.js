@@ -22,8 +22,12 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Spinner/start': function() {
+      'Spinner/start': function(allowCancel) {
         this.view.start();
+
+        if (allowCancel === false) {
+          this.view.$el.find('button').hide();
+        }
       }
     }, {
       'Spinner/stop': function() {
