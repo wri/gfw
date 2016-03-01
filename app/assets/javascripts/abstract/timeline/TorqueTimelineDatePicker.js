@@ -33,7 +33,8 @@ define([
       }
 
       var tzOffset = new Date().getTimezoneOffset();
-      this.set(id, date.add(tzOffset, 'minutes'));
+      if (tzOffset > 0) { date = date.add(tzOffset, 'minutes'); }
+      this.set(id, date);
     }
   });
 
