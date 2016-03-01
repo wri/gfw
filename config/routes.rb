@@ -34,6 +34,8 @@ Gfw::Application.routes.draw do
     get '/howto/data' => redirect("/howto/faqs")
     get '/howto/web_platform' => redirect("/howto/faqs")
     get '/howto/for_business' => redirect("/howto/faqs")
+    get '/howto/analyze-forest-change' => redirect("/howto/analyze-and-subscribe-to-forest-change-data")
+    get '/howto/subscribe-to-alerts-and-user-stories' => redirect("/howto/analyze-and-subscribe-to-forest-change-data")
 
     # about
     get '/about/video' => redirect("/about")
