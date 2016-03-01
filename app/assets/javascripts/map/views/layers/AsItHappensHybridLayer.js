@@ -28,7 +28,7 @@ define([
 
     _getUrl: function(x, y, z) {
       var url;
-      if (z > 8) {
+      if (z > 9) {
         url = this.options.rasterUrlTemplate;
       } else {
         url = this.options.pointsUrlTemplate;
@@ -112,7 +112,7 @@ define([
           recentRangeStartYear = recentRangeStart.year();
       var recentRangeEnd = this.maxDate.clone(),
           recentRangeEndYear = recentRangeEnd.year();
-      var recentRangeStartDay = recentRangeStart.dayOfYear() + ((recentRangeEndYear - 2015) * 365),
+      var recentRangeStartDay = recentRangeStart.dayOfYear() + ((recentRangeStartYear - 2015) * 365),
           recentRangeEndDay = recentRangeEnd.dayOfYear() + ((recentRangeEndYear - 2015) * 365);
 
       var pixelComponents = 4; // RGBA
@@ -121,7 +121,7 @@ define([
         for(var j = 0; j < h; ++j) {
           var pixelPos = (j * w + i) * pixelComponents;
           var yearOfLoss, dayOfLoss;
-          if (z > 8) {
+          if (z > 9) {
             if (imgdata[pixelPos] > 0) {
               if (imgdata[pixelPos+1] === 0) {
                 yearOfLoss = 2015;
