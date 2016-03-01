@@ -1480,7 +1480,18 @@
           padding: 0;
         }
       }
-    }    
+    }  
+
+    .img-two-columns {
+      @include display-flex();
+      @include justify-content(space-between);
+      @include flex-wrap(wrap);
+      @include align-items(flex-start);
+      > * {
+        width: 47.5%;
+        margin: 10px 0;
+      }
+    }  
 
     .read_more {
       padding: 10px 0;
