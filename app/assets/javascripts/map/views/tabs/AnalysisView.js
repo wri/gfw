@@ -4,18 +4,14 @@
  * @return AnalysisView instance (extends Backbone.View).
  */
 define([
-  'underscore',
-  'handlebars',
-  'amplify',
-  'chosen',
+  'underscore', 'handlebars', 'amplify', 'chosen', 'turf',
   'map/presenters/tabs/AnalysisPresenter',
   'map/services/ShapefileService',
   'helpers/geojsonUtilsHelper',
   'map/views/tabs/SpinnerView',
   'text!map/templates/tabs/analysis.handlebars',
   'text!map/templates/tabs/analysis-mobile.handlebars'
-
-], function(_, Handlebars, amplify, chosen, Presenter, ShapefileService, geojsonUtilsHelper, SpinnerView, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, turf, Presenter, ShapefileService, geojsonUtilsHelper, SpinnerView, tpl, tplMobile) {
 
   'use strict';
 
@@ -38,6 +34,7 @@ define([
       //draw
       'click #start-analysis' : '_onClickAnalysis',
       'click #done-analysis' : '_onClickDone',
+      'click #done-subscribe' : '_onClickDoneSubscribe',
 
       //countries
       'change #analysis-country-select' : 'changeIso',
@@ -75,6 +72,7 @@ define([
       //draw
       this.$start = $('#start-analysis');
       this.$done = $('#done-analysis');
+      this.$doneSubscribe = $('#done-subscribe');
 
       //country
       this.$selects = this.$el.find('.chosen-select');
@@ -96,32 +94,56 @@ define([
 
     },
 
-    setListeners: function(){
-
-    },
-
     setDropable: function() {
-      var dropable = document.getElementById('drop-shape-analysis');
-      if (!dropable) return;
+      var dropable = document.getElementById('drop-shape-analysis'),
+          fileSelector = document.getElementById('analysis-file-upload');
+      if (!dropable) { return; }
+
+      var handleUpload = function(file) {
+        var FILE_SIZE_LIMIT = 1000000,
+            sizeMessage = 'The selected file is quite large and uploading it might result in browser instability. Do you want to continue?';
+        if (file.size > FILE_SIZE_LIMIT && !window.confirm(sizeMessage)) {
+          $(dropable).removeClass('moving');
+          return;
+        }
+
+        mps.publish('Spinner/start', []);
+
+        var shapeService = new ShapefileService({ shapefile: file });
+        shapeService.toGeoJSON().then(function(data) {
+          var combinedFeatures = data.features.reduce(turf.union);
+
+          mps.publish('Analysis/upload', [combinedFeatures.geometry]);
+
+          this.drawMultipolygon(combinedFeatures);
+          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(combinedFeatures);
+          this.map.fitBounds(bounds);
+        }.bind(this));
+
+        $(dropable).removeClass('moving');
+      }.bind(this);
+
+      fileSelector.addEventListener('change', function() {
+        var file = this.files[0];
+        if (file) { handleUpload(file); }
+      });
+
+      dropable.addEventListener('click', function(event) {
+        var $el = $(event.target);
+        if ($el.hasClass('source')) { return true; }
+
+        $(fileSelector).trigger('click');
+      });
+
       dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
       dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
       dropable.ondrop = function (e) {
         e.preventDefault();
-
         var file = e.dataTransfer.files[0];
-        var shapeService = new ShapefileService({
-          shapefile : file });
-        shapeService.toGeoJSON().then(function(data) {
-          var features = data.features[0];
-          mps.publish('Analysis/upload', [features.geometry]);
-
-          this.drawMultipolygon(features);
-          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(features);
-          this.map.fitBounds(bounds);
-        }.bind(this));
-
+        handleUpload(file);
         return false;
-      }.bind(this);
+      };
+
     },
 
     render: function(){
@@ -325,17 +347,22 @@ define([
     changeIso: function(e){
       this.iso = $(e.currentTarget).val();
       this.$countryButton.removeClass('disabled');
+      this.$countrySButton.removeClass('disabled');
       this.area = null;
       if(this.iso) {
         this.getSubCountries()
-      }else{
+      } else {
         this.presenter.deleteAnalysis();
+        this.$countryButton.addClass('disabled');
+        this.$countrySButton.addClass('disabled');
         this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
       }
     },
+
     changeArea: function(e){
       this.area = $(e.currentTarget).val();
       this.$countryButton.removeClass('disabled');
+      this.$countrySButton.removeClass('disabled');
     },
 
     // For autoselect country and region when youn reload page
@@ -348,9 +375,11 @@ define([
         this.getSubCountries();
         if (!dont_analyze) {
           this.$countryButton.addClass('disabled');
+          this.$countrySButton.addClass('disabled');
         }
-      }else{
-        this.$countryButton.removeClass('disabled');
+      } else {
+        this.$countryButton.addClass('disabled');
+        this.$countrySButton.addClass('disabled');
         this.$regionSelect.val(this.area).attr('disabled', true).trigger("liszt:updated")
       }
     },
@@ -360,29 +389,21 @@ define([
         var iso = {
           country: this.iso,
           region: this.area
-        }
+        };
         this.$countryButton.addClass('disabled');
         this.presenter.setAnalyzeIso(iso);
       }
     },
 
     subscribeCountry: function(){
-      if (this.iso) {
+      if (this.iso && !this.$countrySButton.hasClass('disabled')) {
         var iso = {
           country: this.iso,
           region: this.area
-        }
-        this.presenter.setSubscribeIso(iso);
+        };
+        this.presenter.subscribeIso(iso);
       }
     },
-
-
-
-
-
-
-
-
 
     /**
      * DRAWING
@@ -412,6 +433,15 @@ define([
         ga('send', 'event', 'Map', 'Analysis', 'Click: done');
         this._stopDrawing();
         this.presenter.doneDrawing();
+        this.toggleAnalysis(true);
+      }
+    },
+
+    _onClickDoneSubscribe: function() {
+      if (!this.$doneSubscribe.hasClass('disabled')) {
+        ga('send', 'event', 'Map', 'Analysis', 'Click: done');
+        this._stopDrawing();
+        this.presenter.doneDrawingSubscribe();
         this.toggleAnalysis(true);
       }
     },
@@ -545,22 +575,6 @@ define([
       this.presenter.setMultipolygon(multipolygon, geojson);
     },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // COUNTRY MASK
     drawMaskCountry: function(geojson, iso){
       this.mask = cartodb.createLayer(this.map, {
@@ -678,14 +692,6 @@ define([
       // }
     },
 
-
-
-
-
-
-
-
-
     /**
      * BUTTONS.
      */
@@ -712,9 +718,8 @@ define([
     toggleDoneBtn: function(to){
       $('#draw-analysis').toggleClass('one', to);
       this.$done.parent().toggleClass('hidden', to);
+      this.$doneSubscribe.parent().toggleClass('hidden', to);
     },
-
-
 
     // OTHER
     onGifPlay: function(){
@@ -730,11 +735,7 @@ define([
       var img = new Image();
       img.src = url;
       return url;
-    },
-
-
-
-
+    }
 
   });
   return AnalysisView;

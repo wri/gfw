@@ -24,6 +24,10 @@ define([
       },
 
       'Torque/started': function(bounds) {
+        if (this.view.bounds !== undefined) {
+          this.view.status.set('running', true);
+        }
+
         this.view.setBounds(bounds);
         this.view.render();
       },
@@ -35,11 +39,12 @@ define([
 
     setTorqueDateRange: function(dates) {
       mps.publish('Timeline/date-range-change', [this.view.getName(), dates]);
+      mps.publish('Timeline/date-change', [this.view.getName(), dates]);
       mps.publish('Place/update', [{go: false}]);
     },
 
     setTorqueDate: function(date) {
-      mps.publish('Timeline/date-change', [this.view.getName(), date]);
+      mps.publish('TorqueTimeline/date-change', [this.view.getName(), date]);
     },
 
     togglePlaying: function() {

@@ -1,22 +1,40 @@
-<tr>
-  <td>
-    <h4>
-      {{#if name}}
-        {{name}}
-      {{else}}
-        <em>Unnamed Subscription</em>
-      {{/if}}
-    </h4>
-    <h5>{{created}}</h5>
-  </td>
+<td>
+  {{#unless confirmed}}
+  <div class="subscription-unconfirmed">
+    <a href="{{confirmationUrl}}">
+      <svg class="icon" width="16px" height="16px">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-warning"></use>
+      </svg>
+    </a>
 
-  <td>
-    <svg><use xlink:href="#icon-h-map"></use></svg>
-    <span><a href="/map/3/15.00/27.00/ALL/grayscale/loss,forestgain?geojson={{params.geom}}">View on Map</a></span>
-  </td>
+    <span class="tooltipmap bottom">
+      Subscription has not been confirmed, click here to resend the
+      confirmation email
+    </span>
+  </div>
+  {{/unless}}
 
-  <td>
-    <svg><use xlink:href="#icon-analysis-remove"></use></svg>
-    <a href="#" class="subscriptions-delete-item">Delete</a>
-  </td>
-</tr>
+  <h4>
+    {{#if name}}
+      {{name}}
+    {{else}}
+      <em>Unnamed Subscription</em>
+    {{/if}}
+  </h4>
+
+  <ul>
+    <li>Data set: {{topic.title}} ({{topic.sub_title}})</li>
+    <li>Date of subscription: {{created}} UTC</li>
+  </ul>
+</td>
+
+<td>
+  <svg><use xlink:href="#icon-h-map"></use></svg>
+  <span><a href="{{url}}" target="_blank">View on Map</a></span>
+</td>
+
+<td>
+  <svg><use xlink:href="#icon-analysis-remove"></use></svg>
+  <a href="#" class="subscriptions-delete-item">Delete</a>
+</td>
+

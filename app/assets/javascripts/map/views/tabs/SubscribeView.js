@@ -1,27 +1,38 @@
-/**
- * The SubscribeView module.
- *
- * @return SubscribeView class (extends Backbone.View).
- */
 define([
-  'backbone',
-  'underscore',
-  'handlebars',
+  'backbone', 'underscore', 'handlebars', 'moment',
   'map/models/UserModel',
   'map/presenters/tabs/SubscribePresenter',
+  'connect/models/Subscription',
   'text!map/templates/tabs/subscribe.handlebars'
-], function(Backbone, _, Handlebars, User, Presenter, tpl) {
+], function(Backbone, _, Handlebars, moment, User, Presenter, Subscription, tpl) {
+
   'use strict';
+
+  var TOPICS = {
+    loss: 'alerts/treeloss',
+    forestgain: 'alerts/treegain',
+    forma: 'alerts/forma',
+    imazon: 'alerts/sad',
+    modis: 'alerts/quicc',
+    terrailoss: 'alerts/terra',
+    prodes: 'alerts/prodes',
+    guyra: 'alerts/guyra',
+    umd_as_it_happens: 'alerts/glad'
+  };
 
   var SubscribeView = Backbone.View.extend({
 
-    el: '#analysis-subscribe',
+    id: 'subscription-modal',
+    className: 'subscription-modal',
 
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .close-icon' : 'hide',
-      'click #subscribe': 'subscribeAlerts',
+      'click .subscription-modal-close': 'close',
+      'click .subscription-modal-backdrop': 'close',
+      'click #returnToMap': 'close',
+      'click #showName': 'askForName',
+      'click #subscribe': 'subscribe',
     },
 
     initialize: function(){
@@ -36,78 +47,144 @@ define([
 
     render: function(){
       this.$el.html(this.template({
-        email: this.user.get('email')
+        email: this.user.get('email'),
+        loggedIn: this.user.isLoggedIn(),
+        date: moment().format('MMM D, YYYY'),
+        dataset: this.subscription && this.subscription.formattedTopic().long_title
       }));
-
-      this.cacheVars();
+      this.setupAuthLinks();
 
       return this;
     },
 
-    cacheVars: function(){
-      this.$content = this.$el.find('.analysis-subscribe-content');
-      this.$steps = this.$el.find('.steps');
+    refreshEmail: function() {
+      if (_.isEmpty(this.user.get('email'))) {
+        this.showSpinner();
+        this.user.fetch();
+      }
     },
 
     show: function(options){
-      this.analysisResource = options.analysisResource;
-      this.$el.addClass('active');
-      this.$content.addClass('active');
-    },
+      this.refreshEmail();
 
-    hide: function(){
-      this.$el.removeClass('active');
-      this.$content.removeClass('active');
-      this.nextStep(0);
-      this.presenter.hide();
-    },
-
-    subscribeAlerts: function() {
-      var email = this.$el.find('#areaEmail').val();
-      var topic = 'Subscribe to alerts';
-
-      var data = {
-        topic: topic,
-        email: email
-      };
-
-      ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + data.topic + ', Email: ' + data.email);
-
-      if (this.analysisResource.type === 'geojson') {
-        data.geom = JSON.parse(this.analysisResource.geojson);
-      }else{
-        data.geom = (this.analysisResource.geom) ? this.analysisResource.geom.geometry : this.presenter.geom_for_subscription;
+      if (!this.user.isLoggedIn()) {
+        this.presenter.setSubscribeState();
       }
 
-      if (this.validateEmail(email)) {
-        $.ajax({
-          type: 'POST',
-          url: window.gfw.config.GFW_API_HOST + '/v2/subscriptions',
-          crossDomain: true,
-          xhrFields: { withCredentials: true },
-          data: JSON.stringify(data),
-          dataType: 'json',
-          success: _.bind(this._successSubscription, this),
-          error: this.remove.bind(this)
-        });
-      }else{
+      this.$el.addClass('is-active');
+      this.presenter.updateUrl();
+
+      this.createSubscription(options);
+      this.currentStep = 0;
+
+      this.render();
+    },
+
+    close: function(event) {
+      if (event !== undefined && event.preventDefault) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      this.$el.removeClass('is-active');
+      this.render();
+      this.presenter.unSetSubscribeState();
+      this.presenter.updateUrl();
+      this.presenter.subscribeEnd();
+    },
+
+    isOpen: function() {
+      return this.$el.hasClass('is-active');
+    },
+
+    showSpinner: function() {
+      this.$('.subscription-spinner-container').css('visibility', 'visible');
+    },
+
+    hideSpinner: function() {
+      this.$('.subscription-spinner-container').css('visibility', 'hidden');
+    },
+
+    setupAuthLinks: function() {
+      var apiHost = window.gfw.config.GFW_API_HOST;
+
+      this.$('.subscription-sign-in').each(function() {
+        var $link = $(this);
+        $link.attr('href', apiHost + $link.attr('href'));
+      });
+    },
+
+    createSubscription: function(options) {
+      var analysisResource = options.analysisResource,
+          geostoreId = options.geostore;
+
+      this.subscription = new Subscription({
+        topic: TOPICS[options.layer.slug] || options.layer.title,
+        url: window.location.href
+      });
+      this.subscription.set(analysisResource);
+
+      if (analysisResource) {
+        var geom;
+        if (analysisResource.type === 'geojson') {
+          geom = JSON.parse(analysisResource.geojson);
+        } else {
+          if (analysisResource.geom) {
+            geom = analysisResource.geom.geometry;
+          } else {
+            geom = this.presenter.geom_for_subscription;
+          }
+        }
+        this.subscription.set('geom', geom);
+      } else if (geostoreId) {
+        this.subscription.set('geostore_id', geostoreId);
+      }
+    },
+
+    askForName: function() {
+      this.subscription.set('email',
+        this.$el.find('#subscriptionEmail').val());
+
+      if (this.subscription.hasValidEmail()) {
+        this.nextStep();
+      } else {
         this.presenter.notificate('email-incorrect');
       }
     },
 
-    validateEmail: function(email){
-      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
+    subscribe: function() {
+      this.showSpinner();
+
+      window.ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' +
+        this.subscription.get('topic') + ', Email: ' + this.subscription.get('email'));
+
+      this.subscription.set('name',
+        this.$el.find('#subscriptionName').val());
+
+      this.subscription.save().
+        then(this.onSave.bind(this)).
+        fail(this.close.bind(this));
     },
 
-    _successSubscription: function(data, textStatus, jqXHR) {
-      this.presenter.subscribeEnd();
-      this.nextStep(1);
+    onSave: function() {
+      this.hideSpinner();
+      this.nextStep();
     },
 
-    nextStep: function(index){
-      this.$steps.removeClass('current')
-      this.$steps.eq(index).addClass('current');
+    nextStep: function(index) {
+      if (this.currentStep === undefined) {
+        this.currentStep = 0;
+      }
+
+      if (index !== undefined && _.isNumber(index)) {
+        this.currentStep = index;
+      } else {
+        this.currentStep += 1;
+      }
+
+      var $steps = this.$('.steps');
+      $steps.removeClass('current');
+      $steps.eq(this.currentStep).addClass('current');
     }
 
   });

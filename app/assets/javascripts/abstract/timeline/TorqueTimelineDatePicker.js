@@ -117,7 +117,9 @@ define([
         onSet: function(event) {
           if (event.select !== undefined) {
             var id = this.component.$node.attr('id');
-            context.selectedDates.setDate(id, moment(event.select));
+            var timezone = new Date().getTimezoneOffset() * 60 * 1000,
+                offsetDate = event.select - timezone;
+            context.selectedDates.setDate(id, moment(offsetDate));
           }
         }
       });

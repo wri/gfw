@@ -245,7 +245,7 @@ $height: auto;
 
 .modal-content {
   font-size: 13px;
-  
+
   br {
     display: none;
   }
@@ -412,10 +412,6 @@ $height: auto;
     color: $dark;
     margin: 20px 0 0;
 
-    &.is-italic {
-      font-style: italic;
-    }
-
     h3 {
       font-size: 16px;
       font-weight: 500;
@@ -444,13 +440,6 @@ $height: auto;
     }
   }
 }
-
-
-
-
-
-
-
 
 
 
@@ -740,9 +729,5 @@ $height: auto;
         }
       }
     }
-
   }
 }
-
-
-

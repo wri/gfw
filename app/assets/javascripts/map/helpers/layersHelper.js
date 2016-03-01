@@ -121,7 +121,7 @@ define([
   'map/views/layers/GtmForestChange2Layer',
   'map/views/layers/GtmForestCoverLayer',
   'map/views/layers/GtmForestDensityLayer',
-  'map/views/layers/AsItHappensLayer',
+  'map/views/layers/AsItHappensHybridLayer',
   'map/views/layers/LandsatAlertsCoverLayer',
   'map/views/layers/KhmProtectedAreasLayer',
   'map/views/layers/KhmEcoLandLayer',
@@ -134,7 +134,11 @@ define([
   'map/views/layers/GuyraCoverLayer',
   'map/views/layers/MysPALayer',
   'map/views/layers/IdnPeatLandsLayer',
+  'map/views/layers/MysPeatLandsLayer',
   'map/views/layers/RaisgMiningLayer',
+  'map/views/layers/PerMiningLayer',
+  'map/views/layers/MexMiningLayer',
+  'map/views/layers/BraMiningLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -270,7 +274,7 @@ define([
   GtmForestChange2Layer,
   GtmForestCoverLayer,
   GtmForestDensityLayer,
-  AsItHappensLayer,
+  AsItHappensHybridLayer,
   LandsatAlertsCoverLayer,
   KhmProtectedAreasLayer,
   KhmEcoLandLayer,
@@ -283,7 +287,11 @@ define([
   GuyraCoverLayer,
   MysPALayer,
   IdnPeatLandsLayer,
+  MysPeatLandsLayer,
   RaisgMiningLayer,
+  PerMiningLayer,
+  MexMiningLayer,
+  BraMiningLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -674,10 +682,9 @@ define([
       view: GtmForestDensityLayer
     },
     umd_as_it_happens: {
-      view: AsItHappensLayer,
+      view: AsItHappensHybridLayer,
       timelineView: AsItHappensTimeline
     },
-    
     gfw_landsat_alerts_coverage: {
       view: LandsatAlertsCoverLayer
     },
@@ -714,10 +721,25 @@ define([
     },
     mys_protected_areas: {
       view:  MysPALayer
-    }, 
+    },
+    mys_peat_lands: {
+      view:  MysPeatLandsLayer
+    },
     idn_peat_lands: {
       view:  IdnPeatLandsLayer
     },
+    mex_mining: {
+      view:  MexMiningLayer
+    },
+    
+    per_mining: {
+      view:  PerMiningLayer
+    },
+    
+    bra_mining: {
+      view:  BraMiningLayer
+    },
+    
     nothing: {
     }
   };

@@ -35,5 +35,9 @@
 @import "modules/carrousel";
 @import "modules/pagination";
 @import "layouts/static";
-@import "modules/connect/sozial-elements";
-@import "modules/connect/connect-form";
+
+@import "modules/connect/shared";
+@import "modules/connect/profile-modal";
+@import "modules/connect/user-form";
+@import "modules/connect/login";
+@import "modules/connect/subscriptions";

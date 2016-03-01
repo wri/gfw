@@ -28,7 +28,6 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click  .chzn-results'      : 'changeProvider',
       'click  .onoffswitch'       : 'toggleLayer',
       'click  .maptype h3'        : 'toggleLayerName',
       'oninput #range-clouds'     : 'setVisibleRange',
@@ -54,8 +53,8 @@ define([
     cacheVars: function() {
       this.$selects            = this.$el.find('.chosen-select');
       this.$hresSelectProvider = $('#hres-provider-select');
-      this.$hresSelectProFil   = $('#hres-filter-select');
       this.$hresSelectFilter   = $('#hres-filter-select');
+      this.$hresSensorFilter   = $('#hres-filter-sensor');
       this.$onoffswitch        = this.$el.find('.onoffswitch');
       this.$range              = $('#range-clouds');
       this.$progress           = $('#progress-clouds');
@@ -93,13 +92,13 @@ define([
       this.zoom = zoom;
       if (isNaN(this.previousZoom)) this.previousZoom = zoom;
       this.$currentZoom.text(zoom);
-      if(this.zoom >= 7) {
+      if(this.zoom >= 5) {
         this.presenter.notificateClose();
         this.$disclaimer.hide(0);
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
           this.$onoffswitch.click();
-          if (this.previousZoom >= 7) {
+          if (this.previousZoom >= 5) {
             this.presenter.notificate('not-zoom-not-reached');
           }
         }
@@ -115,6 +114,7 @@ define([
           'zoom' : this.zoom,
           'satellite' : $objTarget.data('slug'),
           'color_filter': ($objTarget.find('#hres-filter-select').val().length > 0) ? $objTarget.find('#hres-filter-select').val() : 'rgb',
+          'sensor_platform': ($objTarget.find('#hres-filter-sensor').val().length > 0) ? $objTarget.find('#hres-filter-sensor').val() : null,
           'cloud': this.$range.val(),
           'mindate': (this.$mindate.val().length > 0) ? this.$mindate.val() : '2000-09-01',
           'maxdate': (this.$maxdate.val().length > 0) ? this.$maxdate.val() : '2015-09-01'
@@ -140,7 +140,8 @@ define([
     },
 
     _fillParams: function(params) {
-      this.$hresSelectProFil.val(params.color_filter).trigger("liszt:updated");
+      this.$hresSelectFilter.val(params.color_filter).trigger("liszt:updated");
+      this.$hresSensorFilter.val(params.sensor_platform).trigger("liszt:updated");
       this.$range.val(params.cloud);
       this.setVisibleRange();
       this.zoom = params.zoom;
@@ -153,7 +154,7 @@ define([
     },
 
     toggleLayer: function(e) {
-      if (this.zoom >= 7) {
+      if (this.zoom >= 5) {
         this.switchToggle();
         this.$apply.toggleClass('disabled');
         this.presenter.setHres(this._getParams(e));
@@ -214,17 +215,6 @@ define([
       if (!!options) return;
       this.$hresSelectFilter.append(options);
       this.triggerChosen();
-    },
-
-    changeProvider: function(e) {
-      ga('send', 'event', 'Map', 'Settings', 'Urthecast advanced renderer');
-      return;
-      var providers = {
-        'urthe' : '<option value="ndvi">NDVI (Normalized Difference Vegetation Index)</option><option value="evi">EVI (Enhanced vegetation index)</option><option value="ndwi">NDWI (Normalized Difference Water Index)</option><option value="false-nir">False Color NIR (Near Infra Red)</option>',
-        'digiglobe' : '',
-        'skybox' : ''
-      }
-      this.printFilters(providers[$(e.currentTarget).val()]);
     },
 
     setVisibleRange: function(){

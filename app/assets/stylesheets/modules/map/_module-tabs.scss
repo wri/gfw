@@ -39,7 +39,7 @@ $w-control: 44px;
           position: relative;
           @media (min-width: $br-mobileMap){
             float: none;
-            width: 33%;
+            width: 25%;
             &:first-child{
               border-left: none;
             }
@@ -318,32 +318,58 @@ $w-control: 44px;
     margin: 0 auto;
   }
 }
+
 .dropable {
-  margin: 30px 0 0;
+  margin: 0 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   .shape-droppable {
-      border: 1px dashed #88aa37;
-      display: inline-flex;
-      height: 60px;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      width: 90%;
-      font-size: 21px;
-      line-height: 25px;
-      font-weight: 300;
-      &.moving {
-        background-color: aliceblue;
-        border-width: 2px;
-      }
+    border: 1px dashed #88aa37;
+    display: inline-flex;
+    height: 36px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    font-size: 14px;
+    line-height: 25px;
+    border-radius: 40px;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    input {
+      display: none;
+    }
+
+    &.moving {
+      background-color: aliceblue;
+      border-width: 2px;
+    }
   }
+
+  .drop-shape-text {
+    height: 36px;
+    width: 243px;
+    padding: 0 9px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .drop-shape-text span {
+    display: block;
+    width: 200px;
+    line-height: 1em;
+    padding-top: 1px;
+    font-size: 13px;
+  }
+
   .source{
     @extend .info-icon;
     display: inline-block;
-    right: -5px;
-    position: relative;
     cursor: pointer;
   }
 }

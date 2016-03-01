@@ -24,6 +24,17 @@ define([
     }
   });
 
+  var SUBSCRIPTION_ALLOWED = [
+    'loss',
+    'forestgain',
+    'imazon',
+    'terrailoss',
+    'prodes',
+    'guyra',
+    'umd_as_it_happens',
+    'modis'
+  ];
+
   var AnalysisResultsPresenter = PresenterClass.extend({
 
     /**
@@ -43,7 +54,8 @@ define([
       'terrailoss': 'terrai-alerts',
       'prodes': 'prodes-loss',
       'guyra': 'guyra-loss',
-      'forest2000': 'umd-loss-gain'
+      'forest2000': 'umd-loss-gain',
+      'umd_as_it_happens':'glad-alerts',
     },
 
     init: function(view) {
@@ -356,7 +368,14 @@ define([
       mps.publish('ThresholdControls/toggle');
     },
 
-
+    toggleSubscribeButton: function() {
+      var baselayer = this.status.get('baselayer').slug;
+      if (SUBSCRIPTION_ALLOWED.indexOf(baselayer) === -1) {
+        this.view.$('#analysis-subscribe').addClass('disabled');
+      } else {
+        this.view.$('#analysis-subscribe').removeClass('disabled');
+      }
+    }
 
   });
 

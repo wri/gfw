@@ -37,6 +37,8 @@
 @import "modules/modal_new";
 @import "modules/form";
 
+@import "modules/connect/profile-modal";
+@import "modules/connect/user-form";
 
 @import
 
@@ -75,6 +77,7 @@
   "modules/map/tab-basemaps",
   "modules/map/tab-countries",
   "modules/map/tab-highresolution",
+  "modules/map/subscription-modal",
   // timeline
   "modules/map/widget",
   "modules/map/timeline",
