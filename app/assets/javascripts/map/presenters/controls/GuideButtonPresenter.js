@@ -1,7 +1,7 @@
 /**º
- * The TourButtonPresenter class for the TourButtonPresenter view.
+ * The GuideButtonPresenter class for the GuideButtonPresenter view.
  *º
- * @return TourButtonPresenter class.
+ * @return GuideButtonPresenter class.
  */
 define([
   'underscore',
@@ -11,7 +11,7 @@ define([
 
   'use strict';
 
-  var TourButtonPresenter = PresenterClass.extend({
+  var GuideButtonPresenter = PresenterClass.extend({
 
     init: function(view) {
       this.view = view;
@@ -33,5 +33,5 @@ define([
 
   });
 
-  return TourButtonPresenter;
+  return GuideButtonPresenter;
 });

@@ -30,7 +30,7 @@ define([], function() {
       analysistab_4:    '<p>You can also select a <strong>country or subnational region</strong> (Peru, the Republic of Congo, or Kalimantan, Indonesia), or a <strong>shape from another data layer</strong> (like Protected Areas), to subscribe to.</p>',
       log_in:           '<p>Once you subscribe, you can <strong>view and manage your subscriptions</strong> through the <strong>My GFW</strong> feature.</p>',
       intro2:           '<p>Interested in learning more?</p>' + 
-                        '<p>You can also <strong>Analyze</strong> and <strong>Download</strong> GLAD Tree Cover Loss Alerts.</p>' +
+                        '<p>You can also <strong class="js-next-button">Analyze and Download</strong> GLAD Tree Cover Loss Alerts.</p>' +
                         '<p>Or <a href="/map" class="js-skip-tour">End Walk Through</a></p>',
       analysistab_5:    '<p><strong>Analyze</strong> GLAD Alerts for your area of interest by clicking the <strong>green Analyze button</strong> once you have defined an area on the map.</p>' + 
                         '<p><strong>Reminder</strong>: you can define an area by drawing or uploading a custom shape, selecting a country or subnational region, or clicking on an individual shape from another data layer.</p>',

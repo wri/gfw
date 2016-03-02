@@ -1,5 +1,5 @@
 /**
- * The TourButtonView module.
+ * The GuideButtonView module.
  *
  * @return searchbox class (extends Backbone.View).
  */
@@ -7,13 +7,13 @@ define([
   'underscore',
   'backbone',
   'handlebars',
-  'map/presenters/controls/TourButtonPresenter',
-  'text!map/templates/controls/tour-button.handlebars'
+  'map/presenters/controls/GuideButtonPresenter',
+  'text!map/templates/controls/guideButton.handlebars'
 ], function(_, Backbone, Handlebars, Presenter, tpl) {
 
   'use strict';
 
-  var TourButtonView = Backbone.View.extend({
+  var GuideButtonView = Backbone.View.extend({
 
     el: 'body',
 
@@ -52,5 +52,5 @@ define([
 
   });
 
-  return TourButtonView;
+  return GuideButtonView;
 });
