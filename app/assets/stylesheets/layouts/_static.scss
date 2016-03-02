@@ -175,6 +175,7 @@
   }
   img{
     max-width: 100%;
+    border: 1px solid $border;
   }
 
 
@@ -1465,6 +1466,32 @@
         }
       }
     }
+
+    .romanic  {
+      list-style-type: lower-alpha;
+      color: $dark;
+      margin: 0 0 0 10px;
+      > li{
+        padding: 10px 0 0;
+        margin-left: 20px;
+        line-height: 1.5;
+        font-size: 13px;
+        &:first-child{
+          padding: 0;
+        }
+      }
+    }  
+
+    .img-two-columns {
+      @include display-flex();
+      @include justify-content(space-between);
+      @include flex-wrap(wrap);
+      @include align-items(flex-start);
+      > * {
+        width: 47.5%;
+        margin: 10px 0;
+      }
+    }  
 
     .read_more {
       padding: 10px 0;

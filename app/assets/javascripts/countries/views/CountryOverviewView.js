@@ -330,6 +330,7 @@ define([
 
           var data = json.rows;
           var max_trigger = data.length -1;
+
           _.each(data, function(val, key) {
             var ord = e ? (key+11) : (key+1),
                 enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
@@ -355,7 +356,7 @@ define([
                 , this),
               });
             }
-            if (!!mode && mode.mode == 'percent') {
+            if (!!mode && mode.mode == 'percent' && !!val && !!val.ratio) {
               markup_list += '<li>\
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
