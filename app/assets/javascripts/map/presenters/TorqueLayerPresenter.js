@@ -27,6 +27,7 @@ define([
       'Timeline/date-range-change': function(layerName, dates) {
         if (this.view.getName() === layerName) {
           this.view.setDateRange(dates);
+          this.view.stop();
         }
       },
       'Timeline/toggle-playing': function() {

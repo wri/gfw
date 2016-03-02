@@ -357,6 +357,20 @@ define([
         this.$countrySButton.addClass('disabled');
         this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
       }
+
+      if (!this.presenter.layerAvailableForSubscription()) {
+        this.$countrySButton.addClass('disabled');
+      }
+    },
+
+    toggleCountrySubscribeBtn: function() {
+      if (!this.presenter.layerAvailableForSubscription()) {
+        this.$countrySButton.addClass('disabled');
+      } else {
+        if (!this.$countryButton.hasClass('disabled')) {
+          this.$countrySButton.removeClass('disabled');
+        }
+      }
     },
 
     changeArea: function(e){
@@ -381,6 +395,10 @@ define([
         this.$countryButton.addClass('disabled');
         this.$countrySButton.addClass('disabled');
         this.$regionSelect.val(this.area).attr('disabled', true).trigger("liszt:updated")
+      }
+
+      if (!this.presenter.layerAvailableForSubscription()) {
+        this.$countrySButton.addClass('disabled');
       }
     },
 
@@ -440,9 +458,7 @@ define([
     _onClickDoneSubscribe: function() {
       if (!this.$doneSubscribe.hasClass('disabled')) {
         ga('send', 'event', 'Map', 'Analysis', 'Click: done');
-        this._stopDrawing();
         this.presenter.doneDrawingSubscribe();
-        this.toggleAnalysis(true);
       }
     },
 
@@ -719,6 +735,14 @@ define([
       $('#draw-analysis').toggleClass('one', to);
       this.$done.parent().toggleClass('hidden', to);
       this.$doneSubscribe.parent().toggleClass('hidden', to);
+    },
+
+    toggleDoneSubscribeBtn: function() {
+      if (!this.presenter.layerAvailableForSubscription()) {
+        this.$doneSubscribe.addClass('disabled');
+      } else {
+        this.$doneSubscribe.removeClass('disabled');
+      }
     },
 
     // OTHER

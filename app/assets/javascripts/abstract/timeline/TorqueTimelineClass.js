@@ -6,14 +6,14 @@
  * @return Timeline view (extends Backbone.View).
  */
 define([
-  'underscore', 'backbone', 'moment', 'd3', 'handlebars',
+  'jquery', 'underscore', 'backbone', 'moment', 'd3', 'handlebars',
   'abstract/timeline/TorqueTimelineSlider', 'abstract/timeline/TorqueTimelineDatePicker',
   'map/presenters/TorqueTimelinePresenter',
   'text!templates/timelineTorque.handlebars',
   'text!templates/timelineTorque-controls.handlebars',
   'text!templates/timelineTorque-date.handlebars'
 ], function(
-  _, Backbone, moment, d3, Handlebars,
+  $, _, Backbone, moment, d3, Handlebars,
   TorqueTimelineSlider, TorqueTimelineDatePicker,
   Presenter,
   tpl, controlsTpl, dateTpl) {
@@ -120,14 +120,26 @@ define([
     },
 
     _onTorqueStop: function() {
-      this.status.set('running', false);
+      var $el = $(event.currentTarget).find('div');
+      if ($el.hasClass('play-icon')) {
+        this.status.set('running', true);
+      } else {
+        this.status.set('running', false);
+      }
+
       this.renderControls();
     },
 
-    _toggleState: function() {
+    _toggleState: function(event) {
       this.presenter.togglePlaying();
 
-      this.status.toggleRunning();
+      var $el = $(event.currentTarget).find('div');
+      if ($el.hasClass('play-icon')) {
+        this.status.set('running', true);
+      } else {
+        this.status.set('running', false);
+      }
+
       this.renderControls();
     },
 

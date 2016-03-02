@@ -1,5 +1,5 @@
 define([
-  'moment', 'd3', 'handlebars', 'uri',
+  'moment', 'd3', 'handlebars', 'uri', 'mps',
   'helpers/canvasCartoCSSHelper',
   'abstract/layer/CartoDbCanvasLayerClass',
   'map/presenters/TorqueLayerPresenter',
@@ -7,7 +7,7 @@ define([
   'text!map/queries/as_it_happens_hybrid.sql.hbs', 'text!map/queries/as_it_happens_hybrid_raster.sql.hbs',
   'text!map/cartocss/as_it_happens_hybrid_raster.cartocss',
 ], function(
-  moment, d3, Handlebars, UriTemplate,
+  moment, d3, Handlebars, UriTemplate, mps,
   canvasCartoCSSHelper,
   CartoDbCanvasLayerClass,
   Presenter,
@@ -28,7 +28,7 @@ define([
 
     _getUrl: function(x, y, z) {
       var url;
-      if (z > 8) {
+      if (z > 9) {
         url = this.options.rasterUrlTemplate;
       } else {
         url = this.options.pointsUrlTemplate;
@@ -49,6 +49,8 @@ define([
         context.maxDate = moment(dates.max_date);
         if (context.currentDate[1] === undefined) {
           context.currentDate[1] = context.maxDate;
+          mps.publish('Torque/date-range-change', [context.currentDate]);
+          mps.publish('Place/update', [{go: false}]);
         }
 
         return Promise.all([
@@ -101,16 +103,16 @@ define([
           moment(this.currentDate[1])];
       }
 
-      var startDay = this.timelineExtent[0].dayOfYear(),
-          startYear = this.timelineExtent[0].year();
-      var endYear = this.timelineExtent[1].year(),
+      var startYear = this.timelineExtent[0].year(),
+          endYear = this.timelineExtent[1].year();
+      var startDay = this.timelineExtent[0].dayOfYear() + ((startYear - 2015) * 365),
           endDay = this.timelineExtent[1].dayOfYear() + ((endYear - 2015) * 365);
 
       var recentRangeStart = this.maxDate.clone().subtract(7, 'days'),
-          recentRangeStartDay = recentRangeStart.dayOfYear(),
           recentRangeStartYear = recentRangeStart.year();
       var recentRangeEnd = this.maxDate.clone(),
-          recentRangeEndYear = recentRangeEnd.year(),
+          recentRangeEndYear = recentRangeEnd.year();
+      var recentRangeStartDay = recentRangeStart.dayOfYear() + ((recentRangeStartYear - 2015) * 365),
           recentRangeEndDay = recentRangeEnd.dayOfYear() + ((recentRangeEndYear - 2015) * 365);
 
       var pixelComponents = 4; // RGBA
@@ -119,7 +121,7 @@ define([
         for(var j = 0; j < h; ++j) {
           var pixelPos = (j * w + i) * pixelComponents;
           var yearOfLoss, dayOfLoss;
-          if (z > 8) {
+          if (z > 9) {
             if (imgdata[pixelPos] > 0) {
               if (imgdata[pixelPos+1] === 0) {
                 yearOfLoss = 2015;
@@ -154,12 +156,10 @@ define([
             }
           }
 
-          if (yearOfLoss > startYear) {
-            dayOfLoss = dayOfLoss + ((yearOfLoss - 2015) * 365);
-          }
+          dayOfLoss = dayOfLoss + ((yearOfLoss - 2015) * 365);
 
-          if (dayOfLoss >= startDay && yearOfLoss >= startYear && dayOfLoss <= endDay && yearOfLoss <= endYear) {
-            if (dayOfLoss >= recentRangeStartDay && yearOfLoss >= recentRangeStartYear && dayOfLoss <= recentRangeEndDay && yearOfLoss <= recentRangeEndYear) {
+          if (dayOfLoss >= startDay && dayOfLoss <= endDay) {
+            if (dayOfLoss >= recentRangeStartDay && dayOfLoss <= recentRangeEndDay) {
               imgdata[pixelPos] = 219;
               imgdata[pixelPos + 1] = 168;
               imgdata[pixelPos + 2] = 0;

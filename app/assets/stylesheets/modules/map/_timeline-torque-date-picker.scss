@@ -221,18 +221,18 @@ input.picker__input[type="text"].picker__input--active {
   padding: .3125em 0;
   font-weight: 200;
   border: 1px solid transparent;
-  color: $cGreen1;
   text-align: center;
   font-weight: 400;
   position: relative;
 }
 
-.picker__day:after {
+.picker__day.picker__has_data:after {
   content: '\25CF';
   font-size: 9px;
   position: absolute;
   bottom: -2px;
   right: 18px;
+  color: $cGreen1;
 }
 .highresolution-content {
   .picker__day:after {
@@ -305,7 +305,6 @@ input.picker__input[type="text"].picker__input--active {
 
 .picker__button--today[disabled],
 .picker__button--today[disabled]:hover {
-  cursor: default;
   color: #aaa;
 }
 

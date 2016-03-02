@@ -16,7 +16,6 @@ define([
 
   var SUBSCRIPTION_ALLOWED = [
     'loss',
-    'forestgain',
     'imazon',
     'terrailoss',
     'prodes',
@@ -91,6 +90,10 @@ define([
         var baselayer = this.status.get('baselayer');
         var both = this.status.get('both');
         this._setBaselayer(layerSpec.getBaselayers());
+
+        this.view.toggleCountrySubscribeBtn();
+        this.view.toggleDoneSubscribeBtn();
+
         if (this.status.get('baselayer') != baselayer) {
           this._updateAnalysis();
           this.openAnalysisTab();
@@ -192,12 +195,18 @@ define([
         this.view.toggleAnalysis(this.view.$el.hasClass('is-analysis'));
       }
     },{
+      'Subscribe/cancel' : function(){
+        this.status.set('subscribe_only', false);
+      }
+    }, {
       'Subscribe/end' : function(){
         this.view.setStyle();
         if (this.status.get('subscribe_only') === true) {
           this.status.set('subscribe_only', false);
           this.deleteAnalysis();
           mps.publish('Place/update', [{go: false}]);
+          this.view.toggleAnalysis(true);
+          this.view._stopDrawing();
         }
       }
     }, {
@@ -556,7 +565,7 @@ define([
 
       this.view.setEditable(overlay, false);
 
-      mps.publish('Spinner/start');
+      mps.publish('Spinner/start', [false]);
       GeostoreService.save(geojson).then(function(geostoreId) {
         mps.publish('Spinner/stop');
         this.status.set('geostore', geostoreId);
@@ -818,13 +827,17 @@ define([
     },
 
     toggleOverlay: function(to){
-      mps.publish('Overlay/toggle', [to])
+      mps.publish('Overlay/toggle', [to]);
     },
 
     notificate: function(id){
       mps.publish('Notification/open', [id]);
     },
 
+    layerAvailableForSubscription: function() {
+      var baselayer = this.status.get('baselayer');
+      return (baselayer && SUBSCRIPTION_ALLOWED.indexOf(baselayer.slug) > -1);
+    }
 
   });
 

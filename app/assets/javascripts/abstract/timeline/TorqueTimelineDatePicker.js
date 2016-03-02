@@ -23,14 +23,17 @@ define([
     },
 
     setDate: function(id, date) {
+      var otherDate;
       if (id === 'startDate') {
-        var otherDate = this.get('endDate');
+        otherDate = this.get('endDate');
         if (date.isAfter(otherDate)) { return; }
       } else if (id === 'endDate') {
-        var otherDate = this.get('startDate');
+        otherDate = this.get('startDate');
         if (date.isBefore(otherDate)) { return; }
       }
 
+      var tzOffset = new Date().getTimezoneOffset();
+      if (tzOffset > 0) { date = date.add(tzOffset, 'minutes'); }
       this.set(id, date);
     }
   });
@@ -48,10 +51,11 @@ define([
       this.layer = options.layer;
       this.onChange = options.onChange;
 
-      this.selectedDates = new SelectedDates({
-        startDate: moment(options.dateRange.start),
-        endDate: moment(options.dateRange.end)
-      });
+      this.selectedDates = new SelectedDates();
+      this.selectedDates.setDate('startDate',
+        moment.utc(options.dateRange.start));
+      this.selectedDates.setDate('endDate',
+        moment.utc(options.dateRange.end));
       this.listenTo(this.selectedDates, 'change', this.updateTorque);
 
       this.retrieveAvailableDates();
@@ -72,43 +76,72 @@ define([
       var context = this;
 
       var onPickerRender = function() {
-        var $footer = this.$root.find('.picker__footer');
-        $footer.prepend(context.legendTemplate());
-      };
+        var pickerContext = this;
 
-      var onPickerOpen = function() {
-        // Use disabled dates to highlight what days have data
-        this.component.disabled = function(dateToVerify) {
-          var date = dateToVerify.obj,
+        this.$root.find('.picker__day').each(function() {
+          var $el = $(this);
+
+          var date = new Date($el.data('pick')),
               dateUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
           var availableDates = context.getAvailableDates();
 
           if (availableDates.indexOf(dateUTC.getTime()) > -1) {
             // Disabled dates to prevent inverted selected dates
             //   e.g. picking 6/09 for start, and 4/09 for end
-            var id = this.component.$node.attr('id');
-            date = moment(date);
+            var id = pickerContext.component.$node.attr('id');
+            date = moment.utc(date);
 
             if (id === 'startDate') {
               var endDate = context.selectedDates.get('endDate');
-              return (date.isAfter(endDate));
+              if (!date.isAfter(endDate)) {
+                $el.addClass('picker__has_data');
+              }
             } else if (id === 'endDate') {
               var startDate = context.selectedDates.get('startDate');
-              return (date.isBefore(startDate));
+              if (!date.isBefore(startDate)) {
+                $el.addClass('picker__has_data');
+              }
             }
-            return false;
-          } else {
-            return true;
+
+            $el.addClass('picker__has_data');
           }
+        });
+
+        var $footer = this.$root.find('.picker__footer');
+        $footer.prepend(context.legendTemplate());
+      };
+
+      var onPickerOpen = function() {
+        this.component.disabled = function(dateToVerify) {
+          var date = moment.utc(dateToVerify.obj);
+          var id = this.component.$node.attr('id');
+
+          if (id === 'startDate') {
+            var endDate = context.selectedDates.get('endDate');
+            return (date.isAfter(endDate));
+          } else if (id === 'endDate') {
+            var startDate = context.selectedDates.get('startDate');
+            return (date.isBefore(startDate));
+          }
+
+          return false;
         }.bind(this);
 
         this.render();
       };
 
+      var tzOffset = new Date().getTimezoneOffset();
+      var minDate = moment.utc(this.layer.mindate).
+        add(tzOffset, 'minutes').
+        toDate();
+      var maxDate = moment.utc(this.layer.maxdate).
+        add(tzOffset, 'minutes').
+        toDate();
+
       this.$('.timeline-date-picker').pickadate({
         today: 'Jump to Today',
-        min: moment(this.layer.mindate).toDate(),
-        max: moment(this.layer.maxdate).toDate() || moment().toDate(),
+        min: minDate,
+        max: maxDate || moment.utc().add(tzOffset, 'minutes').toDate(),
         selectYears: true,
         selectMonths: true,
         format: 'd mmm yyyy',
@@ -119,7 +152,7 @@ define([
             var id = this.component.$node.attr('id');
             var timezone = new Date().getTimezoneOffset() * 60 * 1000,
                 offsetDate = event.select - timezone;
-            context.selectedDates.setDate(id, moment(offsetDate));
+            context.selectedDates.setDate(id, moment.utc(offsetDate));
           }
         }
       });
