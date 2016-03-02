@@ -1,21 +1,36 @@
-.guideMaskTransparent {
-    background-color: transparent;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0px;
-    top: 0px;
-    opacity: 0;
-}
+#guide-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
 
-.guideMask {
+  &.-active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  // Masks
+  .mask {
     background-color: black;
     position: absolute;
     width: 100%;
     left: 0px;
     top: 0px;
-    opacity: 0;
+    opacity: 0.5;
+    z-index: 2;
+
+    &.-transparent {
+      background-color: transparent;
+      height: 100%;
+      opacity: 0;
+      z-index: 0;    
+    }
+  }
 }
+
 
 .guideBubble {
   position: absolute;
@@ -24,6 +39,7 @@
   background-color: $white;
   padding: 30px;
   box-shadow: $shadow1;
+  z-index: 3;
 
   .guide-navigation {
     @include display-flex();

@@ -23,7 +23,7 @@ define([
     },
 
     initialize: function() {
-      this.presenter = new GuidePresenter(this);
+      // this.presenter = new GuidePresenter(this);
     },
 
     setDefaultTour: function() {

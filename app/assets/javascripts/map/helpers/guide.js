@@ -11,8 +11,6 @@
             rightMask = $("<div/>").addClass("guideMask"),
             transparentMask = $("<div/>").addClass("guideMaskTransparent"),
             bubble = $("<div/>").addClass("guideBubble"),
-            tourButton = $("<div/>").addClass('guideTourButton')
-                                    .html('<span class="tooltipmap left">Tour</span><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-tutorial"></use></svg>'),
             holdingSteps,
             steps,
             position,
@@ -57,11 +55,11 @@
                 }
             },
             positionMask = function(i) {
-                var element = steps[i].element,
+                var selector = steps[i].selector,
                     margin = (steps[i].options && steps[i].options.margin != undefined) ? steps[i].options.margin : options.margin;
 
-                if (!!element) {
-                  var attrs = getElementAttrs(element),
+                if (!!selector) {
+                  var attrs = getElementAttrs($(selector)),
                       top = attrs.top,
                       left = attrs.left,
                       width = attrs.width,
@@ -111,14 +109,14 @@
                 }
             },
             positionBubble = function(i) {
-                var element = steps[i].element,
+                var element = $(steps[i].selector),
                     margin = (steps[i].options && steps[i].options.margin != undefined) ? steps[i].options.margin : options.margin,
                     align = (steps[i].options && steps[i].options.align != undefined) ? steps[i].options.align : null,
                     position = (steps[i].options && steps[i].options.position) ? steps[i].options.position : 'top',
-                    top = (!!element) ? element.offset().top : '50%',
-                    left = (!!element) ? element.offset().left : '50%',
-                    width = (!!element) ? element.outerWidth() : 300,
-                    height = (!!element) ? element.outerHeight() : 300,
+                    top = (!!steps[i].selector) ? element.offset().top : '50%',
+                    left = (!!steps[i].selector) ? element.offset().left : '50%',
+                    width = (!!steps[i].selector) ? element.outerWidth() : 300,
+                    height = (!!steps[i].selector) ? element.outerHeight() : 300,
                     css = {};
 
                 $(".step", bubble).html(i + 1);
@@ -203,8 +201,8 @@
             },
 
             scrollIntoView = function() {
-              var element = steps[position].element;
-              if (!!element) {
+              var element = $(steps[position].selector);
+              if (!!steps[position].selector) {
                 if (($(document).scrollTop()>element.offset().top) || (($(document).scrollTop() + $("body").height())<element.offset().top)) {
                   $('html, body').animate({
                     scrollTop: element.offset().top - 20
@@ -214,26 +212,25 @@
             },
 
             clearGuide = function() {
-                bubble.detach();
-                transparentMask.detach();
-                topMask.add(bottomMask).add(leftMask).add(rightMask).animate({
-                    opacity: 0
-                }, 500, function() {
-                    topMask.add(bottomMask).add(leftMask).add(rightMask).detach();
-                });
+              bubble.detach();
+              transparentMask.detach();
+              topMask.add(bottomMask).add(leftMask).add(rightMask).animate({
+                opacity: 0
+              }, 500, function() {
+                topMask.add(bottomMask).add(leftMask).add(rightMask).detach();
+              });
 
-                tourButton.addClass('is-pulse');
-                setTimeout(function(){
-                  tourButton.removeClass('is-pulse');
-                },3000);
+              // tourButton.addClass('is-pulse');
+              // setTimeout(function(){
+              //   tourButton.removeClass('is-pulse');
+              // },3000);
 
-                $(document).off('keyup.tour-arrows');
+              $(document).off('keyup.tour-arrows');
 
             },
 
             clearStates = function() {
               $('#layersnav-forest-change').removeClass('tour-active');
-
             },
 
             getMaximumZIndex = function() {
@@ -293,17 +290,12 @@
                   nextStep();
                 }
               });
-              tourButton.on("click", function(e) {
-                guide.start();
-              }.bind(this));
 
               topMask.add(bottomMask).add(leftMask).add(rightMask).on("click", function() {
                 ga('send', 'event', 'Map','Walk Through','Give Up');
                 clearGuide();
                 clearStates();
               });
-
-              container.append(tourButton);
 
               return {
                 addStep: function(selector, introduction, options) {
@@ -324,7 +316,6 @@
                   steps = [];
 
                   $.each(holdingSteps, function(i, step) {
-                    var attrs = (!!step.selector) ? getElementAttrs($(step.selector)) : {};
                     // if the element has width or height we get ;
                     steps.push({
                       element: (!!step.selector) ? $(step.selector) : null,
@@ -350,7 +341,6 @@
               steps = [];
 
               $.each(holdingSteps, function(i, step) {
-                var attrs = (!!step.selector) ? getElementAttrs($(step.selector)) : {};
                 // if the element has width or height we get ;
                 steps.push({
                   element: (!!step.selector) ? $(step.selector) : null,

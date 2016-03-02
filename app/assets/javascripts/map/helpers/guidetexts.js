@@ -3,7 +3,7 @@ define([], function() {
   var guideTexts = {
     default: {
       intro:            '<p>Welcome to the Global Forest Watch Interactive Map, where you can <strong>explore forest-related data sets, perform analyses</strong>, and <strong>subscribe to alerts</strong> for areas you are interested in. This walk-through guide will introduce you to some of the map’s main features.</p>' +
-                        '<p>Already familiar with GFW? <a href="/map" class="skip-tour">Skip the walk through</a>.</p>',
+                        '<p>Already familiar with GFW? <a href="/map" class="js-skip-tour">Skip the walk through</a>.</p>',
       layersmenu_1:     '<p>By default, the map displays tree cover gain and loss data. <strong>Use the tabs at the top of the map to turn on other global data layers</strong>.</p>',
       layersmenu_2:     '<p>To learn more about a data set, click on the <strong>green information icon</strong> in the drop down menu.</p>',
       legend:           '<p>The data legend on the left side of the map shows which layers are activated. Use this legend to <strong>learn more about a data set, adjust the canopy density</strong> for tree cover layers, or <strong>turn data layers off.</strong></p>',
@@ -18,7 +18,7 @@ define([], function() {
 
     glad: {
       intro:            '<p>Welcome to the Interactive Map! This walk-through will show you <strong>how to subscribe to GLAD Tree Cover Loss Alerts.</strong></p>' +
-                        '<p>Already familiar with GFW? <a href="/map" class="skip-tour">Skip the walk through</a>.</p>',
+                        '<p>Already familiar with GFW? <a href="/map" class="js-skip-tour">Skip the walk through</a>.</p>',
       layersmenu_1:     '<p>First, select <strong>GLAD Tree Cover Loss Alerts</strong> from the <strong>Forest Change</strong> drop down menu.</p>',
       legend:           '<p>Then zoom in to one of the areas covered by GLAD Alerts – Peru, the Republic of Congo, or Kalimantan.</p>',
       analysistab_1:    '<p>Click on the <strong>Analyze and Subscribe icon</strong> to select an area that you want to subscribe to. There are several ways to define your area of interest.</p>',
@@ -30,19 +30,13 @@ define([], function() {
       log_in:           '<p>Once you subscribe, you can <strong>view and manage your subscriptions</strong> through the <strong>My GFW</strong> feature.</p>',
       intro2:           '<p>Interested in learning more?</p>' + 
                         '<p>You can also <strong>Analyze</strong> and <strong>Download</strong> GLAD Tree Cover Loss Alerts.</p>' +
-                        '<p>Or <a href="/map" class="skip-tour">End Walk Through</a></p>',
+                        '<p>Or <a href="/map" class="js-skip-tour">End Walk Through</a></p>',
       analysistab_5:    '<p><strong>Analyze</strong> GLAD Alerts for your area of interest by clicking the <strong>green Analyze button</strong> once you have defined an area on the map.</p>' + 
                         '<p><strong>Reminder</strong>: you can define an area by drawing or uploading a custom shape, selecting a country or subnational region, or clicking on an individual shape from another data layer.</p>',
       timeline:         '<p>Use the <strong>time selector</strong> at the bottom of the map to change the time interval that you want to analyze.</p>' +
                         '<p><strong>Note</strong>: dates with a green dot below them indicate that GLAD Alerts were detected on those days.</p>',
       analysistab_6:    '<p>Once you have completed an analysis, you can <strong>download GLAD Alerts</strong> for your area of interest by clicking on the “Download and Export Data” icon. The analysis can be downloaded in the following file formats: SVG, GeoJSON, SHP, KML, CSV, or opened in Carto DB.</p>'
-
-
-
-
     }
-
-
   }
   return guideTexts;
 
