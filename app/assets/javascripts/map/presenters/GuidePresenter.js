@@ -6,8 +6,10 @@
 define([
   'underscore',
   'mps',
-  'map/presenters/PresenterClass'
-], function(_, mps, PresenterClass) {
+  'cookie',  
+  'map/helpers/guides',  
+  'map/presenters/PresenterClass',
+], function(_, mps, Cookies, guides, PresenterClass) {
 
   'use strict';
 
@@ -20,11 +22,18 @@ define([
 
   var GuidePresenter = PresenterClass.extend({
 
+    tours: guides,
+
     init: function(view) {
       this.view = view;
       this.status = new StatusModel();
       this._super();
+      this.listeners();
       mps.publish('Place/register', [this]);
+    },
+
+    listeners: function() {
+      this.status.on('change:tour', this.changeTour.bind(this));
     },
 
     getPlaceParams: function() {
@@ -40,20 +49,39 @@ define([
     //  */
     _subscriptions: [{
       'Place/go': function(place) {
-        this._onPlaceGo(place);
+        var params = place.params;
+        this.status.set('tour',(!!params.tour) ? this.setTour(params.tour) : null);
+        this.checkCookieTour();
+      }
+    },{
+      'Tour/open': function(tour) {
+        this.status.set('tour',tour);
       }
     }],
 
-    _onPlaceGo: function(place) {
-      var params = place.params;
-      this.status.set('tour', (!!params.tour) ? true : null);
+    setTour: function(tour) {
+      return (!!this.tours[tour]) ? tour : 'default'
+    }, 
 
-      setTimeout(function(){      
-        this.view.setTour();
-        this.view.initTour();
-      }.bind(this),0)
+    changeTour: function() {
+      Cookies.set('tour', true, { expires: 90 });
+      this.view._setTour(this.status.get('tour'));
+    },
 
+    clearTour: function() {
+      this.status.set('tour', null, { silent: true });
+    },
+
+    finishTour: function() {
+      mps.publish('Place/register', [this]);
+    },
+
+    checkCookieTour: function() {
+      if(!this.status.get('tour') && !Cookies.get('tour')) {
+        this.status.set('tour', 'default');
+      }
     }
+
 
   });
 
