@@ -304,8 +304,10 @@ define([
      * @param  {event} event Click event
      */
     _toggleLayer: function(event) {
-      var layerSlug = $(event.currentTarget).data('sublayer');
-      this.presenter.toggleLayer(layerSlug);
+      if (!$(event.target).hasClass('source') && !$(event.target).parent().hasClass('source')) {      
+        var layerSlug = $(event.currentTarget).data('sublayer');
+        this.presenter.toggleLayer(layerSlug);
+      }
     },
 
     _toogleCategory: function(e){
