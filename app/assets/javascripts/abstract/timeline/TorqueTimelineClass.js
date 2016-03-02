@@ -108,6 +108,8 @@ define([
       var onChange = function(dateRange) {
         this.slider.reScale(dateRange);
         this.currentDate = dateRange;
+        this.status.set('currentDate', moment.utc(dateRange[1]));
+        this.renderDate();
       };
 
       this.datePicker = new TorqueTimelineDatePicker({
