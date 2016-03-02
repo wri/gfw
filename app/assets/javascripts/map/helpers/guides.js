@@ -203,6 +203,15 @@ define([
         }
       },
 
+      // Login
+      {
+        selector: "", 
+        text: guidetexts.glad.analysistab_3, 
+        options: {
+          position: 'center'
+        }
+      },
+
       // Analysis tab draw
       {
         selector: "#module-tabs", 
