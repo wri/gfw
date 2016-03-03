@@ -125,6 +125,7 @@ define([
       bra_mining:Handlebars.compile(raisg_miningTpl),
       per_mining:Handlebars.compile(per_miningTpl),
       umd_as_it_happens:Handlebars.compile(gladTpl),
+      viirs_fires_alerts: Handlebars.compile(firesTpl),
       
     },
 
