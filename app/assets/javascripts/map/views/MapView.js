@@ -8,6 +8,7 @@ define([
   'backbone',
   'underscore',
   'mps',
+  'cookie',
   'map/presenters/MapPresenter',
   'map/views/maptypes/grayscaleMaptype',
   'map/views/maptypes/treeheightMaptype',
@@ -15,7 +16,7 @@ define([
   'map/views/maptypes/positronMaptype',
   'map/views/maptypes/landsatMaptype',
   'map/helpers/layersHelper'
-], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, layersHelper) {
+], function(Backbone, _, mps, Cookies, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, layersHelper) {
 
   'use strict';
 
@@ -506,7 +507,8 @@ define([
 
     // Autolocate
     autolocateQuestion: function() {
-      if (isMobile.any && !this.embed) {
+      if (isMobile.any && !this.embed && !Cookies.get('autolocate')) {
+        Cookies.set('autolocate', true, { expires: 30 });
         mps.publish('Confirm/ask', ['default', 'autolocate']);
       }
     },

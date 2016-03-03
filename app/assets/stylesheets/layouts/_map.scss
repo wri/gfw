@@ -73,6 +73,11 @@ body,html{
     padding: 0 20px;
     z-index: 2;
     white-space: nowrap;
+    display: none;
+    
+    @media (min-width:$br-mobile){
+      display: block;
+    }
   }
 
 }
