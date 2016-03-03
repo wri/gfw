@@ -33,10 +33,12 @@ define([
         this.status.set('hresolution', place.params.hresolution);
         if (!! place.params.hresolution) {
           var params = JSON.parse(atob(place.params.hresolution));
-          if (params.zoom >= 5) {
-            this.view.switchToggle();
-          }
+          this.view.switchToggle();
           this.view._fillParams(params);
+          
+          if (params.zoom < 5) {
+            this.notificate('not-zoom-not-reached');
+          }
         } else {
           this.toggleLayer(null, place.params.sublayers[0]);
         }
