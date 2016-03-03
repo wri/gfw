@@ -143,7 +143,6 @@ define([
   'map/views/layers/CanIntactForestLayer',
   'map/views/layers/MexForestCatLayer',
   'map/views/layers/MexForestSubCatLayer',
-
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates

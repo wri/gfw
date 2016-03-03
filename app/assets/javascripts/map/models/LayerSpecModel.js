@@ -24,6 +24,7 @@ define([
       "mex_forest_zoning_cat",
       "mex_forest_zoning_subcat",
       "forest2000",
+      "per_minam_tree_cover",
       "cod_primary_forest_wgs",
       "can_ifl",
       "WMSLayer",
