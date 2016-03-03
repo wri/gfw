@@ -617,4 +617,32 @@
     line-color: #FFF;
     line-opacity: 0;
   }
+  [layer='vnp14imgt_nrt_global_7d'][zoom<7] {
+  marker-fill: #FFCC00; 
+  marker-width: 1; 
+  marker-line-color: #FFF; 
+  marker-line-width: 0; 
+  marker-line-opacity: 1; 
+  marker-fill-opacity: 0.9; 
+  marker-comp-op: multiply; 
+  marker-type: ellipse; 
+  marker-placement: point; 
+  marker-allow-overlap: true; 
+  marker-clip: false; 
+  marker-multi-policy: largest; 
+}
+[layer='vnp14imgt_nrt_global_7d'][zoom>6] {
+  marker-fill: #FFCC00; 
+  marker-width: 2; 
+  marker-line-color: #FFF; 
+  marker-line-width: 0; 
+  marker-line-opacity: 1; 
+  marker-fill-opacity: 0.9; 
+  marker-comp-op: multiply; 
+  marker-type: ellipse; 
+  marker-placement: point; 
+  marker-allow-overlap: true; 
+  marker-clip: false; 
+  marker-multi-policy: largest; 
+}
 }
