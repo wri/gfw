@@ -20,8 +20,9 @@ define([
       "urthe",
       //-
       "grump2000",
-      //FOREST COVER
+      //FOREST/LAND COVER
       "forest2000",
+      "per_minam_tree_cover",
       "cod_primary_forest_wgs",
       "WMSLayer",
       "global_land_cover",
@@ -144,6 +145,7 @@ define([
       "guyra",
       "terrailoss",
       "fires",
+      "viirs_fires_alerts",
       "modis",
       "imazon",
       "forma",
