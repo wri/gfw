@@ -3,7 +3,7 @@
     <h2>Imagery</h2>
     {{!-- <select data-placeholder="Select Provider" class="chosen-select default notranslate" id="hres-provider-select"><option></option></select> --}}
 
-    <div data-slug="urthe" class="maptype">
+    <div id="urthe-form" data-slug="urthe" class="maptype">
       <h3>UrtheCast<span class="onoffswitch toggleUrtheCast"><span></span></span></h3><span class="info-mapsource"><a href='#' data-source="hr-urthecast" class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
       <p id="disclaimer-zoom">Please move to <strong>zoom level 5</strong> to activate this imagery. Current zoom level is <strong><span id="currentZoom"></span></strong>.</p>
       <span class="advanced-controls">Open Advanced Settings</span>
@@ -41,11 +41,6 @@
         <span>Acquired date maximum <a href='#' data-source="hr-datemax" class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
         <input data-value="{{today}}" id="endDateUC" class="timeline-date-picker-end maxdate" type="text" readonly="">
       </section>
-{{!--       <section>
-        <ul class="button-container one">
-          <li><button class="btn gray uppercase disabled toggleUrtheCast">Apply</button></li>
-        </ul>
-      </section> --}}
     </div>
   </div>
 </div>
