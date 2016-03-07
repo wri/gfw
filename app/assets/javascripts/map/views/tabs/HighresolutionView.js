@@ -51,6 +51,7 @@ define([
     },
 
     cacheVars: function() {
+      this.$urtheForm          = $('#urthe-form');
       this.$selects            = this.$el.find('.chosen-select');
       this.$hresSelectProvider = $('#hres-provider-select');
       this.$hresSelectFilter   = $('#hres-filter-select');
@@ -97,7 +98,6 @@ define([
         this.$disclaimer.hide(0);
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
-          // this.$onoffswitch.click();
           if (this.previousZoom >= 5) {
             this.presenter.notificate('not-zoom-not-reached');
           }
@@ -108,34 +108,25 @@ define([
     },
 
     _getParams: function(e) {
-      var $objTarget = $(e.target).closest('.maptype');
-      if(!!this.$onoffswitch.hasClass('checked')) {
-        return {
-          'zoom' : this.zoom,
-          'satellite' : $objTarget.data('slug'),
-          'color_filter': ($objTarget.find('#hres-filter-select').val().length > 0) ? $objTarget.find('#hres-filter-select').val() : 'rgb',
-          'sensor_platform': ($objTarget.find('#hres-filter-sensor').val().length > 0) ? $objTarget.find('#hres-filter-sensor').val() : null,
-          'cloud': this.$range.val(),
-          'mindate': (this.$mindate.val().length > 0) ? this.$mindate.val() : '2000-09-01',
-          'maxdate': (this.$maxdate.val().length > 0) ? this.$maxdate.val() : '2015-09-01'
-        };
+      return {
+        'zoom' : this.zoom,
+        'satellite' : this.$urtheForm.data('slug'),
+        'color_filter': (this.$urtheForm.find('#hres-filter-select').val().length > 0) ? this.$urtheForm.find('#hres-filter-select').val() : 'rgb',
+        'sensor_platform': (this.$urtheForm.find('#hres-filter-sensor').val().length > 0) ? this.$urtheForm.find('#hres-filter-sensor').val() : null,
+        'cloud': this.$range.val(),
+        'mindate': (this.$mindate.val().length > 0) ? this.$mindate.val() : '2000-09-01',
+        'maxdate': (this.$maxdate.val().length > 0) ? this.$maxdate.val() : '2015-09-01'
       }
-      return null;
     },
 
     _setParams: function(e) {
-      if (! !!this.$onoffswitch.hasClass('checked')) {
-        this.toggleLayer(e);
-      } else {
-        this.$apply.removeClass('disabled');
-      }
       this.$apply.addClass('green').removeClass('gray');
-      this.presenter.setHres(this._getParams(e));
+      this.presenter.setHres(this._getParams());
       this._triggerChanges(e);
     },
 
     _triggerChanges: function(e) {
-      this.presenter.updateLayer($(e.target).closest('.maptype').data('slug'));
+      this.presenter.updateLayer('urthe');
       this.$apply.removeClass('green').addClass('gray');
     },
 
@@ -155,16 +146,12 @@ define([
 
     toggleLayer: function(e) {
       if (this.zoom >= 5) {
-        this.switchToggle();
         this.$apply.toggleClass('disabled');
-        this.presenter.setHres(this._getParams(e));
-        this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
+        this.presenter.toggleLayer('urthe');
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
-          this.switchToggle();
           this.$apply.toggleClass('disabled');
-          this.presenter.setHres(this._getParams(e));
-          this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
+          this.presenter.toggleLayer('urthe');
         } else {
           this.presenter.notificate('not-zoom-not-reached');
         }
@@ -182,9 +169,9 @@ define([
       this.$advanced_options.toggle('250');
     },
 
-    switchToggle: function() {
+    switchToggle: function(to) {
       // this.$onoffswitch.toggleClass('checked');
-      this.$el.find('.onoffswitch').toggleClass('checked');
+      this.$el.find('.onoffswitch').toggleClass('checked', to);
       this.toggleIconUrthe();
     },
 

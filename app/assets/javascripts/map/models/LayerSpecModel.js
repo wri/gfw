@@ -166,7 +166,8 @@ define([
       'forest_use',
       'people',
       'conservation',
-      'stories'
+      'stories',
+      'hrmap'
     ],
 
     /**
