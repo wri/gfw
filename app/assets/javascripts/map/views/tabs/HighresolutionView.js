@@ -87,7 +87,9 @@ define([
       this.$el.html(this.template({
         today: moment().format('DD-MM-YYYY'),
         mindate: moment().subtract(3,'month').format('YYYY-MM-DD'),
-        zoom: this.map.getZoom()
+        zoom: this.map.getZoom(),
+        sensors: this.sensors,
+        renderers: this.renderers
       }));
       this.renderPickers();
       this.cacheVars();
@@ -194,30 +196,13 @@ define([
     },
 
     switchToggle: function(to) {
-      // this.$onoffswitch.toggleClass('checked');
       this.$el.find('.onoffswitch').toggleClass('checked', to);
       this.toggleIconUrthe();
     },
 
 
     printSelects: function() {
-      this.printRenderers();
-      this.printSensors();
       this.triggerChosen();
-    },
-
-    printRenderers: function() {
-      var options = _.map(this.renderers, function(v,k){
-        return '<option value="'+k+'">'+v+'</option>';
-      }).join('');
-      this.$hresSelectFilter.append(options);
-    },
-
-    printSensors: function() {
-      var options = _.map(this.sensors, function(v,k){
-        return '<option value="'+k+'">'+v+'</option>';
-      }).join('');
-      this.$hresSensorFilter.append(options);
     },
 
     setVisibleRange: function(){
