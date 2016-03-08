@@ -198,7 +198,6 @@ define([
       _.each(layers, function(layer) {
         layer.source = (layer.slug === 'nothing') ? null : layer.source || layer.slug;
         if (this.detailsTemplates[layer.slug]) {
-          console.log(options.hresolution);
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
             hresolution: options.hresolution,

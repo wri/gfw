@@ -1,7 +1,27 @@
 <div class="layer-details">
   <div class="definition-list">
   	<strong>Renderer:</strong>
-  	<span>{{hresolution.renderer}}</span>
+  	<span>
+  		{{hresolution.renderer}}
+			{{#ifCond hresolution.color_filter "===" 'ndvi'}}
+				<div class="gradient-bar" style="background: linear-gradient(-90deg,#040 0%,#177000 12.5%,#509700 25%,#8ab617 37.5%,#bad86b 50%,#ac9180 62.5%,#ede6e4 75%,#fff 87%);">
+					<span class="-left">-1</span>
+					<span class="-right">1</span>
+				</div>
+			{{/ifCond}}  	  		
+			{{#ifCond hresolution.color_filter "===" 'evi'}}
+				<div class="gradient-bar" style="background: linear-gradient(-90deg,#040 0%,#177000 12.5%,#509700 25%,#8ab617 37.5%,#bad86b 50%,#ac9180 62.5%,#ede6e4 75%,#fff 87%);">
+					<span class="-left">-1</span>
+					<span class="-right">1</span>
+				</div>
+			{{/ifCond}}  	
+			{{#ifCond hresolution.color_filter "===" 'ndwi'}}
+				<div class="gradient-bar" style="background: linear-gradient(-90deg,#0b0bad 0%,#f4f4f8 16%,#dfc8aa 86%,#bd9d72 100%);">
+					<span class="-left">-1</span>
+					<span class="-right">1</span>
+				</div>
+			{{/ifCond}}  	
+  	</span>
   </div>
   <div class="definition-list">
   	<strong>Sensor:</strong>
