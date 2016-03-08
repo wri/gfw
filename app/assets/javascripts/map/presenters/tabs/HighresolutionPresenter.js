@@ -30,24 +30,27 @@ define([
 
     _subscriptions: [{
       'Place/go': function(place) {
+        this.status.set('layerSpec', place.layerSpec);
         this.status.set('hresolution', place.params.hresolution);
-        if (!! place.params.hresolution) {
+        var is_urthe = !!this.status.get('layerSpec').getLayer({ slug: 'urthe' })
+        if (is_urthe || !!this.status.get('hresolution')) {
           var params = JSON.parse(atob(place.params.hresolution));
-          this.view.switchToggle();
+          this.view.switchToggle(is_urthe);
           this.view._fillParams(params);
           
           if (params.zoom < 5) {
             this.notificate('not-zoom-not-reached');
           }
-        } else {
-          this.toggleLayer(null, place.params.sublayers[0]);
-        }
+        }         
+      }
+    },{
+      'LayerNav/change': function(layerSpec) {
+        this.status.set('layerSpec', layerSpec);
+        var is_urthe = !!this.status.get('layerSpec').getLayer({ slug: 'urthe' })
+        this.setHres((is_urthe) ? this.view._getParams() : null);
+        this.view.switchToggle(is_urthe);
       }
     }],
-
-    setMaptype: function(maptype) {
-      mps.publish('Maptype/change', [maptype]);
-    },
 
     updateLayer: function(name) {
       mps.publish('Layer/update', [name]);
@@ -61,9 +64,6 @@ define([
     setHres: function(value) {
       if (!!value) {
         value = btoa(JSON.stringify(value));
-        sessionStorage.setItem('high-resolution',value);
-      } else {
-        sessionStorage.removeItem('high-resolution');
       }
 
       this.status.set('hresolution', value);
@@ -71,11 +71,10 @@ define([
     },
 
     /**
-     * Publish 'hresolution/changed' event with the current hresolution
-     * and call 'Place/update' to update the url.
+     * call 'Place/update' to update the url.
      */
     _publishHres: function() {
-      mps.publish('hresolution/changed', [this.status.get('hresolution')]);
+      mps.publish('Hresolution/update', [this.status.get('hresolution')]);
       mps.publish('Place/update', [{go: false}]);
     },
 
@@ -85,7 +84,9 @@ define([
      * @return {Object} high-resolution
      */
     getPlaceParams: function() {
-      return {hresolution: this.status.get('hresolution')};
+      return {
+        hresolution: this.status.get('hresolution')
+      };
     },
 
     /**
