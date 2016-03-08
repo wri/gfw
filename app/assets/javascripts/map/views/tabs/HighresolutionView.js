@@ -97,7 +97,7 @@ define([
         this.$disclaimer.hide(0);
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
-          this.$onoffswitch.click();
+          // this.$onoffswitch.click();
           if (this.previousZoom >= 5) {
             this.presenter.notificate('not-zoom-not-reached');
           }
