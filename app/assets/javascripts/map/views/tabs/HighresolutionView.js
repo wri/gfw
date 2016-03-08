@@ -30,7 +30,7 @@ define([
     events: {
       'click  .onoffswitch'       : 'toggleLayer',
       'click  .maptype h3'        : 'toggleLayerName',
-      'oninput #range-clouds'     : 'setVisibleRange',
+      'input #range-clouds'       : 'setVisibleRange',
       'change #range-clouds'      : 'setVisibleRange',
       'change input'              : '_setParams',
       'change select'             : '_setParams',
