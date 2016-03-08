@@ -74,6 +74,7 @@ define([
      * call 'Place/update' to update the url.
      */
     _publishHres: function() {
+      mps.publish('Hresolution/update', [this.status.get('hresolution')]);
       mps.publish('Place/update', [{go: false}]);
     },
 

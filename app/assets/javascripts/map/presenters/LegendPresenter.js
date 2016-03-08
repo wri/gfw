@@ -16,7 +16,8 @@ define([
   var StatusModel = Backbone.Model.extend({
     defaults: {
       layerSpec: null,
-      threshold: null
+      threshold: null,
+      hresolution: null
     }
   });
 
@@ -35,6 +36,7 @@ define([
       'Place/go': function(place) {
         this.status.set('layerSpec', place.layerSpec);
         this.status.set('threshold', place.params.threshold);
+        this.status.set('hresolution', place.params.hresolution);
         this._updateLegend();
         this._toggleSelected();
         this.view.openGFW();
@@ -74,6 +76,11 @@ define([
       'Dialogs/close': function() {
         this.view.toogleLegend(false);
       }
+    }, {
+      'Hresolution/update': function(hresolution) {
+        this.status.set('hresolution', hresolution);
+        this._updateLegend();
+      }
     }],
 
     /**
@@ -82,7 +89,8 @@ define([
     _updateLegend: function() {
       var categories = this.status.get('layerSpec').getLayersByCategory(),
           options = {
-            threshold: this.status.get('threshold')
+            threshold: this.status.get('threshold'),
+            hresolution: this.hresolutionParams()
           },
           geographic = !! this.status.get('layerSpec').attributes.geographic_coverage;
 
@@ -122,6 +130,13 @@ define([
     initExperiment: function(id){
       mps.publish('Experiment/choose',[id]);
     },
+
+    hresolutionParams: function (argument) {
+      if (!!this.status.get('hresolution')) {
+        return JSON.parse(atob(this.status.get('hresolution')));
+      }
+      return {};
+    }
 
 
   });

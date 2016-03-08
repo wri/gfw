@@ -302,6 +302,28 @@
       }
     }
 
+    .definition-list {
+      @include display-flex();
+      width: 190px;
+      font-size: 11px;
+      line-height: 14px;      
+      margin: 5px 0 0;
+
+      &:first-child {
+        margin: 0;
+      }
+      
+      strong {
+        display: inline-block;
+        width: 55px;        
+      }
+
+      span {
+        max-width: 135px;
+      }
+    }
+
+
     sup {
       vertical-align: top;
       font-size: 0.8em;
@@ -505,5 +527,7 @@
   }
 
 
-
+  strong {
+    font-weight: 500;
+  }
 }

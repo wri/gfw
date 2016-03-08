@@ -38,6 +38,21 @@ define([
       'click .advanced-controls'  : '_toggleAdvanced'
     },
 
+    renderers: { 
+      'rgb': 'RGB (Red Green Blue)',
+      'ndvi': 'NDVI (Normalized Difference Vegetation Index)',
+      'evi': 'EVI (Enhanced vegetation index)',
+      'ndwi': 'NDWI (Normalized Difference Water Index)',
+      'false-color-nir': 'False Color NIR (Near Infra Red)',
+    },
+
+    sensors : {
+      'landsat-8,theia,deimos-1': 'All sensors',
+      'landsat-8': 'Landsat 8',
+      'theia': 'Theia',
+      'deimos-1': 'Deimos 1',
+    },
+
     initialize: function(map) {
       this.presenter = new Presenter(this);
       this.map = map;
@@ -53,12 +68,11 @@ define([
     cacheVars: function() {
       this.$urtheForm          = $('#urthe-form');
       this.$selects            = this.$el.find('.chosen-select');
-      this.$hresSelectProvider = $('#hres-provider-select');
-      this.$hresSelectFilter   = $('#hres-filter-select');
-      this.$hresSensorFilter   = $('#hres-filter-sensor');
+      this.$hresSelectFilter   = this.$el.find('#hres-filter-select');
+      this.$hresSensorFilter   = this.$el.find('#hres-filter-sensor');
       this.$onoffswitch        = this.$el.find('.onoffswitch');
-      this.$range              = $('#range-clouds');
-      this.$progress           = $('#progress-clouds');
+      this.$range              = this.$el.find('#range-clouds');
+      this.$progress           = this.$el.find('#progress-clouds');
       this.$mindate            = this.$el.find("input[name='snd__mindate_submit']");
       this.$maxdate            = this.$el.find("input[name='snd__maxdate_submit']");
       this.$advanced_options   = this.$el.find('.advanced-options');
@@ -108,14 +122,21 @@ define([
     },
 
     _getParams: function(e) {
+      var renderer = this.$urtheForm.find('#hres-filter-select').val() || 'rgb',
+          sensor = this.$urtheForm.find('#hres-filter-sensor').val() || null,
+          mindate = (!!this.$mindate.val()) ? this.$mindate.val() : '2000-09-01',
+          maxdate = (!!this.$maxdate.val()) ? this.$maxdate.val() : '2000-09-01';
+
       return {
         'zoom' : this.zoom,
         'satellite' : this.$urtheForm.data('slug'),
-        'color_filter': (this.$urtheForm.find('#hres-filter-select').val().length > 0) ? this.$urtheForm.find('#hres-filter-select').val() : 'rgb',
-        'sensor_platform': (this.$urtheForm.find('#hres-filter-sensor').val().length > 0) ? this.$urtheForm.find('#hres-filter-sensor').val() : null,
+        'color_filter': renderer,
+        'renderer': this.renderers[renderer],
+        'sensor_platform': sensor,
+        'sensor_name': this.sensors[sensor],
         'cloud': this.$range.val(),
-        'mindate': (this.$mindate.val().length > 0) ? this.$mindate.val() : '2000-09-01',
-        'maxdate': (this.$maxdate.val().length > 0) ? this.$maxdate.val() : '2015-09-01'
+        'mindate': mindate,
+        'maxdate': maxdate
       }
     },
 
@@ -131,13 +152,12 @@ define([
     },
 
     _fillParams: function(params) {
-      this.$hresSelectFilter.val(params.color_filter).trigger("liszt:updated");
-      this.$hresSensorFilter.val(params.sensor_platform).trigger("liszt:updated");
-      this.$range.val(params.cloud);
+      this.params = params;
+      this.$hresSelectFilter.val(this.params.color_filter).trigger("liszt:updated");
+      this.$hresSensorFilter.val(this.params.sensor_platform).trigger("liszt:updated");
+      this.$range.val(this.params.cloud);
       this.setVisibleRange();
       this.zoom = params.zoom;
-      var that = this;
-      this.params = params;
       window.setTimeout(_.bind(function(params) {
         this.renderPickers(this.params.mindate, this.params.maxdate);
         this.params = null;
@@ -177,31 +197,23 @@ define([
 
 
     printSelects: function() {
-      this.printProviders();
-      // this.printFilters();
+      this.printRenderers();
+      this.printSensors();
       this.triggerChosen();
     },
 
-    triggerChosen: function() {
-      this.$selects.chosen({
-        width: '100%',
-        allow_single_deselect: true,
-        inherit_select_classes: true,
-        no_results_text: "Oops, nothing found!"
-      });
-    },
-
-    printProviders: function() {
-      var options = '<option value="urthe">Urthecast</option><option value="digiglobe">Digital Globe</option><option value="skybox">Skybox</option>';
-      this.$hresSelectProvider.append(options);
-      this.$hresSelectFilter.append('<option value="rgb">RGB (Red Green Blue)</option><option value="ndvi">NDVI (Normalized Difference Vegetation Index)</option><option value="evi">EVI (Enhanced vegetation index)</option><option value="ndwi">NDWI (Normalized Difference Water Index)</option><option value="false-color-nir">False Color NIR (Near Infra Red)</option>'); //temporary hardcoded
-
-    },
-
-    printFilters: function(options) {
-      if (!!options) return;
+    printRenderers: function() {
+      var options = _.map(this.renderers, function(v,k){
+        return '<option value="'+k+'">'+v+'</option>';
+      }).join('');
       this.$hresSelectFilter.append(options);
-      this.triggerChosen();
+    },
+
+    printSensors: function() {
+      var options = _.map(this.sensors, function(v,k){
+        return '<option value="'+k+'">'+v+'</option>';
+      }).join('');
+      this.$hresSensorFilter.append(options);
     },
 
     setVisibleRange: function(){
@@ -268,7 +280,17 @@ define([
 
     toggleIconUrthe: function() {
       this.$UC_Icon.toggle();
-    }
+    },
+
+    triggerChosen: function() {
+      this.$selects.chosen({
+        width: '100%',
+        allow_single_deselect: true,
+        inherit_select_classes: true,
+        no_results_text: "Oops, nothing found!"
+      });
+    },
+
 
   });
 
