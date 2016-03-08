@@ -141,9 +141,13 @@ define([
     },
 
     _setParams: function(e) {
-      this.$apply.addClass('green').removeClass('gray');
-      this.presenter.setHres(this._getParams());
-      this._triggerChanges(e);
+      if (!!this.presenter.status.get('hresolution')) {
+        this.$apply.addClass('green').removeClass('gray');
+        this.presenter.setHres(this._getParams());
+        this._triggerChanges(e);
+      } else {
+        this.toggleLayer();
+      }
     },
 
     _triggerChanges: function(e) {
@@ -286,6 +290,7 @@ define([
       this.$selects.chosen({
         width: '100%',
         allow_single_deselect: true,
+        disable_search: true,
         inherit_select_classes: true,
         no_results_text: "Oops, nothing found!"
       });
