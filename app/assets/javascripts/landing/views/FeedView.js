@@ -20,7 +20,6 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
-      return;
       this.loadFeed();
     },
 
@@ -32,10 +31,8 @@ define([
       $.ajax({
         url: 'https://gfw-huggin.herokuapp.com/users/1/web_requests/14/feedviewrss.json',
         type:'GET',
-        dataType: 'jsonp',
-        jsonpCallback: 'callback',
         success: _.bind(function(data){
-          this.parse(data.value.items);
+          this.parse(data.items);
         },this)
       })
     },

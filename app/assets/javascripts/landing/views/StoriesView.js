@@ -27,7 +27,6 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
-      return;
 
       //Init Vars
       this.url = 'https://gfw-huggin.herokuapp.com/users/1/web_requests/15/keepupdatedgfwrss.json';
@@ -46,7 +45,7 @@ define([
       $.ajax({
         url: this.url,
         success: _.bind(function(data) {
-          this.parse(data.value.items);
+          this.parse(data.items);
         },this),
         error: function(status, error) {
           mps.publish('Spinner:stop');
