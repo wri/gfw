@@ -48,15 +48,14 @@ define([
 
     },
 
-    parseItem: function(item,slug) {
+    parseItem: function(item) {
         return {
           author: item.title,
           createDate: this.parseDate(item.pubDate),
           description: item.description.substring(0,40),
           link: item.link,
           target: true,
-          avatar: (item.gfwid.length > 0)? 'https://maps.googleapis.com/maps/api/staticmap?center=48.149567,-55.063267&zoom=2&size=80x80' : '/assets/logos/google.svg',
-          type: slug
+          avatar: (item.gfwid.length > 0)? 'https://maps.googleapis.com/maps/api/staticmap?center=48.149567,-55.063267&zoom=2&size=80x80' : '/assets/logos/google.svg'
         }
     },
 
