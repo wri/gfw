@@ -53,12 +53,11 @@ define([
       });
     },
     parse: function(data) {
-      var self = this;
       data = data.slice(0,3);
       this.items = _.map(data,_.bind(function(item) {
-        return self.parseItem(item);;
+        return this.parseItem(item);;
       },this));
-      self.render(this.items);
+      this.render(this.items);
       mps.publish('Spinner:stop');
     },
 
