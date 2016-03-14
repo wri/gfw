@@ -30,6 +30,7 @@ define([
             ['terrailoss', 'forest2000'],
             ['prodes', 'forest2000'],
             ['guyra', 'forest2000'],
+            ['viirs_fires_alerts', 'forest2000'],
             ['forest2000', 'forest2000'],
           ]
         },
