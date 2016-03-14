@@ -67,7 +67,6 @@ define([
       } else {
         var img = '/assets/blog-categories/news.png';
       }
-      console.log(img);
       return {
         title: item.title,
         description: item.description,
