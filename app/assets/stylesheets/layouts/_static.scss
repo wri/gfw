@@ -355,6 +355,13 @@
   }
   &.center{
     text-align: center;
+    header {
+      h2 {
+        @media only screen and (min-width: 480px) {
+          padding: 0;
+        }
+      }
+    }
   }
   &.start{
     &:before{
@@ -989,7 +996,7 @@
           p {
             font-size: 10px;
           }
-          
+
           .is-coming-soon {
             color: #AAA;
           }
