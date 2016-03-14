@@ -2,11 +2,7 @@
   {{#each stories}}
     <li>
       <a href="{{this.link}}">
-        {{#if this.map}}
-          <figure><div class="bg" style="background-image: url({{this.map}})"></div></figure>
-        {{else}}
-          <figure><div class="bg {{this.avatar}}"></div></figure>
-        {{/if}}
+          <figure><div class="bg" style="background-image:url({{this.avatar}})"></div></figure>
         <article class="info">
           <h4>{{this.title}}</h4>
           <p>{{this.description}}</p>

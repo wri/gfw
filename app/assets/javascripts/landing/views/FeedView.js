@@ -20,7 +20,6 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
-      return;
       this.loadFeed();
     },
 
@@ -32,85 +31,32 @@ define([
       $.ajax({
         url: 'https://gfw-huggin.herokuapp.com/users/1/web_requests/14/feedviewrss.json',
         type:'GET',
-        dataType: 'jsonp',
-        jsonpCallback: 'callback',
         success: _.bind(function(data){
-          this.parse(data.value.items);
+          this.parse(data.items);
         },this)
       })
     },
 
 
     parse: function(data) {
+      data = data.slice(0,6);
       this.feedlist = _.map(data,_.bind(function(item) {
-        var result = null;
-        if(item.cartodb_id) {
-          result = this.parseItem(item,'story');
-        } else if(item.disqus) {
-          result = this.parseItem(item,'disqus');
-        } else if(item.google) {
-          result = this.parseItem(item,'google');
-        } else if(item.guid) {
-          result = this.parseItem(item,'blog');
-        } else {
-          result = item;
-        }
-        return result;
+        return this.parseItem(item);
       },this));
-
-      this.feedlist = _.first(this.feedlist.sort(_.bind(function(a,b){
-        return b.createDate - a.createDate;
-      },this)),6);
 
       this.render();
 
     },
 
-    parseItem: function(item,slug) {
-      switch(slug){
-        case 'story':
-          return {
-            author: item.author,
-            createDate: this.parseDate(item.pubDate),
-            description: 'added a new story',
-            link: '/stories/'+item.cartodb_id,
-            target: false,
-            avatar: 'https://maps.googleapis.com/maps/api/staticmap?center=' + item.the_geom.coordinates[1] + ',' + item.the_geom.coordinates[0] + '&zoom=2&size=80x80',
-            type: slug
-          }
-        break;
-        case 'disqus':
-          return {
-            author: item.author.name,
-            createDate: this.parseDate(item.pubDate),
-            description: 'added a comment',
-            link: 'https://disqus.com/home/forum/gfw20/recent/',
-            target:true,
-            avatar: item.author.avatar.small.permalink,
-            type: slug
-          }
-        break;
-        case 'blog':
-          return {
-            author: item['dc:creator'],
-            createDate: this.parseDate(item.pubDate),
-            description: 'added a new post in blog',
-            link: item.link,
-            target:true,
-            type: slug
-          }
-        break;
-        case 'google':
-          return {
-            author: item.author,
-            createDate: this.parseDate(item.pubDate),
-            description: 'commented on Google Groups',
-            link: item.link,
-            target:true,
-            type: slug
-          }
-        break;
-      }
+    parseItem: function(item) {
+        return {
+          author: item.title,
+          createDate: this.parseDate(item.pubDate),
+          description: item.description.substring(0,40),
+          link: item.link,
+          target: true,
+          avatar: (item.gfwid.length > 0)? 'https://maps.googleapis.com/maps/api/staticmap?center=48.149567,-55.063267&zoom=2&size=80x80' : '/assets/logos/google.svg'
+        }
     },
 
     parseDate: function(date) {
