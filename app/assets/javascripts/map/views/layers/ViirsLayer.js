@@ -8,8 +8,9 @@ define([
   'moment',
   'uri',
   'abstract/layer/CartoDBLayerClass',
-  'map/presenters/layers/FiresLayerPresenter'
-], function(_, moment, UriTemplate, CartoDBLayerClass, Presenter) {
+  'text!map/cartocss/viirs.cartocss',
+  'map/presenters/layers/FiresLayerPresenter',
+], function(_, moment, UriTemplate, CartoDBLayerClass,ViirsCarto, Presenter) {
 
   'use strict';
 
@@ -17,6 +18,7 @@ define([
     options: {
       sql: "SELECT the_geom_webmercator, \'{tableName}\' as tablename,\'{tableName}\' AS layer, acq_time,  COALESCE(to_char(acq_date, \'DD Mon, YYYY\')) as acq_date, confidence, bright_ti4 brightness, longitude, latitude FROM {tableName} WHERE acq_date >= \'{year}-{month}-{day}\' AND confidence != 'low'",
       interactivity: 'acq_time, acq_date, confidence, brightness, longitude, latitude',
+      cartocss: ViirsCarto,
       infowindow: true
     },
 

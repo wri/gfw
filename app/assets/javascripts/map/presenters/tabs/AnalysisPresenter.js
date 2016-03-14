@@ -59,6 +59,7 @@ define([
       'prodes': 'prodes-loss',
       'guyra': 'guyra-loss',
       'forest2000': 'umd-loss-gain',
+      'viirs_fires_alerts': 'viirs-active-fires',
       'umd_as_it_happens':'glad-alerts',
     },
 
