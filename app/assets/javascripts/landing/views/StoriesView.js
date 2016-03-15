@@ -27,7 +27,6 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
-      return;
 
       //Init Vars
       this.url = 'https://gfw-huggin.herokuapp.com/users/1/web_requests/15/keepupdatedgfwrss.json';
@@ -46,7 +45,7 @@ define([
       $.ajax({
         url: this.url,
         success: _.bind(function(data) {
-          this.parse(data.value.items);
+          this.parse(data.items);
         },this),
         error: function(status, error) {
           mps.publish('Spinner:stop');
@@ -54,46 +53,28 @@ define([
       });
     },
     parse: function(data) {
-      var self = this;
+      data = data.slice(0,3);
       this.items = _.map(data,_.bind(function(item) {
-        var result = null;
-        if (item.link) {
-          //check if it's a blog post
-          result = self.parseItem(item,'post');
-        } else {
-          // user story here
-          result = self.parseItem(item,'story');
-        }
-        return result;
+        return this.parseItem(item);;
       },this));
-      self.render(this.items);
+      this.render(this.items);
       mps.publish('Spinner:stop');
     },
 
     parseItem: function(item, slug) {
-      if (slug === 'story') {
-        if (! item.media.length) {
-          var img = null;
-        } else {
-          var img = item.media[item.media.length -1].preview_url;
-        }
-        return {
-          title: item.title,
-          description: item.details,
-          link: '/stories/'+item.cartodb_id,
-          target: false,
-          map: (img) ? 'http://gfw2stories.s3.amazonaws.com/uploads/' + img : 'https://maps.googleapis.com/maps/api/staticmap?center=' + item.the_geom.coordinates[1] + ',' + item.the_geom.coordinates[0] + '&zoom=2&size=80x80',
-          type: slug
-        }
+      if (item.media.length && !!JSON.parse(item.media)[1]) {
+        var img = 'http://gfw2stories.s3.amazonaws.com/uploads/' + JSON.parse(item.media)[1]['url'];
       } else {
-        return {
-          title: item.title,
-          description: item.description,
-          link: item.link,
-          target:true,
-          avatar: item.category[0].replace(' ','-'),
-          type: slug
-        }
+        var img = '/assets/blog-categories/news.png';
+      }
+      return {
+        title: item.title,
+        description: item.description,
+        link: (item.link.length) ? item.link : (isNaN(item.gfwid)) ? item.gfwid :  '/stories/'+item.gfwid,
+        target: false,
+        date: item.pubDate,
+        avatar: img,
+        id: (isNaN(item.gfwid)) ? item.gfwid :  '/stories/'+item.gfwid
       }
     }
   });
