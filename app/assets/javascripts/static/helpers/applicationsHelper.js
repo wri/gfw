@@ -241,16 +241,6 @@ define([
     },
     {
       id: 19,
-      name: 'My Forest Atlas',
-      svg: '#shape-my-forest-atlas',
-      content: 'A tool for building your own online interactive map',
-      link_text: 'Coming soon',
-      classname: 'btn soon',
-      source: 'World Resources Institute',
-      tags: 'crowdsourcing, data, maps, mobile, satellite-imagery'
-    },
-    {
-      id: 20,
       name: 'Logging Roads',
       svg: '#shape-logging-roads',
       content: 'View and help document the spread of logging roads across the Congo Basin region of Central Africa',
@@ -263,7 +253,7 @@ define([
       tags: 'crowdsourcing, maps, satellite imagery, Africa, data, Global Forest Watch, logging'
     },
     {
-      id: 21,
+      id: 20,
       name: 'Water',
       svg: '#shape-water',
       content: 'View critical watershed information, understand type and severity of threats such as forest changes to watershed health, and screen for cost-effective, sustainable solutions.',
@@ -273,7 +263,7 @@ define([
       tags: 'data, global-forest-watch, maps'
     },
     {
-      id: 22,
+      id: 21,
       name: 'Develop your own app',
       svg: '#shape-develop',
       content: 'Learn how to develop your own application with Global Forest Watch data.',
