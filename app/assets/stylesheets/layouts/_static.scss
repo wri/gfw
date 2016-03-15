@@ -42,8 +42,10 @@
     font-size: 14px;
     text-align: center;
     color: $dark;
-    text-transform: uppercase;
+    line-height: 1.25;
     padding: 10px 0 0;
+    margin: 0 auto;
+    max-width: 700px;
     @media (min-width: $br-mobile) {
       font-size: 20px;
     }
