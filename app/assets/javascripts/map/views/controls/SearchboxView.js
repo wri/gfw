@@ -134,8 +134,9 @@ define([
       var lat = this.convertDMSToDD(latD.degrees, latD.minutes, latD.seconds, latD.cardinal);
       var lng = this.convertDMSToDD(lngD.degrees, lngD.minutes, lngD.seconds, lngD.cardinal);
 
-      if (!!lat && !_.isNaN(lat) && !!lng && !_.isNaN(lng)) {
+      if (!_.isNaN(lat) && !_.isNaN(lng)) {
         this.presenter.setCenter(lat,lng);
+        this.addMarker(lat,lng);        
         this.model.set('hidden', false);
       }
     },
@@ -162,8 +163,9 @@ define([
       var lat = Number($('#deg-lat').val());
       var lng = Number($('#deg-lng').val());
 
-      if (!!lat && !_.isNaN(lat) && !!lng && !_.isNaN(lng)) {
+      if (!_.isNaN(lat) && !_.isNaN(lng)) {
         this.presenter.setCenter(lat,lng);
+        this.addMarker(lat,lng);
         this.model.set('hidden', false);
       }
     },
@@ -180,6 +182,7 @@ define([
 
       if (!isNaN(coords[0]) && !isNaN(coords[1])) {
         this.presenter.setCenter(coords[1], coords[0]);
+        this.addMarker(coords[1], coords[0]);
         this.model.set('hidden', false);
       }
     },
@@ -201,14 +204,35 @@ define([
         }
 
         if (place.geometry.location && !place.geometry.viewport) {
-          this.presenter.setCenter(place.geometry.location.lat(),
-            place.geometry.location.lng());
+          this.presenter.setCenter(place.geometry.location.lat(), place.geometry.location.lng());
+          this.addMarker(place.geometry.location.lat(), place.geometry.location.lng());
         }
 
         this.model.set('hidden', false);
       };
 
       ga('send', 'event', 'Map', 'Searchbox', 'Find location');
+    },
+
+    addMarker: function(_lat,_lng) {
+      this.removeMarker();
+      
+      var latLng = {
+        lat: _lat,
+        lng: _lng        
+      };
+
+      this.marker = new google.maps.Marker({
+        position: latLng,
+        // icon: icons[feature.type].icon,
+        map: this.map
+      });      
+    },
+
+    removeMarker: function() {
+      if (!!this.marker) {
+        this.marker.setMap(null);
+      }
     }
 
   });
