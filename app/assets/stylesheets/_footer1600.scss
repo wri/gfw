@@ -658,9 +658,9 @@
     }
 
     &.urthecast {
-      height: 23px; width: 110px; @include logos-sprite(urthecast);
+      height: 23px; width: 110px; @include logos-sprite(urthecast1);
       &:hover{
-        @include logos-sprite(urthecasthover);
+        @include logos-sprite(urthecasthover1);
       }
     }
 
