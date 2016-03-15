@@ -1,7 +1,7 @@
 define([
-  'Class', 'uri', 'bluebird',
+  'Class', 'uri', 'bluebird', 'moment',
   'map/services/DataService'
-], function (Class, UriTemplate, Promise, ds) {
+], function (Class, UriTemplate, Promise, moment, ds) {
 
   'use strict';
 
@@ -21,8 +21,11 @@ define([
       var sql = 'SELECT MIN('+this.dateAttribute+') AS min_date, MAX('+this.dateAttribute+') AS max_date FROM '+this.table,
           url = new UriTemplate(URL).fillFromObject({q: sql});
 
+      var endOfDay = moment().endOf('day'),
+          secondsToEndOfDay = endOfDay.diff(moment()) / 1000;
+
       ds.define(REQUEST_ID, {
-        cache: {type: 'persist', duration: 1, unit: 'days'},
+        cache: {type: 'persist', duration: secondsToEndOfDay, unit: 'seconds'},
         url: url,
         type: 'GET'
       });
