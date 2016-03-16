@@ -45,9 +45,14 @@ define([
   'text!map/templates/legend/raisg_mining.handlebars',
   'text!map/templates/legend/per_mining.handlebars',
   'text!map/templates/legend/glad.handlebars',
+  'text!map/templates/legend/urthecast.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl, rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, 
+    concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, 
+    global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
+    gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl, 
+    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl) {
 
   'use strict';
 
@@ -125,7 +130,7 @@ define([
       bra_mining:Handlebars.compile(raisg_miningTpl),
       per_mining:Handlebars.compile(per_miningTpl),
       umd_as_it_happens:Handlebars.compile(gladTpl),
-      
+      urthe: Handlebars.compile(urtheTpl),
     },
 
     options: {
@@ -195,6 +200,7 @@ define([
         if (this.detailsTemplates[layer.slug]) {
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
+            hresolution: options.hresolution,
             layerTitle: layer.title
           });
         }

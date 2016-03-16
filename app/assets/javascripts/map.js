@@ -10,6 +10,7 @@ require([
   'map/utils',
   'enquire',
   'mps',
+  'handlebars',
   'map/router',
   'views/SourceModalView',
   'views/SourceBottomView',
@@ -34,7 +35,7 @@ require([
   'views/NotificationsView',
   'views/DownloadView',
   '_string'
-], function($, _, Class, Backbone, chosen, utils, enquire, mps, Router, SourceModalView, SourceBottomView, SourceMobileFriendlyView, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
+], function($, _, Class, Backbone, chosen, utils, enquire, mps, Handlebars, Router, SourceModalView, SourceBottomView, SourceMobileFriendlyView, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
     MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, GuideView, GuideButtonView, UserFormModalView, HeaderView, FooterView, NotificationsView, DownloadView) {
 
   'use strict';
@@ -46,6 +47,7 @@ require([
     init: function() {
       var router = new Router(this);
       this._cartodbHack();
+      this._handlebarsPlugins()
       this._initViews();
       this._initApp();
 
@@ -104,6 +106,33 @@ require([
         handlebars: typeof(Handlebars) === 'undefined' ? null : Handlebars.compile
       });
     },
+
+    _handlebarsPlugins: function() {
+      Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+        switch (operator) {
+          case '==':
+            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+          case '===':
+            return (v1 === v2) ? options.fn(this) : options.inverse(this);
+          case '!==':
+            return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+          case '<':
+            return (v1 < v2) ? options.fn(this) : options.inverse(this);
+          case '<=':
+            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+          case '>':
+            return (v1 > v2) ? options.fn(this) : options.inverse(this);
+          case '>=':
+            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+          case '&&':
+            return (v1 && v2) ? options.fn(this) : options.inverse(this);
+          case '||':
+            return (v1 || v2) ? options.fn(this) : options.inverse(this);
+          default:
+            return options.inverse(this);
+        }
+      });
+    }
 
   });
 

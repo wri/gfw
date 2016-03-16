@@ -30,12 +30,27 @@ define([
     events: {
       'click  .onoffswitch'       : 'toggleLayer',
       'click  .maptype h3'        : 'toggleLayerName',
-      'oninput #range-clouds'     : 'setVisibleRange',
+      'input #range-clouds'       : 'setVisibleRange',
       'change #range-clouds'      : 'setVisibleRange',
       'change input'              : '_setParams',
       'change select'             : '_setParams',
       'click button'              : '_triggerChanges',
       'click .advanced-controls'  : '_toggleAdvanced'
+    },
+
+    renderers: { 
+      'rgb': 'RGB (Red Green Blue)',
+      'ndvi': 'NDVI (Normalized Difference Vegetation Index)',
+      'evi': 'EVI (Enhanced vegetation index)',
+      'ndwi': 'NDWI (Normalized Difference Water Index)',
+      'false-color-nir': 'False Color NIR (Near Infra Red)',
+    },
+
+    sensors : {
+      'landsat-8,theia,deimos-1': 'All sensors',
+      'landsat-8': 'Landsat 8 (15 m)',
+      'theia': 'Theia (5 m)',
+      'deimos-1': 'Deimos 1 (22 m)',
     },
 
     initialize: function(map) {
@@ -51,13 +66,13 @@ define([
     },
 
     cacheVars: function() {
+      this.$urtheForm          = $('#urthe-form');
       this.$selects            = this.$el.find('.chosen-select');
-      this.$hresSelectProvider = $('#hres-provider-select');
-      this.$hresSelectFilter   = $('#hres-filter-select');
-      this.$hresSensorFilter   = $('#hres-filter-sensor');
+      this.$hresSelectFilter   = this.$el.find('#hres-filter-select');
+      this.$hresSensorFilter   = this.$el.find('#hres-filter-sensor');
       this.$onoffswitch        = this.$el.find('.onoffswitch');
-      this.$range              = $('#range-clouds');
-      this.$progress           = $('#progress-clouds');
+      this.$range              = this.$el.find('#range-clouds');
+      this.$progress           = this.$el.find('#progress-clouds');
       this.$mindate            = this.$el.find("input[name='snd__mindate_submit']");
       this.$maxdate            = this.$el.find("input[name='snd__maxdate_submit']");
       this.$advanced_options   = this.$el.find('.advanced-options');
@@ -72,7 +87,9 @@ define([
       this.$el.html(this.template({
         today: moment().format('DD-MM-YYYY'),
         mindate: moment().subtract(3,'month').format('YYYY-MM-DD'),
-        zoom: this.map.getZoom()
+        zoom: this.map.getZoom(),
+        sensors: this.sensors,
+        renderers: this.renderers
       }));
       this.renderPickers();
       this.cacheVars();
@@ -97,7 +114,6 @@ define([
         this.$disclaimer.hide(0);
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
-          // this.$onoffswitch.click();
           if (this.previousZoom >= 5) {
             this.presenter.notificate('not-zoom-not-reached');
           }
@@ -108,45 +124,46 @@ define([
     },
 
     _getParams: function(e) {
-      var $objTarget = $(e.target).closest('.maptype');
-      if(!!this.$onoffswitch.hasClass('checked')) {
-        return {
-          'zoom' : this.zoom,
-          'satellite' : $objTarget.data('slug'),
-          'color_filter': ($objTarget.find('#hres-filter-select').val().length > 0) ? $objTarget.find('#hres-filter-select').val() : 'rgb',
-          'sensor_platform': ($objTarget.find('#hres-filter-sensor').val().length > 0) ? $objTarget.find('#hres-filter-sensor').val() : null,
-          'cloud': this.$range.val(),
-          'mindate': (this.$mindate.val().length > 0) ? this.$mindate.val() : '2000-09-01',
-          'maxdate': (this.$maxdate.val().length > 0) ? this.$maxdate.val() : '2015-09-01'
-        };
+      var renderer = this.$urtheForm.find('#hres-filter-select').val() || 'rgb',
+          sensor = this.$urtheForm.find('#hres-filter-sensor').val() || null,
+          mindate = (!!this.$mindate.val()) ? this.$mindate.val() : '2000-09-01',
+          maxdate = (!!this.$maxdate.val()) ? this.$maxdate.val() : '2000-09-01';
+
+      return {
+        'zoom' : this.zoom,
+        'satellite' : this.$urtheForm.data('slug'),
+        'color_filter': renderer,
+        'renderer': this.renderers[renderer],
+        'sensor_platform': sensor,
+        'sensor_name': this.sensors[sensor],
+        'cloud': this.$range.val(),
+        'mindate': mindate,
+        'maxdate': maxdate
       }
-      return null;
     },
 
     _setParams: function(e) {
-      if (! !!this.$onoffswitch.hasClass('checked')) {
-        this.toggleLayer(e);
+      if (!!this.presenter.status.get('hresolution')) {
+        this.$apply.addClass('green').removeClass('gray');
+        this.presenter.setHres(this._getParams());
+        this._triggerChanges(e);
       } else {
-        this.$apply.removeClass('disabled');
+        this.toggleLayer();
       }
-      this.$apply.addClass('green').removeClass('gray');
-      this.presenter.setHres(this._getParams(e));
-      this._triggerChanges(e);
     },
 
     _triggerChanges: function(e) {
-      this.presenter.updateLayer($(e.target).closest('.maptype').data('slug'));
+      this.presenter.updateLayer('urthe');
       this.$apply.removeClass('green').addClass('gray');
     },
 
     _fillParams: function(params) {
-      this.$hresSelectFilter.val(params.color_filter).trigger("liszt:updated");
-      this.$hresSensorFilter.val(params.sensor_platform).trigger("liszt:updated");
-      this.$range.val(params.cloud);
+      this.params = params;
+      this.$hresSelectFilter.val(this.params.color_filter).trigger("liszt:updated");
+      this.$hresSensorFilter.val(this.params.sensor_platform).trigger("liszt:updated");
+      this.$range.val(this.params.cloud);
       this.setVisibleRange();
       this.zoom = params.zoom;
-      var that = this;
-      this.params = params;
       window.setTimeout(_.bind(function(params) {
         this.renderPickers(this.params.mindate, this.params.maxdate);
         this.params = null;
@@ -155,16 +172,12 @@ define([
 
     toggleLayer: function(e) {
       if (this.zoom >= 5) {
-        this.switchToggle();
         this.$apply.toggleClass('disabled');
-        this.presenter.setHres(this._getParams(e));
-        this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
+        this.presenter.toggleLayer('urthe');
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
-          this.switchToggle();
           this.$apply.toggleClass('disabled');
-          this.presenter.setHres(this._getParams(e));
-          this.presenter.toggleLayer($(e.target).closest('.maptype').data('slug'));
+          this.presenter.toggleLayer('urthe');
         } else {
           this.presenter.notificate('not-zoom-not-reached');
         }
@@ -182,38 +195,13 @@ define([
       this.$advanced_options.toggle('250');
     },
 
-    switchToggle: function() {
-      // this.$onoffswitch.toggleClass('checked');
-      this.$el.find('.onoffswitch').toggleClass('checked');
+    switchToggle: function(to) {
+      this.$el.find('.onoffswitch').toggleClass('checked', to);
       this.toggleIconUrthe();
     },
 
 
     printSelects: function() {
-      this.printProviders();
-      // this.printFilters();
-      this.triggerChosen();
-    },
-
-    triggerChosen: function() {
-      this.$selects.chosen({
-        width: '100%',
-        allow_single_deselect: true,
-        inherit_select_classes: true,
-        no_results_text: "Oops, nothing found!"
-      });
-    },
-
-    printProviders: function() {
-      var options = '<option value="urthe">Urthecast</option><option value="digiglobe">Digital Globe</option><option value="skybox">Skybox</option>';
-      this.$hresSelectProvider.append(options);
-      this.$hresSelectFilter.append('<option value="rgb">RGB (Red Green Blue)</option><option value="ndvi">NDVI (Normalized Difference Vegetation Index)</option><option value="evi">EVI (Enhanced vegetation index)</option><option value="ndwi">NDWI (Normalized Difference Water Index)</option><option value="false-color-nir">False Color NIR (Near Infra Red)</option>'); //temporary hardcoded
-
-    },
-
-    printFilters: function(options) {
-      if (!!options) return;
-      this.$hresSelectFilter.append(options);
       this.triggerChosen();
     },
 
@@ -281,7 +269,18 @@ define([
 
     toggleIconUrthe: function() {
       this.$UC_Icon.toggle();
-    }
+    },
+
+    triggerChosen: function() {
+      this.$selects.chosen({
+        width: '100%',
+        allow_single_deselect: true,
+        disable_search: true,
+        inherit_select_classes: true,
+        no_results_text: "Oops, nothing found!"
+      });
+    },
+
 
   });
 
