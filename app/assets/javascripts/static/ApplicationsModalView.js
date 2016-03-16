@@ -55,12 +55,6 @@ define([
     render: function(){
       var app = _.findWhere(this.helper, {id: this.status.get('current')}); 
       this.$el.html(this.template({ app: app }));
-      // if (!!this.status.get('current')) {
-      //   var app = _.findWhere(this.helper, {id: this.status.get('current')});
-      //   this.$el.html(this.template({ app: app }));
-      // } else {
-        
-      // }
       return this;
     },
 
