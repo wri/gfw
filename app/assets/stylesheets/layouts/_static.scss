@@ -49,6 +49,10 @@
     @media (min-width: $br-mobile) {
       font-size: 20px;
     }
+
+    strong {
+      font-weight: 500;
+    }
   }
 }
 
