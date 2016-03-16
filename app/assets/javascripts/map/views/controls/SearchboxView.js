@@ -201,6 +201,9 @@ define([
       if (place !== undefined && place.geometry) {
         if (place.geometry.viewport) {
           this.presenter.fitBounds(place.geometry.viewport);
+          if (place.geometry.location) {
+            this.addMarker(place.geometry.location.lat(), place.geometry.location.lng());
+          }
         }
 
         if (place.geometry.location && !place.geometry.viewport) {
