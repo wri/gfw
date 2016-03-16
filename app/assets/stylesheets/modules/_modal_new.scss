@@ -243,6 +243,34 @@ $height: auto;
   }
 }
 
+// MODAL ARROWS
+.modal-arrows {
+  display: none;
+  @media (min-width: $br-mobile) {
+    display: block;
+  }  
+  .btn-direction{
+    position: absolute;
+    top: 50%;
+    @include transform(translate(0,-50%));
+    &.is-left{
+      right: 100%;
+    }
+    &.is-right{
+      left: 100%;
+    }
+    .icon{
+      padding: 10px;
+      width: 60px;
+      height: 60px;
+      svg{
+        stroke: $white;
+      }
+    }
+  }  
+}
+
+// MODAL CONTENT
 .modal-content {
   font-size: 13px;
 
@@ -278,7 +306,7 @@ $height: auto;
   li { list-style: none;}
 
   p {
-    line-height: 1.25;
+    line-height: 1.5;
     margin-bottom: 10px;
     margin-top: 10px;
 

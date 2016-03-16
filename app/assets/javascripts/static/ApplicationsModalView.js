@@ -27,6 +27,12 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    events: function(){
+      return _.extend({},ModalView.prototype.events,{
+        'click .btn-direction' : 'navigateByArrows'
+      });
+    },
+
     initialize: function() {
       this.constructor.__super__.initialize.apply(this);
       this.status = new ApplicationModalStatus();
