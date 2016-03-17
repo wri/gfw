@@ -943,6 +943,8 @@
           @include transform(translate(28px,-50%));
           font-size: 14px;
           font-weight: 300;
+          word-break: break-word;
+          
           @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
             top: 120%;
             left: 0%;
