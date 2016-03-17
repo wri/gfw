@@ -16,6 +16,13 @@ define([
   var StatusModel = Backbone.Model.extend({
     defaults: {
       tour: null,
+    },
+    initialize: function() {
+      this.setMobile();
+    },
+
+    setMobile: function() {      
+      this.set('mobile', (window.innerWidth < window.gfw.config.GFW_MOBILE));
     }
   });
 
@@ -50,8 +57,10 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         var params = place.params;
-        this.status.set('tour',(!!params.tour) ? this.setTour(params.tour) : null);
-        this.checkCookieTour();
+        if (!this.status.get('mobile')) {        
+          this.status.set('tour',(!!params.tour) ? this.setTour(params.tour) : null);
+          this.checkCookieTour();
+        }
       }
     },{
       'Tour/open': function(tour) {
