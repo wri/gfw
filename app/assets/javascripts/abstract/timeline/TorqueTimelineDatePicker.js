@@ -32,8 +32,10 @@ define([
         if (date.isBefore(otherDate)) { return; }
       }
 
-      var tzOffset = new Date().getTimezoneOffset();
-      if (tzOffset > 0) { date = date.add(tzOffset, 'minutes'); }
+      if (date.toDate().getHours() !== 0) {
+        var tzOffset = date.toDate().getTimezoneOffset();
+        if (tzOffset > 0) { date = date.add(tzOffset, 'minutes'); }
+      }
       this.set(id, date);
     }
   });
