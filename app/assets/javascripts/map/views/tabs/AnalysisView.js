@@ -390,6 +390,9 @@ define([
         if (!dont_analyze) {
           this.$countryButton.addClass('disabled');
           this.$countrySButton.addClass('disabled');
+        } else {
+          this.$countryButton.removeClass('disabled');
+          this.$countrySButton.removeClass('disabled');          
         }
       } else {
         this.$countryButton.addClass('disabled');
