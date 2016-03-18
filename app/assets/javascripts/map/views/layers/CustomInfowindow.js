@@ -102,6 +102,7 @@ define([
       this.div_.parentNode.removeChild(this.div_);
       this.div_ = null;
     }
+    if(this.map) this.map.setOptions({ scrollwheel: true });
     this.setMap(null);
     mps.publish('Infowindow/close');
   };
