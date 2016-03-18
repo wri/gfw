@@ -549,7 +549,6 @@ define([
       var paths = overlay.getPath().getArray();
       var geojson = geojsonUtilsHelper.pathToGeojson(paths);
 
-      this.view.setEditable(overlay, false);
       this._saveAndAnalyzeGeojson(geojson, {draw: false});
     },
 

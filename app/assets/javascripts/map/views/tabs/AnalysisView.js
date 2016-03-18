@@ -33,8 +33,6 @@ define([
 
       //draw
       'click #start-analysis' : '_onClickAnalysis',
-      'click #done-analysis' : '_onClickDone',
-      'click #done-subscribe' : '_onClickDoneSubscribe',
 
       //countries
       'change #analysis-country-select' : 'changeIso',
@@ -443,23 +441,13 @@ define([
     },
 
     /**
-     * Triggered when the user clicks on done
-     * to get the analysis of the new polygon.
+     * Triggered when the user complete a polygon 
+     * or change it with the drawing manager.
      */
-    _onClickDone: function() {
-      if (!this.$done.hasClass('disabled')) {
-        ga('send', 'event', 'Map', 'Analysis', 'Click: done');
-        this._stopDrawing();
-        this.presenter.doneDrawing();
-        this.toggleAnalysis(true);
-      }
-    },
-
-    _onClickDoneSubscribe: function() {
-      if (!this.$doneSubscribe.hasClass('disabled')) {
-        ga('send', 'event', 'Map', 'Analysis', 'Click: done');
-        this.presenter.doneDrawingSubscribe();
-      }
+    _updateAnalysis: function() {
+      this._stopDrawing();
+      this.presenter.doneDrawing();
+      this.toggleAnalysis(true);
     },
 
     /**
@@ -491,8 +479,7 @@ define([
       this.$infowindows.addClass('hidden');
 
 
-      google.maps.event.addListener(this.drawingManager,
-        'overlaycomplete', this._onOverlayComplete);
+      google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this._onOverlayComplete);
     },
 
     /**
@@ -504,8 +491,20 @@ define([
       ga('send', 'event', 'Map', 'Analysis', 'Polygon: complete');
       this.presenter.onOverlayComplete(e);
       this._resetDrawing();
-      // buttons clases
-      this.toggleDoneBtn(false);
+      this._updateAnalysis();
+
+      google.maps.event.addListener(e.overlay.getPath(), 'set_at', function () {
+        this._updateAnalysis();
+      }.bind(this));      
+
+      google.maps.event.addListener(e.overlay.getPath(), 'insert_at', function () {
+        this._updateAnalysis();
+      }.bind(this));
+
+      google.maps.event.addListener(e.overlay.getPath(), 'remove_at', function () {
+        this._updateAnalysis();
+      }.bind(this));
+
     },
 
     /**
@@ -516,7 +515,6 @@ define([
       this._resetDrawing();
       // buttons clases
       this.toggleUseBtn(false);
-      this.toggleDoneBtn(true);
       // Remove binds
       $(document).off('keyup.drawing');
 
@@ -731,11 +729,6 @@ define([
       $('.cartodb-popup').toggleClass('dont_analyze', to);
     },
 
-    toggleDoneBtn: function(to){
-      $('#draw-analysis').toggleClass('one', to);
-      this.$done.parent().toggleClass('hidden', to);
-      this.$doneSubscribe.parent().toggleClass('hidden', to);
-    },
 
     toggleDoneSubscribeBtn: function() {
       if (!this.presenter.layerAvailableForSubscription()) {
