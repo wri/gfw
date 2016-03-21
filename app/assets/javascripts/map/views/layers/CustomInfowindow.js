@@ -48,20 +48,23 @@ define([
 
       // Events
       google.maps.event.addDomListener(div, 'click', _.bind(function(ev) {
+        this.enableScrollwheel();
         if (! $(ev.currentTarget).hasClass('story-infowindow')) {
           ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
         }
       }, this));
 
-      google.maps.event.addDomListener(popup, 'mouseover', _.bind(function(ev) {
-        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-        this.disableScrollwheel();
-      }, this));
+      if (popup) {
+        google.maps.event.addDomListener(popup, 'mouseover', _.bind(function(ev) {
+          ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+          this.disableScrollwheel();
+        }, this));
 
-      google.maps.event.addDomListener(popup, 'mouseout', _.bind(function(ev) {
-        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-        this.enableScrollwheel();
-      }, this));
+        google.maps.event.addDomListener(popup, 'mouseout', _.bind(function(ev) {
+          ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+          this.enableScrollwheel();
+        }, this));        
+      }
 
       if (closeButton) {
         google.maps.event.addDomListener(closeButton, 'click', _.bind(function(ev) {
@@ -104,6 +107,7 @@ define([
     }
     if(this.map) this.map.setOptions({ scrollwheel: true });
     this.setMap(null);
+    this.enableScrollwheel();
     mps.publish('Infowindow/close');
   };
 
