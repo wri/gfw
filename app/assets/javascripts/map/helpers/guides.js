@@ -34,7 +34,18 @@ define([
         options: {
           position: 'right',
           callfront: function() {
-            $('#layersnav-forest-change').addClass('tour-active');
+            // WOOOWWWWW mega selectors...
+            var $forestChangeDropDown = $('#layersnav-forest-change');
+            var $forestChangeLoss = $forestChangeDropDown.find('.layer[data-layer="loss"]');
+            var $forestChangeGain = $forestChangeDropDown.find('.layer[data-layer="forestgain"]');
+            
+            $forestChangeDropDown.addClass('tour-active');
+            if(!$forestChangeLoss.hasClass('selected')) {
+              $forestChangeLoss.click();
+            }
+            if(!$forestChangeGain.hasClass('selected')) {
+              $forestChangeGain.click();
+            }
           }
         }
       },
