@@ -115,8 +115,12 @@ define([
     },
 
     _submit: function() {
-      this.$('#submit').hide();
-      this.$('.profile-loading').show();
+      var $submitButton = this.$('#submit');
+
+      if ($submitButton.hasClass('disabled')) { return; }
+
+      $submitButton.hide();
+      this.$('.spinner3').show();
 
       var formValues = this.$('form').
         serializeArray().
