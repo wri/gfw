@@ -109,7 +109,9 @@ define([
         }, this)
       );
       google.maps.event.addListener(this.map, 'bounds_changed', _.bind(function() {
-        if(!this.center_moved && this.mobile){
+        // This function will center the map when it's a small screen in the center - analysis module height
+        // 270 is magic number... We should get rid of it
+        if(!this.center_moved && !this.embed && this.mobile){
           this.offsetCenter(this.map.getCenter(), 0, 270/2);
           this.center_moved = true;
         }
