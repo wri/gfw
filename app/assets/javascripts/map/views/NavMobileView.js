@@ -55,6 +55,7 @@ define([
       }else{
         this.$el.html('');
       }
+      this.$el.find('.timeline-mobile-call-to-action a').attr('href',location.href.replace('/embed',''));
     },
 
     cacheVars: function(){
