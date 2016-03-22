@@ -6,99 +6,62 @@ define([
   'backbone',
   'handlebars',
   'mps',
+  'views/ModalView',
   'static/helpers/applicationsHelper',
   'text!static/templates/applicationsModal.handlebars',
-], function($,Backbone,Handlebars,mps,applicationsHelper,tpl) {
+], function($,Backbone,Handlebars,mps,ModalView,applicationsHelper,tpl) {
 
   'use strict';
 
-  var ApplicationModalModel = Backbone.Model.extend({
+  var ApplicationModalStatus = Backbone.Model.extend({
     defaults: {
-      current: null,
-      visible: false
+      current: null
     }
   })
 
-  var ApplicationModalView = Backbone.View.extend({
+  var ApplicationModalView = ModalView.extend({
 
-    el: '#applicationModalView',
+    id: 'applicationModal',
+
+    className: "modal",
 
     template: Handlebars.compile(tpl),
 
-    events: {
-      'click .close' : 'close',
-      'click .shadow' : 'close',
-      'click .btn-direction' : 'navigateByArrows'
+    events: function(){
+      return _.extend({},ModalView.prototype.events,{
+        'click .btn-direction' : 'navigateByArrows'
+      });
     },
 
     initialize: function() {
-      if (!this.$el.length) {
-        return
-      }
-      //helper
-      this.$document = $(document);
-      this.model = new ApplicationModalModel();
+      this.constructor.__super__.initialize.apply(this);
+      this.status = new ApplicationModalStatus();
       this.helper = applicationsHelper;
-
-      //init
-      this.setListeners()
+      this.render();
+      this._initVars();
+      this.setListeners();
+      this.$body.append(this.el);
     },
 
     setListeners: function() {
       mps.subscribe('App/show', _.bind(function(id){
-        this.model.set('current', id);
+        this.status.set('current', id);
+        this.show();
       }, this ));
 
-      this.model.on('change:current', this.render, this);
-      this.model.on('change:visible', this.toggleBindings, this);
+      this.status.on('change:current', this.render, this);
     },
 
     render: function(){
-      this.$el.toggleClass('active',!!this.model.get('current'))
-      this.model.set('visible', !!this.model.get('current'));
-      if (!!this.model.get('current')) {
-        var app = _.findWhere(this.helper, {id: this.model.get('current')});
-        this.$el.html(this.template({ app: app }));
-      } else {
-        this.$el.html('');
-      }
-    },
-
-    close: function(e) {
-      e && e.preventDefault();
-      this.model.set('current',false);
-    },
-
-    toggleBindings: function() {
-      if (!!this.model.get('visible')) {
-        // document keyup
-        this.$document.on('keyup', _.bind(function(e) {
-          var current = this.model.get('current');
-          switch(e.keyCode) {
-            case 27:
-              this.close();
-            break;
-            case 37:
-              (current == 1) ? current = this.helper.length - 1 : current--;
-              this.model.set('current', current);
-            break;
-            case 39:
-              (current == this.helper.length - 1) ? current = 1 : current++;
-              this.model.set('current', current);
-            break;
-          }
-        },this));
-
-      } else {
-        this.$document.off('keyup');
-      }
-
+      var app = _.findWhere(this.helper, {id: this.status.get('current')}); 
+      this.$el.html(this.template({ app: app }));
+      return this;
     },
 
     navigateByArrows: function(e) {
       e && e.preventDefault();
       var dir = $(e.currentTarget).data('dir');
-      var current = this.model.get('current');
+      var current = this.status.get('current');
       switch(dir) {
         case 'left':
           (current == 1) ? current = this.helper.length - 1 : current--;
@@ -107,7 +70,7 @@ define([
           (current == this.helper.length - 1) ? current = 1 : current++;
         break;
       }
-      this.model.set('current', current);
+      this.status.set('current', current);
     }
 
   });
