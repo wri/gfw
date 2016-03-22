@@ -107,6 +107,18 @@
       }
     }
   }
+  .timeline-mobile-call-to-action {
+    display: block;
+    width: 100%;
+    background: $cGreen;
+    height: 60px;
+    @include display-flex();
+    @include align-items(center);
+    @include justify-content(center);
+    a {
+      color: $cGreen;
+    }
+  }
   .country-navmobile-btn{
     position: absolute;
     bottom: 100%;
