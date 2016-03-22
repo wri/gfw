@@ -89,7 +89,8 @@
     // Legend
     .module-legend{
       top: 20px;
-      left: 20px;
+      left: initial;
+      right: 20px;
       bottom: auto;
       max-height: calc(100% - 90px);
       max-width: 300px;
