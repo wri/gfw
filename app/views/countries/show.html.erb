@@ -532,11 +532,19 @@
                 </div>
               </div>
               <div class="section-content">
-                <% if @country['national_policy_link'].present? %>
-                  <div class="national-policy-links">
-                    <%= link_to @country['national_policy_title'].present? ? @country['national_policy_title'] : 'National Forest Policy', @country['national_policy_link'] %>
-                  </div>
-                <% end %>
+                <ul>
+                  <% if @country['national_policy_link'].present? %>
+                    <li class="national-policy-links">
+                      <%= link_to @country['national_policy_title'].present? ? @country['national_policy_title'] : 'National Forest Policy', @country['national_policy_link'] %>
+                    </li>
+                  <% end %>
+                  <% if @country['policy_links'].present? %>
+                    <% JSON.parse(@country['policy_links']).each do |link| %>
+                      <li><%= link_to link['title'], link['url'], :target => '_blank' %></li>
+                    <% end %>
+                  <% end %>
+                </ul>
+
                 <%= link_to 'Are we missing a link?', 'mailto:gfw@wri.org', class: 'btn-rdn btn-rdn-primary' %>
               </div>
             </section>
