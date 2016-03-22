@@ -172,7 +172,7 @@
     // Timeline
     .widget-timeline{
       .widget-box{
-        bottom: 0px;
+        bottom: 70px;
         left: 50%;
         width: 100%;
         height: 50px;
@@ -182,6 +182,25 @@
         .timeline-month .time .select-timeline-container,
         .timeline-btn .time .select-timeline-container{
           line-height: 50px;
+        }
+      }
+      .timeline-mobile-call-to-action {
+        position: absolute;
+        bottom: 0;
+        height: 70px;
+        background-color: $cGreen;
+        width: 100%;
+        @include display-flex();
+        @include align-items(center);
+        @include justify-content(center);
+        span {
+          font-size: 12px;
+          color: $white;
+          text-transform: uppercase;
+          padding: 0 10px 0 0;
+        }
+        a {
+          color: $cGreen;
         }
       }
       &.analysis{
