@@ -1,26 +1,41 @@
 /** category visualization */
 
-#peru_forest_concessions {
+#concesion_forestal {
    polygon-opacity: 0.7;
    line-color: #FFF;
    line-width: 1;
    line-opacity: 1;
 }
-#peru_forest_concessions[type="TIMBER CONCESSION"] {
+#concesion_forestal [type="MADERABLE_CONCURSO"] {
    polygon-fill: #1F78B4;
 }
-#peru_forest_concessions[type="REFORESTATION"] {
+#concesion_forestal [type="MADERABLE_ADECUACIÓN"] {
+   polygon-fill: #1F78B4;
+}
+#concesion_forestal [type="FORESTACIÓN Y REFORESTACIÓN"] {
    polygon-fill: #F9FF00;
 }
-#peru_forest_concessions[type="CONSERVATION"] {
+#concesion_forestal [type="CONSERVACIÓN"] {
    polygon-fill: #33A02C;
 }
-#peru_forest_concessions[type="ECOTOURISM"] {
+#concesion_forestal [type="ECOTURISMO"] {
    polygon-fill: #FB9A99;
 }
-#peru_forest_concessions[type="NONTIMBER FOREST PRODUCT"] {
+#concesion_forestal [type="OPB (UNGURAHUI)"] {
    polygon-fill: #E31A1C;
 }
-#peru_forest_concessions[type="WILDLIFE CONCESSION"] {
+#concesion_forestal [type="OPB (SHIRINGA)"] {
+   polygon-fill: #E31A1C;
+}
+#concesion_forestal [type="OPB (PLANTAS MEDICINALES)"] {
+   polygon-fill: #E31A1C;
+}
+#concesion_forestal [type="OPB (CASTAÑA)"] {
+   polygon-fill: #E31A1C;
+}
+#concesion_forestal [type="OPB (AGUAJE)"] {
+   polygon-fill: #E31A1C;
+}
+#concesion_forestal [type="FAUNA"] {
    polygon-fill: #FDBF6F;
 }
