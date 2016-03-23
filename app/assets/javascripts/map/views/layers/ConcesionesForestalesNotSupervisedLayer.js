@@ -13,7 +13,7 @@ define([
   var ConcesionesForestalesNotSupervised = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT the_geom_webmercator, cartodb_id,titular as title_holder, area_ha, modalid as type, contrato contract, distrito department, estado as supervision, provincia province, \'{tableName}\' AS tablename, {analysis} AS analysis, \'{tableName}\' AS name FROM {tableName}',
+      sql: 'SELECT the_geom_webmercator, cartodb_id,titular as title_holder, round(area_ha::numeric) area_ha, modalid as type, contrato contract, dpto department, estado as supervision, provincia province, \'{tableName}\' AS tablename, {analysis} AS analysis, \'{tableName}\' AS name FROM {tableName}',
       analysis: true,
       infowindow: true,
       interactivity: 'cartodb_id, tablename, title_holder, area_ha, type, province, department, contract, supervision, analysis',
