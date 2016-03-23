@@ -3,7 +3,7 @@ marker-line-width: 0;
 marker-placement: point;
 marker-allow-overlap: true;
 marker-width: [intensity];
-marker-comp-op: overlay;
+marker-comp-op: src-over;
 
 [zoom=7] {
  marker-allow-overlap: true;
