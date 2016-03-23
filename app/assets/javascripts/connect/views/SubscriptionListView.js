@@ -54,11 +54,22 @@ define([
       if (urlParams.subscription_confirmed === 'true') {
         mps.publish('Notification/open', ['my-gfw-subscription-confirmed']);
       }
+
       if (urlParams.subscription_confirmation_sent === 'true') {
         mps.publish('Notification/open', ['my-gfw-subscription-confirmation-sent']);
       }
+
       if (urlParams.unsubscribed === 'true') {
         mps.publish('Notification/open', ['my-gfw-subscription-deleted']);
+      }
+
+      if (urlParams.migration_successful === 'true') {
+        mps.publish('Notification/open', ['my-gfw-subscription-migrated']);
+      }
+
+      if (urlParams.migration_id !== undefined) {
+        window.location = window.gfw.config.GFW_API_HOST + '/v2/migrations/' +
+          urlParams.migration_id + '/migrate';
       }
     },
 
