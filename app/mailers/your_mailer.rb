@@ -9,7 +9,7 @@ class YourMailer < ActionMailer::Base
 
     mail :subject => "GFW Feedback",
          :to      => emails,
-         :from    => 'feedback@wri.com',
+         :from    => 'feedback@globalforestwatch.org',
          :template_path => 'your_mailer',
          :template_name => 'feedback'
   end
