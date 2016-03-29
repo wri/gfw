@@ -23,6 +23,6 @@ class MobileDownload < ActionMailer::Base
 
     mail :subject => subject,
          :to      => email_address,
-         :from    => 'gfw@wri.org'
+         :from    => 'no-reply@globalforestwatch.org'
   end
 end
