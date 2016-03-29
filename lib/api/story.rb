@@ -40,7 +40,7 @@ module Api
               embed_url: "",
               preview_url: id,
               mime_type: "image/jpeg",
-              order: params['video'].present? ? index+1 : index+2
+              order: index
             }
           end
         end
