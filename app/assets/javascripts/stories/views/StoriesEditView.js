@@ -122,7 +122,8 @@ define([
     events: {
       'click #zoomIn': '_zoomIn',
       'click #zoomOut': '_zoomOut',
-      'click #autoLocate': '_autoLocate'
+      'click #autoLocate': '_autoLocate',
+      'input #story_video' : 'videoInput'
     },
 
     initialize: function() {
@@ -139,6 +140,24 @@ define([
       this._initBindings();
 
       this.render();
+    },
+
+    videoInput: function(e) {
+      this._addVideoThumbnail($(e.target).val());
+    },
+
+    _getVideoID: function(url) {
+      // template: http://img.youtube.com/vi/<video-id-here>/default.jpg
+      // a Youtube video ID has a 11 characters legngth
+      return 'http://img.youtube.com/vi/' + url.split('v=')[1].substring(0, 11) + '/default.jpg';
+    },
+
+    _addVideoThumbnail: function(url) {
+      if ($('#videothumbnail').length > 0) {
+        $('#videothumbnail').find('.inner_box').css('background-image','url('+ this._getVideoID(url) +')')
+      } else {
+        $('.thumbnails').append('<li class="sortable thumbnail" id="videothumbnail"><div class="inner_box" style=" background-image: url('+ this._getVideoID(url) +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
+      }
     },
 
     _initBindings: function() {
