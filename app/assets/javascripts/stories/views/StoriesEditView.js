@@ -163,6 +163,7 @@ define([
       } else {
         $('.thumbnails').append('<li class="sortable thumbnail" draggable="true" id="videothumbnail"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
         this.uploadsIds.push('VID-'+vidID);
+        $("#story_uploads_ids").val(this.uploadsIds.join(","));
         $thumb = $('#videothumbnail');
         $thumb.find('.destroy').on('click', function(e) {
             e.preventDefault();
@@ -369,6 +370,11 @@ define([
       } else {
           target.parentNode.insertBefore(this.sourceDrag, target.nextSibling);
       }
+      var sortables = document.getElementsByClassName('sortable');
+      for (var i = 0; i < sortables.length; i++) {
+        this.uploadsIds[i] = sortables[i];
+      }
+      $("#story_uploads_ids").val(this.uploadsIds.join(","));
     },
 
     dragstart: function(e) {
