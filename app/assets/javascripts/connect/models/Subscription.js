@@ -44,6 +44,11 @@ define([
       title: 'GLAD Tree Cover Loss Alerts',
       long_title: 'weekly GLAD tree cover loss alerts',
       sub_title: 'weekly, 30m, select countries, UMD/GLAD'
+    },
+    'alerts/viirs': {
+      title: 'VIIRS Active fires',
+      long_title: 'daily VIIRS active fires alerts',
+      sub_title: 'daily, 375 m, global, NASA'
     }
   };
 
