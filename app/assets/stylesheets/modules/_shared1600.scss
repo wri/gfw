@@ -808,8 +808,8 @@
 
 .m-transifex {
   position: fixed;
-  top: 0;
-  right: 0;
+  bottom: 0;
+  left: 0;
   display: none;
   z-index: 10000;
   font-size: 12px;
@@ -847,7 +847,7 @@
 
   .txlive-langselector-list {
     position: absolute;
-    top: 100%;
+    bottom: 100%;
     left: 0;
     padding: 0;
     background: $white;

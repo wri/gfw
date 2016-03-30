@@ -74,6 +74,7 @@
   window.liveSettings = {
     picker: '#transifexTranslateElement',
     api_key: "9eda410a7db74687ba40771c56abd357",
+    detectlang: false
 
     // LIVE SETTINGS OPTIONS
     // api_key: "<key>",
@@ -88,8 +89,10 @@
     // ignore_class: ["classname1", "classname2"]
 
   };
+
   if (! !!location.hostname.includes('www.globalforestwatch.org')){
-    $('#transifexTranslateBox').addClass('-visible');
+    var $transifexEl = document.getElementById('transifexTranslateBox');
+    $transifexEl.className += " -visible";
   }
 
 
