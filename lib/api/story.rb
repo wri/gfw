@@ -22,7 +22,6 @@ module Api
     end
 
     def create(params)
-      puts params
       if valid?
         uploads = []
         uploads_ids = params['uploads_ids'].split(',')
