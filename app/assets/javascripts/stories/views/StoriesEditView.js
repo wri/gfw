@@ -123,7 +123,9 @@ define([
       'click #zoomIn': '_zoomIn',
       'click #zoomOut': '_zoomOut',
       'click #autoLocate': '_autoLocate',
-      'input #story_video' : 'videoInput'
+      'input #story_video' : 'videoInput',
+      'dragenter .sortable' : 'dragenter',
+      'dragstart .sortable' : 'dragstart'
     },
 
     initialize: function() {
@@ -135,6 +137,7 @@ define([
 
       this.uploadsIds = [];
       this.filesAdded = 0;
+      this.sourceDrag = undefined;
 
       this._initViews();
       this._initBindings();
@@ -158,7 +161,7 @@ define([
       if ($thumb.length > 0) {
         $thumb.find('.inner_box').css('background-image','url('+ vidID +')')
       } else {
-        $('.thumbnails').append('<li class="sortable thumbnail" id="videothumbnail"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
+        $('.thumbnails').append('<li class="sortable thumbnail" draggable="true" id="videothumbnail"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
         this.uploadsIds.push('VID-'+vidID);
         $thumb = $('#videothumbnail');
         $thumb.find('.destroy').on('click', function(e) {
@@ -232,7 +235,7 @@ define([
           that.uploadsIds.push(file.basename);
 
           var url = file.url.replace('https', 'http');
-          var $thumb = $("<li class='sortable thumbnail'><div class='inner_box' style=' background-image: url("+url+");'></div><a href='#' class='destroy'><svg><use xlink:href='#shape-close'></use></svg></a></li>");
+          var $thumb = $("<li class='sortable thumbnail' draggable='true'><div class='inner_box' style=' background-image: url("+url+");'></div><a href='#' class='destroy'><svg><use xlink:href='#shape-close'></use></svg></a></li>");
 
           var filename = that.prettifyFilename(file.basename).substring(45);
 
@@ -346,6 +349,31 @@ define([
       }else{
         this.$autoLocate.removeClass('active');
       }
+    },
+
+    isbefore: function(a, b) {
+      if (a.parentNode == b.parentNode) {
+        for (var cur = a; cur; cur = cur.previousSibling) {
+          if (cur === b) { 
+              return true;
+          }
+        }
+      }
+      return false;
+    }, 
+
+    dragenter: function(e) {
+      var target = e.target;
+      if (this.isbefore(this.sourceDrag, target.parentNode)) {
+          target.parentNode.parentNode.insertBefore(this.sourceDrag, target.parentNode);
+      } else {
+          target.parentNode.insertBefore(this.sourceDrag, target.nextSibling);
+      }
+    },
+
+    dragstart: function(e) {
+      this.sourceDrag = e.target;
+      (e.originalEvent || e).dataTransfer.effectAllowed = 'move';
     },
 
 
