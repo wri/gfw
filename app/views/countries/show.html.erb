@@ -429,7 +429,7 @@
         <section class="section-content">
 
           <div class="left-col">
-            <section class="missing-link">
+            <section class="missing-link national-policy-links">
               <div class="section-info">
                 <h6>Forest policy and legislation</h6>
                 <div class="section-btn">
@@ -443,7 +443,7 @@
               <div class="section-content">
                 <ul>
                   <% if @country['national_policy_link'].present? %>
-                    <li class="national-policy-links">
+                    <li>
                       <%= link_to @country['national_policy_title'].present? ? @country['national_policy_title'] : 'National Forest Policy', @country['national_policy_link'] %>
                     </li>
                   <% end %>
@@ -463,7 +463,7 @@
             <!-- useful links -->
             <% if @country['ministry_link'].present? || @country['external_links'].present? %>
             <section class='country-external-links'>
-              <div class="section-info section-share">
+              <div class="section-info">
                 <h6>External links</h6>
               </div>
               <div class="section-content">
