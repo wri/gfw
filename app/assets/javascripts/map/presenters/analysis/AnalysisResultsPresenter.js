@@ -31,7 +31,8 @@ define([
     'prodes',
     'guyra',
     'umd_as_it_happens',
-    'modis'
+    'modis',
+    'viirs_fires_alerts'
   ];
 
   var AnalysisResultsPresenter = PresenterClass.extend({
