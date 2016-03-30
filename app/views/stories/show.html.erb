@@ -38,7 +38,6 @@ end %>
       <ul>
         <% if (@story.media[1].present? || @story.media[0]['embed_url'].present?)  %>
           <% @story.media.each do |media| %>
-            <% next if (media['url'].present? && media['url'].start_with?('VID-'))  %>
 
             <% if media['embed_url'].present? %>
               <li class='slide'><%= youtube_embed(media['embed_url']).html_safe %></li>
