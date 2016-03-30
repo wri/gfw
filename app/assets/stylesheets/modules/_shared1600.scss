@@ -797,14 +797,24 @@
 }
 
 
-.txlive-langselector.txlive-langselector-bottomleft {
+.m-transifex {
+  position: fixed;
+  bottom: 0;
+  left: 0;
   display: none;
   @media (min-width: $br-mobile){
     display: block;
   }
-}
-.user-is-loggedin-true {
-  .m-header-item.shape-mygfw svg {
-    background-color: rgba(151, 189, 61, 0.3);
+
+  .txlive-langselector-list {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    padding: 0;
+    background: $white;
+
+    li {
+      padding: 12px 15px;
+    }
   }
 }
