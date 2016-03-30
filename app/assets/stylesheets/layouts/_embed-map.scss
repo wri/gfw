@@ -39,6 +39,10 @@
     height: 100%;
     top: 0;
   }
+  
+  .timeline-mobile-call-to-action {
+    display: none;
+  }
 
   .widget-timeline .timeline-year.timeline-torque .timeline-slider {display: none;}
   @media (max-width: $br-mobileMap - 1) and (min-width: 480px){
@@ -244,7 +248,7 @@
     }
     .widget-timeline{
       .widget-box{
-        bottom: 104px;
+        bottom: 89px;
       }
     }
 
@@ -259,6 +263,7 @@
       bottom: 0;
     }
   }
+
   //footer
   .footer-toggle,
   .map-logos,
@@ -266,7 +271,8 @@
   //croshairs
   .map-viewfinder,
   //feedback
-  .feedback-link {
+  .feedback-link,
+  .guideTourButton {
     display: none !important;
   }
 
