@@ -496,18 +496,7 @@ define([
       this._resetDrawing();
       this._updateAnalysis();
 
-      google.maps.event.addListener(e.overlay.getPath(), 'set_at', function () {
-        this._updateAnalysis();
-      }.bind(this));      
-
-      google.maps.event.addListener(e.overlay.getPath(), 'insert_at', function () {
-        this._updateAnalysis();
-      }.bind(this));
-
-      google.maps.event.addListener(e.overlay.getPath(), 'remove_at', function () {
-        this._updateAnalysis();
-      }.bind(this));
-
+      this.setEditableEvents(e.overlay);
     },
 
     /**
@@ -556,6 +545,20 @@ define([
       overlay.setEditable(to);
     },
 
+    setEditableEvents: function(overlay) {
+      google.maps.event.addListener(overlay.getPath(), 'set_at', function () {
+        this._updateAnalysis();
+      }.bind(this));      
+
+      google.maps.event.addListener(overlay.getPath(), 'insert_at', function () {
+        this._updateAnalysis();
+      }.bind(this));
+
+      google.maps.event.addListener(overlay.getPath(), 'remove_at', function () {
+        this._updateAnalysis();
+      }.bind(this));
+    },
+
     /**
      * Draw Geojson polygon on the map.
      *
@@ -563,10 +566,11 @@ define([
      */
     drawPaths: function(paths) {
       var overlay = new google.maps.Polygon(
-        _.extend({}, {paths: paths}, this.style));
+        _.extend({}, {paths: paths, editable: true}, this.style));
 
       overlay.setMap(this.map);
       this.presenter.setOverlay(overlay);
+      this.setEditableEvents(overlay);
     },
 
     /**
