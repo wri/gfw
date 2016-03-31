@@ -365,9 +365,10 @@ define([
 
     dragenter: function(e) {
       var target = e.target;
-      if (target.nodeName != "LI") {
-        target = target.parentNode;   
-      }
+      if (! !!target.classList.contains('sortable')) {
+        //check we're dropping the element in a proper draggable element
+        target = target.closest('.sortable');
+      }          
       if (this.isbefore(this.sourceDrag, target.parentNode)) {
         target.parentNode.insertBefore(this.sourceDrag, target);
       } else {
