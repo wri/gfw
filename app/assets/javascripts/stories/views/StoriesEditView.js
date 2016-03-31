@@ -146,7 +146,12 @@ define([
     },
 
     videoInput: function(e) {
-      this._addVideoThumbnail($(e.target).val());
+      if ($(e.target).val().length == 0) {
+        var removable = document.querySelectorAll('.sortable.thumbnail')[0];
+        removable.parentNode.removeChild(removable);
+      } else {
+        this._addVideoThumbnail($(e.target).val());
+      }
     },
 
     _getVideoID: function(url) {
@@ -173,7 +178,7 @@ define([
             if (confirmation == true) {
               this.uploadsIds = _.without(this.uploadsIds, 'VID-'+vidID);
               $("#story_uploads_ids").val(this.uploadsIds.join(","));
-
+              $("#story_video").val('');
               $thumb.fadeOut(250, function() {
                 $thumb.remove();
               });
