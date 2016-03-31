@@ -25,6 +25,7 @@ define([
 
       var formData = new FormData();
       formData.append('upload', this.shapefile);
+      formData.append('targetSrs', 'EPSG:4326');
       xhr.send(formData);
 
       return deferred.promise();
