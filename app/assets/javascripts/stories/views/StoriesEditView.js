@@ -369,7 +369,7 @@ define([
         //check we're dropping the element in a proper draggable element
         target = target.closest('.sortable');
       }          
-      if (this.isbefore(this.sourceDrag, target.parentNode)) {
+      if (this.isbefore(this.sourceDrag, target)) {
         target.parentNode.insertBefore(this.sourceDrag, target);
       } else {
         target.parentNode.insertBefore(this.sourceDrag, target.nextSibling);
