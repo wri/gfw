@@ -539,7 +539,7 @@ define([
 
       var y_scale = d3.scale.linear()
         .domain([0, max])
-        .range([h - paddingTop, 0]);
+        .range([h, paddingTop]);
 
       var yAxis = d3.svg.axis()
                     .scale(y_scale)
@@ -575,7 +575,7 @@ define([
       tooltip
         .append('div')
         .attr('class', 'graph-date')
-        .text('Ha in ')
+        .text('ha in ')
 
       var tooltipDate = tooltip.select('.graph-date')
         .append('div')
