@@ -493,7 +493,7 @@ define([
           gridLinesCount = 7;
       var marginTop = 20,
           paddingTop = 10,
-          marginLeft = 20;
+          marginLeft = 60;
 
       // Init graph
       var graph = d3.select('.burned_forests-graph')
@@ -506,7 +506,7 @@ define([
       var gridLineY = h + paddingTop;
       for (var i = 0; i < gridLinesCount; i++) {
         graph.append('svg:line')
-          .attr('x1', 0)
+          .attr('x1', marginLeft)
           .attr('y1', gridLineY)
           .attr('x2', width)
           .attr('y2', gridLineY)
@@ -518,7 +518,7 @@ define([
 
       var x_scale = d3.scale.linear()
         .domain([0, json.length - 1])
-        .range([0, width - 40]);
+        .range([0, width - marginLeft]);
 
       var xAxis = d3.svg.axis()
                     .scale(x_scale)
@@ -539,11 +539,24 @@ define([
 
       var y_scale = d3.scale.linear()
         .domain([0, max])
-        .range([0, h]);
+        .range([h - paddingTop, 0]);
+
+      var yAxis = d3.svg.axis()
+                    .scale(y_scale)
+                    .orient("left")
+                    .tickFormat(d3.format("s"));
+
+      graph.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate("+ marginLeft +",0)")
+        // .attr("transform", "translate(0," + (height - marginTop) + ")")
+        .call(yAxis);
+
+
 
       var line = d3.svg.line()
         .x(function(d, i) { return x_scale(i); })
-        .y(function(d, i) { return h + paddingTop - marginTop - y_scale(d.area_burned_forest); })
+        .y(function(d, i) { return y_scale(d.area_burned_forest) - marginTop + paddingTop; })
         .interpolate("linear");
 
       var cx = width - 40 + marginLeft;
@@ -585,6 +598,7 @@ define([
         .attr('class', 'burned_forests-marker')
         .attr('cx', cx)
         .attr('cy', cy)
+        .style('visibility', 'hidden')
         .attr('r', 5);
 
 
@@ -592,16 +606,18 @@ define([
         .on("mouseout", function() {
           positioner.style("visibility", "hidden");
           tooltip.style("visibility", "hidden");
+          marker.style("visibility", "hidden");
         })
         .on("mouseover", function() {
           positioner.style("visibility", "visible");
           tooltip.style("visibility", "visible");
+          marker.style("visibility", "visible");
         })
         .on('mousemove', function(d) {
           var index = Math.round(x_scale.invert(d3.mouse(this)[0]));
           if (json[index]) {
             var cx = x_scale(index),
-                cy = h - y_scale(json[index].area_burned_forest) + paddingTop,
+                cy = y_scale(json[index].area_burned_forest) + paddingTop,
                 year = json[index].year;
 
             marker
@@ -614,7 +630,7 @@ define([
 
             amount.text(that.helper.formatNumber(json[index].area_burned_forest || 0));
             tooltipDate.text(year);
-            tooltip.style("top", "-20px").style("left", (cx - 150) + "px");
+            tooltip.style("top", "-20px").style("left", (cx + marginLeft - 150 - 20) + "px");
           }
 
         });
