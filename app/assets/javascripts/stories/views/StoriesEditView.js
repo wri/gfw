@@ -146,7 +146,12 @@ define([
     },
 
     videoInput: function(e) {
-      this._addVideoThumbnail($(e.target).val());
+      if ($(e.target).val().length == 0) {
+        var removable = document.getElementById('videothumbnail');
+        removable.parentNode.removeChild(removable);
+      } else {
+        this._addVideoThumbnail($(e.target).val());
+      }
     },
 
     _getVideoID: function(url) {
@@ -173,7 +178,7 @@ define([
             if (confirmation == true) {
               this.uploadsIds = _.without(this.uploadsIds, 'VID-'+vidID);
               $("#story_uploads_ids").val(this.uploadsIds.join(","));
-
+              $("#story_video").val('');
               $thumb.fadeOut(250, function() {
                 $thumb.remove();
               });
@@ -365,10 +370,14 @@ define([
 
     dragenter: function(e) {
       var target = e.target;
-      if (this.isbefore(this.sourceDrag, target.parentNode)) {
-          target.parentNode.parentNode.insertBefore(this.sourceDrag, target.parentNode);
+      if (! !!target.classList.contains('sortable')) {
+        //check we're dropping the element in a proper draggable element
+        target = target.closest('.sortable');
+      }          
+      if (this.isbefore(this.sourceDrag, target)) {
+        target.parentNode.insertBefore(this.sourceDrag, target);
       } else {
-          target.parentNode.insertBefore(this.sourceDrag, target.nextSibling);
+        target.parentNode.insertBefore(this.sourceDrag, target.nextSibling);
       }
       var sortables = document.getElementsByClassName('sortable');
       for (var i = 0; i < sortables.length; i++) {
