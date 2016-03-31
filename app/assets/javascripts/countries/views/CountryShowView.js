@@ -472,14 +472,13 @@ define([
       var $el = $('.country-burned_forests');
       var $graph = $('.burned_forests-graph');
       var $comingSoon = $el.find('.coming-soon');
-      var json = _.filter(_.map($graph.data('json'), function(el) {
-        if (el.year == 2003 || el.year == 2004 || el.year == 2011 || el.year == 2012) {
-          return null;
+      var json = _.compact(_.map($graph.data('json'), function(el) {
+        if (el.year > 2004 && el.year < 2011){
+          return el;
         }
-        return el;
-      }), function(el) {
-        return (el != null)
-      });
+        return null;
+        
+      }));
 
       if (!json.length) {
         $comingSoon.show(0);
