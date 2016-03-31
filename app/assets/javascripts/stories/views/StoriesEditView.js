@@ -365,10 +365,13 @@ define([
 
     dragenter: function(e) {
       var target = e.target;
+      if (target.nodeName != "LI") {
+        target = target.parentNode;   
+      }
       if (this.isbefore(this.sourceDrag, target.parentNode)) {
-          target.parentNode.parentNode.insertBefore(this.sourceDrag, target.parentNode);
+        target.parentNode.insertBefore(this.sourceDrag, target);
       } else {
-          target.parentNode.insertBefore(this.sourceDrag, target.nextSibling);
+        target.parentNode.insertBefore(this.sourceDrag, target.nextSibling);
       }
       var sortables = document.getElementsByClassName('sortable');
       for (var i = 0; i < sortables.length; i++) {
