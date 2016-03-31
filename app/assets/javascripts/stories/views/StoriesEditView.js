@@ -147,7 +147,7 @@ define([
 
     videoInput: function(e) {
       if ($(e.target).val().length == 0) {
-        var removable = document.querySelectorAll('.sortable.thumbnail')[0];
+        var removable = document.getElementById('videothumbnail');
         removable.parentNode.removeChild(removable);
       } else {
         this._addVideoThumbnail($(e.target).val());
