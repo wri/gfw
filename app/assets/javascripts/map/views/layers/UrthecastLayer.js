@@ -12,11 +12,13 @@ define([
 
   'use strict';
 
+  var API_URL = window.gfw.config.GFW_API_HOST;
+
   var UrthecastLayer = ImageLayerClass.extend({
     options: {
-      urlTemplate:'http://uc.gfw-apis.appspot.com/urthecast/map-tiles{/sat}{/z}{/x}{/y}?cloud_coverage_lte={cloud}&acquired_gte={mindate}&acquired_lte={maxdate}T23:59:59Z&sensor_platform={sensor_platform}',
-      urlInfoWindow: 'http://uc.gfw-apis.appspot.com/urthecast/archive/scenes/?geometry_intersects=POINT({lng}+{lat})&cloud_coverage_lte={cloud}&tiled_lte={tileddate}&acquired_gte={mindate}&acquired_lte={maxdate}&sort=-acquired&sensor_platform={sensor_platform}',
-      urlBounds: 'http://uc.gfw-apis.appspot.com/urthecast/archive/scenes/?cloud_coverage_lte={cloud}&tiled_lte={tileddate}&acquired_gte={mindate}&acquired_lte={maxdate}&geometry_intersects={geo}&sort=-acquired&sensor_platform={sensor_platform}',
+      urlTemplate: API_URL + '/urthecast/map-tiles{/sat}{/z}{/x}{/y}?cloud_coverage_lte={cloud}&acquired_gte={mindate}&acquired_lte={maxdate}T23:59:59Z&sensor_platform={sensor_platform}',
+      urlInfoWindow: API_URL + '/urthecast/archive/scenes/?geometry_intersects=POINT({lng}+{lat})&cloud_coverage_lte={cloud}&tiled_lte={tileddate}&acquired_gte={mindate}&acquired_lte={maxdate}&sort=-acquired&sensor_platform={sensor_platform}',
+      urlBounds: API_URL + '/urthecast/archive/scenes/?cloud_coverage_lte={cloud}&tiled_lte={tileddate}&acquired_gte={mindate}&acquired_lte={maxdate}&geometry_intersects={geo}&sort=-acquired&sensor_platform={sensor_platform}',
       dataMaxZoom: {
         'rgb': 14,
         'ndvi': 13,
