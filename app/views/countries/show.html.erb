@@ -136,7 +136,7 @@
                     <div class="forest-type-legends">
                       <ul class="legends-list">
                         <li><span class="primary"></span>Primary</li>
-                        <li><span class="regenerated"></span>Regenerated</li>
+                        <li><span class="regenerated"></span>Naturally regenerated</li>
                         <li><span class="planted"></span>Planted</li>
                       </ul>
                     </div>
@@ -175,7 +175,7 @@
                         <div class="plantations-box">
                           <p class="plantations-year"><%= data['year'] %></p>
                           <p class="plantations-text">Loss outside plantations</p>
-                          <p class="plantations-loss"><%= number_with_delimiter(data['loss_outside'].round) %> Ha</p>
+                          <p class="plantations-loss"><%= number_with_delimiter(data['loss_outside'].round) %> ha</p>
                         </div>
                         <div class="plantations-box">
                           <p class="plantations-text">Percent of total tree cover loss</p>
@@ -253,7 +253,7 @@
               <div class="section-content">
                 <div class="coming-soon">No data available</div>
                 <% if @country['forest_certification'].present? %>
-                  <h3 class="section-title">The Total Area of Certified Forest in 2014 was <span class="highlight"><%= number_with_delimiter(@country['forest_certification'][0]['value']) %> Ha </span></h3>
+                  <h3 class="section-title">The Total Area of Certified Forest in 2014 was <span class="highlight"><%= number_with_delimiter(@country['forest_certification'][0]['value']) %> ha </span></h3>
                   <div class="left-col">
                     <div class="forest_certification-legends">
                       <ul class="legends-list">
@@ -403,7 +403,7 @@
                 <div class="section-content">
                   <% if @country['reforestation'].present? && @country['reforestation'][0]['reforestation_rate'].present? %>
                   <h3 class="section-title">
-                    In 2010, the rate of reforestation was <span class="highlight"><%= gva_to_human(@country['reforestation'][0]['reforestation_rate'])%> Ha</span>
+                    In 2010, the rate of reforestation was <span class="highlight"><%= @country['reforestation'][0]['reforestation_rate'] %> thousands of ha/year</span>
                   </h3>
                   <% else %>
                   <div class="coming-soon">No data available</div>
