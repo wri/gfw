@@ -119,7 +119,8 @@
           @include clearfix();
         }
         h2,h3,h4,p{
-          font-family: "Fira Sans" , Helvetica;
+          font-family: "Fira GFW Sans", "Fira Sans" , Helvetica;
+          font-feature-settings: "liga" 0;
           width: 100%;
         }
         h2{

@@ -1579,7 +1579,8 @@
   .overview_title,
   .source_coverage_title {
     margin: 30px 0 10px;
-    font: 16px/1.1 "Fira Sans";
+    font: 16px/1.1 "Fira GFW Sans", "Fira Sans";
+    font-feature-settings: "liga" 0;
     font-weight: 500;
     color: $dark;
   }
