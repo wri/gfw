@@ -274,12 +274,6 @@ define([
 
   ]
 
-
-
-// Add a card for "My Forest Atlas" (coming soon).  The source is WRI and the descriptive text should say: A tool for building your own online interactive map (text will probably change but this is good enough for now!).  See attached image for preliminary design.
-
-
-
   function tagged(arr) {
     return _.map(arr, function(app){
       if (app.tags) {
