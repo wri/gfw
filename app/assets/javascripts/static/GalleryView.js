@@ -104,6 +104,11 @@ define([
         selectOnClick: false,
         prevText: ' ',
         nextText: ' ',
+        onInit: function() {
+          var len = this.collection.getCount(this.model.get('filter'));
+          this.$paginator.toggleClass('-hidden', (len <= this.model.get('itemsOnPage')));
+        }.bind(this),
+
         onPageClick: _.bind(function(page, e){
           e && e.preventDefault();
           this.$paginator.pagination('drawPage', page);

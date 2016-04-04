@@ -6,6 +6,10 @@
   position: relative;
   left: 50%;
   @include transform(translate(-50%,0));
+
+  &.-hidden {
+    display: none;
+  }
 } 
 
 

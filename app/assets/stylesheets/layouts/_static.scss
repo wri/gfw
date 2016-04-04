@@ -924,7 +924,7 @@
     font-size: 35px;
     color: $dark;
     padding: 40px 20px;
-    text-align: center;
+    // text-align: center;
     &:first-child {
       border: 0;
     }
@@ -932,8 +932,8 @@
 
   .subsection-title{
     color: $dark;
-    margin: -20px 0 20px;
-    text-align: center;
+    margin: -20px 20px 20px;
+    // text-align: center;
     a{
       margin: 10px auto 0;
        @media (min-width: $br-mobile-portrait) {

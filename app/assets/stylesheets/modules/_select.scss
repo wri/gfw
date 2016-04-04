@@ -1,7 +1,15 @@
 /* @group Base */
 .m-select {
   position: relative;
-  width: 260px;
+  z-index: 10;
+
+  &.-abs-right {
+    width: 260px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(0,-60%);    
+  }
 
   select {
     -webkit-appearance: none;
