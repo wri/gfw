@@ -487,12 +487,12 @@ define([
       // Dimensions variables
       var width     = 500,
           height    = 160,
-          h         = 130, // maxHeight
           radius    = width / 2,
           gridLinesCount = 7;
       var marginTop = 20,
           paddingTop = 10,
-          marginLeft = 60;
+          marginLeft = 60,
+          h = height - paddingTop - marginTop;
 
       // Init graph
       var graph = d3.select('.burned_forests-graph')
@@ -502,7 +502,7 @@ define([
         .attr('height', height);
 
       // Add dashed lines grid
-      var gridLineY = h + paddingTop;
+      var gridLineY = h;
       for (var i = 0; i < gridLinesCount; i++) {
         graph.append('svg:line')
           .attr('x1', marginLeft)
@@ -512,7 +512,7 @@ define([
           .style('stroke-dasharray', ('2, 3'))
           .style('stroke', function() { return (i == 0) ? '#333' : '#CCC'; } );
 
-        gridLineY -= (h + paddingTop)/(gridLinesCount-1);
+        gridLineY -= (h)/(gridLinesCount-1);
       };
 
       var x_scale = d3.scale.linear()
@@ -533,12 +533,12 @@ define([
 
       var max = d3.max(json, function(d) { return parseFloat(d.area_burned_forest); });
       if (max === d3.min(json, function(d) { return parseFloat(d.area_burned_forest); })) {
-        h = h/2;
+        height = height/2;
       }
 
       var y_scale = d3.scale.linear()
         .domain([0, max])
-        .range([h, paddingTop]);
+        .range([h, 4]);
 
       var yAxis = d3.svg.axis()
                     .scale(y_scale)
@@ -555,11 +555,11 @@ define([
 
       var line = d3.svg.line()
         .x(function(d, i) { return x_scale(i); })
-        .y(function(d, i) { return y_scale(d.area_burned_forest) - marginTop + paddingTop; })
+        .y(function(d, i) { return y_scale(d.area_burned_forest) - marginTop; })
         .interpolate("linear");
 
       var cx = width - 40 + marginLeft;
-      var cy = h - y_scale(json[json.length - 1].area_burned_forest) + paddingTop;
+      var cy = height - y_scale(json[json.length - 1].area_burned_forest);
 
       var tooltip = d3.select('.burned_forests-graph')
         .append('div')
@@ -589,7 +589,7 @@ define([
         .attr('x1', 0)
         .attr('y1', 0)
         .attr('x2', 0)
-        .attr('y2', h + paddingTop)
+        .attr('y2', h)
         .style('visibility', 'hidden')
         .style('stroke', '#aaa');
 
@@ -616,7 +616,7 @@ define([
           var index = Math.round(x_scale.invert(d3.mouse(this)[0]));
           if (json[index]) {
             var cx = x_scale(index),
-                cy = y_scale(json[index].area_burned_forest) + paddingTop,
+                cy = y_scale(json[index].area_burned_forest),
                 year = json[index].year;
 
             marker
