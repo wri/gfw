@@ -31,6 +31,7 @@ define([
     events: {
       'click .subscription-modal-close': 'close',
       'click .subscription-modal-backdrop': 'close',
+      'click .subscription-sign-in': 'trackSignIn',
       'click #returnToMap': 'close',
       'click #showName': 'askForName',
       'click #subscribe': 'subscribe',
@@ -118,6 +119,10 @@ define([
         var $link = $(this);
         $link.attr('href', apiHost + $link.attr('href'));
       });
+    },
+
+    trackSignIn: function() {
+      window.ga('send', 'event', 'User Profile', 'Signin', 'menu');
     },
 
     createSubscription: function(options) {

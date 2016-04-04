@@ -11,6 +11,7 @@ define([
     events: {
       'click .subscriptions-delete-item': 'confirmDestroy',
       'click h4': 'editName',
+      'click .view-on-map': 'viewOnMap',
       'blur h4': 'saveName',
       'keyup h4': 'handleNameKeyUp'
     },
@@ -46,6 +47,10 @@ define([
         this.subscription.id + '/send_confirmation';
     },
 
+    viewOnMap: function() {
+      window.ga('send', 'event', 'User Profile', 'Go to the Map');
+    },
+
     confirmDestroy: function(event) {
       event.preventDefault();
 
@@ -54,6 +59,7 @@ define([
       this.$el.append(confirmView.render().el);
       this.listenTo(confirmView, 'confirmed', function() {
         this.destroy();
+        window.ga('send', 'event', 'User Profile', 'Delete Subscription');
       }.bind(this));
     },
 
