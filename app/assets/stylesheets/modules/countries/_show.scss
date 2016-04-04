@@ -1149,6 +1149,7 @@
   } // country-alerts-section
 
   .country-burned_forests {
+
     .burned_forests-graph path {
       stroke: $cGreen;
       stroke-width: 4px;
@@ -1163,6 +1164,11 @@
       stroke-width: 0;
       fill: none;
     }
+
+    .burned_forests-graph .axis text {
+      font-size: 10px;
+    }
+
 
     .burned_forests-graph {
       position: relative;
