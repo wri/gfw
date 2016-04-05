@@ -526,7 +526,7 @@ define([
 
       graph.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate("+ (m[3] + p[3]) +"," + (h) + ")")
+        .attr("transform", "translate("+ (m[3]) +"," + (h) + ")")
         .call(xAxis);
 
 
