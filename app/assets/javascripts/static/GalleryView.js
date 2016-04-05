@@ -21,19 +21,20 @@ define([
     },
 
     getPaginatedCollection: function(currentPage,itemsOnPage,filter) {
-      var filteredCollection = (filter == 'all') ? this.toJSON() : this.filter(filter);
+      var filteredCollection = this.customFilter(filter);
       return filteredCollection.slice(currentPage*itemsOnPage, (currentPage*itemsOnPage) + itemsOnPage)
     },
 
     getCount: function(filter) {
-      var filteredCollection = (filter == 'all') ? this.toJSON() : this.filter(filter);
+      var filteredCollection = this.customFilter(filter);
       return filteredCollection.length;
     },
 
-    filter: function(filter) {
-      return _.compact(_.map(this.toJSON(), function(v){
-        return (v.filter == filter) ? v : null
-      }))
+    customFilter: function(_filter) {
+      if (_filter != 'all') {
+        return _.invoke(this.where({filter: _filter}), 'toJSON');
+      }
+      return this.toJSON();
     },
 
   });
