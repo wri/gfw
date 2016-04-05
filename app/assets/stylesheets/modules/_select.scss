@@ -7,7 +7,7 @@
     width: 260px;
     position: absolute;
     top: 50%;
-    right: 0;
+    right: 20px;
     transform: translate(0,-60%);    
   }
 
@@ -69,7 +69,7 @@
       display: block;
       overflow: hidden;
       padding: 16px;
-      border-radius: 0;
+      border-radius: 10px;
       background: #FFF;
       background-clip: padding-box;
       color: $dark;
@@ -163,9 +163,19 @@
       }
     }
 
-    &.chzn-with-drop .chzn-drop {
-      left: 0;
+
+
+    &.chzn-with-drop {
+      .chzn-single {
+        border-radius: 10px 10px 0 0;
+      }
+
+      .chzn-drop {
+        left: 0;
+      }
     }
+
+
     // Default theme
     &.default{
       .chzn-single{
@@ -459,6 +469,7 @@
     &.chzn-with-drop {
       .chzn-single {
         display: none;
+        border-radius: 10px 10px 0 0;
       }
     }
   }
