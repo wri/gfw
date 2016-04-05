@@ -4,11 +4,15 @@
   z-index: 10;
 
   &.-abs-right {
-    width: 260px;
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translate(0,-60%);    
+    padding: 0 20px;
+    @media (min-width: $br-mobile){
+      padding: 0;
+      width: 260px;
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translate(0,-60%);
+    }
   }
 
   select {
