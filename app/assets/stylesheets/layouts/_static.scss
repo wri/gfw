@@ -910,6 +910,7 @@
 }
 .applications-section {
   padding-bottom: 50px;
+  @include clearfix();
   &#develop-your-own-app{
     padding-bottom: 80px;
     .source-article{
@@ -923,7 +924,6 @@
     font-size: 35px;
     color: $dark;
     padding: 40px 20px;
-    text-align: center;
     &:first-child {
       border: 0;
     }
@@ -931,8 +931,7 @@
 
   .subsection-title{
     color: $dark;
-    margin: -20px 0 20px;
-    text-align: center;
+    margin: -20px 20px 20px;
     a{
       margin: 10px auto 0;
        @media (min-width: $br-mobile-portrait) {
