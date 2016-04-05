@@ -1165,9 +1165,30 @@
       fill: none;
     }
 
-    .burned_forests-graph .axis text {
-      font-size: 10px;
+    .burned_forests-graph .axis {
+      .tick text{
+        font-size: 10px;
+      }
+
+      &.x {
+        .tick text {
+          transform: translate(-50%,0);
+        }        
+      }
+
+      &.y {
+        .tick text {
+          transform: translate(-5px,0);
+        }
+      }
+
+      .tick line{
+        opacity: 0.2;
+        stroke: $dark;
+        stroke-dasharray: 2;        
+      }      
     }
+
 
 
     .burned_forests-graph {

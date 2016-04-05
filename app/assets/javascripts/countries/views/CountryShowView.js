@@ -5,6 +5,7 @@ define([
   'jquery',
   'backbone',
   'underscore',
+  'handlebars',
   'd3',
   'mps',
   'scrollit',
@@ -15,8 +16,9 @@ define([
   'countries/models/CountryShowModel',
   'countries/helpers/CountryHelper',
   'views/NotificationsView',
-  'countries/abstract/ForestTenureGraph'
-], function($, Backbone, _, d3, mps, scrollit, SourceWindowView, DownloadView, CountryHeaderView, ShareView, CountryShowModel, CountryHelper, NotificationsView, ForestTenureGraph) {
+  'countries/abstract/ForestTenureGraph',
+  'text!countries/templates/burnedForestTooltip.handlebars',
+], function($, Backbone, _, Handlebars, d3, mps, scrollit, SourceWindowView, DownloadView, CountryHeaderView, ShareView, CountryShowModel, CountryHelper, NotificationsView, ForestTenureGraph, burnedForestTpl) {
 
   'use strict';
 
@@ -27,6 +29,8 @@ define([
       'click .forma_dropdown-link': '_openDropdown',
       'click .share-link': '_openShareModal'
     },
+
+    burnedForestTpl: Handlebars.compile(burnedForestTpl),
 
     initialize: function() {
       this.embed = $('body').hasClass('embed');
@@ -484,107 +488,81 @@ define([
         $comingSoon.show(0);
         return;
       }
-      // Dimensions variables
-      var width     = 500,
-          height    = 160,
-          radius    = width / 2,
-          gridLinesCount = 7;
-      var marginTop = 20,
-          paddingTop = 10,
-          marginLeft = 60,
-          h = height - paddingTop - marginTop;
+
+      var outerWidth = $graph.width();
+      var outerHeight = 160;
+      var m = [20, 20, 0, 60]; // margins
+      var p = [10, 10, 10, 10]; // padding
+      var w = outerWidth - m[1] - m[3]; // width
+      var h = outerHeight - m[0] - m[2]; // height
 
       // Init graph
       var graph = d3.select('.burned_forests-graph')
         .append('svg:svg')
         .attr('class', 'line')
-        .attr('width', width)
-        .attr('height', height);
+        .attr('width', outerWidth)
+        .attr('height', outerHeight);
 
-      // Add dashed lines grid
-      var gridLineY = h;
-      for (var i = 0; i < gridLinesCount; i++) {
-        graph.append('svg:line')
-          .attr('x1', marginLeft)
-          .attr('y1', gridLineY)
-          .attr('x2', width)
-          .attr('y2', gridLineY)
-          .style('stroke-dasharray', ('2, 3'))
-          .style('stroke', function() { return (i == 0) ? '#333' : '#CCC'; } );
 
-        gridLineY -= (h)/(gridLinesCount-1);
-      };
-
-      var x_scale = d3.scale.linear()
+      // Scales
+      var xScale = d3.scale.linear()
         .domain([0, json.length - 1])
-        .range([0, width - marginLeft]);
+        .range([p[3], w - m[1]]);
 
+      var max = d3.max(json, function(d) { return parseFloat(d.area_burned_forest); });
+      var yScale = d3.scale.linear()
+        .domain([0, max + max/10])
+        .range([h, p[1]]);
+
+
+      // Axis
+      // x Axis
       var xAxis = d3.svg.axis()
-                    .scale(x_scale)
-                    .ticks(json.length)
-                    .tickFormat(function(d, i){
-                      return json[d].year;
-                    })
+        .scale(xScale)
+        .ticks(json.length)
+        .tickFormat(function(d, i){
+          return json[d].year;
+        });
+
       graph.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate("+ marginLeft +"," + (height - marginTop) + ")")
+        .attr("transform", "translate("+ (m[3] + p[3]) +"," + (h) + ")")
         .call(xAxis);
 
 
-      var max = d3.max(json, function(d) { return parseFloat(d.area_burned_forest); });
-      if (max === d3.min(json, function(d) { return parseFloat(d.area_burned_forest); })) {
-        height = height/2;
-      }
-
-      var y_scale = d3.scale.linear()
-        .domain([0, max])
-        .range([h, 4]);
-
+      // y Axis
       var yAxis = d3.svg.axis()
-                    .scale(y_scale)
-                    .orient("left")
-                    .tickFormat(d3.format("s"));
+        .scale(yScale)
+        .orient("left")
+        .ticks(5)
+        .tickSize(-w,0)
+        .tickFormat(d3.format("s"));
 
       graph.append("g")
         .attr("class", "y axis")
-        .attr("transform", "translate("+ marginLeft +",0)")
-        // .attr("transform", "translate(0," + (height - marginTop) + ")")
+        .attr("transform", "translate("+m[3]+",0)")
         .call(yAxis);
 
-
-
+      // Line
       var line = d3.svg.line()
-        .x(function(d, i) { return x_scale(i); })
-        .y(function(d, i) { return y_scale(d.area_burned_forest) - marginTop; })
+        .x(function(d, i) { return xScale(i); })
+        .y(function(d, i) { return yScale(d.area_burned_forest) - m[0]; })
         .interpolate("linear");
 
-      var cx = width - 40 + marginLeft;
-      var cy = height - y_scale(json[json.length - 1].area_burned_forest);
+      graph.append('svg:path')
+        .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')')
+        .attr('d', line(json));
 
+
+      // Tooltip
       var tooltip = d3.select('.burned_forests-graph')
         .append('div')
         .attr('class', 'burned_forests-tooltip')
-        .style('visibility', 'hidden')
+        .style('visibility', 'hidden');
 
-      var amount = tooltip
-        .append('div')
-        .attr('class', 'graph-amount')
-        .text('21,123')
+      var burnedForestTpl = this.burnedForestTpl;
 
-      tooltip
-        .append('div')
-        .attr('class', 'graph-date')
-        .text('ha in ')
-
-      var tooltipDate = tooltip.select('.graph-date')
-        .append('div')
-        .attr('class', 'date')
-        .text('November 2012');
-
-      graph.append('svg:path')
-        .attr('transform', 'translate(' + marginLeft + ',' + marginTop + ')')
-        .attr('d', line(json));
-
+      // Positioner
       var positioner = graph.append('svg:line')
         .attr('x1', 0)
         .attr('y1', 0)
@@ -593,14 +571,16 @@ define([
         .style('visibility', 'hidden')
         .style('stroke', '#aaa');
 
+      // Marker
       var marker = graph.append('svg:circle')
         .attr('class', 'burned_forests-marker')
-        .attr('cx', cx)
-        .attr('cy', cy)
+        .attr('cx', -999999)
+        .attr('cy', -999999)
         .style('visibility', 'hidden')
         .attr('r', 5);
 
 
+      // Events
       graph
         .on("mouseout", function() {
           positioner.style("visibility", "hidden");
@@ -613,23 +593,28 @@ define([
           marker.style("visibility", "visible");
         })
         .on('mousemove', function(d) {
-          var index = Math.round(x_scale.invert(d3.mouse(this)[0]));
+          var index = Math.round(xScale.invert(d3.mouse(this)[0]));
           if (json[index]) {
-            var cx = x_scale(index),
-                cy = y_scale(json[index].area_burned_forest),
+            var cx = xScale(index),
+                cy = yScale(json[index].area_burned_forest),
                 year = json[index].year;
 
             marker
-              .attr('cx', cx + marginLeft)
+              .attr('cx', cx + m[3])
               .attr('cy', cy);
 
             positioner
-              .attr('x1', cx + marginLeft)
-              .attr('x2', cx + marginLeft);
+              .attr('x1', cx + m[3])
+              .attr('x2', cx + m[3]);
 
-            amount.text(that.helper.formatNumber(json[index].area_burned_forest || 0));
-            tooltipDate.text(year);
-            tooltip.style("top", "-20px").style("left", (cx + marginLeft - 150 - 20) + "px");
+            tooltip.style({
+              top: '-20px',
+              left: cx + m[3] - tooltip[0][0].offsetWidth - 10 + 'px'
+            }).html(burnedForestTpl({
+              amount: that.helper.formatNumber(json[index].area_burned_forest || 0),
+              year: year
+            }))
+            // tooltip.style("top", "-20px").style("left", (cx + marginLeft - 150 - 20) + "px");
           }
 
         });
