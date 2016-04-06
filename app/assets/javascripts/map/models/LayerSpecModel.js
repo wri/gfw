@@ -142,6 +142,7 @@ define([
       "modis_cover",
       "gran_chaco_extent",
       // FOREST CHANGE
+      "per_minam_loss",
       "guyra",
       "terrailoss",
       "fires",

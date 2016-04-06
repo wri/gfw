@@ -6,25 +6,29 @@
  */
 define([
   'abstract/layer/CartoDBLayerClass',
-  'text!map/cartocss/idn_peat.cartocss'
-], function(CartoDBLayerClass,idn_peatCartoCSS) {
+  'text!map/cartocss/idn_peat.cartocss',
+], function(CartoDBLayerClass, idn_peatCartoCSS) {
 
   'use strict';
 
   var IdnPeatLandsLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: "SELECT the_raster_webmercator, \'{tableName}\' as tablename, \'{tableName}\' layer FROM {tableName}",
-      cartocss: idn_peatCartoCSS,
+      sql: 'SELECT \'{tableName}\' as tablename, cartodb_id, the_geom_webmercator, layer_revi, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
       infowindow: false,
-      analysis: false,
-      interactivity:'',
-      raster: true,
-      raster_band: 1
-    },
+      interactivity: 'cartodb_id, tablename',
+      cartocss: idn_peatCartoCSS,
+      analysis: true
+    }
+
   
   });
 
   return IdnPeatLandsLayer;
+  });
 
-});
+
+
+
+
+

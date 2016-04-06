@@ -141,6 +141,7 @@ define([
   'map/views/layers/BraMiningLayer',
   'map/views/layers/ViirsLayer',
   'map/views/layers/PerMinamCoverLayer',
+  'map/views/layers/PerMinamLossLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -155,7 +156,7 @@ define([
   'map/views/timeline/TerraiTimeline',
   'map/views/timeline/ProdesTimeline',
   'map/views/timeline/AsItHappensTimeline',
-  'map/views/timeline/GuyraTimeline'
+  'map/views/timeline/GuyraTimeline',
 ], function(
   // Layer Views
   LossLayer,
@@ -296,6 +297,7 @@ define([
   BraMiningLayer,
   ViirsLayer,
   PerMinamCoverLayer,
+  PerMinamLossLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -751,6 +753,9 @@ define([
       view:  PerMinamCoverLayer
     },
     
+    per_minam_loss: {
+      view:  PerMinamLossLayer
+    },
     
     nothing: {
     }
