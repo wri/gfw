@@ -94,7 +94,7 @@ define([
      * Render failure analysis on API request message.
      */
     renderFailureOnApi: function() {
-      this.$el.html(this.templates.failure()).removeClass('hidden');
+      this.$el.html(this.templates.failureAPI()).removeClass('hidden');
       this._cacheSelector();
       this.$resultsHide.addClass('hidden');
     },
