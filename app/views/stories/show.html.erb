@@ -1,7 +1,8 @@
-<%if access_through_token?(@story.id)
-  link_to (content_tag :span, 'Edit story'), edit_story_path(@story.token), :class => "btn green edit"
-end %>
-<!-- <h1 class="header-title big"><%= link_to t(".title"), stories_path %></h1> -->
+<%
+  if access_through_token?(@story.id)
+    link_to (content_tag :span, 'Edit story'), edit_story_path(@story.token), :class => "btn green edit"
+  end
+%>
 
 <section class="header-stories">
   <div class="inner">
@@ -28,34 +29,36 @@ end %>
     </header>
   </div>
 </section>
+
 <section class="content-stories">
   <div class="inner">
-    <div id="carrousel-stories" class="story-carrousel <% if (!@story.media[1].present? && !@story.media[0]['embed_url'].present?)  %>no-padding<%end%>">
-      <% if (@story.media[1].present? || @story.media[0]['embed_url'].present?) %>
+    <div id="carrousel-stories" class="story-carrousel">
+      <% if (has_media? @story) %>
         <a href='#' data-direction="prev" class='btn-nav previous'></a>
         <a href='#' data-direction="next" class='btn-nav next'></a>
       <% end %>
+
       <ul>
-        <% if (@story.media[1].present? || @story.media[0]['embed_url'].present?)  %>
-          <% @story.media.each do |media| %>
+        <% @story.media.each do |media| %>
+          <% if media['embed_url'].present? %>
+            <li class='slide'>
+              <%= youtube_embed(media['embed_url']).html_safe %>
+            </li>
+          <% end %>
 
-            <% if media['embed_url'].present? %>
-              <li class='slide'><%= youtube_embed(media['embed_url']).html_safe %></li>
-            <% end %>
-
-            <% if media['url'].present? %>
-              <li class='slide'>
-                <div class="bg full-screen" data-bg="<%= "#{ENV['AWS_HOST']}/#{media['url']}" %>" style="background-image: url(<%= "#{ENV['AWS_HOST']}/#{media['url']}" %>);"></div>
-              </li>
-            <% end %>
+          <% if media['url'].present? %>
+            <li class='slide'>
+              <div class="bg full-screen" data-bg="<%= "#{media_image(media)}" %>" style="background-image: url(<%= "#{media_image(media)}" %>);"></div>
+            </li>
           <% end %>
         <% end %>
+
         <li class="slide">
           <div class="bg is-cover" style="background-image: url(<%= static_map("#{@story.lat}, #{@story.lng}", '1600x500', 5, true) %>);"></div>
         </li>
       </ul>
-      <div id="paginationView" class="main-slider-pagination"></div>
 
+      <div id="paginationView" class="main-slider-pagination"></div>
     </div>
     <div class='story-content'>
       <p><%= simple_format(raw("<span class='dropcap'>#{@story.details[0, 1]}</span>") + @story.details[1, @story.details.length - 1]).gsub("</p>\n\n<p>", "<br /><br />").html_safe %></p>
@@ -75,7 +78,5 @@ end %>
 <div id="fullScreenView" class="story-modal"></div>
 
 <%= render 'more_stories' %>
-
-
 
 <section id="interestingView" class="interesting-section"></section>
