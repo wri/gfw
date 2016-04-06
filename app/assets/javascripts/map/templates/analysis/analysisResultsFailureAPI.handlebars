@@ -1,0 +1,46 @@
+<header>
+  <h2>Sorry, we cannot retrieve this data now. Please try again later.</h2>
+  <button id="btn-analysis-refresh" class="btn green uppercase">Refresh</button>
+</header>
+<footer class="analysis-footer">
+  <ul>
+    <li class="disabled">
+      {{#if loss}}
+        <a class="download-mobile-link" data-type="forest-change" href="http://earthenginepartners.appspot.com/science-2013-global-forest" target="_blank">
+          <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
+          <span class="tooltipmap bottom">Download data</span>
+        </a>
+      {{else}}
+        {{#if forestgain}}
+          <a class="download-mobile-link" data-type="forest-change" href="http://data.globalforestwatch.org/datasets/6c9f379a362e4926ad24b58444f4ba67" target="_blank">
+            <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
+            <span class="tooltipmap bottom">Download data</span>
+          </a>
+        {{else}}
+          <div>
+            <div class="dropdown-button">
+              <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
+            </div>
+            <span class="tooltipmap bottom">Download and export data</span>
+            <ul class="download-dropdown hidden">
+              <li><a class="download-mobile-link" data-type="forest-change" href="{{download.svg}}" target="_blank">SVG</a></li>
+              <li><a class="download-mobile-link" data-type="forest-change" href="{{download.geojson}}" target="_blank">GeoJSON</a></li>
+              <li><a class="download-mobile-link" data-type="forest-change" href="{{download.shp}}" target="_blank">SHP</a></li>
+              <li><a class="download-mobile-link" data-type="forest-change" href="{{download.kml}}" target="_blank">KML</a></li>
+              <li><a class="download-mobile-link" data-type="forest-change" href="{{download.csv}}" target="_blank">CSV</a></li>
+              <li><a class="download-mobile-link" data-type="forest-change" href="http://oneclick.cartodb.com/?file={{download.cdb}}&provider=gfw'" target="_blank">Open in Carto DB</a></li>
+            </ul>
+          </div>
+        {{/if}}
+      {{/if}}
+    </li>
+    <li id="analysis-delete">
+      <svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg>
+      <span class="tooltipmap bottom">Discard analysis</span>
+    </li>
+    <li class="disabled" id="analysis-subscribe">
+      <svg class="icon"><use xlink:href="#icon-analysis-alerts"></use></svg>
+      <span class="tooltipmap bottom">Subscribe</span>
+    </li>
+  </ul>
+</footer>

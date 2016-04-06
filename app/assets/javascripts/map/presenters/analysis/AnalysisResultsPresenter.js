@@ -168,7 +168,7 @@ define([
         this.view.renderFailure();
       } else if (results.failure) {
         mps.publish('Spinner/stop');
-        this.view.renderFailure();
+        this.view.renderFailureOnApi();
       } else {
         mps.publish('Spinner/stop');
         this._renderAnalysis(results);
