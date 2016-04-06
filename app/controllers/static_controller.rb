@@ -96,6 +96,10 @@ class StaticController < ApplicationController
     feedback = params["feedback"]
 
     FeedbackMailer.feedback(feedback,signup,email).deliver
+
+    if signup == 'true' && email.present?
+      Api::Feedback.add_as_tester(email)
+    end
   end
 
   def feedback_jsonp
@@ -105,6 +109,10 @@ class StaticController < ApplicationController
     hostname = params["hostname"]
 
     FeedbackMailer.feedback(feedback,signup,email,hostname).deliver
+    if signup == 'true' && email.present?
+      Api::Feedback.add_as_tester(email)
+    end
+
     respond_to do |format|
       format.js do
         render :json => true, :callback => params[:callback]
