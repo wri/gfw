@@ -1,4 +1,4 @@
-class YourMailer < ActionMailer::Base
+class FeedbackMailer < ActionMailer::Base
   def feedback(feedback,signup,email,hostname)
     @feedback = feedback.present? ? feedback : nil
     @email = email.present? ? email : nil
@@ -20,7 +20,7 @@ class YourMailer < ActionMailer::Base
         when 'fires.globalforestwatch.org' then ['SMinnemeyer@wri.org', 'gfw@wri.org']
         when 'commodities.globalforestwatch.org' then ['slake@wri.org', 'gfw@wri.org']
         when 'climate.globalforestwatch.org' then ['cciciarelli@wri.org', 'gfw@wri.org']
-        else ['abarrett@wri.org', 'gfw@wri.org']
+        else ['adam.mulligan@vizzuality.com']
       end
     end
 end
