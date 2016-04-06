@@ -16,7 +16,7 @@
           <ogc:Filter>
             <ogc:PropertyIsEqualTo>
               <ogc:PropertyName>leyenda</ogc:PropertyName>
-              <ogc:Literal>Território Indígena Reconocido</ogc:Literal>
+              <ogc:Literal>TI reconocido oficialmente</ogc:Literal>
             </ogc:PropertyIsEqualTo>
           </ogc:Filter>
           <sld:PolygonSymbolizer>
@@ -37,7 +37,7 @@
           <ogc:Filter>
             <ogc:PropertyIsEqualTo>
               <ogc:PropertyName>leyenda</ogc:PropertyName>
-              <ogc:Literal>Ocupación Tradicional sin reconocimiento</ogc:Literal>
+              <ogc:Literal>TI sin reconocimiento oficial</ogc:Literal>
             </ogc:PropertyIsEqualTo>
           </ogc:Filter>
           <sld:PolygonSymbolizer>
