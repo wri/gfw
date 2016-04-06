@@ -20,7 +20,7 @@ class FeedbackMailer < ActionMailer::Base
         when 'fires.globalforestwatch.org' then ['SMinnemeyer@wri.org', 'gfw@wri.org']
         when 'commodities.globalforestwatch.org' then ['slake@wri.org', 'gfw@wri.org']
         when 'climate.globalforestwatch.org' then ['cciciarelli@wri.org', 'gfw@wri.org']
-        else ['adam.mulligan@vizzuality.com']
+        else ['abarrett@wri.org', 'gfw@wri.org']
       end
     end
 end
