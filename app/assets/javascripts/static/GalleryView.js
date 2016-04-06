@@ -103,8 +103,8 @@ define([
         displayedPages: 3,
         edges: 1,
         selectOnClick: false,
-        prevText: ' ',
-        nextText: ' ',
+        prevText: '<svg><use xlink:href="#shape-arrow-left"></use></svg>',
+        nextText: '<svg><use xlink:href="#shape-arrow-right"></use></svg>',
         onInit: function() {
           var len = this.collection.getCount(this.model.get('filter'));
           this.$paginator.toggleClass('-hidden', (len <= this.model.get('itemsOnPage')));
