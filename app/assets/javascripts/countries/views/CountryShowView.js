@@ -558,14 +558,18 @@ define([
       var tooltip = d3.select('.burned_forests-graph')
         .append('div')
         .attr('class', 'burned_forests-tooltip')
-        .style('visibility', 'hidden');
+        .style({
+          visibility: 'hidden',
+          top: '-99999px',
+          left: '-99999px',
+        });
 
       var burnedForestTpl = this.burnedForestTpl;
 
       // Positioner
       var positioner = graph.append('svg:line')
-        .attr('x1', 0)
-        .attr('y1', 0)
+        .attr('x1', -999999)
+        .attr('y1', -999999)
         .attr('x2', 0)
         .attr('y2', h)
         .style('visibility', 'hidden')
