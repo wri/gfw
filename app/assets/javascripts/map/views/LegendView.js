@@ -47,14 +47,13 @@ define([
   'text!map/templates/legend/per_mining.handlebars',
   'text!map/templates/legend/glad.handlebars',
   'text!map/templates/legend/urthecast.handlebars',
-  'text!map/templates/legend/per_minam_loss.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, 
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, 
     global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
     gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl, 
-    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl, per_minam_lossTpl) {
+    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl) {
 
   'use strict';
 
@@ -134,7 +133,7 @@ define([
       umd_as_it_happens:Handlebars.compile(gladTpl),
       viirs_fires_alerts: Handlebars.compile(firesTpl),
       urthe: Handlebars.compile(urtheTpl),
-      per_minam_loss: Handlebars.compile(per_minam_lossTpl),
+      
     },
 
     options: {

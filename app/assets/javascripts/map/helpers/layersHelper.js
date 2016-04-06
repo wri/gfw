@@ -141,7 +141,6 @@ define([
   'map/views/layers/BraMiningLayer',
   'map/views/layers/ViirsLayer',
   'map/views/layers/PerMinamCoverLayer',
-  'map/views/layers/PerMinamLossLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -297,7 +296,6 @@ define([
   BraMiningLayer,
   ViirsLayer,
   PerMinamCoverLayer,
-  PerMinamLossLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -752,11 +750,6 @@ define([
     per_minam_tree_cover: {
       view:  PerMinamCoverLayer
     },
-    
-    per_minam_loss: {
-      view:  PerMinamLossLayer
-    },
-    
     nothing: {
     }
   };
