@@ -10,7 +10,8 @@ define([
   'map/views/analysis/AdvancedAnalysisView',
   'text!map/templates/analysis/analysisResults.handlebars',
   'text!map/templates/analysis/analysisResultsFailure.handlebars',
-], function(_, Handlebars, Presenter, AdvancedAnalysisView, tpl, failureTpl) {
+  'text!map/templates/analysis/analysisResultsFailureAPI.handlebars',
+], function(_, Handlebars, Presenter, AdvancedAnalysisView, tpl, failureTpl, failureAPITpl) {
 
   'use strict';
 
@@ -28,6 +29,7 @@ define([
 
     templates: {
       failure: Handlebars.compile(failureTpl),
+      failureAPI: Handlebars.compile(failureAPITpl),
     },
 
     events:{
@@ -83,7 +85,15 @@ define([
      * Render failure analysis request message.
      */
     renderFailure: function() {
-      // this._update(this.templates.failure());
+      this.$el.html(this.templates.failure()).removeClass('hidden');
+      this._cacheSelector();
+      this.$resultsHide.addClass('hidden');
+    },
+
+    /**
+     * Render failure analysis on API request message.
+     */
+    renderFailureOnApi: function() {
       this.$el.html(this.templates.failure()).removeClass('hidden');
       this._cacheSelector();
       this.$resultsHide.addClass('hidden');
