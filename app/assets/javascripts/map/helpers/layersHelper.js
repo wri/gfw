@@ -155,7 +155,7 @@ define([
   'map/views/timeline/TerraiTimeline',
   'map/views/timeline/ProdesTimeline',
   'map/views/timeline/AsItHappensTimeline',
-  'map/views/timeline/GuyraTimeline'
+  'map/views/timeline/GuyraTimeline',
 ], function(
   // Layer Views
   LossLayer,
@@ -750,8 +750,6 @@ define([
     per_minam_tree_cover: {
       view:  PerMinamCoverLayer
     },
-    
-    
     nothing: {
     }
   };
