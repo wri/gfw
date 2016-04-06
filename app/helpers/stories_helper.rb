@@ -24,6 +24,16 @@ module StoriesHelper
     @page == @total_pages
   end
 
+  def has_media? story
+    return story.media.length > 0
+  end
+
+  def media_image media
+    if media['url'].present?
+      return "#{ENV['AWS_HOST']}/#{media['url']}"
+    end
+  end
+
   def story_image_or_map(media, coords = nil)
     media_filtered = media.select do |item| 
       item['embed_url'].nil? || item['embed_url'].empty? || !item['preview_url'].nil? || !item['preview_url'].empty?
