@@ -6,8 +6,8 @@
  */
 define([
   'abstract/layer/CartoDBLayerClass',
-  'text!map/cartocss/idn_peat.cartocss'
-], function(CartoDBLayerClass,idn_peatCartoCSS) {
+  'text!map/cartocss/idn_peat.cartocss',
+], function(CartoDBLayerClass, idn_peatCartoCSS) {
 
   'use strict';
 
@@ -24,5 +24,10 @@ define([
   });
 
   return IdnPeatLandsLayer;
+  });
 
-});
+
+
+
+
+

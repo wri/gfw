@@ -536,6 +536,7 @@
       line-width: 1;
       line-opacity: 1;
   }
+  
   [layer='wdpa_protected_areas'] {
     polygon-fill: #2167AB;
     polygon-opacity: 0.5;
@@ -719,4 +720,3 @@
     line-opacity: 1;
   }
 }
-
