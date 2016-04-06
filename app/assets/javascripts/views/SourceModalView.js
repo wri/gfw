@@ -62,7 +62,7 @@ define([
       e && e.preventDefault() && e.stopPropagation();
       // current
       this.$current = $(e.currentTarget);
-      this.$current.find('svg').attr('class','spinner start');
+      this.$current.find('svg').attr('class','spinner-info start');
 
       this.sourceModel = new SourceModel({
         slug: this.$current.data('source'),
