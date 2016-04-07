@@ -71,11 +71,13 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         this._setBaselayer(place.layerSpec.getBaselayers());
+        this.status.set('loss_gain_and_extent', place.layerSpec.checkLossGainExtent());
         if ( place.params.subscribe_alerts ) this.subscribeAnalysis();
       }
     }, {
       'LayerNav/change': function(layerSpec) {
         this._setBaselayer(layerSpec.getBaselayers());
+        this.status.set('loss_gain_and_extent', layerSpec.checkLossGainExtent());
       }
     }, {
       'AnalysisService/results': function(results) {

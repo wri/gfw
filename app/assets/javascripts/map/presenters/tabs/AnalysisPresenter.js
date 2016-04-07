@@ -91,7 +91,9 @@ define([
       'LayerNav/change': function(layerSpec) {
         var baselayer = this.status.get('baselayer');
         var both = this.status.get('both');
+        var loss_gain_and_extent = this.status.get('loss_gain_and_extent');
         this._setBaselayer(layerSpec.getBaselayers());
+        this.status.set('loss_gain_and_extent', layerSpec.checkLossGainExtent());
 
         this.view.toggleCountrySubscribeBtn();
         this.view.toggleDoneSubscribeBtn();
@@ -104,6 +106,11 @@ define([
             this._updateAnalysis();
             this.openAnalysisTab();
           }
+        }
+
+        if (loss_gain_and_extent != this.status.get('loss_gain_and_extent')) {
+          this._updateAnalysis();
+          this.openAnalysisTab();          
         }
       }
     }, {
