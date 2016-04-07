@@ -680,6 +680,13 @@
         @include logos-sprite(vizzualityhover);
       }
     }
+
+    &.cargill {
+      height: 73px; width: 146px; @include logos-sprite(cargill);
+      &:hover{
+        @include logos-sprite(cargillhover);
+      }
+    }
   }
 }
 
