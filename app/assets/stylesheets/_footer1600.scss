@@ -682,9 +682,9 @@
     }
 
     &.cargill {
-      height: 45px; width: 124px; @include logos-sprite(aux);
+      height: 73px; width: 146px; @include logos-sprite(cargill);
       &:hover{
-        @include logos-sprite(aux);
+        @include logos-sprite(cargillhover);
       }
     }
   }
