@@ -269,7 +269,20 @@ define([
       content: 'Learn how to develop your own application with Global Forest Watch data.',
       href: '/getinvolved/develop-your-own-app',
       link_text: 'Read more',
-      classname: 'btn gray medium',
+      classname: 'btn gray medium'
+    },
+    {
+      id: 22,
+      name: 'Protecting forests & peatlands in Indonesia',
+      svg: '#shape-GAB',
+      content: 'Explore the relationship between company concessions, peatlands, fire hotspots, and deforestation alerts in Indonesia.',
+      href: 'http://www.greenpeace.org/seasia/id/Global/seasia/Indonesia/Code/Forest-Map/en/',
+      target: true,
+      link_text: 'Launch App',
+      classname: 'btn green medium mobile-friendly',
+      source: 'Greenpeace',
+      mobile_friendly: 'other',
+      tags: 'Asia, Commodities, Palm oil, Mining, Fires, Maps'
     },
 
   ]
