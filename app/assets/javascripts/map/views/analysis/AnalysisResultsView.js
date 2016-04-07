@@ -102,6 +102,7 @@ define([
     setParams: function(params){
       this.params = params;
       this.params.warning_text = (this.$analysisTab.find('li.active').data('analysis') === 'draw-tab');
+      this.params.warning_extent_text = this.presenter.status.get('loss_gain_and_extent');
       this.params.downloadVisible = ((this.params.loss || this.params.forestgain) && this.mobile) ? false : true;
       this.params.url = this.setDownloadLink(params.layer.slug);
     },

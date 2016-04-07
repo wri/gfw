@@ -264,7 +264,17 @@ define([
       }, this));
 
       return categories;
-    }
+    },
+
+    /**
+     * Check if (loss and/or gain) + cover
+     *
+     * @return {boolean} boolean
+     */    
+    checkLossGainExtent: function() {
+      var forest_clearing = this.get('forest_clearing');
+      return (!!forest_clearing['forest2000'] && (!!forest_clearing['loss'] || !!forest_clearing['forestgain']));
+    },
 
   });
 
