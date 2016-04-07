@@ -19,7 +19,6 @@ define([
 
   var applicationsHelper = [
     {
-      id: 1,
       name: 'GFW Interactive map',
       svg: '#shape-world',
       content: 'View and analyze data on the GFW Interactive Map.',
@@ -30,7 +29,6 @@ define([
       tags: 'data, fires, global-forest-watch, maps, mining, mobile, palm-oil, satellite-imagery'
     },
     {
-      id: 2,
       name: 'Country profiles & rankings',
       svg: '#shape-country',
       content: 'View country-specific data, analyze forest change within a country or subnational jurisdiction, or view country rankings based on forest statistics.',
@@ -41,7 +39,6 @@ define([
       tags: 'boreal-forests, data, global-forest-watch'
     },
     {
-      id: 3,
       name: 'Open Data Portal',
       svg: '#shape-download',
       content: 'Browse, learn more about, and download the data displayed on Global Forest Watch.',
@@ -52,7 +49,6 @@ define([
       tags: 'data, fires, global-forest-watch, maps, mining, palm-oil, satellite-imagery'
     },
     {
-      id: 4,
       name: 'Fires',
       svg: '#shape-fire',
       content: 'Track forest fires and haze in the ASEAN region.',
@@ -63,7 +59,6 @@ define([
       tags: 'asia, data, fires, global-forest-watch, maps, palm-oil, satellite-imagery'
     },
     {
-      id: 5,
       name: 'Commodities',
       svg: '#shape-commodities',
       content: 'Identify deforestation risk in commodity supply chains.',
@@ -74,7 +69,6 @@ define([
       tags: 'asia, commodities, data, fires, global-forest-watch, maps, mining, palm-oil'
     },
     {
-      id: 6,
       name: 'Climate',
       svg: '#shape-climate',
       content: 'Track carbon emissions and removals in forest landscapes.',
@@ -85,7 +79,6 @@ define([
       tags: 'data, global-forest-watch, maps'
     },
     {
-      id: 7,
       name: 'Global Forest Watch: Sumatra campaign on Tomnod',
       svg: '#shape-tomnod',
       content: 'Help Global Forest Watch Fires track illegal fires and preserve the health of people and forests in Southeast Asia.',
@@ -98,7 +91,6 @@ define([
       tags: 'asia, crowdsourcing, data, fires, maps, palm-oil, satellite-imagery'
     },
     {
-      id: 8,
       name: 'Open Landscape Partnership Platform',
       svg: '#shape-landscape',
       content: 'View and analyze ultra-high-resolution satellite imagery (up to 50 centimeters) for select forest landscapes.',
@@ -111,7 +103,6 @@ define([
       tags: 'crowdsourcing, data, maps, satellite-imagery'
     },
     {
-      id: 9,
       name: 'Sustainable Palm Oil Transparency Toolkit (SPOTT)',
       svg: '#shape-spott',
       content: 'Assess oil palm growers on the information that they make publicly available about the sustainability of their operations.',
@@ -124,7 +115,6 @@ define([
       tags: 'asia, commodities, data, global-forest-watch, maps, palm-oil'
     },
     {
-      id: 10,
       name: 'Monitoring of the Andean Amazon Project (MAAP)',
       svg: '#shape-aca',
       content: 'View information, maps and analysis from a new deforestation monitoring system for the Andean Amazon.',
@@ -137,7 +127,6 @@ define([
       tags: 'data, latin-america, maps, mining, satellite imagery'
     },
     {
-      id: 11,
       name: 'Cameroon Forest Atlas',
       svg: '#shape-CMR',
       content: 'View an interactive map with land-use data for Cameroon.',
@@ -150,7 +139,6 @@ define([
       tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
-      id: 12,
       name: 'Central African Republic Forest Atlas',
       svg: '#shape-CAF',
       content: 'View an interactive map with land-use data for the Central African Republic.',
@@ -163,7 +151,6 @@ define([
       tags: 'africa, data, global-forest-watch, maps'
     },
     {
-      id: 13,
       name: 'Republic of Congo Forest Atlas',
       svg: '#shape-COG',
       content: 'View an interactive map with land-use data for the Congo.',
@@ -176,7 +163,6 @@ define([
       tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
-      id: 14,
       name: 'Democratic Republic of Congo Forest Atlas',
       svg: '#shape-COD',
       content: 'View an interactive map with land-use data for the Democratic Republic of the Congo.',
@@ -189,7 +175,6 @@ define([
       tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
-      id: 15,
       name: 'Equatorial Guinea Forest Atlas',
       svg: '#shape-GNQ',
       content: 'View an interactive map with land-use data for Equatorial Guinea.',
@@ -202,7 +187,6 @@ define([
       tags: 'africa, data, global-forest-watch, maps'
     },
     {
-      id: 16,
       name: 'Gabon Forest Atlas',
       svg: '#shape-GAB',
       content: 'View an interactive map with land-use data for Gabon.',
@@ -215,7 +199,6 @@ define([
       tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
-      id: 17,
       name: 'Open Foris',
       svg: '#shape-open-foris',
       content: 'A set of free and open-source software tools that facilitates flexible and efficient data collection, analysis, and reporting.',
@@ -228,7 +211,6 @@ define([
       tags: 'crowdsourcing, data, maps, mobile, satellite-imagery'
     },
     {
-      id: 18,
       name: 'Forest Watcher Mobile App',
       svg: '#shape-globe-mobile',
       content: 'This easy-to-use app enables anyone with limited Internet connectivity to find GFW alerts in their forests and upload observations like photos and other data from the field. The Jane Goodall Institute, in partnership with Global Forest Watch, Google, and TouchLab, is currently piloting this app in Uganda to improve local forest monitoring. The beta version is now live!.',
@@ -240,7 +222,6 @@ define([
       tags: 'crowdsourcing, data, maps, mobile, satellite-imagery'
     },
     {
-      id: 19,
       name: 'Logging Roads',
       svg: '#shape-logging-roads',
       content: 'View and help document the spread of logging roads across the Congo Basin region of Central Africa',
@@ -253,7 +234,6 @@ define([
       tags: 'crowdsourcing, maps, satellite imagery, Africa, data, Global Forest Watch, logging'
     },
     {
-      id: 20,
       name: 'Water',
       svg: '#shape-water',
       content: 'View critical watershed information, understand type and severity of threats such as forest changes to watershed health, and screen for cost-effective, sustainable solutions.',
@@ -263,7 +243,6 @@ define([
       tags: 'data, global-forest-watch, maps'
     },
     {
-      id: 21,
       name: 'Develop your own app',
       svg: '#shape-develop',
       content: 'Learn how to develop your own application with Global Forest Watch data.',
@@ -272,7 +251,6 @@ define([
       classname: 'btn gray medium'
     },
     {
-      id: 22,
       name: 'Protecting forests & peatlands in Indonesia',
       svg: '#shape-GAB',
       content: 'Explore the relationship between company concessions, peatlands, fire hotspots, and deforestation alerts in Indonesia.',

@@ -53,7 +53,7 @@ define([
     },
 
     render: function(){
-      var app = _.findWhere(this.helper, {id: this.status.get('current')}); 
+      var app = this.helper[this.status.get('current')];
       this.$el.html(this.template({ app: app }));
       return this;
     },
