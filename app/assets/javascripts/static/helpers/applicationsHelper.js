@@ -260,7 +260,7 @@ define([
       classname: 'btn green medium mobile-friendly',
       source: 'Greenpeace',
       mobile_friendly: 'other',
-      tags: 'Asia, Commodities, Palm oil, Mining, Fires, Maps'
+      tags: 'asia, commodities, palm oil, mining, fires, maps'
     },
 
   ]
