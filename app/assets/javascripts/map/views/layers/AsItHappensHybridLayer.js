@@ -19,6 +19,10 @@ define([
 
   var AsItHappensHybridLayer = CartoDbCanvasLayerClass.extend({
 
+    defaults: {
+      dataMaxZoom: 20
+    },
+
     table: 'umd_alerts_agg_hybrid',
 
     init: function(layer, options, map) {
