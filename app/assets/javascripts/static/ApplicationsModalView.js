@@ -16,7 +16,7 @@ define([
   var ApplicationModalStatus = Backbone.Model.extend({
     defaults: {
       current: null,
-      filteredApps: null
+      filteredApps: []
     }
   })
 
@@ -59,7 +59,7 @@ define([
     },
 
     render: function(){
-      var app = this.status.get('filteredApps') ?
+      var app = this.status.get('filteredApps').length > 0 ?
         this.status.get('filteredApps')[this.status.get('current')] :
         this.helper[this.status.get('current')];
       this.$el.html(this.template({ app: app }));
@@ -70,13 +70,15 @@ define([
       e && e.preventDefault();
       var dir = $(e.currentTarget).data('dir');
       var current = this.status.get('current');
-      var filteredApps = this.status.get('filteredApps');
+      var apps = this.status.get('filteredApps').length > 0 ?
+        this.status.get('filteredApps') :
+        this.helper;
       switch(dir) {
         case 'left':
-          (current == 0) ? current = filteredApps.length - 1 : current--;
+          (current == 0) ? current = apps.length - 1 : current--;
         break;
         case 'right':
-          (current == filteredApps.length - 1) ? current = 0 : current++;
+          (current == apps.length - 1) ? current = 0 : current++;
         break;
       }
       this.status.set('current', current);
