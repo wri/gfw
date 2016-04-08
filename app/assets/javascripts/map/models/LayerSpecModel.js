@@ -273,7 +273,7 @@ define([
      */    
     checkLossGainExtent: function() {
       var forest_clearing = this.get('forest_clearing');
-      return (!!forest_clearing['forest2000'] && (!!forest_clearing['loss'] || !!forest_clearing['forestgain']));
+      return (!!forest_clearing && !!forest_clearing['forest2000'] && (!!forest_clearing['loss'] || !!forest_clearing['forestgain']));
     },
 
   });
