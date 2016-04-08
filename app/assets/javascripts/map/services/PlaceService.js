@@ -66,7 +66,7 @@ define([
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?tab,geojson,geostore,wdpaid,begin,end,threshold,dont_analyze,hresolution,tour,subscribe,use,useid}',
+    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?tab,fit_to_geom,geojson,geostore,wdpaid,begin,end,threshold,dont_analyze,hresolution,tour,subscribe,use,useid}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.

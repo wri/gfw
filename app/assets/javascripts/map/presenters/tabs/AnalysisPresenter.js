@@ -266,6 +266,11 @@ define([
         }
       }.bind(this);
 
+      if (params.fit_to_geom !== undefined) {
+        this.status.set('fit_to_geom', params.fit_to_geom)
+      }
+
+      var fit_to_geom = this.status.get('fit_to_geom') === 'true';
       if (params.analyze && params.name === 'map') {
         this.view.onClickAnalysis();
       } else if (params.wdpaid) {
@@ -276,13 +281,13 @@ define([
         if (params.geojson) {
           Promise.all([
             this._analyzeIso(params.iso),
-            this._analyzeGeojson(params.geojson)
+            this._analyzeGeojson(params.geojson, {draw: true, fit_to_geom: fit_to_geom})
           ]).then(subscribe);
         } else {
           this._analyzeIso(params.iso).then(subscribe);
         }
       } else if (params.geojson) {
-        this._analyzeGeojson(params.geojson).then(subscribe);
+        this._analyzeGeojson(params.geojson, {draw: true, fit_to_geom: fit_to_geom}).then(subscribe);
       } else if (params.geostore) {
         this.status.set('geostore', params.geostore);
         subscribe();
@@ -317,10 +322,18 @@ define([
       mps.publish('Spinner/start');
       resource = this._buildResource(resource);
 
+      var paths = geojsonUtilsHelper.geojsonToPath(geojson);
       // Draw geojson if needed.
       if (options.draw) {
-        this.view.drawPaths(
-          geojsonUtilsHelper.geojsonToPath(geojson));
+        this.view.drawPaths(paths);
+      }
+
+      if (options.fit_to_geom) {
+        var bounds = new google.maps.LatLngBounds();
+        paths.forEach(function(point) {
+          bounds.extend(point);
+        });
+        this.view.map.fitBounds(bounds);
       }
 
       // Publish analysis
@@ -807,6 +820,10 @@ define([
       } else if (resource.use && resource.useid) {
         p.use = resource.use;
         p.useid = resource.useid;
+      }
+
+      if (this.status.get('fit_to_geom')) {
+        p.fit_to_geom = 'true';
       }
 
       if (this.status.get('tab')) {
