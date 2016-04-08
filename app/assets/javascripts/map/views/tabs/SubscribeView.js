@@ -147,7 +147,9 @@ define([
           }
         }
         this.subscription.set('geom', geom);
-      } else if (geostoreId) {
+      }
+
+      if (geostoreId) {
         this.subscription.set('geostore_id', geostoreId);
       }
     },
