@@ -50,7 +50,6 @@ define([
         if (this.model.get('page') != 1) {
           this.model.set('page', this.model.get('page') - 1);
           this.render();
-          console.log('no subscriptions in this page');  
         }
       }
     },
