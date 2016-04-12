@@ -46,7 +46,16 @@ define([
         if (this.subscriptions.length/this.model.get('perpage') > 1) {
           this.initPaginate();
         }
+      } else {
+        if (this.model.get('page') != 1) {
+          this.model.set('page', this.model.get('page') - 1);
+          this.render();
+        }
       }
+    },
+
+    renderList: function() {
+
     },
 
     show: function() {
@@ -92,8 +101,8 @@ define([
         currentPage : this.model.get('page'),
         displayedPages: 3,
         selectOnClick: false,
-        prevText: ' ',
-        nextText: ' ',
+        prevText: '<svg><use xlink:href="#shape-arrow-left"></use></svg>',
+        nextText: '<svg><use xlink:href="#shape-arrow-right"></use></svg>',
         onPageClick: function(pageNumber, event){
           event.preventDefault();
           this.model.set('page', pageNumber);
