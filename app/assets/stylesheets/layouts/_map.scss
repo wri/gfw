@@ -154,10 +154,11 @@ body,html{
       left: 0;
       width: 100%;
       height: 38px;
-      background: rgba($dark,0.5);
+      background: rgba($white,0.75);
       z-index: 0;
     }
   }
+
   .footer-toggle{
     position: absolute;
     left: 50%;
@@ -165,13 +166,25 @@ body,html{
     @include transform(translate(-50%,0));
     margin-left: 15px;
     height: 38px;
+    line-height: 42px;
     border: none;
     border-radius: 0;
     padding: 0 20px;
     z-index: 2;
     white-space: nowrap;
     display: none;
+    color: $cGreen;
+    background: none;
+    text-transform: none;
     
+    &:after {
+      content: "";
+    }
+
+    &:hover {
+      color: $dark;
+    }
+
     @media (min-width:$br-mobile){
       display: block;
     }
