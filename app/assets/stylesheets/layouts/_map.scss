@@ -48,6 +48,17 @@ body,html{
   box-sizing: border-box;
   background: #B3E2FF;
 
+  a[href^="http://maps.google.com/maps"]{display:none !important}
+  a[href^="https://maps.google.com/maps"]{display:none !important}
+
+  .gmnoprint a, .gmnoprint span, .gm-style-cc {
+    z-index: 1;
+  }
+  .gmnoprint div {
+    background:none !important;
+  }
+
+
   // Footer
   .map-footer {
     position: absolute;
@@ -159,36 +170,6 @@ body,html{
     }
   }
 
-  .footer-toggle{
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    @include transform(translate(-50%,0));
-    margin-left: 15px;
-    height: 38px;
-    line-height: 42px;
-    border: none;
-    border-radius: 0;
-    padding: 0 20px;
-    z-index: 2;
-    white-space: nowrap;
-    display: none;
-    color: $cGreen;
-    background: none;
-    text-transform: none;
-    
-    &:after {
-      content: "";
-    }
-
-    &:hover {
-      color: $dark;
-    }
-
-    @media (min-width:$br-mobile){
-      display: block;
-    }
-  }
 
 }
 
@@ -273,36 +254,7 @@ body,html{
     opacity: 0;
     visibility: hidden;
   }
-
 }
-
-.map-logos {
-  position: absolute;
-  bottom: 0px;
-  left: 70px;
-  height: 38px;
-  z-index: 100;
-  display: none;
-  @media (min-width:$br-mobile){
-    display: block;
-  }
-
-  .map-logo {
-    display: inline-block;
-    margin-left: 15px;
-    position: relative;
-    top: 3px;
-    &.uc-logo {
-      display: none;
-      top: -2px;
-    }
-  }
-
-  img {
-    border: none;
-  }
-}
-
 
 
 .map-latlng {
