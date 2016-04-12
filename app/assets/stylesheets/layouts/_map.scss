@@ -48,7 +48,115 @@ body,html{
   box-sizing: border-box;
   background: #B3E2FF;
 
+  a[href^="http://maps.google.com/maps"]{display:none !important}
+  a[href^="https://maps.google.com/maps"]{display:none !important}
+
+  .gmnoprint a, .gmnoprint span, .gm-style-cc {
+    z-index: 1;
+  }
+  .gmnoprint div {
+    background:none !important;
+  }
+
+
   // Footer
+  .map-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 38px;
+
+    &:after {
+      content: "";
+      display: none;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: $white;
+      z-index: 1;      
+    }
+
+    &.active {
+      &:after {
+        display: block;
+      }
+    }
+
+    // logos
+    .map-logos {
+      display: none;
+      height: 100%; 
+      position: relative;
+      z-index: 0;     
+
+      @media (min-width:$br-mobile){
+        @include display-flex();
+        @include align-items(center);
+      }
+    
+      > li {
+        display: inline-block;
+        margin-left: 20px;
+        position: relative; 
+        
+        &:first-child {
+          margin-left: 35px;
+        }       
+
+        a {
+          position: relative;
+          &.google-logo, &.gee-logo {
+            top: 2px;
+          }
+          &.uc-logo {
+            display: none;
+          }
+        }
+        
+      }
+
+      img {
+        border: none;
+        max-height: 18px;
+      }
+    }
+
+    // button
+    .footer-toggle{
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      @include transform(translate(-50%,0));
+      margin-left: 15px;
+      height: 38px;
+      line-height: 42px;
+      border: none;
+      border-radius: 0;
+      padding: 0 20px;
+      z-index: 2;
+      white-space: nowrap;
+      display: none;
+      color: $cGreen;
+      background: none;
+      text-transform: none;
+      
+      &:after {
+        content: "";
+      }
+
+      &:hover {
+        color: $dark;
+      }
+
+      @media (min-width:$br-mobile){
+        display: block;
+      }
+    }
+  }
+
   .gm-style{
     &:after{
       content: "";
@@ -62,36 +170,6 @@ body,html{
     }
   }
 
-  .footer-toggle{
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    @include transform(translate(-50%,0));
-    margin-left: 15px;
-    height: 38px;
-    line-height: 42px;
-    border: none;
-    border-radius: 0;
-    padding: 0 20px;
-    z-index: 2;
-    white-space: nowrap;
-    display: none;
-    color: $cGreen;
-    background: none;
-    text-transform: none;
-    
-    &:after {
-      content: "";
-    }
-
-    &:hover {
-      color: $dark;
-    }
-
-    @media (min-width:$br-mobile){
-      display: block;
-    }
-  }
 
 }
 
@@ -176,36 +254,7 @@ body,html{
     opacity: 0;
     visibility: hidden;
   }
-
 }
-
-.map-logos {
-  position: absolute;
-  bottom: 0px;
-  left: 70px;
-  height: 38px;
-  z-index: 100;
-  display: none;
-  @media (min-width:$br-mobile){
-    display: block;
-  }
-
-  .map-logo {
-    display: inline-block;
-    margin-left: 15px;
-    position: relative;
-    top: 3px;
-    &.uc-logo {
-      display: none;
-      top: -2px;
-    }
-  }
-
-  img {
-    border: none;
-  }
-}
-
 
 
 .map-latlng {
