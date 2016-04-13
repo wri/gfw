@@ -90,7 +90,7 @@
 
   };
 
-  if (! !!location.hostname.includes('www.globalforestwatch.org')){
+  if (location.hostname.indexOf('www.globalforestwatch.org') == -1){
     var $transifexEl = document.getElementById('transifexTranslateBox');
     $transifexEl.className += " -visible";
   }
