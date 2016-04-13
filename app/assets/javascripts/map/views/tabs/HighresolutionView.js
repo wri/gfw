@@ -197,7 +197,7 @@ define([
 
     switchToggle: function(to) {
       this.$el.find('.onoffswitch').toggleClass('checked', to);
-      this.toggleIconUrthe();
+      this.toggleIconUrthe(to);
     },
 
 
@@ -267,8 +267,9 @@ define([
       }
     },
 
-    toggleIconUrthe: function() {
-      this.$UC_Icon.toggle();
+    toggleIconUrthe: function(to) {
+
+      this.$UC_Icon.toggle(to);
     },
 
     triggerChosen: function() {

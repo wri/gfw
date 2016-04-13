@@ -829,7 +829,8 @@
 
   @media (min-width: $br-mobile){
     &.-visible {
-      display: block;  
+      // Don't forget to remove this
+      // display: block;  
     }
   }
 
