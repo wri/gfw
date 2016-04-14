@@ -843,8 +843,7 @@
     svg{
       display: inline-block;
       position: absolute;
-      top: 50%;
-      @include transform(translate(0,-50%));
+      top: 2px;
       right: 0px;
       height: 18px;
       width: 18px;
