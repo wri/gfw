@@ -64,16 +64,6 @@ define([
         presenter._renderResults(AnalysisServiceResponse.fires);
         expect(presenter._renderAnalysis.calls.count()).toEqual(1);
       });
-
-      it('should render failure message from a failure response', function() {
-        presenter._renderResults({failure: true});
-        expect(viewSpy.renderFailure.calls.count()).toEqual(1);
-      });
-
-      it('should render unavailable message from a unvalid resource', function() {
-        presenter._renderResults({unavailable: true});
-        expect(viewSpy.renderFailure.calls.count()).toEqual(1);
-      });
     });
 
     describe('deleteAnalysis()', function() {
