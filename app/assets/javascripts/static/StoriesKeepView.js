@@ -58,9 +58,10 @@ define([
         itemsOnPage : this.model.get('perpage'),
         currentPage : this.model.get('page'),
         displayedPages: 3,
+        edges: 1,        
         selectOnClick: false,
-        prevText: ' ',
-        nextText: ' ',
+        prevText: '<svg><use xlink:href="#shape-arrow-left"></use></svg>',
+        nextText: '<svg><use xlink:href="#shape-arrow-right"></use></svg>',
         onPageClick: _.bind(function(pageNumber, event){
           event.preventDefault();
           this.$paginationContainer.pagination('drawPage', pageNumber);

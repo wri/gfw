@@ -171,6 +171,10 @@ define([
       this.subscription.set('name',
         this.$el.find('#subscriptionName').val());
 
+      this.stopListening(this.user);
+      this.user.setEmailIfEmpty(this.subscription.get('email'));
+      this.user.save();
+
       this.subscription.save().
         then(this.onSave.bind(this)).
         fail(this.close.bind(this));
