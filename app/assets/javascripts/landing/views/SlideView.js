@@ -38,7 +38,7 @@ define([
         infinite: true,
         speed: 500,
         autoplay: true,
-        autoplaySpeed: 5000,
+        autoplaySpeed: 6500,
         slide: 'li',
         fade: true,
         cssEase: 'linear',
