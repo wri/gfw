@@ -1,7 +1,7 @@
 define([
-  'underscore', 'backbone',
+  'underscore', 'backbone', 'moment',
   'map/presenters/tabs/AnalysisPresenter',
-], function(_, Backbone, AnalysisPresenter) {
+], function(_, Backbone, moment, AnalysisPresenter) {
 
   describe('AnalysisPresenter', function() {
 
@@ -17,7 +17,8 @@ define([
             'loss': 'umd-loss-gain',
             'forestgain': 'umd-loss-gain',
             'forest2000': 'umd-loss-gain',
-            'viirs_fires_alerts': 'viirs-active-fires'
+            'viirs_fires_alerts': 'viirs-active-fires',
+            'afakelayer': 'fl'
           }
         };
 
@@ -37,7 +38,7 @@ define([
       describe('when a baselayer is selected', function() {
         beforeEach(function() {
           this.status.set('baselayer', {
-            slug: 'viirs_fires_alerts'
+            slug: 'afakelayer'
           });
         });
 
@@ -68,7 +69,7 @@ define([
         });
 
         it('stores the dataset on the resource', function() {
-          expect(this.method({}).dataset).toEqual('viirs-active-fires');
+          expect(this.method({}).dataset).toEqual('fl');
         });
       });
 
@@ -160,10 +161,32 @@ define([
         });
       });
 
-      describe('when a baselayer that is not loss, forestgain or forest2000 is selected', function() {
+      describe('when the viirs baselayer is selected', function() {
         beforeEach(function() {
           this.status.set('baselayer', {
             slug: 'viirs_fires_alerts'
+          });
+        });
+
+        describe('with a date far in the past', function() {
+          beforeEach(function() {
+            this.status.set('date', ['2014-03-03', '2014-03-04']);
+          });
+
+          it('transforms the dates to the most recent valid range', function() {
+            var expectedPeriod = [
+              moment().subtract(1, 'days').utc().format('YYYY-MM-DD'),
+              moment().utc().format('YYYY-MM-DD')].join(',');
+
+            expect(this.method({}).period).toEqual(expectedPeriod);
+          });
+        });
+      });
+
+      describe('when a baselayer that is not loss, forestgain or forest2000 is selected', function() {
+        beforeEach(function() {
+          this.status.set('baselayer', {
+            slug: 'afakelayer'
           });
         });
 
