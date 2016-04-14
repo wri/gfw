@@ -9,8 +9,9 @@ define([
   'uri',
   'abstract/layer/CartoDBLayerClass',
   'map/presenters/layers/FiresLayerPresenter',
+  'map/helpers/FiresDatesHelper',
   'text!map/cartocss/global_7d.cartocss'
-], function(_, moment, UriTemplate, CartoDBLayerClass, Presenter, global7dCartoCSS) {
+], function(_, moment, UriTemplate, CartoDBLayerClass, Presenter, DatesHelper, global7dCartoCSS) {
 
   'use strict';
 
@@ -26,9 +27,10 @@ define([
       _.bindAll(this, 'setCurrentDate');
       this.presenter = new Presenter(this);
 
-      // Default to 48 hours
-      this.setCurrentDate(options.currentDate ||
-        [moment().subtract(24, 'hours'), moment()]);
+      // Default to 24 hours
+      var currentDate = options.currentDate ||
+        [moment().subtract(24, 'hours'), moment()];
+      this.setCurrentDate(DatesHelper.getRangeForDates(currentDate));
 
       this._super(layer, options, map);
     },
