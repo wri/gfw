@@ -757,11 +757,14 @@
     svg{
       fill: $dark;
       position: absolute;
-      top: 50%;
-      left: 50%;
+      left: 0;
+      margin: auto;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
       width: 18px;
       height: 18px;
-      @include transform(translate(-50%,-50%));
     }
   }
   .menu-section-link{
