@@ -55,7 +55,6 @@ define([
       this.svg = {};
       this.xscale = {};
 
-
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.render(_.bind(function() {
@@ -66,13 +65,12 @@ define([
           }, this));
         },this)
       });
+
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.renderMobile();
         },this)
       });
-
-
     },
 
     renderMobile: function(){
