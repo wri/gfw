@@ -28,7 +28,7 @@ define([
 
   return {
     getRangeForDates: function(dates) {
-      var duration = moment(dates[1]).diff(dates[0], 'hours'),
+      var duration = moment(dates[1]).diff(moment(dates[0]), 'hours'),
           dateRange = _.findWhere(AVAILABLE_DATE_RANGES, {duration: duration});
 
       return [dateRange.start, dateRange.end];
