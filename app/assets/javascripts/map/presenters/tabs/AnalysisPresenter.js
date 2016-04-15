@@ -83,7 +83,9 @@ define([
     }, {
       'Place/go': function(place) {
         this._setBaselayer(place.layerSpec.getBaselayers());
-        this.status.set('date', [place.params.begin, place.params.end]);
+        if (! !!this.status.get('date')) {
+          this.status.set('date', [place.params.begin, place.params.end]);
+        }
         this.status.set('threshold', place.params.threshold);
         this.status.set('dont_analyze', place.params.dont_analyze);
         this._handlePlaceGo(place.params);
