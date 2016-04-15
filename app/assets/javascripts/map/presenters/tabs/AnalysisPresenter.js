@@ -5,12 +5,13 @@
  */
 define([
   'map/presenters/PresenterClass',
-  'underscore', 'backbone', 'mps', 'topojson', 'bluebird',
+  'underscore', 'backbone', 'mps', 'topojson', 'bluebird', 'moment',
   'helpers/geojsonUtilsHelper',
+  'map/helpers/FiresDatesHelper',
   'map/services/CountryService',
   'map/services/RegionService',
   'map/services/GeostoreService'
-], function(PresenterClass, _, Backbone, mps, topojson, Promise, geojsonUtilsHelper, countryService, regionService, GeostoreService) {
+], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment, geojsonUtilsHelper, FiresDatesHelper, countryService, regionService, GeostoreService) {
 
   'use strict';
 
@@ -608,7 +609,7 @@ define([
      * from the current status.
      */
     _buildResource: function(resource) {
-      var date, dateFormat;
+      var date, dateFormat = 'YYYY-MM-DD';
       var baselayer = this.status.get('baselayer');
 
       // Return resource if there isn't a baselayer
@@ -622,43 +623,33 @@ define([
         resource.geostore = this.status.get('geostore');
       }
 
-      if (baselayer.slug !== 'forestgain') {
-        // Append dataset string
-        resource.dataset = this.datasets[baselayer.slug];
+      resource.dataset = this.datasets[baselayer.slug];
 
-        // Append period
+      if (baselayer.slug === 'loss' || baselayer.slug === 'forest2000' || baselayer.slug === 'forestgain') {
+        var threshold = this.status.get('threshold');
+        if (threshold === undefined || threshold === null) {
+          threshold = 30;
+        }
+        resource.thresh = '?thresh=' + threshold;
+      }
+
+      if (baselayer.slug === 'forestgain') {
+        date = ['2001-01-01', '2013-12-31'];
+      } else {
         date = this.status.get('date');
-        dateFormat = 'YYYY-MM-DD';
 
-        // period format = 2012-12-23,2013-01-4
-        date[0] = (date[0] != null) ? ((!!date[0]._isAMomentObject) ? date[0] : date[0].substr(0,10)) : '2001-01-01';
-        date[1] = (date[1] != null) ? ((!!date[1]._isAMomentObject) ? date[1] : date[1].substr(0,10)) : '2014-12-31';
-        resource.period = '{0},{1}'.format(date[0].format(dateFormat), date[1].format(dateFormat));
+        if (!date[0]) { date[0] = '2001-01-01'; }
+        if (!date[1]) { date[1] = '2014-12-31'; }
 
-        // this is super ugly
-        if (baselayer.slug === 'loss' || baselayer.slug === 'forest2000') {
-          resource.thresh = '?thresh=' + ((this.status.get('threshold') === null) ? 30 :  this.status.get('threshold'));
-        } else {
-          delete resource.thresh;
+        if (baselayer.slug === 'viirs_fires_alerts') {
+          date = FiresDatesHelper.getRangeForDates(date);
         }
 
-        return resource;
-      } else {
-        // Append dataset string
-        resource.dataset = this.datasets[baselayer.slug];
-
-        // Append period
-        date = ['2001-01-01','2013-12-31'];
-
-        // period format = 2012-12-23,2013-01-4
-        resource.period = '{0},{1}'.format(
-          date[0], date[1]);
-
-        // this is super ugly
-        resource.thresh = '?thresh=' + this.status.get('threshold');
-
-        return resource;
+        date = date.map(function(date) { return moment(date).format(dateFormat); });
       }
+      resource.period = '{0},{1}'.format(date[0], date[1]);
+
+      return resource;
     },
 
     /**
