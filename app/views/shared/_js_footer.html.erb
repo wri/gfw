@@ -92,7 +92,9 @@
 
   if (location.hostname.indexOf('www.globalforestwatch.org') == -1){
     var $transifexEl = document.getElementById('transifexTranslateBox');
-    $transifexEl.className += " -visible";
+    if (!!$transifexEl) {
+      $transifexEl.className += " -visible";
+    }
   }
 
 </script>

@@ -36,6 +36,7 @@ define([
       TimelineView.__super__._cacheSelector.apply(this);
       this.$timelineName = this.$el.find('.timeline-name');
       this.$timelineLatLng = this.$el.find('.timeline-latlng');
+      this.$fullMapButton = this.$el.find('.timeline-mobile-call-to-action');
     },
 
     update: function(layer) {
@@ -47,6 +48,7 @@ define([
       var html = this.template(p);
       this._update(html);
       this.$timelineLatLng.html(currentLatlng);
+      this.$fullMapButton.find('a').attr('href',location.href.replace('/embed',''));
     },
 
     updateLatlng: function(lat, lng) {
