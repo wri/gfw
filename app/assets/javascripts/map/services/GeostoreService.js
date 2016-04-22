@@ -40,14 +40,15 @@ define([
 
       ds.define(SAVE_REQUEST_ID, {
         url: url,
-        type: 'POST'
+        type: 'POST',
+        contentType: 'application/json'
       });
 
       var requestConfig = {
         resourceId: SAVE_REQUEST_ID,
         data: JSON.stringify(geojson),
         success: function(response) {
-          resolve(response.id);
+          resolve(response.data.id);
         },
         error: reject
       };
