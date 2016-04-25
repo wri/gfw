@@ -20,9 +20,6 @@ gem 'rack-reverse-proxy', '~> 0.11.0', :require => 'rack/reverse_proxy'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
-  gem 'launchy' # this lets us call save_and_open_page to see what's on a page for debugging capybara tests
-  gem 'capybara', '2.0.3'  # capybara-webkit works with this version
-  gem 'capybara-screenshot'
   gem 'show_me_the_cookies'
   gem 'factory_girl_rails'
   gem 'shoulda-matchers'
