@@ -14,7 +14,6 @@ class CountriesController < ApplicationController
   end
 
   def show
-
     if @country['gva'].present? && @country['gva'] > 0
       gva_precision = (@country['gva_percent'] < 0.1) ? 2 : 1
       @country['gva_percent'] = number_to_percentage(@country['gva_percent'], precision: gva_precision)
@@ -26,7 +25,6 @@ class CountriesController < ApplicationController
     blog_story = Api::Blog.find_by_country(@country)
     @blog_story = blog_story.present? ? blog_story : nil
 
-        
     response = Typhoeus.get("https://wri-01.cartodb.com/api/v2/sql?q=with%20r%20as%20((select%20the_geom_webmercator%20from%0Agadm2_countries%20where%20iso%3Dupper('#{@country['iso'].downcase}')))%20SELECT%20f.the_geom%2C%20author%2C%20date%2C%20image%2C%20lat%2Clon%2Ctitle%20FROM%20mongabay%20f%2C%20r%20WHERE%20st_intersects(f.the_geom_webmercator%2Cr.the_geom_webmercator)%20order%20by%20date%3A%3Adate%20desc", headers: { "Accept" => "application/json" })
     @mongabay_story = if response.success?
                         JSON.parse(response.body)['rows'][0]
@@ -72,8 +70,9 @@ class CountriesController < ApplicationController
         end
       end
     end
+
     def find_by_name(country_name)
-      country_name, *rest = country_name.split(/_/)
+      country_name, *_ = country_name.split(/_/)
       country_name = country_name.capitalize
       response = Typhoeus.get("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20gfw2_countries%20where%20name%20like%20'#{country_name}%25'",
         headers: {"Accept" => "application/json"}
@@ -84,6 +83,7 @@ class CountriesController < ApplicationController
         nil
       end
     end
+
     def check_country_iso
       @country = find_by_iso(params[:id])
       unless @country.nil?

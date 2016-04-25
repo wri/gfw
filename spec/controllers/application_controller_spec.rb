@@ -63,6 +63,10 @@ describe ApplicationController do
     context "with a non whitelisted IP" do
       let(:ip) { "1.3.3.7" }
 
+      before :each do
+        controller.request.stub(:host).and_return("www.globalforestwatch.org")
+      end
+
       it "redirects to accept_terms_path" do
         is_expected.to redirect_to(accept_terms_path)
       end
@@ -84,6 +88,11 @@ describe ApplicationController do
       let(:user_agent) {
         "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
       }
+
+      before :each do
+        controller.request.stub(:user_agent).and_return(user_agent)
+        controller.request.stub(:host).and_return("www.globalforestwatch.org")
+      end
 
       it "does not redirect to /notsupportedbrowser" do
         is_expected.to_not redirect_to("/notsupportedbrowser")
