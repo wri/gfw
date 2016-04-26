@@ -752,12 +752,18 @@
 // KEEP UPDATED
 .stories-box {
   width: 100%;
-  >ul {
+
+  > ul {
     position: relative;
     @include display-flex();
     @include flex-wrap(wrap);
     @include justify-content(space-between);
-    >li {
+
+    .spinner {
+      top: 25px;
+    }
+
+    > li {
       padding: 0 0 40px 0;
       position: relative;
       &:first-child { margin-top: 20px;}
@@ -782,6 +788,7 @@
         @include row(flex-start);
         @include flex-wrap(wrap);
       }
+
       figure {
         width: 100%;
         margin: 0 0 20px -15px;

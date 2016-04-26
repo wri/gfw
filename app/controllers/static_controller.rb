@@ -47,12 +47,7 @@ class StaticController < ApplicationController
     @keywords = 'GFW, stay informed, stories, read, news, blog, newsletter, sign up, publications, browse, updates, keep udated, submit, upload, share'
     @currentNavigation = '.shape-keep'
 
-    stories_per_page = 5
-
     @page        = (params[:page] || 1).to_i
-    @total_stories = Api::Story.visible.count
-    @stories_per_page = stories_per_page
-    @visible     = Api::Story.find_by_page(@page, stories_per_page)
   end
 
   def keepstories
