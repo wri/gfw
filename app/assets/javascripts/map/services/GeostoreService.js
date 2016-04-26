@@ -8,7 +8,7 @@ define([
   var GET_REQUEST_ID = 'GeostoreService:get',
       SAVE_REQUEST_ID = 'GeostoreService:save';
 
-  var URL = window.gfw.config.GFW_API_HOST + '/geostore/{id}';
+  var URL = window.gfw.config.GFW_API_HOST + '/api/geostore/{id}';
 
   var GeostoreService = Class.extend({
 
