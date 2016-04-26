@@ -44,9 +44,9 @@ Gfw::Application.routes.draw do
   get '/about/testers' => redirect("/about")
   get '/getinvolved/provide-feedback' => redirect("/getinvolved")
 
-  # stories
-  get '/stories/crowdsourcedstories' => 'stories#crowdsourcedstories'
-  resources :stories
+  get '/stories' => redirect('/stayinformed/crowdsourced-stories')
+  get '/stories/new' => 'stories#index', as: 'new_story'
+  get '/stories/*all' => 'stories#index'
 
   # static
   get '/data' => redirect("sources")
@@ -58,7 +58,6 @@ Gfw::Application.routes.draw do
 
   get '/stayinformed' => 'static#keep'
   get '/stayinformed(/:section)' => 'static#keep'
-  get '/stayinformed-stories' => 'static#keepstories'
 
   get '/getinvolved/apply-to-the-small-grants-fund' => redirect('/small-grants-fund')
   get '/getinvolved/develop-your-own-app' => redirect('/developers-corner')
@@ -74,7 +73,6 @@ Gfw::Application.routes.draw do
   # explore
   get '/explore' => 'static#explore'
   get '/explore(/:section)' => 'static#explore'
-
 
   get '/notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'
   get '/terms' => 'static#terms'

@@ -1,6 +1,6 @@
 define([
   'backbone', 'handlebars', 'underscore',
-  'text!stories/templates/story.handlebars'
+  'text!stories/templates/story_item.handlebars'
 ], function(
   Backbone, Handlebars, _,
   tpl
