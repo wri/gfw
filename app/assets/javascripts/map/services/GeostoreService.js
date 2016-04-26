@@ -25,7 +25,9 @@ define([
 
       var requestConfig = {
         resourceId: GET_REQUEST_ID,
-        success: resolve
+        success: function(response) {
+          resolve(response.data);
+        },
       };
 
       ds.request(requestConfig);

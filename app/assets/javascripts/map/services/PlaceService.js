@@ -140,7 +140,7 @@ define([
 
       if (place.params.geostore) {
         GeostoreService.get(place.params.geostore).then(function(geostore) {
-          mps.publish('Geostore/go', [geostore.data]);
+          mps.publish('Geostore/go', [geostore]);
         });
       }
     },
