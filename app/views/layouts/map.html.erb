@@ -29,13 +29,13 @@
     <%= csrf_meta_tags %>
 
     <% if !is_embed %>
-      <script id="loader-gfw" data-current=".shape-map" src="http://gfw-assets.s3.amazonaws.com/static/gfw-assets.latest.js"></script>
+      <%= render 'shared/gfw_assets' %>
     <% end %>
 
   </head>
 
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
-    <%= render 'shared/svg_icons_header' %>
+    
     <%= render 'shared/svg_icons_footer' %>
     <%= render 'shared/js_config' %>
 
