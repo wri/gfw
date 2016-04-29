@@ -16,7 +16,8 @@ input.picker__input[type="text"] {
   cursor: default;
   border-color: $cGreen1;
   border-radius: 20px;
-  color: $cGreen1;
+  color: $dark;
+  text-transform: uppercase;
 }
 
 input.picker__input[type="text"]:hover {
@@ -25,8 +26,7 @@ input.picker__input[type="text"]:hover {
 
 input.picker__input[type="text"]:hover,
 input.picker__input[type="text"].picker__input--active {
-  background-color: $cGreen1;
-  color: white;
+  background-color: darken($white,5%);
 }
 
 .picker {
@@ -234,22 +234,7 @@ input.picker__input[type="text"].picker__input--active {
   right: 18px;
   color: $cGreen1;
 }
-.highresolution-content {
-  .picker__day:after {
-    content: none;
-  }
-  .picker .picker__holder {
-    top: -260px;
-    position: relative;
-    left: -370px;
-  }
 
-}
-.tab-mobile-content {
-  .picker .picker__holder {
-    left: 0;
-  }
-}
 .picker__day:hover {
   cursor: pointer;
   background: #eee;
@@ -322,4 +307,22 @@ input.picker__input[type="text"].picker__input--active {
   position: absolute;
   left: 2px;
   top: 15px;
+}
+
+// HRES
+.highresolution-content {
+  .picker__day:after {
+    content: none;
+  }
+  .picker .picker__holder {
+    top: -170px;
+    left: -350px;
+    bottom: auto;
+  }
+
+}
+.tab-mobile-content {
+  .picker .picker__holder {
+    left: 0;
+  }
 }

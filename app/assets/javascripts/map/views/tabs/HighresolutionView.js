@@ -9,11 +9,12 @@ define([
   'enquire',
   'moment',
   'mps',
+  'cookie',
   'picker',
   'pickadate',
   'map/presenters/tabs/HighresolutionPresenter',
   'text!map/templates/tabs/highresolution.handlebars'
-], function(_, Handlebars, enquire, moment, mps, picker, pickadate, Presenter, tpl) {
+], function(_, Handlebars, enquire, moment, mps, Cookies, picker, pickadate, Presenter, tpl) {
 
   'use strict';
 
@@ -28,14 +29,14 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click  .onoffswitch'       : 'toggleLayer',
-      'click  .maptype h3'        : 'toggleLayerName',
+      'click .onoffswitch'        : 'toggleLayer',
+      'click .maptype h3'         : 'toggleLayerName',
       'input #range-clouds'       : 'setVisibleRange',
       'change #range-clouds'      : 'setVisibleRange',
+      'click #btn-highresolutionModal' : 'setCookie',
       'change input'              : '_setParams',
       'change select'             : '_setParams',
-      'click button'              : '_triggerChanges',
-      'click .advanced-controls'  : '_toggleAdvanced'
+      'click .advanced-controls'  : '_toggleAdvanced',
     },
 
     renderers: { 
@@ -77,9 +78,9 @@ define([
       this.$maxdate            = this.$el.find("input[name='snd__maxdate_submit']");
       this.$advanced_options   = this.$el.find('.advanced-options');
       this.$advanced_controls  = this.$el.find('.advanced-controls');
-      this.$apply              = this.$el.find('.btn');
       this.$disclaimer         = this.$el.find('#disclaimer-zoom');
       this.$currentZoom        = this.$el.find('#currentZoom');
+      this.$highresolutionModal = this.$el.find('#highresolutionModal');
       this.$UC_Icon            = $('#uc-logo-map');
     },
 
@@ -144,17 +145,11 @@ define([
 
     _setParams: function(e) {
       if (!!this.presenter.status.get('hresolution')) {
-        this.$apply.addClass('green').removeClass('gray');
         this.presenter.setHres(this._getParams());
-        this._triggerChanges(e);
+        this.presenter.updateLayer('urthe');
       } else {
         this.toggleLayer();
       }
-    },
-
-    _triggerChanges: function(e) {
-      this.presenter.updateLayer('urthe');
-      this.$apply.removeClass('green').addClass('gray');
     },
 
     _fillParams: function(params) {
@@ -172,11 +167,9 @@ define([
 
     toggleLayer: function(e) {
       if (this.zoom >= 5) {
-        this.$apply.toggleClass('disabled');
         this.presenter.toggleLayer('urthe');
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
-          this.$apply.toggleClass('disabled');
           this.presenter.toggleLayer('urthe');
         } else {
           this.presenter.notificate('not-zoom-not-reached');
@@ -192,12 +185,21 @@ define([
 
     _toggleAdvanced: function(e) {
       this.$advanced_controls.toggleClass('active');
+      this.$advanced_controls.text((this.$advanced_controls.hasClass('active')) ? "Close Advanced Settings" : "Open Advanced Settings");
       this.$advanced_options.toggle('250');
     },
 
     switchToggle: function(to) {
       this.$el.find('.onoffswitch').toggleClass('checked', to);
-      this.toggleIconUrthe();
+      if (!Cookies.get('highresolution-advice')) {
+        this.$highresolutionModal.toggleClass('-active', to);  
+      }
+      this.toggleIconUrthe(to);
+    },
+
+    setCookie: function() {
+      Cookies.set('highresolution-advice', true, { expires: 60 });
+      this.$highresolutionModal.toggleClass('-active', false);
     },
 
 
@@ -220,7 +222,7 @@ define([
 
       var TODAY         = moment().toDate(),
           TODAY_TEXT    = 'Jump to Today',
-          FORMAT        = 'dddd, dd mmm, yyyy',
+          FORMAT        = 'dd mmm yyyy',
           FORMATSUBMIT  = 'yyyy-mm-dd';
 
       var startHRdate = $('.timeline-date-picker-start').pickadate({
