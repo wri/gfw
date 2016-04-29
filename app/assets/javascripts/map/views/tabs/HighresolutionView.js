@@ -39,7 +39,7 @@ define([
       'click .advanced-controls'  : '_toggleAdvanced',
     },
 
-    renderers: { 
+    renderers: {
       'rgb': 'RGB (Red Green Blue)',
       'ndvi': 'NDVI (Normalized Difference Vegetation Index)',
       'evi': 'EVI (Enhanced vegetation index)',
@@ -192,7 +192,7 @@ define([
     switchToggle: function(to) {
       this.$el.find('.onoffswitch').toggleClass('checked', to);
       if (!Cookies.get('highresolution-advice')) {
-        this.$highresolutionModal.toggleClass('-active', to);  
+        this.$highresolutionModal.toggleClass('-active', to);
       }
       this.toggleIconUrthe(to);
     },
@@ -275,13 +275,9 @@ define([
       }
     },
 
-    toggleIconUrthe: function() {
-      this.$UC_Icon.toggle();
-    },
-
-    triggerChosen: function() {
-    },
-
+    toggleIconUrthe: function(to) {
+      this.$UC_Icon.toggle(to);
+    }
 
   });
 
