@@ -34,6 +34,7 @@ $letterW: 20px;
 
   .highresolution-content{
     padding: 15px;
+    max-width: 360px;
     // max-height: 350px;
     // overflow-y: auto;
     @media (min-width: 1500px){
@@ -44,7 +45,9 @@ $letterW: 20px;
     h2 {
       font-size: 21px;
       padding: 0 0 15px;
-      text-align: center;
+      @media (min-width: $br-mobile){
+        text-align: center;
+      }
     }
 
     // HRES SECTION
@@ -120,7 +123,7 @@ $letterW: 20px;
       position: relative;
       top: 15px;
       cursor: pointer;
-      display: block;
+      display: none;
       text-transform: uppercase;
       margin: 0 -15px;
       font-weight: 500;
@@ -129,6 +132,11 @@ $letterW: 20px;
       text-align: center;
       font-size: 10px;
       background: $border;      
+      
+      @media (min-width: $br-mobile){
+        display: block;
+      }
+
       @media (min-width: 1500px){
         top: 20px;
         margin: 0 -20px;
@@ -139,8 +147,11 @@ $letterW: 20px;
       }
     }
     .advanced-options {
-      display: none;
-      padding: 15px 0 5px;
+      display: block;
+      @media (min-width: $br-mobile){
+        display: none;
+        padding: 15px 0 5px;
+      }
       @media (min-width: 1500px){
         padding: 20px 0 5px;
       }
