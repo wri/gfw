@@ -204,7 +204,13 @@ define([
 
 
     printSelects: function() {
-      this.triggerChosen();
+      this.$selects.chosen({
+        width: '100%',
+        allow_single_deselect: true,
+        disable_search: true,
+        inherit_select_classes: true,
+        no_results_text: "Oops, nothing found!"
+      });
     },
 
     setVisibleRange: function(){
@@ -274,13 +280,6 @@ define([
     },
 
     triggerChosen: function() {
-      this.$selects.chosen({
-        width: '100%',
-        allow_single_deselect: true,
-        disable_search: true,
-        inherit_select_classes: true,
-        no_results_text: "Oops, nothing found!"
-      });
     },
 
 
