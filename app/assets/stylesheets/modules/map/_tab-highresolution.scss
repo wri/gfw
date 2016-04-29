@@ -1,124 +1,152 @@
 $letterW: 20px;
-#disclaimer-zoom {
-  display: none;
-  margin: 15px 0;
-  font-size: 13px;
-  color: $red;
-  strong {
-    color: #555;
-  }
-}
 .tab-highresolution {
+
+  .highresolution-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: rgba(#000, 0.7);
+    box-shadow: $shadow1;
+    padding: 20px;
+    color: $white;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.4;
+    max-width: 240px;
+    opacity: 0;
+    visibility: hidden;
+
+
+    &.-active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    > * {
+      margin-top: 15px;
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+  }
+
   .highresolution-content{
     padding: 15px;
-    max-height: 350px;
-    overflow-y: auto;
+    // max-height: 350px;
+    // overflow-y: auto;
     @media (min-width: 1500px){
       padding: 20px;
-      max-height: 400px;
+      // max-height: 400px;
     }
+
     h2 {
       font-size: 21px;
       padding: 0 0 15px;
       text-align: center;
     }
-    // Select box
-    .select-box{
-      .chzn-container-single{
-        margin: 0 0 5px;
-        &:last-child{
-          margin: 0;
-        }
-      }
-      .country-ul-mobile{
-        margin: 0 -15px;
-        >li{
-          padding: 10px 20px;
-          border-bottom: 1px solid $border;
-          font-size: 14px;
-          &:last-child{
-            border-bottom: none;
-          }
-        }
-      }
-      .letters-ul-mobile-box{
-        position: relative;
-        margin: -15px -15px 0;
-        border-bottom: 1px solid $border;
-        &:before,&:after{
-          content: "";
-          position: absolute;
-          top: 0;
-          width: 15px;
-          height: 100%;
-        }
-        &:before{
-          left: 0;
-          @include gradient(left,rgba(255,255,255,1),rgba(255,255,255,0));
-        }
-        &:after{
-          right: 0;
-          @include gradient(right,rgba(255,255,255,1),rgba(255,255,255,0));
-        }
-        .scroll-none{
-          overflow: auto;
-          padding: 15px 0 13px;
-        }
-        .letters-ul-mobile{
-          width: 27.5 * $letterW;
-          padding: 0px 15px;
-          overflow: hidden;
-          >li{
-            float: left;
-            color: $cGreen;
-            width: $letterW;
-            height: $letterW;
-            line-height: $letterW;
-            text-align: center;
-            text-transform: uppercase;
-            &.disabled{
-              color: $dark;
-              opacity: 0.75;
-            }
-            &.current{
-              font-weight: 500;
-            }
-          }
-        }
-      }
-    }
-    .maptype,
+
+    // HRES SECTION
     section {
       margin: 11px 0 0 0;
-      > span {
+      
+      // TITLES
+      h3 {
         display: block;
         font-size: 11px;
         color: #999;
         text-transform: uppercase;
         padding: 7px 0;
         position: relative;
+        font-weight: 500;
+
+        &.-title {
+          font-size: 16px;
+          text-transform: none;
+          font-weight: 400;
+
+          .source {
+            margin: 0px 0 0 4px;
+          }
+        }
+
+        .onoffswitch {
+          position: absolute;
+          top: 50%;
+          transform: translate(0,-50%);
+          cursor: pointer;
+          right: 5px;
+        }
+
+
         .source {
           @extend .info-icon;
           display: inline-block;
           position: absolute;
-          top: 4px;
-          margin: 0 0 0 4px;
+          top: 50%;
+          transform: translate(0,-50%);
+          margin: -2px 0 0 4px;
         }
       }
-      h3 {
-        display: inline;
+
+      // DISCLAIMER
+      #disclaimer-zoom {
+        display: none;
+        margin: 15px 0;
+        font-size: 13px;
+
+        strong {
+          color: darken($dark, 10%);
+          font-weight: 500;
+        }
       }
-      .info-mapsource {
-        display: inline-block;
-        position: relative;
-        top: -3px;
+
+      // DATES
+      .btn-box-dates {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        .slash {
+          margin: 0 5px;
+          font-size: 13px;
+        }
       }
     }
-    .onoffswitch {
-      float: right;
-      margin: 1px 0 0 6px;
+
+    // ADVANCED OPTIONS
+    .advanced-controls {
+      position: relative;
+      top: 15px;
       cursor: pointer;
+      display: block;
+      text-transform: uppercase;
+      margin: 0 -15px;
+      font-weight: 500;
+      
+      padding: 10px 15px;
+      text-align: center;
+      font-size: 10px;
+      background: $border;      
+      @media (min-width: 1500px){
+        top: 20px;
+        margin: 0 -20px;
+      }
+
+      &:hover {
+        background: darken($border, 5%);
+      }
     }
+    .advanced-options {
+      display: none;
+      padding: 15px 0 5px;
+      @media (min-width: 1500px){
+        padding: 20px 0 5px;
+      }
+    }
+
+
     .checked {
       background: #97bd3d;
     }
@@ -161,22 +189,6 @@ $letterW: 20px;
         border-radius: 2px;
         z-index: 2;
       }
-    }
-
-    .advanced-controls {
-      cursor: pointer;
-      &:after {
-        content:'►';
-        left: 133px;
-        display: inline-block;
-        position: absolute;
-      }
-      &.active:after {
-        content: '▼';
-      }
-    }
-    .advanced-options {
-      display: none;
     }
 
     // RANGE INPUT
