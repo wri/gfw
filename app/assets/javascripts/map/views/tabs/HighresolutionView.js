@@ -241,6 +241,9 @@ define([
         formatSubmit: FORMATSUBMIT,
         hiddenPrefix: 'snd__mindate',
         onOpen: onPickerOpen,
+        klass: {
+          picker: 'picker -left',
+        },        
         onSet: function(event) {
           if ( event.select ) {
             endHRdate_picker.set('min', startHRdate_picker.get('select'));
@@ -260,6 +263,9 @@ define([
         formatSubmit: FORMATSUBMIT,
         hiddenPrefix: 'snd__maxdate',
         onOpen: onPickerOpen,
+        klass: {
+          picker: 'picker -left',
+        },        
         onSet: function(event) {
           if ( event.select ) {
             startHRdate_picker.set('max', endHRdate_picker.get('select'));
