@@ -83,6 +83,7 @@ define([
       pantropical: Handlebars.compile(pantropicalTpl),
       idn_primary: Handlebars.compile(idnPrimaryTpl),
       ifl_2013_deg: Handlebars.compile(intact2013Tpl),
+      can_ifl: Handlebars.compile(intact2013Tpl),
       grump2000: Handlebars.compile(grumpTpl),
       user_stories:  Handlebars.compile(storiesTpl),
       terrailoss: Handlebars.compile(terra_iTpl),

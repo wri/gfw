@@ -141,6 +141,7 @@ define([
   'map/views/layers/BraMiningLayer',
   'map/views/layers/ViirsLayer',
   'map/views/layers/PerMinamCoverLayer',
+  'map/views/layers/CanIntactForestLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -296,6 +297,7 @@ define([
   BraMiningLayer,
   ViirsLayer,
   PerMinamCoverLayer,
+  CanIntactForestLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -750,6 +752,10 @@ define([
     per_minam_tree_cover: {
       view:  PerMinamCoverLayer
     },
+    can_ifl: {
+      view:  CanIntactForestLayer
+    },
+    
     nothing: {
     }
   };
