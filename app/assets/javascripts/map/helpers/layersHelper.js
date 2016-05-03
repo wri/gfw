@@ -139,6 +139,8 @@ define([
   'map/views/layers/MexMiningLayer',
   'map/views/layers/BraMiningLayer',
   'map/views/layers/ViirsLayer',
+  'map/views/layers/PerMinamCoverLayer',
+  'map/views/layers/CanIntactForestLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -292,6 +294,8 @@ define([
   MexMiningLayer,
   BraMiningLayer,
   ViirsLayer,
+  PerMinamCoverLayer,
+  CanIntactForestLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -731,15 +735,19 @@ define([
     mex_mining: {
       view:  MexMiningLayer
     },
-    
     per_mining: {
       view:  PerMiningLayer
     },
-    
     bra_mining: {
       view:  BraMiningLayer
     },
-    
+    per_minam_tree_cover: {
+      view:  PerMinamCoverLayer
+    },
+    can_ifl: {
+      view:  CanIntactForestLayer
+    },
+
     nothing: {
     }
   };
