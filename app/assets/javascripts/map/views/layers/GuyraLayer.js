@@ -20,7 +20,7 @@ define([
     },
 
     init: function(layer, options, map) {
-      var mapObj={month_to_change: moment(layer.maxdate).subtract(3, 'months').utc().format('MM'), year_to_change: moment(layer.maxdate).utc().format('YYYY')}
+      var mapObj={month_to_change: moment(layer.maxdate).subtract(3, 'months').utc().format('MM'), year_to_change: moment(layer.maxdate).subtract(3, 'months').utc().format('YYYY')}
 
       this.options.cartocss = GuyraCartoCSS.replace(/month_to_change|year_to_change/g, function(matched){return mapObj[matched]});
       
