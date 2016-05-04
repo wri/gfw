@@ -9,7 +9,7 @@
   [zoom<6]{
     line-width: 0.05;
     line-opacity: 1;} 
-  [year = year_to_change][month>month_to_change]{
+  [year >= year_to_change][month>month_to_change]{
     polygon-fill: #FFCC00;
     line-color: #FFCC00;
     [zoom>5]{
