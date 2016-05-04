@@ -5,7 +5,7 @@
  */
 define([
   'abstract/layer/CartoDBLayerClass',
-  'text!map/cartocss/idn_peat.cartocss'
+  'text!map/cartocss/mys_peat_lands.cartocss'
 ], function(CartoDBLayerClass, mys_peatCartoCSS) {
 
   'use strict';
@@ -13,9 +13,9 @@ define([
   var MysPeatLandsLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT \'{tableName}\' as tablename, layer_revi, cartodb_id, the_geom_webmercator, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
-      infowindow: false,
-      interactivity: 'cartodb_id, tablename',
+      sql: 'SELECT \'{tableName}\' as tablename, layer_revi as name, cartodb_id, the_geom_webmercator, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
+      infowindow: true,
+      interactivity: 'cartodb_id, name, tablename, analysis',
       cartocss: mys_peatCartoCSS,
       analysis: true
     }

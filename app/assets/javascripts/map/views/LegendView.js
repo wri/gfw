@@ -128,8 +128,6 @@ define([
       rus_hcv:Handlebars.compile(rus_hrvTpl),
       raisg:Handlebars.compile(raisg_land_rightsTpl),
       mys_protected_areas:Handlebars.compile(mysPATpl),
-      mys_peat_lands:Handlebars.compile(mys_peatTpl),
-      idn_peat_lands:Handlebars.compile(idn_peatTpl),
       raisg_mining:Handlebars.compile(raisg_miningTpl),
       bra_mining:Handlebars.compile(raisg_miningTpl),
       per_mining:Handlebars.compile(per_miningTpl),
