@@ -20,10 +20,13 @@ define([
       "urthe",
       //-
       "grump2000",
+      "mex_forest_zoning_cat",
+      "mex_forest_zoning_subcat",
       //FOREST/LAND COVER
       "forest2000",
       "per_minam_tree_cover",
       "cod_primary_forest_wgs",
+      "can_ifl",
       "WMSLayer",
       "global_land_cover",
       "us_land_cover",
