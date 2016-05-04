@@ -149,6 +149,9 @@ define([
         format: 'd mmm yyyy',
         onRender: onPickerRender,
         onOpen: onPickerOpen,
+        klass: {
+          picker: 'picker -top',
+        },
         onSet: function(event) {
           if (event.select !== undefined) {
             var id = this.component.$node.attr('id');
