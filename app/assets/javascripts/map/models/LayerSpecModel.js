@@ -21,8 +21,11 @@ define([
       //-
       "grump2000",
       //FOREST COVER
+      "mex_forest_zoning_cat",
+      "mex_forest_zoning_subcat",
       "forest2000",
       "cod_primary_forest_wgs",
+      "can_ifl",
       "WMSLayer",
       "global_land_cover",
       "us_land_cover",

@@ -141,6 +141,9 @@ define([
   'map/views/layers/ViirsLayer',
   'map/views/layers/PerMinamCoverLayer',
   'map/views/layers/CanIntactForestLayer',
+  'map/views/layers/MexForestCatLayer',
+  'map/views/layers/MexForestSubCatLayer',
+
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -296,6 +299,8 @@ define([
   ViirsLayer,
   PerMinamCoverLayer,
   CanIntactForestLayer,
+  MexForestCatLayer,
+  MexForestSubCatLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -759,7 +764,12 @@ define([
     can_ifl: {
       view:  CanIntactForestLayer
     },
-
+    mex_forest_zoning_cat: {
+      view:  MexForestCatLayer
+    },
+    mex_forest_zoning_subcat: {
+      view:  MexForestSubCatLayer
+    },
     nothing: {
     }
   };
