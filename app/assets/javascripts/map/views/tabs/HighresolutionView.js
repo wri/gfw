@@ -29,14 +29,14 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .onoffswitch'        : 'toggleLayer',
-      'click .maptype h3'         : 'toggleLayerName',
-      'input #range-clouds'       : 'setVisibleRange',
-      'change #range-clouds'      : 'setVisibleRange',
+      'click .onoffswitch'             : 'toggleLayer',
+      'click .maptype h3'              : 'toggleLayerName',
+      'click .advanced-controls'       : 'toggleAdvanced',
       'click #btn-highresolutionModal' : 'setCookie',
-      'change input'              : '_setParams',
-      'change select'             : '_setParams',
-      'click .advanced-controls'  : '_toggleAdvanced',
+      'input #range-clouds'            : 'setClouds',
+      'change #range-clouds'           : 'setClouds',
+      'change input'                   : '_setParams',
+      'change select'                  : '_setParams',
     },
 
     renderers: {
@@ -57,7 +57,6 @@ define([
     initialize: function(map) {
       this.presenter = new Presenter(this);
       this.map = map;
-      this.params_new_url;
       this.previousZoom;
       this.selectedDates = new SelectedDates({
         startDateUC: moment().format('DD-MM-YYYY'),
@@ -157,7 +156,7 @@ define([
       this.$hresSelectFilter.val(this.params.color_filter).trigger("liszt:updated");
       this.$hresSensorFilter.val(this.params.sensor_platform).trigger("liszt:updated");
       this.$range.val(this.params.cloud);
-      this.setVisibleRange();
+      this.setClouds();
       this.zoom = params.zoom;
       window.setTimeout(_.bind(function(params) {
         this.renderPickers(this.params.mindate, this.params.maxdate);
@@ -183,7 +182,7 @@ define([
       this.toggleLayer(e);
     },
 
-    _toggleAdvanced: function(e) {
+    toggleAdvanced: function(e) {
       this.$advanced_controls.toggleClass('active');
       this.$advanced_controls.text((this.$advanced_controls.hasClass('active')) ? "Close Advanced Settings" : "Open Advanced Settings");
       this.$advanced_options.toggle('250');
@@ -213,7 +212,7 @@ define([
       });
     },
 
-    setVisibleRange: function(){
+    setClouds: function(){
       var width = this.$range.val();
       this.$progress.width(width + '%');
       ga('send', 'event', 'Map', 'Settings', 'Urthecast advanced cloud');
