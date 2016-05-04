@@ -169,9 +169,8 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
             height: 100%;
             display: block;
             position: absolute;
-            left: 50%;
-            top: 50%;
-            @include transform(translate(-50%,-50%));
+            left: 0%;
+            top: 0%;
             @include transition(all,0,linear);
           }
         }
