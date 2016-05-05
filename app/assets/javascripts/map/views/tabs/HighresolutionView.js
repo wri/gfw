@@ -32,7 +32,6 @@ define([
       'click .onoffswitch'             : 'toggleLayer',
       'click .maptype h3'              : 'toggleLayerName',
       'click .advanced-controls'       : 'toggleAdvanced',
-      'click #btn-highresolutionModal' : 'setCookie',
       'input #range-clouds'            : 'setClouds',
       'change #range-clouds'           : 'setClouds',
       'change input'                   : '_setParams',
@@ -190,17 +189,23 @@ define([
 
     switchToggle: function(to) {
       this.$el.find('.onoffswitch').toggleClass('checked', to);
-      if (!Cookies.get('highresolution-advice')) {
-        this.$highresolutionModal.toggleClass('-active', to);
+      
+      if (to && !isMobile.any) {
+        var listenerMouseMove = google.maps.event.addListener(this.map, 'mousemove', function(e) {
+          this.$highresolutionModal.toggleClass('-active', to);
+          this.$highresolutionModal.css({
+            top: e.pixel.y + 25, // 35 is the height of the app bar
+            left: e.pixel.x
+          });
+          setTimeout(function() {
+            google.maps.event.removeListener(listenerMouseMove);
+            this.$highresolutionModal.toggleClass('-active', false);
+          }.bind(this), 5000)
+        }.bind(this));        
       }
+      
       this.toggleIconUrthe(to);
     },
-
-    setCookie: function() {
-      Cookies.set('highresolution-advice', true, { expires: 60 });
-      this.$highresolutionModal.toggleClass('-active', false);
-    },
-
 
     printSelects: function() {
       this.$selects.chosen({
