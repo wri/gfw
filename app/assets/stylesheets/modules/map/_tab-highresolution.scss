@@ -5,7 +5,7 @@ $letterW: 20px;
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%,-100%);
     background: rgba(#000, 0.7);
     box-shadow: $shadow1;
     padding: 20px;
@@ -16,7 +16,7 @@ $letterW: 20px;
     max-width: 240px;
     opacity: 0;
     visibility: hidden;
-
+    pointer-events: none;
 
     &.-active {
       opacity: 1;
