@@ -52,38 +52,46 @@
     padding: 0 10px;
     max-height: 240px;
     -webkit-overflow-scrolling: touch;
+    
     li {
       display: none;
       margin: 0;
       padding: 5px 6px;
       list-style: none;
       line-height: 15px;
+      
       em{
         font-style: normal;
         text-decoration: underline;
       }
+      
       &.active-result {
         display: list-item;
         cursor: pointer;
       }
+      
       &.disabled-result {
         display: list-item;
         color: #ccc;
         cursor: default;
       }
+      
       &.highlighted{
         background-color: #FAFAFA;
       }
+      
       &.no-results{
         display: list-item;
         background: #f4f4f4;
       }
+      
       &.group-result{
         display: list-item;
         color: #999;
         font-weight: 500;
         cursor: default;
       }
+      
       &.group-option {
         padding-left: 15px;
       }
@@ -93,6 +101,7 @@
   &.chzn-with-drop .chzn-drop {
     left: 0;
   }
+  
   // Default theme
   &.default{
     .chzn-single{
@@ -103,11 +112,18 @@
       .chzn-default {
         color: $dark;
       }
+
+      div{
+        display: block;
+      }
+
       abbr{
         display: block;
       }
     }
   }
+
+  // Coord theme
   &.coord-select {
     font-size: 18px;
     .chzn-single{
@@ -131,12 +147,50 @@
     .chzn-results {
       padding: 0;
       margin: 0;
+      
       li{
         padding: 10px 0;
         text-align: center;
         // &.result-selected {
         //   display: none;
         // }
+      }
+    }
+  }
+
+  // Country theme
+  &.country-select {
+    $country-color: rgb(207, 127, 236);
+    
+    .chzn-single{
+      color: $dark;
+      background-color: rgba($country-color, 0.25);
+      padding: 15px 10px;
+
+      .chzn-default {
+        color: $dark;
+      }
+
+      div{
+        display: block;
+      }
+      
+      abbr{
+        display: block;
+      }
+    }    
+
+    .chzn-drop {
+      position: relative;
+      top: 0;
+      left: 0;      
+      
+      .chzn-search {
+        padding: 10px;
+      }
+
+      .chzn-results {
+        color: $dark;
       }
     }
   }
@@ -220,14 +274,6 @@
   &.chzn-container-single-nosearch .chzn-search {
     position: absolute;
     left: -9999px;
-  }
-  // Default theme
-  &.default{
-    .chzn-single{
-      div{
-        display: block;
-      }
-    }
   }
 }
 

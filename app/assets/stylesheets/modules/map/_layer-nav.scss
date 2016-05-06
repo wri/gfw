@@ -254,6 +254,13 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         }
 
       }
+
+      .layers-nav-header {
+        &:after {
+          display: none;
+        }
+      }
+
       .category-name{
         color: $white;
         @media (max-width: $br-mobileMap - 1){

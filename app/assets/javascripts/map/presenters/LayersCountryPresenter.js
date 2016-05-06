@@ -1,7 +1,7 @@
 /**
- * The LayersNavPresenter class for the LayersNavView.
+ * The LayersCountryPresenter class for the LayersNavView.
  *
- * @return LayersNavPresenter class.
+ * @return LayersCountryPresenter class.
  */
 define([
   'underscore',
@@ -12,7 +12,7 @@ define([
 
   'use strict';
 
-  var LayersNavPresenter = PresenterClass.extend({
+  var LayersCountryPresenter = PresenterClass.extend({
 
     init: function(view) {
       this.view = view;
@@ -24,17 +24,9 @@ define([
      */
     _subscriptions: [{
       'Place/go': function(place) {
-        this.view._toggleSelected(place.layerSpec.getLayers());
-      }
-    }, {
-      'LayerNav/change': function(layerSpec) {
-        this.view._toggleSelected(layerSpec.getLayers());
+        console.log(place);   
       }
     }],
-
-    initExperiment: function(id){
-      mps.publish('Experiment/choose',[id]);
-    },
 
     notificate: function(id){
       mps.publish('Notification/open', [id]);
@@ -56,5 +48,5 @@ define([
     },
   });
 
-  return LayersNavPresenter;
+  return LayersCountryPresenter;
 });
