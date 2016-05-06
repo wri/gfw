@@ -21,6 +21,10 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    events: {
+      'change #layers-country-select' : 'changeIso'
+    },
+
     initialize: function() {
       // Init presenter
       this.presenter = new Presenter(this);
@@ -33,7 +37,6 @@ define([
     },
 
     render: function() {
-      console.log(this.countries.toJSON());
       this.$el.html(this.template({
         countries: this.countries.toJSON()
       }));
@@ -54,6 +57,16 @@ define([
       });
       this.$select.trigger('liszt:open');
     },
+
+    // EVENTS //
+    changeIso: function(e) {
+      var country = this.$select.val();
+      this.presenter.publishIso({
+        country: country, 
+        region: null
+      });
+    }
+
 
   });
 
