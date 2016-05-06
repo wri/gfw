@@ -31,6 +31,9 @@ define([
     'prodes',
     'guyra',
     'umd_as_it_happens',
+    'umd_as_it_happens_per',
+    'umd_as_it_happens_cog',
+    'umd_as_it_happens_idn',
     'modis',
     'viirs_fires_alerts'
   ];
@@ -56,6 +59,9 @@ define([
       'guyra': 'guyra-loss',
       'forest2000': 'umd-loss-gain',
       'umd_as_it_happens':'glad-alerts',
+      'umd_as_it_happens_per':'glad-alerts',
+      'umd_as_it_happens_cog':'glad-alerts',
+      'umd_as_it_happens_idn':'glad-alerts',
       'viirs_fires_alerts': 'viirs-active-fires'
     },
 
