@@ -1,0 +1,39 @@
+<span class="category-name">COUNTRY DATA <i id="forest_clearing-category-num" class="category-num"></i></span>
+<div id="country-layers-nav" class="layers-nav">
+  <div class="layers-nav-header">
+    <div class="category-icon"><svg><use xlink:href="#icon-layer-country"></use></svg></div>
+    <span class="category-name">COUNTRY DATA</span>
+  </div>
+
+  {{#if layers}}
+    <ul class="layers-list scroll-thin-dark">
+      {{#each layers}}
+        <li class="{{#if this.does_wrapper}}wrapped-layer{{else}}layer{{/if}}" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">
+          <span class="onoffswitch"><span></span></span>
+          <span class="layer-title">
+            {{this.title}}
+            {{#if this.source_json}}
+              <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+            {{else}}
+              <a href='#' data-source='{{this.slug}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+            {{/if}}
+          </span>
+          {{#if this.subtitle}}
+            <span class="layer-info">{{this.subtitle}}</span>
+          {{/if}}
+          {{#if this.does_wrapper}}
+            <span class="does_wrapper"></span>
+          {{/if}}
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <select data-placeholder="Select country" class="chosen-select country-select notranslate" id="layers-country-select">
+      <option></option>
+      {{#each this.countries}}
+        <option value="{{this.iso}}">{{this.name}}</option>
+      {{/each}}
+    </select>
+  {{/if}}
+
+</div>

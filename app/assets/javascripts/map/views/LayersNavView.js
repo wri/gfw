@@ -8,29 +8,23 @@ define([
   'underscore',
   'amplify',
   'chosen',
-  'map/presenters/LayersNavPresenter',
   'handlebars',
+  'map/presenters/LayersNavPresenter',
   'text!map/templates/layersNav.handlebars',
-  'text!map/templates/layersNavByCountry.handlebars',
-  'text!map/templates/layersNavByCountryWrapper.handlebars'
-], function(Backbone, _, amplify, chosen, Presenter, Handlebars, tpl, tplCountry, tplCountryWrapper) {
+  'map/views/LayersCountryView',
+], function(Backbone, _, amplify, chosen, Handlebars, Presenter, tpl, LayersCountryView) {
 
   'use strict';
 
   var LayersNavView = Backbone.View.extend({
 
     template: Handlebars.compile(tpl),
-    templateCountry: Handlebars.compile(tplCountry),
-    templateCountryWrapper: Handlebars.compile(tplCountryWrapper),
 
     events: {
       'click .category-name' : '_toggleLayersNav',
       'click .layer': '_toggleLayer',
       'click .wrapped-layer': '_toggleLayerWrap',
       'click .grouped-layers-trigger' : 'toggleLayersGroup',
-      'click #country-layers' : '_showNotification',
-      'click #country-layers-reset' : '_resetIso',
-      'click #country-layers-reset-mobile' : '_resetIso'
     },
 
     initialize: function() {
@@ -63,6 +57,8 @@ define([
       this.$layersCountry = $('#layers-country-nav');
       this.$countryLayers = $('#country-layers');
       this.$countryLayersReset = $('#country-layers-reset');
+
+      new LayersCountryView();
 
     },
 
@@ -240,93 +236,93 @@ define([
       }, this ))
     },
 
-    /**
-     * Set and update iso
-     */
-    setIso: function(iso){
-      this.iso = iso.country;
-      this.region = iso.region;
-      this.setIsoLayers();
-    },
+    // /**
+    //  * Set and update iso
+    //  */
+    // setIso: function(iso){
+    //   this.iso = iso.country;
+    //   this.region = iso.region;
+    //   this.setIsoLayers();
+    // },
 
-    updateIso: function(iso){
-      // This is for preventing blur on layers nav
-      this.$categoriesList.width('auto');
-      (iso.country !== this.iso) ? this.resetIsoLayers() : null;
-      this.iso = iso.country;
-      this.region = iso.region;
-      this.setIsoLayers();
-    },
+    // updateIso: function(iso){
+    //   // This is for preventing blur on layers nav
+    //   this.$categoriesList.width('auto');
+    //   (iso.country !== this.iso) ? this.resetIsoLayers() : null;
+    //   this.iso = iso.country;
+    //   this.region = iso.region;
+    //   this.setIsoLayers();
+    // },
 
-    _resetIso: function(){
-      this.presenter.resetIso();
-    },
+    // _resetIso: function(){
+    //   this.presenter.resetIso();
+    // },
 
-    /**
-     * Render Iso Layers.
-     */
-    _getIsoLayers: function(layers) {
-      this.layersIso = layers;
-    },
+    // /**
+    //  * Render Iso Layers.
+    //  */
+    // _getIsoLayers: function(layers) {
+    //   this.layersIso = layers;
+    // },
 
-    resetIsoLayers: function(){
-      _.each(this.$countryLayers.find('.layer'),_.bind(function(li){
-        if ($(li).hasClass('selected')) {
-          var layerSlug = $(li).data('layer');
-          this.presenter.toggleLayer(layerSlug)
-        }
-      }, this ))
-    },
+    // resetIsoLayers: function(){
+    //   _.each(this.$countryLayers.find('.layer'),_.bind(function(li){
+    //     if ($(li).hasClass('selected')) {
+    //       var layerSlug = $(li).data('layer');
+    //       this.presenter.toggleLayer(layerSlug)
+    //     }
+    //   }, this ))
+    // },
 
-    setIsoLayers: function(e){
-      var layersToRender = [];
-      _.each(this.layersIso, _.bind(function(layer){
-        if (layer.iso === this.iso) {
-          layersToRender.push(layer);
-        }
-      }, this ));
+    // setIsoLayers: function(e){
+    //   var layersToRender = [];
+    //   _.each(this.layersIso, _.bind(function(layer){
+    //     if (layer.iso === this.iso) {
+    //       layersToRender.push(layer);
+    //     }
+    //   }, this ));
 
-      if (!!this.iso && this.iso !== 'ALL') {
-        this.$countryLayersReset.removeClass('hidden');
-      }else{
-        this.$countryLayersReset.addClass('hidden');
-      }
+    //   // if (!!this.iso && this.iso !== 'ALL') {
+    //   //   this.$countryLayersReset.removeClass('hidden');
+    //   // }else{
+    //   //   this.$countryLayersReset.addClass('hidden');
+    //   // }
 
 
-      if(layersToRender.length > 0) {
-        this.$countryLayers.addClass('active').removeClass('disabled');
-        this.$countryLayersReset.addClass('active').removeClass('disabled');
-      }else{
-        this.$countryLayers.removeClass('active').addClass('disabled');
-        this.$countryLayersReset.removeClass('active').addClass('disabled');
-      }
-      this.renderIsoLayers(layersToRender);
-    },
+    //   // if(layersToRender.length > 0) {
+    //   //   this.$countryLayers.addClass('active').removeClass('disabled');
+    //   //   this.$countryLayersReset.addClass('active').removeClass('disabled');
+    //   // }else{
+    //   //   this.$countryLayers.removeClass('active').addClass('disabled');
+    //   //   this.$countryLayersReset.removeClass('active').addClass('disabled');
+    //   // }
+    //   this.renderIsoLayers(layersToRender);
+    // },
 
-    renderIsoLayers: function(layers){
-      var country = _.find(amplify.store('countries'), _.bind(function(country){
-        return country.iso === this.iso;
-      }, this ));
-      var name = (country) ? country.name : 'Country';
-      (country) ? this.$countryLayers.addClass('iso-detected') : this.$countryLayers.removeClass('iso-detected');
-      this.$countryLayers.html(this.templateCountry({ country: name ,  layers: layers }));
-      for (var i = 0; i< layers.length; i++) {
-        if (!!layers[i].does_wrapper) {
-          var self = this;
-          var wrapped_layers = JSON.parse(layers[i].does_wrapper);
-          self.$countryLayers.find('[data-layer="' +  layers[i].slug + '"] .does_wrapper').html(self.templateCountryWrapper({layers: wrapped_layers}));
-          var removeLayerFromCountry = function(layer) {
-            self.$countryLayers.find('[data-layer="' +  layer.slug + '"]:not(.wrapped)').remove();
-          }
-          _.each(wrapped_layers,removeLayerFromCountry);
-        }
-      }
+    // renderIsoLayers: function(layers){
+    //   var country = _.find(amplify.store('countries'), _.bind(function(country){
+    //     return country.iso === this.iso;
+    //   }, this ));
+    //   var name = (country) ? country.name : 'Country';
+    //   (country) ? this.$countryLayers.addClass('iso-detected') : this.$countryLayers.removeClass('iso-detected');
+    //   this.$countryLayers.html(this.templateCountry({ country: name ,  layers: layers }));
+    //   for (var i = 0; i< layers.length; i++) {
+    //     if (!!layers[i].does_wrapper) {
+    //       var self = this;
+    //       var wrapped_layers = JSON.parse(layers[i].does_wrapper);
+    //       self.$countryLayers.find('[data-layer="' +  layers[i].slug + '"] .does_wrapper').html(self.templateCountryWrapper({layers: wrapped_layers}));
+    //       var removeLayerFromCountry = function(layer) {
+    //         self.$countryLayers.find('[data-layer="' +  layer.slug + '"]:not(.wrapped)').remove();
+    //       }
+    //       _.each(wrapped_layers,removeLayerFromCountry);
+    //     }
+    //   }
 
-      this.fixLegibility();
+    //   // this.fixLegibility();
 
-      //this.presenter.initExperiment('source');
-      this._toggleSelected(this.layers);
-    },
+    //   //this.presenter.initExperiment('source');
+    //   this._toggleSelected(this.layers);
+    // },
 
     fixLegibility: function(){
       var w = this.$categoriesList.width();
