@@ -37,7 +37,7 @@ define([
         this._handlePlaceGo(place.params);
       }
     },{
-      'LocalMode/updateIso': function(iso) {
+      'Country/update': function(iso) {
         this.status.set('iso', iso);
         if (!iso.country) {
           mps.publish('Place/update', [{go: false}]);

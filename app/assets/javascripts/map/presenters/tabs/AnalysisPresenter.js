@@ -189,7 +189,7 @@ define([
           this.deleteAnalysis();
           this._analyzeIso(iso,{ fit_bounds: true });
         }else{
-          mps.publish('LocalMode/updateIso',[iso, this.status.get('dont_analyze')]);
+          mps.publish('Country/update',[iso, this.status.get('dont_analyze')]);
           this.deleteAnalysis();
         }
 
@@ -364,7 +364,7 @@ define([
       var options = options || {};
       this.deleteAnalysis();
       this.view.setSelects(iso, this.status.get('dont_analyze'));
-      mps.publish('LocalMode/updateIso', [iso, this.status.get('dont_analyze')]);
+      mps.publish('Country/update', [iso, this.status.get('dont_analyze')]);
       this.status.unset('geostore');
 
       // Build resource
@@ -441,7 +441,7 @@ define([
         this.status.set('subscribe_only', true);
         this.status.set('dont_analyze', false);
         this.status.set('resource', resource);
-        mps.publish('LocalMode/updateIso', [iso, this.status.get('dont_analyze')]);
+        mps.publish('Country/update', [iso, this.status.get('dont_analyze')]);
         mps.publish('Place/update', [{go: false}]);
         this._subscribeAnalysis();
       }

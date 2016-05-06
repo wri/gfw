@@ -26,6 +26,10 @@ define([
       'Place/go': function(place) {
         console.log(place);   
       }
+    },{
+      'Country/update': function(iso) {
+        console.log(iso);
+      }
     }],
 
     notificate: function(id){
@@ -37,6 +41,11 @@ define([
      *
      * @param  {string} layerSlug
      */
+
+    publishIso: function(iso) {
+      mps.publish('Country/update', [iso]);
+    },
+
     toggleLayer: function(layerSlug) {
       var where = [{slug: layerSlug}];
 
