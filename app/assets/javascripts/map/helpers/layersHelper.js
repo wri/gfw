@@ -689,6 +689,18 @@ define([
       view: AsItHappensHybridLayer,
       timelineView: AsItHappensTimeline
     },
+    umd_as_it_happens_per: {
+      view: AsItHappensHybridLayer,
+      timelineView: AsItHappensTimeline
+    },
+    umd_as_it_happens_cog: {
+      view: AsItHappensHybridLayer,
+      timelineView: AsItHappensTimeline
+    },
+    umd_as_it_happens_idn: {
+      view: AsItHappensHybridLayer,
+      timelineView: AsItHappensTimeline
+    },
     gfw_landsat_alerts_coverage: {
       view: LandsatAlertsCoverLayer
     },
