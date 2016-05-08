@@ -40,7 +40,11 @@ define([
      */
     _subscriptions: [{
       'Place/go': function(place) {
-        console.log(place);   
+        var params = place.params;
+        if(!!params.iso.country && params.iso.country !== 'ALL'){
+          this.view.setCountry(params.iso);
+          this.status.set('iso', params.iso);
+        }
       }
     },{
       'Country/update': function(iso) {

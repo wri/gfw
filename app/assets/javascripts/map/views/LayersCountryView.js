@@ -37,7 +37,7 @@ define([
 
     initialize: function() {
       // Init presenter
-      this.presenter = new Presenter(this);
+      this.presenter = new Presenter(this);        
 
       // Init country service
       this.countries = new CountryCollection();
@@ -52,7 +52,7 @@ define([
       this.$el.html(this.template({
         countries: this.countries.toJSON(),
         country: this.model.get('country'),
-        countryName: this.model.get('countryName'),
+        countryName: this.model.get('countryName') || 'Country',
         countryLayers: this.model.get('countryLayers')
       }));
       this.cache();
