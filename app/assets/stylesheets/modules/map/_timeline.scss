@@ -1,6 +1,6 @@
 .widget-timeline {
   .widget-box {
-    bottom: 100px;
+    bottom: 94px;
     left: 0;
     width: 100%;
     height: 45px;
@@ -45,6 +45,10 @@
         // }
       }
     }
+  }
+
+  .timeline-mobile-call-to-action {
+    display: none;
   }
 
   .timeline-legend {

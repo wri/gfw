@@ -1,7 +1,7 @@
 define([
-  'd3',
+  'd3', 'underscore',
   'geojsonArea'
-], function(d3, geojsonArea) {
+], function(d3, _, geojsonArea) {
 
   var geojsonUtilsHelper = {
     /**
@@ -35,10 +35,20 @@ define([
      * @return {array} paths
      */
     geojsonToPath: function(geojson) {
-      var coords = geojson.coordinates[0];
-      return _.map(coords, function(g) {
-        return new google.maps.LatLng(g[1], g[0]);
-      });
+      if (geojson.type === 'Polygon') {
+        var coords = geojson.coordinates[0];
+        return _.map(coords, function(g) {
+          return new google.maps.LatLng(g[1], g[0]);
+        });
+      } else if (geojson.type === 'MultiPolygon') {
+        return geojson.coordinates.map(function(polygon) {
+          return polygon[0].map(function(coords) {
+            return new google.maps.LatLng(coords[1], coords[0]);
+          });
+        });
+      } else {
+        return false;
+      }
     },
 
     /**

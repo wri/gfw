@@ -23,7 +23,7 @@ define([
      */
     _subscriptions: [{
       'MapControlsSearch/show': function() {
-        this.view.toggleSearch();
+        this.view.model.toggleVisibility();
       }
     }],
 
@@ -40,6 +40,7 @@ define([
       mps.publish('Map/set-center', [lat, lng]);
       mps.publish('Map/set-zoom', [12]);
     }
+    
   });
 
   return SearchboxPresenter;

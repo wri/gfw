@@ -314,7 +314,7 @@ define([
         if (!!layers[i].does_wrapper) {
           var self = this;
           var wrapped_layers = JSON.parse(layers[i].does_wrapper);
-          self.$countryLayers.find('.does_wrapper').html(self.templateCountryWrapper({layers: wrapped_layers}));
+          self.$countryLayers.find('[data-layer="' +  layers[i].slug + '"] .does_wrapper').html(self.templateCountryWrapper({layers: wrapped_layers}));
           var removeLayerFromCountry = function(layer) {
             self.$countryLayers.find('[data-layer="' +  layer.slug + '"]:not(.wrapped)').remove();
           }

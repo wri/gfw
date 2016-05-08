@@ -10,8 +10,9 @@ require([
   'map/utils',
   'enquire',
   'mps',
+  'handlebars',
   'map/router',
-  'views/SourceWindowView',
+  'views/SourceModalView',
   'views/SourceBottomView',
   'views/SourceMobileFriendlyView',
   'map/presenters/ExperimentsPresenter',
@@ -26,14 +27,16 @@ require([
   'map/views/LegendView',
   'map/views/TimelineView',
   'map/views/NavMobileView',
+  'map/views/GuideView',
+  'map/views/controls/GuideButtonView',
+  'connect/views/UserFormModalView',
   'views/HeaderView',
   'views/FooterView',
   'views/NotificationsView',
   'views/DownloadView',
-
   '_string'
-], function($, _, Class, Backbone, chosen, utils, enquire, mps, Router, SourceWindowView, SourceBottomView, SourceMobileFriendlyView, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
-    MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, HeaderView, FooterView, NotificationsView, DownloadView) {
+], function($, _, Class, Backbone, chosen, utils, enquire, mps, Handlebars, Router, SourceModalView, SourceBottomView, SourceMobileFriendlyView, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
+    MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, GuideView, GuideButtonView, UserFormModalView, HeaderView, FooterView, NotificationsView, DownloadView) {
 
   'use strict';
 
@@ -44,6 +47,7 @@ require([
     init: function() {
       var router = new Router(this);
       this._cartodbHack();
+      this._handlebarsPlugins()
       this._initViews();
       this._initApp();
 
@@ -73,7 +77,6 @@ require([
       // Google Experiments
       new ExperimentsPresenter();
 
-
       var mapView = new MapView();
 
       new MapControlsView(mapView.map);
@@ -85,10 +88,14 @@ require([
       new NavMobileView();
       new FooterView();
       new HeaderView();
-      new SourceWindowView();
+      new SourceModalView();
       new SourceBottomView();
       new SourceMobileFriendlyView();
       new NotificationsView();
+      new GuideView();
+      new GuideButtonView();
+
+      $('body').append(new UserFormModalView().el);
     },
 
     /**
@@ -99,6 +106,33 @@ require([
         handlebars: typeof(Handlebars) === 'undefined' ? null : Handlebars.compile
       });
     },
+
+    _handlebarsPlugins: function() {
+      Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+        switch (operator) {
+          case '==':
+            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+          case '===':
+            return (v1 === v2) ? options.fn(this) : options.inverse(this);
+          case '!==':
+            return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+          case '<':
+            return (v1 < v2) ? options.fn(this) : options.inverse(this);
+          case '<=':
+            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+          case '>':
+            return (v1 > v2) ? options.fn(this) : options.inverse(this);
+          case '>=':
+            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+          case '&&':
+            return (v1 && v2) ? options.fn(this) : options.inverse(this);
+          case '||':
+            return (v1 || v2) ? options.fn(this) : options.inverse(this);
+          default:
+            return options.inverse(this);
+        }
+      });
+    }
 
   });
 

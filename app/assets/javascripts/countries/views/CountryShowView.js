@@ -5,6 +5,7 @@ define([
   'jquery',
   'backbone',
   'underscore',
+  'handlebars',
   'd3',
   'mps',
   'scrollit',
@@ -15,12 +16,11 @@ define([
   'countries/models/CountryShowModel',
   'countries/helpers/CountryHelper',
   'views/NotificationsView',
-
-
-], function($, Backbone, _, d3, mps, scrollit, SourceWindowView, DownloadView, CountryHeaderView, ShareView, CountryShowModel, CountryHelper, NotificationsView) {
+  'countries/abstract/ForestTenureGraph',
+  'text!countries/templates/burnedForestTooltip.handlebars',
+], function($, Backbone, _, Handlebars, d3, mps, scrollit, SourceWindowView, DownloadView, CountryHeaderView, ShareView, CountryShowModel, CountryHelper, NotificationsView, ForestTenureGraph, burnedForestTpl) {
 
   'use strict';
-
 
   var CountryShowView = Backbone.View.extend({
     el: '#countryShowView',
@@ -29,6 +29,8 @@ define([
       'click .forma_dropdown-link': '_openDropdown',
       'click .share-link': '_openShareModal'
     },
+
+    burnedForestTpl: Handlebars.compile(burnedForestTpl),
 
     initialize: function() {
       this.embed = $('body').hasClass('embed');
@@ -55,7 +57,9 @@ define([
         this._stickynav();
         this._drawTenure();
         this._drawForestsType();
+        this._drawForestCertification();
         this._drawFormaAlerts();
+        this._drawBurnedForests();
         this._initFormaDropdown();
       // }
     },
@@ -140,143 +144,44 @@ define([
     },
 
     _drawTenure: function() {
-      var sql = ['SELECT tenure_government, tenure_owned, tenure_owned_individuals,',
-                 'tenure_reserved, GREATEST(tenure_government, tenure_owned,',
-                                          'tenure_owned_individuals,',
-                                          'tenure_owned_individuals,',
-                                          'tenure_reserved) as max',
-                 "FROM gfw2_countries WHERE iso = '" + this.country.get('iso') + "'"].join(' ');
+      var sql = ['SELECT tenure_government,',
+                   'tenure_owned, tenure_owned_individuals, tenure_reserved',
+                 'FROM gfw2_countries',
+                 'WHERE iso = \'' + this.country.get('iso') + '\''
+                ].join(' ');
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+ sql, function(json) {
-        var data = json.rows[0],
-            h = 0;
+        var data = json.rows[0];
+        var tenures = [{
+          name: 'Public lands administered by the government',
+          percent: data.tenure_government
+        }, {
+          name: 'Public lands reserved for communities and indigenous groups',
+          percent: data.tenure_reserved
+        }, {
+          name: 'Private lands owned by communities and indigenous groups',
+          percent: data.tenure_owned
+        }, {
+          name: 'Private lands owned by firms and individuals',
+          percent: data.tenure_owned_individuals
+        }];
 
-        var x_extent = [0, data.max],
-            x_scale = d3.scale.linear()
-                        .range([0, 500])
-                        .domain(x_extent);
-
-        var origins = [],
-            aggr = 0,
-            klass = ['one', 'two', 'three', 'four']
-
-        var tenures = [
-          {
-            name: 'Public lands administered by the government',
-            percent: data.tenure_government
-          },
-          {
-            name: 'Public lands reserved for communities and indigenous groups',
-            percent: data.tenure_reserved
-          },
-          {
-            name: 'Private lands owned by communities and indigenous groups',
-            percent: data.tenure_owned
-          },
-          {
-            name: 'Private lands owned by firms and individuals',
-            percent: data.tenure_owned_individuals
-          }
-        ];
-
-        var tenures_ord = [];
-
-        _.each(tenures, function(tenure, i) {
-          if (tenure['percent'] !== null && tenure['percent'] !== 0) {
-            h += 50;
-
-            tenures_ord.push({
-              name: tenure['name'],
-              percent: tenure['percent']
-            });
-          }
+        tenures = _.filter(tenures, function(tenure) {
+          return tenure['percent'] > 0;
         });
 
-        if (tenures_ord.length === 0) {
+        if (tenures.length === 0) {
           $('.country-tenure .coming-soon').show();
           return;
         }
 
-        var svg = d3.select('.country-tenure .line-graph')
-          .append('svg')
-          .attr('height', h);
-
-        var svgWidth = $(svg[0]).outerWidth();
-        var svgMaxWidth = svgWidth - 80;
-
-        // add lines
-        svg.selectAll('rect')
-          .data(tenures_ord)
-          .enter()
-          .append('rect')
-          .attr('class', function(d, i) {
-            return klass[i];
-          })
-          .attr('x', function() {
-            return x_scale(0);
-          })
-          .attr('y', function(d, i) {
-            return 25 + (50 * i);
-          })
-          .attr('width', function(d) {
-            var width = x_scale(d['percent']);
-            return width > svgMaxWidth ? svgMaxWidth : width;
-          })
-          .attr('height', 4)
-          .attr('rx', 2)
-          .attr('ry', 2);
-
-        // add balls
-        svg.selectAll('circle')
-          .data(tenures_ord)
-          .enter()
-          .append('svg:circle')
-          .attr('class', function(d, i) {
-            return klass[i];
-          })
-          .attr('cx', function(d, i) {
-            var x = x_scale(d['percent']);
-            return x > svgMaxWidth ? svgMaxWidth : x;
-          })
-          .attr('cy', function(d, i) {
-            return 27 + (50 * i);
-          })
-          .attr('r', 5);
-
-        // add values
-        svg.selectAll('.units')
-          .data(tenures_ord)
-          .enter()
-          .append('text')
-          .text(function(d) {
+        new ForestTenureGraph({
+          data: tenures,
+          el: $('.country-tenure .line-graph'),
+          valueFormatter: function(d) {
             return d['percent']/1000000 + 'Mha';
-          })
-          .attr('class', function(d, i) {
-            return 'units ' + klass[i];
-          })
-          .attr('x', function(d, i) {
-            var x = x_scale(d['percent'])+10;
-            return x > (svgMaxWidth + 10) ? (svgMaxWidth + 10) : x;
-          })
-          .attr('y', function(d, i) {
-            return 31 + (50 * i);
-          });
-
-        // add legend
-        svg.selectAll('.legend')
-          .data(tenures_ord)
-          .enter()
-          .append('text')
-          .text(function(d) {
-            return d['name'];
-          })
-          .attr('class', function(d, i) {
-            return 'legend ' + klass[i];
-          })
-          .attr('x', 0)
-          .attr('y', function(d, i) {
-            return 15 + (50 * i);
-          });
+          }
+        });
       });
     },
 
@@ -343,6 +248,69 @@ define([
           .style('font-size', '13px');
       });
     },
+
+
+    _drawForestCertification: function() {
+      var graph = '.forest_certification-graph';
+      var $graph = $('.forest_certification-graph');
+      var $certification = $('.country-forest_certification');
+      var data = _.pluck($graph.data('json'), 'value');
+      data.shift()
+
+      var sumData = _.reduce(data, function(memo, num){ return memo + num; }, 0);
+
+      if (sumData === 0) {
+        $certification.find('.coming-soon').show();
+        return;
+      }
+
+
+      // Parse data
+      data = _.map(data, function(d, i){
+        return Math.round(d * 100);
+      });
+
+      $certification.find('.forest_certification-legends').show();
+
+      var width = 225,
+          height = 225,
+          radius = Math.min(width, height) / 2,
+          colors = ['#819515', '#A1BA42', '#DDDDDD'],
+          labelColors = ['white', 'white', '#555'];
+
+      var pie = d3.layout.pie()
+          .sort(null);
+
+      var arc = d3.svg.arc() // create <path> elements for using arc data
+          .innerRadius(radius - 67)
+          .outerRadius(radius)
+
+      var svg = d3.select(".forest_certification-graph")
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .attr("style", 'min-width:' + width + ';min-height:' + height)
+          .append("g")
+          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+      var path = svg.selectAll("path")
+          .data(pie(data));
+
+      path.enter().append("path")
+        .attr("fill", function(d, i) { return colors[i]; })
+        .attr("d", arc);
+
+      path.enter().append('text')
+        .attr('transform', function(d) { var c = arc.centroid(d); return 'translate(' + (c[0]-12) + ',' + (c[1]+8) + ')'})
+        .text(function(d) {
+          if (d.data > 0) return d.data + '%'
+        })
+        .attr('fill', function(d, i) { return labelColors[i]; } )
+        .attr('class', 'notranslate')
+        .style('font-size', '13px');
+    },
+
+
 
     _drawFormaAlerts: function() {
       var that = this;
@@ -500,6 +468,162 @@ define([
           });
 
       });
+    },
+
+    _drawBurnedForests: function() {
+      var that = this;
+
+      var $el = $('.country-burned_forests');
+      var $graph = $('.burned_forests-graph');
+      var $comingSoon = $el.find('.coming-soon');
+      var json = _.compact(_.map($graph.data('json'), function(el) {
+        if (el.year > 2004 && el.year < 2011){
+          return el;
+        }
+        return null;
+        
+      }));
+
+      if (!json.length) {
+        $comingSoon.show(0);
+        return;
+      }
+
+      var outerWidth = $graph.width();
+      var outerHeight = 160;
+      var m = [20, 20, 0, 60]; // margins
+      var p = [10, 10, 10, 10]; // padding
+      var w = outerWidth - m[1] - m[3]; // width
+      var h = outerHeight - m[0] - m[2]; // height
+
+      // Init graph
+      var graph = d3.select('.burned_forests-graph')
+        .append('svg:svg')
+        .attr('class', 'line')
+        .attr('width', outerWidth)
+        .attr('height', outerHeight);
+
+
+      // Scales
+      var xScale = d3.scale.linear()
+        .domain([0, json.length - 1])
+        .range([p[3], w - m[1]]);
+
+      var max = d3.max(json, function(d) { return parseFloat(d.area_burned_forest); });
+      var yScale = d3.scale.linear()
+        .domain([0, max + max/10])
+        .range([h, p[1]]);
+
+
+      // Axis
+      // x Axis
+      var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .ticks(json.length)
+        .tickFormat(function(d, i){
+          return json[d].year;
+        });
+
+      graph.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate("+ (m[3]) +"," + (h) + ")")
+        .call(xAxis);
+
+
+      // y Axis
+      var yAxis = d3.svg.axis()
+        .scale(yScale)
+        .orient("left")
+        .ticks(5)
+        .tickSize(-w,0)
+        .tickFormat(d3.format("s"));
+
+      graph.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate("+m[3]+",0)")
+        .call(yAxis);
+
+      // Line
+      var line = d3.svg.line()
+        .x(function(d, i) { return xScale(i); })
+        .y(function(d, i) { return yScale(d.area_burned_forest) - m[0]; })
+        .interpolate("linear");
+
+      graph.append('svg:path')
+        .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')')
+        .attr('d', line(json));
+
+
+      // Tooltip
+      var tooltip = d3.select('.burned_forests-graph')
+        .append('div')
+        .attr('class', 'burned_forests-tooltip')
+        .style({
+          visibility: 'hidden',
+          top: '-99999px',
+          left: '-99999px',
+        });
+
+      var burnedForestTpl = this.burnedForestTpl;
+
+      // Positioner
+      var positioner = graph.append('svg:line')
+        .attr('x1', -999999)
+        .attr('y1', -999999)
+        .attr('x2', 0)
+        .attr('y2', h)
+        .style('visibility', 'hidden')
+        .style('stroke', '#aaa');
+
+      // Marker
+      var marker = graph.append('svg:circle')
+        .attr('class', 'burned_forests-marker')
+        .attr('cx', -999999)
+        .attr('cy', -999999)
+        .style('visibility', 'hidden')
+        .attr('r', 5);
+
+
+      // Events
+      graph
+        .on("mouseout", function() {
+          positioner.style("visibility", "hidden");
+          tooltip.style("visibility", "hidden");
+          marker.style("visibility", "hidden");
+        })
+        .on("mouseover", function() {
+          positioner.style("visibility", "visible");
+          tooltip.style("visibility", "visible");
+          marker.style("visibility", "visible");
+        })
+        .on('mousemove', function(d) {
+          var index = Math.round(xScale.invert(d3.mouse(this)[0]));
+          if (json[index]) {
+            var cx = xScale(index),
+                cy = yScale(json[index].area_burned_forest),
+                year = json[index].year;
+
+            marker
+              .attr('cx', cx + m[3])
+              .attr('cy', cy);
+
+            positioner
+              .attr('x1', cx + m[3])
+              .attr('x2', cx + m[3]);
+
+            tooltip.style({
+              top: '-20px',
+              left: cx + m[3] - tooltip[0][0].offsetWidth - 10 + 'px'
+            }).html(burnedForestTpl({
+              amount: that.helper.formatNumber(json[index].area_burned_forest || 0),
+              year: year
+            }))
+            // tooltip.style("top", "-20px").style("left", (cx + marginLeft - 150 - 20) + "px");
+          }
+
+        });
+
+
     },
 
     _openDropdown: function(e) {

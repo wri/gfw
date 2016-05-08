@@ -1,0 +1,25 @@
+<script type="text/javascript">
+  window.liveSettings = {
+    picker: '#transifexTranslateElement',
+    api_key: "9eda410a7db74687ba40771c56abd357",
+    detectlang: false
+
+    // LIVE SETTINGS OPTIONS
+    // api_key: "<key>",
+    // picker: "top-left|top-right|bottom-left|bottom-right|#id",
+    // detectlang: true|false|function() { return lang-code; },
+    // version: 'latest|<version>',
+    // autocollect: true|false,
+    // dynamic: true|false,
+    // staging: true|false,
+    // parse_attr: ["attr1", "attr2", ...],
+    // ignore_tags: ["tag1", "tag2", ...],
+    // ignore_class: ["classname1", "classname2"]
+
+  };
+</script>
+<script type="text/javascript">     
+var version=null,assetsVersions=["a","b","c","d"],jsParams={get:function(e,s){s||(s=location.href),e=e.replace(/[\[]/,"\\[").replace(/[\]]/,"\\]");var t="[\\?&]"+e+"=([^&#]*)",o=new RegExp(t),n=o.exec(s);return null==n?null:n[1]}},jsCookiesHelper={get:function(e){if(document.cookie.length>0){var s=document.cookie.indexOf(e+"=");if(-1!=s){s=s+e.length+1;var t=document.cookie.indexOf(";",s);return-1==t&&(t=document.cookie.length),unescape(document.cookie.substring(s,t))}}return""},set:function(e,s,t){var o=new Date;o.setDate(o.getDate()+t),document.cookie=e+"="+escape(s)+(null==t?"":"; expires="+o.toUTCString())+"; path=/"},check:function(e){return e=jsCookiesHelper.get(e),null!=e&&""!=e}};jsParams.get("version")?(version=jsParams.get("version"),jsCookiesHelper.set("assets-version",version,30)):jsCookiesHelper.get("assets-version")?version=jsCookiesHelper.get("assets-version"):(version=assetsVersions[Math.floor(Math.random()*assetsVersions.length)],jsCookiesHelper.set("assets-version",version,30));var script=document.createElement("script");script.id="loader-gfw",script.src="http://gfw-assets.s3.amazonaws.com/static/gfw-assets.2.0.0-"+version+".js",script.dataset.current="<%= @currentNavigation %>",document.head.appendChild(script);
+</script>
+
+<!-- <script id="loader-gfw" data-current="<%= @currentNavigation %>" src="<%#= ENV['GFW_ASSETS_URL'] %>"></script> -->

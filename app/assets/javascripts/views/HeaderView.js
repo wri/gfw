@@ -17,6 +17,7 @@ define([
 
     events: {
       'click #btn-menu' : 'toggleMenu',
+      'click #btnAppsMenu' : 'toggleAppMenu',
       'click .share-link' : 'shareOpen',
       'click .menu-section-link' : 'menuOpen'
     },
@@ -30,7 +31,11 @@ define([
       this.$footer = $('#footerMenu');
       this.$siteMap = $('#siteMap');
       this.$mobileMenu = $('#mobileMenu');
+      this.$appsMenu = $('#appsSubmenu');
+      this.$btnAppsMenu = $('#btnAppsMenu');
       this.$translate = $('#google_translate_element');
+
+      this.mobile = (this.$window.width() > 850) ? false: true;
 
       this.createMenu();
       this.$window.on('resize',_.bind(this.createMenu,this));
@@ -51,11 +56,30 @@ define([
       }
     },
 
+    toggleAppMenu: function(e){
+      if (this.mobile) {
+        e && e.preventDefault();
+        $(e.currentTarget).toggleClass('active');
+        if ($(e.currentTarget).hasClass('active')) {
+          this.scrollTop = this.$document.scrollTop();
+          this.$htmlbody.addClass('active');
+          this.$appsMenu.addClass('active');
+          this.$btnAppsMenu.find('.shape-apps').children('.icon').toggle();
+        }else{
+          this.$htmlbody.removeClass('active').animate({ scrollTop: this.scrollTop }, 0);
+          this.$appsMenu.removeClass('active');
+          this.$btnAppsMenu.find('.shape-apps').children('.icon').toggle();
+        }
+      }
+    },
+
     createMenu: function(){
       if (this.$window.width() > 850) {
+        this.mobile = false;
         this.$footer.appendTo(this.$siteMap);
         this.$translate.appendTo($('#google_translate_element_box1'));
       }else{
+        this.mobile = true;
         this.$footer.appendTo(this.$mobileMenu);
         this.$translate.appendTo($('#google_translate_element_box2'));
       }
@@ -72,6 +96,8 @@ define([
     },
 
     welcome: function() {
+      if (window.location.hostname === 'localhost') { return; }
+
       console.info('%c .', "background-image: url('http://www.globalforestwatch.org/assets/logo-new.png'); width: 85px; height: 90px; float:left;font-size:82px; color: transparent;");
       console.info('%cWelcome to GFW ', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;font-size: 15px;");
       console.info('%cIn case you\'re interested in the code of this website ', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;");

@@ -6,8 +6,9 @@
 define([
   'Class',
   'underscore',
+  'mps',
   'map/views/layers/CustomInfowindow'
-], function(Class, _, CustomInfowindow) {
+], function(Class, _, mps, CustomInfowindow) {
 
   'use strict';
 
@@ -26,6 +27,13 @@ define([
       this.name = layer.slug;
       this.tileSize = new google.maps.Size(256, 256);
       this.options = _.extend({}, this.defaults, this.options || {});
+      this.setListeners();
+    },
+
+    setListeners: function() {
+      mps.subscribe('Infowindow/close', _.bind(function(){
+        this.removeMultipolygon();
+      }, this ))
     },
 
     addLayer: function(position, success) {
@@ -34,6 +42,10 @@ define([
         if (this.options.infowindow && this.options.interactivity) {
           this.setInfowindow(layer);
         }
+        if (this.options.urlBounds) {
+          this.checkForImagesInBounds();
+        }
+
         success();
       }, this));
 
@@ -42,7 +54,11 @@ define([
     removeLayer: function() {
       var overlayIndex = this._getOverlayIndex();
       this.removeInfowindow();
+      this.removeMultipolygon();
       if (overlayIndex > -1) {
+        if (!!this.clearEvents) {
+          this.clearEvents();
+        };
         google.maps.event.clearListeners(this.map, 'click');
         this.map.overlayMapTypes.setAt(overlayIndex, null);
         // this.map.overlayMapTypes.removeAt(overlayIndex);
@@ -86,19 +102,38 @@ define([
       }
     },
 
+    removeMultipolygon: function() {
+      if (!!this.multipolygon) {
+        this.map.data.remove(this.multipolygon);
+      }
+    },
+
     _getOverlayIndex: function() {
       var index = -1;
-      _.each(this.map.overlayMapTypes.getArray(), _.bind(function(layer, i){
-        if (layer && layer.name === this.getName()) {
-          index = i;
+
+      _.each(this.map.overlayMapTypes.getArray(), function(layer, i) {
+        if (layer) {
+          var layerName = layer.name || layer.options.name;
+          if (layerName === this.getName()) {
+            index = i;
+          }
         }
-      }, this ));
+      }, this);
+
       return index;
     },
 
     getName: function() {
       return this.name;
     },
+
+    notificate: function(id)  {
+      mps.publish('Notification/open', [id]);
+    },
+
+    hidenotification: function()  {
+      mps.publish('Notification/close');
+    }
 
   });
 

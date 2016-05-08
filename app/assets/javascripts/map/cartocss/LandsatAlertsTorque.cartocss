@@ -1,0 +1,50 @@
+#layer {
+  comp-op: src;
+  marker-fill-opacity: 1;
+  marker-line-width: 0;
+  marker-placement: point;
+  marker-type: rectangle;
+  marker-width: 0.25;
+  marker-height: 0.25;
+  marker-fill: #F69;
+
+  [zoom=11] {
+    marker-width: 0.375;
+    marker-height: 0.375;
+  }
+
+  [zoom=12] {
+    marker-width: 0.75;
+    marker-height: 0.75;
+  }
+
+  [zoom=13] {
+    marker-width: 1.5;
+    marker-height: 1.5;
+  }
+
+  [zoom=14]{
+    marker-width: 3;
+    marker-height: 3;
+  }
+
+  [zoom=15]{
+    marker-width: 6;
+    marker-height: 6;
+  }
+
+  [zoom=16]{
+    marker-width: 12;
+    marker-height: 12;
+  }
+
+  [zoom=17]{
+    marker-width: 24;
+    marker-height: 24;
+  }
+
+  [zoom>=18]{
+    marker-width: 48;
+    marker-height: 48;
+  }
+}

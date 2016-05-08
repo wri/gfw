@@ -30,9 +30,12 @@
     <%= controller_stylesheet_link_tag %>
     <%= yield :js %>
     <%= csrf_meta_tags %>
+    <%= render 'shared/gfw_assets' %>
   </head>
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
     <%= render 'layouts/svg_icons' %>
+    
+    <%= render 'shared/svg_icons_footer' %>
     <%= render 'shared/svg_icons_map' %>
     <%= render 'shared/modal' %>
     <%= render 'shared/notifications' %>
@@ -43,7 +46,7 @@
         </div>
         <%= render 'shared/footer_landing' %>
     </div>
-    <a class="feedback-link" href="/getinvolved/provide-feedback"><span>Feedback</span></a>
+    
     <!-- Javascript -->
     <script src="//maps.googleapis.com/maps/api/js?libraries=drawing,places&sensor=false"></script>
     <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>

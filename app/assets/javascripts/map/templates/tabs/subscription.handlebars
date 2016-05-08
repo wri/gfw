@@ -1,7 +1,7 @@
 <div class="tab-subscription">
   <nav id="subscription-nav" class="subscription-nav noselect">
     <ul>
-      <li id="draw-tab-button" data-subscription="draw-tab-s"><svg><use xlink:href="#icon-analysis-draw"></use></svg>Draw shape</li>
+      <li id="draw-tab-button" data-subscription="draw-tab-s"><svg><use xlink:href="#icon-analysis-draw"></use></svg>Draw or upload shape</li>
       <li id="country-tab-button" data-subscription="country-tab-s"><svg><use xlink:href="#icon-analysis-country"></use></svg>Country or region</li>
       <li id="data-tab-button" data-subscription="data-tab-s"><svg><use xlink:href="#icon-analysis-data"></use></svg>Other data layers</li>
     </ul>
@@ -27,6 +27,23 @@
         <li><button id="start-subscription" class="btn green uppercase">Start drawing</button></li>
         <li class="hidden"><button id="done-subscription" class="btn green uppercase">Subscribe</button></li>
       </ul>
+      <div class="dropable">
+        <div id="drop-shape-subscription" class="shape-droppable">
+          <div class="drop-shape-text">
+            Or drop a custom shapefile here
+          </div>
+
+          <div class="spinner3 drop-shape-loading">
+            <svg width="50" height="50">
+              <g>
+              <path class="background" d="M0,25A25,25 0 1,1 0,-25A25,25 0 1,1 0,25M0,20A20,20 0 1,0 0,-20A20,20 0 1,0 0,20Z"></path>
+              <path class="foreground" d="M1.5308084989341915e-15,-25A25,25 0 0,1 25,0L20,0A20,20 0 0,0 1.2246467991473533e-15,-20Z"></path>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <a href='#' data-source="drop-shapefile" class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+      </div>
     </div>
     <div id="country-tab-s" class="subscription-tab-content country-tab">
       <select data-placeholder="Select country" class="chosen-select default notranslate" id="subscription-country-select"><option></option></select>

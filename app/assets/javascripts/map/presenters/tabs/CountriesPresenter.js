@@ -45,16 +45,16 @@ define([
         this.view.setSelects(iso);
       }
     },{
+      'Subscribe/clearIso': function() {
+        this.status.set('iso', {});
+      }
+    },{
       'LayerNav/change': function(layerSpec) {
         this.view._renderHtml();
       }
     },{
       'Layers/isos': function(layers_iso) {
         this.view.getIsoLayers(layers_iso);
-      }
-    },{
-      'AnalysisResults/delete-analysis': function() {
-        this.changeIso({country: null, area:null});
       }
     },{
       'Analysis/analyze-iso': function(iso,to) {
@@ -110,10 +110,6 @@ define([
 
     changeNameIso: function(name){
       mps.publish('Countries/name', [name, !!name]);
-    },
-
-    openTab: function(id){
-      mps.publish('Tab/open',[id]);
     },
 
     initExperiment: function(id){

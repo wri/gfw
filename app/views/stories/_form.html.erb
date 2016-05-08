@@ -68,22 +68,22 @@
   </div>
 
   <div class="field">
-    <%= f.label :video %>
+    <%= label_tag 'youtube video' %>
 
     <%= f.text_field :video, :placeholder => 'http://www.youtube.com/watch?v=lTG-0brb98I' %>
   </div>
 
   <div class="field">
     <%= f.label :media %>
-    <p class="hint mobile-hide">Drag & drop images and videos to reorder them within the carousel. The first one will be considered as the preferred one. The maximum file size for uploads is 4 MB</p>
-    <p class="hint mobile-show">Click below to upload photos or videos to your story. The first photo will be considered the preferred one. The maximum file size for uploads is 4 MB. If you are on an iOS device you must upload pictures one by one</p>
+    <p class="hint mobile-hide">Select images and videos to add to your story. Drag & drop to reorder them within the carousel. The first one will become the default image for the story. The maximum file size for uploads is 4 MB.</p>
+    <p class="hint mobile-show">Click below to upload photos or videos to your story. The first photo will become the default image. The maximum file size for uploads is 4 MB. If you are on an iOS device you must upload pictures one by one.</p>
 
     <ul class="thumbnails">
       <li><a href='#' class='upload_picture'></a></li>
 
       <% (@story.media ||= []).each do |media| %>
         <% if media['thumbnail_url'].present? %>
-          <li class="thumbnail sortable">
+          <li class="thumbnail sortable" draggable="true"">
             <img src="<%= media['thumbnail_url'] %>" alt="" />
             <a href='#' class='destroy'></a>
           </li>

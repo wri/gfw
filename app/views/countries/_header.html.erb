@@ -48,12 +48,12 @@
               <span class="amount"></span>
               <span class="unit">%</span>
             </div>
-            <h4 class="t">TREE COVER LOSS (2001 - 2013)</h4>
+            <h4 class="t">TREE COVER LOSS (2001 - 2014)</h4>
             <div class='total-loss'></div>
             <div class='total-loss-ha'></div>
           </div>
           <div class="loss-gain-graph ghost">
-            <h4 class="mobile-hide">TREE COVER LOSS (2001 - 2013)</h4>
+            <h4 class="mobile-hide">TREE COVER LOSS (2001 - 2014)</h4>
             <div class='total-loss'></div>
             <div class='total-loss-ha'></div>
             <div class='graph' id="lossGainGraph"></div>
@@ -75,8 +75,8 @@
         <div class="country-sidenav">
           <button id="country-sidebar-button"><em>More Options</em> <span class="icon"><svg><use xlink:href="#shape-arrow-down"></use></svg></span></button>
           <ul id="country-sidebar-ul">
-            <li class="disabled">
-              <a href='<%= map_coords %>/grayscale/loss,forestgain?begin=2001-01-01&end=2014-12-30&threshold=' class='action analyze_from_country disabled' target="_blank" id="url_analysis">
+            <li>
+              <a href='<%= map_coords %>/grayscale/loss,forestgain?begin=2001-01-01&end=2014-12-30&threshold=' class='action analyze_from_country' target="_blank" id="url_analysis">
                 <strong>Analyze forest change</strong>
                 <span class="sidenav-icon">
                   <svg>
@@ -96,7 +96,7 @@
               </a>
             </li>
             <li>
-              <a href='http://data.globalforestwatch.org/datasets?q=country<%= @country['iso'] %>' class="download-mobile-link" target='_blank'>
+              <a href='http://data.globalforestwatch.org/datasets?keyword=<%= @country['iso'] %>' class="download-mobile-link" target='_blank'>
                 Browse and download country data
                 <span class="sidenav-icon">
                   <svg>
@@ -105,9 +105,9 @@
                 </span>
               </a>
             </li>
-            <li class="disabled">
-              <a href="#" class="download disabled download-mobile-link" data-type="country-stats">
-              <!-- <a href="http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/umd_country_stats.xlsx" class="download disabled download-mobile-link" data-type="country-stats">   -->
+            <li>
+              <a href="http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/tree_cover_stats_2014.xlsx" class="download download-mobile-link" data-type="country-stats">
+              <!-- <a href="#" class="download disabled download-mobile-link"> -->
                 Download tree cover stats
                 <span class="sidenav-icon">
                   <svg>

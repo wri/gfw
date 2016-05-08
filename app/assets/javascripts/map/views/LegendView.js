@@ -30,9 +30,32 @@ define([
   'text!map/templates/legend/bra_biomes.handlebars',
   'text!map/templates/legend/plantations_by_type.handlebars',
   'text!map/templates/legend/plantations_by_species.handlebars',
+  'text!map/templates/legend/oil_palm.handlebars',
+  'text!map/templates/legend/gtm_forest_change.handlebars',
+  'text!map/templates/legend/gtm_forest_cover.handlebars',
+  'text!map/templates/legend/gtm_forest_density.handlebars',
+  'text!map/templates/legend/khm_eco_land_conc.handlebars',
+  'text!map/templates/legend/usa_forest_ownership.handlebars',
+  'text!map/templates/legend/guyra_deforestation.handlebars',
+  'text!map/templates/legend/logging_roads.handlebars',
+  'text!map/templates/legend/rus_hrv.handlebars',
+  'text!map/templates/legend/raisg_land_rights.handlebars',
+  'text!map/templates/legend/mysPA.handlebars',
+  'text!map/templates/legend/idn_peat.handlebars',
+  'text!map/templates/legend/mys_peat.handlebars',
+  'text!map/templates/legend/raisg_mining.handlebars',
+  'text!map/templates/legend/per_mining.handlebars',
+  'text!map/templates/legend/glad.handlebars',
+  'text!map/templates/legend/urthecast.handlebars',
+  'text!map/templates/legend/mex_forest_cat.handlebars',
+  'text!map/templates/legend/mex_forest_subcat.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, 
+    concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, 
+    global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
+    gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl, 
+    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl) {
 
   'use strict';
 
@@ -62,6 +85,7 @@ define([
       pantropical: Handlebars.compile(pantropicalTpl),
       idn_primary: Handlebars.compile(idnPrimaryTpl),
       ifl_2013_deg: Handlebars.compile(intact2013Tpl),
+      can_ifl: Handlebars.compile(intact2013Tpl),
       grump2000: Handlebars.compile(grumpTpl),
       user_stories:  Handlebars.compile(storiesTpl),
       terrailoss: Handlebars.compile(terra_iTpl),
@@ -77,8 +101,45 @@ define([
       forma : Handlebars.compile(formaTPL),
       bra_biomes : Handlebars.compile(bra_biomesTPL),
       plantations_by_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      bra_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      per_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      lbr_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      col_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      khm_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      idn_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      mys_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
       plantations_by_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
-
+      bra_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      per_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      lbr_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      col_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      khm_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      idn_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      mys_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      oil_palm: Handlebars.compile(oil_palmTpl),
+      gtm_forest_change1: Handlebars.compile(gtm_forest_changeTpl),
+      gtm_forest_change2: Handlebars.compile(gtm_forest_changeTpl),
+      gtm_forest_cover: Handlebars.compile(gtm_forest_coverTpl),
+      gtm_forest_density: Handlebars.compile(gtm_forest_densityTpl),
+      khm_eco_land_conc: Handlebars.compile(khm_eco_land_concTpl),
+      usa_forest_ownership: Handlebars.compile(usa_forest_ownershipTpl),
+      guyra:Handlebars.compile(guyra_deforestationTpl),
+      logging_roads:Handlebars.compile(logging_roadsTpl),
+      rus_hcv:Handlebars.compile(rus_hrvTpl),
+      raisg:Handlebars.compile(raisg_land_rightsTpl),
+      mys_protected_areas:Handlebars.compile(mysPATpl),
+      raisg_mining:Handlebars.compile(raisg_miningTpl),
+      bra_mining:Handlebars.compile(raisg_miningTpl),
+      per_mining:Handlebars.compile(per_miningTpl),
+      umd_as_it_happens:Handlebars.compile(gladTpl),
+      umd_as_it_happens_per:Handlebars.compile(gladTpl),
+      umd_as_it_happens_cog:Handlebars.compile(gladTpl),
+      umd_as_it_happens_idn:Handlebars.compile(gladTpl),
+      viirs_fires_alerts: Handlebars.compile(firesTpl),
+      mex_forest_zoning_cat: Handlebars.compile(mex_forest_catTpl),
+      mex_forest_zoning_subcat: Handlebars.compile(mex_forest_subcatTpl),
+      urthe: Handlebars.compile(urtheTpl),
+      
     },
 
     options: {
@@ -109,6 +170,7 @@ define([
 
     toogleModule: function(){
       this.$el.toggleClass('hide', this.model.get('hidden'));
+      this.$el.toggleClass('hide-no-layers', this.model.get('hidden'));
     },
 
     toogleEmbedLegend: function(e){
@@ -147,6 +209,7 @@ define([
         if (this.detailsTemplates[layer.slug]) {
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
+            hresolution: options.hresolution,
             layerTitle: layer.title
           });
         }
@@ -256,8 +319,10 @@ define([
      * @param  {event} event Click event
      */
     _toggleLayer: function(event) {
-      var layerSlug = $(event.currentTarget).data('sublayer');
-      this.presenter.toggleLayer(layerSlug);
+      if (!$(event.target).hasClass('source') && !$(event.target).parent().hasClass('source')) {      
+        var layerSlug = $(event.currentTarget).data('sublayer');
+        this.presenter.toggleLayer(layerSlug);
+      }
     },
 
     _toogleCategory: function(e){

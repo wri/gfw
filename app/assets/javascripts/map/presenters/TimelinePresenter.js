@@ -100,7 +100,6 @@ define([
 
       if (currentTimeline) {
         if (currentTimeline.getName() === baselayer.slug) {
-
           date = [this.status.get('begin') , this.status.get('end')];
           // Return if the timeline is already active.
           return;
@@ -138,6 +137,11 @@ define([
       timeline = new TimelineView(layer, date);
       this.status.set('timeline', timeline);
 
+      if (timeline.getCurrentDate !== undefined) {
+        var dateRange = timeline.getCurrentDate();
+        mps.publish('Timeline/date-change', [timeline.getName(), dateRange]);
+      }
+
       this.view.model.set('hidden', false);
     },
 
@@ -147,6 +151,10 @@ define([
     _removeTimeline: function() {
       var timeline = this.status.get('timeline');
       if (!timeline) {return;}
+
+      if (timeline.presenter && timeline.presenter.unsubscribe) {
+        timeline.presenter.unsubscribe();
+      }
 
       if (timeline.stopAnimation) {
         timeline.stopAnimation();

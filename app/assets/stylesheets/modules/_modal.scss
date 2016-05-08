@@ -67,12 +67,14 @@ $height: auto;
     z-index: 20;
     svg{
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 0%;
+      left: 0%;
+      bottom: 0;
+      right: 0;
+      margin: auto;
       width: 50%;
       height: 50%;
       fill: $dark;
-      @include transform(translate(-50%,-50%));
     }
     &:hover{
       svg{
@@ -246,7 +248,7 @@ $height: auto;
       }
     }
     strong {
-      font-weight: bold;
+      font-weight: 500;
     }
 
     .read_more {
@@ -266,7 +268,10 @@ $height: auto;
       font-size: 90%;
     }
     .source_summary{
-      margin: 0 0 15px;
+      .img-max {
+        max-width: 100%;
+      }
+      // margin: 0 0 15px;
     }
   }
 
@@ -324,6 +329,28 @@ $height: auto;
   .source_table {
     border-top: 1px solid #ccc;
     margin-bottom: 20px;
+  }
+
+  .modal-table {
+    border-collapse: collapse;
+    font-size: 11px;
+    margin: 20px 0;
+    width: 100%;
+
+    th, .td-header {
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    td,th {
+      border: 1px solid $border;
+      padding: 10px;
+      line-height: 1.125;
+
+      &.no-border {
+        border: none;
+      }
+    }
   }
 
   .forest_change .source_category_title {
@@ -433,12 +460,12 @@ $height: auto;
     z-index: 20;
     svg{
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 50%;
-      height: 50%;
+      top: 0%;
+      left: 0%;
+      bottom: 0;
+      right: 0;
+      margin: auto;
       fill: $dark;
-      @include transform(translate(-50%,-50%));
     }
     &:hover{
       svg{
@@ -688,12 +715,14 @@ $height: auto;
     z-index: 20;
     svg{
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 0%;
+      left: 0%;
+      bottom: 0;
+      right: 0;
+      margin: auto;
       width: 50%;
       height: 50%;
       fill: $dark;
-      @include transform(translate(-50%,-50%));
     }
     &:hover{
       svg{

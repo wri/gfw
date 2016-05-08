@@ -68,16 +68,17 @@ define([
         },this)
       });
 
-      this.cacheVars();
       //Experiment
       //this.presenter.initExperiment('source');
     },
 
     render: function(){
       this.$el.html(this.template());
+      this.cacheVars();
     },
     renderMobile: function(){
       this.$el.html(this.templateMobile());
+      this.cacheVars();
     },
 
     cacheVars: function(){
@@ -104,11 +105,6 @@ define([
       // countries
       this.setStyle(0.45);
       this.getCountries();
-      if (!this.embed) {
-        setTimeout(_.bind(function(){
-          this.presenter.openTab('#countries-tab-button');
-        },this), 0);
-      }
       this.$countryReset.on('click', _.bind(this.changeIsoMobile, this));
     },
 
@@ -149,19 +145,10 @@ define([
     renderIsoLayer: function(layersToRender){
       this.$layers.html(this.templateIso({ layers: layersToRender }));
       this._renderHtml();
-      this._selectSubIsoLayer();
     },
 
     _renderHtml: function(){
       this.$layers.find('.layers-list').html($('#country-layers .layers-list').html())
-    },
-
-    _selectSubIsoLayer: function() {
-      var parentSelected = this.$layers.find('.layer:first').hasClass('selected');
-      var subLayersSelected = this.$layers.find('.wrapped.selected').length > 0;
-      if (!subLayersSelected && parentSelected) {
-        this.$layers.find('.wrapped:first').click();
-      }
     },
 
     toggleLayer: function(event) {
@@ -181,8 +168,7 @@ define([
     },
 
     toggleLayerWrap: function(e){
-      if ($(e.target).parent().siblings().hasClass('selected')) return;
-      if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source') && !$(e.target).hasClass('layer')) {
+      if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source') && !$(e.target).hasClass('layer') && !$(e.target).parents('.wrapped').hasClass('layer')) {
         var $li = $(e.currentTarget);
         var layerSlug = $li.data('layer');
         $('#country-layers [data-layer="'+layerSlug+'"]:first').click();
@@ -241,7 +227,7 @@ define([
         this.$countryUl.html(options);
         this.setLettersVisibility(letters);
 
-      }else{
+      } else {
         //Loop for print options
         var options = "<option></option>";
         _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
@@ -361,6 +347,7 @@ define([
           }, this ),
           error: function(error){
             console.log(error);
+            mps.publish('Spinner/stop')
           }
         });
       }else{

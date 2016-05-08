@@ -6,7 +6,7 @@
 define([
   'underscore',
   'uri',
-  'abstract/layer/OverlayLayerClass'
+  'abstract/layer/OverlayLayerClass',
 ], function(_, UriTemplate, OverlayLayerClass) {
 
   'use strict';
@@ -19,6 +19,7 @@ define([
 
     init: function(layer, options, map) {
       this.tiles = {};
+      this.layer_slug = layer.slug;
       this._super(layer, options, map);
     },
 
@@ -26,6 +27,10 @@ define([
       var deferred = new $.Deferred();
       deferred.resolve(this);
       return deferred.promise();
+    },
+
+    _getParams: function() {
+      return {};
     },
 
     /**
@@ -42,11 +47,12 @@ define([
       var zsteps = this._getZoomSteps(zoom);
 
       var url = this._getUrl.apply(this,
-        this._getTileCoords(coord.x, coord.y, zoom));
+        this._getTileCoords(coord.x, coord.y, zoom,this._getParams()));
 
       var image = new Image();
       image.src = url;
       image.className += this.name;
+
       image.onerror = function() {
         this.style.display = 'none';
       };
@@ -80,11 +86,20 @@ define([
       return z - this.options.dataMaxZoom;
     },
 
-    _getUrl: function(x, y, z) {
-      return new UriTemplate(this.options.urlTemplate).fillFromObject({x: x, y: y, z: z});
+    _getUrl: function(x, y, z, params) {
+      return new UriTemplate(this.options.urlTemplate).fillFromObject({
+        x: x,
+        y: y,
+        z: z,
+        sat: params.color_filter,
+        cloud: params.cloud,
+        mindate: params.mindate,
+        maxdate: params.maxdate,
+        sensor_platform: params.sensor_platform
+      });
     },
 
-    _getTileCoords: function(x, y, z) {
+    _getTileCoords: function(x, y, z, params) {
       if (z > this.options.dataMaxZoom) {
         x = Math.floor(x / (Math.pow(2, z - this.options.dataMaxZoom)));
         y = Math.floor(y / (Math.pow(2, z - this.options.dataMaxZoom)));
@@ -98,7 +113,7 @@ define([
         }
       }
 
-      return [x, y, z];
+      return [x, y, z, params];
     }
   });
 

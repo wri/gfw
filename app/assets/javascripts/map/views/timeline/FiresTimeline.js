@@ -4,35 +4,13 @@
  * @return FiresTimeline class (extends TimelineBtnClass)
  */
 define([
-  'underscore',
-  'moment',
+  'underscore', 'moment',
   'abstract/timeline/TimelineBtnClass',
-  'map/presenters/TimelineClassPresenter'
-], function(_, moment, TimelineBtnClass, Presenter) {
+  'map/presenters/TimelineClassPresenter',
+  'map/helpers/FiresDatesHelper'
+], function(_, moment, TimelineBtnClass, Presenter, DatesHelper) {
 
   'use strict';
-
-  var data = [{
-    start: moment().subtract(8, 'days'),
-    end: moment().subtract(24, 'hours'),
-    label: 'Past week',
-    hoursDiff: 168
-  },{
-    start: moment().subtract(96, 'hours'),
-    end: moment().subtract(24, 'hours'),
-    label: 'Past 72 hours',
-    hoursDiff: 72
-  },{
-    start: moment().subtract(72, 'hours'),
-    end: moment().subtract(24, 'hours'),
-    label: 'Past 48 hours',
-    hoursDiff: 48
-  },{
-    start: moment().subtract(48, 'hours'),
-    end: moment().subtract(24, 'hours'),
-    label: 'Past 24 hours',
-    hoursDiff: 24
-  }];
 
   var FiresTimeline = TimelineBtnClass.extend({
 
@@ -40,32 +18,19 @@ define([
       this.presenter = new Presenter(this);
 
       this.options = {
-        dateRange: [moment().subtract(8, 'days'), moment()],
+        dateRange: [moment().subtract(7, 'days'), moment()],
         width: 550,
         tickWidth: 110,
         tipsy: false
       };
 
-      if (currentDate) {
-        currentDate = this.setCurrentDate(currentDate);
+      if (!(currentDate && currentDate[0] && currentDate[1])) {
+        currentDate = [moment().subtract(24, 'hours'), moment()];
       }
+      currentDate = DatesHelper.getRangeForDates(currentDate);
+
 
       FiresTimeline.__super__.initialize.apply(this, [layer, currentDate]);
-    },
-
-    /**
-     * To make fires layer bookmarkable we need to
-     * convert the url date to current valid dates.
-     * eg. last month day 29 to 30 should be last 24 hours.
-     *
-     *
-     * @param {Array} currentDate [moment, moment]
-     */
-    setCurrentDate: function(currentDate) {
-      var hoursDiff = moment(currentDate[1]).diff(currentDate[0], 'hours');
-      var dataItem = _.findWhere(data, {hoursDiff: hoursDiff});
-      currentDate = [dataItem.start, dataItem.end];
-      return currentDate;
     },
 
     /**
@@ -74,7 +39,7 @@ define([
      * @return {array} Array of quarterly.
      */
     _getData: function() {
-      return data;
+      return DatesHelper.dateRanges;
     }
   });
 

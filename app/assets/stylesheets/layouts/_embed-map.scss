@@ -16,7 +16,7 @@
       height: 60px;
       position: absolute;
       top: 0;
-      right: 20px;
+      left: 20px;
       text-indent: -9999px;
       z-index: 31;
       margin: 0 0 0 15px;
@@ -39,8 +39,12 @@
     height: 100%;
     top: 0;
   }
+  
+  .timeline-mobile-call-to-action {
+    display: none;
+  }
 
-
+  .widget-timeline .timeline-year.timeline-torque .timeline-slider {display: none;}
   @media (max-width: $br-mobileMap - 1) and (min-width: 480px){
     // MODULES
     .module{
@@ -89,7 +93,8 @@
     // Legend
     .module-legend{
       top: 20px;
-      left: 20px;
+      left: initial;
+      right: 20px;
       bottom: auto;
       max-height: calc(100% - 90px);
       max-width: 300px;
@@ -171,7 +176,7 @@
     // Timeline
     .widget-timeline{
       .widget-box{
-        bottom: 0px;
+        bottom: 70px;
         left: 50%;
         width: 100%;
         height: 50px;
@@ -181,6 +186,25 @@
         .timeline-month .time .select-timeline-container,
         .timeline-btn .time .select-timeline-container{
           line-height: 50px;
+        }
+      }
+      .timeline-mobile-call-to-action {
+        position: absolute;
+        bottom: 0;
+        height: 70px;
+        background-color: $cGreen;
+        width: 100%;
+        @include display-flex();
+        @include align-items(center);
+        @include justify-content(center);
+        span {
+          font-size: 12px;
+          color: $white;
+          text-transform: uppercase;
+          padding: 0 10px 0 0;
+        }
+        a {
+          color: $cGreen;
         }
       }
       &.analysis{
@@ -224,7 +248,7 @@
     }
     .widget-timeline{
       .widget-box{
-        bottom: 44px;
+        bottom: 89px;
       }
     }
 
@@ -233,12 +257,13 @@
     }
 
     .module-mapcontrols{
-      bottom: 54px;
+      bottom: 114px;
     }
     .module-tabs .button-container.fixed{
       bottom: 0;
     }
   }
+
   //footer
   .footer-toggle,
   .map-logos,
@@ -246,7 +271,8 @@
   //croshairs
   .map-viewfinder,
   //feedback
-  .feedback-link {
+  .feedback-link,
+  .guideTourButton {
     display: none !important;
   }
 

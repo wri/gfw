@@ -1,15 +1,15 @@
 /** category visualization */
 
-#peru_forest_concessions {
+#concesion_forestal {
    polygon-opacity: 0.7;
    line-color: #FFF;
    line-width: 1;
    line-opacity: 1;
 }
 
-#peru_forest_concessions[supervision="SUPERVISED BY OSINFOR"] {
+#concesion_forestal [supervision="SUPERVISADO POR EL OSINFOR"] {
    polygon-fill: #1F78B4;
 }
-#peru_forest_concessions[supervision="UNSUPERVISED"] {
+#concesion_forestal [supervision="NO SUPERVISADO"] {
    polygon-fill: #A6CEE3;
 }

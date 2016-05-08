@@ -19,7 +19,19 @@ define([
       forbidCombined: {
         forest_clearing: {
           except: [
-            ['loss', 'forestgain']
+            ['loss', 'forestgain', 'forest2000'],
+            ['forma', 'forest2000'],
+            ['loss', 'forest2000'],
+            ['forestgain', 'forest2000'],
+            ['forma', 'forest2000'],
+            ['imazon', 'forest2000'],
+            ['fires', 'forest2000'],
+            ['modis', 'forest2000'],
+            ['terrailoss', 'forest2000'],
+            ['prodes', 'forest2000'],
+            ['guyra', 'forest2000'],
+            ['viirs_fires_alerts', 'forest2000'],
+            ['forest2000', 'forest2000'],
           ]
         },
         geographic_coverage: {}

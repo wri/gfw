@@ -7,9 +7,11 @@ define([
   'underscore',
   'handlebars',
   'map/presenters/analysis/AnalysisResultsPresenter',
+  'map/views/analysis/AdvancedAnalysisView',
   'text!map/templates/analysis/analysisResults.handlebars',
   'text!map/templates/analysis/analysisResultsFailure.handlebars',
-], function(_, Handlebars, Presenter, tpl, failureTpl) {
+  'text!map/templates/analysis/analysisResultsFailureAPI.handlebars',
+], function(_, Handlebars, Presenter, AdvancedAnalysisView, tpl, failureTpl, failureAPITpl) {
 
   'use strict';
 
@@ -19,7 +21,6 @@ define([
     }
   });
 
-
   var AnalysisResultsView = Backbone.View.extend({
 
     el: '#analysis-result',
@@ -28,6 +29,7 @@ define([
 
     templates: {
       failure: Handlebars.compile(failureTpl),
+      failureAPI: Handlebars.compile(failureAPITpl),
     },
 
     events:{
@@ -35,8 +37,10 @@ define([
       'click #analysis-subscribe': '_subscribe',
       'click .dropdown-button' :'_toggleDownloads',
       'click .canopy-button' : '_showCanopy',
+      'click .advanced-analysis-button' : '_showAdvancedAnalysis',
       'click .close' : 'toogleAnalysis',
-      'click #toggleIFL' : 'toogleIFL'
+      'click #toggleIFL' : 'toogleIFL',
+      'click #btn-analysis-refresh' : 'refreshAnalysis'
     },
 
     initialize: function() {
@@ -73,16 +77,24 @@ define([
       this.$el.html(this.template(this.params)).removeClass('hidden');
       this._cacheSelector();
       this.$resultsHide.addClass('hidden');
+      this.presenter.toggleSubscribeButton();
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + this.params.layer.title);
     },
-
 
     /**
      * Render failure analysis request message.
      */
     renderFailure: function() {
-      // this._update(this.templates.failure());
       this.$el.html(this.templates.failure()).removeClass('hidden');
+      this._cacheSelector();
+      this.$resultsHide.addClass('hidden');
+    },
+
+    /**
+     * Render failure analysis on API request message.
+     */
+    renderFailureOnApi: function() {
+      this.$el.html(this.templates.failureAPI()).removeClass('hidden');
       this._cacheSelector();
       this.$resultsHide.addClass('hidden');
     },
@@ -90,9 +102,9 @@ define([
     setParams: function(params){
       this.params = params;
       this.params.warning_text = (this.$analysisTab.find('li.active').data('analysis') === 'draw-tab');
+      this.params.warning_extent_text = this.presenter.status.get('loss_gain_and_extent');
       this.params.downloadVisible = ((this.params.loss || this.params.forestgain) && this.mobile) ? false : true;
       this.params.url = this.setDownloadLink(params.layer.slug);
-
     },
 
     _deleteAnalysis: function() {
@@ -107,7 +119,12 @@ define([
       this.$el.addClass('hidden');
     },
 
-    _subscribe: function() {
+    _subscribe: function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if ($(event.target).hasClass('disabled')) { return; }
+
       this.presenter.subscribeAnalysis();
       ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + this.params.layer.title);
     },
@@ -121,6 +138,14 @@ define([
     _showCanopy: function(e){
       e && e.preventDefault();
       this.presenter.showCanopy();
+    },
+
+    _showAdvancedAnalysis: function(e) {
+      e && e.preventDefault();
+
+      var view = new AdvancedAnalysisView({
+        resource: this.presenter.status.get('resource')});
+      $('#advanced-analysis').html(view.render().el);
     },
 
     setDownloadLink: function(layer){
@@ -148,8 +173,11 @@ define([
     toogleIFL: function(e){
       $(e.currentTarget).find('.onoffswitch').toggleClass('checked');
       this.$switchIFLabels.toggleClass('checked')
-    }
+    },
 
+    refreshAnalysis: function() {
+      this.presenter.refreshAnalysis();
+    }
 
   });
 

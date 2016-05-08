@@ -40,6 +40,7 @@ require([
       new SourceMobileFriendlyView();
       new SourceWindowView();
 
+
       //countries
       new CountryListView();
       new CountryOverviewView();

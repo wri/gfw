@@ -15,12 +15,12 @@
     {{#if content.data.analysis}}
     <div id="cartodb-popup-fixed" class="cartodb-popup-fixed">
       {{#if content.data.analysis}}
-        <a style="cursor:pointer;" id="analyzeBtn" class="analyze-concession btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid= "{{content.data.id}}">analyze</a>
+        <a style="cursor:pointer;" id="analyzeBtn" class="analyze-concession btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">analyze</a>
       {{/if}}
-        <a style="cursor:pointer;" id="subscriptionBtn" class="subscription-concession btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid= "{{content.data.id}}">subscribe</a>
+        <a style="cursor:pointer;" id="subscriptionBtn" class="subscription-concession btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">subscribe</a>
     </div>
     {{/if}}
-    <div class="cartodb-popup-content">
+    <div class="cartodb-popup-content scroll-dark">
       <div class="cartodb-popup-content-inside">
         {{#if content.data.project_name}}
           {{#if content.data.project_ur}}
@@ -71,6 +71,10 @@
           <h4>Type:</h4>
           <p>{{content.data.type}}</p>
         {{/if}}
+        {{#if content.data.dates}}
+          <h4>Loss alert date:</h4>
+          <p>{{content.data.dates}}</p>
+        {{/if}}
         {{#if content.data.mineral}}
           <h4>Mineral:</h4>
           <p>{{content.data.mineral}}</p>
@@ -99,7 +103,14 @@
           <h4>Permit Num:</h4>
           <p>{{content.data.permit_num}}</p>
         {{/if}}
-
+        {{#if content.data.permit_date}}
+          <h4>Permit Date:</h4>
+          <p>{{content.data.permit_date}}</p>
+        {{/if}}
+        {{#if content.data.substance}}
+          <h4>Substance:</h4>
+          <p>{{content.data.substance}}</p>
+        {{/if}}
 				{{#if content.data.project_pr}}
           <h4>Project Proponent :</h4>
           <p><a href="{{content.data.proponent_}}" target="_blank">{{content.data.project_pr}}</a></p>
@@ -156,12 +167,52 @@
           <h4>Confidence:</h4>
           <p>{{content.data.confidence}}</p>
         {{/if}}
+        {{#if content.data.developer_en}}
+          <h4>Developer:</h4>
+          <p>{{content.data.developer_en}}</p>
+        {{/if}}
+        {{#if content.data.inv_intent}}
+          <h4>Investment intention:</h4>
+          <p>{{content.data.inv_intent}}</p>
+        {{/if}}
+        {{#if content.data.contracting_authority}}
+          <h4>Contracting authority:</h4>
+          <p>{{content.data.contracting_authority}}</p>
+        {{/if}}
+        {{#if content.data.contract_date}}
+          <h4>Contract date:</h4>
+          <p>{{content.data.contract_date}}</p>
+        {{/if}}
+        {{#if content.data.contract_duration}}
+          <h4>Contract duration:</h4>
+          <p>{{content.data.contract_duration}} years</p>
+        {{/if}}
+        {{#if content.data.original_size_h}}
+          <h4>Original size ha:</h4>
+          <p>{{content.data.original_size_h}}</p>
+        {{/if}}
+        {{#if content.data.adjustment_classification}}
+          <h4>Adjustment:</h4>
+          <p>{{content.data.adjustment_classification}}</p>
+        {{/if}}
         {{#if content.data.acq_date}}
           <h4>Acquisition date:</h4>
           <p>{{content.data.acq_date}}</p>
         {{/if}}
+        {{#if content.data.year}}
+          <h4>Year:</h4>
+          <p>{{content.data.year}}</p>
+        {{/if}}
+        {{#if content.data.year_created}}
+          <h4>Year created:</h4>
+          <p>{{content.data.year_created}}</p>
+        {{/if}}
+        {{#if content.data.date_created}}
+          <h4>Date of creation:</h4>
+          <p>{{content.data.date_created}}</p>
+        {{/if}}
         {{#if content.data.date_create}}
-          <h4>Status date:</h4>
+          <h4>Date:</h4>
           <p>{{content.data.date_create}}</p>
         {{/if}}
         {{#if content.data.acq_time}}
@@ -175,6 +226,10 @@
         {{#if content.data.biome}}
           <h4>Biome:</h4>
           <p>{{content.data.biome}}</p>
+        {{/if}}
+        {{#if content.data.doc_status}}
+          <h4>Status:</h4>
+          <p>{{content.data.doc_status}}</p>
         {{/if}}
         {{#if content.data.source}}
           <h4>Source:</h4>
@@ -232,6 +287,10 @@
           <h4>Easement Holder Type:</h4>
           <p>{{content.data.eholdtyp}}</p>
         {{/if}}
+        {{#if content.data.owner}}
+          <h4>Owner:</h4>
+          <p>{{content.data.owner}}</p>
+        {{/if}}
         {{#if content.data.owntype}}
           <h4>Landowner Type:</h4>
           <p>{{content.data.owntype}}</p>
@@ -280,9 +339,9 @@
           <h4>Plantation type:</h4>
           <p>{{content.data.type_text}}</p>
         {{/if}}
-        {{#if content.data.spec_org}}
+        {{#if content.data.spec_simp}}
           <h4>Species:</h4>
-          <p>{{content.data.spec_org}}</p>
+          <p>{{content.data.spec_simp}}</p>
         {{/if}}
         {{#if content.data.percent}}
           <h4>Percent plantation coverage:</h4>
@@ -291,6 +350,22 @@
         {{#if content.data.area_ha}}
           <h4>Area HA:</h4>
           <p>{{content.data.area_ha}}</p>
+        {{/if}}
+        {{#if content.data.acquired}}
+          <h4>Acquisition date:</h4>
+          <p>{{content.data.acquired}}</p>
+        {{/if}}
+        {{#if content.data.platform}}
+          <h4>Platform:</h4>
+          <p>{{content.data.platform}}</p>
+        {{/if}}
+        {{#if content.data.sensor_platform}}
+          <h4>Sensor platform:</h4>
+          <p>{{content.data.sensor_platform}}</p>
+        {{/if}}
+        {{#if content.data.cloud_coverage}}
+          <h4>Cloud coverage:</h4>
+          <p>{{content.data.cloud_coverage}}%</p>
         {{/if}}
       </div>
     </div>

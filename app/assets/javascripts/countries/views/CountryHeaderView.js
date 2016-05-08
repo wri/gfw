@@ -360,7 +360,7 @@ define([
     },
 
     _updateData: function(area_id) {
-      var url     = window.gfw.config.GFW_API_HOST + 'countries/' + this.country.get('iso'),
+      var url     = window.gfw.config.GFW_API_HOST + 'countries/' + this.country.get('iso').toLowerCase(),
           canopy  = this.helper.config.canopy_choice || 30,
           $cnp_op = $('.umd_options_control').find('.sidenav-icon'),
           $target = $('.tree-numbers'),
@@ -630,14 +630,14 @@ define([
         .attr('width', barWidth - 2)
         .style('fill', function(d, i) {
           if (i === data_.length -1) {
-            return '#9FBA2B';
+            return '#F69';
           } else {
             return '#555';
           }
         })
         .on('mouseover', function(d) {
           d3.selectAll('.bar, .axis_country').style('fill', '#555')
-          d3.select(this).style('fill', '#9FBA2B')
+          d3.select(this).style('fill', '#F69')
           var text = d3.select(this.parentNode)
           text.select('.axis_country').style('fill', '#9D9AA5')
           $date.html(' Ha');

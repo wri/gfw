@@ -30,6 +30,10 @@ define([
   var SpinnerView = Backbone.View.extend({
     el: '#tab-spinner',
 
+    events: {
+      'click #spinner2-close' : 'cancel'
+    },
+
     initialize: function(){
       this.presenter = new Presenter(this);
       this.render();
@@ -38,14 +42,14 @@ define([
     render: function(){
       var $spinner = this.$el.find('#spinner2');
       var τ = 2 * Math.PI;
-      var width = $spinner.width();
-      var height = $spinner.height();
+      var width = $spinner.width() || 50;
+      var height = $spinner.height() || 50;
       this.arc = d3.svg.arc()
           .innerRadius(width/2 - 5)
           .outerRadius(width/2)
           .startAngle(0);
 
-      var svg = d3.selectAll($spinner.toArray()).append("svg")
+      var svg = d3.selectAll($spinner.toArray()).insert("svg", ":first-child")
           .attr("width", width)
           .attr("height", height)
         .append("g")
@@ -70,8 +74,6 @@ define([
       this.$foreground = this.$el.find('.foreground');
       this.count = 0;
       this.rotate();
-
-
     },
 
     rotate: function(){
@@ -93,6 +95,10 @@ define([
 
     stop: function(){
       this.$el.removeClass('active');
+    },
+
+    cancel: function() {
+      this.presenter.cancel();
     }
 
 

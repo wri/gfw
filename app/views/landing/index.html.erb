@@ -35,48 +35,48 @@
   </nav>
 
   <ul class="main-slider-viewport">
-    <span class="ribbon">Complete this short survey!</span>
-    <li class="slide slide5">
-      <a href="http://bit.ly/1HtGRZd?referral=carousel">
+    <!-- <span class="ribbon">Complete this short survey!</span> -->
+    <li class="slide slide7">
+      <a href="http://bit.ly/PeatEmissions">
         <div class="inner">
           <aside>
-            <h2>Chocolate's Carbon Footprint</h2>
-            <h3><span>How much rainforest</span> <span>is in that chocolate bar?</span></h3>
+            <h2>Tropical peat</h2>
+            <h3><span>New data on GFW Climate measures</span> <span>emissions from peat drainage</span></h3>
             <div class="link"><span class="mobile-hide">more info</span><span class="mobile-show">+</span></div>
           </aside>
         </div>
       </a>
-      <p class="credits">Photo: EverJean</p>
+      <p class="credits">Photo: Ruanda Agung Sugardiman</p>
     </li>
-    <li class="slide slide7 current">
-      <a href="http://bit.ly/1HSyDPa?referral=carousel">
+    <li class="slide slide5">
+      <a href="http://bit.ly/GFWTigers">
         <div class="inner">
           <aside>
-            <h2>Zooming In</h2>
-            <h3><span>Forest Fires</span> <span>Blaze in Indonesia’s</span> <span>Tesso Nilo National Park</span></h3>
+            <h2>Critical habitats</h2>
+            <h3><span>New research outlines measures</span> <span>to protect tiger populations</span></h3>
             <div class="link"><span class="mobile-hide">more info</span><span class="mobile-show">+</span></div>
           </aside>
         </div>
       </a>
-      <p class="credits">Photo: DIGITAL GLOBE</p>
+      <p class="credits">Photo: Kristof Borkowski</p>
     </li>
 	  <li class="slide slide1">
       <a href="/map?referral=carousel">
   	    <div class="inner">
   		    <aside>
-  		      <h2>Explore</h2>
-  		      <h3><span>Explore forest data</span> <span>on the GFW</span> <span>Interactive Map</span></h3>
+		      <h2>Explore</h2>
+		      <h3><span>Explore forest data</span> <span>on the GFW</span> <span>Interactive Map</span></h3>
   		      <div class="link"><span class="mobile-hide">more info</span><span class="mobile-show">+</span></div>
   		    </aside>
   		  </div>
       </a>
     </li>
     <li class="slide slide2">
-      <a href="/stories/new?referral=carousel">
+      <a href="http://climate.globalforestwatch.org/">
         <div class="inner">
           <aside>
-            <h2>Report</h2>
-            <h3><span>HAVE A STORY</span> <span>TO SHARE ABOUT</span> <span>FOREST CHANGE?</span></h3>
+            <h2>Climate</h2>
+            <h3><span>Explore the impacts</span> <span>of tropical deforestation</span> <span>on climate change</span></h3>
             <div class="link"><span class="mobile-hide">more info</span><span class="mobile-show">+</span></div>
           </aside>
         </div>
@@ -159,17 +159,17 @@
         </a>
       </div>
       <div class="col col3">
+        <a class="mobile-friendly" href="http://climate.globalforestwatch.org/">
+          <svg class="icon soon"><use xlink:href="#shape-climate"></use></svg>
+          <h3>Climate</h3>
+          <div class="hidden"><p>Launch Global Forest Watch Climate, a tool to track carbon emissions and removals in forest landscapes.</p></div>
+        </a>
+      </div>
+      <div class="col col3">
         <a href="/getinvolved/develop-your-own-app">
           <svg class="icon develop"><use xlink:href="#shape-develop"></use></svg>
           <h3>Develop your own app</h3>
           <div class="hidden"><p>Access tools and information to create your own applications that harness Global Forest Watch data</p></div>
-        </a>
-      </div>
-      <div class="col col3">
-        <a href="/explore/coming-soon">
-          <svg class="icon soon"><use xlink:href="#shape-soon"></use></svg>
-          <h3>Coming soon</h3>
-          <div class="hidden"><p>Learn about new Global Forest Watch applications that will be released in the near future</p></div>
         </a>
       </div>
 
@@ -237,7 +237,18 @@
 	        <div class="feed">
 	          <h3>Get involved</h3>
 	          <div class="timeline-involved tablet">
-	          	<ul id="feedView"></ul>
+	          	<ul id="feedView">
+                <% @feedview.each do |item|%>
+                  <li>
+                    <a href="<%=item["link"] %>" target="_blank">
+                        <figure class="<%=item["type"] %>"><div style="background-image:url('<%=item["avatar"] %>');"></div></figure>
+                      <div class="info">
+                        <p><span><%=item["author"] %></span><%=item["description"][0..49] %>...</p>
+                      </div>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
 	          </div>
 	        </div>
           <div class="button-box">
@@ -252,7 +263,20 @@
 	        <div class="stories">
 	          <h3>Stay informed</h3>
 	          <div class="timeline-stories">
-	          	<ul id="storiesView" data-limit="3" data-truncate="true"></ul>
+	          	<ul id="storiesView" data-limit="3" data-truncate="true">
+                <% @storiesview.each do |item|%>
+                  <li>
+                    <a href="<%=item["id"] %>">
+                        <figure><div class="bg" style="background-image: url(<%= item["avatar"] %>)"></div></figure>
+                      <article class="info">
+                        <h4><%= item["title"] %></h4>
+                        <p><%=item["description"][0..29] %>...</p>
+                        <button class="btn gray medium">More</button>
+                      </article>
+                    </a>
+                  </li>
+                 <% end %>
+              </ul>
 	          </div>
           </div>
           <div class="button-box two">

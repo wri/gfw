@@ -174,7 +174,11 @@ define([
       var $tooltip = $button.find('.tooltipmap');
       $button.toggleClass('active');
       ($button.hasClass('active')) ? $tooltip.text('Show windows (h)') : $tooltip.text('Hide windows (h)') ;
-      mps.publish('MapControlsToggleModules/toggle');
+      mps.publish('MapControlsToggleModules/toggle',[{hide: $button.hasClass('active')}]);
+    },
+
+    removeToogleActive: function() {
+      this.$el.find('.toggle-modules').removeClass('active');
     },
 
     toggleControls: function(e){

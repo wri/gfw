@@ -1,7 +1,7 @@
-<div class="tab-analysis">
+<div class="tab-analysis scroll-dark">
   <nav id="analysis-nav" class="analysis-nav noselect">
     <ul>
-      <li id="draw-tab-button" data-analysis="draw-tab"><svg><use xlink:href="#icon-analysis-draw"></use></svg>Draw shape</li>
+      <li id="draw-tab-button" data-analysis="draw-tab"><svg><use xlink:href="#icon-analysis-draw"></use></svg>Draw or upload shape</li>
       <li id="country-tab-button" data-analysis="country-tab"><svg><use xlink:href="#icon-analysis-country"></use></svg>Country or region</li>
       <li id="data-tab-button" data-analysis="data-tab"><svg><use xlink:href="#icon-analysis-data"></use></svg>Other data layers</li>
     </ul>
@@ -9,34 +9,49 @@
   <div id="analysis-content" class="analysis-content">
     <div id="default" class="analysis-tab-content default results-hide active">
       <header>
-        <h2>Choose analysis type to calculate forest change statistics</h2>
+        <h2>Select an area to analyze or subscribe to</h2>
       </header>
     </div>
     <div id="draw-tab" class="analysis-tab-content draw-tab results-hide">
       <header>
-        <h2>Draw in the map the area you want to analyze</h2>
-        {{!-- <p>Learn more <a href="#" data-source="regular_dialog" class="source btn gray uppercase little">Click here</a></p> --}}
+        <h2>Draw in the map the area you want to analyze or subscribe to</h2>
       </header>
       <div class="image"><div><svg><use xlink:href="#icon-analysis-draw"></use></svg></div></div>
       <ul id="draw-analysis" class="button-container one">
         <li><button id="start-analysis" class="btn green uppercase">Start drawing</button></li>
-        <li class="hidden"><button id="done-analysis" class="btn green uppercase">Analyze</button></li>
       </ul>
+      <ul id="draw-analysis" class="button-container one">
+        <li class="hidden"><button id="done-analysis" class="btn green uppercase">Analyze</button></li>
+        <li class="hidden"><button id="done-subscribe" class="btn green uppercase">Subscribe</button></li>
+      </ul>
+      <p class="p-center">or</p>
+      <div class="dropable">
+        <div id="drop-shape-analysis" class="shape-droppable">
+          <input type="file" id="analysis-file-upload">
+          <div class="drop-shape-text">
+            <span>Click to pick a file or drop one here</span>
+            <a href="#" data-source="drop-shapefile" class="source">
+              <svg><use xlink:href="#shape-info"></use></svg>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="country-tab" class="analysis-tab-content country-tab">
       <select data-placeholder="Select country" class="chosen-select default notranslate" id="analysis-country-select"><option></option></select>
       <select data-placeholder="Select jurisdiction (optional)" disabled="true" class="chosen-select default notranslate" id="analysis-region-select"><option></option></select>
       <ul class="button-container one">
-        <li><button id="analysis-country-button" class="btn green uppercase">Analyze</button></li>
+        <li><button id="analysis-country-button" class="btn green uppercase disabled">Analyze</button></li>
+        <li><button id="subscribe-country-button" class="btn green uppercase disabled">Subscribe</button></li>
       </ul>
     </div>
     <div id="data-tab" class="analysis-tab-content data-tab results-hide">
       <header>
-        <h2>Analyze a shape on the map</h2>
+        <h2>Analyze or subscribe to a shape on the map</h2>
         <ol>
           <li>Use the tabs above the map to turn on a data layer <a href="#" class="source" data-source="analyze_a_shape_on_the_map"><svg><use xlink:href="#shape-info"></use></svg></a></li>
           <li>Select a shape in the map</li>
-          <li>Click “Analyze”</li>
+          <li>Click “Analyze” or “Subscribe”</li>
         </ol>
         <p class="see-gif source" data-source="see_how_to_analyze_a_shape_on_the_map"><a href="#">See example.</a></p>
       </header>
@@ -47,4 +62,11 @@
     </div>
   </div>
   <div id="analysis-result" class="analysis-result hidden"></div>
+</div>
+<div id="tab-spinner" class="spinner2-box">
+  <div id="spinner2" class="spinner2">
+    <div id="spinner2-close" class="spinner2-close">
+      <button class="btn red uppercase">Cancel analysis</button>
+    </div>
+  </div>
 </div>

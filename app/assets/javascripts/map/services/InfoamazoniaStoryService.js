@@ -14,7 +14,7 @@ define([
 
     requestId: 'InfoamazoniaStoryService',
 
-    url: '//wri-01.cartodb.com/api/v2/sql?q=SELECT cartodb_id,ST_AsGeoJSON(the_geom),the_geom_webmercator, title, permalink FROM table_3692668532 UNION SELECT cartodb_id ,ST_AsGeoJSON(the_geom),the_geom_webmercator,title, permalink FROM table_5294800104',
+    url: '//wri-01.cartodb.com/api/v2/sql?q=(SELECT ST_AsGeoJSON(the_geom),the_geom_webmercator, title, permalink FROM geojson union SELECT ST_AsGeoJSON(the_geom),the_geom_webmercator, title, permalink FROM table_4200314533 where the_geom_webmercator is not null) union SELECT ST_AsGeoJSON(the_geom),the_geom_webmercator, title, permalink FROM table_2528172694 where the_geom_webmercator is not null',
 
     /**
      * Constructs a new instance of StoryService.
@@ -41,11 +41,13 @@ define([
           d.latlng = JSON.parse(d.st_asgeojson).coordinates;
           d.lat = d.latlng[1];
           d.lng = d.latlng[0];
-          d.loc = d.permalink;
+          d.link = d.permalink;
           return d;
         });
         successCb(result);
+
       }
+
 
       var config = {resourceId: this.requestId, success: _parseData,
         error: errorCb};

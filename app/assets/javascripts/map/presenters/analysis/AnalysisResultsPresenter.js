@@ -24,6 +24,20 @@ define([
     }
   });
 
+  var SUBSCRIPTION_ALLOWED = [
+    'loss',
+    'imazon',
+    'terrailoss',
+    'prodes',
+    'guyra',
+    'umd_as_it_happens',
+    'umd_as_it_happens_per',
+    'umd_as_it_happens_cog',
+    'umd_as_it_happens_idn',
+    'modis',
+    'viirs_fires_alerts'
+  ];
+
   var AnalysisResultsPresenter = PresenterClass.extend({
 
     /**
@@ -41,7 +55,14 @@ define([
       'fires': 'nasa-active-fires',
       'modis': 'quicc-alerts',
       'terrailoss': 'terrai-alerts',
-      'prodes': 'prodes-loss'
+      'prodes': 'prodes-loss',
+      'guyra': 'guyra-loss',
+      'forest2000': 'umd-loss-gain',
+      'umd_as_it_happens':'glad-alerts',
+      'umd_as_it_happens_per':'glad-alerts',
+      'umd_as_it_happens_cog':'glad-alerts',
+      'umd_as_it_happens_idn':'glad-alerts',
+      'viirs_fires_alerts': 'viirs-active-fires'
     },
 
     init: function(view) {
@@ -56,11 +77,13 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         this._setBaselayer(place.layerSpec.getBaselayers());
+        this.status.set('loss_gain_and_extent', place.layerSpec.checkLossGainExtent());
         if ( place.params.subscribe_alerts ) this.subscribeAnalysis();
       }
     }, {
       'LayerNav/change': function(layerSpec) {
         this._setBaselayer(layerSpec.getBaselayers());
+        this.status.set('loss_gain_and_extent', layerSpec.checkLossGainExtent());
       }
     }, {
       'AnalysisService/results': function(results) {
@@ -153,7 +176,7 @@ define([
         this.view.renderFailure();
       } else if (results.failure) {
         mps.publish('Spinner/stop');
-        this.view.renderFailure();
+        this.view.renderFailureOnApi();
       } else {
         mps.publish('Spinner/stop');
         this._renderAnalysis(results);
@@ -180,9 +203,11 @@ define([
         return;
       }
 
-      var params = this._getAnalysisResource(results, layer);
-      this.view.renderAnalysis(params);
-      mps.publish('Place/update', [{go: false}]);
+      if (_.values(this.datasets).indexOf(results.meta.id) > -1) {
+        var params = this._getAnalysisResource(results, layer);
+        this.view.renderAnalysis(params);
+        mps.publish('Place/update', [{go: false}]);
+      }
     },
 
     /**
@@ -221,6 +246,9 @@ define([
       mps.publish('Place/update', [{go: false}]);
     },
 
+    refreshAnalysis: function() {
+      mps.publish('AnalysisService/refresh', []);
+    },
 
     /**
      * Set total area for countries, protected areas or forest use layers
@@ -290,14 +318,14 @@ define([
        *   - gainAlerts
        *   - extent
        */
-      if (layer.slug === 'loss' || layer.slug === 'forestgain') {
+      if (layer.slug === 'loss' || layer.slug === 'forestgain' || layer.slug === 'forestgain' || layer.slug === 'forest2000') {
         p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
         p.extent = p.gainAlerts = p.lossAlerts = 0;
         p.threshold  = results.params.thresh || 30;
         p.both = this.status.get('both');
         // The api returns all the loss and gain alerts.
         if (results.years) {
-          p.gainAlerts = results.years[results.years.length-1].gain * 12;
+          p.gainAlerts = results.years[0].total_gain;
           p.extent = results.years[results.years.length-1].extent;
           var years = _.range(dateRange[1].diff(dateRange[0], 'years'));
           _.each(years, function(i) {
@@ -349,7 +377,14 @@ define([
       mps.publish('ThresholdControls/toggle');
     },
 
-
+    toggleSubscribeButton: function() {
+      var baselayer = this.status.get('baselayer').slug;
+      if (SUBSCRIPTION_ALLOWED.indexOf(baselayer) === -1) {
+        this.view.$('#analysis-subscribe').addClass('disabled');
+      } else {
+        this.view.$('#analysis-subscribe').removeClass('disabled');
+      }
+    }
 
   });
 

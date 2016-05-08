@@ -7,7 +7,8 @@
   text-align: center;
   cursor: pointer;
   text-decoration: none;
-  font-family: "Fira Sans";
+  font-family: "Fira GFW Sans", "Fira Sans";
+  font-feature-settings: "liga" 0;
 }
 
 // Btn
@@ -103,6 +104,18 @@
     &.disabled{
       &:hover {
         background: $cGreen;
+      }
+    }
+  }
+  &.red {
+    color: $white;
+    background: $red;
+    &:hover {
+      background: darken($red,10%);
+    }
+    &.disabled{
+      &:hover {
+        background: $red;
       }
     }
   }
@@ -203,5 +216,22 @@
 
   &:hover {
     background: $cGreen;
+  }
+}
+
+
+.m-btncontainer {
+  @include display-flex();
+  @include align-items(center);
+  &.is-center {
+    @include justify-content(center);
+  }
+  &.is-steps {
+    .btn {
+      display: none;
+      &.is-active {
+        display: block;
+      }
+    }
   }
 }

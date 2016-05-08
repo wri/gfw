@@ -9,14 +9,15 @@ define([
   'uri',
   'abstract/layer/CartoDBLayerClass',
   'map/presenters/layers/FiresLayerPresenter',
+  'map/helpers/FiresDatesHelper',
   'text!map/cartocss/global_7d.cartocss'
-], function(_, moment, UriTemplate, CartoDBLayerClass, Presenter, global7dCartoCSS) {
+], function(_, moment, UriTemplate, CartoDBLayerClass, Presenter, DatesHelper, global7dCartoCSS) {
 
   'use strict';
 
   var FiresLayer = CartoDBLayerClass.extend({
     options: {
-      sql: 'SELECT the_geom_webmercator, acq_time,  COALESCE(to_char(acq_date, \'DD Mon, YYYY\')) as acq_date, confidence, brightness, longitude, latitude FROM global_7d WHERE acq_date > \'{year}-{month}-{day}\' AND CAST(confidence AS INT) > 30',
+      sql: 'SELECT the_geom_webmercator, acq_time,  COALESCE(to_char(acq_date, \'DD Mon, YYYY\')) as acq_date, confidence, brightness, longitude, latitude FROM global_7d WHERE acq_date >= \'{year}-{month}-{day}\' AND CAST(confidence AS INT) > 30',
       cartocss: global7dCartoCSS,
       interactivity: 'acq_time, acq_date, confidence, brightness, longitude, latitude',
       infowindow: true
@@ -26,9 +27,10 @@ define([
       _.bindAll(this, 'setCurrentDate');
       this.presenter = new Presenter(this);
 
-      // Default to 48 hours
-      this.setCurrentDate(options.currentDate ||
-        [moment().subtract(48, 'hours'), moment().subtract(24, 'hours')]);
+      // Default to 24 hours
+      var currentDate = options.currentDate ||
+        [moment().subtract(24, 'hours'), moment()];
+      this.setCurrentDate(DatesHelper.getRangeForDates(currentDate));
 
       this._super(layer, options, map);
     },

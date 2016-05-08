@@ -11,27 +11,37 @@
 
     .icon-share {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      @include transform-translate(-50%, -50%);
       width: 12px;
       height: 12px;
     }
   } // global svg size
 
   .circle {
-    svg{
+    svg {
       fill: #bebcc2;
       width: 100%;
       height: 65%;
       position: absolute;
-      top: 50%;
-      left: 50%;
-      @include transform(translate(-50%,-50%));
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+
+      @include transform(translate(0%,0%));
     }
+    
     position: relative;
     border-radius: 50%;
     border: 1px solid #bebcc2;
+
+    &.green {
+      svg{
+        fill: $white;
+      }
+      background: $cGreen;
+      border: 1px solid $cGreen;
+    }
 
     &.sidenav-icon {
       display: inline-block;
@@ -42,13 +52,14 @@
       -webkit-transform: translate(0, -50%);
       width: 18px;
       height: 18px;
-      border-color: #555;
+      background: $cGreen;
+      border-color: $cGreen;
       svg {
         position: absolute;
         display: inline-block;
         height: 12px;
         width: 12px;
-        fill: #555;
+        fill: $white;
       }
     }
   }
@@ -361,7 +372,7 @@
             font-size: 24px;
             font-weight: 500;
             margin-top: 6px;
-            color: #97bd3d;
+            color: $lossColor;
             display: inline-block;
             .total-loss-ha {
               display: inline-block;
@@ -498,12 +509,12 @@
           }
 
           .graph-amount,
-          .graph-gain-amount,
           .total-loss {
             font-size: 30px;
             font-weight: 500;
-            color: $cGreen;
+            color: $lossColor;
           }
+
           .graph-amount {
             font-size: 23px;
           }
@@ -511,6 +522,7 @@
             text-align: center;
             position: relative;
             top: -12px;
+            color: $gainColor;
             @media (min-width: $br-mobile) {
               text-align: left;
             }
@@ -834,10 +846,17 @@
     color: $cGreen;
   }
   .country-alerts,
+  .country-alerts-section,
   .country-production,
   .country-tenure,
   .country-employment,
-  .country-forests-type {
+  .country-forests-type,
+  .country-loss_outside_plantations,
+  .country-carbon_stocks,
+  .country-emissions,
+  .country-forest_certification,
+  .country-reforestation,
+  .country-burned_forests {
     .coming-soon {
       width: 100%;
       font-size: 16px;
@@ -850,7 +869,9 @@
     }
   }
   .country-tenure,
-  .country-forests-type {
+  .country-forests-type,
+  .country-forest_certification,
+  .country-burned_forests {
     .coming-soon {
       display: none;
     }
@@ -862,7 +883,8 @@
       float: right;
     }
   }
-  .country-forests-type {
+  .country-forests-type,
+  .country-forest_certification {
     @media (min-width: $br-mobile) {
       .right-col {
         position: relative;
@@ -883,8 +905,9 @@
     }
 
     .section-info {
+      @include clearfix();
       margin-bottom: 12px;
-      padding-bottom: 15px;
+      padding-bottom: 10px;
       font-size: 14px;
       color: $dark;
       font-weight: 500;
@@ -896,6 +919,7 @@
       .section-btn {
         position: absolute;
         right: 0px;
+        top: 0;
       }
 
       .share {
@@ -991,7 +1015,7 @@
   } // global sections
 
   .forma-graph path {
-    stroke: $cGreen;
+    stroke: $lossColor;
     stroke-width: 4px;
     fill: none;
   }
@@ -1013,14 +1037,14 @@
   .forma-marker {
     stroke: white;
     stroke-width: 2px;
-    fill: $cGreen;
+    fill: $lossColor;
   }
 
   .graph-tooltip {
     position: absolute;
     width: 150px;
     height: 78px;
-    background: $cGreen;
+    background: $lossColor;
     @include box-sizing(border-box);
     padding: 12px 10px;
     border-radius: 5px;
@@ -1060,7 +1084,7 @@
 
       border-top: 8px solid transparent;
       border-bottom: 8px solid transparent;
-      border-left: 8px solid $cGreen;
+      border-left: 8px solid $lossColor;
 
       right: -8px;
       margin: auto;
@@ -1080,7 +1104,7 @@
     }
 
     .legend-title {
-      color: $cGreen;
+      color: $lossColor;
       font-size: 14px;
       font-weight: 500;
       margin-bottom: 3px;
@@ -1096,6 +1120,9 @@
     #formaAlertsContent {
       h3 {
         text-transform: none;
+        .highlight {
+          color: $lossColor;
+        }
       }
       .btn-rdn-primary {
         margin: 0;
@@ -1123,7 +1150,138 @@
     }
   } // country-alerts-section
 
-  .forest-type-legends {
+  .country-burned_forests {
+
+    .burned_forests-graph path {
+      stroke: $cGreen;
+      stroke-width: 4px;
+      fill: none;
+    }
+    .burned_forests_dropdown-menu {
+      display: none;
+    }
+
+    .burned_forests-graph .axis path {
+      stroke: transparent;
+      stroke-width: 0;
+      fill: none;
+    }
+
+    .burned_forests-graph .axis {
+      .tick text{
+        font-size: 10px;
+      }
+
+      &.x {
+        .tick text {
+          transform: translate(-50%,0);
+        }        
+      }
+
+      &.y {
+        .tick text {
+          transform: translate(-5px,0);
+        }
+      }
+
+      .tick line{
+        opacity: 0.2;
+        stroke: $dark;
+        stroke-dasharray: 2;        
+      }      
+    }
+
+
+
+    .burned_forests-graph {
+      position: relative;
+      height: 160px;
+      .embed &{
+        display: block;
+        width: 500px;
+        margin: 0 auto;
+      }
+    }
+
+    .burned_forests-marker {
+      stroke: white;
+      stroke-width: 2px;
+      fill: $cGreen;
+    }
+
+    .burned_forests-tooltip {
+      position: absolute;
+      width: 150px;
+      height: 78px;
+      background: $cGreen;
+      @include box-sizing(border-box);
+      padding: 12px 10px;
+      border-radius: 5px;
+      text-align: center;
+      z-index: 10;
+      pointer-events: none;
+
+      .graph-amount,
+      .graph-gain-amount,
+      .total-loss {
+        font-size: 26px;
+        color: white;
+        margin-bottom: 4px;
+        display: block;
+      }
+
+      .graph-date,
+      .graph-gain-total,
+      .total-loss-ha {
+        font-size: 12px;
+        color: $dark;
+        .date {
+          margin-top: 2px;
+          display: inline-block;
+          font-size: 14px;
+        }
+      }
+
+      @include box-shadow(#ddd 2px 2px 10px);
+
+      &:before {
+        content:'';
+        display:block;
+        width:0;
+        height:0;
+        position:absolute;
+
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 8px solid $cGreen;
+
+        right: -8px;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+      }
+    }
+
+    .burned_forests-alerts-legend {
+      margin: 5px 0 25px 0;
+
+      span {
+        color: #666666;
+        font-size: 13px;
+        font-weight: 300;
+        display: block;
+      }
+
+      .legend-title {
+        color: $cGreen;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 3px;
+      }
+    }
+  }
+
+  .forest-type-legends, .forest_certification-legends {
     font-size: 14px;
     display: none;
     margin-top: 10px;
@@ -1173,7 +1331,7 @@
         width: 100%;
       }
     }
-    .section-content .left-col .section-title {
+    .section-content .right-col .section-title {
       @extend .clearfix;
       margin-bottom: 10px;
       font-size: 47px;
@@ -2288,7 +2446,7 @@
             }
 
             .graph svg {
-              width: 165px;
+              width: 175px;
             }
 
             .graph-amount,
@@ -2379,12 +2537,13 @@
 
     .country-graph-section {
 
-      .forests-type-graph {
+      .forests-type-graph, .forest_certification-graph {
         margin: 0 0 25px 0;
+        width: 225px;
+        height: 225px;
 
         svg {
           display: block;
-          width: 225px;
           margin: 0 auto;
         }
       }
@@ -2392,7 +2551,7 @@
 
     .country-employment {
       .section-content {
-        .left-col {
+        .right-col {
           .employment {
             margin-bottom: 25px;
           }
@@ -2490,3 +2649,110 @@
 .country-download-modal {
   position: fixed;
 }
+
+
+
+.section-content {
+  .plantations-section {
+    @include display-flex();
+    @include justify-content(space-between);
+    > li {
+      width: 45%;
+    }
+    .plantations-box {
+      padding: 20px 0 13px;
+      border-top: 2px solid $border;
+      &:first-child {
+        border-top: none;
+      }
+      p {
+        text-transform: uppercase;
+        font-size: 12px;
+
+        &.plantations-text {
+          max-width: 170px;
+        }
+
+        &.plantations-year {
+          font-weight: 500;
+          font-size: 24px;
+          color: $dark;
+          margin: 0 0 5px;
+        }
+
+        &.plantations-loss {
+          font-weight: 500;
+          font-size: 21px;
+          color: #B93B65;
+          text-transform: none;
+          margin: 15px 0 0;
+          @media (min-width: $br-mobile) {
+            font-size: 32px;
+          }
+          @media (min-width: $br-tablet) {
+            font-size: 36px;
+          }
+        }
+
+        &.plantations-percentage {
+          font-weight: 500;
+          font-size: 21px;
+          color: #B93B65;
+          margin: 10px 0;
+          @media (min-width: $br-mobile) {
+            font-size: 24px;
+          }
+        }
+      }
+      .plantations-trees {
+        position: relative;
+        width: 150px;
+        display: none;
+        @media (min-width: $br-mobile) {
+          display: block;
+        }
+        @media (min-width: $br-tablet) {
+          width: 210px;
+        }
+
+        .mask {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          @include display-flex();
+          @include justify-content(flex-start);
+          span {
+            display: block;
+            width: 15px;
+            background: image-url('countries/tree-mask.svg') center no-repeat;
+            background-size: contain;
+            @media (min-width: $br-tablet) {
+              width: 21px;
+            }
+          }
+        }
+
+        .bar {
+          position: relative;
+          z-index: 0;
+          height: 22px;
+          @media (min-width: $br-tablet) {
+            height: 31px;
+          }
+          background: $lossColor;
+          div{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #B93B65;
+          }
+        }
+      }
+    }
+  }
+}
+
+

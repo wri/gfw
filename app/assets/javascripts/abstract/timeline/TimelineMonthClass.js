@@ -61,7 +61,7 @@ define([
       this.playing = false;
 
       // Max date range
-      this.drMax = this.options.dateRange;
+      this.drMax = this.options.dateRange.map(function(dr) { return moment(dr); });
       // Date range
       this.dr = [[moment(this.drMax[0]).year()], [moment(this.drMax[1]).year() + 1]];
 
@@ -385,7 +385,10 @@ define([
 
       if (Math.abs(this.xscale(value) - xr) <
         Math.abs(this.xscale(value) - xl)) {
-        if (this.ext.left > x) {return;}
+        var dateOutsideLimit = date.isAfter(
+          this.drMax[1].clone().add(1, 'month'));
+        if (dateOutsideLimit || this.ext.left > x) { return; }
+
         this.domain.attr('x1', this.ext.left);
         // Set to max handler position when moving mouse fast to the right.
         if (date.isAfter(moment(this.drMax[1]))) {
@@ -394,7 +397,10 @@ define([
         this.ext.right = this.xscale(rounded);
         this._moveHandler(rounded, 'right');
       } else {
-        if (this.ext.right < x) {return;}
+        var dateOutsideLimit = date.isBefore(
+          this.drMax[0].clone().subtract(1, 'month'));
+        if (dateOutsideLimit || this.ext.right < x) { return; }
+
         this.ext.left = x;
         this.domain.attr('x2', this.ext.right);
         this._moveHandler(rounded, 'left');

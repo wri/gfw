@@ -85,6 +85,7 @@ define([
                 sublayer, \
                 table_name, \
                 source, \
+                source_json, \
                 category_color, \
                 category_slug, \
                 category_name, \
@@ -98,6 +99,7 @@ define([
                 ST_XMIN(the_geom) AS xmin, \
                 ST_YMAX(the_geom) AS ymax, \
                 ST_YMIN(the_geom) AS ymin, \
+                fit_to_geom, \
                 tileurl, \
                 does_wrapper, \
                 true AS visible \

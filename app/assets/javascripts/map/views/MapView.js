@@ -8,6 +8,7 @@ define([
   'backbone',
   'underscore',
   'mps',
+  'cookie',
   'map/presenters/MapPresenter',
   'map/views/maptypes/grayscaleMaptype',
   'map/views/maptypes/treeheightMaptype',
@@ -15,7 +16,7 @@ define([
   'map/views/maptypes/positronMaptype',
   'map/views/maptypes/landsatMaptype',
   'map/helpers/layersHelper'
-], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, layersHelper) {
+], function(Backbone, _, mps, Cookies, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, layersHelper) {
 
   'use strict';
 
@@ -108,7 +109,9 @@ define([
         }, this)
       );
       google.maps.event.addListener(this.map, 'bounds_changed', _.bind(function() {
-        if(!this.center_moved && this.mobile){
+        // This function will center the map when it's a small screen in the center - analysis module height
+        // 270 is magic number... We should get rid of it
+        if(!this.center_moved && !this.embed && this.mobile){
           this.offsetCenter(this.map.getCenter(), 0, 270/2);
           this.center_moved = true;
         }
@@ -123,12 +126,10 @@ define([
       }, this));
 
       google.maps.event.addListener(this.map, 'click', _.bind(function(wdpa) {
-        if (!(!!wdpa.wdpaid)) {
-          return;
+        if (!!wdpa && !!wdpa.wdpaid) {
+          // TODO => No mps here!
+          mps.publish('AnalysisTool/analyze-wdpaid', [wdpa]);
         }
-        // TODO => No mps here!
-        console.log('wdpa: ',wdpa);
-        mps.publish('AnalysisTool/analyze-wdpaid', [wdpa]);
       }, this));
 
       google.maps.event.addListener(this.map, 'maptypeid_changed', _.bind(function() {
@@ -431,7 +432,7 @@ define([
       this.map.mapTypes.set('treeheight', treeheightMaptype());
       this.map.mapTypes.set('dark', darkMaptype());
       this.map.mapTypes.set('positron', positronMaptype());
-      for (var i = 1999; i < 2013; i++) {
+      for (var i = 1999; i < 2015; i++) {
         this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
       }
     },
@@ -506,10 +507,10 @@ define([
       this.$overlayMobile.toggleClass('active', bool);
     },
 
-
     // Autolocate
     autolocateQuestion: function() {
-      if (isMobile.any && !this.embed) {
+      if (isMobile.any && !this.embed && !Cookies.get('autolocate')) {
+        Cookies.set('autolocate', true, { expires: 30 });
         mps.publish('Confirm/ask', ['default', 'autolocate']);
       }
     },

@@ -33,7 +33,12 @@
 @import "modules/icons1600";
 @import "modules/slick1600";
 @import "modules/notifications";
+@import "modules/modal";
+@import "modules/modal_new";
+@import "modules/form";
 
+@import "modules/connect/profile-modal";
+@import "modules/connect/user-form";
 
 @import
 
@@ -45,10 +50,8 @@
   // Modules
   "modules/notice",
   "modules/navbar",
-  "modules/feedback",
-  "modules/form",
-  "modules/modal",
   "modules/dialog",
+  "modules/guide",
 
   // layer nav
   "modules/map/layer-nav",
@@ -67,17 +70,23 @@
   "modules/map/control-searchbox",
   "modules/map/control-share",
   "modules/map/control-threshold",
+  "modules/map/advanced-analysis",
   // tabs
   "modules/map/module-tabs",
   "modules/map/tab-analysis",
   "modules/map/tab-basemaps",
   "modules/map/tab-countries",
+  "modules/map/tab-highresolution",
+  "modules/map/subscription-modal",
   // timeline
   "modules/map/widget",
   "modules/map/timeline",
   "modules/map/timeline-btn",
   "modules/map/timeline-year",
   "modules/map/timeline-month",
+
+  "modules/map/timeline-torque",
+  "modules/map/timeline-torque-date-picker",
 
   //Nav mobile
   "modules/map/module-navmobile",

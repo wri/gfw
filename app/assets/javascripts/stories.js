@@ -46,6 +46,7 @@ require([
       new SourceWindowView();
       new SourceMobileFriendlyView();
       new NotificationsView();
+
     }
   });
 

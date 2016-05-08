@@ -73,35 +73,49 @@
         overflow: visible;
       }
       >ul {
-        min-width: 410px;
+        min-width: 470px;
         width: 100%;
-        padding: 0 5px;
         height: 55px;
+        padding: 0;
 
         @media (min-width: $br-mobile){
           width: auto;
           min-width: 0;
           margin: 0;
+          padding: 0 5px;
           height: auto;
         }
         >li {
           float: left;
           height: 55px;
+          border-left: 1px solid transparent;
+          border-right: 1px solid transparent;
+          &.active {
+            background: $white;
+            border-color: $border;
+          }
           @media (min-width: $br-mobile){
             height: 25px;
             width: 25px;
             margin: 0 0 0 20px;
+            border: none;
             &:first-child {
               margin: 0;
             }
+            &:hover {
+              .home-submenu, .apps-submenu{
+                opacity: 1;
+                visibility: visible;
+              }
+            }
           }
           >a,.link {
+            position: relative;
             cursor: pointer;
             display: inline-block;
             line-height: 55px;
             min-width: 50px;
             padding: 10px;
-            position: relative;
             text-transform: uppercase;
             @include transition(all 0.15s $easeInOutCubic);
             @media (min-width: 550px){
@@ -132,24 +146,25 @@
             .tooltip1{
               margin: 0;
               line-height: normal;
-              @media (max-width: $br-mobile - 1){
-                display: block;
-                position: relative;
-                background: none;
-                box-shadow: none;
-                z-index: 1;
-                visibility: visible;
-                opacity: 1;
-                color: $dark;
-                top: auto;
-                left: auto;
-                text-align: center;
-                padding: 0;
-                font-size: 10px;
-                @include transform(translate(0,20px));
-                &:after{
-                  display: none;
-                }
+              display: block;
+              position: relative;
+              background: none;
+              box-shadow: none;
+              z-index: 1;
+              visibility: visible;
+              opacity: 1;
+              color: $dark;
+              top: auto;
+              left: auto;
+              text-align: center;
+              padding: 2px 0 0;
+              font-size: 10px;
+              @include transform(translate(0,20px));
+              &:after {
+                display: none;
+              }
+              @media (min-width: $br-mobile){
+                display: none;
               }
             }
 
@@ -181,28 +196,22 @@
                 top: auto;
                 left: auto;
                 @include transform(translate(0,0));
+                width: 20px;
+                height: 25px;
+                display: block;
+                margin: 0 auto;
               }
             }
-
-            &.shape-world{
-              svg{
-                @include transform(translate(-50%,0) scale(0.9));
-                @media (min-width: $br-mobile){
-                  position: relative;
-                  top: auto;
-                  left: auto;
-                  @include transform(scale(0.9));
-                }
+            &.current  {
+              &:after {
+                content: "";
+                position: absolute;
+                top: -5px;
+                left: 0;
+                height: 3px;
+                width: 100%;
+                background: $cGreen;
               }
-            }
-
-            &:hover, &.current  {
-              &.shape-house { svg{ fill: $cGreen;} }
-              &.shape-world { svg{ fill: $cGreen;} }
-              &.shape-country { svg{ fill: $cGreen;} }
-              &.shape-fire { svg{ fill: $red;} }
-              &.shape-commodities { svg{ fill: $orange;} }
-              &.shape-blog { svg{ fill: $cGreen;} }
               svg {
                 fill: $cGreen;
               }
@@ -232,7 +241,7 @@
         font-size: 10px;
         text-transform: uppercase;
         position: relative;
-        top: -2px;
+        top: 0px;
       }
       &:after{
         content: "";
@@ -284,22 +293,31 @@
       @media (min-width: $br-mobile){
         padding: 0;
         width: auto;
+        position: static;
       }
-      >div{
-        >ul {
-          >li {
-            >a,.link {
-              &:hover  {
-                .tooltip1{
-                  visibility: visible;
-                  opacity: 1;
+      @media (min-width: $br-mobile){
+        >div{
+          >ul {
+            >li {
+              >a,.link {
+                &:hover  {
+                  &.shape-apps{
+                    .tooltip1{
+                      visibility: hidden;
+                      opacity: 0;
+                    }
+                  }
+                  .tooltip1{
+                    visibility: visible;
+                    opacity: 1;
+                  }
                 }
-                // @include transform(scale(1.25));
               }
             }
           }
         }
       }
+
     }
     &.second-nav {
       float: right;
@@ -383,6 +401,7 @@
       @media (min-width: $br-mobile){
         width: 60px;
         height: 60px;
+        margin: 0;
       }
       @media (min-width: $br-mobileMap){
         width: 90px;
@@ -536,7 +555,11 @@
 					position: relative;
 					z-index: 2;
           text-align: center;
-          padding: 20px 40px;
+          padding: 20px 25px;
+
+          @media (min-width: 1050px){
+            // padding: 20px 40px;
+          }
 
           &:after{
             content: "";
@@ -570,7 +593,16 @@
           opacity: 0;
           @include transform(translate(-50%,0px));
           @include transition(all 0.15s $easeInOutCubic);
-          min-width: 0;
+          &:after{
+            content: "";
+            display: block;
+            position: absolute;
+            top: 51px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: $cGreen;
+          }
 					li {
             border-top: 1px solid rgba(0,0,0,0.07);
             @for $i from 1 through 10 {
@@ -725,11 +757,14 @@
     svg{
       fill: $dark;
       position: absolute;
-      top: 50%;
-      left: 50%;
+      left: 0;
+      margin: auto;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
       width: 18px;
       height: 18px;
-      @include transform(translate(-50%,-50%));
     }
   }
   .menu-section-link{

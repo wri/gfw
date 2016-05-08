@@ -80,17 +80,26 @@
     }
   }
 }
+
 .tab-analysis, .tab-subscription{
+
   .is-subscribing &{
     min-height: 250px;
   }
+
+  .is-analysis &{
+    max-height: 60.1vh;
+    overflow: auto;  
+
+  }
+  
   nav{
     display: block;
     ul{
       @include display-flex();
       li{
         width: 100%;
-        padding: 8px 6px;
+        padding: 8px 4px;
         text-transform: uppercase;
         text-align: center;
         font-size: 12px;
@@ -203,10 +212,23 @@
 //DRAW TAB
 .analysis-tab-content.draw-tab,
 .subscription-tab-content.draw-tab{
+
+  .p-center {
+    text-align: center;
+    padding: 10px 0;      
+  }
+
   .image{
     position: relative;
     max-width: 50%;
     margin: 20px auto;
+    display: none;
+  
+    @media (min-height: 645px){
+      display: block;
+    }
+
+
 
     div{
       position: relative;
@@ -444,49 +466,31 @@
 
 
   // FOOTER ANALYSIS
-  .analysis-footer{
+  .analysis-footer {
     margin: 10px 0 0;
-    border-top: 1px solid $border;
+
     @media (min-width: 1500px){
       margin: 15px 0 0;
     }
 
     >ul{
+      margin-top: 10px;
       @include row();
+
       >li{
         width: 100%;
         position: relative;
         padding: 10px 0;
         cursor: pointer;
-        @media (max-width: $br-mobileMap - 1){
-          &#analysis-subscribe{
-            // display: none;
-          }
-          .tooltipmap{
-            opacity: 1;
-            visibility: visible;
-            position: relative;
-            @include transform(none);
-            left: 0;
-            top: 0;
-            box-shadow: none;
-            background: none;
-            font-size: 11px;
-            text-align: center;
-            display: block;
-            white-space: normal;
-            line-height: 1;
-            &:after{
-              display: none;
-            }
-          }
-        }
 
-        &:hover{
-          .tooltipmap{
-            opacity: 1;
-            visibility: visible;
-          }
+        .tip{
+          font-size: 10px;
+          padding: 4px 4px 0;
+          text-align: center;
+          text-transform: uppercase;
+          display: block;
+          line-height: 1;  
+          color: $dark;        
         }
 
         &.disabled{
@@ -499,21 +503,11 @@
           svg{
             @include animation(pulse_animation,0.75s,4,$easeInOutSine);
           }
+
           .tooltipmap{
             opacity: 1;
             visibility: visible;
           }
-        }
-
-        &:after{
-          content: "";
-          height: 50%;
-          width: 1px;
-          background: $border;
-          position: absolute;
-          top: 50%;
-          left: 0;
-          @include transform(translate(0,-50%));
         }
 
         &:first-child{
@@ -521,6 +515,7 @@
             display: none;
           }
         }
+
         svg{
           fill: $dark;
           width: 18px;
@@ -540,6 +535,7 @@
 
           }
         }
+
         .download-dropdown {
           text-align: left;
           width: 90px;
@@ -553,9 +549,11 @@
           background-color: $white;
           border-radius: 3px;
           box-shadow: $shadow1;
+
           &.hidden{
             display: none;
           }
+
           &:after{
             content: "";
             display: block;
@@ -573,10 +571,11 @@
           }
 
           > li a {
-            padding: 8px 10px;
+            padding: 5px 10px;
             display: block;
             border-bottom: 1px solid #f2f2f2;
             color: $cGreen;
+
             &:hover{
               background-color: darken($white,2.5%);
             }
@@ -584,134 +583,9 @@
         }
       }
     }
-  }
-}
 
-.analysis-subscribe{
-  position: fixed;
-  width: 100%;
-  height: 275px;
-  background: $white;
-  bottom: 0;
-  left: 0;
-  z-index: 23;
-  padding: 20px 20px 56px;
-  @include transform(translate(0,100%));
-  @include transition(all 0.25s $easeInOutSine);
-  &.active{
-    @include transform(translate(0,0));
-    opacity: 1;
-    visibility: visible;
-  }
-
-  @media (min-width: $br-mobileMap){
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: auto;
-    height: 100%;
-    z-index: 23;
-    overflow: hidden;
-    opacity: 0;
-    visibility: hidden;
-    @include transform(translate(0,0));
-    &.active{
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-
-
-
-  .analysis-subscribe-content{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #FFF;
-    @include transform(translate(0%,0));
-    @include transition(all 0.25s $easeInOutSine);
-    @media (min-width: $br-mobileMap){
-      @include transform(translate(100%,0));
-    }
-    &.active{
-      @include transform(translate(0%,0));
-    }
-
-    >.close-icon {
-      position: absolute;
-      top: 0;
-      right: 0;
-      fill: $dark;
-      z-index: 2;
-      padding: 5px;
-      cursor: pointer;
-    }
-    header{
-      text-align: center;
-      font-size: 13px;
-      @include clearfix();
-      h2{
-        font-size: 21px;
-        padding: 0 0 15px;
-        text-align: center;
-        span{
-          color: $cGreen;
-          &.source{ cursor: pointer;}
-        }
-      }
-      p{
-        button{
-          margin: 7px auto 0;
-          display: block;
-        }
-      }
-      ol{
-        text-align: left;
-        list-style-type: decimal;
-        list-style-position: outside;
-        position: relative;
-        float: left;
-        max-width: 80%;
-        left: 50%;
-        @include transform(translate(-50%,0));
-        li{
-          padding: 5px 0 0;
-          &:first-child{ margin: 0;}
-          .source{
-            @extend .info-icon;
-            display: inline-block;
-            top: 2px;
-            position: relative;
-          }
-        }
-      }
-    }
-
-    .content{
-      display: block;
-    }
-
-    .steps{
-      position: absolute;
-      top: 0;
-      left: 0;
+    .analysis-subscribe {
       width: 100%;
-      height: 100%;
-      padding: 15px;
-      @media (min-width: 1500px){
-        padding: 20px;
-      }
-      @include transform(translate(0%,100%));
-      @include transition(all 0.25s $easeInOutSine);
-      @media (min-width: $br-mobileMap){
-        @include transform(translate(100%,0));
-      }
-      &.current{
-        @include transform(translate(0%,0));
-      }
     }
   }
 }
-

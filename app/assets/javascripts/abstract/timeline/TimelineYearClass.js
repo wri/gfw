@@ -40,8 +40,8 @@ define([
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
-      this.dateRangeStart = this.options.dateRange[0];
-      this.dateRangeEnd = this.options.dateRange[1];
+      this.dateRangeStart = this.options.dateRange[0].utc();
+      this.dateRangeEnd = this.options.dateRange[1].utc();
       if (currentDate && currentDate[0]) {
         this.currentDate = currentDate;
       } else {
@@ -248,7 +248,10 @@ define([
           .ticks(ticks)
           .tickSize(0)
           .tickPadding(0)
-          .tickFormat(function(d) {return String(d); })
+          .tickFormat(_.bind(function(d) {
+            // return (d == 2000 && this.name == 'prodes') ? String('1997-2000') : String(d);
+            return String(d);
+          }, this ))
 
       this.svg.append('g')
           .attr('class', 'xaxis-years')
@@ -317,6 +320,7 @@ define([
         .attr('x2', this.handlers.right.attr('x'));
 
       d3.select('.xaxis-years')
+          .attr('class', 'xaxis-years '+this.name)
           .selectAll('.tick')
           .on('click',_.bind(function(value){
             this.selectYear(value);
@@ -572,7 +576,7 @@ define([
       // give time to finish animations.
       setTimeout(function() {
         var startYear = Math.round(this.xscale.invert(this.handlers.left.attr('x')));
-        var endYear = Math.ceil(this.xscale.invert(this.handlers.right.attr('x')));
+        var endYear = Math.round(this.xscale.invert(this.handlers.right.attr('x')));
 
         this.updateCurrentDate([moment([startYear]), moment([endYear])]);
       }.bind(this), 100);

@@ -1,25 +1,36 @@
 {{#if layers}}
 <header>
   <div class="alone">
-    <p>Available data sets for this country:</p>
+    <p>Available local datasets for this country:</p>
   </div>
 </header>
-<ul class="layers-list">
+<ul class="layers-list scroll-thin-dark">
   {{#each layers}}
     <li class="layer" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">
       <span class="onoffswitch"><span></span></span>
-      <span class="layer-title">{{this.title}} <a href='#' data-source='{{this.slug}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+      <span class="layer-title">
+        {{this.title}}
+        {{#if this.source_json}}
+          <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+        {{else}}
+          <a href='#' data-source='{{this.slug}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+        {{/if}}
+      </span>
+      {{#if this.subtitle}}<span class="layer-info">{{this.subtitle}}</span>{{/if}}
     {{#if this.does_wrapper}}
       <span class="does_wrapper"></span>
     {{/if}}
     </li>
   {{/each}}
 </ul>
+<div class="alone">
+  <p><a href="#" class="source" data-source="view_existing_global_data">View global datasets</a> in this country</p>
+</div>
 {{else}}
 <header>
   <div class="alone">
-    <p>No country data is available yet. </p>
-    <p><a href="#" class="source" data-source="view_existing_global_data">View existing global data sets</a> or <a href="/getinvolved/share-data" target="_blank">suggest your own.</a></p>
+    <p>Local datasets coming soon! </p>
+    <p>For now, <a href="#" class="source" data-source="view_existing_global_data">view global datasets</a> for this area, <a href="/getinvolved/share-data" target="_blank">suggest your own</a>, or use the buttons below to see statistics and infographics for this country.</p>
   </div>
 </header>
 {{/if}}

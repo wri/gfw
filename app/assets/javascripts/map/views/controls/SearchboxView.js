@@ -7,16 +7,20 @@ define([
   'underscore',
   'backbone',
   'handlebars',
-  'keymaster',
+  'proj4',
   'map/presenters/controls/SearchboxPresenter',
   'text!map/templates/controls/searchbox.handlebars'
-], function(_, Backbone, Handlebars, keymaster, Presenter, tpl) {
+], function(_, Backbone, Handlebars, proj4, Presenter, tpl) {
 
   'use strict';
 
   var SearchboxModel = Backbone.Model.extend({
     defaults:{
-      hidden: true
+      type: 'regular'
+    },
+
+    toggleVisibility: function() {
+      this.set('hidden', !this.get('hidden'));
     }
   });
 
@@ -27,252 +31,211 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click' : 'onClick',
-      'click .searching-kinds' : '_setType'
+      'click': 'close',
+      'click .kind' : 'setType',
+      'click #coord-btn' : 'searchByCoords',
+      'click #deg-btn' : 'searchByDegs',
+      'click #utm-btn' : 'searchByUtm',
     },
 
     initialize: function(map) {
       this.map = map;
+
       this.model = new SearchboxModel();
+      this.listenTo(this.model, 'change:hidden', this.toggleSearch);
+      this.listenTo(this.model, 'change:type', this.changeType);
+
       this.presenter = new Presenter(this);
-      _.bindAll(this, 'setAutocomplete', 'onPlaceSelected');
 
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
-        match: _.bind(function(){
-          this.mobile = false;
-        },this)
+        match: function() { this.mobile = false; }.bind(this)
       });
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
-        match: _.bind(function(){
-          this.mobile = true;
-        },this)
+        match: function() { this.mobile = true; }.bind(this)
       });
 
-
       this.render();
-      //cacheVars
-      this.$input = this.$el.find('input');
-
-      this.setListeners();
-      this.setAutocomplete();
-
-    },
-
-    checkSearchType: function(address) {
-      if (this.$searchbox.hasClass('blocked')) return;
-      var isLatLong = function(address) {
-        return (address.includes("º") || address.includes("°")) && (address.includes("'") || address.contains("′")) && (address.includes("W") || address.includes("E")) && (address.includes("N") || address.includes("S"));
-      }
-      var isDegrees = function(address) {
-        if (address.contains('º'))
-          address = address.replace(/º/g,'');
-        if (address.contains('°'))
-          address = address.replace(/°/g,'');
-        if (address.contains(","))
-          address = address.split(",");
-        else
-          address = address.split(" ");
-        if (!!address && address.length != 2) return false;
-        if (!(~~address[0] != 0 && ~~address[1] != 0)) return false; //avoid mistakes with coordinates, degrees have no letters, so everything must be numbers ~~NaN will be 0
-
-        var degrees = new Uint8Array(new ArrayBuffer(2));
-        var aux = new Array(2);
-        aux = address[0].split('.');
-        degrees[0] = Math.abs(aux[0]);
-        aux = address[1].split('.');
-        degrees[1] = Math.abs(aux[0]);
-        if (degrees[0] <= 90 && degrees[1] <= 180) {
-          return true;
-        }
-        return false;
-      }
-      if (isLatLong(address)) {
-        //user typed a latitude and longitude coordinates
-        this._setType(null,"coordinates");
-      } else if (isDegrees(address)) {
-        //user typed a degrees coordinates
-        this._setType(null,"degrees");
-      } else {
-        //user typed a regular address
-        this._setType(null,"regular");
-      }
-    },
-
-    _latLongToDecimal: function(address) {
-      var degrees = address || this.$searchbox.find('.degrees input').val();
-      if (degrees.contains(","))
-        degrees = degrees.split(",");
-      else if (degrees.contains("E "))
-        degrees = degrees.split("E ");
-      else if (degrees.contains("W "))
-        degrees = degrees.split("W ");
-      else
-        degrees = degrees.split(" ");
-      return this._parseDMS(degrees[0]) + ', ' + this._parseDMS(degrees[1]);
-    },
-
-    _setType: function(e, kind) {
-      this.$searchbox.addClass('blocked');
-      if (!!e && ! !!kind) {
-        var $target = $(e.target);
-        if ($target.hasClass('selected')) return;
-        this.$searchbox.find('.search.selected').removeClass('selected');
-
-        $(e.target).parent().find('.selected').removeClass('selected');
-        $target.addClass('selected').focus();
-        this.$searchbox.find('.search.'+$target.data('kind')).addClass('selected');
-        $target = null;
-      } else if (typeof(kind) === "string") {
-        if (this.$searchbox.find('.search.'+kind).hasClass('selected')) return;
-        var $prevInput = this.$searchbox.find('.search.selected input');
-        this.$searchbox.find('.search.'+kind+' input').val($prevInput.val());
-        $prevInput.val('');
-        $prevInput = null;
-
-        this.$searchbox.find('.search.selected').removeClass('selected');
-        this.$searchbox.find('.search.'+kind).addClass('selected').focus();
-        this.$searchbox.find('.kind').removeClass('selected');
-        this.$searchbox.find('*[data-kind="' + kind + '"]').addClass('selected');
-      }
-    },
-
-    _parseDMS: function(dmsStr) {
-      // check for signed decimal degrees without NSEW, if so return it directly
-      if (typeof dmsStr == 'number' && isFinite(dmsStr)) return Number(dmsStr);
-
-      // strip off any sign or compass dir'n & split out separate d/m/s
-      var dms = String(dmsStr).trim().replace(/^-/, '').replace(/[NSEW]$/i, '').split(/[^0-9.,]+/);
-      if (dms[dms.length-1]=='') dms.splice(dms.length-1);  // from trailing symbol
-
-      if (dms == '') return NaN;
-
-      // and convert to decimal degrees...
-      var deg;
-      switch (dms.length) {
-          case 3:  // interpret 3-part result as d/m/s
-              deg = dms[0]/1 + dms[1]/60 + dms[2]/3600;
-              break;
-          case 2:  // interpret 2-part result as d/m
-              deg = dms[0]/1 + dms[1]/60;
-              break;
-          case 1:  // just d (possibly decimal) or non-separated dddmmss
-              deg = dms[0];
-              // check for fixed-width unseparated format eg 0033709W
-              //if (/[NS]/i.test(dmsStr)) deg = '0' + deg;  // - normalise N/S to 3-digit degrees
-              //if (/[0-9]{7}/.test(deg)) deg = deg.slice(0,3)/1 + deg.slice(3,5)/60 + deg.slice(5)/3600;
-              break;
-          default:
-              return NaN;
-      }
-      if (/^-|[WS]$/i.test(dmsStr.trim())) deg = -deg; // take '-', west and south as -ve
-
-      return Number(deg);
-    },
-
-    setListeners: function() {
-      this.$input.on('keyup', _.bind(function(e){
-        if (e.keyCode === 27) {
-          this.model.set('hidden', false);
-          this.toggleSearch();
-        } else if (e.keyCode === 13) {
-          var geom = [0,0];
-          if (this.$searchbox.find('.search.selected').hasClass('degrees')) {
-            geom = this.$searchbox.find('.search.selected input').val();
-            if (geom.contains('º'))
-              geom = geom.replace(/º/g,'');
-            if (geom.contains('°'))
-              geom = geom.replace(/°/g,'');
-            if (geom.contains(","))
-              geom = geom.split(",");
-            else
-              geom = geom.split(" ");
-            this.presenter.setCenter(geom[0],geom[1]);
-            geom = null;
-            this.toggleSearch();
-          } else if (this.$searchbox.find('.search.selected').hasClass('coordinates')) {
-            geom = this._latLongToDecimal(this.$searchbox.find('.coordinates input').val());
-            if (! !!geom) {
-              this.$input[0] = this.$searchbox.find('.search input').val();
-              mps.publish('Notification/open', ['coordinates-not-standard']);
-              this._setType(null,"regular");
-              return;
-            }
-            geom = geom.split(",");
-            this.presenter.setCenter(geom[1],geom[0]);
-          }
-          geom = null;
-          this.toggleSearch();
-        } else {
-          if (! !! e.target.value) return;
-          this.checkSearchType(e.target.value);
-        }
-      }, this ));
-
-      google.maps.event.addListener(this.map, 'click',_.bind(function() {
-        this.model.set('hidden', false);
-        this.toggleSearch();
-      }, this));
     },
 
     render: function() {
       this.$el.html(this.template);
-      this.$searchbox = $('.search-box');
+
+      this.setupAutocomplete();
+      this.$('.chosen-select').chosen({
+        width: '40px',
+        inherit_select_classes: true,
+        disable_search: true,
+        display_selected_options: false,
+        display_disabled_options: false
+      });
     },
 
-    onClick: function(e) {
-      if ($(e.target).hasClass('control-searchbox')) {
+    close: function(event) {
+      if (event.target === this.el) {
         this.model.set('hidden', false);
-        this.toggleSearch();
       }
+    },
+
+    focusInput: function() {
+      var type = this.model.get('type');
+      setTimeout(function() {
+        this.$('.'+type).find('input').first().focus();
+      }.bind(this), 10);
     },
 
     toggleSearch: function() {
       var hidden = this.model.get('hidden');
       if (hidden) {
-        // This is for android keyboard. It pushes all content up, we want to prevent it
+        // This is for android keyboard. It pushes all content up, we
+        // want to prevent it
         if (this.mobile) {
           $('html,body').height($(window).height());
         }
+
         this.$el.show(0);
-        this.$input.focus();
-        this.model.set('hidden', false);
-        setTimeout(_.bind(function(){
-          this.$input.val('');
-        }, this),1);
-      }else{
-        // This is for android keyboard. It pushes all content up, we want to prevent it
+        this.focusInput();
+      } else {
+        // This is for android keyboard. It pushes all content up, we
+        // want to prevent it
         if (this.mobile) {
           $('html,body').height('100%');
         }
+
         this.$el.hide(0);
-        this.$input.blur();
-        this.model.set('hidden', true);
       }
     },
 
-    setAutocomplete: function() {
-      this.autocomplete = new google.maps.places.SearchBox(this.$input[0]);
-      google.maps.event.addListener(this.autocomplete, 'places_changed', this.onPlaceSelected);
+    setType: function(e) {
+      e && e.preventDefault();
+
+      var $target = $(e.currentTarget),
+          kind = $target.data('kind');
+
+      this.model.set('type', kind);
+    },
+
+    changeType: function() {
+      var type = this.model.get('type');
+      this.$('.search').removeClass('selected');
+      this.$('.kind').removeClass('selected')
+
+      this.focusInput();
+
+      this.$('.' + type).addClass('selected');
+      this.$('[data-kind="'+type+'"]').addClass('selected');
+    },
+
+    searchByCoords: function(e) {
+      e && e.preventDefault();
+
+      var latD = this.getDMS('#coord-lat');
+      var lngD = this.getDMS('#coord-lng');
+
+      var lat = this.convertDMSToDD(latD.degrees, latD.minutes, latD.seconds, latD.cardinal);
+      var lng = this.convertDMSToDD(lngD.degrees, lngD.minutes, lngD.seconds, lngD.cardinal);
+
+      if (!_.isNaN(lat) && !_.isNaN(lng)) {
+        this.presenter.setCenter(lat,lng);
+        this.addMarker(lat,lng);        
+        this.model.set('hidden', false);
+      }
+    },
+
+    getDMS: function(id) {
+      var $el = $(id);
+      return {
+        degrees: Number($el.find('input[name=degrees]').val()),
+        minutes: Number($el.find('input[name=minutes]').val()),
+        seconds: Number($el.find('input[name=seconds]').val()),
+        cardinal: $el.find('select[name=cardinal]').val(),
+      }
+    },
+
+    convertDMSToDD: function(degrees, minutes, seconds, cardinal) {
+      var dd = degrees + minutes/60 + seconds/(60*60);
+      if (cardinal == "S" || cardinal == "W") {
+        dd = dd * -1;
+      } // Don't do anything for N or E
+      return dd;
+    },
+
+    searchByDegs: function() {
+      var lat = Number($('#deg-lat').val());
+      var lng = Number($('#deg-lng').val());
+
+      if (!_.isNaN(lat) && !_.isNaN(lng)) {
+        this.presenter.setCenter(lat,lng);
+        this.addMarker(lat,lng);
+        this.model.set('hidden', false);
+      }
+    },
+
+    searchByUtm: function() {
+      var easting    = parseInt(this.$('#utm-easting').val(),10),
+          northing   = parseInt(this.$('#utm-northing').val(),10),
+          zone       = parseInt(this.$('#utm-zone').val(),10),
+          hemisphere = this.$('#utm-hemisphere').val();
+
+      var utm = "+proj=utm +zone=" + zone + " " + hemisphere,
+          wgs84 = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
+          coords = proj4(utm, wgs84, [easting, northing]);
+
+      if (!isNaN(coords[0]) && !isNaN(coords[1])) {
+        this.presenter.setCenter(coords[1], coords[0]);
+        this.addMarker(coords[1], coords[0]);
+        this.model.set('hidden', false);
+      }
+    },
+
+    setupAutocomplete: function() {
+      var input = this.$('.search-input')[0];
+      this.autocomplete = new google.maps.places.SearchBox(input);
+
+      google.maps.event.addListener(this.autocomplete,
+        'places_changed', this.onPlaceSelected.bind(this));
     },
 
     onPlaceSelected: function() {
-      var place = this.autocomplete.getPlaces();
-      if (place.length == 1) {
-        place = place[0];
-        if (place && place.geometry && place.geometry.viewport) {
+      var place = this.autocomplete.getPlaces()[0];
+
+      if (place !== undefined && place.geometry) {
+        if (place.geometry.viewport) {
           this.presenter.fitBounds(place.geometry.viewport);
-        }
-        if (place && place.geometry && place.geometry.location && !place.geometry.viewport) {
-          var index = [];
-          for (var x in place.geometry.location) {
-             index.push(x);
+          if (place.geometry.location) {
+            this.addMarker(place.geometry.location.lat(), place.geometry.location.lng());
           }
-          this.presenter.setCenter(place.geometry.location[index[0]],place.geometry.location[index[1]]);
         }
+
+        if (place.geometry.location && !place.geometry.viewport) {
+          this.presenter.setCenter(place.geometry.location.lat(), place.geometry.location.lng());
+          this.addMarker(place.geometry.location.lat(), place.geometry.location.lng());
+        }
+
         this.model.set('hidden', false);
-        this.toggleSearch();
       };
+
       ga('send', 'event', 'Map', 'Searchbox', 'Find location');
+    },
+
+    addMarker: function(_lat,_lng) {
+      this.removeMarker();
+      
+      var latLng = {
+        lat: _lat,
+        lng: _lng        
+      };
+
+      this.marker = new google.maps.Marker({
+        position: latLng,
+        // icon: icons[feature.type].icon,
+        map: this.map
+      });      
+    },
+
+    removeMarker: function() {
+      if (!!this.marker) {
+        this.marker.setMap(null);
+      }
     }
 
   });

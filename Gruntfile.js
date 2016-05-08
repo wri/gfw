@@ -17,20 +17,9 @@ module.exports = function(grunt) {
     connect: {
       server: {
         options: {
-          port : 8000
+          port : 9090
         }
       }
-    },
-
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc',
-        reporter: require('jshint-stylish')
-      },
-      all: [
-        'Gruntfile.js',
-        '<%= root.app %>/javascripts/map/{,*/}{,*/}{,*/}*.js'
-      ]
     },
 
     jasmine: {
@@ -39,7 +28,7 @@ module.exports = function(grunt) {
           specs: [
             '<%= root.test %>/spec/*_spec.js',
           ],
-          host: 'http://127.0.0.1:8000/',
+          host: 'http://127.0.0.1:9090/',
           helpers: '<%= root.test %>/helpers/*.js',
           outfile: '<%= root.test %>/SpecRunner.html',
           keepRunner: true,
@@ -60,12 +49,11 @@ module.exports = function(grunt) {
         spawn: false
       },
       test: {
-        files: '<%= jshint.all %>',
+        files: [
+          'Gruntfile.js',
+          '<%= root.app %>/javascripts/map/{,*/}{,*/}{,*/}*.js'
+        ],
         tasks: ['jasmine']
-      },
-      scripts: {
-        files: '<%= jshint.all %>',
-        tasks: ['jshint']
       }
     }
 
@@ -73,13 +61,11 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [
     'connect:server',
-    'jasmine',
-    'jshint'
+    'jasmine'
   ]);
 
   grunt.registerTask('default', [
     'connect:server',
-    'jshint',
     'jasmine',
     'watch'
   ]);

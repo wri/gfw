@@ -16,6 +16,24 @@
   to { @include transform(translate(-50%,-50%) rotate(360deg));}
 }
 
+// LOADER
+@-webkit-keyframes loader2 {
+  from { @include transform(rotate(0deg));}
+  to { @include transform(rotate(360deg));}
+}
+@-moz-keyframes loader2 {
+  from { @include transform(rotate(0deg));}
+  to { @include transform(rotate(360deg));}
+}
+@-ms-keyframes loader2 {
+  from { @include transform(rotate(0deg));}
+  to { @include transform(rotate(360deg));}
+}
+@keyframes loader2 {
+  from { @include transform(rotate(0deg));}
+  to { @include transform(rotate(360deg));}
+}
+
 
 // UPDOWN
 @-webkit-keyframes updown {
@@ -69,4 +87,26 @@
   0% { @include transform(scale(1)); }
   50% { @include transform(scale(1.5)); }
   100% { @include transform(scale(1)); }
+}
+
+// PULSE
+@-webkit-keyframes pulse_animation2 {
+  0% { @include transform(scale(1, 1) translate(0,-50%));}
+  50% {@include transform(scale(1.2, 1.2) translate(0,-50%));}
+  100% { @include transform(scale(1, 1) translate(0,-50%));}
+}
+@-moz-keyframes pulse_animation2 {
+  0% { @include transform(scale(1, 1) translate(0,-50%));}
+  50% {@include transform(scale(1.2, 1.2) translate(0,-50%));}
+  100% { @include transform(scale(1, 1) translate(0,-50%));}
+}
+@-ms-keyframes pulse_animation2 {
+  0% { @include transform(scale(1, 1) translate(0,-50%));}
+  50% {@include transform(scale(1.2, 1.2) translate(0,-50%));}
+  100% { @include transform(scale(1, 1) translate(0,-50%));}
+}
+@keyframes pulse_animation2 {
+  0% { @include transform(scale(1, 1) translate(0,-50%));}
+  50% { @include transform(scale(1.2, 1.2) translate(0,-50%));}
+  100% { @include transform(scale(1, 1) translate(0,-50%));}
 }

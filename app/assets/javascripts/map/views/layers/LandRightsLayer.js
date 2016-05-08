@@ -4,7 +4,7 @@
  * @return LandRightsLayer class (extends CartoDBLayerClass)
  */
 define([
-  'abstract/layer/CartoDBLayerClass',
+  'abstract/layer/CartoDBLayerClass'
 ], function(CartoDBLayerClass) {
 
   'use strict';

@@ -1,0 +1,26 @@
+#mex_forest_zoning {
+   polygon-opacity: 1;
+   line-color: #FFF;
+   line-width: 0;
+   line-opacity: 1;
+}
+
+#mex_forest_zoning[subcat="Áreas cubiertas con selvas altas perennifolias"] { polygon-fill: #ffffcc;}
+#mex_forest_zoning[subcat="Áreas cubiertas con vegetación de galería"] { polygon-fill: #c2e699;}
+#mex_forest_zoning[subcat="Áreas cubiertas con vegetación de manglar o bosque mesófilo de montaña"] { polygon-fill: #78c679;}
+#mex_forest_zoning[subcat="Áreas localizadas arriba de los tres mil metros sobre el nivel del mar"] { polygon-fill: #02818a;}
+#mex_forest_zoning[subcat="Áreas Naturales Protegidas"] { polygon-fill: #2171b5;}
+#mex_forest_zoning[subcat="Terrenos adecuados para realizar forestaciones"] { polygon-fill: #ffffb2;}
+#mex_forest_zoning[subcat="Terrenos con pendientes mayores al cien por ciento o cuarenta y cinco grados"] { polygon-fill: #cccccc;}
+#mex_forest_zoning[subcat="Terrenos con vegetación forestal de zonas áridas"] { polygon-fill: #fed98e;}
+#mex_forest_zoning[subcat="Terrenos forestales con degradación alta"] { polygon-fill: #d94701;}
+#mex_forest_zoning[subcat="Terrenos forestales de productividad alta"] { polygon-fill: #b3cde3;}
+#mex_forest_zoning[subcat="Terrenos forestales de productividad baja"] { polygon-fill: #8c96c6;}
+#mex_forest_zoning[subcat="Terrenos forestales de productividad media"] { polygon-fill: #88419d;}
+#mex_forest_zoning[subcat="Terrenos forestales o preferentemente forestales con degradación baja"] { polygon-fill: #bae4bc;}
+#mex_forest_zoning[subcat="Terrenos forestales o preferentemente forestales con degradación media"] { polygon-fill: #7bccc4;}
+#mex_forest_zoning[subcat="Terrenos forestales o preferentemente forestales degradados que se encuentran sometidos a tratamientos de recuperación forestal"] { polygon-fill: #2b8cbe;}
+#mex_forest_zoning[subcat="Terrenos preferentemente forestales"] { polygon-fill: #238b45;}
+#mex_forest_zoning[subcat="Terrenos preferentemente forestales con degradación alta"] { polygon-fill: #525252;}
+#mex_forest_zoning[subcat="No aplica"] { polygon-fill: #f7f7f7;}
+#mex_forest_zoning[subcat="*"] { polygon-fill: #f7f7f7;}

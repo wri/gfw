@@ -1,5 +1,5 @@
 /*global MarkerClusterer*/
-/**
+/*
  * The JSON map layer module.
  * @return JSONLayerClass (extends Class).
  */
@@ -54,7 +54,7 @@ define([
 
       this.markers = _.map(stories, function(story) {
 
-        story.title = _.str.truncate(story.title, 34);
+        story.title = _.str.truncate(story.title, 68);
 
         var markerOptions, infoWindowOptions;
 
@@ -88,11 +88,28 @@ define([
 
         var marker = new CustomMarker(latlng, this.map, markerOptions);
 
+
         google.maps.event.addListener(marker, 'click', _.bind(function() {
+          if (!!story.link) {
+            var redirectWindow = window.open(story.link, '_blank');
+                redirectWindow.location;
+          } else {
+            var redirectWindow = window.open('/stories/'+story.id, '_blank');
+                redirectWindow.location;
+          }
+        }, this));
+
+        google.maps.event.addListener(marker, 'mouseover', _.bind(function() {
           if (this.infowindow) {
             this.infowindow.remove();
           }
           this.infowindow = new CustomInfowindow(latlng, this.map, infoWindowOptions);
+        }, this));
+
+        google.maps.event.addListener(marker, 'mouseout', _.bind(function() {
+          if (this.infowindow) {
+            this.infowindow.remove();
+          }
         }, this));
 
         return marker;

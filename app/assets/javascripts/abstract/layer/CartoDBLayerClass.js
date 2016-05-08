@@ -22,6 +22,7 @@ define([
       interactivity: 'cartodb_id, name',
       infowindow: false,
       cartodb_logo: false,
+      raster: false,
       analysis: false
     },
 
@@ -39,7 +40,9 @@ define([
         sublayers: [{
           sql: this.getQuery(),
           cartocss: this.options.cartocss,
-          interactivity: this.options.interactivity
+          interactivity: this.options.interactivity,
+          raster: this.options.raster,
+          raster_band: this.options.raster_band
         }]
       };
 
@@ -75,6 +78,7 @@ define([
       this.infowindow.model.on('change', _.bind(function(model) {
         var analysis = $('#analysis-tab-button').hasClass('disabled');
         $('#analyzeBtn').toggleClass('dont-analyze', analysis);
+        mps.publish('Infowindow/toggleSubscribeButton', []);
       }, this));
       this.infowindow.model.on('change', _.bind(function(model) {
         this.infowindowsButtons();
@@ -95,21 +99,20 @@ define([
           mps.publish('AnalysisTool/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]);
 
           ($(this).data('wdpaid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area' + $(this).data('wdpaid')) : null;
-
           ($(this).data('useid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze ' + $(this).data('use').toUpperCase() + ' ' + $(this).data('useid')) : null;
         }else{
           mps.publish('Notification/open', ['not-select-forest']);
         }
 
       });
-      $('.cartodb-popup').on('click', '.subscription-concession', function () {
-        $('.cartodb-infowindow').hide(0);
-        mps.publish('Subscription/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]);
+      $('.cartodb-popup').on('click', '.subscription-concession', function (e) {
+        if (!$(e.currentTarget).hasClass('disabled')) {
+          $('.cartodb-infowindow').hide(0);
+          mps.publish('Subscription/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]);
 
-        ($(this).data('wdpaid')) ? ga('send', 'event', 'Map', 'Subscribe', 'Analyze Protected Area' + $(this).data('wdpaid')) : null;
-
-        ($(this).data('useid')) ? ga('send', 'event', 'Map', 'Subscribe', 'Analyze ' + $(this).data('use').toUpperCase() + ' ' + $(this).data('useid')) : null;
-
+          ($(this).data('wdpaid')) ? ga('send', 'event', 'Map', 'Subscribe', 'Analyze Protected Area' + $(this).data('wdpaid')) : null;
+          ($(this).data('useid')) ? ga('send', 'event', 'Map', 'Subscribe', 'Analyze ' + $(this).data('use').toUpperCase() + ' ' + $(this).data('useid')) : null;
+        }
       });
     },
 

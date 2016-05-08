@@ -302,6 +302,57 @@
       }
     }
 
+    .definition-list {
+      @include display-flex();
+      width: 190px;
+      font-size: 11px;
+      line-height: 14px;      
+      margin: 5px 0 0;
+
+      &:first-child {
+        margin: 0;
+      }
+      
+      .-title {
+        display: inline-block;
+        width: 55px;        
+      }
+
+      span {
+        width: 135px;
+      }
+    }
+
+    .gradient-bar {
+      clear: both;
+      height: 12px;
+      width: 100%;
+      border: 1px solid $border;
+      border-radius: 10px;      
+      margin: 5px 0 30px;
+      position: relative;
+
+      span {
+        display: block;
+        width: auto;
+        max-width: 50%;
+        position: absolute;
+        top: 100%;
+        padding: 5px 0 0;        
+        font-size: 8px;
+        line-height: 1;
+        
+        &.-left {
+          left: 0;
+        }
+        
+        &.-right {
+          right: 0;
+          text-align: right;
+        }
+      }
+    }    
+
     sup {
       vertical-align: top;
       font-size: 0.8em;
@@ -366,7 +417,7 @@
   /****************************/
   /* PantropicalLayer details */
   /****************************/
-  .layer-details-pantropical {
+  .layer-details-carbon_stocks {
     .details-title .units {
       font-weight: normal;
       text-transform: normal;
@@ -386,21 +437,21 @@
       li:last-child {float: right;}
     }
 
-    .quartile-bar {
+    .quartile-bar-biomass {
       clear: both;
       height: 12px;
       width: 100%;
       border: 1px solid #ccc;
       border-radius: 10px;
       background: #FFFFD4;
-      background: -moz-linear-gradient(left, #FFFFD4 0%, #dd8653 100%);
-      background: -webkit-gradient(linear, left top, right top, color-stop(0%,#FFFFD4), color-stop(100%,#dd8653));
-      background: -webkit-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
-      background: -o-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
-      background: -ms-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
-      background: linear-gradient(to right, #FFFFD4 0%,#dd8653 100%);
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFD4', endColorstr='#dd8653', GradientType=1);
-      background-image: -ms-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
+      background: -moz-linear-gradient(left, #895122 10%, #957F4F 35%, #9DB38A 75%, #3D7A33 100%);
+      background: -webkit-gradient(linear, left top, right top, color-stop(10%,#895122),color-stop(35%,#957F4F),color-stop(75%,#9DB38A), color-stop(100%,#3D7A33));
+      background: -webkit-linear-gradient(left, #895122 10%, #957F4F 35%, #9DB38A 75%, #3D7A33 100%);
+      background: -o-linear-gradient(left, #895122 10%, #957F4F 35%, #9DB38A 75%, #3D7A33 100%);
+      background: -ms-linear-gradient(left, #895122 10%, #957F4F 35%, #9DB38A 75%, #3D7A33 100%);
+      background: linear-gradient(to right, #895122 10%, #957F4F 35%, #9DB38A 75%, #3D7A33 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#895122', endColorstr='#3D7A33', GradientType=1);
+      background-image: -ms-linear-gradient(left, #895122 10%, #957F4F 35%, #9DB38A 75%, #3D7A33 100%);
     }
   }
 
@@ -477,6 +528,23 @@
     }
   }
 
+  /****************************/
+  /* OilPalmLayer details */
+  /****************************/
+  .layer-details-oil {
+    a {
+      color: $orange;
+      &:hover{
+        color: lighten($orange, 10%);
+      }
+    }
+  }
+  .layer-details-grump{
+    .canopy{
+      margin: 5px 0 0;
+    }
+  }
+
 
   /****************************/
   /* HondurasLayer details */
@@ -488,5 +556,7 @@
   }
 
 
-
+  strong {
+    font-weight: 500;
+  }
 }

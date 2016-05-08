@@ -97,7 +97,7 @@ define([
     _defineRequests: function() {
       var datasets = [
         'forma-alerts', 'umd-loss-gain', 'imazon-alerts', 'nasa-active-fires',
-        'quicc-alerts', 'terrai-alerts', 'prodes-loss'
+        'quicc-alerts', 'terrai-alerts', 'prodes-loss', 'loss-by-type', 'glad-alerts', 'guyra-loss','viirs-active-fires',
       ];
 
       // Defines requests for each dataset (e.g., forma-alerts) and type (e.g.
@@ -119,10 +119,15 @@ define([
     _subscribe: function() {
       mps.subscribe('AnalysisService/get', _.bind(function(config) {
         this.execute(config);
+        this.config = config;
       }, this));
 
       mps.subscribe('AnalysisService/cancel', _.bind(function() {
         this._abortRequest();
+      }, this));
+
+      mps.subscribe('AnalysisService/refresh', _.bind(function() {
+        this.execute(this.config);
       }, this));
     },
 
@@ -134,7 +139,10 @@ define([
      */
     _urls: function(dataset) {
       var types = ['world', 'national', 'subnational', 'use', 'wdpa'];
-      var params = {'umd-loss-gain': '{thresh}'}[dataset] || '';
+      var params = {
+        'umd-loss-gain': '{thresh}',
+        'loss-by-type': '?aggregate_by={aggregate_by}',
+      }[dataset] || '';
       var ids = _.map(types,
         function(type) {
           return  _.str.sprintf('%s:%s', dataset, type);

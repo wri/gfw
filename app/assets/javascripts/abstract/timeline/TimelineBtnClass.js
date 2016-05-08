@@ -9,10 +9,11 @@ define([
   'underscore',
   'backbone',
   'moment',
+  'handlebars',
   'd3',
   'text!templates/timelineBtn-mobile.handlebars'
 
-], function(_, Backbone, moment, d3, tplMobile) {
+], function(_, Backbone, moment, Handlebars, d3, tplMobile) {
 
   'use strict';
 
@@ -54,7 +55,6 @@ define([
       this.svg = {};
       this.xscale = {};
 
-
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.render(_.bind(function() {
@@ -65,13 +65,12 @@ define([
           }, this));
         },this)
       });
+
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.renderMobile();
         },this)
       });
-
-
     },
 
     renderMobile: function(){
@@ -204,8 +203,8 @@ define([
       if (!el) {
         el = this.tickG.filter(function(d) {
           var dformat = 'DD-MM-YYYY';
-          return (d.start.format(dformat) === date.start.format(dformat) &&
-            d.end.format(dformat) === date.end.format(dformat));
+          return (d.start.format(dformat) === moment(date.start).format(dformat) &&
+            d.end.format(dformat) === moment(date.end).format(dformat));
         }).node();
       }
 
@@ -238,8 +237,8 @@ define([
     },
 
     _getTooltipText: function(date) {
-      return '{0}-{1} {2}'.format(date.start.format('MMM'),
-        date.end.format('MMM'), date.end.year());
+      return '{0}-{1} {2}'.format(moment(date.start).format('MMM'),
+        date.end.format('MMM'), moment(date.end).year());
     },
 
     /**

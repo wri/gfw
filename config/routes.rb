@@ -6,13 +6,6 @@ Gfw::Application.routes.draw do
     # stories
     # get '/stories' => redirect("/stayinformed/crowdsourced-stories")
 
-    #sources
-    get '/sources/conservation?t=protected_areas' => redirect('http://www.protectedplanet.net/')
-    get '/sources/forest_use?t=oil_palm' => redirect('http://data.globalforestwatch.org/datasets/20398d4dc36e47bd92b559786670f270_0')
-    get '/sources/forest_cover?t=idn_primary' => redirect('http://data.globalforestwatch.org/datasets/b3ac8839275446b5983c0271fddf1e33')
-    get '/sources/forest_change?t=forma' => redirect('http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64')
-
-
     # 2004-2009 era
     get '/english' => redirect('/')
     get '/french' => redirect('/')
@@ -41,6 +34,8 @@ Gfw::Application.routes.draw do
     get '/howto/data' => redirect("/howto/faqs")
     get '/howto/web_platform' => redirect("/howto/faqs")
     get '/howto/for_business' => redirect("/howto/faqs")
+    get '/howto/analyze-forest-change' => redirect("/howto/analyze-and-subscribe-to-forest-change-data")
+    get '/howto/subscribe-to-alerts-and-user-stories' => redirect("/howto/analyze-and-subscribe-to-forest-change-data")
 
     # about
     get '/about/video' => redirect("/about")
@@ -50,6 +45,8 @@ Gfw::Application.routes.draw do
     get '/about/users' => redirect("/about")
     get '/about/small_grants_fund' => redirect("/getinvolved/apply-to-the-small-grants-fund")
     get '/about/testers' => redirect("/about")
+    get '/getinvolved/provide-feedback' => redirect("/getinvolved")
+
 
   resources :stories
 
@@ -61,6 +58,9 @@ Gfw::Application.routes.draw do
   get '/sources' => 'static#data'
   get '/sources(/:section)' => 'static#data'
 
+  get '/my_gfw/' => 'connect#index', as: 'user_index'
+  get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
+
   # get '/stayinformed' => redirect('stayinformed/crowdsourced-stories')
   get '/stayinformed' => 'static#keep'
   get '/stayinformed(/:section)' => 'static#keep'
@@ -69,6 +69,7 @@ Gfw::Application.routes.draw do
   get '/getinvolved' => 'static#getinvolved'
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'
+  get '/feedback_jsonp' => 'static#feedback_jsonp'
 
   # howto
   get '/howto' => 'static#howto'
@@ -136,7 +137,5 @@ Gfw::Application.routes.draw do
 
   root 'landing#index'
 
-
-
-
+  get '/glad', to: redirect('/map/3/15.00/27.00/ALL/grayscale/umd_as_it_happens')
 end
