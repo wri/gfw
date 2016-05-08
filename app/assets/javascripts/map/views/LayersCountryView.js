@@ -35,16 +35,13 @@ define([
       'click #layers-country-reset' : 'resetIso'
     },
 
-    initialize: function() {
+    initialize: function(map, countries) {
       // Init presenter
       this.presenter = new Presenter(this);        
-
-      // Init country service
-      this.countries = new CountryCollection();
-      this.countries.fetch().done(function(){
-        this.render();
-      }.bind(this))
-
+      this.map = map;
+      this.countries = countries;
+      
+      this.render();
       this.listeners();
     },
 
@@ -74,8 +71,15 @@ define([
         allow_single_deselect: true,
         inherit_select_classes: true,
         no_results_text: "Oops, nothing found!"
-      });
-      this.$select.trigger('liszt:open');
+      })
+
+      this.$select.trigger('chosen:open');
+
+      // Bug, whenever you mousedown inside chosen container the scroll of the countries go back to top
+      $('#layers_country_select_chosen .chosen-drop, #layers_country_select_chosen .chosen-single').on("mousedown", function(e){
+        e && e.stopPropagation() && e.preventDefault();
+        return false;
+      })
     },
 
     // Layers

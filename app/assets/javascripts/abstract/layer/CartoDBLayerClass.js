@@ -4,11 +4,12 @@
  */
 define([
   'underscore',
+  'mps',
   'uri',
   'abstract/layer/OverlayLayerClass',
   'text!map/cartocss/style.cartocss',
   'text!map/templates/infowindow.handlebars'
-], function(_, UriTemplate, OverlayLayerClass, CARTOCSS, TPL) {
+], function(_, mps, UriTemplate, OverlayLayerClass, CARTOCSS, TPL) {
 
   'use strict';
 
