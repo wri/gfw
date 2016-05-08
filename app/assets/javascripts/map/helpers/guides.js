@@ -80,7 +80,7 @@ define([
           position: 'left',
           callfront: function() {
             $('#countries-tab-button').removeClass('active').click();
-            $('#countries-country-select').val(null).trigger('change').trigger("liszt:updated");
+            $('#countries-country-select').val(null).trigger('change').trigger("chosen:updated");
           }
         }
       },

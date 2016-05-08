@@ -298,7 +298,7 @@ define([
     setSelects: function(iso){
       this.iso = iso.country;
       this.commonIsoChanges();
-      this.$countrySelect.val(this.iso).trigger("liszt:updated");
+      this.$countrySelect.val(this.iso).trigger("chosen:updated");
       if (this.mobile) {
         this.filterByLetter(null);
       }
@@ -329,8 +329,8 @@ define([
           this.filterByLetter(null);
         }
       };
-      this.$countrySelect.val(this.iso).trigger("liszt:updated");
-      // this.$regionSelect.val(this.area).trigger("liszt:updated");
+      this.$countrySelect.val(this.iso).trigger("chosen:updated");
+      // this.$regionSelect.val(this.area).trigger("chosen:updated");
       if (this.iso) {
         this.getAdditionalInfoCountry();
       }
