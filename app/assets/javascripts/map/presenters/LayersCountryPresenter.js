@@ -48,6 +48,10 @@ define([
       }
     },{
       'Country/update': function(iso) {
+        if (! !!iso.country) {
+          this.view.resetCountryLayers();
+        }
+
         this.view.setCountry(iso);
         this.status.set('iso', iso);
       }
@@ -89,15 +93,18 @@ define([
     },
 
     _removeLayer: function(layer) {
+      // Get current active layers from layerspec
       var currentLayers = layerSpecService._getLayers();
+
       if (!!layer.wrappers) {
-        // Check the wrapped layers
+        // Check if any of the wrapped layers is active and toggle it
         _.each(layer.wrappers, function(wrap_layer) {
           if (!!currentLayers[wrap_layer.slug]) {
             this._toggleLayer(wrap_layer.slug);
           }
         }.bind(this));
       } else {
+        // Check if any of the regular layers is active and toggle it
         if (!!currentLayers[layer.slug]) {
           this._toggleLayer(layer.slug);
         }        

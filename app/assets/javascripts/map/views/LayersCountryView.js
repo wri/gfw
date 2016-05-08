@@ -75,10 +75,12 @@ define([
 
       this.$select.trigger('chosen:open');
 
-      // Bug, whenever you mousedown inside chosen container the scroll of the countries go back to top
-      $('#layers_country_select_chosen .chosen-drop, #layers_country_select_chosen .chosen-single').on("mousedown", function(e){
+      // Bug:solved, whenever you mousedown inside chosen container the scroll of the countries go back to top
+      $('#layers_country_select_chosen .chosen-results, #layers_country_select_chosen .chosen-single').on("mousedown", function(e){
         e && e.stopPropagation() && e.preventDefault();
-        this.$select.trigger('chosen:open');
+        if (!$(e.currentTarget).hasClass('chosen-results')) {
+          this.$select.trigger('chosen:open');  
+        }
         return false;
       }.bind(this))
     },
@@ -116,9 +118,7 @@ define([
       });
     },
 
-    resetIso: function() {
-      this.resetCountryLayers();
-      
+    resetIso: function() {      
       this.presenter.publishIso({
         country: null, 
         region: null
