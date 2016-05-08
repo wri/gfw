@@ -27,9 +27,13 @@ define([
       'click .grouped-layers-trigger' : 'toggleLayersGroup',
     },
 
-    initialize: function() {
+    initialize: function(map,countries) {
       _.bindAll(this, '_toggleSelected');
       this.presenter = new Presenter(this);
+      this.map = map;
+      this.countries = countries;
+
+
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.setElement('#layers-menu');
@@ -58,7 +62,7 @@ define([
       this.$countryLayers = $('#country-layers');
       this.$countryLayersReset = $('#country-layers-reset');
 
-      new LayersCountryView();
+      new LayersCountryView(this.map,this.countries);
 
     },
 

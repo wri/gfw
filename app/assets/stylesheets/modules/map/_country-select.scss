@@ -1,12 +1,12 @@
 /* @group Base */
-.chzn-container {
+.chosen-container {
   position: relative;
   display: inline-block;
   vertical-align: middle;
   font-size: 12px;
   zoom: 1;
   *display: inline;
-  .chzn-single {
+  .chosen-single {
     position: relative;
     display: block;
     overflow: hidden;
@@ -21,7 +21,7 @@
     font-weight: 500;
     text-transform: uppercase;
     outline: none;
-    .chzn-default {
+    .chosen-default {
       color: $white;
     }
     span {
@@ -32,7 +32,7 @@
       padding-right: 40px;
     }
   }
-  .chzn-drop {
+  .chosen-drop {
     position: absolute;
     top: 100%;
     left: -9999px;
@@ -44,7 +44,7 @@
   }
   /* @end */
   /* @group Results */
-  .chzn-results {
+  .chosen-results {
     position: relative;
     overflow-x: hidden;
     overflow-y: auto;
@@ -98,18 +98,18 @@
     }
   }
 
-  &.chzn-with-drop .chzn-drop {
+  &.chosen-with-drop .chosen-drop {
     left: 0;
   }
   
   // Default theme
   &.default{
-    .chzn-single{
+    .chosen-single{
       color: $dark;
       background-color: $white;
       padding: 10px;
       border: 1px solid $border;
-      .chzn-default {
+      .chosen-default {
         color: $dark;
       }
 
@@ -126,7 +126,7 @@
   // Coord theme
   &.coord-select {
     font-size: 18px;
-    .chzn-single{
+    .chosen-single{
       padding: 7px 10px 3px;
       border: 0;
       border-bottom: 1px solid $dark;
@@ -144,7 +144,7 @@
       }
     }
 
-    .chzn-results {
+    .chosen-results {
       padding: 0;
       margin: 0;
       
@@ -162,12 +162,12 @@
   &.country-select {
     $country-color: rgb(207, 127, 236);
     
-    .chzn-single{
+    .chosen-single{
       color: $dark;
       background-color: rgba($country-color, 0.25);
       padding: 15px 10px;
 
-      .chzn-default {
+      .chosen-default {
         color: $dark;
       }
 
@@ -180,16 +180,16 @@
       }
     }    
 
-    .chzn-drop {
+    .chosen-drop {
       position: relative;
       top: 0;
       left: 0;      
       
-      .chzn-search {
+      .chosen-search {
         padding: 10px;
       }
 
-      .chzn-results {
+      .chosen-results {
         color: $dark;
       }
     }
@@ -202,9 +202,9 @@
 
 /* @end */
 /* @group Single Chosen */
-.chzn-container-single {
+.chosen-container-single {
   outline: none;
-  .chzn-single {
+  .chosen-single {
     abbr {
       position: absolute;
       top: 50%;
@@ -248,7 +248,7 @@
       }
     }
   }
-  .chzn-search {
+  .chosen-search {
     position: relative;
     z-index: 1010;
     margin: 0;
@@ -267,11 +267,11 @@
     }
   }
 
-  .chzn-drop {
+  .chosen-drop {
     background-clip: padding-box;
   }
 
-  &.chzn-container-single-nosearch .chzn-search {
+  &.chosen-container-single-nosearch .chosen-search {
     position: absolute;
     left: -9999px;
   }
@@ -281,32 +281,32 @@
 
 /* @end */
 /* @group Active  */
-// .chzn-container-active.chzn-with-drop .chzn-single div {
+// .chosen-container-active.chosen-with-drop .chosen-single div {
 //   border-left: none;
 //   background: transparent;
 // }
-// .chzn-container-active.chzn-with-drop .chzn-single div b {
+// .chosen-container-active.chosen-with-drop .chosen-single div b {
 //   border-left: none;
 //   background: transparent;
 // }
-// .chzn-container-active .chzn-choices {
+// .chosen-container-active .chosen-choices {
 //   border: 1px solid #5897fb;
 //   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 // }
-// .chzn-container-active .chzn-choices li.search-field input {
+// .chosen-container-active .chosen-choices li.search-field input {
 //   color: #111 !important;
 // }
 
 /* @end */
 /* @group Disabled Support */
-.chzn-disabled {
+.chosen-disabled {
   opacity: 0.5 !important;
   cursor: default;
 }
-.chzn-disabled .chzn-single {
+.chosen-disabled .chosen-single {
   cursor: default;
 }
-.chzn-disabled .chzn-choices .search-choice .search-choice-close {
+.chosen-disabled .chosen-choices .search-choice .search-choice-close {
   cursor: default;
 }
 /* @end */
