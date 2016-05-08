@@ -78,8 +78,9 @@ define([
       // Bug, whenever you mousedown inside chosen container the scroll of the countries go back to top
       $('#layers_country_select_chosen .chosen-drop, #layers_country_select_chosen .chosen-single').on("mousedown", function(e){
         e && e.stopPropagation() && e.preventDefault();
+        this.$select.trigger('chosen:open');
         return false;
-      })
+      }.bind(this))
     },
 
     // SETTERS
