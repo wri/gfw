@@ -39,7 +39,7 @@ define([
     },
 
     init: function() {
-      _.bindAll(this, '_removeLayer');
+      _.bindAll(this, '_getLayers', '_removeLayer');
       this.model = new LayerSpecModel();
     },
 
@@ -59,6 +59,10 @@ define([
           success(this.model);
         }, this),
         error);
+    },
+
+    _getLayers: function() {
+      return this.model.getLayers();
     },
 
     /**

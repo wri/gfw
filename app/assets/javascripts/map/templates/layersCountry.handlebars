@@ -29,7 +29,16 @@
             <span class="layer-info">{{this.subtitle}}</span>
           {{/if}}
           {{#if this.does_wrapper}}
-            <span class="does_wrapper"></span>
+            <span class="does_wrapper">
+              <span class="layer-info">
+                {{#each this.wrappers}}
+                <label data-layer="{{this.slug}}" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />{{this.title}}
+                </label>
+                {{/each}}
+              </span>                        
+            </span>
           {{/if}}
         </li>
       {{/each}}

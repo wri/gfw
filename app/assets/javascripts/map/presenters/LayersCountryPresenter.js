@@ -78,7 +78,7 @@ define([
      *
      * @param  {object} layerSpec
      */
-    toggleLayer: function(layerSlug) {
+    _toggleLayer: function(layerSlug) {
       var where = [{slug: layerSlug}];
 
       layerSpecService.toggle(where,
@@ -87,6 +87,22 @@ define([
           mps.publish('Place/update', [{go: false}]);
         }, this));
     },
+
+    _removeLayer: function(layer) {
+      var currentLayers = layerSpecService._getLayers();
+      if (!!layer.wrappers) {
+        // Check the wrapped layers
+        _.each(layer.wrappers, function(wrap_layer) {
+          if (!!currentLayers[wrap_layer.slug]) {
+            this._toggleLayer(wrap_layer.slug);
+          }
+        }.bind(this));
+      } else {
+        if (!!currentLayers[layer.slug]) {
+          this._toggleLayer(layer.slug);
+        }        
+      }
+    }
 
   });
 

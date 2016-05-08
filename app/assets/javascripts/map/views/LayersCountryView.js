@@ -82,9 +82,16 @@ define([
       })
     },
 
-    // Layers
+    // SETTERS
     setLayers: function(layers) {
       this.model.set('layers', layers);
+    },
+
+    setCountry: function(iso) {
+      var country = (!!iso && !!iso.country) ? iso.country : null; 
+      var countryName = (!!iso && !!iso.country) ? _.findWhere(this.countries.toJSON(), {iso: iso.country }).name : null;
+      this.model.set('countryName', countryName);
+      this.model.set('country', country);
     },
 
     setCountryLayers: function() {
@@ -99,14 +106,6 @@ define([
       this.render();
     },
 
-    // Country
-    setCountry: function(iso) {
-      var country = (!!iso && !!iso.country) ? iso.country : null; 
-      var countryName = (!!iso && !!iso.country) ? _.findWhere(this.countries.toJSON(), {iso: iso.country }).name : null;
-      this.model.set('countryName', countryName);
-      this.model.set('country', country);
-    },
-
     // EVENTS //
     changeIso: function(e) {
       var country = this.$select.val();
@@ -117,10 +116,18 @@ define([
     },
 
     resetIso: function() {
+      this.resetCountryLayers();
+      
       this.presenter.publishIso({
         country: null, 
         region: null
-      });      
+      });
+    },
+
+    resetCountryLayers: function(){
+      _.each(this.model.get('countryLayers'),_.bind(function(layer){
+        this.presenter._removeLayer(layer);
+      }, this ))
     }
 
   });
