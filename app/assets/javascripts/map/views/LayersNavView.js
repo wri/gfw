@@ -90,7 +90,7 @@ define([
 
           $li.addClass('selected');
           $toggle.addClass('checked');
-          $layerTitle.css('color', layer.title_color);
+          // $layerTitle.css('color', layer.title_color);
           $toggle.css('background', layer.title_color);
 
           ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layer.slug);
@@ -98,7 +98,7 @@ define([
           $li.removeClass('selected');
           $toggle.removeClass('checked').css('background', '').css('border-color', '');
           $toggleIcon.css('background-color', '');
-          $layerTitle.css('color', '');
+          // $layerTitle.css('color', '');
         }
       });
       this.toogleSelectedWrapper();
