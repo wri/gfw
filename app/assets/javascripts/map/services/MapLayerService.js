@@ -59,7 +59,7 @@ define([
         _.bind(function(layers) {
 
           //filter iso layers and pack them, then send the package to the presenter
-          mps.publish('Layers/isos', [_.filter(layers.rows,function(lay) {return lay.iso != null;})] );
+          mps.publish('Country/layers', [_.filter(layers.rows,function(lay) {return lay.iso != null;})] );
 
           var hits = _.map(where, _.partial(_.where, layers.rows));
           successCb(_.flatten(hits));

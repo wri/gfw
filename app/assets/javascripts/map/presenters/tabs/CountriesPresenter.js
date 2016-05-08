@@ -45,16 +45,16 @@ define([
         this.view.setSelects(iso);
       }
     },{
+      'Country/layers': function(layers_iso) {
+        this.view.getIsoLayers(layers_iso);
+      }
+    },{
       'Subscribe/clearIso': function() {
         this.status.set('iso', {});
       }
     },{
       'LayerNav/change': function(layerSpec) {
         this.view._renderHtml();
-      }
-    },{
-      'Layers/isos': function(layers_iso) {
-        this.view.getIsoLayers(layers_iso);
       }
     },{
       'Analysis/analyze-iso': function(iso,to) {
