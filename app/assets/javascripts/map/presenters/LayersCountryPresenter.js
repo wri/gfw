@@ -12,11 +12,27 @@ define([
 
   'use strict';
 
+  var StatusModel = Backbone.Model.extend({
+    defaults: {
+      iso: null,
+      dont_analyze: true
+    }
+  });
+
   var LayersCountryPresenter = PresenterClass.extend({
 
     init: function(view) {
       this.view = view;
       this._super();
+      this.status = new StatusModel();
+      mps.publish('Place/register', [this]);
+    },
+
+    getPlaceParams: function() {
+      var p = {};
+      p.iso = this.status.get('iso');
+      p.dont_analyze = this.status.get('dont_analyze');
+      return p;
     },
 
     /**
@@ -28,7 +44,12 @@ define([
       }
     },{
       'Country/update': function(iso) {
-        console.log(iso);
+        this.view.setCountry(iso);
+        this.status.set('iso', iso);
+      }
+    },{
+      'Country/layers': function(layers) {
+        this.view.setLayers(layers);
       }
     }],
 
@@ -37,15 +58,22 @@ define([
     },
 
     /**
-     * Publish a a Map/toggle-layer.
+     * Publish a a Country/update.
      *
-     * @param  {string} layerSlug
+     * @param  {object} iso: {country:'xxx', region: null}
      */
-
     publishIso: function(iso) {
+      this.status.set('iso', iso);
+      this.status.set('dont_analyze', true);        
       mps.publish('Country/update', [iso]);
+      mps.publish('Place/update', [{go: false}]);
     },
 
+    /**
+     * Publish a a LayerNav/change.
+     *
+     * @param  {object} layerSpec
+     */
     toggleLayer: function(layerSlug) {
       var where = [{slug: layerSlug}];
 
@@ -55,6 +83,7 @@ define([
           mps.publish('Place/update', [{go: false}]);
         }, this));
     },
+
   });
 
   return LayersCountryPresenter;

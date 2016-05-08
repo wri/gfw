@@ -5,9 +5,11 @@
     <span class="category-name">COUNTRY DATA</span>
   </div>
 
-  {{#if layers}}
+  {{#if country}}
+    <p class="country-title">{{this.countryName}} <span id="layers-country-reset"><svg><use xlink:href="#shape-close"></use></svg></span></p>
+    {{#if countryLayers}}
     <ul class="layers-list scroll-thin-dark">
-      {{#each layers}}
+      {{#each countryLayers}}
         <li class="{{#if this.does_wrapper}}wrapped-layer{{else}}layer{{/if}}" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">
           <span class="onoffswitch"><span></span></span>
           <span class="layer-title">
@@ -27,6 +29,12 @@
         </li>
       {{/each}}
     </ul>
+    {{else}}
+      <div class="country-description">
+        <p>Local datasets coming soon! </p>
+        <p>For now, <a href="#" class="source" data-source="view_existing_global_data">view global datasets</a> for this area, <a href="/getinvolved/share-data" target="_blank">suggest your own</a>, or use the buttons below to see statistics and infographics for this country.</p>
+      </div>
+    {{/if}}
   {{else}}
     <select data-placeholder="Select country" class="chosen-select country-select notranslate" id="layers-country-select">
       <option></option>

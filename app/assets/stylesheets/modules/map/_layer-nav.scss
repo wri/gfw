@@ -252,6 +252,69 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
             }
           }
         }
+      }
+      
+      .country-description {
+        color: $dark;
+        font-size: 14px;
+        padding: 15px 10px;
+        line-height: 1.25;
+
+        > * {
+          margin: 10px 0 0;
+          
+          &:first-child {
+            margin-top: 0;
+          }
+        }
+
+        a {
+          color: $cGreen;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .country-title {
+        color: $dark;
+        background-color: rgba($country-color, 0.25);
+        font-size: 12px;
+        padding: 15px 10px;
+        margin: 0;
+        position: relative;
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        line-height: 1;
+        font-weight: 500;
+        text-transform: uppercase;
+
+        span {
+          position: absolute;
+          @include display-flex;
+          @include align-items(center);
+          @include justify-content(center);
+          top: 50%;
+          right: 10px;
+          width: 14px;
+          height: 14px;
+          margin: -7px 0 0; 
+          border-radius: 50%;
+          background: $dark;
+
+          svg {
+            display: block;
+            width: 80%;
+            height: 80%;
+            fill: $white;
+          }
+
+          &:hover {
+            background: lighten($dark, 5%);
+          }
+        }
+
 
       }
 
