@@ -3,13 +3,67 @@
     <header>
       <h2>View country data</h2>
     </header>
-    <div class="select-box">
-      <select data-placeholder="Select country" class="chosen-select default notranslate" id="countries-country-select"><option></option></select>
-      {{!-- <select data-placeholder="Select jurisdiction" disabled="true" class="chosen-select default notranslate" id="countries-region-select"><option></option></select> --}}
-    </div>
-    <div class="toggle-countries-content" id="toggle-countries-content">
-      <div id="countries-layers" class="countries-layers"></div>
-      <div id="countries-buttons" class="countries-buttons"></div>
-    </div>
+
+    <select data-placeholder="Select country" class="chosen-select default notranslate" id="countries-country-select">
+      <option></option>
+      {{#each this.countries}}
+        <option value="{{this.iso}}">{{this.name}}</option>
+      {{/each}}
+    </select>
+
+    {{#if country}}
+
+      {{#if countryLayers}}
+
+      <ul class="layers-list scroll-thin-dark">
+        {{#each countryLayers}}
+          <li class="{{#if this.does_wrapper}}wrapped-layer{{else}}layer{{/if}}" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">
+              {{this.title}}
+              {{#if this.source_json}}
+                <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+              {{else}}
+                <a href='#' data-source='{{this.slug}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+              {{/if}}
+            </span>
+            {{#if this.subtitle}}
+              <span class="layer-info">{{this.subtitle}}</span>
+            {{/if}}
+            {{#if this.does_wrapper}}
+              <span class="does_wrapper">
+                <span class="layer-info">
+                  {{#each this.wrappers}}
+                  <label data-layer="{{this.slug}}" class="layer wrapped">
+                    <span></span>
+                    <input type="radio" />{{this.title}}
+                  </label>
+                  {{/each}}
+                </span>                        
+              </span>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+
+      {{else}}
+
+        <div class="country-description">
+          <p>Local datasets coming soon! </p>
+          <p>For now, <a href="#" class="source" data-source="view_existing_global_data">view global datasets</a> for this area, <a href="/getinvolved/share-data" target="_blank">suggest your own</a>, or use the buttons below to see statistics and infographics for this country.</p>
+        </div>
+
+      {{/if}}
+
+      <div id="countries-buttons" class="countries-buttons">
+        <ul class="button-container">
+          <li><a class="btn gray uppercase little download-mobile-link" target="_blank" href="http://data.globalforestwatch.org/datasets?keyword={{this.country}}">Country data</a></li>
+          <li><a class="btn gray uppercase little" href="/country/{{this.country}}">Country profile</a></li>
+        </ul>
+        <div id="countries-more">
+        </div>        
+      </div>
+    {{/if}}
+            
   </div>
  </div>
