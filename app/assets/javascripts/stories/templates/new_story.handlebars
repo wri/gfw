@@ -75,14 +75,14 @@
         <div class="form-box">
           <form id="new_story">
             <div class="field required">
-              <label for="title">Title</label>
+              <label for="title" class="{{#if errors.title}}has_error{{/if}}">Title</label>
               <span>Required</span>
-              <input type="text" name="title" id="title" placeholder="Illegal Logging in National Park" value="{{story.title}}">
+              <input type="text" name="title" id="title" placeholder="Illegal Logging in National Park" value="{{story.title}}" class="{{#if errors.title}}has_error{{/if}}">
             </div>
 
             <div class="field required">
               <div>
-                <label>Choose a location</label>
+                <label class="{{#if errors.location}}has_error{{/if}}">Choose a location</label>
               </div>
 
               <p class='hint'>
@@ -94,7 +94,7 @@
 
               <div class="stories_map-container" >
                 <div>
-                  <div id="stories_map" class="map stories_map"></div>
+                  <div id="stories_map" class="map stories_map {{#if errors.location}}has_error{{/if}}"></div>
                   <div class="map-controls">
                     <div class="control-zoom">
                       <button type="button" id="zoomIn">
