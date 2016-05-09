@@ -409,6 +409,11 @@
 // NEW
 .submit-section{
   padding: 70px 0 50px;
+
+  .inner {
+    min-height: 1400px;
+  }
+
   aside {
     display: none;
     position: absolute;

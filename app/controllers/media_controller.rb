@@ -1,4 +1,6 @@
 class MediaController < ApplicationController
+  skip_before_filter :verify_authenticity_token
+
   def upload
     uploader = MediaUploader.new
     uploader.store!(params[:media][:image])

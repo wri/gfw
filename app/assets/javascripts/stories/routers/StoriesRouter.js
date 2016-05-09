@@ -1,11 +1,11 @@
 define([
   'jquery', 'backbone',
   'views/NotificationsView',
-  'stories/views/StoriesShowView'
+  'stories/views/StoriesNewView', 'stories/views/StoriesShowView'
 ], function(
   $, Backbone,
   NotificationsView,
-  StoriesShowView
+  StoriesNewView, StoriesShowView
 ) {
 
   'use strict';
@@ -25,6 +25,7 @@ define([
     },
 
     newStory: function() {
+      new StoriesNewView();
     },
 
     showStory: function(storyId) {
