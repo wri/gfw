@@ -18,8 +18,7 @@ define([
 
   var StatusModel = Backbone.Model.extend({
     defaults: {
-      iso: null,
-      dont_analyze: true
+      iso: null
     }
   });
 
@@ -35,7 +34,6 @@ define([
     getPlaceParams: function() {
       var p = {};
       p.iso = this.status.get('iso');
-      p.dont_analyze = this.status.get('dont_analyze');
       return p;
     },
 
