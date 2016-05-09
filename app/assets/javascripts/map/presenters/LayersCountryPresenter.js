@@ -6,9 +6,13 @@
 define([
   'underscore',
   'mps',
+  'topojson',
   'map/presenters/PresenterClass',
-  'map/services/LayerSpecService'
-], function(_, mps, PresenterClass, layerSpecService) {
+  'map/services/LayerSpecService',
+  'helpers/geojsonUtilsHelper',
+  'map/services/CountryService',
+
+], function(_, mps, topojson, PresenterClass, layerSpecService, geojsonUtilsHelper, countryService) {
 
   'use strict';
 
@@ -51,7 +55,6 @@ define([
         if (! !!iso.country) {
           this.view.resetCountryLayers();
         }
-
         this.view.setCountry(iso);
         this.status.set('iso', iso);
       }
@@ -75,6 +78,32 @@ define([
       this.status.set('dont_analyze', true);        
       mps.publish('Country/update', [iso]);
       mps.publish('Place/update', [{go: false}]);
+
+      // Fit country bounds
+      this.countryBounds();
+    },
+
+    /**
+     * Country bounds
+     *
+     * @param  {object} iso: {country:'xxx', region: null}
+     */
+    countryBounds: function() {
+      var iso = this.status.get('iso');
+
+      if(!!iso.country && iso.country !== 'ALL'){
+        countryService.execute(iso.country, _.bind(function(results) {
+          var objects = _.findWhere(results.topojson.objects, {
+            type: 'MultiPolygon'
+          });
+          var geojson = topojson.feature(results.topojson,objects);
+
+          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+          if (!!bounds) {
+            mps.publish('Map/fit-bounds', [bounds]);
+          }
+        },this));
+      }
     },
 
     /**

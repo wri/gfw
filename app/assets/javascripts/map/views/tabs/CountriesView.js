@@ -50,9 +50,11 @@ define([
     },
 
 
-    initialize: function(map) {
+    initialize: function(map, countries) {
       this.embed = $('body').hasClass('is-embed-action');
       this.map = map;
+      // TO-DO: use the countries collection instead of amplify it
+      // this.countries = countries;
       this.model = new CountriesModel();
       this.presenter = new Presenter(this);
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
@@ -213,7 +215,8 @@ define([
      */
     printCountries: function(){
       //Country select
-      this.countries = amplify.store('countries');
+            // TO-DO: use the countries collection instead of amplify it
+      // this.countries = amplify.store('countries');
 
       if(this.mobile){
         var options = "";
