@@ -31,7 +31,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     @media (min-width: 1500px){
       float: left;
       left: 50%;
-      @include transform(translate(-50%,0));
+      @include transform(translate(-50%,0) translateZ(0));
       text-rendering: optimizeLegibility;
     }
   }

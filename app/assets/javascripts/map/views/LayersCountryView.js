@@ -52,19 +52,25 @@ define([
         countryName: this.model.get('countryName') || 'Country',
         countryLayers: this.model.get('countryLayers')
       }));
+      
       this.cache();
       this.chosen();
+      this.legibility();
     },
 
     cache: function() {
       this.$select = this.$el.find('#layers-country-select');
+      this.$selectChosenId = '#layers_country_select_chosen';
+      // This belongs to the parent, is there a better way to do this?
+      this.$layersNav = $('#layers-menu .categories-list');
     },
 
     listeners: function() {
       this.model.on('change:country', this.setCountryLayers.bind(this));
+      this.model.on('change:country', this.legibility.bind(this));
     },
 
-    // Plugins    
+    // Plugins & helpers    
     chosen: function() {
       this.$select.chosen({
         width: '100%',
@@ -75,14 +81,27 @@ define([
 
       this.$select.trigger('chosen:open');
 
-      // Bug:solved, whenever you mousedown inside chosen container the scroll of the countries go back to top
-      $('#layers_country_select_chosen .chosen-results, #layers_country_select_chosen .chosen-single').on("mousedown", function(e){
+      // BUG:solved, whenever you mousedown inside chosen container the scroll of the countries go back to top
+      // It would be nice if we can improve this code :)
+      $(this.$selectChosenId + ' .chosen-results, '+this.$selectChosenId+' .chosen-single').on("mousedown", function(e){
         e && e.stopPropagation() && e.preventDefault();
         if (!$(e.currentTarget).hasClass('chosen-results')) {
           this.$select.trigger('chosen:open');  
         }
         return false;
       }.bind(this))
+    },
+
+    // BUG: If the menu has an odd width the text will be blurred
+    // Theres is a css hack to fix this (http://stackoverflow.com/questions/29236793/css3-transform-blurring-and-flickering-issue-on-container-with-odd-numbered)
+    // but it doesn't work or I don't know how to do it
+    legibility: function(){
+      this.$layersNav.width('auto');
+      var w = this.$layersNav.width();
+      if (w%2 != 0) {
+        // This is for prevent blur on layers nav
+        this.$layersNav.width(w+1);
+      }
     },
 
     // SETTERS
@@ -98,14 +117,15 @@ define([
     },
 
     setCountryLayers: function() {
-      var country = this.model.get('country');
-      var layers = this.model.get('layers');
-      if (!!country) {
-        var countryLayers = _.where(layers, {iso: country});
-        this.model.set('countryLayers', countryLayers);
-      } else {
-        this.model.set('countryLayers', null);
-      }
+      var country = this.model.get('country'),
+          layers = this.model.get('layers'),
+          countryLayers = (!!country) ? _.where(layers, {iso: country}) : null;
+      
+      // Set country layers, if they don't exists we need to 
+      // set it to null because visualization depends 
+      // on the existence of countryLayers
+      this.model.set('countryLayers', countryLayers);
+      
       this.render();
     },
 
