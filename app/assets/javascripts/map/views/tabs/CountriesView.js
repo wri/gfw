@@ -104,6 +104,25 @@ define([
       this.render();
     },
 
+    // LAYERS
+    toggleSelected: function(layers) {
+      var activeLayers = _.keys(layers);
+      _.each(this.model.get('countryLayers'), function(layer){
+
+        var $layer = this.$el.find('[data-layer="'+layer.slug+'"]'),
+            $toggle = $layer.find('.onoffradio, .onoffswitch'),
+            // Is selected?
+            is_selected = _.contains(activeLayers, layer.slug);
+
+        // Toggle simple layers
+        $layer.toggleClass('selected', is_selected);
+        $toggle.toggleClass('checked', is_selected).css('background', (is_selected) ? layer.title_color : '');
+
+        // Toggle wrapped layers
+
+      }.bind(this));
+    },
+
     // EVENTS //
     changeIso: function(e) {
       var country = this.$select.val();

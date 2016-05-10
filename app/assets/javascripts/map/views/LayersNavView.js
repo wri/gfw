@@ -97,7 +97,7 @@ define([
         } else {
           $li.removeClass('selected');
           $toggle.removeClass('checked').css('background', '').css('border-color', '');
-          $toggleIcon.css('background-color', '');
+          // $toggleIcon.css('background-color', '');
           // $layerTitle.css('color', '');
         }
       });
