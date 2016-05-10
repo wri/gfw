@@ -1,0 +1,45 @@
+#wdpa_protected_areas {
+   polygon-opacity: 0.5;
+   line-width: 0.2;
+   line-opacity: 1;
+}
+#wdpa_protected_areas[iucn_cat="Ia"] {
+   polygon-fill: #5CA2D1;
+  line-color: #5CA2D1;
+}
+#wdpa_protected_areas[iucn_cat="Ib"] {
+   polygon-fill: #3E7BB6;
+  line-color: #3E7BB6;
+}
+#wdpa_protected_areas[iucn_cat="II"] {
+   polygon-fill: #0F3B82;
+  line-color: #0F3B82;
+}
+#wdpa_protected_areas[iucn_cat="III"] {
+   polygon-fill: #081B47;
+  line-color:  #081B47;
+}
+#wdpa_protected_areas[iucn_cat="IV"] {
+   polygon-fill: #B2DF8A;
+  line-color:#B2DF8A;
+}
+#wdpa_protected_areas[iucn_cat="V"] {
+   polygon-fill: #229A00;
+  line-color:  #229A00;
+}
+#wdpa_protected_areas[iucn_cat="VI"] {
+   polygon-fill: #055D00;
+  line-color:#055D00;
+}
+#wdpa_protected_areas[iucn_cat="Not Applicable"] {
+   polygon-fill: #FFFFFF;
+  line-color: #FFF;
+}
+#wdpa_protected_areas[iucn_cat="Not Assigned"] {
+   polygon-fill: #f9f438;
+  line-color: #f9f438;
+}
+#wdpa_protected_areas[iucn_cat="Not Reported"] {
+   polygon-fill: #cc281a;
+  line-color: #cc281a;
+}

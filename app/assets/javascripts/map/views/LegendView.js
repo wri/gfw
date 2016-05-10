@@ -49,13 +49,14 @@ define([
   'text!map/templates/legend/urthecast.handlebars',
   'text!map/templates/legend/mex_forest_cat.handlebars',
   'text!map/templates/legend/mex_forest_subcat.handlebars',
+  'text!map/templates/legend/pa.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, 
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, 
     global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
     gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl, 
-    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl) {
+    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl, paTpl) {
 
   'use strict';
 
@@ -132,10 +133,14 @@ define([
       bra_mining:Handlebars.compile(raisg_miningTpl),
       per_mining:Handlebars.compile(per_miningTpl),
       umd_as_it_happens:Handlebars.compile(gladTpl),
+      umd_as_it_happens_per:Handlebars.compile(gladTpl),
+      umd_as_it_happens_cog:Handlebars.compile(gladTpl),
+      umd_as_it_happens_idn:Handlebars.compile(gladTpl),
       viirs_fires_alerts: Handlebars.compile(firesTpl),
       mex_forest_zoning_cat: Handlebars.compile(mex_forest_catTpl),
       mex_forest_zoning_subcat: Handlebars.compile(mex_forest_subcatTpl),
       urthe: Handlebars.compile(urtheTpl),
+      protected_areasCDB:Handlebars.compile(paTpl)
       
     },
 
