@@ -48,7 +48,7 @@ define([
         if(!!params.iso.country && params.iso.country !== 'ALL'){
           this.status.set('iso', params.iso);
           this.view.setCountry(params.iso);
-          this.view.toggleSelected(layerSpec.getLayers());
+          this.view._toggleSelected(layerSpec.getLayers());
         }
       }
     },{
@@ -62,7 +62,7 @@ define([
       }
     },{
       'LayerNav/change': function(layerSpec) {
-        this.view.toggleSelected(layerSpec.getLayers());
+        this.view._toggleSelected(layerSpec.getLayers());
       }
     }],
 
