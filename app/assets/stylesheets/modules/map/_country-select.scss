@@ -190,6 +190,9 @@
       }
 
       .chosen-results {
+        // We don't want to loss the focus 
+        // when you start filtering the dropdown
+        height: 240px;
         color: $dark;
       }
     }
