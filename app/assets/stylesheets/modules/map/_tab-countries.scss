@@ -1,11 +1,13 @@
 $letterW: 20px;
-.tab-countries{
-  .countries-content{
+.tab-countries {
+
+  .countries-content {
     padding: 15px;
     @media (min-width: 1500px){
       padding: 20px;
     }
 
+    // Layer list
     .layers-list {
       margin: 15px 0;
       border-bottom: none;
@@ -13,6 +15,7 @@ $letterW: 20px;
       max-height: 180px;      
     }
 
+    // Descriptions    
     .country-description {
       text-align: center;
       color: $dark;
@@ -30,8 +33,88 @@ $letterW: 20px;
 
       a {
         color: $cGreen;
+        
         &:hover {
           text-decoration: underline;
+        }
+      }
+    }
+
+    // Letter mobile list
+    .country-letters{
+      position: relative;
+      margin: -15px -15px 0;
+      border-bottom: 1px solid $border;
+      
+      &:before, &:after{
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 15px;
+        height: 100%;
+      }
+      
+      // Gradients on each side
+      &:before{
+        left: 0;
+        @include gradient(left,rgba(255,255,255,1),rgba(255,255,255,0));
+      }
+
+      &:after{
+        right: 0;
+        @include gradient(right,rgba(255,255,255,1),rgba(255,255,255,0));
+      }
+      
+      // Scroll box
+      .scroll-none {
+        overflow: auto;
+        padding: 15px 0 13px;
+      }
+
+      // List of letters
+      ul {
+        width: 27.5 * $letterW;
+        padding: 0px 15px;
+        overflow: hidden;
+
+        > li {
+          float: left;
+          color: $cGreen;
+          width: $letterW;
+          height: $letterW;
+          line-height: $letterW;
+          text-align: center;
+          text-transform: uppercase;
+          
+          &.-disabled {
+            color: $dark;
+            opacity: 0.75;
+          }
+          
+          &.-active {
+            position: relative;
+            top: -2px;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    // Country mobile list
+    .country-ul{
+      margin: 0 -15px;
+      
+      > li {
+        padding: 10px 20px;
+        border-bottom: 1px solid $border;
+        font-size: 14px;
+
+        &.-no-visible {
+          display: none;
+        }
+        
+        &:last-child {
+          border-bottom: none;
         }
       }
     }
@@ -53,51 +136,6 @@ $letterW: 20px;
     //       font-size: 14px;
     //       &:last-child{
     //         border-bottom: none;
-    //       }
-    //     }
-    //   }
-    //   .letters-ul-mobile-box{
-    //     position: relative;
-    //     margin: -15px -15px 0;
-    //     border-bottom: 1px solid $border;
-    //     &:before,&:after{
-    //       content: "";
-    //       position: absolute;
-    //       top: 0;
-    //       width: 15px;
-    //       height: 100%;
-    //     }
-    //     &:before{
-    //       left: 0;
-    //       @include gradient(left,rgba(255,255,255,1),rgba(255,255,255,0));
-    //     }
-    //     &:after{
-    //       right: 0;
-    //       @include gradient(right,rgba(255,255,255,1),rgba(255,255,255,0));
-    //     }
-    //     .scroll-none{
-    //       overflow: auto;
-    //       padding: 15px 0 13px;
-    //     }
-    //     .letters-ul-mobile{
-    //       width: 27.5 * $letterW;
-    //       padding: 0px 15px;
-    //       overflow: hidden;
-    //       >li{
-    //         float: left;
-    //         color: $cGreen;
-    //         width: $letterW;
-    //         height: $letterW;
-    //         line-height: $letterW;
-    //         text-align: center;
-    //         text-transform: uppercase;
-    //         &.disabled{
-    //           color: $dark;
-    //           opacity: 0.75;
-    //         }
-    //         &.current{
-    //           font-weight: 500;
-    //         }
     //       }
     //     }
     //   }

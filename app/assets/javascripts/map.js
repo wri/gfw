@@ -115,6 +115,10 @@ require([
     },
 
     _handlebarsPlugins: function() {
+      Handlebars.registerHelper('firstLetter', function(text) {
+        return text.charAt(0).toUpperCase();
+      });
+
       Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
         switch (operator) {
           case '==':
