@@ -29,7 +29,9 @@ define([
     })),
 
     events: {
-      'change #countries-country-select' : 'changeIso'
+      'change #countries-country-select' : 'changeIso',
+      'click .layer': 'toggleLayer',
+      'click .wrapped-layer': 'toggleWrappedLayer',
     },
 
     initialize: function(map, countries) {
@@ -104,22 +106,44 @@ define([
       this.render();
     },
 
-    // LAYERS
-    toggleSelected: function(layers) {
+    // SELECTED LAYERS
+    _toggleSelected: function(layers) {
       var activeLayers = _.keys(layers);
+      
       _.each(this.model.get('countryLayers'), function(layer){
+        if (!layer.wrappers) {
+          // Toggle simple layers
+          var $layer = this.$el.find('[data-layer="'+layer.slug+'"]'),
+              $toggle = $layer.find('.onoffradio, .onoffswitch'),
+              // Is selected?
+              is_selected = _.contains(activeLayers, layer.slug);
+          
+          $layer.toggleClass('selected', is_selected);
+          $toggle.toggleClass('checked', is_selected).css('background', (is_selected) ? layer.title_color : '');
+        
+        } else {
+          // Toggle wrapped layers
+          var $wraplayer = this.$el.find('[data-layer="'+layer.slug+'"]'),
+              $wraptoggle = $wraplayer.find('.onoffradio, .onoffswitch'),
+              layers = layer.wrappers,
+              is_wrapSelected = false;
 
-        var $layer = this.$el.find('[data-layer="'+layer.slug+'"]'),
-            $toggle = $layer.find('.onoffradio, .onoffswitch'),
-            // Is selected?
-            is_selected = _.contains(activeLayers, layer.slug);
+          _.each(layer.wrappers, function(_layer){
+            var $layer = this.$el.find('[data-layer="'+_layer.slug+'"]'),
+                is_selected = _.contains(activeLayers, _layer.slug);
 
-        // Toggle simple layers
-        $layer.toggleClass('selected', is_selected);
-        $toggle.toggleClass('checked', is_selected).css('background', (is_selected) ? layer.title_color : '');
+            $layer.toggleClass('selected', is_selected);
+            
+            if (is_selected) {
+              is_wrapSelected = true;
+            }
 
-        // Toggle wrapped layers
+          }.bind(this));
 
+          $wraplayer.toggleClass('selected', is_wrapSelected);
+          $wraptoggle.toggleClass('checked', is_wrapSelected).css('background', (is_wrapSelected) ? '#cf7fec' : '');
+
+        }
       }.bind(this));
     },
 
@@ -132,12 +156,53 @@ define([
       });
     },
 
-    resetIso: function() {      
-      this.presenter.publishIso({
-        country: null, 
-        region: null
-      });
+    toggleLayer: function(e) {
+      e && e.preventDefault() && e.stopPropagation();
+      var is_source = $(e.target).hasClass('source') || $(e.target).parents().hasClass('source');
+      var is_wrapped = $(e.target).hasClass('wrapped') || $(e.target).parents().hasClass('wrapped');
+      
+      // this prevents layer change when you click in source link or in a wrapped layer
+      if (!is_source && !is_wrapped) {
+        var layerSlug = $(e.currentTarget).data('layer');
+        this.publishToggleLayer(layerSlug);
+      }      
     },
+
+    toggleWrappedLayer: function(e) {
+      e && e.preventDefault() && e.stopPropagation();
+      var is_source = $(e.target).hasClass('source') || $(e.target).parents().hasClass('source');
+      var is_wrapped = $(e.target).hasClass('wrapped');
+      var $layers = $(e.currentTarget).find('.layer');
+
+      if (!is_source) {
+        if (is_wrapped) {
+          // selected index & clicked index
+          var $selected = $layers.filter('.selected'),
+              indexSelected = $layers.index($selected),
+
+              $clicked = $layers.filter($(e.target)),
+              index = $layers.index($clicked);
+
+          if (indexSelected != index) {
+            var layerSlug = $($layers[indexSelected]).data('layer');
+            this.publishToggleLayer(layerSlug);
+          }
+
+        } else {
+          var $selected = $layers.filter('.selected'),
+              index = ($layers.index($selected) == -1) ? 0 : $layers.index($selected);          
+        }
+
+        // Publish toggle layer
+        var layerSlug = $($layers[index]).data('layer')
+        this.publishToggleLayer(layerSlug);
+      }
+    },
+
+    publishToggleLayer: function(layerSlug) {
+      this.presenter._toggleLayer(layerSlug);
+      ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
+    }
 
   });
 

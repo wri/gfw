@@ -192,13 +192,11 @@ define([
           var color = $li.data('color') || '#cf7fec';
           $li.addClass('selected');
           $toggle.addClass('checked');
-          $layerTitle.css('color', color);
           $toggle.css('background', color);
         } else {
           $li.removeClass('selected');
           $toggle.removeClass('checked').css('background', '').css('border-color', '');
           $toggleIcon.css('background-color', '');
-          $layerTitle.css('color', '');
         }
       });
 

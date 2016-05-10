@@ -50,11 +50,9 @@ define([
       }
     },{
       'Country/update': function(iso) {
-        if (! !!iso.country) {
-          this.view.resetCountryLayers();
-        }
+        this.view.resetCountryLayers()
         this.view.setCountry(iso);
-        this.status.set('iso', iso);
+        this.status.set('iso', _.clone(iso));
       }
     },{
       'Country/layers': function(layers) {
@@ -136,7 +134,7 @@ define([
           this._toggleLayer(layer.slug);
         }        
       }
-    }
+    },
 
   });
 
