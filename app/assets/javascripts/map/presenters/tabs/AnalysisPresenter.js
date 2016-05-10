@@ -450,7 +450,7 @@ define([
 
     setAnalyzeIso: function(iso){
       this.status.set('dont_analyze', null);
-      mps.publish('Analysis/analyze-iso', [iso, this.status.get('dont_analyze')]);
+      this._analyzeIso(iso);
     },
 
     _analyzeWdpai: function(wdpaid, options) {
