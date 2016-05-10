@@ -43,9 +43,12 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         var params = place.params;
+        var layerSpec = place.layerSpec;
+        
         if(!!params.iso.country && params.iso.country !== 'ALL'){
           this.status.set('iso', params.iso);
           this.view.setCountry(params.iso);
+          this.view.toggleSelected(layerSpec.getLayers());
         }
       }
     },{
@@ -56,6 +59,10 @@ define([
     },{
       'Country/layers': function(layers) {
         this.view.setLayers(layers);
+      }
+    },{
+      'LayerNav/change': function(layerSpec) {
+        this.view.toggleSelected(layerSpec.getLayers());
       }
     }],
 
@@ -86,7 +93,7 @@ define([
     countryBounds: function() {
       var iso = this.status.get('iso');
 
-      if(!!iso.country && iso.country !== 'ALL'){
+      if(!!iso && !!iso.country && iso.country !== 'ALL'){
         countryService.execute(iso.country, _.bind(function(results) {
           var objects = _.findWhere(results.topojson.objects, {
             type: 'MultiPolygon'
@@ -113,9 +120,10 @@ define([
         countryService.execute(iso.country, _.bind(function(results) {
           var is_more = (!!results.indepth);
           var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
-
+          
           if (is_more) {
             this.view.more({
+              name: results.name,
               url: results.indepth, 
               is_idn: is_idn
             });            
