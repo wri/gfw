@@ -449,7 +449,7 @@ $height: auto;
 
 
   // CLOSE BUTTON
-  >.close {
+  > .close {
     display: block;
     position: absolute;
     top: 0px; right: 0px;
@@ -458,10 +458,13 @@ $height: auto;
     z-index: 20;
     svg{
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 50%;
-      height: 50%;
+      top: 0%;
+      left: 0%;
+      bottom: 0;
+      right: 0;
+      width: 20px;
+      height: 20px;      
+      margin: auto;
       fill: $dark;
       @include transform(translate(-50%,-50%));
     }
