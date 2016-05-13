@@ -38,6 +38,7 @@ define([
       // Layer click
       'click .layer': 'changeLayer',
       'click .wrapped-layer': 'changeWrappedLayer',
+      
       // Mobile Events
       'click #country-letters li' : 'changeLetter',
       'click #country-ul li' : 'changeIsoMobile',
@@ -100,6 +101,11 @@ define([
       // mobile vars
       this.$countryLetters = this.$el.find('#country-letters');
       this.$countryUl = this.$el.find('#country-ul');
+
+      // These buttons belong to the tabs-mobile.handlebars
+      // Any recommendation?
+      this.$countryBtnReset = $('#country-tab-mobile-btn-reset');
+      this.$countryBtnBack = $('#country-tab-mobile-btn-back');
     },
 
 
@@ -132,6 +138,8 @@ define([
       this.model.set('country', country);
 
       this.presenter.countryMore();
+      // Mobile
+      this.setCountryMobileButtons();
     },
 
     setCountryLayers: function() {
@@ -165,6 +173,11 @@ define([
       }
     },
 
+    setCountryMobileButtons: function() {
+      var country = this.model.get('country');
+      this.$countryBtnReset.toggleClass('invisible', ! !!country);
+      this.$countryBtnBack.toggleClass('invisible', !!country);
+    },
 
 
 
