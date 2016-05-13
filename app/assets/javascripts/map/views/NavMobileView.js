@@ -31,11 +31,11 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
-      this.presenter = new Presenter(this);
 
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.model = new NavMobileModel();
+          this.presenter = new Presenter(this);
           this.render(true);
         },this)
       });
