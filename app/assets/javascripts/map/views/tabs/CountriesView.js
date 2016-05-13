@@ -91,6 +91,8 @@ define([
     // INITS
     listeners: function() {
       this.model.on('change:country', this.setCountryLayers.bind(this));
+      this.model.on('change:country', this.setCountryMobileButtons.bind(this));
+
       this.model.on('change:letter', this.setLetter.bind(this));
       this.model.on('change:letter', this.setCountryUl.bind(this));
     },
@@ -136,10 +138,11 @@ define([
       var countryName = (!!iso && !!iso.country) ? _.findWhere(this.countries.toJSON(), {iso: iso.country }).name : null;
       this.model.set('countryName', countryName);
       this.model.set('country', country);
-
-      this.presenter.countryMore();
       // Mobile
-      this.setCountryMobileButtons();
+      this.model.set('letter', null); 
+
+      // Load the third button if it exists
+      this.presenter.countryMore();      
     },
 
     setCountryLayers: function() {
@@ -153,6 +156,9 @@ define([
       }
       this.render();
     },
+
+
+
 
     // MOBILE SETTERS
     setLetter: function() {
@@ -184,14 +190,6 @@ define([
     // EVENTS //
     changeIso: function(e) {
       var country = this.$select.val();
-      this.presenter.publishIso({
-        country: country, 
-        region: null
-      });
-    },
-
-    changeIsoMobile: function(e) {
-      var country = $(e.currentTarget).data('country');
       this.presenter.publishIso({
         country: country, 
         region: null
@@ -247,7 +245,19 @@ define([
       ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
     },
 
-    // Mobile events
+
+
+
+
+    // MOBILE EVENTS
+    changeIsoMobile: function(e) {
+      var country = $(e.currentTarget).data('country');
+      this.presenter.publishIso({
+        country: country, 
+        region: null
+      });
+    },
+
     changeLetter: function(e){
       var $current = $(e.currentTarget),
           disabled = $current.hasClass('-disabled'),
