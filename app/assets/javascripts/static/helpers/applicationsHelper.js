@@ -19,7 +19,7 @@ define([
 
   var applicationsHelper = [
     {
-      name: 'GFW Interactive map',
+      name: 'GFW Interactive Map',
       svg: '#shape-world',
       content: 'View and analyze data on the GFW Interactive Map.',
       href: '/map',
@@ -29,7 +29,7 @@ define([
       tags: 'data, fires, global-forest-watch, maps, mining, mobile, palm-oil, satellite-imagery'
     },
     {
-      name: 'Country profiles & rankings',
+      name: 'Countries',
       svg: '#shape-country',
       content: 'View country-specific data, analyze forest change within a country or subnational jurisdiction, or view country rankings based on forest statistics.',
       href: '/countries',

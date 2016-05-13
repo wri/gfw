@@ -9,11 +9,12 @@ define([
   'enquire',
   'moment',
   'mps',
+  'cookie',
   'picker',
   'pickadate',
   'map/presenters/tabs/HighresolutionPresenter',
   'text!map/templates/tabs/highresolution.handlebars'
-], function(_, Handlebars, enquire, moment, mps, picker, pickadate, Presenter, tpl) {
+], function(_, Handlebars, enquire, moment, mps, Cookies, picker, pickadate, Presenter, tpl) {
 
   'use strict';
 
@@ -28,17 +29,16 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click  .onoffswitch'       : 'toggleLayer',
-      'click  .maptype h3'        : 'toggleLayerName',
-      'input #range-clouds'       : 'setVisibleRange',
-      'change #range-clouds'      : 'setVisibleRange',
-      'change input'              : '_setParams',
-      'change select'             : '_setParams',
-      'click button'              : '_triggerChanges',
-      'click .advanced-controls'  : '_toggleAdvanced'
+      'click .onoffswitch'             : 'toggleLayer',
+      'click .maptype h3'              : 'toggleLayerName',
+      'click .advanced-controls'       : 'toggleAdvanced',
+      'input #range-clouds'            : 'setClouds',
+      'change #range-clouds'           : 'setClouds',
+      'change input'                   : '_setParams',
+      'change select'                  : '_setParams',
     },
 
-    renderers: { 
+    renderers: {
       'rgb': 'RGB (Red Green Blue)',
       'ndvi': 'NDVI (Normalized Difference Vegetation Index)',
       'evi': 'EVI (Enhanced vegetation index)',
@@ -56,7 +56,6 @@ define([
     initialize: function(map) {
       this.presenter = new Presenter(this);
       this.map = map;
-      this.params_new_url;
       this.previousZoom;
       this.selectedDates = new SelectedDates({
         startDateUC: moment().format('DD-MM-YYYY'),
@@ -77,9 +76,9 @@ define([
       this.$maxdate            = this.$el.find("input[name='snd__maxdate_submit']");
       this.$advanced_options   = this.$el.find('.advanced-options');
       this.$advanced_controls  = this.$el.find('.advanced-controls');
-      this.$apply              = this.$el.find('.btn');
       this.$disclaimer         = this.$el.find('#disclaimer-zoom');
       this.$currentZoom        = this.$el.find('#currentZoom');
+      this.$highresolutionModal = this.$el.find('#highresolutionModal');
       this.$UC_Icon            = $('#uc-logo-map');
     },
 
@@ -144,17 +143,11 @@ define([
 
     _setParams: function(e) {
       if (!!this.presenter.status.get('hresolution')) {
-        this.$apply.addClass('green').removeClass('gray');
         this.presenter.setHres(this._getParams());
-        this._triggerChanges(e);
+        this.presenter.updateLayer('urthe');
       } else {
         this.toggleLayer();
       }
-    },
-
-    _triggerChanges: function(e) {
-      this.presenter.updateLayer('urthe');
-      this.$apply.removeClass('green').addClass('gray');
     },
 
     _fillParams: function(params) {
@@ -162,7 +155,7 @@ define([
       this.$hresSelectFilter.val(this.params.color_filter).trigger("liszt:updated");
       this.$hresSensorFilter.val(this.params.sensor_platform).trigger("liszt:updated");
       this.$range.val(this.params.cloud);
-      this.setVisibleRange();
+      this.setClouds();
       this.zoom = params.zoom;
       window.setTimeout(_.bind(function(params) {
         this.renderPickers(this.params.mindate, this.params.maxdate);
@@ -172,11 +165,9 @@ define([
 
     toggleLayer: function(e) {
       if (this.zoom >= 5) {
-        this.$apply.toggleClass('disabled');
         this.presenter.toggleLayer('urthe');
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
-          this.$apply.toggleClass('disabled');
           this.presenter.toggleLayer('urthe');
         } else {
           this.presenter.notificate('not-zoom-not-reached');
@@ -190,22 +181,43 @@ define([
       this.toggleLayer(e);
     },
 
-    _toggleAdvanced: function(e) {
+    toggleAdvanced: function(e) {
       this.$advanced_controls.toggleClass('active');
+      this.$advanced_controls.text((this.$advanced_controls.hasClass('active')) ? "Close Advanced Settings" : "Open Advanced Settings");
       this.$advanced_options.toggle('250');
     },
 
     switchToggle: function(to) {
       this.$el.find('.onoffswitch').toggleClass('checked', to);
+      
+      if (to && !isMobile.any) {
+        var listenerMouseMove = google.maps.event.addListener(this.map, 'mousemove', function(e) {
+          this.$highresolutionModal.toggleClass('-active', to);
+          this.$highresolutionModal.css({
+            top: e.pixel.y + 25, // 35 is the height of the app bar
+            left: e.pixel.x
+          });
+          setTimeout(function() {
+            google.maps.event.removeListener(listenerMouseMove);
+            this.$highresolutionModal.toggleClass('-active', false);
+          }.bind(this), 5000)
+        }.bind(this));        
+      }
+      
       this.toggleIconUrthe(to);
     },
 
-
     printSelects: function() {
-      this.triggerChosen();
+      this.$selects.chosen({
+        width: '100%',
+        allow_single_deselect: true,
+        disable_search: true,
+        inherit_select_classes: true,
+        no_results_text: "Oops, nothing found!"
+      });
     },
 
-    setVisibleRange: function(){
+    setClouds: function(){
       var width = this.$range.val();
       this.$progress.width(width + '%');
       ga('send', 'event', 'Map', 'Settings', 'Urthecast advanced cloud');
@@ -220,7 +232,7 @@ define([
 
       var TODAY         = moment().toDate(),
           TODAY_TEXT    = 'Jump to Today',
-          FORMAT        = 'dddd, dd mmm, yyyy',
+          FORMAT        = 'dd mmm yyyy',
           FORMATSUBMIT  = 'yyyy-mm-dd';
 
       var startHRdate = $('.timeline-date-picker-start').pickadate({
@@ -233,6 +245,9 @@ define([
         formatSubmit: FORMATSUBMIT,
         hiddenPrefix: 'snd__mindate',
         onOpen: onPickerOpen,
+        klass: {
+          picker: 'picker -left',
+        },        
         onSet: function(event) {
           if ( event.select ) {
             endHRdate_picker.set('min', startHRdate_picker.get('select'));
@@ -252,6 +267,9 @@ define([
         formatSubmit: FORMATSUBMIT,
         hiddenPrefix: 'snd__maxdate',
         onOpen: onPickerOpen,
+        klass: {
+          picker: 'picker -left',
+        },        
         onSet: function(event) {
           if ( event.select ) {
             startHRdate_picker.set('max', endHRdate_picker.get('select'));
@@ -268,20 +286,8 @@ define([
     },
 
     toggleIconUrthe: function(to) {
-
       this.$UC_Icon.toggle(to);
-    },
-
-    triggerChosen: function() {
-      this.$selects.chosen({
-        width: '100%',
-        allow_single_deselect: true,
-        disable_search: true,
-        inherit_select_classes: true,
-        no_results_text: "Oops, nothing found!"
-      });
-    },
-
+    }
 
   });
 

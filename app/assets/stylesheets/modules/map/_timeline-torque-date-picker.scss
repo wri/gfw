@@ -6,6 +6,32 @@
   position: absolute;
   z-index: 10000;
   user-select: none;
+
+  &.-top { 
+    @media (min-width: $br-mobile){
+      top: 0;
+    }
+
+    .picker__holder {
+      margin: -356px 0 0 -140px;
+      @media (min-width: $br-mobile){
+        left: auto;
+        margin: -356px 0 0 -225px;
+      }
+    }
+  }
+  &.-bottom { }
+  &.-left { 
+    .picker__holder {
+      margin: -140px 0 0 -140px;
+      @media (min-width: $br-mobile){
+        left: -160px;
+        bottom: auto;
+        margin: -150px 0 0 -150px;
+      }
+    }
+  }
+  &.-right {  }
 }
 
 input.picker__input[type="text"] {
@@ -16,7 +42,8 @@ input.picker__input[type="text"] {
   cursor: default;
   border-color: $cGreen1;
   border-radius: 20px;
-  color: $cGreen1;
+  color: $dark;
+  text-transform: uppercase;
 }
 
 input.picker__input[type="text"]:hover {
@@ -25,8 +52,7 @@ input.picker__input[type="text"]:hover {
 
 input.picker__input[type="text"]:hover,
 input.picker__input[type="text"].picker__input--active {
-  background-color: $cGreen1;
-  color: white;
+  background-color: darken($white,5%);
 }
 
 .picker {
@@ -34,21 +60,27 @@ input.picker__input[type="text"].picker__input--active {
 }
 
 .picker__holder {
+  position: fixed;
+  top: 50%;
+  left: 50%;
   width: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-
   outline: none;
-  position: absolute;
-  left: -225px;
-  bottom: 5px;
   background: #ffffff;
   box-sizing: border-box;
-  width: 340px;
+  width: 280px;
+  
   max-height: 0;
   opacity: 0;
   transform: translateY(-1em) perspective(600px) rotateX(10deg);
   transition: transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s 0.15s, border-width 0s 0.15s;
+  @media (min-width: $br-mobile){
+    position: absolute;
+    top: auto;
+    bottom: 5px; 
+    width: 300px;
+  }
 }
 
 .picker--opened .picker__holder {
@@ -209,7 +241,7 @@ input.picker__input[type="text"].picker__input--active {
 
 .picker__weekday {
   width: 14.285714286%;
-  font-size: .75em;
+  font-size: 11px;
   padding-bottom: .25em;
   color: #555;
   font-weight: 500;
@@ -218,7 +250,9 @@ input.picker__input[type="text"].picker__input--active {
 }
 
 .picker__day {
+  color: $dark;
   padding: .3125em 0;
+  font-size: 14px;
   font-weight: 200;
   border: 1px solid transparent;
   text-align: center;
@@ -226,37 +260,30 @@ input.picker__input[type="text"].picker__input--active {
   position: relative;
 }
 
+.picker__day--outfocus {
+  opacity: 0.5;
+}
+
 .picker__day.picker__has_data:after {
   content: '\25CF';
   font-size: 9px;
   position: absolute;
   bottom: -2px;
-  right: 18px;
+  right: 15px;
   color: $cGreen1;
 }
-.highresolution-content {
-  .picker__day:after {
-    content: none;
-  }
-  .picker .picker__holder {
-    top: -260px;
-    position: relative;
-    left: -370px;
-  }
 
-}
-.tab-mobile-content {
-  .picker .picker__holder {
-    left: 0;
-  }
-}
 .picker__day:hover {
   cursor: pointer;
   background: #eee;
 }
 
-.picker__day--highlighted {
-  background: #eee;
+.picker__day--selected {
+  background: $cGreen1;
+  color: $white;
+  &:hover {
+    background: $cGreen1;
+  }
 }
 
 .picker__day--disabled,
@@ -265,6 +292,7 @@ input.picker__input[type="text"].picker__input--active {
   background: none;
   cursor: default;
   color: #555;
+  opacity: 0.5;
 }
 
 .picker__day.picker__day--disabled:after {

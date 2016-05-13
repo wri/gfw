@@ -3,20 +3,5 @@
    line-color: #FFF;
    line-width: 0;
    line-opacity: 1;
-}
-
-#idn_peat_lands[layer_revi=null] {
-   polygon-fill: #ACAAAB;
-}
-#idn_peat_lands[layer_revi="gambut"] {
-   polygon-fill: #A1DAB4;
-}
-#idn_peat_lands[layer_revi="gambut 40cm"] {
-   polygon-fill: #41B6C4;
-}
-#idn_peat_lands[layer_revi="gambut tipis"] {
-   polygon-fill: #2C7FB8;
-}
-#idn_peat_lands[layer_revi="tanah mineral (bukan"] {
    polygon-fill: #253494;
 }

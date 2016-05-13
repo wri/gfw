@@ -47,13 +47,16 @@ define([
   'text!map/templates/legend/per_mining.handlebars',
   'text!map/templates/legend/glad.handlebars',
   'text!map/templates/legend/urthecast.handlebars',
+  'text!map/templates/legend/mex_forest_cat.handlebars',
+  'text!map/templates/legend/mex_forest_subcat.handlebars',
+  'text!map/templates/legend/pa.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, 
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, 
     global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
     gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl, 
-    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl) {
+    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl, paTpl) {
 
   'use strict';
 
@@ -83,6 +86,7 @@ define([
       pantropical: Handlebars.compile(pantropicalTpl),
       idn_primary: Handlebars.compile(idnPrimaryTpl),
       ifl_2013_deg: Handlebars.compile(intact2013Tpl),
+      can_ifl: Handlebars.compile(intact2013Tpl),
       grump2000: Handlebars.compile(grumpTpl),
       user_stories:  Handlebars.compile(storiesTpl),
       terrailoss: Handlebars.compile(terra_iTpl),
@@ -125,14 +129,18 @@ define([
       rus_hcv:Handlebars.compile(rus_hrvTpl),
       raisg:Handlebars.compile(raisg_land_rightsTpl),
       mys_protected_areas:Handlebars.compile(mysPATpl),
-      mys_peat_lands:Handlebars.compile(mys_peatTpl),
-      idn_peat_lands:Handlebars.compile(idn_peatTpl),
       raisg_mining:Handlebars.compile(raisg_miningTpl),
       bra_mining:Handlebars.compile(raisg_miningTpl),
       per_mining:Handlebars.compile(per_miningTpl),
       umd_as_it_happens:Handlebars.compile(gladTpl),
+      umd_as_it_happens_per:Handlebars.compile(gladTpl),
+      umd_as_it_happens_cog:Handlebars.compile(gladTpl),
+      umd_as_it_happens_idn:Handlebars.compile(gladTpl),
       viirs_fires_alerts: Handlebars.compile(firesTpl),
+      mex_forest_zoning_cat: Handlebars.compile(mex_forest_catTpl),
+      mex_forest_zoning_subcat: Handlebars.compile(mex_forest_subcatTpl),
       urthe: Handlebars.compile(urtheTpl),
+      protected_areasCDB:Handlebars.compile(paTpl)
       
     },
 
