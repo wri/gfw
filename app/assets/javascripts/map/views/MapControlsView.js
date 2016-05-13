@@ -137,7 +137,7 @@ define([
 
     //SEARCH
     showSearch: function(){
-      mps.publish('MapControlsSearch/show');
+      this.presenter.showSearch();
     },
 
     //SHARE
@@ -173,8 +173,8 @@ define([
       var $button = this.$el.find('.toggle-modules');
       var $tooltip = $button.find('.tooltipmap');
       $button.toggleClass('active');
-      ($button.hasClass('active')) ? $tooltip.text('Show windows (h)') : $tooltip.text('Hide windows (h)') ;
-      mps.publish('MapControlsToggleModules/toggle',[{hide: $button.hasClass('active')}]);
+      ($button.hasClass('active')) ? $tooltip.text('Show windows (h)') : $tooltip.text('Hide windows (h)');
+      this.presenter.toggleModules($button.hasClass('active'))
     },
 
     removeToogleActive: function() {
