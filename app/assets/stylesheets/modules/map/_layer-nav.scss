@@ -236,6 +236,9 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       @media (max-width: $br-mobileMap - 1){
         background: $white;
         color: #A300D9;
+        // It will only create issues. At least when there isn't a country selected
+        // So for the moment let's leave this hidden
+        display: none;
       }
       &.disabled{
         opacity: 0.25;
@@ -277,13 +280,13 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       }
 
       .country-title {
+        display: none;
         color: $dark;
         background-color: rgba($country-color, 0.25);
         font-size: 12px;
         padding: 15px 28px 15px 10px;
         margin: 0;
         position: relative;
-        display: block;
         overflow: hidden;
         white-space: nowrap;
         line-height: 1;
@@ -292,6 +295,9 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;        
+        @media (min-width: $br-mobileMap){
+          display: block;
+        }
 
         span {
           position: absolute;
