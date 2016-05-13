@@ -11,8 +11,10 @@ $letterW: 20px;
     .layers-list {
       margin: 15px 0;
       border-bottom: none;
-      overflow-y: auto;
-      max-height: 180px;      
+      @media (min-width: $br-mobileMap){
+        overflow-y: auto;
+        max-height: 180px;        
+      }
     }
 
     // Descriptions    
@@ -119,133 +121,37 @@ $letterW: 20px;
       }
     }
 
+    // buttons
+    .country-buttons{
+      @media (max-width: $br-mobileMap - 1){
+        margin: -15px;
+      }
+      .button-container{
+        @media (max-width: $br-mobileMap - 1){
+          margin: 0;
+          border-bottom: 1px solid $border;
+        }
 
-    // // Select box
-    // .select-box{
-    //   .chosen-container-single{
-    //     margin: 0 0 5px;
-    //     &:last-child{
-    //       margin: 0;
-    //     }
-    //   }
-    //   .country-ul-mobile{
-    //     margin: 0 -15px;
-    //     >li{
-    //       padding: 10px 20px;
-    //       border-bottom: 1px solid $border;
-    //       font-size: 14px;
-    //       &:last-child{
-    //         border-bottom: none;
-    //       }
-    //     }
-    //   }
-    // }
-
-    // // Toggle Countries content
-    // .toggle-countries-content{
-    //   display: none;
-    //   &.active{
-    //     display: block;
-    //   }
-    //   .countries-layers{
-    //     header{
-    //       h2{
-    //         padding: 20px 0;
-    //       }
-    //       h3{
-    //         padding: 20px 0;
-    //         font-size: 16px;
-    //         font-weight: 300;
-    //       }
-    //     }
-    //     .alone,{
-    //         padding: 20px 0 10px;
-    //         line-height: 1.25;
-    //         font-size: 14px;
-    //         text-align: center;
-    //       }
-    //     .layers-list{
-    //       border-bottom: none;
-    //       overflow-y: auto;
-    //       max-height: 180px;
-    //       li{
-    //         padding-left: 5px;
-    //       }
-    //     }
-    //   }
-    //   .layers{
-    //     margin: 5px 0 20px;
-    //     text-align: center;
-    //     li{
-    //       width: 100%;
-    //       margin-bottom: 10px;
-    //       @include clearfix();
-    //       &:last-child {
-    //         margin-bottom: 0;
-    //       }
-
-    //       .layer-name {
-    //         display: inline-block;
-    //         position: relative;
-    //         padding: 0 17px 0 13px;
-    //         font-size: 13px;
-    //         .circle{
-    //           position: absolute;
-    //           top: -2px;
-    //           left: 0;
-    //           &:before {
-    //             content: ' \25CF';
-    //             font-size: 16px;
-    //             margin: 0 4px 0 -1px;
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    //   .countries-buttons{
-    //     @media (max-width: $br-mobileMap - 1){
-    //       margin: 0 -15px;
-    //     }
-    //     .button-container{
-    //       position: relative;
-    //       bottom: 0;
-    //       left: 0;
-    //       box-shadow: none;
-    //       @include justify-content(flex-start);
-    //       @media (max-width: $br-mobileMap - 1){
-    //         padding: 18px 0px 18px 0px;
-    //         margin: 0;
-    //         border-bottom: 1px solid $border;
-    //         &:first-child{
-    //           padding: 0 0px 12px 0px;
-    //         }
-    //       }
-
-    //       li{
-    //         @media (max-width: $br-mobileMap - 1){
-    //           padding: 0;
-    //           border-left: 1px solid $border;
-    //           &:first-child{
-    //             border-left: none;
-    //           }
-    //         }
-    //         .btn{
-    //           @media (max-width: $br-mobileMap - 1){
-    //             font-size: 14px;
-    //             color: $cGreen;
-    //             border: none;
-    //             padding: 0;
-    //             background: none;
-    //             &:hover{
-    //               background-color: $white;
-    //             }
-
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-
+        li{
+          @media (max-width: $br-mobileMap - 1){
+            padding: 0;
+            border-left: 1px solid $border;
+            &:first-child{
+              border-left: none;
+            }
+          }
+          .btn{
+            @media (max-width: $br-mobileMap - 1){
+              font-size: 14px;
+              color: $cGreen;
+              border: none;
+              padding: 14px 10px 12px;
+              background: none;
+              height: auto;
+            }
+          }
+        }
+      }
+    }
   }
 }
