@@ -124,7 +124,7 @@ $letterW: 20px;
     // buttons
     .country-buttons{
       @media (max-width: $br-mobileMap - 1){
-        margin: -15px;
+        margin: -15px -15px 0;
       }
       .button-container{
         @media (max-width: $br-mobileMap - 1){

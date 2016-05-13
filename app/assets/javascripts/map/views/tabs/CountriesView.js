@@ -104,12 +104,12 @@ define([
       this.$countryLetters = this.$el.find('#country-letters');
       this.$countryUl = this.$el.find('#country-ul');
 
-      // These buttons belong to the tabs-mobile.handlebars
+      // Hack: These buttons belong to the tabs-mobile.handlebars
+      // function where they will be used: setCountryMobileButtons
       // Any recommendation?
       this.$countryBtnReset = $('#country-tab-mobile-btn-reset');
       this.$countryBtnBack = $('#country-tab-mobile-btn-back');
     },
-
 
     chosen: function() {
       this.$select.val(this.model.get('country'));
