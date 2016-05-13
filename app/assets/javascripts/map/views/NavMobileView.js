@@ -31,7 +31,8 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
-
+      // We should refactor this view...
+      // It has a lot of hacks without any explanation (i.e.: line 58 ¿¿?¿?¿?)
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.model = new NavMobileModel();
