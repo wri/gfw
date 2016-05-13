@@ -28,7 +28,8 @@ define([
       'click .tab' : 'toggleTabs',
       'click .share-mobile' : 'toggleShareMobile',
       'click .tab-mobile' : 'toggleTabsMobile',
-      'click .close-tab-mobile' : 'hideTabsMobile',
+      'click .tab-mobile-close' : 'hideTabsMobile',
+      'click .tab-mobile-reset-country' : 'resetCountry',
       'click ul' : 'checkForestChangeAvailability'
     },
 
@@ -146,6 +147,13 @@ define([
       this.$tabMobileButtons.removeClass('active');
       this.$tabsMobileContent.removeClass('active');
       this.presenter.onTabMobileClose();
+    },
+
+    resetCountry: function() {
+      this.presenter.publishIso({
+        country: null, 
+        region: null
+      });      
     },
 
     toggleMobileLayers: function(){
