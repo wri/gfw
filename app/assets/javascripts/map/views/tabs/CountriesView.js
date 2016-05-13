@@ -272,6 +272,8 @@ define([
 
 
     // SELECTED LAYERS
+    // after any change in layers this will be triggered to set the selected ones
+    // we need to differenciate between simple layers and wrapped layers
     _toggleSelected: function(layers) {
       var activeLayers = _.keys(layers);
       
