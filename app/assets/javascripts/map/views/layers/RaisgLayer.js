@@ -10,7 +10,7 @@ define([
 
   'use strict';
 
-  var wmsUrl = 'http://gisserver.socioambiental.org:6080/arcgis/services/raisg/raisg_tis/MapServer/WMSServer?';
+  var wmsUrl = 'https://geo.socioambiental.org/arcgis/services/raisg/raisg_tis/MapServer/WMSServer?';
     wmsUrl += '&SERVICE=WMS';
     wmsUrl += '&REQUEST=GetMap';
     wmsUrl += '&VERSION=1.1.1';
@@ -24,7 +24,7 @@ define([
     wmsUrl += '&SRS=EPSG%3A3857';
 
 
-  var wmsInfowindowUrl = 'http://gisserver.socioambiental.org:6080/arcgis/rest/services/raisg/raisg_tis/MapServer/3/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=tis.pais,tis.categoria,tis.nombre,tis.status,tis.etnias,tis.no_habitantes,tis.fuente_data_habitantes,tis.norma,tis.fecha_norma,tis.fecha_ultima_atualizacion_norma,tis.area_oficial_ha,tis.institucionraisg,tis.fuente,tis.fecha_atualizacion_dato,tis.leyenda,tis.codigo_tis&geometryType=esriGeometryPoint&geometry={longitude},{latitude}';
+  var wmsInfowindowUrl = 'https://geo.socioambiental.org/arcgis/rest/services/raisg/raisg_tis/MapServer/3/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=tis.pais,tis.categoria,tis.nombre,tis.status,tis.etnias,tis.no_habitantes,tis.fuente_data_habitantes,tis.norma,tis.fecha_norma,tis.fecha_ultima_atualizacion_norma,tis.area_oficial_ha,tis.institucionraisg,tis.fuente,tis.fecha_atualizacion_dato,tis.leyenda,tis.codigo_tis&geometryType=esriGeometryPoint&geometry={longitude},{latitude}';
 
 
   var RaisgLayer = WMSLayerClass.extend({
