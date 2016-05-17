@@ -8,18 +8,18 @@ define([
   'moment',
   'uri',
   'abstract/layer/CartoDBLayerClass',
+  'text!map/cartocss/viirs.cartocss',
   'map/presenters/layers/FiresLayerPresenter',
-  'map/helpers/FiresDatesHelper',
-  'text!map/cartocss/global_7d.cartocss'
-], function(_, moment, UriTemplate, CartoDBLayerClass, Presenter, DatesHelper, global7dCartoCSS) {
+  'map/helpers/FiresDatesHelper'
+], function(_, moment, UriTemplate, CartoDBLayerClass, ViirsCarto, Presenter, DatesHelper) {
 
   'use strict';
 
-  var FiresLayer = CartoDBLayerClass.extend({
+  var ViirsLayer = CartoDBLayerClass.extend({
     options: {
-      sql: 'SELECT the_geom_webmercator, acq_time,  COALESCE(to_char(acq_date, \'DD Mon, YYYY\')) as acq_date, confidence, brightness, longitude, latitude FROM global_7d WHERE acq_date >= \'{year}-{month}-{day}\' AND CAST(confidence AS INT) > 30',
-      cartocss: global7dCartoCSS,
+      sql: "SELECT the_geom_webmercator, \'{tableName}\' as tablename,\'{tableName}\' AS layer, acq_time,  COALESCE(to_char(acq_date, \'DD Mon, YYYY\')) as acq_date, confidence, bright_ti4 brightness, longitude, latitude FROM {tableName} WHERE acq_date >= \'{year}-{month}-{day}\' AND confidence != 'low'",
       interactivity: 'acq_time, acq_date, confidence, brightness, longitude, latitude',
+      cartocss: ViirsCarto,
       infowindow: true
     },
 
@@ -56,5 +56,5 @@ define([
     }
   });
 
-  return FiresLayer;
+  return ViirsLayer;
 });

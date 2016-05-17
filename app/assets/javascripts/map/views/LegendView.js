@@ -131,6 +131,7 @@ define([
       per_mining:Handlebars.compile(per_miningTpl),
       umd_as_it_happens:Handlebars.compile(gladTpl),
       urthe: Handlebars.compile(urtheTpl),
+      viirs_fires_alerts: Handlebars.compile(firesTpl)
     },
 
     options: {

@@ -139,6 +139,7 @@ define([
   'map/views/layers/PerMiningLayer',
   'map/views/layers/MexMiningLayer',
   'map/views/layers/BraMiningLayer',
+  'map/views/layers/ViirsLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -292,6 +293,7 @@ define([
   PerMiningLayer,
   MexMiningLayer,
   BraMiningLayer,
+  ViirsLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -365,6 +367,10 @@ define([
     },
     fires: {
       view: FiresLayer,
+      timelineView: FiresTimeline
+    },
+    viirs_fires_alerts: {
+      view: ViirsLayer,
       timelineView: FiresTimeline
     },
     forest2000: {
