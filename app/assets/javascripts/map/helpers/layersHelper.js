@@ -143,6 +143,7 @@ define([
   'map/views/layers/CanIntactForestLayer',
   'map/views/layers/MexForestCatLayer',
   'map/views/layers/MexForestSubCatLayer',
+  'map/views/layers/Places2WatchLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -300,6 +301,7 @@ define([
   CanIntactForestLayer,
   MexForestCatLayer,
   MexForestSubCatLayer,
+  Places2WatchLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -769,6 +771,10 @@ define([
     mex_forest_zoning_subcat: {
       view:  MexForestSubCatLayer
     },
+    places_to_watch: {
+      view:  Places2WatchLayer
+    },
+    
     nothing: {
     }
   };
