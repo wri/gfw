@@ -1,0 +1,22 @@
+#world_ifl2_50_concept{
+  polygon-fill: #FFFFB2;
+  polygon-opacity: 0.8;
+  line-color: #FFF;
+  line-width: 0;
+  line-opacity: 1;
+}
+#world_ifl2_50_concept [ ntile <= 5] {
+   polygon-fill: #BD0026;
+}
+#world_ifl2_50_concept [ ntile <= 4.5] {
+   polygon-fill: #F03B20;
+}
+#world_ifl2_50_concept [ ntile <= 3.5] {
+   polygon-fill: #FD8D3C;
+}
+#world_ifl2_50_concept [ ntile <= 2.5] {
+   polygon-fill: #FECC5C;
+}
+#world_ifl2_50_concept [ ntile <= 1.5] {
+   polygon-fill: #FFFFB2;
+}
