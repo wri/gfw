@@ -17,7 +17,6 @@ define([
   'map/views/layers/ImazonCoverLayer',
   'map/views/layers/ModisLayer',
   'map/views/layers/ModisCoverLayer',
-  'map/views/layers/FiresLayer',
   'map/views/layers/Forest2000Layer',
   'map/views/layers/IntactForestLayer',
   'map/views/layers/IntactForestLayer2000',
@@ -177,7 +176,6 @@ define([
   ImazonCoverLayer,
   ModisLayer,
   ModisCoverLayer,
-  FiresLayer,
   Forest2000Layer,
   IntactForestLayer,
   IntactForestLayer2000,
@@ -375,10 +373,6 @@ define([
     },
     modis_cover: {
       view: ModisCoverLayer
-    },
-    fires: {
-      view: FiresLayer,
-      timelineView: FiresTimeline
     },
     viirs_fires_alerts: {
       view: ViirsLayer,
