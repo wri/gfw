@@ -77,7 +77,6 @@ define([
     detailsTemplates: {
       loss: Handlebars.compile(lossTpl),
       imazon: Handlebars.compile(imazonTpl),
-      fires: Handlebars.compile(firesTpl),
       forest2000: Handlebars.compile(forest2000Tpl),
       pantropical: Handlebars.compile(pantropicalTpl),
       idn_primary: Handlebars.compile(idnPrimaryTpl),
