@@ -13,9 +13,9 @@ define([
   var Places2WatchLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT \'{tableName}\' as tablename, cartodb_id, ntile, the_geom_webmercator, round(area_ha::float) as area_ha, slope, alerts_last_month, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
+      sql: 'SELECT \'{tableName}\' as tablename, cartodb_id, ntile, ST_ConvexHull(the_geom_webmercator) the_geom_webmercator, slope_semester::numeric, alerts_last_semester::text,  \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName} where ntile=5 and alerts_last_semester is not null',
       infowindow: true,
-      interactivity: 'cartodb_id, tablename, area_ha, slope, alerts_last_month, analysis',
+      interactivity: 'cartodb_id, tablename, slope_semester, alerts_last_semester, analysis',
       analysis: true,
       cartocss: Places2WatchCartocss
     }
