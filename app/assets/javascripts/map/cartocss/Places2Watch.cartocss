@@ -1,22 +1,22 @@
-#world_ifl2_50_concept{
-  polygon-fill: #FFFFB2;
+#world_ifl2_50_concept_copy{
+  polygon-fill: #FECC5C;
   polygon-opacity: 0.8;
   line-color: #FFF;
   line-width: 0;
   line-opacity: 1;
 }
-#world_ifl2_50_concept [ ntile <= 5] {
+#world_ifl2_50_concept_copy [ slope_semester <= 0.00014339042479651] {
    polygon-fill: #BD0026;
 }
-#world_ifl2_50_concept [ ntile <= 4.5] {
+#world_ifl2_50_concept_copy [ slope_semester <= 0.0000453926725729051] {
    polygon-fill: #F03B20;
 }
-#world_ifl2_50_concept [ ntile <= 3.5] {
+#world_ifl2_50_concept_copy [ slope_semester <= 0.0000154791151568245] {
    polygon-fill: #FD8D3C;
 }
-#world_ifl2_50_concept [ ntile <= 2.5] {
+#world_ifl2_50_concept_copy [ slope_semester <= 0.00000133000367580598] {
    polygon-fill: #FECC5C;
 }
-#world_ifl2_50_concept [ ntile <= 1.5] {
+#world_ifl2_50_concept_copy [ slope_semester <= -0.0000700322818771827] {
    polygon-fill: #FFFFB2;
 }
