@@ -368,11 +368,11 @@
           <p>{{content.data.cloud_coverage}}%</p>
         {{/if}}
         {{#if content.data.alerts_last_month}}
-          <h4>Glad alerts in the last month:</h4>
-          <p>{{content.data.alerts_last_month}}</p>
+          <h4>Glad alerts in the last six months:</h4>
+          <p>{{content.data.alerts_last_semester}}</p>
         {{/if}}
-        {{#if content.data.slope}}
-          <h4>Glad alerts slope trend for the last year:</h4>
+        {{#if content.data.slope_semester}}
+          <h4>Glad alerts slope trend for last six months:</h4>
           <p>{{content.data.slope}}</p>
         {{/if}}
       </div>
