@@ -30,6 +30,10 @@ define([
       'LayerNav/change': function(layerSpec) {
         this.view._toggleSelected(layerSpec.getLayers());
       }
+    }, {
+      'Country/update': function(iso) {
+        this.view.fixLegibility();
+      }
     }],
 
     initExperiment: function(id){

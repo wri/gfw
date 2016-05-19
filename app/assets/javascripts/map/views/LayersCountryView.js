@@ -54,24 +54,20 @@ define([
       }));
       
       this.cache();
-      this.chosen();
-      this.legibility();
+      this.renderChosen();
     },
 
     cache: function() {
       this.$select = this.$el.find('#layers-country-select');
       this.$selectChosenId = '#layers_country_select_chosen';
-      // This belongs to the parent, is there a better way to do this?
-      this.$layersNav = $('#layers-menu .categories-list');
     },
 
     listeners: function() {
       this.model.on('change:country', this.setCountryLayers.bind(this));
-      this.model.on('change:country', this.legibility.bind(this));
     },
 
     // Plugins & helpers    
-    chosen: function() {
+    renderChosen: function() {
       this.$select.chosen({
         width: '100%',
         allow_single_deselect: true,
@@ -90,18 +86,6 @@ define([
         }
         return false;
       }.bind(this))
-    },
-
-    // BUG: If the menu has an odd width the text will be blurred
-    // Theres is a css hack to fix this (http://stackoverflow.com/questions/29236793/css3-transform-blurring-and-flickering-issue-on-container-with-odd-numbered)
-    // but it doesn't work or I don't know how to do it
-    legibility: function(){
-      this.$layersNav.width('auto');
-      var w = this.$layersNav.width();
-      if (w%2 != 0) {
-        // This is for prevent blur on layers nav
-        this.$layersNav.width(w+1);
-      }
     },
 
     // SETTERS
