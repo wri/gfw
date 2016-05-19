@@ -144,7 +144,6 @@ define([
         'forma' : 'http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64',
         'terrailoss' : 'http://www.terra-i.org/terra-i/data.html',
         'imazon' : 'http://www.imazongeo.org.br/doc/downloads.php',
-        'fires' : 'https://earthdata.nasa.gov/data/near-real-time-data/firms',
         'modis' : 'http://data.globalforestwatch.org/datasets/e7bfe60d90ea4e5aa808eba4723ad3f8_0'
 
       }

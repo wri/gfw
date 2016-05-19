@@ -143,7 +143,6 @@ define([
       // FOREST CHANGE
       "guyra",
       "terrailoss",
-      "fires",
       "viirs_fires_alerts",
       "modis",
       "imazon",

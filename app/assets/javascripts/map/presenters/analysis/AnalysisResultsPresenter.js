@@ -48,7 +48,6 @@ define([
       'forestgain': 'umd-loss-gain',
       'forma': 'forma-alerts',
       'imazon': 'imazon-alerts',
-      'fires': 'nasa-active-fires',
       'modis': 'quicc-alerts',
       'terrailoss': 'terrai-alerts',
       'prodes': 'prodes-loss',
@@ -288,14 +287,6 @@ define([
         p.totalArea = geojsonUtilsHelper.getHectares(results.params.geojson);
       } else if (results.params.iso) {
         p.totalArea = this.status.get('isoTotalArea') ? this.status.get('isoTotalArea') : 0;
-      }
-
-      /**
-       * Fires params
-       *   - dateRange (get it from the results as string)
-       */
-      if (layer.slug === 'fires') {
-        p.dateRange = _.isArray(results.period) ? results.period[0] : results.period;
       }
 
       if (layer.slug === 'prodes') {
