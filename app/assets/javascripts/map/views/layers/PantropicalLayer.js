@@ -32,7 +32,7 @@ define([
     filterCanvasImgdata: function(imgdata, w, h) {
       "use asm";
       // We'll force the use of a 32bit integer wit `value |0`
-      // More info here: http://asmjs.org/spec/latest/ 
+      // More info here: http://asmjs.org/spec/latest/
       var components = 4 | 0,
           w = w |0,
           j = j |0,
@@ -43,28 +43,30 @@ define([
             .exponent(exp)
             .domain([0,256])
             .range([0,256]);
-      var c = [137, 81,  34,  0,    // first bucket
-               137, 81,  34,  255,
-               137, 81,  34,  230,
-               148, 123, 75,  220,
-               148, 123, 75,  200,
-               157, 179, 138, 200,
-               157, 179, 138, 255,
-               21,  95,  8,   210]; // last bucket 
-      var countBuckets = c.length / 4 |0; //4: four bands
+      var c = [112, 168, 256, // first bucket
+               76,  83,  122,
+               210, 31,  38,
+               241, 152, 19,
+               255, 208, 11]; // last bucket
+      var countBuckets = c.length / 3 |0; //3: three bands
 
       for(var i = 0 |0; i < w; ++i) {
         for(var j = 0 |0; j < h; ++j) {
           var pixelPos  = ((j * w + i) * components) |0,
-              intensity = imgdata[pixelPos+2] |0;
-             
-          var intensity_scaled = myscale(intensity) |0,
-          bucket = (~~(countBuckets * intensity_scaled / 256) * 4);
 
-          imgdata[pixelPos] = c[bucket];
-          imgdata[pixelPos + 1] = c[bucket + 1];
-          imgdata[pixelPos + 2] = c[bucket + 2];
-          imgdata[pixelPos + 3] = c[bucket + 3];
+             // intensity = imgdata[pixelPos+2]-(imgdata[pixelPos+3]*imgdata[pixelPos+2]/100) |0;
+              intensity = imgdata[pixelPos+2];
+             //if (intensity>255) intensity=255;
+             //if (intensity<0) intensity=0;
+             imgdata[pixelPos + 3] = 0;
+
+          var intensity_scaled = myscale(intensity) |0,
+          bucket = (~~(countBuckets * intensity_scaled / 256) * 3);
+
+          imgdata[pixelPos] = 255-intensity;
+          imgdata[pixelPos + 1] = 128;
+          imgdata[pixelPos + 2] = 0;
+          if(intensity>0){imgdata[pixelPos + 3] = intensity};
         }
       }
     },
