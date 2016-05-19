@@ -4,42 +4,42 @@
    line-opacity: 1;
 }
 #wdpa_protected_areas[iucn_cat="Ia"] {
-   polygon-fill: #5CA2D1;
-  line-color: #5CA2D1;
+   polygon-fill: #5ca2d1;
+  line-color: #5ca2d1;
 }
 #wdpa_protected_areas[iucn_cat="Ib"] {
-   polygon-fill: #3E7BB6;
-  line-color: #3E7BB6;
+   polygon-fill: #3e7bb6;
+  line-color: #3e7bb6;
 }
 #wdpa_protected_areas[iucn_cat="II"] {
-   polygon-fill: #0F3B82;
-  line-color: #0F3B82;
+   polygon-fill: #0f3b82;
+  line-color: #0f3b82;
 }
 #wdpa_protected_areas[iucn_cat="III"] {
-   polygon-fill: #081B47;
-  line-color:  #081B47;
+   polygon-fill: #c9ddff;
+  line-color: #c9ddff;
 }
 #wdpa_protected_areas[iucn_cat="IV"] {
-   polygon-fill: #B2DF8A;
-  line-color:#B2DF8A;
+   polygon-fill: #b9b2a1;
+  line-color: #b9b2a1;
 }
 #wdpa_protected_areas[iucn_cat="V"] {
-   polygon-fill: #229A00;
-  line-color:  #229A00;
+   polygon-fill: #ae847e;
+  line-color: #ae847e;
 }
 #wdpa_protected_areas[iucn_cat="VI"] {
-   polygon-fill: #055D00;
-  line-color:#055D00;
+   polygon-fill: #daa89b;
+  line-color: #daa89b;
 }
 #wdpa_protected_areas[iucn_cat="Not Applicable"] {
-   polygon-fill: #FFFFFF;
-  line-color: #FFF;
+   polygon-fill: #8F95D3;
+  line-color: #8F95D3;
 }
 #wdpa_protected_areas[iucn_cat="Not Assigned"] {
-   polygon-fill: #f9f438;
-  line-color: #f9f438;
+  polygon-fill: #2e6171;
+  line-color: #2e6171;
 }
 #wdpa_protected_areas[iucn_cat="Not Reported"] {
-   polygon-fill: #cc281a;
-  line-color: #cc281a;
+   polygon-fill: #b79fad;
+  line-color: #b79fad;
 }
