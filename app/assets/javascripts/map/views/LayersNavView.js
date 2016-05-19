@@ -50,20 +50,19 @@ define([
 
     render: function() {
       this.$el.html('').append(this.template());
-      //Experiment
-      //this.presenter.initExperiment('source');
+      // Initialize Country dropdown layers
+      new LayersCountryView(this.map,this.countries);
 
+      this.cache();
+      this.fixLegibility();
+    },
+
+    cache: function() {
       //Init
       this.$groupedLayers = $('.grouped-layers-trigger');
       this.$toggleUMD = $('#toggleUmd');
       this.$categoriesList = $('.categories-list');
       this.$categoriesNum = $('.category-num');
-      this.$layersCountry = $('#layers-country-nav');
-      this.$countryLayers = $('#country-layers');
-      this.$countryLayersReset = $('#country-layers-reset');
-
-      new LayersCountryView(this.map,this.countries);
-
     },
 
 
@@ -250,7 +249,21 @@ define([
           },3000);
         }
       }
-    }
+    },
+
+    // BUG: If the menu has an odd width the text will be blurred
+    // Theres is a css hack to fix this (http://stackoverflow.com/questions/29236793/css3-transform-blurring-and-flickering-issue-on-container-with-odd-numbered)
+    // but it doesn't work or I don't know how to do it
+    fixLegibility: function(){
+      this.$categoriesList.width('auto');
+      var w = this.$categoriesList.width();
+      if (w%2 != 0) {
+        // This is for prevent blur on layers nav
+        this.$categoriesList.width(w+1);
+      }
+    },
+
+
 
   });
 
