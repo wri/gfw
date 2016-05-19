@@ -81,27 +81,27 @@ require([
       this.map = map.map;
       this.countries = new CountryCollection();
 
+      new TabsView(this.map, this.countries);
+      new AnalysisResultsView(this.map, this.countries);
+      new LayersNavView(this.map, this.countries);
+      new LegendView(this.map, this.countries);
+      new TimelineView(this.map, this.countries);
+      new NavMobileView(this.map, this.countries);
+      new FooterView(this.map, this.countries);
+      new HeaderView(this.map, this.countries);
+      new SourceModalView(this.map, this.countries);
+      new SourceBottomView(this.map, this.countries);
+      new SourceMobileFriendlyView(this.map, this.countries);
+      new NotificationsView(this.map, this.countries);
+      new GuideView(this.map, this.countries);
+      new GuideButtonView(this.map, this.countries);  
+
       // Init views
       this.countries.fetch().done(function(){
-        new TabsView(this.map, this.countries);
-        new AnalysisResultsView(this.map, this.countries);
-        new LayersNavView(this.map, this.countries);
-        new LegendView(this.map, this.countries);
-        new TimelineView(this.map, this.countries);
-        new NavMobileView(this.map, this.countries);
-        new FooterView(this.map, this.countries);
-        new HeaderView(this.map, this.countries);
-        new SourceModalView(this.map, this.countries);
-        new SourceBottomView(this.map, this.countries);
-        new SourceMobileFriendlyView(this.map, this.countries);
-        new NotificationsView(this.map, this.countries);
-        new GuideView(this.map, this.countries);
-        new GuideButtonView(this.map, this.countries);  
         this._initApp();
-
       }.bind(this))
 
-
+      // What is this? Are we already using it?
       $('body').append(new UserFormModalView().el);
     },
 

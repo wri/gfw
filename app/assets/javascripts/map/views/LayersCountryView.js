@@ -41,7 +41,6 @@ define([
       this.map = map;
       this.countries = countries;
       
-      this.render();
       this.listeners();
     },
 
@@ -63,6 +62,7 @@ define([
     },
 
     listeners: function() {
+      this.countries.on('sync', this.render.bind(this));
       this.model.on('change:country', this.setCountryLayers.bind(this));
     },
 

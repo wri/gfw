@@ -49,13 +49,11 @@ define([
       this.presenter = new Presenter(this);        
       this.map = map;
       this.countries = countries;
-      
+
       // MOBILE
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.model.set('mobile', false);
-          this.render();
-          this.listeners();
         },this)
       });
 
@@ -63,10 +61,11 @@ define([
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.model.set('mobile', true);
-          this.render();
-          this.listeners();
         },this)
       });
+
+      this.listeners();
+
     },
 
     render: function() {
@@ -90,6 +89,8 @@ define([
 
     // INITS
     listeners: function() {
+      this.countries.on('sync', this.render.bind(this));
+
       this.model.on('change:country', this.setCountryLayers.bind(this));
       this.model.on('change:country', this.setCountryMobileButtons.bind(this));
 
