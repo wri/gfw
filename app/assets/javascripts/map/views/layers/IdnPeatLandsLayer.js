@@ -18,11 +18,7 @@ define([
       infowindow: true,
       interactivity: 'cartodb_id, name, tablename, analysis',
       cartocss: idn_peatCartoCSS,
-      infowindow: false,
-      analysis: false,
-      interactivity:'',
-      raster: true,
-      raster_band: 1
+      analysis: true
     },
   
   });
