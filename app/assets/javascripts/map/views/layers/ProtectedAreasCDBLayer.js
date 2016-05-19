@@ -15,7 +15,7 @@ define([
     options: {
       sql: 'SELECT the_geom_webmercator, the_geom,iucn_cat, desig_eng, iso3 as country, name, wdpaid as id, {analysis} AS analysis, \'{tableName}\' as layer FROM {tableName}',
       infowindow: true,
-      interactivity: 'desig_eng, country, name, id, analysis',
+      interactivity: 'desig_eng, country, name, id, analysis, iucn_cat',
       analysis: true,
       cartocss: PaCartocss,
 

@@ -203,6 +203,10 @@
           <h4>Year:</h4>
           <p>{{content.data.year}}</p>
         {{/if}}
+        {{#if content.data.iucn_cat}}
+          <h4>IUCN Category:</h4>
+          <p>{{content.data.iucn_cat}}</p>
+        {{/if}}
         {{#if content.data.year_created}}
           <h4>Year created:</h4>
           <p>{{content.data.year_created}}</p>
