@@ -1,11 +1,7 @@
-#idn_peat {
-  	raster-opacity:1; 
-  	raster-colorizer-default-mode: linear; 
-  	raster-colorizer-default-color: transparent; 
-  	raster-colorizer-epsilon: 0.02; 
-  	raster-colorizer-stops: 
-    	stop(1, #ACAAAB)
-      stop(2, #A1DAB4)
-      stop(3, #41B6C4)
-      stop(4, #2C7FB8)
-      stop(5, #253494)}
+#idn_peat_lands {
+   polygon-opacity: 0.7;
+   line-color: #FFF;
+   line-width: 0;
+   line-opacity: 1;
+   polygon-fill: #253494;
+}

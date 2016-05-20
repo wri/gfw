@@ -14,13 +14,11 @@ define([
   var IdnPeatLandsLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: "SELECT the_raster_webmercator, \'{tableName}\' as tablename, \'{tableName}\' layer FROM {tableName}",
+      sql: 'SELECT \'{tableName}\' as tablename, layer_revi as name, cartodb_id, the_geom_webmercator, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
+      infowindow: true,
+      interactivity: 'cartodb_id, name, tablename, analysis',
       cartocss: idn_peatCartoCSS,
-      infowindow: false,
-      analysis: false,
-      interactivity:'',
-      raster: true,
-      raster_band: 1
+      analysis: true
     },
   
   });
