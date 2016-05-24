@@ -264,3 +264,14 @@ $story-w: 215px;
     height: 100%;
   }
 }
+#graphSlope {
+   .bar {
+    fill: #97bd3d;
+    stroke: #789631;
+    margin: 1px;
+    stroke-linecap: round;
+  }
+  text {
+     fill: #999;
+  }
+}
