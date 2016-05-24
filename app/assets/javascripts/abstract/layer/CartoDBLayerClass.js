@@ -135,7 +135,7 @@ define([
     drawSlopeGraph: function(slope, alerts) {
       alerts = JSON.parse(alerts);
       d3.select("#graphSlope").select("svg").remove();
-      var margin = {top: 2, right: 2, bottom: 10, left:2},
+      var margin = {top: 15, right: 40, bottom: 15, left:40},
           width = 200,
           height = 100;
 
@@ -147,18 +147,14 @@ define([
           .domain([0, d3.max(alerts, function(d) { return d.count; })])
           .range([height - margin.top - margin.bottom, 0]);
 
-      // var xAxis = d3.svg.axis()
-      //     .scale(x)
-      //     .orient('bottom')
-      //     .ticks(d3.time.year, 1)
-      //     .tickFormat(d3.time.format('%x'))
-      //     .tickSize(0)
-      //     .tickPadding(1);
-
-      // var yAxis = d3.svg.axis()
-      //     .scale(y)
-      //     .orient('left')
-      //     .tickPadding(1);
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient('left')
+          .tickFormat(d3.format("s"))
+          .outerTickSize(0)
+          .ticks(5)
+          .tickPadding(10)
+          .tickPadding(1);
 
       var svg = d3.select('#graphSlope').append('svg')
           .attr('class', 'chart')
@@ -176,14 +172,9 @@ define([
           .attr('width', 6)
           .attr('height', function(d) { return height - margin.top - margin.bottom - y(d.count) });
 
-      // svg.append('g')
-      //     .attr('class', 'x axis')
-      //     .attr('transform', 'translate(0, ' + (height - margin.top - margin.bottom) + ')')
-      //     .call(xAxis);
-
-      // svg.append('g')
-      //   .attr('class', 'y axis')
-      //   .call(yAxis);
+      svg.append('g')
+        .attr('class', 'y axis')
+        .call(yAxis);
     }
 
   });
