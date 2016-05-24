@@ -5,10 +5,11 @@
 define([
   'underscore',
   'uri',
+  'd3',
   'abstract/layer/OverlayLayerClass',
   'text!map/cartocss/style.cartocss',
   'text!map/templates/infowindow.handlebars'
-], function(_, UriTemplate, OverlayLayerClass, CARTOCSS, TPL) {
+], function(_, UriTemplate, d3, OverlayLayerClass, CARTOCSS, TPL) {
 
   'use strict';
 
@@ -76,6 +77,9 @@ define([
       });
       this.infowindowsButtons();
       this.infowindow.model.on('change', _.bind(function(model) {
+        if (!!model.attributes.content.data.slope_semester && !!model.attributes.content.data.alerts_last_semester) {
+          this.drawSlopeGraph(model.attributes.content.data.slope_semester,model.attributes.content.data.alerts_last_semester);
+        }
         var analysis = $('#analysis-tab-button').hasClass('disabled');
         $('#analyzeBtn').toggleClass('dont-analyze', analysis);
         mps.publish('Infowindow/toggleSubscribeButton', []);
@@ -126,6 +130,60 @@ define([
     getQuery: function() {
       return new UriTemplate(this.options.sql || this.queryTemplate)
         .fillFromObject({tableName: this.layer.table_name, analysis: this.options.analysis});
+    },
+
+    drawSlopeGraph: function(slope, alerts) {
+      alerts = JSON.parse(alerts);
+      d3.select("#graphSlope").select("svg").remove();
+      var margin = {top: 2, right: 2, bottom: 10, left:2},
+          width = 200,
+          height = 100;
+
+      var x = d3.time.scale()
+          .domain([new Date(alerts[0].date), d3.time.day.offset(new Date(alerts[alerts.length - 1].date), 1)])
+          .rangeRound([0, width - margin.left - margin.right]);
+
+      var y = d3.scale.linear()
+          .domain([0, d3.max(alerts, function(d) { return d.count; })])
+          .range([height - margin.top - margin.bottom, 0]);
+
+      // var xAxis = d3.svg.axis()
+      //     .scale(x)
+      //     .orient('bottom')
+      //     .ticks(d3.time.year, 1)
+      //     .tickFormat(d3.time.format('%x'))
+      //     .tickSize(0)
+      //     .tickPadding(1);
+
+      // var yAxis = d3.svg.axis()
+      //     .scale(y)
+      //     .orient('left')
+      //     .tickPadding(1);
+
+      var svg = d3.select('#graphSlope').append('svg')
+          .attr('class', 'chart')
+          .attr('width', width)
+          .attr('height', height)
+        .append('g')
+          .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
+
+      svg.selectAll('.chart')
+          .data(alerts)
+        .enter().append('rect')
+          .attr('class', 'bar')
+          .attr('x', function(d) { return x(new Date(d.date)); })
+          .attr('y', function(d) { return height - margin.top - margin.bottom - (height - margin.top - margin.bottom - y(d.count)) })
+          .attr('width', 6)
+          .attr('height', function(d) { return height - margin.top - margin.bottom - y(d.count) });
+
+      // svg.append('g')
+      //     .attr('class', 'x axis')
+      //     .attr('transform', 'translate(0, ' + (height - margin.top - margin.bottom) + ')')
+      //     .call(xAxis);
+
+      // svg.append('g')
+      //   .attr('class', 'y axis')
+      //   .call(yAxis);
     }
 
   });
