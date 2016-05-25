@@ -17,7 +17,8 @@ define([
     terrailoss: 'alerts/terra',
     prodes: 'alerts/prodes',
     guyra: 'alerts/guyra',
-    umd_as_it_happens: 'alerts/glad'
+    umd_as_it_happens: 'alerts/glad',
+    viirs_fires_alerts: 'alerts/viirs'
   };
 
   var SubscribeView = Backbone.View.extend({
