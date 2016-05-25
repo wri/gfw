@@ -25,7 +25,6 @@ define([
             ['forestgain', 'forest2000'],
             ['forma', 'forest2000'],
             ['imazon', 'forest2000'],
-            ['fires', 'forest2000'],
             ['modis', 'forest2000'],
             ['terrailoss', 'forest2000'],
             ['prodes', 'forest2000'],

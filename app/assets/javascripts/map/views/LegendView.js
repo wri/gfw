@@ -50,13 +50,14 @@ define([
   'text!map/templates/legend/mex_forest_cat.handlebars',
   'text!map/templates/legend/mex_forest_subcat.handlebars',
   'text!map/templates/legend/pa.handlebars',
+  'text!map/templates/legend/places2watch.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, 
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, 
     global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
     gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl, 
-    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl, paTpl) {
+    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl, paTpl, places2watchTPL) {
 
   'use strict';
 
@@ -81,7 +82,6 @@ define([
     detailsTemplates: {
       loss: Handlebars.compile(lossTpl),
       imazon: Handlebars.compile(imazonTpl),
-      fires: Handlebars.compile(firesTpl),
       forest2000: Handlebars.compile(forest2000Tpl),
       pantropical: Handlebars.compile(pantropicalTpl),
       idn_primary: Handlebars.compile(idnPrimaryTpl),
@@ -140,7 +140,8 @@ define([
       mex_forest_zoning_cat: Handlebars.compile(mex_forest_catTpl),
       mex_forest_zoning_subcat: Handlebars.compile(mex_forest_subcatTpl),
       urthe: Handlebars.compile(urtheTpl),
-      protected_areasCDB:Handlebars.compile(paTpl)
+      protected_areasCDB:Handlebars.compile(paTpl),
+      places_to_watch:Handlebars.compile(places2watchTPL)
       
     },
 

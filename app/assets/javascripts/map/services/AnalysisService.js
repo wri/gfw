@@ -96,8 +96,9 @@ define([
      */
     _defineRequests: function() {
       var datasets = [
-        'forma-alerts', 'umd-loss-gain', 'imazon-alerts', 'nasa-active-fires',
-        'quicc-alerts', 'terrai-alerts', 'prodes-loss', 'loss-by-type', 'glad-alerts', 'guyra-loss','viirs-active-fires',
+        'forma-alerts', 'umd-loss-gain', 'imazon-alerts',
+        'quicc-alerts', 'terrai-alerts', 'prodes-loss', 'loss-by-type',
+        'glad-alerts', 'guyra-loss','viirs-active-fires',
       ];
 
       // Defines requests for each dataset (e.g., forma-alerts) and type (e.g.

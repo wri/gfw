@@ -148,7 +148,6 @@ define([
       "per_minam_loss",
       "guyra",
       "terrailoss",
-      "fires",
       "viirs_fires_alerts",
       "modis",
       "imazon",

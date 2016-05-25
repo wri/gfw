@@ -14,9 +14,7 @@
     </div>
     {{#if content.data.analysis}}
     <div id="cartodb-popup-fixed" class="cartodb-popup-fixed">
-      {{#if content.data.analysis}}
         <a style="cursor:pointer;" id="analyzeBtn" class="analyze-concession btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">analyze</a>
-      {{/if}}
         <a style="cursor:pointer;" id="subscriptionBtn" class="subscription-concession btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">subscribe</a>
     </div>
     {{/if}}
@@ -203,6 +201,10 @@
           <h4>Year:</h4>
           <p>{{content.data.year}}</p>
         {{/if}}
+        {{#if content.data.iucn_cat}}
+          <h4>IUCN Category:</h4>
+          <p>{{content.data.iucn_cat}}</p>
+        {{/if}}
         {{#if content.data.year_created}}
           <h4>Year created:</h4>
           <p>{{content.data.year_created}}</p>
@@ -366,6 +368,14 @@
         {{#if content.data.cloud_coverage}}
           <h4>Cloud coverage:</h4>
           <p>{{content.data.cloud_coverage}}%</p>
+        {{/if}}
+        {{#if content.data.alerts_last_semester}}
+          <h4 style="width: 100%">Glad alerts in the last six months:</h4>
+          <p style="width:200px;height:100px;" id="graphSlope"></p>
+        {{/if}}
+        {{#if content.data.slope_semester}}
+          <h4>Glad alerts slope trend for last six months:</h4>
+          <p id="slopeTotal">{{content.data.slope_semester}}</p>
         {{/if}}
       </div>
     </div>
