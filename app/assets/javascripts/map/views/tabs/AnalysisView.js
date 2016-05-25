@@ -351,6 +351,7 @@ define([
         this.getSubCountries()
       } else {
         this.presenter.deleteAnalysis();
+        this.presenter.setDontAnalyze(true);
         this.$countryButton.addClass('disabled');
         this.$countrySButton.addClass('disabled');
         this.$regionSelect.val(null).attr('disabled', true).trigger("chosen:updated");
@@ -383,6 +384,7 @@ define([
       this.area = iso.region;
 
       this.$countrySelect.val(this.iso).trigger("chosen:updated");
+
       if (this.iso) {
         this.getSubCountries();
         if (!dont_analyze) {

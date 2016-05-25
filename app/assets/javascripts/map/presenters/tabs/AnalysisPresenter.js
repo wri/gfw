@@ -196,16 +196,13 @@ define([
         }
       },
     },{
-      'Countries/changeIso': function(iso,analyze) {
-        this.status.set('dont_analyze', analyze);
+      'Country/update': function(iso) {
         if (!!iso.country) {
           this.deleteAnalysis();
-          this._analyzeIso(iso,{ fit_bounds: true });
-        }else{
-          mps.publish('Country/update',[iso, this.status.get('dont_analyze')]);
+          this.view.setSelects(iso, this.status.get('dont_analyze'));
+        } else {
           this.deleteAnalysis();
         }
-
       }
     },{
       'Analysis/toggle': function() {
@@ -248,6 +245,10 @@ define([
         } else {
           $('#subscriptionBtn').addClass('disabled');
         }
+      }
+    },{
+      'Analysis/enabled': function(enabled) {
+        this.status.set('dont_analyze', enabled);
       }
     }],
 
@@ -370,7 +371,7 @@ define([
       var options = options || {};
       this.deleteAnalysis();
       this.view.setSelects(iso, this.status.get('dont_analyze'));
-      mps.publish('Country/update', [iso, this.status.get('dont_analyze')]);
+      mps.publish('Country/update', [iso]);
       this.status.unset('geostore');
 
       // Build resource
@@ -445,17 +446,23 @@ define([
 
       if (baselayer) {
         this.status.set('subscribe_only', true);
-        this.status.set('dont_analyze', false);
         this.status.set('resource', resource);
-        mps.publish('Country/update', [iso, this.status.get('dont_analyze')]);
+        this.setDontAnalyze(null);
+        mps.publish('Country/update', [iso]);
         mps.publish('Place/update', [{go: false}]);
         this._subscribeAnalysis();
       }
     },
 
     setAnalyzeIso: function(iso){
-      this.status.set('dont_analyze', null);
       this._analyzeIso(iso);
+      this.setDontAnalyze(null);      
+    },
+
+    setDontAnalyze: function(dont_analyze) {
+      this.status.set('dont_analyze', dont_analyze);
+      mps.publish('Analysis/enabled', [this.status.get('dont_analyze')]);
+      mps.publish('Place/update', [{go: false}]);
     },
 
     _analyzeWdpai: function(wdpaid, options) {
@@ -603,8 +610,8 @@ define([
 
         if (baselayer) {
           this.status.set('subscribe_only', true);
-          this.status.set('dont_analyze', false);
           this.status.set('resource', resource);
+          this.setDontAnalyze(null);          
           mps.publish('Place/update', [{go: false}]);
           this._subscribeAnalysis();
         }
@@ -698,6 +705,7 @@ define([
     deleteAnalysis: function() {
       mps.publish('Spinner/stop');
       mps.publish('AnalysisResults/Delete');
+
       this.view._removeCartodblayer();
       this.view.$el.removeClass('is-analysis');
 
@@ -812,6 +820,8 @@ define([
       var resource = this.status.get('resource');
       if (!resource) {return;}
       var p = {};
+
+      p.dont_analyze = this.status.get('dont_analyze');
 
       if (resource.iso) {
         p.iso = {};

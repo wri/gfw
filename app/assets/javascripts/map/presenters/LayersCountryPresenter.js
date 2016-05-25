@@ -45,6 +45,9 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         var params = place.params;
+        
+        this.status.set('dont_analyze', params.dont_analyze);
+
         if(!!params.iso.country && params.iso.country !== 'ALL'){
           this.view.setCountry(params.iso);
           this.status.set('iso', params.iso);
@@ -59,6 +62,10 @@ define([
     },{
       'Country/layers': function(layers) {
         this.view.setLayers(layers);
+      }
+    },{
+      'Analysis/enabled': function(enabled) {
+        this.status.set('dont_analyze', enabled);
       }
     }],
 
@@ -75,6 +82,7 @@ define([
       this.status.set('iso', iso);
       this.status.set('dont_analyze', true);        
       mps.publish('Country/update', [iso]);
+      mps.publish('Analysis/enabled', [this.status.get('dont_analyze')]);
       mps.publish('Place/update', [{go: false}]);
 
       // Fit country bounds
