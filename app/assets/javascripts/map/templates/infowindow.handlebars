@@ -27,7 +27,7 @@
             <h2><a href="{{content.data.project_ur}}" target="_blank">{{content.data.project_name}}</a></h2>
           {{else}}
             <h2>{{content.data.project_name}}</h2>
-          {{/if}}
+          {{/if}} 
         {{/if}}
         {{#if content.data.project_na}}
           {{#if content.data.project_ur}}
@@ -382,6 +382,10 @@
         {{#if content.data.validity}}
           <h4>Validity:</h4>
           <p>{{content.data.validity}}</p>
+        {{/if}}
+        {{#if content.data.tipo}}
+          <h4>Tipo:</h4>
+          <p>{{content.data.tipo}}</p>
         {{/if}}
       </div>
     </div>
