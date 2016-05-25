@@ -1,0 +1,10 @@
+#mex_protected_areas {
+   polygon-opacity: 0.5;
+   line-width: 0.2;
+   line-opacity: 1;
+   polygon-fill: #4D94C4;
+   line-color: #006CB5;
+}
+#mex_protected_areas[tipo='Federal'] {
+  polygon-opacity: 0.9;
+}

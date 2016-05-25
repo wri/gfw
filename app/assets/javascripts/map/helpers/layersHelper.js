@@ -82,6 +82,7 @@ define([
   'map/views/layers/BirdlifeLayer',
   'map/views/layers/AzepolyLayer',
   'map/views/layers/TigersLayer',
+  'map/views/layers/MexicanProtectedAreasLayer',
   'map/views/layers/CarbonLayer',
   'map/views/layers/DamHotspotsLayer',
   'map/views/layers/ColombiaForestChangeLayer',
@@ -241,6 +242,7 @@ define([
   BirdlifeLayer,
   AzepolyLayer,
   TigersLayer,
+  MexicanProtectedAreasLayer,
   CarbonLayer,
   DamHotspotsLayer,
   ColombiaForestChangeLayer,
@@ -573,6 +575,9 @@ define([
     },
     tigers: {
       view: TigersLayer
+    },
+    mexican_pa: {
+      view: MexicanProtectedAreasLayer
     },
     verified_carbon: {
       view: CarbonLayer
