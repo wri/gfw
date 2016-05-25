@@ -95,32 +95,40 @@ $w-control: 44px;
       }
     }
   }
-  .content{
+
+  .content {
     display: none;
     position: relative;
-    &.active{
+    
+    &.active {
       display: block;
     }
-    header{
+
+    header {
       text-align: center;
       font-size: 13px;
       @include clearfix();
-      h2{
+      
+      h2 {
         font-size: 21px;
         padding: 0 0 15px;
         text-align: center;
-        span{
+        span {
           color: $cGreen;
-          &.source{ cursor: pointer;}
+          &.source{ 
+            cursor: pointer;
+          }
         }
       }
-      p{
-        button{
+      
+      p {
+        button {
           margin: 7px auto 0;
           display: block;
         }
       }
-      ol{
+
+      ol {
         text-align: left;
         list-style-type: decimal;
         list-style-position: outside;
@@ -129,10 +137,15 @@ $w-control: 44px;
         max-width: 80%;
         left: 50%;
         @include transform(translate(-50%,0));
-        li{
+        
+        li {
           padding: 5px 0 0;
-          &:first-child{ margin: 0;}
-          .source{
+          
+          &:first-child{ 
+            margin: 0;
+          }
+          
+          .source {
             @extend .info-icon;
             display: inline-block;
             top: 2px;
@@ -141,16 +154,17 @@ $w-control: 44px;
         }
       }
     }
-    ul{
-      .tab-content{
+    ul {
+      .tab-content {
         display: none;
-        &.selected{
+        
+        &.selected {
           display: block;
         }
       }
     }
   }
-  .button-container{
+  .button-container {
     margin: 10px 0 0;
     @include display-flex();
     @include justify-content(space-between);
@@ -160,20 +174,27 @@ $w-control: 44px;
         position: fixed;
         background: $white;
         z-index: 2001;
-        bottom: 56px;
+        bottom: 50px;
         left: 0;
         width: 100%;
         padding: 10px;
         border-top: 1px solid $border;
       }
     }
-    li{
+
+    li {
       width: 100%;
       padding: 0 5px;
-      .btn{
+
+      .btn {
         width: 100%;
+        
+        &.-invisible {
+          display: none;
+        }
       }
-      input{
+
+      input {
         width: 100%;
         font-family: inherit;
         font-size: 13px;
@@ -182,8 +203,11 @@ $w-control: 44px;
         margin: 5px 0 18px;
       }
     }
+
     &.one{
-      li{ width: 100%;}
+      li { 
+        width: 100%;
+      }
     }
   }
 }

@@ -80,6 +80,7 @@
       background: darken($dark,25%);
     }
   }
+  
   &.white {
     color: $dark;
     background: $white;
@@ -87,6 +88,7 @@
       background: darken($white,10%);
     }
   }
+  
   &.gray {
     color: $dark;
     background: $white;
@@ -95,6 +97,7 @@
       background: darken($white,5%);
     }
   }
+  
   &.green {
     color: $white;
     background: $cGreen;
@@ -107,6 +110,7 @@
       }
     }
   }
+  
   &.red {
     color: $white;
     background: $red;
@@ -119,6 +123,7 @@
       }
     }
   }
+  
   &.light {
     color: $white;
     background: #CBCCBF;
@@ -126,6 +131,7 @@
       background: darken(#CBCCBF,5%);
     }
   }
+  
   &.light2 {
     color: $dark;
     background: $border;
@@ -134,6 +140,7 @@
       background: darken($border,5%);
     }
   }
+  
   &.soon {
     color: #ccc;
     background: none;
@@ -141,10 +148,16 @@
     text-transform: uppercase;
     cursor: default;
   }
+  
   &.disabled{
     opacity: 0.25;
     cursor: default;
   }
+
+  &.invisible{
+    display: none;
+  }
+  
   &.with-icon{
     min-width: 0;
     @media (min-width: $br-mobile) {
@@ -160,6 +173,7 @@
       @include transform(translate(0,-50%));
     }
   }
+  
   &.with-center-icon{
     min-width: 0;
     span{

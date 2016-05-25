@@ -1,20 +1,21 @@
 <div class="tab-countries">
   <div class="countries-content">
-    <header>
-      <h2>View country data</h2>
-    </header>
 
-    <select data-placeholder="Select country" class="chosen-select default notranslate" id="countries-country-select">
-      <option></option>
-      {{#each this.countries}}
-        <option value="{{this.iso}}">{{this.name}}</option>
-      {{/each}}
-    </select>
-
+    {{!-- Check if the country exists --}}
     {{#if country}}
 
+      <div id="countries-buttons" class="country-buttons">
+        <ul class="button-container">
+          <li><a class="btn gray uppercase little download-mobile-link" target="_blank" href="http://data.globalforestwatch.org/datasets?keyword={{this.country}}">Country data</a></li>
+          <li><a class="btn gray uppercase little" href="/country/{{this.country}}">Country profile</a></li>
+        </ul>
+        <div id="countries-more">
+        </div>        
+      </div>
+      
+      {{!-- Check if there are country layers --}}
       {{#if countryLayers}}
-
+      
       <ul class="layers-list scroll-thin-dark">
         {{#each countryLayers}}
           <li class="{{#if this.does_wrapper}}wrapped-layer{{else}}layer{{/if}}" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">
@@ -55,15 +56,25 @@
 
       {{/if}}
 
-      <div id="countries-buttons" class="country-buttons">
-        <ul class="button-container">
-          <li><a class="btn gray uppercase little download-mobile-link" target="_blank" href="http://data.globalforestwatch.org/datasets?keyword={{this.country}}">Country data</a></li>
-          <li><a class="btn gray uppercase little" href="/country/{{this.country}}">Country profile</a></li>
-        </ul>
-        <div id="countries-more">
-        </div>        
+    {{else}}
+
+      <div id="country-letters" class="country-letters">
+        <div class="scroll-none">
+          <ul class="letters-ul-mobile">
+            {{#each this.alphabet}}
+              <li data-letter="{{this}}">{{this}}</li>
+            {{/each}}
+          </ul>
+        </div>
       </div>
+
+      <ul id="country-ul" class="country-ul">
+        {{#each this.countries}}
+          <li data-letter="{{firstLetter this.name}}" data-country="{{this.iso}}">{{this.name}}</li>
+        {{/each}}
+      </ul>
+
     {{/if}}
-            
+    
   </div>
  </div>

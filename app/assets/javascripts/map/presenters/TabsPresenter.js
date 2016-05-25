@@ -14,7 +14,8 @@ define([
 
   var StatusModel = Backbone.Model.extend({
     defaults: {
-      tab: 'countries-tab'
+      tab: 'countries-tab',
+      iso: null,      
     }
   });
 
@@ -37,8 +38,10 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         var tab = place.params.tab || this.status.get('tab');
+        var iso = place.params.iso;
         var button = '#'+tab+'-button';
         this.status.set('tab', tab);
+        this.status.set('iso', iso);
         this.view.openTab(button, null);
       }
     },{
@@ -48,6 +51,10 @@ define([
     },{
       'Layers/toggle': function(toggle) {
         this.view.toggleMobileLayers(toggle);
+      }
+    },{
+      'Country/update': function(iso) {
+        this.status.set('iso', iso);
       }
     }],
 
@@ -61,6 +68,11 @@ define([
       mps.publish('Tab/closed');
     },
 
+    publishIso: function(iso) {
+      mps.publish('Country/update', [iso]);
+      mps.publish('Place/update', [{go: false}]);
+    },
+
     /**
      * Used by PlaceService to get the current tab value.
      *
@@ -69,6 +81,7 @@ define([
     getPlaceParams: function() {
       var p = {};
       p.tab = this.status.get('tab');
+      p.iso = this.status.get('iso');
       return p;
     },
 

@@ -25,19 +25,14 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         this.view._toggleSelected(place.layerSpec.getLayers());
-        (place.params.iso) ? this.view.setIso(place.params.iso) : null;
       }
     }, {
       'LayerNav/change': function(layerSpec) {
         this.view._toggleSelected(layerSpec.getLayers());
       }
     }, {
-      'Layers/isos': function(layers_iso) {
-        this.view._getIsoLayers(layers_iso);
-      }
-    }, {
-      'LocalMode/updateIso': function(iso) {
-        this.view.updateIso(iso);
+      'Country/update': function(iso) {
+        this.view.fixLegibility();
       }
     }],
 
@@ -48,11 +43,6 @@ define([
     notificate: function(id){
       mps.publish('Notification/open', [id]);
     },
-
-    resetIso: function(){
-      mps.publish('Countries/changeIso',[{country: null, region: null},false]);
-    },
-
 
     /**
      * Publish a a Map/toggle-layer.

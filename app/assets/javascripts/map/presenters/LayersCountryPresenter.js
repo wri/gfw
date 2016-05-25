@@ -9,10 +9,10 @@ define([
   'topojson',
   'map/presenters/PresenterClass',
   'map/services/LayerSpecService',
-  'map/services/CountryService',
   'helpers/geojsonUtilsHelper',
+  'map/services/CountryService',
 
-], function(_, mps, topojson, PresenterClass, layerSpecService, countryService, geojsonUtilsHelper) {
+], function(_, mps, topojson, PresenterClass, layerSpecService, geojsonUtilsHelper, countryService) {
 
   'use strict';
 
@@ -45,26 +45,20 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         var params = place.params;
-        var layerSpec = place.layerSpec;
-        
         if(!!params.iso.country && params.iso.country !== 'ALL'){
-          this.status.set('iso', params.iso);
           this.view.setCountry(params.iso);
-          this.view._toggleSelected(layerSpec.getLayers());
+          this.status.set('iso', params.iso);
         }
       }
     },{
       'Country/update': function(iso) {
-        this.status.set('iso', iso);
+        this.view.resetCountryLayers()
         this.view.setCountry(iso);
+        this.status.set('iso', _.clone(iso));
       }
     },{
       'Country/layers': function(layers) {
         this.view.setLayers(layers);
-      }
-    },{
-      'LayerNav/change': function(layerSpec) {
-        this.view._toggleSelected(layerSpec.getLayers());
       }
     }],
 
@@ -95,7 +89,7 @@ define([
     countryBounds: function() {
       var iso = this.status.get('iso');
 
-      if(!!iso && !!iso.country && iso.country !== 'ALL'){
+      if(!!iso.country && iso.country !== 'ALL'){
         countryService.execute(iso.country, _.bind(function(results) {
           var objects = _.findWhere(results.topojson.objects, {
             type: 'MultiPolygon'
@@ -109,32 +103,6 @@ define([
         },this));
       }
     },
-
-    /**
-     * Country bounds
-     *
-     * @param  {object} iso: {country:'xxx', region: null}
-     */
-    countryMore: function() {
-      var iso = this.status.get('iso');
-
-      if(!!iso && !!iso.country && iso.country !== 'ALL'){
-        countryService.execute(iso.country, _.bind(function(results) {
-          var is_more = (!!results.indepth);
-          var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
-          
-          if (is_more) {
-            this.view.more({
-              name: results.name,
-              url: results.indepth, 
-              is_idn: is_idn
-            });            
-          }
-
-        },this));
-      }
-    },
-
 
     /**
      * Publish a a LayerNav/change.
@@ -151,6 +119,24 @@ define([
         }, this));
     },
 
+    _removeLayer: function(layer) {
+      // Get current active layers from layerspec
+      var currentLayers = layerSpecService._getLayers();
+
+      if (!!layer.wrappers) {
+        // Check if any of the wrapped layers is active and toggle it
+        _.each(layer.wrappers, function(wrap_layer) {
+          if (!!currentLayers[wrap_layer.slug]) {
+            this._toggleLayer(wrap_layer.slug);
+          }
+        }.bind(this));
+      } else {
+        // Check if any of the regular layers is active and toggle it
+        if (!!currentLayers[layer.slug]) {
+          this._toggleLayer(layer.slug);
+        }        
+      }
+    },
 
   });
 

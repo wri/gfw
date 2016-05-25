@@ -19,8 +19,6 @@ define([
     }
   });
 
-
-
   var NavMobileView = Backbone.View.extend({
 
     el: '#module-navmobile',
@@ -33,6 +31,8 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
+      // We should refactor this view...
+      // It has a lot of hacks without any explanation (i.e.: line 58 ¿¿?¿?¿?)
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.model = new NavMobileModel();
@@ -52,7 +52,7 @@ define([
       if(bool){
         this.$el.html(this.template());
         this.cacheVars();
-      }else{
+      } else {
         this.$el.html('');
       }
       this.$el.find('.timeline-mobile-call-to-action a').attr('href',location.href.replace('/embed',''));
@@ -98,12 +98,13 @@ define([
     toogleHresBtn: function(toggle){
       this.$hresBtn.toggleClass('current',toggle);
     },
+
     toggleVisibilityAnalysis: function(toggle){
       this.$analysisBtn.toggleClass('disabled',toggle);
     },
 
-    toogleCountryBtn: function (name,bool) {
-      this.$countryBtn.toggleClass('active',bool);
+    toogleCountryBtn: function (name) {
+      this.$countryBtn.toggleClass('active',!!name);
       this.$countryBtn.find('.name').text(name);
     },
 

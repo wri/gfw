@@ -1,368 +1,322 @@
 /**
- * The CountriesView selector view.
+ * The Countries.
  *
- * @return CountriesView instance (extends Backbone.View).
  */
 define([
-  'underscore',
-  'handlebars',
-  'amplify',
+  'backbone',
+  'underscore', 
   'chosen',
   'map/presenters/tabs/CountriesPresenter',
+  'map/collections/CountryCollection',
+  'handlebars',
   'text!map/templates/tabs/countries.handlebars',
-  'text!map/templates/tabs/countriesIso.handlebars',
-  'text!map/templates/tabs/countriesButtons.handlebars',
-  'text!map/templates/tabs/countries-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplIso, tplButtons, tplMobile) {
+  'text!map/templates/tabs/countriesMore.handlebars',
+  'text!map/templates/tabs/countriesMobile.handlebars',
+], function(Backbone, _, chosen, Presenter, CountryCollection, Handlebars, tpl, tplMore, tplMobile) {
 
   'use strict';
 
-  var CountriesModel = Backbone.Model.extend({
-    defaults: {
-      country_layers: null
-    }
-  });
-
-
-
-  var CountriesView = Backbone.View.extend({
+  var LayersCountryView = Backbone.View.extend({
 
     el: '#countries-tab',
 
     template: Handlebars.compile(tpl),
-    templateIso: Handlebars.compile(tplIso),
-    templateButtons: Handlebars.compile(tplButtons),
+    templateMore: Handlebars.compile(tplMore),
     templateMobile: Handlebars.compile(tplMobile),
 
+    model: new (Backbone.Model.extend({
+      country: null,
+      countryName: null,
+      countryLayers: null,
+      mobile: null,
+      letter: null
+    })),
+
     events: {
-      //countries
-      'click .layer': 'toggleLayer',
-      'click .wrapped-layer': 'toggleLayerWrap',
-
-      'click #countries-analyze-button' : 'analyzeIso',
+      // Country select change
       'change #countries-country-select' : 'changeIso',
-
-      'click #countries-country-ul li' : 'changeIsoMobile',
-      'click #countries-country-reset' : 'changeIsoMobile',
-
-      'click #countries-letters-ul li' : 'setLetter'
-
+      // Layer click
+      'click .layer': 'changeLayer',
+      'click .wrapped-layer': 'changeWrappedLayer',
+      
+      // Mobile Events
+      'click #country-letters li' : 'changeLetter',
+      'click #country-ul li' : 'changeIsoMobile',
     },
 
-
-    initialize: function(map) {
-      this.embed = $('body').hasClass('is-embed-action');
+    initialize: function(map, countries) {
+      // Init presenter
+      this.presenter = new Presenter(this);        
       this.map = map;
-      this.model = new CountriesModel();
-      this.presenter = new Presenter(this);
+      this.countries = countries;
+
+      // MOBILE
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
-          this.mobile = false;
-          this.render();
+          this.model.set('mobile', false);
         },this)
       });
+
+      // DESKTOP
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
-          this.mobile = true;
-          this.renderMobile();
+          this.model.set('mobile', true);
         },this)
       });
 
-      //Experiment
-      //this.presenter.initExperiment('source');
+      this.listeners();
+
     },
 
-    render: function(){
-      this.$el.html(this.template());
-      this.cacheVars();
-    },
-    renderMobile: function(){
-      this.$el.html(this.templateMobile());
-      this.cacheVars();
-    },
+    render: function() {
+      // Render different templates depending on the device
+      var template = (this.model.get('mobile')) ? this.templateMobile : this.template;
+      this.$el.html(template({
+        countries: this.countries.toJSON(),
+        country: this.model.get('country'),
+        countryName: this.model.get('countryName') || 'Country',
+        countryLayers: this.model.get('countryLayers'),
+        // mobile params
+        alphabet: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+      }));
 
-    cacheVars: function(){
-
-      //toggle-countries-content
-      this.$toggle = $('#toggle-countries-content');
-      //buttons
-      this.$buttons = $('#countries-buttons');
-      //layers
-      this.$layers = $('#countries-layers');
-
-      //country
-      this.$selects = this.$el.find('.chosen-select');
-      this.$countrySelect = $('#countries-country-select');
-      this.$countryUl = $('#countries-country-ul');
-      this.$countryReset = $('#countries-country-reset');
-      this.$countryBack = $('#country-tab-mobile-btn-back');
-      this.$countryName = $('#countries-name');
-      this.$letters = $('#countries-letters-ul');
-      this.inits();
-    },
-
-    inits: function(){
-      // countries
-      this.setStyle(0.45);
-      this.getCountries();
-      this.$countryReset.on('click', _.bind(this.changeIsoMobile, this));
-    },
-
-    /**
-     * Set geojson style.
-     */
-    setStyle: function(opacity) {
-      this.style = {
-        strokeWeight: 2,
-        fillOpacity: opacity,
-        fillColor: '#FFF',
-        strokeColor: '#A2BC28',
-        icon: new google.maps.MarkerImage(
-          '/assets/icons/marker_exclamation.png',
-          new google.maps.Size(36, 36), // size
-          new google.maps.Point(0, 0), // offset
-          new google.maps.Point(18, 18) // anchor
-        )
-      };
-
-      this.map.data.setStyle(this.style);
-    },
-
-    getIsoLayers: function(layers){
-      this.isoLayers = layers;
-    },
-
-    setIsoLayers: function(){
-      var layersToRender = [];
-      _.each(this.isoLayers, _.bind(function(layer){
-        if (layer.iso === this.iso) {
-          layersToRender.push(layer);
-        }
-      }, this ));
-      this.renderIsoLayer(layersToRender);
-    },
-
-    renderIsoLayer: function(layersToRender){
-      this.$layers.html(this.templateIso({ layers: layersToRender }));
-      this._renderHtml();
-    },
-
-    _renderHtml: function(){
-      this.$layers.find('.layers-list').html($('#country-layers .layers-list').html())
-    },
-
-    toggleLayer: function(event) {
-      // event.stopPropagation();
-      event.preventDefault();
-
-      if (!$(event.target).hasClass('source') && !$(event.target).parent().hasClass('source')) {
-        var $li = $(event.currentTarget);
-        var layerSlug = $li.data('layer');
-        var layer = _.where(this.isoLayers, {slug: layerSlug})[0];
-
-        if (layer) {
-          $('#country-layers [data-layer="'+layerSlug+'"]:first').click()
-          ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
-        }
-      }
-    },
-
-    toggleLayerWrap: function(e){
-      if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source') && !$(e.target).hasClass('layer') && !$(e.target).parents('.wrapped').hasClass('layer')) {
-        var $li = $(e.currentTarget);
-        var layerSlug = $li.data('layer');
-        $('#country-layers [data-layer="'+layerSlug+'"]:first').click();
-      }
-    },
-
-    setButtons: function(to, country){
-      this.$toggle.toggleClass('active', to);
-      var isSpecialAtlas = (!!country && !!country.iso && country.iso == 'IDN') || false;
-      this.$buttons.html(this.templateButtons( {iso: this.iso, country: country, isSpecialAtlas: isSpecialAtlas} ));
-    },
-
-    analyzeIso: function(e){
-      this.presenter.setAnalyze(null);
+      this.cache();
+      this.chosen();
     },
 
 
-    /**
-     * COUNTRY
-     */
-    getCountries: function(){
-      if (!amplify.store('countries')) {
-        var sql = ['SELECT c.iso, c.name FROM gfw2_countries c WHERE c.enabled = true'];
-        $.ajax({
-          url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
-          dataType: 'json',
-          success: _.bind(function(data){
-            amplify.store('countries', data.rows);
-            this.printCountries();
-          }, this ),
-          error: function(error){
-            console.log(error);
-          }
-        });
-      }else{
-        this.printCountries()
-      }
+
+
+    // INITS
+    listeners: function() {
+      this.countries.on('sync', this.render.bind(this));
+
+      this.model.on('change:country', this.setCountryLayers.bind(this));
+      this.model.on('change:country', this.setCountryMobileButtons.bind(this));
+
+      this.model.on('change:letter', this.setLetter.bind(this));
+      this.model.on('change:letter', this.setCountryUl.bind(this));
     },
 
-    /**
-     * Print countries.
-     */
-    printCountries: function(){
-      //Country select
-      this.countries = amplify.store('countries');
+    cache: function() {
+      this.$select = this.$el.find('#countries-country-select');
+      this.$more = this.$el.find('#countries-more');
+      // mobile vars
+      this.$countryLetters = this.$el.find('#country-letters');
+      this.$countryUl = this.$el.find('#country-ul');
 
-      if(this.mobile){
-        var options = "";
-        var letters = [];
-        _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
-          var letter = country.name.charAt(0).toUpperCase();
-          options += '<li data-value="'+ country.iso +'" data-alpha="'+ letter +'">'+ country.name + '</li>';
-          letters.push(letter);
-        }, this ));
-        letters = _.uniq(letters);
-        this.$countryUl.html(options);
-        this.setLettersVisibility(letters);
+      // Hack: These buttons belong to the tabs-mobile.handlebars
+      // function where they will be used: setCountryMobileButtons
+      // Any recommendation?
+      this.$countryBtnReset = $('#country-tab-mobile-btn-reset');
+      this.$countryBtnBack = $('#country-tab-mobile-btn-back');
+    },
 
+    chosen: function() {
+      this.$select.val(this.model.get('country'));
+      this.$select.chosen({
+        width: '100%',
+        allow_single_deselect: true,
+        inherit_select_classes: true,
+        no_results_text: "Oops, nothing found!"
+      })
+    },
+
+    more: function(data) {
+      this.$more.html(this.templateMore(data));
+    },
+
+
+
+
+    // SETTERS
+    setLayers: function(layers) {
+      this.model.set('layers', layers);
+    },
+
+    setCountry: function(iso) {
+      var country = (!!iso && !!iso.country) ? iso.country : null; 
+      var countryName = (!!iso && !!iso.country) ? _.findWhere(this.countries.toJSON(), {iso: iso.country }).name : null;
+      this.model.set('countryName', countryName);
+      this.model.set('country', country);
+      // Mobile
+      this.model.set('letter', null); 
+
+      // Load the third button if it exists
+      this.presenter.countryMore();      
+    },
+
+    setCountryLayers: function() {
+      var country = this.model.get('country');
+      var layers = this.model.get('layers');
+      if (!!country) {
+        var countryLayers = _.where(layers, {iso: country});
+        this.model.set('countryLayers', countryLayers);
       } else {
-        //Loop for print options
-        var options = "<option></option>";
-        _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
-          options += '<option value="'+ country.iso +'">'+ country.name + '</option>';
-        }, this ));
-        this.$countrySelect.append(options);
-        this.$selects.chosen({
-          width: '100%',
-          allow_single_deselect: true,
-          inherit_select_classes: true,
-          no_results_text: "Oops, nothing found!"
-        });
+        this.model.set('countryLayers', null);
+      }
+      this.render();
+    },
+
+
+
+
+    // MOBILE SETTERS
+    setLetter: function() {
+      var letter = this.model.get('letter');
+      this.$countryLetters.find('li').removeClass('-active');
+      if (!!letter) {
+        this.$countryLetters.find('[data-letter="'+letter+'"]').addClass('-active');
       }
     },
 
-    // Please refactor
-    setLettersVisibility: function(arr){
-      _.each(this.$letters.find('li'), _.bind(function(v){
-        var alpha = $(v).data('alpha');
-        if (arr.indexOf(alpha) == -1) {
-          $(v).addClass('disabled');
-        }
-      }, this ))
-
-    },
-
-    setLetter: function(e){
-      var current = $(e.currentTarget), filter;
-      if (!current.hasClass('disabled')) {
-        if (current.hasClass('current')) {
-          this.$letters.find('li').removeClass('current');
-          filter = null;
-        }else{
-          this.$letters.find('li').removeClass('current');
-          current.addClass('current');
-          filter = current.data('alpha');
-        }
-        this.filterByLetter(filter)
+    setCountryUl: function() {
+      var letter = this.model.get('letter');
+      if (!!letter) {
+        this.$countryUl.find('li').addClass('-no-visible');
+        this.$countryUl.find('[data-letter="'+letter+'"]').removeClass('-no-visible');
+      } else {
+        this.$countryUl.find('li').removeClass('-no-visible');
       }
-
     },
 
-    filterByLetter: function(filter){
-      this.$countryUl.find('li').filter(function(k,v){
-        if (!!filter) {
-          ($(v).data('alpha') == filter) ? $(v).removeClass('hidden') : $(v).addClass('hidden');
-        }else{
-          $(v).removeClass('current hidden');
-        }
+    setCountryMobileButtons: function() {
+      var country = this.model.get('country');
+      this.$countryBtnReset.toggleClass('invisible', ! !!country);
+      this.$countryBtnBack.toggleClass('invisible', !!country);
+    },
+
+
+
+    // EVENTS //
+    changeIso: function(e) {
+      var country = this.$select.val();
+      this.presenter.publishIso({
+        country: country, 
+        region: null
       });
-      (! !!filter) ? this.$letters.find('li').removeClass('current') : null;
     },
 
-    // Select change iso
-    changeIso: function(e){
-      this.iso = $(e.currentTarget).val() || null;
-      this.commonIsoChanges();
-      this.presenter.changeIso({country: this.iso, region: null});
+    // Layers
+    changeLayer: function(e) {
+      e && e.preventDefault() && e.stopPropagation();
+      var is_source = $(e.target).hasClass('source') || $(e.target).parents().hasClass('source');
+      var is_wrapped = $(e.target).hasClass('wrapped') || $(e.target).parents().hasClass('wrapped');
+      
+      // this prevents layer change when you click in source link or in a wrapped layer
+      if (!is_source && !is_wrapped) {
+        var layerSlug = $(e.currentTarget).data('layer');
+        this.publishToggleLayer(layerSlug);
+      }      
     },
 
-    changeIsoMobile: function(e){
-      this.iso = $(e.currentTarget).data('value') || null;
-      this.commonIsoChanges();
-      this.presenter.changeIso({country: this.iso, region: null});
-    },
+    changeWrappedLayer: function(e) {
+      e && e.preventDefault() && e.stopPropagation();
+      var is_source = $(e.target).hasClass('source') || $(e.target).parents().hasClass('source');
+      var is_wrapped = $(e.target).hasClass('wrapped');
+      var $layers = $(e.currentTarget).find('.layer');
 
-    // For autoselect country and region when youn reload page
-    setSelects: function(iso){
-      this.iso = iso.country;
-      this.commonIsoChanges();
-      this.$countrySelect.val(this.iso).trigger("liszt:updated");
-      if (this.mobile) {
-        this.filterByLetter(null);
-      }
-    },
+      if (!is_source) {
+        if (is_wrapped) {
+          // selected index & clicked index
+          var $selected = $layers.filter('.selected'),
+              indexSelected = $layers.index($selected),
 
-    commonIsoChanges: function(){
-      this.setIsoLayers();
-      this.setButtons(!!this.iso);
-      if (this.mobile) {
-        var country = _.find(amplify.store('countries'), _.bind(function(country){
-          return country.iso === this.iso;
-        }, this ));
-        var name = (country) ? country.name + ' Data' : 'Country Data';
-        var shareName = (country) ? country.name : '';
-        this.$countryName.text(name);
-        this.presenter.changeNameIso(shareName);
-        if(!!this.iso) {
-          this.$countryReset.show(0);
-          this.$countryBack.hide(0);
-          this.$countryUl.addClass('hidden');
-          this.$letters.parents('.letters-ul-mobile-box').addClass('hidden');
-          this.filterByLetter(null);
-        }else{
-          this.$countryReset.hide(0);
-          this.$countryBack.show(0);
-          this.$countryUl.removeClass('hidden');
-          this.$letters.parents('.letters-ul-mobile-box').removeClass('hidden');
-          this.filterByLetter(null);
-        }
-      };
-      this.$countrySelect.val(this.iso).trigger("liszt:updated");
-      // this.$regionSelect.val(this.area).trigger("liszt:updated");
-      if (this.iso) {
-        this.getAdditionalInfoCountry();
-      }
-    },
+              $clicked = $layers.filter($(e.target)),
+              index = $layers.index($clicked);
 
-    getAdditionalInfoCountry: function(){
-      if (!amplify.store('country-'+this.iso)) {
-        $.ajax({
-          url: window.gfw.config.GFW_API_HOST + '/countries/'+this.iso,
-          dataType: 'json',
-          success: _.bind(function(data){
-            amplify.store('country-'+this.iso, data);
-            this.setAdditionalInfoCountry();
-          }, this ),
-          error: function(error){
-            console.log(error);
-            mps.publish('Spinner/stop')
+          if (indexSelected != index) {
+            var layerSlug = $($layers[indexSelected]).data('layer');
+            this.publishToggleLayer(layerSlug);
           }
-        });
-      }else{
-        this.setAdditionalInfoCountry()
+
+        } else {
+          var $selected = $layers.filter('.selected'),
+              index = ($layers.index($selected) == -1) ? 0 : $layers.index($selected);          
+        }
+
+        // Publish toggle layer
+        var layerSlug = $($layers[index]).data('layer')
+        this.publishToggleLayer(layerSlug);
       }
     },
 
-    setAdditionalInfoCountry: function(){
-      var country = amplify.store('country-'+this.iso);
-      this.setButtons(!!this.iso, country);
+    publishToggleLayer: function(layerSlug) {
+      this.presenter._toggleLayer(layerSlug);
+      ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
     },
 
+
+
+
+
+    // MOBILE EVENTS
+    changeIsoMobile: function(e) {
+      var country = $(e.currentTarget).data('country');
+      this.presenter.publishIso({
+        country: country, 
+        region: null
+      });
+    },
+
+    changeLetter: function(e){
+      var $current = $(e.currentTarget),
+          disabled = $current.hasClass('-disabled'),
+          // Check if the current letter isn't enabled
+          letter = (!$current.hasClass('-current')) ? $current.data('letter') : null;
+      if (!disabled) {
+        this.model.set('letter', letter);  
+      }
+    },  
+
+
+
+
+    // SELECTED LAYERS
+    // after any change in layers this will be triggered to set the selected ones
+    // we need to differenciate between simple layers and wrapped layers
+    _toggleSelected: function(layers) {
+      var activeLayers = _.keys(layers);
+      
+      _.each(this.model.get('countryLayers'), function(layer){
+        if (!layer.wrappers) {
+          // Toggle simple layers
+          var $layer = this.$el.find('[data-layer="'+layer.slug+'"]'),
+              $toggle = $layer.find('.onoffradio, .onoffswitch'),
+              // Is selected?
+              is_selected = _.contains(activeLayers, layer.slug);
+          
+          $layer.toggleClass('selected', is_selected);
+          $toggle.toggleClass('checked', is_selected).css('background', (is_selected) ? layer.title_color : '');
+        
+        } else {
+          // Toggle wrapped layers
+          var $wraplayer = this.$el.find('[data-layer="'+layer.slug+'"]'),
+              $wraptoggle = $wraplayer.find('.onoffradio, .onoffswitch'),
+              layers = layer.wrappers,
+              is_wrapSelected = false;
+
+          _.each(layer.wrappers, function(_layer){
+            var $layer = this.$el.find('[data-layer="'+_layer.slug+'"]'),
+                is_selected = _.contains(activeLayers, _layer.slug);
+
+            $layer.toggleClass('selected', is_selected);
+            
+            if (is_selected) {
+              is_wrapSelected = true;
+            }
+
+          }.bind(this));
+
+          $wraplayer.toggleClass('selected', is_wrapSelected);
+          $wraptoggle.toggleClass('checked', is_wrapSelected).css('background', (is_wrapSelected) ? '#cf7fec' : '');
+
+        }
+      }.bind(this));
+    },
 
   });
 
-  return CountriesView;
+  return LayersCountryView;
 
 });
