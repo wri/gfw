@@ -645,6 +645,9 @@ define([
           threshold = 30;
         }
         resource.thresh = '?thresh=' + threshold;
+      } else {
+        // Other layers has thresh = 30, don't they?
+        resource.thresh = 30;
       }
 
       if (baselayer.slug === 'forestgain') {
