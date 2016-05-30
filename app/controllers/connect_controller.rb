@@ -1,8 +1,6 @@
 class ConnectController < ApplicationController
   layout 'connect'
 
-  before_filter :check_terms
-
   def index
     @title = 'My GFW'
     @desc = 'Explore the status of forests worldwide by layering data to create custom maps of forest change, cover, and use.'
