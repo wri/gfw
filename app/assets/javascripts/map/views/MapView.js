@@ -534,7 +534,7 @@ define([
             $locate_handle.removeClass('spinner start');
           }, this ),
           _.bind(function() {
-            this.presenter.notificate('notif-enable-location');
+            this.presenter.notificate('notification-enable-location');
             $locate_handle.removeClass('spinner start');
           }, this )
         );

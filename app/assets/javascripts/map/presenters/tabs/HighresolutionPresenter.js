@@ -39,7 +39,7 @@ define([
           this.view._fillParams(params);
           
           if (params.zoom < 5) {
-            this.notificate('not-zoom-not-reached');
+            this.notificate('notification-zoom-not-reached');
           }
         }         
       }

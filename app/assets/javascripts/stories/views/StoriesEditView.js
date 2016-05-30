@@ -217,7 +217,7 @@ define([
         that.filesAdded += _.size(data.files);
         _.each(data.files, function(file) {
           if (file && file.size > 4000000) {
-            mps.publish('Notification/open', ['notif-limit-exceed']);
+            mps.publish('Notification/open', ['notification-limit-exceed']);
             return;
           } else {
             var filename = that.prettifyFilename(file.name);
@@ -278,7 +278,7 @@ define([
         $('#story_uploads_ids').val(that.uploadsIds.join(','));
         ga('send', 'event', 'Stories', 'New story', 'submit');
       }).on('fileuploadfail', function (e, data){
-        mps.publish('Notification/open', ['upload-error-server']);
+        mps.publish('Notification/open', ['notification-upload-error-server']);
         var $submitButton = $("form input[type='submit']");
         $submitButton.val('Submit story');
         $submitButton.removeClass('disabled');
@@ -349,7 +349,7 @@ define([
           }, this ),
           _.bind(function() {
             this.$autoLocate.removeClass('active');
-            mps.publish('Notification/open', ['notif-enable-location']);
+            mps.publish('Notification/open', ['notification-enable-location']);
           }, this )
         );
       }else{
