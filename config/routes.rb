@@ -38,7 +38,7 @@ Gfw::Application.routes.draw do
     get '/getinvolved/provide-feedback' => redirect("/getinvolved")
 
     # terms
-    # get '/accept_terms' => redirect("/terms")
+    get '/accept_terms' => redirect("/terms")
 
   # stories
   get '/stories/crowdsourcedstories' => 'stories#crowdsourcedstories'
@@ -75,8 +75,6 @@ Gfw::Application.routes.draw do
 
   get '/notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'
   get '/terms' => 'static#terms'
-  # redirect old urls to the term page
-  get '/accept_terms' => 'static#terms'
 
   # map
   get '/map' => 'map#index'
