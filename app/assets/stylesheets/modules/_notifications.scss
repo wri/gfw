@@ -58,11 +58,11 @@
   }
 
   &.info {
-    background: rgba(#3182bd, 0.95);
+    background: rgba(#3082BD, 0.95);
   }
 
   &.warning {
-    background: rgba(#FFEE51, 0.95);
+    background: rgba(#FFF00E, 0.95);
 
     .content {
       p {
@@ -85,6 +85,6 @@
   }
 
   &.error {
-    background: rgba(#FF4848, 0.95);
+    background: rgba(#DD3E21, 0.95);
   }
 }
