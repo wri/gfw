@@ -146,3 +146,61 @@ textarea {
     }
   }
 }
+
+.checkbox-box {
+  @include clearfix();
+  @include display-flex();
+  @include justify-content(center);
+  padding: 15px 0;
+
+  .custom-radio {
+    margin: 0 0 0 20px;
+    &:first-child {
+      margin: 0;
+    }
+  }
+
+  label {
+    font-weight: 400;
+    text-transform: none;
+    position: relative;
+    padding-left: 25px;
+    line-height: 28px;
+    cursor: pointer;
+
+    span{
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      border: 1px solid $dark;
+      @include transform(translate(0,-50%));
+      
+      &:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50%;
+        height: 50%;
+        background: $cGreen;
+        display: none;
+        @include transform(translate(-50%,-50%));
+      }
+    }
+  }
+
+  input[type=checkbox] {
+    display: none;
+  }
+
+  input[type=checkbox]:checked + label {
+    span{
+      &:after {
+        display: block;
+      }
+    }
+  }
+}
+
