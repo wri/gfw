@@ -1,18 +1,11 @@
 class HomeController < ApplicationController
 
-  skip_before_filter :check_terms, :only => [:accept_and_redirect]
   before_filter :load_circles, :only => [:index]
 
   def index
     @circles = load_circles
     @title = I18n.translate 'home.index.title'
     @desc = 'Global Forest Watch (GFW) is a dynamic online forest monitoring and alert system that empowers people everywhere to better manage forests.'
-  end
-
-  def accept_and_redirect
-    cookies.permanent[ENV['TERMS_COOKIE'].to_sym] = { :value => true, :domain => ENV['GFW_HOST'] }
-
-    redirect_to session[:return_to].nil? ? root_path : session[:return_to]
   end
 
   private

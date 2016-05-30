@@ -44,9 +44,6 @@ Gfw::Application.routes.draw do
   get '/stories/crowdsourcedstories' => 'stories#crowdsourcedstories'
   resources :stories
 
-  # terms
-  post '/accept' => 'home#accept_and_redirect'
-
   # static
   get '/data' => redirect("sources")
   get '/sources' => 'static#data'
@@ -78,7 +75,8 @@ Gfw::Application.routes.draw do
 
   get '/notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'
   get '/terms' => 'static#terms'
-  get '/accept_terms' => 'static#accept_terms'
+  # redirect old urls to the term page
+  get '/accept_terms' => 'static#terms'
 
   # map
   get '/map' => 'map#index'
