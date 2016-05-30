@@ -159,7 +159,7 @@ define([
       if (this.subscription.hasValidEmail()) {
         this.nextStep();
       } else {
-        this.presenter.notificate('email-incorrect');
+        this.presenter.notificate('notification-email-incorrect');
       }
     },
 

@@ -139,7 +139,7 @@ define([
         this.user.save().then(this._redirect.bind(this));
       } else {
         this.render();
-        mps.publish('Notification/open', ['my-gfw-profile-errors']);
+        mps.publish('Notification/open', ['notification-my-gfw-profile-errors']);
         window.location.hash = 'user-profile';
       }
     },
@@ -159,7 +159,7 @@ define([
       if (urlParams.redirect !== undefined) {
         window.location.href = urlParams.redirect;
       } else {
-        mps.publish('Notification/open', ['my-gfw-profile-saved']);
+        mps.publish('Notification/open', ['notification-my-gfw-profile-saved']);
         this.trigger('saved');
         window.scrollTo(0,0);
       }

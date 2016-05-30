@@ -197,7 +197,7 @@ define([
         this.$deletebtn = $('#analysis-delete');
         clearTimeout(this.timeout);
         this.$deletebtn.addClass('pulse');
-        this.presenter.notificate('not-delete-analysis');
+        this.presenter.notificate('notification-delete-analysis');
         this.timeout = setTimeout(_.bind(function(){
           this.$deletebtn.removeClass('pulse');
         }, this ),3000)
