@@ -223,7 +223,7 @@ define([
         $.get(url).done(_.bind(function(data) {
           this.hidenotification();
           if (!!data && !!data.payload && !data.payload.length) {
-            this.notificate('not-no-images-urthecast');
+            this.notificate('notification-no-images-urthecast');
           }
         }, this ));
       }

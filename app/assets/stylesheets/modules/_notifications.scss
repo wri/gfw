@@ -1,4 +1,4 @@
-.notifications{
+.notifications {
   position: fixed;
   top: 0;
   left: 0;
@@ -21,7 +21,8 @@
     height: 40px;
     z-index: 20;
     @include transform(translate(0,-50%));
-    svg{
+    
+    svg {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -30,17 +31,18 @@
       fill: $white;
       @include transform(translate(-50%,-50%));
     }
-    &:hover{
-      svg{
+    
+    &:hover {
+      svg {
         fill: darken($white,10%);
       }
     }
   }
 
-  .content{
-    p{
+  .content {
+    p {
       color: $white;
-      font-size: 14px;
+      font-size: 16px;
     }
   }
 
@@ -51,16 +53,38 @@
 
 
   // COLORS
-  &.success{
-    background: rgba($cGreen, 0.85);
+  &.success {
+    background: rgba($cGreen, 0.95);
   }
-  &.info{
-    background: rgba(#3182bd, 0.85);
+
+  &.info {
+    background: rgba(#3182bd, 0.95);
   }
-  &.warning{
-    background: rgba(#ED4602, 0.85);
+
+  &.warning {
+    background: rgba(#FFEE51, 0.95);
+
+    .content {
+      p {
+        color: $dark;
+      }
+    }
+    
+    // Close btn
+    .close {     
+      svg {
+        fill: $dark;
+      }
+      
+      &:hover {
+        svg {
+          fill: darken($dark,10%);
+        }
+      }
+    }
   }
-  &.error{
-    background: rgba(#FF4848, 0.85);
+
+  &.error {
+    background: rgba(#FF4848, 0.95);
   }
 }
