@@ -18,7 +18,6 @@ require([
   'static/ApplicationsModalView',
   'views/HeaderView',
   'views/FooterView',
-  'views/TermsView',
   'views/SidebarNavView',
   'views/InterestingView',
   'views/SourceMobileFriendlyView',
@@ -65,7 +64,6 @@ require([
       //shared
       new HeaderView();
       new FooterView();
-      new TermsView();
       new SourceMobileFriendlyView();
 
       //static
