@@ -61,19 +61,19 @@ define([
     show: function() {
       var urlParams = _.parseUrl();
       if (urlParams.subscription_confirmed === 'true') {
-        mps.publish('Notification/open', ['my-gfw-subscription-confirmed']);
+        mps.publish('Notification/open', ['notification-my-gfw-subscription-confirmed']);
       }
 
       if (urlParams.subscription_confirmation_sent === 'true') {
-        mps.publish('Notification/open', ['my-gfw-subscription-confirmation-sent']);
+        mps.publish('Notification/open', ['notification-my-gfw-subscription-confirmation-sent']);
       }
 
       if (urlParams.unsubscribed === 'true') {
-        mps.publish('Notification/open', ['my-gfw-subscription-deleted']);
+        mps.publish('Notification/open', ['notification-my-gfw-subscription-deleted']);
       }
 
       if (urlParams.migration_successful === 'true') {
-        mps.publish('Notification/open', ['my-gfw-subscription-migrated']);
+        mps.publish('Notification/open', ['notification-my-gfw-subscription-migrated']);
       }
 
       if (urlParams.migration_id !== undefined) {

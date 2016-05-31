@@ -114,7 +114,7 @@ define([
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
           if (this.previousZoom >= 5) {
-            this.presenter.notificate('not-zoom-not-reached');
+            this.presenter.notificate('notification-zoom-not-reached');
           }
         }
         this.$disclaimer.show(0);
@@ -170,7 +170,7 @@ define([
         if (!!this.$onoffswitch.hasClass('checked')) {
           this.presenter.toggleLayer('urthe');
         } else {
-          this.presenter.notificate('not-zoom-not-reached');
+          this.presenter.notificate('notification-zoom-not-reached');
         }
       }
       ga('send', 'event', 'Map', 'Toggle', 'Urthecast');

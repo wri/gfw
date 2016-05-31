@@ -113,12 +113,12 @@ define([
           error: _.bind(this._downloadRequestFailure, this)
         });
       }else{
-        mps.publish('Notification/open',['email-incorrect']);
+        mps.publish('Notification/open',['notification-email-incorrect']);
       }
     },
 
     _downloadRequestSuccess: function() {
-      mps.publish('Notification/open',['not-email-send']);
+      mps.publish('Notification/open',['notification-email-send']);
       this.$loader.removeClass('active');
       this.hide();
     },
