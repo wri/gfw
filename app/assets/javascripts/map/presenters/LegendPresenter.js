@@ -43,10 +43,10 @@ define([
         if(!!place.params.iso.country && place.params.iso.country !== 'ALL'){
           this.status.set('iso', place.params.iso);
         }
-
+        
+        this.getCountryMore();
         this.updateLegend();
         this.toggleSelected();
-        this.getCountryMore();
         this.view.updateLinkToGFW();
       }
     },{
@@ -155,7 +155,7 @@ define([
           var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
           
           if (is_more) {
-            this.view.more({
+            this.view.renderMore({
               name: results.name,
               url: results.indepth, 
               is_idn: is_idn

@@ -352,7 +352,7 @@ define([
       }
     },
 
-    more: function(data) {
+    renderMore: function(data) {
       this.$more.html(this.templateMore(data));
     },    
 
