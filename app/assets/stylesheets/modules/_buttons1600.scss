@@ -263,8 +263,7 @@
 
   &.is-space-between {
     @include justify-content(space-between);
-  }
-  
+  }  
 
   &.-fix-width-220 {
     @media (min-width: $br-mobile) {
