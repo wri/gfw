@@ -47,12 +47,21 @@
   // @ul
   .categories{
     margin: 20px 0;
+    
+    > * {
+      margin-bottom: 20px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
     &.divided{
       margin: 15px 0;
       @media (min-width: $br-mobileMap){
         margin: 0 0 20px;
       }
     }
+
     h2{
       padding: 10px 15px;
       margin: 0 0 15px;
@@ -65,19 +74,36 @@
         padding: 10px 20px;
       }
     }
-    // @li
-    .category {
-      padding: 0 20px 25px;
-      &.closed{
-        padding: 0 20px 10px;
-        .category-name {
-          &:after{ @include transform(translate(0,-100%) rotate(180deg));}
-          em{ display: inline-block;}
+    
+    .country-buttons {
+      padding: 0 20px;    
+      .m-btncontainer {
+        > li {
+          width: 47.5%;
         }
       }
-      &:last-child{
+    }
+
+    // @li
+    .category {
+      padding: 0 20px;
+
+      &.closed {
+        .category-name {
+          &:after { 
+            @include transform(translate(0,-100%) rotate(180deg));
+          }
+
+          em { 
+            display: inline-block;
+          }
+        }
+      }
+
+      &:last-child {
         padding: 0 20px;
       }
+
       .category-name {
         text-transform: uppercase;
         font-weight: 500;

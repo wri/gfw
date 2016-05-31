@@ -237,9 +237,15 @@
 .m-btncontainer {
   @include display-flex();
   @include align-items(center);
+  
   &.is-center {
     @include justify-content(center);
   }
+
+  &.is-space-between {
+    @include justify-content(space-between);
+  }
+  
   &.is-steps {
     .btn {
       display: none;

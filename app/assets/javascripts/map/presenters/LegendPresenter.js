@@ -17,7 +17,8 @@ define([
     defaults: {
       layerSpec: null,
       threshold: null,
-      hresolution: null
+      hresolution: null,
+      iso: null
     }
   });
 
@@ -37,49 +38,58 @@ define([
         this.status.set('layerSpec', place.layerSpec);
         this.status.set('threshold', place.params.threshold);
         this.status.set('hresolution', place.params.hresolution);
+
+        if(!!place.params.iso.country && place.params.iso.country !== 'ALL'){
+          this.status.set('iso', place.params.iso);
+        }
+
         this._updateLegend();
         this._toggleSelected();
-        this.view.openGFW();
+        this.view.updateLinkToGFW();
       }
     },{
       'Place/update': function(place) {
-        this.view.openGFW();
+        this.view.updateLinkToGFW();
       }
     }, {
       'LayerNav/change': function(layerSpec) {
         this.status.set('layerSpec', layerSpec);
         this._updateLegend();
+        // Toggle sublayers
         this._toggleSelected();
       }
     }, {
       'AnalysisTool/stop-drawing': function() {
-        this.view.model.set({
-          hidden: false
-        });
+        this.view.model.set({ hidden: false });
       }
     }, {
       'AnalysisTool/start-drawing': function() {
-        this.view.model.set({
-          hidden: true
-        });
+        this.view.model.set({ hidden: true });
       }
     }, {
-      'Threshold/changed': function(threshold) {
+      'Threshold/update': function(threshold) {
         this.status.set('threshold', threshold);
-        this.status.get('layerSpec') && this._updateLegend();
-      }
-    }, {
-      'LegendMobile/open': function() {
-        this.view.toogleLegend();
-      }
-    }, {
-      'Dialogs/close': function() {
-        this.view.toogleLegend(false);
+        this._updateLegend();
       }
     }, {
       'Hresolution/update': function(hresolution) {
         this.status.set('hresolution', hresolution);
         this._updateLegend();
+      }
+    }, {
+      'Country/update': function(iso) {
+        this.status.set('iso', _.clone(iso));
+        this._updateLegend();
+      }
+    },    
+    // Mobile events... we should standardise them
+    {
+      'Dialogs/close': function() {
+        this.view.toogleLegend(false);
+      }
+    }, {
+      'LegendMobile/open': function() {
+        this.view.toogleLegend();
       }
     }],
 
@@ -92,9 +102,10 @@ define([
             threshold: this.status.get('threshold'),
             hresolution: this.hresolutionParams()
           },
+          iso = this.status.get('iso'),
           geographic = !! this.status.get('layerSpec').attributes.geographic_coverage;
 
-      this.view.update(categories, options, geographic);
+      this.view.update(categories, options, geographic, iso);
     },
 
     /**
@@ -119,7 +130,7 @@ define([
         }, this));
     },
 
-    showCanopy: function(){
+    toggleThreshold: function(){
       mps.publish('ThresholdControls/toggle');
     },
 
@@ -131,7 +142,7 @@ define([
       mps.publish('Experiment/choose',[id]);
     },
 
-    hresolutionParams: function (argument) {
+    hresolutionParams: function () {
       if (!!this.status.get('hresolution')) {
         return JSON.parse(atob(this.status.get('hresolution')));
       }
