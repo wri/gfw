@@ -46,7 +46,6 @@ define([
 
     initialize: function(map, countries) {
       // Init presenter
-      this.presenter = new Presenter(this);        
       this.map = map;
       this.countries = countries;
 
@@ -61,6 +60,7 @@ define([
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.model.set('mobile', true);
+          this.presenter = new Presenter(this);
         },this)
       });
 
