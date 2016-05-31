@@ -8,8 +8,9 @@ define([
   'backbone',
   'mps',
   'map/presenters/PresenterClass',
-  'map/services/LayerSpecService'
-], function(_, Backbone, mps, PresenterClass, layerSpecService) {
+  'map/services/LayerSpecService',
+  'map/services/CountryService',  
+], function(_, Backbone, mps, PresenterClass, layerSpecService, countryService) {
 
   'use strict';
 
@@ -43,8 +44,9 @@ define([
           this.status.set('iso', place.params.iso);
         }
 
-        this._updateLegend();
-        this._toggleSelected();
+        this.updateLegend();
+        this.toggleSelected();
+        this.getCountryMore();
         this.view.updateLinkToGFW();
       }
     },{
@@ -54,9 +56,9 @@ define([
     }, {
       'LayerNav/change': function(layerSpec) {
         this.status.set('layerSpec', layerSpec);
-        this._updateLegend();
+        this.updateLegend();
         // Toggle sublayers
-        this._toggleSelected();
+        this.toggleSelected();
       }
     }, {
       'AnalysisTool/stop-drawing': function() {
@@ -69,17 +71,18 @@ define([
     }, {
       'Threshold/update': function(threshold) {
         this.status.set('threshold', threshold);
-        this._updateLegend();
+        this.updateLegend();
       }
     }, {
       'Hresolution/update': function(hresolution) {
         this.status.set('hresolution', hresolution);
-        this._updateLegend();
+        this.updateLegend();
       }
     }, {
       'Country/update': function(iso) {
         this.status.set('iso', _.clone(iso));
-        this._updateLegend();
+        this.updateLegend();
+        this.getCountryMore();
       }
     },    
     // Mobile events... we should standardise them
@@ -96,11 +99,11 @@ define([
     /**
      * Update legend by calling view.update.
      */
-    _updateLegend: function() {
+    updateLegend: function() {
       var categories = this.status.get('layerSpec').getLayersByCategory(),
           options = {
             threshold: this.status.get('threshold'),
-            hresolution: this.hresolutionParams()
+            hresolution: this.getHresolutionParams()
           },
           iso = this.status.get('iso'),
           geographic = !! this.status.get('layerSpec').attributes.geographic_coverage;
@@ -111,7 +114,7 @@ define([
     /**
      * Toggle selected class sublayers by calling view.toggleSelected.
      */
-    _toggleSelected: function() {
+    toggleSelected: function() {
       this.view.toggleSelected(this.status.get('layerSpec').getLayers());
     },
 
@@ -138,11 +141,32 @@ define([
       mps.publish('Overlay/toggle', [to])
     },
 
-    initExperiment: function(id){
-      mps.publish('Experiment/choose',[id]);
-    },
+    /**
+     * Country bounds
+     *
+     * @param  {object} iso: {country:'xxx', region: null}
+     */
+    getCountryMore: function() {
+      var iso = this.status.get('iso');
 
-    hresolutionParams: function () {
+      if(!!iso && !!iso.country && iso.country !== 'ALL'){
+        countryService.execute(iso.country, _.bind(function(results) {
+          var is_more = (!!results.indepth);
+          var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
+          
+          if (is_more) {
+            this.view.more({
+              name: results.name,
+              url: results.indepth, 
+              is_idn: is_idn
+            });            
+          }
+
+        },this));
+      }
+    },    
+
+    getHresolutionParams: function () {
       if (!!this.status.get('hresolution')) {
         return JSON.parse(atob(this.status.get('hresolution')));
       }
