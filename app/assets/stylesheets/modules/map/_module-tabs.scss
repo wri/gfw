@@ -24,13 +24,14 @@ $w-control: 44px;
 
   // max-height: calc(100% - 275px);
   // overflow: auto;
-  header{
-    nav{
-      ul{
+  header {
+    nav {
+      ul {
         @media (min-width: $br-mobileMap){
           @include display-flex();
         }
-        li{
+
+        li {
           width: auto;
           float: right;
           cursor: pointer;
@@ -39,24 +40,34 @@ $w-control: 44px;
           position: relative;
           @media (min-width: $br-mobileMap){
             float: none;
-            width: 25%;
+            width: 33.33333%;
+            
             &:first-child{
               border-left: none;
             }
+            
             &:hover{
               background: $light;
+              
               .tooltipmap{
                 opacity: 1;
                 visibility: visible;
               }
             }
           }
+          
           &:active{ background: darken($light,5%);}
+          
           &.active{ background: $white;}
-          &.inactive{
+          
+          &.inactive {
             background: #EEEEEE;
-            &:hover{ background: lighten(#EEEEEE, 5%);}
+            
+            &:hover { 
+              background: lighten(#EEEEEE, 5%);
+            }
           }
+
           &.pulse{
             svg{
               @include animation(pulse_animation,0.75s,4,$easeInOutSine);
