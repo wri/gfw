@@ -261,6 +261,11 @@
     }
   }
 
+  &.is-space-between {
+    @include justify-content(space-between);
+  }
+  
+
   &.-fix-width-220 {
     @media (min-width: $br-mobile) {
       > * {
@@ -300,7 +305,7 @@
     }
   }
 
-  // Steps
+  // Steps 
   &.is-steps {
     .btn {
       display: none;
