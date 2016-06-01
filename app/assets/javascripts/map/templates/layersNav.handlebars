@@ -94,11 +94,6 @@
             </li>
           </div>
           <div class="layer-group">
-            <li class="layer" data-layer="fires">
-              <span class="onoffradio"><span></span></span>
-              <span class="layer-title">FIRMS active fires<a href='#' data-source='firms_active_fires' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-              <span class="layer-info">(daily, 1km, global, NASA)</span>
-            </li>
             <li class="layer" data-layer="viirs_fires_alerts">
               <span class="onoffradio"><span></span></span>
               <span class="layer-title">VIIRS active fires<a href='#' data-source='viirs_fires_alerts' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
@@ -137,6 +132,10 @@
                 <input type="radio" />2013
               </label>
             </span> --}}
+          </li>
+          <li class="layer" data-layer="places_to_watch">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Places to watch (POC)<a href='#' data-source='places_to_watch' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
           <li class="layer" data-layer="pantropical">
             <span class="onoffswitch"><span></span></span>
@@ -323,11 +322,11 @@
       </div>
     </li>
 
-    <li id="country-layers" class="country-layers-nav country disabled">
-      <span class="category-name">COUNTRY LAYERS <i id="forest_clearing-category-num" class="category-num"></i></span>
+    <li id="country-layers" class="country-layers-nav country">
+      <span class="category-name">COUNTRY DATA</span>
     </li>
-    <li id="country-layers-reset" class="country-close disabled hidden">
+    {{!-- <li id="country-layers-reset" class="country-close disabled hidden">
       <button class="btn close"><span><svg><use xlink:href="#shape-close"></use></svg></span></button>
-    </li>
+    </li> --}}
   </ul>
 </div>

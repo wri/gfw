@@ -31,7 +31,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     @media (min-width: 1500px){
       float: left;
       left: 50%;
-      @include transform(translate(-50%,0));
+      @include transform(translate(-50%,0) translateZ(0));
       text-rendering: optimizeLegibility;
     }
   }
@@ -111,72 +111,6 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         }
       }
     }
-    &.country-close{
-      padding: 0;
-      border-bottom: none;
-      width: 40px;
-      min-height: 1px;
-
-      &.disabled{
-        opacity: 0.25;
-        @media (max-width: $br-mobileMap - 1){
-          display: none;
-        }
-      }
-      &.active{
-        opacity: 1;
-        @media (max-width: $br-mobileMap - 1){
-          display: none;
-        }
-      }
-      .close{
-        position: absolute;
-        top: 0%;
-        left: -1px;
-        height: 46px;
-        width: 40px;
-        border-radius: 0;
-        padding: 0;
-        background: #A300D9;
-        @include transition(all,0,linear);
-        border-bottom: 5px solid $country-color;
-        &:hover {
-          background: $white;
-          border-bottom: 5px solid $country-color;
-          span{
-            box-shadow: 0 0 0 2px #FF4848;
-            svg{
-              fill: #FF4848;
-            }
-          }
-        }
-        span{
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 14px;
-          height: 14px;
-          text-align: center;
-          font-family: Arial;
-          font-weight: 700;
-          color: $white;
-          box-shadow: 0 0 0 2px $white;
-          border-radius: 50%;
-          @include transform(translate(-50%, -50%));
-          svg{
-            fill: $white;
-            width: 100%;
-            height: 100%;
-            display: block;
-            position: absolute;
-            left: 0%;
-            top: 0%;
-            @include transition(all,0,linear);
-          }
-        }
-      }
-    }
-
 
 
 
@@ -231,11 +165,14 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       }
     }
     &.country{
-      background: #A300D9;
+      background: $country-color;
       color: $white;
       @media (max-width: $br-mobileMap - 1){
         background: $white;
-        color: #A300D9;
+        color: $country-color;
+        // It will only create issues. At least when there isn't a country selected
+        // So for the moment let's leave this hidden
+        display: none;
       }
       &.disabled{
         opacity: 0.25;
@@ -252,8 +189,104 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
             }
           }
         }
+      }
+      
+      .country-description {
+        color: $dark;
+        font-size: 14px;
+        padding: 15px 10px;
+        line-height: 1.25;
+
+        > * {
+          margin: 10px 0 0;
+          
+          &:first-child {
+            margin-top: 0;
+          }
+        }
+
+        a {
+          color: $cGreen;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .country-title {
+        display: none;
+        color: $dark;
+        background-color: rgba($country-color, 0.25);
+        font-size: 12px;
+        padding: 15px 28px 15px 10px;
+        margin: 0;
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+        line-height: 1;
+        font-weight: 500;
+        text-transform: uppercase;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;        
+        @media (min-width: $br-mobileMap){
+          display: block;
+        }
+
+        span {
+          position: absolute;
+          @include display-flex;
+          @include align-items(center);
+          @include justify-content(center);
+          top: 20px;
+          right: 10px;
+          width: 14px;
+          height: 14px;
+          margin: -7px 0 0; 
+          border-radius: 50%;
+          background: $dark;
+
+          svg {
+            display: block;
+            width: 10px;
+            height: 10px;
+            fill: $white;
+          }
+
+          &:hover {
+            background: lighten($dark, 5%);
+          }
+        }
+
+        .m-btncontainer {
+          margin-top: 5px;
+          flex-wrap: wrap;
+          
+          > * {
+            margin-right: 2px;
+            margin-bottom: 2px;
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+
+          .btn {
+            border-radius: 0;
+            background: $country-color;
+            &:hover {
+              background: lighten($country-color, 5%);
+            }
+          }
+        }
 
       }
+
+      .layers-nav-header {
+        &:after {
+          display: none;
+        }
+      }
+
       .category-name{
         color: $white;
         @media (max-width: $br-mobileMap - 1){
@@ -506,6 +539,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     color: #AAA;
     word-wrap: break-word;
     label {
+      cursor: pointer;
       position: relative;
       float: none;
       font-weight: normal;
@@ -515,13 +549,18 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       padding-left: 13px;
       text-transform: none;
       display: block;
+
+      &:hover {
+        color: lighten($dark,5%);
+      }
+      
       &.selected {
         color: $dark;
-        text-shadow: 0px 0px 0px #999;
         span:before{
           display: block;
         }
       }
+
       span{
         display: block;
         position: absolute;

@@ -40,7 +40,7 @@
     "jquery-ujs": "~1.0.2",
     "qtip2": "~2.2.1",
     "ScrollIt.js": "*",
-    "chosen": "./public/chosen_v0.13.0.zip",
+    "chosen": "~1.5.1",
     "keymaster": "~1.6.3",
     "enquire": "~2.1.2",
     "pickadate": "~3.5.6",

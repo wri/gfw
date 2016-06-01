@@ -29,7 +29,7 @@ define([
         this.view.setCurrentDate(date);
       }
     }, {
-      'Threshold/changed': function(threshold) {
+      'Threshold/update': function(threshold) {
         this.view.setThreshold(threshold);
       }
     }],

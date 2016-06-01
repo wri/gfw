@@ -114,7 +114,7 @@ define([
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
           if (this.previousZoom >= 5) {
-            this.presenter.notificate('not-zoom-not-reached');
+            this.presenter.notificate('notification-zoom-not-reached');
           }
         }
         this.$disclaimer.show(0);
@@ -152,8 +152,8 @@ define([
 
     _fillParams: function(params) {
       this.params = params;
-      this.$hresSelectFilter.val(this.params.color_filter).trigger("liszt:updated");
-      this.$hresSensorFilter.val(this.params.sensor_platform).trigger("liszt:updated");
+      this.$hresSelectFilter.val(this.params.color_filter).trigger("chosen:updated");
+      this.$hresSensorFilter.val(this.params.sensor_platform).trigger("chosen:updated");
       this.$range.val(this.params.cloud);
       this.setClouds();
       this.zoom = params.zoom;
@@ -170,7 +170,7 @@ define([
         if (!!this.$onoffswitch.hasClass('checked')) {
           this.presenter.toggleLayer('urthe');
         } else {
-          this.presenter.notificate('not-zoom-not-reached');
+          this.presenter.notificate('notification-zoom-not-reached');
         }
       }
       ga('send', 'event', 'Map', 'Toggle', 'Urthecast');

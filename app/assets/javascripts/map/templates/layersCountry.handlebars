@@ -1,0 +1,72 @@
+<span class="category-name">
+  {{this.countryName}} DATA 
+  <i id="forest_clearing-category-num" class="category-num"></i>
+</span>
+<div id="country-layers-nav" class="layers-nav">
+  <div class="layers-nav-header">
+    <div class="category-icon"><svg><use xlink:href="#icon-layer-country"></use></svg></div>
+    <span class="category-name">
+      {{this.countryName}} DATA
+    </span>
+  </div>
+
+  {{#if country}}
+    {{!-- TITLE --}}
+    <div class="country-title">{{this.countryName}} 
+      <span id="layers-country-reset"><svg><use xlink:href="#shape-close"></use></svg></span>
+      <ul class="m-btncontainer">
+        <li><a class="btn green uppercase little download-mobile-link" target="_blank" href="http://data.globalforestwatch.org/datasets?keyword={{this.country}}">Data</a></li>
+        <li><a class="btn green uppercase little" href="/country/{{this.country}}" target="_blank">Profile</a></li>
+        <li id="layers-country-atlas"></li>
+      </ul>      
+    </div>
+
+
+    {{!-- LAYERS --}}
+    {{#if countryLayers}}    
+    <ul class="layers-list scroll-thin-dark">
+      {{#each countryLayers}}
+        <li class="{{#if this.does_wrapper}}wrapped-layer{{else}}layer{{/if}}" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">
+          <span class="onoffswitch"><span></span></span>
+          <span class="layer-title">
+            {{this.title}}
+            {{#if this.source_json}}
+              <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+            {{else}}
+              <a href='#' data-source='{{this.slug}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+            {{/if}}
+          </span>
+          {{#if this.subtitle}}
+            <span class="layer-info">{{this.subtitle}}</span>
+          {{/if}}
+          {{#if this.does_wrapper}}
+            <span class="does_wrapper">
+              <span class="layer-info">
+                {{#each this.wrappers}}
+                <label data-layer="{{this.slug}}" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />{{this.title}}
+                </label>
+                {{/each}}
+              </span>                        
+            </span>
+          {{/if}}
+        </li>
+      {{/each}}
+    </ul>
+    {{else}}
+      <div class="country-description">
+        <p>Local datasets coming soon! </p>
+        <p>For now, <a href="#" class="source" data-source="view_existing_global_data">view global datasets</a> for this area, <a href="/getinvolved/share-data" target="_blank">suggest your own</a>, or use the buttons below to see statistics and infographics for this country.</p>
+      </div>
+    {{/if}}
+  {{else}}
+    <select data-placeholder="Select country" class="chosen-select country-select notranslate" id="layers-country-select">
+      <option></option>
+      {{#each this.countries}}
+        <option value="{{this.iso}}">{{this.name}}</option>
+      {{/each}}
+    </select>
+  {{/if}}
+
+</div>

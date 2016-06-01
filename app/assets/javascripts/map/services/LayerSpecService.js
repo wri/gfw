@@ -25,7 +25,6 @@ define([
             ['forestgain', 'forest2000'],
             ['forma', 'forest2000'],
             ['imazon', 'forest2000'],
-            ['fires', 'forest2000'],
             ['modis', 'forest2000'],
             ['terrailoss', 'forest2000'],
             ['prodes', 'forest2000'],
@@ -39,7 +38,7 @@ define([
     },
 
     init: function() {
-      _.bindAll(this, '_removeLayer');
+      _.bindAll(this, '_getLayers', '_removeLayer');
       this.model = new LayerSpecModel();
     },
 
@@ -59,6 +58,10 @@ define([
           success(this.model);
         }, this),
         error);
+    },
+
+    _getLayers: function() {
+      return this.model.getLayers();
     },
 
     /**

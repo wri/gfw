@@ -91,14 +91,23 @@ define([
       mps.publish('Map/autolocate');
     },
 
+    toggleModules: function(hide) {
+      mps.publish('MapControlsToggleModules/toggle',[{ hide: hide }]);
+    },
+
     /**
      * Used by searchbox view to handle a fitbounds.
      *
      * @return {object} Map bounds
      */
+    showSearch: function() {
+      mps.publish('MapControlsSearch/show');      
+    },
+
     fitBounds: function(bounds) {
       mps.publish('Map/fit-bounds', [bounds]);
     },
+    
 
     notificate: function(id){
       mps.publish('Notification/open', [id]);

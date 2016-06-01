@@ -4,11 +4,13 @@
  */
 define([
   'underscore',
+  'mps',
   'uri',
+  'd3',
   'abstract/layer/OverlayLayerClass',
   'text!map/cartocss/style.cartocss',
   'text!map/templates/infowindow.handlebars'
-], function(_, UriTemplate, OverlayLayerClass, CARTOCSS, TPL) {
+], function(_, mps, UriTemplate, d3, OverlayLayerClass, CARTOCSS, TPL) {
 
   'use strict';
 
@@ -76,6 +78,10 @@ define([
       });
       this.infowindowsButtons();
       this.infowindow.model.on('change', _.bind(function(model) {
+        if (!!model.attributes.content.data.slope_semester && !!model.attributes.content.data.alerts_last_semester) {
+          this.drawSlopeGraph(model.attributes.content.data.slope_semester,model.attributes.content.data.alerts_last_semester);
+        }
+        if (!!model.attributes.content.data.slope_semester) {this.prettySlopeSemester(model.attributes.content.data.slope_semester)}
         var analysis = $('#analysis-tab-button').hasClass('disabled');
         $('#analyzeBtn').toggleClass('dont-analyze', analysis);
         mps.publish('Infowindow/toggleSubscribeButton', []);
@@ -101,7 +107,7 @@ define([
           ($(this).data('wdpaid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area' + $(this).data('wdpaid')) : null;
           ($(this).data('useid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze ' + $(this).data('use').toUpperCase() + ' ' + $(this).data('useid')) : null;
         }else{
-          mps.publish('Notification/open', ['not-select-forest']);
+          mps.publish('Notification/open', ['notification-select-forest-change-layer']);
         }
 
       });
@@ -126,6 +132,61 @@ define([
     getQuery: function() {
       return new UriTemplate(this.options.sql || this.queryTemplate)
         .fillFromObject({tableName: this.layer.table_name, analysis: this.options.analysis});
+    },
+
+    drawSlopeGraph: function(slope, alerts) {
+      alerts = JSON.parse(alerts);
+      d3.select("#graphSlope").select("svg").remove();
+      var margin = {top: 15, right: 40, bottom: 15, left:40},
+          width = 200,
+          height = 100;
+
+      var x = d3.time.scale()
+          .domain([new Date(alerts[0].date), d3.time.day.offset(new Date(alerts[alerts.length - 1].date), 1)])
+          .rangeRound([0, width - margin.left - margin.right]);
+
+      var y = d3.scale.linear()
+          .domain([0, d3.max(alerts, function(d) { return d.count; })])
+          .range([height - margin.top - margin.bottom, 0]);
+
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient('left')
+          .tickFormat(d3.format("s"))
+          .outerTickSize(0)
+          .ticks(5)
+          .tickPadding(10)
+          .tickPadding(1);
+
+      var svg = d3.select('#graphSlope').append('svg')
+          .attr('class', 'chart')
+          .attr('width', width)
+          .attr('height', height)
+        .append('g')
+          .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
+
+      svg.selectAll('.chart')
+          .data(alerts)
+        .enter().append('rect')
+          .attr('class', 'bar')
+          .attr('x', function(d) { return x(new Date(d.date)); })
+          .attr('y', function(d) { return height - margin.top - margin.bottom - (height - margin.top - margin.bottom - y(d.count)) })
+          .attr('width', 6)
+          .attr('height', function(d) { return height - margin.top - margin.bottom - y(d.count) });
+
+      svg.append('g')
+        .attr('class', 'y axis')
+        .call(yAxis);
+    },
+
+    prettySlopeSemester: function(total) {
+      if (total < 0)
+        var triangle = '<span style="color:lightgreen">▼</span>';
+      else if (total > 0)
+        var triangle = '<span style="color:red">▲</span>';
+      else
+        return 1;
+      $('#slopeTotal').html(total + triangle);
     }
 
   });

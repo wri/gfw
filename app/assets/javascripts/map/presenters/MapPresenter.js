@@ -35,6 +35,10 @@ define([
         this._onPlaceGo(place);
       }
     }, {
+      'Geostore/go': function(geostore) {
+        this._showGeostore(geostore);
+      }
+    }, {
       'LayerNav/change': function(layerSpec) {
         this._setLayers(layerSpec);
         this._fitToLayers(layerSpec.getLayers());
@@ -68,7 +72,7 @@ define([
         this.view.$maplngLng.addClass('hidden');
       }
     }, {
-      'Threshold/changed': function(threshold) {
+      'Threshold/update': function(threshold) {
         this._updateStatusModel({
           threshold: threshold
         });
@@ -118,6 +122,10 @@ define([
       if (params.threshold) {
         this.status.set('threshold', params.threshold);
       }
+
+      if (params.fit_to_geom) {
+        this.status.set('fit_to_geom', params.fit_to_geom === 'true');
+      }
     },
 
     _resizeSetLayers: function(){
@@ -159,6 +167,16 @@ define([
           bounds = new google.maps.LatLngBounds(southWest, northEast);
 
       this.view.fitBounds(bounds);
+    },
+
+    _fitToGeostore: function(geostore) {
+      if (this.status.get('fit_to_geom') === true) {
+        var paths = geojsonUtilsHelper.geojsonToPath(geostore.geojson),
+            bounds = new google.maps.LatLngBounds();
+
+        paths.forEach(function(point) { bounds.extend(point); });
+        this.view.map.fitBounds(bounds);
+      }
     },
 
     /**

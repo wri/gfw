@@ -1,13 +1,18 @@
 /**
- * The CountriesPresenter class for the CountriesPresenter view.
+ * The LayersCountryPresenter class for the LayersNavView.
  *
- * @return CountriesPresenter class.
+ * @return LayersCountryPresenter class.
  */
 define([
   'underscore',
   'mps',
+  'topojson',
   'map/presenters/PresenterClass',
-], function(_, mps, PresenterClass) {
+  'map/services/LayerSpecService',
+  'map/services/CountryService',
+  'helpers/geojsonUtilsHelper',
+
+], function(_, mps, topojson, PresenterClass, layerSpecService, countryService, geojsonUtilsHelper) {
 
   'use strict';
 
@@ -18,9 +23,7 @@ define([
     }
   });
 
-
-
-  var CountriesPresenter = PresenterClass.extend({
+  var LayersCountryPresenter = PresenterClass.extend({
 
     init: function(view) {
       this.view = view;
@@ -29,64 +32,6 @@ define([
       mps.publish('Place/register', [this]);
     },
 
-    /**
-     * Application subscriptions.
-     */
-    _subscriptions: [{
-      'Place/go': function(place) {
-        this._handlePlaceGo(place.params);
-      }
-    },{
-      'LocalMode/updateIso': function(iso) {
-        this.status.set('iso', iso);
-        if (!iso.country) {
-          mps.publish('Place/update', [{go: false}]);
-        }
-        this.view.setSelects(iso);
-      }
-    },{
-      'Subscribe/clearIso': function() {
-        this.status.set('iso', {});
-      }
-    },{
-      'LayerNav/change': function(layerSpec) {
-        this.view._renderHtml();
-      }
-    },{
-      'Layers/isos': function(layers_iso) {
-        this.view.getIsoLayers(layers_iso);
-      }
-    },{
-      'Analysis/analyze-iso': function(iso,to) {
-        this.status.set('iso', iso);
-        this.setAnalyze(to);
-      }
-    },{
-      'DownloadView/create': function(downloadView) {
-        this.view.downloadView = downloadView;
-      }
-    }],
-
-    _handlePlaceGo: function(params){
-      if(params.dont_analyze) {
-        this.status.set('dont_analyze', true);
-      }else{
-        this.status.set('dont_analyze', null);
-      }
-      if(params.iso.country && params.iso.country !== 'ALL'){
-        this.status.set('iso', params.iso);
-        this.view.setSelects(params.iso);
-      }
-    },
-    /**
-     * Used by PlaceService to get the current threshold value.
-     *
-     * @return {Object} threshold
-     */
-
-
-
-
     getPlaceParams: function() {
       var p = {};
       p.iso = this.status.get('iso');
@@ -94,31 +39,128 @@ define([
       return p;
     },
 
-    setAnalyze: function(to){
-      this.status.set('dont_analyze', to);
-      mps.publish('Place/update', [{go: false}]);
-      mps.publish('Countries/changeIso',[this.status.get('iso'),this.status.get('dont_analyze')]);
+    /**
+     * Application subscriptions.
+     */
+    _subscriptions: [{
+      'Place/go': function(place) {
+        var params = place.params;
+        var layerSpec = place.layerSpec;
+
+        this.status.set('dont_analyze', params.dont_analyze);
+        
+        if(!!params.iso.country && params.iso.country !== 'ALL'){
+          this.status.set('iso', params.iso);
+          this.view.setCountry(params.iso);
+          this.view._toggleSelected(layerSpec.getLayers());
+        }
+      }
+    },{
+      'Country/update': function(iso) {
+        this.status.set('iso', iso);
+        this.view.setCountry(iso);
+      }
+    },{
+      'Country/layers': function(layers) {
+        this.view.setLayers(layers);
+      }
+    },{
+      'LayerNav/change': function(layerSpec) {
+        this.view._toggleSelected(layerSpec.getLayers());
+      }
+    },{
+      'Analysis/enabled': function(enabled) {
+        this.status.set('dont_analyze', enabled);
+      }
+    }],
+
+    notificate: function(id){
+      mps.publish('Notification/open', [id]);
     },
 
-
-    changeIso: function(iso){
+    /**
+     * Publish a a Country/update.
+     *
+     * @param  {object} iso: {country:'xxx', region: null}
+     */
+    publishIso: function(iso) {
       this.status.set('iso', iso);
-      this.status.set('dont_analyze', true);
+      this.status.set('dont_analyze', true);        
+
+      mps.publish('Analysis/enabled', [this.status.get('dont_analyze')]);
+      mps.publish('Country/update', [iso]);
       mps.publish('Place/update', [{go: false}]);
-      mps.publish('Countries/changeIso',[iso,this.status.get('dont_analyze')]);
+
+      // Fit country bounds
+      this.countryBounds();
     },
 
-    changeNameIso: function(name){
-      mps.publish('Countries/name', [name, !!name]);
+    /**
+     * Country bounds
+     *
+     * @param  {object} iso: {country:'xxx', region: null}
+     */
+    countryBounds: function() {
+      var iso = this.status.get('iso');
+
+      if(!!iso && !!iso.country && iso.country !== 'ALL'){
+        countryService.execute(iso.country, _.bind(function(results) {
+          var objects = _.findWhere(results.topojson.objects, {
+            type: 'MultiPolygon'
+          });
+          var geojson = topojson.feature(results.topojson,objects);
+
+          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+          if (!!bounds) {
+            mps.publish('Map/fit-bounds', [bounds]);
+          }
+        },this));
+      }
     },
 
-    initExperiment: function(id){
-      mps.publish('Experiment/choose',[id]);
+    /**
+     * Country bounds
+     *
+     * @param  {object} iso: {country:'xxx', region: null}
+     */
+    countryMore: function() {
+      var iso = this.status.get('iso');
+
+      if(!!iso && !!iso.country && iso.country !== 'ALL'){
+        countryService.execute(iso.country, _.bind(function(results) {
+          var is_more = (!!results.indepth);
+          var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
+          
+          if (is_more) {
+            this.view.more({
+              name: results.name,
+              url: results.indepth, 
+              is_idn: is_idn
+            });            
+          }
+
+        },this));
+      }
     },
 
+
+    /**
+     * Publish a a LayerNav/change.
+     *
+     * @param  {object} layerSpec
+     */
+    _toggleLayer: function(layerSlug) {
+      var where = [{slug: layerSlug}];
+
+      layerSpecService.toggle(where,
+        _.bind(function(layerSpec) {
+          mps.publish('LayerNav/change', [layerSpec]);
+          mps.publish('Place/update', [{go: false}]);
+        }, this));
+    },
 
 
   });
 
-  return CountriesPresenter;
+  return LayersCountryPresenter;
 });

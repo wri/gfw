@@ -17,7 +17,6 @@ define([
   'map/views/layers/ImazonCoverLayer',
   'map/views/layers/ModisLayer',
   'map/views/layers/ModisCoverLayer',
-  'map/views/layers/FiresLayer',
   'map/views/layers/Forest2000Layer',
   'map/views/layers/IntactForestLayer',
   'map/views/layers/IntactForestLayer2000',
@@ -83,6 +82,7 @@ define([
   'map/views/layers/BirdlifeLayer',
   'map/views/layers/AzepolyLayer',
   'map/views/layers/TigersLayer',
+  'map/views/layers/MexicanProtectedAreasLayer',
   'map/views/layers/CarbonLayer',
   'map/views/layers/DamHotspotsLayer',
   'map/views/layers/ColombiaForestChangeLayer',
@@ -144,6 +144,7 @@ define([
   'map/views/layers/CanIntactForestLayer',
   'map/views/layers/MexForestCatLayer',
   'map/views/layers/MexForestSubCatLayer',
+  'map/views/layers/Places2WatchLayer',
 
   // high resolution maps
   'map/views/layers/UrthecastLayer',
@@ -176,7 +177,6 @@ define([
   ImazonCoverLayer,
   ModisLayer,
   ModisCoverLayer,
-  FiresLayer,
   Forest2000Layer,
   IntactForestLayer,
   IntactForestLayer2000,
@@ -242,6 +242,7 @@ define([
   BirdlifeLayer,
   AzepolyLayer,
   TigersLayer,
+  MexicanProtectedAreasLayer,
   CarbonLayer,
   DamHotspotsLayer,
   ColombiaForestChangeLayer,
@@ -303,6 +304,7 @@ define([
   CanIntactForestLayer,
   MexForestCatLayer,
   MexForestSubCatLayer,
+  Places2WatchLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -373,10 +375,6 @@ define([
     },
     modis_cover: {
       view: ModisCoverLayer
-    },
-    fires: {
-      view: FiresLayer,
-      timelineView: FiresTimeline
     },
     viirs_fires_alerts: {
       view: ViirsLayer,
@@ -578,6 +576,9 @@ define([
     tigers: {
       view: TigersLayer
     },
+    mexican_pa: {
+      view: MexicanProtectedAreasLayer
+    },
     verified_carbon: {
       view: CarbonLayer
     },
@@ -778,6 +779,10 @@ define([
     mex_forest_zoning_subcat: {
       view:  MexForestSubCatLayer
     },
+    places_to_watch: {
+      view:  Places2WatchLayer
+    },
+    
     nothing: {
     }
   };
