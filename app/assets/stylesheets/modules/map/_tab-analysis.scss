@@ -473,17 +473,16 @@
       margin: 15px 0 0;
     }
 
-    >ul{
+    > ul {
       margin-top: 10px;
       @include row();
 
-      >li{
+      > li {
         width: 100%;
-        position: relative;
         padding: 10px 0;
         cursor: pointer;
 
-        .tip{
+        .tip {
           font-size: 10px;
           padding: 4px 4px 0;
           text-align: center;
@@ -493,53 +492,47 @@
           color: $dark;        
         }
 
-        &.disabled{
+        &.disabled {
           opacity: 0.5;
           pointer-events: none;
           cursor: default;
         }
 
-        &.pulse{
-          svg{
+        &.pulse {
+          svg {
             @include animation(pulse_animation,0.75s,4,$easeInOutSine);
           }
 
-          .tooltipmap{
+          .tooltipmap {
             opacity: 1;
             visibility: visible;
           }
         }
 
-        &:first-child{
+        &:first-child {
           &:after{
             display: none;
           }
         }
 
-        svg{
+        svg {
           fill: $dark;
           width: 18px;
           height: 18px;
           margin: 0 auto;
         }
 
-        .dropdown-button{
-          &:after{
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-
-          }
+        .dropdown-button {
         }
 
         .download-dropdown {
+          @include display-flex();
+          @include flex-direction(column);
+          @include justify-content(space-between);
           text-align: left;
-          width: 90px;
-          bottom: 100%;
+          width: 100%;
+          height: 100%;
+          bottom: 80px;
           left: 50%;
           @include transform(translate(-50%,0));
           position: absolute;
@@ -549,35 +542,39 @@
           background-color: $white;
           border-radius: 3px;
           box-shadow: $shadow1;
+          line-height: 1.5;
 
-          &.hidden{
+          &.hidden {
             display: none;
           }
 
-          &:after{
+          &:after {
             content: "";
             display: block;
             position: absolute;
-            width: 8px;
+            width: 50%;
             height: 8px;
             background: $white;
             z-index: 2;
-            bottom: 0;
-            left: 50%;
-            @include transform(translate(-50%,50%) rotate(45deg));
-            border-width: 0 1px 1px 0;
-            border-color: transparent lighten($border,5%) lighten($border,5%) transparent;
-            border-style: solid;
+            bottom: -2px;
+            left: 0%;
           }
 
-          > li a {
+          > li {
             padding: 5px 10px;
-            display: block;
             border-bottom: 1px solid #f2f2f2;
-            color: $cGreen;
+            
+            &:last-child {
+              border-bottom: none;
+            }
 
-            &:hover{
+            &:hover {
               background-color: darken($white,2.5%);
+            }
+
+            a {
+              display: block;
+              color: $cGreen;
             }
           }
         }
