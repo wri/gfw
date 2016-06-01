@@ -124,11 +124,11 @@ define([
     },
 
     /**
-     * Publish 'Threshold/changed' event with the current threshold
+     * Publish 'Threshold/update' event with the current threshold
      * and call 'Place/update' to update the url.
      */
     _publishThreshold: function() {
-      mps.publish('Threshold/changed', [this.status.get('threshold')]);
+      mps.publish('Threshold/update', [this.status.get('threshold')]);
       mps.publish('Place/update', [{go: false}]);
     },
 

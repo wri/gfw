@@ -22,7 +22,7 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Threshold/changed': function(threshold) {
+      'Threshold/update': function(threshold) {
         this.view.setThreshold(threshold);
       }
     }],
