@@ -64,7 +64,7 @@ define([
         var previousIso = this.status.get('iso');
 
         // Reset country layers only when the country are different or null
-        if (currentIso.country != previousIso.country || ! !!currentIso.country) {
+        if (!!previousIso && (currentIso.country != previousIso.country || ! !!currentIso.country)) {
           this.view.resetCountryLayers();
         }
 
