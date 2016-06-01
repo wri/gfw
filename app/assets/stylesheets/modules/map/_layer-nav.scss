@@ -305,7 +305,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           @include display-flex;
           @include align-items(center);
           @include justify-content(center);
-          top: 50%;
+          top: 20px;
           right: 10px;
           width: 14px;
           height: 14px;
@@ -325,6 +325,20 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           }
         }
 
+        .m-btncontainer {
+          margin-top: 5px;
+          
+          > * {
+            margin-left: 2px;
+            &:first-child {
+              margin-left: 0;
+            }
+          }
+
+          .btn {
+            border-radius: 0;
+          }
+        }
 
       }
 
