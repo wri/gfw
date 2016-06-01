@@ -60,7 +60,14 @@ define([
       }
     },{
       'Country/update': function(iso) {
-        this.view.resetCountryLayers()
+        var currentIso = iso;
+        var previousIso = this.status.get('iso');
+
+        // Reset country layers only when the country are different or null
+        if (currentIso.country != previousIso.country || ! !!currentIso.country) {
+          this.view.resetCountryLayers();
+        }
+
         this.view.setCountry(iso);
         this.status.set('iso', _.clone(iso));
       }
