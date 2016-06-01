@@ -178,7 +178,7 @@ define([
         this._updateAnalysis();
       }
     }, {
-      'Threshold/changed': function(threshold) {
+      'Threshold/update': function(threshold) {
         this.status.set('threshold', threshold);
         this.openAnalysisTab();
         this._updateAnalysis();
@@ -456,7 +456,6 @@ define([
 
     setAnalyzeIso: function(iso){
       this._analyzeIso(iso);
-      this.setDontAnalyze(null);      
     },
 
     setDontAnalyze: function(dont_analyze) {
@@ -645,6 +644,9 @@ define([
           threshold = 30;
         }
         resource.thresh = '?thresh=' + threshold;
+      } else {
+        // Other layers has thresh = 30, don't they?
+        resource.thresh = 30;
       }
 
       if (baselayer.slug === 'forestgain') {

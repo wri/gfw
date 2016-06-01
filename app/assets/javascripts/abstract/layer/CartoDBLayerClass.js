@@ -107,7 +107,7 @@ define([
           ($(this).data('wdpaid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area' + $(this).data('wdpaid')) : null;
           ($(this).data('useid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze ' + $(this).data('use').toUpperCase() + ' ' + $(this).data('useid')) : null;
         }else{
-          mps.publish('Notification/open', ['not-select-forest']);
+          mps.publish('Notification/open', ['notification-select-forest-change-layer']);
         }
 
       });

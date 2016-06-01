@@ -8,8 +8,9 @@ define([
   'backbone',
   'mps',
   'map/presenters/PresenterClass',
-  'map/services/LayerSpecService'
-], function(_, Backbone, mps, PresenterClass, layerSpecService) {
+  'map/services/LayerSpecService',
+  'map/services/CountryService',  
+], function(_, Backbone, mps, PresenterClass, layerSpecService, countryService) {
 
   'use strict';
 
@@ -17,7 +18,8 @@ define([
     defaults: {
       layerSpec: null,
       threshold: null,
-      hresolution: null
+      hresolution: null,
+      iso: null
     }
   });
 
@@ -37,70 +39,83 @@ define([
         this.status.set('layerSpec', place.layerSpec);
         this.status.set('threshold', place.params.threshold);
         this.status.set('hresolution', place.params.hresolution);
-        this._updateLegend();
-        this._toggleSelected();
-        this.view.openGFW();
+
+        if(!!place.params.iso.country && place.params.iso.country !== 'ALL'){
+          this.status.set('iso', place.params.iso);
+        }
+        
+        this.updateLegend();
+        this.toggleSelected();
+        this.view.updateLinkToGFW();
       }
     },{
       'Place/update': function(place) {
-        this.view.openGFW();
+        this.view.updateLinkToGFW();
       }
     }, {
       'LayerNav/change': function(layerSpec) {
         this.status.set('layerSpec', layerSpec);
-        this._updateLegend();
-        this._toggleSelected();
+        this.updateLegend();
+        // Toggle sublayers
+        this.toggleSelected();
       }
     }, {
       'AnalysisTool/stop-drawing': function() {
-        this.view.model.set({
-          hidden: false
-        });
+        this.view.model.set({ hidden: false });
       }
     }, {
       'AnalysisTool/start-drawing': function() {
-        this.view.model.set({
-          hidden: true
-        });
+        this.view.model.set({ hidden: true });
       }
     }, {
-      'Threshold/changed': function(threshold) {
+      'Threshold/update': function(threshold) {
         this.status.set('threshold', threshold);
-        this.status.get('layerSpec') && this._updateLegend();
-      }
-    }, {
-      'LegendMobile/open': function() {
-        this.view.toogleLegend();
-      }
-    }, {
-      'Dialogs/close': function() {
-        this.view.toogleLegend(false);
+        this.updateLegend();
       }
     }, {
       'Hresolution/update': function(hresolution) {
         this.status.set('hresolution', hresolution);
-        this._updateLegend();
+        this.updateLegend();
+      }
+    }, {
+      'Country/update': function(iso) {
+        this.status.set('iso', _.clone(iso));
+        this.updateLegend();
+      }
+    },    
+    // Mobile events... we should standardise them
+    {
+      'Dialogs/close': function() {
+        this.view.toogleLegend(false);
+      }
+    }, {
+      'LegendMobile/open': function() {
+        this.view.toogleLegend();
       }
     }],
 
     /**
      * Update legend by calling view.update.
      */
-    _updateLegend: function() {
+    updateLegend: function() {
       var categories = this.status.get('layerSpec').getLayersByCategory(),
           options = {
             threshold: this.status.get('threshold'),
-            hresolution: this.hresolutionParams()
+            hresolution: this.getHresolutionParams()
           },
+          iso = this.status.get('iso'),
           geographic = !! this.status.get('layerSpec').attributes.geographic_coverage;
 
-      this.view.update(categories, options, geographic);
+      this.view.update(categories, options, geographic, iso);
+
+      // There is no other way...we should refactor the legend behaviour
+      this.getCountryMore();
     },
 
     /**
      * Toggle selected class sublayers by calling view.toggleSelected.
      */
-    _toggleSelected: function() {
+    toggleSelected: function() {
       this.view.toggleSelected(this.status.get('layerSpec').getLayers());
     },
 
@@ -119,7 +134,7 @@ define([
         }, this));
     },
 
-    showCanopy: function(){
+    toggleThreshold: function(){
       mps.publish('ThresholdControls/toggle');
     },
 
@@ -127,11 +142,32 @@ define([
       mps.publish('Overlay/toggle', [to])
     },
 
-    initExperiment: function(id){
-      mps.publish('Experiment/choose',[id]);
-    },
+    /**
+     * Country bounds
+     *
+     * @param  {object} iso: {country:'xxx', region: null}
+     */
+    getCountryMore: function() {
+      var iso = this.status.get('iso');
 
-    hresolutionParams: function (argument) {
+      if(!!iso && !!iso.country && iso.country !== 'ALL'){
+        countryService.execute(iso.country, _.bind(function(results) {
+          var is_more = (!!results.indepth);
+          var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
+          
+          if (is_more) {
+            this.view.renderMore({
+              name: results.name,
+              url: results.indepth, 
+              is_idn: is_idn
+            });            
+          }
+
+        },this));
+      }
+    },    
+
+    getHresolutionParams: function () {
       if (!!this.status.get('hresolution')) {
         return JSON.parse(atob(this.status.get('hresolution')));
       }

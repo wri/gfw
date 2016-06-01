@@ -204,7 +204,7 @@ define([
         var successful = document.execCommand('copy');
         $(e.currentTarget).html('copied')
       } catch(err) {
-        mps.publish('Notification/open', ['not-clipboard-support']);
+        mps.publish('Notification/open', ['notification-clipboard-support']);
       }
     },
 

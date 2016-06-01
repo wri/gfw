@@ -54,7 +54,6 @@ define([
       new LayersCountryView(this.map,this.countries);
 
       this.cache();
-      this.fixLegibility();
     },
 
     cache: function() {
@@ -235,20 +234,6 @@ define([
         $(group).find('.onoffradio').css({'background-color': color, 'border-color' : color });
 
       }, this ))
-    },
-
-    _showNotification: function(e){
-      if ($(e.currentTarget).hasClass('disabled') && !$(e.target).hasClass('country-layers-reset-mobile')) {
-        if($(e.currentTarget).hasClass('iso-detected')){
-          this.presenter.notificate('not-country-not-has-layers');
-        }else{
-          this.presenter.notificate('not-country-choose');
-          $('#countries-tab-button').addClass('pulse');
-          setTimeout(function(){
-            $('#countries-tab-button').removeClass('pulse');
-          },3000);
-        }
-      }
     },
 
     // BUG: If the menu has an odd width the text will be blurred

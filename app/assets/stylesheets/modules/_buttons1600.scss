@@ -250,6 +250,22 @@
     }
   }
 
+  &.is-space-between {
+    @include justify-content(space-between);
+  }
+
+  &.-col50 {
+    > * {
+      width: 47.5%;
+    }
+  }
+
+  &.-col100 {
+    > * {
+      width: 100%;
+    }
+  }
+
   &.is-steps {
     .btn {
       display: none;
