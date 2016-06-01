@@ -412,6 +412,7 @@ define([
           region: this.area
         };
         this.$countryButton.addClass('disabled');
+        this.presenter.setDontAnalyze(null);
         this.presenter.setAnalyzeIso(iso);
       }
     },

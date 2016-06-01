@@ -444,7 +444,6 @@ define([
 
     setAnalyzeIso: function(iso){
       this._analyzeIso(iso);
-      this.setDontAnalyze(null);      
     },
 
     setDontAnalyze: function(dont_analyze) {
