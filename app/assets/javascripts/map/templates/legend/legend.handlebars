@@ -3,16 +3,16 @@
 <span class="close js-toggle-legend"><svg><use xlink:href="#shape-close"></use></svg></span>
 
 {{#if this.country}}
-  <ul class="categories divided">
-    <h2>{{this.country.name}} data</h2>
+  <ul class="categories -divided -country">
+    <h2 class="-country">
+      {{this.country.name}} data
+        <ul class="m-btncontainer">
+          <li><a class="btn green uppercase little download-mobile-link" target="_blank" href="http://data.globalforestwatch.org/datasets?keyword={{this.country.iso}}">Country data</a></li>
+          <li><a class="btn green uppercase little download-mobile-link" target ="_blank" href="/country/{{this.country.iso}}">Country profile</a></li>
+          <li id="legend-country-more"></li>
+        </ul>
+    </h2>
     
-    <div id="legend-country-buttons" class="country-buttons">
-      <ul class="m-btncontainer is-space-between -col50">
-        <li><a class="btn gray uppercase little full-width download-mobile-link" target="_blank" href="http://data.globalforestwatch.org/datasets?keyword={{this.country.iso}}">Country data</a></li>
-        <li><a class="btn gray uppercase little full-width" href="/country/{{this.country.iso}}">Country profile</a></li>
-      </ul>
-    </div>
-    <div id="legend-country-more" class="country-buttons"></div>
 
     {{#each categoriesIso}}
       <li class="category {{#if this.closed}}closed{{/if}}">
@@ -57,7 +57,7 @@
   </ul> {{!-- /categories --}}
 {{/if}}
 {{#if categories}}
-<ul class="categories {{#if country}}divided{{/if}}">
+<ul class="categories {{#if country}}-divided{{/if}}">
   {{#if country}}
     <h2>Global data</h2>
   {{/if}}

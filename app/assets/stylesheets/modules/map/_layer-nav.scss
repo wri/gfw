@@ -111,72 +111,6 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         }
       }
     }
-    &.country-close{
-      padding: 0;
-      border-bottom: none;
-      width: 40px;
-      min-height: 1px;
-
-      &.disabled{
-        opacity: 0.25;
-        @media (max-width: $br-mobileMap - 1){
-          display: none;
-        }
-      }
-      &.active{
-        opacity: 1;
-        @media (max-width: $br-mobileMap - 1){
-          display: none;
-        }
-      }
-      .close{
-        position: absolute;
-        top: 0%;
-        left: -1px;
-        height: 46px;
-        width: 40px;
-        border-radius: 0;
-        padding: 0;
-        background: #A300D9;
-        @include transition(all,0,linear);
-        border-bottom: 5px solid $country-color;
-        &:hover {
-          background: $white;
-          border-bottom: 5px solid $country-color;
-          span{
-            box-shadow: 0 0 0 2px #FF4848;
-            svg{
-              fill: #FF4848;
-            }
-          }
-        }
-        span{
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 14px;
-          height: 14px;
-          text-align: center;
-          font-family: Arial;
-          font-weight: 700;
-          color: $white;
-          box-shadow: 0 0 0 2px $white;
-          border-radius: 50%;
-          @include transform(translate(-50%, -50%));
-          svg{
-            fill: $white;
-            width: 100%;
-            height: 100%;
-            display: block;
-            position: absolute;
-            left: 0%;
-            top: 0%;
-            @include transition(all,0,linear);
-          }
-        }
-      }
-    }
-
 
 
 
@@ -231,12 +165,12 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       }
     }
     &.country{
-      background: #A300D9;
+      background: $country-color;
       color: $white;
       border-color: #aa3cd2;
       @media (max-width: $br-mobileMap - 1){
         background: $white;
-        color: #A300D9;
+        color: $country-color;
         // It will only create issues. At least when there isn't a country selected
         // So for the moment let's leave this hidden
         display: none;

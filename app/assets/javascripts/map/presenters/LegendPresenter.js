@@ -44,7 +44,6 @@ define([
           this.status.set('iso', place.params.iso);
         }
         
-        this.getCountryMore();
         this.updateLegend();
         this.toggleSelected();
         this.view.updateLinkToGFW();
@@ -82,7 +81,6 @@ define([
       'Country/update': function(iso) {
         this.status.set('iso', _.clone(iso));
         this.updateLegend();
-        this.getCountryMore();
       }
     },    
     // Mobile events... we should standardise them
@@ -109,6 +107,9 @@ define([
           geographic = !! this.status.get('layerSpec').attributes.geographic_coverage;
 
       this.view.update(categories, options, geographic, iso);
+
+      // There is no other way...we should refactor the legend behaviour
+      this.getCountryMore();
     },
 
     /**
