@@ -327,16 +327,19 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
 
         .m-btncontainer {
           margin-top: 5px;
+          flex-wrap: wrap;
           
           > * {
-            margin-left: 2px;
-            &:first-child {
-              margin-left: 0;
+            margin-right: 2px;
+            margin-bottom: 2px;
+            &:last-child {
+              margin-right: 0;
             }
           }
 
           .btn {
             border-radius: 0;
+            background: $country-color;
           }
         }
 
