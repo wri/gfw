@@ -121,7 +121,7 @@ define([
   'map/views/layers/GtmForestChange2Layer',
   'map/views/layers/GtmForestCoverLayer',
   'map/views/layers/GtmForestDensityLayer',
-  'map/views/layers/AsItHappensHybridLayer',
+  'map/views/layers/GladLayer',
   'map/views/layers/LandsatAlertsCoverLayer',
   'map/views/layers/KhmProtectedAreasLayer',
   'map/views/layers/KhmEcoLandLayer',
@@ -288,7 +288,7 @@ define([
   GtmForestChange2Layer,
   GtmForestCoverLayer,
   GtmForestDensityLayer,
-  AsItHappensHybridLayer,
+  GladLayer,
   LandsatAlertsCoverLayer,
   KhmProtectedAreasLayer,
   KhmEcoLandLayer,
@@ -713,19 +713,19 @@ define([
       view: GtmForestDensityLayer
     },
     umd_as_it_happens: {
-      view: AsItHappensHybridLayer,
+      view: GladLayer,
       timelineView: AsItHappensTimeline
     },
     umd_as_it_happens_per: {
-      view: AsItHappensHybridLayer,
+      view: GladLayer,
       timelineView: AsItHappensTimeline
     },
     umd_as_it_happens_cog: {
-      view: AsItHappensHybridLayer,
+      view: GladLayer,
       timelineView: AsItHappensTimeline
     },
     umd_as_it_happens_idn: {
-      view: AsItHappensHybridLayer,
+      view: GladLayer,
       timelineView: AsItHappensTimeline
     },
     gfw_landsat_alerts_coverage: {
