@@ -11,8 +11,19 @@
   </div>
 
   {{#if country}}
-    <p class="country-title">{{this.countryName}} <span id="layers-country-reset"><svg><use xlink:href="#shape-close"></use></svg></span></p>
-    {{#if countryLayers}}
+    {{!-- TITLE --}}
+    <div class="country-title">{{this.countryName}} 
+      <span id="layers-country-reset"><svg><use xlink:href="#shape-close"></use></svg></span>
+      <ul class="m-btncontainer">
+        <li><a class="btn green uppercase little download-mobile-link" target="_blank" href="http://data.globalforestwatch.org/datasets?keyword={{this.country}}">data</a></li>
+        <li><a class="btn green uppercase little" href="/country/{{this.country}}" target="_blank">profile</a></li>
+        <li id="layers-country-atlas"></li>
+      </ul>      
+    </div>
+
+
+    {{!-- LAYERS --}}
+    {{#if countryLayers}}    
     <ul class="layers-list scroll-thin-dark">
       {{#each countryLayers}}
         <li class="{{#if this.does_wrapper}}wrapped-layer{{else}}layer{{/if}}" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">

@@ -29,6 +29,7 @@ define([
       this.view = view;
       this._super();
       this.status = new StatusModel();
+      this.listeners();
       mps.publish('Place/register', [this]);
     },
 
@@ -37,6 +38,10 @@ define([
       p.iso = this.status.get('iso');
       p.dont_analyze = this.status.get('dont_analyze');
       return p;
+    },
+
+    listeners: function() {
+      this.status.on('change:iso', this.countryAtlas.bind(this));
     },
 
     /**
@@ -49,7 +54,7 @@ define([
         this.status.set('dont_analyze', params.dont_analyze);
 
         if(!!params.iso.country && params.iso.country !== 'ALL'){
-          this.view.setCountry(params.iso);
+          this.view.setCountry(params.iso);          
           this.status.set('iso', params.iso);
         }
       }
@@ -108,6 +113,31 @@ define([
           if (!!bounds) {
             mps.publish('Map/fit-bounds', [bounds]);
           }
+        },this));
+      }
+    },
+
+    /**
+     * Country bounds
+     *
+     * @param  {object} iso: {country:'xxx', region: null}
+     */
+    countryAtlas: function() {
+      var iso = this.status.get('iso');
+
+      if(!!iso && !!iso.country && iso.country !== 'ALL'){
+        countryService.execute(iso.country, _.bind(function(results) {
+          var is_more = (!!results.indepth);
+          var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
+          
+          if (is_more) {
+            this.view.renderAtlas({
+              name: results.name,
+              url: results.indepth, 
+              is_idn: is_idn
+            });            
+          }
+
         },this));
       }
     },
