@@ -11,7 +11,8 @@ define([
   'map/collections/CountryCollection',
   'handlebars',
   'text!map/templates/layersCountry.handlebars',
-], function(Backbone, _, chosen, Presenter, CountryCollection, Handlebars, tpl) {
+  'text!map/templates/layersCountryAtlas.handlebars',
+], function(Backbone, _, chosen, Presenter, CountryCollection, Handlebars, tpl, tplAtlas) {
 
   'use strict';
 
@@ -23,6 +24,7 @@ define([
     el: '#country-layers',
 
     template: Handlebars.compile(tpl),
+    templateAtlas: Handlebars.compile(tplAtlas),
 
     model: new (Backbone.Model.extend({
       country: null,
@@ -59,6 +61,7 @@ define([
     cache: function() {
       this.$select = this.$el.find('#layers-country-select');
       this.$selectChosenId = '#layers_country_select_chosen';
+      this.$atlas = this.$el.find('#layers-country-atlas');
     },
 
     listeners: function() {
@@ -86,6 +89,10 @@ define([
         }
         return false;
       }.bind(this))
+    },
+
+    renderAtlas: function(data) {
+      this.$atlas.html(this.templateAtlas(data));
     },
 
     // SETTERS
