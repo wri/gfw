@@ -46,7 +46,7 @@
 
   // @ul
   .categories{
-    margin: 20px 0;
+    margin: 20px 0 0;
     
     > * {
       margin-bottom: 10px;
@@ -55,30 +55,60 @@
       }
     }
 
-    &.divided{
-      margin: 15px 0;
+    &.-divided{
+      margin: 0;
+    }
+
+    &.-country {
+      // background: rgba($country-color, 0.1);
+      padding: 15px 0;
+      margin: 0;
       @media (min-width: $br-mobileMap){
-        margin: 0 0 20px;
+        padding: 0;
+        margin: 0;
       }
     }
 
     h2{
       padding: 10px 15px;
-      margin: 0 0 15px;
+      margin: 0 0 20px;
       background: #F0F0F0;
       font-weight: 500;
       color: $dark;
       font-size: 14px;
       text-transform: uppercase;
+
+      &.-country {
+        background: rgba($country-color, 0.25);        
+      }
+
       @media (min-width: $br-mobileMap){
         padding: 10px 20px;
       }
+
+      .m-btncontainer {
+        margin-top: 5px;
+        flex-wrap: wrap;
+        
+        > * {
+          margin-right: 2px;
+          margin-bottom: 2px;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+
+        .btn {
+          border-radius: 0;
+          background: $country-color;
+          &:hover {
+            background: lighten($country-color, 5%);
+          }
+        }
+      }
+
     }
     
-    .country-buttons {
-      padding: 0 20px;    
-    }
-
     // @li
     .category {
       padding: 0 20px;
@@ -101,7 +131,7 @@
       }
 
       &:last-child {
-        padding: 0 20px;
+        padding: 0 20px 20px;
       }
 
       .category-name {
