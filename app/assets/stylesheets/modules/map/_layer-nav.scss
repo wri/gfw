@@ -339,6 +339,9 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           .btn {
             border-radius: 0;
             background: $country-color;
+            &:hover {
+              background: lighten($country-color, 5%);
+            }
           }
         }
 
