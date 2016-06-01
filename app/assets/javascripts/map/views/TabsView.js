@@ -84,7 +84,7 @@ define([
 
     initCustomViews: function(){
       new AnalysisView(this.map, this.countries);
-      // new CountriesView(this.map, this.countries);
+      new CountriesView(this.map, this.countries);
       new BasemapsView(this.map, this.countries);
       new HighresolutionView(this.map, this.countries);
 
