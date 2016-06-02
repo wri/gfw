@@ -1,13 +1,24 @@
-<h3 id="title-dialog-legend" class="title-dialog .noselect">Legend <span>(Click to expand)</span></h3>
-<span class="close"><svg><use xlink:href="#shape-close"></use></svg></span>
-{{#if iso}}
-  <ul class="categories {{#if iso}}divided{{/if}}">
-    <h2>{{name}} data</h2>
+{{!-- TO-DO: Let's figure out how to include this elements only for mobile devices --}}
+<h3 id="title-dialog-legend" class="title-dialog noselect js-toggle-embed-legend">Legend <span>(Click to expand)</span></h3>
+<span class="close js-toggle-legend"><svg><use xlink:href="#shape-close"></use></svg></span>
+
+{{#if this.country}}
+  <ul class="categories -divided -country">
+    <h2 class="-country">
+      {{this.country.name}} data
+        <ul class="m-btncontainer">
+          <li><a class="btn green uppercase little download-mobile-link" target="_blank" href="http://data.globalforestwatch.org/datasets?keyword={{this.country.iso}}">Country data</a></li>
+          <li><a class="btn green uppercase little download-mobile-link" target ="_blank" href="/country/{{this.country.iso}}">Country profile</a></li>
+          <li id="legend-country-more"></li>
+        </ul>
+    </h2>
+    
+
     {{#each categoriesIso}}
       <li class="category {{#if this.closed}}closed{{/if}}">
         {{#each this}}
           {{#if @first}}
-            <span data-category_slug="{{this.category_status}}" class="category-name" style="color: {{this.category_color}}; border-color: {{this.category_color}};">
+            <span data-category_slug="{{this.category_status}}" class="category-name js-toggle-category" style="color: {{this.category_color}}; border-color: {{this.category_color}};">
               {{this.category_name}}
               <em>({{../../layers_length}})</em>
             </span>
@@ -20,7 +31,7 @@
                 <i class="circle" style="color:{{this.title_color}};"></i>
                 {{this.title}}
                 {{#if this.subtitle}}<span class="subtitle">{{this.subtitle}}</span>{{/if}}
-                <a href='#' class='layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
+                <a href='#' class='layer-close js-layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
                 {{#if this.source_json}}
                   <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
                 {{else}}
@@ -33,7 +44,7 @@
                 {{{this.detailsTpl}}}
               {{/if}}
               {{#if this.sublayer}}
-                <div class="layer-sublayer" data-sublayer="{{this.sublayer}}">
+                <div class="layer-sublayer js-toggle-sublayer" data-sublayer="{{this.sublayer}}">
                   <span class="onoffswitch {{this.geographic}} {{#if this.geographic}}style="background-color:#f69;"{{/if}}"><span></span></span>
                   <div class="sublayer-title">Geographic coverage</div>
                 </div>
@@ -46,15 +57,15 @@
   </ul> {{!-- /categories --}}
 {{/if}}
 {{#if categories}}
-<ul class="categories {{#if iso}}divided{{/if}}">
-  {{#if iso}}
+<ul class="categories {{#if country}}-divided{{/if}}">
+  {{#if country}}
     <h2>Global data</h2>
   {{/if}}
   {{#each categories}}
     <li class="category {{#if this.closed}}closed{{/if}}">
       {{#each this}}
         {{#if @first}}
-          <span data-category_slug="{{this.category_status}}" class="category-name" style="color: {{this.category_color}}; border-color: {{this.category_color}};">
+          <span data-category_slug="{{this.category_status}}" class="category-name js-toggle-category" style="color: {{this.category_color}}; border-color: {{this.category_color}};">
             {{this.category_name}}
             <em>({{../../layers_length}})</em>
           </span>
@@ -67,7 +78,7 @@
               <i class="circle" style="color:{{this.title_color}};"></i>
                 {{this.title}}
                 {{#if this.subtitle}}<span class="subtitle">{{this.subtitle}}</span>{{/if}}
-              <a href='#' class='layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
+              <a href='#' class='layer-close js-layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
               {{#if this.source_json}}
                 <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
               {{else}}
@@ -80,7 +91,7 @@
               {{{this.detailsTpl}}}
             {{/if}}
             {{#if this.sublayer}}
-              <div class="layer-sublayer" data-sublayer="{{this.sublayer}}">
+              <div class="layer-sublayer js-toggle-sublayer" data-sublayer="{{this.sublayer}}">
                 <span class="onoffswitch {{this.geographic}}" {{#if this.geographic}}style="background-color:#f69;"{{/if}}><span></span></span>
                 <div class="sublayer-title">Geographic coverage<a href='#' data-source='{{this.source}}_source' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></div>
 

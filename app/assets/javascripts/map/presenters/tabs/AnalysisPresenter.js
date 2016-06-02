@@ -178,7 +178,7 @@ define([
         this._updateAnalysis();
       }
     }, {
-      'Threshold/changed': function(threshold) {
+      'Threshold/update': function(threshold) {
         this.status.set('threshold', threshold);
         this.openAnalysisTab();
         this._updateAnalysis();
@@ -456,7 +456,6 @@ define([
 
     setAnalyzeIso: function(iso){
       this._analyzeIso(iso);
-      this.setDontAnalyze(null);      
     },
 
     setDontAnalyze: function(dont_analyze) {

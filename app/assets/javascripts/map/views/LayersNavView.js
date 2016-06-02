@@ -54,7 +54,6 @@ define([
       new LayersCountryView(this.map,this.countries);
 
       this.cache();
-      this.fixLegibility();
     },
 
     cache: function() {
