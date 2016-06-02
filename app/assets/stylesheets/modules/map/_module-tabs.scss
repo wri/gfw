@@ -119,6 +119,10 @@ $w-control: 44px;
       text-align: center;
       font-size: 13px;
       @include clearfix();
+
+      &.-last {
+        margin: 0 0 20px;
+      }
       
       h2 {
         font-size: 21px;
