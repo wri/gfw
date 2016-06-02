@@ -717,7 +717,7 @@ define([
         multipolygon: this.status.get('multipolygon')
       });
 
-      this.view.setSelects({ country: null, region: null });
+      this.view.setSelects({ country: null, region: null }, this.status.get('dont_analyze'));
 
       // Reset status model
       this.status.set({
