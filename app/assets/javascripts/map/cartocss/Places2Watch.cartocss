@@ -1,22 +1,30 @@
-#world_ifl2_50_concept_copy{
-  polygon-fill: #FECC5C;
+/** choropleth visualization */
+#borneo_peru_roc_final_alerts_copy{
+  polygon-fill: #FFFFB2;
   polygon-opacity: 0.8;
   line-color: #FFF;
-  line-width: 0;
-  line-opacity: 1;
+  line-width: 0.5;
+  line-opacity: 0;
+  polygon-smooth:0.5;
 }
-#world_ifl2_50_concept_copy [ slope_semester <= 0.00014339042479651] {
-   polygon-fill: #BD0026;
+#borneo_peru_roc_final_alerts_copy [ total_alerts <= 46428] {
+   polygon-fill: #B10026;
 }
-#world_ifl2_50_concept_copy [ slope_semester <= 0.0000453926725729051] {
-   polygon-fill: #F03B20;
+#borneo_peru_roc_final_alerts_copy [ total_alerts <= 778] {
+   polygon-fill: #E31A1C;
 }
-#world_ifl2_50_concept_copy [ slope_semester <= 0.0000154791151568245] {
+#borneo_peru_roc_final_alerts_copy [ total_alerts <= 336] {
+   polygon-fill: #FC4E2A;
+}
+#borneo_peru_roc_final_alerts_copy [ total_alerts <= 214] {
    polygon-fill: #FD8D3C;
 }
-#world_ifl2_50_concept_copy [ slope_semester <= 0.00000133000367580598] {
-   polygon-fill: #FECC5C;
+#borneo_peru_roc_final_alerts_copy [ total_alerts <= 147] {
+   polygon-fill: #FEB24C;
 }
-#world_ifl2_50_concept_copy [ slope_semester <= -0.0000700322818771827] {
+#borneo_peru_roc_final_alerts_copy [ total_alerts <= 97] {
+   polygon-fill: #FED976;
+}
+#borneo_peru_roc_final_alerts_copy [ total_alerts <= 60] {
    polygon-fill: #FFFFB2;
 }
