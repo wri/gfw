@@ -6,12 +6,12 @@
   <ul class="categories -divided -country">
     <h2 class="-country">
       {{this.country.name}} data
-        <ul class="m-btncontainer">
-          <li><a class="btn green uppercase little download-mobile-link" target="_blank" href="http://data.globalforestwatch.org/datasets?keyword={{this.country.iso}}">Country data</a></li>
-          <li><a class="btn green uppercase little download-mobile-link" target ="_blank" href="/country/{{this.country.iso}}">Country profile</a></li>
-          <li id="legend-country-more"></li>
-        </ul>
     </h2>
+    <ul class="m-btncontainer">
+      <li><a class="btn gray uppercase little download-mobile-link" target="_blank" href="http://data.globalforestwatch.org/datasets?keyword={{this.country.iso}}">Country data</a></li>
+      <li><a class="btn gray uppercase little download-mobile-link" target ="_blank" href="/country/{{this.country.iso}}">Country profile</a></li>
+      <li id="legend-country-more"></li>
+    </ul>
     
 
     {{#each categoriesIso}}
