@@ -165,9 +165,8 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       }
     }
     &.country{
-      background: $country-color;
-      color: $white;
-      border-color: #aa3cd2;
+      background: rgba($country-color, 0.25);
+
       @media (max-width: $br-mobileMap - 1){
         background: $white;
         color: $country-color;
@@ -264,18 +263,10 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           flex-wrap: wrap;
           
           > * {
-            margin-right: 2px;
-            margin-bottom: 2px;
+            margin-right: 5px;
+            margin-bottom: 5px;
             &:last-child {
               margin-right: 0;
-            }
-          }
-
-          .btn {
-            border-radius: 0;
-            background: $country-color;
-            &:hover {
-              background: lighten($country-color, 5%);
             }
           }
         }
@@ -288,8 +279,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         }
       }
 
-      .category-name{
-        color: $white;
+      .category-name {
         @media (max-width: $br-mobileMap - 1){
           color: rgb(207, 127, 236);
         }

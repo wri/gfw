@@ -65,13 +65,12 @@
 
     &.-country {
       padding: 0;
-      margin: 0;
-      background: #FDF5FF;       
+      margin: 0;     
     }
 
     h2{
       padding: 10px 15px;
-      margin: 0 0 20px;
+      margin: 20px 0;
       background: #F0F0F0;
       font-weight: 500;
       color: $dark;
@@ -79,36 +78,30 @@
       text-transform: uppercase;
 
       &.-country {
-        background: rgba($country-color, 0.25);        
+        background: rgba($country-color, 0.25);  
+        margin: 0 0 20px;              
       }
 
       @media (min-width: $br-mobileMap){
         padding: 10px 20px;
       }
-
-      .m-btncontainer {
-        margin-top: 5px;
-        flex-wrap: wrap;
-        
-        > * {
-          margin-right: 2px;
-          margin-bottom: 2px;
-          &:last-child {
-            margin-right: 0;
-          }
-        }
-
-        .btn {
-          border-radius: 0;
-          background: $country-color;
-          &:hover {
-            background: lighten($country-color, 5%);
-          }
-        }
-      }
-
     }
     
+    .m-btncontainer {
+      padding: 0 20px;
+      margin-top: 5px;
+      flex-wrap: wrap;
+      
+      > * {
+        margin-right: 5px;
+        margin-bottom: 5px;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+
     // @li
     .category {
       padding: 0 20px;
