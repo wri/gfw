@@ -55,17 +55,36 @@ define([
         return this.tiles[tileId].canvas;
       }
 
+      var div = ownerDocument.createElement('div');
+      div.style.width = this.tileSize.width;
+      div.style.height = this.tileSize.height;
+      div.style.position = 'relative';
+      div.style.overflow = 'hidden';
+
       var canvas = ownerDocument.createElement('canvas');
       canvas.style.border = 'none';
       canvas.style.margin = '0';
       canvas.style.padding = '0';
       canvas.width = this.tileSize.width;
       canvas.height = this.tileSize.height;
+      div.appendChild(canvas);
+
+      if (this.options.showLoadingSpinner === true) {
+        var loader = ownerDocument.createElement('div');
+        loader.className += 'loader spinner start';
+        loader.style.position = 'absolute';
+        loader.style.top      = '50%';
+        loader.style.left     = '50%';
+        loader.style.border = '4px solid #FFF';
+        loader.style.borderRadius = '50%';
+        loader.style.borderTopColor = '#555';
+        div.appendChild(loader);
+      }
 
       var url = this._getUrl.apply(this,
         this._getTileCoords(coord.x, coord.y, zoom));
 
-      this._getImage(url, _.bind(function(image) {
+      this._getImage(url, function(image) {
         var canvasData = {
           tileId: tileId,
           canvas: canvas,
@@ -77,9 +96,17 @@ define([
 
         this._cacheTile(canvasData);
         this._drawCanvasImage(canvasData);
-      }, this));
 
-      return canvas;
+        if (this.options.showLoadingSpinner === true) {
+          div.removeChild(loader);
+        }
+      }.bind(this), function() {
+        if (this.options.showLoadingSpinner === true) {
+          div.removeChild(loader);
+        }
+      }.bind(this));
+
+      return div;
     },
 
     _drawCanvasImage: function(canvasData) {
@@ -115,7 +142,7 @@ define([
       return z - this.options.dataMaxZoom;
     },
 
-    _getImage: function(url, callback) {
+    _getImage: function(url, callback, errorCallback) {
       var xhr = new XMLHttpRequest();
 
       xhr.onload = function () {
@@ -134,6 +161,10 @@ define([
 
         image.src = url;
       };
+
+      if (errorCallback !== undefined) {
+        xhr.onerror = errorCallback;
+      }
 
       xhr.open('GET', url, true);
       xhr.responseType = 'blob';
