@@ -499,6 +499,7 @@ define([
       this._resetDrawing();
       this._updateAnalysis();
 
+      this.presenter.setDontAnalyze(true);
       this.setEditableEvents(e.overlay);
     },
 
