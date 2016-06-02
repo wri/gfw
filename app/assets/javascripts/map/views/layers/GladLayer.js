@@ -17,6 +17,7 @@ define([
     init: function(layer, options, map) {
       this.presenter = new Presenter(this);
       this._super(layer, options, map);
+      this.options.showLoadingSpinner = true;
       this._setupAnimation();
 
       this.currentDate = [
