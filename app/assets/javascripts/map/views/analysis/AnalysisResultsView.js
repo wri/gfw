@@ -130,9 +130,11 @@ define([
     },
 
     _toggleDownloads: function(e) {
-      e && e.preventDefault();
-      this.$downloadDropdown.toggleClass('hidden');
-      ga('send', 'event', 'Map', 'Download', 'Downloads-' + 'Layer: ' + this.params.layer.title);
+      if (e.target.tagName.toLowerCase() !== 'a') {
+        $(e.currentTarget).toggleClass('-active');
+        this.$downloadDropdown.toggleClass('hidden');
+        ga('send', 'event', 'Map', 'Download', 'Downloads-' + 'Layer: ' + this.params.layer.title);
+      };
     },
 
     _showCanopy: function(e){

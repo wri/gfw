@@ -150,19 +150,20 @@
             <span class="tip">Download data</span>
           </a>
         {{else}}
-          <div>
-            <div class="dropdown-button">
+          <div class="dropdown-button">
+            <div>
               <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
+              <svg class="icon -inactive"><use xlink:href="#shape-close"></use></svg>
             </div>
             <span class="tip">Download and export data</span>
             <ul class="download-dropdown hidden">
               <li><span>By downloading data you agree to the <a href="/terms" target="_blank">GFW Terms of Service</a></span></li>
-              <li><a class="download-mobile-link source-confirm" data-type="forest-change" href="{{download.svg}}" target="_blank">SVG</a></li>
-              <li><a class="download-mobile-link source-confirm" data-type="forest-change" href="{{download.geojson}}" target="_blank">GeoJSON</a></li>
-              <li><a class="download-mobile-link source-confirm" data-type="forest-change" href="{{download.shp}}" target="_blank">SHP</a></li>
-              <li><a class="download-mobile-link source-confirm" data-type="forest-change" href="{{download.kml}}" target="_blank">KML</a></li>
-              <li><a class="download-mobile-link source-confirm" data-type="forest-change" href="{{download.csv}}" target="_blank">CSV</a></li>
-              <li><a class="download-mobile-link source-confirm" data-type="forest-change" href="http://oneclick.cartodb.com/?file={{download.cdb}}&provider=gfw'" target="_blank">Open in Carto DB</a></li>
+              <li><a class="download-mobile-link" data-type="forest-change" href="{{download.svg}}" target="_blank">SVG</a></li>
+              <li><a class="download-mobile-link" data-type="forest-change" href="{{download.geojson}}" target="_blank">GeoJSON</a></li>
+              <li><a class="download-mobile-link" data-type="forest-change" href="{{download.shp}}" target="_blank">SHP</a></li>
+              <li><a class="download-mobile-link" data-type="forest-change" href="{{download.kml}}" target="_blank">KML</a></li>
+              <li><a class="download-mobile-link" data-type="forest-change" href="{{download.csv}}" target="_blank">CSV</a></li>
+              <li><a class="download-mobile-link" data-type="forest-change" href="http://oneclick.cartodb.com/?file={{download.cdb}}&provider=gfw'" target="_blank">Open in Carto DB</a></li>
             </ul>
           </div>
         {{/if}}

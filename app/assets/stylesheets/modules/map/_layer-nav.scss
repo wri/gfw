@@ -167,6 +167,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     &.country{
       background: $country-color;
       color: $white;
+      border-color: #aa3cd2;
       @media (max-width: $br-mobileMap - 1){
         background: $white;
         color: $country-color;
