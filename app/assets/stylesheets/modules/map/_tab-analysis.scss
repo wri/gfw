@@ -6,7 +6,8 @@
   color: $dark;
   font-size: 13px;
   max-height: 75%;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 0px 0 56px;
   z-index: 22;
   background: $white;
@@ -89,8 +90,8 @@
 
   .is-analysis &{
     max-height: 60.1vh;
-    overflow: auto;  
-
+    overflow-y: auto;
+    overflow-x: hidden;
   }
   
   nav{
@@ -520,43 +521,57 @@
           width: 18px;
           height: 18px;
           margin: 0 auto;
+
+          &.-inactive {
+            display: none;
+          }
         }
 
         .dropdown-button {
+          &.-active {
+            svg {
+              display: none;
+              &.-inactive {
+                display: block;
+              }              
+            }
+          }
         }
 
         .download-dropdown {
           @include display-flex();
           @include flex-direction(column);
-          @include justify-content(space-between);
+          @include justify-content(flex-end);
           text-align: left;
           width: 100%;
-          height: 100%;
-          bottom: 80px;
-          left: 50%;
-          @include transform(translate(-50%,0));
+          // overflow: auto;
+          bottom: 75px;
+          left: 0;
+          @include transform(translate(0%,0));
+          @include transition(all 0.25s $easeInOutSine);
           position: absolute;
           z-index: 2000;
           font-size: 13px;
           border: 0;
           background-color: $white;
           border-radius: 3px;
-          box-shadow: $shadow1;
           line-height: 1.5;
 
           &.hidden {
-            display: none;
+            visibility: hidden;
+            opacity: 0;
+            @include transform(translate(0,20%));
           }
 
-          &:after {
+          &:before {
             content: "";
             display: block;
             position: absolute;
-            width: 50%;
-            height: 8px;
-            background: $white;
+            width: 100%;
+            height: 100%;
+            background: rgba(#000, 0.25);
             z-index: 2;
-            bottom: -2px;
+            bottom: 100%;
             left: 0%;
           }
 
@@ -564,6 +579,16 @@
             padding: 5px 10px;
             border-bottom: 1px solid #f2f2f2;
             
+            &:first-child {
+              border-bottom: none;
+              font-size: 10px;
+              text-align: right;
+              border-bottom: none;              
+              &:hover {
+                background-color: $white;
+              }              
+            }
+
             &:last-child {
               border-bottom: none;
             }
