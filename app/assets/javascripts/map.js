@@ -79,9 +79,10 @@ require([
     _initViews: function() {
 
       var map = new MapView();
-      new MapControlsView(this.map, this.countries);
-
       this.map = map.map;
+
+      new MapControlsView(this.map);
+
       this.countries = new CountryCollection();
 
       new TabsView(this.map, this.countries);
