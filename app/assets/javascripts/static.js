@@ -20,13 +20,12 @@ require([
   'static/HowToToggleView',
   'views/HeaderView',
   'views/FooterView',
-  'views/TermsView',
   'views/SidebarNavView',
   'views/InterestingView',
   'views/SourceMobileFriendlyView',
   '_string'
 ], function($, _, Class, Backbone, mps, RouterStatic, CarrouselView, StoriesKeepView, VideoView, SearchView, FeedbackView, ApplicationsNavView, ApplicationsGridView, ApplicationsModalView,
-            GalleryView, HowToToggleView, HeaderView, FooterView, TermsView, SidebarNavView, InterestingView, SourceMobileFriendlyView) {
+            GalleryView, HowToToggleView, HeaderView, FooterView, SidebarNavView, InterestingView, SourceMobileFriendlyView) {
   'use strict';
 
   var LandingPage = Class.extend({
@@ -68,7 +67,6 @@ require([
       //shared
       new HeaderView();
       new FooterView();
-      new TermsView();
       new SourceMobileFriendlyView();
 
       //static

@@ -47,11 +47,11 @@ Gfw::Application.routes.draw do
     get '/about/testers' => redirect("/about")
     get '/getinvolved/provide-feedback' => redirect("/getinvolved")
 
+    # terms
+    get '/accept_terms' => redirect("/terms")
+
 
   resources :stories
-
-  # terms
-  post '/accept' => 'home#accept_and_redirect'
 
   # static
   get '/data' => redirect("sources")
@@ -86,7 +86,6 @@ Gfw::Application.routes.draw do
 
   get '/notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'
   get '/terms' => 'static#terms'
-  get '/accept_terms' => 'static#accept_terms'
 
   # map
   get '/map' => 'map#index'

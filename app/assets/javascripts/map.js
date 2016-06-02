@@ -13,8 +13,11 @@ require([
   'handlebars',
   'map/router',
   'views/SourceModalView',
+  'views/ConfirmModalView',
+  // we should merge these views with the ModalClass
   'views/SourceBottomView',
   'views/SourceMobileFriendlyView',
+
   'map/collections/CountryCollection',  
   'map/presenters/ExperimentsPresenter',
   'map/services/AnalysisService',
@@ -36,7 +39,7 @@ require([
   'views/NotificationsView',
   'views/DownloadView',
   '_string'
-], function($, _, Class, Backbone, chosen, utils, enquire, mps, Handlebars, Router, SourceModalView, SourceBottomView, SourceMobileFriendlyView, CountryCollection, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
+], function($, _, Class, Backbone, chosen, utils, enquire, mps, Handlebars, Router, SourceModalView, ConfirmModalView, SourceBottomView, SourceMobileFriendlyView, CountryCollection, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
     MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, GuideView, GuideButtonView, UserFormModalView, HeaderView, FooterView, NotificationsView, DownloadView) {
 
   'use strict';
@@ -91,6 +94,7 @@ require([
       new FooterView(this.map, this.countries);
       new HeaderView(this.map, this.countries);
       new SourceModalView(this.map, this.countries);
+      new ConfirmModalView(this.map, this.countries);
       new SourceBottomView(this.map, this.countries);
       new SourceMobileFriendlyView(this.map, this.countries);
       new NotificationsView(this.map, this.countries);
