@@ -42,10 +42,11 @@
     }
   }
 
-  .analysis-tab-content.country-tab{
-    .select-box-mobile{
+  .analysis-tab-content.country-tab {
+    .select-box-mobile {
       margin: 10px 0 0;
       position: relative;
+
       &:after{
         content: "";
         display: block;
@@ -58,11 +59,13 @@
         background: image-url('svg-icons/arrow-down.svg') center no-repeat;
         background-size: contain;
       }
-      &:first-child{
+
+      &:first-child {
         margin: 0;
       }
     }
-    select{
+
+    select {
       -webkit-appearance: none;
       width: 100%;
       height: 36px;
@@ -75,32 +78,32 @@
       background: $white;
       font-family: inherit;
       text-transform: uppercase;
-      option{
+      
+      option {
         text-transform: none;
       }
     }
   }
 }
 
-.tab-analysis, .tab-subscription{
+.tab-analysis {
 
-  .is-subscribing &{
-    min-height: 250px;
-  }
-
-  .is-analysis &{
+  .is-analysis & {
     max-height: 60.1vh;
     overflow-y: auto;
     overflow-x: hidden;
   }
   
-  nav{
+  nav {
     display: block;
-    ul{
+    
+    ul {
       @include display-flex();
-      li{
+      
+      li {
+        position: relative;
         width: 100%;
-        padding: 8px 4px;
+        padding: 14px 4px;
         text-transform: uppercase;
         text-align: center;
         font-size: 12px;
@@ -109,37 +112,42 @@
         @media (min-width: $br-mobileMap){
           width: 33.333333%;
         }
-        &:hover{
-          svg{
-            fill: $cGreen;
+
+        &:after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: 0%;
+          height: 4px;
+          background: $cGreen;
+          @include transform(translate(-50%,0%));
+          @include transition(all 0.125s $easeInOutSine);
+        }
+
+        &:hover {
+          &:after {
+            background: $dark;
+            width: 50%;
           }
         }
-        &.active{
-          background: $light;
-          // border-bottom: 2px solid $dark;
-          svg{
-            fill: $cGreen;
+
+        &.active {
+          &:after {
+            background: $cGreen;
+            width: 50%;
           }
         }
-        &.disabled{
+
+        &.disabled {
           opacity: 0.5;
           // pointer-events: none;
           cursor: default;
-          &:hover{
-            svg{
-              fill: #7F7F7F;
-            }
-          }
-        }
-        svg{
-          display: block;
-          width: 25px;
-          height: 25px;
-          margin: 0 auto 7px;
-          fill: #7F7F7F;
-          @media (min-width: 1500px){
-            width: 30px;
-            height: 30px;
+          
+          &:hover {
+            &:after {
+              width: 0%;
+            }            
           }
         }
       }
@@ -356,12 +364,12 @@
     position: relative;
     bottom: auto;
     left: auto;
-    padding: 15px 15px 5px;
+    padding: 15px 15px 0px;
     @include transform(translate(0,0%));
   }
 
   @media (min-width: 1500px){
-    padding: 20px 20px 10px;
+    padding: 20px 20px 0px;
   }
 
   .close{
@@ -433,187 +441,150 @@
     }
   }
 
-
-  .ifl-switch{
-    position: relative;
-    width: 80%;
-    margin: 10px auto 0;
-    cursor: pointer;
-    @include display-flex();
-    @include align-items(center);
-    display: none !important;
-    .label{
-      display: inline-block;
-      width: 50%;
-      font-size: 10px;
-      text-transform: uppercase;
-      padding: 2px 0 0 20px;
-      color: #AAA;
-      &:first-child{
-        padding: 2px 20px 0 0;
-        text-align: right;
-      }
-      &.checked{
-        color: $dark;
-      }
-    }
-    .onoffswitch{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      float: none;
-      margin: 0;
-      background: $dark;
-      @include transform(translate(-50%,-50%));
-      &.checked{
-        background: rgb(22, 133, 0);
-      }
-    }
+  .analysis-subscribe {
+    width: 100%;
   }
-
 
   // FOOTER ANALYSIS
   .analysis-footer {
-    margin: 10px 0 0;
+    margin: 15px 0 0;
 
-    @media (min-width: 1500px){
-      margin: 15px 0 0;
-    }
 
+    // GRID
     > ul {
-      margin-top: 10px;
-      @include row();
+      margin: 20px -20px 0;
+      @include display-flex();
+      @include justify-content(space-between);
 
       > li {
         width: 100%;
-        padding: 10px 0;
-        cursor: pointer;
+      }
+    }
 
-        .tip {
-          font-size: 10px;
-          padding: 4px 4px 0;
-          text-align: center;
-          text-transform: uppercase;
-          display: block;
-          line-height: 1;  
-          color: $dark;        
+
+
+    // FOOTER BTN
+    .analysis-footer-btn {
+      @include display-flex();
+      @include align-items(center);
+      @include justify-content(center);
+      width: 100%;
+      padding: 10px 0;        
+      box-shadow: none;
+      border: none;
+      background: none;
+      font-family: inherit;
+      outline: none;
+      color: $dark;
+      background: #eeeeee;
+      cursor: pointer;
+      
+      // ICON
+      svg {
+        fill: $dark;
+        width: 18px;
+        height: 18px;
+        margin: 0 5px 0 0;
+
+        &.-inactive {
+          display: none;
         }
+      }
 
-        &.disabled {
-          opacity: 0.5;
-          pointer-events: none;
-          cursor: default;
-        }
+      > span {
+        font-size: 10px;
+        text-transform: uppercase;
+      }
 
-        &.pulse {
-          svg {
-            @include animation(pulse_animation,0.75s,4,$easeInOutSine);
-          }
+      // STATES
+      &:hover {
+        background: lighten(#eeeeee, 5%);
+      }
 
-          .tooltipmap {
-            opacity: 1;
-            visibility: visible;
-          }
-        }
-
-        &:first-child {
-          &:after{
-            display: none;
-          }
-        }
-
+      &.-active {
+        background: $white;
         svg {
-          fill: $dark;
-          width: 18px;
-          height: 18px;
-          margin: 0 auto;
-
+          display: none;
           &.-inactive {
-            display: none;
-          }
-        }
-
-        .dropdown-button {
-          &.-active {
-            svg {
-              display: none;
-              &.-inactive {
-                display: block;
-              }              
-            }
-          }
-        }
-
-        .download-dropdown {
-          @include display-flex();
-          @include flex-direction(column);
-          @include justify-content(flex-end);
-          text-align: left;
-          width: 100%;
-          // overflow: auto;
-          bottom: 75px;
-          left: 0;
-          @include transform(translate(0%,0));
-          @include transition(all 0.25s $easeInOutSine);
-          position: absolute;
-          z-index: 2000;
-          font-size: 13px;
-          border: 0;
-          background-color: $white;
-          border-radius: 3px;
-          line-height: 1.5;
-
-          &.hidden {
-            visibility: hidden;
-            opacity: 0;
-            @include transform(translate(0,20%));
-          }
-
-          &:before {
-            content: "";
             display: block;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(#000, 0.25);
-            z-index: 2;
-            bottom: 100%;
-            left: 0%;
-          }
-
-          > li {
-            padding: 4px 10px;
-            border-bottom: 1px solid #f2f2f2;
-            
-            &:first-child {
-              border-bottom: none;
-              font-size: 10px;
-              text-align: right;
-              border-bottom: none;              
-              &:hover {
-                background-color: $white;
-              }              
-            }
-
-            &:last-child {
-              border-bottom: none;
-            }
-
-            &:hover {
-              background-color: darken($white,2.5%);
-            }
-
-            a {
-              display: block;
-              color: $cGreen;
-            }
-          }
+          }              
         }
       }
     }
 
-    .analysis-subscribe {
+
+
+    // FOOTER DROPDOWN (we use this for the download "modal")
+    .analysis-footer-dropdown {
+      @include display-flex();
+      @include flex-direction(column);
+      @include justify-content(flex-end);      
       width: 100%;
+      position: absolute;
+      bottom: 38px;
+      left: 0;
+      z-index: 2000;
+
+      @include transition(all 0.25s $easeInOutSine);
+      @include transform(translate(0,15px));
+
+      font-size: 13px;
+      text-align: left;
+      background-color: $white;
+      line-height: 1.5;
+      visibility: hidden;
+      opacity: 0;
+
+      // Toggle -active class
+      &.-active {
+        @include transform(translate(0,0));
+        visibility: visible;
+        opacity: 1;
+      }
+
+      // Overlay
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba(#000, 0.25);
+        z-index: 2;
+        bottom: 100%;
+        left: 0%;
+      }
+
+      // Items
+      > li {
+        padding: 4px 15px;
+        border-bottom: 1px solid $border;
+        
+        &:first-child {
+          border-bottom: none;
+          font-size: 10px;
+          text-align: left;
+          border-bottom: none;  
+          padding: 10px 15px;
+
+          &:hover {
+            background-color: $white;
+          }              
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &:hover {
+          background-color: darken($white,2.5%);
+        }
+
+        > a {
+          display: block;
+          color: $cGreen;
+        }
+      }
     }
   }
 }
