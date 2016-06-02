@@ -515,53 +515,59 @@
     }
 
 		@include clearfix();
-		>ul {
+		
+    > ul {
       clear: none;
       float: right;
       padding-right: 5px;
-			>li {
+      font-size: 14px;      
+			
+      > li {
         position: relative;
         border-top: 1px solid darken($border,10%);
         float: left;
         border-top: none;
         top: 1px;
+        margin: 0 0 0 10px;
+        
+        &:first-child { 
+          margin: 0;
+        }
+
         &:hover {
           z-index: 5;
-          >a{
+
+          > a {
             &:after{
               opacity: 1;
             }
           }
+
           ul {
             background: rgba(#fff,0.95);
             visibility: visible;
             opacity: 1;
-            li{
-              a{
+            
+            li {
+              a {
                 @include transform(translate(0%,0px));
                 visibility: visible;
                 opacity: 1;
-             }
+              }
             }
           }
-        }
-        margin: 0 0 0 10px;
-        &:first-child { margin: 0;}
+        }     
 
-				>a {
+				> a {
 					display: block;
 					text-transform: uppercase;
 					color: $dark;
 					position: relative;
 					z-index: 2;
           text-align: center;
-          padding: 20px 25px;
+          padding: 21px 40px;
 
-          @media (min-width: 1050px){
-            // padding: 20px 40px;
-          }
-
-          &:after{
+          &:after {
             content: "";
             background-color: $cGreen;
             position: absolute;
@@ -586,13 +592,14 @@
           position: absolute;
           top: 0;
           left: 50%;
-          min-width: 150px;
+          min-width: 175px;
           padding: 56px 0 0;
           box-shadow: 0 1px 3px rgba(#000,0.25);
           visibility: hidden;
           opacity: 0;
           @include transform(translate(-50%,0px));
           @include transition(all 0.15s $easeInOutCubic);
+          
           &:after{
             content: "";
             display: block;
@@ -603,25 +610,18 @@
             height: 5px;
             background: $cGreen;
           }
-					li {
+					
+          li {
             border-top: 1px solid rgba(0,0,0,0.07);
-            @for $i from 1 through 10 {
-              &:nth-child(#{$i}) a{
-                // @include transition(all 0.2s $easeInOutSine $i*0.04s);
-              }
-            }
 
 						a {
 							color: $dark;
-							padding: 10px;
-							font-size: 15px;
-							text-align: center;
+							padding: 14px;
+							font-size: 14px;
 							display: block;
-              // opacity: 0;
-              // visibility: hidden;
-              // @include transform(translate(-5%,0px));
               position: relative;
-							&:hover {
+							
+              &:hover {
 								background: darken(#FFF,2%);
 							}
 						}
