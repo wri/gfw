@@ -382,6 +382,23 @@
         {{#if content.data.slope_semester}}
           <h4>Glad alerts slope trend for last six months:</h4>
           <p>{{content.data.slope}}</p>
+          <p id="slopeTotal">{{content.data.slope_semester}}</p>
+        {{/if}}
+        {{#if content.data.validity}}
+          <h4>Validity:</h4>
+          <p>{{content.data.validity}}</p>
+        {{/if}}
+        {{#if content.data.avg_score}}
+          <h4>Average score:</h4>
+          <p>{{content.data.avg_score}}</p>
+        {{/if}}
+        {{#if content.data.total_alerts}}
+          <h4>Total alerts:</h4>
+          <p>{{content.data.total_alerts}}</p>
+        {{/if}}
+        {{#if content.data.tipo}}
+          <h4>Tipo:</h4>
+          <p>{{content.data.tipo}}</p>
         {{/if}}
       </div>
     </div>
