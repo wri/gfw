@@ -274,7 +274,7 @@ define([
     _getAnalysisResource: function(results, layer) {
       var p = {};
 
-      p[layer.slug] = true;
+      p.slug = layer.slug;
       p.layer = layer;
       p.download = results.download_urls;
       if (p.download) {
