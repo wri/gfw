@@ -193,18 +193,18 @@
   <ul>
     {{#if downloadVisible}}
     <li>
-      {{#if loss}}
+      {{#ifCond slug "===" 'loss'}}
         <a class="analysis-footer-btn download-mobile-link" data-type="forest-change" href="http://earthenginepartners.appspot.com/science-2013-global-forest" target="_blank">
           <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
           <span>Download data</span>
         </a>
-      {{else}}
-        {{#if forestgain}}
+        {{else}}
+        {{#ifCond slug "===" 'forestgain'}}
           <a class="analysis-footer-btn download-mobile-link" data-type="forest-change" href="http://earthenginepartners.appspot.com/science-2013-global-forest" target="_blank">
             <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
             <span>Download data</span>
           </a>
-        {{else}}
+          {{else}}
           <button class="analysis-footer-btn js-dropdown-btn">
             <div>
               <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
@@ -220,9 +220,9 @@
               <li><a class="download-mobile-link" data-type="forest-change" href="{{download.csv}}" target="_blank">CSV</a></li>
               <li><a class="download-mobile-link" data-type="forest-change" href="http://oneclick.cartodb.com/?file={{download.cdb}}&provider=gfw'" target="_blank">Open in Carto DB</a></li>
             </ul>          
-          </button>
-        {{/if}}
-      {{/if}}
+          </button>          
+        {{/ifCond}}
+      {{/ifCond}}
     </li>
     {{/if}}
 
