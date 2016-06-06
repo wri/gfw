@@ -54,8 +54,8 @@ define([
         this.view.toogleTimeline(false);
       }
     }, {
-      'Analysis/toggle': function(boolean) {
-        this.view.toogleTimeline(boolean);
+      'Analysis/toggle': function() {
+        this.view.toogleTimeline(false);
       }
     }, {
       'LayerNav/change': function() {
