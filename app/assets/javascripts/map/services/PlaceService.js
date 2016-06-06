@@ -66,7 +66,7 @@ define([
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?tab,fit_to_geom,geojson,geostore,wdpaid,begin,end,threshold,dont_analyze,hresolution,tour,subscribe,use,useid}',
+    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?tab,fit_to_geom,geojson,geostore,wdpaid,begin,end,threshold,dont_analyze,hresolution,tour,subscribe,use,useid,layer_options}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -187,6 +187,11 @@ define([
       p.referral = p.referral;
       p.hresolution = p.hresolution;
       p.tour = p.tour;
+
+      if (p.layer_options) {
+        p.layer_options = p.layer_options.split(",");
+      }
+
       return p;
     },
 
@@ -214,6 +219,11 @@ define([
       p.threshold = p.threshold ? String(p.threshold) : null;
       p.hresolution = p.hresolution;
       p.tour = p.tour;
+
+      if (p.layer_options) {
+        p.layer_options = p.layer_options.join(",");
+      }
+
       return p;
     },
 

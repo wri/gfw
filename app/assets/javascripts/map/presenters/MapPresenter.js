@@ -127,6 +127,10 @@ define([
         this.status.set('threshold', params.threshold);
       }
 
+      if (params.layer_options) {
+        this.status.set('layerOptions', params.layer_options);
+      }
+
       if (params.fit_to_geom) {
         this.status.set('fit_to_geom', params.fit_to_geom === 'true');
       }
@@ -146,7 +150,7 @@ define([
      * and the current layer options status.
      */
     _setLayers: function(layerSpec, params) {
-      var options = _.pick(this.status.toJSON(), 'threshold');
+      var options = _.pick(this.status.toJSON(), 'threshold', 'layerOptions');
       if (params && params.begin && params.end) {
         options.currentDate = [params.begin, params.end];
       }
