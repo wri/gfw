@@ -219,6 +219,7 @@ define([
       }
     }, {
       'Analysis/upload': function(geojson) {
+        ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');
         this._saveAndAnalyzeGeojson(geojson, {draw: true});
       }
     }, {

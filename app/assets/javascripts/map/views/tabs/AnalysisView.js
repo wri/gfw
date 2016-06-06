@@ -4,14 +4,14 @@
  * @return AnalysisView instance (extends Backbone.View).
  */
 define([
-  'underscore', 'handlebars', 'amplify', 'chosen', 'turf',
+  'underscore', 'handlebars', 'amplify', 'chosen', 'turf', 'mps',
   'map/presenters/tabs/AnalysisPresenter',
   'map/services/ShapefileService',
   'helpers/geojsonUtilsHelper',
   'map/views/tabs/SpinnerView',
   'text!map/templates/tabs/analysis.handlebars',
   'text!map/templates/tabs/analysis-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, turf, Presenter, ShapefileService, geojsonUtilsHelper, SpinnerView, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, turf, mps, Presenter, ShapefileService, geojsonUtilsHelper, SpinnerView, tpl, tplMobile) {
 
   'use strict';
 
