@@ -7,6 +7,7 @@ define([
   'underscore',
   'handlebars',
   'd3',
+  'mps',
   'map/presenters/TabsPresenter',
   'map/views/tabs/AnalysisView',
   'map/views/tabs/CountriesView',
@@ -16,7 +17,7 @@ define([
   'views/ShareView',
   'text!map/templates/tabs.handlebars',
   'text!map/templates/tabs-mobile.handlebars'
-], function(_, Handlebars, d3, Presenter, AnalysisView, CountriesView, BasemapsView, HighresolutionView, SubscribeView, ShareView, tpl, tplMobile) {
+], function(_, Handlebars, d3, mps, Presenter, AnalysisView, CountriesView, BasemapsView, HighresolutionView, SubscribeView, ShareView, tpl, tplMobile) {
 
   'use strict';
 

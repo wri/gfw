@@ -258,14 +258,44 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         }
 
         .m-btncontainer {
-          margin-top: 5px;
+          margin-top: 10px;
           flex-wrap: wrap;
           
-          > * {
-            margin-right: 5px;
-            margin-bottom: 5px;
-            &:last-child {
-              margin-right: 0;
+          .btn-icon {
+            display: block;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            background: transparent;
+            border-radius: 50%;
+
+
+            &:hover {
+              background: $country-color;
+              svg {
+                fill: #000;
+              }              
+            }
+
+            &.-disabled {
+              opacity: 0.5;
+              pointer-events: none;
+              &:hover {              
+                background: transparent;
+                svg {
+                  fill: $dark;
+                }              
+              }
+            }
+
+            svg {
+              position: absolute;
+              width: 20px;
+              height: 20px;
+              top: 50%;
+              left: 50%;
+              margin: -10px 0 0 -10px; 
+              fill: $dark;
             }
           }
         }

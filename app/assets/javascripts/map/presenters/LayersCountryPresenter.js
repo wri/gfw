@@ -76,10 +76,20 @@ define([
         this.view.setLayers(layers);
       }
     },{
-      'Analysis/enabled': function(enabled) {
+      'Analysis/dont_analyze': function(enabled) {
         this.status.set('dont_analyze', enabled);
       }
+    },{
+      'Analysis/enabled': function(boolean) {
+        this.view.setAnalysisButtonStatus(boolean);
+      }
+    },{
+      'Subscribe/enabled': function(boolean) {
+        this.view.setSubscribeButtonStatus(boolean);
+      }
     }],
+
+
 
     notificate: function(id){
       mps.publish('Notification/open', [id]);
@@ -94,7 +104,7 @@ define([
       this.status.set('iso', iso);
       this.status.set('dont_analyze', true);        
       mps.publish('Country/update', [iso]);
-      mps.publish('Analysis/enabled', [this.status.get('dont_analyze')]);
+      mps.publish('Analysis/dont_analyze', [this.status.get('dont_analyze')]);
       mps.publish('Place/update', [{go: false}]);
 
       // Fit country bounds
@@ -125,7 +135,7 @@ define([
     },
 
     /**
-     * Country bounds
+     * Country atlas
      *
      * @param  {object} iso: {country:'xxx', region: null}
      */
@@ -147,6 +157,28 @@ define([
 
         },this));
       }
+    },
+
+    /**
+     * Analyze iso
+     *
+     * @param  {object} iso: {country:'xxx', region: null}
+     */
+    analyzeIso: function() {
+      var iso = this.status.get('iso');
+      this.status.set('dont_analyze', null);
+      mps.publish('Analysis/iso', [iso]);
+      mps.publish('Tab/open', ['#analysis-tab-button']);      
+    },
+
+    /**
+     * Subscribe iso
+     *
+     * @param  {object} iso: {country:'xxx', region: null}
+     */
+    subscribeIso: function() {
+      var iso = this.status.get('iso');
+      mps.publish('Subscribe/iso', [iso]);
     },
 
     /**

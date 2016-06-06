@@ -14,10 +14,28 @@
     {{!-- TITLE --}}
     <div class="country-title">{{this.countryName}} 
       <span id="layers-country-reset"><svg><use xlink:href="#shape-close"></use></svg></span>
-      <ul class="m-btncontainer">
-        <li><a class="btn gray uppercase little download-mobile-link" target="_blank" href="http://data.globalforestwatch.org/datasets?keyword={{this.country}}">Data</a></li>
-        <li><a class="btn gray uppercase little" href="/country/{{this.country}}" target="_blank">Profile</a></li>
-        <li id="layers-country-atlas"></li>
+      <ul class="m-btncontainer is-space-between">
+        <li>
+          <a class="btn-icon download-mobile-link" target="_blank" href="http://data.globalforestwatch.org/datasets?keyword={{this.country}}" title="Download country data">
+            <svg><use xlink:href="#icon-country-download"></use></svg>
+          </a>
+        </li>
+        <li>
+          <a class="btn-icon" href="/country/{{this.country}}" target="_blank" title="Visit country profile">
+            <svg><use xlink:href="#icon-country-country"></use></svg>
+          </a>
+        </li>
+        <li>
+          <a id="layers-country-analyze" class="btn-icon" href="#" target="_blank" title="Analyze">
+            <svg><use xlink:href="#icon-country-analysis"></use></svg>
+          </a>
+        </li>
+        <li>
+          <a id="layers-country-subscribe" class="btn-icon" href="#" target="_blank" title="Subscribe">
+            <svg><use xlink:href="#icon-country-alerts"></use></svg>
+          </a>
+        </li>
+        {{!-- <li id="layers-country-atlas"></li> --}}
       </ul>      
     </div>
 

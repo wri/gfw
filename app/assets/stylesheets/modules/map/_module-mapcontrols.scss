@@ -9,6 +9,7 @@ $w-control: 38px;
   &.timeline-open{
     @include transform(translate(0,-45px));
   }
+  
   @media (min-width: $br-mobile){
     bottom: 60px;
   }

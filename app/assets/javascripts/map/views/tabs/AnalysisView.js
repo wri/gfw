@@ -423,7 +423,7 @@ define([
           country: this.iso,
           region: this.area
         };
-        this.presenter.subscribeIso(iso);
+        this.presenter._subscribeIso(iso);
       }
     },
 
@@ -742,11 +742,7 @@ define([
 
 
     toggleDoneSubscribeBtn: function() {
-      if (!this.presenter.layerAvailableForSubscription()) {
-        this.$doneSubscribe.addClass('disabled');
-      } else {
-        this.$doneSubscribe.removeClass('disabled');
-      }
+      this.$doneSubscribe.toggleClass('disabled', !this.presenter.layerAvailableForSubscription());
     },
 
     // OTHER

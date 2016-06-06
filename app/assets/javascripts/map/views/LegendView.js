@@ -236,8 +236,6 @@ define([
       categoriesGlobal = this.statusCategories(_.groupBy(layersGlobal, function(layer){ return layer.category_slug }));
       categoriesIso = this.statusCategories(_.groupBy(layersIso, function(layer){ return layer.category_slug }));
 
-      console.log(categoriesIso);
-
       // Render
       this.render(this.template({
         categories: (_.isEmpty(categoriesGlobal)) ? false : categoriesGlobal,

@@ -113,8 +113,8 @@ define([
         this.view._deleteAnalysisView();
       }
     },{
-      'Analysis/toggle': function() {
-        this.view.toogleAnalysis($('#analysis-tab').hasClass('is-analysis'));
+      'Analysis/toggle': function(boolean) {
+        this.view.toogleAnalysis(boolean);
       }
     },{
       'DownloadView/create': function(downloadView) {
@@ -182,7 +182,6 @@ define([
         // Subscribe button just should be activated
         // when a analysis is succesfully rendered.
         this.view.$tab.addClass('is-analysis');
-        mps.publish('Analysis/toggle');
         this._setSubscribeButton();
       }
     },
@@ -240,7 +239,7 @@ define([
       this.status.set('iso', null);
       this.status.set('resource', null);
       this.view.model.set('boxHidden', true);
-      mps.publish('Analysis/enabled', [true]);
+      mps.publish('Analysis/dont_analyze', [true]);
       mps.publish('AnalysisService/cancel', []);
       mps.publish('AnalysisResults/delete-analysis', []);
       mps.publish('Place/update', [{go: false}]);
