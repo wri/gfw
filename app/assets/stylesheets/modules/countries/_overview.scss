@@ -850,6 +850,19 @@
       fill: $dark;
     }
 
+    .tos {
+      font-size: 10px;
+      text-transform: none;
+      max-width: 190px;
+      line-height: 1.1;  
+      a {
+        color: $cGreen;
+        &:hover {
+          color: lighten($cGreen, 5%)
+        }
+      }    
+    }
+
     @include box-sizing(border-box);
 
     .country-icons-share {
