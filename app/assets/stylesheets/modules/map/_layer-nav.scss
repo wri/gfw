@@ -233,7 +233,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           display: block;
         }
 
-        span {
+        > span {
           position: absolute;
           @include display-flex;
           @include align-items(center);
@@ -276,6 +276,10 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
               svg {
                 fill: #000;
               }              
+              .tooltipmap {
+                opacity: 1;
+                visibility: visible;                
+              }
             }
 
             &.-disabled {
