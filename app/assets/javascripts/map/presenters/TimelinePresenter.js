@@ -72,7 +72,7 @@ define([
       }
     }, {
       'Analysis/toggle': function(boolean) {
-        this.view.toggleMobile(boolean);
+        this.view.toggleMobile(false);
       }
     },{
       'Overlay/toggle' : function(bool){

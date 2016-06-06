@@ -176,6 +176,10 @@ define([
         this.view.toggleAnalysis(boolean);
       }
     },{
+      'Analysis/toggle': function(boolean) {
+        this.view.toggleAnalysis(this.view.$el.hasClass('is-analysis'));
+      }
+    },{
       'Analysis/upload': function(geojson) {
         this._saveAndAnalyzeGeojson(geojson, {draw: true});
       }
