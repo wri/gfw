@@ -1,4 +1,4 @@
-class YourMailer < ActionMailer::Base
+class FeedbackMailer < ActionMailer::Base
   def feedback(feedback,signup,email,hostname)
     @feedback = feedback.present? ? feedback : nil
     @email = email.present? ? email : nil
@@ -10,7 +10,7 @@ class YourMailer < ActionMailer::Base
     mail :subject => "GFW Feedback",
          :to      => emails,
          :from    => 'feedback@globalforestwatch.org',
-         :template_path => 'your_mailer',
+         :template_path => 'feedback_mailer',
          :template_name => 'feedback'
   end
 

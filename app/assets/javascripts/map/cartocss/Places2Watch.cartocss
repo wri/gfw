@@ -1,22 +1,17 @@
-#world_ifl2_50_concept_copy{
-  polygon-fill: #FECC5C;
+#borneo_peru_roc_final_alerts_copy{
+  polygon-fill: #FFEDA0;
   polygon-opacity: 0.8;
   line-color: #FFF;
-  line-width: 0;
-  line-opacity: 1;
+  line-width: 0.5;
+  line-opacity: 0;
+  polygon-smooth: 0.5;
 }
-#world_ifl2_50_concept_copy [ slope_semester <= 0.00014339042479651] {
-   polygon-fill: #BD0026;
-}
-#world_ifl2_50_concept_copy [ slope_semester <= 0.0000453926725729051] {
+#borneo_peru_roc_final_alerts_copy [ avg_score <= 7489.402578] {
    polygon-fill: #F03B20;
 }
-#world_ifl2_50_concept_copy [ slope_semester <= 0.0000154791151568245] {
-   polygon-fill: #FD8D3C;
+#borneo_peru_roc_final_alerts_copy [ avg_score <= 90.730752] {
+   polygon-fill: #FEB24C;
 }
-#world_ifl2_50_concept_copy [ slope_semester <= 0.00000133000367580598] {
-   polygon-fill: #FECC5C;
-}
-#world_ifl2_50_concept_copy [ slope_semester <= -0.0000700322818771827] {
-   polygon-fill: #FFFFB2;
+#borneo_peru_roc_final_alerts_copy [ avg_score <= 42.87897] {
+   polygon-fill: #FFEDA0;
 }

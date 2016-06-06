@@ -240,6 +240,7 @@ define([
       this.status.set('iso', null);
       this.status.set('resource', null);
       this.view.model.set('boxHidden', true);
+      mps.publish('Analysis/enabled', [true]);
       mps.publish('AnalysisService/cancel', []);
       mps.publish('AnalysisResults/delete-analysis', []);
       mps.publish('Place/update', [{go: false}]);
@@ -273,7 +274,7 @@ define([
     _getAnalysisResource: function(results, layer) {
       var p = {};
 
-      p[layer.slug] = true;
+      p.slug = layer.slug;
       p.layer = layer;
       p.download = results.download_urls;
       if (p.download) {

@@ -35,7 +35,7 @@ define([
     events:{
       'click #analysis-delete': '_deleteAnalysis',
       'click #analysis-subscribe': '_subscribe',
-      'click .dropdown-button' :'_toggleDownloads',
+      'click .js-dropdown-btn' :'_toggleDownloads',
       'click .canopy-button' : '_showCanopy',
       'click .advanced-analysis-button' : '_showAdvancedAnalysis',
       'click .close' : 'toogleAnalysis',
@@ -62,7 +62,6 @@ define([
     },
 
     _cacheSelector: function() {
-      this.$downloadDropdown = $('.download-dropdown');
       this.$subscribeButton = $('#analysis-subscribe');
       this.$switchIFLabels = $('.ifl-switch .label');
     },
@@ -130,9 +129,11 @@ define([
     },
 
     _toggleDownloads: function(e) {
-      e && e.preventDefault();
-      this.$downloadDropdown.toggleClass('hidden');
-      ga('send', 'event', 'Map', 'Download', 'Downloads-' + 'Layer: ' + this.params.layer.title);
+      if (e.target.tagName.toLowerCase() !== 'a') {
+        $(e.currentTarget).toggleClass('-active');
+        $(e.currentTarget).find('.js-dropdown').toggleClass('-active')
+        ga('send', 'event', 'Map', 'Download', 'Downloads-' + 'Layer: ' + this.params.layer.title);
+      };
     },
 
     _showCanopy: function(e){

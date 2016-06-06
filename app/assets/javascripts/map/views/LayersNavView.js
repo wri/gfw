@@ -50,10 +50,11 @@ define([
 
     render: function() {
       this.$el.html('').append(this.template());
+      this.cache();
+      this.fixLegibility();
       // Initialize Country dropdown layers
       new LayersCountryView(this.map,this.countries);
 
-      this.cache();
     },
 
     cache: function() {
