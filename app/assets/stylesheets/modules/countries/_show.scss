@@ -646,7 +646,7 @@
             @include display-flex();
             @include align-items(center);
 
-            a {
+            > a {
               color: #BEBCC2;
               display: block;
               height: 87px;
@@ -674,7 +674,6 @@
                 }
               }
 
-
               .no_def {
                 svg{
                   fill: #97bd3d;
@@ -695,13 +694,13 @@
               background: #464646;
             }
             &.disabled{
-              a{
+              > a{
                 cursor: default;
                 opacity: 0.25;
               }
               &:hover {
                 background: #333;
-                a{
+                > a{
                   .sidenav-icon {
                     svg{
                       fill: #bebcc2;
@@ -710,6 +709,16 @@
                 }
               }
             }
+
+            p {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              font-size: 10px;
+              text-transform: none;
+              padding: 10px 25px;
+              color: #BEBCC2;
+            }           
           }
         }
 
