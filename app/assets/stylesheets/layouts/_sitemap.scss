@@ -47,6 +47,11 @@
     line-height: 1.4;
     letter-spacing: .1px;
     text-transform: uppercase;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -79,12 +84,17 @@
 
   .page-section > .title-section {
     display: inline-block;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 
     > a {
       font-size: 19px;
       line-height: 1.7px;
       font-weight: 300;
+      color: $cGreen;
+    }
+
+    &:hover {
+      text-decoration: underline;
     }
 
     &:last-child {
@@ -116,5 +126,10 @@
     font-size: 14px;
     line-height: 1.4;
     letter-spacing: .1px;
+    color: $dark;
+
+    &:hover {
+      color: $cGreen;
+    }
   }
 }
