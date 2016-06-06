@@ -130,6 +130,8 @@ Gfw::Application.routes.draw do
 
   get '/landing' => 'landing#index'
 
+  # sitemap
+  get '/sitemap' => 'sitemap#index'
 
   # robots
   get '/robots', to: redirect('/robots.txt'), format: false
