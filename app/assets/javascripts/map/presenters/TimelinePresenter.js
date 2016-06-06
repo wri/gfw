@@ -63,16 +63,16 @@ define([
         this.view.model.set('forceHidden', true);
       }
     }, {
-      'Timeline/toggle': function(toggle) {
-        this.view.toggleMobile(toggle);
+      'Timeline/toggle': function(boolean) {
+        this.view.toggleMobile(boolean);
       }
     }, {
       'Layers/toggle': function(toggle) {
         this.view.toggleMobile(false);
       }
     }, {
-      'Analysis/toggle': function(toggle) {
-        this.view.toggleMobile(false);
+      'Analysis/toggle': function(boolean) {
+        this.view.toggleMobile(boolean);
       }
     },{
       'Overlay/toggle' : function(bool){

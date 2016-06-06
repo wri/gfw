@@ -34,7 +34,9 @@ define([
 
     events: {
       'change #layers-country-select' : 'changeIso',
-      'click #layers-country-reset' : 'resetIso'
+      'click #layers-country-reset' : 'resetIso',
+      'click #layers-country-analyze' : 'analyzeIso',
+      'click #layers-country-subscribe' : 'subscribeIso',
     },
 
     initialize: function(map, countries) {
@@ -62,6 +64,9 @@ define([
       this.$select = this.$el.find('#layers-country-select');
       this.$selectChosenId = '#layers_country_select_chosen';
       this.$atlas = this.$el.find('#layers-country-atlas');
+
+      this.$btnAnalysis = this.$el.find('#layers-country-analyze');
+      this.$btnSubscribe = this.$el.find('#layers-country-subscribe');
     },
 
     listeners: function() {
@@ -140,6 +145,24 @@ define([
       _.each(this.model.get('countryLayers'),_.bind(function(layer){
         this.presenter._removeLayer(layer);
       }, this ))
+    },
+
+    analyzeIso: function(e) {
+      e && e.preventDefault();
+      this.presenter.analyzeIso();
+    },
+
+    subscribeIso: function(e) {
+      e && e.preventDefault();
+      this.presenter.subscribeIso();
+    },
+
+    setAnalysisButtonStatus: function(boolean) {
+      this.$btnAnalysis.toggleClass('-disabled', !boolean);
+    },
+
+    setSubscribeButtonStatus: function(boolean) {
+      this.$btnSubscribe.toggleClass('-disabled', !boolean);
     }
 
   });
