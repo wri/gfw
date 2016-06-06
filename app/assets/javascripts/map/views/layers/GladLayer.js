@@ -1,7 +1,7 @@
 define([
   'bluebird', 'uri',
   'abstract/layer/AnimatedCanvasLayerClass',
-  'map/presenters/TorqueLayerPresenter'
+  'map/presenters/GladLayerPresenter'
 ], function(
   Promise, UriTemplate,
   AnimatedCanvasLayerClass,
@@ -17,6 +17,7 @@ define([
     init: function(layer, options, map) {
       this.presenter = new Presenter(this);
       this._super(layer, options, map);
+      this.presenter.setConfirmedStatus(options.layerOptions);
       this.options.showLoadingSpinner = true;
       this._setupAnimation();
 
@@ -65,6 +66,11 @@ define([
       var recentRangeStartDay = recentRangeStart.dayOfYear() + ((recentRangeStartYear - 2015) * 365),
           recentRangeEndDay = recentRangeEnd.dayOfYear() + ((recentRangeEndYear - 2015) * 365);
 
+      var confidenceValue = -1;
+      if (this.presenter.status.get('hideUnconfirmed') === true) {
+        confidenceValue = 0;
+      }
+
       var pixelComponents = 4; // RGBA
       var pixelPos, i, j;
       for(i = 0; i < w; ++i) {
@@ -78,7 +84,7 @@ define([
           var confidence = this.decodeConfidence(imgdata[pixelPos],
             imgdata[pixelPos+1], imgdata[pixelPos+2]);
 
-          if (day >= startDay && day <= endDay && confidence === 1) {
+          if (day >= startDay && day <= endDay && confidence > confidenceValue) {
             if (day >= recentRangeStartDay && day <= recentRangeEndDay) {
               imgdata[pixelPos] = 219;
               imgdata[pixelPos + 1] = 168;
