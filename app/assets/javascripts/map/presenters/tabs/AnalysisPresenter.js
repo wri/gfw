@@ -182,6 +182,7 @@ define([
     },{
       'Analysis/upload': function(geojson) {
         this._saveAndAnalyzeGeojson(geojson, {draw: true});
+        ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');        
       }
     },
     // Timeline
