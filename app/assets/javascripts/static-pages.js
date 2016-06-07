@@ -34,7 +34,17 @@ require([
      */
     _initViews: function() {
       new SliderView({
-        el: '#stepsSliderView',
+        el: '#SFGSliderView',
+        options: {
+          defaultSlider: {
+            infinite: false,
+            navigation: false
+          }
+        }
+      });
+
+      new SliderView({
+        el: '#GrantesForestSliderView',
         options: {
           defaultSlider: {
             infinite: false,
