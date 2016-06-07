@@ -353,7 +353,7 @@
   bottom: 0;
   left: 0;
   z-index: 22;
-  padding: 20px 20px 56px;
+  padding: 20px 20px 50px;
   @include transform(translate(0,100%));
   @include transition(all 0.25s $easeInOutSine);
   &.active{
@@ -521,7 +521,7 @@
       @include justify-content(flex-end);      
       width: 100%;
       position: absolute;
-      bottom: 38px;
+      bottom: 88px;
       left: 0;
       z-index: 2000;
 
@@ -534,6 +534,10 @@
       line-height: 1.5;
       visibility: hidden;
       opacity: 0;
+
+      @media (min-width: $br-mobileMap){
+        bottom: 38px;
+      }
 
       // Toggle -active class
       &.-active {
@@ -548,7 +552,7 @@
         display: block;
         position: absolute;
         width: 100%;
-        height: 100%;
+        height: 400%;
         background: rgba(#000, 0.25);
         z-index: 2;
         bottom: 100%;
