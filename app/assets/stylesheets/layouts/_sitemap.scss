@@ -50,9 +50,12 @@
     letter-spacing: .1px;
     text-transform: uppercase;
 
-    &:hover {
-      text-decoration: underline;
+    > a {
+      &:hover {
+        text-decoration: underline;
+      }      
     }
+
 
     &:last-child {
       margin-bottom: 0;
@@ -93,11 +96,11 @@
       line-height: 1.7px;
       font-weight: 300;
       color: $cGreen;
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
-    &:hover {
-      text-decoration: underline;
-    }
 
     &:last-child {
       margin-bottom: 0;
