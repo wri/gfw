@@ -132,6 +132,9 @@ Gfw::Application.routes.draw do
   # sitemap
   get '/sitemap' => 'sitemap#index'
 
+  # Small Grunts Fund
+  get '/small-grants-fund' => 'small_grants_fund#index'
+
   # robots
   get '/robots', to: redirect('/robots.txt'), format: false
   get '/robots.:format' => 'robots#index'
