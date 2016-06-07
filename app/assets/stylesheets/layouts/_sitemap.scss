@@ -43,7 +43,7 @@
   }
 
   .page-title {
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 
     font-size: 21px;
     line-height: 1.4;
@@ -131,10 +131,10 @@
     font-size: 14px;
     line-height: 1.4;
     letter-spacing: .1px;
-    color: $dark;
+    color: $cGreen;
 
     &:hover {
-      color: $cGreen;
+      text-decoration: underline;
     }
   }
 }
