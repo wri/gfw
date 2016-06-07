@@ -34,6 +34,7 @@
   </head>
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
     <%= render 'layouts/svg_icons' %>
+    <%= render 'layouts/svg_icons_static' %>
 
     <%= render 'shared/svg_icons_footer' %>
     <%= render 'shared/modal' %>
@@ -46,9 +47,9 @@
     </div>
 
     <!-- Javascript -->
-    <script src="//maps.googleapis.com/maps/api/js?libraries=drawing,places&sensor=false"></script>
-    <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
-    <%= requirejs_include_tag 'static' %>
+    <!-- <script src="//maps.googleapis.com/maps/api/js?libraries=drawing,places&sensor=false"></script>
+    <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script> -->
+    <%= requirejs_include_tag 'static-pages' %>
     <%= render 'shared/js_footer' %>
   </body>
 </html>

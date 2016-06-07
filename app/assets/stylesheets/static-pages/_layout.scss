@@ -4,20 +4,20 @@
   padding: 0px;
   max-width: 1600px;
   width: 100%;
+}
 
-  .l-inner {
-    margin: 0 auto;
-    position: relative;
+.l-inner {
+  margin: 0 auto;
+  position: relative;
 
-    @media (min-width: $br-mobile){
-      max-width: 1024px;
-      width: 95%;
-    }
+  @media (min-width: $br-mobile){
+    max-width: 1024px;
+    width: 95%;
+  }
 
-    @media (min-width: $br-desktopbig){
-      max-width: 1200px;
-      width: 75%;
-    }
+  @media (min-width: $br-desktopbig){
+    max-width: 1200px;
+    width: 75%;
   }
 }
 

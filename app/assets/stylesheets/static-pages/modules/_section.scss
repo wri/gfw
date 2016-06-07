@@ -1,4 +1,5 @@
 .m-section {
+  border-bottom: 1px solid $border1;
 
   &.-padding {
     padding: 40px 15px;
@@ -7,36 +8,47 @@
     }
   }
 
-  &.-border {
-    border-top: 1px solid $border1;
+  &.-no-border {
+    border: 0;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.7;
+    letter-spacing: .1px;
+    color: $dark;
+
+    & + p {
+      margin-top: 5px;
+    }
   }
 
 
-  &.-own-atlas {
-    background: url($baseurl + '/assets/images/bkg-own-atlas.jpg');
-    background-size: cover;
-    position: relative;
-    z-index: 0;
-    @media (min-width: $br-mobile){
-      background-attachment: fixed;
-    }
-
-    .l-inner {
-      z-index: 1;
-    }
-    
-    &:after{
-      content: "";
-      display: block;
-      position: absolute;
-      z-index: 0;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(#000,0.5);
-    }
-  }
+  // &.-own-atlas {
+  //   background: url($baseurl + '/assets/images/bkg-own-atlas.jpg');
+  //   background-size: cover;
+  //   position: relative;
+  //   z-index: 0;
+  //   @media (min-width: $br-mobile){
+  //     background-attachment: fixed;
+  //   }
+  //
+  //   .l-inner {
+  //     z-index: 1;
+  //   }
+  //
+  //   &:after{
+  //     content: "";
+  //     display: block;
+  //     position: absolute;
+  //     z-index: 0;
+  //     top: 0;
+  //     left: 0;
+  //     width: 100%;
+  //     height: 100%;
+  //     background: rgba(#000,0.5);
+  //   }
+  // }
 
   header {
     h2 {
@@ -44,7 +56,7 @@
       @media (min-width: $br-mobile){
         padding: 0 0 35px;
       }
-      
+
 
       .-font-small {
         font-size: 19px;
@@ -63,7 +75,7 @@
       @media (min-width: $br-mobile){
         font-size: 19px;
         line-height: 32px;
-      }      
+      }
     }
 
     &.-light {
@@ -80,7 +92,7 @@
         top: 0;
         right: 0;
         width: 250px;
-      }      
+      }
     }
   }
 }

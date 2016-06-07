@@ -1,19 +1,30 @@
-h2 {
-	font-size: 25px;
-	line-height: 1.25;
-	font-weight: 300;
-	color: #555;
+
+// H2
+.page-title {
+  font-size: 47px;
+  letter-spacing: -.7px;
+
+  color: $dark;
+}
+
+.section-title {
+	font-size: 35px;
+	line-height: 1.1;
+	letter-spacing: .2px;
+
+	color: $dark;
+
   @media (min-width: $br-mobile){
   	font-size: 35px;
   }
 
-  a {
+  > a {
   	color: $dark;
   }
 
-  &.-api {
-    text-transform: uppercase;
-  }
+  // &.-api {
+  //   text-transform: uppercase;
+  // }
 }
 
 h3 {
@@ -23,6 +34,10 @@ h3 {
 
   &.-primary {
     color: $primary-color;
+  }
+
+  &.-secondary {
+    color: $dark;
   }
 
   @media (min-width: $br-mobile){
