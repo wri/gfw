@@ -5,19 +5,19 @@
     padding: 50px 0;
   }
 
-  &#stepsSliderView {
-    @media (min-width: $br-mobile) {
-      padding: 100px 0 50px;
-      .frame {
-        overflow: visible;
-      }
+  // &#stepsSliderView {
+  //   @media (min-width: $br-mobile) {
+  //     padding: 100px 0 50px;
+  //     .frame {
+  //       overflow: visible;
+  //     }
+  //
+  //     .slider-arrows {
+  //       display: none;
+  //     }
+  //   }
+  // }
 
-      .slider-arrows {
-        display: none;
-      }
-    }
-  }
-  
   // Slider
   .slider {
     .frame {
@@ -27,14 +27,18 @@
       font-size: 0;
       line-height: 0;
       overflow: hidden;
-      white-space: nowrap;
+      // white-space: nowrap;
       padding: 1px 0;
-      
+
     }
 
     .slides {
       display: inline-flex;
       align-items: stretch;
+
+      // display: flex;
+      // justify-content: space-between;
+
     }
 
     li {
@@ -70,7 +74,7 @@
           margin: 0 0 0 -10px;
           @media (min-width: $br-mobile) {
             left: 0;
-          }          
+          }
         }
 
         &.-right {
@@ -79,13 +83,13 @@
           margin: 0 -10px 0 0;
           @media (min-width: $br-mobile) {
             right: 0;
-          }          
+          }
         }
 
         svg {
           width: 30px;
           height: 30px;
-          fill: $primary-color;
+          fill: $white;
         }
       }
     }

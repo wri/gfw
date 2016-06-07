@@ -14,6 +14,7 @@
 @import "modules/filters";
 
 // Home
+@import "modules/cover";
 @import "modules/slider";
 @import "modules/lory-slider";
 @import "modules/card";
@@ -31,3 +32,6 @@
 
 // Syntax
 @import "syntax";
+
+// helpers
+@import "helpers";

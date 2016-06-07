@@ -38,8 +38,11 @@ button {
   cursor: pointer;
 }
 
-.-hidden {
-  display: none;
+hr {
+  margin: 25px 0;
+
+  border: 0;
+  border-top: 1px solid $border1;
 }
 
 %reset-input {
