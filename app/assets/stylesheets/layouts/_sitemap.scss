@@ -20,10 +20,12 @@
 
   .category-title {
     margin-top: 75px;
+
     font-size: 35px;
     font-weight: 300;
     line-height: 1.1;
     letter-spacing: .2px;
+    color: $dark;
   }
 
   .page {
@@ -47,10 +49,9 @@
     line-height: 1.4;
     letter-spacing: .1px;
     text-transform: uppercase;
-    > a {
-      &:hover {
-        text-decoration: underline;
-      }
+
+    &:hover {
+      text-decoration: underline;
     }
 
     &:last-child {
@@ -78,7 +79,7 @@
       margin-bottom: 0;
 
       &:nth-child(5n) {
-        margin-top: 25px;
+        margin-top: 15px;
       }
     }
   }
@@ -92,11 +93,11 @@
       line-height: 1.7px;
       font-weight: 300;
       color: $cGreen;
-      &:hover {
-        text-decoration: underline;
-      }
     }
 
+    &:hover {
+      text-decoration: underline;
+    }
 
     &:last-child {
       margin-bottom: 0;
