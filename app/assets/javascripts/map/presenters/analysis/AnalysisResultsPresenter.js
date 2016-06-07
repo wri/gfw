@@ -173,8 +173,8 @@ define([
         this._renderAnalysis(results);
         // Subscribe button just should be activated
         // when a analysis is succesfully rendered.
-        mps.publish('Analysis/toggle', [true]);
         this.view.$tab.addClass('is-analysis');
+        mps.publish('Analysis/toggle', [this.view.$tab.hasClass('is-analysis')]);
         this._setSubscribeButton();
       }
     },

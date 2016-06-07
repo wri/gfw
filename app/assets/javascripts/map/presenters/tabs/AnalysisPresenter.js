@@ -164,7 +164,8 @@ define([
       }
     },{
       'Analysis/toggle': function(boolean) {
-        this.view.toggleAnalysis(this.view.$el.hasClass('is-analysis'));
+        console.log('Analysis/toggle '+boolean);
+        this.view.toggleAnalysis($('#analysis-tab').hasClass('is-analysis'));
       }
     },{
       'Analysis/upload': function(geojson) {
@@ -210,7 +211,7 @@ define([
       'Country/update': function(iso) {
         if (!!iso.country) {
           this.deleteAnalysis();
-          this.view.setSelects(iso, this.status.get('dont_analyze'));
+          this.view.setSelects(iso, true);
         } else {
           this.deleteAnalysis();
         }
