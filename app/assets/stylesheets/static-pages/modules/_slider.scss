@@ -1,0 +1,142 @@
+.m-slider {
+	ul {
+		width: 100%;
+		padding-bottom: 300px;
+		position: relative;
+    @media (min-width: $br-mobile) {
+      padding-bottom: 500px;
+    }
+		
+		li {
+			position: absolute;
+			top: 0px;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: url($baseurl + '/assets/images/home-slider/home-slider-1.png');
+			background-size: cover;
+      @media (min-width: $br-mobile) {
+        top: -60px;
+        height: calc(100% + 60px);
+      }
+
+			
+			.l-inner {
+		    position: absolute;
+        bottom: 0;
+        left: 0;
+        @media (min-width: $br-mobile) {
+          top: 0;
+          bottom: auto;
+          left: 50%;
+          transform: translate(-50%,0);
+		      height: 100%;	
+        }
+        @media (max-width: $br-mobile - 1) {
+          width: 100%;
+        }
+		  }			
+		}
+	}
+
+	aside {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+    width: 100%;
+    background: rgba($white,0.75);
+    padding: 20px 50px 20px 15px;
+    
+    @media (min-width: $br-mobile) {
+      background: none;
+      padding: 0;
+      width: auto;
+      top: 50%;
+      bottom: auto;
+      transform: translate(0,-50%);
+      margin: 30px 0 0;
+    }
+    
+    h2 {
+      font-size: 30px;
+      display: inline-block;
+      font-weight: 400;
+      text-transform: uppercase;
+      @media (min-width: $br-mobile) {
+        background: rgba($white,0.75);
+        font-size: 61px;
+        padding: 10px 5px 5px;
+      }
+    }
+    
+    h3 {
+      font-size: 15px;
+      color: #333;
+      text-transform: uppercase;
+      font-weight: 300;
+      @media (min-width: $br-mobile) {
+        font-size: 31px;
+        line-height: 0.5;
+        overflow: hidden;
+    
+        span {
+          display: inline-block;
+          float: left;
+          clear: both;
+          background: rgba($white,0.75);
+          padding: 12px;
+        }
+      }
+    }
+    
+    .-link {
+      background: $dark;
+      color: $white;
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 44px;
+      font-size: 30px;
+      display: inline-block;
+      text-transform: uppercase;
+      text-decoration: none;
+
+      strong {
+        display: none;
+        font-weight: 400;
+        @media (min-width: $br-mobile) {
+          display: block;
+        }
+      }
+
+      em {
+        display: block;
+        font-weight: 400;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        @media (min-width: $br-mobile) {
+          display: none;
+        }        
+      }
+
+      @media (min-width: $br-mobile) {
+        top: auto;
+        right: auto;
+        height: auto;
+        width: auto;
+        position: relative;
+        font-size: 17px;
+        padding: 8px 30px;
+        display: inline-block;
+      }
+
+      &:hover {
+        background: $primary-color;
+      }
+    }
+	}
+
+}

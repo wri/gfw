@@ -1,0 +1,374 @@
+.m-card {
+	position: relative;
+	width: 100%;
+	background: $white;
+	padding: 0px 15px 15px;
+	border: 1px solid $border1;
+  @media (min-width: $br-mobile) {
+		padding: 0px 30px 30px;
+  }
+
+
+	svg {
+		width: 80px;
+		height: 80px;
+		margin: 0 0 20px;
+	  @media (min-width: $br-mobile) {
+			width: 100px;
+			height: 100px;
+			margin: 0 0 30px;
+	  }
+	}
+
+
+	h3 {
+		margin: 0 0 10px;
+    white-space: normal;
+
+	  @media (min-width: $br-mobile) {
+			margin: 0 0 18px;
+	  }
+	}
+
+	p {
+		&.-uppercase {
+			text-transform: uppercase;
+		}		
+	}
+
+	// Default
+	&.-default {
+		padding: 0;
+		border: 0;
+		margin: 30px 0 0;
+		
+		&:first-child {
+			margin: 0;
+		}
+
+	  @media (min-width: $br-mobile-portrait) and (max-width: $br-mobile - 1){
+			width: 50%;
+			margin: 0;
+			&:nth-child(n+3) {
+				margin: 45px 0 0;
+			}
+	  }
+
+	  @media (min-width: $br-mobile) {
+			width: 25%;
+			margin: 0;
+	  }
+
+		p {
+			max-width: 80%;
+		}
+	}
+
+
+	// Atlas
+	&.-atlas {
+		width: 100%;
+		padding: 0px 15px 15px;
+	  @media (min-width: $br-mobile) {
+			width: calc(100% - 30px);
+			margin: 0 auto; 
+			padding: 0px 30px 30px;
+	  }
+
+		p {
+			font-size: 14px;
+			max-width: none;
+			white-space: normal;
+			line-height: 1.5;
+		}
+
+		.img {
+			margin: 0 -15px 20px;
+			padding-bottom: 50%;
+			background: url($baseurl + '/assets/images/thumbnail-post.png');
+			background-size: cover;
+		  @media (min-width: $br-mobile) {
+				margin: 0 -30px 30px;
+		  }
+		}	
+		&:hover {
+			h3 {
+				text-decoration: underline;
+			}
+		}			
+	}
+
+	// Gallery
+	&.-gallery {
+		margin: 15px 0 0;
+
+	  @media (min-width: $br-mobile-portrait) and (max-width: $br-mobile - 1) {
+			width: calc(50% - 20px);
+			margin: 30px 0 0 30px;
+			&:nth-child(2n+1) {
+				margin: 30px 0 0;
+			}
+	  }
+
+
+	  @media (min-width: $br-mobile) {
+			width: calc(33.3333% - 30px);
+			margin: 45px 0 0 45px;
+			&:nth-child(3n+1) {
+				margin: 45px 0 0;
+			}
+	  }
+
+	  a {
+	  	color: $dark;
+	  }
+
+		p {
+			font-size: 14px;
+			max-width: none;
+			white-space: normal;
+			line-height: 1.5;
+		}
+
+		.img {
+			position: relative;
+			overflow: hidden;
+			margin: 0 -15px 15px;
+			padding-bottom: 50%;
+		  @media (min-width: $br-mobile) {
+				margin: 0 -30px 30px;
+		  }
+
+		  > div {
+		  	position: absolute;
+		  	top: 0;
+		  	left: 0;
+		  	width: 100%;
+		  	height: 100%;
+		  	background-size: cover;
+		  	transform: scale(1);
+		  	transition: $transition1;
+		  }
+
+		  .coming-soon {
+				text-transform: uppercase;
+				height: auto;
+				width: auto;
+				padding: 2px 45px;
+				font-size: 12px;
+				position: absolute;
+				left: auto;
+				right: 0;
+				top: 0;
+				z-index: 1;
+				transform: rotate(45deg) translate(50%,200%);
+				transform-origin: 100% 0%;
+				background: $dark;
+				color: $white;
+		  }
+
+		}
+
+		small {
+			display: block;
+			margin: 10px 0 0;
+			font-size: 11px;
+			color: #999;
+		}
+
+		&:hover:not(.-coming-soon) {
+			h3 {
+				text-decoration: underline;
+			}
+
+			.img > div {
+				// transform: scale(1.1);
+			}
+		}				
+	}
+
+	// Submit
+	&.-submit {
+		background: $primary-color;
+		min-height: 250px;
+
+		.-center {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+		}
+
+		svg {
+			display: block;
+			width: 50px;
+			height: 50px;
+			margin: 0 auto 25px;
+			fill: $white;
+		}
+
+		h3 {
+			color: $white;
+			text-align: center;
+		}
+
+	}
+
+	// Video
+	&.-video {
+		width: 100%;
+		padding: 0px 15px 15px;
+		cursor: pointer;
+	  @media (min-width: $br-mobile) {
+			width: calc(100% - 30px);
+			margin: 0 auto; 
+			padding: 0px 30px 30px;
+	  }
+
+		p {
+			font-size: 14px;
+			max-width: none;
+			white-space: normal;
+			line-height: 1.5;
+		}
+
+		.img {
+			margin: 0 -15px 20px;
+			padding-bottom: 50%;
+			background: $dark;
+			position: relative;
+		  @media (min-width: $br-mobile) {
+				margin: 0 -30px 30px;
+		  }
+
+			&:before, &:after{
+				content: "";
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+			}
+
+			&:before{
+				width: 56px;
+				height: 56px;
+				background: $primary-color;
+				border-radius: 50%;
+				z-index: 1;
+			}
+
+			&:after{
+				z-index: 2;
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-width: 7px 0 7px 10px;
+				border-color: transparent transparent transparent white;				
+			}
+		}
+
+		&:hover {
+			.img {
+				&:before {
+					background: lighten($primary-color,5%);
+				}
+			}
+		}		
+	}
+
+
+	// Number
+	&.-number {
+		width: 100%;
+		padding: 30px 15px 30px;
+		cursor: pointer;
+	  @media (min-width: $br-mobile) {
+			width: calc(100% - 30px);
+			margin: 0 auto; 
+			padding: 60px 40px;
+	  }
+
+		h3 {
+			color: #444444;
+		}
+
+		p {
+			font-size: 14px;
+			max-width: none;
+			white-space: normal;
+			line-height: 1.5;
+		}
+
+		.number {
+			width: 40px;
+			height: 40px;
+			line-height: 38px;
+			font-size: 20px;
+			font-weight: 500;
+			margin: 0 auto 20px;
+						
+			background: $white;
+			color: $primary-color;
+			border: 3px solid $primary-color;
+			border-radius: 50%;
+			text-align: center;
+
+		  @media (min-width: $br-mobile) {
+				width: 80px;
+				height: 80px;
+				line-height: 80px;
+				font-size: 35px;
+				margin: 0;
+	
+				position: absolute;
+				top: 0;
+				left: 50%;
+				transform: translate(-50%,-50%);
+		  }
+		}
+	}
+
+	// Interesting
+	&.-interesting {
+		background: $white;
+		padding: 20px;
+		margin: 15px 0 0;
+
+		&:first-child {
+			margin: 0;
+		}
+
+	  @media (min-width: $br-mobile) {
+			width: calc(50% - 30px);
+			padding: 60px 40px 120px;
+			margin: 0;
+	  }
+
+		h3 {
+			color: $primary-color;
+			margin: 0 0 10px;
+		  @media (min-width: $br-mobile) {
+		  	margin: 0 0 18px;
+		  	font-size: 24px;
+		  }
+		}
+
+		p {
+			max-width: 250px;
+			color: $dark;
+		}
+
+		svg {
+			width: 100px;
+			height: 100px;
+		  @media (min-width: $br-mobile) {
+				position: absolute;
+				bottom: 0;
+				right: 0;		  	
+				width: 140px;
+				height: 150px;
+				margin: 35px;
+		  }
+		}
+	}
+}
