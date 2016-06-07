@@ -69,7 +69,7 @@ define([
         this.view._toggleSelected(layerSpec.getLayers());
       }
     },{
-      'Analysis/enabled': function(enabled) {
+      'Analysis/dont_analyze': function(enabled) {
         this.status.set('dont_analyze', enabled);
       }
     }],
@@ -87,7 +87,7 @@ define([
       this.status.set('iso', iso);
       this.status.set('dont_analyze', true);        
 
-      mps.publish('Analysis/enabled', [this.status.get('dont_analyze')]);
+      mps.publish('Analysis/dont_analyze', [this.status.get('dont_analyze')]);
       mps.publish('Country/update', [iso]);
       mps.publish('Place/update', [{go: false}]);
 

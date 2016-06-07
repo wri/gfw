@@ -54,9 +54,9 @@ define([
           this.view.resetBtns();
       }
     },{
-      'Analysis/toggle': function() {
+      'Analysis/toggle': function(boolean) {
         this.view.toogleTimelineClass(false);
-        this.view.toogleAnalysisBtn($('#analysis-tab').hasClass('is-analysis'));
+        this.view.toogleAnalysisBtn($('#analysis-tab').hasClass('is-analysis'));        
       }
     },{
       'Analysis/visibility': function(to) {
