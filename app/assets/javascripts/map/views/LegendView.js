@@ -238,8 +238,8 @@ define([
 
       // Render
       this.render(this.template({
-        categories: (jQuery.isEmptyObject(categoriesGlobal)) ? false : categoriesGlobal,
-        categoriesIso: categoriesIso,
+        categories: (_.isEmpty(categoriesGlobal)) ? false : categoriesGlobal,
+        categoriesIso: (_.isEmpty(categoriesIso)) ? false : categoriesIso,
         layersLength: layers.length,
         country: (!!iso) ? _.findWhere(this.countries.toJSON(), { iso: iso.country }) : null,
       }));

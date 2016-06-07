@@ -20,10 +20,12 @@
 
   .category-title {
     margin-top: 75px;
+
     font-size: 35px;
     font-weight: 300;
     line-height: 1.1;
     letter-spacing: .2px;
+    color: $dark;
   }
 
   .page {
@@ -41,17 +43,19 @@
   }
 
   .page-title {
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 
     font-size: 21px;
     line-height: 1.4;
     letter-spacing: .1px;
     text-transform: uppercase;
+
     > a {
       &:hover {
         text-decoration: underline;
-      }
+      }      
     }
+
 
     &:last-child {
       margin-bottom: 0;
@@ -78,7 +82,7 @@
       margin-bottom: 0;
 
       &:nth-child(5n) {
-        margin-top: 25px;
+        margin-top: 30px;
       }
     }
   }
@@ -127,10 +131,10 @@
     font-size: 14px;
     line-height: 1.4;
     letter-spacing: .1px;
-    color: $dark;
+    color: $cGreen;
 
     &:hover {
-      color: $cGreen;
+      text-decoration: underline;
     }
   }
 }
