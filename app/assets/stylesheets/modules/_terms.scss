@@ -1,3 +1,23 @@
+.terms-link-close {
+  display: flex;
+  align-items: center;
+
+  position: absolute;
+  right: 0px;
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 500;
+  top: 15px;
+  padding: 20px;  
+
+  svg {
+    margin: 0 0 0 5px;
+    width: 20px;
+    height: 20px;
+    fill: $cGreen;
+  }
+}
+
 .terms-container {
   margin: 70px 15px;
   max-width: 960px;
