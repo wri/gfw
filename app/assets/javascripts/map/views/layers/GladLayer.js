@@ -42,7 +42,7 @@ define([
       return [dayOfYear, year];
     },
 
-    decodeConfidence(r, g, b) {
+    decodeConfidence: function(r, g, b) {
       return parseInt(b.toString()[0], 10) - 1;
     },
 
