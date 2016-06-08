@@ -47,7 +47,7 @@ define([
       this.$sliderItems = this.$el.find('.js_slide');
       this.slideCount = this.$el.find('.js_slide').length;
 
-      // this.$sliderNavigation = this.$el.find('.js_slide_navigation');
+      this.$sliderNavigation = this.$el.find('.js_slide_navigation');
     },
 
     // Slider plugin
@@ -80,8 +80,13 @@ define([
     },
 
     initNavigation: function() {
-      var pages = Math.ceil(this.slideCount/this.options.slider.slides_per_slide);
-      var arrayPages =(function(a,b){while(a--)b[a]=a+1;return b})(pages,[]);
+      // var pages = Math.ceil(this.slideCount/this.options.slider.slides_per_slide);
+      // var arrayPages =(function(a,b){while(a--)b[a]=a+1;return b})(pages,[]);
+
+      if (this.slideCount < 4) {
+        this.$sliderNavigation.addClass('_hidden');
+        return;
+      }
 
       // this.$sliderNavigation.html(this.navTemplate({pages: null}));
       // this.$sliderNavigationItems = this.$sliderNavigation.find('li');
