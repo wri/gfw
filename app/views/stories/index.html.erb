@@ -1,42 +1,39 @@
 <section class="m-header-static">
-    <div class="inner">
-      <header>
-        <h2><%= @title %></h2>
-        <h3>Read stories from Global forest Watch users about what is happening in forests on the ground</h3>
-      </header>
-      <ul class="row">
-        <li><a href="/stories/new" class="btn white uppercase">Submit a story</a></li>
-      </ul>
-    </div>
+  <div class="inner">
+    <header>
+      <h2><%= @title %></h2>
+      <h3>Read stories from Global forest Watch users about what is happening in forests on the ground</h3>
+    </header>
+    <ul class="row">
+      <li><a href="/stories/new" class="btn white uppercase">Submit a story</a></li>
+    </ul>
+  </div>
 </section>
 
 <section class="m-section-static">
-  <div class="inner">
-    <article id="crowdsourced-stories">
-      <header>
-        <h2>Stories from our users</h2>
-      </header>
-      <div class="content">
-        <div id="storiesKeepView" class="stories-box">
-          <ul id="storiesKeepList">
-            <% @visible.each do |story| %>
-              <li>
-                <a href="<%= story_path(story['id']) %>">
-                  <figure><div class="bg" style="background-image: url(<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>)"></div></figure>
-                  <article class="info">
-                    <h4><%= story['title'] %></h4>
-                    <p><%= truncate(story['details'], :length => 295) %></p>
-                    <button class="btn gray medium">More</button>
-                  </article>
-                </a>
-              </li>
-            <% end %>
-          </ul>
-          <div class="section-footer">
-            <div id="pagination-container" data-page="<%= @page %>" data-perpage="<%= @stories_per_page %>" data-total="<%= @total_stories %>"></div>
-          </div>
-        </div>
-      </div>
-    </article>    
+  <div class="inner">    
+    <header>
+      <h2>Stories from GFW users</h2>
+    </header>
+    <div id="storiesListView" class="m-list-stories">
+      <ul>
+        <% @total_stories_paginated.each do |story| %>
+          <li class="m-list-story">
+            <a href="<%= story_path(story['id']) %>">
+              <div class="img"><div class="bg" style="background-image: url(<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>)"></div></div>
+              <article class="info">
+                <h4><%= story['title'] %></h4>
+                <p><%= truncate(story['details'], :length => 295) %></p>
+                <button class="btn gray medium">More</button>
+              </article>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+      <!-- TO DO: pagination -->
+      <!-- <div class="section-footer">
+        <div id="pagination-container" data-page="<%= @page %>" data-perpage="<%= @stories_per_page %>" data-total="<%= @total_stories %>"></div>
+      </div> -->
+    </div> 
   </div>
 </section>

@@ -20,9 +20,9 @@ class StoriesController < ApplicationController
       stories_per_page = 5
 
       @page        = (params[:page] || 1).to_i
-      @total_stories = Api::Story.visible.count
       @stories_per_page = stories_per_page
-      @visible     = Api::Story.find_by_page(@page, stories_per_page)
+      @total_stories = Api::Story.visible.count
+      @total_stories_paginated     = Api::Story.find_by_page(@page, stories_per_page)
       
       @title = 'Crowdsourced Stories'
       return
