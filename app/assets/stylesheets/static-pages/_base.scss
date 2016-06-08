@@ -1,9 +1,11 @@
 .static-page {
 
-  .page-title {
-    font-size: 47px;
-    display: none;
+  .main-title {
+    font-size: 35px;
     color: $dark;
+    @media (min-width: $br-mobile){
+      font-size: 47px;
+    }    
   }
 
   .section-title {
