@@ -127,6 +127,11 @@ define([
           callback(image);
           URL.revokeObjectURL(url);
         };
+
+        if (errorCallback !== undefined) {
+          image.onerror = errorCallback;
+        }
+
         image.src = url;
       };
 
