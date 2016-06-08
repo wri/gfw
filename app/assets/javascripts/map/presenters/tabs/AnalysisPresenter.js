@@ -642,11 +642,15 @@ define([
         resource.geostore = this.status.get('geostore');
       }
 
-      if (this.status.get('layerOptions')) {
-        var options = this.status.get('layerOptions') || [];
+      var options = this.status.get('layerOptions') || [];
+      if (options.length > 0) {
+        resource.layer_options = {};
         options.forEach(function(option) {
-          resource[option] = true;
+          resource.layer_options[option] = true;
         });
+        resource.layer_options = JSON.stringify(resource.layer_options);
+      } else {
+        delete resource.layer_options;
       }
 
       resource.dataset = this.datasets[baselayer.slug];

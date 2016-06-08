@@ -154,12 +154,13 @@ define([
           callback(image);
           URL.revokeObjectURL(url);
         };
+
+        if (errorCallback !== undefined) {
+          image.onerror = errorCallback;
+        }
+
         image.src = url;
       };
-
-      if (errorCallback !== undefined) {
-        xhr.onerror = errorCallback;
-      }
 
       xhr.open('GET', url, true);
       xhr.responseType = 'blob';
