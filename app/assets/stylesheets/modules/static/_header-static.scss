@@ -62,8 +62,9 @@
 
   // this should be improved
   .row {
-    @include row(center);
-    @include flex-wrap(wrap);
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     margin: 20px auto 0;
     @media (min-width: $br-mobile) {
       margin: 50px 0 0;
@@ -73,8 +74,11 @@
       margin: 5px 0px;
       width: 100%;
       @media (min-width: $br-mobile) {
-        margin: 0 20px;
+        margin: 0 20px 0 0;
         width: auto;
+        &:last-child {
+          margin: 0;
+        }
       }
     }
 
