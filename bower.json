@@ -47,7 +47,8 @@
     "proj4": "~2.3.12",
     "js-cookie": "~2.1.0",
     "bluebird": "~3.1.1",
-    "turf": "~2.0.2"
+    "turf": "~2.0.2",
+    "lory": "^2.1.0"
   },
   "resolutions": {
     "jquery": "1.11.1"
