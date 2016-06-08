@@ -1,3 +1,17 @@
+<% content_for :header do %>
+  <h1><a href="/">Global Forest Watch</a></h1>
+  <nav id="nav-mobile">
+    <ul class="mobile-hide">
+      <li>
+        <a <% if controller?("stories") && action?("index") %>class="current"<% end %> href="/stories">Crowdsourced stories</a>
+      </li>
+      <li>
+        <a <% if controller?("stories") && action?("new") %>class="current"<% end %> href="/stories/new">Submit a story</a>
+      </li>
+    </ul>
+  </nav>
+<% end %>
+
 <section id="storiesEditView" class="submit-section">
   <div class="inner">
     <aside>
