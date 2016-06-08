@@ -1,0 +1,91 @@
+// KEEP UPDATED
+.stories-box {
+  width: 100%;
+  >ul {
+    position: relative;
+    @include display-flex();
+    @include flex-wrap(wrap);
+    @include justify-content(space-between);
+    >li {
+      padding: 0 0 40px 0;
+      position: relative;
+      &:first-child { margin-top: 20px;}
+      width: 100%;
+
+      @media (min-width: $br-mobile-portrait) {
+        width: 47.5%;
+        padding: 0 0px 40px;
+        &:first-child { margin-top: 0px;}
+      }
+
+      @media (min-width: $br-mobile) {
+        width: 100%;
+        padding: 40px 0;
+        border-top: 1px solid $border;
+        &:first-child { margin-top: 20px;}
+      }
+
+      a {
+        text-decoration: none;
+        position: relative;
+        @include row(flex-start);
+        @include flex-wrap(wrap);
+      }
+      figure {
+        width: 100%;
+        margin: 0 0 20px -15px;
+        @media (min-width: $br-mobile-portrait) {
+          overflow: hidden;
+          margin: 0 0 20px;
+        }
+        @media (min-width: $br-mobile) {
+          width: 200px;
+          position: absolute;
+          top: 50%;
+          left: 65%;
+          margin: 0 0 20px;
+          @include transform(translate(0,-50%));
+        }
+        .bg {
+          // background: #000;
+          background-position: center;
+          background-size: cover;
+          padding-bottom: 40%;
+          width: calc(100% + 30px);
+          margin: 0 auto;
+          @media (min-width: $br-mobile) {
+            width: 75%;
+            border-radius: 50%;
+            padding-bottom: 75%;
+            border: 1px solid #999;
+          }
+        }
+      }
+      .info {
+        width: 100%;
+        font-size: 14px;
+        @media (min-width: $br-mobile) {
+          width: 60%;
+        }
+        h4 {
+          color: $dark;
+          font-size: 21px;
+          line-height: 1.25;
+          padding: 0 0 5px;
+        }
+        p {
+          color: #999999;
+          font-weight: 400;
+          line-height: 1.25;
+        }
+        .btn {
+          margin: 20px 0 0;
+        }
+      }
+    }
+  }
+  .section-footer{
+    border-top: 1px solid $border;
+    @include clearfix();
+  }
+}

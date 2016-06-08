@@ -17,7 +17,14 @@ class StoriesController < ApplicationController
       respond_with @stories
       return
     else
-      redirect_to '/stayinformed/crowdsourced-stories'
+      stories_per_page = 5
+
+      @page        = (params[:page] || 1).to_i
+      @total_stories = Api::Story.visible.count
+      @stories_per_page = stories_per_page
+      @visible     = Api::Story.find_by_page(@page, stories_per_page)
+      
+      @title = 'Crowdsourced Stories'
       return
     end
   end
