@@ -1,11 +1,12 @@
-
 define([
   'jquery',
   'underscore',
-  'Backbone',
+  'backbone',
   'enquire',
   'lory'
 ], function($, _, Backbone, enquire, lory) {
+
+  'use strict';
 
   var SliderView = Backbone.View.extend({
 
