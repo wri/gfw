@@ -24,13 +24,18 @@
   </div>
 </section>
 
-<section class="m-section-static">
+<section id="storiesResetPosition" class="m-section-static">
+  <div id="storiesSpinner" class="m-spinner -fixed">
+    <div class="loader"><svg><use xlink:href="#shape-spinner"></use></svg></div>
+  </div>
+
   <div class="inner">    
     <header>
       <h2>Stories from GFW users</h2>
     </header>
     <div id="storiesListView" class="m-list-stories">
-      <ul>
+      <!-- Pagination -->
+      <ul id="storiesList">
         <% @total_stories_paginated.each do |story| %>
           <li class="m-list-story">
             <a href="<%= story_path(story['id']) %>">
@@ -44,10 +49,9 @@
           </li>
         <% end %>
       </ul>
-      <!-- TO DO: pagination -->
-      <!-- <div class="section-footer">
-        <div id="pagination-container" data-page="<%= @page %>" data-perpage="<%= @stories_per_page %>" data-total="<%= @total_stories %>"></div>
-      </div> -->
+      <!-- Pagination -->
+      <div id="storiesPagination" data-page="<%= @page %>" data-perpage="<%= @stories_per_page %>" data-total="<%= @total_stories %>"></div>
+      
     </div> 
   </div>
 </section>
