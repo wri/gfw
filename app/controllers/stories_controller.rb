@@ -36,7 +36,7 @@ class StoriesController < ApplicationController
   def new
     @url = stories_path
     @story = Api::Story.new
-    @title = I18n.translate 'stories.new.title'
+    @title = 'Submit a story'
   end
 
   def edit
