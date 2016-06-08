@@ -12,6 +12,16 @@
   </nav>
 <% end %>
 
+<section class="m-header-static">
+  <div class="inner">
+    <header>
+      <h2><%= @title %></h2>
+      <h3>Share your story about issues affecting forests, forest communities, and how you use GFW to monitor and protect forests with the Global Forest Watch community</h3>
+    </header>
+  </div>
+</section>
+
+
 <section id="storiesEditView" class="submit-section">
   <div class="inner">
     <aside>
@@ -53,9 +63,6 @@
     </aside>
     <div class="content">
       <div class="story_form">
-        <header>
-          <h2>Submit a story <a href="#" class="icon source" data-source="story-tips"><svg><use xlink:href="#shape-info"></use></svg></a></h2>
-        </header>
         <div class="form-box">
           <%= render 'form' %>
         </div>
