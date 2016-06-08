@@ -14,7 +14,8 @@ define([
 
     events: {
       'click .modal-backdrop' : 'hide',
-      'click .modal-close' : 'hide'
+      'click .modal-close' : 'hide',
+      'click .modal-hide' : 'hide',
     },
 
     initialize: function() {

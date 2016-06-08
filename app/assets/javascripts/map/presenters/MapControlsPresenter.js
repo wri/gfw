@@ -46,15 +46,15 @@ define([
         });
       }
     },{
-      'Timeline/toggle' : function(toggle){
-        this.view.toogleTimeline(toggle);
+      'Timeline/toggle' : function(boolean){
+        this.view.toogleTimeline(boolean);
       }
     }, {
       'Layers/toggle': function(toggle) {
         this.view.toogleTimeline(false);
       }
     }, {
-      'Analysis/toggle': function(toggle) {
+      'Analysis/toggle': function() {
         this.view.toogleTimeline(false);
       }
     }, {
@@ -117,11 +117,6 @@ define([
       mps.publish('LegendMobile/open');
       this.view.toogleTimeline(false);
     },
-
-    openAnalysis: function(){
-      mps.publish('Analysis/toggle');
-    },
-
 
   });
 

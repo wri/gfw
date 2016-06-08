@@ -2,8 +2,6 @@ require 'spec_helper'
 
 describe ApplicationController do
   controller do
-    before_action :check_terms
-
     def index
       render text: ''
     end

@@ -163,7 +163,32 @@ define([
         this.openAnalysisTab(true);
         this._analyzeConcession(useid, layerSlug);
       }
-    }, {
+    },{
+      'Analysis/dont_analyze': function(enabled) {
+        this.status.set('dont_analyze', enabled);
+      }
+    },{
+      'Analysis/iso': function(iso) {
+        this.status.set('dont_analyze', false);
+        this._analyzeIso(iso);
+      }
+    },{
+      'Analysis/enabled': function(boolean) {
+        this.view.toggleAnalysis(boolean);
+      }
+    },{
+      'Analysis/toggle': function(boolean) {
+        console.log('Analysis/toggle '+boolean);
+        this.view.toggleAnalysis($('#analysis-tab').hasClass('is-analysis'));
+      }
+    },{
+      'Analysis/upload': function(geojson) {
+        this._saveAndAnalyzeGeojson(geojson, {draw: true});
+        ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');        
+      }
+    },
+    // Timeline
+    {
       'Timeline/date-change': function(layerSlug, date) {
         this.status.set('date', date);
         this.openAnalysisTab();
@@ -200,14 +225,10 @@ define([
       'Country/update': function(iso) {
         if (!!iso.country) {
           this.deleteAnalysis();
-          this.view.setSelects(iso, this.status.get('dont_analyze'));
+          this.view.setSelects(iso, true);
         } else {
           this.deleteAnalysis();
         }
-      }
-    },{
-      'Analysis/toggle': function() {
-        this.view.toggleAnalysis(this.view.$el.hasClass('is-analysis'));
       }
     },{
       'Subscribe/cancel' : function(){
@@ -224,13 +245,14 @@ define([
           this.view._stopDrawing();
         }
       }
-    }, {
+    },{
+      'Subscribe/iso': function(iso) {
+        this.status.set('dont_analyze', false);
+        this._subscribeIso(iso)
+      }
+    },{
       'Dialogs/close': function() {
         this.view.toggleAnalysis(true);
-      }
-    }, {
-      'Analysis/upload': function(geojson) {
-        this._saveAndAnalyzeGeojson(geojson, {draw: true});
       }
     }, {
       'Spinner/cancel': function() {
@@ -246,10 +268,6 @@ define([
         } else {
           $('#subscriptionBtn').addClass('disabled');
         }
-      }
-    },{
-      'Analysis/enabled': function(enabled) {
-        this.status.set('dont_analyze', enabled);
       }
     }, {
       'LayerNav/changeLayerOptions': function(layerOptions) {
@@ -442,7 +460,7 @@ define([
       }.bind(this));
     },
 
-    subscribeIso: function(iso) {
+    _subscribeIso: function(iso) {
       var baselayer = this.getBaselayer();
       this.status.unset('geostore');
 
@@ -466,7 +484,7 @@ define([
 
     setDontAnalyze: function(dont_analyze) {
       this.status.set('dont_analyze', dont_analyze);
-      mps.publish('Analysis/enabled', [this.status.get('dont_analyze')]);
+      mps.publish('Analysis/dont_analyze', [this.status.get('dont_analyze')]);
       mps.publish('Place/update', [{go: false}]);
     },
 
@@ -693,8 +711,8 @@ define([
     _publishAnalysis: function(resource, failed) {
       mps.publish('Spinner/start');
       this.status.set('resource', resource);
-      // this._setAnalysisBtnVisibility();
       mps.publish('Place/update', [{go: false}]);
+
       //Open tab of analysis
       this.view.openTab(resource.type);
 
@@ -734,7 +752,7 @@ define([
         multipolygon: this.status.get('multipolygon')
       });
 
-      this.view.setSelects({ country: null, region: null });
+      this.view.setSelects({ country: null, region: null }, this.status.get('dont_analyze'));
 
       // Reset status model
       this.status.set({
@@ -744,7 +762,6 @@ define([
         multipolygon: null
       });
 
-      this._setAnalysisBtnVisibility();
       mps.publish('Subscribe/clearIso', []);
     },
 
@@ -763,6 +780,9 @@ define([
           _.pluck(baselayers, 'slug'),
           _.keys(this.datasets)))];
       }
+
+      mps.publish('Analysis/enabled', [!!baselayer]);
+      
       $('#analyzeBtn').toggleClass('dont-analyze', !!!baselayer);
       this.status.set('baselayer', baselayer);
       this._setAnalysisBtnVisibility();
@@ -882,6 +902,7 @@ define([
 
     layerAvailableForSubscription: function() {
       var baselayer = this.status.get('baselayer');
+      mps.publish('Subscribe/enabled', [(baselayer && SUBSCRIPTION_ALLOWED.indexOf(baselayer.slug) > -1)]);
       return (baselayer && SUBSCRIPTION_ALLOWED.indexOf(baselayer.slug) > -1);
     }
 
