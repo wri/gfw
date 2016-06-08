@@ -4,9 +4,9 @@
 require([
   'jquery',
   'Class',
-  'Backbone',
-  'static-pages/SliderView',
-], function($, Class, Backbone, SliderView) {
+  'backbone',
+  'static-pages/views/SmallGrantsFundView',
+], function($, Class, Backbone, SmallGrantsFundView) {
 
   'use strict';
 
@@ -15,7 +15,6 @@ require([
     $el: $('body'),
 
     init: function() {
-
       this._initViews();
       this._initApp();
     },
@@ -33,25 +32,7 @@ require([
      * Initialize Application Views.
      */
     _initViews: function() {
-      new SliderView({
-        el: '#SFGSliderView',
-        options: {
-          defaultSlider: {
-            infinite: false,
-            navigation: false
-          }
-        }
-      });
-
-      new SliderView({
-        el: '#GrantesForestSliderView',
-        options: {
-          defaultSlider: {
-            infinite: false,
-            navigation: false
-          }
-        }
-      });
+      new SmallGrantsFundView();
     }
 
   });
