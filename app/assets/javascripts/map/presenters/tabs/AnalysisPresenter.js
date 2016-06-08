@@ -93,6 +93,7 @@ define([
         }
         this.status.set('threshold', place.params.threshold);
         this.status.set('dont_analyze', place.params.dont_analyze);
+        this.status.set('layerOptions', place.params.layer_options);
         this._handlePlaceGo(place.params);
       }
     }, {
@@ -260,6 +261,11 @@ define([
         } else {
           $('#subscriptionBtn').addClass('disabled');
         }
+      }
+    }, {
+      'LayerNav/changeLayerOptions': function(layerOptions) {
+        this.status.set('layerOptions', layerOptions || []);
+        this._updateAnalysis();
       }
     }],
 
@@ -621,7 +627,7 @@ define([
         if (baselayer) {
           this.status.set('subscribe_only', true);
           this.status.set('resource', resource);
-          this.setDontAnalyze(null);          
+          this.setDontAnalyze(null);
           mps.publish('Place/update', [{go: false}]);
           this._subscribeAnalysis();
         }
@@ -645,6 +651,13 @@ define([
 
       if (this.status.get('geostore')) {
         resource.geostore = this.status.get('geostore');
+      }
+
+      if (this.status.get('layerOptions')) {
+        var options = this.status.get('layerOptions') || [];
+        options.forEach(function(option) {
+          resource[option] = true;
+        });
       }
 
       resource.dataset = this.datasets[baselayer.slug];
@@ -758,7 +771,7 @@ define([
       }
 
       mps.publish('Analysis/enabled', [!!baselayer]);
-      
+
       $('#analyzeBtn').toggleClass('dont-analyze', !!!baselayer);
       this.status.set('baselayer', baselayer);
       this._setAnalysisBtnVisibility();
