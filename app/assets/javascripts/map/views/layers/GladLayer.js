@@ -10,7 +10,7 @@ define([
 
   'use strict';
 
-  var TILE_URL = 'http://gis-gfw.wri.org/arcgis/rest/services/image_services/band1_day/ImageServer/tile{/z}{/y}{/x}';
+  var TILE_URL = 'http://wri-tiles.s3.amazonaws.com/glad_test/test1{/z}{/x}{/y}.png';
 
   var GladLayer = AnimatedCanvasLayerClass.extend({
 
