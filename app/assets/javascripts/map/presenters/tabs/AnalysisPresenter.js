@@ -93,6 +93,7 @@ define([
         }
         this.status.set('threshold', place.params.threshold);
         this.status.set('dont_analyze', place.params.dont_analyze);
+        this.status.set('layerOptions', place.params.layer_options);
         this._handlePlaceGo(place.params);
       }
     }, {
@@ -267,6 +268,11 @@ define([
         } else {
           $('#subscriptionBtn').addClass('disabled');
         }
+      }
+    }, {
+      'LayerNav/changeLayerOptions': function(layerOptions) {
+        this.status.set('layerOptions', layerOptions || []);
+        this._updateAnalysis();
       }
     }],
 
@@ -652,6 +658,17 @@ define([
 
       if (this.status.get('geostore')) {
         resource.geostore = this.status.get('geostore');
+      }
+
+      var options = this.status.get('layerOptions') || [];
+      if (options.length > 0) {
+        resource.layer_options = {};
+        options.forEach(function(option) {
+          resource.layer_options[option] = true;
+        });
+        resource.layer_options = JSON.stringify(resource.layer_options);
+      } else {
+        delete resource.layer_options;
       }
 
       resource.dataset = this.datasets[baselayer.slug];

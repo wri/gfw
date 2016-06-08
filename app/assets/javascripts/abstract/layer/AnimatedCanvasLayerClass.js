@@ -8,7 +8,7 @@ define([
 
   'use strict';
 
-  var CartoDbCanvasLayerClass = CanvasLayerClass.extend({
+  var AnimatedCanvasLayerClass = CanvasLayerClass.extend({
     init: function(layer, options, map) {
       options = options || {};
 
@@ -133,6 +133,6 @@ define([
 
   });
 
-  return CartoDbCanvasLayerClass;
+  return AnimatedCanvasLayerClass;
 
 });
