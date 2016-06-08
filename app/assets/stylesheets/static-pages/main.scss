@@ -2,9 +2,9 @@
 @import "reset";
 
 // Layout & grids
+@import 'base';
 @import "layout";
 @import "buttons";
-@import "titles";
 
 // Modules
 @import "modules/header";

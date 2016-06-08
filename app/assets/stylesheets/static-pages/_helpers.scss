@@ -1,40 +1,33 @@
+.static-page {
+  
+  // typography
+  ._text-center {
+    text-align: center;
+  }
 
-// layout
-._flex {
-  display: flex;
-}
+  ._light {
+    font-weight: 300;
+  }
 
-._align_around {
-  justify-content: space-around;
-}
+  ._bold {
+    font-weight: 500;
+  }
 
-// typography
-._text-center {
-  text-align: center;
-}
+  ._uppercase {
+    text-transform: uppercase;
+  }
 
-._light {
-  font-weight: 300;
-}
+  ._italic {
+    font-style: italic;
+  }
 
-._bold {
-  font-weight: 500;
-}
+  ._color-white {
+    color: $white;
+  }
 
-._uppercase {
-  text-transform: uppercase;
-}
-
-._italic {
-  font-style: italic;
-}
-
-._color-white {
-  color: $white;
-}
-
-// states
-._hidden {
-  display: none;
-  visibility: hidden;
+  // states
+  ._hidden {
+    display: none;
+    visibility: hidden;
+  }
 }

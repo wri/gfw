@@ -427,19 +427,7 @@
       opacity: 0;
       visibility: hidden;
     }
-    &:after{
-      content: "";
-      display: block;
-      width: 30px;
-      height: 18px;
-      position: absolute;
-      bottom: -5px;
-      right: -5px;
-      background: image-url('beta.png');
-    }
-    .beta-box{
-      display: none;
-    }
+
     @media (min-width: $br-mobile){
       width: 90px;
       height: 90px;
@@ -453,6 +441,38 @@
 			display: block;
 			height: 100%;
 			width: 100%;
+      color: $white;
+
+      .ribbon {
+        text-indent: 0px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        font-size: 8px;
+        text-transform: uppercase;
+        transform: translate(5px,8px);
+
+        > span {
+          display: block;
+          position: relative;
+          z-index: 2;
+          background: #b6b6ba;
+          padding: 3px 5px 2px;
+        }
+
+        &:after {
+          content: "";
+          position: absolute;
+          z-index: 1;
+          right: 0;
+          bottom: 100%;
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 5px 0 0 5px;
+          border-color: transparent transparent transparent darken(#b6b6ba,10%);
+        }
+      }
 		}
 	}
 
@@ -515,13 +535,13 @@
     }
 
 		@include clearfix();
-		
+
     > ul {
       clear: none;
       float: right;
       padding-right: 5px;
-      font-size: 14px;      
-			
+      font-size: 14px;
+
       > li {
         position: relative;
         border-top: 1px solid darken($border,10%);
@@ -529,8 +549,8 @@
         border-top: none;
         top: 1px;
         margin: 0 0 0 10px;
-        
-        &:first-child { 
+
+        &:first-child {
           margin: 0;
         }
 
@@ -547,7 +567,7 @@
             background: rgba(#fff,0.95);
             visibility: visible;
             opacity: 1;
-            
+
             li {
               a {
                 @include transform(translate(0%,0px));
@@ -556,7 +576,7 @@
               }
             }
           }
-        }     
+        }
 
 				> a {
 					display: block;
@@ -599,7 +619,7 @@
           opacity: 0;
           @include transform(translate(-50%,0px));
           @include transition(all 0.15s $easeInOutCubic);
-          
+
           &:after{
             content: "";
             display: block;
@@ -610,7 +630,7 @@
             height: 5px;
             background: $cGreen;
           }
-					
+
           li {
             border-top: 1px solid rgba(0,0,0,0.07);
 
@@ -620,7 +640,7 @@
 							font-size: 14px;
 							display: block;
               position: relative;
-							
+
               &:hover {
 								background: darken(#FFF,2%);
 							}
