@@ -13,7 +13,6 @@
 // Images
 @import "logos/*.png";
 @import "icons/*.png";
-@import "home-icons/*.png";
 @import "stories-icons/*.png";
 
 
@@ -32,8 +31,13 @@
 @import "modules/shared1600";
 @import "modules/slick1600";
 
+// Static Modules
+@import "modules/static/header-static";
+@import "modules/static/section-static";
+@import "modules/static/section-stories";
 
 @import "layouts/stories";
+// @import "layouts/static";
 
 
 @import "states";
