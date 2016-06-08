@@ -83,7 +83,7 @@ define([
       // var pages = Math.ceil(this.slideCount/this.options.slider.slides_per_slide);
       // var arrayPages =(function(a,b){while(a--)b[a]=a+1;return b})(pages,[]);
 
-      if (this.slideCount < 4) {
+      if (this.slideCount < 4 && !this.mobile) {
         this.$sliderNavigation.addClass('_hidden');
         return;
       }
