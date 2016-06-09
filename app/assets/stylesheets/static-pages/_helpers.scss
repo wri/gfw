@@ -1,5 +1,10 @@
 .static-page {
-  
+
+  ._align-vertically-flex {
+    display: flex;
+    align-items: center; 
+  }
+
   // typography
   ._text-center {
     text-align: center;

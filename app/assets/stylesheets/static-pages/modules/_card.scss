@@ -22,7 +22,9 @@
     }
 
     @media (min-width: $br-mobile) {
-			margin: 0 0 18px;
+      & + * {
+        margin-top: 18px;
+      }
 	  }
   }
 
