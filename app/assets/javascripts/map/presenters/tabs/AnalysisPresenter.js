@@ -178,7 +178,6 @@ define([
       }
     },{
       'Analysis/toggle': function(boolean) {
-        console.log('Analysis/toggle '+boolean);
         this.view.toggleAnalysis($('#analysis-tab').hasClass('is-analysis'));
       }
     },{
