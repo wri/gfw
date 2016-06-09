@@ -35,86 +35,17 @@ define([
     disableDefaultUI: true,
   };
 
-  config.OVERLAYSTYLES = {
-    strokeWeight: 2,
-    fillOpacity: 0.45,
-    fillColor: "#FFF",
-    strokeColor: "#A2BC28",
-    editable: true,
-    icon: new google.maps.MarkerImage(
-      '/assets/icons/marker_exclamation.png',
-      new google.maps.Size(36, 36), // size
-      new google.maps.Point(0, 0), // offset
-      new google.maps.Point(18, 18) // anchor
-    )
-  };
-
-  config.MAPSTYLES = {};
-
-  config.MAPSTYLES.grayscale = {
-    type: 'style',
-    style: [ { "featureType": "water" }, { "featureType": "transit", "stylers": [ { "saturation": -100 } ] }, { "featureType": "road", "stylers": [ { "saturation": -100 } ] }, { "featureType": "poi", "stylers": [ { "saturation": -100 } ] }, { "featureType": "landscape", "stylers": [ { "saturation": -100 } ] }, { "featureType": "administrative", "stylers": [ { "saturation": -100 } ] },{ "featureType": "poi.park", "elementType": "geometry", "stylers": [ { "visibility": 'off' } ] } ]
-  }
-
-  config.MAPSTYLES.terrain = {
-    type: 'mapType',
-    style: google.maps.MapTypeId.TERRAIN,
-    title: "Terrain"
-  }
-
-  config.MAPSTYLES.satellite = {
-    type: 'mapType',
-    style: google.maps.MapTypeId.SATELLITE,
-    title: "Satellite"
-  }
-
-  config.MAPSTYLES.roads = {
-    type: 'mapType',
-    style: google.maps.MapTypeId.HYBRID,
-    title: "Roads"
-  }
-
-  config.MAPSTYLES.treeheight = {
-    type: 'customMapType',
-    style: new google.maps.ImageMapType({
-      getTileUrl: function(ll, z) {
-        var X = Math.abs(ll.x % (1 << z)); // wrap
-        return window.gfw.config.GFW_API_HOST + "/gee/simple_green_coverage/" + z + "/" + X + "/" + ll.y + ".png";
-      },
-      tileSize: new google.maps.Size(256, 256),
-      isPng: true,
-      maxZoom: 17,
-      name: "Forest Height",
-      alt: "Global forest height"
-    })
-  }
-
-  config.MAPSTYLES.landsat = [];
-
-  for(var i = 1999; i < 2013; i++) {
-    (function(year) {
-      config.MAPSTYLES.landsat[i] = new google.maps.ImageMapType({
-        getTileUrl: function(ll, z) {
-          var X = Math.abs(ll.x % (1 << z));  // wrap
-          return window.gfw.config.GFW_API_HOST + "/gee/landsat_composites/" + z + "/" + X + "/" + ll.y + ".png?year="+year;
-        },
-        tileSize: new google.maps.Size(256, 256),
-        isPng: true,
-        maxZoom: 17,
-        name: "Landsat "+i
-      });
-    })(i);
-  }
-
-
   var StoriesNewView = Backbone.View.extend({
 
     el: '#storiesNewView',
 
     events: {
-      'click #zoomIn': '_zoomIn',
-      'click #zoomOut': '_zoomOut',
-      'click #autoLocate': '_autoLocate'
+      'click #controlZoomIn': '_zoomIn',
+      'click #controlZoomOut': '_zoomOut',
+      'click #autoLocate': '_autoLocate',
+      'input #story_video' : '_videoInput',
+      'dragenter .sortable' : '_dragenter',
+      'dragstart .sortable' : '_dragstart'
     },
 
     model: new (Backbone.Model.extend({
@@ -135,6 +66,76 @@ define([
       this._initBindings();
 
       this.render();
+    },
+
+    /**
+     * UI EVENTS
+     */
+    
+    _dragenter: function(e) {
+      var target = e.target;
+      if (! !!target.classList.contains('sortable')) {
+        //check we're dropping the element in a proper draggable element
+        target = target.closest('.sortable');
+      }          
+      if (this.isbefore(this.sourceDrag, target)) {
+        target.parentNode.insertBefore(this.sourceDrag, target);
+      } else {
+        target.parentNode.insertBefore(this.sourceDrag, target.nextSibling);
+      }
+      var sortables = document.getElementsByClassName('sortable');
+      for (var i = 0; i < sortables.length; i++) {
+        this.uploadsIds[i] = sortables[i];
+      }
+      $("#story_uploads_ids").val(this.uploadsIds.join(","));
+    },
+
+    _dragstart: function(e) {
+      this.sourceDrag = e.target;
+      (e.originalEvent || e).dataTransfer.effectAllowed = 'move';
+    },
+
+
+    _videoInput: function(e) {
+      if ($(e.target).val().length == 0) {
+        var removable = document.getElementById('videothumbnail');
+        removable.parentNode.removeChild(removable);
+      } else {
+        this._addVideoThumbnail($(e.target).val());
+      }
+    },
+
+    _getVideoID: function(url) {
+      // template: http://img.youtube.com/vi/<video-id-here>/default.jpg
+      // a Youtube video ID has a 11 characters legngth
+      return 'http://img.youtube.com/vi/' + url.split('v=')[1].substring(0, 11) + '/default.jpg';
+    },
+
+    _addVideoThumbnail: function(url) {
+      var vidID  = this._getVideoID(url),
+          $thumb = $('#videothumbnail');
+      if ($thumb.length > 0) {
+        $thumb.find('.inner_box').css('background-image','url('+ vidID +')')
+      } else {
+        $('.thumbnails').append('<li class="sortable thumbnail" draggable="true" id="videothumbnail"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
+        this.uploadsIds.push('VID-'+vidID);
+        $("#story_uploads_ids").val(this.uploadsIds.join(","));
+        $thumb = $('#videothumbnail');
+        $thumb.find('.destroy').on('click', function(e) {
+            e.preventDefault();
+
+            var confirmation = confirm('Are you sure?')
+
+            if (confirmation == true) {
+              this.uploadsIds = _.without(this.uploadsIds, 'VID-'+vidID);
+              $("#story_uploads_ids").val(this.uploadsIds.join(","));
+              $("#story_video").val('');
+              $thumb.fadeOut(250, function() {
+                $thumb.remove();
+              });
+            }
+          });
+      }
     },
 
     _initBindings: function() {
@@ -241,7 +242,7 @@ define([
       var $searchInput = $('.map-search-input');
 
       // Load map
-      this.map = new google.maps.Map(document.getElementById('stories_map'),config.MAPOPTIONS);
+      this.map = new google.maps.Map(document.getElementById('map'),config.MAPOPTIONS);
 
       // Listen to map loaded
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function(){
@@ -273,17 +274,9 @@ define([
       });
 
 
-      // Listen to any change on center position
-      google.maps.event.addListener(this.map, 'zoom_changed',
-        _.bind(function() {
-          this.setCenter();
-        }, this)
-      );
-      google.maps.event.addListener(this.map, 'dragend',
-        _.bind(function() {
-          this.setCenter();
-      }, this));
-
+      // Google Maps 
+      google.maps.event.addListener(this.map, 'zoom_changed', this.setCenter.bind(this));
+      google.maps.event.addListener(this.map, 'dragend', this.setCenter.bind(this));
     },
 
     _autoLocate: function(e){
@@ -294,8 +287,8 @@ define([
             this.$autoLocate.removeClass('active');
             var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
             this.map.panTo(pos);
+            this.map.setZoom(18);
             this.setCenter();
-            this.setZoom(18);
           }, this ),
           _.bind(function() {
             this.$autoLocate.removeClass('active');
@@ -307,20 +300,28 @@ define([
       }
     },
 
-
+    isbefore: function(a, b) {
+      if (a.parentNode == b.parentNode) {
+        for (var cur = a; cur; cur = cur.previousSibling) {
+          if (cur === b) { 
+              return true;
+          }
+        }
+      }
+      return false;
+    }, 
 
     //ZOOM
     _zoomIn: function() {
-      this.setZoom(this.getZoom() + 1);
+      this.map.setZoom(this.getZoom() + 1);
     },
+
     _zoomOut: function(){
-      this.setZoom(this.getZoom() - 1);
+      this.map.setZoom(this.getZoom() - 1);
     },
+
     getZoom: function(){
       return this.map.getZoom();
-    },
-    setZoom: function(zoom){
-      this.map.setZoom(zoom);
     },
 
     setCenter: function() {
