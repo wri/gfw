@@ -8,6 +8,14 @@
     }
   }
 
+  &.-big-padding {
+    padding: 100px 0;
+
+    @media screen and (min-width: $br-mobile) {
+      padding: 150px 0;
+    }
+  }
+
   &.-no-border {
     border: 0;
   }
@@ -90,7 +98,7 @@
     .m-select {
       width: 100%;
       max-width: 400px;
-      @media (min-width: $br-mobile){
+      @media (min-width: $br-mobile) {
         position: absolute;
         top: 0;
         right: 0;
@@ -101,6 +109,8 @@
 
   .copyright {
     margin-top: 25px;
+
+    font-size: 11px;
 
     @media screen and (min-width: $br-mobile) {
       margin: 0;
