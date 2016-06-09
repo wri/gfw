@@ -107,17 +107,9 @@ define([
   }
 
 
-  var StoriesEditModel = Backbone.Model.extend({
-    defaults: {
-      the_geom: null
-    }
-  })
+  var StoriesNewView = Backbone.View.extend({
 
-
-
-  var StoriesEditView = Backbone.View.extend({
-
-    el: '#storiesEditView',
+    el: '#storiesNewView',
 
     events: {
       'click #zoomIn': '_zoomIn',
@@ -128,12 +120,16 @@ define([
       'dragstart .sortable' : 'dragstart'
     },
 
+    model: new (Backbone.Model.extend({
+      defaults: {
+        the_geom: null
+      }
+    })),
+
     initialize: function() {
       if (!this.$el.length) {
         return
       }
-
-      this.model = new StoriesEditModel();
 
       this.uploadsIds = [];
       this.filesAdded = 0;
@@ -434,7 +430,7 @@ define([
   });
 
 
-  return StoriesEditView;
+  return StoriesNewView;
 
 });
 

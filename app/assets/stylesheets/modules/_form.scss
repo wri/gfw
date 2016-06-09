@@ -1,94 +1,109 @@
-.field {
-  margin: 0 0 25px;
-  position: relative;
-  clear: both;
-}
+$label-width: 85px;
 
-.field_with_errors {
-  label {
-    color: #C12000;
-  }
-
-  input[type="text"],
-  input[type="email"] {
-    border: 1px solid #C12000;
-  }
-
-  p {
-    margin-bottom: 25px;
-    font-weight: 500;
-    font-size: 12px;
-    color: #C12000;
-    text-transform: uppercase;
-  }
-}
-
-label {
-  float: left;
-  color: #333;
-  font-weight: 500;
-  font-size: 12px;
-  text-transform: uppercase;
-}
 
 input[type="password"],
 input[type="text"],
 input[type="date"],
 input[type="email"],
 textarea {
-  border: 1px solid #ccc;
-  padding: 10px;
+  display: block;
   width: 100%;
-  margin: 5px 0;
+  border: 1px solid $border;
+  padding: 10px;
+  margin: 0;
   font-size: 14px;
-  @include border-radius(3px);
+  border-radius: 4px;
   outline: none;
+  &:focus {
+    border-color: darken($border,10%);
+  }
 }
 
-textarea {
-  height: 182px;
-  max-width: 100%;
-}
-
+/**
+ * Field
+ */
 .field {
   @include clearfix();
+  position: relative;  
   width: 100%;
+  margin: 0 0 25px;
   @media (min-width: $br-mobile) {
-    max-width: 582px;
+    padding: 0px 0px 0px $label-width;
   }
 
-
-  &.short {
+  label {
+    padding: 0 15px 0 0;
+    width: 100%;
+    color: $dark;
+    font-weight: 500;
+    font-size: 13px;
+    text-transform: uppercase;
+    text-align: right;
+    line-height: 1.5;
     @media (min-width: $br-mobile) {
-      max-width: 304px;
+      width: $label-width;
+      position: absolute;
+      left: 0;
+      top: 12px;
+    }
+
+    &.-has-hint {
+      top: 1px;
+    }
+  }
+
+  textarea {
+    height: 182px;
+    max-width: 100%;
+  }
+
+  > p {
+    color: $dark;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 15px;
+
+    &.-terms {
+      font-size: 10px;
+      margin: 5px;
+    }
+  }
+
+  // STATES
+  &.-short {
+    input[type="password"],
+    input[type="text"],
+    input[type="date"],
+    input[type="email"],
+    textarea {
+      max-width: 400px;
+    }
+  }
+
+  &.-with-errors {
+    label {
+      color: $red;
     }
 
     input[type="text"],
-    input[type="date"],
     input[type="email"] {
-      width: 100%;
-      display: block;
-      clear: both;
+      border: 1px solid $red;
     }
-  }
 
-  &.required {
-    span {
-      float: right;
-      font-size: 13px;
-      color: #666;
-      &.drop_pin{
-        @media (max-width: $br-mobile - 1) {
-          display: block;
-          float: left;
-          width: 100%;
-          margin: 2px 0 5px;
-        }
-      }
-    }
+    p {
+      margin-bottom: 25px;
+      font-weight: 500;
+      font-size: 12px;
+      color: $red;
+      text-transform: uppercase;
+    }    
   }
 }
 
+
+/**
+ * Radio
+ */
 .radio-box {
   @include clearfix();
   @include display-flex();
@@ -147,6 +162,10 @@ textarea {
   }
 }
 
+
+/**
+ * Checkbox
+ */
 .checkbox-box {
   @include clearfix();
   @include display-flex();
