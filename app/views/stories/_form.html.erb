@@ -20,10 +20,10 @@
     <%= f.label :location, 'Location *', class: "-has-hint" %>
     <p>Select a location for your story by entering an address in the search box, by dragging the map, or by clicking the target icon to find your current location. The flag in the center indicates where your story will be placed. </p>
 
-    <div class="<%= '-with-errors' if @story.errors[:the_geom].present? %> stories_map-container" >
+    <div class="<%= '-with-errors' if @story.errors[:the_geom].present? %> m-stories-map" >
       <div>
 
-        <div id="stories_map" class="map stories_map"></div>
+        <div id="stories_map" class="map"></div>
         <div class="map-controls">
           <div class="control-zoom">
             <button type="button" id="zoomIn"><svg><use xlink:href="#icon-control-plus"></use></svg></button>
