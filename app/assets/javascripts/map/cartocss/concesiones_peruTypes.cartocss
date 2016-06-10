@@ -3,39 +3,55 @@
 #concesion_forestal {
    polygon-opacity: 0.7;
    line-color: #FFF;
-   line-width: 1;
+   line-width: 0.2;
    line-opacity: 1;
 }
-#concesion_forestal [type="MADERABLE_CONCURSO"] {
+#concesion_forestal [type="POR CONCURSO PUBLICO"] {
    polygon-fill: #1F78B4;
 }
-#concesion_forestal [type="MADERABLE_ADECUACIÓN"] {
+#concesion_forestal [type="POR ADECUACION DE CONTRATO"] {
    polygon-fill: #1F78B4;
 }
-#concesion_forestal [type="FORESTACIÓN Y REFORESTACIÓN"] {
+#concesion_forestal [type="CONTRATO MAYOR A 1000 HA"] {
+   polygon-fill: #1F78B4;
+}
+#concesion_forestal [type="FORESTACION Y REFORESTACION"] {
    polygon-fill: #F9FF00;
 }
-#concesion_forestal [type="CONSERVACIÓN"] {
+#concesion_forestal [type="CONSERVACION"] {
    polygon-fill: #33A02C;
 }
 #concesion_forestal [type="ECOTURISMO"] {
    polygon-fill: #FB9A99;
 }
-#concesion_forestal [type="OPB (UNGURAHUI)"] {
+#concesion_forestal [type="UNGURAHUI"] {
    polygon-fill: #E31A1C;
 }
-#concesion_forestal [type="OPB (SHIRINGA)"] {
+#concesion_forestal [type="SHIRINGA"] {
    polygon-fill: #E31A1C;
 }
-#concesion_forestal [type="OPB (PLANTAS MEDICINALES)"] {
+#concesion_forestal [type="PLANTAS MEDICINALES"] {
    polygon-fill: #E31A1C;
 }
-#concesion_forestal [type="OPB (CASTAÑA)"] {
+#concesion_forestal [type="CASTAÑA"] {
    polygon-fill: #E31A1C;
 }
-#concesion_forestal [type="OPB (AGUAJE)"] {
+#concesion_forestal [type="AGUAJE"] {
    polygon-fill: #E31A1C;
 }
-#concesion_forestal [type="FAUNA"] {
+#concesion_forestal [type="MANEJO DE FAUNA SILVESTRE"] {
    polygon-fill: #FDBF6F;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
