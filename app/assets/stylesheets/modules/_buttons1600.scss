@@ -43,6 +43,7 @@
     text-transform: uppercase;
     padding: 0px 35px;
   }
+
   &.huge {
     font-size: 18px;
     text-transform: uppercase;
@@ -53,16 +54,19 @@
       font-size: 21px;
     }
   }
+
   &.little{
     font-size: 10px;
     text-transform: uppercase;
     height: 25px;
     line-height: 24px;
   }
+
   &.full-width{
     display: block;
     width: 100%;
   }
+
   &.lines{
     line-height: 1;
     white-space: normal;
@@ -192,52 +196,48 @@
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Btn arrow
-.btn-arrow {
-  -webkit-appearance: none;
-  background: $border;
-  border: none;
-  outline: none;
-  display: block;
-  position: absolute;
-  z-index: 1;
+// Call to action buttons
+.btn-cta {
+  @extend %reset-btn;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 50px 0;
+  color: $white;
+  background: $cGreen;
   cursor: pointer;
-  top: 50%;
-  left: 50%;
-  height: 50px;
-  width: 50px;
-  padding: 10px;
-  border-radius: 50%;
-  @include transition(all .25s $easeInOutCubic);
-  @include transform(translate(-50%,-50%));
+
+  span {
+    display: block;
+    font-size: 21px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
   svg {
-    fill: none;
-    stroke: $white;
+    display: block;
+    width: 50px;
+    height: 50px;
+    padding: 8px;
+    margin: 0 20px 0 0;
+    border: 3px solid $white;
+    border-radius: 50%;
+    fill: $white;
   }
 
   &:hover {
-    background: $cGreen;
+    background: lighten($cGreen,5%);
   }
 }
 
 
+// Button containers
 .m-btncontainer {
   @include display-flex();
   @include align-items(center);
   
+  // Justify
   &.is-center {
     @include justify-content(center);
     
@@ -254,6 +254,7 @@
     @include justify-content(space-between);
   }
 
+  // Sizes
   &.-col50 {
     > * {
       width: 47.5%;
@@ -266,6 +267,7 @@
     }
   }
 
+  // Steps
   &.is-steps {
     .btn {
       display: none;

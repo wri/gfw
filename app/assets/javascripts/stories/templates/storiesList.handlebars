@@ -1,0 +1,15 @@
+{{#each stories}}
+  <li class="m-list-story">
+    <a href="/stories/{{this.id}}">
+      <div class="img">
+        <div class="bg" style="background-image: url({{this.map}})"></div>
+      </div>
+      <article class="info">
+        <h4>{{this.title}}</h4>
+        <p>{{this.details}}</p>
+        <button class="btn gray medium">More</button>
+      </article>
+    </a>
+  </li>
+{{/each}}
+

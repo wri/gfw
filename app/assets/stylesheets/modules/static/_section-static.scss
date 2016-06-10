@@ -1,0 +1,53 @@
+.m-section-static {
+  position: relative;
+  padding: 60px 0;
+  
+	// HEADER
+  header {
+    color: $dark;
+    padding: 0px 0 40px;
+
+    h2 {
+      font-size: 35px;
+      @media only screen and (min-width: 480px) {
+        padding: 0 210px 0 0;
+      }
+
+    }
+
+    h3 {
+      font-size: 21px;
+      line-height: 1.25;
+      padding: 15px 0 0;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 10px 0 0;
+      a {
+        color: $cGreen;
+        font-weight: 500;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .btn {
+      margin: 15px auto 0;
+      width: 100%;
+      @media (min-width: $br-mobile-portrait) {
+        width: auto;
+      }
+    }
+  }
+
+  .inner {
+    padding: 0 15px;
+    @media (min-width: $br-mobile) {
+      padding: 0;
+    }
+  }
+}
