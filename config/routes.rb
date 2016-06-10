@@ -61,7 +61,7 @@ Gfw::Application.routes.draw do
   get '/my_gfw/' => 'connect#index', as: 'user_index'
   get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
 
-  # get '/stayinformed' => redirect('stayinformed/crowdsourced-stories')
+  get '/stayinformed/crowdsourced-stories' => redirect('/stories')
   get '/stayinformed' => 'static#keep'
   get '/stayinformed(/:section)' => 'static#keep'
   get '/stayinformed-stories' => 'static#keepstories'
