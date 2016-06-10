@@ -117,6 +117,7 @@ Gfw::Application.routes.draw do
 
   # sitemap
   get '/sitemap' => 'sitemap#index'
+  get '/howto', to: redirect('/howto/')
 
   # Small Grunts Fund
   get '/small-grants-fund' => 'small_grants_fund#index'
