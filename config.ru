@@ -1,18 +1,18 @@
 # This file is used by Rack-based servers to start the application.
 
 require ::File.expand_path('../config/environment',  __FILE__)
-use Rack::Deflater
-run Rails.application
-
 require 'rack/reverse_proxy'
 
+use Rack::Deflater
 use Rack::ReverseProxy do
   # Set :preserve_host to true globally (default is true already)
   reverse_proxy_options preserve_host: true
 
-  # Forward the path /test* to http://example.com/test*
+  # Forward the path /gfw-assets* to ENV['GFW_ASSETS_URL']*
   reverse_proxy(/^\/gfw-assets\/?(.*)$/, "#{ENV['GFW_ASSETS_URL']}$1")
-  reverse_proxy(/^\/howto\/?(.*)$/, "#{ENV['HOWTO_URL']}$1")
+
+  # Forward the path /howto/* to ENV['HOWTO_URL']/*
+  reverse_proxy(/^\/howto(\/.*)$/, "#{ENV['HOWTO_URL']}$1")
 end
 
 if ENV['ACCESS'] == 'private'
@@ -21,3 +21,5 @@ if ENV['ACCESS'] == 'private'
     password  == ENV['ACCESS_PASSWORD']
   end
 end
+
+run Rails.application
