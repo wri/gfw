@@ -42,8 +42,12 @@
     </div>
 
     <%= f.hidden_field :the_geom %>
+    <%= f.hidden_field :uploads_ids %>    
   </div>
-
+  <div class="field">
+    <%= f.label :location %>
+    <%= f.text_field :location, :placeholder => '“Katingan Peatland area, Indonesia,” “Near Ambanja, Mozambique”' %>
+   </div>
   <div class="field -short">
     <%= f.label :date %>
     <%= f.date_field :date %>
@@ -61,7 +65,6 @@
 
   <div class="field">
     <%= f.label :media, class: "-has-hint" %>
-    <%= f.hidden_field :uploads_ids %>
     
     <p class="mobile-hide">Select images and videos to add to your story. Drag & drop to reorder them within the carousel. The first one will become the default image for the story. The maximum file size for uploads is 4 MB.</p>
     <p class="mobile-show">Click below to upload photos or videos to your story. The first photo will become the default image. The maximum file size for uploads is 4 MB. If you are on an iOS device you must upload pictures one by one.</p>
