@@ -12,7 +12,7 @@ use Rack::ReverseProxy do
 
   # Forward the path /test* to http://example.com/test*
   reverse_proxy(/^\/gfw-assets\/?(.*)$/, "#{ENV['GFW_ASSETS_URL']}$1")
-  reverse_proxy(/^\/howto\/?(.*)$/, "#{ENV['HOWTO_URL']}$1")
+  reverse_proxy(/^\/howto(\/.*)$/, "http://vizzuality.github.io/gfw-howto$1")
 end
 
 if ENV['ACCESS'] == 'private'
