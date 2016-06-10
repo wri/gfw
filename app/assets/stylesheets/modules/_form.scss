@@ -80,7 +80,7 @@ textarea {
     }
   }
 
-  &.-with-errors {
+  &.-with-errors, &.field_with_errors {
     label {
       color: $red;
     }
