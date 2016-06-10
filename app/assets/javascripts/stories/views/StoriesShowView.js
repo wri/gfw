@@ -61,6 +61,9 @@ define([
       new InterestingView();
       mps.publish('Interesting/update',['discussion_forum, how_to, submit_a_story']);
 
+      var title = this.story.get('title') || '';
+      document.title = title + ' | Global Forest Watch';
+
       return this;
     },
 
