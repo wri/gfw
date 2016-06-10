@@ -28,7 +28,24 @@
 <section class="content-stories">
   <div class="inner">
     <div id="carrousel-stories" class="story-carrousel">
-      CAROUSEL GON GO HERE
+      {{#if media}}
+        <a href='#' data-direction="prev" class='btn-nav previous'></a>
+        <a href='#' data-direction="next" class='btn-nav next'></a>
+      {{/if}}
+
+      <ul>
+        {{#each media}}
+          {{#if this.embed}}
+            <li class='slide'>{{{this.embed}}}</li>
+          {{/if}}
+        {{/each}}
+
+        <li class="slide">
+          <div class="bg is-cover" style="background-image: url({{map}});"></div>
+        </li>
+      </ul>
+
+      <div id="paginationView" class="main-slider-pagination"></div>
     </div>
 
     <div class='story-content'>

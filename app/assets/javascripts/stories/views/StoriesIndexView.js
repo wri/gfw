@@ -29,6 +29,9 @@ define([
       this.$('#storiesSpinner').addClass('-start');
       this.renderPaginationControls();
 
+      $('#crowdsourcedStories').addClass('current');
+      document.title = 'Crowdsourced Stories | Global Forest Watch';
+
       return this;
     },
 
