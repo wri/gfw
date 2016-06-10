@@ -9,6 +9,7 @@ define([
   var StoriesItemView = Backbone.View.extend({
 
     tagName: 'li',
+    className: 'm-list-story',
 
     template: Handlebars.compile(tpl),
 

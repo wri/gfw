@@ -409,11 +409,6 @@
 // NEW
 .submit-section{
   padding: 70px 0 50px;
-
-  .inner {
-    min-height: 1400px;
-  }
-
   aside {
     display: none;
     position: absolute;
@@ -492,23 +487,6 @@
 
 
 .story_form{
-  label.has_error {
-    color: #C12000;
-  }
-
-  input[type="text"].has_error,
-  input[type="email"].has_error {
-    border: 1px solid #C12000;
-  }
-
-  p.has_error {
-    margin-bottom: 25px;
-    font-weight: 500;
-    font-size: 12px;
-    color: #C12000;
-    text-transform: uppercase;
-  }
-
   header{
     h2{
       position: relative;
@@ -556,7 +534,7 @@
       line-height: 1.2em;
       color: $dark;
       padding: 2px 0 0;
-      
+
       &.-terms {
         margin: 0 0 8px;
       }
@@ -736,7 +714,7 @@
   }
 }
 
-.stories_map.has_error {
+.field_with_errors .stories_map {
   border: 1px solid #C12000;
 }
 

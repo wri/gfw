@@ -18,6 +18,7 @@ define([
       this.stories = new Stories([], {perPage: 5});
       this.stories.setPage(this.$el.data('page') || 1);
       this.listenTo(this.stories, 'sync', this.renderStories);
+      this.listenTo(this.stories, 'sync', this.renderPaginationControls);
       this.stories.fetch();
 
       this.render();
@@ -25,19 +26,22 @@ define([
 
     render: function() {
       this.$el.html(this.template());
+      this.$('#storiesSpinner').addClass('-start');
       this.renderPaginationControls();
 
       return this;
     },
 
     renderStories: function() {
-      var $storiesList = this.$('#storiesKeepList');
+      var $storiesList = this.$('#storiesList');
       $storiesList.empty();
 
       this.stories.getPaginatedModels().forEach(function(story) {
         var view = new StoryView({story: story});
         $storiesList.append(view.render().el);
       }.bind(this));
+
+      this.$('#storiesSpinner').removeClass('-start');
     },
 
     renderPaginationControls: function() {

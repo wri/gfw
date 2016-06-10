@@ -653,7 +653,7 @@
 
       >li{
         margin: 20px;
-        
+
         img {
           border: none;
         }
@@ -752,18 +752,12 @@
 // KEEP UPDATED
 .stories-box {
   width: 100%;
-
-  > ul {
+  >ul {
     position: relative;
     @include display-flex();
     @include flex-wrap(wrap);
     @include justify-content(space-between);
-
-    .spinner {
-      top: 25px;
-    }
-
-    > li {
+    >li {
       padding: 0 0 40px 0;
       position: relative;
       &:first-child { margin-top: 20px;}
@@ -788,7 +782,6 @@
         @include row(flex-start);
         @include flex-wrap(wrap);
       }
-
       figure {
         width: 100%;
         margin: 0 0 20px -15px;
@@ -1027,7 +1020,7 @@
   @media (min-width: $br-mobile) {
     padding: 30px 20px 0;
   }
-  
+
   .application-modal-header {
     width: 100%;
     position: relative;
@@ -1295,7 +1288,7 @@
           padding: 0;
         }
       }
-    }  
+    }
 
     .img-two-columns {
       @include display-flex();
@@ -1306,7 +1299,7 @@
         width: 47.5%;
         margin: 10px 0;
       }
-    }  
+    }
 
     .read_more {
       padding: 10px 0;

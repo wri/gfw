@@ -40,7 +40,7 @@ define([
 
     scrollToTop: function() {
       if ($(window).width() >= 850 ) {
-        var $sideBar = $('#sidebarNavView');
+        var $sideBar = $('#storiesResetPosition');
         $('html, body').animate({scrollTop: $sideBar.offset().top}, 500);
       } else {
         $('#sources-box').animate({scrollTop: 0}, 500);

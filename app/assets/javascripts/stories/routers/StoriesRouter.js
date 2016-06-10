@@ -1,11 +1,11 @@
 define([
   'jquery', 'backbone',
   'views/NotificationsView',
-  'stories/views/StoriesNewView', 'stories/views/StoriesShowView'
+  'stories/views/StoriesIndexView', 'stories/views/StoriesNewView', 'stories/views/StoriesShowView'
 ], function(
   $, Backbone,
   NotificationsView,
-  StoriesNewView, StoriesShowView
+  StoriesIndexView, StoriesNewView, StoriesShowView
 ) {
 
   'use strict';
@@ -15,6 +15,7 @@ define([
     el: $('.layout-content'),
 
     routes: {
+      'stories': 'index',
       'stories/new': 'newStory',
       'stories/:id': 'showStory',
       '*path': 'show404'
@@ -22,6 +23,11 @@ define([
 
     initialize: function() {
       new NotificationsView();
+    },
+
+    index: function() {
+      var storyIndex = new StoriesIndexView();
+      this.el.html(storyIndex.render().el);
     },
 
     newStory: function() {

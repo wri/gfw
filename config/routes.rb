@@ -44,7 +44,8 @@ Gfw::Application.routes.draw do
   get '/about/testers' => redirect("/about")
   get '/getinvolved/provide-feedback' => redirect("/getinvolved")
 
-  get '/stories' => redirect('/stayinformed/crowdsourced-stories')
+  get '/stayinformed/crowdsourced-stories' => redirect('/stories')
+  get '/stories' => 'stories#index'
   get '/stories/new' => 'stories#index', as: 'new_story'
   get '/stories/*all' => 'stories#index'
 
