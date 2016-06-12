@@ -41,13 +41,6 @@ class StaticController < ApplicationController
     redirect_to url
   end
 
-  def howto
-    @title = 'How To'
-    @desc = 'Learn to use the GFW platform with detailed directions on how to harness a wide variety of content and capabilities to suit your interests.'
-    @keywords = 'GFW, how to, howto, learn to, instuctions, video, tutorial, tutorials, guidelines, guide, learn, help, platform, website, map, analyze, manual, faqs'
-    @currentNavigation = '.shape-howto'
-  end
-
   def keep
     @title = 'Stay informed'
     @desc = 'Read the latest news and GFW analysis, sign up to receive alerts, and subscribe to areas of interest.'

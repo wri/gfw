@@ -1,0 +1,40 @@
+.l-wrapper {
+  position: relative;
+  margin: 0 auto;
+  padding: 0px;
+  max-width: 1600px;
+  width: 100%;
+}
+
+.l-inner {
+  margin: 0 auto;
+  position: relative;
+
+  @media (min-width: $br-mobile){
+    max-width: 1024px;
+    width: 95%;
+  }
+
+  @media (min-width: $br-desktopbig){
+    max-width: 1200px;
+    width: 75%;
+  }
+}
+
+.l-menu {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  background: rgba($white,0.8);
+  border-bottom: 1px solid $border1;
+}
+
+.l-content {
+  width: 100%;
+  background: $white;
+  padding: 0;
+  @media (min-width: $br-mobile){
+    // width: calc(100% - #{$aside-width});
+  }
+}

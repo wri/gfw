@@ -1,7 +1,12 @@
 <% if content_for?(:header) %>
   <%= yield :header %>
 <% else %>
-  <h1><a href="/">Global Forest Watch</a></h1>
+  <h1>
+    <a href="/">
+      Global Forest Watch
+      <span class="ribbon"><span>Beta</span></span>
+    </a>
+  </h1>
   <nav id="nav-mobile">
     <form class="mobile-show" action="/search">
       <svg class="icon"><use xlink:href="#shape-search"></use></svg>

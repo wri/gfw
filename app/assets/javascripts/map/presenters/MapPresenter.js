@@ -36,7 +36,7 @@ define([
       }
     }, {
       'Geostore/go': function(geostore) {
-        this._showGeostore(geostore);
+        this.status.set('geostore', geostore);
       }
     }, {
       'LayerNav/change': function(layerSpec) {
@@ -107,6 +107,10 @@ define([
       this._updateStatusModel(place.params);
       this._setLayers(place.layerSpec, place.params);
 
+      if (!!place.params.fit_to_geom && !!this.status.get('geostore') && !!this.status.get('geostore').geojson) {
+        this._fitToGeostore(this.status.get('geostore'));
+      }
+
       // Very weird my friend (if if if if if if)
       if ((!!place.params.iso && !!place.params.iso.country && place.params.iso.country == 'ALL') && ! !!place.params.wdpaid && ! !!place.params.geojson) {
         this.view.autolocateQuestion();
@@ -121,6 +125,10 @@ define([
     _updateStatusModel: function(params) {
       if (params.threshold) {
         this.status.set('threshold', params.threshold);
+      }
+
+      if (params.layer_options) {
+        this.status.set('layerOptions', params.layer_options);
       }
 
       if (params.fit_to_geom) {
@@ -142,7 +150,7 @@ define([
      * and the current layer options status.
      */
     _setLayers: function(layerSpec, params) {
-      var options = _.pick(this.status.toJSON(), 'threshold');
+      var options = _.pick(this.status.toJSON(), 'threshold', 'layerOptions');
       if (params && params.begin && params.end) {
         options.currentDate = [params.begin, params.end];
       }
@@ -187,7 +195,6 @@ define([
      */
     _setMapOptions: function(place) {
       var params = place.params;
-
       if (params.fitbounds) {
         this.view.fitBounds(geojsonUtilsHelper.getBoundsFromGeojson(params.geojson))
       }

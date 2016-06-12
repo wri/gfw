@@ -27,16 +27,6 @@ Gfw::Application.routes.draw do
     get '/common(/:section)(/:section)(/:section)' => redirect("sources")
     get '/assets(/:content)' => redirect('/')
 
-    # howto
-    get '/howto/video' => redirect("/howto")
-    get '/howto/general_questions' => redirect("/howto/faqs")
-    get '/howto/terminology' => redirect("/howto/faqs")
-    get '/howto/data' => redirect("/howto/faqs")
-    get '/howto/web_platform' => redirect("/howto/faqs")
-    get '/howto/for_business' => redirect("/howto/faqs")
-    get '/howto/analyze-forest-change' => redirect("/howto/analyze-and-subscribe-to-forest-change-data")
-    get '/howto/subscribe-to-alerts-and-user-stories' => redirect("/howto/analyze-and-subscribe-to-forest-change-data")
-
     # about
     get '/about/video' => redirect("/about")
     get '/about/gfw' => redirect("/about/about-gfw")
@@ -61,7 +51,7 @@ Gfw::Application.routes.draw do
   get '/my_gfw/' => 'connect#index', as: 'user_index'
   get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
 
-  # get '/stayinformed' => redirect('stayinformed/crowdsourced-stories')
+  get '/stayinformed/crowdsourced-stories' => redirect('/stories')
   get '/stayinformed' => 'static#keep'
   get '/stayinformed(/:section)' => 'static#keep'
   get '/stayinformed-stories' => 'static#keepstories'
@@ -70,10 +60,6 @@ Gfw::Application.routes.draw do
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'
   get '/feedback_jsonp' => 'static#feedback_jsonp'
-
-  # howto
-  get '/howto' => 'static#howto'
-  get '/howto(/:section)' => 'static#howto'
 
   # about
   get '/about' => 'static#about'
@@ -131,6 +117,10 @@ Gfw::Application.routes.draw do
 
   # sitemap
   get '/sitemap' => 'sitemap#index'
+  get '/howto', to: redirect('/howto/')
+
+  # Small Grunts Fund
+  get '/small-grants-fund' => 'small_grants_fund#index'
 
   # robots
   get '/robots', to: redirect('/robots.txt'), format: false

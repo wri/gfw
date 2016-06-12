@@ -54,10 +54,10 @@ define([
   'text!map/templates/legend/places2watch.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, tplMore, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, 
-    concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, 
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
+    concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
     global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
-    gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl, 
+    gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl,
     rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl, paTpl, places2watchTPL) {
 
   'use strict';
@@ -142,12 +142,13 @@ define([
       urthe: Handlebars.compile(urtheTpl),
       protected_areasCDB:Handlebars.compile(paTpl),
       places_to_watch:Handlebars.compile(places2watchTPL)
-      
+
     },
 
     events: {
       'click .js-toggle-category' : 'toogleCategory',
       'click .js-toggle-sublayer': 'toggleLayer',
+      'click .js-toggle-layer-option': 'toggleLayerOption',
       'click .js-layer-close' : 'removeLayer',
       'click .js-toggle-threshold' : 'toggleThreshold',
       'click .js-toggle-legend' : 'toogleLegend',
@@ -243,6 +244,7 @@ define([
         layersLength: layers.length,
         country: (!!iso) ? _.findWhere(this.countries.toJSON(), { iso: iso.country }) : null,
       }));
+      this.presenter.toggleLayerOptions();
     },
 
     statusCategories: function(array){
@@ -272,7 +274,7 @@ define([
         });
       } else {
         this.model.set({
-          hidden: false, 
+          hidden: false,
           boxClosed: false
         });
         this.updateLegend(categories, options, geographic, iso);
@@ -301,9 +303,30 @@ define([
       }
     },
 
+    toggleLayerOption: function(e) {
+      if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source')) {
+        var option = $(e.currentTarget).data('option');
+        this.presenter.toggleLayerOption(option);
+      }
+    },
+
+    toggleLayerOptions: function(layerOptions) {
+      _.each(this.$el.find('.layer-option'), function(div) {
+        var $div = $(div);
+        var $toggle = $div.find('.onoffswitch');
+        var optionSelected = layerOptions.indexOf($div.data('option')) > -1;
+
+        if (optionSelected) {
+          $toggle.addClass('checked').css('background', '#F69');
+        } else {
+          $toggle.removeClass('checked').css('background', '');
+        }
+      }, this);
+    },
+
     // layers
     toggleLayer: function(e) {
-      if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source')) {      
+      if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source')) {
         var layerSlug = $(e.currentTarget).data('sublayer');
         this.presenter.toggleLayer(layerSlug);
       }
@@ -368,7 +391,7 @@ define([
 
     renderMore: function(data) {
       this.$more.html(this.templateMore(data));
-    },    
+    },
 
 
 

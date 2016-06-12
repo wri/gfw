@@ -9,7 +9,7 @@ define([
   'mps',
   'map/presenters/PresenterClass',
   'map/services/LayerSpecService',
-  'map/services/CountryService',  
+  'map/services/CountryService',
 ], function(_, Backbone, mps, PresenterClass, layerSpecService, countryService) {
 
   'use strict';
@@ -19,7 +19,20 @@ define([
       layerSpec: null,
       threshold: null,
       hresolution: null,
-      iso: null
+      iso: null,
+      layerOptions: []
+    },
+
+    toggleLayerOption: function(option) {
+      var options = this.get('layerOptions') || [],
+          index = options.indexOf(option);
+      if (index > -1) {
+        options.splice(index, 1);
+        this.set('layerOptions', options);
+      } else {
+        options.push(option);
+        this.set('layerOptions', options);
+      }
     }
   });
 
@@ -29,6 +42,7 @@ define([
       this.view = view;
       this.status = new StatusModel();
       this._super();
+      mps.publish('Place/register', [this]);
     },
 
     /**
@@ -39,13 +53,15 @@ define([
         this.status.set('layerSpec', place.layerSpec);
         this.status.set('threshold', place.params.threshold);
         this.status.set('hresolution', place.params.hresolution);
+        this.status.set('layerOptions', place.params.layer_options);
 
         if(!!place.params.iso.country && place.params.iso.country !== 'ALL'){
           this.status.set('iso', place.params.iso);
         }
-        
+
         this.updateLegend();
         this.toggleSelected();
+        this.toggleLayerOptions();
         this.view.updateLinkToGFW();
       }
     },{
@@ -82,7 +98,7 @@ define([
         this.status.set('iso', _.clone(iso));
         this.updateLegend();
       }
-    },    
+    },
     // Mobile events... we should standardise them
     {
       'Dialogs/close': function() {
@@ -110,6 +126,18 @@ define([
 
       // There is no other way...we should refactor the legend behaviour
       this.getCountryMore();
+    },
+
+    toggleLayerOption: function(option) {
+      this.status.toggleLayerOption(option);
+      this.toggleLayerOptions();
+      mps.publish('Place/update', [{go: false}]);
+    },
+
+    toggleLayerOptions: function() {
+      mps.publish('LayerNav/changeLayerOptions',
+        [this.status.get('layerOptions')]);
+      this.view.toggleLayerOptions(this.status.get('layerOptions') || []);
     },
 
     /**
@@ -154,26 +182,39 @@ define([
         countryService.execute(iso.country, _.bind(function(results) {
           var is_more = (!!results.indepth);
           var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
-          
+
           if (is_more) {
             this.view.renderMore({
               name: results.name,
-              url: results.indepth, 
+              url: results.indepth,
               is_idn: is_idn
-            });            
+            });
           }
 
         },this));
       }
-    },    
+    },
 
     getHresolutionParams: function () {
       if (!!this.status.get('hresolution')) {
         return JSON.parse(atob(this.status.get('hresolution')));
       }
       return {};
-    }
+    },
 
+    /**
+     * Used by PlaceService
+     */
+    getPlaceParams: function() {
+      var params = {};
+
+      var layerOptions = this.status.get('layerOptions');
+      if (layerOptions && layerOptions.length > 0) {
+        params.layer_options = this.status.get('layerOptions');
+      }
+
+      return params;
+    }
 
   });
 

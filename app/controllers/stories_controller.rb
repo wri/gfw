@@ -17,7 +17,14 @@ class StoriesController < ApplicationController
       respond_with @stories
       return
     else
-      redirect_to '/stayinformed/crowdsourced-stories'
+      stories_per_page = 5
+
+      @page        = (params[:page] || 1).to_i
+      @stories_per_page = stories_per_page
+      @total_stories = Api::Story.visible.count
+      @total_stories_paginated     = Api::Story.find_by_page(@page, stories_per_page)
+      
+      @title = 'Crowdsourced Stories'
       return
     end
   end
@@ -29,7 +36,7 @@ class StoriesController < ApplicationController
   def new
     @url = stories_path
     @story = Api::Story.new
-    @title = I18n.translate 'stories.new.title'
+    @title = 'Submit a story'
   end
 
   def edit

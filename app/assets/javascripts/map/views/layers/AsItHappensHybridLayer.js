@@ -1,7 +1,7 @@
 define([
   'moment', 'd3', 'handlebars', 'uri', 'mps',
   'helpers/canvasCartoCSSHelper',
-  'abstract/layer/CartoDbCanvasLayerClass',
+  'abstract/layer/AnimatedCanvasLayerClass',
   'map/presenters/TorqueLayerPresenter',
   'map/services/CartoDbLayerDateService', 'map/services/CartoDbLayerService', 'map/services/CartoDbRasterLayerService',
   'text!map/queries/as_it_happens_hybrid.sql.hbs', 'text!map/queries/as_it_happens_hybrid_raster.sql.hbs',
@@ -9,7 +9,7 @@ define([
 ], function(
   moment, d3, Handlebars, UriTemplate, mps,
   canvasCartoCSSHelper,
-  CartoDbCanvasLayerClass,
+  AnimatedCanvasLayerClass,
   Presenter,
   CartoDbLayerDateService, CartoDbLayerService, CartoDbRasterLayerService,
   SQL, rasterSQL,
@@ -17,7 +17,7 @@ define([
 
   'use strict';
 
-  var AsItHappensHybridLayer = CartoDbCanvasLayerClass.extend({
+  var AsItHappensHybridLayer = AnimatedCanvasLayerClass.extend({
 
     defaults: {
       dataMaxZoom: 20
