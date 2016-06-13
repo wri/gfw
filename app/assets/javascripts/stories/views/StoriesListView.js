@@ -95,16 +95,15 @@ define([
         },
 
         success: function () {
+          this.$storiesSpinner.toggleClass('-start', false);
           this.render();
         }.bind(this),
         
         error: function (e) {
+          this.$storiesSpinner.toggleClass('-start', false);
           alert(' Service request failure: ' + e);
         }.bind(this),
-
-        complete: function (e) {
-          this.$storiesSpinner.toggleClass('-start', false);
-        }.bind(this)
+        
       })
     },
 
