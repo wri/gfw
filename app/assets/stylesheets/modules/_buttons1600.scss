@@ -54,6 +54,12 @@
     }
   }
 
+  &.huge-padding {
+    height: 48px;
+    line-height: 50px;    
+    padding: 0 50px;
+  }
+
   &.little{
     font-size: 10px;
     text-transform: uppercase;
@@ -181,6 +187,10 @@
   }
 }
 
+
+
+
+
 // Call to action buttons
 .btn-cta {
   @extend %reset-btn;
@@ -217,6 +227,9 @@
 }
 
 
+
+
+
 // Button containers
 .m-btncontainer {
   @include display-flex();
@@ -225,6 +238,25 @@
   // Justify
   &.is-center {
     @include justify-content(center);
+  }
+
+  &.-fix-width-220 {
+    > * {
+      width: 220px;
+    }
+  }
+
+  &.-mobile {
+    @media (max-width: $br-mobile - 1) {
+      flex-wrap: wrap;
+      > * {
+        margin: 15px 0 0;
+        
+        &:first-child {
+          margin: 0;
+        }
+      }
+    }
   }
 
   // Sizes

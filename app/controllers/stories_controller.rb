@@ -43,6 +43,7 @@ class StoriesController < ApplicationController
     @url = stories_path
     @story = Api::Story.new
     @title = 'Submit a story'
+    @total_stories_paginated = Api::Story.find_by_page(1, 4)
   end
 
   def edit
