@@ -3,7 +3,10 @@
  */
 .m-latest-stories {
 	position: relative;
-	margin: 0 0 80px;
+  @media (min-width: $br-mobile) {
+		margin: 0 0 80px;
+		min-height: 660px;
+  }
 }
 
 
@@ -11,13 +14,16 @@
  * NAVIGATION
  */
 .m-latest-navigation {
-	display: flex;
+	display: none;
 	align-items: center;
 	justify-content: space-between;
 	position: absolute;
 	bottom: 0;
 	left: 50%;
 	transform: translate(-50%,50%);
+  @media (min-width: $br-mobile) {
+  	display: flex;
+  }
 
 	> li {
 		margin: 0 55px 0 0;
@@ -63,39 +69,74 @@
 	}
 }
 
+/**
+ * SLIDE LIST
+ */
+.m-latest-list {
+	> li {
+		margin-bottom: 35px;
+	  @media (min-width: $br-mobile) {
+	  	margin-bottom: 0;
+	  }
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
 
 /**
  * SLIDE
  */
 .m-latest-story {
-	display: none;
+	flex-wrap: wrap;
 	justify-content: space-between;
+  @media (min-width: $br-mobile) {
+		display: none;
+		// min height to prevent jumps when you change between slides
+		min-height: 660px;
+  }
 
-	&.-active, &:first-child {
-		display: flex;
+	&.-active {
+	  @media (min-width: $br-mobile) {
+	  	display: flex;
+	  }
 	}
 
 	> * {
-		width: 50%;
+		width: 100%;
+    @media (min-width: $br-mobile) {
+      width: 50%;
+    }
 	}
 
 	.info {
-		background: $light;
-		padding: 110px 50px;
 		color: $dark;
+    @media (min-width: $br-mobile) {
+			background: $light;
+			padding: 110px 50px;
+    }
+
 
 		h3 {
 			font-size: 21px;
 			color: $dark;
 			text-transform: uppercase;
+			display: none;
+	    @media (min-width: $br-mobile) {
+				display: block;
+	    }
 		}
 
 		h2 {
 			color: $cGreen;
-			font-size: 30px;
 			font-weight: 300;
-			padding: 40px 0 0;
 			line-height: 1.35;
+			font-size: 21px;
+	    @media (min-width: $br-mobile) {
+				font-size: 30px;
+				padding: 40px 0 0;
+	    }
 
 			a {
 				color: $cGreen;
@@ -111,14 +152,19 @@
       line-height: 1.5;
       padding: 20px 0 0;
       font-weight: 300;
-      @media only screen and (min-width: $br-mobile) {
+      @media (min-width: $br-mobile) {
         font-size: 19px;
       }
 		}
 	}
 
 	.img {
+		display: none;
 		position: relative;
+
+    @media (min-width: $br-mobile) {
+      display: block;
+    }
 
 		.bg {
 			position: absolute;

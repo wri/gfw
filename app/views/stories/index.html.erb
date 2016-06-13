@@ -26,10 +26,14 @@
 </section>
 
 <section class="m-section-static -no-padding">
-  <div class="inner">        
-    <!-- Pagination -->
-    <div class="m-latest-stories">    
-      <ul id="storiesLatestView" class="m-latest-list">
+  <div class="inner">  
+    <header class="mobile-show">
+      <h2>Latest user stories</h2>
+    </header>
+
+    <!-- Latest stories -->
+    <div id="storiesLatestView" class="m-latest-stories">    
+      <ul id="storiesLatestListView" class="m-latest-list">
         <% @total_stories_paginated.each do |story| %>
           <li class="m-latest-story">
             <article class="info">
@@ -55,9 +59,43 @@
 <section class="m-section-static">
   <div class="inner">        
     <!-- Pagination -->
-    <ul class="m-btncontainer is-center">    
-      <li><a class="btn green medium uppercase" href="/stories/new">Submit a story</a></li>
-      <li><a class="btn gray medium uppercase" href="/stories/crowdsourcedstories">View all</a></li>
+    <ul class="m-btncontainer is-center -fix-width-220 -mobile">    
+      <li><a class="btn green huge-padding full-width uppercase" href="/stories/new">Submit a story</a></li>
+      <li><a class="btn gray huge-padding full-width uppercase" href="/stories/crowdsourcedstories">View all</a></li>
     </div>
   </ul>
 </section>
+
+<section class="m-section-static">
+  <div class="inner">
+    <header>
+      <h2>You may find this interesting</h2>
+    </header>
+    <ul class="m-interesting">
+      <li class="m-interesting-item">
+        <div class="img">
+          <a href="/map">
+            <div class="bg" style="background-image: url('/assets/static-pages//small-grants-fund/gfw-interactive-map.png')"></div>
+          </a>
+        </div>
+        <div class="info">        
+          <h3><a href="/map">GFW INTERACTIVE MAP</a></h3>
+          <p>View and analyze data on the GFW Interactive Map.</p>
+        </div>
+      </li>
+
+      <li class="m-interesting-item">
+        <div class="img">
+          <a href="/countries">
+            <div class="bg" style="background-image: url('/assets/static-pages/small-grants-fund/home-slider-1.png')"></div>
+          </a>
+        </div>
+        <div class="info">        
+          <h3><a href="/countries">MAP BUILDER</a></h3>
+          <p>Create your own version of Global Forest Watch, featuring a specific location or type of data</p>
+        </div>
+      </li>
+    </ul> 
+  </div>
+</section>
+
