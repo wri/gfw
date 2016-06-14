@@ -20,19 +20,31 @@ define([
     },
 
     _setSlides: function() {
-      var slideElems = ['#SFGSliderView', '#GrantesForestSliderView'],
-        slideOptions = {
+
+      var sliders = [{
+        slideOptions: {
+          el: '#SFGSliderView',
+          options: {
+            defaultSlider: {
+              autoplay: true,
+              navigation: false
+            }
+          }
+        }
+      },{
+        slideOptions: {
+          el: '#GrantesForestSliderView',
           options: {
             defaultSlider: {
               infinite: false,
               navigation: false
             }
           }
-        };
+        }
+      }]
 
-      slideElems.forEach(function(elem) {
-        Object.assign(slideOptions, {el: elem});
-        new SliderView(slideOptions);
+      sliders.forEach(function(slider) {
+        new SliderView(slider.slideOptions);
       });
     }
 
