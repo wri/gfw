@@ -33,7 +33,7 @@ Gfw::Application.routes.draw do
     get '/about/partners' => redirect("/about/the-gfw-partnership")
     get '/partners' => redirect("/about/the-gfw-partnership")
     get '/about/users' => redirect("/about")
-    get '/about/small_grants_fund' => redirect("/getinvolved/apply-to-the-small-grants-fund")
+    get '/about/small_grants_fund' => redirect("/small-grants-fund")
     get '/about/testers' => redirect("/about")
     get '/getinvolved/provide-feedback' => redirect("/getinvolved")
 
@@ -57,6 +57,7 @@ Gfw::Application.routes.draw do
   get '/stayinformed(/:section)' => 'static#keep'
   get '/stayinformed-stories' => 'static#keepstories'
 
+  get '/getinvolved/apply-to-the-small-grants-fund' => redirect('/small-grants-fund')
   get '/getinvolved' => 'static#getinvolved'
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'

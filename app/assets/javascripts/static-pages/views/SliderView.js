@@ -63,6 +63,10 @@ define([
       this.$slider[0].addEventListener('on.lory.resize', this.setSlideWidth.bind(this));
 
       this.slider = lory.lory(this.$slider[0], this.options.slider);
+
+      if (!!this.options.slider && !!this.options.slider.autoplay) {
+        this.initAutoPlay();
+      }
     },
 
     setOptions: function() {
@@ -90,6 +94,16 @@ define([
 
       // this.$sliderNavigation.html(this.navTemplate({pages: null}));
       // this.$sliderNavigationItems = this.$sliderNavigation.find('li');
+    },
+
+    initAutoPlay: function() {
+      this.options.slider.interval = setInterval(function(){
+        this.slider.next();
+      }.bind(this), 6000)
+    },
+
+    stopAutoPlay: function() {
+      clearInterval(this.options.slider.interval);
     },
 
     // Events
