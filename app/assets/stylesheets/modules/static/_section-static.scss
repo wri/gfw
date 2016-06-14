@@ -2,17 +2,32 @@
   position: relative;
   padding: 60px 0;
   
+  &.-no-padding {
+    padding: 0;
+  }
+
 	// HEADER
   header {
     color: $dark;
     padding: 0px 0 40px;
+    max-width: 900px;
+    &.-no-padding {
+      padding: 0;
+    }
 
     h2 {
+      color: $dark;
       font-size: 35px;
       @media only screen and (min-width: 480px) {
         padding: 0 210px 0 0;
       }
 
+      &.-main-title {
+        font-size: 35px;
+        @media only screen and (min-width: $br-mobile) {
+          font-size: 47px;
+        }
+      }
     }
 
     h3 {
@@ -24,7 +39,12 @@
     p {
       font-size: 14px;
       line-height: 1.5;
-      padding: 10px 0 0;
+      padding: 20px 0 0;
+      font-weight: 300;
+      @media only screen and (min-width: $br-mobile) {
+        font-size: 19px;
+      }
+
       a {
         color: $cGreen;
         font-weight: 500;

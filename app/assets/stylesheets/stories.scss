@@ -35,12 +35,15 @@
 // Static Modules
 @import "modules/static/header-static";
 @import "modules/static/section-static";
-@import "modules/static/spinner";
+@import "modules/static/spinner-static";
+@import "modules/static/cover-static";
+@import "modules/static/interesting-static";
 
+// Stories Modules
 @import "modules/static/list-stories";
 @import "modules/static/new-stories";
+@import "modules/static/latest-stories";
 
 @import "layouts/stories";
-// @import "layouts/static";
 
 

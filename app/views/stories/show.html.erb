@@ -4,10 +4,24 @@
   end
 %>
 
+<% content_for :header do %>
+  <h1><a href="/">Global Forest Watch</a></h1>
+  <nav id="nav-mobile">
+    <ul class="mobile-hide">
+      <li>
+        <a <% if controller?("stories") && action?("crowdsourcedstories") %>class="current"<% end %> href="/stories/crowdsourcedstories">Crowdsourced stories</a>
+      </li>
+      <li>
+        <a <% if controller?("stories") && action?("new") %>class="current"<% end %> href="/stories/new">Submit a story</a>
+      </li>
+    </ul>
+  </nav>
+<% end %>
+
 <section class="header-stories">
   <div class="inner">
     <header>
-      <a class="back-btn desktop-show" href="/stayinformed/crowdsourced-stories"><svg><use xlink:href="#shape-fast-forward-left"></use></svg>Back to crowdsourced stories</a>
+      <a class="back-btn desktop-show" href="/stories/crowdsourcedstories"><svg><use xlink:href="#shape-fast-forward-left"></use></svg>Back to crowdsourced stories</a>
       <h2><%= @story.title %></h2>
       <p>
       <% if @story.location.present?  %>

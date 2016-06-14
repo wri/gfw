@@ -3,7 +3,7 @@
   <nav id="nav-mobile">
     <ul class="mobile-hide">
       <li>
-        <a <% if controller?("stories") && action?("index") %>class="current"<% end %> href="/stories">Crowdsourced stories</a>
+        <a <% if controller?("stories") && action?("crowdsourcedstories") %>class="current"<% end %> href="/stories/crowdsourcedstories">Crowdsourced stories</a>
       </li>
       <li>
         <a <% if controller?("stories") && action?("new") %>class="current"<% end %> href="/stories/new">Submit a story</a>
@@ -12,54 +12,90 @@
   </nav>
 <% end %>
 
-<section class="m-header-static">
+<header class="m-cover">
+  <div class="cover-background" style="background-image: url('/assets/covers/stories-cover.png')"></div>
+</header>
+
+<section class="m-section-static">
   <div class="inner">
-    <header>
-      <h2><%= @title %></h2>
-      <h3>Read stories from Global forest Watch users about what is happening in forests on the ground</h3>
+    <header class="-no-padding">
+      <h2 class="-main-title">Stories</h2>
+      <p>Global Forest Watch is not just about big data; it is a movement to connect people on the ground with information that can create tangible change. That is why we want to hear your stories about issues affecting forests, forest communities, and how you use GFW to monitor and protect forests. Share your report with the world by putting it on the GFW Map!</p>
     </header>
-    <ul class="row">
-      <li><a href="/stories/new" class="btn green uppercase">Submit a story</a></li>
-    </ul>
   </div>
 </section>
 
-<section id="storiesResetPosition" class="m-section-static">
-  <div id="storiesSpinner" class="m-spinner -fixed">
-    <div class="loader"><svg><use xlink:href="#shape-spinner"></use></svg></div>
-  </div>
-
-  <div class="inner">    
-    <header>
-      <h2>Stories from GFW users</h2>
+<section class="m-section-static -no-padding">
+  <div class="inner">  
+    <header class="mobile-show">
+      <h2>Latest user stories</h2>
     </header>
-    <div id="storiesListView" class="m-list-stories">
-      <!-- Pagination -->
-      <ul id="storiesList">
+
+    <!-- Latest stories -->
+    <div id="storiesLatestView" class="m-latest-stories">    
+      <ul id="storiesLatestListView" class="m-latest-list">
         <% @total_stories_paginated.each do |story| %>
-          <li class="m-list-story">
-            <a href="<%= story_path(story['id']) %>">
-              <div class="img"><div class="bg" style="background-image: url(<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>)"></div></div>
-              <article class="info">
-                <h4><%= story['title'] %></h4>
-                <p><%= truncate(story['details'], :length => 295) %></p>
-                <button class="btn gray medium">More</button>
-              </article>
-            </a>
+          <li class="m-latest-story">
+            <article class="info">
+              <h3>LATEST USER STORIES</h3>
+              <h2><a href="<%= story_path(story['id']) %>"><%= story['title'] %></a></h2>
+              <p><%= truncate(story['details'], :length => 295) %></p>
+            </article>
+            <div class="img"><div class="bg" style="background-image: url(<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>)"></div></div>
           </li>
         <% end %>
+      </ul>  
+      <ul id="storiesLatestNavigationView" class="m-latest-navigation">
+        <% @total_stories_paginated.each do |story| %>
+          <li>
+            <div class="img"><div class="bg" style="background-image: url(<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>)"></div></div>
+          </li>
+        <% end %>        
       </ul>
-      <!-- Pagination -->
-      <div id="storiesPagination" data-page="<%= @page %>" data-perpage="<%= @stories_per_page %>" data-total="<%= @total_stories %>"></div>
-    </div> 
+    </div>
   </div>
 </section>
 
 <section class="m-section-static">
+  <div class="inner">        
+    <!-- Pagination -->
+    <ul class="m-btncontainer is-center -fix-width-220 -mobile">    
+      <li><a class="btn green huge-padding full-width uppercase" href="/stories/new">Submit a story</a></li>
+      <li><a class="btn gray huge-padding full-width uppercase" href="/stories/crowdsourcedstories">View all</a></li>
+    </div>
+  </ul>
+</section>
+
+<section class="m-section-static">
   <div class="inner">
-    <a class="btn-cta" href="/stories/new">
-      <svg><use xlink:href="#icon-plus"></use></svg>
-      <span>Submit a story</span>
-    </a>
+    <header>
+      <h2>You may find this interesting</h2>
+    </header>
+    <ul class="m-interesting">
+      <li class="m-interesting-item">
+        <div class="img">
+          <a href="/map">
+            <div class="bg" style="background-image: url('/assets/interesting/interesting-map.png')"></div>
+          </a>
+        </div>
+        <div class="info">        
+          <h3><a href="/map">GFW INTERACTIVE MAP</a></h3>
+          <p>View and analyze data on the GFW Interactive Map.</p>
+        </div>
+      </li>
+
+      <li class="m-interesting-item">
+        <div class="img">
+          <a href="/countries">
+            <div class="bg" style="background-image: url('/assets/interesting/interesting-countries.png')"></div>
+          </a>
+        </div>
+        <div class="info">        
+          <h3><a href="/countries">COUNTRIES</a></h3>
+          <p>View country-specific data, analyze forest change within a country or subnational jurisdiction, or view country rankings based on forest statistics.</p>
+        </div>
+      </li>
+    </ul> 
   </div>
 </section>
+

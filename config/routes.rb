@@ -40,7 +40,8 @@ Gfw::Application.routes.draw do
     # terms
     get '/accept_terms' => redirect("/terms")
 
-
+  # stories
+  get '/stories/crowdsourcedstories' => 'stories#crowdsourcedstories'
   resources :stories
 
   # static
