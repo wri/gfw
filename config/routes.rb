@@ -57,6 +57,7 @@ Gfw::Application.routes.draw do
   get '/stayinformed-stories' => 'static#keepstories'
 
   get '/getinvolved/apply-to-the-small-grants-fund' => redirect('/small-grants-fund')
+  get '/getinvolved/develop-your-own-app' => redirect('/developers-corner')
   get '/getinvolved' => 'static#getinvolved'
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'
@@ -120,6 +121,7 @@ Gfw::Application.routes.draw do
   # sitemap
   get '/sitemap' => 'sitemap#index'
   get '/howto', to: redirect('/howto/')
+  get '/developers-corner', to: redirect('/developers-corner/')
 
   # Small Grunts Fund
   get '/small-grants-fund' => 'small_grants_fund#index'
