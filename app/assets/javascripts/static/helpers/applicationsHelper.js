@@ -267,7 +267,7 @@ define([
       name: 'Develop your own app',
       svg: '#shape-develop',
       content: 'Learn how to develop your own application with Global Forest Watch data.',
-      href: '/getinvolved/develop-your-own-app',
+      href: '/developers-corner/',
       link_text: 'Read more',
       classname: 'btn gray medium',
     },

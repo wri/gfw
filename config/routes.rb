@@ -27,23 +27,13 @@ Gfw::Application.routes.draw do
     get '/common(/:section)(/:section)(/:section)' => redirect("sources")
     get '/assets(/:content)' => redirect('/')
 
-    # howto
-    get '/howto/video' => redirect("/howto")
-    get '/howto/general_questions' => redirect("/howto/faqs")
-    get '/howto/terminology' => redirect("/howto/faqs")
-    get '/howto/data' => redirect("/howto/faqs")
-    get '/howto/web_platform' => redirect("/howto/faqs")
-    get '/howto/for_business' => redirect("/howto/faqs")
-    get '/howto/analyze-forest-change' => redirect("/howto/analyze-and-subscribe-to-forest-change-data")
-    get '/howto/subscribe-to-alerts-and-user-stories' => redirect("/howto/analyze-and-subscribe-to-forest-change-data")
-
     # about
     get '/about/video' => redirect("/about")
     get '/about/gfw' => redirect("/about/about-gfw")
     get '/about/partners' => redirect("/about/the-gfw-partnership")
     get '/partners' => redirect("/about/the-gfw-partnership")
     get '/about/users' => redirect("/about")
-    get '/about/small_grants_fund' => redirect("/getinvolved/apply-to-the-small-grants-fund")
+    get '/about/small_grants_fund' => redirect("/small-grants-fund")
     get '/about/testers' => redirect("/about")
     get '/getinvolved/provide-feedback' => redirect("/getinvolved")
 
@@ -66,14 +56,12 @@ Gfw::Application.routes.draw do
   get '/stayinformed(/:section)' => 'static#keep'
   get '/stayinformed-stories' => 'static#keepstories'
 
+  get '/getinvolved/apply-to-the-small-grants-fund' => redirect('/small-grants-fund')
+  get '/getinvolved/develop-your-own-app' => redirect('/developers-corner')
   get '/getinvolved' => 'static#getinvolved'
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'
   get '/feedback_jsonp' => 'static#feedback_jsonp'
-
-  # howto
-  get '/howto' => 'static#howto'
-  get '/howto(/:section)' => 'static#howto'
 
   # about
   get '/about' => 'static#about'
@@ -130,6 +118,13 @@ Gfw::Application.routes.draw do
 
   get '/landing' => 'landing#index'
 
+  # sitemap
+  get '/sitemap' => 'sitemap#index'
+  get '/howto', to: redirect('/howto/')
+  get '/developers-corner', to: redirect('/developers-corner/')
+
+  # Small Grunts Fund
+  get '/small-grants-fund' => 'small_grants_fund#index'
 
   # robots
   get '/robots', to: redirect('/robots.txt'), format: false

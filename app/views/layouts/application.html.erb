@@ -30,11 +30,11 @@
     <%= controller_stylesheet_link_tag %>
     <%= yield :js %>
     <%= csrf_meta_tags %>
-    <script id="loader-gfw" data-current="<%= @currentNavigation %>" src="http://globalforestwatch.org/gfw-assets"></script>
+    <%= render 'shared/gfw_assets' %>
   </head>
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
     <%= render 'layouts/svg_icons' %>
-    <%= render 'shared/svg_icons_header' %>
+    
     <%= render 'shared/svg_icons_footer' %>
     <%= render 'shared/modal' %>
     <div class="wrap">
