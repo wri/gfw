@@ -641,7 +641,7 @@
     text-align: left;
     text-transform: uppercase;
     color: #463F52;
-    @include border-radius(21px);
+    border-radius: 21px;
 
     i {
       float: right;
@@ -667,7 +667,7 @@
 //   text-align: center;
 //   color: #C440FF;
 //   background: #fff;
-//   @include border-radius(5px);
+//   border-radius: 5px;
 //   @include box-shadow(0 0 3px #000);
 
 //   &:after {
@@ -761,7 +761,7 @@
         height: 6px;
         width: 6px;
         vertical-align: middle;
-        @include border-radius(4px);
+        border-radius: 4px;
       }
     }
   }

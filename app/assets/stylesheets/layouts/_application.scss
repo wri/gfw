@@ -146,7 +146,7 @@
         top: 5px; left: 5px;
         width: 256px;
         height: 256px;
-        @include border-radius(129px);
+        border-radius: 129px;
       }
 
       a {
@@ -160,7 +160,7 @@
         top: 0; left: 0;
         height: 100%;
         width: 100%;
-        @include border-radius(134px);
+        border-radius: 134px;
         background: #ccc;
       }
 
@@ -171,7 +171,7 @@
         height: 256px;
         width: 256px;
         background-image: image-url('backgrounds/bkg_circles_gradient.png');
-        @include border-radius(129px);
+        border-radius: 129px;
       }
 
       .title {
@@ -269,7 +269,7 @@
     height: 27px;
     padding: 12px 20px 6px 10px;
     background: #fff;
-    @include border-radius(23px);
+    border-radius: 23px;
     @include clearfix;
 
     .fb_iframe_widget{
