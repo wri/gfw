@@ -4,7 +4,7 @@
 @import 'flexbox';
 
 // General
-@import "settings1600";
+@import "settings";
 @import "mixins";
 @import "animations";
 @import "base";
@@ -22,10 +22,10 @@
 @import "modules/modal";
 @import "modules/modal_new";
 @import "modules/form";
-@import "modules/shared1600";
+@import "modules/shared";
 @import "modules/buttons";
-@import "modules/icons1600";
-@import "modules/slick1600";
+@import "modules/icons";
+@import "modules/slick";
 @import "modules/carrousel";
 @import "modules/pagination";
 @import "modules/terms";
