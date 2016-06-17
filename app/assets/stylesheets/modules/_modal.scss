@@ -550,7 +550,7 @@ $height: auto;
   border: 1px solid #757573;
   background: #fff;
   @include box-shadow(0 0 7px #666);
-  @include border-radius(3px);
+  border-radius: 3px;
   text-align: center;
 
   .form {

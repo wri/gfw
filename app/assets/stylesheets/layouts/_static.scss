@@ -1341,7 +1341,7 @@
       text-decoration: none;
       color: #fff;
       background: $cGreen;
-      @include border-radius(16px);
+      border-radius: 16px;
       &.disabled {
         @include opacity(.5);
         cursor: default;
