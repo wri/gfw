@@ -17,12 +17,14 @@ require([
   'views/InterestingView',
   'views/SourceWindowView',
   'views/SourceMobileFriendlyView',
-  'stories/views/StoriesEditView',
+  'stories/views/StoriesListView',
+  'stories/views/StoriesNewView',
+  'stories/views/StoriesLatestView',
   'stories/views/CarrouselStoriesView',
   'views/NotificationsView',
   'handlebars',
   '_string',
-], function($, _, Class, Backbone, mps, jqueryujs, jqueryui, jquery_migrate, jquery_fileupload, geojson, HeaderView, FooterView, InterestingView, SourceWindowView, SourceMobileFriendlyView, StoriesEditView, CarrouselStoriesView, NotificationsView, Handlebars) {
+], function($, _, Class, Backbone, mps, jqueryujs, jqueryui, jquery_migrate, jquery_fileupload, geojson, HeaderView, FooterView, InterestingView, SourceWindowView, SourceMobileFriendlyView, StoriesListView, StoriesNewView, StoriesLatestView, CarrouselStoriesView, NotificationsView, Handlebars) {
   'use strict';
 
   var StoriesPage = Class.extend({
@@ -41,11 +43,14 @@ require([
       new HeaderView();
       new FooterView();
       new InterestingView();
-      new StoriesEditView();
-      new CarrouselStoriesView();
       new SourceWindowView();
       new SourceMobileFriendlyView();
       new NotificationsView();
+
+      new StoriesListView();
+      new StoriesNewView();
+      new StoriesLatestView();
+      new CarrouselStoriesView();
 
     }
   });

@@ -13,7 +13,6 @@
 // Images
 @import "logos/*.png";
 @import "icons/*.png";
-@import "home-icons/*.png";
 @import "stories-icons/*.png";
 
 
@@ -31,7 +30,19 @@
 @import "modules/icons1600";
 @import "modules/shared1600";
 @import "modules/slick1600";
+@import "modules/pagination";
 
+// Static Modules
+@import "modules/static/header-static";
+@import "modules/static/section-static";
+@import "modules/static/spinner-static";
+@import "modules/static/cover-static";
+@import "modules/static/interesting-static";
+
+// Stories Modules
+@import "modules/static/list-stories";
+@import "modules/static/new-stories";
+@import "modules/static/latest-stories";
 
 @import "layouts/stories";
 

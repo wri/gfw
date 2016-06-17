@@ -1249,7 +1249,6 @@
       }
 
       .expand_arrow {
-        @include static-icons-sprite(expand_arrow_up);
       }
 
       .source_header {
@@ -1564,7 +1563,6 @@
     height: 10px;
     width: 8px;
     margin-left: 15px;
-    @include static-icons-sprite(arrow_down);
   }
 
   .source_table {
