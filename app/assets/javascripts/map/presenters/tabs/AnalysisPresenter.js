@@ -61,7 +61,7 @@ define([
       'modis': 'quicc-alerts',
       'terrailoss': 'terrai-alerts',
       'prodes': 'prodes-loss',
-      'guyra': 'guyra-loss',
+      'guyra': 'guira-loss',
       'forest2000': 'umd-loss-gain',
       'viirs_fires_alerts': 'viirs-active-fires',
       'umd_as_it_happens':'glad-alerts',
@@ -346,7 +346,6 @@ define([
 
       // Build resource
       var resource = {
-        geojson: geojson,
         type: 'geojson'
       };
       mps.publish('Spinner/start');

@@ -55,7 +55,7 @@ define([
       'modis': 'quicc-alerts',
       'terrailoss': 'terrai-alerts',
       'prodes': 'prodes-loss',
-      'guyra': 'guyra-loss',
+      'guyra': 'guira-loss',
       'forest2000': 'umd-loss-gain',
       'umd_as_it_happens':'glad-alerts',
       'umd_as_it_happens_per':'glad-alerts',
