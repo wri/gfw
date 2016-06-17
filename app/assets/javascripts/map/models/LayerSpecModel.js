@@ -129,6 +129,7 @@ define([
       "cod_logging",
       "cog_logging",
       "mys_logging",
+      "mys_logging_sabah",
       "logging",
       "logging_roads",
       "raisg_mining",
