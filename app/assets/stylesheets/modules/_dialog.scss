@@ -10,7 +10,7 @@
   width: 100%;
   height: 100%;
   z-index: 10000001;
-  @include transition(opacity 1s ease);
+  transition: opacity 1s ease;
 }
 
 /**
@@ -42,7 +42,7 @@
  * @div
  */
 .m-dialog-wrapper {
-  @include transition(opacity 1s ease);
+  transition: opacity 1s ease;
   position: absolute;
   z-index: 99999999;
   top: 20%;

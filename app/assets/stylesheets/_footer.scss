@@ -7,7 +7,7 @@
     z-index: 1001;
     background: #EDEDE8;
     transform: translate(0,100%);
-    @include transition(all 0.5s $easeInOutCubic);
+    transition: all 0.5s $easeInOutCubic;
     .footer-fixed-container{
         height: 100%;
         width: 100%;
@@ -65,7 +65,7 @@
               left: 50%;
               border-bottom: 2px solid transparent;
               transform: translate(-50%,0);
-              @include transition(all .25s $easeInOutCubic);
+              transition: all .25s $easeInOutCubic;
 	    			}
 	    			&:hover {
 	    				h3 { border-color: $dark; ; }

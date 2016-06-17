@@ -17,7 +17,7 @@
       width: 33.33333333%;
       height: 44px;
       border-left: 1px solid $border;
-      @include transition(all,0.25s,$easeInOutSine);
+      transition: all 0.25s $easeInOutSine;
       &:first-child{ border-left: none;}
       &:after{
         content: "";
@@ -27,7 +27,7 @@
         top: 0;
         left: 0;
         background: $cGreen;
-        @include transition(all,0.25s,$easeInOutSine);
+        transition: all 0.25s $easeInOutSine;
       }
 
       &.active{
@@ -118,7 +118,7 @@
     left: 10px;
     z-index: 20;
     transform: translate(0,-10px);
-    @include transition(all 0.25s $easeInOutSine);
+    transition: all 0.25s $easeInOutSine;
     visibility: hidden;
     opacity: 0;
     &.active{

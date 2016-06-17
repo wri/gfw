@@ -21,7 +21,7 @@
       z-index: 31;
       margin: 0 0 0 15px;
       @include retina-image('logo-new.png','logo-new@2x.png');
-      @include transition(all 0.25s linear);
+      transition: all 0.25s linear;
       &.active{
         opacity: 0;
         visibility: hidden;

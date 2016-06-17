@@ -341,7 +341,7 @@
     }
   }
 
-  @include transition(all 0.15s $easeInOutCubic);
+  transition: all 0.15s $easeInOutCubic;
   &:after {
     content: "";
     display: block;
@@ -683,7 +683,7 @@
   font-weight: 500;
   text-transform: uppercase;
   transform: translate(0,-100%);
-  @include transition(all 0s $easeOutSine 0s);
+  transition: all 0s $easeOutSine 0s;
   &.active{
     transform: translate(0,0%);
     @include transition(all 0.3s $easeOutSine 0.3s);

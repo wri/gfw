@@ -117,7 +117,7 @@
             min-width: 50px;
             padding: 10px;
             text-transform: uppercase;
-            @include transition(all 0.15s $easeInOutCubic);
+            transition: all 0.15s $easeInOutCubic;
             @media (min-width: 550px){
               min-width: 70px;
             }
@@ -424,7 +424,7 @@
     font-size: 14px;
     font-weight: 400;
     @include retina-image('logo-new.png','logo-new@2x.png');
-    @include transition(all 0.25s linear);
+    transition: all 0.25s linear;
     &.active{
       opacity: 0;
       visibility: hidden;
@@ -616,7 +616,7 @@
             width: 100%;
             height: 5px;
             opacity: 0;
-            @include transition(all 0.2s $easeInOutCubic);
+            transition: all 0.2s $easeInOutCubic;
           }
 
           &.current, &:hover{
@@ -638,7 +638,7 @@
           visibility: hidden;
           opacity: 0;
           transform: translate(-50%,0px);
-          @include transition(all 0.15s $easeInOutCubic);
+          transition: all 0.15s $easeInOutCubic;
 
           &:after{
             content: "";
@@ -697,7 +697,7 @@
         width: 100%;
         height: 5px;
         opacity: 0;
-        @include transition(all 0.2s $easeInOutCubic);
+        transition: all 0.2s $easeInOutCubic;
       }
 
       &.current, &:hover{
