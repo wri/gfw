@@ -11,7 +11,7 @@
   padding: 0px 0 56px;
   z-index: 22;
   background: $white;
-  @include transition(all 0.25s $easeInOutSine);
+  transition: all 0.25s $easeInOutSine;
   transform: translate(0,100%);
 
   &.active{
@@ -122,7 +122,7 @@
           height: 4px;
           background: $cGreen;
           transform: translate(-50%,0%);
-          @include transition(all 0.125s $easeInOutSine);
+          transition: all 0.125s $easeInOutSine;
         }
 
         &:hover {
@@ -355,7 +355,7 @@
   z-index: 22;
   padding: 20px 20px 50px;
   transform: translate(0,100%);
-  @include transition(all 0.25s $easeInOutSine);
+  transition: all 0.25s $easeInOutSine;
   &.active{
     transform: translate(0,0);
   }
@@ -525,7 +525,7 @@
       left: 0;
       z-index: 2000;
 
-      @include transition(all 0.25s $easeInOutSine);
+      transition: all 0.25s $easeInOutSine;
       transform: translate(0,15px);
 
       font-size: 13px;

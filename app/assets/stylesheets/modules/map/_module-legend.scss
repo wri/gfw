@@ -9,7 +9,7 @@
   padding: 0px 0 56px;
   z-index: 22;
   background: $white;
-  @include transition(all 0.25s $easeInOutSine);
+  transition: all 0.25s $easeInOutSine;
   transform: translate(0,100%);
 
   &.active{
@@ -275,7 +275,7 @@
         fill: #AAA;
         width: 10px;
         height: 10px;
-        @include transition(all,0s);
+        transition: all 0s ease;
         @media (min-width: $br-mobileMap){
           left: 0;
           right: 0;

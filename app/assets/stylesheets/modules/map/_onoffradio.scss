@@ -24,7 +24,7 @@ $w: 10px;
   left: 50%;
   transform: translate(-50%,-50%) scale(0);
   border-radius: 50%;
-  @include transition(all 0.2s $easeInOutSine);
+  transition: all 0.2s $easeInOutSine;
 
   background: white;
 }

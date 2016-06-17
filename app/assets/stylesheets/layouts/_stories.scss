@@ -100,7 +100,7 @@
               background: rgba(#000,0.25);
               visibility: hidden;
               opacity: 0;
-              @include transition(all,.25s,$easeInOutSine);
+              transition: all .25s $easeInOutSine;
             }
             &:before {
               content: "";
@@ -115,7 +115,7 @@
               margin: -30px 0 0 -30px;
               visibility: hidden;
               opacity: 0;
-              @include transition(all,.25s,$easeInOutSine);
+              transition: all .25s $easeInOutSine;
             }
             &:hover{
               &:before, &:after{
@@ -160,7 +160,7 @@
           background: $white;
           float: left;
           margin: 0 0 0 15px;
-          @include transition(all,.5s,$easeInOutSine);
+          transition: all .5s $easeInOutSine;
           &:first-child { margin: 0;}
           &.current, &:hover {
             opacity: 1;
@@ -246,13 +246,13 @@
   height: 100%;
   opacity: 0;
   visibility: hidden;
-  @include transition(all 0s $easeInOutSine);
+  transition: all 0s $easeInOutSine;
   transform: scale(0.75);
 
   &.active{
     opacity: 1;
     visibility: visible;
-    @include transition(all 0.25s $easeInOutSine);
+    transition: all 0.25s $easeInOutSine;
     transform: scale(1);
   }
 
@@ -379,7 +379,7 @@
               width: 65%;
               height: 2px;
               background: $dark;
-              @include transition(all 0.15s $easeInOutSine);
+              transition: all 0.15s $easeInOutSine;
               @include transform-origin(50% 50%);
             }
 

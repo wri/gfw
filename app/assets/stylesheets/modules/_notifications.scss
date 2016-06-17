@@ -5,7 +5,7 @@
   width: 100%;
   z-index: 1101;
   padding: 20px 40px 20px 20px;
-  @include transition(all 0.25s $easeInOutSine);
+  transition: all 0.25s $easeInOutSine;
   transform: translate(0,-100%);
   @media (min-width: $br-mobileMap){
     padding: 20px;

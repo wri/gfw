@@ -22,5 +22,5 @@
   background: #fff;
   transform: translate(0px,0%);
   border-radius: 4px;
-  @include transition(all 0.2s $easeInOutSine);
+  transition: all 0.2s $easeInOutSine;
 }

@@ -187,7 +187,7 @@ body,html{
   cursor: url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default;
 
   @include user-select(none);
-  @include transition(opacity 1s ease);
+  transition: opacity 1s ease;
 
   &.is-loaded {
     opacity: 1;
@@ -315,7 +315,7 @@ body,html{
   background: rgba($dark,0.5);
   opacity: 0;
   visibility: hidden;
-  @include transition(all 0.25s $easeInOutSine);
+  transition: all 0.25s $easeInOutSine;
   @media (min-width:$br-mobile){
     display: none !important;
   }

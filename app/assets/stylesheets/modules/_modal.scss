@@ -12,7 +12,7 @@ $height: auto;
   opacity: 0;
   visibility: hidden;
   display: none;
-  @include transition(all 0s $easeInOutSine);
+  transition: all 0s $easeInOutSine;
 
   @media (min-width: $br-mobile){
     left: 50%; top: 50%;
@@ -46,7 +46,7 @@ $height: auto;
     display: block;
     opacity: 1;
     visibility: visible;
-    @include transition(all 0.25s $easeInOutSine);
+    transition: all 0.25s $easeInOutSine;
   }
 
   &.iframe{
@@ -440,7 +440,7 @@ $height: auto;
   padding: 20px;
   visibility: hidden;
   transform: translate(0,100%);
-  @include transition(all 0.25s $easeInOutSine);
+  transition: all 0.25s $easeInOutSine;
 
   &.active{
     visibility: visible;

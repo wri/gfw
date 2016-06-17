@@ -295,13 +295,13 @@
     overflow-x: hidden;
     overflow-y: auto;
     transform: translate(100%,0);
-    @include transition(all 0s $easeOutSine);
+    transition: all 0s $easeOutSine;
     -webkit-overflow-scrolling: touch;
     &.active{
       transform: translate(0%,0);
     }
     &.animate{
-      @include transition(all 0.3s $easeOutSine);
+      transition: all 0.3s $easeOutSine;
     }
 
 
@@ -1662,7 +1662,7 @@
     z-index: 11;
     margin: 0 auto 20px;
     @include retina-image('logo-new.png','logo-new@2x.png');
-    @include transition(all 0.25s linear);
+    transition: all 0.25s linear;
     &:after{
       content: "";
       display: block;
