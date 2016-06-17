@@ -164,14 +164,14 @@
           &:first-child { margin: 0;}
           &.current, &:hover {
             opacity: 1;
-            @include transform(scale(2));
+            transform: scale(2);
           }
           &:after{
             content: "";
             position: absolute;
             top: 50%;
             left: 50%;
-            @include transform(translate(-50%,-50%));
+            transform: translate(-50%,-50%);
             width: 250%;
             height: 250%;
             background: transparent;
@@ -196,7 +196,7 @@
       border: 3px solid $white;
       top: 50%;
       border-radius: 50%;
-      @include transform(translate(0,-50%));
+      transform: translate(0,-50%);
       @media (min-width: $br-mobile) {
         display: block;
       }
@@ -220,7 +220,7 @@
       margin: 0;
       &:before {
         background: image-url('svg-icons/arrow-left.svg') center no-repeat;
-        @include transform(translate(-2px,0));
+        transform: translate(-2px,0);
       }
     }
     .next{
@@ -228,7 +228,7 @@
       margin: 0;
       &:before {
         background: image-url('svg-icons/arrow-right.svg') center no-repeat;
-        @include transform(translate(0px,0));
+        transform: translate(0px,0);
       }
     }
   }
@@ -247,13 +247,13 @@
   opacity: 0;
   visibility: hidden;
   @include transition(all 0s $easeInOutSine);
-  @include transform(scale(0.75));
+  transform: scale(0.75);
 
   &.active{
     opacity: 1;
     visibility: visible;
     @include transition(all 0.25s $easeInOutSine);
-    @include transform(scale(1));
+    transform: scale(1);
   }
 
   .close {
@@ -270,7 +270,7 @@
       width: 50%;
       height: 50%;
       fill: $white;
-      @include transform(translate(-50%,-50%));
+      transform: translate(-50%,-50%);
     }
     &:hover{
       svg{
@@ -296,7 +296,7 @@
     top: 50%;
     left: 50%;
     z-index: 2;
-    @include transform(translate(-50%,-50%));
+    transform: translate(-50%,-50%);
     box-shadow: 0px 7px 15px rgba(0,0,0,0.3);
   }
 }
@@ -364,7 +364,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            @include transform(translate(-50%,-50%));
+            transform: translate(-50%,-50%);
           }
         }
         &.new-story{
@@ -384,18 +384,18 @@
             }
 
             &:before{
-              @include transform(translate(-50%,-50%) rotate(0deg));
+              transform: translate(-50%,-50%) rotate(0deg);
             }
 
             &:after{
-              @include transform(translate(-50%,-50%) rotate(90deg));
+              transform: translate(-50%,-50%) rotate(90deg);
             }
             &:hover{
               &:before{
-                @include transform(translate(-50%,-50%) rotate(0deg) scale(0.75));
+                transform: translate(-50%,-50%) rotate(0deg) scale(0.75);
               }
               &:after{
-                @include transform(translate(-50%,-50%) rotate(90deg) scale(0.75));
+                transform: translate(-50%,-50%) rotate(90deg) scale(0.75);
               }
             }
           }
@@ -507,7 +507,7 @@
         right: 5px;
         border: 1px solid $dark;
         border-radius: 50%;
-        @include transform(translate(0,-50%));
+        transform: translate(0,-50%);
         svg{
           fill: $dark;
           position: absolute;
@@ -516,7 +516,7 @@
           margin: 0 0 0 -1px;
           top: 50%;
           left: 50%;
-          @include transform(translate(-50%,-50%));
+          transform: translate(-50%,-50%);
         }
         @media (min-width: $br-mobile) {
           display: none;
@@ -625,7 +625,7 @@
     top: 50%;
     left: 50%;
     background: $cGreen;
-    @include transform(translate(-50%,-50%));
+    transform: translate(-50%,-50%);
   }
 
   &:before{
@@ -703,7 +703,7 @@
     width: 30px;
     height: 30px;
     margin: -10px 0 0;
-    @include transform(translate(-50%,-50%));
+    transform: translate(-50%,-50%);
     @include animation(loader,1s,infinite,$easeInOutCubic);
     visibility: visible;
     opacity: 1;

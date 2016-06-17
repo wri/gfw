@@ -224,7 +224,7 @@
           display: block;
           position: absolute;
           top: 50%;
-          @include transform(translate(0,-50%));
+          transform: translate(0,-50%);
           right: 15px;
           width: 10px;
           height: 100%;
@@ -294,11 +294,11 @@
     left: 0;
     overflow-x: hidden;
     overflow-y: auto;
-    @include transform(translate(100%,0));
+    transform: translate(100%,0);
     @include transition(all 0s $easeOutSine);
     -webkit-overflow-scrolling: touch;
     &.active{
-      @include transform(translate(0%,0));
+      transform: translate(0%,0);
     }
     &.animate{
       @include transition(all 0.3s $easeOutSine);
@@ -314,7 +314,7 @@
       padding: 0;
       overflow-x: visible;
       overflow-y: visible;
-      @include transform(translate(0%,0));
+      transform: translate(0%,0);
     }
     &:before, &:after{
       content: "";
@@ -795,7 +795,7 @@
           top: 50%;
           left: 65%;
           margin: 0 0 20px;
-          @include transform(translate(0,-50%));
+          transform: translate(0,-50%);
         }
         .bg {
           // background: #000;
@@ -985,7 +985,7 @@
           left: 0;
           width: 100px;
           height: 45px;
-          @include transform(translate(0,-50%));
+          transform: translate(0,-50%);
           svg{
             fill: $dark;
           }
@@ -1398,7 +1398,7 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
-        @include transform(translate(-50%,-50%));
+        transform: translate(-50%,-50%);
       }
 
       &:after{
@@ -1408,14 +1408,14 @@
         left: 0;
         width: 1px;
         height: 50%;
-        @include transform(translate(0,-50%));
+        transform: translate(0,-50%);
         background-color: #ccc;
       }
     }
 
     &.active{
       .expand_arrow:before{
-        @include transform(translate(-50%,-50%) rotate(180deg));
+        transform: translate(-50%,-50%) rotate(180deg);
       }
     }
   }
@@ -1523,7 +1523,7 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
-        @include transform(translate(-50%,-50%));
+        transform: translate(-50%,-50%);
       }
 
       &:after{
@@ -1533,7 +1533,7 @@
         left: 0;
         width: 1px;
         height: 50%;
-        @include transform(translate(0,-50%));
+        transform: translate(0,-50%);
         background-color: #ccc;
       }
     }

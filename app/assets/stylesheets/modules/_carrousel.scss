@@ -89,7 +89,7 @@
               border-style: solid;
               border-width: 15px 0 15px 25px;
               border-color: transparent transparent transparent $white;
-              @include transform(translate(-50%,-50%));
+              transform: translate(-50%,-50%);
             }
             &:after{
               top: 0;

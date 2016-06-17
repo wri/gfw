@@ -159,7 +159,7 @@
               text-align: center;
               padding: 2px 0 0;
               font-size: 10px;
-              @include transform(translate(0,20px));
+              transform: translate(0,20px);
               &:after {
                 display: none;
               }
@@ -190,12 +190,12 @@
               position: absolute;
               top: 6px;
               left: 50%;
-              @include transform(translate(-50%,0));
+              transform: translate(-50%,0);
               @media (min-width: $br-mobile){
                 position: relative;
                 top: auto;
                 left: auto;
-                @include transform(translate(0,0));
+                transform: translate(0,0);
                 width: 20px;
                 height: 25px;
                 display: block;
@@ -234,7 +234,7 @@
       background-color: darken($light,10%);
       border: none;
       outline: none;
-      @include transform(translate(0,-50%));
+      transform: translate(0,-50%);
       font-family: inherit;
       span{
         display: block;
@@ -590,7 +590,7 @@
 
             li {
               a {
-                @include transform(translate(0%,0px));
+                transform: translate(0%,0px);
                 visibility: visible;
                 opacity: 1;
               }
@@ -637,7 +637,7 @@
           box-shadow: 0 1px 3px rgba(#000,0.25);
           visibility: hidden;
           opacity: 0;
-          @include transform(translate(-50%,0px));
+          transform: translate(-50%,0px);
           @include transition(all 0.15s $easeInOutCubic);
 
           &:after{
@@ -760,7 +760,7 @@
             right: 0;
             height: 16px;
             width: 16px;
-            @include transform(translate(0,-55%));
+            transform: translate(0,-55%);
             &:before {
               content: "";
               visibility: visible;
@@ -825,7 +825,7 @@
       right: 0%;
       width: 22px;
       height: 22px;
-      @include transform(translate(-50%,-50%));
+      transform: translate(-50%,-50%);
     }
   }
   .menu-section-dropdown{

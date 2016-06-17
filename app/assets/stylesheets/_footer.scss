@@ -6,7 +6,7 @@
     height: calc(100% - 38px);
     z-index: 1001;
     background: #EDEDE8;
-    @include transform(translate(0,100%));
+    transform: translate(0,100%);
     @include transition(all 0.5s $easeInOutCubic);
     .footer-fixed-container{
         height: 100%;
@@ -14,7 +14,7 @@
         overflow: auto;
     }
     &.active{
-        @include transform(translate(0,-38px));
+        transform: translate(0,-38px);
     }
     .footer-logos-btn{
       text-align: center;
@@ -64,7 +64,7 @@
               position: relative;
               left: 50%;
               border-bottom: 2px solid transparent;
-              @include transform(translate(-50%,0));
+              transform: translate(-50%,0);
               @include transition(all .25s $easeInOutCubic);
 	    			}
 	    			&:hover {
@@ -307,7 +307,7 @@
     width: 88px;
     position: relative;
     top: 50%;
-    @include transform(translate(0,-50%));
+    transform: translate(0,-50%);
 
 
     &.wri {

@@ -338,7 +338,7 @@
   left: 50%;
   padding: 20px;
   z-index: 5;
-  @include transform(translate(-50%,-50%));
+  transform: translate(-50%,-50%);
   opacity: 0;
   visibility: hidden;
   background: $dark;
