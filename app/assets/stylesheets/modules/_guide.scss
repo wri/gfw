@@ -107,7 +107,7 @@
   position: absolute;
   &.top {
     left: 50%;
-    @include transform(translate(-50%,0));
+    transform: translate(-50%,0);
     bottom: -10px;
     border-top-color:white;
     border-right-color:transparent;
@@ -132,7 +132,7 @@
   }
   &.bottom {
     left: 50%;
-    @include transform(translate(-50%,0));
+    transform: translate(-50%,0);
     top: -10px;
     border-top-color:transparent;
     border-right-color:transparent;
@@ -161,7 +161,7 @@
   height: 32px;
   width: 32px;
   background: #FFD24D;
-  @include transform(translate(0,-50%));
+  transform: translate(0,-50%);
   @include transform-origin(50%,0%);
   margin: 65px 0 0;
   padding: 2px;

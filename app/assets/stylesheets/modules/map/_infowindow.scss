@@ -2,7 +2,7 @@
 .cartodb-infowindow {
   background: $white;
   box-shadow: $shadow1;
-  @include transform(translate(-97px, -12px));
+  transform: translate(-97px, -12px);
 
 
   &:after{
@@ -15,7 +15,7 @@
     height: 14px;
     background: $white;
     box-shadow: 1px 1px 0 0 rgba($dark, 0.5);
-    @include transform(translate(-50%, 50%) rotate(45deg));
+    transform: translate(-50%, 50%) rotate(45deg);
   }
   &.hidden{
     visibility: hidden;
@@ -204,7 +204,7 @@ $story-w: 215px;
     width: 10px;
     height: 10px;
     background: rgba(#000, 1);
-    @include transform(translate(-50%, 50%) rotate(45deg));
+    transform: translate(-50%, 50%) rotate(45deg);
   }
 
   .story-popup{

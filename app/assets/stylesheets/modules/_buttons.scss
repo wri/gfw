@@ -180,7 +180,7 @@
       top: 50%;
       right: 5px;
       fill: $dark;
-      @include transform(translate(0,-50%));
+      transform: translate(0,-50%);
     }
   }
   
@@ -197,7 +197,7 @@
       top: 50%;
       right: 0;
       fill: $white;
-      @include transform(translate(0px,-50%));
+      transform: translate(0px,-50%);
     }
   }
 }

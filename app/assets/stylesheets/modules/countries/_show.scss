@@ -28,7 +28,7 @@
       bottom: 0;
       margin: auto;
 
-      @include transform(translate(0%,0%));
+      transform: translate(0%,0%);
     }
     
     position: relative;
@@ -606,7 +606,7 @@
             position: absolute;
             top: 50%;
             right: 20px;
-            @include transform(translate(0,-50%));
+            transform: translate(0,-50%);
             width: 18px;
             height: 18px;
             svg{
@@ -615,7 +615,7 @@
           }
           &.active{
             .icon{
-              @include transform(translate(0,-50%) rotate(180deg));
+              transform: translate(0,-50%) rotate(180deg);
             }
           }
           @media (max-width: $br-mobile - 1){

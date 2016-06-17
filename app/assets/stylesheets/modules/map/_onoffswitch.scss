@@ -9,7 +9,7 @@
   border-radius: 5px;
 
   &.checked span {
-    @include transform(translate(7px,0%));
+    transform: translate(7px,0%);
   }
 }
 
@@ -20,7 +20,7 @@
   width: 6px;
   height: 6px;
   background: #fff;
-  @include transform(translate(0px,0%));
+  transform: translate(0px,0%);
   border-radius: 4px;
   @include transition(all 0.2s $easeInOutSine);
 }

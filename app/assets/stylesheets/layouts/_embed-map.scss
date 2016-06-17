@@ -61,7 +61,7 @@
           span{
             display: none;
           }
-          &:after{ @include transform(translate(0,-100%) rotate(180deg));}
+          &:after{ transform: translate(0,-100%) rotate(180deg);}
         }
         &:after{
           display: block;
@@ -71,7 +71,7 @@
           right: 5px;
           width: 0;
           height: 0;
-          @include transform(translate(0,-100%));
+          transform: translate(0,-100%);
           border-left: 3px solid transparent;
           border-right: 3px solid transparent;
           border-top: 5px solid #F69;
@@ -99,7 +99,7 @@
       max-height: calc(100% - 90px);
       max-width: 300px;
       padding: 0;
-      @include transform(translate(0,0));
+      transform: translate(0,0);
       .close{
         display: none;
       }
@@ -130,7 +130,7 @@
     .module.module-mapcontrols-mobile{
       bottom: 50px;
       left: 50%;
-      @include transform(translate(-160px,0));
+      transform: translate(-160px,0);
       ul{
         display: none;
         margin: 0;
@@ -180,7 +180,7 @@
         left: 50%;
         width: 100%;
         height: 50px;
-        @include transform(translate(-50%,0%));
+        transform: translate(-50%,0%);
         box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
         .timeline-year .time .select-timeline-container,
         .timeline-month .time .select-timeline-container,

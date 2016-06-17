@@ -28,7 +28,7 @@
       position: absolute;
       top: 50%;
       right: 0;
-      @include transform(translate(0,-50%));
+      transform: translate(0,-50%);
       width: 1px;
       height: 60%;
       background: $border;
@@ -44,7 +44,7 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      @include transform(translate(-50%,-50%));
+      transform: translate(-50%,-50%);
       margin: 0 0 0 1px;
       width: 0;
       height: 0;
@@ -57,7 +57,7 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      @include transform(translate(-50%,-50%));
+      transform: translate(-50%,-50%);
       display: none;
       width: 10px;
       height: 10px;

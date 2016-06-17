@@ -5,10 +5,10 @@
     width: 100%;
     height: 45px;
     border-bottom: 1px solid $border;
-    @include transform(translate(0,100%));
+    transform: translate(0,100%);
     @include transition(all 0.25s $easeInOutSine);
     &.active{
-      @include transform(translate(0,0%));
+      transform: translate(0,0%);
     }
     @media (min-width: $br-mobile){
       bottom: 44px;
@@ -22,7 +22,7 @@
       right: 35px;
       width: auto;
       height: 50px;
-      @include transform(translate(0,0%));
+      transform: translate(0,0%);
       @include transition(all,0s,$easeInOutSine);
       border-bottom: none;
     }
@@ -38,10 +38,10 @@
       // }
 
       &.transform {
-        @include transform(translate(-50%,0));
+        transform: translate(-50%,0);
         margin-left: 0;
         // @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        //   @include transform(translate(0%,0));
+        //   transform: translate(0%,0);
         // }
       }
     }
@@ -111,7 +111,7 @@
       background-color: $white;
       width: 8px;
       height: 8px;
-      @include transform(rotate(45deg));
+      transform: rotate(45deg);
 
       box-shadow: 1px 1px 1px 0 rgba($dark,0.5);
 
