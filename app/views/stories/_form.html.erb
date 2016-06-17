@@ -41,13 +41,11 @@
       </div>
     </div>
 
+    <%= f.hidden_field :location %>
     <%= f.hidden_field :the_geom %>
     <%= f.hidden_field :uploads_ids %>    
   </div>
-  <div class="field">
-    <%= f.label :location %>
-    <%= f.text_field :location, :placeholder => '“Katingan Peatland area, Indonesia,” “Near Ambanja, Mozambique”' %>
-   </div>
+
   <div class="field -short">
     <%= f.label :date %>
     <%= f.date_field :date %>
