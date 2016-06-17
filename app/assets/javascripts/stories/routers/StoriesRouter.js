@@ -1,11 +1,11 @@
 define([
   'jquery', 'backbone',
   'views/NotificationsView',
-  'stories/views/StoriesIndexView', 'stories/views/StoriesNewView', 'stories/views/StoriesShowView'
+  'stories/views/StoriesIndexView', 'stories/views/StoriesListView', 'stories/views/StoriesNewView', 'stories/views/StoriesShowView'
 ], function(
   $, Backbone,
   NotificationsView,
-  StoriesIndexView, StoriesNewView, StoriesShowView
+  StoriesIndexView, StoriesListView, StoriesNewView, StoriesShowView
 ) {
 
   'use strict';
@@ -16,6 +16,7 @@ define([
 
     routes: {
       'stories': 'index',
+      'stories/crowdsourcedstories': 'listStories',
       'stories/new': 'newStory',
       'stories/:id': 'showStory',
       '*path': 'show404'
@@ -28,6 +29,11 @@ define([
     index: function() {
       var storyIndex = new StoriesIndexView();
       this.el.html(storyIndex.render().el);
+    },
+
+    listStories: function() {
+      var storiesList = new StoriesListView();
+      this.el.html(storiesList.render().el);
     },
 
     newStory: function() {

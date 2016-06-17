@@ -5,7 +5,7 @@ define([
   'use strict';
 
   var Story = Backbone.Model.extend({
-    urlRoot: window.gfw.config.GFW_API_HOST + '/story/',
+    urlRoot: window.gfw.config.GFW_API_HOST_V2 + '/story/',
 
     parse: function(response) {
       var attributes;

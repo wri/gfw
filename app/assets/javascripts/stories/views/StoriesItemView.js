@@ -1,8 +1,10 @@
 define([
   'backbone', 'handlebars', 'underscore',
+  'stories/utilities/story',
   'text!stories/templates/story_item.handlebars'
 ], function(
   Backbone, Handlebars, _,
+  StoryUtilities,
   tpl
 ) {
 
@@ -19,24 +21,13 @@ define([
     },
 
     render: function() {
+      var story = StoryUtilities.decorateWithIconUrl(
+        this.story.toJSON());
       this.$el.html(this.template({
-        story: this.story.toJSON(),
-        icon_url: this.icon_url()
+        story: story,
       }));
 
       return this;
-    },
-
-    icon_url: function() {
-      var media = this.story.get('media'), img;
-      if (media.length > 0 && !_.isEmpty(media[media.length-1].previewUrl)) {
-        var url = media[media.length-1].previewUrl;
-        img = 'http://gfw2stories.s3.amazonaws.com/uploads/' + url;
-      } else {
-        img = 'https://maps.googleapis.com/maps/api/staticmap?center=' + this.story.get('lat') + ',' + this.story.get('lng') + '&zoom=2&size=80x80';
-      }
-
-      return img;
     }
 
   });

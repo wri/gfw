@@ -202,26 +202,8 @@
   }
 }
 
-// Call to action buttons
-.btn-cta {
-  @extend %reset-btn;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 50px 0;
-  color: $white;
-  background: $cGreen;
-  cursor: pointer;
 
-  span {
-    display: block;
-    font-size: 21px;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
 
-<<<<<<< 5da688dd681195b7fa07ca5bd5f805077d31b300
 
 
 // Call to action buttons
@@ -258,6 +240,10 @@
     background: lighten($cGreen,5%);
   }
 }
+
+
+
+
 
 // Button containers
 .m-btncontainer {

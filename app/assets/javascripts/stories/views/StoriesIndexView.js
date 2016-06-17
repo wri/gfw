@@ -1,58 +1,61 @@
 define([
-  'backbone', 'handlebars', 'simplePagination',
+  'jquery', 'backbone', 'handlebars', 'simplePagination',
   'stories/collections/StoriesCollection',
+  'stories/utilities/story',
   'stories/views/StoriesItemView', 'stories/views/StoriesPaginationView',
-  'text!stories/templates/stories.handlebars'
+  'text!stories/templates/index.handlebars'
 ], function(
-  Backbone, Handlebars, simplePagination,
+  $, Backbone, Handlebars, simplePagination,
   Stories,
+  StoryUtilities,
   StoryView, StoriesPaginationView,
   tpl
 ) {
+
+  'use strict';
 
   var StoriesIndexView = Backbone.View.extend({
 
     template: Handlebars.compile(tpl),
 
+    events: {
+      'click #storiesLatestNavigationView li' : 'onStoryClick'
+    },
+
     initialize: function() {
       this.stories = new Stories([], {perPage: 5});
-      this.stories.setPage(this.$el.data('page') || 1);
-      this.listenTo(this.stories, 'sync', this.renderStories);
-      this.listenTo(this.stories, 'sync', this.renderPaginationControls);
+      this.listenTo(this.stories, 'sync', this.render);
       this.stories.fetch();
 
       this.render();
     },
 
     render: function() {
-      this.$el.html(this.template());
-      this.$('#storiesSpinner').addClass('-start');
-      this.renderPaginationControls();
+      var stories = this.stories.toJSON().slice(0,4);
+      stories = stories.map(function(story) {
+        return StoryUtilities.decorateWithIconUrl(story);
+      });
 
-      $('#crowdsourcedStories').addClass('current');
+      this.$el.html(this.template({stories: stories}));
+      //this.$('#storiesSpinner').addClass('-start');
+
       document.title = 'Crowdsourced Stories | Global Forest Watch';
 
       return this;
     },
 
-    renderStories: function() {
-      var $storiesList = this.$('#storiesList');
-      $storiesList.empty();
+    onStoryClick: function(event) {
+      var $storiesList = this.$('#storiesLatestListView'),
+          $storiesNavigation = this.$('#storiesLatestNavigationView');
 
-      this.stories.getPaginatedModels().forEach(function(story) {
-        var view = new StoryView({story: story});
-        $storiesList.append(view.render().el);
-      }.bind(this));
+      var active = $storiesNavigation.
+        children('li').index($(event.currentTarget));
 
-      this.$('#storiesSpinner').removeClass('-start');
-    },
+      $storiesNavigation.children('li').toggleClass('-active', false);
+      $storiesNavigation.children('li').eq(active).toggleClass('-active', true);
 
-    renderPaginationControls: function() {
-      var paginationView = new StoriesPaginationView({
-        el: '#pagination-container',
-        stories: this.stories
-      });
-      this.listenTo(paginationView, 'change', this.renderStories);
+      $storiesList.children('li').toggleClass('-active', false);
+      $storiesList.children('li').eq(active).toggleClass('-active', true);
     }
 
   });
