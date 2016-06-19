@@ -1,13 +1,13 @@
 define([
   'mps', 'backbone', 'handlebars', 'underscore',
   'stories/models/StoryModel',
-  'views/InterestingView', 'stories/views/CarrouselStoriesView',
+  'views/InterestingView', 'stories/views/CarrouselStoriesView', 'stories/views/MoreStoriesView',
   'text!stories/templates/story.handlebars',
   'text!stories/templates/youtubeEmbed.handlebars', 'text!stories/templates/imageEmbed.handlebars'
 ], function(
   mps, Backbone, Handlebars, _,
   Story,
-  InterestingView, CarrouselStoriesView,
+  InterestingView, CarrouselStoriesView, MoreStoriesView,
   tpl, youtubeTpl, imageTpl
 ) {
 
@@ -63,6 +63,9 @@ define([
 
       var title = this.story.get('title') || '';
       document.title = title + ' | Global Forest Watch';
+
+      var moreStoriesView = new MoreStoriesView();
+      this.$('.more-stories-section').html(moreStoriesView.render().el);
 
       return this;
     },
