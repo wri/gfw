@@ -19,10 +19,9 @@
 
 
 
-// Layout
-@import "layouts/header";
-@import "layouts/footer";
-@import "layouts/grid";
+// Layouts
+// This will load all common layouts styles
+@import "layouts/layouts";
 
 //modules
 @import "modules/shared";
