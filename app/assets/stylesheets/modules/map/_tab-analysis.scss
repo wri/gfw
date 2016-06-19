@@ -98,7 +98,7 @@
     display: block;
     
     ul {
-      @include display-flex();
+      display: flex;
       
       li {
         position: relative;
@@ -453,8 +453,8 @@
     // GRID
     > ul {
       margin: 20px -20px 0;
-      @include display-flex();
-      @include justify-content(space-between);
+      display: flex;
+      justify-content: space-between;
 
       > li {
         width: 100%;
@@ -465,9 +465,9 @@
 
     // FOOTER BTN
     .analysis-footer-btn {
-      @include display-flex();
-      @include align-items(center);
-      @include justify-content(center);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
       padding: 10px 0;        
       box-shadow: none;
@@ -516,9 +516,9 @@
 
     // FOOTER DROPDOWN (we use this for the download "modal")
     .analysis-footer-dropdown {
-      @include display-flex();
-      @include flex-direction(column);
-      @include justify-content(flex-end);      
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;      
       width: 100%;
       position: absolute;
       bottom: 88px;

@@ -93,8 +93,8 @@ body,html{
       z-index: 0;     
 
       @media (min-width:$br-mobile){
-        @include display-flex();
-        @include align-items(center);
+        display: flex;
+        align-items: center;
       }
     
       > li {
@@ -180,7 +180,7 @@ body,html{
   opacity: 0;
   cursor: url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default;
 
-  @include user-select(none);
+  user-select: none;
   transition: opacity 1s ease;
 
   &.is-loaded {

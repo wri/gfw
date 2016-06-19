@@ -76,27 +76,27 @@
     }
     .select-timeline-container{
       line-height: 46px;
-      @include display-flex();
-      @include justify-content(center);
-      @include align-items(center);
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       .select-timeline-box{
         margin: 0 0 0 10px;
         &:first-child{
           margin: 0;
         }
-        @include display-flex();
-        @include justify-content(center);
-        @include align-items(center);
+        display: flex;
+        justify-content: center;
+        align-items: center;
         position: relative;
         > span{
           margin: 0 5px 0 0;
           font-size: 12px;
         }
         .select-box{
-          @include display-flex();
-          @include justify-content(center);
-          @include align-items(center);
+          display: flex;
+          justify-content: center;
+          align-items: center;
           .month-box{
             position: relative;
             button{

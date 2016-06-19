@@ -82,9 +82,9 @@ $search-br: 600px;
     .coordinates, .degrees, .utm {
       padding: 0 20px 15px;
       @media (min-width: $search-br){
-        @include display-flex();
-        @include justify-content(space-between);
-        @include align-items(center);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         padding: 0 10px;
       }
       button {
@@ -99,9 +99,9 @@ $search-br: 600px;
 
     .coord-box , .deg-box, .utm-box {
       @media (max-width: $search-br){
-        @include display-flex();
-        @include justify-content(space-between);
-        @include align-items(center);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
       input{
         padding: 0;
@@ -140,9 +140,9 @@ $search-br: 600px;
       }
     }
     .deg-box, .utm-box {
-      @include display-flex();
-      @include justify-content(space-between);
-      @include align-items(center);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       span{
         width: 50px;
         @media (min-width: $search-br){

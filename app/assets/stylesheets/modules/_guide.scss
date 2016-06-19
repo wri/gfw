@@ -42,9 +42,9 @@
   z-index: 3;
 
   .guide-navigation {
-    @include display-flex();
-    @include justify-content(space-between);
-    @include align-items(center);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin: 0 0 15px;
 
     .step {
@@ -162,7 +162,7 @@
   width: 32px;
   background: #FFD24D;
   transform: translate(0,-50%);
-  @include transform-origin(50%,0%);
+  transform-origin: 50% 0%;
   margin: 65px 0 0;
   padding: 2px;
   cursor: pointer;

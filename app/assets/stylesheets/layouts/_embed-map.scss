@@ -150,8 +150,8 @@
         font-size: 12px;
         max-width: 600px;
         margin: 0 auto;
-        @include display-flex();
-        @include justify-content(center);
+        display: flex;
+        justify-content: center;
         li{
           padding: 0 15px;
           margin: 15px 0;
@@ -194,9 +194,9 @@
         height: 70px;
         background-color: $cGreen;
         width: 100%;
-        @include display-flex();
-        @include align-items(center);
-        @include justify-content(center);
+        display: flex;
+        align-items: center;
+        justify-content: center;
         span {
           font-size: 12px;
           color: $white;

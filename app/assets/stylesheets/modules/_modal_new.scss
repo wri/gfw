@@ -205,8 +205,8 @@ $height: auto;
     transform: translate(-50%,0);
     float: left;
     padding: 4px;
-    @include display-flex();
-    @include justify-content(center);
+    display: flex;
+    justify-content: center;
     border: 1px solid $cGreen;
     border-radius: 45px;
 

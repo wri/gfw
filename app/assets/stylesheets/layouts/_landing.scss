@@ -450,13 +450,16 @@
 }
 .main-apps  {
 	.row {
-		@include row();
+		display: flex;
+    justify-content: space-between;
+    align-items: stretch;
 	}
 	.col {
 		cursor: pointer;
 	}
 	.col6 {
-		@include col(50);
+    width: 50%;
+    min-height: 1px;
 		padding: 20px;
     @media (min-width: $br-mobile) {
       padding: 0;
@@ -514,8 +517,10 @@
   }
 
 	.row {
-		@include row();
-    @include flex-wrap(wrap);
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;		
+    flex-wrap: wrap;
     @media (min-width: $br-tablet) {
       padding: 0 10%;
     }
@@ -543,12 +548,14 @@
 		}
 
 		.col3 {
-			@include col(50);
+      width: 50%;
+      min-height: 1px;
 			padding: 20px;
       border-top: 1px solid $border;
 			border-left: 1px solid $border;
       @media (min-width: $br-mobile) {
-        @include col(25);
+        width: 25%;
+        min-height: 1px;
         border-top: none;
       }
 			&:first-child  { border-left: none; }
@@ -630,11 +637,11 @@
   padding: 20px;
   display: none;
   @media (min-width: $br-mobile) {
-    @include display-flex();
+    display: flex;
   }
   a {
-    @include display-flex();
-    @include align-self(center);
+    display: flex;
+    align-self: center;
     width: 270px;
     background: $white;
     margin: 0 auto;
@@ -660,8 +667,8 @@
     svg {
       display: inline-block;
       fill: $dark;
-      @include display-flex();
-      @include align-self(center);
+      display: flex;
+      align-self: center;
       width: 50px;
       height: 50px;
       margin: 0 5px 0 0;
@@ -690,23 +697,28 @@
     max-width: 1200px;
   }
 	.row {
-		@include row();
-    @include flex-wrap(wrap);
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-wrap: wrap;
     @media (max-width: $br-mobile - 1) {
-      @include flex-direction(column-reverse);
+      flex-direction: column-reverse;
     }
 	}
 	.col {
 		background: $white;
 	}
 	.col4 {
-		@include col(100);
-    @include display-flex();
+    width: 100%;
+    min-height: 1px;
+    display: flex;
     @media (min-width: $br-mobile) {
-      @include col(48);
+      width: 48%;
+      min-height: 1px;
     }
     @media (min-width: $br-tablet) {
-      @include col(32);
+      width: 32%;
+      min-height: 1px;
     }
     &.tablet{
       @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
@@ -728,7 +740,7 @@
     }
   }
 	.card {
-		@include display-flex();
+		display: flex;
     width: 100%;
     border-top: 1px solid #CCC;
     padding: 20px;
@@ -757,10 +769,10 @@
       left: 0;
       width: 100%;
       padding: 20px;
-      @include display-flex();
-      @include justify-content(center);
+      display: flex;
+      justify-content: center;
       &.two{
-        @include justify-content(space-between);
+        justify-content: space-between;
         .btn{
           width: 49%;
         }
@@ -1001,8 +1013,10 @@
     border-top: 1px solid $border;
     &:first-child { border-top: none;}
     a {
-     text-decoration: none;
-     @include row(space-between);
+      text-decoration: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
     }
     figure {
      width: 40%;

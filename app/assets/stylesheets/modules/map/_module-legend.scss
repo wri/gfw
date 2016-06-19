@@ -352,7 +352,7 @@
     }
 
     .definition-list {
-      @include display-flex();
+      display: flex;
       width: 190px;
       font-size: 11px;
       line-height: 14px;      

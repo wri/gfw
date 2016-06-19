@@ -234,9 +234,9 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
 
         > span {
           position: absolute;
-          @include display-flex;
-          @include align-items(center);
-          @include justify-content(center);
+          display: flex;
+          align-items: center;
+          justify-content: center;
           top: 20px;
           right: 10px;
           width: 14px;

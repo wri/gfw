@@ -28,7 +28,7 @@ $w-control: 44px;
     nav {
       ul {
         @media (min-width: $br-mobileMap){
-          @include display-flex();
+          display: flex;
         }
 
         li {
@@ -181,8 +181,8 @@ $w-control: 44px;
   }
   .button-container {
     margin: 10px 0 0;
-    @include display-flex();
-    @include justify-content(space-between);
+    display: flex;
+    justify-content: space-between;
 
     @media (max-width: $br-mobileMap - 1){
       &.fixed {

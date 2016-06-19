@@ -66,7 +66,7 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, 
       right: 100%;
     }
     &.active{
-      @include display-flex();
+      display: flex;
       min-width: 200px;
     }
     &:after{

@@ -228,8 +228,8 @@
     font-size: 13px;
     text-transform: uppercase;
     position: absolute;
-    @include display-flex();
-    @include justify-content(space-between);
+    display: flex;
+    justify-content: space-between;
     right: 60px;
     top: 8px;
     border-radius: 50px;
@@ -244,9 +244,9 @@
     span,
     strong {
       width: 50%;
-      @include display-flex();
-      @include justify-content(center);
-      @include align-items(center);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     @media only screen and (max-width: 480px) {
       position: relative;
@@ -448,7 +448,7 @@
   position: absolute;
   top: 50%;
   right: 60px;
-  @include transform-translate(0, -50%);
+  transform: translate(0, -50%);
   float: right;
   width: 240px;
   text-align: right;
@@ -492,7 +492,7 @@
     //   content: '';
     //   position: absolute;
     //   top: 50%;
-    //   @include transform-translate(0, -50%);
+    //   transform: translate(0, -50%);
     //   right: -11px;
     //   width: 6px;
     //   height: 6px;
@@ -539,7 +539,7 @@
   position: absolute;
   top: 50%;
   left: 0;
-  @include transform-translate(0, -50%);
+  transform: translate(0, -50%);
   width: 60px;
 }
 
@@ -744,7 +744,7 @@
     li {
       font-size: 19px;
       line-height: 1.5;
-      @include text-shadow(0 0 5px rgba(#000, .8));
+      text-shadow: 0 0 5px rgba(#000, .8);
 
       &:first-child i {
         background: #FF6699;
@@ -905,7 +905,7 @@
         position: absolute;
         top: 50%;
         right: 0;
-        @include transform-translate(0, -50%);
+        transform: translate(0, -50%);
     }
   }
 
@@ -925,7 +925,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    @include transform-translate(-50%, -50%);
+    transform: translate(-50%, -50%);
   }
 }
 

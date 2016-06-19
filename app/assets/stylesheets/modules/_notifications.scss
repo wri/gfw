@@ -41,9 +41,9 @@
 
 
   .content {
-    @include display-flex();
-    @include justify-content(center);
-    @include align-items(center);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     svg {
       width: 26px;
       height: 26px;
@@ -54,6 +54,9 @@
     p {
       color: $white;
       font-size: 16px;
+      button {
+        margin: 0 0 0 10px;
+      }
     }
   }
 
