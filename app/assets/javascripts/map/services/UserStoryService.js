@@ -13,7 +13,7 @@ define([
 
     requestId: 'UserStoryService',
 
-    url: '/stories.json?for_map=true',
+    url: window.gfw.config.GFW_API_HOST_V2 + '/story',
 
     /**
      * Constructs a new instance of StoryService.
@@ -36,7 +36,7 @@ define([
 
     fetchStories: function(successCb, errorCb) {
       function _parseData(data) {
-        successCb(data);
+        successCb(data.data);
       }
 
       var config = {resourceId: this.requestId, success: _parseData,
