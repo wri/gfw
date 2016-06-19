@@ -1,10 +1,12 @@
 define([
   'Class', 'jquery', 'backbone', 'mps', 'handlebars', 'jquery_fileupload', 'backbone.syphon', 'moment', 'underscore',
   'stories/models/StoryModel', 'stories/models/MediaModel',
+  'stories/views/LatestStoriesView',
   'text!stories/templates/new_story.handlebars'
 ], function(
   Class, $, Backbone, mps, Handlebars, jquery_fileupload, BackboneSyphon, moment, _,
   Story, Media,
+  LatestStoriesView,
   tpl
 ) {
 
@@ -380,6 +382,9 @@ define([
 
       this.renderMap();
       this.renderFileUploader();
+
+      var latestStoriesView = new LatestStoriesView();
+      this.$('#latestStories').html(latestStoriesView.render().el);
 
       $('#submitAStory').addClass('current');
       document.title = 'Submit a story | Global Forest Watch';
