@@ -14,10 +14,8 @@
 
 
 // Layouts
-@import "layouts/header";
-@import "layouts/footer";
-@import "layouts/grid";
-@import "modules/notifications";
+// This will load all common layouts styles
+@import "layouts/layouts";
 
 // Modules
 @import "modules/modal";
