@@ -21,8 +21,8 @@ $w-control: 38px;
   }
   ul{
     width: $w-control;
-    @include display-flex();
-    @include flex-wrap(wrap);
+    display: flex;
+    flex-wrap: wrap;
     background: $white;
     box-shadow: $shadow1;
     margin: 10px 0 0;
@@ -37,19 +37,19 @@ $w-control: 38px;
       margin: 0;
     }
     li{
-      @include display-flex();
-      @include justify-content(center);
-      @include align-items(center);
+      display: flex;
+      justify-content: center;
+      align-items: center;
       background: $white;
       width: $w-control;
       height: $w-control;
       position: relative;
       cursor: pointer;
       .handler{
-        @include display-flex();
-        @include justify-content(center);
-        @include align-items(center);
-        @include transform-origin(51% 50.1%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform-origin: 51% 50.1%;
         width: 100%;
         height: 100%;
       }

@@ -247,12 +247,12 @@
 
 // Button containers
 .m-btncontainer {
-  @include display-flex();
-  @include align-items(center);
+  display: flex;
+  align-items: center;
   
   // Justify
   &.is-center {
-    @include justify-content(center);
+    justify-content: center;
     
     > * {
       margin: 0 0 0 10px;
@@ -264,7 +264,7 @@
   }
 
   &.is-space-between {
-    @include justify-content(space-between);
+    justify-content: space-between;
   }
 
   &.-fix-width-220 {

@@ -737,8 +737,8 @@ $height: auto;
 
   .button-container {
     margin: 10px 0 0;
-    @include display-flex();
-    @include justify-content(space-between);
+    display: flex;
+    justify-content: space-between;
 
     li{
       width: 48%;
@@ -792,8 +792,8 @@ $height: auto;
     padding: 50px 0 0;
 
     ul {
-      @include display-flex();
-      @include justify-content(space-between);
+      display: flex;
+      justify-content: space-between;
 
       li {
         width: 44px;

@@ -106,8 +106,8 @@ textarea {
  */
 .radio-box {
   @include clearfix();
-  @include display-flex();
-  @include justify-content(center);
+  display: flex;
+  justify-content: center;
   padding: 15px 0;
 
   .custom-radio {
@@ -168,8 +168,8 @@ textarea {
  */
 .checkbox-box {
   @include clearfix();
-  @include display-flex();
-  @include justify-content(center);
+  display: flex;
+  justify-content: center;
   padding: 15px 0;
 
   .custom-radio {

@@ -39,7 +39,10 @@
       margin: 0 0 50px;
     	border-bottom: 1px solid #E5E5DF;
     	ul {
-    		@include row(space-between);
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+
     		li {
     			width: 16.666666%;
     			a {
@@ -77,7 +80,9 @@
     .site-map {
     	padding: 0 0 40px;
     	.row {
-    		@include row(space-between);
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
     		padding: 40px 0;
     		border-bottom: 1px solid #E5E5DF;
     		.col {
@@ -123,8 +128,10 @@
     	}
     	.row{
         @media (min-width: $br-mobile){
-          @include row(space-between,flex-start);
-          @include flex-wrap(wrap);
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          flex-wrap: wrap;
         }
 	    	.wri-logo{
           display: block;
@@ -179,7 +186,9 @@
         display: none;
       }
       .inner{
-        @include row(space-between);
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
       }
       a {
         color: $dark;
@@ -225,28 +234,28 @@
 }
 
 .footer-share-container {
-    @include display-flex();
+    display: flex;
     padding: 0 0 40px 0;
     background: $white;
-    @include justify-content(space-around);
-    @include align-items(center);
-    @include flex-wrap(wrap);
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
     border-top: 1px solid $border;
     border-bottom: 1px solid $border;
     position: relative;
     @media (min-width: $br-mobile){
       padding: 0;
       height: 155px;
-      @include flex-wrap(nowrap);
+      flex-wrap: nowrap;
     }
     .footer-share {
         color: #555;
-        @include display-flex();
-        @include flex-direction(column);
+        display: flex;
+        flex-direction: column;
         text-align: center;
         height: 60px;
-        @include align-items(center);
-        @include justify-content(space-between);
+        align-items: center;
+        justify-content: space-between;
         margin: 40px 0 0;
         @media (min-width: $br-mobile){
           margin: 0;
@@ -289,7 +298,7 @@
 
 @media only screen and (max-width: 480px) {
   .footer-share-container {
-    @include flex-direction(column);
+    flex-direction: column;
     height: 250px;
 
     .share_buttons {
