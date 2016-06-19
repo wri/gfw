@@ -3,7 +3,11 @@
 @import "compass/css3";
 @import 'flexbox';
 
-  // Images
+// Global
+// This will load all common settings, mixins and styles needed 
+@import "global/global";
+
+// Images
 @import
   "icons/*.png",
   "logos/*.png",
@@ -13,16 +17,11 @@
   "country-icons/*.png",
   "stories-icons/*.png";
 
-// General
-@import "settings";
-@import "mixins";
-@import "animations";
-@import "base";
 
 
 // Layout
-@import "header";
-@import "footer";
+@import "layouts/header";
+@import "layouts/footer";
 @import "layouts/grid";
 
 //modules
@@ -93,5 +92,3 @@
 
   "modules/map/analysis-tool",
   "modules/map/infowindow";
-
-@import "states";
