@@ -1,10 +1,10 @@
 define([
   'Class', 'jquery', 'backbone', 'mps', 'handlebars', 'jquery_fileupload', 'backbone.syphon', 'moment', 'underscore',
-  'stories/models/StoryModel',
+  'stories/models/StoryModel', 'stories/models/MediaModel',
   'text!stories/templates/new_story.handlebars'
 ], function(
   Class, $, Backbone, mps, Handlebars, jquery_fileupload, BackboneSyphon, moment, _,
-  Story,
+  Story, Media,
   tpl
 ) {
 
@@ -68,7 +68,6 @@ define([
     },
 
     initialize: function() {
-      this.uploadsIds = [];
       this.sourceDrag = undefined;
 
       this.story = new Story();
@@ -95,27 +94,31 @@ define([
     },
 
     _addVideoThumbnail: function(url) {
+      var media = new Media({embedUrl: url});
+      this.story.addMedia(media);
+
       var vidID  = this._getVideoID(url),
           $thumb = $('#videothumbnail');
       if ($thumb.length > 0) {
-        $thumb.find('.inner_box').css('background-image','url('+ vidID +')')
+        $thumb.find('.inner_box').css('background-image','url('+ vidID +')');
       } else {
         $('.thumbnails').append('<li class="sortable thumbnail" draggable="true" id="videothumbnail" data-id="VID-'+vidID+'"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
-        this.uploadsIds.push('VID-'+vidID);
         $thumb = $('#videothumbnail');
         $thumb.find('.destroy').on('click', function(e) {
           e.preventDefault();
 
-          var confirmation = confirm('Are you sure?')
+          var confirmation = confirm('Are you sure?');
 
           if (confirmation == true) {
-            this.uploadsIds = _.without(this.uploadsIds, 'VID-'+vidID);
+            var video = this.story.get('media').where({embedUrl: url})[0];
+            this.story.get('media').remove(video);
+
             $("#video").val('');
             $thumb.fadeOut(250, function() {
               $thumb.remove();
             });
           }
-        });
+        }.bind(this));
       }
     },
 
@@ -168,7 +171,9 @@ define([
 
         $.each(files, function (index, file) {
           remainingFiles -= 1;
-          that.uploadsIds.push(file.basename);
+
+          var media = new Media({previewUrl: file.basename});
+          that.story.addMedia(media);
 
           var url = file.url.replace('https', 'http');
           var $thumb = $("<li class='sortable thumbnail' draggable='true' data-id='"+file.basename+"'><div class='inner_box' style=' background-image: url("+url+");'></div><a href='#' class='destroy'><svg><use xlink:href='#shape-close'></use></svg></a></li>");
@@ -188,8 +193,6 @@ define([
             var confirmation = confirm('Are you sure?')
 
             if (confirmation == true) {
-              that.uploadsIds = _.without(that.uploadsIds, file.basename);
-
               $thumb.fadeOut(250, function() {
                 $thumb.remove();
               });
@@ -222,6 +225,7 @@ define([
 
     setStoryLocationToCenter: function() {
       var center = this.map.getCenter();
+      this.story.set('geojson', { "type": "Point", "coordinates": [center.lng(), center.lat()] });
       this.story.set('lat', center.lat());
       this.story.set('lng', center.lng());
     },
@@ -280,8 +284,11 @@ define([
         navigator.geolocation.getCurrentPosition(
           function(position) {
             $autoLocate.removeClass('active');
-            this.story.set('lat', position.coords.latitude, {silent: true});
-            this.story.set('lng', position.coords.longitude, {silent: true});
+            var lat = position.coords.latitude,
+                lng = position.coords.longitude;
+            this.story.set('geojson', { "type": "Point", "coordinates": [lng, lat] });
+            this.story.set('lat', lat, {silent: true});
+            this.story.set('lng', lng, {silent: true});
             this.zoomToStory();
           }.bind(this),
 
@@ -313,16 +320,16 @@ define([
         target = target.closest('.sortable');
       }
 
+      var currentOrder = this.$('.sortable').index(this.sourceDrag);
+
       if (this.isbefore(this.sourceDrag, target)) {
         target.parentNode.insertBefore(this.sourceDrag, target);
       } else {
         target.parentNode.insertBefore(this.sourceDrag, target.nextSibling);
       }
 
-      var sortables = document.getElementsByClassName('sortable');
-      for (var i = 0; i < sortables.length; i++) {
-        this.uploadsIds[i] = $(sortables[i]).data('id');
-      }
+      var newOrder = this.$('.sortable').index(this.sourceDrag);
+      this.story.get('media').move(currentOrder, newOrder);
     },
 
     dragstart: function(e) {
@@ -351,7 +358,10 @@ define([
       this.story.set(attributesFromForm);
 
       if (this.validator.isValid(this.story)) {
-        alert('valid');
+        this.story.save().then(function(result) {
+          var id = result.data.id;
+          window.location = '/stories/'+id;
+        });
       } else {
         this.render(this.validator.messages);
         mps.publish('Notification/open', ['story-new-form-error']);
