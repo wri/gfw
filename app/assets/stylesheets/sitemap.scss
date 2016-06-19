@@ -3,15 +3,14 @@
 @import "compass/css3";
 @import 'flexbox';
 
-// Global
-// This will load all common settings, mixins and styles needed 
-@import "global/global";
-
 // Images
 @import "logos/*.png";
 @import "icons/*.png";
 @import "home-icons/*.png";
 
+// Global
+// This will load all common settings, mixins and styles needed 
+@import "global/global";
 
 // Layouts
 // This will load all common layouts styles

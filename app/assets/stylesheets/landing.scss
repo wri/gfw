@@ -3,19 +3,18 @@
 @import "compass/css3";
 @import 'flexbox';
 
-// Global
-// This will load all common settings, mixins and styles needed 
-@import "global/global";
-
 // Images
 @import "logos/*.png",
         "getting-started/*.png",
         "blog-categories/*.png";
 
+// Global
+// This will load all common settings, mixins and styles needed 
+@import "global/global";
+
 // Layouts
 // This will load all common layouts styles
 @import "layouts/layouts";
-@import "modules/notifications";
 
 // Modules
 @import "modules/modal";
@@ -26,6 +25,7 @@
 @import "modules/icons";
 @import "modules/slick";
 @import "layouts/landing";
+@import "modules/notifications";
 
 @import "modules/connect/profile-modal";
 @import "modules/connect/user-form";
