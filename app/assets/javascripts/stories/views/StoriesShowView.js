@@ -51,6 +51,7 @@ define([
 
     render: function() {
       this.$el.html(this.template({
+        currentUrl: window.location.href,
         story: this.story.toJSON(),
         media: this.getMedia(),
         map: this.getMap(),
@@ -79,7 +80,7 @@ define([
 
     getMedia: function() {
       var media = this.story.get('media');
-      if (!media) { return []; }
+      if (_.isEmpty(media)) { return []; }
 
       return media.map(function(item) {
         var mediaItem = {};
