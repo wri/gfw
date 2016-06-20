@@ -35,7 +35,7 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, 
         position: absolute;
         top: 50%;
         left: 16px;
-        @include transform(translate(0,-50%));
+        transform: translate(0,-50%);
         background: #000;
         border-radius: 50%;
         border: 2px solid $border;
@@ -47,7 +47,7 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, 
         position: absolute;
         top: 50%;
         right: 20px;
-        @include transform(translate(0,-50%));
+        transform: translate(0,-50%);
       }
     }
   }
@@ -66,7 +66,7 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, 
       right: 100%;
     }
     &.active{
-      @include display-flex();
+      display: flex;
       min-width: 200px;
     }
     &:after{
@@ -75,7 +75,7 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, 
       bottom: calc(70px/2 - 12px);
       right: 0;
       display: none;
-      @include transform(translate(50%,-50%) rotate(45deg));
+      transform: translate(50%,-50%) rotate(45deg);
       background: $white;
       width: 12px;
       height: 12px;

@@ -30,6 +30,8 @@ GEM
     airbrussh (1.0.1)
       sshkit (>= 1.6.1, != 1.7.0)
     arel (4.0.2)
+    autoprefixer-rails (6.3.6.2)
+      execjs
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -353,6 +355,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  autoprefixer-rails (~> 6.3.6.2)
   better_errors
   binding_of_caller
   byebug

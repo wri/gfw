@@ -30,7 +30,7 @@
   left: 50%;
   z-index: 2;
   background: $white;
-  @include transform(translate(-50%,-50%));
+  transform: translate(-50%,-50%);
   header{
     text-align: center;
     font-size: 13px;
@@ -60,7 +60,7 @@
       float: left;
       max-width: 80%;
       left: 50%;
-      @include transform(translate(-50%,0));
+      transform: translate(-50%,0);
       li{
         padding: 5px 0 0;
         &:first-child{ margin: 0;}
@@ -88,7 +88,7 @@
       width: 50%;
       height: 50%;
       fill: $dark;
-      @include transform(translate(-50%,-50%));
+      transform: translate(-50%,-50%);
     }
     &:hover{
       svg{
@@ -152,7 +152,7 @@
         font-size: 10px;
         font-weight: 500;
         cursor: pointer;
-        @include transform(translate(-50%,0));
+        transform: translate(-50%,0);
         &:hover{
           color: darken($cGreen, 5%);
         }
@@ -174,7 +174,7 @@
         height: 100%;
         top: 0;
         left: 50%;
-        @include transform(translate(-50%,0));
+        transform: translate(-50%,0);
         margin: 1px 0 0;
         background: image-url('/assets/icons/point.png') repeat-x 1px center;
         &:after{
@@ -250,7 +250,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        @include transform(translate(-50%,-50%));
+        transform: translate(-50%,-50%);
         width: 4px;
         height: 4px;
         background: $dark;
@@ -273,7 +273,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        @include transform(translate(-50%,-50%));
+        transform: translate(-50%,-50%);
         width: 4px;
         height: 4px;
         background: $dark;
@@ -296,7 +296,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        @include transform(translate(-50%,-50%));
+        transform: translate(-50%,-50%);
         width: 4px;
         height: 4px;
         background: $dark;

@@ -204,7 +204,7 @@
     position: absolute;
     top: 50%;
     right: 20px;
-    @include transform(translate(0,-50%));
+    transform: translate(0,-50%);
     border-radius: 50%;
     background: $cGreen;
     width: 18px;
@@ -217,7 +217,7 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      @include transform(translate(-50%,-50%));
+      transform: translate(-50%,-50%);
     }
   }
   .trigger-mode {
@@ -228,8 +228,8 @@
     font-size: 13px;
     text-transform: uppercase;
     position: absolute;
-    @include display-flex();
-    @include justify-content(space-between);
+    display: flex;
+    justify-content: space-between;
     right: 60px;
     top: 8px;
     border-radius: 50px;
@@ -244,9 +244,9 @@
     span,
     strong {
       width: 50%;
-      @include display-flex();
-      @include justify-content(center);
-      @include align-items(center);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     @media only screen and (max-width: 480px) {
       position: relative;
@@ -448,7 +448,7 @@
   position: absolute;
   top: 50%;
   right: 60px;
-  @include transform-translate(0, -50%);
+  transform: translate(0, -50%);
   float: right;
   width: 240px;
   text-align: right;
@@ -492,7 +492,7 @@
     //   content: '';
     //   position: absolute;
     //   top: 50%;
-    //   @include transform-translate(0, -50%);
+    //   transform: translate(0, -50%);
     //   right: -11px;
     //   width: 6px;
     //   height: 6px;
@@ -539,7 +539,7 @@
   position: absolute;
   top: 50%;
   left: 0;
-  @include transform-translate(0, -50%);
+  transform: translate(0, -50%);
   width: 60px;
 }
 
@@ -641,7 +641,7 @@
     text-align: left;
     text-transform: uppercase;
     color: #463F52;
-    @include border-radius(21px);
+    border-radius: 21px;
 
     i {
       float: right;
@@ -667,7 +667,7 @@
 //   text-align: center;
 //   color: #C440FF;
 //   background: #fff;
-//   @include border-radius(5px);
+//   border-radius: 5px;
 //   @include box-shadow(0 0 3px #000);
 
 //   &:after {
@@ -744,7 +744,7 @@
     li {
       font-size: 19px;
       line-height: 1.5;
-      @include text-shadow(0 0 5px rgba(#000, .8));
+      text-shadow: 0 0 5px rgba(#000, .8);
 
       &:first-child i {
         background: #FF6699;
@@ -761,7 +761,7 @@
         height: 6px;
         width: 6px;
         vertical-align: middle;
-        @include border-radius(4px);
+        border-radius: 4px;
       }
     }
   }
@@ -905,7 +905,7 @@
         position: absolute;
         top: 50%;
         right: 0;
-        @include transform-translate(0, -50%);
+        transform: translate(0, -50%);
     }
   }
 
@@ -925,7 +925,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    @include transform-translate(-50%, -50%);
+    transform: translate(-50%, -50%);
   }
 }
 

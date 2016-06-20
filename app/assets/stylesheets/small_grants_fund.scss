@@ -1,27 +1,22 @@
 // Compass
 @import "compass/reset";
 @import "compass/css3";
-@import 'flexbox';
-//
-// // General
-@import "settings1600";
-@import "fonts1600";
-@import "mixins1600";
-@import "animations1600";
-@import "base1600";
-//
+
 // Images
 @import "logos/*.png";
-//
-// // Layouts
-@import "header1600";
-@import "footer1600";
-@import "layouts/grid1600";
-@import "modules/notifications";
-//
-// // Modules
+
+// Global
+// This will load all common settings, mixins and styles needed 
+@import "global/global";
+
+// Layouts
+// This will load all common layouts styles
+@import "layouts/layouts";
+
+// Modules
 @import "modules/modal";
 @import "modules/modal_new";
+@import "modules/notifications";
 
 // static page
 @import "static-pages/main";

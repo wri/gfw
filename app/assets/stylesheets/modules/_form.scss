@@ -106,8 +106,8 @@ textarea {
  */
 .radio-box {
   @include clearfix();
-  @include display-flex();
-  @include justify-content(center);
+  display: flex;
+  justify-content: center;
   padding: 15px 0;
 
   .custom-radio {
@@ -133,7 +133,7 @@ textarea {
       height: 20px;
       border: 1px solid $dark;
       border-radius: 50%;
-      @include transform(translate(0,-50%));
+      transform: translate(0,-50%);
       &:after {
         content: "";
         position: absolute;
@@ -144,7 +144,7 @@ textarea {
         border-radius: 50%;
         background: $cGreen;
         display: none;
-        @include transform(translate(-50%,-50%));
+        transform: translate(-50%,-50%);
       }
     }
   }
@@ -168,8 +168,8 @@ textarea {
  */
 .checkbox-box {
   @include clearfix();
-  @include display-flex();
-  @include justify-content(center);
+  display: flex;
+  justify-content: center;
   padding: 15px 0;
 
   .custom-radio {
@@ -194,7 +194,7 @@ textarea {
       width: 20px;
       height: 20px;
       border: 1px solid $dark;
-      @include transform(translate(0,-50%));
+      transform: translate(0,-50%);
       
       &:after {
         content: "";
@@ -205,7 +205,7 @@ textarea {
         height: 50%;
         background: $cGreen;
         display: none;
-        @include transform(translate(-50%,-50%));
+        transform: translate(-50%,-50%);
       }
     }
   }

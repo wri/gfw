@@ -28,7 +28,7 @@
       bottom: 0;
       margin: auto;
 
-      @include transform(translate(0%,0%));
+      transform: translate(0%,0%);
     }
     
     position: relative;
@@ -606,7 +606,7 @@
             position: absolute;
             top: 50%;
             right: 20px;
-            @include transform(translate(0,-50%));
+            transform: translate(0,-50%);
             width: 18px;
             height: 18px;
             svg{
@@ -615,7 +615,7 @@
           }
           &.active{
             .icon{
-              @include transform(translate(0,-50%) rotate(180deg));
+              transform: translate(0,-50%) rotate(180deg);
             }
           }
           @media (max-width: $br-mobile - 1){
@@ -630,9 +630,9 @@
           height: 100%;
           padding: 1px 0;
           box-sizing: border-box;
-          @include display-flex();
-          @include flex-direction(column);
-          @include justify-content(space-between);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
 
           > li {
             width: 100%;
@@ -640,8 +640,8 @@
             border: 1px solid $dark;
             height: 100%;
             border-bottom: none;
-            @include display-flex();
-            @include align-items(center);
+            display: flex;
+            align-items: center;
 
             > a {
               color: #BEBCC2;
@@ -654,8 +654,8 @@
               font-size: 14px;
               cursor: pointer;
               text-decoration: none;
-              @include display-flex();
-              @include align-items(center);
+              display: flex;
+              align-items: center;
               padding: 0 30px 0 25px;
 
               .sidenav-icon {
@@ -663,7 +663,7 @@
                 position: absolute;
                 top: 50%;
                 right: 20px;
-                @include transform-translate(0,-50%);
+                transform: translate(0,-50%);
                 width: 18px;
                 height: 18px;
                 svg{
@@ -798,9 +798,9 @@
         height: 50px;
         width: 16.66666%;
         border-left: none;
-        @include display-flex();
-        @include align-items(center);
-        @include justify-content(center);
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background: #F2F2F3;
         &:first-child {
           border-left: 1px solid #E5E5E5;
@@ -953,7 +953,7 @@
         padding: 0 0 10px 0;
       }
       .info, .share {
-        @include transform-translate(0, -4px);
+        transform: translate(0, -4px);
       }
       .info {
         position: absolute;
@@ -1437,7 +1437,7 @@
       }
 
       li {
-        @include inline-block();
+        display: inline-block;
         position: relative;
         padding-right: 8px;
         margin: 0 5px 10px 0px;
@@ -1561,13 +1561,13 @@
 
         text-align: center;
         color: #AAAAAA;
-        @include border-radius(2px);
+        border-radius: 2px;
 
       }
       .name-container {
-        @include display-flex;
+        display: flex;
         height: calc(100% - 23px);
-        @include align-items(center);
+        align-items: center;
         .name {
           width: 100%;
         }
@@ -1655,7 +1655,7 @@
               position: absolute;
               top: 50%;
               left: 50%;
-              @include transform-translate(-50%, -50%);
+              transform: translate(-50%, -50%);
               color: #FDFDFD;
               width: 200px;
               strong, span {
@@ -1897,10 +1897,10 @@
     border-color: #555;
     background: #555;
     color: #fff;
-    @include transition(background-color 0.2s ease);
+    transition: background-color 0.2s ease;
 
     &:hover {
-      @include transition(background-color 0.2s ease);
+      transition: background-color 0.2s ease;
       background-color: #000;
       color: #fff;
     }
@@ -1929,7 +1929,7 @@
     top: -395px;
     left: -444px;
     border: 1px solid #666;
-    @include border-radius(3px);
+    border-radius: 3px;
     @include box-shadow(0px 0px 3px #666);
   }
 
@@ -2127,11 +2127,11 @@
       pointer-events:none;
     }
     a {
-      @include inline-block();
+      display: inline-block;
       width: 70px;
       padding: 10px 0;
       border: #666666;
-      @include border-radius(3px);
+      border-radius: 3px;
       font-weight:bold;
 
       text-align: center;
@@ -2483,7 +2483,7 @@
             padding: 0;
             background: $dark;
             &.active{
-              @include display-flex();
+              display: flex;
             }
 
             li {
@@ -2667,8 +2667,8 @@
 
 .section-content {
   .plantations-section {
-    @include display-flex();
-    @include justify-content(space-between);
+    display: flex;
+    justify-content: space-between;
     > li {
       width: 45%;
     }
@@ -2733,8 +2733,8 @@
           width: 100%;
           height: 100%;
           z-index: 1;
-          @include display-flex();
-          @include justify-content(flex-start);
+          display: flex;
+          justify-content: flex-start;
           span {
             display: block;
             width: 15px;

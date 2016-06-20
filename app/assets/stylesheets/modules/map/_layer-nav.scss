@@ -31,7 +31,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     @media (min-width: 1500px){
       float: left;
       left: 50%;
-      @include transform(translate(-50%,0) translateZ(0));
+      transform: translate(-50%,0) translateZ(0);
       text-rendering: optimizeLegibility;
     }
   }
@@ -72,7 +72,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       border-bottom: 1px solid #e5e5e5;
       &.show{
         &:after{
-          @include transform(translate(0,-50%) rotate(0deg));
+          transform: translate(0,-50%) rotate(0deg);
         }
       }
       .category-num{
@@ -95,7 +95,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         position: absolute;
         right: 20px;
         top: 50%;
-        @include transform(translate(0,-50%) rotate(90deg));
+        transform: translate(0,-50%) rotate(90deg);
         width: 0;
         height: 0;
         border-left: 5px solid transparent;
@@ -234,9 +234,9 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
 
         > span {
           position: absolute;
-          @include display-flex;
-          @include align-items(center);
-          @include justify-content(center);
+          display: flex;
+          align-items: center;
+          justify-content: center;
           top: 20px;
           right: 10px;
           width: 14px;
@@ -330,7 +330,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           color: #AAA;
           display: none;
           text-transform: none;
-          @include transform(translate(0,-50%));
+          transform: translate(0,-50%);
           svg{
             position: absolute;
             top: 1px;
@@ -339,7 +339,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
             fill: #AAA;
             width: 10px;
             height: 10px;
-            @include transition(all,0s);
+            transition: all 0s ease;
             @media (min-width: $br-mobileMap){
               left: 0;
               right: 0;
@@ -360,7 +360,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     width: 100%;
     max-height: none;
     background: white;
-    @include transition(all .2s ease);
+    transition: all 0.2s ease;
     &.show{
       display: inline-block;
     }
@@ -379,7 +379,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       &.tour-active {
         opacity: 1;
         max-height: 1000px;
-        @include transition(all 0s ease);
+        transition: all 0s ease;
       }
 
       &:after {
@@ -520,7 +520,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     padding: 15px 20px;
     cursor: pointer;
     position: relative;
-    @include transition(all .2s ease);
+    transition: all 0.2s ease;
     @media (min-width: $br-mobileMap){
       padding: 10px;
       border-bottom: 1px solid #e5e5e5;
