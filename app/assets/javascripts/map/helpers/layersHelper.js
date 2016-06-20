@@ -145,6 +145,7 @@ define([
   'map/views/layers/MexForestCatLayer',
   'map/views/layers/MexForestSubCatLayer',
   'map/views/layers/Places2WatchLayer',
+  'map/views/layers/MysWoodFiberSabahLayer',
 
   // high resolution maps
   'map/views/layers/UrthecastLayer',
@@ -305,6 +306,7 @@ define([
   MexForestCatLayer,
   MexForestSubCatLayer,
   Places2WatchLayer,
+  MysWoodFiberSabahLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -781,6 +783,9 @@ define([
     },
     places_to_watch: {
       view:  Places2WatchLayer
+    },
+    mys_wood_fiber_sabah: {
+      view: MysWoodFiberSabahLayer
     },
     
     nothing: {

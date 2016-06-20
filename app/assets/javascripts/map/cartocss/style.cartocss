@@ -335,6 +335,12 @@
     line-clip: false;
     polygon-clip: false;
   }
+    [layer='mys_wood_fiber_sabah'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
 
   [layer='forma_extent'] {
     polygon-fill: #f69;

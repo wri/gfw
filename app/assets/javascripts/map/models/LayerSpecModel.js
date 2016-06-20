@@ -132,6 +132,7 @@ define([
       "logging",
       "logging_roads",
       "raisg_mining",
+      "mys_wood_fiber_sabah",
       //STORIES
       "infoamazonia",
       "mongabay",
