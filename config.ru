@@ -13,6 +13,10 @@ use Rack::ReverseProxy do
 
   # Forward the path /howto/* to ENV['HOWTO_URL']/*
   reverse_proxy(/^\/howto(\/.*)$/, "#{ENV['HOWTO_URL']}$1")
+
+  # Forward the path /howto/* to ENV['HOWTO_URL']/*
+  reverse_proxy(/^\/developers-corner(\/.*)$/, "#{ENV['DEVELOPERS_URL']}$1")
+
 end
 
 if ENV['ACCESS'] == 'private'

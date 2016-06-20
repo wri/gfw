@@ -1,9 +1,14 @@
 <% content_for :header do %>
-  <h1><a href="/">Global Forest Watch</a></h1>
+  <h1 class="-name">
+    <a href="/stories">
+      Stories
+      <span class="ribbon"><span>Beta</span></span>
+    </a>
+  </h1>
   <nav id="nav-mobile">
     <ul class="mobile-hide">
       <li>
-        <a <% if controller?("stories") && action?("index") %>class="current"<% end %> href="/stories">Crowdsourced stories</a>
+        <a <% if controller?("stories") && action?("crowdsourcedstories") %>class="current"<% end %> href="/stories/crowdsourcedstories">Crowdsourced stories</a>
       </li>
       <li>
         <a <% if controller?("stories") && action?("new") %>class="current"<% end %> href="/stories/new">Submit a story</a>
@@ -65,6 +70,80 @@
     </div>
   </div>
 </section>
+
+<section class="m-section-static -no-padding">
+  <div class="inner">  
+    <header class="mobile-show">
+      <h2>Latest user stories</h2>
+    </header>
+
+    <!-- Latest stories -->
+    <div id="storiesLatestView" class="m-latest-stories">    
+      <ul id="storiesLatestListView" class="m-latest-list">
+        <% @total_stories_paginated.each do |story| %>
+          <li class="m-latest-story">
+            <article class="info">
+              <h3>LATEST USER STORIES</h3>
+              <h2><a href="<%= story_path(story['id']) %>"><%= story['title'] %></a></h2>
+              <p><%= truncate(story['details'], :length => 295) %></p>
+            </article>
+            <div class="img"><div class="bg" style="background-image: url(<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>)"></div></div>
+          </li>
+        <% end %>
+      </ul>  
+      <ul id="storiesLatestNavigationView" class="m-latest-navigation">
+        <% @total_stories_paginated.each do |story| %>
+          <li>
+            <div class="img"><div class="bg" style="background-image: url(<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>)"></div></div>
+          </li>
+        <% end %>        
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="m-section-static">
+  <div class="inner">        
+    <!-- Pagination -->
+    <ul class="m-btncontainer is-center -fix-width-220">
+      <li><a class="btn gray huge-padding full-width uppercase" href="/stories/crowdsourcedstories">View all</a></li>
+    </div>
+  </ul>
+</section>
+
+<section class="m-section-static">
+  <div class="inner">
+    <header>
+      <h2>You may find this interesting</h2>
+    </header>
+    <ul class="m-interesting">
+      <li class="m-interesting-item">
+        <div class="img">
+          <a href="http://blog.globalforestwatch.org/" target="_blank">
+            <div class="bg" style="background-image: url('/assets/interesting/interesting-blog.jpg')"></div>
+          </a>
+        </div>
+        <div class="info">        
+          <h3><a href="http://blog.globalforestwatch.org/" target="_blank">BLOG</a></h3>
+          <p>The GFW blog catalyzes conversations around improved forest management by providing timely, credible analysis on threats to global forests.</p>
+        </div>
+      </li>
+
+      <li class="m-interesting-item">
+        <div class="img">
+          <a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank">
+            <div class="bg" style="background-image: url('/assets/interesting/interesting-forum.jpg')"></div>
+          </a>
+        </div>
+        <div class="info">        
+          <h3><a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank">DISCUSSION FORUM</a></h3>
+          <p>Read conversations about forest change data, learn about interesting applications of GFW, and view other data-related questions.</p>
+        </div>
+      </li>
+    </ul> 
+  </div>
+</section>
+
 
 <div id='sources' class="sources is-hidden" style="display:none;">
   <ul class='sources'>

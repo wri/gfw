@@ -8,10 +8,10 @@ $w: 10px;
 
   &.checked span {
     background: #ccc;
-    @include transform(translate(-50%,-50%) scale(1))
+    transform: translate(-50%,-50%) scale(1);
   }
 
-  @include border-radius(50%);
+  border-radius: 50%;
 }
 
 .onoffradio span {
@@ -22,9 +22,9 @@ $w: 10px;
   position: absolute;
   top: 50%;
   left: 50%;
-  @include transform(translate(-50%,-50%) scale(0));
-  @include border-radius(50%);
-  @include transition(all 0.2s $easeInOutSine);
+  transform: translate(-50%,-50%) scale(0);
+  border-radius: 50%;
+  transition: all 0.2s $easeInOutSine;
 
   background: white;
 }

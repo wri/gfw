@@ -117,7 +117,7 @@
             min-width: 50px;
             padding: 10px;
             text-transform: uppercase;
-            @include transition(all 0.15s $easeInOutCubic);
+            transition: all 0.15s $easeInOutCubic;
             @media (min-width: 550px){
               min-width: 70px;
             }
@@ -159,7 +159,7 @@
               text-align: center;
               padding: 2px 0 0;
               font-size: 10px;
-              @include transform(translate(0,20px));
+              transform: translate(0,20px);
               &:after {
                 display: none;
               }
@@ -190,12 +190,12 @@
               position: absolute;
               top: 6px;
               left: 50%;
-              @include transform(translate(-50%,0));
+              transform: translate(-50%,0);
               @media (min-width: $br-mobile){
                 position: relative;
                 top: auto;
                 left: auto;
-                @include transform(translate(0,0));
+                transform: translate(0,0);
                 width: 20px;
                 height: 25px;
                 display: block;
@@ -234,7 +234,7 @@
       background-color: darken($light,10%);
       border: none;
       outline: none;
-      @include transform(translate(0,-50%));
+      transform: translate(0,-50%);
       font-family: inherit;
       span{
         display: block;
@@ -421,8 +421,10 @@
 		text-indent: -9999px;
     z-index: 11;
     margin: 0 0 0 15px;
+    font-size: 14px;
+    font-weight: 400;
     @include retina-image('logo-new.png','logo-new@2x.png');
-    @include transition(all 0.25s linear);
+    transition: all 0.25s linear;
     &.active{
       opacity: 0;
       visibility: hidden;
@@ -437,6 +439,7 @@
         visibility: visible;
       }
     }
+
 		a {
 			display: block;
 			height: 100%;
@@ -444,12 +447,11 @@
       color: $white;
 
       .ribbon {
+        color: $white;
         text-indent: 0px;
         position: absolute;
         bottom: 0;
         right: 0;
-        font-size: 8px;
-        text-transform: uppercase;
         transform: translate(5px,8px);
 
         > span {
@@ -458,6 +460,10 @@
           z-index: 2;
           background: #b6b6ba;
           padding: 3px 5px 2px;
+          line-height: 1;
+          font-weight: 500;
+          font-size: 10px;
+          text-transform: uppercase;
         }
 
         &:after {
@@ -474,6 +480,20 @@
         }
       }
 		}
+
+    &.-name {
+      @media (min-width: $br-mobile){
+        line-height: 58px;
+        margin: 0;
+        text-indent: 110px;  
+        
+        a {
+          color: $dark;
+          text-transform: uppercase;
+          white-space: nowrap;    
+        }    
+      }      
+    }
 	}
 
 
@@ -570,7 +590,7 @@
 
             li {
               a {
-                @include transform(translate(0%,0px));
+                transform: translate(0%,0px);
                 visibility: visible;
                 opacity: 1;
               }
@@ -596,7 +616,7 @@
             width: 100%;
             height: 5px;
             opacity: 0;
-            @include transition(all 0.2s $easeInOutCubic);
+            transition: all 0.2s $easeInOutCubic;
           }
 
           &.current, &:hover{
@@ -617,8 +637,8 @@
           box-shadow: 0 1px 3px rgba(#000,0.25);
           visibility: hidden;
           opacity: 0;
-          @include transform(translate(-50%,0px));
-          @include transition(all 0.15s $easeInOutCubic);
+          transform: translate(-50%,0px);
+          transition: all 0.15s $easeInOutCubic;
 
           &:after{
             content: "";
@@ -677,7 +697,7 @@
         width: 100%;
         height: 5px;
         opacity: 0;
-        @include transition(all 0.2s $easeInOutCubic);
+        transition: all 0.2s $easeInOutCubic;
       }
 
       &.current, &:hover{
@@ -740,7 +760,7 @@
             right: 0;
             height: 16px;
             width: 16px;
-            @include transform(translate(0,-55%));
+            transform: translate(0,-55%);
             &:before {
               content: "";
               visibility: visible;
@@ -808,7 +828,7 @@
       right: 0%;
       width: 22px;
       height: 22px;
-      @include transform(translate(-50%,-50%));
+      transform: translate(-50%,-50%);
     }
   }
   .menu-section-dropdown{
