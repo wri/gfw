@@ -38,7 +38,7 @@ Gfw::Application.routes.draw do
     get '/getinvolved/provide-feedback' => redirect("/getinvolved")
 
     # terms
-    get '/accept_terms' => redirect("/terms")
+    # get '/accept_terms' => redirect("/terms")
 
   # stories
   get '/stories/crowdsourcedstories' => 'stories#crowdsourcedstories'
