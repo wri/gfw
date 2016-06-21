@@ -93,8 +93,8 @@ body,html{
       z-index: 0;     
 
       @media (min-width:$br-mobile){
-        @include display-flex();
-        @include align-items(center);
+        display: flex;
+        align-items: center;
       }
     
       > li {
@@ -129,7 +129,7 @@ body,html{
       position: absolute;
       left: 50%;
       bottom: 0;
-      @include transform(translate(-50%,0));
+      transform: translate(-50%,0);
       margin-left: 15px;
       height: 38px;
       line-height: 42px;
@@ -180,8 +180,8 @@ body,html{
   opacity: 0;
   cursor: url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default;
 
-  @include user-select(none);
-  @include transition(opacity 1s ease);
+  user-select: none;
+  transition: opacity 1s ease;
 
   &.is-loaded {
     opacity: 1;
@@ -280,7 +280,7 @@ body,html{
   background: rgba($dark,0.5);
   opacity: 0;
   visibility: hidden;
-  @include transition(all 0.25s $easeInOutSine);
+  transition: all 0.25s $easeInOutSine;
   @media (min-width:$br-mobile){
     display: none !important;
   }

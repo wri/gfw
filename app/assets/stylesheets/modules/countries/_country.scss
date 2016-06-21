@@ -19,7 +19,7 @@
     z-index: 11;
     margin: 0 0 0 15px;
     @include retina-image('logo-new.png','logo-new@2x.png');
-    @include transition(all 0.25s linear);
+    transition: all 0.25s linear;
     &.active{
       opacity: 0;
       visibility: hidden;
@@ -67,11 +67,11 @@
     padding: 20px;
     border: 1px solid #E5E5E5;
     background: #fff;
-    @include transition(all 0.1s $easeInOutCubic);
+    transition: all 0.1s $easeInOutCubic;
 
     .country_main,
     .country_alt {
-      @include transition(all 0.1s $easeInOutCubic);
+      transition: all 0.1s $easeInOutCubic;
     }
 
     &:hover {
@@ -83,7 +83,7 @@
         fill: $cGreen;
       }
       @media (min-width: 480px){
-        @include transform(scale(1.1));
+        transform: scale(1.1);
       }
     }
   }

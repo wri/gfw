@@ -25,7 +25,7 @@
       position: absolute;
       top: 50%;
       right: 0;
-      @include transform(translate(0,-50%));
+      transform: translate(0,-50%);
       width: 1px;
       height: 60%;
       background: $border;
@@ -41,7 +41,7 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      @include transform(translate(-50%,-50%));
+      transform: translate(-50%,-50%);
       margin: 0 0 0 1px;
       width: 0;
       height: 0;
@@ -54,7 +54,7 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      @include transform(translate(-50%,-50%));
+      transform: translate(-50%,-50%);
       display: none;
       width: 10px;
       height: 10px;
@@ -72,9 +72,9 @@
       width: auto;
     }
     .select-timeline-container{
-      @include display-flex();
-      @include justify-content(center);
-      @include align-items(center);
+      display: flex;
+      justify-content: center;
+      align-items: center;
       line-height: 46px;
       .select-timeline-box{
         margin: 0 0 0 10px;
@@ -115,13 +115,10 @@
         fill: $cGreen1;
       }
     }
-    .tick{
-      // @include transform(translateY(3px));
-    }
     .domain {
       stroke: $cGreen1;
       stroke-width: 4;
-      @include transform(translate(0,-4px));
+      transform: translate(0,-4px);
       // shape-rendering: crispEdges;
     }
   }
@@ -147,6 +144,6 @@
     fill: $cGreen1;
     stroke: darken($cGreen1, 20);
     cursor: col-resize;
-    @include transform(translate(-9px,-3px));
+    transform: translate(-9px,-3px);
   }
 }

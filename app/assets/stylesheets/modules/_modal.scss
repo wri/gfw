@@ -12,14 +12,14 @@ $height: auto;
   opacity: 0;
   visibility: hidden;
   display: none;
-  @include transition(all 0s $easeInOutSine);
+  transition: all 0s $easeInOutSine;
 
   @media (min-width: $br-mobile){
     left: 50%; top: 50%;
     width: $width;
     height: $height;
     display: block;
-    @include transform(translate(-50%,-50%));
+    transform: translate(-50%,-50%);
   }
 
   // GRADIENTS
@@ -46,7 +46,7 @@ $height: auto;
     display: block;
     opacity: 1;
     visibility: visible;
-    @include transition(all 0.25s $easeInOutSine);
+    transition: all 0.25s $easeInOutSine;
   }
 
   &.iframe{
@@ -441,12 +441,12 @@ $height: auto;
   left: 0;
   padding: 20px;
   visibility: hidden;
-  @include transform(translate(0,100%));
-  @include transition(all 0.25s $easeInOutSine);
+  transform: translate(0,100%);
+  transition: all 0.25s $easeInOutSine;
 
   &.active{
     visibility: visible;
-    @include transform(translate(0,0%));
+    transform: translate(0,0%);
   }
 
 
@@ -550,7 +550,7 @@ $height: auto;
   border: 1px solid #757573;
   background: #fff;
   @include box-shadow(0 0 7px #666);
-  @include border-radius(3px);
+  border-radius: 3px;
   text-align: center;
 
   .form {
@@ -658,7 +658,7 @@ $height: auto;
   left: 50%;
   z-index: 2;
   background: $white;
-  @include transform(translate(-50%,-50%));
+  transform: translate(-50%,-50%);
 
   header{
     text-align: center;
@@ -697,7 +697,7 @@ $height: auto;
       left: 50%;
       width: 30px;
       height: 30px;
-      @include transform(translate(-50%,-50%));
+      transform: translate(-50%,-50%);
       @include animation(loader,1s,infinite,$easeInOutCubic);
       z-index: 11;
       border: 3px dashed $cGreen;
@@ -740,8 +740,8 @@ $height: auto;
 
   .button-container {
     margin: 10px 0 0;
-    @include display-flex();
-    @include justify-content(space-between);
+    display: flex;
+    justify-content: space-between;
 
     li{
       width: 48%;
@@ -795,8 +795,8 @@ $height: auto;
     padding: 50px 0 0;
 
     ul {
-      @include display-flex();
-      @include justify-content(space-between);
+      display: flex;
+      justify-content: space-between;
 
       li {
         width: 44px;
@@ -819,7 +819,7 @@ $height: auto;
           left: 50%;
           width: 20px;
           height: 20px;
-          @include transform(translate(-50%,-50%));
+          transform: translate(-50%,-50%);
         }
       }
     }

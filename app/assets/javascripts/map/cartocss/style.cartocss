@@ -136,6 +136,13 @@
     line-clip: false;
     polygon-clip: false;
   }
+  [layer='mys_logging_sabah'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
   [layer='gfw2_drc_conc'] {
     polygon-fill: #EC7014;
     line-color: #EC7014;
@@ -624,6 +631,16 @@
     line-color: #FFF;
     line-opacity: 0;
   }
+
+  [layer='mys_protected_areas_sabah'] {
+  polygon-fill: #1F78B4;
+   polygon-opacity: 0.7;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 1;
+
+}
+
 }
 
 

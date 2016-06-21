@@ -5,8 +5,8 @@
   width: 100%;
   z-index: 1101;
   padding: 20px 40px 20px 20px;
-  @include transition(all 0.25s $easeInOutSine);
-  @include transform(translate(0,-100%));
+  transition: all 0.25s $easeInOutSine;
+  transform: translate(0,-100%);
   @media (min-width: $br-mobileMap){
     padding: 20px;
     text-align: center;
@@ -20,7 +20,7 @@
     width: 40px;
     height: 40px;
     z-index: 20;
-    @include transform(translate(0,-50%));
+    transform: translate(0,-50%);
     
     svg {
       position: absolute;
@@ -29,7 +29,7 @@
       width: 50%;
       height: 50%;
       fill: $white;
-      @include transform(translate(-50%,-50%));
+      transform: translate(-50%,-50%);
     }
     
     &:hover {
@@ -41,9 +41,9 @@
 
 
   .content {
-    @include display-flex();
-    @include justify-content(center);
-    @include align-items(center);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     svg {
       width: 26px;
       height: 26px;
@@ -54,12 +54,15 @@
     p {
       color: $white;
       font-size: 16px;
+      button {
+        margin: 0 0 0 10px;
+      }
     }
   }
 
   // STATES
   &.active{
-    @include transform(translate(0,0%));
+    transform: translate(0,0%);
   }
 
 
