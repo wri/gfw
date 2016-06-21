@@ -1,5 +1,5 @@
 .widget {
-  @include user-select(none);
+  user-select: none;
 
   .widget-box {
     position: absolute;
@@ -17,7 +17,7 @@
   cursor: pointer;
   position: absolute;
 
-  @include border-radius(3px);
+  border-radius: 3px;
   @include box-shadow(0px 0px 3px #666);
   @include box-sizing(border-box);
 
@@ -57,10 +57,7 @@
   width: 245px;
   min-height: 20px;
 
-
-  @include transition-property(height);
-  @include transition-duration(140ms);
-  @include transition-timing-function(ease-in-out);
+  transition: height 0.15s ease-in-out;
 
   color: $dark;
   background: $white;

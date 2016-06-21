@@ -28,7 +28,7 @@ $w-control: 44px;
     nav {
       ul {
         @media (min-width: $br-mobileMap){
-          @include display-flex();
+          display: flex;
         }
 
         li {
@@ -151,7 +151,7 @@ $w-control: 44px;
         float: left;
         max-width: 80%;
         left: 50%;
-        @include transform(translate(-50%,0));
+        transform: translate(-50%,0);
         
         li {
           padding: 5px 0 0;
@@ -181,8 +181,8 @@ $w-control: 44px;
   }
   .button-container {
     margin: 10px 0 0;
-    @include display-flex();
-    @include justify-content(space-between);
+    display: flex;
+    justify-content: space-between;
 
     @media (max-width: $br-mobileMap - 1){
       &.fixed {
@@ -276,7 +276,7 @@ $w-control: 44px;
       //     position: absolute;
       //     top: 50%;
       //     left: 0;
-      //     @include transform(translate(0,-6px));
+      //     transform: translate(0,-6px);
       //   }
       // }
       h2{
@@ -307,7 +307,7 @@ $w-control: 44px;
             position: absolute;
             top: 50%;
             right: 0;
-            @include transform(translate(0,-6px));
+            transform: translate(0,-6px);
           }
         }
       }
@@ -342,7 +342,7 @@ $w-control: 44px;
     position: absolute;
     top: 50%;
     left: 50%;
-    @include transform(translate(-50%,-50%));
+    transform: translate(-50%,-50%);
 
     svg {
       display: block;

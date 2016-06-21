@@ -146,7 +146,7 @@ define([
   'map/views/layers/MexForestSubCatLayer',
   'map/views/layers/Places2WatchLayer',
   'map/views/layers/MysLoggingSabahLayer',
-
+  'map/views/layers/MysPASabahLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -307,6 +307,7 @@ define([
   MexForestSubCatLayer,
   Places2WatchLayer,
   MysLoggingSabahLayer,
+  MysPASabahLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -783,6 +784,9 @@ define([
     },
     places_to_watch: {
       view:  Places2WatchLayer
+    },
+    mys_proteced_areas_sabah: {
+      view:  MysPASabahLayer
     },
     
     mys_logging_sabah: {

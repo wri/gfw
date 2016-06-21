@@ -2,7 +2,7 @@
   position: absolute;
   top: 30px;
   left: 50%;
-  @include transform(translate(-50%,0));
+  transform: translate(-50%,0);
   .mode-button{
     border: 1px solid #CCC;
     border-radius: 50px;
