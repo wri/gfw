@@ -13,9 +13,9 @@ define([
   var MysPASabahLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT \'{tableName}\' as tablename,  cartodb_id, the_geom_webmercator, type, name, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
+      sql: 'SELECT \'{tableName}\' as tablename, cartodb_id, the_geom_webmercator, type, name, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
       infowindow: true,
-      interactivity: 'cartodb_id,  tablename, name, type, analysis',
+      interactivity: 'cartodb_id, tablename, name, type, analysis',
       analysis: true
     }
   });
