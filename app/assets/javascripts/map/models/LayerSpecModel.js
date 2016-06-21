@@ -75,6 +75,7 @@ define([
       "cri_land_rights",
       "nzl_land_rights",
       "raisg",
+      "mex_land_rights",
       // CONSERVATION
       "biodiversity_hotspots",
       "verified_carbon",
@@ -133,6 +134,8 @@ define([
       "logging",
       "logging_roads",
       "raisg_mining",
+      "mexican_psa",
+      "bra_logging",
       //STORIES
       "infoamazonia",
       "mongabay",
