@@ -1,0 +1,25 @@
+#mex_land_rights {
+
+   polygon-opacity: 0.7;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 1;
+
+  [type="Comunidad"] {
+    polygon-fill: #A6CEE3;
+  }
+  [type="E"] {
+    polygon-fill: #1F78B4;
+
+  }
+  [type="Edijo"] {
+    polygon-fill: #1F78B4;
+
+  }  
+  [type="Ejido"] {
+    polygon-fill: #1F78B4;
+
+  }
+
+}
+
