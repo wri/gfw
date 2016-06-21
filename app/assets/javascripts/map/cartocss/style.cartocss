@@ -618,6 +618,31 @@
     line-color: #FFF;
     line-opacity: 0;
   }
+
+  [layer='mys_protected_areas_sabah'] {
+   polygon-fill: #1F78B4;
+   polygon-opacity: 0.7;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 1;
+
+}
+
+  [layer='mex_psa'] {
+   polygon-fill: #3182BD;
+   polygon-opacity: 0.7;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 1;
+
+}
+  [layer='bra_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
 }
 
 

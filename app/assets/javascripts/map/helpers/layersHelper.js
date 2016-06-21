@@ -145,7 +145,9 @@ define([
   'map/views/layers/MexForestCatLayer',
   'map/views/layers/MexForestSubCatLayer',
   'map/views/layers/Places2WatchLayer',
-
+  'map/views/layers/MexicoPaymentsLayer',
+  'map/views/layers/MexLandRightsLayer',
+  'map/views/layers/BraLoggingLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -305,6 +307,9 @@ define([
   MexForestCatLayer,
   MexForestSubCatLayer,
   Places2WatchLayer,
+  MexicoPaymentsLayer,
+  MexLandRightsLayer,
+  BraLoggingLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -759,11 +764,9 @@ define([
     mex_mining: {
       view:  MexMiningLayer
     },
-    
     per_mining: {
       view:  PerMiningLayer
     },
-    
     bra_mining: {
       view:  BraMiningLayer
     },
@@ -782,7 +785,15 @@ define([
     places_to_watch: {
       view:  Places2WatchLayer
     },
-    
+    mexican_psa: {
+      view:  MexicoPaymentsLayer
+    },
+    mex_land_rights: {
+      view:  MexLandRightsLayer
+    },
+    bra_logging: {
+      view:  BraLoggingLayer
+    },
     nothing: {
     }
   };
