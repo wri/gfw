@@ -145,6 +145,7 @@ define([
   'map/views/layers/MexForestCatLayer',
   'map/views/layers/MexForestSubCatLayer',
   'map/views/layers/Places2WatchLayer',
+  'map/views/layers/MysLoggingSabahLayer',
   'map/views/layers/MysPASabahLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
@@ -305,6 +306,7 @@ define([
   MexForestCatLayer,
   MexForestSubCatLayer,
   Places2WatchLayer,
+  MysLoggingSabahLayer,
   MysPASabahLayer,
   //highres layers
   UrthecastLayer,
@@ -787,6 +789,10 @@ define([
       view:  MysPASabahLayer
     },
     
+    mys_logging_sabah: {
+      view:  MysLoggingSabahLayer
+    },
+
     nothing: {
     }
   };
