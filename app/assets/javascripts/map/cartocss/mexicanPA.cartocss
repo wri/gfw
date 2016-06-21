@@ -1,0 +1,19 @@
+#mex_protected_areas {
+   polygon-opacity: 0.7;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 1;
+}
+
+#mex_protected_areas[type="Estatal"] {
+   polygon-fill: #2572B4;
+}
+#mex_protected_areas[type="Federal"] {
+   polygon-fill: #579ECB;
+}
+#mex_protected_areas[type="Municipal"] {
+   polygon-fill: #B2DF8A;
+}
+#mex_protected_areas[type="Área destinada voluntariamente a la conservación"] {
+   polygon-fill: #9ED4D1;
+}
