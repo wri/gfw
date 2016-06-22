@@ -610,7 +610,7 @@
   line-width: 0;
   line-opacity: 1;
   }
-  [layer='khm_protected_areas_wgs'] {
+  [layer='khm_protected_areas'] {
   polygon-fill: #3182BD;
   polygon-opacity: 0.6;
   line-color: #FFF;
