@@ -6,20 +6,23 @@
    line-opacity: 1;
 
   [type="Comunidad"] {
-    polygon-fill: #A6CEE3;
+    polygon-fill: #1F78B4;
+    line-color: #1F78B4;
   }
   [type="E"] {
-    polygon-fill: #1F78B4;
+    polygon-fill: #4d658f;
+    line-color: #4d658f;
 
   }
   [type="Edijo"] {
-    polygon-fill: #1F78B4;
+    polygon-fill: #4d658f;
+    line-color: #4d658f;
 
   }  
   [type="Ejido"] {
-    polygon-fill: #1F78B4;
+    polygon-fill: #4d658f;
+    line-color: #4d658f;
 
   }
 
 }
-
