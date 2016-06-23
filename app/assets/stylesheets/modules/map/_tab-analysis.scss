@@ -86,14 +86,7 @@
   }
 }
 
-.tab-analysis {
-
-  .is-analysis & {
-    max-height: 60.1vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-  
+.tab-analysis { 
   nav {
     display: block;
     
@@ -132,14 +125,14 @@
           }
         }
 
-        &.active {
+        &.-active {
           &:after {
             background: $cGreen;
             width: 50%;
           }
         }
 
-        &.disabled {
+        &.-disabled {
           opacity: 0.5;
           // pointer-events: none;
           cursor: default;
@@ -153,10 +146,9 @@
       }
     }
   }
-  .analysis-content,
-  .subscription-content{
-    .analysis-tab-content,
-    .subscription-tab-content{
+
+  .analysis-content,{
+    .analysis-tab-content,{
       display: none;
       padding: 15px;
       @media (min-width: $br-mobileMap){
@@ -165,10 +157,10 @@
       @media (min-width: 1500px){
         padding: 20px;
       }
-      &.active{
+      &.-active{
         display: block;
       }
-      &.hidden{
+      &.-hidden{
         display: none;
       }
     }
@@ -216,49 +208,6 @@
   left: 0;
   padding: 30px !important;
   z-index: 5;
-}
-
-//DRAW TAB
-.analysis-tab-content.draw-tab,
-.subscription-tab-content.draw-tab{
-
-  .p-center {
-    text-align: center;
-    padding: 10px 0;      
-  }
-
-  .-terms {
-    font-size: 10px;
-    margin: 8px 0 0;
-    text-align: center;    
-  }
-
-  .image{
-    position: relative;
-    max-width: 50%;
-    margin: 20px auto;
-    display: none;
-  
-    @media (min-height: 645px){
-      display: block;
-    }
-
-
-
-    div{
-      position: relative;
-      padding-bottom: 82.417582417582%;
-    }
-
-    svg{
-      width: 105%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      fill: $cGreen;
-    }
-  }
 }
 
 //COUNTRY TAB
