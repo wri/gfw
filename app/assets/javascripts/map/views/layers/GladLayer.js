@@ -1,9 +1,9 @@
 define([
-  'bluebird', 'uri',
+  'bluebird', 'uri', 'd3',
   'abstract/layer/AnimatedCanvasLayerClass',
   'map/presenters/GladLayerPresenter'
 ], function(
-  Promise, UriTemplate,
+  Promise, UriTemplate, d3,
   AnimatedCanvasLayerClass,
   Presenter
 ) {
@@ -91,7 +91,7 @@ define([
       return intensity;
     },
 
-    filterCanvasImgdata: function(imgdata, w, h) {
+    filterCanvasImgdata: function(imgdata, w, h, z) {
       if (this.timelineExtent === undefined) {
         this.timelineExtent = [moment(this.currentDate[0]),
           moment(this.currentDate[1])];
@@ -114,6 +114,12 @@ define([
         confidenceValue = 1;
       }
 
+      var exp = z < 11 ? 0.2 + ((z - 3) / 20) : 1;
+      var intensityRange = d3.scale.pow()
+          .exponent(exp)
+          .domain([1,55])
+          .range([50,256]);
+
       var pixelComponents = 4; // RGBA
       var pixelPos, i, j;
       for(i = 0; i < w; ++i) {
@@ -126,16 +132,20 @@ define([
 
           var confidence = this.decodeConfidence(imgdata[pixelPos],
             imgdata[pixelPos+1], imgdata[pixelPos+2]);
+          var intensity = intensityRange(this.decodeIntensity(imgdata[pixelPos],
+            imgdata[pixelPos+1], imgdata[pixelPos+2]));
 
           if (day >= startDay && day <= endDay && confidence >= confidenceValue) {
             if (day >= recentRangeStartDay && day <= recentRangeEndDay) {
               imgdata[pixelPos] = 219;
               imgdata[pixelPos + 1] = 168;
               imgdata[pixelPos + 2] = 0;
+              imgdata[pixelPos + 3] = intensity;
             } else {
               imgdata[pixelPos] = 220;
               imgdata[pixelPos + 1] = 102;
               imgdata[pixelPos + 2] = 153;
+              imgdata[pixelPos + 3] = intensity;
             }
           } else {
             imgdata[pixelPos + 3] = 0;
