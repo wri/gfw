@@ -10,11 +10,12 @@ define([
   'chosen', 
   'turf', 
   'mps',
+  'helpers/geojsonUtilsHelper',
   'map/presenters/analysis/AnalysisDrawPresenter',
   'text!map/templates/analysis/analysis-draw.handlebars',
   // 'map/services/ShapefileService',
   // 'helpers/geojsonUtilsHelper',
-], function(_, Handlebars, amplify, chosen, turf, mps, Presenter, tpl) {
+], function(_, Handlebars, amplify, chosen, turf, mps, geojsonUtilsHelper, Presenter, tpl) {
 
   'use strict';
 
@@ -26,7 +27,8 @@ define([
 
     model: new (Backbone.Model.extend({
       geostore: null,
-      is_drawing: false
+      is_drawing: false,
+      geojson: null
     })),
 
     events: {
@@ -54,6 +56,7 @@ define([
     },
 
     listeners: function() {
+      this.model.on('change:geojson', this.changeGeojson.bind(this));
       this.model.on('change:is_drawing', this.changeIsDrawing.bind(this));
     },
 
@@ -75,8 +78,12 @@ define([
 
       // TO-DO: We should improve this...
       // We are handling the tooltip buttons here
-      $('.cartodb-popup').toggleClass('dont_analyze', !!is_drawing);
-      
+      // $('.cartodb-popup').toggleClass('dont_analyze', !!is_drawing);
+    },
+
+    changeGeojson: function(e) {
+      console.log(e);
+      // this.presenter.storeGeojson();
     },
 
 
@@ -91,17 +98,18 @@ define([
 
       if (!this.model.get('is_drawing')) {
         this.model.set('is_drawing', true);
-        this.presenter.deleteAnalysis();
         this.presenter.startDrawing();
         ga('send', 'event', 'Map', 'Analysis', 'Click: start');
 
       } else {
         this.model.set('is_drawing', false);
-        this.presenter.deleteAnalysis();
         this.presenter.stopDrawing();
+        this.presenter.deleteAnalysis();
         ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
       }
     },
+
+
 
     /**
      * DRAWING MANAGER
@@ -129,6 +137,7 @@ define([
       $(document).on('keyup.drawing', function(e){
         if (e.keyCode == 27) {
           this.stopDrawingManager();
+          this.presenter.stopDrawing();
           this.presenter.deleteAnalysis();
         }
       }.bind(this));
@@ -147,24 +156,28 @@ define([
 
     completeDrawing: function(e) {
       this.stopDrawingManager();
-      this.eventsDrawing(e.overlay);
-      // this.presenter.completeDrawing(e);
-      // this._updateAnalysis();
+      this.presenter.stopDrawing();
 
-      // this.presenter.setDontAnalyze(true);
+      this.eventsDrawing(e);
+
+      this.model.set('geojson', e);
+
       ga('send', 'event', 'Map', 'Analysis', 'Polygon: complete');
     },
 
-    eventsDrawing: function(overlay) {
-      google.maps.event.addListener(overlay.getPath(), 'set_at', function () {
+    eventsDrawing: function(e) {
+      google.maps.event.addListener(e.overlay.getPath(), 'set_at', function () {
+        console.log(arguments);
         // this._updateAnalysis();
       }.bind(this));      
 
-      google.maps.event.addListener(overlay.getPath(), 'insert_at', function () {
+      google.maps.event.addListener(e.overlay.getPath(), 'insert_at', function () {
+        console.log(arguments);
         // this._updateAnalysis();
       }.bind(this));
 
-      google.maps.event.addListener(overlay.getPath(), 'remove_at', function () {
+      google.maps.event.addListener(e.overlay.getPath(), 'remove_at', function () {
+        console.log(arguments);
         // this._updateAnalysis();
       }.bind(this));
     },

@@ -12,11 +12,10 @@ define([
   'bluebird', 
   'moment',
   'helpers/geojsonUtilsHelper',
-  'map/helpers/FiresDatesHelper',
   'map/services/CountryService',
   'map/services/RegionService',
   'map/services/GeostoreService'
-], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment, geojsonUtilsHelper, FiresDatesHelper, countryService, regionService, GeostoreService) {
+], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment, geojsonUtilsHelper, countryService, regionService, GeostoreService) {
 
   'use strict';
 
@@ -154,11 +153,18 @@ define([
     // DRAWING EVENTS
     {
       'Analysis/start-drawing': function() {
-        // this._updateAnalysis();
+        
       }
     },{
       'Analysis/stop-drawing': function() {
-        // this.deleteAnalysis();
+        
+      }
+    },{
+      'Analysis/complete-drawing': function(geojson) {
+        GeostoreService.save(geojson).then(function(geostoreId) {
+          this.status.set('geostore', geostoreId);
+          this._analyzeGeojson(geojson, options);
+        }.bind(this));
       }
     },
     // ANALYSIS EVENTS
@@ -178,6 +184,7 @@ define([
       this.status.set('type', null);
       this.status.set('active', false);
       this.status.set('geostore', null);
+      this.status.set('isoEnabled', false);
       this.status.set('iso', {
         country: null,
         region: null
