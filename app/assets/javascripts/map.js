@@ -13,8 +13,12 @@ require([
   'handlebars',
   'map/router',
   'views/SourceModalView',
+  'views/ConfirmModalView',
+  // we should merge these views with the ModalClass
   'views/SourceBottomView',
   'views/SourceMobileFriendlyView',
+
+  'map/collections/CountryCollection',  
   'map/presenters/ExperimentsPresenter',
   'map/services/AnalysisService',
   'map/services/CountryService',
@@ -35,7 +39,7 @@ require([
   'views/NotificationsView',
   'views/DownloadView',
   '_string'
-], function($, _, Class, Backbone, chosen, utils, enquire, mps, Handlebars, Router, SourceModalView, SourceBottomView, SourceMobileFriendlyView, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
+], function($, _, Class, Backbone, chosen, utils, enquire, mps, Handlebars, Router, SourceModalView, ConfirmModalView, SourceBottomView, SourceMobileFriendlyView, CountryCollection, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
     MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, GuideView, GuideButtonView, UserFormModalView, HeaderView, FooterView, NotificationsView, DownloadView) {
 
   'use strict';
@@ -49,14 +53,13 @@ require([
       this._cartodbHack();
       this._handlebarsPlugins()
       this._initViews();
-      this._initApp();
 
-      // For dev
-      window.router = router;
-      window.mps = mps;
-      window.analysis = AnalysisService;
-      window.countryService = CountryService;
-      window.ds = DataService;
+      // // For dev
+      // window.router = router;
+      // window.mps = mps;
+      // window.analysis = AnalysisService;
+      // window.countryService = CountryService;
+      // window.ds = DataService;
     },
 
     /**
@@ -74,27 +77,35 @@ require([
      * you are not completely sure.
      */
     _initViews: function() {
-      // Google Experiments
-      new ExperimentsPresenter();
 
-      var mapView = new MapView();
+      var map = new MapView();
+      new MapControlsView(this.map, this.countries);
 
-      new MapControlsView(mapView.map);
-      new TabsView(mapView.map);
-      new AnalysisResultsView();
-      new LayersNavView();
-      new LegendView();
-      new TimelineView();
-      new NavMobileView();
-      new FooterView();
-      new HeaderView();
-      new SourceModalView();
-      new SourceBottomView();
-      new SourceMobileFriendlyView();
-      new NotificationsView();
-      new GuideView();
-      new GuideButtonView();
+      this.map = map.map;
+      this.countries = new CountryCollection();
 
+      new TabsView(this.map, this.countries);
+      new AnalysisResultsView(this.map, this.countries);
+      new LayersNavView(this.map, this.countries);
+      new LegendView(this.map, this.countries);
+      new TimelineView(this.map, this.countries);
+      new NavMobileView(this.map, this.countries);
+      new FooterView(this.map, this.countries);
+      new HeaderView(this.map, this.countries);
+      new SourceModalView(this.map, this.countries);
+      new ConfirmModalView(this.map, this.countries);
+      new SourceBottomView(this.map, this.countries);
+      new SourceMobileFriendlyView(this.map, this.countries);
+      new NotificationsView(this.map, this.countries);
+      new GuideView(this.map, this.countries);
+      new GuideButtonView(this.map, this.countries);  
+
+      // Init views
+      this.countries.fetch().done(function(){
+        this._initApp();
+      }.bind(this))
+
+      // What is this? Are we already using it?
       $('body').append(new UserFormModalView().el);
     },
 
@@ -108,6 +119,10 @@ require([
     },
 
     _handlebarsPlugins: function() {
+      Handlebars.registerHelper('firstLetter', function(text) {
+        return text.charAt(0).toUpperCase();
+      });
+
       Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
         switch (operator) {
           case '==':

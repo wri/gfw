@@ -97,7 +97,7 @@ define([
     _defineRequests: function() {
       var datasets = [
         'forma-alerts', 'umd-loss-gain', 'imazon-alerts',
-        'quicc-alerts', 'terrai-alerts', 'prodes-loss', 'loss-by-type',
+        'quicc-alerts', 'terrai-alerts', 'prodes-loss', 'loss-by-type', 
         'glad-alerts', 'guyra-loss','viirs-active-fires',
       ];
 

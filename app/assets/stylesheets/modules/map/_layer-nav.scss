@@ -31,7 +31,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     @media (min-width: 1500px){
       float: left;
       left: 50%;
-      @include transform(translate(-50%,0));
+      transform: translate(-50%,0) translateZ(0);
       text-rendering: optimizeLegibility;
     }
   }
@@ -72,7 +72,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       border-bottom: 1px solid #e5e5e5;
       &.show{
         &:after{
-          @include transform(translate(0,-50%) rotate(0deg));
+          transform: translate(0,-50%) rotate(0deg);
         }
       }
       .category-num{
@@ -95,7 +95,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         position: absolute;
         right: 20px;
         top: 50%;
-        @include transform(translate(0,-50%) rotate(90deg));
+        transform: translate(0,-50%) rotate(90deg);
         width: 0;
         height: 0;
         border-left: 5px solid transparent;
@@ -111,72 +111,6 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         }
       }
     }
-    &.country-close{
-      padding: 0;
-      border-bottom: none;
-      width: 40px;
-      min-height: 1px;
-
-      &.disabled{
-        opacity: 0.25;
-        @media (max-width: $br-mobileMap - 1){
-          display: none;
-        }
-      }
-      &.active{
-        opacity: 1;
-        @media (max-width: $br-mobileMap - 1){
-          display: none;
-        }
-      }
-      .close{
-        position: absolute;
-        top: 0%;
-        left: -1px;
-        height: 46px;
-        width: 40px;
-        border-radius: 0;
-        padding: 0;
-        background: #A300D9;
-        @include transition(all,0,linear);
-        border-bottom: 5px solid $country-color;
-        &:hover {
-          background: $white;
-          border-bottom: 5px solid $country-color;
-          span{
-            box-shadow: 0 0 0 2px #FF4848;
-            svg{
-              fill: #FF4848;
-            }
-          }
-        }
-        span{
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 14px;
-          height: 14px;
-          text-align: center;
-          font-family: Arial;
-          font-weight: 700;
-          color: $white;
-          box-shadow: 0 0 0 2px $white;
-          border-radius: 50%;
-          @include transform(translate(-50%, -50%));
-          svg{
-            fill: $white;
-            width: 100%;
-            height: 100%;
-            display: block;
-            position: absolute;
-            left: 0%;
-            top: 0%;
-            @include transition(all,0,linear);
-          }
-        }
-      }
-    }
-
 
 
 
@@ -231,11 +165,14 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       }
     }
     &.country{
-      background: #A300D9;
-      color: $white;
+      background: rgba($country-color, 0.25);
+
       @media (max-width: $br-mobileMap - 1){
         background: $white;
-        color: #A300D9;
+        color: $country-color;
+        // It will only create issues. At least when there isn't a country selected
+        // So for the moment let's leave this hidden
+        display: none;
       }
       &.disabled{
         opacity: 0.25;
@@ -252,10 +189,131 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
             }
           }
         }
+      }
+      
+      .country-description {
+        color: $dark;
+        font-size: 14px;
+        padding: 15px 10px;
+        line-height: 1.25;
+
+        > * {
+          margin: 10px 0 0;
+          
+          &:first-child {
+            margin-top: 0;
+          }
+        }
+
+        a {
+          color: $cGreen;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .country-title {
+        display: none;
+        color: $dark;
+        background-color: rgba($country-color, 0.25);
+        font-size: 12px;
+        padding: 15px 28px 15px 10px;
+        margin: 0;
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+        line-height: 1;
+        font-weight: 500;
+        text-transform: uppercase;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;        
+        @media (min-width: $br-mobileMap){
+          display: block;
+        }
+
+        > span {
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          top: 20px;
+          right: 10px;
+          width: 14px;
+          height: 14px;
+          margin: -7px 0 0; 
+          border-radius: 50%;
+          background: $dark;
+
+          svg {
+            display: block;
+            width: 10px;
+            height: 10px;
+            fill: $white;
+          }
+
+          &:hover {
+            background: lighten($dark, 5%);
+          }
+        }
+
+        .m-btncontainer {
+          margin-top: 10px;
+          flex-wrap: wrap;
+          
+          .btn-icon {
+            display: block;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            background: transparent;
+            border-radius: 50%;
+
+
+            &:hover {
+              background: $country-color;
+              svg {
+                fill: #000;
+              }              
+              .tooltipmap {
+                opacity: 1;
+                visibility: visible;                
+              }
+            }
+
+            &.-disabled {
+              opacity: 0.5;
+              pointer-events: none;
+              &:hover {              
+                background: transparent;
+                svg {
+                  fill: $dark;
+                }              
+              }
+            }
+
+            svg {
+              position: absolute;
+              width: 20px;
+              height: 20px;
+              top: 50%;
+              left: 50%;
+              margin: -10px 0 0 -10px; 
+              fill: $dark;
+            }
+          }
+        }
 
       }
-      .category-name{
-        color: $white;
+
+      .layers-nav-header {
+        &:after {
+          display: none;
+        }
+      }
+
+      .category-name {
         @media (max-width: $br-mobileMap - 1){
           color: rgb(207, 127, 236);
         }
@@ -273,7 +331,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           color: #AAA;
           display: none;
           text-transform: none;
-          @include transform(translate(0,-50%));
+          transform: translate(0,-50%);
           svg{
             position: absolute;
             top: 1px;
@@ -282,7 +340,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
             fill: #AAA;
             width: 10px;
             height: 10px;
-            @include transition(all,0s);
+            transition: all 0s ease;
             @media (min-width: $br-mobileMap){
               left: 0;
               right: 0;
@@ -303,7 +361,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     width: 100%;
     max-height: none;
     background: white;
-    @include transition(all .2s ease);
+    transition: all 0.2s ease;
     &.show{
       display: inline-block;
     }
@@ -322,7 +380,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       &.tour-active {
         opacity: 1;
         max-height: 1000px;
-        @include transition(all 0s ease);
+        transition: all 0s ease;
       }
 
       &:after {
@@ -463,7 +521,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     padding: 15px 20px;
     cursor: pointer;
     position: relative;
-    @include transition(all .2s ease);
+    transition: all 0.2s ease;
     @media (min-width: $br-mobileMap){
       padding: 10px;
       border-bottom: 1px solid #e5e5e5;
@@ -506,6 +564,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     color: #AAA;
     word-wrap: break-word;
     label {
+      cursor: pointer;
       position: relative;
       float: none;
       font-weight: normal;
@@ -515,13 +574,18 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       padding-left: 13px;
       text-transform: none;
       display: block;
+
+      &:hover {
+        color: lighten($dark,5%);
+      }
+      
       &.selected {
         color: $dark;
-        text-shadow: 0px 0px 0px #999;
         span:before{
           display: block;
         }
       }
+
       span{
         display: block;
         position: absolute;

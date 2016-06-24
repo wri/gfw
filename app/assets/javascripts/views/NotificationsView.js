@@ -68,6 +68,7 @@ define([
       this.$el.removeClass('success warning info error').addClass($notif.data('type'));
       // Add content to notification content
       this.$notifContent.html($notif.clone().html());
+      this.$notifContent.prepend('<svg><use xlink:href="#icon-'+$notif.data('type')+'"></use></svg>');
       //Active notifications
       this.model.set('hidden', false);
     },

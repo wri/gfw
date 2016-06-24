@@ -2,7 +2,7 @@
   position: absolute;
   background: none;
   box-shadow: none;
-  @include transition(all 0.5s $easeInOutSine);
+  transition: all 0.5s $easeInOutSine;
   opacity: 1;
   visibility: visible;
   @media (min-width: $br-mobileMap){

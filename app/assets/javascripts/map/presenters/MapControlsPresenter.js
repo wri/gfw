@@ -46,15 +46,15 @@ define([
         });
       }
     },{
-      'Timeline/toggle' : function(toggle){
-        this.view.toogleTimeline(toggle);
+      'Timeline/toggle' : function(boolean){
+        this.view.toogleTimeline(boolean);
       }
     }, {
       'Layers/toggle': function(toggle) {
         this.view.toogleTimeline(false);
       }
     }, {
-      'Analysis/toggle': function(toggle) {
+      'Analysis/toggle': function() {
         this.view.toogleTimeline(false);
       }
     }, {
@@ -91,14 +91,23 @@ define([
       mps.publish('Map/autolocate');
     },
 
+    toggleModules: function(hide) {
+      mps.publish('MapControlsToggleModules/toggle',[{ hide: hide }]);
+    },
+
     /**
      * Used by searchbox view to handle a fitbounds.
      *
      * @return {object} Map bounds
      */
+    showSearch: function() {
+      mps.publish('MapControlsSearch/show');      
+    },
+
     fitBounds: function(bounds) {
       mps.publish('Map/fit-bounds', [bounds]);
     },
+    
 
     notificate: function(id){
       mps.publish('Notification/open', [id]);
@@ -108,11 +117,6 @@ define([
       mps.publish('LegendMobile/open');
       this.view.toogleTimeline(false);
     },
-
-    openAnalysis: function(){
-      mps.publish('Analysis/toggle');
-    },
-
 
   });
 

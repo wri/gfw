@@ -8,6 +8,7 @@ define([
   'handlebars',
   'map/presenters/LegendPresenter',
   'text!map/templates/legend/legend.handlebars',
+  'text!map/templates/legend/legendMore.handlebars',
   'text!map/templates/legend/loss.handlebars',
   'text!map/templates/legend/imazon.handlebars',
   'text!map/templates/legend/fires.handlebars',
@@ -46,30 +47,32 @@ define([
   'text!map/templates/legend/per_mining.handlebars',
   'text!map/templates/legend/glad.handlebars',
   'text!map/templates/legend/urthecast.handlebars',
+  'text!map/templates/legend/mex_forest_cat.handlebars',
+  'text!map/templates/legend/mex_forest_subcat.handlebars',
+  'text!map/templates/legend/pa.handlebars',
 
-], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
+], function(_, Handlebars, Presenter, tpl, tplMore, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, 
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, 
     global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
     gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl, 
-    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl) {
+    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl, paTpl) {
 
   'use strict';
-
-  var LegendModel = Backbone.Model.extend({
-    defaults:{
-      hidden: true,
-      categories_status: [],
-    }
-  });
-
-
 
   var LegendView = Backbone.View.extend({
 
     el: '#module-legend',
 
     template: Handlebars.compile(tpl),
+    templateMore: Handlebars.compile(tplMore),
+
+    model: new (Backbone.Model.extend({
+      defaults:{
+        hidden: true,
+        categories_status: [],
+      }
+    })),
 
     /**
      * Optional layers detail templates.
@@ -81,6 +84,7 @@ define([
       pantropical: Handlebars.compile(pantropicalTpl),
       idn_primary: Handlebars.compile(idnPrimaryTpl),
       ifl_2013_deg: Handlebars.compile(intact2013Tpl),
+      can_ifl: Handlebars.compile(intact2013Tpl),
       grump2000: Handlebars.compile(grumpTpl),
       user_stories:  Handlebars.compile(storiesTpl),
       terrailoss: Handlebars.compile(terra_iTpl),
@@ -127,8 +131,14 @@ define([
       bra_mining:Handlebars.compile(raisg_miningTpl),
       per_mining:Handlebars.compile(per_miningTpl),
       umd_as_it_happens:Handlebars.compile(gladTpl),
+      umd_as_it_happens_per:Handlebars.compile(gladTpl),
+      umd_as_it_happens_cog:Handlebars.compile(gladTpl),
+      umd_as_it_happens_idn:Handlebars.compile(gladTpl),
+      viirs_fires_alerts: Handlebars.compile(firesTpl),
+      mex_forest_zoning_cat: Handlebars.compile(mex_forest_catTpl),
+      mex_forest_zoning_subcat: Handlebars.compile(mex_forest_subcatTpl),
       urthe: Handlebars.compile(urtheTpl),
-      viirs_fires_alerts: Handlebars.compile(firesTpl)
+      protected_areasCDB:Handlebars.compile(paTpl)      
     },
 
     options: {
@@ -136,46 +146,56 @@ define([
     },
 
     events: {
-      'click .category-name' : '_toogleCategory',
-      'click .layer-sublayer': '_toggleLayer',
-      'click .canopy-button' : '_showCanopy',
-      'click .layer-close'   : '_removeLayer',
-      'click .close' : 'toogleLegend',
-      'click #title-dialog-legend' : 'toogleEmbedLegend',
+      'click .js-toggle-category' : 'toogleCategory',
+      'click .js-toggle-sublayer': 'toggleLayer',
+      'click .js-layer-close' : 'removeLayer',
+      'click .js-toggle-threshold' : 'toggleThreshold',
+      'click .js-toggle-legend' : 'toogleLegend',
+      'click .js-toggle-embed-legend' : 'toogleEmbedLegend',
     },
 
-    initialize: function() {
-      _.bindAll(this, 'update');
+    initialize: function(map,countries) {
       this.presenter = new Presenter(this);
-      this.model = new LegendModel();
-      this.embed = $('body').hasClass('is-embed-action');
-      this.$el.removeClass('hide');
-      this.setListeners();
+
+      this.map = map;
+      this.countries = countries;
+
+      this.listeners();
+
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: function(){
+          this.mobile = false;
+        }.bind(this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: function(){
+          this.mobile = true;
+        }.bind(this)
+      });
+
     },
 
-    setListeners: function(){
+    listeners: function() {
       this.model.on('change:hidden', this.toogleModule, this);
     },
 
-    toogleModule: function(){
-      this.$el.toggleClass('hide', this.model.get('hidden'));
-      this.$el.toggleClass('hide-no-layers', this.model.get('hidden'));
+    render: function(html) {
+      this.$el.html(html);
+      this.cache();
     },
 
-    toogleEmbedLegend: function(e){
-      e && e.preventDefault();
-      var active = this.$titleDialog.hasClass('active');
-      this.$titleDialog.toggleClass('active', !active);
-      this.$categories.toggleClass('active', !active);
-      this.$buttonLegendBox.toggleClass('active', !active);
+    cache: function() {
+      // elements
+      this.$window = $(window);
+      this.$titleDialog = $('#title-dialog-legend');
+      this.$categories = this.$el.find('.categories');
+      this.$buttonLegendBox =  $('#button-box-embed-legend');
+      this.$linkLegendBox =  $('#link-embed-legend');
 
-    },
+      this.$more = this.$el.find('#legend-country-more');
 
-    openGFW: function(){
-      if (this.embed && !!this.$linkLegendBox) {
-        var href = window.location.href.replace('/embed','');
-        this.$linkLegendBox.attr('href', href);
-      }
+      // vars
+      this.embed = $('body').hasClass('is-embed-action');
     },
 
     /**
@@ -183,14 +203,12 @@ define([
      * @param  {array}  categories layers ordered by category
      * @param  {object} options    legend options
      */
-    _renderLegend: function(categories, options, geographic) {
-      var iso = null;
+    updateLegend: function(categories, options, geographic, iso) {
       var layersGlobal = [];
       var layersIso = [];
       var categoriesGlobal = [];
       var categoriesIso = [];
       var layers = _.flatten(categories);
-      var layersLength = layers.length;
 
       // Append details template to layer.
       _.each(layers, function(layer) {
@@ -204,36 +222,27 @@ define([
         }
 
         if (layer.iso) {
-          var countries = amplify.store('countries');
-          iso = layer.iso;
           layersIso.push(layer);
           layer.category_status = layer.category_slug+'-iso';
         } else {
           layersGlobal.push(layer);
           layer.category_status = layer.category_slug+'-global'
         }
+
         layer.geographic = geographic ? 'checked' : '';
+
       }, this);
 
       categoriesGlobal = this.statusCategories(_.groupBy(layersGlobal, function(layer){ return layer.category_slug }));
       categoriesIso = this.statusCategories(_.groupBy(layersIso, function(layer){ return layer.category_slug }));
 
-      if (iso) {
-        var country = _.find(amplify.store('countries'), _.bind(function(country){
-          return country.iso === iso;
-        }, this ));
-      }
-      var name = (country) ? country.name : iso;
-
-      var html = this.template({
-        categories: (jQuery.isEmptyObject(categoriesGlobal)) ? false : categoriesGlobal,
-        categoriesIso: categoriesIso,
-        layersLength: layersLength,
-        iso: iso,
-        name: name
-      });
-
-      this.render(html);
+      // Render
+      this.render(this.template({
+        categories: (_.isEmpty(categoriesGlobal)) ? false : categoriesGlobal,
+        categoriesIso: (_.isEmpty(categoriesIso)) ? false : categoriesIso,
+        layersLength: layers.length,
+        country: (!!iso) ? _.findWhere(this.countries.toJSON(), { iso: iso.country }) : null,
+      }));
     },
 
     statusCategories: function(array){
@@ -251,17 +260,75 @@ define([
       return array;
     },
 
+    /**
+     * Set widget from layers object.
+     *
+     * @param  {array} categories, options, geographic
+     */
+    update: function(categories, options, geographic, iso) {
+      if (categories.length === 0) {
+        this.model.set({
+          hidden: true
+        });
+      } else {
+        this.model.set({
+          hidden: false, 
+          boxClosed: false
+        });
+        this.updateLegend(categories, options, geographic, iso);
+      }
+    },
+
+    /**
+     *
+     * UI EVENTS
+     *
+    */
+    // category
+    toogleCategory: function(e){
+      if (!this.mobile) {
+        // Save category status in an array
+        var categories_status = this.model.get('categories_status');
+        var slug = $(e.currentTarget).data('category_slug');
+        var index = categories_status.indexOf(slug);
+
+        // Generate the status of the categories
+        (index != -1) ? categories_status.splice(index, 1) : categories_status.push(slug);
+        this.model.set('categories_status',categories_status);
+
+        $(e.currentTarget).parent().toggleClass('closed');
+        $(e.currentTarget).parent().children('.layers').toggleClass('closed');
+      }
+    },
+
+    // layers
+    toggleLayer: function(e) {
+      if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source')) {      
+        var layerSlug = $(e.currentTarget).data('sublayer');
+        this.presenter.toggleLayer(layerSlug);
+      }
+    },
+
+    removeLayer: function(e){
+      e && e.preventDefault();
+      var layerSlug = $(e.currentTarget).data('slug');
+      this.presenter.toggleLayer(layerSlug);
+    },
+
+    // threshold
+    toggleThreshold: function(e){
+      e && e.preventDefault();
+      this.presenter.toggleThreshold();
+    },
+
+    // legend
     toogleLegend: function(bool){
       var to = (bool && bool.currentTarget) ? false : bool;
       this.$el.toggleClass('active', to);
       this.presenter.toggleOverlay(to);
     },
 
-    /**
-     * Toggle selected sublayers on the legend widget.
-     *
-     * @param  {object} layers The layers object
-     */
+    // Toggle sublayers if they are selected
     toggleSelected: function(layers) {
       _.each(this.$el.find('.layer-sublayer'), function(div) {
         var $div = $(div);
@@ -277,69 +344,31 @@ define([
       }, this);
     },
 
-    render: function(html) {
-      this.$el.html(html);
-      this.$titleDialog = $('#title-dialog-legend');
-      this.$categories = this.$el.find('.categories');
-      this.$buttonLegendBox =  $('#button-box-embed-legend');
-      this.$linkLegendBox =  $('#link-embed-legend');
+    // Toggle visibility
+    toogleModule: function() {
+      this.$el.toggleClass('hide', this.model.get('hidden'));
+      this.$el.toggleClass('hide-no-layers', this.model.get('hidden'));
     },
 
-    /**
-     * Set widget from layers object.
-     *
-     * @param  {array} layers
-     */
-    update: function(categories, options, geographic) {
-      if (categories.length === 0) {
-        this.model.set('hidden', true);
-      } else {
-        this.model.set({'hidden': false, 'boxClosed': false});
-        this._renderLegend(categories, options, geographic);
-      }
-      //Experiment
-      //this.presenter.initExperiment('source');
-    },
-
-    /**
-     * Handles a toggle layer change UI event by dispatching
-     * to LegendPresenter.
-     *
-     * @param  {event} event Click event
-     */
-    _toggleLayer: function(event) {
-      if (!$(event.target).hasClass('source') && !$(event.target).parent().hasClass('source')) {      
-        var layerSlug = $(event.currentTarget).data('sublayer');
-        this.presenter.toggleLayer(layerSlug);
-      }
-    },
-
-    _toogleCategory: function(e){
-      if ($(window).width() > window.gfw.config.GFW_MOBILE) {
-        // Save category status in an array
-        var categories_status = this.model.get('categories_status');
-        var slug = $(e.currentTarget).data('category_slug');
-        var index = categories_status.indexOf(slug);
-        (index != -1) ? categories_status.splice(index, 1) : categories_status.push(slug);
-        this.model.set('categories_status',categories_status);
-
-        $(e.currentTarget).parent().toggleClass('closed');
-        $(e.currentTarget).parent().children('.layers').toggleClass('closed');
-      }
-    },
-
-    _removeLayer: function(e){
+    // Embed UI events
+    toogleEmbedLegend: function(e){
       e && e.preventDefault();
-      var layerSlug = $(e.currentTarget).data('slug');
-      this.presenter.toggleLayer(layerSlug);
+      var active = this.$titleDialog.hasClass('active');
+      this.$titleDialog.toggleClass('active', !active);
+      this.$categories.toggleClass('active', !active);
+      this.$buttonLegendBox.toggleClass('active', !active);
     },
 
-    _showCanopy: function(e){
-      e && e.preventDefault();
-      this.presenter.showCanopy();
-    }
+    updateLinkToGFW: function(){
+      if (this.embed && !!this.$linkLegendBox) {
+        var href = window.location.href.replace('/embed','');
+        this.$linkLegendBox.attr('href', href);
+      }
+    },
 
-
+    renderMore: function(data) {
+      this.$more.html(this.templateMore(data));
+    },    
 
 
 

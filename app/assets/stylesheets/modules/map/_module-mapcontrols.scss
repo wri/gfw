@@ -4,11 +4,12 @@ $w-control: 38px;
   bottom: 110px;
   right: 10px;
   z-index: 21;
-  @include transition(all 0.25s $easeInOutSine);
+  transition: all 0.25s $easeInOutSine;
 
   &.timeline-open{
-    @include transform(translate(0,-45px));
+    transform: translate(0,-45px);
   }
+  
   @media (min-width: $br-mobile){
     bottom: 60px;
   }
@@ -20,8 +21,8 @@ $w-control: 38px;
   }
   ul{
     width: $w-control;
-    @include display-flex();
-    @include flex-wrap(wrap);
+    display: flex;
+    flex-wrap: wrap;
     background: $white;
     box-shadow: $shadow1;
     margin: 10px 0 0;
@@ -36,19 +37,19 @@ $w-control: 38px;
       margin: 0;
     }
     li{
-      @include display-flex();
-      @include justify-content(center);
-      @include align-items(center);
+      display: flex;
+      justify-content: center;
+      align-items: center;
       background: $white;
       width: $w-control;
       height: $w-control;
       position: relative;
       cursor: pointer;
       .handler{
-        @include display-flex();
-        @include justify-content(center);
-        @include align-items(center);
-        @include transform-origin(51% 50.1%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform-origin: 51% 50.1%;
         width: 100%;
         height: 100%;
       }
@@ -107,10 +108,10 @@ $w-control: 38px;
   &.module-mapcontrols-mobile{
     top: auto;
     bottom: 110px;
-    @include transition(all 0.25s $easeInOutSine);
+    transition: all 0.25s $easeInOutSine;
 
     &.timeline-open{
-      @include transform(translate(0,-45px));
+      transform: translate(0,-45px);
     }
     @media (min-width: $br-mobileMap){
       display: none;

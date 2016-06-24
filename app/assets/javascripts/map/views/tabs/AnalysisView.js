@@ -76,8 +76,9 @@ define([
       this.$selects = this.$el.find('.chosen-select');
       this.$countrySelect = $('#analysis-country-select');
       this.$regionSelect = $('#analysis-region-select');
-      this.$countryButton = $('#analysis-country-button');
-      this.$countrySButton = $('#subscribe-country-button');
+      this.$countryButtonContainer = $('#country-button-container');
+      this.$countryAnalysis = $('#analysis-country-button');
+      this.$countrySubscribe = $('#subscribe-country-button');
 
       //other
       this.$img = $('#data-tab-img');
@@ -160,7 +161,6 @@ define([
       var to = (bool && bool.currentTarget) ? true : bool;
       this.$el.toggleClass('active', !to);
       this.presenter.toggleOverlay(!to);
-
     },
 
     inits: function(){
@@ -197,7 +197,7 @@ define([
         this.$deletebtn = $('#analysis-delete');
         clearTimeout(this.timeout);
         this.$deletebtn.addClass('pulse');
-        this.presenter.notificate('not-delete-analysis');
+        this.presenter.notificate('notification-delete-analysis');
         this.timeout = setTimeout(_.bind(function(){
           this.$deletebtn.removeClass('pulse');
         }, this ),3000)
@@ -294,7 +294,7 @@ define([
     },
 
     getSubCountries: function(){
-      this.$regionSelect.attr('disabled', true).trigger("liszt:updated");
+      this.$regionSelect.attr('disabled', true).trigger("chosen:updated");
       var sql = ["SELECT gadm_1_all.cartodb_id, gadm_1_all.iso, gadm2_provinces_simple.id_1, gadm2_provinces_simple.name_1 as name_1 FROM gadm_1_all, gadm2_provinces_simple where gadm_1_all.iso = '"+this.iso+"' AND gadm2_provinces_simple.iso = '"+this.iso+"' AND gadm2_provinces_simple.id_1 = gadm_1_all.id_1 order by id_1 asc"];
       $.ajax({
         url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
@@ -338,43 +338,46 @@ define([
         options += '<option value="'+ area.id_1 +'">'+ area.name_1 + '</option>';
       }, this ));
       this.$regionSelect.empty().append(options).removeAttr('disabled');
-      this.$regionSelect.val(this.area).trigger("liszt:updated");
+      this.$regionSelect.val(this.area).trigger("chosen:updated");
     },
 
     // Select change iso
     changeIso: function(e){
       this.iso = $(e.currentTarget).val();
-      this.$countryButton.removeClass('disabled');
-      this.$countrySButton.removeClass('disabled');
+      this.$countryAnalysis.removeClass('disabled');
+      this.$countrySubscribe.removeClass('disabled');
       this.area = null;
+      
       if(this.iso) {
         this.getSubCountries()
+        this.$countryButtonContainer.show();
       } else {
+        this.$countryButtonContainer.show();        
         this.presenter.deleteAnalysis();
-        this.$countryButton.addClass('disabled');
-        this.$countrySButton.addClass('disabled');
-        this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
+        this.presenter.setDontAnalyze(true);
+        this.$countryAnalysis.addClass('disabled');
+        this.$countrySubscribe.addClass('disabled');
+        this.$regionSelect.val(null).attr('disabled', true).trigger("chosen:updated");
       }
 
       if (!this.presenter.layerAvailableForSubscription()) {
-        this.$countrySButton.addClass('disabled');
+        this.$countrySubscribe.addClass('disabled');
       }
     },
 
     toggleCountrySubscribeBtn: function() {
       if (!this.presenter.layerAvailableForSubscription()) {
-        this.$countrySButton.addClass('disabled');
+        this.$countrySubscribe.addClass('disabled');
       } else {
-        if (!this.$countryButton.hasClass('disabled')) {
-          this.$countrySButton.removeClass('disabled');
+        if (!this.$countryAnalysis.hasClass('disabled')) {
+          this.$countrySubscribe.removeClass('disabled');
         }
       }
     },
 
     changeArea: function(e){
       this.area = $(e.currentTarget).val();
-      this.$countryButton.removeClass('disabled');
-      this.$countrySButton.removeClass('disabled');
+      this.$countryButtonContainer.show();
     },
 
     // For autoselect country and region when youn reload page
@@ -382,45 +385,50 @@ define([
       this.iso = iso.country;
       this.area = iso.region;
 
-      this.$countrySelect.val(this.iso).trigger("liszt:updated");
+      this.$countrySelect.val(this.iso).trigger("chosen:updated");
+
       if (this.iso) {
         this.getSubCountries();
         if (!dont_analyze) {
-          this.$countryButton.addClass('disabled');
-          this.$countrySButton.addClass('disabled');
+          this.$countryButtonContainer.hide();
         } else {
-          this.$countryButton.removeClass('disabled');
-          this.$countrySButton.removeClass('disabled');          
+          this.$countryAnalysis.removeClass('disabled');
+          this.$countrySubscribe.removeClass('disabled');          
         }
       } else {
-        this.$countryButton.addClass('disabled');
-        this.$countrySButton.addClass('disabled');
-        this.$regionSelect.val(this.area).attr('disabled', true).trigger("liszt:updated")
+        if (dont_analyze) {
+          this.$countryButtonContainer.show();
+        }
+        this.$countryAnalysis.addClass('disabled');
+        this.$countrySubscribe.addClass('disabled');
+        this.$regionSelect.val(this.area).attr('disabled', true).trigger("chosen:updated")
       }
 
       if (!this.presenter.layerAvailableForSubscription()) {
-        this.$countrySButton.addClass('disabled');
+        this.$countrySubscribe.addClass('disabled');
       }
     },
 
     analysisCountry: function(){
-      if (this.iso && !this.$countryButton.hasClass('disabled')) {
+      if (this.iso && !this.$countryAnalysis.hasClass('disabled')) {
         var iso = {
           country: this.iso,
           region: this.area
         };
-        this.$countryButton.addClass('disabled');
+        this.$countryButtonContainer.hide();
+        this.$countryAnalysis.addClass('disabled');
+        this.presenter.setDontAnalyze(null);
         this.presenter.setAnalyzeIso(iso);
       }
     },
 
     subscribeCountry: function(){
-      if (this.iso && !this.$countrySButton.hasClass('disabled')) {
+      if (this.iso && !this.$countrySubscribe.hasClass('disabled')) {
         var iso = {
           country: this.iso,
           region: this.area
         };
-        this.presenter.subscribeIso(iso);
+        this.presenter._subscribeIso(iso);
       }
     },
 
@@ -496,6 +504,7 @@ define([
       this._resetDrawing();
       this._updateAnalysis();
 
+      this.presenter.setDontAnalyze(true);
       this.setEditableEvents(e.overlay);
     },
 
@@ -738,11 +747,7 @@ define([
 
 
     toggleDoneSubscribeBtn: function() {
-      if (!this.presenter.layerAvailableForSubscription()) {
-        this.$doneSubscribe.addClass('disabled');
-      } else {
-        this.$doneSubscribe.removeClass('disabled');
-      }
+      this.$doneSubscribe.toggleClass('disabled', !this.presenter.layerAvailableForSubscription());
     },
 
     // OTHER

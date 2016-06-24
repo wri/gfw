@@ -59,7 +59,7 @@ define([
         _.bind(function(layers) {
 
           //filter iso layers and pack them, then send the package to the presenter
-          mps.publish('Layers/isos', [_.filter(layers.rows,function(lay) {return lay.iso != null;})] );
+          mps.publish('Country/layers', [this.getParsedLayers(layers)] );
 
           var hits = _.map(where, _.partial(_.where, layers.rows));
           successCb(_.flatten(hits));
@@ -67,6 +67,32 @@ define([
         _.bind(function(error) {
           errorCb(error);
         }, this));
+    },
+
+    getParsedLayers: function(layers) {
+      var countryLayers = _.filter(layers.rows,function(lay) {return lay.iso != null;})
+      
+      _.each(countryLayers, function(layer){
+        if(!!layer.does_wrapper) {
+          var does_wrapper = JSON.parse(layer.does_wrapper);
+          // Store the wrapped layers here
+          layer.wrappers = {};
+
+          _.each(does_wrapper, function(wrap_layer) {            
+            // Add the wrapped layer to the wrapper array            
+            layer.wrappers[wrap_layer.slug] = _.findWhere(countryLayers, {
+              slug: wrap_layer.slug
+            });
+            layer.wrappers[wrap_layer.slug].radio_title = wrap_layer.title;
+
+            countryLayers =_.without(countryLayers, _.findWhere(countryLayers, { 
+              slug: wrap_layer.slug 
+            }));        
+          }) 
+        }
+      }); 
+
+      return countryLayers;
     },
 
     _getUrl: function() {

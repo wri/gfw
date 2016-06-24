@@ -8,34 +8,32 @@ define([
   'underscore',
   'amplify',
   'chosen',
-  'map/presenters/LayersNavPresenter',
   'handlebars',
+  'map/presenters/LayersNavPresenter',
   'text!map/templates/layersNav.handlebars',
-  'text!map/templates/layersNavByCountry.handlebars',
-  'text!map/templates/layersNavByCountryWrapper.handlebars'
-], function(Backbone, _, amplify, chosen, Presenter, Handlebars, tpl, tplCountry, tplCountryWrapper) {
+  'map/views/LayersCountryView',
+], function(Backbone, _, amplify, chosen, Handlebars, Presenter, tpl, LayersCountryView) {
 
   'use strict';
 
   var LayersNavView = Backbone.View.extend({
 
     template: Handlebars.compile(tpl),
-    templateCountry: Handlebars.compile(tplCountry),
-    templateCountryWrapper: Handlebars.compile(tplCountryWrapper),
 
     events: {
       'click .category-name' : '_toggleLayersNav',
       'click .layer': '_toggleLayer',
       'click .wrapped-layer': '_toggleLayerWrap',
       'click .grouped-layers-trigger' : 'toggleLayersGroup',
-      'click #country-layers' : '_showNotification',
-      'click #country-layers-reset' : '_resetIso',
-      'click #country-layers-reset-mobile' : '_resetIso'
     },
 
-    initialize: function() {
+    initialize: function(map,countries) {
       _.bindAll(this, '_toggleSelected');
       this.presenter = new Presenter(this);
+      this.map = map;
+      this.countries = countries;
+
+
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.setElement('#layers-menu');
@@ -52,18 +50,19 @@ define([
 
     render: function() {
       this.$el.html('').append(this.template());
-      //Experiment
-      //this.presenter.initExperiment('source');
+      this.cache();
+      this.fixLegibility();
+      // Initialize Country dropdown layers
+      new LayersCountryView(this.map,this.countries);
 
+    },
+
+    cache: function() {
       //Init
       this.$groupedLayers = $('.grouped-layers-trigger');
       this.$toggleUMD = $('#toggleUmd');
       this.$categoriesList = $('.categories-list');
       this.$categoriesNum = $('.category-num');
-      this.$layersCountry = $('#layers-country-nav');
-      this.$countryLayers = $('#country-layers');
-      this.$countryLayersReset = $('#country-layers-reset');
-
     },
 
 
@@ -90,15 +89,15 @@ define([
 
           $li.addClass('selected');
           $toggle.addClass('checked');
-          $layerTitle.css('color', layer.title_color);
+          // $layerTitle.css('color', layer.title_color);
           $toggle.css('background', layer.title_color);
 
           ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layer.slug);
         } else {
           $li.removeClass('selected');
           $toggle.removeClass('checked').css('background', '').css('border-color', '');
-          $toggleIcon.css('background-color', '');
-          $layerTitle.css('color', '');
+          // $toggleIcon.css('background-color', '');
+          // $layerTitle.css('color', '');
         }
       });
       this.toogleSelectedWrapper();
@@ -192,13 +191,11 @@ define([
           var color = $li.data('color') || '#cf7fec';
           $li.addClass('selected');
           $toggle.addClass('checked');
-          $layerTitle.css('color', color);
           $toggle.css('background', color);
         } else {
           $li.removeClass('selected');
           $toggle.removeClass('checked').css('background', '').css('border-color', '');
           $toggleIcon.css('background-color', '');
-          $layerTitle.css('color', '');
         }
       });
 
@@ -240,116 +237,19 @@ define([
       }, this ))
     },
 
-    /**
-     * Set and update iso
-     */
-    setIso: function(iso){
-      this.iso = iso.country;
-      this.region = iso.region;
-      this.setIsoLayers();
-    },
-
-    updateIso: function(iso){
-      // This is for preventing blur on layers nav
-      this.$categoriesList.width('auto');
-      (iso.country !== this.iso) ? this.resetIsoLayers() : null;
-      this.iso = iso.country;
-      this.region = iso.region;
-      this.setIsoLayers();
-    },
-
-    _resetIso: function(){
-      this.presenter.resetIso();
-    },
-
-    /**
-     * Render Iso Layers.
-     */
-    _getIsoLayers: function(layers) {
-      this.layersIso = layers;
-    },
-
-    resetIsoLayers: function(){
-      _.each(this.$countryLayers.find('.layer'),_.bind(function(li){
-        if ($(li).hasClass('selected')) {
-          var layerSlug = $(li).data('layer');
-          this.presenter.toggleLayer(layerSlug)
-        }
-      }, this ))
-    },
-
-    setIsoLayers: function(e){
-      var layersToRender = [];
-      _.each(this.layersIso, _.bind(function(layer){
-        if (layer.iso === this.iso) {
-          layersToRender.push(layer);
-        }
-      }, this ));
-
-      if (!!this.iso && this.iso !== 'ALL') {
-        this.$countryLayersReset.removeClass('hidden');
-      }else{
-        this.$countryLayersReset.addClass('hidden');
-      }
-
-
-      if(layersToRender.length > 0) {
-        this.$countryLayers.addClass('active').removeClass('disabled');
-        this.$countryLayersReset.addClass('active').removeClass('disabled');
-      }else{
-        this.$countryLayers.removeClass('active').addClass('disabled');
-        this.$countryLayersReset.removeClass('active').addClass('disabled');
-      }
-      this.renderIsoLayers(layersToRender);
-    },
-
-    renderIsoLayers: function(layers){
-      var country = _.find(amplify.store('countries'), _.bind(function(country){
-        return country.iso === this.iso;
-      }, this ));
-      var name = (country) ? country.name : 'Country';
-      (country) ? this.$countryLayers.addClass('iso-detected') : this.$countryLayers.removeClass('iso-detected');
-      this.$countryLayers.html(this.templateCountry({ country: name ,  layers: layers }));
-      for (var i = 0; i< layers.length; i++) {
-        if (!!layers[i].does_wrapper) {
-          var self = this;
-          var wrapped_layers = JSON.parse(layers[i].does_wrapper);
-          self.$countryLayers.find('[data-layer="' +  layers[i].slug + '"] .does_wrapper').html(self.templateCountryWrapper({layers: wrapped_layers}));
-          var removeLayerFromCountry = function(layer) {
-            self.$countryLayers.find('[data-layer="' +  layer.slug + '"]:not(.wrapped)').remove();
-          }
-          _.each(wrapped_layers,removeLayerFromCountry);
-        }
-      }
-
-      this.fixLegibility();
-
-      //this.presenter.initExperiment('source');
-      this._toggleSelected(this.layers);
-    },
-
+    // BUG: If the menu has an odd width the text will be blurred
+    // Theres is a css hack to fix this (http://stackoverflow.com/questions/29236793/css3-transform-blurring-and-flickering-issue-on-container-with-odd-numbered)
+    // but it doesn't work or I don't know how to do it
     fixLegibility: function(){
+      this.$categoriesList.width('auto');
       var w = this.$categoriesList.width();
       if (w%2 != 0) {
-        // This is for preventing blur on layers nav
+        // This is for prevent blur on layers nav
         this.$categoriesList.width(w+1);
       }
-
     },
 
-    _showNotification: function(e){
-      if ($(e.currentTarget).hasClass('disabled') && !$(e.target).hasClass('country-layers-reset-mobile')) {
-        if($(e.currentTarget).hasClass('iso-detected')){
-          this.presenter.notificate('not-country-not-has-layers');
-        }else{
-          this.presenter.notificate('not-country-choose');
-          $('#countries-tab-button').addClass('pulse');
-          setTimeout(function(){
-            $('#countries-tab-button').removeClass('pulse');
-          },3000);
-        }
-      }
-    }
+
 
   });
 

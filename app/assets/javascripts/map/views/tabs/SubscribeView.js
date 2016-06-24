@@ -18,6 +18,9 @@ define([
     prodes: 'alerts/prodes',
     guyra: 'alerts/guyra',
     umd_as_it_happens: 'alerts/glad',
+    umd_as_it_happens_per: 'alerts/glad',
+    umd_as_it_happens_cog: 'alerts/glad',
+    umd_as_it_happens_idn: 'alerts/glad',
     viirs_fires_alerts: 'alerts/viirs'
   };
 
@@ -159,7 +162,7 @@ define([
       if (this.subscription.hasValidEmail()) {
         this.nextStep();
       } else {
-        this.presenter.notificate('email-incorrect');
+        this.presenter.notificate('notification-email-incorrect');
       }
     },
 

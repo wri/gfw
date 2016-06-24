@@ -7,6 +7,7 @@ define([
   'underscore',
   'handlebars',
   'd3',
+  'mps',
   'map/presenters/TabsPresenter',
   'map/views/tabs/AnalysisView',
   'map/views/tabs/CountriesView',
@@ -16,7 +17,7 @@ define([
   'views/ShareView',
   'text!map/templates/tabs.handlebars',
   'text!map/templates/tabs-mobile.handlebars'
-], function(_, Handlebars, d3, Presenter, AnalysisView, CountriesView, BasemapsView, HighresolutionView, SubscribeView, ShareView, tpl, tplMobile) {
+], function(_, Handlebars, d3, mps, Presenter, AnalysisView, CountriesView, BasemapsView, HighresolutionView, SubscribeView, ShareView, tpl, tplMobile) {
 
   'use strict';
 
@@ -28,15 +29,17 @@ define([
       'click .tab' : 'toggleTabs',
       'click .share-mobile' : 'toggleShareMobile',
       'click .tab-mobile' : 'toggleTabsMobile',
-      'click .close-tab-mobile' : 'hideTabsMobile',
+      'click .tab-mobile-close' : 'hideTabsMobile',
+      'click .tab-mobile-reset-country' : 'resetCountry',
       'click ul' : 'checkForestChangeAvailability'
     },
 
     template: Handlebars.compile(tpl),
     templateMobile: Handlebars.compile(tplMobile),
 
-    initialize: function(map) {
+    initialize: function(map, countries) {
       this.map = map;
+      this.countries = countries;
       this.presenter = new Presenter(this);
       // Render
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
@@ -81,12 +84,12 @@ define([
     },
 
     initCustomViews: function(){
-      new AnalysisView(this.map);
-      new CountriesView(this.map);
-      new BasemapsView();
-      new HighresolutionView(this.map);
+      new AnalysisView(this.map, this.countries);
+      new CountriesView(this.map, this.countries);
+      new BasemapsView(this.map, this.countries);
+      new HighresolutionView(this.map, this.countries);
 
-      var subscribeView = new SubscribeView();
+      var subscribeView = new SubscribeView(this.map, this.countries);
       $('body').append(subscribeView.el);
     },
 
@@ -147,6 +150,13 @@ define([
       this.presenter.onTabMobileClose();
     },
 
+    resetCountry: function() {
+      this.presenter.publishIso({
+        country: null, 
+        region: null
+      });      
+    },
+
     toggleMobileLayers: function(){
       var $tab = $('#settings-tab-mobile');
       // this.$tabMobileButtons.removeClass('active');
@@ -167,7 +177,7 @@ define([
     checkForestChangeAvailability: function(e) {
       // If the user clicks the analysis icon and having this LI item an EVENT POINTER NONE style attribute, what the user actually clicks is the UL
       if (e.target.tagName === 'UL' && $('#analysis-tab-button').hasClass('disabled')) {
-        mps.publish('Notification/open', ['open-forest-change-layer']);
+        mps.publish('Notification/open', ['notification-select-forest-change-layer']);
       }
     }
   });

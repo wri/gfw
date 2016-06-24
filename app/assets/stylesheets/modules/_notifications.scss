@@ -1,12 +1,12 @@
-.notifications{
+.notifications {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1101;
   padding: 20px 40px 20px 20px;
-  @include transition(all 0.25s $easeInOutSine);
-  @include transform(translate(0,-100%));
+  transition: all 0.25s $easeInOutSine;
+  transform: translate(0,-100%);
   @media (min-width: $br-mobileMap){
     padding: 20px;
     text-align: center;
@@ -20,47 +20,89 @@
     width: 40px;
     height: 40px;
     z-index: 20;
-    @include transform(translate(0,-50%));
-    svg{
+    transform: translate(0,-50%);
+    
+    svg {
       position: absolute;
       top: 50%;
       left: 50%;
       width: 50%;
       height: 50%;
       fill: $white;
-      @include transform(translate(-50%,-50%));
+      transform: translate(-50%,-50%);
     }
-    &:hover{
-      svg{
+    
+    &:hover {
+      svg {
         fill: darken($white,10%);
       }
     }
   }
 
-  .content{
-    p{
+
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      width: 26px;
+      height: 26px;
+      fill: $white;
+      margin: 0 15px 0 0;
+    }
+
+    p {
       color: $white;
-      font-size: 14px;
+      font-size: 16px;
+      button {
+        margin: 0 0 0 10px;
+      }
     }
   }
 
   // STATES
   &.active{
-    @include transform(translate(0,0%));
+    transform: translate(0,0%);
   }
 
 
   // COLORS
-  &.success{
-    background: rgba($cGreen, 0.85);
+  &.success {
+    background: rgba($cGreen, 0.95);
   }
-  &.info{
-    background: rgba(#3182bd, 0.85);
+
+  &.info {
+    background: rgba(#3082BD, 0.95);
   }
-  &.warning{
-    background: rgba(#ED4602, 0.85);
+
+  &.warning {
+    background: rgba(#FFF00E, 0.95);
+
+    .content {
+      svg {
+        fill: $dark;
+      }
+
+      p {
+        color: $dark;
+      }
+    }
+    
+    // Close btn
+    .close {     
+      svg {
+        fill: $dark;
+      }
+      
+      &:hover {
+        svg {
+          fill: darken($dark,10%);
+        }
+      }
+    }
   }
-  &.error{
-    background: rgba(#FF4848, 0.85);
+
+  &.error {
+    background: rgba(#DD3E21, 0.95);
   }
 }

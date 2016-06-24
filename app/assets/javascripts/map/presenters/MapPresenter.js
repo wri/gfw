@@ -72,7 +72,7 @@ define([
         this.view.$maplngLng.addClass('hidden');
       }
     }, {
-      'Threshold/changed': function(threshold) {
+      'Threshold/update': function(threshold) {
         this._updateStatusModel({
           threshold: threshold
         });

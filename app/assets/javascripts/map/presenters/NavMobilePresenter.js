@@ -6,16 +6,31 @@
 define([
   'underscore',
   'mps',
-  'map/presenters/PresenterClass'
-], function(_, mps, PresenterClass) {
+  'map/presenters/PresenterClass',
+  'map/services/CountryService'  
+], function(_, mps, PresenterClass, countryService) {
 
   'use strict';
+
+  var StatusModel = Backbone.Model.extend({
+    defaults: {
+      iso: null
+    }
+  });
+
 
   var NavMobilePresenter = PresenterClass.extend({
 
     init: function(view) {
       this.view = view;
       this._super();
+      this.status = new StatusModel();
+
+      this.listeners();      
+    },
+
+    listeners: function() {
+      this.status.on('change:iso', this.changeIso.bind(this));
     },
 
     // /**
@@ -39,9 +54,9 @@ define([
           this.view.resetBtns();
       }
     },{
-      'Analysis/toggle': function() {
+      'Analysis/toggle': function(boolean) {
         this.view.toogleTimelineClass(false);
-        this.view.toogleAnalysisBtn($('#analysis-tab').hasClass('is-analysis'));
+        this.view.toogleAnalysisBtn($('#analysis-tab').hasClass('is-analysis'));        
       }
     },{
       'Analysis/visibility': function(to) {
@@ -52,8 +67,8 @@ define([
         this.view.toogleAnalysisBtn(false);
       }
     },{
-      'Countries/name': function(name,bool) {
-        this.view.toogleCountryBtn(name,bool);
+      'Country/update': function(iso) {
+        this.status.set('iso', iso);
       }
     },{
       'Timeline/toggle' : function(toggle){
@@ -68,6 +83,19 @@ define([
         this.view.toogleTimelineClass(false);
       }
     }],
+    
+    changeIso: function() {
+      var iso = this.status.get('iso');
+
+      if(!!iso && !!iso.country && iso.country !== 'ALL'){
+        countryService.execute(iso.country, _.bind(function(results) {
+          this.view.toogleCountryBtn(results.name);
+        },this));
+      } else {
+        this.view.toogleCountryBtn(null);
+      }
+    },  
+
     toggleCurrentTab: function(tab, toggle){
       mps.publish(tab+'/toggle', [toggle]);
     },

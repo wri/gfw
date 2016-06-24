@@ -31,6 +31,9 @@ define([
     'prodes',
     'guyra',
     'umd_as_it_happens',
+    'umd_as_it_happens_per',
+    'umd_as_it_happens_cog',
+    'umd_as_it_happens_idn',
     'modis',
     'viirs_fires_alerts'
   ];
@@ -55,6 +58,9 @@ define([
       'guyra': 'guyra-loss',
       'forest2000': 'umd-loss-gain',
       'umd_as_it_happens':'glad-alerts',
+      'umd_as_it_happens_per':'glad-alerts',
+      'umd_as_it_happens_cog':'glad-alerts',
+      'umd_as_it_happens_idn':'glad-alerts',
       'viirs_fires_alerts': 'viirs-active-fires'
     },
 
@@ -105,8 +111,8 @@ define([
         this.view._deleteAnalysisView();
       }
     },{
-      'Analysis/toggle': function() {
-        this.view.toogleAnalysis($('#analysis-tab').hasClass('is-analysis'));
+      'Analysis/toggle': function(boolean) {
+        this.view.toogleAnalysis(boolean);
       }
     },{
       'DownloadView/create': function(downloadView) {
@@ -174,7 +180,7 @@ define([
         // Subscribe button just should be activated
         // when a analysis is succesfully rendered.
         this.view.$tab.addClass('is-analysis');
-        mps.publish('Analysis/toggle');
+        mps.publish('Analysis/toggle', [this.view.$tab.hasClass('is-analysis')]);
         this._setSubscribeButton();
       }
     },
@@ -232,6 +238,7 @@ define([
       this.status.set('iso', null);
       this.status.set('resource', null);
       this.view.model.set('boxHidden', true);
+      mps.publish('Analysis/dont_analyze', [true]);
       mps.publish('AnalysisService/cancel', []);
       mps.publish('AnalysisResults/delete-analysis', []);
       mps.publish('Place/update', [{go: false}]);
@@ -265,7 +272,7 @@ define([
     _getAnalysisResource: function(results, layer) {
       var p = {};
 
-      p[layer.slug] = true;
+      p.slug = layer.slug;
       p.layer = layer;
       p.download = results.download_urls;
       if (p.download) {

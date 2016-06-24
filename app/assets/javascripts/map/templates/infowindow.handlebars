@@ -20,7 +20,7 @@
         <a style="cursor:pointer;" id="subscriptionBtn" class="subscription-concession btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">subscribe</a>
     </div>
     {{/if}}
-    <div class="cartodb-popup-content scroll-dark">
+    <div class="cartodb-popup-content scroll-thin-dark">
       <div class="cartodb-popup-content-inside">
         {{#if content.data.project_name}}
           {{#if content.data.project_ur}}
@@ -202,6 +202,10 @@
         {{#if content.data.year}}
           <h4>Year:</h4>
           <p>{{content.data.year}}</p>
+        {{/if}}
+        {{#if content.data.iucn_cat}}
+          <h4>IUCN Category:</h4>
+          <p>{{content.data.iucn_cat}}</p>
         {{/if}}
         {{#if content.data.year_created}}
           <h4>Year created:</h4>

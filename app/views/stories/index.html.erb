@@ -53,7 +53,7 @@
       <ul id="storiesLatestNavigationView" class="m-latest-navigation">
         <% @total_stories_paginated.each do |story| %>
           <li>
-            <div class="img"><div class="bg" style="background-image: url(<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>)"></div></div>
+            <div class="img"><div class="bg" style="background-image: url(<%= static_map("#{story['lat']}, #{story['lng']}") %>)"></div></div>
           </li>
         <% end %>        
       </ul>

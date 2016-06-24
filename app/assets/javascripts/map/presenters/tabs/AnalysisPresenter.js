@@ -22,6 +22,9 @@ define([
     'prodes',
     'guyra',
     'umd_as_it_happens',
+    'umd_as_it_happens_per',
+    'umd_as_it_happens_cog',
+    'umd_as_it_happens_idn',
     'modis',
     'viirs_fires_alerts'
   ];
@@ -62,6 +65,9 @@ define([
       'forest2000': 'umd-loss-gain',
       'viirs_fires_alerts': 'viirs-active-fires',
       'umd_as_it_happens':'glad-alerts',
+      'umd_as_it_happens_per':'glad-alerts',
+      'umd_as_it_happens_cog':'glad-alerts',
+      'umd_as_it_happens_idn':'glad-alerts',
     },
 
     init: function(view) {
@@ -149,7 +155,32 @@ define([
         this.openAnalysisTab(true);
         this._analyzeConcession(useid, layerSlug);
       }
-    }, {
+    },{
+      'Analysis/dont_analyze': function(enabled) {
+        this.status.set('dont_analyze', enabled);
+      }
+    },{
+      'Analysis/iso': function(iso) {
+        this.status.set('dont_analyze', false);
+        this._analyzeIso(iso);
+      }
+    },{
+      'Analysis/enabled': function(boolean) {
+        this.view.toggleAnalysis(boolean);
+      }
+    },{
+      'Analysis/toggle': function(boolean) {
+        console.log('Analysis/toggle '+boolean);
+        this.view.toggleAnalysis($('#analysis-tab').hasClass('is-analysis'));
+      }
+    },{
+      'Analysis/upload': function(geojson) {
+        ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');
+        this._saveAndAnalyzeGeojson(geojson, {draw: true});
+      }
+    },
+    // Timeline
+    {
       'Timeline/date-change': function(layerSlug, date) {
         this.status.set('date', date);
         this.openAnalysisTab();
@@ -165,7 +196,7 @@ define([
         this._updateAnalysis();
       }
     }, {
-      'Threshold/changed': function(threshold) {
+      'Threshold/update': function(threshold) {
         this.status.set('threshold', threshold);
         this.openAnalysisTab();
         this._updateAnalysis();
@@ -183,20 +214,13 @@ define([
         }
       },
     },{
-      'Countries/changeIso': function(iso,analyze) {
-        this.status.set('dont_analyze', analyze);
+      'Country/update': function(iso) {
         if (!!iso.country) {
           this.deleteAnalysis();
-          this._analyzeIso(iso,{ fit_bounds: true });
-        }else{
-          mps.publish('LocalMode/updateIso',[iso, this.status.get('dont_analyze')]);
+          this.view.setSelects(iso, true);
+        } else {
           this.deleteAnalysis();
         }
-
-      }
-    },{
-      'Analysis/toggle': function() {
-        this.view.toggleAnalysis(this.view.$el.hasClass('is-analysis'));
       }
     },{
       'Subscribe/cancel' : function(){
@@ -213,14 +237,14 @@ define([
           this.view._stopDrawing();
         }
       }
-    }, {
+    },{
+      'Subscribe/iso': function(iso) {
+        this.status.set('dont_analyze', false);
+        this._subscribeIso(iso)
+      }
+    },{
       'Dialogs/close': function() {
         this.view.toggleAnalysis(true);
-      }
-    }, {
-      'Analysis/upload': function(geojson) {
-        ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');
-        this._saveAndAnalyzeGeojson(geojson, {draw: true});
       }
     }, {
       'Spinner/cancel': function() {
@@ -236,12 +260,6 @@ define([
         } else {
           $('#subscriptionBtn').addClass('disabled');
         }
-      }
-    }, {
-      'Spinner/cancel': function() {
-        mps.publish('AnalysisService/cancel', []);
-        mps.publish('AnalysisResults/delete-analysis', []);
-        mps.publish('Place/update', [{go: false}]);
       }
     }],
 
@@ -364,7 +382,7 @@ define([
       var options = options || {};
       this.deleteAnalysis();
       this.view.setSelects(iso, this.status.get('dont_analyze'));
-      mps.publish('LocalMode/updateIso', [iso, this.status.get('dont_analyze')]);
+      mps.publish('Country/update', [iso]);
       this.status.unset('geostore');
 
       // Build resource
@@ -429,7 +447,7 @@ define([
       }.bind(this));
     },
 
-    subscribeIso: function(iso) {
+    _subscribeIso: function(iso) {
       var baselayer = this.getBaselayer();
       this.status.unset('geostore');
 
@@ -439,17 +457,22 @@ define([
 
       if (baselayer) {
         this.status.set('subscribe_only', true);
-        this.status.set('dont_analyze', false);
         this.status.set('resource', resource);
-        mps.publish('LocalMode/updateIso', [iso, this.status.get('dont_analyze')]);
+        this.setDontAnalyze(null);
+        mps.publish('Country/update', [iso]);
         mps.publish('Place/update', [{go: false}]);
         this._subscribeAnalysis();
       }
     },
 
     setAnalyzeIso: function(iso){
-      this.status.set('dont_analyze', null);
-      mps.publish('Analysis/analyze-iso', [iso, this.status.get('dont_analyze')]);
+      this._analyzeIso(iso);
+    },
+
+    setDontAnalyze: function(dont_analyze) {
+      this.status.set('dont_analyze', dont_analyze);
+      mps.publish('Analysis/dont_analyze', [this.status.get('dont_analyze')]);
+      mps.publish('Place/update', [{go: false}]);
     },
 
     _analyzeWdpai: function(wdpaid, options) {
@@ -597,8 +620,8 @@ define([
 
         if (baselayer) {
           this.status.set('subscribe_only', true);
-          this.status.set('dont_analyze', false);
           this.status.set('resource', resource);
+          this.setDontAnalyze(null);          
           mps.publish('Place/update', [{go: false}]);
           this._subscribeAnalysis();
         }
@@ -664,8 +687,8 @@ define([
     _publishAnalysis: function(resource, failed) {
       mps.publish('Spinner/start');
       this.status.set('resource', resource);
-      // this._setAnalysisBtnVisibility();
       mps.publish('Place/update', [{go: false}]);
+
       //Open tab of analysis
       this.view.openTab(resource.type);
 
@@ -695,6 +718,7 @@ define([
     deleteAnalysis: function() {
       mps.publish('Spinner/stop');
       mps.publish('AnalysisResults/Delete');
+
       this.view._removeCartodblayer();
       this.view.$el.removeClass('is-analysis');
 
@@ -704,7 +728,7 @@ define([
         multipolygon: this.status.get('multipolygon')
       });
 
-      this.view.setSelects({ country: null, region: null });
+      this.view.setSelects({ country: null, region: null }, this.status.get('dont_analyze'));
 
       // Reset status model
       this.status.set({
@@ -714,7 +738,6 @@ define([
         multipolygon: null
       });
 
-      this._setAnalysisBtnVisibility();
       mps.publish('Subscribe/clearIso', []);
     },
 
@@ -733,6 +756,9 @@ define([
           _.pluck(baselayers, 'slug'),
           _.keys(this.datasets)))];
       }
+
+      mps.publish('Analysis/enabled', [!!baselayer]);
+      
       $('#analyzeBtn').toggleClass('dont-analyze', !!!baselayer);
       this.status.set('baselayer', baselayer);
       this._setAnalysisBtnVisibility();
@@ -810,6 +836,8 @@ define([
       if (!resource) {return;}
       var p = {};
 
+      p.dont_analyze = this.status.get('dont_analyze');
+
       if (resource.iso) {
         p.iso = {};
         p.iso.country = resource.iso;
@@ -850,6 +878,7 @@ define([
 
     layerAvailableForSubscription: function() {
       var baselayer = this.status.get('baselayer');
+      mps.publish('Subscribe/enabled', [(baselayer && SUBSCRIPTION_ALLOWED.indexOf(baselayer.slug) > -1)]);
       return (baselayer && SUBSCRIPTION_ALLOWED.indexOf(baselayer.slug) > -1);
     }
 

@@ -78,7 +78,7 @@
               position: absolute;
               opacity: 0;
               visibility: hidden;
-              @include transition(all 0.25s $easeInOutSine);
+              transition: all 0.25s $easeInOutSine;
             }
             &:before{
               top: 50%;
@@ -89,7 +89,7 @@
               border-style: solid;
               border-width: 15px 0 15px 25px;
               border-color: transparent transparent transparent $white;
-              @include transform(translate(-50%,-50%));
+              transform: translate(-50%,-50%);
             }
             &:after{
               top: 0;

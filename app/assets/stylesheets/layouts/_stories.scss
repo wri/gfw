@@ -100,7 +100,7 @@
               background: rgba(#000,0.25);
               visibility: hidden;
               opacity: 0;
-              @include transition(all,.25s,$easeInOutSine);
+              transition: all .25s $easeInOutSine;
             }
             &:before {
               content: "";
@@ -115,7 +115,7 @@
               margin: -30px 0 0 -30px;
               visibility: hidden;
               opacity: 0;
-              @include transition(all,.25s,$easeInOutSine);
+              transition: all .25s $easeInOutSine;
             }
             &:hover{
               &:before, &:after{
@@ -160,18 +160,18 @@
           background: $white;
           float: left;
           margin: 0 0 0 15px;
-          @include transition(all,.5s,$easeInOutSine);
+          transition: all .5s $easeInOutSine;
           &:first-child { margin: 0;}
           &.current, &:hover {
             opacity: 1;
-            @include transform(scale(2));
+            transform: scale(2);
           }
           &:after{
             content: "";
             position: absolute;
             top: 50%;
             left: 50%;
-            @include transform(translate(-50%,-50%));
+            transform: translate(-50%,-50%);
             width: 250%;
             height: 250%;
             background: transparent;
@@ -196,7 +196,7 @@
       border: 3px solid $white;
       top: 50%;
       border-radius: 50%;
-      @include transform(translate(0,-50%));
+      transform: translate(0,-50%);
       @media (min-width: $br-mobile) {
         display: block;
       }
@@ -220,7 +220,7 @@
       margin: 0;
       &:before {
         background: image-url('svg-icons/arrow-left.svg') center no-repeat;
-        @include transform(translate(-2px,0));
+        transform: translate(-2px,0);
       }
     }
     .next{
@@ -228,7 +228,7 @@
       margin: 0;
       &:before {
         background: image-url('svg-icons/arrow-right.svg') center no-repeat;
-        @include transform(translate(0px,0));
+        transform: translate(0px,0);
       }
     }
   }
@@ -246,14 +246,14 @@
   height: 100%;
   opacity: 0;
   visibility: hidden;
-  @include transition(all 0s $easeInOutSine);
-  @include transform(scale(0.75));
+  transition: all 0s $easeInOutSine;
+  transform: scale(0.75);
 
   &.active{
     opacity: 1;
     visibility: visible;
-    @include transition(all 0.25s $easeInOutSine);
-    @include transform(scale(1));
+    transition: all 0.25s $easeInOutSine;
+    transform: scale(1);
   }
 
   .close {
@@ -270,7 +270,7 @@
       width: 50%;
       height: 50%;
       fill: $white;
-      @include transform(translate(-50%,-50%));
+      transform: translate(-50%,-50%);
     }
     &:hover{
       svg{
@@ -296,7 +296,7 @@
     top: 50%;
     left: 50%;
     z-index: 2;
-    @include transform(translate(-50%,-50%));
+    transform: translate(-50%,-50%);
     box-shadow: 0px 7px 15px rgba(0,0,0,0.3);
   }
 }
@@ -312,16 +312,19 @@
     }
   }
   .row{
-    @include row(flex-start);
-    @include flex-wrap(wrap);
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: wrap;
     .col{
-      @include col(100);
+      width: 100%;
+      min-height: 1px;
       margin-top: 20px;
       &:first-child{
         margin-top: 0;
       }
       @media (min-width: $br-mobile) {
-        @include col(25);
+        width: 25%;
         margin-top: 0;
       }
       a{
@@ -329,9 +332,10 @@
         display: block;
         color: $dark;
         text-decoration: none;
-        @include row();
-        @include align-items(center);
-        @include flex-wrap(wrap);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
         @media (min-width: $br-mobile) {
           text-align: center;
           width: 80%;
@@ -364,7 +368,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            @include transform(translate(-50%,-50%));
+            transform: translate(-50%,-50%);
           }
         }
         &.new-story{
@@ -379,23 +383,23 @@
               width: 65%;
               height: 2px;
               background: $dark;
-              @include transition(all 0.15s $easeInOutSine);
-              @include transform-origin(50% 50%);
+              transition: all 0.15s $easeInOutSine;
+              transform-origin: 50% 50%;
             }
 
             &:before{
-              @include transform(translate(-50%,-50%) rotate(0deg));
+              transform: translate(-50%,-50%) rotate(0deg);
             }
 
             &:after{
-              @include transform(translate(-50%,-50%) rotate(90deg));
+              transform: translate(-50%,-50%) rotate(90deg);
             }
             &:hover{
               &:before{
-                @include transform(translate(-50%,-50%) rotate(0deg) scale(0.75));
+                transform: translate(-50%,-50%) rotate(0deg) scale(0.75);
               }
               &:after{
-                @include transform(translate(-50%,-50%) rotate(90deg) scale(0.75));
+                transform: translate(-50%,-50%) rotate(90deg) scale(0.75);
               }
             }
           }
@@ -507,7 +511,7 @@
         right: 5px;
         border: 1px solid $dark;
         border-radius: 50%;
-        @include transform(translate(0,-50%));
+        transform: translate(0,-50%);
         svg{
           fill: $dark;
           position: absolute;
@@ -516,7 +520,7 @@
           margin: 0 0 0 -1px;
           top: 50%;
           left: 50%;
-          @include transform(translate(-50%,-50%));
+          transform: translate(-50%,-50%);
         }
         @media (min-width: $br-mobile) {
           display: none;
@@ -534,6 +538,10 @@
       line-height: 1.2em;
       color: $dark;
       padding: 2px 0 0;
+      
+      &.-terms {
+        margin: 0 0 8px;
+      }
     }
   }
 }
@@ -558,8 +566,6 @@
     text-align: left;
     color: #666;
     word-wrap: break-word;
-    // @include column-count(2);
-    // @include column-gap(20px);
   }
 }
 
@@ -621,7 +627,7 @@
     top: 50%;
     left: 50%;
     background: $cGreen;
-    @include transform(translate(-50%,-50%));
+    transform: translate(-50%,-50%);
   }
 
   &:before{
@@ -634,7 +640,7 @@
   }
 
   @media (min-width: $br-mobile) {
-    @include inline-block();
+    display: inline-block;
     float: left;
     width: 132px;
     margin: 5px 10px 0px 0;
@@ -643,7 +649,7 @@
 
 .thumbnail {
   position: relative;
-  @include inline-block();
+  display: inline-block;
   width: 48%;
   height: 76px;
   margin: 4% 0px 0 0;
@@ -699,7 +705,7 @@
     width: 30px;
     height: 30px;
     margin: -10px 0 0;
-    @include transform(translate(-50%,-50%));
+    transform: translate(-50%,-50%);
     @include animation(loader,1s,infinite,$easeInOutCubic);
     visibility: visible;
     opacity: 1;

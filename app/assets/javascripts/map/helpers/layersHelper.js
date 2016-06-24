@@ -139,6 +139,10 @@ define([
   'map/views/layers/MexMiningLayer',
   'map/views/layers/BraMiningLayer',
   'map/views/layers/ViirsLayer',
+  'map/views/layers/PerMinamCoverLayer',
+  'map/views/layers/CanIntactForestLayer',
+  'map/views/layers/MexForestCatLayer',
+  'map/views/layers/MexForestSubCatLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -292,6 +296,10 @@ define([
   MexMiningLayer,
   BraMiningLayer,
   ViirsLayer,
+  PerMinamCoverLayer,
+  CanIntactForestLayer,
+  MexForestCatLayer,
+  MexForestSubCatLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -685,6 +693,18 @@ define([
       view: AsItHappensHybridLayer,
       timelineView: AsItHappensTimeline
     },
+    umd_as_it_happens_per: {
+      view: AsItHappensHybridLayer,
+      timelineView: AsItHappensTimeline
+    },
+    umd_as_it_happens_cog: {
+      view: AsItHappensHybridLayer,
+      timelineView: AsItHappensTimeline
+    },
+    umd_as_it_happens_idn: {
+      view: AsItHappensHybridLayer,
+      timelineView: AsItHappensTimeline
+    },
     gfw_landsat_alerts_coverage: {
       view: LandsatAlertsCoverLayer
     },
@@ -731,15 +751,24 @@ define([
     mex_mining: {
       view:  MexMiningLayer
     },
-    
     per_mining: {
       view:  PerMiningLayer
     },
-    
     bra_mining: {
       view:  BraMiningLayer
     },
-    
+    per_minam_tree_cover: {
+      view:  PerMinamCoverLayer
+    },
+    can_ifl: {
+      view:  CanIntactForestLayer
+    },
+    mex_forest_zoning_cat: {
+      view:  MexForestCatLayer
+    },
+    mex_forest_zoning_subcat: {
+      view:  MexForestSubCatLayer
+    },
     nothing: {
     }
   };

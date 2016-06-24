@@ -4,11 +4,12 @@
  */
 define([
   'underscore',
+  'mps',
   'uri',
   'abstract/layer/OverlayLayerClass',
   'text!map/cartocss/style.cartocss',
   'text!map/templates/infowindow.handlebars'
-], function(_, UriTemplate, OverlayLayerClass, CARTOCSS, TPL) {
+], function(_, mps, UriTemplate, OverlayLayerClass, CARTOCSS, TPL) {
 
   'use strict';
 
@@ -101,7 +102,7 @@ define([
           ($(this).data('wdpaid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area' + $(this).data('wdpaid')) : null;
           ($(this).data('useid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze ' + $(this).data('use').toUpperCase() + ' ' + $(this).data('useid')) : null;
         }else{
-          mps.publish('Notification/open', ['not-select-forest']);
+          mps.publish('Notification/open', ['notification-select-forest-change-layer']);
         }
 
       });

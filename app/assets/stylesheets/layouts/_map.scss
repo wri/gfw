@@ -49,6 +49,103 @@ body,html{
   background: #B3E2FF;
 
   // Footer
+  .map-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 38px;
+
+    &:after {
+      content: "";
+      display: none;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: $white;
+      z-index: 1;      
+    }
+
+    &.active {
+      &:after {
+        display: block;
+      }
+    }
+
+    // logos
+    .map-logos {
+      display: none;
+      height: 100%; 
+      position: relative;
+      z-index: 0;     
+
+      @media (min-width:$br-mobile){
+        display: flex;
+        align-items: center;
+      }
+    
+      > li {
+        display: inline-block;
+        margin-left: 20px;
+        position: relative; 
+        
+        &:first-child {
+          margin-left: 35px;
+        }       
+
+        a {
+          position: relative;
+          &.google-logo, &.gee-logo {
+            top: 2px;
+          }
+          &.uc-logo {
+            display: none;
+          }
+        }
+        
+      }
+
+      img {
+        border: none;
+        max-height: 18px;
+      }
+    }
+
+    // button
+    .footer-toggle{
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%,0);
+      margin-left: 15px;
+      height: 38px;
+      line-height: 42px;
+      border: none;
+      border-radius: 0;
+      padding: 0 20px;
+      z-index: 2;
+      white-space: nowrap;
+      display: none;
+      color: $cGreen;
+      background: none;
+      text-transform: none;
+      
+      &:after {
+        content: "";
+      }
+
+      &:hover {
+        color: $dark;
+      }
+
+      @media (min-width:$br-mobile){
+        display: block;
+      }
+    }
+  }
+
   .gm-style{
     &:after{
       content: "";
@@ -89,8 +186,8 @@ body,html{
   opacity: 0;
   cursor: url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default;
 
-  @include user-select(none);
-  @include transition(opacity 1s ease);
+  user-select: none;
+  transition: opacity 1s ease;
 
   &.is-loaded {
     opacity: 1;
@@ -218,7 +315,7 @@ body,html{
   background: rgba($dark,0.5);
   opacity: 0;
   visibility: hidden;
-  @include transition(all 0.25s $easeInOutSine);
+  transition: all 0.25s $easeInOutSine;
   @media (min-width:$br-mobile){
     display: none !important;
   }
