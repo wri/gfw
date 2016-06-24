@@ -90,10 +90,14 @@
   .page-section > .title-section {
     display: inline-block;
     margin-bottom: 15px;
+    font-size: 19px;
+    line-height: 1.7;
+    font-weight: 300;
+    color: $cGreen;
 
     > a {
       font-size: 19px;
-      line-height: 1.7px;
+      line-height: 1.7;
       font-weight: 300;
       color: $cGreen;
       &:hover {
