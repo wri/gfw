@@ -22,7 +22,7 @@ require([
   'views/InterestingView',
   'views/SourceMobileFriendlyView',
   '_string'
-], function($, _, Class, Backbone, mps, RouterStatic, CarrouselView, StoriesKeepView, VideoView, SearchView, FeedbackView, ApplicationsNavView, ApplicationsGridView, ApplicationsModalView, HeaderView, FooterView, TermsView, SidebarNavView, InterestingView, SourceMobileFriendlyView) {
+], function($, _, Class, Backbone, mps, RouterStatic, CarrouselView, StoriesKeepView, VideoView, SearchView, FeedbackView, ApplicationsNavView, ApplicationsGridView, ApplicationsModalView, HeaderView, FooterView, SidebarNavView, InterestingView, SourceMobileFriendlyView) {
   'use strict';
 
   var LandingPage = Class.extend({
