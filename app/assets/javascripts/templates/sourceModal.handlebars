@@ -105,6 +105,12 @@
       <div class="modal-footer">
         <div class="m-btncontainer is-center">
           <a href="{{download_data}}" target="_blank" class="btn green uppercase download-mobile-link">Download data</a>
+          {{#if map_service}}
+            <a href="{{map_service}}" target="_blank" class="btn green uppercase download-mobile-link">Map service</a>
+          {{/if}}
+          {{#if sql_api}}
+            <a href="{{sql_api}}" target="_blank" class="btn green uppercase download-mobile-link">SQL API</a>
+          {{/if}}
         </div>
       </div>
     {{/if}}
