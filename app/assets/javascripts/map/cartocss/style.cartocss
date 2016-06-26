@@ -136,6 +136,13 @@
     line-clip: false;
     polygon-clip: false;
   }
+  [layer='mys_logging_sabah'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
   [layer='gfw2_drc_conc'] {
     polygon-fill: #EC7014;
     line-color: #EC7014;
@@ -330,6 +337,12 @@
     polygon-clip: false;
   }
   [layer='mys_wood_fiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+    [layer='mys_wood_fiber_sabah'] {
     polygon-fill: #e6adb9;
     line-color: #e6adb9;
     line-clip: false;
@@ -597,7 +610,7 @@
   line-width: 0;
   line-opacity: 1;
   }
-  [layer='khm_protected_areas_wgs'] {
+  [layer='khm_protected_areas'] {
   polygon-fill: #3182BD;
   polygon-opacity: 0.6;
   line-color: #FFF;
@@ -618,6 +631,31 @@
     line-color: #FFF;
     line-opacity: 0;
   }
+
+  [layer='mys_protected_areas_sabah'] {
+   polygon-fill: #1F78B4;
+   polygon-opacity: 0.7;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 1;
+
+}
+
+  [layer='mex_psa'] {
+   polygon-fill: #3182BD;
+   polygon-opacity: 0.7;
+   line-color: #3182BD;
+   line-width: 0.5;
+   line-opacity: 1;
+
+}
+  [layer='bra_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
 }
 
 

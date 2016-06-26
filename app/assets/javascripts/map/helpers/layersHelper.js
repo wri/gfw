@@ -145,7 +145,12 @@ define([
   'map/views/layers/MexForestCatLayer',
   'map/views/layers/MexForestSubCatLayer',
   'map/views/layers/Places2WatchLayer',
-
+  'map/views/layers/MexicoPaymentsLayer',
+  'map/views/layers/MexLandRightsLayer',
+  'map/views/layers/BraLoggingLayer',
+  'map/views/layers/MysWoodFiberSabahLayer',
+  'map/views/layers/MysLoggingSabahLayer',
+  'map/views/layers/MysPASabahLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -305,6 +310,12 @@ define([
   MexForestCatLayer,
   MexForestSubCatLayer,
   Places2WatchLayer,
+  MexicoPaymentsLayer,
+  MexLandRightsLayer,
+  BraLoggingLayer,
+  MysWoodFiberSabahLayer,
+  MysLoggingSabahLayer,
+  MysPASabahLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -759,11 +770,9 @@ define([
     mex_mining: {
       view:  MexMiningLayer
     },
-    
     per_mining: {
       view:  PerMiningLayer
     },
-    
     bra_mining: {
       view:  BraMiningLayer
     },
@@ -782,7 +791,24 @@ define([
     places_to_watch: {
       view:  Places2WatchLayer
     },
-    
+    mexican_psa: {
+      view:  MexicoPaymentsLayer
+    },
+    mex_land_rights: {
+      view:  MexLandRightsLayer
+    },
+    bra_logging: {
+      view:  BraLoggingLayer
+    },
+    mys_wood_fiber_sabah: {
+      view: MysWoodFiberSabahLayer
+    },
+    mys_proteced_areas_sabah: {
+      view:  MysPASabahLayer
+    },
+    mys_logging_sabah: {
+      view:  MysLoggingSabahLayer
+    },
     nothing: {
     }
   };
