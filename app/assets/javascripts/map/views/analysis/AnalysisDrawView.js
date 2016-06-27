@@ -62,6 +62,26 @@ define([
 
 
     /**
+     * UI EVENTS
+     * onClickStartDrawing
+     * @param  {[object]} e
+     * @return {void}
+     */
+    onClickStartDrawing: function(e) {
+      e && e.preventDefault();
+
+      if (!this.model.get('is_drawing')) {
+        this.model.set('is_drawing', true);
+        ga('send', 'event', 'Map', 'Analysis', 'Click: start');
+
+      } else {
+        this.model.set('is_drawing', false);
+        ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
+      }
+    },
+
+
+    /**
      * LISTENERS
      * changeIsDrawing
      * @return {void}
@@ -74,6 +94,10 @@ define([
       } else {
         this.$btnStartDrawing.removeClass('gray').addClass('green').text('Start drawing');
         this.stopDrawingManager();
+
+        // delete polygon...
+        debugger;
+        this.map.data
       }
 
       // TO-DO: We should improve this...
@@ -88,37 +112,14 @@ define([
 
 
     /**
-     * UI EVENTS
-     * onClickStartDrawing
-     * @param  {[object]} e
-     * @return {void}
-     */
-    onClickStartDrawing: function(e) {
-      e && e.preventDefault();
-
-      if (!this.model.get('is_drawing')) {
-        this.model.set('is_drawing', true);
-        this.presenter.startDrawing();
-        ga('send', 'event', 'Map', 'Analysis', 'Click: start');
-
-      } else {
-        this.model.set('is_drawing', false);
-        this.presenter.stopDrawing();
-        this.presenter.deleteAnalysis();
-        ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
-      }
-    },
-
-
-
-    /**
      * DRAWING MANAGER
      * startDrawingManager
      * @param  {[object]} e
      * @return {void}
      */
     startDrawingManager: function() {
-      // this.presenter.deleteMultiPoligon();
+      this.presenter.startDrawing();
+
       this.drawingManager = new google.maps.drawing.DrawingManager({
         map: this.map,
         drawingMode: google.maps.drawing.OverlayType.POLYGON,
@@ -136,9 +137,8 @@ define([
       // Bindings
       $(document).on('keyup.drawing', function(e){
         if (e.keyCode == 27) {
-          this.stopDrawingManager();
-          this.presenter.stopDrawing();
-          this.presenter.deleteAnalysis();
+          this.model.set('is_drawing', false);
+          ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
         }
       }.bind(this));
 
@@ -146,6 +146,8 @@ define([
     },
 
     stopDrawingManager: function() {
+      this.presenter.stopDrawing();
+
       if (this.drawingManager) {
         this.drawingManager.setDrawingMode(null);
         this.drawingManager.setMap(null);
@@ -156,8 +158,6 @@ define([
 
     completeDrawing: function(e) {
       this.stopDrawingManager();
-      this.presenter.stopDrawing();
-
       this.eventsDrawing(e);
 
       this.model.set('geojson', e);
