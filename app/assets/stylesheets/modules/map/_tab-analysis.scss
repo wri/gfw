@@ -452,12 +452,16 @@
 
     // GRID
     > ul {
-      margin: 20px -20px 0;
+      margin: 20px -15px 0;
       display: flex;
       justify-content: space-between;
 
+      @media (min-width: 1500px){
+        margin: 20px -20px 0;
+      }
+
       > li {
-        width: 100%;
+        width: 33.33333%;
       }
     }
 
@@ -465,11 +469,10 @@
 
     // FOOTER BTN
     .analysis-footer-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: block;
       width: 100%;
-      padding: 10px 0;        
+      padding: 10px;
+      text-align: center;     
       box-shadow: none;
       border: none;
       background: none;
@@ -478,13 +481,15 @@
       color: $dark;
       background: #eeeeee;
       cursor: pointer;
+      font-size: 10px;
+      line-height: 1;
       
       // ICON
       svg {
         fill: $dark;
         width: 18px;
         height: 18px;
-        margin: 0 5px 0 0;
+        margin: 0 auto 3px;
 
         &.-inactive {
           display: none;
@@ -492,7 +497,7 @@
       }
 
       > span {
-        font-size: 10px;
+        font-size: 9px;
         text-transform: uppercase;
       }
 
@@ -521,7 +526,7 @@
       justify-content: flex-end;      
       width: 100%;
       position: absolute;
-      bottom: 88px;
+      bottom: 100px;
       left: 0;
       z-index: 2000;
 
@@ -536,7 +541,7 @@
       opacity: 0;
 
       @media (min-width: $br-mobileMap){
-        bottom: 38px;
+        bottom: 51px;
       }
 
       // Toggle -active class
