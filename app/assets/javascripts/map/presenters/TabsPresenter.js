@@ -14,7 +14,7 @@ define([
 
   var StatusModel = Backbone.Model.extend({
     defaults: {
-      tab: 'countries-tab',
+      tab: 'analysis-tab',
       iso: null,      
     }
   });
