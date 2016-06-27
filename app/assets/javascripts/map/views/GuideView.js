@@ -1,10 +1,10 @@
 define([
-  'handlebars',
+  'handlebars', 'mps',
   'map/helpers/guides',
   'map/presenters/GuidePresenter',  
   'text!map/templates/guideContainer.handlebars',
   'text!map/templates/guideBubble.handlebars'
-], function(Handlebars, guides, GuidePresenter, tpl, tplBubble) {
+], function(Handlebars, mps, guides, GuidePresenter, tpl, tplBubble) {
 
   var GuideView = Backbone.View.extend({
     

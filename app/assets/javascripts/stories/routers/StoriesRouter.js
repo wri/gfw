@@ -1,11 +1,15 @@
 define([
   'jquery', 'backbone',
   'views/NotificationsView',
-  'stories/views/StoriesIndexView', 'stories/views/StoriesListView', 'stories/views/StoriesNewView', 'stories/views/StoriesShowView'
+  'map/models/UserModel',
+  'stories/views/StoriesIndexView', 'stories/views/StoriesListView', 'stories/views/StoriesNewView', 'stories/views/StoriesShowView',
+  'connect/views/LoginView'
 ], function(
   $, Backbone,
   NotificationsView,
-  StoriesIndexView, StoriesListView, StoriesNewView, StoriesShowView
+  User,
+  StoriesIndexView, StoriesListView, StoriesNewView, StoriesShowView,
+  LoginView
 ) {
 
   'use strict';
@@ -36,8 +40,19 @@ define([
       this.el.html(storiesList.render().el);
     },
 
+    checkLoggedIn: function() {
+      this.user = new User();
+      return this.user.fetch();
+    },
+
     newStory: function() {
-      new StoriesNewView();
+      this.checkLoggedIn().then(function() {
+        new StoriesNewView();
+      }.bind(this)).fail(function() {
+        var loginView = new LoginView({
+          message: 'Please log in to submit a story.' });
+        this.el.html(loginView.render().el);
+      }.bind(this));
     },
 
     showStory: function(storyId) {
