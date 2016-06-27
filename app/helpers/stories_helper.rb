@@ -25,7 +25,7 @@ module StoriesHelper
   end
 
   def story_image_or_map(media, coords = nil)
-    return "#{ENV['AWS_HOST']}/#{media[1]['preview_url']}" if media[1].present?
+    return "#{ENV['AWS_HOST']}/#{media[1]['preview_url']}" if media[1].present? and media[1]['preview_url'] != '[object HTMLLIElement]'
     unless coords.nil?
       static_map(coords)
     end
