@@ -22,85 +22,96 @@ define([
   var AnalysisNewPresenter = PresenterClass.extend({
     status: new (Backbone.Model.extend({
       defaults: {
+        // Analysis
         type: null,
+
         enabled: true,
         active: false,
+        activeSubscription: false,
         threshold: 30,
         
-        dates: {
-          begin: null,
-          end: null
-        },
+        // Dates
+        begin: null,
+        end: null,
 
         // Country
         iso: null,
         isoEnabled: false,
 
-        // Shape
-        geostore: null
+        // Draw
+        geostore: null,
+        isDrawing: false
       }
     })),
 
-    datasets: {
-      'loss': {
+    datasets: [{
+        name: 'loss',
         slug: 'umd-loss-gain',
         subscription: true
-      },
-      'forestgain': {
+      },{
+        name: 'forestgain',
         slug: 'umd-loss-gain'
-      },
-      'forma': {
+      },{
+        name: 'forma',
         slug: 'forma-alerts'
-      },
-      'imazon': {
+      },{
+        name: 'imazon',
         slug: 'imazon-alerts',
         subscription: true
-      },
-      'modis': {
+      },{
+        name: 'modis',
         slug: 'quicc-alerts',
         subscription: true        
-      },
-      'terrailoss': {
+      },{
+        name: 'terrailoss',
         slug: 'terrai-alerts',
         subscription: true
-      },
-      'prodes': {
+      },{
+        name: 'prodes',
         slug: 'prodes-loss',
         subscription: true
-      },
-      'guyra': {
+      },{
+        name: 'guyra',
         slug: 'guyra-loss',
         subscription: true
-      },
-      'forest2000': {
+      },{
+        name: 'forest2000',
         slug: 'umd-loss-gain'
-      },
-      'viirs_fires_alerts': {
+      },{
+        name: 'viirs_fires_alerts',
         slug: 'viirs-active-fires',
         subscription: true
-      },
-      'umd_as_it_happens': {
+      },{
+        name: 'umd_as_it_happens',
+        slug: 'glad-alerts',
+        subscription: true
+      },{
+        name: 'umd_as_it_happens_per',
+        slug: 'glad-alerts',
+        subscription: true
+      },{
+        name: 'umd_as_it_happens_cog',
+        slug: 'glad-alerts',
+        subscription: true
+      },{
+        name: 'umd_as_it_happens_idn',
         slug: 'glad-alerts',
         subscription: true
       },
-      'umd_as_it_happens_per': {
-        slug: 'glad-alerts',
-        subscription: true
-      },
-      'umd_as_it_happens_cog': {
-        slug: 'glad-alerts',
-        subscription: true
-      },
-      'umd_as_it_happens_idn': {
-        slug: 'glad-alerts',
-        subscription: true
-      },
-    },
+    ],
 
     init: function(view) {
       this.view = view;
       this._super();
+      this.listeners();
       mps.publish('Place/register', [this]);
+    },
+
+    listeners: function() {
+      this.status.on('change:baselayers', this.changeBaselayers.bind(this));
+      this.status.on('change:enabled', this.changeEnabled.bind(this));
+      this.status.on('change:enabledSubscription', this.changeEnabledSubscription.bind(this));
+      this.status.on('change:geostore', this.changeGeostore.bind(this));
     },
 
     /**
@@ -146,23 +157,73 @@ define([
     },
 
     /**
-     * Application subscriptions.
+     * Analysis subscriptions.
      */
     _subscriptions: [
+
+      // GLOBAL EVENTS
       {
         'Place/go': function(place) {
           var params = place.params;
+          
+          // Baselayer
+          this.status.set('baselayers', _.pluck(params.baselayers, 'slug'));
+          
+          // Dates
+          this.status.set('begin', params.begin);
+          this.status.set('end', params.begin);
+          
+          // Geostore
           this.status.set('geostore', params.geostore);
+          
+          // Countries
+          this.status.set('iso', {
+            country: params.country,
+            region: params.region
+          });
+          this.status.set('isoEnabled', params.dont_analyze);
+          
+          // Threshold
+          this.status.set('threshold', params.threshold);
         }
       },
+      {
+        'LayerNav/change': function(layerSpec) {
+          this.status.set('baselayers', _.keys(layerSpec.getBaselayers()));
+
+          // var baselayer = this.status.get('baselayer');
+          // var both = this.status.get('both');
+          // var loss_gain_and_extent = this.status.get('loss_gain_and_extent');
+          // this._setBaselayer(layerSpec.getBaselayers());
+          // this.status.set('loss_gain_and_extent', layerSpec.checkLossGainExtent());
+
+          // this.view.toggleCountrySubscribeBtn();
+          // this.view.toggleDoneSubscribeBtn();
+
+          // if (this.status.get('baselayer') != baselayer) {
+          //   this._updateAnalysis();
+          //   this.openAnalysisTab();
+          // }else{
+          //   if (this.status.get('both') != both) {
+          //     this._updateAnalysis();
+          //     this.openAnalysisTab();
+          //   }
+          // }
+
+          // if (loss_gain_and_extent != this.status.get('loss_gain_and_extent')) {
+          //   this._updateAnalysis();
+          //   this.openAnalysisTab();          
+          // }
+        }
+      },      
       // DRAWING EVENTS
       {
         'Analysis/start-drawing': function() {
-          
+          this.status.set('isDrawing', true);
         }
       },{
         'Analysis/stop-drawing': function() {
-          
+          this.status.set('isDrawing', false);
         }
       },{
         'Analysis/store-geojson': function(geojson) {
@@ -177,7 +238,7 @@ define([
           }
         }
       },
-      // ANALYSIS EVENTS
+      // GLOBAL ANALYSIS EVENTS
       {
         'Analysis/delete': function() {
           this.deleteAnalysis();
@@ -185,8 +246,56 @@ define([
       }
     ],
 
+
+
+
+
     /**
-     * MPS EVENTS
+     * LISTENERS
+     *
+     */    
+    changeBaselayers: function() {
+      // Check which baselayers are analysis-allowed
+      var enabled = !!_.intersection(
+        this.status.get('baselayers'),
+        _.pluck(this.datasets, 'name')
+      ).length;
+
+      // Check which baselayers are subscription-allowed
+      var enabledSubscription = !!_.intersection(
+        this.status.get('baselayers'),
+        _.pluck(_.where(this.datasets, {subscription: true}), 'name')
+      ).length;
+      
+      this.status.set('enabled', enabled);
+      this.status.set('enabledSubscription', enabledSubscription);
+    },
+
+    changeEnabled: function() {
+      var enabled = this.status.get('enabled');
+      this.view.setEnabled(enabled);
+
+      mps.publish('Analysis/enabled', enabled);
+      if (!enabled) {
+        mps.publish('Tab/toggle', ['analysis-tab',enabled]);
+      }
+    },
+
+    changeEnabledSubscription: function() {
+      mps.publish('Analysis/enabled-subscription', this.status.get('enabledSubscription'));
+    },
+
+    changeGeostore: function() {
+      if (!!this.status.get('geostore')) {
+        console.log('****** analyze geostore **********');  
+      }
+    },
+
+
+
+
+    /**
+     * ACTIONS
      * deleteAnalysis
      * @return {void}
      */    
@@ -200,6 +309,14 @@ define([
         country: null,
         region: null
       });
+    },
+
+    /**
+     * publishEnabled
+     * @return {void}
+     */
+    publishEnabled: function() {
+      mps.publish('Analysis/enabled', this.status.get('active'));
     },
 
     notificate: function(id){

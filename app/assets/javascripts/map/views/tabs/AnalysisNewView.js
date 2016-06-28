@@ -28,6 +28,7 @@ define([
     templateMobile: Handlebars.compile(tplMobile),
 
     model: new (Backbone.Model.extend({
+      enabled: true,
       tab: 'default'
     })),
 
@@ -57,12 +58,14 @@ define([
     },
 
     cache: function(){
+      this.$tabButton = $('#analysis-tab-button');
       //tabs
       this.$tabs = $('#analysis-nav li');
       this.$tabsContent = $('.analysis-tab-content');
     },
 
     listeners: function() {
+      this.model.on('change:enabled', this.changeEnabled.bind(this));
       this.model.on('change:tab', this.changeTab.bind(this));
     },
 
@@ -77,6 +80,12 @@ define([
       this.analysisDrawView = new AnalysisDrawView(this.map,this.countries);
       this.analysisCountryView = new AnalysisCountryView(this.map,this.countries);
     },
+
+
+
+
+
+
 
     /**
      * LISTENERS
@@ -94,14 +103,31 @@ define([
       $('#'+tab).addClass('-active');
     },
 
+    changeEnabled: function() {
+      var enabled = this.model.get('enabled');
+      // Toggle disabled class
+      this.$tabButton.toggleClass('disabled', !enabled);
+    },
+
+
+
+
+
+
     /**
-     * GLOBAL EVENTS
-     * deleteAnalysis
+     * PRESENTER EVENTS
+     * setEnabled
      * @return {void}
      */
-    deleteAnalysis: function() {
-      console.log('delete');
+    setEnabled: function(enabled) {
+      this.model.set('enabled', enabled);
     },
+
+
+
+
+
+
 
     /**
      * UI EVENTS

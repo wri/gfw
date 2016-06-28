@@ -59,6 +59,7 @@ define([
 
     cacheVars: function(){
       this.$tabs = this.$el.find('.tab');
+      this.$tabList = this.$el.find('.tab-list');
       this.$tabMobileButtons = $('.tab-mobile');
       this.$tabMobileBackButtons = $('.tab-mobile-back');
       this.$settingsTabButton = $('#settings-tab-button');
@@ -91,6 +92,36 @@ define([
 
       var subscribeView = new SubscribeView(this.map, this.countries);
       $('body').append(subscribeView.el);
+    },
+
+    toggleTab: function(id, active) {
+      var id = id,
+          active = active,
+          $tabButton = this.$tabList.find('[data-tab="'+id+'"]'),
+          is_active = $tabButton.hasClass('active');
+      
+      // If it0's already closed or opened we don't need to do anything
+      if (active != is_active) {
+        if (active) {
+          // container
+          this.$container.toggleClass('active', active);
+          
+          // tabs
+          this.$tabs.removeClass('active').addClass('inactive');
+          $tabButton.toggleClass('inactive', !active).toggleClass('active', active);
+
+          // tabs content
+          this.$tabsContent.removeClass('selected');
+          $('#'+ id).toggleClass('selected', !active);          
+        } else {
+          this.$container.removeClass('active')
+          this.$tabs.removeClass('inactive active');
+          this.$tabsContent.removeClass('selected');
+        }
+
+      }
+      
+
     },
 
     toggleTabs: function(e){
