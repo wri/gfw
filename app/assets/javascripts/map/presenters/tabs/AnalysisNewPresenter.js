@@ -149,6 +149,12 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [
+      {
+        'Place/go': function(place) {
+          var params = place.params;
+          this.status.set('geostore', params.geostore);
+        }
+      },
       // DRAWING EVENTS
       {
         'Analysis/start-drawing': function() {

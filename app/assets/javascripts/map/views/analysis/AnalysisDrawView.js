@@ -175,12 +175,17 @@ define([
      */
     completeDrawing: function(e) {
       this.model.set('overlay', e.overlay);
-      this.model.set('geojson', this.getGeojson(e.overlay));
+
+      // Check if the drawing is enabled
+      if(this.model.get('is_drawing')) {      
+        this.model.set('geojson', this.getGeojson(e.overlay));
+        
+        this.eventsDrawing();
+
+        ga('send', 'event', 'Map', 'Analysis', 'Polygon: complete');
+      }
 
       this.stopDrawingManager();
-      this.eventsDrawing();
-
-      ga('send', 'event', 'Map', 'Analysis', 'Polygon: complete');
     },
 
     /**
