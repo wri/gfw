@@ -61,7 +61,6 @@ define([
       "khm_eco_land_conc",
       "usa_forest_ownership",
       "idn_peat_lands",
-      "bra_land_cover",
       // PEOPLE
       "resource_rights",
       "cmr_resource_rights",

@@ -151,7 +151,6 @@ define([
   'map/views/layers/MysWoodFiberSabahLayer',
   'map/views/layers/MysLoggingSabahLayer',
   'map/views/layers/MysPASabahLayer',
-  'map/views/layers/BraLandcoverLayer',
   'map/views/layers/PerPALayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
@@ -318,7 +317,6 @@ define([
   MysWoodFiberSabahLayer,
   MysLoggingSabahLayer,
   MysPASabahLayer,
-  BraLandcoverLayer,
   PerPALayer,
   //highres layers
   UrthecastLayer,
@@ -812,9 +810,6 @@ define([
     },
     mys_logging_sabah: {
       view:  MysLoggingSabahLayer
-    },
-    bra_land_cover: {
-      view:  BraLandcoverLayer
     },
     per_protected_areas: {
       view:  PerPALayer
