@@ -242,14 +242,25 @@ define([
     },
 
 
+
+
+
     /**
      * HELPERS
+     * getGeojson
+     * @param  {object} overlay
+     * @return {object:geojson}
      */
     getGeojson: function(overlay) {
       var paths = overlay.getPath().getArray();
       return geojsonUtilsHelper.pathToGeojson(paths);            
     },
-
+    
+    /**
+     * drawGeojson
+     * @param  {object:geojson} geojson
+     * @return {void}
+     */
     drawGeojson: function(geojson) {
       var paths = geojsonUtilsHelper.geojsonToPath(geojson.features[0].geometry);
       var overlay = new google.maps.Polygon({
