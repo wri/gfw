@@ -94,6 +94,7 @@ define([
       "per_priv_pa",
       "per_reg_pa",
       "mys_proteced_areas_sabah",
+      "per_protected_areas",
       // Land USE
       "dam_hotspots",
       "per_prod_for",
