@@ -73,6 +73,7 @@ define([
       var template = (this.mobile) ? this.templateMobile : this.template;
       this.$el.html(template());
       this.cache();
+      
       this.initChildrenViews();
     },
 

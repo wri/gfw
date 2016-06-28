@@ -28,6 +28,12 @@ define([
         enabled: true,
         active: false,
         activeSubscription: false,
+        
+        // Layers
+        baselayers: [],
+        baselayer: null,
+
+        // Options
         threshold: 30,
         
         // Dates
@@ -52,6 +58,9 @@ define([
         name: 'forestgain',
         slug: 'umd-loss-gain'
       },{
+        name: 'forest2000',
+        slug: 'umd-loss-gain'
+      },{
         name: 'forma',
         slug: 'forma-alerts'
       },{
@@ -74,9 +83,6 @@ define([
         name: 'guyra',
         slug: 'guyra-loss',
         subscription: true
-      },{
-        name: 'forest2000',
-        slug: 'umd-loss-gain'
       },{
         name: 'viirs_fires_alerts',
         slug: 'viirs-active-fires',
@@ -189,7 +195,14 @@ define([
       },
       {
         'LayerNav/change': function(layerSpec) {
-          this.status.set('baselayers', _.keys(layerSpec.getBaselayers()));
+          var currentBaselayers = this.status.get('baselayers');
+          var newBaselayers = _.keys(layerSpec.getBaselayers());
+          
+          var baselayers_change = !!_.difference(currentBaselayers, newBaselayers).length || !!_.difference(newBaselayers, currentBaselayers).length;
+          if (baselayers_change) {
+            this.status.set('baselayers', _.keys(layerSpec.getBaselayers()));
+          }
+          
 
           // var baselayer = this.status.get('baselayer');
           // var both = this.status.get('both');
@@ -275,14 +288,14 @@ define([
       var enabled = this.status.get('enabled');
       this.view.setEnabled(enabled);
 
-      mps.publish('Analysis/enabled', enabled);
+      mps.publish('Analysis/enabled', [enabled]);
       if (!enabled) {
         mps.publish('Tab/toggle', ['analysis-tab',enabled]);
       }
     },
 
     changeEnabledSubscription: function() {
-      mps.publish('Analysis/enabled-subscription', this.status.get('enabledSubscription'));
+      mps.publish('Analysis/enabled-subscription', [this.status.get('enabledSubscription')]);
     },
 
     changeGeostore: function() {
