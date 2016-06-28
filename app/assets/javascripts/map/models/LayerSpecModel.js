@@ -61,6 +61,7 @@ define([
       "khm_eco_land_conc",
       "usa_forest_ownership",
       "idn_peat_lands",
+      "bra_land_cover",
       // PEOPLE
       "resource_rights",
       "cmr_resource_rights",
@@ -94,6 +95,7 @@ define([
       "per_priv_pa",
       "per_reg_pa",
       "mys_proteced_areas_sabah",
+      "per_protected_areas",
       // Land USE
       "dam_hotspots",
       "per_prod_for",
