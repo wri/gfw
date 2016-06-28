@@ -142,39 +142,42 @@ define([
       // if (this.status.get('tab')) {
       //   p.tab = this.status.get('tab');
       // }
-
-      // return p;
+      return p;
     },
 
     /**
      * Application subscriptions.
      */
     _subscriptions: [
-    // DRAWING EVENTS
-    {
-      'Analysis/start-drawing': function() {
-        
+      // DRAWING EVENTS
+      {
+        'Analysis/start-drawing': function() {
+          
+        }
+      },{
+        'Analysis/stop-drawing': function() {
+          
+        }
+      },{
+        'Analysis/store-geojson': function(geojson) {
+          if (!!geojson) {        
+            GeostoreService.save(geojson).then(function(geostoreId) {
+              this.status.set('geostore', geostoreId);
+              mps.publish('Place/update', [{go: false}]);
+            }.bind(this));
+          } else {
+            this.status.set('geostore', null);
+            mps.publish('Place/update', [{go: false}]);
+          }
+        }
+      },
+      // ANALYSIS EVENTS
+      {
+        'Analysis/delete': function() {
+          this.deleteAnalysis();
+        }
       }
-    },{
-      'Analysis/stop-drawing': function() {
-        
-      }
-    },{
-      'Analysis/store-geojson': function(geojson) {
-        console.log(geojson);
-        GeostoreService.save(geojson).then(function(geostoreId) {
-          console.log(geostoreId);
-          this.status.set('geostore', geostoreId);
-          // this._analyzeGeojson(geojson, options);
-        }.bind(this));
-      }
-    },
-    // ANALYSIS EVENTS
-    {
-      'Analysis/delete': function() {
-        this.deleteAnalysis();
-      }
-    }],
+    ],
 
     /**
      * MPS EVENTS

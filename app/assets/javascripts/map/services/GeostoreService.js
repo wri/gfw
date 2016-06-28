@@ -1,5 +1,7 @@
 define([
-  'Class', 'uri', 'bluebird',
+  'Class', 
+  'uri', 
+  'bluebird',
   'map/services/DataService'
 ], function(Class, UriTemplate, Promise, ds) {
 
@@ -15,20 +17,20 @@ define([
     get: function(id) {
       return new Promise(function(resolve, reject) {
 
-      var url = new UriTemplate(URL).fillFromObject({id: id});
+        var url = new UriTemplate(URL).fillFromObject({id: id});
 
-      ds.define(GET_REQUEST_ID, {
-        cache: {type: 'persist', duration: 1, unit: 'days'},
-        url: url,
-        type: 'GET'
-      });
+        ds.define(GET_REQUEST_ID, {
+          cache: {type: 'persist', duration: 1, unit: 'days'},
+          url: url,
+          type: 'GET'
+        });
 
-      var requestConfig = {
-        resourceId: GET_REQUEST_ID,
-        success: resolve
-      };
+        var requestConfig = {
+          resourceId: GET_REQUEST_ID,
+          success: resolve
+        };
 
-      ds.request(requestConfig);
+        ds.request(requestConfig);
 
       });
     },
@@ -36,23 +38,25 @@ define([
     save: function(geojson) {
       return new Promise(function(resolve, reject) {
 
-      var url = new UriTemplate(URL).fillFromObject({});
+        var url = new UriTemplate(URL).fillFromObject({});
 
-      ds.define(SAVE_REQUEST_ID, {
-        url: url,
-        type: 'POST'
-      });
+        ds.define(SAVE_REQUEST_ID, {
+          url: url,
+          type: 'POST'
+        });
 
-      var requestConfig = {
-        resourceId: SAVE_REQUEST_ID,
-        data: JSON.stringify(geojson),
-        success: function(response) {
-          resolve(response.id);
-        },
-        error: reject
-      };
+        var requestConfig = {
+          resourceId: SAVE_REQUEST_ID,
+          data: {
+            "geojson": JSON.stringify(geojson)
+          },
+          success: function(response) {
+            resolve(response.data.attributes.hash);
+          },
+          error: reject
+        };
 
-      ds.request(requestConfig);
+        ds.request(requestConfig);
 
       });
     }

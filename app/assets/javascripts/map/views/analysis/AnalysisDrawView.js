@@ -27,8 +27,9 @@ define([
 
     model: new (Backbone.Model.extend({
       geostore: null,
+      geojson: null,
       is_drawing: false,
-      geojson: null
+      overlay: null
     })),
 
     events: {
@@ -63,6 +64,7 @@ define([
 
     /**
      * UI EVENTS
+     * 
      * onClickStartDrawing
      * @param  {[object]} e
      * @return {void}
@@ -76,6 +78,7 @@ define([
 
       } else {
         this.model.set('is_drawing', false);
+        this.deleteDrawing();        
         ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
       }
     },
@@ -83,6 +86,7 @@ define([
 
     /**
      * LISTENERS
+     * 
      * changeIsDrawing
      * @return {void}
      */    
@@ -94,10 +98,6 @@ define([
       } else {
         this.$btnStartDrawing.removeClass('gray').addClass('green').text('Start drawing');
         this.stopDrawingManager();
-
-        // delete polygon...
-        debugger;
-        this.map.data
       }
 
       // TO-DO: We should improve this...
@@ -107,19 +107,18 @@ define([
 
     /**
      * changeGeojson
-     * store the geojson
      * @return {void}
      */
     changeGeojson: function() {
-      console.log(this.model.get('geojson'));
-      this.presenter.storeGeojson(this.model.get('geojson'));
+      var geojson = this.model.get('geojson');
+      this.presenter.storeGeojson(geojson);
     },
 
 
     /**
      * DRAWING MANAGER
+     *
      * startDrawingManager
-     * @param  {[object]} e
      * @return {void}
      */
     startDrawingManager: function() {
@@ -143,6 +142,7 @@ define([
       $(document).on('keyup.drawing', function(e){
         if (e.keyCode == 27) {
           this.model.set('is_drawing', false);
+          this.deleteDrawing();
           ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
         }
       }.bind(this));
@@ -150,6 +150,10 @@ define([
       google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this.completeDrawing.bind(this));      
     },
 
+    /**
+     * stopDrawingManager
+     * @return {void}
+     */
     stopDrawingManager: function() {
       this.presenter.stopDrawing();
 
@@ -157,278 +161,73 @@ define([
         this.drawingManager.setDrawingMode(null);
         this.drawingManager.setMap(null);
       }
+
       // Bindings
       $(document).off('keyup.drawing');
+
+      google.maps.event.clearListeners(this.drawingManager, 'overlaycomplete');
     },
 
+    /**
+     * completeDrawing
+     * @param  {[object]} e
+     * @return {void}
+     */
     completeDrawing: function(e) {
-      this.stopDrawingManager();
-      this.eventsDrawing(e);
+      this.model.set('overlay', e.overlay);
+      this.model.set('geojson', this.getGeojson(e.overlay));
 
-      this.model.set('geojson', e);
+      this.stopDrawingManager();
+      this.eventsDrawing();
 
       ga('send', 'event', 'Map', 'Analysis', 'Polygon: complete');
     },
 
-    eventsDrawing: function(e) {
-      google.maps.event.addListener(e.overlay.getPath(), 'set_at', function () {
-        console.log(arguments);
-        // this._updateAnalysis();
+    /**
+     * deleteDrawing
+     * @return {void}
+     */
+    deleteDrawing: function() {
+      var overlay = this.model.get('overlay');
+      if (!!overlay) {        
+        overlay.setMap(null);
+        this.model.set('overlay', null);
+        this.model.set('geojson', null);
+      }
+    },
+
+    /**
+     * eventsDrawing
+     * @return {void}
+     */
+    eventsDrawing: function() {
+      var overlay = this.model.get('overlay');
+      google.maps.event.addListener(overlay.getPath(), 'set_at', function () {
+        this.model.set('overlay', overlay);
+        this.model.set('geojson', this.getGeojson(overlay));
       }.bind(this));      
 
-      google.maps.event.addListener(e.overlay.getPath(), 'insert_at', function () {
-        console.log(arguments);
-        // this._updateAnalysis();
+      google.maps.event.addListener(overlay.getPath(), 'insert_at', function () {
+        this.model.set('overlay', overlay);
+        this.model.set('geojson', this.getGeojson(overlay));
       }.bind(this));
 
-      google.maps.event.addListener(e.overlay.getPath(), 'remove_at', function () {
-        console.log(arguments);
-        // this._updateAnalysis();
+      google.maps.event.addListener(overlay.getPath(), 'remove_at', function () {
+        this.model.set('overlay', overlay);
+        this.model.set('geojson', this.getGeojson(overlay));
       }.bind(this));
     },
 
 
-
-
-    // setDropable: function() {
-    //   var dropable = document.getElementById('drop-shape-analysis'),
-    //       fileSelector = document.getElementById('analysis-file-upload');
-    //   if (!dropable) { return; }
-
-    //   var handleUpload = function(file) {
-    //     var FILE_SIZE_LIMIT = 1000000,
-    //         sizeMessage = 'The selected file is quite large and uploading it might result in browser instability. Do you want to continue?';
-    //     if (file.size > FILE_SIZE_LIMIT && !window.confirm(sizeMessage)) {
-    //       $(dropable).removeClass('moving');
-    //       return;
-    //     }
-
-    //     mps.publish('Spinner/start', []);
-
-    //     var shapeService = new ShapefileService({ shapefile: file });
-    //     shapeService.toGeoJSON().then(function(data) {
-    //       var combinedFeatures = data.features.reduce(turf.union);
-
-    //       mps.publish('Analysis/upload', [combinedFeatures.geometry]);
-
-    //       this.drawMultipolygon(combinedFeatures);
-    //       var bounds = geojsonUtilsHelper.getBoundsFromGeojson(combinedFeatures);
-    //       this.map.fitBounds(bounds);
-    //     }.bind(this));
-
-    //     $(dropable).removeClass('moving');
-    //   }.bind(this);
-
-    //   fileSelector.addEventListener('change', function() {
-    //     var file = this.files[0];
-    //     if (file) { handleUpload(file); }
-    //   });
-
-    //   dropable.addEventListener('click', function(event) {
-    //     var $el = $(event.target);
-    //     if ($el.hasClass('source')) { return true; }
-
-    //     $(fileSelector).trigger('click');
-    //   });
-
-    //   dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
-    //   dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
-    //   dropable.ondrop = function (e) {
-    //     e.preventDefault();
-    //     var file = e.dataTransfer.files[0];
-    //     handleUpload(file);
-    //     return false;
-    //   };
-
-    // },
-
-    // /**
-    //  * Set geojson style.
-    //  */
-    // setStyle: function() {
-    //   this.style = {
-    //     strokeWeight: 2,
-    //     fillOpacity: 0,
-    //     fillColor: '#FFF',
-    //     strokeColor: '#A2BC28',
-    //   };
-
-    //   this.map.data.setStyle(_.bind(function(feature){
-    //     var strokeColor = (feature.getProperty('color')) ? feature.getProperty('color') : '#A2BC28';
-    //     return ({
-    //       strokeWeight: 2,
-    //       fillOpacity: 0,
-    //       fillColor: '#FFF',
-    //       strokeColor: strokeColor
-    //     });
-    //   }, this ));
-    // },
-
     /**
-     * DRAWING
+     * HELPERS
      */
-    /**
-     * Triggered when the user clicks on the analysis draw button.
-     */
-    // _onClickAnalysis: function() {
-    //   if (!this.$start.hasClass('in_use')) {
-    //     ga('send', 'event', 'Map', 'Analysis', 'Click: start');
-    //     this.toggleUseBtn(true);
-    //     this._startDrawingManager();
-    //     this.presenter.startDrawing();
-    //   }else{
-    //     ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
-    //     this._stopDrawing();
-    //     this.presenter.deleteAnalysis();
-    //   }
-    // },
-
-    // /**
-    //  * Triggered when the user complete a polygon 
-    //  * or change it with the drawing manager.
-    //  */
-    // _updateAnalysis: function() {
-    //   this._stopDrawing();
-    //   this.presenter.doneDrawing();
-    //   this.toggleAnalysis(true);
-    // },
-
-    // /**
-    //  * Star drawing manager and add an overlaycomplete
-    //  * listener.
-    //  */
-    // _startDrawingManager: function() {
-    //   this.presenter.deleteMultiPoligon();
-    //   this.model.set('is_drawing', true);
-    //   this.drawingManager = new google.maps.drawing.DrawingManager({
-    //     drawingControl: false,
-    //     drawingMode: google.maps.drawing.OverlayType.POLYGON,
-    //     polygonOptions: _.extend({
-    //       editable: true
-    //     }, this.style),
-    //     panControl: false,
-    //     map: this.map
-    //   });
-
-    //   $(document).on('keyup.drawing', function(e){
-    //     if (e.keyCode == 27) {
-    //       this._stopDrawing();
-    //       this.presenter.deleteAnalysis();
-    //     }
-    //   }.bind(this));
-
-    //   // cache cartodb infowindows
-    //   this.$infowindows = $('.cartodb-infowindow');
-    //   this.$infowindows.addClass('hidden');
-
-
-    //   google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this._onOverlayComplete);
-    // },
-
-    // /**
-    //  * Triggered when the user finished drawing a polygon.
-    //  *
-    //  * @param  {Object} e event
-    //  */
-    // _onOverlayComplete: function(e) {
-    //   ga('send', 'event', 'Map', 'Analysis', 'Polygon: complete');
-    //   this.presenter.onOverlayComplete(e);
-    //   this._resetDrawing();
-    //   this._updateAnalysis();
-
-    //   this.presenter.setDontAnalyze(true);
-    //   this.setEditableEvents(e.overlay);
-    // },
-
-    // /**
-    //  * Stop drawing manager, set drawing box to hidden.
-    //  */
-    // _stopDrawing: function() {
-    //   this.presenter.stopDrawing();
-    //   this._resetDrawing();
-    //   // buttons clases
-    //   this.toggleUseBtn(false);
-    //   // Remove binds
-    //   $(document).off('keyup.drawing');
-
-    // },
-
-    // _resetDrawing: function(){
-    //   this.model.set('is_drawing', false);
-    //   if(this.$infowindows)
-    //     this.$infowindows.hide(0).removeClass('hidden');
-    //   if (this.drawingManager) {
-    //     this.drawingManager.setDrawingMode(null);
-    //     this.drawingManager.setMap(null);
-    //   }
-    // },
-
-    // /**
-    //  * Deletes a overlay from the map.
-    //  *
-    //  * @param  {object} resource overlay/multipolygon
-    //  */
-    // deleteGeom: function(resource) {
-    //   if (resource.overlay) {
-    //     resource.overlay.setMap(null);
-    //     resource.overlay = null;
-    //   }
-
-    //   if (resource.multipolygon) {
-    //     this.map.data.remove(resource.multipolygon);
-    //   }
-
-    //   this._removeCartodblayer();
-    //   this.$tabs.removeClass('disabled');
-    // },
-
-    // setEditable: function(overlay, to) {
-    //   overlay.setEditable(to);
-    // },
-
-    // setEditableEvents: function(overlay) {
-    //   google.maps.event.addListener(overlay.getPath(), 'set_at', function () {
-    //     this._updateAnalysis();
-    //   }.bind(this));      
-
-    //   google.maps.event.addListener(overlay.getPath(), 'insert_at', function () {
-    //     this._updateAnalysis();
-    //   }.bind(this));
-
-    //   google.maps.event.addListener(overlay.getPath(), 'remove_at', function () {
-    //     this._updateAnalysis();
-    //   }.bind(this));
-    // },
-
-    // /**
-    //  * Draw Geojson polygon on the map.
-    //  *
-    //  * @param  {String} geojson Geojson polygon as a string
-    //  */
-    // drawPaths: function(paths) {
-    //   var overlay = new google.maps.Polygon(
-    //     _.extend({}, {paths: paths, editable: true}, this.style));
-
-    //   overlay.setMap(this.map);
-    //   this.presenter.setOverlay(overlay);
-    //   this.setEditableEvents(overlay);
-    // },
-
-    // /**
-    //  * Draw a multypoligon on the map.
-    //  *
-    //  * @param  {Object} topojson
-    //  */
-    // drawMultipolygon: function(geojson) {
-    //   var multipolygon = this.map.data.addGeoJson(geojson)[0];
-    //   this.map.data.addListener("click", function(e){
-    //       google.maps.event.trigger(this.map, 'click', e);
-    //   }.bind(this));
-    //   this.setStyle();
-    //   this.presenter.setMultipolygon(multipolygon, geojson);
-    // },
-
+    getGeojson: function(overlay) {
+      var paths = overlay.getPath().getArray();
+      return geojsonUtilsHelper.pathToGeojson(paths);            
+    }
   });
+
   return AnalysisDrawView;
 
 });

@@ -180,7 +180,7 @@ define([
       p.iso = _.object(['country', 'region'], p.iso.split('-'));
       p.begin = p.begin ? p.begin.format('YYYY-MM-DD') : null;
       p.end = p.end ? p.end.format('YYYY-MM-DD') : null;
-      p.geojson = p.geojson ? JSON.parse(decodeURIComponent(p.geojson)) : null;
+      p.geostore = p.geostore ? p.geostore : null;
       p.wdpaid = p.wdpaid ? _.toNumber(p.wdpaid) : null;
       p.threshold = p.threshold ? _.toNumber(p.threshold) : null;
       p.subscribe_alerts = (p.subscribe_alerts === 'subscribe') ? true : null;
@@ -214,7 +214,7 @@ define([
       p.iso = _.compact(_.values(p.iso)).join('-') || 'ALL';
       p.begin = p.begin ? p.begin.format('YYYY-MM-DD') : null;
       p.end = p.end ? p.end.format('YYYY-MM-DD') : null;
-      p.geojson = p.geojson ? encodeURIComponent(p.geojson) : null;
+      p.geostore = p.geostore ? p.geostore : null;
       p.wdpaid = p.wdpaid ? String(p.wdpaid) : null;
       p.threshold = p.threshold ? String(p.threshold) : null;
       p.hresolution = p.hresolution;
