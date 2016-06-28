@@ -11,16 +11,16 @@ define([
   'topojson', 
   'bluebird', 
   'moment',
-  'helpers/geojsonUtilsHelper',
 
-], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment, geojsonUtilsHelper) {
+], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment) {
 
   'use strict';
 
   var AnalysisDrawPresenter = PresenterClass.extend({
     status: new (Backbone.Model.extend({
       defaults: {
-        is_drawing: false
+        is_drawing: false,
+        geostore: null
       }
     })),
 
@@ -29,9 +29,20 @@ define([
       this._super();
     },
 
-    notificate: function(id){
-      mps.publish('Notification/open', [id]);
-    },
+    /**
+     * Application subscriptions.
+     */
+    _subscriptions: [
+      {
+        'Geostore/go': function(response) {
+          this.view.drawGeojson(response.data.attributes.geojson);
+        }
+      },{
+        'Analysis/delete': function() {
+          this.view.deleteDrawing();
+        }
+      }
+    ],
 
     // DRAW
     startDrawing: function() {
@@ -44,15 +55,23 @@ define([
       mps.publish('Analysis/stop-drawing');
     },
 
+    // GEOJSON
     storeGeojson: function(geojson) {
       mps.publish('Analysis/store-geojson', [geojson]);
+    },
+
+    drawGeojson: function(geojson) {
+      
     },
 
     // GLOBAL
     deleteAnalysis: function() {
       mps.publish('Analysis/delete');
-    }
+    },
 
+    notificate: function(id){
+      mps.publish('Notification/open', [id]);
+    },
 
 
   });

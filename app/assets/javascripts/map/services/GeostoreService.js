@@ -42,14 +42,16 @@ define([
 
         ds.define(SAVE_REQUEST_ID, {
           url: url,
-          type: 'POST'
+          type: 'POST',
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
         });
 
         var requestConfig = {
           resourceId: SAVE_REQUEST_ID,
-          data: {
-            "geojson": JSON.stringify(geojson)
-          },
+          data: JSON.stringify({
+            geojson: geojson
+          }),
           success: function(response) {
             resolve(response.data.attributes.hash);
           },

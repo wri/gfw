@@ -26,7 +26,6 @@ define([
     template: Handlebars.compile(tpl),
 
     model: new (Backbone.Model.extend({
-      geostore: null,
       geojson: null,
       is_drawing: false,
       overlay: null
@@ -62,6 +61,10 @@ define([
     },
 
 
+
+
+
+
     /**
      * UI EVENTS
      * 
@@ -78,10 +81,14 @@ define([
 
       } else {
         this.model.set('is_drawing', false);
-        this.deleteDrawing();        
+        this.presenter.deleteAnalysis();        
         ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
       }
     },
+
+
+
+
 
 
     /**
@@ -115,6 +122,10 @@ define([
     },
 
 
+
+
+
+
     /**
      * DRAWING MANAGER
      *
@@ -142,7 +153,7 @@ define([
       $(document).on('keyup.drawing', function(e){
         if (e.keyCode == 27) {
           this.model.set('is_drawing', false);
-          this.deleteDrawing();
+          this.presenter.deleteAnalysis();
           ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
         }
       }.bind(this));
@@ -189,6 +200,16 @@ define([
     },
 
     /**
+     * updateDrawing
+     * @param  {[object]} overlay
+     * @return {void}
+     */
+    updateDrawing: function(overlay) {
+      this.model.set('overlay', overlay);
+      this.model.set('geojson', this.getGeojson(overlay));
+    },
+
+    /**
      * deleteDrawing
      * @return {void}
      */
@@ -207,19 +228,17 @@ define([
      */
     eventsDrawing: function() {
       var overlay = this.model.get('overlay');
+
       google.maps.event.addListener(overlay.getPath(), 'set_at', function () {
-        this.model.set('overlay', overlay);
-        this.model.set('geojson', this.getGeojson(overlay));
+        this.updateDrawing(overlay);
       }.bind(this));      
 
       google.maps.event.addListener(overlay.getPath(), 'insert_at', function () {
-        this.model.set('overlay', overlay);
-        this.model.set('geojson', this.getGeojson(overlay));
+        this.updateDrawing(overlay);
       }.bind(this));
 
       google.maps.event.addListener(overlay.getPath(), 'remove_at', function () {
-        this.model.set('overlay', overlay);
-        this.model.set('geojson', this.getGeojson(overlay));
+        this.updateDrawing(overlay);
       }.bind(this));
     },
 
@@ -230,7 +249,27 @@ define([
     getGeojson: function(overlay) {
       var paths = overlay.getPath().getArray();
       return geojsonUtilsHelper.pathToGeojson(paths);            
+    },
+
+    drawGeojson: function(geojson) {
+      var paths = geojsonUtilsHelper.geojsonToPath(geojson.features[0].geometry);
+      var overlay = new google.maps.Polygon({
+        paths: paths,
+        editable: true,
+        strokeWeight: 2,
+        fillOpacity: 0,
+        fillColor: '#FFF',
+        strokeColor: '#A2BC28'
+      });
+
+      overlay.setMap(this.map);
+      
+      this.model.set('overlay', overlay, { silent: true });
+      this.model.set('geojson', this.getGeojson(overlay), { silent: true });
+
+      this.eventsDrawing();
     }
+
   });
 
   return AnalysisDrawView;
