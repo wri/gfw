@@ -1,38 +1,72 @@
 //DRAW TAB
 .analysis-draw-tab {
-  .p-center {
-    text-align: center;
-    padding: 10px 0;      
+  p {
+    &.-center {
+      text-align: center;
+      padding: 10px 0;      
+    }
+
+    &.-terms {
+      font-size: 10px;
+      margin: 8px 0 0;
+      text-align: center;    
+    }
   }
 
-  .-terms {
-    font-size: 10px;
-    margin: 8px 0 0;
-    text-align: center;    
-  }
+  .dropable {
+    margin: 0 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  .image{
-    position: relative;
-    max-width: 50%;
-    margin: 20px auto;
-    display: none;
-  
-    @media (min-height: 645px){
+    .shape-droppable {
+      border: 1px dashed #88aa37;
+      display: inline-flex;
+      height: 36px;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      font-size: 14px;
+      line-height: 25px;
+      border-radius: 40px;
+      text-transform: uppercase;
+      cursor: pointer;
+
+      input {
+        display: none;
+      }
+
+      &.moving {
+        background-color: aliceblue;
+        border-width: 2px;
+      }
+    }
+
+    .drop-shape-text {
+      height: 36px;
+      width: 243px;
+      padding: 0 9px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .drop-shape-text span {
       display: block;
+      width: 200px;
+      line-height: 1em;
+      padding-top: 1px;
+      font-size: 13px;
     }
 
-    div{
-      position: relative;
-      padding-bottom: 82.417582417582%;
-    }
-
-    svg{
-      width: 105%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      fill: $cGreen;
+    .source{
+      @extend .info-icon;
+      display: inline-block;
+      cursor: pointer;
     }
   }
+
+
 }
