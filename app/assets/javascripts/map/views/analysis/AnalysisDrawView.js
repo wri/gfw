@@ -7,7 +7,6 @@ define([
   'underscore', 
   'handlebars', 
   'amplify', 
-  'chosen', 
   'turf', 
   'mps',
   'helpers/geojsonUtilsHelper',
@@ -15,7 +14,7 @@ define([
   'text!map/templates/analysis/analysis-draw.handlebars',
   // 'map/services/ShapefileService',
   // 'helpers/geojsonUtilsHelper',
-], function(_, Handlebars, amplify, chosen, turf, mps, geojsonUtilsHelper, Presenter, tpl) {
+], function(_, Handlebars, amplify, turf, mps, geojsonUtilsHelper, Presenter, tpl) {
 
   'use strict';
 

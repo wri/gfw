@@ -75,6 +75,7 @@ define([
 
     initChildrenViews: function() {
       this.analysisDrawView = new AnalysisDrawView(this.map,this.countries);
+      this.analysisCountryView = new AnalysisCountryView(this.map,this.countries);
     },
 
     /**

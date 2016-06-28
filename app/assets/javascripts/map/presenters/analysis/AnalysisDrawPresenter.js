@@ -8,11 +8,10 @@ define([
   'underscore', 
   'backbone', 
   'mps', 
-  'topojson', 
   'bluebird', 
   'moment',
 
-], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment) {
+], function(PresenterClass, _, Backbone, mps, Promise, moment) {
 
   'use strict';
 
