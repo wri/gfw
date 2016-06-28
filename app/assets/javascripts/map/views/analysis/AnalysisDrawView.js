@@ -105,9 +105,14 @@ define([
       // $('.cartodb-popup').toggleClass('dont_analyze', !!is_drawing);
     },
 
-    changeGeojson: function(e) {
-      console.log(e);
-      // this.presenter.storeGeojson();
+    /**
+     * changeGeojson
+     * store the geojson
+     * @return {void}
+     */
+    changeGeojson: function() {
+      console.log(this.model.get('geojson'));
+      this.presenter.storeGeojson(this.model.get('geojson'));
     },
 
 

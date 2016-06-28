@@ -160,10 +160,12 @@ define([
         
       }
     },{
-      'Analysis/complete-drawing': function(geojson) {
+      'Analysis/store-geojson': function(geojson) {
+        console.log(geojson);
         GeostoreService.save(geojson).then(function(geostoreId) {
+          console.log(geostoreId);
           this.status.set('geostore', geostoreId);
-          this._analyzeGeojson(geojson, options);
+          // this._analyzeGeojson(geojson, options);
         }.bind(this));
       }
     },
