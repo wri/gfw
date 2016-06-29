@@ -18,14 +18,16 @@ define([
   var AnalysisDrawPresenter = PresenterClass.extend({
     status: new (Backbone.Model.extend({
       defaults: {
+        overlay: null,
+        geojson: null,
         is_drawing: false,
-        geostore: null
       }
     })),
 
     init: function(view) {
       this.view = view;
       this._super();
+      this.listeners();
     },
 
     /**
@@ -34,6 +36,7 @@ define([
     _subscriptions: [
       {
         'Geostore/go': function(response) {
+          this.status.set('geojson', response.data.attributes.geojson, {silent: true});
           this.view.drawGeojson(response.data.attributes.geojson);
         }
       },{
@@ -43,27 +46,34 @@ define([
       }
     ],
 
-    // DRAW
-    startDrawing: function() {
-      this.status.set('is_drawing', true);
-      mps.publish('Analysis/start-drawing');
+    listeners: function() {
+      this.status.on('change:is_drawing', this.changeIsDrawing.bind(this));
+      this.status.on('change:geojson', this.changeGeojson.bind(this));
     },
 
-    stopDrawing: function() {
-      this.status.set('is_drawing', false);
-      mps.publish('Analysis/stop-drawing');
+    // DRAW
+    changeIsDrawing: function() {
+      this.view.changeIsDrawing();
+      if(this.status.get('is_drawing')) {
+        mps.publish('Analysis/start-drawing');
+      } else  {
+        mps.publish('Analysis/stop-drawing');
+      }
     },
+
 
     // GEOJSON
-    storeGeojson: function(geojson) {
-      mps.publish('Analysis/store-geojson', [geojson]);
+    changeGeojson: function() {
+      mps.publish('Analysis/store-geojson', [this.status.get('geojson')]);
     },
 
-    drawGeojson: function(geojson) {
-      
-    },
 
-    // GLOBAL
+    /**
+     * ACTIONS
+     * - deleteAnalysis
+     * - getBaselayer
+     * @return {void}
+     */    
     deleteAnalysis: function() {
       mps.publish('Analysis/delete');
     },

@@ -24,12 +24,6 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    model: new (Backbone.Model.extend({
-      geojson: null,
-      is_drawing: false,
-      overlay: null
-    })),
-
     events: {
       //draw
       'click #btn-start-drawing' : 'onClickStartDrawing',
@@ -41,7 +35,6 @@ define([
       this.presenter = new Presenter(this);
 
       this.render();
-      this.listeners();
       // this.setDropable();
     },
 
@@ -52,11 +45,6 @@ define([
 
     cache: function(){
       this.$btnStartDrawing = this.$el.find('#btn-start-drawing');
-    },
-
-    listeners: function() {
-      this.model.on('change:geojson', this.changeGeojson.bind(this));
-      this.model.on('change:is_drawing', this.changeIsDrawing.bind(this));
     },
 
 
@@ -74,12 +62,12 @@ define([
     onClickStartDrawing: function(e) {
       e && e.preventDefault();
 
-      if (!this.model.get('is_drawing')) {
-        this.model.set('is_drawing', true);
+      if (!this.presenter.status.get('is_drawing')) {
+        this.presenter.status.set('is_drawing', true);
         ga('send', 'event', 'Map', 'Analysis', 'Click: start');
 
       } else {
-        this.model.set('is_drawing', false);
+        this.presenter.status.set('is_drawing', false);
         this.presenter.deleteAnalysis();        
         ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
       }
@@ -91,13 +79,13 @@ define([
 
 
     /**
-     * LISTENERS
+     * PRESENTER ACTIONS
      * 
      * changeIsDrawing
      * @return {void}
      */    
     changeIsDrawing: function() {
-      var is_drawing = this.model.get('is_drawing');
+      var is_drawing = this.presenter.status.get('is_drawing');
       if (is_drawing) {
         this.$btnStartDrawing.removeClass('green').addClass('gray').text('Cancel');
         this.startDrawingManager();
@@ -109,15 +97,6 @@ define([
       // TO-DO: We should improve this...
       // We are handling the tooltip buttons here
       // $('.cartodb-popup').toggleClass('dont_analyze', !!is_drawing);
-    },
-
-    /**
-     * changeGeojson
-     * @return {void}
-     */
-    changeGeojson: function() {
-      var geojson = this.model.get('geojson');
-      this.presenter.storeGeojson(geojson);
     },
 
 
@@ -132,8 +111,6 @@ define([
      * @return {void}
      */
     startDrawingManager: function() {
-      this.presenter.startDrawing();
-
       this.drawingManager = new google.maps.drawing.DrawingManager({
         map: this.map,
         drawingMode: google.maps.drawing.OverlayType.POLYGON,
@@ -151,7 +128,7 @@ define([
       // Bindings
       $(document).on('keyup.drawing', function(e){
         if (e.keyCode == 27) {
-          this.model.set('is_drawing', false);
+          this.presenter.status.set('is_drawing', false);
           this.presenter.deleteAnalysis();
           ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
         }
@@ -165,8 +142,6 @@ define([
      * @return {void}
      */
     stopDrawingManager: function() {
-      this.presenter.stopDrawing();
-
       if (this.drawingManager) {
         this.drawingManager.setDrawingMode(null);
         this.drawingManager.setMap(null);
@@ -184,11 +159,11 @@ define([
      * @return {void}
      */
     completeDrawing: function(e) {
-      this.model.set('overlay', e.overlay);
+      this.presenter.status.set('overlay', e.overlay);
 
       // Check if the drawing is enabled
-      if(this.model.get('is_drawing')) {      
-        this.model.set('geojson', this.getGeojson(e.overlay));
+      if(this.presenter.status.get('is_drawing')) {      
+        this.presenter.status.set('geojson', this.getGeojson(e.overlay));
         
         this.eventsDrawing();
 
@@ -204,8 +179,8 @@ define([
      * @return {void}
      */
     updateDrawing: function(overlay) {
-      this.model.set('overlay', overlay);
-      this.model.set('geojson', this.getGeojson(overlay));
+      this.presenter.status.set('overlay', overlay);
+      this.presenter.status.set('geojson', this.getGeojson(overlay));
     },
 
     /**
@@ -213,11 +188,11 @@ define([
      * @return {void}
      */
     deleteDrawing: function() {
-      var overlay = this.model.get('overlay');
+      var overlay = this.presenter.status.get('overlay');
       if (!!overlay) {        
         overlay.setMap(null);
-        this.model.set('overlay', null);
-        this.model.set('geojson', null);
+        this.presenter.status.set('overlay', null);
+        this.presenter.status.set('geojson', null);
       }
     },
 
@@ -226,7 +201,7 @@ define([
      * @return {void}
      */
     eventsDrawing: function() {
-      var overlay = this.model.get('overlay');
+      var overlay = this.presenter.status.get('overlay');
 
       google.maps.event.addListener(overlay.getPath(), 'set_at', function () {
         this.updateDrawing(overlay);
@@ -274,8 +249,8 @@ define([
 
       overlay.setMap(this.map);
       
-      this.model.set('overlay', overlay, { silent: true });
-      this.model.set('geojson', this.getGeojson(overlay), { silent: true });
+      this.presenter.status.set('overlay', overlay, { silent: true });
+      this.presenter.status.set('geojson', this.getGeojson(overlay), { silent: true });
 
       this.eventsDrawing();
     }

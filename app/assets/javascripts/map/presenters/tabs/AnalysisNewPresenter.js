@@ -7,15 +7,14 @@ define([
   'map/presenters/PresenterClass',
   'underscore', 
   'backbone', 
-  'mps', 
-  'topojson', 
+  'mps',
   'bluebird', 
   'moment',
   'helpers/geojsonUtilsHelper',
   'map/services/CountryService',
   'map/services/RegionService',
   'map/services/GeostoreService'
-], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment, geojsonUtilsHelper, countryService, regionService, GeostoreService) {
+], function(PresenterClass, _, Backbone, mps, Promise, moment, geojsonUtilsHelper, countryService, regionService, GeostoreService) {
 
   'use strict';
 
@@ -27,6 +26,7 @@ define([
 
         enabled: false,
         enabledSubscription: false,
+        enabledUpdating: true,
 
         active: false,
         
@@ -51,7 +51,8 @@ define([
       }
     })),
 
-    datasets: [{
+    datasets: [
+      {
         name: 'loss',
         slug: 'umd-loss-gain',
         subscription: true
@@ -115,6 +116,11 @@ define([
     },
 
     listeners: function() {
+      // dev
+      this.status.on('change', function(){
+        this.updateAnalysis();
+      }.bind(this));
+
       this.status.on('change:baselayers', this.changeBaselayers.bind(this));
       this.status.on('change:enabled', this.changeEnabled.bind(this));
       this.status.on('change:enabledSubscription', this.changeEnabledSubscription.bind(this));
@@ -133,10 +139,8 @@ define([
         p.geostore = this.status.get('geostore');
       }
 
-      if (!!this.status.get('isoEnabled')) {
-        p.dont_analyze = !this.status.get('isoEnabled');
-      }      
-
+      p.dont_analyze = !this.status.get('isoEnabled');
+      
       if (!!this.status.get('iso') && !!this.status.get('isoEnabled')) {
         p.iso = this.status.get('iso');
       }      
@@ -188,7 +192,7 @@ define([
           
           // Dates
           this.status.set('begin', params.begin);
-          this.status.set('end', params.begin);
+          this.status.set('end', params.end);
           
           // Geostore
           this.status.set('geostore', params.geostore);
@@ -213,6 +217,11 @@ define([
           if (baselayers_change) {
             this.status.set('baselayers', _.keys(layerSpec.getBaselayers()));
           }
+        }
+      },      
+      {
+        'Threshold/update': function(threshold) {
+          this.status.set('threshold', threshold);
         }
       },      
 
@@ -254,6 +263,30 @@ define([
       },
 
 
+      // TIMELINE
+      {
+        'Timeline/date-change': function(layerSlug, date) {
+          var dateFormat = 'YYYY-MM-DD';
+          var date = date.map(function(date) { 
+            return moment(date).format(dateFormat); 
+          });
+          
+          this.status.set('begin', date[0]);
+          this.status.set('end', date[1]);
+        }
+      }, 
+      {
+        'Timeline/start-playing': function() {
+          this.status.set('enabledUpdating', false);
+        }
+      }, 
+      {
+        'Timeline/stop-playing': function() {
+          this.status.set('enabledUpdating', true);
+        }
+      },
+
+
       // GLOBAL ANALYSIS EVENTS
       {
         'Analysis/active': function(active) {
@@ -281,6 +314,9 @@ define([
      *
      */    
     changeBaselayers: function() {
+      // Set the baselayer to analyze
+      this.status.set('baselayer', this.changeBaselayer());
+
       // Check which baselayers are analysis-allowed
       var enabled = !!_.intersection(
         this.status.get('baselayers'),
@@ -295,8 +331,13 @@ define([
       
       this.status.set('enabled', enabled);
       this.status.set('enabledSubscription', enabledSubscription);
-      this.status.set('baselayer', this.getBaselayer());
     },
+
+    changeBaselayer: function() {
+      return _.uniq(_.pluck(_.filter(this.datasets, function(dataset){
+        return _.contains(this.status.get('baselayers'), dataset.name)
+      }.bind(this)), 'slug'));
+    },    
 
     changeEnabled: function() {
       var enabled = this.status.get('enabled');
@@ -325,10 +366,23 @@ define([
 
     /**
      * ACTIONS
+     * - createAnalysis
+     * - updateAnalysis
      * - deleteAnalysis
      * - getBaselayer
      * @return {void}
-     */    
+     */   
+    createAnalysis: function() {
+
+    },
+
+    updateAnalysis: function() {
+      // 1. Check if analysis is active
+      if (this.status.get('active')) {
+
+      }
+    },
+
     deleteAnalysis: function() {
       // this.view.deleteAnalysis();
       this.status.set('type', null);
@@ -341,9 +395,6 @@ define([
       });
     },
 
-    getBaselayer: function() {
-      
-    },
 
     notificate: function(id){
       mps.publish('Notification/open', [id]);
