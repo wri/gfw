@@ -240,7 +240,7 @@
         &:hover {
           z-index: 5;
 
-          > .submenu-header {
+          > .submenu-header, > a {
             &:after{
               opacity: 1;
             }
@@ -261,7 +261,7 @@
           }
         }
 
-				> .submenu-header {
+				> .submenu-header, > a {
 					display: block;
 					text-transform: uppercase;
 					color: $dark;
