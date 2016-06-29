@@ -179,7 +179,7 @@ define([
       var iso = this.status.get('iso');
 
       if(!!iso && !!iso.country && iso.country !== 'ALL'){
-        countryService.execute(iso.country, _.bind(function(results) {
+        countryService.show(iso.country, _.bind(function(results) {
           var is_more = (!!results.indepth);
           var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
 

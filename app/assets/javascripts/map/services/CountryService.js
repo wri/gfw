@@ -9,42 +9,57 @@ define([
 
   'use strict';
 
+  var GET_REQUEST_ID = 'CountryService:get',
+      SHOW_REQUEST_ID = 'CountryService:show';
+
+  var URL = window.gfw.config.GFW_API_HOST + '/countries/{iso}';
+
+
   var CountryService = Class.extend({
 
-    requestId: 'CountryService',
+    get: function() {
+      return new Promise(function(resolve, reject) {
 
-    _uriTemplate: window.gfw.config.GFW_API_HOST + '/countries/{iso}',
+        var url = new UriTemplate(URL).fillFromObject({});
 
-    /**
-     * Constructs a new instance of CountryService.
-     *
-     * @return {CountryService} instance
-     */
-    init: function() {
-      this._defineRequests();
+        ds.define(GET_REQUEST_ID, {
+          cache: {type: 'persist', duration: 1, unit: 'days'},
+          url: url,
+          type: 'GET'
+        });
+
+        var requestConfig = {
+          resourceId: GET_REQUEST_ID,
+          success: resolve
+        };
+
+        ds.request(requestConfig);
+
+      });
     },
 
-    /**
-     * The configuration for client side caching of results.
-     */
-    _cacheConfig: {type: 'persist', duration: 1, unit: 'days'},
+    show: function(id) {
+      return new Promise(function(resolve, reject) {
 
-    /**
-     * Defines requests used by CountryService.
-     */
-    _defineRequests: function() {
-      var cache = this._cacheConfig;
-      var config = {cache: cache, url: this._uriTemplate};
+        var url = new UriTemplate(URL).fillFromObject({id: id});
 
-      ds.define(this.requestId, config);
-    },
+        ds.define(SHOW_REQUEST_ID, {
+          cache: {type: 'persist', duration: 1, unit: 'days'},
+          url: url,
+          type: 'GET'
+        });
 
-    execute: function(iso, successCb, failureCb) {
-      var config = {resourceId: this.requestId, data: {iso: iso},
-        success: successCb, error: failureCb};
+        var requestConfig = {
+          resourceId: SHOW_REQUEST_ID,
+          success: resolve,
+          error: reject
+        };
 
-      ds.request(config);
+        ds.request(requestConfig);
+
+      });
     }
+
   });
 
   var service = new CountryService();

@@ -245,7 +245,7 @@ define([
         categories: (_.isEmpty(categoriesGlobal)) ? false : categoriesGlobal,
         categoriesIso: (_.isEmpty(categoriesIso)) ? false : categoriesIso,
         layersLength: layers.length,
-        country: (!!iso) ? _.findWhere(this.countries.toJSON(), { iso: iso.country }) : null,
+        country: (!!iso) ? _.findWhere(this.countries, { iso: iso.country }) : null,
       }));
       this.presenter.toggleLayerOptions();
     },

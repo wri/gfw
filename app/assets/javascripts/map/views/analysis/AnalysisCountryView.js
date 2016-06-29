@@ -24,11 +24,6 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    model: new (Backbone.Model.extend({
-      country: null,
-      region: null
-    })),
-
     events: {
       // selects
       'change #analysis-country-select' : 'selectIso',
@@ -43,12 +38,12 @@ define([
       this.countries = countries;
       this.presenter = new Presenter(this);
 
-      this.listeners();
+      this.render();
     },
 
     render: function(){
       this.$el.html(this.template({
-        countries: this.countries.toJSON()
+        countries: this.countries
       }));
 
       this.cache();
@@ -58,11 +53,10 @@ define([
 
     cache: function() {
       this.$selects = this.$el.find('.chosen-select');
-    },
 
-    listeners: function() {
-      // Countries collection
-      this.countries.on('sync', this.render.bind(this));
+      this.$buttonContainer = this.$el.find('#country-button-container');
+      this.$analysisBtn = this.$el.find('#analysis-country-button');
+      this.$subscribeBtn = this.$el.find('#subscribe-country-button');
     },
 
     renderChosen: function() {
@@ -90,13 +84,18 @@ define([
     selectIso: function(e) {
       e && e.preventDefault();
       // Reset region whenever a user selects a new country
-      this.model.set('region', null);
-      this.model.set('country', $(e.currentTarget).val());
+      this.presenter.status.set('iso', {
+        country: $(e.currentTarget).val(),
+        region: null
+      });
     },
 
     selectRegion: function(e) {
       e && e.preventDefault();
-      this.model.set('region', $(e.currentTarget).val());
+      this.presenter.status.set('iso', {
+        country: this.presenter.status.get('iso').country,
+        region: $(e.currentTarget).val()
+      });
     },
 
     /**
@@ -106,6 +105,7 @@ define([
      */
     analyzeCountry: function(e) {
       e && e.preventDefault();
+      console.log('********** Analyze country ***********')
     },
 
     /**
@@ -115,6 +115,7 @@ define([
      */
     subscribeCountry: function(e) {
       e && e.preventDefault();
+      console.log('********** Subscribe to country ***********')
     },
 
 
@@ -123,13 +124,25 @@ define([
 
 
 
+
+
     /**
-     * LISTENERS
+     * PRESENTER ACTIONS
      * 
      * loadRegions
      * @return {void}
      */    
-
+    toggleEnabledButtons: function() {
+      var iso = this.presenter.status.get('iso');
+      
+      if (!!iso && !!iso.country && iso.country != 'ALL') {
+        this.$analysisBtn.toggleClass('disabled', !this.presenter.status.get('enabled'));
+        this.$subscribeBtn.toggleClass('disabled', !this.presenter.status.get('enabledSubscription'));        
+      } else {
+        this.$analysisBtn.toggleClass('disabled', true);
+        this.$subscribeBtn.toggleClass('disabled', true);
+      }
+    },
 
 
   });

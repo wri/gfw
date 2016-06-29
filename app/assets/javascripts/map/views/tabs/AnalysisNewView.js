@@ -28,7 +28,6 @@ define([
     templateMobile: Handlebars.compile(tplMobile),
 
     model: new (Backbone.Model.extend({
-      enabled: true,
       tab: 'default'
     })),
 
@@ -65,7 +64,6 @@ define([
     },
 
     listeners: function() {
-      this.model.on('change:enabled', this.changeEnabled.bind(this));
       this.model.on('change:tab', this.changeTab.bind(this));
     },
 
@@ -86,50 +84,6 @@ define([
 
 
 
-
-
-    /**
-     * LISTENERS
-     * changeTab
-     * @return {void}
-     */
-    changeTab: function() {
-      var tab = this.model.get('tab');
-      // Current tab
-      this.$tabs.removeClass('-active');
-      $('#'+tab+'-button').addClass('-active');
-
-      // Current content tab
-      this.$tabsContent.removeClass('-active');
-      $('#'+tab).addClass('-active');
-    },
-
-    changeEnabled: function() {
-      var enabled = this.model.get('enabled');
-      // Toggle disabled class
-      this.$tabButton.toggleClass('disabled', !enabled);
-    },
-
-
-
-
-
-
-    /**
-     * PRESENTER EVENTS
-     * setEnabled
-     * @return {void}
-     */
-    setEnabled: function(enabled) {
-      this.model.set('enabled', enabled);
-    },
-
-
-
-
-
-
-
     /**
      * UI EVENTS
      * onClickTabs
@@ -144,6 +98,41 @@ define([
       } else {
         this.presenter.notificate('notification-delete-analysis');
       }
+    },
+
+
+
+
+
+    /**
+     * UI LISTENERS
+     * changeTab
+     * @return {void}
+     */
+    changeTab: function() {
+      var tab = this.model.get('tab');
+      // Current tab
+      this.$tabs.removeClass('-active');
+      $('#'+tab+'-button').addClass('-active');
+
+      // Current content tab
+      this.$tabsContent.removeClass('-active');
+      $('#'+tab).addClass('-active');
+    },
+
+
+
+
+    /**
+     * PRESENTER ACTIONS
+     * 
+     * loadRegions
+     * @return {void}
+     */    
+    toggleEnabledButtons: function() {
+      var enabled = this.presenter.status.get('enabled');
+      // Toggle disabled class
+      this.$tabButton.toggleClass('disabled', !enabled);
     },
 
   });

@@ -25,9 +25,10 @@ define([
         // Analysis
         type: null,
 
-        enabled: true,
+        enabled: false,
+        enabledSubscription: false,
+
         active: false,
-        activeSubscription: false,
         
         // Layers
         baselayers: [],
@@ -131,6 +132,16 @@ define([
       if (!!this.status.get('geostore')) {
         p.geostore = this.status.get('geostore');
       }
+
+      if (!!this.status.get('isoEnabled')) {
+        p.dont_analyze = !this.status.get('isoEnabled');
+      }      
+
+      if (!!this.status.get('iso') && !!this.status.get('isoEnabled')) {
+        p.iso = this.status.get('iso');
+      }      
+
+
       // var resource = this.status.get('resource');
       // if (!resource) {return;}
       // var p = {};
@@ -187,7 +198,7 @@ define([
             country: params.country,
             region: params.region
           });
-          this.status.set('isoEnabled', params.dont_analyze);
+          this.status.set('isoEnabled', !params.dont_analyze);
           
           // Threshold
           this.status.set('threshold', params.threshold);
@@ -202,33 +213,10 @@ define([
           if (baselayers_change) {
             this.status.set('baselayers', _.keys(layerSpec.getBaselayers()));
           }
-          
-
-          // var baselayer = this.status.get('baselayer');
-          // var both = this.status.get('both');
-          // var loss_gain_and_extent = this.status.get('loss_gain_and_extent');
-          // this._setBaselayer(layerSpec.getBaselayers());
-          // this.status.set('loss_gain_and_extent', layerSpec.checkLossGainExtent());
-
-          // this.view.toggleCountrySubscribeBtn();
-          // this.view.toggleDoneSubscribeBtn();
-
-          // if (this.status.get('baselayer') != baselayer) {
-          //   this._updateAnalysis();
-          //   this.openAnalysisTab();
-          // }else{
-          //   if (this.status.get('both') != both) {
-          //     this._updateAnalysis();
-          //     this.openAnalysisTab();
-          //   }
-          // }
-
-          // if (loss_gain_and_extent != this.status.get('loss_gain_and_extent')) {
-          //   this._updateAnalysis();
-          //   this.openAnalysisTab();          
-          // }
         }
       },      
+
+
       // DRAWING EVENTS
       {
         'Analysis/start-drawing': function() {
@@ -251,7 +239,32 @@ define([
           }
         }
       },
+
+
+      // COUNTRY EVENTS
+      {
+        'Analysis/iso': function(iso) {
+          this.status.set('iso', iso);
+        }
+      },
+      {
+        'Analysis/isoEnabled': function(isoEnabled) {
+          this.status.set('isoEnabled', isoEnabled);
+        }
+      },
+
+
       // GLOBAL ANALYSIS EVENTS
+      {
+        'Analysis/active': function(active) {
+          this.status.set('active', active);
+        }
+      },
+      {
+        'Analysis/type': function(type) {
+          this.status.set('type', type);
+        }
+      },
       {
         'Analysis/delete': function() {
           this.deleteAnalysis();
@@ -282,13 +295,16 @@ define([
       
       this.status.set('enabled', enabled);
       this.status.set('enabledSubscription', enabledSubscription);
+      this.status.set('baselayer', this.getBaselayer());
     },
 
     changeEnabled: function() {
       var enabled = this.status.get('enabled');
-      this.view.setEnabled(enabled);
-
       mps.publish('Analysis/enabled', [enabled]);
+      this.view.toggleEnabledButtons();
+      
+      // Hide analysis tab if it's not enabled 
+      // to make an analysis
       if (!enabled) {
         mps.publish('Tab/toggle', ['analysis-tab',enabled]);
       }
@@ -309,7 +325,8 @@ define([
 
     /**
      * ACTIONS
-     * deleteAnalysis
+     * - deleteAnalysis
+     * - getBaselayer
      * @return {void}
      */    
     deleteAnalysis: function() {
@@ -324,12 +341,8 @@ define([
       });
     },
 
-    /**
-     * publishEnabled
-     * @return {void}
-     */
-    publishEnabled: function() {
-      mps.publish('Analysis/enabled', this.status.get('active'));
+    getBaselayer: function() {
+      
     },
 
     notificate: function(id){

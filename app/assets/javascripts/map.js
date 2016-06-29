@@ -18,7 +18,8 @@ require([
   'views/SourceBottomView',
   'views/SourceMobileFriendlyView',
 
-  'map/collections/CountryCollection',  
+  'map/collections/CountryCollection',
+
   'map/presenters/ExperimentsPresenter',
   'map/services/AnalysisService',
   'map/services/CountryService',
@@ -39,7 +40,7 @@ require([
   'views/NotificationsView',
   'views/DownloadView',
   '_string'
-], function($, _, Class, Backbone, chosen, utils, enquire, mps, Handlebars, Router, SourceModalView, ConfirmModalView, SourceBottomView, SourceMobileFriendlyView, CountryCollection, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
+], function($, _, Class, Backbone, chosen, utils, enquire, mps, Handlebars, Router, SourceModalView, ConfirmModalView, SourceBottomView, SourceMobileFriendlyView, CountryCollection, ExperimentsPresenter, AnalysisService, countryService, DataService, MapView,
     MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, GuideView, GuideButtonView, UserFormModalView, HeaderView, FooterView, NotificationsView, DownloadView) {
 
   'use strict';
@@ -80,30 +81,36 @@ require([
 
       var map = new MapView();
       
-      this.map = map.map;
-      this.countries = new CountryCollection();
+      // I was thinking that, without a map, an array of countries and an array of layers
+      // we shouldn't create any view.
+      countryService.get().then(function(results) {
+        this.map = map.map;
+        this.countries = _.where(results.countries, {
+          enabled: true
+        });
 
-      new MapControlsView(this.map, this.countries);
-      new TabsView(this.map, this.countries);
-      new AnalysisResultsView(this.map, this.countries);
-      new LayersNavView(this.map, this.countries);
-      new LegendView(this.map, this.countries);
-      new TimelineView(this.map, this.countries);
-      new NavMobileView(this.map, this.countries);
-      new FooterView(this.map, this.countries);
-      new HeaderView(this.map, this.countries);
-      new SourceModalView(this.map, this.countries);
-      new ConfirmModalView(this.map, this.countries);
-      new SourceBottomView(this.map, this.countries);
-      new SourceMobileFriendlyView(this.map, this.countries);
-      new NotificationsView(this.map, this.countries);
-      new GuideView(this.map, this.countries);
-      new GuideButtonView(this.map, this.countries);  
 
-      // Init views
-      this.countries.fetch().done(function(){
+        new MapControlsView(this.map, this.countries);
+        new TabsView(this.map, this.countries);
+        new AnalysisResultsView(this.map, this.countries);
+        new LayersNavView(this.map, this.countries);
+        new LegendView(this.map, this.countries);
+        new TimelineView(this.map, this.countries);
+        new NavMobileView(this.map, this.countries);
+        new FooterView(this.map, this.countries);
+        new HeaderView(this.map, this.countries);
+        new SourceModalView(this.map, this.countries);
+        new ConfirmModalView(this.map, this.countries);
+        new SourceBottomView(this.map, this.countries);
+        new SourceMobileFriendlyView(this.map, this.countries);
+        new NotificationsView(this.map, this.countries);
+        new GuideView(this.map, this.countries);
+        new GuideButtonView(this.map, this.countries);  
+
         this._initApp();
-      }.bind(this))
+
+      }.bind(this));
+
 
       // What is this? Are we already using it?
       $('body').append(new UserFormModalView().el);

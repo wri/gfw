@@ -88,7 +88,7 @@ define([
       var iso = this.status.get('iso');
 
       if(!!iso && !!iso.country && iso.country !== 'ALL'){
-        countryService.execute(iso.country, _.bind(function(results) {
+        countryService.show(iso.country, _.bind(function(results) {
           this.view.toogleCountryBtn(results.name);
         },this));
       } else {
