@@ -1,9 +1,9 @@
 define([
   'backbone', 'handlebars', 'moment',
   'connect/collections/Subscriptions',
-  'connect/views/SubscriptionListItemDeleteConfirmView',
+  'connect/views/ListItemDeleteConfirmView',
   'text!connect/templates/subscriptionListItem.handlebars'
-], function(Backbone, Handlebars, moment, Subscriptions, SubscriptionListItemDeleteConfirmView, tpl) {
+], function(Backbone, Handlebars, moment, Subscriptions, ListItemDeleteConfirmView, tpl) {
 
   'use strict';
 
@@ -54,7 +54,7 @@ define([
     confirmDestroy: function(event) {
       event.preventDefault();
 
-      var confirmView = new SubscriptionListItemDeleteConfirmView({
+      var confirmView = new ListItemDeleteConfirmView({
         subscription: this.subscription});
       this.$el.append(confirmView.render().el);
       this.listenTo(confirmView, 'confirmed', function() {

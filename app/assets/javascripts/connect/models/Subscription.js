@@ -54,6 +54,7 @@ define([
 
   var Subscription = Backbone.Model.extend({
     idAttribute: 'key',
+    type: 'subscription',
 
     urlRoot: window.gfw.config.GFW_API_HOST + '/v2/subscriptions',
 

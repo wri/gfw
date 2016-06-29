@@ -6,13 +6,13 @@
     </a>
     <div class="modal-wrapper">
       <header>
-        <h2>Delete this subscription</h2>
-        <h3>{{#if name}}{{name}},{{/if}} {{created}}</h3>
+        <h2>Delete this {{type}}</h2>
+        <h3>{{#if model.name}}{{model.name}},{{/if}} {{model.createdAt}}</h3>
       </header>
 
       <div class="modal-content">
         <h3>
-          This will delete the subscription from your profile. Are you
+          This will delete the {{type}} from your profile. Are you
           sure?
         </h3>
 

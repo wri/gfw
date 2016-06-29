@@ -1,11 +1,11 @@
 define([
   'backbone', 'handlebars', 'moment',
-  'text!connect/templates/subscriptionListItemDeleteConfirm.handlebars'
+  'text!connect/templates/listItemDeleteConfirm.handlebars'
 ], function(Backbone, Handlebars, moment, tpl) {
 
   'use strict';
 
-  var SubsciptionListItemDeleteConfirmView = Backbone.View.extend({
+  var ListItemDeleteConfirmView = Backbone.View.extend({
     events: {
       'click #confirm-delete': 'confirm',
       'click #cancel-delete': 'cancel',
@@ -18,17 +18,20 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function(options) {
-      this.subscription = options.subscription;
+      this.model = options.model;
     },
 
     render: function() {
-      var subscription = this.subscription.toJSON();
-      if (subscription.created !== undefined) {
-        subscription.created = moment(subscription.created).
+      var model = this.model.toJSON();
+      if (model.createdAt !== undefined) {
+        model.createdAt = moment(model.createdAt).
           format('dddd, YYYY-MM-DD, h:mm a');
       }
 
-      this.$el.html(this.template(subscription));
+      this.$el.html(this.template({
+        model: model,
+        type: this.model.type
+      }));
 
       return this;
     },
@@ -47,6 +50,6 @@ define([
 
   });
 
-  return SubsciptionListItemDeleteConfirmView;
+  return ListItemDeleteConfirmView;
 
 });
