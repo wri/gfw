@@ -143,20 +143,6 @@
         }
       }
 		}
-
-    &.-name {
-      @media (min-width: $br-mobile){
-        line-height: 58px;
-        margin: 0;
-        text-indent: 110px;  
-        
-        a {
-          color: $dark;
-          text-transform: uppercase;
-          white-space: nowrap;    
-        }    
-      }      
-    }
 	}
 
 
