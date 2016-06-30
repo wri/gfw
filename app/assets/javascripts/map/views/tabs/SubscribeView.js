@@ -129,37 +129,23 @@ define([
     },
 
     createSubscription: function(options) {
-      var analysisResource = options.analysisResource,
-          geostoreId = options.geostore;
+      var analysisResource = options.analysisResource;
+
+      var params = _.pick(analysisResource,
+        'iso', 'id1', 'geostore', 'wdpa', 'use', 'useid');
 
       this.subscription = new Subscription({
-        topic: TOPICS[options.layer.slug] || options.layer.title,
-        url: window.location.href
+        layers: [analysisResource.dataset],
+        geostoreId: options.geostore,
+        params: params
       });
-      this.subscription.set(analysisResource);
-
-      if (analysisResource) {
-        var geom;
-        if (analysisResource.type === 'geojson') {
-          geom = JSON.parse(analysisResource.geojson);
-        } else {
-          if (analysisResource.geom) {
-            geom = analysisResource.geom.geometry;
-          } else {
-            geom = this.presenter.geom_for_subscription;
-          }
-        }
-        this.subscription.set('geom', geom);
-      }
-
-      if (geostoreId) {
-        this.subscription.set('geostore_id', geostoreId);
-      }
     },
 
     askForName: function() {
-      this.subscription.set('email',
-        this.$el.find('#subscriptionEmail').val());
+      this.subscription.set('resource', {
+        type: 'EMAIL',
+        content: this.$el.find('#subscriptionEmail').val()
+      });
 
       if (this.subscription.hasValidEmail()) {
         this.nextStep();
@@ -171,14 +157,11 @@ define([
     subscribe: function() {
       this.showSpinner();
 
-      window.ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' +
-        this.subscription.get('topic') + ', Email: ' + this.subscription.get('email'));
-
       this.subscription.set('name',
         this.$el.find('#subscriptionName').val());
 
       this.stopListening(this.user);
-      this.user.setEmailIfEmpty(this.subscription.get('email'));
+      this.user.setEmailIfEmpty(this.subscription.get('resource').content);
       this.user.save();
 
       this.subscription.save().
