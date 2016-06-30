@@ -3,6 +3,8 @@
   .main-title {
     font-size: 35px;
     color: $dark;
+    font-weight: 400;
+
     @media (min-width: $br-mobile){
       font-size: 47px;
     }    
