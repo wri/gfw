@@ -77,7 +77,7 @@ define([
 
     sourceSuccess: function() {
       this.$current.find('svg').attr('class','');
-      this.$el.html(this.template(this.sourceModel.toJSON()));
+      this.$el.html(this.template(this.getData()));
       this.show();
       this.setTargetOfLinks();
       ga('send', 'event', document.title.replace('| Global Forest Watch',''), 'Info', this.sourceModel.get('slug'));
@@ -104,6 +104,31 @@ define([
 
     setTargetOfLinks: function() {
       this.$el.find('a').attr('target', '_blank');
+    },
+
+    /**
+     * [getData]
+     * @return {[object]} [source Model with some amendments]
+     */
+    getData: function() {
+      var data = this.sourceModel.toJSON();
+      if (data.download_data) {
+        
+        // I think it would be better if they fill a new field in the database
+        if (data.download_data.indexOf('http://data.globalforestwatch.org/datasets/') > -1) {
+          data.open_in_carto = 'https://oneclick.cartodb.com?file='+data.download_data+'.geojson';
+        }
+      }
+
+      if (data.map_service) {
+        data.open_in_arcgis = 'http://www.arcgis.com/home/webmap/viewer.html?url='+ data.map_service;
+      }
+
+      if (data.download_data || data.open_in_carto || data.open_in_arcgis) {
+        data.footer = true;
+      }
+
+      return data;
     }
 
   });
