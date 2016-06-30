@@ -121,7 +121,6 @@ define([
       if (zsteps < 0) {
         ctx.drawImage(image, 0, 0);
       } else {                                          // over the maxzoom, we'll need to scale up each tile
-
         ctx.imageSmoothingEnabled = false;              // disable pic enhancement
         ctx.mozImageSmoothingEnabled = false;
 
@@ -133,6 +132,7 @@ define([
 
         ctx.drawImage(image, srcX, srcY, srcW, srcH, 0, 0, 256, 256);
       }
+
       var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
       this.filterCanvasImgdata(I.data, canvas.width, canvas.height, canvasData.z);
       ctx.putImageData(I, 0, 0);

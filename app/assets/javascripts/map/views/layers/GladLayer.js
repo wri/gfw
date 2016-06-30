@@ -24,6 +24,7 @@ define([
       this._super(layer, options, map);
       this.presenter.setConfirmedStatus(options.layerOptions);
       this.options.showLoadingSpinner = true;
+      this.options.dataMaxZoom = 12;
       this._setupAnimation();
 
       this.currentDate = [
