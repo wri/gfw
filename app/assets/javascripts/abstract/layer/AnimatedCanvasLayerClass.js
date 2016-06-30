@@ -113,19 +113,6 @@ define([
       }
     },
 
-    _drawCanvasImage: function(canvasData) {
-      var canvas = canvasData.canvas,
-          ctx = canvas.getContext('2d'),
-          image = canvasData.image;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(image, 0, 0);
-
-      var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      this.filterCanvasImgdata(I.data, canvas.width, canvas.height, canvasData.z);
-      ctx.putImageData(I, 0, 0);
-    },
-
     filterCanvasImgdata: function() {
       throw('filterCanvasImgdata must be implemented');
     }
