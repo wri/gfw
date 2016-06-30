@@ -116,11 +116,15 @@ define([
         
         // I think it would be better if they fill a new field in the database
         if (data.download_data.indexOf('http://data.globalforestwatch.org/datasets/') > -1) {
-          data.cartodb_oneclick = 'https://oneclick.cartodb.com?file='+data.download_data+'.geojson';
+          data.open_in_carto = 'https://oneclick.cartodb.com?file='+data.download_data+'.geojson';
         }
       }
 
-      if (data.download_data || data.map_service) {
+      if (data.map_service) {
+        data.open_in_arcgis = 'http://www.arcgis.com/home/webmap/viewer.html?url='+ data.map_service;
+      }
+
+      if (data.download_data || data.open_in_carto || data.open_in_arcgis) {
         data.footer = true;
       }
 
