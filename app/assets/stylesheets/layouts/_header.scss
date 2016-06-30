@@ -240,7 +240,7 @@
         &:hover {
           z-index: 5;
 
-          > .submenu-header, > a {
+          > a:not(.submenu-header) {
             &:after{
               opacity: 1;
             }
@@ -282,12 +282,22 @@
             transition: all 0.2s $easeInOutCubic;
           }
 
-          &.current, &:hover{
+          &.current{
             &:after{
               opacity: 1;
             }
           }
+
 				}
+
+        > a:not(.submenu-header) {
+          &:hover{
+            &:after{
+              opacity: 1;
+            }
+          }
+        }
+
 				//submenu
 				ul {
 					width: 100%;
