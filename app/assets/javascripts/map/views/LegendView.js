@@ -209,7 +209,7 @@ define([
      * @param  {array}  categories layers ordered by category
      * @param  {object} options    legend options
      */
-    updateLegend: function(categories, options, geographic, iso) {
+    updateLegend: function(categories, options, geographic, iso, more) {
       var layersGlobal = [];
       var layersIso = [];
       var categoriesGlobal = [];
@@ -248,6 +248,7 @@ define([
         categoriesIso: (_.isEmpty(categoriesIso)) ? false : categoriesIso,
         layersLength: layers.length,
         country: (!!iso) ? _.findWhere(this.countries.toJSON(), { iso: iso.country }) : null,
+        more: more
       }));
       this.presenter.toggleLayerOptions();
     },
@@ -272,8 +273,8 @@ define([
      *
      * @param  {array} categories, options, geographic
      */
-    update: function(categories, options, geographic, iso) {
-      if (categories.length === 0) {
+    update: function(categories, options, geographic, iso, more) {
+      if (categories.length === 0 && !more) {
         this.model.set({
           hidden: true
         });
@@ -282,7 +283,7 @@ define([
           hidden: false,
           boxClosed: false
         });
-        this.updateLegend(categories, options, geographic, iso);
+        this.updateLegend(categories, options, geographic, iso, more);
       }
     },
 

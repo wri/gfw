@@ -6,11 +6,12 @@
 define([
   'underscore',
   'backbone',
+  'bluebird',
   'mps',
   'map/presenters/PresenterClass',
   'map/services/LayerSpecService',
   'map/services/CountryService',
-], function(_, Backbone, mps, PresenterClass, layerSpecService, countryService) {
+], function(_, Backbone, Promise, mps, PresenterClass, layerSpecService, countryService) {
 
   'use strict';
 
@@ -114,18 +115,18 @@ define([
      * Update legend by calling view.update.
      */
     updateLegend: function() {
-      var categories = this.status.get('layerSpec').getLayersByCategory(),
-          options = {
-            threshold: this.status.get('threshold'),
-            hresolution: this.getHresolutionParams()
-          },
-          iso = this.status.get('iso'),
-          geographic = !! this.status.get('layerSpec').attributes.geographic_coverage;
+      this.getCountryMore().then(function() {
+        var categories = this.status.get('layerSpec').getLayersByCategory(),
+            options = {
+              threshold: this.status.get('threshold'),
+              hresolution: this.getHresolutionParams()
+            },
+            iso = this.status.get('iso'),
+            geographic = !! this.status.get('layerSpec').attributes.geographic_coverage,
+            more = this.status.get('more');
 
-      this.view.update(categories, options, geographic, iso);
-
-      // There is no other way...we should refactor the legend behaviour
-      this.getCountryMore();
+        this.view.update(categories, options, geographic, iso, more);
+      }.bind(this));
     },
 
     toggleLayerOption: function(option) {
@@ -176,23 +177,28 @@ define([
      * @param  {object} iso: {country:'xxx', region: null}
      */
     getCountryMore: function() {
-      var iso = this.status.get('iso');
+      return new Promise(function(resolve) {
+        var iso = this.status.get('iso');
 
-      if(!!iso && !!iso.country && iso.country !== 'ALL'){
-        countryService.execute(iso.country, _.bind(function(results) {
-          var is_more = (!!results.indepth);
-          var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
-
-          if (is_more) {
-            this.view.renderMore({
-              name: results.name,
-              url: results.indepth,
-              is_idn: is_idn
-            });
-          }
-
-        },this));
-      }
+        if(!!iso && !!iso.country && iso.country !== 'ALL'){
+          countryService.execute(iso.country, _.bind(function(results) {
+            var is_more = (!!results.indepth);
+            var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
+            if (is_more) {
+              this.status.set('more', {
+                name: results.name,
+                url: results.indepth,
+                is_idn: is_idn
+              });
+            } else {
+              this.status.set('more', null);
+            }
+            resolve();
+          },this));
+        } else {
+          resolve();
+        }        
+      }.bind(this));
     },
 
     getHresolutionParams: function () {
