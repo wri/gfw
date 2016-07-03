@@ -58,8 +58,7 @@ define([
             region: params.iso.region
           });
 
-          this.status.set('isoEnabled', ! !!params.dont_analyze);          
-        }
+          this.status.set('isoEnabled', (!!params.dont_analyze) ? !params.dont_analyze : (!!params.country && params.country != 'ALL'));        }
       },
       
       // GLOBAL ANALYSIS EVENTS

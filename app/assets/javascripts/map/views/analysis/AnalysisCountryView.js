@@ -105,7 +105,7 @@ define([
      */
     analyzeCountry: function(e) {
       e && e.preventDefault();
-      console.log('********** Analyze country ***********')
+      this.presenter.status.set('isoEnabled', true);
     },
 
     /**
@@ -115,7 +115,7 @@ define([
      */
     subscribeCountry: function(e) {
       e && e.preventDefault();
-      console.log('********** Subscribe to country ***********')
+      this.presenter.subscribeCountry();
     },
 
 

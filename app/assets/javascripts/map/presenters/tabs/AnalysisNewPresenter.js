@@ -42,8 +42,11 @@ define([
         end: null,
 
         // Country
-        iso: null,
-        isoEnabled: false,
+        iso: {
+          country: null,
+          region: null
+        },
+        isoEnabled: true,
 
         // Draw
         geostore: null,
@@ -118,13 +121,31 @@ define([
     listeners: function() {
       // dev
       this.status.on('change', function(){
-        this.updateAnalysis();
+        mps.publish('Place/update', [{go: false}]);
       }.bind(this));
 
+      // Baselayers
       this.status.on('change:baselayers', this.changeBaselayers.bind(this));
+      this.status.on('change:baselayer', this.changeBaselayer.bind(this));
+
+      // Enabled
       this.status.on('change:enabled', this.changeEnabled.bind(this));
       this.status.on('change:enabledSubscription', this.changeEnabledSubscription.bind(this));
+
+
+      // Dates
+      this.status.on('change:begin', this.changeDate.bind(this));
+      this.status.on('change:end', this.changeDate.bind(this));
+
+      // Threshold
+      this.status.on('change:threshold', this.changeThreshold.bind(this));
+
+      // Geostore
       this.status.on('change:geostore', this.changeGeostore.bind(this));
+      
+      // Geostore
+      this.status.on('change:isoEnabled', this.changeIsoEnabled.bind(this));
+      this.status.on('change:iso', this.changeIso.bind(this));
     },
 
     /**
@@ -194,18 +215,20 @@ define([
           this.status.set('begin', params.begin);
           this.status.set('end', params.end);
           
+          
+          // Threshold
+          this.status.set('threshold', params.threshold);
+
           // Geostore
           this.status.set('geostore', params.geostore);
           
           // Countries
+          this.status.set('isoEnabled', (!!params.dont_analyze) ? !params.dont_analyze : (!!params.country && params.country != 'ALL'));
+
           this.status.set('iso', {
             country: params.country,
             region: params.region
           });
-          this.status.set('isoEnabled', !params.dont_analyze);
-          
-          // Threshold
-          this.status.set('threshold', params.threshold);
         }
       },
       {
@@ -222,6 +245,7 @@ define([
       {
         'Threshold/update': function(threshold) {
           this.status.set('threshold', threshold);
+          mps.publish('Place/update', [{go: false}]);
         }
       },      
 
@@ -240,11 +264,9 @@ define([
           if (!!geojson) {        
             GeostoreService.save(geojson).then(function(geostoreId) {
               this.status.set('geostore', geostoreId);
-              mps.publish('Place/update', [{go: false}]);
             }.bind(this));
           } else {
             this.status.set('geostore', null);
-            mps.publish('Place/update', [{go: false}]);
           }
         }
       },
@@ -315,7 +337,7 @@ define([
      */    
     changeBaselayers: function() {
       // Set the baselayer to analyze
-      this.status.set('baselayer', this.changeBaselayer());
+      this.status.set('baselayer', this.setBaselayer());
 
       // Check which baselayers are analysis-allowed
       var enabled = !!_.intersection(
@@ -334,10 +356,12 @@ define([
     },
 
     changeBaselayer: function() {
-      return _.uniq(_.pluck(_.filter(this.datasets, function(dataset){
-        return _.contains(this.status.get('baselayers'), dataset.name)
-      }.bind(this)), 'slug'));
-    },    
+      this.publishAnalysis();
+    },
+
+    changeActive: function() {
+      this.publishAnalysis();
+    },
 
     changeEnabled: function() {
       var enabled = this.status.get('enabled');
@@ -355,31 +379,93 @@ define([
       mps.publish('Analysis/enabled-subscription', [this.status.get('enabledSubscription')]);
     },
 
+    changeDate: function() {
+      this.publishAnalysis();
+    },
+
+    changeThreshold: function() {
+      this.publishAnalysis();
+    },
+
+    // Analysis publishers
     changeGeostore: function() {
       if (!!this.status.get('geostore')) {
-        console.log('****** analyze geostore **********');  
+        this.status.set({
+          active: true,
+          type: 'draw'
+        }, { 
+          silent: true 
+        });
+        this.publishAnalysis();
+      }
+    },
+
+    changeIso: function() {
+      if (!!this.status.get('iso').country && this.status.get('iso').country != 'ALL') {
+        if (!!this.status.get('isoEnabled')) {
+          this.status.set({
+            active: true,
+            type: 'country'
+          }, { 
+            silent: true 
+          });
+          this.publishAnalysis();
+        }                
+      } else {
+        this.status.set('isoEnabled', false);
+      }
+    },
+
+    changeIsoEnabled: function() {
+      if (!!this.status.get('isoEnabled')) {
+        this.status.set({
+          active: true,
+          type: 'country'
+        }, { 
+          silent: true 
+        });
+        this.publishAnalysis();
       }
     },
 
 
-
-
     /**
      * ACTIONS
-     * - createAnalysis
-     * - updateAnalysis
+     * - setBaselayer
+     * - setAnalysis
+     * - publishAnalysis
      * - deleteAnalysis
-     * - getBaselayer
      * @return {void}
-     */   
-    createAnalysis: function() {
+     */
+    setBaselayer: function() {
+      return _.uniq(_.pluck(_.filter(this.datasets, function(dataset){
+        return _.contains(this.status.get('baselayers'), dataset.name)
+      }.bind(this)), 'slug'));
+    },    
 
+    setAnalysis: function() {
+      console.log(this.status.toJSON());
+
+      switch(this.status.get('type')) {
+        case 'draw':
+          console.log('Analysis draw');
+        break;
+        case 'country':
+          console.log('Analysis country');
+        break;
+        case 'wdpaid':
+          console.log('Analysis wdpaid');
+        break;
+        case 'use':
+          console.log('Analysis use');
+        break;
+      }
     },
 
-    updateAnalysis: function() {
+    publishAnalysis: function() {
       // 1. Check if analysis is active
-      if (this.status.get('active')) {
-
+      if (this.status.get('active') && !!this.status.get('enabledUpdating')) {
+        this.setAnalysis();
       }
     },
 
@@ -388,13 +474,13 @@ define([
       this.status.set('type', null);
       this.status.set('active', false);
       this.status.set('geostore', null);
+      this.status.set('enabledUpdating', true);
       this.status.set('isoEnabled', false);
       this.status.set('iso', {
         country: null,
         region: null
       });
     },
-
 
     notificate: function(id){
       mps.publish('Notification/open', [id]);
