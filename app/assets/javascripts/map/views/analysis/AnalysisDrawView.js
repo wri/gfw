@@ -68,7 +68,7 @@ define([
 
       } else {
         this.presenter.status.set('is_drawing', false);
-        this.presenter.deleteAnalysis();        
+        this.presenter.publishDeleteAnalysis();        
         ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
       }
     },

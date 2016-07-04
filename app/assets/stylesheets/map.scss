@@ -55,8 +55,10 @@
 
   // Real Modules
   "modules/map/module",
+  
   // legend
   "modules/map/module-legend",
+  
   // controls
   "modules/map/module-mapcontrols",
   "modules/map/control-searchbox",
@@ -73,6 +75,8 @@
 
   // analysis
   "modules/map/analysis-draw",
+  "modules/map/analysis-country",
+  "modules/map/analysis-spinner",
 
   // timeline
   "modules/map/widget",
@@ -80,14 +84,10 @@
   "modules/map/timeline-btn",
   "modules/map/timeline-year",
   "modules/map/timeline-month",
-
   "modules/map/timeline-torque",
   "modules/map/timeline-torque-date-picker",
 
   //Nav mobile
   "modules/map/module-navmobile",
 
-
-
-  "modules/map/analysis-tool",
   "modules/map/infowindow";

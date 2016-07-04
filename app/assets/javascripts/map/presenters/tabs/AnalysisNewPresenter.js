@@ -29,6 +29,8 @@ define([
         enabledUpdating: true,
 
         active: false,
+        spinner: false,
+        subtab: 'default',
         
         // Layers
         baselayers: [],
@@ -187,6 +189,10 @@ define([
       // Areas
       this.status.on('change:use', this.changeUse.bind(this));
       this.status.on('change:wdpaid', this.changeWdpaid.bind(this));
+
+      // Spinner
+      this.status.on('change:spinner', this.changeSpinner.bind(this));
+      this.status.on('change:subtab', this.changeSubtab.bind(this));
       
     },
 
@@ -368,6 +374,11 @@ define([
 
       // GLOBAL ANALYSIS EVENTS
       {
+        'Analysis/subtab': function(subtab) {
+          this.status.set('subtab', subtab);
+        }
+      },
+      {
         'Analysis/active': function(active) {
           this.status.set('active', active);
         }
@@ -420,6 +431,10 @@ define([
       this.publishAnalysis();
     },
 
+    changeSpinner: function() {
+      this.view.toggleSpinner();
+    },
+
     changeEnabled: function() {
       var enabled = this.status.get('enabled');
       mps.publish('Analysis/enabled', [enabled]);
@@ -444,7 +459,13 @@ define([
       this.publishAnalysis();
     },
 
-    // Analysis publishers
+    changeSubtab: function() {
+      this.view.toggleSubtab();
+    },
+
+    /**
+     * Analysis
+     */
     changeGeostore: function() {
       if (!!this.status.get('geostore')) {
         this.status.set({
@@ -455,11 +476,8 @@ define([
         });
 
         this.deleteAnalysis({ 
-          silent: true,
-          type: this.status.get('type')
+          silent: true
         });
-
-    
         this.publishAnalysis();
       }
     },
@@ -475,10 +493,8 @@ define([
           });
   
           this.deleteAnalysis({ 
-            silent: true,
-            type: this.status.get('type')
-          });
-          
+            silent: true
+          });       
           this.publishAnalysis();
         }                
       } else {
@@ -488,18 +504,7 @@ define([
 
     changeIsoEnabled: function() {
       if (!!this.status.get('isoEnabled')) {
-        this.status.set({
-          active: true,
-          type: 'country'
-        }, { 
-          silent: true 
-        });
-
-        this.deleteAnalysis({ 
-          silent: true,
-          type: this.status.get('type')
-        });        
-        this.publishAnalysis();
+        this.changeIso();
       }
     },
 
@@ -513,11 +518,8 @@ define([
         });
 
         this.deleteAnalysis({ 
-          silent: true,
-          type: this.status.get('type')
+          silent: true
         });
-
-        
         this.publishAnalysis();
       }
     },
@@ -532,11 +534,8 @@ define([
         });
 
         this.deleteAnalysis({ 
-          silent: true,
-          type: this.status.get('type')
+          silent: true
         });
-
-        
         this.publishAnalysis();
       }
     },
@@ -578,19 +577,25 @@ define([
     publishAnalysis: function() {
       // 1. Check if analysis is active
       if (this.status.get('active') && !!this.status.get('enabledUpdating')) {
+        this.status.set('spinner', true);
         this.setAnalysis();
       }
     },
 
+    publishDeleteAnalysis: function() {
+      this.status.set('type', null);
+      mps.publish('Analysis/delete');
+    },
+
     deleteAnalysis: function(options) {
-      var type = (options && options.type) ? options.type : null;
-      var statuslist = (!!type) ? _.filter(this.types, function(v){
+      var type = this.status.get('type');
+      var statusFiltered = (!!type) ? _.filter(this.types, function(v){
         return v.type != type;
       }.bind(this)) : this.types;
       
       // If type exists delete all stuff related 
       // to other analysis
-      _.each(statuslist, function(v){
+      _.each(statusFiltered, function(v){
         switch(v.name) {
           case 'iso':
             this.status.set('iso', {
@@ -610,6 +615,8 @@ define([
         this.status.set('active', false, options);
         this.status.set('enabledUpdating', true, options);
       }
+
+      this.status.set('spinner', false);
 
       mps.publish('Place/update', [{go: false}]);
     },

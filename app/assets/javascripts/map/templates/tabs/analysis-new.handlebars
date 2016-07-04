@@ -1,9 +1,9 @@
 <div class="tab-analysis scroll-thin-dark">
   <nav id="analysis-nav" class="analysis-nav noselect">
     <ul>
-      <li id="analysis-draw-tab-button" data-tab="analysis-draw-tab">Draw or upload shape</li>
-      <li id="analysis-country-tab-button" data-tab="analysis-country-tab">Country or region</li>
-      <li id="analysis-shape-tab-button" data-tab="analysis-shape-tab">Other data layers</li>
+      <li id="analysis-draw-tab-button" data-subtab="analysis-draw-tab">Draw or upload shape</li>
+      <li id="analysis-country-tab-button" data-subtab="analysis-country-tab">Country or region</li>
+      <li id="analysis-shape-tab-button" data-subtab="analysis-shape-tab">Other data layers</li>
     </ul>
   </nav>
   <div id="analysis-content" class="analysis-content">
@@ -17,11 +17,11 @@
     <div id="analysis-shape-tab" class="analysis-tab-content analysis-shape-tab"></div>
   </div>
 </div>
-{{!-- <div id="tab-spinner" class="spinner2-box">
-  <div id="spinner2" class="spinner2">
-    <div id="spinner2-close" class="spinner2-close">
-      <button class="btn red uppercase">Cancel analysis</button>
-    </div>
+
+<div id="analysis-spinner" class="analysis-spinner">
+  {{!-- We should try to improve the spinner --}}
+  <div class="analysis-spinner-box">
+    <div class="icon"></div>
+    <button class="btn red uppercase btn-delete-analysis">Cancel analysis</button>
   </div>
 </div>
- --}}

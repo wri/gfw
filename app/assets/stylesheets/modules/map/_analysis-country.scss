@@ -1,0 +1,9 @@
+//DRAW TAB
+.analysis-country-tab {
+  .chosen-container {
+    margin: 5px 0 0;
+    &:first-of-type {
+      margin: 0;
+    }
+  }  
+}

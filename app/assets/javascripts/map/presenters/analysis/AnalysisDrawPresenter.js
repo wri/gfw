@@ -41,7 +41,7 @@ define([
         }
       },{
         'Analysis/delete': function() {
-          this.view.deleteDrawing();
+          this.deleteAnalysis();
         }
       }
     ],
@@ -70,12 +70,18 @@ define([
 
     /**
      * ACTIONS
+     * - publishDeleteAnalysis
      * - deleteAnalysis
      * - getBaselayer
      * @return {void}
      */    
-    deleteAnalysis: function() {
+    publishDeleteAnalysis: function() {
       mps.publish('Analysis/delete');
+    },
+
+    deleteAnalysis: function() {
+      this.status.set('is_drawing', false);
+      this.view.deleteDrawing();
     },
 
     notificate: function(id){
