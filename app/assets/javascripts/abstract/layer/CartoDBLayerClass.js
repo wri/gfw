@@ -102,7 +102,7 @@ define([
       $('.cartodb-popup').on('click', '.analyze-concession', function (e) {
         $('.cartodb-infowindow').hide(0);
         if (!$(e.currentTarget).hasClass('dont-analyze')) {
-          mps.publish('Analysis/areas', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]);
+          mps.publish('Analysis/shape', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]);
 
           ($(this).data('wdpaid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area' + $(this).data('wdpaid')) : null;
           ($(this).data('useid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze ' + $(this).data('use').toUpperCase() + ' ' + $(this).data('useid')) : null;

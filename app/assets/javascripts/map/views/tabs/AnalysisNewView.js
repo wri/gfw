@@ -96,7 +96,7 @@ define([
         var subtab = $(e.currentTarget).data('subtab');
         this.presenter.status.set('subtab', subtab);
       } else {
-        this.presenter.notificate('notification-delete-analysis');
+        this.presenter.publishNotification('notification-delete-analysis');
       }
     },
 

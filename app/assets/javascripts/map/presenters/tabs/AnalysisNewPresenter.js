@@ -10,11 +10,10 @@ define([
   'mps',
   'bluebird', 
   'moment',
+  'map/services/AnalysisNewService',
+  'map/services/GeostoreService',
   'helpers/geojsonUtilsHelper',
-  'map/services/CountryService',
-  'map/services/RegionService',
-  'map/services/GeostoreService'
-], function(PresenterClass, _, Backbone, mps, Promise, moment, geojsonUtilsHelper, countryService, regionService, GeostoreService) {
+], function(PresenterClass, _, Backbone, mps, Promise, moment, AnalysisService, GeostoreService, geojsonUtilsHelper) {
 
   'use strict';
 
@@ -69,7 +68,7 @@ define([
         subtab: 'draw'
       },
       
-      // AREAS
+      // SHAPE
       {
         name: 'wdpaid',
         type: 'wdpaid',
@@ -333,9 +332,9 @@ define([
       },
 
 
-      // AREAS
+      // SHAPE
       {
-        'Analysis/areas': function(useid, use, wdpaid) {
+        'Analysis/shape': function(useid, use, wdpaid) {
           this.status.set('useid', useid);
           this.status.set('use', use);
           this.status.set('wdpaid', wdpaid);
@@ -532,11 +531,8 @@ define([
 
 
     /**
-     * ACTIONS
+     * SETTERS
      * - setBaselayer
-     * - setAnalysis
-     * - publishAnalysis
-     * - deleteAnalysis
      * @return {void}
      */
     setBaselayer: function() {
@@ -545,36 +541,44 @@ define([
       }.bind(this)), 'slug'));
     },    
 
-    setAnalysis: function() {
-      switch(this.status.get('type')) {
-        case 'draw':
-          mps.publish('Analysis/subtab', ['analysis-draw-tab'])
-          console.log('Analysis draw');
-        break;
-        case 'country':
-          mps.publish('Analysis/subtab', ['analysis-country-tab'])
-          mps.publish('Country/update', [this.status.get('iso')])
-          mps.publish('Country/update', [this.status.get('iso')])
-          console.log('Analysis country');
-        break;
-        case 'wdpaid':
-          mps.publish('Analysis/subtab', ['analysis-shape-tab'])
-          console.log('Analysis wdpaid');
-        break;
-        case 'use':
-          mps.publish('Analysis/subtab', ['analysis-shape-tab'])
-          console.log('Analysis use');
-        break;
-      }
-      mps.publish('Analysis/do-analysis', [this.status.toJSON()]);
-      console.log(this.status.toJSON());
-    },
-
+    /**
+     * PUBLISHERS
+     * - publishAnalysis
+     * - publishDeleteAnalysis
+     * - publishNotification
+     */
     publishAnalysis: function() {
       // 1. Check if analysis is active
       if (this.status.get('active') && !!this.status.get('enabledUpdating')) {
         this.status.set('spinner', true);
-        this.setAnalysis();
+
+        switch(this.status.get('type')) {
+          case 'draw':
+            mps.publish('Analysis/subtab', ['analysis-draw-tab'])
+          break;
+          case 'country':
+            mps.publish('Analysis/subtab', ['analysis-country-tab'])
+            mps.publish('Country/update', [this.status.get('iso')])
+          break;
+          case 'wdpaid':
+            mps.publish('Analysis/subtab', ['analysis-shape-tab'])
+          break;
+          case 'use':
+            mps.publish('Analysis/subtab', ['analysis-shape-tab'])
+          break;
+        }
+
+        // mps.publish('Analysis/do-analysis', [this.status.toJSON()]);
+        // console.log(this.status.toJSON());
+        AnalysisService.get(this.status.toJSON())
+          .then(function(response){
+            this.status.set('spinner', false);
+            console.log(response);
+          }.bind(this))
+          .error(function(error){
+            this.status.set('spinner', false);
+            console.log(error);
+          }.bind(this))
       }
     },
 
@@ -583,6 +587,16 @@ define([
       mps.publish('Analysis/delete');
     },
 
+    publishNotification: function(id){
+      mps.publish('Notification/open', [id]);
+    },
+
+
+
+    /**
+     * HELPERS
+     * - deleteAnalysis 
+     */
     deleteAnalysis: function(options) {
       var type = this.status.get('type');
       var statusFiltered = (!!type) ? _.filter(this.types, function(v){
@@ -620,9 +634,6 @@ define([
       mps.publish('Place/update', [{go: false}]);
     },
 
-    notificate: function(id){
-      mps.publish('Notification/open', [id]);
-    },
 
   });
 

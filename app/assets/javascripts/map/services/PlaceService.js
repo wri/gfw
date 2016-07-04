@@ -151,8 +151,8 @@ define([
      * @param  {Object} params The route params
      * @return {string} The route URL
      */
-    _getRoute: function(param) {
-      var url = new UriTemplate(this._uriTemplate).fillFromObject(param);
+    _getRoute: function(params) {
+      var url = new UriTemplate(this._uriTemplate).fillFromObject(params);
       return decodeURIComponent(url);
     },
 
