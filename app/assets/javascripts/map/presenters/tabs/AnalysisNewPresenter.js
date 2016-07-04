@@ -548,19 +548,25 @@ define([
     setAnalysis: function() {
       switch(this.status.get('type')) {
         case 'draw':
+          mps.publish('Analysis/subtab', ['analysis-draw-tab'])
           console.log('Analysis draw');
         break;
         case 'country':
+          mps.publish('Analysis/subtab', ['analysis-country-tab'])
+          mps.publish('Country/update', [this.status.get('iso')])
           mps.publish('Country/update', [this.status.get('iso')])
           console.log('Analysis country');
         break;
         case 'wdpaid':
+          mps.publish('Analysis/subtab', ['analysis-shape-tab'])
           console.log('Analysis wdpaid');
         break;
         case 'use':
+          mps.publish('Analysis/subtab', ['analysis-shape-tab'])
           console.log('Analysis use');
         break;
       }
+      mps.publish('Analysis/do-analysis', [this.status.toJSON()]);
       console.log(this.status.toJSON());
     },
 
