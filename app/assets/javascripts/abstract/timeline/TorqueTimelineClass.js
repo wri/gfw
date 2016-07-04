@@ -122,7 +122,7 @@ define([
     },
 
     _onTorqueStop: function() {
-      var $el = $(event.currentTarget).find('div');
+      var $el = this.$('.play').find('div');
       if ($el.hasClass('play-icon')) {
         this.status.set('running', true);
       } else {
