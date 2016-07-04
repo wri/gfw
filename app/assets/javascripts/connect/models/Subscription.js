@@ -55,7 +55,7 @@ define([
   var Subscription = Backbone.Model.extend({
     type: 'subscription',
 
-    url: window.gfw.config.GFW_API_HOST_V2 + '/subscriptions',
+    urlRoot: window.gfw.config.GFW_API_HOST_V2 + '/subscriptions',
 
     sync: function(method, model, options) {
       options || (options = {});
@@ -76,8 +76,15 @@ define([
     },
 
     parse: function(response) {
-      var attributes = response.data.attributes;
-      attributes.id = response.data.id;
+      var attributes = {};
+
+      if (response.data !== undefined) {
+        attributes = response.data.attributes;
+        attributes.id = response.data.id;
+      } else {
+        attributes = response.attributes;
+        attributes.id = response.id;
+      }
 
       return attributes;
     },

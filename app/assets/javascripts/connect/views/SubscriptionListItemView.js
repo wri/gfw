@@ -31,9 +31,8 @@ define([
 
       subscription.confirmationUrl = this.confirmationUrl();
       subscription.topic = this.subscription.formattedTopic();
-      subscription.params.geom = JSON.stringify(subscription.params.geom);
-      if (subscription.created !== undefined) {
-        subscription.created = moment(subscription.created).
+      if (subscription.createdAt !== undefined) {
+        subscription.createdAt = moment(subscription.createdAt).
           format('dddd, YYYY-MM-DD, h:mm a');
       }
 
@@ -55,7 +54,7 @@ define([
       event.preventDefault();
 
       var confirmView = new ListItemDeleteConfirmView({
-        subscription: this.subscription});
+        model: this.subscription});
       this.$el.append(confirmView.render().el);
       this.listenTo(confirmView, 'confirmed', function() {
         this.destroy();
@@ -97,6 +96,7 @@ define([
             new_value = $el.find('input').val();
 
         this.subscription.save('name', new_value, {
+          patch: true,
           wait: true,
           silent: true,
           success: this.resetName.bind(this),
