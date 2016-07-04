@@ -30,6 +30,7 @@ define([
       "WMSLayer",
       "global_land_cover",
       "us_land_cover",
+      "mex_land_cover",
       "gtm_forest_cover",
       "gtm_forest_density",
       "gtm_forest_change2",
