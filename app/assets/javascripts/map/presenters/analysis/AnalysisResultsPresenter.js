@@ -240,7 +240,6 @@ define([
       this.status.set('iso', null);
       this.status.set('resource', null);
       this.view.model.set('boxHidden', true);
-      mps.publish('Analysis/dont_analyze', [true]);
       mps.publish('AnalysisService/cancel', []);
       mps.publish('AnalysisResults/delete-analysis', []);
       mps.publish('Place/update', [{go: false}]);

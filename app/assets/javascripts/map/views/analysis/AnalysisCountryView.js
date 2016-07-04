@@ -110,7 +110,7 @@ define([
      */
     analyzeCountry: function(e) {
       e && e.preventDefault();
-      this.presenter.status.set('isoEnabled', true);
+      this.presenter.status.set('isoDisabled', false);
     },
 
     /**

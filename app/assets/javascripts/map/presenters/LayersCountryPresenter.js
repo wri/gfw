@@ -18,8 +18,7 @@ define([
 
   var StatusModel = Backbone.Model.extend({
     defaults: {
-      iso: null,
-      dont_analyze: true
+      iso: null
     }
   });
 
@@ -50,8 +49,6 @@ define([
       'Place/go': function(place) {
         var params = place.params;
         
-        this.status.set('dont_analyze', params.dont_analyze);
-
         if(!!params.iso.country && params.iso.country !== 'ALL'){
           this.view.setCountry(params.iso);          
           this.status.set('iso', params.iso);
@@ -73,10 +70,6 @@ define([
     },{
       'Country/layers': function(layers) {
         this.view.setLayers(layers);
-      }
-    },{
-      'Analysis/dont_analyze': function(enabled) {
-        this.status.set('dont_analyze', enabled);
       }
     },{
       'Analysis/enabled': function(boolean) {
@@ -101,9 +94,7 @@ define([
      */
     publishIso: function(iso) {
       this.status.set('iso', iso);
-      this.status.set('dont_analyze', true);        
       mps.publish('Country/update', [iso]);
-      mps.publish('Analysis/dont_analyze', [this.status.get('dont_analyze')]);
       mps.publish('Place/update', [{go: false}]);
 
       // Fit country bounds
@@ -165,7 +156,6 @@ define([
      */
     analyzeIso: function() {
       var iso = this.status.get('iso');
-      this.status.set('dont_analyze', null);
       mps.publish('Analysis/iso', [iso]);
       mps.publish('Tab/open', ['#analysis-tab-button']);      
     },

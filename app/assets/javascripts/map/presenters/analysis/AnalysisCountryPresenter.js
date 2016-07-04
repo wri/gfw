@@ -23,7 +23,6 @@ define([
           country: 'ALL',
           region: null
         },
-        isoEnabled: false,
 
         enabled: true,
         enabledSubscription: true
@@ -38,7 +37,7 @@ define([
 
     listeners: function() {
       this.status.on('change:iso', this.changeIso.bind(this));
-      this.status.on('change:isoEnabled', this.changeIsoEnabled.bind(this));
+      this.status.on('change:isoDisabled', this.changeIso.bind(this));
 
       this.status.on('change:enabled', this.changeEnabled.bind(this));
       this.status.on('change:enabledSubscription', this.changeEnabledSubscription.bind(this));
@@ -53,12 +52,15 @@ define([
         'Place/go': function(place) {
           var params = place.params;          
           
-          this.status.set('iso', {
-            country: params.iso.country,
-            region: params.iso.region
+          this.status.set({
+            // Countries
+            iso: {
+              country: params.iso.country,
+              region: params.iso.region              
+            },
+            isoDisabled: (!!params.dont_analyze) || !(!!params.iso.country && params.iso.country != 'ALL'),            
           });
-
-          this.status.set('isoEnabled', (!!params.dont_analyze) ? !params.dont_analyze : (!!params.country && params.country != 'ALL'));        }
+        }
       },
       
       // GLOBAL ANALYSIS EVENTS
@@ -83,11 +85,7 @@ define([
     changeIso: function() {
       this.view.setSelects();
       this.view.toggleEnabledButtons();
-      mps.publish('Analysis/iso', [this.status.get('iso')])
-    },
-
-    changeIsoEnabled: function() {
-      mps.publish('Analysis/isoEnabled', [this.status.get('isoEnabled')])
+      mps.publish('Analysis/iso', [this.status.get('iso'), this.status.get('isoDisabled')])
     },
 
     changeEnabled: function() {
@@ -113,7 +111,7 @@ define([
         country: null,
         region: null
       });
-      this.status.set('isoEnabled', false);
+      this.status.set('isoDisabled', true);
     },
 
     notificate: function(id){

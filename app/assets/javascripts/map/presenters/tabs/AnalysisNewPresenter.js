@@ -48,7 +48,7 @@ define([
           country: null,
           region: null
         },
-        isoEnabled: false,
+        isoDisabled: false,
 
         // Areas
         wdpaid: null,
@@ -65,31 +65,37 @@ define([
       // GEOSTORE
       {
         name: 'geostore',
-        type: 'draw'
+        type: 'draw',
+        subtab: 'draw'
       },
       
       // AREAS
       {
         name: 'wdpaid',
-        type: 'wdpaid'
+        type: 'wdpaid',
+        subtab: 'shape'
       },
       {
         name: 'use',
-        type: 'use'
+        type: 'use',
+        subtab: 'shape'
       },
       {
         name: 'useid',
-        type: 'use'
+        type: 'use',
+        subtab: 'shape'
       },
       
       // COUNTRY
       {
-        name: 'isoEnabled',
-        type: 'country'
+        name: 'iso',
+        type: 'country',
+        subtab: 'country'
       },
       {
-        name: 'iso',
-        type: 'country'
+        name: 'isoDisabled',
+        type: 'country',
+        subtab: 'country'
       },
     ],
 
@@ -183,7 +189,7 @@ define([
       this.status.on('change:geostore', this.changeGeostore.bind(this));
       
       // Countries
-      this.status.on('change:isoEnabled', this.changeIsoEnabled.bind(this));
+      this.status.on('change:isoDisabled', this.changeIso.bind(this));
       this.status.on('change:iso', this.changeIso.bind(this));
 
       // Areas
@@ -203,16 +209,17 @@ define([
      */
     getPlaceParams: function() {
       var p = {};
+
+      // Countries
+      p.dont_analyze = !!this.status.get('isoDisabled');
       
       // Geostore
       if (!!this.status.get('geostore')) {
         p.geostore = this.status.get('geostore');
       }
       
-      // Countries
-      p.dont_analyze = ! !!this.status.get('isoEnabled');
 
-      if (!!this.status.get('iso') && !!this.status.get('isoEnabled')) {
+      if (!!this.status.get('iso') && !!this.status.get('isoDisabled')) {
         p.iso = this.status.get('iso');
       }      
 
@@ -246,32 +253,33 @@ define([
         'Place/go': function(place) {
           var params = place.params;
           
-          // Baselayer
-          this.status.set('baselayers', _.pluck(params.baselayers, 'slug'));
-          
-          // Dates
-          this.status.set('begin', params.begin);
-          this.status.set('end', params.end);
-          
-          
-          // Threshold
-          this.status.set('threshold', params.threshold);
+          this.status.set({
+            // Countries
+            iso: {
+              country: params.iso.country,
+              region: params.iso.region              
+            },
+            isoDisabled: (!!params.dont_analyze) || !(!!params.iso.country && params.iso.country != 'ALL'),
+            
+            // Baselayer
+            baselayers: _.pluck(params.baselayers, 'slug'),
 
-          // Geostore
-          this.status.set('geostore', params.geostore);
+            // Dates
+            begin: params.begin,
+            end: params.end,
+            
+            // Threshold
+            threshold: params.threshold,
+
+            // Geostore
+            geostore: params.geostore,
+            
+            // Areas
+            wdpaid: params.wdpaid,
+            use: params.use,
+            useid: params.useid,
+          })
           
-          // Countries
-          this.status.set('isoEnabled', (!!params.dont_analyze) ? !params.dont_analyze : (!!params.country && params.country != 'ALL'));
-
-          this.status.set('iso', {
-            country: params.country,
-            region: params.region
-          });
-
-          // Areas
-          this.status.set('wdpaid', params.wdpaid);
-          this.status.set('use', params.use);
-          this.status.set('useid', params.useid);
         }
       },
       {
@@ -316,19 +324,11 @@ define([
 
       // COUNTRY EVENTS
       {
-        'Country/update': function(iso) {
-          this.status.set('iso', iso);
-          this.status.set('isoEnabled', false);
-        }
-      },
-      {
-        'Analysis/iso': function(iso) {
-          this.status.set('iso', iso);
-        }
-      },
-      {
-        'Analysis/isoEnabled': function(isoEnabled) {
-          this.status.set('isoEnabled', isoEnabled);
+        'Analysis/iso': function(iso, isoDisabled) {
+          this.status.set({
+            iso: iso,
+            isoDisabled: isoDisabled
+          });
         }
       },
 
@@ -341,12 +341,6 @@ define([
           this.status.set('wdpaid', wdpaid);
         }
       },
-      {
-        'Analysis/isoEnabled': function(isoEnabled) {
-          this.status.set('isoEnabled', isoEnabled);
-        }
-      },
-
 
       // TIMELINE
       {
@@ -464,7 +458,11 @@ define([
     },
 
     /**
-     * Analysis
+     * 4 TYPES OF ANALYSIS
+     * - changeGeostore
+     * - changeIso
+     * - changeWdpaid
+     * - changeUse
      */
     changeGeostore: function() {
       if (!!this.status.get('geostore')) {
@@ -484,7 +482,7 @@ define([
 
     changeIso: function() {
       if (!!this.status.get('iso').country && this.status.get('iso').country != 'ALL') {
-        if (!!this.status.get('isoEnabled')) {
+        if (!this.status.get('isoDisabled')) {
           this.status.set({
             active: true,
             type: 'country'
@@ -497,14 +495,6 @@ define([
           });       
           this.publishAnalysis();
         }                
-      } else {
-        this.status.set('isoEnabled', false);
-      }
-    },
-
-    changeIsoEnabled: function() {
-      if (!!this.status.get('isoEnabled')) {
-        this.changeIso();
       }
     },
 
@@ -602,6 +592,9 @@ define([
               country: null,
               region: null
             }, options);  
+          break;
+          case 'isoDisabled':
+            this.status.set('isoDisabled', true);              
           break;
           default:
             this.status.set(v.name, null, options);  
