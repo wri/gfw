@@ -163,7 +163,7 @@ define([
     },
 
     toggleThreshold: function(){
-      mps.publish('ThresholdControls/toggle');
+      mps.publish('ThresholdControls/show');
     },
 
     toggleOverlay: function(to){

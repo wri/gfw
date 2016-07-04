@@ -24,6 +24,8 @@ define([
       return new Promise(function(resolve, reject) {
 
         this.analysis = this.buildAnalysisFromStatus(status);
+        console.log(this.analysis);
+
         var url = this.getUrl();
 
         ds.define(GET_REQUEST_ID, {

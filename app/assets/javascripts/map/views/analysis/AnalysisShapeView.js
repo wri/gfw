@@ -6,10 +6,9 @@
 define([
   'underscore', 
   'handlebars', 
-  'mps',
   'map/presenters/analysis/AnalysisShapePresenter',
   'text!map/templates/analysis/analysis-shape.handlebars',
-], function(_, Handlebars, mps, Presenter, tpl) {
+], function(_, Handlebars, Presenter, tpl) {
 
   'use strict';
 

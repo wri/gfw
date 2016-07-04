@@ -21,13 +21,14 @@ require([
   'map/collections/CountryCollection',
 
   'map/presenters/ExperimentsPresenter',
+  // Should we get rid of them?
   'map/services/AnalysisService',
   'map/services/CountryService',
   'map/services/DataService',
+  // 
   'map/views/MapView',
   'map/views/MapControlsView',
   'map/views/TabsView',
-  'map/views/analysis/AnalysisResultsView',
   'map/views/LayersNavView',
   'map/views/LegendView',
   'map/views/TimelineView',
@@ -41,7 +42,7 @@ require([
   'views/DownloadView',
   '_string'
 ], function($, _, Class, Backbone, chosen, utils, enquire, mps, Handlebars, Router, SourceModalView, ConfirmModalView, SourceBottomView, SourceMobileFriendlyView, CountryCollection, ExperimentsPresenter, AnalysisService, countryService, DataService, MapView,
-    MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, GuideView, GuideButtonView, UserFormModalView, HeaderView, FooterView, NotificationsView, DownloadView) {
+    MapControlsView, TabsView, LayersNavView, LegendView, TimelineView, NavMobileView, GuideView, GuideButtonView, UserFormModalView, HeaderView, FooterView, NotificationsView, DownloadView) {
 
   'use strict';
 
@@ -92,7 +93,6 @@ require([
 
         new MapControlsView(this.map, this.countries);
         new TabsView(this.map, this.countries);
-        new AnalysisResultsView(this.map, this.countries);
         new LayersNavView(this.map, this.countries);
         new LegendView(this.map, this.countries);
         new TimelineView(this.map, this.countries);

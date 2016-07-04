@@ -12,10 +12,11 @@ define([
   'map/views/analysis/AnalysisDrawView',
   'map/views/analysis/AnalysisCountryView',
   'map/views/analysis/AnalysisShapeView',
+  'map/views/analysis/AnalysisResultsNewView',
   'map/presenters/tabs/AnalysisNewPresenter',
   'text!map/templates/tabs/analysis-new.handlebars',
   'text!map/templates/tabs/analysis-mobile-new.handlebars'
-], function(_, Handlebars, amplify, chosen, turf, AnalysisDrawView, AnalysisCountryView, AnalysisShapeView, Presenter, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, turf, AnalysisDrawView, AnalysisCountryView, AnalysisShapeView, AnalysisResultsNewView, Presenter, tpl, tplMobile) {
 
   'use strict';
 
@@ -78,6 +79,7 @@ define([
       this.analysisDrawView = new AnalysisDrawView(this.map,this.countries);
       this.analysisCountryView = new AnalysisCountryView(this.map,this.countries);
       this.analysisShapeView = new AnalysisShapeView(this.map,this.countries);
+      this.AnalysisResultsNewView = new AnalysisResultsNewView(this.map,this.countries);
     },
 
 

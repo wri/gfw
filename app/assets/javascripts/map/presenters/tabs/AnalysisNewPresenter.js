@@ -216,7 +216,6 @@ define([
       if (!!this.status.get('geostore')) {
         p.geostore = this.status.get('geostore');
       }
-      
 
       if (!!this.status.get('iso') && !!this.status.get('isoDisabled')) {
         p.iso = this.status.get('iso');
@@ -258,6 +257,7 @@ define([
               country: params.iso.country,
               region: params.iso.region              
             },
+            // Check if param exists, if it doesn't check if country exists and it isn't equal to 'ALL'
             isoDisabled: (!!params.dont_analyze) || !(!!params.iso.country && params.iso.country != 'ALL'),
             
             // Baselayer
@@ -275,7 +275,9 @@ define([
             
             // Areas
             wdpaid: params.wdpaid,
-            use: params.use,
+            // Replace gfw_ from the use. 
+            // We should have a pair compare array intead of using a replace...
+            use: (!!params.use) ? params.use.replace('gfw_','') : null,
             useid: params.useid,
           })
           
@@ -336,7 +338,7 @@ define([
       {
         'Analysis/shape': function(useid, use, wdpaid) {
           this.status.set('useid', useid);
-          this.status.set('use', use);
+          this.status.set('use', (!!use) ? use.replace('gfw_','') : null);
           this.status.set('wdpaid', wdpaid);
         }
       },
@@ -414,6 +416,8 @@ define([
       
       this.status.set('enabled', enabled);
       this.status.set('enabledSubscription', enabledSubscription);
+
+      this.publishAnalysis();
     },
 
     changeBaselayer: function() {
@@ -457,6 +461,7 @@ define([
     },
 
     /**
+     * TO-DO: improve this
      * 4 TYPES OF ANALYSIS
      * - changeGeostore
      * - changeIso
@@ -543,41 +548,34 @@ define([
 
     /**
      * PUBLISHERS
-     * - publishAnalysis
+     * - publishAnalysis ****** ¡¡¡¡IMPORTANT!!!! ******
      * - publishDeleteAnalysis
      * - publishNotification
      */
     publishAnalysis: function() {
       // 1. Check if analysis is active
+      console.log(this.status.get('active'));
       if (this.status.get('active') && !!this.status.get('enabledUpdating')) {
         this.status.set('spinner', true);
+        
+        // Open the current subtab
+        var subtab = _.findWhere(this.types, { type: this.status.get('type') }).subtab;
+        mps.publish('Analysis/subtab', ['analysis-'+ subtab +'-tab'])
 
-        switch(this.status.get('type')) {
-          case 'draw':
-            mps.publish('Analysis/subtab', ['analysis-draw-tab'])
-          break;
-          case 'country':
-            mps.publish('Analysis/subtab', ['analysis-country-tab'])
-            mps.publish('Country/update', [this.status.get('iso')])
-          break;
-          case 'wdpaid':
-            mps.publish('Analysis/subtab', ['analysis-shape-tab'])
-          break;
-          case 'use':
-            mps.publish('Analysis/subtab', ['analysis-shape-tab'])
-          break;
-        }
-
-        // mps.publish('Analysis/do-analysis', [this.status.toJSON()]);
-        // console.log(this.status.toJSON());
+        // Send request to the Analysis Service
         AnalysisService.get(this.status.toJSON())
+
           .then(function(response){
+            var statusWithResults = _.extend({}, this.status.toJSON(), {
+              results: response.data.attributes
+            });
+            mps.publish('Analysis/results', [statusWithResults]);
             this.status.set('spinner', false);
-            console.log(response);
           }.bind(this))
-          .error(function(error){
-            this.status.set('spinner', false);
-            console.log(error);
+
+          .error(function(error){          
+            mps.publish('Analysis/results-error', [error]);
+            this.status.set('spinner', false);            
           }.bind(this))
       }
     },

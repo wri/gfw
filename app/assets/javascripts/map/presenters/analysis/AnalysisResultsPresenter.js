@@ -365,7 +365,7 @@ define([
 
 
     showCanopy: function(){
-      mps.publish('ThresholdControls/toggle');
+      mps.publish('ThresholdControls/show');
     },
 
     toggleSubscribeButton: function() {
