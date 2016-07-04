@@ -36,7 +36,6 @@ define([
     getPlaceParams: function() {
       var p = {};
       p.iso = this.status.get('iso');
-      p.dont_analyze = this.status.get('dont_analyze');
       return p;
     },
 

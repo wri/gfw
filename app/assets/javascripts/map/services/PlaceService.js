@@ -111,8 +111,9 @@ define([
      */
     _updatePlace: function() {
       var route, params;
-      params = this._destandardizeParams(
-        this._getPresenterParams(this._presenters));
+      params = this._destandardizeParams(this._getPresenterParams(this._presenters));
+      console.log(params);
+
       route = this._getRoute(params);
       this.router.navigateTo(route, {silent: true});
     },
@@ -183,6 +184,7 @@ define([
       p.geostore = p.geostore ? p.geostore : null;
       p.wdpaid = p.wdpaid ? _.toNumber(p.wdpaid) : null;
       p.threshold = p.threshold ? _.toNumber(p.threshold) : null;
+      p.dont_analyze = p.dont_analyze ? p.dont_analyze : null;
       p.subscribe_alerts = (p.subscribe_alerts === 'subscribe') ? true : null;
       p.referral = p.referral;
       p.hresolution = p.hresolution;
@@ -217,6 +219,7 @@ define([
       p.geostore = p.geostore ? p.geostore : null;
       p.wdpaid = p.wdpaid ? String(p.wdpaid) : null;
       p.threshold = p.threshold ? String(p.threshold) : null;
+      p.dont_analyze = p.dont_analyze ? p.dont_analyze : null;
       p.hresolution = p.hresolution;
       p.tour = p.tour;
 

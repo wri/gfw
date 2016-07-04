@@ -46,13 +46,50 @@ define([
           country: null,
           region: null
         },
-        isoEnabled: true,
+        isoEnabled: false,
+
+        // Areas
+        wdpaid: null,
+        use: null,
+        useid: null,
 
         // Draw
         geostore: null,
         isDrawing: false
       }
     })),
+
+    types: [
+      // GEOSTORE
+      {
+        name: 'geostore',
+        type: 'draw'
+      },
+      
+      // AREAS
+      {
+        name: 'wdpaid',
+        type: 'wdpaid'
+      },
+      {
+        name: 'use',
+        type: 'use'
+      },
+      {
+        name: 'useid',
+        type: 'use'
+      },
+      
+      // COUNTRY
+      {
+        name: 'isoEnabled',
+        type: 'country'
+      },
+      {
+        name: 'iso',
+        type: 'country'
+      },
+    ],
 
     datasets: [
       {
@@ -143,9 +180,14 @@ define([
       // Geostore
       this.status.on('change:geostore', this.changeGeostore.bind(this));
       
-      // Geostore
+      // Countries
       this.status.on('change:isoEnabled', this.changeIsoEnabled.bind(this));
       this.status.on('change:iso', this.changeIso.bind(this));
+
+      // Areas
+      this.status.on('change:use', this.changeUse.bind(this));
+      this.status.on('change:wdpaid', this.changeWdpaid.bind(this));
+      
     },
 
     /**
@@ -155,38 +197,28 @@ define([
      */
     getPlaceParams: function() {
       var p = {};
-
+      
+      // Geostore
       if (!!this.status.get('geostore')) {
         p.geostore = this.status.get('geostore');
       }
-
-      p.dont_analyze = !this.status.get('isoEnabled');
       
+      // Countries
+      p.dont_analyze = ! !!this.status.get('isoEnabled');
+
       if (!!this.status.get('iso') && !!this.status.get('isoEnabled')) {
         p.iso = this.status.get('iso');
       }      
 
+      // Areas
+      if (!!this.status.get('wdpaid')) {
+        p.wdpaid = this.status.get('wdpaid');
+      }
 
-      // var resource = this.status.get('resource');
-      // if (!resource) {return;}
-      // var p = {};
-
-      // p.dont_analyze = this.status.get('dont_analyze');
-
-      // if (resource.iso) {
-      //   p.iso = {};
-      //   p.iso.country = resource.iso;
-      //   p.iso.region = resource.id1 ? resource.id1 : null;
-      // } else if (resource.geostore) {
-      //   p.geostore = resource.geostore;
-      // } else if (resource.geojson) {
-      //   p.geojson = encodeURIComponent(resource.geojson);
-      // } else if (resource.wdpaid) {
-      //   p.wdpaid = resource.wdpaid;
-      // } else if (resource.use && resource.useid) {
-      //   p.use = resource.use;
-      //   p.useid = resource.useid;
-      // }
+      if (!!this.status.get('use') && !!this.status.get('useid')) {
+        p.use = this.status.get('use');
+        p.useid = this.status.get('useid');
+      }
 
       // if (this.status.get('fit_to_geom')) {
       //   p.fit_to_geom = 'true';
@@ -229,6 +261,11 @@ define([
             country: params.country,
             region: params.region
           });
+
+          // Areas
+          this.status.set('wdpaid', params.wdpaid);
+          this.status.set('use', params.use);
+          this.status.set('useid', params.useid);
         }
       },
       {
@@ -245,7 +282,6 @@ define([
       {
         'Threshold/update': function(threshold) {
           this.status.set('threshold', threshold);
-          mps.publish('Place/update', [{go: false}]);
         }
       },      
 
@@ -276,6 +312,21 @@ define([
       {
         'Analysis/iso': function(iso) {
           this.status.set('iso', iso);
+        }
+      },
+      {
+        'Analysis/isoEnabled': function(isoEnabled) {
+          this.status.set('isoEnabled', isoEnabled);
+        }
+      },
+
+
+      // AREAS
+      {
+        'Analysis/areas': function(useid, use, wdpaid) {
+          this.status.set('useid', useid);
+          this.status.set('use', use);
+          this.status.set('wdpaid', wdpaid);
         }
       },
       {
@@ -321,8 +372,8 @@ define([
         }
       },
       {
-        'Analysis/delete': function() {
-          this.deleteAnalysis();
+        'Analysis/delete': function(options) {
+          this.deleteAnalysis(options);
         }
       }
     ],
@@ -396,6 +447,13 @@ define([
         }, { 
           silent: true 
         });
+
+        this.deleteAnalysis({ 
+          silent: true,
+          type: this.status.get('type')
+        });
+
+    
         this.publishAnalysis();
       }
     },
@@ -409,6 +467,12 @@ define([
           }, { 
             silent: true 
           });
+  
+          this.deleteAnalysis({ 
+            silent: true,
+            type: this.status.get('type')
+          });
+          
           this.publishAnalysis();
         }                
       } else {
@@ -424,6 +488,49 @@ define([
         }, { 
           silent: true 
         });
+
+        this.deleteAnalysis({ 
+          silent: true,
+          type: this.status.get('type')
+        });        
+        this.publishAnalysis();
+      }
+    },
+
+    changeWdpaid: function() {
+      if (!!this.status.get('wdpaid')) {
+        this.status.set({
+          active: true,
+          type: 'wdpaid'
+        }, { 
+          silent: true 
+        });
+
+        this.deleteAnalysis({ 
+          silent: true,
+          type: this.status.get('type')
+        });
+
+        
+        this.publishAnalysis();
+      }
+    },
+
+    changeUse: function() {
+      if (!!this.status.get('use')) {
+        this.status.set({
+          active: true,
+          type: 'use'
+        }, { 
+          silent: true 
+        });
+
+        this.deleteAnalysis({ 
+          silent: true,
+          type: this.status.get('type')
+        });
+
+        
         this.publishAnalysis();
       }
     },
@@ -444,13 +551,12 @@ define([
     },    
 
     setAnalysis: function() {
-      console.log(this.status.toJSON());
-
       switch(this.status.get('type')) {
         case 'draw':
           console.log('Analysis draw');
         break;
         case 'country':
+          mps.publish('Country/update', [this.status.get('iso')])
           console.log('Analysis country');
         break;
         case 'wdpaid':
@@ -460,6 +566,7 @@ define([
           console.log('Analysis use');
         break;
       }
+      console.log(this.status.toJSON());
     },
 
     publishAnalysis: function() {
@@ -469,17 +576,39 @@ define([
       }
     },
 
-    deleteAnalysis: function() {
-      // this.view.deleteAnalysis();
-      this.status.set('type', null);
-      this.status.set('active', false);
-      this.status.set('geostore', null);
-      this.status.set('enabledUpdating', true);
-      this.status.set('isoEnabled', false);
-      this.status.set('iso', {
-        country: null,
-        region: null
-      });
+    deleteAnalysis: function(options) {
+      var type = (options && options.type) ? options.type : null;
+      
+      // If type exists delete all stuff related 
+      // to other analysis
+      _.each(this.types, function(v){
+        if (!!type) {
+          if (type != v.type) {
+            switch(v.name) {
+              case 'iso':
+                this.status.set('iso', {
+                  country: null,
+                  region: null
+                }, options);  
+              break;
+              default:
+                this.status.set(v.name, null, options);  
+              break;
+            }
+          }
+        } else {
+          this.status.set(v.name, null, options);
+        }
+      }.bind(this));
+      
+      // If type doesn't exist remove type, active and enabledUpdating
+      if (! !!type) {
+        this.status.set('type', null, options);
+        this.status.set('active', false, options);
+        this.status.set('enabledUpdating', true, options);
+      }
+
+      mps.publish('Place/update', [{go: false}]);
     },
 
     notificate: function(id){
