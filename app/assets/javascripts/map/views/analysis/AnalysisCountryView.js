@@ -53,7 +53,12 @@ define([
 
     cache: function() {
       this.$selects = this.$el.find('.chosen-select');
+      
+      // Select
+      this.$analysisCountrySelect = this.$el.find('#analysis-country-select');
+      this.$analysisRegionSelect = this.$el.find('#analysis-region-select');
 
+      // Buttons
       this.$buttonContainer = this.$el.find('#country-button-container');
       this.$analysisBtn = this.$el.find('#analysis-country-button');
       this.$subscribeBtn = this.$el.find('#subscribe-country-button');
@@ -143,6 +148,18 @@ define([
         this.$subscribeBtn.toggleClass('disabled', true);
       }
     },
+
+    setSelects: function() {
+      var iso = this.presenter.status.get('iso'),
+          country = (iso && iso.country != 'ALL') ? iso.country : null,
+          region = iso.region;
+
+      // Country
+      this.$analysisCountrySelect.val(country).trigger('chosen:updated');
+
+      // Region
+      this.$analysisRegionSelect.val(region).attr('disabled', !country).trigger('chosen:updated');
+    }
 
 
   });

@@ -64,11 +64,7 @@ define([
       // GLOBAL ANALYSIS EVENTS
       {
         'Analysis/delete': function() {
-          this.status.set('iso', {
-            country: null,
-            region: null
-          });
-          this.status.set('isoEnabled', false);
+          this.deleteAnalysis();
         }
       },{
         'Analysis/enabled': function(enabled) {
@@ -85,6 +81,7 @@ define([
      * LISTENERS
      */
     changeIso: function() {
+      this.view.setSelects();
       this.view.toggleEnabledButtons();
       mps.publish('Analysis/iso', [this.status.get('iso')])
     },
@@ -107,8 +104,16 @@ define([
      * - deleteAnalysis
      * - notificate
      */
-    deleteAnalysis: function() {
+    publishAnalysis: function() {
       mps.publish('Analysis/delete');
+    },
+
+    deleteAnalysis: function() {
+      this.status.set('iso', {
+        country: null,
+        region: null
+      });
+      this.status.set('isoEnabled', false);
     },
 
     notificate: function(id){
