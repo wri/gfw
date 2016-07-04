@@ -310,6 +310,12 @@ define([
 
       // COUNTRY EVENTS
       {
+        'Country/update': function(iso) {
+          this.status.set('iso', iso);
+          this.status.set('isoEnabled', false);
+        }
+      },
+      {
         'Analysis/iso': function(iso) {
           this.status.set('iso', iso);
         }
@@ -578,26 +584,23 @@ define([
 
     deleteAnalysis: function(options) {
       var type = (options && options.type) ? options.type : null;
+      var statuslist = (!!type) ? _.filter(this.types, function(v){
+        return v.type != type;
+      }.bind(this)) : this.types;
       
       // If type exists delete all stuff related 
       // to other analysis
-      _.each(this.types, function(v){
-        if (!!type) {
-          if (type != v.type) {
-            switch(v.name) {
-              case 'iso':
-                this.status.set('iso', {
-                  country: null,
-                  region: null
-                }, options);  
-              break;
-              default:
-                this.status.set(v.name, null, options);  
-              break;
-            }
-          }
-        } else {
-          this.status.set(v.name, null, options);
+      _.each(statuslist, function(v){
+        switch(v.name) {
+          case 'iso':
+            this.status.set('iso', {
+              country: null,
+              region: null
+            }, options);  
+          break;
+          default:
+            this.status.set(v.name, null, options);  
+          break;
         }
       }.bind(this));
       

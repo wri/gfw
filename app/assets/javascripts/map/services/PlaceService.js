@@ -112,7 +112,6 @@ define([
     _updatePlace: function() {
       var route, params;
       params = this._destandardizeParams(this._getPresenterParams(this._presenters));
-      console.log(params);
 
       route = this._getRoute(params);
       this.router.navigateTo(route, {silent: true});
