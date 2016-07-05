@@ -60,8 +60,9 @@ define([
           this.view.render();
         }
       }, {
-        'Analysis/results-error': function(error) {
-          this.status.set('error', error);
+        'Analysis/results-error': function(status) {
+          this.status.set(status, { silent: true });
+          
           this.view.renderError();
         }
       }
@@ -79,6 +80,7 @@ define([
 
     setAnalysisResource: function(status) {
       // We have to improve this function
+      console.log('*********  STATUS  *********');
       console.log(this.status.toJSON());
       var p = {};
 
@@ -124,7 +126,8 @@ define([
           p.totalArea = geojsonUtilsHelper.getHectares((!!this.status.get('geojson').features) ? this.status.get('geojson').features[0].geometry : this.status.get('geojson'));
         break;
       }
-
+      
+      console.log('*********  RESOURCE  *********');
       console.log(p);
       return p;
       
@@ -221,12 +224,16 @@ define([
 
     /**
      * PUBLISHERS
-     * - publishAnalysis ****** ¡¡¡¡IMPORTANT!!!! ******
+     * - publishRefreshAnalysis
      * - publishShowCanopy
      * - publishNotification
      */
     publishDeleteAnalysis: function() {
       mps.publish('Analysis/delete');
+    },
+
+    publishRefreshAnalysis: function() {
+      mps.publish('Analysis/refresh');
     },
 
     publishShowCanopy: function(){

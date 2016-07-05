@@ -21,10 +21,10 @@ define([
   var AnalysisService = Class.extend({
 
     get: function(status) {
+
       return new Promise(function(resolve, reject) {
 
         this.analysis = this.buildAnalysisFromStatus(status);
-        console.log(this.analysis);
 
         var url = this.getUrl();
 
@@ -33,12 +33,26 @@ define([
           url: APIURL + url,
           type: 'GET',
           dataType: 'json',
-          contentType: 'application/json; charset=utf-8'
+          contentType: 'application/json; charset=utf-8',
+          decoder: function ( data, status, xhr, success, error ) {
+            if ( status === "success" ) {
+              success( data, xhr );
+            } else if ( status === "fail" || status === "error" ) {
+              error( JSON.parse(xhr.responseText) );
+            } else {
+              error( JSON.parse(xhr.responseText) );
+            }
+          }          
         });
 
         var requestConfig = {
           resourceId: GET_REQUEST_ID,
-          success: resolve
+          success: function(data, status) {
+            resolve(data,status);        
+          },
+          error: function(status, xhr) {
+            reject(status, xhr);
+          }
         };
 
         this.abortRequest();

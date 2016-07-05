@@ -17,6 +17,7 @@ define([
 
     events: {
       'click #btn-analysis-delete': 'onClickDelete',
+      'click #btn-analysis-refresh': 'onClickRefresh',
       // 'click #analysis-subscribe': '_subscribe',
       // 'click .js-dropdown-btn' :'_toggleDownloads',
       // 'click .canopy-button' : '_showCanopy',
@@ -80,7 +81,9 @@ define([
 
     renderError: function() {
       this.setElement(this.setEl())
-      this.$el.addClass('-results').html(this.templates.error(this.presenter.status.get('error')));      
+      this.$el.addClass('-results').html(this.templates.error({
+        errors: this.presenter.status.get('errors')
+      }));      
     },
 
     cache: function() {
@@ -96,6 +99,11 @@ define([
       this.presenter.publishDeleteAnalysis();
     },
 
+    onClickRefresh: function(e) {
+      e && e.preventDefault();
+      this.presenter.publishRefreshAnalysis();
+    },
+
 
     /**
      * HELPERS
@@ -103,7 +111,7 @@ define([
      */
     setEl: function() {
       return _.findWhere(this.types, { type: this.presenter.status.get('type') }).el
-    }
+    },
 
   });
 

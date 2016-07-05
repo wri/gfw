@@ -384,6 +384,11 @@ define([
         }
       },
       {
+        'Analysis/refresh': function() {
+          this.publishAnalysis();
+        }
+      },      
+      {
         'Analysis/delete': function(options) {
           this.deleteAnalysis(options);
         }
@@ -568,17 +573,25 @@ define([
         // Send request to the Analysis Service
         AnalysisService.get(this.status.toJSON())
 
-          .then(function(response){
+          .then(function(response, xhr){
+            this.status.set('spinner', false);
             var statusWithResults = _.extend({}, this.status.toJSON(), {
               results: response.data.attributes
             });
             mps.publish('Analysis/results', [statusWithResults]);
-            this.status.set('spinner', false);
+            return true;
+          }.bind(this))
+          
+          .catch(function(errors){ 
+            this.status.set('spinner', false); 
+            var statusWithErrors = _.extend({}, this.status.toJSON(), errors);
+            mps.publish('Analysis/results-error', [statusWithErrors]);
+            
+            return true;
           }.bind(this))
 
-          .error(function(error){          
-            mps.publish('Analysis/results-error', [error]);
-            this.status.set('spinner', false);            
+          .finally(function(){
+            this.status.set('spinner', false);
           }.bind(this))
       }
     },
