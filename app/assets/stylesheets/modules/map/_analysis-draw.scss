@@ -13,14 +13,15 @@
     }
   }
 
-  .dropable {
+  .analysis-dropable {
     margin: 0 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     .shape-droppable {
-      border: 1px dashed #88aa37;
+      position: relative;
+      border: 1px dashed $cGreen;
       display: inline-flex;
       height: 36px;
       justify-content: center;
@@ -34,10 +35,17 @@
       cursor: pointer;
 
       input {
-        display: none;
+        appearance: none;
+        display: block;
+        position: absolute;
+        width: calc(100% - 30px);
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
       }
 
-      &.moving {
+      &.-moving {
         background-color: aliceblue;
         border-width: 2px;
       }

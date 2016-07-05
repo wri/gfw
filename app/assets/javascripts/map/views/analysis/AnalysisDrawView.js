@@ -12,9 +12,9 @@ define([
   'helpers/geojsonUtilsHelper',
   'map/presenters/analysis/AnalysisDrawPresenter',
   'text!map/templates/analysis/analysis-draw.handlebars',
-  // 'map/services/ShapefileService',
+  'map/services/ShapefileService',
   // 'helpers/geojsonUtilsHelper',
-], function(_, Handlebars, amplify, turf, mps, geojsonUtilsHelper, Presenter, tpl) {
+], function(_, Handlebars, amplify, turf, mps, geojsonUtilsHelper, Presenter, tpl, ShapefileService) {
 
   'use strict';
 
@@ -24,9 +24,22 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    config: {
+      FILE_SIZE_LIMIT: 1000000,
+      FILE_SIZE_MESSAGE: 'The selected file is quite large and uploading it might result in browser instability. Do you want to continue?'
+    },
+
     events: {
       //draw
       'click #btn-start-drawing' : 'onClickStartDrawing',
+
+      //upload   
+      'change #file-upload-shape' : 'onChangeFileShape',
+      'dragenter' : 'onDragenterShape',
+      'dragleave' : 'onDragleaveShape',
+      'dragend' : 'onDragendShape',
+      'drop' : 'onDropShape'
+      
     },
 
     initialize: function(map, countries) {
@@ -35,7 +48,6 @@ define([
       this.presenter = new Presenter(this);
 
       this.render();
-      // this.setDropable();
     },
 
     render: function(){
@@ -44,7 +56,12 @@ define([
     },
 
     cache: function(){
+      // Draw
       this.$btnStartDrawing = this.$el.find('#btn-start-drawing');
+
+      // Upload
+      this.$dropable = this.$el.find('#area-dropable-shape');
+      this.$fileSelector = this.$el.find('#file-upload-shape');
     },
 
 
@@ -55,9 +72,26 @@ define([
     /**
      * UI EVENTS
      * 
-     * onClickStartDrawing
+     * - onClickStartDrawing
      * @param  {[object]} e
      * @return {void}
+     * 
+     * - onChangeFileShape
+     * @param  {[object]} e
+     * @return {void}
+     * 
+     * - onDragoverShape
+     * @param  {[object]} e
+     * @return {void}
+     * 
+     * - onDragendShape
+     * @param  {[object]} e
+     * @return {void}
+     * 
+     * - onDropShape
+     * @param  {[object]} e
+     * @return {void}
+
      */
     onClickStartDrawing: function(e) {
       e && e.preventDefault();
@@ -72,6 +106,35 @@ define([
         ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
       }
     },
+
+    onChangeFileShape: function(e) {
+      var file = e.currentTarget.files[0];
+      if (file) { 
+        this.uploadFile(file); 
+      }
+    },
+
+    onDragenterShape: function(e) {
+      this.$dropable.addClass('-moving'); 
+      return false;
+    },
+
+    onDragleaveShape: function(e) {
+      this.$dropable.removeClass('-moving'); 
+    },
+    
+    onDragendShape: function(e) {
+      this.$dropable.removeClass('-moving'); 
+      return false;
+    },
+
+    onDropShape: function(e, data, clone, element) {
+      e && e.preventDefault();
+      var file = e.originalEvent.dataTransfer.files[0];
+      this.uploadFile(file);
+      return false;
+    },
+
 
 
 
@@ -220,6 +283,107 @@ define([
 
 
 
+
+
+    /**
+     * UPLOAD FILES
+     * 
+     * - uploadFile
+     */
+    setDropable: function() {
+      // Check if the dropable element exists
+      if (!!this.$dropable.length) { return; }
+
+
+    },
+
+    uploadFile: function(file) {
+      if (file.size > this.config.FILE_SIZE_LIMIT && !window.confirm(this.config.FILE_SIZE_MESSAGE)) {
+        this.$dropable.removeClass('-moving');
+        return;
+      }
+
+      // mps.publish('Spinner/start', []);
+
+      var shapeService = new ShapefileService({ shapefile: file });
+
+      shapeService.toGeoJSON().then(function(data) {
+        if (!!data.features) {
+          var geojson = data.features.reduce(turf.union),
+              bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson),
+              geometry = geojson.geometry;
+          
+          this.drawGeojson(geometry);
+          this.map.fitBounds(bounds);
+
+          this.presenter.status.set('geojson', geojson);
+        }
+
+        // mps.publish('Analysis/upload', [combinedFeatures.geometry]);
+
+      }.bind(this));
+
+      this.$dropable.removeClass('-moving');      
+    },
+
+
+
+    // setDropable: function() {
+    //   var dropable = document.getElementById('drop-shape-analysis'),
+    //       fileSelector = document.getElementById('analysis-file-upload');
+    //   if (!dropable) { return; }
+
+    //   var handleUpload = function(file) {
+    //     var FILE_SIZE_LIMIT = 1000000,
+    //         sizeMessage = 'The selected file is quite large and uploading it might result in browser instability. Do you want to continue?';
+    //     if (file.size > FILE_SIZE_LIMIT && !window.confirm(sizeMessage)) {
+    //       $(dropable).removeClass('-moving');
+    //       return;
+    //     }
+
+    //     mps.publish('Spinner/start', []);
+
+    //     var shapeService = new ShapefileService({ shapefile: file });
+    //     shapeService.toGeoJSON().then(function(data) {
+    //       var combinedFeatures = data.features.reduce(turf.union);
+
+    //       mps.publish('Analysis/upload', [combinedFeatures.geometry]);
+
+    //       this.drawMultipolygon(combinedFeatures);
+    //       var bounds = geojsonUtilsHelper.getBoundsFromGeojson(combinedFeatures);
+    //       this.map.fitBounds(bounds);
+    //     }.bind(this));
+
+    //     $(dropable).removeClass('-moving');
+    //   }.bind(this);
+
+    //   fileSelector.addEventListener('change', function() {
+    //     var file = this.files[0];
+    //     if (file) { handleUpload(file); }
+    //   });
+
+    //   dropable.addEventListener('click', function(event) {
+    //     var $el = $(event.target);
+    //     if ($el.hasClass('source')) { return true; }
+
+    //     $(fileSelector).trigger('click');
+    //   });
+
+    //   dropable.ondragover = function () { $(dropable).toggleClass('-moving'); return false; };
+    //   dropable.ondragend = function () { $(dropable).toggleClass('-moving'); return false; };
+    //   dropable.ondrop = function (e) {
+    //     e.preventDefault();
+    //     var file = e.dataTransfer.files[0];
+    //     handleUpload(file);
+    //     return false;
+    //   };
+
+    // },    
+
+
+
+
+
     /**
      * HELPERS
      * getGeojson
@@ -237,7 +401,7 @@ define([
      * @return {void}
      */
     drawGeojson: function(geojson) {
-      var paths = geojsonUtilsHelper.geojsonToPath(geojson.features[0].geometry);
+      var paths = geojsonUtilsHelper.geojsonToPath(geojson);
       var overlay = new google.maps.Polygon({
         paths: paths,
         editable: true,
