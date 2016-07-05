@@ -80,8 +80,8 @@ define([
 
     setAnalysisResource: function(status) {
       // We have to improve this function
-      console.log('*********  STATUS  *********');
-      console.log(this.status.toJSON());
+      // console.log('*********  STATUS  *********');
+      // console.log(this.status.toJSON());
       var p = {};
 
       
@@ -127,8 +127,8 @@ define([
         break;
       }
       
-      console.log('*********  RESOURCE  *********');
-      console.log(p);
+      // console.log('*********  RESOURCE  *********');
+      // console.log(p);
       return p;
       
     },

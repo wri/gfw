@@ -80,10 +80,13 @@ define([
     },
 
     renderError: function() {
-      this.setElement(this.setEl())
-      this.$el.addClass('-results').html(this.templates.error({
-        errors: this.presenter.status.get('errors')
-      }));      
+      var type = this.presenter.status.get('type');
+      if (!!type) {
+        this.setElement(this.setEl())
+        this.$el.addClass('-results').html(this.templates.error({
+          errors: this.presenter.status.get('errors')
+        }));        
+      }
     },
 
     cache: function() {
@@ -110,7 +113,8 @@ define([
      * - setEl
      */
     setEl: function() {
-      return _.findWhere(this.types, { type: this.presenter.status.get('type') }).el
+      var type = this.presenter.status.get('type');
+      return _.findWhere(this.types, { type: type }).el
     },
 
   });

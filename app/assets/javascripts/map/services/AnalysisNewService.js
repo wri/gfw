@@ -21,7 +21,7 @@ define([
   var AnalysisService = Class.extend({
 
     get: function(status) {
-
+        
       return new Promise(function(resolve, reject) {
 
         this.analysis = this.buildAnalysisFromStatus(status);
@@ -39,6 +39,8 @@ define([
               success( data, xhr );
             } else if ( status === "fail" || status === "error" ) {
               error( JSON.parse(xhr.responseText) );
+            } else if ( status === "abort") {
+              console.log('aborted');
             } else {
               error( JSON.parse(xhr.responseText) );
             }
@@ -50,8 +52,8 @@ define([
           success: function(data, status) {
             resolve(data,status);        
           },
-          error: function(status, xhr) {
-            reject(status, xhr);
+          error: function(errors) {
+            reject(errors);
           }
         };
 
@@ -78,8 +80,10 @@ define([
      * Abort the current request if it exists.
      */
     abortRequest: function() {
-      this._currentRequest && this._currentRequest.abort();
-      this._currentRequest = null;
+      if (this.currentRequest) {
+        this.currentRequest.abort();
+        this.currentRequest = null;
+      }
     }
 
   });

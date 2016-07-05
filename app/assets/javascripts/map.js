@@ -10,6 +10,7 @@ require([
   'map/utils',
   'enquire',
   'mps',
+  'bluebird',  
   'handlebars',
   'map/router',
   'views/SourceModalView',
@@ -41,7 +42,7 @@ require([
   'views/NotificationsView',
   'views/DownloadView',
   '_string'
-], function($, _, Class, Backbone, chosen, utils, enquire, mps, Handlebars, Router, SourceModalView, ConfirmModalView, SourceBottomView, SourceMobileFriendlyView, CountryCollection, ExperimentsPresenter, AnalysisService, countryService, DataService, MapView,
+], function($, _, Class, Backbone, chosen, utils, enquire, mps, Promise, Handlebars, Router, SourceModalView, ConfirmModalView, SourceBottomView, SourceMobileFriendlyView, CountryCollection, ExperimentsPresenter, AnalysisService, countryService, DataService, MapView,
     MapControlsView, TabsView, LayersNavView, LegendView, TimelineView, NavMobileView, GuideView, GuideButtonView, UserFormModalView, HeaderView, FooterView, NotificationsView, DownloadView) {
 
   'use strict';
@@ -53,7 +54,8 @@ require([
     init: function() {
       var router = new Router(this);
       this._cartodbHack();
-      this._handlebarsPlugins()
+      this._handlebarsPlugins();
+      this._configPromise();
       this._initViews();
 
       // // For dev
@@ -154,6 +156,19 @@ require([
             return options.inverse(this);
         }
       });
+    },
+
+    _configPromise: function() {
+      Promise.config({
+          // Enable warnings
+          warnings: false,
+          // Enable long stack traces
+          longStackTraces: false,
+          // Enable cancellation
+          cancellation: false,
+          // Enable monitoring
+          monitoring: false
+      });      
     }
 
   });

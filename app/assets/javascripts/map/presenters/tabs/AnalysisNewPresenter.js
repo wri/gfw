@@ -575,19 +575,20 @@ define([
 
           .then(function(response, xhr){
             this.status.set('spinner', false);
+
             var statusWithResults = _.extend({}, this.status.toJSON(), {
               results: response.data.attributes
             });
             mps.publish('Analysis/results', [statusWithResults]);
-            return true;
+
           }.bind(this))
           
           .catch(function(errors){ 
-            this.status.set('spinner', false); 
+            this.status.set('spinner', false);
+
             var statusWithErrors = _.extend({}, this.status.toJSON(), errors);
             mps.publish('Analysis/results-error', [statusWithErrors]);
             
-            return true;
           }.bind(this))
 
           .finally(function(){
