@@ -12,7 +12,7 @@ define([
   'helpers/geojsonUtilsHelper',
   'map/presenters/analysis/AnalysisDrawPresenter',
   'text!map/templates/analysis/analysis-draw.handlebars',
-  'map/services/ShapefileService',
+  'map/services/ShapefileNewService',
   // 'helpers/geojsonUtilsHelper',
 ], function(_, Handlebars, amplify, turf, mps, geojsonUtilsHelper, Presenter, tpl, ShapefileService) {
 
@@ -305,18 +305,18 @@ define([
 
       // mps.publish('Spinner/start', []);
 
-      var shapeService = new ShapefileService({ shapefile: file });
-
-      shapeService.toGeoJSON().then(function(data) {
-        if (!!data.features) {
-          var geojson = data.features.reduce(turf.union),
+      ShapefileService.save(file).then(function(response) {
+        var features = response.data.attributes.features;
+        if (!!features) {
+          var geojson = features.reduce(turf.union),
               bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson),
               geometry = geojson.geometry;
           
           this.drawGeojson(geometry);
           this.map.fitBounds(bounds);
 
-          this.presenter.status.set('geojson', geojson);
+          console.log(geojson);
+          this.presenter.status.set('geojson', geometry);
         }
 
         // mps.publish('Analysis/upload', [combinedFeatures.geometry]);
