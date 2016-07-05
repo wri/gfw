@@ -15,7 +15,16 @@ define([
 
   var AnalysisResultsNewView = Backbone.View.extend({
 
-    
+    events: {
+      'click #btn-analysis-delete': 'onClickDelete',
+      // 'click #analysis-subscribe': '_subscribe',
+      // 'click .js-dropdown-btn' :'_toggleDownloads',
+      // 'click .canopy-button' : '_showCanopy',
+      // 'click .advanced-analysis-button' : '_showAdvancedAnalysis',
+      // 'click .close' : 'toogleAnalysis',
+      // 'click #toggleIFL' : 'toogleIFL',
+      // 'click #btn-analysis-refresh' : 'refreshAnalysis'
+    },
 
     templates: {
       success: Handlebars.compile(tpl),
@@ -36,6 +45,10 @@ define([
       },
 
       // SHAPE
+      {
+        el: '#analysis-shape-tab',
+        type: 'use',
+      },
       {
         el: '#analysis-shape-tab',
         type: 'wdpaid',
@@ -62,17 +75,27 @@ define([
 
     render: function() {
       this.setElement(this.setEl())
-      this.$el.removeClass().addClass('analysis-results').html(this.templates.success(this.presenter.status.get('resource')));
+      this.$el.addClass('-results').html(this.templates.success(this.presenter.status.get('resource')));
     },
 
     renderError: function() {
       this.setElement(this.setEl())
-      this.$el.removeClass().addClass('analysis-results').html(this.templates.error(this.presenter.status.get('error')));      
+      this.$el.addClass('-results').html(this.templates.error(this.presenter.status.get('error')));      
     },
 
     cache: function() {
 
     },
+
+    /**
+     * UI EVENTS
+     * - onClickDelete
+     */
+    onClickDelete: function(e) {
+      e && e.preventDefault();
+      this.presenter.publishDeleteAnalysis();
+    },
+
 
     /**
      * HELPERS

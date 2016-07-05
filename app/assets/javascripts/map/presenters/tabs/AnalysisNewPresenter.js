@@ -264,8 +264,8 @@ define([
             baselayers: _.pluck(params.baselayers, 'slug'),
 
             // Dates
-            begin: params.begin,
-            end: params.end,
+            begin: (params.begin) ? params.begin : '2001-01-01',
+            end: (params.begin) ? params.end : '2015-01-01',
             
             // Threshold
             threshold: params.threshold,
@@ -478,7 +478,8 @@ define([
         });
 
         this.deleteAnalysis({ 
-          silent: true
+          silent: true,
+          type: 'draw'
         });
         this.publishAnalysis();
       }
@@ -495,7 +496,8 @@ define([
           });
   
           this.deleteAnalysis({ 
-            silent: true
+            silent: true,
+            type: 'country'
           });       
           this.publishAnalysis();
         }                
@@ -512,7 +514,8 @@ define([
         });
 
         this.deleteAnalysis({ 
-          silent: true
+          silent: true,
+          type: 'wdpaid'
         });
         this.publishAnalysis();
       }
@@ -528,7 +531,8 @@ define([
         });
 
         this.deleteAnalysis({ 
-          silent: true
+          silent: true,
+          type: 'use'
         });
         this.publishAnalysis();
       }
@@ -554,7 +558,6 @@ define([
      */
     publishAnalysis: function() {
       // 1. Check if analysis is active
-      console.log(this.status.get('active'));
       if (this.status.get('active') && !!this.status.get('enabledUpdating')) {
         this.status.set('spinner', true);
         
@@ -581,7 +584,6 @@ define([
     },
 
     publishDeleteAnalysis: function() {
-      this.status.set('type', null);
       mps.publish('Analysis/delete');
     },
 
@@ -596,7 +598,7 @@ define([
      * - deleteAnalysis 
      */
     deleteAnalysis: function(options) {
-      var type = this.status.get('type');
+      var type = (!!options) ? options.type : null;
       var statusFiltered = (!!type) ? _.filter(this.types, function(v){
         return v.type != type;
       }.bind(this)) : this.types;
@@ -625,6 +627,8 @@ define([
         this.status.set('type', null, options);
         this.status.set('active', false, options);
         this.status.set('enabledUpdating', true, options);
+
+        this.view.reRenderChildrenViews();
       }
 
       this.status.set('spinner', false);

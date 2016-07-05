@@ -5,7 +5,6 @@
   bottom: 0;
   left: 0;
   z-index: 22;
-  padding: 20px 20px 50px;
   transform: translate(0,100%);
   transition: all 0.25s $easeInOutSine;
   &.active{
@@ -16,12 +15,7 @@
     position: relative;
     bottom: auto;
     left: auto;
-    padding: 15px 15px 0px;
     transform: translate(0,0%);
-  }
-
-  @media (min-width: 1500px){
-    padding: 20px 20px 0px;
   }
 
   .close{

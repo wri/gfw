@@ -79,7 +79,13 @@ define([
       this.analysisDrawView = new AnalysisDrawView(this.map,this.countries);
       this.analysisCountryView = new AnalysisCountryView(this.map,this.countries);
       this.analysisShapeView = new AnalysisShapeView(this.map,this.countries);
-      this.AnalysisResultsNewView = new AnalysisResultsNewView(this.map,this.countries);
+      this.analysisResultsNewView = new AnalysisResultsNewView(this.map,this.countries);
+    },
+
+    reRenderChildrenViews: function() {
+      this.analysisDrawView.render();
+      this.analysisCountryView.render();
+      this.analysisShapeView.render();
     },
 
 

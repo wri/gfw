@@ -42,7 +42,7 @@ define([
     },
 
     render: function(){
-      this.$el.html(this.template({
+      this.$el.removeClass('-results').html(this.template({
         countries: this.countries
       }));
 

@@ -78,6 +78,7 @@ define([
      */
 
     setAnalysisResource: function(status) {
+      // We have to improve this function
       console.log(this.status.toJSON());
       var p = {};
 
@@ -87,14 +88,18 @@ define([
       
       // Alerts
       p.alerts = {};
-      p.alerts.totalAlerts = this.roundNumber(this.status.get('results').value || this.status.get('results').loss);
-      p.alerts.gainAlerts = this.roundNumber(this.status.get('results').gain || 0);
-      p.alerts.treeExtent = this.roundNumber(this.status.get('results').treeExtent || 0);
+      p.alerts.totalAlerts = this.roundNumber(this.status.get('results').value);
+
+      if (p.slug === 'umd-loss-gain') {
+        p.alerts.totalAlerts = this.roundNumber(this.status.get('results').value || this.status.get('results').loss);
+        p.alerts.gainAlerts = this.roundNumber(this.status.get('results').gain || 0);
+        p.alerts.treeExtent = this.roundNumber(this.status.get('results').treeExtent || 0);
+      }
+      
       if (p.slug === 'imazon-alerts') {
         p.alerts.degradAlerts = (this.status.get('results').value[0]) ? Math.round(this.status.get('results').value[0].value).toLocaleString() : 0;
         p.alerts.deforAlerts = (this.status.get('results').value[1]) ? Math.round(this.status.get('results').value[1].value).toLocaleString() : 0;
       }
-
 
       // Options
       p.options = {};
