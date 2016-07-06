@@ -163,7 +163,7 @@ define([
 
     setSubscribeButtonStatus: function(boolean) {
       this.$btnSubscribe.toggleClass('-disabled', !boolean);
-    }
+    },
 
   });
 

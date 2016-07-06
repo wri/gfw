@@ -76,6 +76,14 @@ define([
         'Analysis/enabled-subscription': function(enabled) {
           this.status.set('enabledSubscription', enabled);
         }
+      },{
+        'Analysis/delete': function() {
+          this.deleteAnalysis();
+        }
+      },{
+        'Country/geojson': function(geojson) {
+          this.view.drawGeojson(geojson);
+        }
       }
     ],
 
@@ -112,6 +120,8 @@ define([
         region: null
       });
       this.status.set('isoDisabled', true);
+
+      this.view.deleteDrawing();
     },
 
     notificate: function(id){

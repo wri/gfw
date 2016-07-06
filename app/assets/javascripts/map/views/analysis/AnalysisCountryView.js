@@ -159,6 +159,52 @@ define([
 
       // Region
       this.$analysisRegionSelect.val(region).attr('disabled', !country).trigger('chosen:updated');
+    },
+
+    deleteDrawing: function() {
+      var overlay = this.presenter.status.get('overlay_country');
+      if (!!overlay) {        
+        overlay.setMap(null);
+        this.presenter.status.set('overlay_country', null);
+        this.presenter.status.set('geojson_country', null);
+      }
+    },
+
+
+    /**
+     * HELPERS
+     * getGeojson
+     * @param  {object} overlay
+     * @return {object:geojson}
+     */
+    getGeojson: function(overlay) {
+      var paths = overlay.getPath().getArray();
+      return geojsonUtilsHelper.pathToGeojson(paths);            
+    },
+    
+    /**
+     * drawGeojson
+     * @param  {object:geojson} geojson
+     * @return {void}
+     */
+    drawGeojson: function(geojson) {
+      // Delete previous overlay if it exists
+      this.deleteDrawing();
+
+      var paths = geojsonUtilsHelper.geojsonToPath(geojson);
+      var overlay = new google.maps.Polygon({
+        paths: paths,
+        editable: false,
+        strokeWeight: 2,
+        fillOpacity: 0,
+        fillColor: '#FFF',
+        strokeColor: '#A2BC28'
+      });
+
+      overlay.setMap(this.map);
+      
+      this.presenter.status.set('overlay_country', overlay, { silent: true });
+      this.presenter.status.set('geojson_country', this.getGeojson(overlay), { silent: true });
     }
 
 

@@ -24,6 +24,16 @@ define([
 
   var LayersCountryPresenter = PresenterClass.extend({
 
+    status: new (Backbone.Model.extend({
+      defaults: {
+        iso: {
+          country: 'ALL',
+          region: null
+        },
+        isoDisabled: true
+      }
+    })),
+
     init: function(view) {
       this.view = view;
       this._super();
@@ -54,6 +64,8 @@ define([
           this.view.setCountry(params.iso);          
           this.status.set('iso', params.iso);
         }
+
+        this.status.set('isoDisabled',(!!params.dont_analyze) || !(!!params.iso.country && params.iso.country != 'ALL'))
       }
     },{
       'Country/update': function(iso) {
@@ -74,10 +86,14 @@ define([
       }
     },{
       'Analysis/iso': function(iso,isoDisabled) {
+        this.status.set('isoDisabled', isoDisabled);
         if(!!iso.country && iso.country !== 'ALL' && !isoDisabled){
-          this.view.setCountry(iso);          
-          this.status.set('iso', iso);
-        }        
+          this.view.setCountry(iso);
+          this.status.set({
+            iso: iso,
+            isoDisabled: isoDisabled
+          });
+        }
       }
     },{
       'Analysis/enabled': function(boolean) {
@@ -120,15 +136,21 @@ define([
             var objects = _.findWhere(results.topojson.objects, {
               type: 'MultiPolygon'
             });
-            var geojson = topojson.feature(results.topojson,objects);
-            console.log(geojson);
+            var geojson = topojson.feature(results.topojson,objects),
+                bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson),
+                geometry = geojson.geometry
 
-            var bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
-            console.log(bounds);
 
+            // Get bounds and fit to them
             if (!!bounds) {
               mps.publish('Map/fit-bounds', [bounds]);
             }
+
+            // Draw geojson of country if isoDisabled is equal to true
+            if (!this.status.get('isoDisabled')) {
+              mps.publish('Country/geojson', [geometry]);
+            }
+            
           }.bind(this));
       }
     },
