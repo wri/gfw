@@ -63,9 +63,7 @@
             <li class='slide'>
               <%= youtube_embed(media['embed_url']).html_safe %>
             </li>
-          <% end %>
-
-          <% if media['url'].present? %>
+          <% elsif media['url'].present? %>
             <li class='slide'>
               <div class="bg full-screen" data-bg="<%= "#{media_image(media)}" %>" style="background-image: url(<%= "#{media_image(media)}" %>);"></div>
             </li>
