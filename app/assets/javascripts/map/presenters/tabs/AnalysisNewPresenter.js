@@ -325,6 +325,15 @@ define([
 
       // COUNTRY EVENTS
       {
+        'Country/update': function(iso) {
+          if(!!iso.country && iso.country != 'ALL') {          
+            this.status.set({
+              iso: iso
+            });
+          }
+        }
+      },
+      {
         'Analysis/iso': function(iso, isoDisabled) {
           this.status.set({
             iso: iso,

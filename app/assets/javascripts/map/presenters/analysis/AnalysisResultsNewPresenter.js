@@ -80,51 +80,66 @@ define([
 
     setAnalysisResource: function(status) {
       // We have to improve this function
-      console.log('*********  STATUS  *********');
-      console.log(this.status.toJSON());
+      // console.log('*********  STATUS  *********');
+      // console.log(this.status.toJSON());
       var p = {};
+      /**
+       * Define variable that we are going to use later
+       */
+      var type = this.status.get('type'),
+          results = this.status.get('results'),
+          dateRange = [moment(this.status.get('begin')),moment(this.status.get('end'))];
 
-      
+      // Layers
       p.slug = this.status.get('baselayer')[0];
       p.baselayers = this.status.get('baselayers_full');
       
       // Area
-      p.areaHa = this.roundNumber(this.status.get('results').areaHa || 0);
+      p.areaHa = this.roundNumber(results.areaHa || 0);
       
       // Alerts
       p.alerts = {};
-      p.alerts.totalAlerts = this.roundNumber(this.status.get('results').value || 0);
-
-      if (p.slug === 'umd-loss-gain') {
-        p.alerts.totalAlerts = this.roundNumber(this.status.get('results').loss || 0);
-        p.alerts.gainAlerts = this.roundNumber(this.status.get('results').gain || 0);
-        p.alerts.treeExtent = this.roundNumber(this.status.get('results').treeExtent || 0);
-      }
-      
-      if (p.slug === 'imazon-alerts') {
-        p.alerts.degradAlerts = (this.status.get('results').value[0]) ? Math.round(this.status.get('results').value[0].value).toLocaleString() : 0;
-        p.alerts.deforAlerts = (this.status.get('results').value[1]) ? Math.round(this.status.get('results').value[1].value).toLocaleString() : 0;
-      }
+      p.alerts.totalAlerts = this.roundNumber(results.value || 0);
 
       // Options
       p.options = {};
       p.options.threshold = this.status.get('threshold');
       p.options.enabledSubscription = this.status.get('enabledSubscription');
       
-      
-      p.options.download = (!!this.status.get('results').download_urls) ? _.extend({}, this.status.get('results').download_urls, {
+      p.options.download = (!!results.download_urls) ? _.extend({}, results.download_urls, {
         cdb: (p.download.kml) ? encodeURIComponent(p.download.kml + '&filename=GFW_Analysis_Results') : null
       }) : null;
       
       // Dates
-      var dateRange = [moment(this.status.get('begin')),moment(this.status.get('end'))];
       p.dates = {};
-      p.dates.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
       p.dates.dateRange = '{0} to {1}'.format(dateRange[0].format('MMM-YYYY'),dateRange[1].format('MMM-YYYY'));
 
+      /**
+       * Exceptions
+       */
+      if (p.slug === 'umd-loss-gain') {
+        var results = (type == 'country') ? results.total : results;
+        p.areaHa = this.roundNumber(results.areaHa || 0);
+
+        p.alerts.totalAlerts = this.roundNumber(results.loss || 0);
+        p.alerts.gainAlerts = this.roundNumber(results.gain || 0);
+        p.alerts.treeExtent = this.roundNumber(results.treeExtent || 0);
+
+        // Dates
+        p.dates.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
+      }
       
-      console.log('*********  RESOURCE  *********');
-      console.log(p);
+      if (p.slug === 'imazon-alerts') {
+        p.alerts.degradAlerts = (results.value[0]) ? Math.round(results.value[0].value).toLocaleString() : 0;
+        p.alerts.deforAlerts = (results.value[1]) ? Math.round(results.value[1].value).toLocaleString() : 0;
+      }
+
+      if (p.slug === 'prodes-loss') {
+        p.dates.dateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
+      }
+
+      // console.log('*********  RESOURCE  *********');
+      // console.log(p);
       return p;
       
     },

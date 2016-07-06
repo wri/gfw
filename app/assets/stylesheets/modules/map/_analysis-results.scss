@@ -98,9 +98,16 @@
 
     // GRID
     > ul {
-      margin: 20px -20px 0;
+      margin: 15px -15px 0;
       display: flex;
       justify-content: space-between;
+      @media (min-width: 1500px){
+        margin: 20px -20px 0;
+        position: relative;
+        bottom: auto;
+        left: auto;
+        transform: translate(0,0%);
+      }
 
       > li {
         width: 100%;

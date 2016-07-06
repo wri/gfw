@@ -26,12 +26,16 @@ define([
       'Place/go': function(place) {
         this.view._toggleSelected(place.layerSpec.getLayers());
       }
-    }, {
+    },{
       'LayerNav/change': function(layerSpec) {
         this.view._toggleSelected(layerSpec.getLayers());
       }
-    }, {
+    },{
       'Country/update': function(iso) {
+        this.view.fixLegibility();
+      }
+    },{
+      'Analysis/iso': function(iso, isoDisabled) {
         this.view.fixLegibility();
       }
     }],

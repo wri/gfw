@@ -40,6 +40,7 @@ define([
 
     listeners: function() {
       this.status.on('change:iso', this.countryAtlas.bind(this));
+      this.status.on('change:iso', this.countryBounds.bind(this));
     },
 
     /**
@@ -72,6 +73,13 @@ define([
         this.view.setLayers(layers);
       }
     },{
+      'Analysis/iso': function(iso,isoDisabled) {
+        if(!!iso.country && iso.country !== 'ALL' && !isoDisabled){
+          this.view.setCountry(iso);          
+          this.status.set('iso', iso);
+        }        
+      }
+    },{
       'Analysis/enabled': function(boolean) {
         this.view.setAnalysisButtonStatus(boolean);
       }
@@ -95,10 +103,7 @@ define([
     publishIso: function(iso) {
       this.status.set('iso', iso);
       mps.publish('Country/update', [iso]);
-      mps.publish('Place/update', [{go: false}]);
-
-      // Fit country bounds
-      this.countryBounds();
+      mps.publish('Place/update', [{go: false}]);      
     },
 
     /**
@@ -110,17 +115,21 @@ define([
       var iso = this.status.get('iso');
 
       if(!!iso.country && iso.country !== 'ALL'){
-        countryService.show(iso.country, _.bind(function(results) {
-          var objects = _.findWhere(results.topojson.objects, {
-            type: 'MultiPolygon'
-          });
-          var geojson = topojson.feature(results.topojson,objects);
+        countryService.show(iso.country)
+          .then(function(results,status) {
+            var objects = _.findWhere(results.topojson.objects, {
+              type: 'MultiPolygon'
+            });
+            var geojson = topojson.feature(results.topojson,objects);
+            console.log(geojson);
 
-          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
-          if (!!bounds) {
-            mps.publish('Map/fit-bounds', [bounds]);
-          }
-        },this));
+            var bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+            console.log(bounds);
+
+            if (!!bounds) {
+              mps.publish('Map/fit-bounds', [bounds]);
+            }
+          }.bind(this));
       }
     },
 

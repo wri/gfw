@@ -12,7 +12,7 @@ define([
   var GET_REQUEST_ID = 'CountryService:get',
       SHOW_REQUEST_ID = 'CountryService:show';
 
-  var URL = window.gfw.config.GFW_API_HOST + '/countries/{iso}';
+  var URL = window.gfw.config.GFW_API_HOST + '/countries/{id}';
 
 
   var CountryService = Class.extend({
@@ -46,19 +46,39 @@ define([
         ds.define(SHOW_REQUEST_ID, {
           cache: {type: 'persist', duration: 1, unit: 'days'},
           url: url,
-          type: 'GET'
+          type: 'GET',
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8',          
+
+          // TO-DO We should move this to the DataService
+          decoder: function ( data, status, xhr, success, error ) {
+            if ( status === "success" ) {
+              success( data, xhr );
+            } else if ( status === "fail" || status === "error" ) {
+              error( JSON.parse(xhr.responseText) );
+            } else if ( status === "abort") {
+              
+            } else {
+              error( JSON.parse(xhr.responseText) );
+            }
+          }          
+
         });
 
         var requestConfig = {
           resourceId: SHOW_REQUEST_ID,
-          success: resolve,
-          error: reject
+          success: function(data, status) {
+            resolve(data,status);        
+          },
+          error: function(errors) {
+            reject(errors);
+          }
         };
 
         ds.request(requestConfig);
 
-      });
-    }
+      }.bind(this));
+    },
 
   });
 
