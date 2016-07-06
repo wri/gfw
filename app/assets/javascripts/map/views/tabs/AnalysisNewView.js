@@ -34,7 +34,9 @@ define([
     events: {
       //tabs
       'click #analysis-nav li' : 'onClickSubTabs',
-      'click .btn-delete-analysis' : 'onClickDelete',
+      'click .btn-analysis-delete' : 'onClickDelete',
+      'click .btn-analysis-refresh' : 'onClickRefresh',
+      'click .btn-analysis-canopy' : 'onClickCanopy',
     },
 
     initialize: function(map, countries) {
@@ -108,9 +110,25 @@ define([
       }
     },
 
+    /**
+     * UI EVENTS
+     * - onClickDelete
+     */
     onClickDelete: function(e) {
+      e && e.preventDefault();
       this.presenter.publishDeleteAnalysis();
     },
+
+    onClickRefresh: function(e) {
+      e && e.preventDefault();
+      this.presenter.publishRefreshAnalysis();
+    },
+
+    onClickCanopy: function(e) {
+      e && e.preventDefault();
+      this.presenter.publishCanopyAnalysis();
+    },
+
 
 
 

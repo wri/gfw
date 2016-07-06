@@ -16,8 +16,6 @@ define([
   var AnalysisResultsNewView = Backbone.View.extend({
 
     events: {
-      'click #btn-analysis-delete': 'onClickDelete',
-      'click #btn-analysis-refresh': 'onClickRefresh',
       // 'click #analysis-subscribe': '_subscribe',
       // 'click .js-dropdown-btn' :'_toggleDownloads',
       // 'click .canopy-button' : '_showCanopy',
@@ -97,15 +95,6 @@ define([
      * UI EVENTS
      * - onClickDelete
      */
-    onClickDelete: function(e) {
-      e && e.preventDefault();
-      this.presenter.publishDeleteAnalysis();
-    },
-
-    onClickRefresh: function(e) {
-      e && e.preventDefault();
-      this.presenter.publishRefreshAnalysis();
-    },
 
 
     /**

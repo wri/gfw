@@ -15,7 +15,7 @@
     {{#ifCond slug "===" 'umd-loss-gain'}}
       {{#if baselayers.loss}}
         <li>
-          <span class="stats-title">Loss <a href="#" class="source" data-source="how_to_adjust_date">{{dates.lossDateRange}}</a><span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{options.threshold}}% <a href="#" class="canopy-button">canopy density</a></span></span>
+          <span class="stats-title">Loss <a href="#" class="source" data-source="how_to_adjust_date">{{dates.lossDateRange}}</a><span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
           <span class="stats-count" style="color: {{baselayers.loss.category_color}};"><strong>{{alerts.totalAlerts}}</strong> ha</span>
         </li>
       {{/if}}
@@ -29,7 +29,7 @@
 
       {{#if baselayers.forest2000}}    
       <li>
-        <span class="stats-title">Tree cover (2000)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{options.threshold}}% <a href="#" class="canopy-button">canopy density</a></span></span>
+        <span class="stats-title">Tree cover (2000)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
         <span class="stats-count" style="color: {{baselayers.forest2000.title_color}};"><strong>{{alerts.treeExtent}}</strong> ha</span>
       </li>
       {{/if}}
@@ -184,7 +184,7 @@
       </li>
 
       <li>
-        <button id="btn-analysis-delete" class="analysis-footer-btn">
+        <button class="analysis-footer-btn btn-analysis-delete">
           <svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg>
           <span>Discard analysis</span>
         </button>

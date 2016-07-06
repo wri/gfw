@@ -559,6 +559,7 @@ define([
      * PUBLISHERS
      * - publishAnalysis ****** ¡¡¡¡IMPORTANT!!!! ******
      * - publishDeleteAnalysis
+     * - publishRefreshAnalysis
      * - publishNotification
      */
     publishAnalysis: function() {
@@ -601,8 +602,16 @@ define([
       mps.publish('Analysis/delete');
     },
 
+    publishRefreshAnalysis: function() {
+      mps.publish('Analysis/refresh');
+    },
+
     publishNotification: function(id){
       mps.publish('Notification/open', [id]);
+    },
+
+    publishCanopyAnalysis: function() {
+      mps.publish('ThresholdControls/show');
     },
 
 
@@ -619,6 +628,7 @@ define([
       
       // If type exists delete all stuff related 
       // to other analysis
+      // 'iso' and 'isoDisabled' need a different treatment
       _.each(statusFiltered, function(v){
         switch(v.name) {
           case 'iso':
