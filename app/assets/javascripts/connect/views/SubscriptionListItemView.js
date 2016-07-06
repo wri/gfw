@@ -1,9 +1,12 @@
 define([
   'backbone', 'handlebars', 'moment',
-  'connect/collections/Subscriptions',
-  'connect/views/ListItemDeleteConfirmView',
+  'connect/views/ListItemDeleteConfirmView', 'connect/views/SubscriptionListItemLayerSelectView',
   'text!connect/templates/subscriptionListItem.handlebars'
-], function(Backbone, Handlebars, moment, Subscriptions, ListItemDeleteConfirmView, tpl) {
+], function(
+  Backbone, Handlebars, moment,
+  ListItemDeleteConfirmView, SubscriptionListItemLayerSelectView,
+  tpl
+) {
 
   'use strict';
 
@@ -12,6 +15,7 @@ define([
       'click .subscriptions-delete-item': 'confirmDestroy',
       'click h4': 'editName',
       'click .view-on-map': 'viewOnMap',
+      'click .dataset': 'editLayers',
       'blur h4': 'saveName',
       'keyup h4': 'handleNameKeyUp'
     },
@@ -28,9 +32,10 @@ define([
 
     render: function() {
       var subscription = this.subscription.toJSON();
+      console.log(subscription);
 
       subscription.confirmationUrl = this.confirmationUrl();
-      subscription.topic = this.subscription.formattedTopic();
+      subscription.topics = this.subscription.formattedTopics();
       if (subscription.createdAt !== undefined) {
         subscription.createdAt = moment(subscription.createdAt).
           format('dddd, YYYY-MM-DD, h:mm a');
@@ -65,6 +70,14 @@ define([
     destroy: function() {
       this.subscription.destroy({
          success: this.remove.bind(this)});
+    },
+
+    editLayers: function() {
+      var layerSelectView = new SubscriptionListItemLayerSelectView({
+        subscription: this.subscription});
+      this.$('.dataset').replaceWith(layerSelectView.render().el);
+
+      this.listenTo(layerSelectView, 'complete', this.render);
     },
 
     editName: function(event) {
