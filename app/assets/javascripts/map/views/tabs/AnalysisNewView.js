@@ -36,6 +36,7 @@ define([
       'click #analysis-nav li' : 'onClickSubTabs',
       'click .btn-analysis-delete' : 'onClickDelete',
       'click .btn-analysis-refresh' : 'onClickRefresh',
+      'click .btn-analysis-subscribe' : 'onClickSubscribe',
       'click .btn-analysis-canopy' : 'onClickCanopy',
     },
 
@@ -96,9 +97,12 @@ define([
 
     /**
      * UI EVENTS
-     * onClickSubTabs
+     * - onClickSubTabs
+     * - onClickDelete
+     * - onClickRefresh
+     * - onClickCanopy
+     * - onClickSubscribe
      * @param  {[object]} e
-     * @return {void}
      */
     onClickSubTabs: function(e){
       // Check if the subtabs don't have the -disabled class
@@ -110,10 +114,6 @@ define([
       }
     },
 
-    /**
-     * UI EVENTS
-     * - onClickDelete
-     */
     onClickDelete: function(e) {
       e && e.preventDefault();
       this.presenter.publishDeleteAnalysis();
@@ -128,6 +128,15 @@ define([
       e && e.preventDefault();
       this.presenter.publishCanopyAnalysis();
     },
+
+    onClickSubscribe: function(e) {
+      e && e.preventDefault() && e.stopPropagation();
+      if (this.presenter.status.get('enabledSubscription')) { 
+        this.presenter.publishSubscribtion();
+      }
+      // ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + this.params.layer.title);
+    },
+
 
 
 

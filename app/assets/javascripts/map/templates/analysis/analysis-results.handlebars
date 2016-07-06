@@ -3,10 +3,10 @@
 
   {{!-- RESULTS --}}
   <ul class="analysis-stats">
-    {{#if totalArea}}
+    {{#if areaHa}}
       <li>
         <span class="stats-title">Total selected area</span>
-        <span class="stats-count"><strong>{{totalArea}}</strong> ha</span>
+        <span class="stats-count"><strong>{{areaHa}}</strong> ha</span>
       </li>
     {{/if}}
 
@@ -154,7 +154,9 @@
 
   {{!-- FOOTER --}}
   <footer class="analysis-footer">
-    <button id="analysis-subscribe" class="btn green uppercase analysis-subscribe">Subscribe</button>
+    <div class="m-btncontainer -col100">
+      <button class="btn green uppercase btn-analysis-subscribe {{#unless options.enabledSubscription}}disabled{{/unless}}">Subscribe</button>
+    </div>
 
     <ul>
       <li>

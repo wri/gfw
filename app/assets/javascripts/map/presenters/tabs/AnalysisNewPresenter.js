@@ -130,7 +130,7 @@ define([
         subscription: true
       },{
         name: 'guyra',
-        slug: 'guyra-loss',
+        slug: 'guira-loss',
         subscription: true
       },{
         name: 'viirs_fires_alerts',
@@ -604,6 +604,11 @@ define([
 
     publishRefreshAnalysis: function() {
       mps.publish('Analysis/refresh');
+    },
+
+    publishSubscribtion: function() {
+      var options = {};
+      mps.publish('Subscribe/show', [options]);
     },
 
     publishNotification: function(id){

@@ -80,20 +80,23 @@ define([
 
     setAnalysisResource: function(status) {
       // We have to improve this function
-      // console.log('*********  STATUS  *********');
-      // console.log(this.status.toJSON());
+      console.log('*********  STATUS  *********');
+      console.log(this.status.toJSON());
       var p = {};
 
       
       p.slug = this.status.get('baselayer')[0];
       p.baselayers = this.status.get('baselayers_full');
       
+      // Area
+      p.areaHa = this.roundNumber(this.status.get('results').areaHa || 0);
+      
       // Alerts
       p.alerts = {};
-      p.alerts.totalAlerts = this.roundNumber(this.status.get('results').value);
+      p.alerts.totalAlerts = this.roundNumber(this.status.get('results').value || 0);
 
       if (p.slug === 'umd-loss-gain') {
-        p.alerts.totalAlerts = this.roundNumber(this.status.get('results').value || this.status.get('results').loss);
+        p.alerts.totalAlerts = this.roundNumber(this.status.get('results').loss || 0);
         p.alerts.gainAlerts = this.roundNumber(this.status.get('results').gain || 0);
         p.alerts.treeExtent = this.roundNumber(this.status.get('results').treeExtent || 0);
       }
@@ -106,6 +109,7 @@ define([
       // Options
       p.options = {};
       p.options.threshold = this.status.get('threshold');
+      p.options.enabledSubscription = this.status.get('enabledSubscription');
       
       
       p.options.download = (!!this.status.get('results').download_urls) ? _.extend({}, this.status.get('results').download_urls, {
@@ -118,17 +122,9 @@ define([
       p.dates.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
       p.dates.dateRange = '{0} to {1}'.format(dateRange[0].format('MMM-YYYY'),dateRange[1].format('MMM-YYYY'));
 
-
-      // Total Area
-      switch(this.status.get('type')) {
-        case 'draw':
-          // Depending on the 
-          p.totalArea = geojsonUtilsHelper.getHectares((!!this.status.get('geojson').features) ? this.status.get('geojson').features[0].geometry : this.status.get('geojson'));
-        break;
-      }
       
-      // console.log('*********  RESOURCE  *********');
-      // console.log(p);
+      console.log('*********  RESOURCE  *********');
+      console.log(p);
       return p;
       
     },

@@ -40,7 +40,7 @@ define([
             } else if ( status === "fail" || status === "error" ) {
               error( JSON.parse(xhr.responseText) );
             } else if ( status === "abort") {
-              console.log('aborted');
+              
             } else {
               error( JSON.parse(xhr.responseText) );
             }
