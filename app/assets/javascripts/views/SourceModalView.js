@@ -112,12 +112,10 @@ define([
      */
     getData: function() {
       var data = this.sourceModel.toJSON();
-      if (data.download_data) {
-        
-        // I think it would be better if they fill a new field in the database
-        if (data.download_data.indexOf('http://data.globalforestwatch.org/datasets/') > -1) {
-          data.open_in_carto = 'https://oneclick.cartodb.com?file='+data.download_data+'.geojson';
-        }
+      
+      if (data.sql_api) {
+        data.open_in_carto = 'http://oneclick.cartodb.com?file='+encodeURIComponent(data.sql_api+'&format=geojson');
+
       }
 
       if (data.map_service) {
