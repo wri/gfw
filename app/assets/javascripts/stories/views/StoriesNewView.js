@@ -72,13 +72,13 @@ define([
     /**
      * UI EVENTS
      */
-    
+
     _dragenter: function(e) {
       var target = e.target;
       if (! !!target.classList.contains('sortable')) {
         //check we're dropping the element in a proper draggable element
         target = target.closest('.sortable');
-      }          
+      }
       if (this.isbefore(this.sourceDrag, target)) {
         target.parentNode.insertBefore(this.sourceDrag, target);
       } else {
@@ -86,7 +86,7 @@ define([
       }
       var sortables = document.getElementsByClassName('sortable');
       for (var i = 0; i < sortables.length; i++) {
-        this.uploadsIds[i] = sortables[i];
+        this.uploadsIds[i] = $(sortables[i]).data('uploadId');
       }
       $("#story_uploads_ids").val(this.uploadsIds.join(","));
     },
@@ -117,11 +117,13 @@ define([
           $thumb = $('#videothumbnail');
       if ($thumb.length > 0) {
         $thumb.find('.inner_box').css('background-image','url('+ vidID +')')
+        $thumb.data('uploadId', 'VID-'+vidID);
       } else {
         $('.thumbnails').append('<li class="sortable thumbnail" draggable="true" id="videothumbnail"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
         this.uploadsIds.push('VID-'+vidID);
         $("#story_uploads_ids").val(this.uploadsIds.join(","));
         $thumb = $('#videothumbnail');
+        $thumb.data('uploadId', 'VID-'+vidID);
         $thumb.find('.destroy').on('click', function(e) {
             e.preventDefault();
 
@@ -194,6 +196,7 @@ define([
 
           var url = file.url.replace('https', 'http');
           var $thumb = $("<li class='sortable thumbnail' draggable='true'><div class='inner_box' style=' background-image: url("+url+");'></div><a href='#' class='destroy'><svg><use xlink:href='#shape-close'></use></svg></a></li>");
+          $thumb.data('uploadId', file.basename);
 
           var filename = that.prettifyFilename(file.basename).substring(45);
 
@@ -275,7 +278,7 @@ define([
       });
 
 
-      // Google Maps 
+      // Google Maps
       google.maps.event.addListener(this.map, 'zoom_changed', this.setCenter.bind(this));
       google.maps.event.addListener(this.map, 'dragend', this.setCenter.bind(this));
     },
@@ -304,14 +307,13 @@ define([
     isbefore: function(a, b) {
       if (a.parentNode == b.parentNode) {
         for (var cur = a; cur; cur = cur.previousSibling) {
-          if (cur === b) { 
+          if (cur === b) {
               return true;
           }
         }
       }
       return false;
-    }, 
-
+    },
 
     //ZOOM
     _zoomIn: function() {
