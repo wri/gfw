@@ -61,6 +61,7 @@ define([
 
       this.uploadsIds = [];
       this.filesAdded = 0;
+      this.sourceDrag = undefined;
 
       this._initViews();
       this._initBindings();
@@ -192,7 +193,7 @@ define([
           that.uploadsIds.push(file.basename);
 
           var url = file.url.replace('https', 'http');
-          var $thumb = $("<li class='sortable thumbnail'><div class='inner_box' style=' background-image: url("+url+");'></div><a href='#' class='destroy'><svg><use xlink:href='#shape-close'></use></svg></a></li>");
+          var $thumb = $("<li class='sortable thumbnail' draggable='true'><div class='inner_box' style=' background-image: url("+url+");'></div><a href='#' class='destroy'><svg><use xlink:href='#shape-close'></use></svg></a></li>");
 
           var filename = that.prettifyFilename(file.basename).substring(45);
 
@@ -310,6 +311,7 @@ define([
       }
       return false;
     }, 
+
 
     //ZOOM
     _zoomIn: function() {
