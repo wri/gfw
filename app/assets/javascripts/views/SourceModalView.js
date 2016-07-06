@@ -112,10 +112,9 @@ define([
      */
     getData: function() {
       var data = this.sourceModel.toJSON();
-      console.log(data);
       if (data.sql_api) {
-        data.open_in_carto = 'http://oneclick.cartodb.com?file='+encodeURIComponent(data.sql_api + '&format=geojson');
-
+        var file = encodeURIComponent(data.sql_api + '&format=geojson').replace(/%20/g, "%2520");
+        data.open_in_carto = 'http://oneclick.cartodb.com?file='+file;
       }
 
       if (data.map_service) {
