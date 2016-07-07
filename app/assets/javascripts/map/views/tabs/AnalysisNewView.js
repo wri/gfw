@@ -160,9 +160,12 @@ define([
 
     toggleSubtab: function() {
       var subtab = this.presenter.status.get('subtab');
+      console.log(this.presenter.status.get('active'));
+      this.$subTabs.toggleClass('-disabled', this.presenter.status.get('active'));
+
       // Current subtab
       this.$subTabs.removeClass('-active');
-      $('#'+subtab+'-button').addClass('-active');
+      $('#'+subtab+'-button').removeClass('-disabled').addClass('-active');
 
       // Current content subtab
       this.$subTabsContent.removeClass('-active');

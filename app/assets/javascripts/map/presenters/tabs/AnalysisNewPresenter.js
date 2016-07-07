@@ -669,6 +669,7 @@ define([
         this.view.reRenderChildrenViews();
       }
 
+      this.view.toggleSubtab();
       this.status.set('spinner', false);
 
       mps.publish('Place/update', [{go: false}]);

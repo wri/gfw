@@ -5,9 +5,8 @@ define([
   'jquery',
   'backbone',
   'underscore',
-  'mps',
   'presenters/NotificationsPresenter',
-], function($,Backbone, _,mps, Presenter) {
+], function($,Backbone, _, Presenter) {
 
   'use strict';
 
@@ -36,7 +35,6 @@ define([
       // Init
       this.cacheVars();
       this.model.on("change:hidden", this._toggle, this);
-      // mps.publish('Notification/open',['info-example'])
     },
 
     cacheVars: function(){
@@ -74,10 +72,9 @@ define([
     },
 
     triggerAction: function(e){
-      var act = $(e.currentTarget).data('action');
-      if (!$(act).hasClass('active')) {
-        $(act).trigger('click');
-      }
+      var action = $(e.currentTarget).data('action');
+      var options = $(e.currentTarget).data('options') || {};
+      this.presenter.publishAction(action, options)
       this.hide();
     },
 
