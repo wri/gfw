@@ -82,6 +82,7 @@ define([
   'map/views/layers/BirdlifeLayer',
   'map/views/layers/AzepolyLayer',
   'map/views/layers/TigersLayer',
+  'map/views/layers/MexicanProtectedAreasLayer',
   'map/views/layers/CarbonLayer',
   'map/views/layers/DamHotspotsLayer',
   'map/views/layers/ColombiaForestChangeLayer',
@@ -120,7 +121,7 @@ define([
   'map/views/layers/GtmForestChange2Layer',
   'map/views/layers/GtmForestCoverLayer',
   'map/views/layers/GtmForestDensityLayer',
-  'map/views/layers/AsItHappensHybridLayer',
+  'map/views/layers/GladLayer',
   'map/views/layers/LandsatAlertsCoverLayer',
   'map/views/layers/KhmProtectedAreasLayer',
   'map/views/layers/KhmEcoLandLayer',
@@ -144,6 +145,14 @@ define([
   'map/views/layers/MexForestCatLayer',
   'map/views/layers/MexForestSubCatLayer',
   'map/views/layers/Places2WatchLayer',
+  'map/views/layers/MexicoPaymentsLayer',
+  'map/views/layers/MexLandRightsLayer',
+  'map/views/layers/BraLoggingLayer',
+  'map/views/layers/MysWoodFiberSabahLayer',
+  'map/views/layers/MysLoggingSabahLayer',
+  'map/views/layers/MysPASabahLayer',
+  'map/views/layers/PerPALayer',
+  'map/views/layers/MexLandCoverLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -158,7 +167,7 @@ define([
   'map/views/timeline/TerraiTimeline',
   'map/views/timeline/ProdesTimeline',
   'map/views/timeline/AsItHappensTimeline',
-  'map/views/timeline/GuyraTimeline'
+  'map/views/timeline/GuyraTimeline',
 ], function(
   // Layer Views
   LossLayer,
@@ -240,6 +249,7 @@ define([
   BirdlifeLayer,
   AzepolyLayer,
   TigersLayer,
+  MexicanProtectedAreasLayer,
   CarbonLayer,
   DamHotspotsLayer,
   ColombiaForestChangeLayer,
@@ -278,7 +288,7 @@ define([
   GtmForestChange2Layer,
   GtmForestCoverLayer,
   GtmForestDensityLayer,
-  AsItHappensHybridLayer,
+  GladLayer,
   LandsatAlertsCoverLayer,
   KhmProtectedAreasLayer,
   KhmEcoLandLayer,
@@ -302,6 +312,14 @@ define([
   MexForestCatLayer,
   MexForestSubCatLayer,
   Places2WatchLayer,
+  MexicoPaymentsLayer,
+  MexLandRightsLayer,
+  BraLoggingLayer,
+  MysWoodFiberSabahLayer,
+  MysLoggingSabahLayer,
+  MysPASabahLayer,
+  PerPALayer,
+  MexLandCoverLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -573,6 +591,9 @@ define([
     tigers: {
       view: TigersLayer
     },
+    mexican_pa: {
+      view: MexicanProtectedAreasLayer
+    },
     verified_carbon: {
       view: CarbonLayer
     },
@@ -692,19 +713,19 @@ define([
       view: GtmForestDensityLayer
     },
     umd_as_it_happens: {
-      view: AsItHappensHybridLayer,
+      view: GladLayer,
       timelineView: AsItHappensTimeline
     },
     umd_as_it_happens_per: {
-      view: AsItHappensHybridLayer,
+      view: GladLayer,
       timelineView: AsItHappensTimeline
     },
     umd_as_it_happens_cog: {
-      view: AsItHappensHybridLayer,
+      view: GladLayer,
       timelineView: AsItHappensTimeline
     },
     umd_as_it_happens_idn: {
-      view: AsItHappensHybridLayer,
+      view: GladLayer,
       timelineView: AsItHappensTimeline
     },
     gfw_landsat_alerts_coverage: {
@@ -774,7 +795,30 @@ define([
     places_to_watch: {
       view:  Places2WatchLayer
     },
-    
+    mexican_psa: {
+      view:  MexicoPaymentsLayer
+    },
+    mex_land_rights: {
+      view:  MexLandRightsLayer
+    },
+    bra_logging: {
+      view:  BraLoggingLayer
+    },
+    mys_wood_fiber_sabah: {
+      view: MysWoodFiberSabahLayer
+    },
+    mys_proteced_areas_sabah: {
+      view:  MysPASabahLayer
+    },
+    mys_logging_sabah: {
+      view:  MysLoggingSabahLayer
+    },
+    per_protected_areas: {
+      view:  PerPALayer
+    },
+    mex_land_cover: {
+      view:  MexLandCoverLayer
+    },
     nothing: {
     }
   };
