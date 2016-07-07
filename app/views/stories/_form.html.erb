@@ -72,7 +72,7 @@
 
       <% (@story.media ||= []).each do |media| %>
         <% if media['thumbnail_url'].present? %>
-          <li class="thumbnail sortable">
+          <li class="thumbnail sortable" draggable="true"">
             <img src="<%= media['thumbnail_url'] %>" alt="" />
             <a href='#' class='destroy'></a>
           </li>
