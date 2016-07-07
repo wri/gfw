@@ -23,24 +23,17 @@ module Api
 
     def create(params)
       if valid?
-        uploads = [{
-          url: "",
-          embed_url: params['video'].present? ? params['video'] : "",
-          preview_url: "",
-          mime_type: "",
-          order: 0
-        }]
-
+        uploads = []
         uploads_ids = params['uploads_ids'].split(',')
-
         if uploads_ids.length >= 1
-          params['uploads_ids'].split(',').each_with_index do |id, index|
+          uploads_ids.each_with_index do |id, index|
+            idSub_video = id.sub('VID-','')
             uploads << {
-              url: id,
-              embed_url: "",
+              url: (id.start_with?('VID-'))? idSub_video : id,
+              embed_url: (id.start_with?('VID-'))? "https://www.youtube.com/watch?v=" + idSub_video.sub('http://img.youtube.com/vi/','').sub('/default.jpg','') : "",
               preview_url: id,
-              mime_type: "image/jpeg",
-              order: params['video'].present? ? index+1 : index+2
+              mime_type: (id.start_with?('VID-'))? "" : "image/jpeg",
+              order: index
             }
           end
         end
