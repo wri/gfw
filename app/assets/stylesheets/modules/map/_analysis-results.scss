@@ -16,6 +16,10 @@
     bottom: auto;
     left: auto;
     transform: translate(0,0%);
+    max-height: 40vh;
+    padding: 5px 0;
+    overflow-x: hidden; 
+    overflow-y: auto;
   }
 
   .close{
@@ -41,6 +45,7 @@
 
     > li {
       padding: 6px 0;
+      overflow: hidden;
       // border-bottom: 1px solid #ddd;
 
       &:first-child {
@@ -86,161 +91,160 @@
       line-height: 1.25;
     }
   }
+}
+
+// FOOTER ANALYSIS
+.analysis-footer {
+  margin: 15px 0 0;
 
   .analysis-subscribe {
     width: 100%;
   }
 
-  // FOOTER ANALYSIS
-  .analysis-footer {
-    margin: 15px 0 0;
+  // GRID
+  > ul {
+    margin: 15px -15px 0;
+    display: flex;
+    justify-content: space-between;
+    @media (min-width: 1500px){
+      margin: 20px -20px 0;
+      position: relative;
+      bottom: auto;
+      left: auto;
+      transform: translate(0,0%);
+    }
+
+    > li {
+      width: 100%;
+    }
+  }
 
 
-    // GRID
-    > ul {
-      margin: 15px -15px 0;
-      display: flex;
-      justify-content: space-between;
-      @media (min-width: 1500px){
-        margin: 20px -20px 0;
-        position: relative;
-        bottom: auto;
-        left: auto;
-        transform: translate(0,0%);
-      }
 
-      > li {
-        width: 100%;
+  // FOOTER BTN
+  .analysis-footer-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 0;        
+    box-shadow: none;
+    border: none;
+    background: none;
+    font-family: inherit;
+    outline: none;
+    color: $dark;
+    background: #eeeeee;
+    cursor: pointer;
+    
+    // ICON
+    svg {
+      fill: $dark;
+      width: 18px;
+      height: 18px;
+      margin: 0 5px 0 0;
+
+      &.-inactive {
+        display: none;
       }
     }
 
+    > span {
+      font-size: 10px;
+      text-transform: uppercase;
+    }
 
+    // STATES
+    &:hover {
+      background: lighten(#eeeeee, 5%);
+    }
 
-    // FOOTER BTN
-    .analysis-footer-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      padding: 10px 0;        
-      box-shadow: none;
-      border: none;
-      background: none;
-      font-family: inherit;
-      outline: none;
-      color: $dark;
-      background: #eeeeee;
-      cursor: pointer;
-      
-      // ICON
+    &.-active {
+      background: $white;
       svg {
-        fill: $dark;
-        width: 18px;
-        height: 18px;
-        margin: 0 5px 0 0;
-
+        display: none;
         &.-inactive {
-          display: none;
-        }
-      }
-
-      > span {
-        font-size: 10px;
-        text-transform: uppercase;
-      }
-
-      // STATES
-      &:hover {
-        background: lighten(#eeeeee, 5%);
-      }
-
-      &.-active {
-        background: $white;
-        svg {
-          display: none;
-          &.-inactive {
-            display: block;
-          }              
-        }
+          display: block;
+        }              
       }
     }
+  }
 
 
 
-    // FOOTER DROPDOWN (we use this for the download "modal")
-    .analysis-footer-dropdown {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;      
-      width: 100%;
+  // FOOTER DROPDOWN (we use this for the download "modal")
+  .analysis-footer-dropdown {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;      
+    width: 100%;
+    position: absolute;
+    bottom: 88px;
+    left: 0;
+    z-index: 2000;
+
+    transition: all 0.25s $easeInOutSine;
+    transform: translate(0,15px);
+
+    font-size: 13px;
+    text-align: left;
+    background-color: $white;
+    line-height: 1.5;
+    visibility: hidden;
+    opacity: 0;
+
+    @media (min-width: $br-mobileMap){
+      bottom: 38px;
+    }
+
+    // Toggle -active class
+    &.-active {
+      transform: translate(0,0);
+      visibility: visible;
+      opacity: 1;
+    }
+
+    // Overlay
+    &:before {
+      content: "";
+      display: block;
       position: absolute;
-      bottom: 88px;
-      left: 0;
-      z-index: 2000;
+      width: 100%;
+      height: 400%;
+      background: rgba(#000, 0.25);
+      z-index: 2;
+      bottom: 100%;
+      left: 0%;
+    }
 
-      transition: all 0.25s $easeInOutSine;
-      transform: translate(0,15px);
-
-      font-size: 13px;
-      text-align: left;
-      background-color: $white;
-      line-height: 1.5;
-      visibility: hidden;
-      opacity: 0;
-
-      @media (min-width: $br-mobileMap){
-        bottom: 38px;
-      }
-
-      // Toggle -active class
-      &.-active {
-        transform: translate(0,0);
-        visibility: visible;
-        opacity: 1;
-      }
-
-      // Overlay
-      &:before {
-        content: "";
-        display: block;
-        position: absolute;
-        width: 100%;
-        height: 400%;
-        background: rgba(#000, 0.25);
-        z-index: 2;
-        bottom: 100%;
-        left: 0%;
-      }
-
-      // Items
-      > li {
-        padding: 4px 15px;
-        border-bottom: 1px solid $border;
-        
-        &:first-child {
-          border-bottom: none;
-          font-size: 10px;
-          text-align: left;
-          border-bottom: none;  
-          padding: 10px 15px;
-
-          &:hover {
-            background-color: $white;
-          }              
-        }
-
-        &:last-child {
-          border-bottom: none;
-        }
+    // Items
+    > li {
+      padding: 4px 15px;
+      border-bottom: 1px solid $border;
+      
+      &:first-child {
+        border-bottom: none;
+        font-size: 10px;
+        text-align: left;
+        border-bottom: none;  
+        padding: 10px 15px;
 
         &:hover {
-          background-color: darken($white,2.5%);
-        }
+          background-color: $white;
+        }              
+      }
 
-        > a {
-          display: block;
-          color: $cGreen;
-        }
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: darken($white,2.5%);
+      }
+
+      > a {
+        display: block;
+        color: $cGreen;
       }
     }
   }

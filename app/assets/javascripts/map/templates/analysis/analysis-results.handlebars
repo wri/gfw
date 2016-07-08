@@ -1,4 +1,4 @@
-<div class="analysis-results">
+<div class="analysis-results scroll-thin-dark">
   <span class="close"><svg><use xlink:href="#shape-arrow-down"></use></svg></span>
 
   {{!-- RESULTS --}}
@@ -150,47 +150,46 @@
       </li>
     {{/ifCond}}
   </ul>
-
-
-  {{!-- FOOTER --}}
-  <footer class="analysis-footer">
-    <div class="m-btncontainer -col100">
-      <button class="btn green uppercase btn-analysis-subscribe {{#unless options.enabledSubscription}}disabled{{/unless}}">Subscribe</button>
-    </div>
-
-    <ul>
-      <li>
-        {{#ifCond slug "===" 'umd-loss-gain'}}
-          <a class="analysis-footer-btn download-mobile-link" data-type="forest-change" href="http://earthenginepartners.appspot.com/science-2013-global-forest" target="_blank">
-            <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
-            <span>Download data</span>
-          </a>
-        {{else}}
-          <button class="analysis-footer-btn js-dropdown-btn">
-            <div>
-              <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
-              <svg class="icon -inactive"><use xlink:href="#shape-close"></use></svg>
-            </div>
-            <span>Download data</span>            
-            <ul class="analysis-footer-dropdown js-dropdown">
-              <li><span>By downloading data you agree to the <a href="/terms">GFW Terms of Service</a></span></li>
-              <li><a class="download-mobile-link" data-type="forest-change" href="{{options.svg}}" target="_blank">SVG</a></li>
-              <li><a class="download-mobile-link" data-type="forest-change" href="{{options.geojson}}" target="_blank">GeoJSON</a></li>
-              <li><a class="download-mobile-link" data-type="forest-change" href="{{options.shp}}" target="_blank">SHP</a></li>
-              <li><a class="download-mobile-link" data-type="forest-change" href="{{options.kml}}" target="_blank">KML</a></li>
-              <li><a class="download-mobile-link" data-type="forest-change" href="{{options.csv}}" target="_blank">CSV</a></li>
-              <li><a class="download-mobile-link" data-type="forest-change" href="http://oneclick.cartodb.com/?file={{options.cdb}}&provider=gfw'" target="_blank">Open in Carto DB</a></li>
-            </ul>          
-          </button>          
-        {{/ifCond}}
-      </li>
-
-      <li>
-        <button class="analysis-footer-btn btn-analysis-delete">
-          <svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg>
-          <span>Discard analysis</span>
-        </button>
-      </li>
-    </ul>
-  </footer>
 </div>
+
+{{!-- FOOTER --}}
+<footer class="analysis-footer">
+  <div class="m-btncontainer -col100">
+    <button class="btn green uppercase btn-analysis-subscribe {{#unless options.enabledSubscription}}disabled{{/unless}}">Subscribe</button>
+  </div>
+
+  <ul>
+    <li>
+      {{#ifCond slug "===" 'umd-loss-gain'}}
+        <a class="analysis-footer-btn download-mobile-link" data-type="forest-change" href="http://earthenginepartners.appspot.com/science-2013-global-forest" target="_blank">
+          <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
+          <span>Download data</span>
+        </a>
+      {{else}}
+        <button class="analysis-footer-btn js-dropdown-btn">
+          <div>
+            <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
+            <svg class="icon -inactive"><use xlink:href="#shape-close"></use></svg>
+          </div>
+          <span>Download data</span>            
+          <ul class="analysis-footer-dropdown js-dropdown">
+            <li><span>By downloading data you agree to the <a href="/terms">GFW Terms of Service</a></span></li>
+            <li><a class="download-mobile-link" data-type="forest-change" href="{{options.svg}}" target="_blank">SVG</a></li>
+            <li><a class="download-mobile-link" data-type="forest-change" href="{{options.geojson}}" target="_blank">GeoJSON</a></li>
+            <li><a class="download-mobile-link" data-type="forest-change" href="{{options.shp}}" target="_blank">SHP</a></li>
+            <li><a class="download-mobile-link" data-type="forest-change" href="{{options.kml}}" target="_blank">KML</a></li>
+            <li><a class="download-mobile-link" data-type="forest-change" href="{{options.csv}}" target="_blank">CSV</a></li>
+            <li><a class="download-mobile-link" data-type="forest-change" href="http://oneclick.cartodb.com/?file={{options.cdb}}&provider=gfw'" target="_blank">Open in Carto DB</a></li>
+          </ul>          
+        </button>          
+      {{/ifCond}}
+    </li>
+
+    <li>
+      <button class="analysis-footer-btn btn-analysis-delete">
+        <svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg>
+        <span>Discard analysis</span>
+      </button>
+    </li>
+  </ul>
+</footer>
