@@ -121,7 +121,7 @@ define([
       });
       this.status.set('isoDisabled', true);
 
-      this.view.deleteDrawing();
+      this.view.deleteGeojson();
     },
 
     notificate: function(id){

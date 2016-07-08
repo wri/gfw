@@ -13,7 +13,7 @@ define([
   'map/services/AnalysisNewService',
   'map/services/GeostoreService',
   'helpers/geojsonUtilsHelper',
-], function(PresenterClass, _, Backbone, mps, Promise, moment, AnalysisService, GeostoreService, geojsonUtilsHelper) {
+], function(PresenterClass, _, Backbone, mps, Promise, moment, AnalysisService, GeostoreService, ShapeService, geojsonUtilsHelper) {
 
   'use strict';
 
@@ -49,7 +49,7 @@ define([
         },
         isoDisabled: false,
 
-        // Areas
+        // Shapes
         wdpaid: null,
         use: null,
         useid: null,
@@ -193,6 +193,7 @@ define([
 
       // Areas
       this.status.on('change:use', this.changeUse.bind(this));
+      this.status.on('change:useid', this.changeUse.bind(this));
       this.status.on('change:wdpaid', this.changeWdpaid.bind(this));
 
       // Spinner
@@ -273,11 +274,11 @@ define([
             // Geostore
             geostore: params.geostore,
             
-            // Areas
+            // Shapes
             wdpaid: params.wdpaid,
             // Replace gfw_ from the use. 
             // We should have a pair compare array intead of using a replace...
-            use: (!!params.use) ? params.use.replace('gfw_','') : null,
+            use: params.use,
             useid: params.useid,
           })
           
@@ -347,7 +348,7 @@ define([
       {
         'Analysis/shape': function(useid, use, wdpaid) {
           this.status.set('useid', useid);
-          this.status.set('use', (!!use) ? use.replace('gfw_','') : null);
+          this.status.set('use', use);
           this.status.set('wdpaid', wdpaid);
         }
       },
@@ -532,11 +533,12 @@ define([
           type: 'wdpaid'
         });
         this.publishAnalysis();
+
       }
     },
 
     changeUse: function() {
-      if (!!this.status.get('use')) {
+      if (!!this.status.get('use') && !!this.status.get('useid')) {
         this.status.set({
           active: true,
           type: 'use'
@@ -549,6 +551,7 @@ define([
           type: 'use'
         });
         this.publishAnalysis();
+
       }
     },
 

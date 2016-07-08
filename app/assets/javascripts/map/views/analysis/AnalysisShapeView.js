@@ -8,7 +8,9 @@ define([
   'handlebars', 
   'map/presenters/analysis/AnalysisShapePresenter',
   'text!map/templates/analysis/analysis-shape.handlebars',
-], function(_, Handlebars, Presenter, tpl) {
+  'helpers/geojsonUtilsHelper',
+
+], function(_, Handlebars, Presenter, tpl, geojsonUtilsHelper) {
 
   'use strict';
 
@@ -82,9 +84,60 @@ define([
         this.$btnPlay.removeClass('-hidden');
         this.$thumbnail.attr('src',this.png);        
       }
+    },
+
+
+
+
+    /**
+     * HELPERS
+     * getGeojson
+     * @param  {object} overlay
+     * @return {object:geojson}
+     */
+    getGeojson: function(overlay) {
+      var paths = overlay.getPath().getArray();
+      return geojsonUtilsHelper.pathToGeojson(paths);            
+    },
+    
+    /**
+     * deleteGeojson
+     * @param undefined
+     * @return {void}
+     */
+    deleteGeojson: function() {
+      var overlay = this.presenter.status.get('overlay_shape');
+      if (!!overlay) {        
+        overlay.setMap(null);
+        this.presenter.status.set('overlay_shape', null);
+        this.presenter.status.set('geojson_shape', null);
+      }
+    },
+
+    /**
+     * drawGeojson
+     * @param  {object:geojson} geojson
+     * @return {void}
+     */
+    drawGeojson: function(geojson) {
+      // Delete previous overlay if it exists
+      this.deleteGeojson();
+
+      var paths = geojsonUtilsHelper.geojsonToPath(geojson);
+      var overlay = new google.maps.Polygon({
+        paths: paths,
+        editable: false,
+        strokeWeight: 2,
+        fillOpacity: 0,
+        fillColor: '#FFF',
+        strokeColor: '#A2BC28'
+      });
+
+      overlay.setMap(this.map);
+      
+      this.presenter.status.set('overlay_shape', overlay, { silent: true });
+      this.presenter.status.set('geojson_shape', this.getGeojson(overlay), { silent: true });
     }
-
-
 
   });
   return AnalysisShapeView;

@@ -161,14 +161,6 @@ define([
       this.$analysisRegionSelect.val(region).attr('disabled', !country).trigger('chosen:updated');
     },
 
-    deleteDrawing: function() {
-      var overlay = this.presenter.status.get('overlay_country');
-      if (!!overlay) {        
-        overlay.setMap(null);
-        this.presenter.status.set('overlay_country', null);
-        this.presenter.status.set('geojson_country', null);
-      }
-    },
 
 
     /**
@@ -183,13 +175,27 @@ define([
     },
     
     /**
+     * deleteGeojson
+     * @param undefined
+     * @return {void}
+     */
+    deleteGeojson: function() {
+      var overlay = this.presenter.status.get('overlay_country');
+      if (!!overlay) {        
+        overlay.setMap(null);
+        this.presenter.status.set('overlay_country', null);
+        this.presenter.status.set('geojson_country', null);
+      }
+    },
+
+    /**
      * drawGeojson
      * @param  {object:geojson} geojson
      * @return {void}
      */
     drawGeojson: function(geojson) {
       // Delete previous overlay if it exists
-      this.deleteDrawing();
+      this.deleteGeojson();
 
       var paths = geojsonUtilsHelper.geojsonToPath(geojson);
       var overlay = new google.maps.Polygon({

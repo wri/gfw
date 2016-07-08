@@ -18,15 +18,18 @@ define([
     'use'     : '/{baselayer}/use{/use}{/useid}{?period,thresh}',
   };
 
+  var USENAMES = ['mining', 'oilpalm', 'fiber', 'logging'];
+
   var AnalysisService = Class.extend({
 
     get: function(status) {
         
       return new Promise(function(resolve, reject) {
-
+        console.log(status);
         this.analysis = this.buildAnalysisFromStatus(status);
-
+        console.log(this.analysis);
         var url = this.getUrl();
+        console.log(url);
 
         ds.define(GET_REQUEST_ID, {
           cache: {type: 'persist', duration: 1, unit: 'days'},
@@ -67,13 +70,22 @@ define([
       return new UriTemplate(APIURLS[this.analysis.type]).fillFromObject(this.analysis);
     },
 
+    getUse: function(use) {
+      var USENAME = _.filter(USENAMES, function(name){
+        return (use.indexOf(name) != -1)
+      });
+      
+      return (USENAME.length) ? USENAME[0] : use;
+    },
+
     buildAnalysisFromStatus: function(status) {
       return _.extend({}, status, {
         country: status.iso.country,
         region: status.iso.region,
         thresh: status.threshold,
-        period: status.begin + ',' + status.end
-      })
+        period: status.begin + ',' + status.end,
+        use: (!!status.use) ? this.getUse(status.use) : null
+      });
     },
 
     /**
