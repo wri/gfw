@@ -73,17 +73,6 @@ define([
      * @param  {string} maptype
      */
     selectMaptype: function(maptype) {
-      // if (maptype == 'positron' || maptype == 'dark') {
-      //   console.log(this.cartoAttribution);
-      //   // debugger;
-      //   var self = this;
-      //   setTimeout(_.bind(function() {
-      //     $('#map').find('.gmnoprint span').ready(function(){
-      //       debugger
-      //       $(this).addClass('showimportant').html(self.cartoAttribution)
-      //     });
-      //   }, self ), 2000);
-      // }
       this.$maptypes.removeClass('selected');
       this.$maptypeslist.find('.' + maptype).addClass('selected');
     },
