@@ -137,18 +137,11 @@ define([
               type: 'MultiPolygon'
             });
             var geojson = topojson.feature(results.topojson,objects),
-                bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson),
-                geometry = geojson.geometry
-
+                bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson)
 
             // Get bounds and fit to them
             if (!!bounds) {
               mps.publish('Map/fit-bounds', [bounds]);
-            }
-
-            // Draw geojson of country if isoDisabled is equal to true
-            if (!this.status.get('isoDisabled')) {
-              mps.publish('Country/geojson', [geometry]);
             }
             
           }.bind(this));

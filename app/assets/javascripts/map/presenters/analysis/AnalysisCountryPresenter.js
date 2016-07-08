@@ -11,8 +11,10 @@ define([
   'topojson', 
   'bluebird', 
   'moment',
+  'map/services/CountryService',
+  'helpers/geojsonUtilsHelper',  
 
-], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment) {
+], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment, countryService, geojsonUtilsHelper) {
 
   'use strict';
 
@@ -23,6 +25,7 @@ define([
           country: 'ALL',
           region: null
         },
+        isoEnabled: false,
 
         enabled: true,
         enabledSubscription: true
@@ -81,8 +84,14 @@ define([
           this.deleteAnalysis();
         }
       },{
-        'Country/geojson': function(geojson) {
-          this.view.drawGeojson(geojson);
+        'Analysis/iso': function(iso,isoDisabled) {
+          this.status.set('isoDisabled', isoDisabled);
+          if(!!iso.country && iso.country !== 'ALL' && !isoDisabled){
+            this.status.set({
+              iso: iso,
+              isoDisabled: isoDisabled
+            });
+          }
         }
       }
     ],
@@ -91,9 +100,14 @@ define([
      * LISTENERS
      */
     changeIso: function() {
+      var iso = this.status.get('iso');
+      var isoDisabled = this.status.get('isoDisabled');
       this.view.setSelects();
       this.view.toggleEnabledButtons();
-      mps.publish('Analysis/iso', [this.status.get('iso'), this.status.get('isoDisabled')])
+      if (!!iso.country && iso.country != 'ALL' && !isoDisabled) {
+        this.countryGeojson();
+      }
+      mps.publish('Analysis/iso', [iso, isoDisabled])
     },
 
     changeEnabled: function() {
@@ -102,6 +116,26 @@ define([
 
     changeEnabledSubscription: function() {
       this.view.toggleEnabledButtons();
+    },
+
+    countryGeojson: function() {
+      var iso = this.status.get('iso');
+
+      countryService.show(iso.country)
+        .then(function(results,status) {
+          console.log(results);
+          var objects = _.findWhere(results.topojson.objects, {
+            type: 'MultiPolygon'
+          });
+          var geojson = topojson.feature(results.topojson,objects),
+              geometry = geojson.geometry
+
+          // Draw geojson of country if isoDisabled is equal to true
+          this.view.drawGeojson(geometry);
+          
+          
+        }.bind(this));
+
     },
 
 
