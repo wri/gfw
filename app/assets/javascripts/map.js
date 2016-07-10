@@ -22,8 +22,10 @@ require([
   'map/collections/CountryCollection',
 
   'map/presenters/ExperimentsPresenter',
-  // Should we get rid of them?
+  
   'map/services/AnalysisService',
+
+  // Should we get rid of them?
   'map/services/CountryService',
   'map/services/DataService',
   // 
@@ -57,13 +59,6 @@ require([
       this._handlebarsPlugins();
       this._configPromise();
       this._initViews();
-
-      // // For dev
-      // window.router = router;
-      // window.mps = mps;
-      // window.analysis = AnalysisService;
-      // window.countryService = CountryService;
-      // window.ds = DataService;
     },
 
     /**
@@ -161,13 +156,13 @@ require([
     _configPromise: function() {
       Promise.config({
           // Enable warnings
-          warnings: true,
+          warnings: false,
           // Enable long stack traces
-          longStackTraces: true,
+          longStackTraces: false,
           // Enable cancellation
-          cancellation: true,
+          cancellation: false,
           // Enable monitoring
-          monitoring: true
+          monitoring: false
       });      
     }
 

@@ -229,6 +229,7 @@ define([
         this.presenter.status.set('geojson', this.getGeojson(e.overlay));
         
         this.eventsDrawing();
+        this.presenter.status.set('is_drawing', false);
 
         ga('send', 'event', 'Map', 'Analysis', 'Polygon: complete');
       }

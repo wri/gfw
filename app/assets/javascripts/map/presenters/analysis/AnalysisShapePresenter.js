@@ -79,7 +79,6 @@ define([
      */
     changeUse: function() {
       if (!!this.status.get('use') && !!this.status.get('useid')) {
-        console.log(this.status.get('use'),this.status.get('useid'))
         // Get geometry from the shape
         ShapeService.get(this.status.get('use'), this.status.get('useid'))
           .then(function(geojson, status){

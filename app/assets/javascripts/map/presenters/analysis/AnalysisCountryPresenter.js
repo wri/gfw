@@ -72,6 +72,10 @@ define([
           this.deleteAnalysis();
         }
       },{
+        'Analysis/shape': function() {
+          this.deleteAnalysis();
+        }
+      },{
         'Analysis/enabled': function(enabled) {
           this.status.set('enabled', enabled);
         }
@@ -123,7 +127,6 @@ define([
 
       countryService.show(iso.country)
         .then(function(results,status) {
-          console.log(results);
           var objects = _.findWhere(results.topojson.objects, {
             type: 'MultiPolygon'
           });
@@ -132,10 +135,7 @@ define([
 
           // Draw geojson of country if isoDisabled is equal to true
           this.view.drawGeojson(geometry);
-          
-          
         }.bind(this));
-
     },
 
 

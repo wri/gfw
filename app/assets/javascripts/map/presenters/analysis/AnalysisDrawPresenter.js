@@ -39,7 +39,13 @@ define([
           this.status.set('geojson', response.data.attributes.geojson, {silent: true});
           this.view.drawGeojson(response.data.attributes.geojson.features[0].geometry);
         }
-      },{
+      },
+      {
+        'Analysis/shape': function() {
+          this.deleteAnalysis();
+        }
+      },
+      {
         'Analysis/delete': function() {
           this.deleteAnalysis();
         }

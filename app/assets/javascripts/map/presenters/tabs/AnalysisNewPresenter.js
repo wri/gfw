@@ -29,18 +29,20 @@ define([
 
         active: false,
         spinner: false,
+        tab: null,
         subtab: 'default',
         
         // Layers
         baselayers: [],
         baselayer: null,
-
-        // Options
-        threshold: 30,
         
         // Dates
         begin: null,
         end: null,
+
+        // Draw
+        geostore: null,
+        isDrawing: false,
 
         // Country
         iso: {
@@ -54,9 +56,10 @@ define([
         use: null,
         useid: null,
 
-        // Draw
-        geostore: null,
-        isDrawing: false
+        // Options
+        threshold: 30,
+        fit_to_geom: null,
+
       }
     })),
 
@@ -186,6 +189,7 @@ define([
 
       // Geostore
       this.status.on('change:geostore', this.changeGeostore.bind(this));
+      this.status.on('change:isDrawing', this.changeIsDrawing.bind(this));
       
       // Countries
       this.status.on('change:isoDisabled', this.changeIso.bind(this));
@@ -232,13 +236,13 @@ define([
         p.useid = this.status.get('useid');
       }
 
-      // if (this.status.get('fit_to_geom')) {
-      //   p.fit_to_geom = 'true';
-      // }
+      if (this.status.get('fit_to_geom')) {
+        p.fit_to_geom = 'true';
+      }
 
-      // if (this.status.get('tab')) {
-      //   p.tab = this.status.get('tab');
-      // }
+      if (this.status.get('tab')) {
+        p.tab = this.status.get('tab');
+      }
       return p;
     },
 
@@ -268,8 +272,9 @@ define([
             begin: (params.begin) ? params.begin : '2001-01-01',
             end: (params.begin) ? params.end : '2015-01-01',
             
-            // Threshold
+            // Options
             threshold: params.threshold,
+            fit_to_geom: params.fit_to_geom,
 
             // Geostore
             geostore: params.geostore,
@@ -352,6 +357,12 @@ define([
           this.status.set('wdpaid', wdpaid);
         }
       },
+      {
+        'Analysis/shape-enableds': function() {
+          this.publishEnableds();
+        }
+      },
+
 
       // TIMELINE
       {
@@ -402,7 +413,7 @@ define([
         'Analysis/delete': function(options) {
           this.deleteAnalysis(options);
         }
-      }
+      },
     ],
 
 
@@ -473,6 +484,10 @@ define([
 
     changeSubtab: function() {
       this.view.toggleSubtab();
+    },
+
+    changeIsDrawing: function() {
+      // console.log('IsDrawing', this.status.get('isDrawing'))
     },
 
     /**
@@ -631,6 +646,11 @@ define([
       mps.publish('ThresholdControls/show');
     },
 
+    publishEnableds: function() {
+      mps.publish('Analysis/enabled', [this.status.get('enabled')]);
+      mps.publish('Analysis/enabled-subscription', [this.status.get('enabledSubscription')]);
+    },
+
 
 
     /**
@@ -642,7 +662,7 @@ define([
       var statusFiltered = (!!type) ? _.filter(this.types, function(v){
         return v.type != type;
       }.bind(this)) : this.types;
-      
+
       // If type exists delete all stuff related 
       // to other analysis
       // 'iso' and 'isoDisabled' need a different treatment
