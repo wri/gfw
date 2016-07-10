@@ -9,6 +9,7 @@ define([
   'amplify', 
   'chosen', 
   'turf', 
+  'views/ShareView',
   'map/views/analysis/AnalysisDrawView',
   'map/views/analysis/AnalysisCountryView',
   'map/views/analysis/AnalysisShapeView',
@@ -16,7 +17,7 @@ define([
   'map/presenters/tabs/AnalysisNewPresenter',
   'text!map/templates/tabs/analysis-new.handlebars',
   'text!map/templates/tabs/analysis-mobile-new.handlebars'
-], function(_, Handlebars, amplify, chosen, turf, AnalysisDrawView, AnalysisCountryView, AnalysisShapeView, AnalysisResultsNewView, Presenter, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, turf, ShareView, AnalysisDrawView, AnalysisCountryView, AnalysisShapeView, AnalysisResultsNewView, Presenter, tpl, tplMobile) {
 
   'use strict';
 
@@ -38,6 +39,7 @@ define([
       'click .btn-analysis-refresh' : 'onClickRefresh',
       'click .btn-analysis-subscribe' : 'onClickSubscribe',
       'click .btn-analysis-canopy' : 'onClickCanopy',
+      'click .btn-analysis-share' : 'onClickShare',
     },
 
     initialize: function(map, countries) {
@@ -135,6 +137,11 @@ define([
         this.presenter.publishSubscribtion();
       }
       // ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + this.params.layer.title);
+    },
+
+    onClickShare: function(e) {
+      var shareView = new ShareView().share(e);
+      $('body').append(shareView.el);
     },
 
 
