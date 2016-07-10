@@ -97,7 +97,9 @@ define([
             });
           }
           
-          if (! !!iso.country) {
+          if (!!iso.country && iso.country !== 'ALL') {
+            console.log('Set regions');
+          } else {
             mps.publish('Analysis/delete');
           }
         }
