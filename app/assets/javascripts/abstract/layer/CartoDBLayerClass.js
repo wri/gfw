@@ -81,9 +81,10 @@ define([
         if (!!model.attributes.content.data.slope_semester && !!model.attributes.content.data.alerts_last_semester) {
           this.drawSlopeGraph(model.attributes.content.data.slope_semester,model.attributes.content.data.alerts_last_semester);
         }
-        if (!!model.attributes.content.data.slope_semester) {this.prettySlopeSemester(model.attributes.content.data.slope_semester)}
+        if (!!model.attributes.content.data.slope_semester) {
+          this.prettySlopeSemester(model.attributes.content.data.slope_semester)
+        }
         var analysis = $('#analysis-tab-button').hasClass('disabled');
-        $('#analyzeBtn').toggleClass('dont-analyze', analysis);
         mps.publish('Infowindow/toggleSubscribeButton', []);
       }, this));
       this.infowindow.model.on('change', _.bind(function(model) {
