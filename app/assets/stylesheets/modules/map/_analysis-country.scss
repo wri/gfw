@@ -5,5 +5,11 @@
     &:first-of-type {
       margin: 0;
     }
-  }  
+  }
+
+  &.-results {
+		.select-container {
+			padding: 0 0 15px;
+		}
+  }
 }

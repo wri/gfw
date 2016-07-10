@@ -156,13 +156,13 @@ require([
     _configPromise: function() {
       Promise.config({
           // Enable warnings
-          warnings: false,
+          warnings: true,
           // Enable long stack traces
-          longStackTraces: false,
+          longStackTraces: true,
           // Enable cancellation
-          cancellation: false,
+          cancellation: true,
           // Enable monitoring
-          monitoring: false
+          monitoring: true
       });      
     }
 

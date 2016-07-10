@@ -1,36 +1,48 @@
+<div class="select-container">
+  <select data-placeholder="Select country" class="chosen-select default notranslate" id="analysis-country-select">
+    <option></option>
+    {{#each countries}}
+      <option value="{{iso}}">{{name}}</option>
+    {{/each}}
+  </select>
+  <select data-placeholder="Select jurisdiction (optional)" disabled="true" class="chosen-select default notranslate" id="analysis-region-select">
+    <option></option>
+  </select>
+</div>
+
 <div class="analysis-results scroll-thin-dark">
   <span class="close"><svg><use xlink:href="#shape-arrow-down"></use></svg></span>
 
   {{!-- RESULTS --}}
   <ul class="analysis-stats">
-    {{#if areaHa}}
+    {{#if resource.areaHa}}
       <li>
         <span class="stats-title">Total selected area</span>
-        <span class="stats-count"><strong>{{areaHa}}</strong> ha</span>
+        <span class="stats-count"><strong>{{resource.areaHa}}</strong> ha</span>
       </li>
     {{/if}}
 
     
     {{!-- LOSS --}}
-    {{#ifCond slug "===" 'umd-loss-gain'}}
-      {{#if baselayers.loss}}
+    {{#ifCond resource.slug "===" 'umd-loss-gain'}}
+      {{#if resource.baselayers.loss}}
         <li>
-          <span class="stats-title">Loss <a href="#" class="source" data-source="how_to_adjust_date">{{dates.lossDateRange}}</a><span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
-          <span class="stats-count" style="color: {{baselayers.loss.category_color}};"><strong>{{alerts.totalAlerts}}</strong> ha</span>
+          <span class="stats-title">Loss <a href="#" class="source" data-source="how_to_adjust_date">{{resource.dates.lossDateRange}}</a><span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
+          <span class="stats-count" style="color: {{resource.baselayers.loss.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> ha</span>
         </li>
       {{/if}}
 
-      {{#if baselayers.forestgain}}
+      {{#if resource.baselayers.forestgain}}
         <li>
           <span class="stats-title">Gain 2001-2012</span>
-          <span class="stats-count" style="color: {{baselayers.forestgain.title_color}};"><strong>{{alerts.gainAlerts}}</strong> ha</span>
+          <span class="stats-count" style="color: {{resource.baselayers.forestgain.title_color}};"><strong>{{resource.alerts.gainAlerts}}</strong> ha</span>
         </li>
       {{/if}}
 
-      {{#if baselayers.forest2000}}    
+      {{#if resource.baselayers.forest2000}}    
       <li>
-        <span class="stats-title">Tree cover (2000)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
-        <span class="stats-count" style="color: {{baselayers.forest2000.title_color}};"><strong>{{alerts.treeExtent}}</strong> ha</span>
+        <span class="stats-title">Tree cover (2000)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
+        <span class="stats-count" style="color: {{resource.baselayers.forest2000.title_color}};"><strong>{{resource.alerts.treeExtent}}</strong> ha</span>
       </li>
       {{/if}}
 
@@ -48,22 +60,22 @@
     {{/ifCond}}   
 
     {{!-- PRODES --}}
-    {{#ifCond slug "===" 'prodes-loss'}}
+    {{#ifCond resource.slug "===" 'prodes-loss'}}
       <li>
-        <span class="stats-title">Prodes tree cover loss ({{dates.dateRange}})</span>
-        <span class="stats-count" style="color: {{baselayers.prodes.title_color}};"><strong>{{alerts.totalAlerts}}</strong> ha</span>
+        <span class="stats-title">Prodes tree cover loss ({{resource.dates.dateRange}})</span>
+        <span class="stats-count" style="color: {{resource.baselayers.prodes.title_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> ha</span>
       </li>
     {{/ifCond}}
 
     {{!-- IMAZON --}}
-    {{#ifCond slug "===" 'imazon-alerts'}}
+    {{#ifCond resource.slug "===" 'imazon-alerts'}}
       <li>
-        <span class="stats-title">Deforestation alerts ({{dates.dateRange}})</span>
-        <span class="stats-count" style="color: {{baselayers.imazon.title_color}};"><strong>{{alerts.deforAlerts}}</strong> ha</span>
+        <span class="stats-title">Deforestation alerts ({{resource.dates.dateRange}})</span>
+        <span class="stats-count" style="color: {{resource.baselayers.imazon.title_color}};"><strong>{{resource.alerts.deforAlerts}}</strong> ha</span>
       </li>
       <li>
         <span class="stats-title">Degradation alerts</span>
-        <span class="stats-count" style="color: {{baselayers.imazon.category_color}};"><strong>{{alerts.degradAlerts}}</strong> ha</span>
+        <span class="stats-count" style="color: {{resource.baselayers.imazon.category_color}};"><strong>{{resource.alerts.degradAlerts}}</strong> ha</span>
       </li>
     {{/ifCond}}   
 
@@ -71,82 +83,82 @@
 
    
     {{!-- GUYRA --}}
-    {{#ifCond slug "===" 'guyra-loss'}}
+    {{#ifCond resource.slug "===" 'guyra-loss'}}
       <li>
         <span class="stats-title">Grand Chaco tree cover loss:</span>
-        <span class="stats-count" style="color: {{baselayers.guyra.category_color}};"><strong>{{alerts.totalAlerts}}</strong> ha</span>
+        <span class="stats-count" style="color: {{resource.baselayers.guyra.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> ha</span>
       </li>
     {{/ifCond}}   
 
 
     {{!-- GLAD --}}
-    {{#ifCond slug "===" 'glad-alerts'}}
+    {{#ifCond resource.slug "===" 'glad-alerts'}}
       <li>
         <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
-        <span class="stats-count" style="color: {{baselayers.umd_as_it_happens.category_color}};"><strong>{{alerts.totalAlerts}}</strong></span>
+        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong></span>
       </li>
     {{/ifCond}}   
 
 
     {{!-- GLAD PERU --}}
-    {{#ifCond slug "===" 'umd_as_it_happens_per'}}
+    {{#ifCond resource.slug "===" 'umd_as_it_happens_per'}}
       <li>
         <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
-        <span class="stats-count" style="color: {{baselayers.umd_as_it_happens_per.category_color}};"><strong>{{alerts.totalAlerts}}</strong></span>
+        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens_per.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong></span>
       </li>
     {{/ifCond}}   
 
 
     {{!-- GLAD CONGO --}}
-    {{#ifCond slug "===" 'umd_as_it_happens_cog'}}
+    {{#ifCond resource.slug "===" 'umd_as_it_happens_cog'}}
       <li>
         <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
-        <span class="stats-count" style="color: {{baselayers.umd_as_it_happens_cog.category_color}};"><strong>{{alerts.totalAlerts}}</strong></span>
+        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens_cog.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong></span>
       </li>
     {{/ifCond}}   
 
 
     {{!-- GLAD INDONESIA --}}
-    {{#ifCond slug "===" 'umd_as_it_happens_idn'}}
+    {{#ifCond resource.slug "===" 'umd_as_it_happens_idn'}}
       <li>
         <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
-        <span class="stats-count" style="color: {{baselayers.umd_as_it_happens_idn.category_color}};"><strong>{{alerts.totalAlerts}}</strong></span>
+        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens_idn.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong></span>
       </li>
     {{/ifCond}}   
 
 
     {{!-- FORMA --}}
-    {{#ifCond slug "===" 'forma-alerts'}}
+    {{#ifCond resource.slug "===" 'forma-alerts'}}
       <li>
-        <span class="stats-title">Total alerts ({{dates.dateRange}})</span>
-        <span class="stats-count" style="color: {{baselayers.forma.category_color}};"><strong>{{alerts.totalAlerts}}</strong> {{alertsName}}</span>
+        <span class="stats-title">Total alerts ({{resource.dates.dateRange}})</span>
+        <span class="stats-count" style="color: {{resource.baselayers.forma.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> {{resource.alertsName}}</span>
       </li>
     {{/ifCond}}
 
 
     {{!-- MODIS --}}
-    {{#ifCond slug "===" 'quicc-alerts'}}
+    {{#ifCond resource.slug "===" 'quicc-alerts'}}
       <li>
-        <span class="stats-title">Total alerts ({{dates.dateRange}})</span>
-        <span class="stats-count" style="color: {{baselayers.modis.category_color}};"><strong>{{alerts.totalAlerts}}</strong> {{alertsName}}</span>
+        <span class="stats-title">Total alerts ({{resource.dates.dateRange}})</span>
+        <span class="stats-count" style="color: {{resource.baselayers.modis.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> {{resource.alertsName}}</span>
       </li>
     {{/ifCond}}
 
 
     {{!-- FIRES --}}
-    {{#ifCond slug "===" 'viirs-active-fires'}}
+    {{#ifCond resource.slug "===" 'viirs-active-fires'}}
       <li>
-        <span class="stats-title">Total alerts ({{dates.dateRange}})</span>
-        <span class="stats-count" style="color: {{baselayers.viirs_fires_alerts.category_color}};"><strong>{{alerts.totalAlerts}}</strong> {{alertsName}}</span>
+        <span class="stats-title">Total alerts ({{resource.dates.dateRange}})</span>
+        <span class="stats-count" style="color: {{resource.baselayers.viirs_fires_resource.alerts.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> {{resource.alertsName}}</span>
       </li>
     {{/ifCond}}
 
 
     {{!-- TERRAi --}}
-    {{#ifCond slug "===" 'terrai-alerts'}}
+    {{#ifCond resource.slug "===" 'terrai-alerts'}}
       <li>
-        <span class="stats-title">Total alerts ({{dates.dateRange}})</span>
-        <span class="stats-count" style="color: {{baselayers.terrailoss.category_color}};"><strong>{{alerts.totalAlerts}}</strong> {{alertsName}}</span>
+        <span class="stats-title">Total alerts ({{resource.dates.dateRange}})</span>
+        <span class="stats-count" style="color: {{resource.baselayers.terrailoss.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> {{resource.alertsName}}</span>
       </li>
     {{/ifCond}}
   </ul>
@@ -155,12 +167,12 @@
 {{!-- FOOTER --}}
 <footer class="analysis-footer">
   <div class="m-btncontainer -col100">
-    <button class="btn green uppercase btn-analysis-subscribe {{#unless options.enabledSubscription}}disabled{{/unless}}">Subscribe</button>
+    <button class="btn green uppercase btn-analysis-subscribe {{#unless resource.options.enabledSubscription}}disabled{{/unless}}">Subscribe</button>
   </div>
 
   <ul>
     <li>
-      {{#ifCond slug "===" 'umd-loss-gain'}}
+      {{#ifCond resource.slug "===" 'umd-loss-gain'}}
         <a class="analysis-footer-btn download-mobile-link" data-type="forest-change" href="http://earthenginepartners.appspot.com/science-2013-global-forest" target="_blank">
           <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
           <span>Download data</span>
@@ -174,12 +186,12 @@
           <span>Download data</span>            
           <ul class="analysis-footer-dropdown js-dropdown">
             <li><span>By downloading data you agree to the <a href="/terms">GFW Terms of Service</a></span></li>
-            <li><a class="download-mobile-link" data-type="forest-change" href="{{options.svg}}" target="_blank">SVG</a></li>
-            <li><a class="download-mobile-link" data-type="forest-change" href="{{options.geojson}}" target="_blank">GeoJSON</a></li>
-            <li><a class="download-mobile-link" data-type="forest-change" href="{{options.shp}}" target="_blank">SHP</a></li>
-            <li><a class="download-mobile-link" data-type="forest-change" href="{{options.kml}}" target="_blank">KML</a></li>
-            <li><a class="download-mobile-link" data-type="forest-change" href="{{options.csv}}" target="_blank">CSV</a></li>
-            <li><a class="download-mobile-link" data-type="forest-change" href="http://oneclick.cartodb.com/?file={{options.cdb}}&provider=gfw'" target="_blank">Open in Carto DB</a></li>
+            <li><a class="download-mobile-link" data-type="forest-change" href="{{resource.options.svg}}" target="_blank">SVG</a></li>
+            <li><a class="download-mobile-link" data-type="forest-change" href="{{resource.options.geojson}}" target="_blank">GeoJSON</a></li>
+            <li><a class="download-mobile-link" data-type="forest-change" href="{{resource.options.shp}}" target="_blank">SHP</a></li>
+            <li><a class="download-mobile-link" data-type="forest-change" href="{{resource.options.kml}}" target="_blank">KML</a></li>
+            <li><a class="download-mobile-link" data-type="forest-change" href="{{resource.options.csv}}" target="_blank">CSV</a></li>
+            <li><a class="download-mobile-link" data-type="forest-change" href="http://oneclick.cartodb.com/?file={{resource.options.cdb}}&provider=gfw'" target="_blank">Open in Carto DB</a></li>
           </ul>          
         </button>          
       {{/ifCond}}

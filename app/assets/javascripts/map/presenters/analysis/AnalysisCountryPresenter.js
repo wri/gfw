@@ -96,6 +96,10 @@ define([
               isoDisabled: isoDisabled
             });
           }
+          
+          if (! !!iso.country) {
+            mps.publish('Analysis/delete');
+          }
         }
       }
     ],
@@ -111,6 +115,7 @@ define([
       if (!!iso.country && iso.country != 'ALL' && !isoDisabled) {
         this.countryGeojson();
       }
+
       mps.publish('Analysis/iso', [iso, isoDisabled])
     },
 

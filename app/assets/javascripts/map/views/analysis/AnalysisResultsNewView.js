@@ -74,7 +74,14 @@ define([
 
     render: function() {
       this.setElement(this.setEl())
-      this.$el.addClass('-results').html(this.templates.success(this.presenter.status.get('resource')));
+      this.$el.addClass('-results').html(this.templates.success({
+        resource: this.presenter.status.get('resource'),
+        countries: this.countries
+      }));
+
+      this.cache();
+      this.renderChosen();
+      this.setSelects();
     },
 
     renderError: function() {
@@ -88,7 +95,11 @@ define([
     },
 
     cache: function() {
+      this.$selects = this.$el.find('.chosen-select');
 
+      // Select
+      this.$analysisCountrySelect = this.$el.find('#analysis-country-select');
+      this.$analysisRegionSelect = this.$el.find('#analysis-region-select');
     },
 
     /**
@@ -105,6 +116,28 @@ define([
       var type = this.presenter.status.get('type');
       return _.findWhere(this.types, { type: type }).el
     },
+
+    setSelects: function() {
+      var iso = this.presenter.status.get('iso'),
+          country = (iso && iso.country != 'ALL') ? iso.country : null,
+          region = iso.region;
+
+      // Country
+      this.$analysisCountrySelect.val(country).trigger('chosen:updated');
+
+      // Region
+      this.$analysisRegionSelect.val(region).attr('disabled', !country).trigger('chosen:updated');
+    },
+
+    renderChosen: function() {
+      this.$selects.chosen({
+        width: '100%',
+        allow_single_deselect: true,
+        inherit_select_classes: true,
+        no_results_text: "Oops, nothing found!"
+      });      
+    },
+
 
   });
 
