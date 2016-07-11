@@ -112,13 +112,19 @@ define([
         this.renderDate();
       };
 
-      this.datePicker = new TorqueTimelineDatePicker({
+      var datePicker = new TorqueTimelineDatePicker({
         layer: this.layer,
         presenter: this.presenter,
         dateRange: this.bounds,
         onChange: onChange.bind(this)
       });
-      this.$el.prepend(this.datePicker.render().el);
+
+      if (this.datePicker) {
+        this.datePicker.remove();
+      }
+
+      this.$el.prepend(datePicker.render().el);
+      this.datePicker = datePicker;
     },
 
     _onTorqueStop: function() {

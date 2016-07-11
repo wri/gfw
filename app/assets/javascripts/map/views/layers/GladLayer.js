@@ -1,10 +1,12 @@
 define([
-  'bluebird', 'uri', 'd3',
+  'bluebird', 'uri', 'd3', 'mps', 'moment',
   'abstract/layer/AnimatedCanvasLayerClass',
-  'map/presenters/TorqueLayerPresenter'
+  'map/services/GladDateService',
+  'map/presenters/GladLayerPresenter'
 ], function(
-  Promise, UriTemplate, d3,
+  Promise, UriTemplate, d3, mps, moment,
   AnimatedCanvasLayerClass,
+  GladDateService,
   Presenter
 ) {
 
@@ -36,7 +38,21 @@ define([
     },
 
     _getLayer: function() {
-      return Promise.resolve(this);
+      return new Promise(function(resolve) {
+
+      var dateService = new GladDateService({
+        layer: 'glad-alerts' });
+
+      dateService.fetchDates().then(function(response) {
+        this.maxDate = moment(response.max_date);
+        this.currentDate[1] = this.maxDate;
+        mps.publish('Torque/date-range-change', [this.currentDate]);
+        mps.publish('Place/update', [{go: false}]);
+
+        resolve(this);
+      }.bind(this));
+
+      }.bind(this));
     },
 
     _getUrl: function(x, y, z) {
