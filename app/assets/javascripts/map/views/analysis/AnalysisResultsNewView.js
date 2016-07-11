@@ -131,7 +131,23 @@ define([
       this.$analysisCountrySelect.val(country).trigger('chosen:updated');
 
       // Region
-      this.$analysisRegionSelect.val(region).attr('disabled', !country).trigger('chosen:updated');
+      if (!!this.presenter.status.get('regions')) {
+        // Append the regions
+        this.$analysisRegionSelect.html('<option></option>');
+        _.each(this.presenter.status.get('regions'), function(region) {
+          this.$analysisRegionSelect.append($("<option />").val(region.id_1).text(region.name_1));
+        }.bind(this));
+        
+        // Set the selected value
+        this.$analysisRegionSelect.val(region).attr('disabled', false).trigger('chosen:updated');  
+      } else {
+        // Remove the regions
+        this.$analysisRegionSelect.html('<option></option>');
+
+        // Remove the selected value
+        this.$analysisRegionSelect.val(null).attr('disabled', true).trigger('chosen:updated');
+      }
+      
     },
 
     renderChosen: function() {

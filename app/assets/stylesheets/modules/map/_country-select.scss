@@ -68,6 +68,10 @@
       &.active-result {
         display: list-item;
         cursor: pointer;
+        
+        &.result-selected {
+          background: #DDD;
+        }
       }
       
       &.disabled-result {

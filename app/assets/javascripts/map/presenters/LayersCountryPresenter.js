@@ -96,6 +96,19 @@ define([
         }
       }
     },{
+      'Analysis/delete': function(options) {
+        var iso = this.status.get('iso');
+        if(!!iso.country && iso.country !== 'ALL'){
+          this.status.set({
+            iso: {
+              country: iso.country,
+              region: null
+            }
+          });
+        }
+        
+      }
+    },{
       'Analysis/enabled': function(boolean) {
         this.view.setAnalysisButtonStatus(boolean);
       }

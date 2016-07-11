@@ -12,9 +12,10 @@ define([
   'bluebird', 
   'moment',
   'map/services/CountryService',
+  'map/services/RegionService',
   'helpers/geojsonUtilsHelper',  
 
-], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment, countryService, geojsonUtilsHelper) {
+], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment, CountryService, RegionService, geojsonUtilsHelper) {
 
   'use strict';
 
@@ -28,7 +29,11 @@ define([
         isoEnabled: false,
 
         enabled: true,
-        enabledSubscription: true
+        enabledSubscription: true,
+
+        country: null,
+        regions: null,
+        region: null,
       }
     })),
 
@@ -41,6 +46,8 @@ define([
     listeners: function() {
       this.status.on('change:iso', this.changeIso.bind(this));
       this.status.on('change:isoDisabled', this.changeIso.bind(this));
+
+      this.status.on('change:regions', this.changeRegions.bind(this));
 
       this.status.on('change:enabled', this.changeEnabled.bind(this));
       this.status.on('change:enabledSubscription', this.changeEnabledSubscription.bind(this));
@@ -90,18 +97,13 @@ define([
       },{
         'Analysis/iso': function(iso,isoDisabled) {
           this.status.set('isoDisabled', isoDisabled);
+
           if(!!iso.country && iso.country !== 'ALL' && !isoDisabled){
             this.status.set({
               iso: iso,
               isoDisabled: isoDisabled
             });
-          }
-          
-          if (!!iso.country && iso.country !== 'ALL') {
-            console.log('Set regions');
-          } else {
-            mps.publish('Analysis/delete');
-          }
+          }          
         }
       }
     ],
@@ -112,13 +114,21 @@ define([
     changeIso: function() {
       var iso = this.status.get('iso');
       var isoDisabled = this.status.get('isoDisabled');
-      this.view.setSelects();
-      this.view.toggleEnabledButtons();
-      if (!!iso.country && iso.country != 'ALL' && !isoDisabled) {
-        this.countryGeojson();
+
+      // Draw geojson depending if it's a country or a region
+      if(!!iso.country && iso.country !== 'ALL' && !isoDisabled){
+        (!!iso.region) ? this.showRegion() : this.showCountry();
       }
 
-      mps.publish('Analysis/iso', [iso, isoDisabled])
+      // Get regions
+      if (!!iso.country && iso.country != 'ALL') {
+        this.getRegions();
+        mps.publish('Analysis/iso', [iso, isoDisabled])
+      } else {
+        mps.publish('Analysis/delete');         
+      }
+
+      this.view.toggleEnabledButtons();
     },
 
     changeEnabled: function() {
@@ -129,10 +139,27 @@ define([
       this.view.toggleEnabledButtons();
     },
 
-    countryGeojson: function() {
+    changeRegions: function() {
+      this.view.setSelects();
+    },
+
+
+    /**
+     * ACTIONS
+     * - showCountry
+     * - showRegion
+     * - getRegions
+     * - deleteAnalysis
+     * - notificate
+     */
+    publishAnalysis: function() {
+      mps.publish('Analysis/delete');
+    },
+
+    showCountry: function() {
       var iso = this.status.get('iso');
 
-      countryService.show(iso.country)
+      CountryService.show(iso.country)
         .then(function(results,status) {
           var objects = _.findWhere(results.topojson.objects, {
             type: 'MultiPolygon'
@@ -142,25 +169,45 @@ define([
 
           // Draw geojson of country if isoDisabled is equal to true
           this.view.drawGeojson(geometry);
+
         }.bind(this));
     },
 
+    getRegions: function() {
+      var iso = this.status.get('iso');
+  
+      RegionService.get(iso.country)
+        .then(function(results,status) {
+          this.status.set({
+            regions: results.rows
+          })
+        }.bind(this));
+    },
 
-    /**
-     * ACTIONS
-     * - deleteAnalysis
-     * - notificate
-     */
-    publishAnalysis: function() {
-      mps.publish('Analysis/delete');
+    showRegion: function() {
+      var iso = this.status.get('iso');
+
+      RegionService.show(iso.country, iso.region)
+        .then(function(results,status) {
+          var geometry = results.features[0].geometry
+
+          // Draw geojson of country if isoDisabled is equal to true
+          this.view.drawGeojson(geometry);
+        }.bind(this));
     },
 
     deleteAnalysis: function() {
-      this.status.set('iso', {
+      this.status.set({
+        iso: {
+          country: null,
+          region: null
+        },
+        isoDisabled: true,
+        
+        regions: null,
         country: null,
         region: null
       });
-      this.status.set('isoDisabled', true);
 
       this.view.deleteGeojson();
     },

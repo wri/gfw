@@ -9,8 +9,9 @@ define([
   'backbone',
   'moment',
   'mps',
+  'map/services/RegionService',  
   'helpers/geojsonUtilsHelper'
-], function(PresenterClass, _, Backbone, moment, mps, geojsonUtilsHelper) {
+], function(PresenterClass, _, Backbone, moment, mps, RegionService, geojsonUtilsHelper) {
 
   'use strict';
 
@@ -25,6 +26,7 @@ define([
     },
 
     listeners: function() {
+      this.status.on('change:resource', this.changeResource.bind(this));
     },
 
     /**
@@ -55,19 +57,42 @@ define([
       {
         'Analysis/results': function(status) {
           this.status.set(status, { silent: true });
-          this.status.set('resource', this.setAnalysisResource());
-          
-          this.view.render();
+          this.status.set({
+            resource: _.clone(this.setAnalysisResource())
+          },{ 
+            silent: true 
+          });
+
+          // Trigger change always
+          this.changeResource();
         }
       }, {
         'Analysis/results-error': function(status) {
-          this.status.set(status, { silent: true });
-          
+          this.status.set(status, { silent: true });          
           this.view.renderError();
         }
       }
     ],
 
+
+    changeResource: function() {
+      var iso = this.status.get('iso');
+
+      // Get regions if analysis has country
+      (!!iso.country && iso.country != 'ALL') ? this.getRegions() : this.view.render();
+    },
+
+    getRegions: function() {
+      var iso = this.status.get('iso');
+  
+      RegionService.get(iso.country)
+        .then(function(results,status) {
+          this.status.set({
+            regions: results.rows
+          });
+          this.view.render();
+        }.bind(this));
+    },
 
     /**
      * Get analysis resource params which are going to be
