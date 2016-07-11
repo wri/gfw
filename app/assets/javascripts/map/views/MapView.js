@@ -40,6 +40,21 @@ define([
       overviewMapControl: false
     },
 
+    attributions: [
+      {
+        id: 'dark',
+        attribution: 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.',        
+      },
+      {
+        id: 'positron',
+        attribution: 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.',        
+      },
+      {
+        id: 'openstreet',
+        attribution: 'Map tiles by <a href="http://www.openstreetmap.org/">Open street map</a>',        
+      },
+    ],
+
     /**
      * Constructs a new MapView and its presenter.
      */
@@ -134,7 +149,7 @@ define([
       }, this));
 
       google.maps.event.addListener(this.map, 'maptypeid_changed', _.bind(function() {
-        this.setCredit('Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.');
+        this.setAttribution();
       }, this ));
 
 
@@ -376,14 +391,16 @@ define([
       this.map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(this.creditNode);
     },
 
-    setCredit: function(credit){
+    setAttribution: function(){
       var maptype = this.getMapTypeId();
-      if (maptype == 'dark' || maptype == 'positron') {
+      var maptypeAttribution = _.findWhere(this.attributions, { id: maptype });
+
+      if (!!maptypeAttribution) {
         this.creditNode.style.display = 'block';
-        this.creditNode.innerHTML = credit + ' -';
-      }else{
+        this.creditNode.innerHTML = maptypeAttribution.attribution;        
+      } else {
         this.creditNode.style.display = 'none';
-        this.creditNode.innerHTML = '';
+        this.creditNode.innerHTML = '';        
       }
     },
 
