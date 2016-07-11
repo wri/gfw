@@ -49,10 +49,6 @@
       {{/if}}
 
       <li>
-        <a href="#" class="advanced-analysis-button">View Advanced Analysis</a>
-      </li>
-
-      <li>
         <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
       </li>
 
@@ -168,8 +164,13 @@
 
 {{!-- FOOTER --}}
 <footer class="analysis-footer">
-  <div class="m-btncontainer -col100">
+  {{!-- <div class="m-btncontainer -col100">
     <button class="btn green uppercase btn-analysis-subscribe {{#unless resource.options.enabledSubscription}}disabled{{/unless}}">Subscribe</button>
+  </div> --}}
+
+  <div class="m-btncontainer is-center -col50">
+    <button class="btn gray little uppercase full-width btn-analysis-advanced {{#unless resource.options.enabledSubscription}}disabled{{/unless}}">Advanced analysis</button>
+    <button class="btn green little uppercase full-width btn-analysis-subscribe {{#unless resource.options.enabledSubscription}}disabled{{/unless}}">Subscribe</button>
   </div>
 
   <ul>
