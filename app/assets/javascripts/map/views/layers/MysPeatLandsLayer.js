@@ -1,5 +1,5 @@
 /**
- * idn_peat_lands
+ * mys_peat_lands
  *
  * @return ProtectedAreasCDBLayer class (extends CartoDBLayerClass)
  */
@@ -23,5 +23,4 @@ define([
   });
 
   return MysPeatLandsLayer;
-
-});
+  });

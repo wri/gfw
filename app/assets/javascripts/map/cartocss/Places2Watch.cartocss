@@ -1,0 +1,17 @@
+#borneo_peru_roc_final_alerts_copy{
+  polygon-fill: #FFEDA0;
+  polygon-opacity: 0.8;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 0;
+  polygon-smooth: 0.5;
+}
+#borneo_peru_roc_final_alerts_copy [ avg_score <= 7489.402578] {
+   polygon-fill: #F03B20;
+}
+#borneo_peru_roc_final_alerts_copy [ avg_score <= 90.730752] {
+   polygon-fill: #FEB24C;
+}
+#borneo_peru_roc_final_alerts_copy [ avg_score <= 42.87897] {
+   polygon-fill: #FFEDA0;
+}

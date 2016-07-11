@@ -30,6 +30,7 @@ define([
       "WMSLayer",
       "global_land_cover",
       "us_land_cover",
+      "mex_land_cover",
       "gtm_forest_cover",
       "gtm_forest_density",
       "gtm_forest_change2",
@@ -75,6 +76,7 @@ define([
       "cri_land_rights",
       "nzl_land_rights",
       "raisg",
+      "mex_land_rights",
       // CONSERVATION
       "biodiversity_hotspots",
       "verified_carbon",
@@ -92,6 +94,8 @@ define([
       "per_nat_pa",
       "per_priv_pa",
       "per_reg_pa",
+      "mys_proteced_areas_sabah",
+      "per_protected_areas",
       // Land USE
       "dam_hotspots",
       "per_prod_for",
@@ -129,9 +133,12 @@ define([
       "cod_logging",
       "cog_logging",
       "mys_logging",
+      "mys_logging_sabah",
       "logging",
       "logging_roads",
       "raisg_mining",
+      "mexican_psa",
+      "bra_logging",
       //STORIES
       "infoamazonia",
       "mongabay",
@@ -145,6 +152,7 @@ define([
       "modis_cover",
       "gran_chaco_extent",
       // FOREST CHANGE
+      "per_minam_loss",
       "guyra",
       "terrailoss",
       "viirs_fires_alerts",
