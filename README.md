@@ -72,17 +72,20 @@ Almost there! Final steps are to update your `.env` file:
 
 ```bash
 RACK_ENV=development
-GFW_API_HOST=gfw-apis.appspot.com
-BLOG_HOST=http://blog.globalforestwatch.org
-AWS_HOST=
+GFW_API_HOST=http://api.globalforestwatch.org/
+AWS_HOST=/uploads
+LAYER_SPEC=layerspec_nuclear_hazard
 TERMS_COOKIE=true
 S3_BUCKET_NAME=
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
-LAYER_SPEC=layerspec_nuclear_hazard
 ANALYTICS_PROPERTY_ID='UA-XXXXX-X'
 FEEDBACK_MAIL=example@gfw.com
 CACHE_VERSION=54
+GFW_ASSETS_URL=http://gfw-assets.s3.amazonaws.com/static/gfw-assets.nightly.js
+HOWTO_URL=http://vizzuality.github.io/gfw-howto
+DEVELOPERS_URL=http://vizzuality.github.io/gfw-atlas
+BLOG_HOST=http://blog.globalforestwatch.org
 ```
 
 Last step. For real. Start the app server and access it at
