@@ -25,6 +25,11 @@ define([
 
       'Torque/date-range-change': function(date) {
         this.view.currentDate = date;
+        this.view.setBounds({
+          start: date[0],
+          end: date[1]
+        });
+        this.view.renderDatePicker();
       },
 
       'Torque/started': function(bounds) {
