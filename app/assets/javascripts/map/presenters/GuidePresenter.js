@@ -6,8 +6,8 @@
 define([
   'underscore',
   'mps',
-  'cookie',  
-  'map/helpers/guides',  
+  'cookie',
+  'map/helpers/guides',
   'map/presenters/PresenterClass',
 ], function(_, mps, Cookies, guides, PresenterClass) {
 
@@ -16,20 +16,32 @@ define([
   var StatusModel = Backbone.Model.extend({
     defaults: {
       tour: null,
+      position: 0,
+      steps: null
     },
+
+    tours: guides,
+
     initialize: function() {
       this.setMobile();
     },
 
-    setMobile: function() {      
+    setMobile: function() {
       this.set('mobile', (window.innerWidth < window.gfw.config.GFW_MOBILE));
-    }
+    },
+
+    setSteps: function() {
+      this.set('steps', this.getSteps());
+    },
+
+    getSteps: function() {
+      var tour = this.get('tour');
+      return (!!this.tours[tour]) ? this.tours[tour] : this.tours['default'];
+    },
   });
 
 
   var GuidePresenter = PresenterClass.extend({
-
-    tours: guides,
 
     init: function(view) {
       this.view = view;
@@ -41,6 +53,8 @@ define([
 
     listeners: function() {
       this.status.on('change:tour', this.changeTour.bind(this));
+
+      this.status.on('change:position',this.changePosition.bind(this));
     },
 
     getPlaceParams: function() {
@@ -57,8 +71,8 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         var params = place.params;
-        if (!this.status.get('mobile')) {        
-          this.status.set('tour',(!!params.tour) ? this.setTour(params.tour) : null);
+        if (!this.status.get('mobile')) {
+          this.status.set('tour',(!!params.tour) ? this.getTour(params.tour) : null);
           this.checkCookieTour();
         }
       }
@@ -68,17 +82,31 @@ define([
       }
     }],
 
-    setTour: function(tour) {
-      return (!!this.tours[tour]) ? tour : 'default'
-    }, 
+    getTour: function(tour) {
+      return (!!this.status.tours[tour]) ? tour : 'default'
+    },
 
     changeTour: function() {
+      mps.publish('Place/update', [this]);
       Cookies.set('tour', true, { expires: 90 });
-      this.view._setTour(this.status.get('tour'));
+      this.status.setSteps();
+      this.view.start();
+    },
+
+    changePosition: function() {
+      this.view.updatePosition();
     },
 
     clearTour: function() {
       this.status.set('tour', null, { silent: true });
+      this.status.set('steps', null, { silent: true });
+      this.status.set('position', 0, { silent: true });
+
+      if (this.status.get('tour') === 'default') {
+        // Pulse button
+        mps.publish('Tour/finish');
+      }
+      mps.publish('Place/update', [this]);
     },
 
     finishTour: function() {
@@ -88,6 +116,26 @@ define([
     checkCookieTour: function() {
       if(!this.status.get('tour') && !Cookies.get('tour')) {
         this.status.set('tour', 'default');
+      }
+    },
+
+    goToNextStep: function() {
+      var position = this.status.get('position');
+
+      if (position == this.status.get('steps').length - 1) {
+        this.view.stop();
+      } else {
+        position++;
+        this.status.set('position', position);
+      }
+    },
+
+    goToPrevStep: function() {
+      var position = this.status.get('position');
+
+      if (position > 0) {
+        position--;
+        this.status.set('position', position);
       }
     }
 
