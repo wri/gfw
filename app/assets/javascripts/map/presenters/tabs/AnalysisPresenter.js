@@ -25,7 +25,6 @@ define([
     'umd_as_it_happens_per',
     'umd_as_it_happens_cog',
     'umd_as_it_happens_idn',
-    'modis',
     'viirs_fires_alerts'
   ];
 
@@ -58,7 +57,6 @@ define([
       'forestgain': 'umd-loss-gain',
       'forma': 'forma-alerts',
       'imazon': 'imazon-alerts',
-      'modis': 'quicc-alerts',
       'terrailoss': 'terrai-alerts',
       'prodes': 'prodes-loss',
       'guyra': 'guyra-loss',

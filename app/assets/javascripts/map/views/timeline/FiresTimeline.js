@@ -1,5 +1,5 @@
 /**
- * The Modis timeline.
+ * The Fires timeline.
  *
  * @return FiresTimeline class (extends TimelineBtnClass)
  */
