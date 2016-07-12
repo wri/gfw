@@ -16,12 +16,6 @@ define([
 
   'use strict';
 
-  var StatusModel = Backbone.Model.extend({
-    defaults: {
-      iso: null
-    }
-  });
-
   var LayersCountryPresenter = PresenterClass.extend({
 
     status: new (Backbone.Model.extend({
@@ -37,7 +31,6 @@ define([
     init: function(view) {
       this.view = view;
       this._super();
-      this.status = new StatusModel();
       this.listeners();
       mps.publish('Place/register', [this]);
     },

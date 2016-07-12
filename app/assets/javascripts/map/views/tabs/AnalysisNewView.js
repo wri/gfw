@@ -40,6 +40,7 @@ define([
       'click .btn-analysis-subscribe' : 'onClickSubscribe',
       'click .btn-analysis-canopy' : 'onClickCanopy',
       'click .btn-analysis-share' : 'onClickShare',
+      'click .btn-analysis-advanced' : 'onClickAdvanced',
     },
 
     initialize: function(map, countries) {
@@ -140,8 +141,18 @@ define([
     },
 
     onClickShare: function(e) {
+      e && e.preventDefault() && e.stopPropagation();
       var shareView = new ShareView().share(e);
       $('body').append(shareView.el);
+    },
+
+    onClickAdvanced: function(e) {
+      e && e.preventDefault() && e.stopPropagation();
+      console.log('Advanced analysis');
+      // var view = new AdvancedAnalysisView({
+      //   resource: this.presenter.status.get('resource')});
+      // $('#advanced-analysis').html(view.render().el);
+
     },
 
 
