@@ -385,16 +385,6 @@
     line-opacity: 0;
   }
 
-
-  [layer='quicc_alerts'] {
-    marker-fill: black;
-    marker-opacity: 0.9;
-    marker-allow-overlap: true;
-    marker-placement: point;
-    marker-type: ellipse;
-    marker-width: 3;
-  }
-
   [layer='biodiversity_hotspots'] {
     polygon-fill: #49A39A;
     line-color: #49A39A;
@@ -406,13 +396,6 @@
     line-opacity: 0.8;
   }
 
-  [layer='quicc_bounding_box_extent'] {
-    polygon-fill: #f69;
-    polygon-opacity: 0.3;
-    line-width: 0;
-    line-color: #FFF;
-    line-opacity: 1;
-  }
 
   [layer='imazon_sad_geografic_extent'] {
     polygon-fill: #f69;

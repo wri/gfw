@@ -156,15 +156,6 @@
   {{/ifCond}}
 
 
-  {{!-- MODIS --}}
-  {{#ifCond slug "===" 'modis'}}
-    <li>
-      <span class="stats-title">Total alerts ({{dateRange}})</span>
-      <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> {{alertsName}}</span>
-    </li>
-  {{/ifCond}}
-
-
   {{!-- FIRES --}}
   {{#ifCond slug "===" 'viirs_fires_alerts'}}
     <li>

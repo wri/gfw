@@ -162,8 +162,7 @@ define([
         'forestgain' : 'http://data.globalforestwatch.org/datasets/6c9f379a362e4926ad24b58444f4ba67',
         'forma' : 'http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64',
         'terrailoss' : 'http://www.terra-i.org/terra-i/data.html',
-        'imazon' : 'http://www.imazongeo.org.br/doc/downloads.php',
-        'modis' : 'http://data.globalforestwatch.org/datasets/e7bfe60d90ea4e5aa808eba4723ad3f8_0'
+        'imazon' : 'http://www.imazongeo.org.br/doc/downloads.php'
 
       }
       return links[layer];

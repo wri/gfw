@@ -15,8 +15,6 @@ define([
   'map/views/layers/Forma250CoverLayer',
   'map/views/layers/ImazonLayer',
   'map/views/layers/ImazonCoverLayer',
-  'map/views/layers/ModisLayer',
-  'map/views/layers/ModisCoverLayer',
   'map/views/layers/Forest2000Layer',
   'map/views/layers/IntactForestLayer',
   'map/views/layers/IntactForestLayer2000',
@@ -162,7 +160,6 @@ define([
   'map/views/timeline/FormaTimeline',
   'map/views/timeline/Forma250Timeline',
   'map/views/timeline/ImazonTimeline',
-  'map/views/timeline/ModisTimeline',
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
   'map/views/timeline/ProdesTimeline',
@@ -182,8 +179,6 @@ define([
   Forma250CoverLayer,
   ImazonLayer,
   ImazonCoverLayer,
-  ModisLayer,
-  ModisCoverLayer,
   Forest2000Layer,
   IntactForestLayer,
   IntactForestLayer2000,
@@ -329,7 +324,6 @@ define([
   FormaTimeline,
   Forma250Timeline,
   ImazonTimeline,
-  ModisTimeline,
   FiresTimeline,
   TerraiTimeline,
   ProdesTimeline,
@@ -383,13 +377,6 @@ define([
     },
     imazon_cover: {
       view: ImazonCoverLayer
-    },
-    modis: {
-      view: ModisLayer,
-      timelineView: ModisTimeline
-    },
-    modis_cover: {
-      view: ModisCoverLayer
     },
     viirs_fires_alerts: {
       view: ViirsLayer,
