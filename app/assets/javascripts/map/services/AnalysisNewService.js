@@ -12,10 +12,10 @@ define([
   var APIURL = window.gfw.config.GFW_API_HOST_NEW_API;
 
   var APIURLS = {
-    'draw'    : '/{baselayer}{?geostore,period,thresh}',
-    'country' : '/{baselayer}/admin{/country}{/region}{?period,thresh}',
-    'wdpaid'  : '/{baselayer}/wdpa{/wdpaid}{?period,thresh}',
-    'use'     : '/{baselayer}/use{/use}{/useid}{?period,thresh}',
+    'draw'    : '/{dataset}{?geostore,period,thresh}',
+    'country' : '/{dataset}/admin{/country}{/region}{?period,thresh}',
+    'wdpaid'  : '/{dataset}/wdpa{/wdpaid}{?period,thresh}',
+    'use'     : '/{dataset}/use{/use}{/useid}{?period,thresh}',
   };
 
   var USENAMES = ['mining', 'oilpalm', 'fiber', 'logging'];

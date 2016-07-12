@@ -116,7 +116,7 @@ define([
           dateRange = [moment(this.status.get('begin')),moment(this.status.get('end'))];
 
       // Layers
-      p.slug = this.status.get('baselayer')[0];
+      p.slug = this.status.get('dataset');
       p.baselayers = this.status.get('baselayers_full');
       
       // Area
@@ -155,8 +155,8 @@ define([
       }
       
       if (p.slug === 'imazon-alerts') {
-        p.alerts.degradAlerts = (results.value[0]) ? Math.round(results.value[0].value).toLocaleString() : 0;
-        p.alerts.deforAlerts = (results.value[1]) ? Math.round(results.value[1].value).toLocaleString() : 0;
+        p.alerts.degradAlerts = (!!results.value.length && results.value[0]) ? Math.round(results.value[0].value).toLocaleString() : 0;
+        p.alerts.deforAlerts = (!!results.value.length && results.value[1]) ? Math.round(results.value[1].value).toLocaleString() : 0;
       }
 
       if (p.slug === 'prodes-loss') {
@@ -197,7 +197,10 @@ define([
      * - roundNumber
      */
     roundNumber: function(value){
-      return (value < 10) ? value.toFixed(2).toLocaleString() : Math.round(value).toLocaleString();
+      if (_.isNumber(value)) {
+        return (value < 10) ? value.toFixed(2).toLocaleString() : Math.round(value).toLocaleString();
+      }
+      return 0;
     },
     
 

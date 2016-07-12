@@ -23,8 +23,8 @@ define([
         // Analysis
         type: null,
 
-        enabled: false,
-        enabledSubscription: false,
+        enabled: null,
+        enabledSubscription: null,
         enabledUpdating: true,
 
         active: false,
@@ -32,6 +32,8 @@ define([
         tab: null,
         subtab: 'default',
         
+        dataset: [],
+
         // Layers
         baselayers: [],
         baselayer: null,
@@ -173,7 +175,8 @@ define([
 
       // Baselayers
       this.status.on('change:baselayers', this.changeBaselayers.bind(this));
-      this.status.on('change:baselayer', this.changeBaselayer.bind(this));
+      
+      this.status.on('change:dataset', this.changeDataset.bind(this));
 
       // Enabled
       this.status.on('change:enabled', this.changeEnabled.bind(this));
@@ -189,7 +192,6 @@ define([
 
       // Geostore
       this.status.on('change:geostore', this.changeGeostore.bind(this));
-      this.status.on('change:isDrawing', this.changeIsDrawing.bind(this));
       
       // Countries
       this.status.on('change:isoDisabled', this.changeIso.bind(this));
@@ -255,6 +257,7 @@ define([
       {
         'Place/go': function(place) {
           var params = place.params;
+          var layerSpec = place.layerSpec;
           
           this.status.set({
             // Countries
@@ -267,6 +270,7 @@ define([
             
             // Baselayer
             baselayers: _.pluck(params.baselayers, 'slug'),
+            baselayer: layerSpec.getBaselayer(),
 
             // Dates
             begin: (params.begin) ? params.begin : '2001-01-01',
@@ -297,6 +301,7 @@ define([
           var baselayers_change = !!_.difference(currentBaselayers, newBaselayers).length || !!_.difference(newBaselayers, currentBaselayers).length;
           if (baselayers_change) {
             this.status.set('baselayers', _.keys(layerSpec.getBaselayers()));
+            this.status.set('baselayer', layerSpec.getBaselayer());
           }
         }
       },      
@@ -417,7 +422,7 @@ define([
      */    
     changeBaselayers: function() {
       // Set the baselayer to analyze
-      this.status.set('baselayer', this.setBaselayer());
+      this.status.set('dataset', this.setDataset());
 
       // Check which baselayers are analysis-allowed
       var enabled = !!_.intersection(
@@ -433,12 +438,16 @@ define([
       
       this.status.set('enabled', enabled);
       this.status.set('enabledSubscription', enabledSubscription);
-
-      this.publishAnalysis();
+      
+      if (this.status.get('dataset')) {
+        this.publishAnalysis();  
+      }
     },
 
-    changeBaselayer: function() {
-      this.publishAnalysis();
+    changeDataset: function() {
+      if (!!this.status.get('dataset')) {
+        this.publishAnalysis();  
+      }
     },
 
     changeActive: function() {
@@ -457,7 +466,7 @@ define([
       // Hide analysis tab if it's not enabled 
       // to make an analysis
       if (!enabled) {
-        mps.publish('Tab/toggle', ['analysis-tab',enabled]);
+        mps.publish('Tab/toggle', ['analysis-tab', enabled]);
       }
     },
 
@@ -475,10 +484,6 @@ define([
 
     changeSubtab: function() {
       this.view.toggleSubtab();
-    },
-
-    changeIsDrawing: function() {
-      // console.log('IsDrawing', this.status.get('isDrawing'))
     },
 
     /**
@@ -564,13 +569,14 @@ define([
 
     /**
      * SETTERS
-     * - setBaselayer
+     * - setDataset
      * @return {void}
      */
-    setBaselayer: function() {
-      return _.uniq(_.pluck(_.filter(this.datasets, function(dataset){
-        return _.contains(this.status.get('baselayers'), dataset.name)
+    setDataset: function() {
+      var dataset = _.uniq(_.pluck(_.filter(this.datasets, function(dataset){
+        return _.contains(this.status.get('baselayers'), dataset.name);
       }.bind(this)), 'slug'));
+      return dataset[0] || null;
     },    
 
     /**
@@ -582,12 +588,15 @@ define([
      */
     publishAnalysis: function() {
       // 1. Check if analysis is active
-      if (this.status.get('active') && !!this.status.get('enabledUpdating')) {
+      if (this.status.get('active') && !!this.status.get('enabled') && !!this.status.get('enabledUpdating')) {
         this.status.set('spinner', true);
-        
+
         // Open the current subtab
         var subtab = _.findWhere(this.types, { type: this.status.get('type') }).subtab;
-        mps.publish('Analysis/subtab', ['analysis-'+ subtab +'-tab'])
+        mps.publish('Analysis/subtab', ['analysis-'+ subtab +'-tab']);
+
+        // Open the analysis tab
+        mps.publish('Tab/toggle', ['analysis-tab', true]);
 
         // Send request to the Analysis Service
         AnalysisService.get(this.status.toJSON())
@@ -625,8 +634,7 @@ define([
     },
 
     publishSubscribtion: function() {
-      var options = {};
-      mps.publish('Subscribe/show', [options]);
+      mps.publish('Subscribe/show', [this.status.toJSON()]);
     },
 
     publishNotification: function(id){

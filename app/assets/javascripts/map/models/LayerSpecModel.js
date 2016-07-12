@@ -229,6 +229,14 @@ define([
       return this.positionizer(this.get('forest_clearing') || {});
     },
 
+    getBaselayer: function() {
+      var baselayers = _.keys(this.positionizer(this.get('forest_clearing') || {}));
+      if (!!baselayers.length) {
+        return this.getLayer({ slug: baselayers[0] });
+      }
+      return {};
+    },
+
     /**
      * Return sublayers object.
      *
@@ -243,17 +251,6 @@ define([
         });
 
       return this.positionizer(layers);
-    },
-
-   /**
-     * Return an ordered array of layers. Order by layer position.
-     *
-     * @return {array} layers
-     */
-    getOrderedLayers: function() {
-      return _.sortBy(this.getLayers(), function(layer) {
-        return layer.position;
-      });
     },
 
     /**
@@ -275,16 +272,6 @@ define([
       }, this));
 
       return categories;
-    },
-
-    /**
-     * Check if (loss and/or gain) + cover
-     *
-     * @return {boolean} boolean
-     */    
-    checkLossGainExtent: function() {
-      var forest_clearing = this.get('forest_clearing');
-      return (!!forest_clearing && !!forest_clearing['forest2000'] && (!!forest_clearing['loss'] || !!forest_clearing['forestgain']));
     },
 
   });

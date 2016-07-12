@@ -100,7 +100,7 @@ define([
           $tabButton = this.$tabList.find('[data-tab="'+id+'"]'),
           is_active = $tabButton.hasClass('active');
       
-      // If it0's already closed or opened we don't need to do anything
+      // If it's already closed or opened we don't need to do anything
       if (active != is_active) {
         if (active) {
           // container
@@ -112,13 +112,13 @@ define([
 
           // tabs content
           this.$tabsContent.removeClass('selected');
-          $('#'+ id).toggleClass('selected', !active);          
+          this.$el.find('#'+ id).toggleClass('selected', active);
+          
         } else {
           this.$container.removeClass('active')
           this.$tabs.removeClass('inactive active');
           this.$tabsContent.removeClass('selected');
         }
-
       }
       
 

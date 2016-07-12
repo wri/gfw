@@ -97,7 +97,6 @@ define([
 
     selectRegion: function(e) {
       e && e.preventDefault();
-      console.log($(e.currentTarget).val());
       this.presenter.status.set('iso', {
         country: this.presenter.status.get('iso').country,
         region: $(e.currentTarget).val()

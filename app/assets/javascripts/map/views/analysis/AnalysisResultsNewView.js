@@ -15,16 +15,6 @@ define([
 
   var AnalysisResultsNewView = Backbone.View.extend({
 
-    events: {
-      // 'click #analysis-subscribe': '_subscribe',
-      // 'click .js-dropdown-btn' :'_toggleDownloads',
-      // 'click .canopy-button' : '_showCanopy',
-      // 'click .advanced-analysis-button' : '_showAdvancedAnalysis',
-      // 'click .close' : 'toogleAnalysis',
-      // 'click #toggleIFL' : 'toogleIFL',
-      // 'click #btn-analysis-refresh' : 'refreshAnalysis'
-    },
-
     templates: {
       success: Handlebars.compile(tpl),
       error: Handlebars.compile(errorTpl),
