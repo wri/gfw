@@ -40,12 +40,12 @@ Next clone the gfw repo:
 $ git clone https://github.com/Vizzuality/gfw.git
 ```
 
-Using rbenv, install and set Ruby 2.1.0 in the main app directory:
+Using rbenv, install and set Ruby 2.1.5 in the main app directory:
 
 ```bash
 $ cd gfw
-$ rbenv install 2.1.0
-$ rbenv local 2.1.0
+$ rbenv install 2.1.5
+$ rbenv local 2.1.5
 ```
 
 Now let's install Ruby on Rails:
@@ -65,7 +65,8 @@ Installing front end dependencies:
 
 ```bash
 $ npm install -g grunt-cli bower phantomjs
-$ npm install -d && bower install
+$ npm install -d
+$ bower install
 ```
 
 Almost there! Final steps are to update your `.env` file:
