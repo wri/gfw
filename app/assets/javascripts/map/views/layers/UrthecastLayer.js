@@ -201,12 +201,15 @@ define([
 
     // MAP EVENTS
     addEvents: function() {
-      this.clickevent = google.maps.event.addListener(this.map, "click", _.bind(this.onClickEvent, this ));
-      this.dragendevent = google.maps.event.addListener(this.map, "dragend", _.bind(this.checkForImagesInBounds, this ));
+      this.clickevent = google.maps.event.addListener(this.map, "click", this.onClickEvent.bind(this));
+      this.dragendevent = google.maps.event.addListener(this.map, "dragend", this.checkForImagesInBounds.bind(this));
+      this.zoomChangedEvent = google.maps.event.addListener(this.map, "zoom_changed",  this.checkForImagesInBounds.bind(this));
     },
 
     clearEvents: function() {
-      google.maps.event.clearListeners(this.map, 'dragend')
+      google.maps.event.clearListeners(this.map, this.clickevent);
+      google.maps.event.clearListeners(this.map, this.dragendevent);
+      google.maps.event.clearListeners(this.map, this.zoomChangedEvent);
     },
 
     checkForImagesInBounds: function() {
