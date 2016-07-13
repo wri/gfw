@@ -5,7 +5,7 @@
 	width: 100%;
 	height: calc(100% - 51px);
 	transform: translate(0,20px);
-	transition: all .15s $easeInOutSine;
+	transition: all 0s $easeInOutSine;
 	z-index: 30;
 	visibility: hidden;
 	opacity: 0;
@@ -15,6 +15,7 @@
 		transform: translate(0,0);
 		visibility: visible;
 		opacity: 1;
+    transition: all .15s $easeInOutSine;
 	}
 
   .analysis-downloads-overlay {

@@ -26,7 +26,7 @@ define([
         el: '#analysis-draw-tab',
         type: 'draw',
       },
-      
+
       // COUNTRY
       {
         el: '#analysis-country-tab',
@@ -42,7 +42,7 @@ define([
         el: '#analysis-shape-tab',
         type: 'wdpaid',
       },
-      
+
     ],
 
     initialize: function(map, countries) {
@@ -65,8 +65,9 @@ define([
     render: function() {
       var el = this.setEl();
       var country = this.presenter.status.get('iso').country;
-      
+
       // Set element to render
+      console.log(el);
       this.setElement(el)
 
       this.$el.addClass('-results').html(this.templates.success({
@@ -85,7 +86,7 @@ define([
         this.setElement(this.setEl())
         this.$el.addClass('-results').html(this.templates.error({
           errors: this.presenter.status.get('errors')
-        }));        
+        }));
       }
     },
 
@@ -127,9 +128,9 @@ define([
         _.each(this.presenter.status.get('regions'), function(region) {
           this.$analysisRegionSelect.append($("<option />").val(region.id_1).text(region.name_1));
         }.bind(this));
-        
+
         // Set the selected value
-        this.$analysisRegionSelect.val(region).attr('disabled', false).trigger('chosen:updated');  
+        this.$analysisRegionSelect.val(region).attr('disabled', false).trigger('chosen:updated');
       } else {
         // Remove the regions
         this.$analysisRegionSelect.html('<option></option>');
@@ -137,7 +138,7 @@ define([
         // Remove the selected value
         this.$analysisRegionSelect.val(null).attr('disabled', true).trigger('chosen:updated');
       }
-      
+
     },
 
     renderChosen: function() {
@@ -146,7 +147,7 @@ define([
         allow_single_deselect: true,
         inherit_select_classes: true,
         no_results_text: "Oops, nothing found!"
-      });      
+      });
     },
 
 

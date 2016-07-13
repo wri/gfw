@@ -43,6 +43,10 @@ define([
       'Analysis/downloads-toggle': function(active) {
         this.status.set('active', active);
       }
+    },{
+      'Analysis/delete': function() {
+        this.status.set('active', false);
+      }
     }],
 
 

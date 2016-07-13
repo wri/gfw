@@ -1,29 +1,29 @@
-<h3 class="title-dialog">Analyze forest change</h3>
-<span class="close"><svg><use xlink:href="#shape-close"></use></svg></span>
 <div class="tab-analysis">
-  <nav id="analysis-nav" class="analysis-nav">
+  <nav id="analysis-nav" class="analysis-nav noselect">
     <ul>
-      {{!-- <li id="draw-tab-button" data-analysis="draw-tab"><svg><use xlink:href="#icon-analysis-draw"></use></svg>Draw shape</li> --}}
-      <li id="country-tab-button" data-analysis="country-tab"><svg><use xlink:href="#icon-analysis-country"></use></svg>Country or region</li>
+      <li id="analysis-draw-tab-button" data-subtab="analysis-draw-tab">Draw or upload shape</li>
+      <li id="analysis-country-tab-button" data-subtab="analysis-country-tab">Country or region</li>
+      <li id="analysis-shape-tab-button" data-subtab="analysis-shape-tab">Other data layers</li>
     </ul>
   </nav>
   <div id="analysis-content" class="analysis-content">
-    <div id="draw-tab" class="analysis-tab-content draw-tab results-hide">
+    <div id="default" class="analysis-tab-content -active">
       <header>
-        <h2>Draw in the map the area you want to analyze</h2>
+        <h2>Select an area to analyze or subscribe to</h2>
       </header>
-      <ul id="draw-analysis" class="button-container one">
-        <li><button id="start-analysis" class="btn green uppercase">Start drawing</button></li>
-        <li class="hidden"><button id="done-analysis" class="btn green uppercase">Analyze</button></li>
-      </ul>
     </div>
-    <div id="country-tab" class="analysis-tab-content country-tab active">
-      <div class="select-box-mobile"><select data-placeholder="Select country" class="notranslate" id="analysis-country-select"><option value="" disabled selected>Select country</option></select></div>
-      <div class="select-box-mobile"><select data-placeholder="Select jurisdiction (optional)" disabled="true" class="notranslate" id="analysis-region-select"><option value="" disabled selected>Select jurisdiction (optional)</option></select></div>
-      <ul class="button-container">
-        <li><button id="subscribe-country-button" class="btn green uppercase disabled">Subscribe</button></li>
-        <li><button id="analysis-country-button" class="btn green uppercase disabled">Analyze</button></li>
-      </ul>
-    </div>
+    <div id="analysis-draw-tab" class="analysis-tab-content analysis-draw-tab"></div>
+    <div id="analysis-country-tab" class="analysis-tab-content analysis-country-tab"></div>
+    <div id="analysis-shape-tab" class="analysis-tab-content analysis-shape-tab"></div>
+  </div>
+</div>
+
+<div id="analysis-downloads" class="analysis-downloads"></div>
+
+<div id="analysis-spinner" class="analysis-spinner">
+  {{!-- We should try to improve the spinner --}}
+  <div class="analysis-spinner-box">
+    <div class="icon"></div>
+    <button class="btn red uppercase btn-analysis-delete">Cancel analysis</button>
   </div>
 </div>
