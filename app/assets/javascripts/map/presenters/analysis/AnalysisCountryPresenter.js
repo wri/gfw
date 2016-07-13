@@ -5,15 +5,15 @@
  */
 define([
   'map/presenters/PresenterClass',
-  'underscore', 
-  'backbone', 
-  'mps', 
-  'topojson', 
-  'bluebird', 
+  'underscore',
+  'backbone',
+  'mps',
+  'topojson',
+  'bluebird',
   'moment',
   'map/services/CountryService',
   'map/services/RegionService',
-  'helpers/geojsonUtilsHelper',  
+  'helpers/geojsonUtilsHelper',
 
 ], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment, CountryService, RegionService, geojsonUtilsHelper) {
 
@@ -26,7 +26,7 @@ define([
           country: 'ALL',
           region: null
         },
-        isoEnabled: false,
+        isoDisabled: true,
 
         enabled: true,
         enabledSubscription: true,
@@ -60,19 +60,20 @@ define([
       // GLOBAL EVENTS
       {
         'Place/go': function(place) {
-          var params = place.params;          
-          
+          var params = place.params;
+
           this.status.set({
+
             // Countries
             iso: {
               country: params.iso.country,
-              region: params.iso.region              
+              region: params.iso.region
             },
-            isoDisabled: (!!params.dont_analyze) || !(!!params.iso.country && params.iso.country != 'ALL'),            
+            isoDisabled: (!!params.dont_analyze) || !(!!params.iso.country && params.iso.country != 'ALL'),
           });
         }
       },
-      
+
       // GLOBAL ANALYSIS EVENTS
       {
         'Analysis/delete': function() {
@@ -103,7 +104,7 @@ define([
               iso: iso,
               isoDisabled: isoDisabled
             });
-          }          
+          }
         }
       }
     ],
@@ -125,7 +126,7 @@ define([
         this.getRegions();
         mps.publish('Analysis/iso', [iso, isoDisabled])
       } else {
-        mps.publish('Analysis/delete');         
+        mps.publish('Analysis/delete');
       }
 
       this.view.toggleEnabledButtons();
@@ -175,7 +176,7 @@ define([
 
     getRegions: function() {
       var iso = this.status.get('iso');
-  
+
       RegionService.get(iso.country)
         .then(function(results,status) {
           this.status.set({
@@ -203,7 +204,7 @@ define([
           region: null
         },
         isoDisabled: true,
-        
+
         regions: null,
         country: null,
         region: null

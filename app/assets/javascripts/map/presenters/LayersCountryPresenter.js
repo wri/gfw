@@ -43,7 +43,7 @@ define([
 
     listeners: function() {
       this.status.on('change:iso', this.countryAtlas.bind(this));
-      this.status.on('change:iso', this.countryBounds.bind(this));
+      // this.status.on('change:iso', this.countryBounds.bind(this));
     },
 
     /**
@@ -52,13 +52,13 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         var params = place.params;
-        
+
         if(!!params.iso.country && params.iso.country !== 'ALL'){
-          this.view.setCountry(params.iso);          
+          this.view.setCountry(params.iso);
           this.status.set('iso', params.iso);
         }
 
-        this.status.set('isoDisabled',(!!params.dont_analyze) || !(!!params.iso.country && params.iso.country != 'ALL'))
+        this.status.set('isoDisabled', (!!params.dont_analyze) || !(!!params.iso.country && params.iso.country != 'ALL'))
       }
     },{
       'Country/update': function(iso) {
@@ -99,7 +99,7 @@ define([
             }
           });
         }
-        
+
       }
     },{
       'Analysis/enabled': function(boolean) {
@@ -125,7 +125,7 @@ define([
     publishIso: function(iso) {
       this.status.set('iso', iso);
       mps.publish('Country/update', [iso]);
-      mps.publish('Place/update', [{go: false}]);      
+      mps.publish('Place/update', [{go: false}]);
     },
 
     /**
@@ -149,7 +149,7 @@ define([
             if (!!bounds) {
               mps.publish('Map/fit-bounds', [bounds]);
             }
-            
+
           }.bind(this));
       }
     },
@@ -166,13 +166,13 @@ define([
         countryService.show(iso.country, _.bind(function(results) {
           var is_more = (!!results.indepth);
           var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
-          
+
           if (is_more) {
             this.view.renderAtlas({
               name: results.name,
-              url: results.indepth, 
+              url: results.indepth,
               is_idn: is_idn
-            });            
+            });
           }
 
         },this));
@@ -187,7 +187,7 @@ define([
     analyzeIso: function() {
       var iso = this.status.get('iso');
       mps.publish('Analysis/iso', [iso]);
-      mps.publish('Tab/open', ['#analysis-tab-button']);      
+      mps.publish('Tab/open', ['#analysis-tab-button']);
     },
 
     /**
@@ -230,7 +230,7 @@ define([
         // Check if any of the regular layers is active and toggle it
         if (!!currentLayers[layer.slug]) {
           this._toggleLayer(layer.slug);
-        }        
+        }
       }
     },
 
