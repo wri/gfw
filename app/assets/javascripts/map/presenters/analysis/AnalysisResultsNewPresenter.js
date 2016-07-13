@@ -9,14 +9,14 @@ define([
   'backbone',
   'moment',
   'mps',
-  'map/services/RegionService',  
+  'map/services/RegionService',
   'helpers/geojsonUtilsHelper'
 ], function(PresenterClass, _, Backbone, moment, mps, RegionService, geojsonUtilsHelper) {
 
   'use strict';
 
   var AnalysisResultsPresenter = PresenterClass.extend({
-    
+
     status: new (Backbone.Model.extend()),
 
     init: function(view) {
@@ -40,10 +40,10 @@ define([
         }
       },
       {
-        'LayerNav/change': function(layerSpec) {  
+        'LayerNav/change': function(layerSpec) {
           this.status.set('baselayers_full', layerSpec.getBaselayers(), {silent: true});
         }
-      },          
+      },
       {
         'Geostore/go': function(response) {
           this.status.set('geojson', response.data.attributes.geojson, {silent: true});
@@ -53,14 +53,14 @@ define([
         'Analysis/store-geojson': function(geojson) {
           this.status.set('geojson', geojson, {silent: true});
         }
-      },    
+      },
       {
         'Analysis/results': function(status) {
           this.status.set(status, { silent: true });
           this.status.set({
             resource: _.clone(this.setAnalysisResource())
-          },{ 
-            silent: true 
+          },{
+            silent: true
           });
 
           // Trigger change always
@@ -68,7 +68,7 @@ define([
         }
       }, {
         'Analysis/results-error': function(status) {
-          this.status.set(status, { silent: true });          
+          this.status.set(status, { silent: true });
           this.view.renderError();
         }
       }
@@ -84,7 +84,7 @@ define([
 
     getRegions: function() {
       var iso = this.status.get('iso');
-  
+
       RegionService.get(iso.country)
         .then(function(results,status) {
           this.status.set({
@@ -99,7 +99,6 @@ define([
      * pass to the html to render the analysis results.
      *
      * @param  {Object} results Results object form the AnalysisService
-     * @param  {Object} layer   The layer object
      * @return {Object}         Returns resource params
      */
 
@@ -118,10 +117,10 @@ define([
       // Layers
       p.slug = this.status.get('dataset');
       p.baselayers = this.status.get('baselayers_full');
-      
+
       // Area
       p.areaHa = this.roundNumber(results.areaHa || 0);
-      
+
       // Alerts
       p.alerts = {};
       p.alerts.totalAlerts = this.roundNumber(results.value || 0);
@@ -130,11 +129,13 @@ define([
       p.options = {};
       p.options.threshold = this.status.get('threshold');
       p.options.enabledSubscription = this.status.get('enabledSubscription');
-      
-      p.options.download = (!!results.download_urls) ? _.extend({}, results.download_urls, {
-        cdb: (p.download.kml) ? encodeURIComponent(p.download.kml + '&filename=GFW_Analysis_Results') : null
-      }) : null;
-      
+
+      if (!!results.downloadUrls) {
+        console.log(results.downloadUrls);
+        mps.publish('Analysis/downloads', [results.downloadUrls]);
+      }
+
+
       // Dates
       p.dates = {};
       p.dates.dateRange = '{0} to {1}'.format(dateRange[0].format('MMM-YYYY'),dateRange[1].format('MMM-YYYY'));
@@ -153,7 +154,7 @@ define([
         // Dates
         p.dates.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
       }
-      
+
       if (p.slug === 'imazon-alerts') {
         p.alerts.degradAlerts = (!!results.value.length && results.value[0]) ? Math.round(results.value[0].value).toLocaleString() : 0;
         p.alerts.deforAlerts = (!!results.value.length && results.value[1]) ? Math.round(results.value[1].value).toLocaleString() : 0;
@@ -166,7 +167,7 @@ define([
       // console.log('*********  RESOURCE  *********');
       // console.log(p);
       return p;
-      
+
     },
 
     /**
@@ -202,7 +203,7 @@ define([
       }
       return 0;
     },
-    
+
 
   });
 

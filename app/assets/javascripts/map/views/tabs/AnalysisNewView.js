@@ -4,20 +4,21 @@
  * @return AnalysisNewView instance (extends Backbone.View).
  */
 define([
-  'underscore', 
-  'handlebars', 
-  'amplify', 
-  'chosen', 
-  'turf', 
+  'underscore',
+  'handlebars',
+  'amplify',
+  'chosen',
+  'turf',
   'views/ShareView',
   'map/views/analysis/AnalysisDrawView',
   'map/views/analysis/AnalysisCountryView',
   'map/views/analysis/AnalysisShapeView',
   'map/views/analysis/AnalysisResultsNewView',
+  'map/views/analysis/AnalysisDownloadView',
   'map/presenters/tabs/AnalysisNewPresenter',
   'text!map/templates/tabs/analysis-new.handlebars',
   'text!map/templates/tabs/analysis-mobile-new.handlebars'
-], function(_, Handlebars, amplify, chosen, turf, ShareView, AnalysisDrawView, AnalysisCountryView, AnalysisShapeView, AnalysisResultsNewView, Presenter, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, turf, ShareView, AnalysisDrawView, AnalysisCountryView, AnalysisShapeView, AnalysisResultsNewView, AnalysisDownloadView, Presenter, tpl, tplMobile) {
 
   'use strict';
 
@@ -28,10 +29,6 @@ define([
     template: Handlebars.compile(tpl),
     templateMobile: Handlebars.compile(tplMobile),
 
-    model: new (Backbone.Model.extend({
-      subtab: 'default'
-    })),
-
     events: {
       //tabs
       'click #analysis-nav li' : 'onClickSubTabs',
@@ -41,6 +38,7 @@ define([
       'click .btn-analysis-canopy' : 'onClickCanopy',
       'click .btn-analysis-share' : 'onClickShare',
       'click .btn-analysis-advanced' : 'onClickAdvanced',
+      'click .btn-analysis-downloads' : 'onClickDownloads',
     },
 
     initialize: function(map, countries) {
@@ -64,7 +62,7 @@ define([
 
     cache: function(){
       this.$tabButton = $('#analysis-tab-button');
-      
+
       //tabs
       this.$subTabs = this.$el.find('#analysis-nav li');
       this.$subTabsContent = this.$el.find('.analysis-tab-content');
@@ -77,7 +75,7 @@ define([
       var template = (this.mobile) ? this.templateMobile : this.template;
       this.$el.html(template());
       this.cache();
-      
+
       this.initChildrenViews();
     },
 
@@ -86,6 +84,7 @@ define([
       this.analysisCountryView = new AnalysisCountryView(this.map,this.countries);
       this.analysisShapeView = new AnalysisShapeView(this.map,this.countries);
       this.analysisResultsNewView = new AnalysisResultsNewView(this.map,this.countries);
+      this.analysisDownloadView = new AnalysisDownloadView(this.map,this.countries);
     },
 
     reRenderChildrenViews: function() {
@@ -105,6 +104,7 @@ define([
      * - onClickRefresh
      * - onClickCanopy
      * - onClickSubscribe
+     * - onClickDownloads
      * @param  {[object]} e
      */
     onClickSubTabs: function(e){
@@ -135,11 +135,11 @@ define([
     onClickSubscribe: function(e) {
       e && e.preventDefault() && e.stopPropagation();
       console.log('Subscribe analysis');
-      // if (this.presenter.status.get('enabledSubscription')) { 
+      // if (this.presenter.status.get('enabledSubscription')) {
       //   this.presenter.publishSubscribtion();
       //   // ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + this.params.layer.title);
       // }
-      
+
     },
 
     onClickShare: function(e) {
@@ -157,16 +157,25 @@ define([
 
     },
 
+    onClickDownloads: function(e) {
+      var $current = $(e.currentTarget),
+          is_active = $current.hasClass('-active');
+
+      this.$el.find('.btn-analysis-downloads').toggleClass('-active', !is_active);
+
+      this.presenter.publishDownloadsAnalysis(!is_active);
+    },
+
 
 
 
 
     /**
      * PRESENTER ACTIONS
-     * 
+     *
      * loadRegions
      * @return {void}
-     */    
+     */
     toggleEnabledButtons: function() {
       var enabled = this.presenter.status.get('enabled');
       // Toggle disabled class

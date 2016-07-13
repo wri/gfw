@@ -24,7 +24,7 @@
       </li>
     {{/if}}
 
-    
+
     {{!-- LOSS --}}
     {{#ifCond resource.slug "===" 'umd-loss-gain'}}
       {{#if resource.baselayers.loss}}
@@ -41,7 +41,7 @@
         </li>
       {{/if}}
 
-      {{#if resource.baselayers.forest2000}}    
+      {{#if resource.baselayers.forest2000}}
       <li>
         <span class="stats-title">Tree cover (2000)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
         <span class="stats-count" style="color: {{resource.baselayers.forest2000.title_color}};"><strong>{{resource.alerts.treeExtent}}</strong> ha</span>
@@ -55,7 +55,7 @@
       <li>
         <div class="stats-notice">NOTE: tree cover loss and gain statistics cannot be compared against each other. <a href="#" class="source" data-source="loss-compare-gain">Learn more</a>.</div>
       </li>
-    {{/ifCond}}   
+    {{/ifCond}}
 
     {{!-- PRODES --}}
     {{#ifCond resource.slug "===" 'prodes-loss'}}
@@ -75,18 +75,18 @@
         <span class="stats-title">Degradation alerts</span>
         <span class="stats-count" style="color: {{resource.baselayers.imazon.category_color}};"><strong>{{resource.alerts.degradAlerts}}</strong> ha</span>
       </li>
-    {{/ifCond}}   
+    {{/ifCond}}
 
 
 
-   
+
     {{!-- GUYRA --}}
     {{#ifCond resource.slug "===" 'guyra-loss'}}
       <li>
         <span class="stats-title">Grand Chaco tree cover loss:</span>
         <span class="stats-count" style="color: {{resource.baselayers.guyra.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> ha</span>
       </li>
-    {{/ifCond}}   
+    {{/ifCond}}
 
 
     {{!-- GLAD --}}
@@ -95,7 +95,7 @@
         <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
         <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong></span>
       </li>
-    {{/ifCond}}   
+    {{/ifCond}}
 
 
     {{!-- GLAD PERU --}}
@@ -104,7 +104,7 @@
         <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
         <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens_per.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong></span>
       </li>
-    {{/ifCond}}   
+    {{/ifCond}}
 
 
     {{!-- GLAD CONGO --}}
@@ -113,7 +113,7 @@
         <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
         <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens_cog.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong></span>
       </li>
-    {{/ifCond}}   
+    {{/ifCond}}
 
 
     {{!-- GLAD INDONESIA --}}
@@ -122,7 +122,7 @@
         <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
         <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens_idn.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong></span>
       </li>
-    {{/ifCond}}   
+    {{/ifCond}}
 
 
     {{!-- FORMA --}}
@@ -147,7 +147,7 @@
     {{#ifCond resource.slug "===" 'viirs-active-fires'}}
       <li>
         <span class="stats-title">Total alerts ({{resource.dates.dateRange}})</span>
-        <span class="stats-count" style="color: {{resource.baselayers.viirs_fires_resource.alerts.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> {{resource.alertsName}}</span>
+        <span class="stats-count" style="color: {{resource.baselayers.viirs_fires_alerts.title_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> {{resource.alertsName}}</span>
       </li>
     {{/ifCond}}
 
@@ -181,25 +181,15 @@
           <span>Download data</span>
         </a>
       {{else}}
-        <button class="analysis-footer-btn js-dropdown-btn">
+        <button class="analysis-footer-btn btn-analysis-downloads">
           <div>
             <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
             <svg class="icon -inactive"><use xlink:href="#shape-close"></use></svg>
           </div>
-          <span>Download data</span>            
-          <ul class="analysis-footer-dropdown js-dropdown">
-            <li><span>By downloading data you agree to the <a href="/terms">GFW Terms of Service</a></span></li>
-            <li><a class="download-mobile-link" data-type="forest-change" href="{{resource.options.svg}}" target="_blank">SVG</a></li>
-            <li><a class="download-mobile-link" data-type="forest-change" href="{{resource.options.geojson}}" target="_blank">GeoJSON</a></li>
-            <li><a class="download-mobile-link" data-type="forest-change" href="{{resource.options.shp}}" target="_blank">SHP</a></li>
-            <li><a class="download-mobile-link" data-type="forest-change" href="{{resource.options.kml}}" target="_blank">KML</a></li>
-            <li><a class="download-mobile-link" data-type="forest-change" href="{{resource.options.csv}}" target="_blank">CSV</a></li>
-            <li><a class="download-mobile-link" data-type="forest-change" href="http://oneclick.cartodb.com/?file={{resource.options.cdb}}&provider=gfw'" target="_blank">Open in Carto DB</a></li>
-          </ul>          
-        </button>          
+          <span>Download data</span>
+        </button>
       {{/ifCond}}
     </li>
-
     <li>
       <button class="analysis-footer-btn btn-analysis-share">
         <svg class="icon"><use xlink:href="#icon-analysis-share"></use></svg>

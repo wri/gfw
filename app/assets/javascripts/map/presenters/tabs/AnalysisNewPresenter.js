@@ -645,6 +645,10 @@ define([
       mps.publish('ThresholdControls/show');
     },
 
+    publishDownloadsAnalysis: function(active) {
+      mps.publish('Analysis/downloads-toggle', [active]);
+    },
+
     publishEnableds: function() {
       mps.publish('Analysis/enabled', [this.status.get('enabled')]);
       mps.publish('Analysis/enabled-subscription', [this.status.get('enabledSubscription')]);
