@@ -102,15 +102,9 @@ define([
       this.status.set('steps', null, { silent: true });
       this.status.set('position', 0, { silent: true });
 
-      if (this.status.get('tour') === 'default') {
-        // Pulse button
-        mps.publish('Tour/finish');
-      }
+      // Pulse button
+      mps.publish('Tour/finish');
       mps.publish('Place/update', [this]);
-    },
-
-    finishTour: function() {
-      mps.publish('Place/register', [this]);
     },
 
     checkCookieTour: function() {
