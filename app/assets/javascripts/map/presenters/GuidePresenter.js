@@ -98,19 +98,17 @@ define([
     },
 
     clearTour: function() {
-      this.status.set('tour', null, { silent: true });
-      this.status.set('steps', null, { silent: true });
-      this.status.set('position', 0, { silent: true });
-
+      // Only send the mps if the current tour is the default one
       if (this.status.get('tour') === 'default') {
         // Pulse button
         mps.publish('Tour/finish');
       }
-      mps.publish('Place/update', [this]);
-    },
 
-    finishTour: function() {
-      mps.publish('Place/register', [this]);
+      this.status.set('tour', null, { silent: true });
+      this.status.set('steps', null, { silent: true });
+      this.status.set('position', 0, { silent: true });
+
+      mps.publish('Place/update', [this]);
     },
 
     checkCookieTour: function() {
