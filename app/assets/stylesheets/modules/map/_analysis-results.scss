@@ -16,10 +16,18 @@
     bottom: auto;
     left: auto;
     transform: translate(0,0%);
-    max-height: 40vh;
-    overflow-x: hidden; 
+    overflow-x: hidden;
     overflow-y: auto;
   }
+
+  @media (min-height: 500px){
+    max-height: 26.1vh;
+  }
+
+  @media (min-height: 750px){
+    max-height: none;
+  }
+
 
   .close{
     position: absolute;
@@ -105,7 +113,7 @@
     margin: 15px -15px 0;
     display: flex;
     justify-content: space-between;
-    
+
     @media (min-width: 1500px){
       margin: 15px -20px 0;
     }
@@ -121,7 +129,7 @@
   .analysis-footer-btn {
     display: block;
     width: 100%;
-    padding: 10px;        
+    padding: 10px;
     box-shadow: none;
     border: none;
     background: none;
@@ -133,7 +141,7 @@
     cursor: pointer;
     font-size: 10px;
     line-height: 1;
-    
+
     // ICON
     svg {
       fill: $dark;
@@ -162,7 +170,7 @@
         display: none;
         &.-inactive {
           display: block;
-        }              
+        }
       }
     }
   }
@@ -173,7 +181,7 @@
   .analysis-footer-dropdown {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;      
+    justify-content: flex-end;
     width: 100%;
     position: absolute;
     bottom: 100px;
@@ -218,17 +226,17 @@
     > li {
       padding: 4px 15px;
       border-bottom: 1px solid $border;
-      
+
       &:first-child {
         border-bottom: none;
         font-size: 10px;
         text-align: left;
-        border-bottom: none;  
+        border-bottom: none;
         padding: 10px 15px;
 
         &:hover {
           background-color: $white;
-        }              
+        }
       }
 
       &:last-child {
