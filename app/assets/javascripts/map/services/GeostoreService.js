@@ -20,7 +20,7 @@ define([
         var url = new UriTemplate(URL).fillFromObject({id: id});
 
         ds.define(GET_REQUEST_ID, {
-          cache: {type: 'persist', duration: 1, unit: 'days'},
+          cache: false,
           url: url,
           type: 'GET'
         });
@@ -41,6 +41,7 @@ define([
         var url = new UriTemplate(URL).fillFromObject({});
 
         ds.define(SAVE_REQUEST_ID, {
+          cache: false,
           url: url,
           type: 'POST',
           dataType: 'json',
@@ -69,6 +70,7 @@ define([
         var url = new UriTemplate(URL).fillFromObject({});
 
         ds.define(SAVE_REQUEST_ID, {
+          cache: false,
           url: url,
           type: 'POST',
           dataType: 'json',

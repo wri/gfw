@@ -103,9 +103,6 @@ define([
      */
 
     setAnalysisResource: function(status) {
-      // We have to improve this function
-      // console.log('*********  STATUS  *********');
-      // console.log(this.status.toJSON());
       var p = {};
       /**
        * Define variable that we are going to use later
@@ -131,7 +128,6 @@ define([
       p.options.enabledSubscription = this.status.get('enabledSubscription');
 
       if (!!results.downloadUrls) {
-        console.log(results.downloadUrls);
         mps.publish('Analysis/downloads', [results.downloadUrls]);
       }
 
@@ -164,10 +160,7 @@ define([
         p.dates.dateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
       }
 
-      // console.log('*********  RESOURCE  *********');
-      // console.log(p);
       return p;
-
     },
 
     /**

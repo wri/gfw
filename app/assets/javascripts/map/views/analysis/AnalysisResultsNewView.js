@@ -67,7 +67,6 @@ define([
       var country = this.presenter.status.get('iso').country;
 
       // Set element to render
-      console.log(el);
       this.setElement(el)
 
       this.$el.addClass('-results').html(this.templates.success({

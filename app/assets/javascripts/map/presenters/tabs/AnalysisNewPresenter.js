@@ -127,10 +127,6 @@ define([
         slug: 'imazon-alerts',
         subscription: true
       },{
-        name: 'modis',
-        slug: 'quicc-alerts',
-        subscription: true
-      },{
         name: 'terrailoss',
         slug: 'terrai-alerts',
         subscription: true
@@ -329,6 +325,7 @@ define([
       },{
         'Analysis/store-geojson': function(geojson) {
           if (!!geojson) {
+            this.status.set('spinner', true);
             GeostoreService.save(geojson).then(function(geostoreId) {
               this.status.set('geostore', geostoreId);
             }.bind(this));
@@ -527,6 +524,8 @@ define([
         if (this.usenames.indexOf(use) !== -1) {
           this.setAnalysis('use');
         } else {
+          this.status.set('spinner', true);
+
           var provider = {
             table: use,
             filter: 'cartodb_id = ' + useid,

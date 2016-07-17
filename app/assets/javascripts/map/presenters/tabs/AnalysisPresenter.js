@@ -25,7 +25,6 @@ define([
     'umd_as_it_happens_per',
     'umd_as_it_happens_cog',
     'umd_as_it_happens_idn',
-    'modis',
     'viirs_fires_alerts'
   ];
 
@@ -58,7 +57,6 @@ define([
       'forestgain': 'umd-loss-gain',
       'forma': 'forma-alerts',
       'imazon': 'imazon-alerts',
-      'modis': 'quicc-alerts',
       'terrailoss': 'terrai-alerts',
       'prodes': 'prodes-loss',
       'guyra': 'guyra-loss',
@@ -119,7 +117,7 @@ define([
 
         if (loss_gain_and_extent != this.status.get('loss_gain_and_extent')) {
           this._updateAnalysis();
-          this.openAnalysisTab();          
+          this.openAnalysisTab();
         }
       }
     }, {
@@ -183,7 +181,7 @@ define([
     },{
       'Analysis/upload': function(geojson) {
         this._saveAndAnalyzeGeojson(geojson, {draw: true});
-        ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');        
+        ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');
       }
     },
     // Timeline
@@ -633,7 +631,7 @@ define([
         if (baselayer) {
           this.status.set('subscribe_only', true);
           this.status.set('resource', resource);
-          this.setDontAnalyze(null);          
+          this.setDontAnalyze(null);
           mps.publish('Place/update', [{go: false}]);
           this._subscribeAnalysis();
         }
@@ -781,7 +779,7 @@ define([
       }
 
       mps.publish('Analysis/enabled', [!!baselayer]);
-      
+
       $('#analyzeBtn').toggleClass('dont-analyze', !!!baselayer);
       this.status.set('baselayer', baselayer);
       this._setAnalysisBtnVisibility();

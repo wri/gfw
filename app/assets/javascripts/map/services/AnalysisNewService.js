@@ -24,11 +24,7 @@ define([
     get: function(status) {
       return new Promise(function(resolve, reject) {
         this.analysis = this.buildAnalysisFromStatus(status);
-        console.log('************Analysis****************');
-        console.log(this.analysis);
         var url = this.getUrl();
-        console.log(url);
-        console.log('************************************');
 
         ds.define(GET_REQUEST_ID, {
           cache: {type: 'persist', duration: 1, unit: 'days'},
