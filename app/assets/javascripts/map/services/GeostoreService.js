@@ -1,6 +1,6 @@
 define([
-  'Class', 
-  'uri', 
+  'Class',
+  'uri',
   'bluebird',
   'map/services/DataService'
 ], function(Class, UriTemplate, Promise, ds) {
@@ -53,7 +53,35 @@ define([
             geojson: geojson
           }),
           success: function(response) {
-            resolve(response.data.attributes.hash);
+            resolve(response.data.id);
+          },
+          error: reject
+        };
+
+        ds.request(requestConfig);
+
+      });
+    },
+
+    use: function(provider) {
+      return new Promise(function(resolve, reject) {
+
+        var url = new UriTemplate(URL).fillFromObject({});
+
+        ds.define(SAVE_REQUEST_ID, {
+          url: url,
+          type: 'POST',
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        });
+
+        var requestConfig = {
+          resourceId: SAVE_REQUEST_ID,
+          data: JSON.stringify({
+            provider: provider
+          }),
+          success: function(response) {
+            resolve(response.data.id);
           },
           error: reject
         };

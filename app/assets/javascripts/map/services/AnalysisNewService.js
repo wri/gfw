@@ -1,6 +1,6 @@
 define([
-  'Class', 
-  'uri', 
+  'Class',
+  'uri',
   'bluebird',
   'map/services/DataService'
 ], function(Class, UriTemplate, Promise, ds) {
@@ -12,18 +12,16 @@ define([
   var APIURL = window.gfw.config.GFW_API_HOST_NEW_API;
 
   var APIURLS = {
-    'draw'    : '/{dataset}{?geostore,period,thresh}',
-    'country' : '/{dataset}/admin{/country}{/region}{?period,thresh}',
-    'wdpaid'  : '/{dataset}/wdpa{/wdpaid}{?period,thresh}',
-    'use'     : '/{dataset}/use{/use}{/useid}{?period,thresh}',
+    'draw'         : '/{dataset}{?geostore,period,thresh}',
+    'country'      : '/{dataset}/admin{/country}{/region}{?period,thresh}',
+    'wdpaid'       : '/{dataset}/wdpa{/wdpaid}{?period,thresh}',
+    'use'          : '/{dataset}/use{/use}{/useid}{?period,thresh}',
+    'use-geostore' : '/{dataset}{?geostore,period,thresh}',
   };
-
-  var USENAMES = ['mining', 'oilpalm', 'fiber', 'logging'];
 
   var AnalysisService = Class.extend({
 
     get: function(status) {
-        
       return new Promise(function(resolve, reject) {
         this.analysis = this.buildAnalysisFromStatus(status);
         console.log('************Analysis****************');
@@ -44,17 +42,17 @@ define([
             } else if ( status === "fail" || status === "error" ) {
               error( JSON.parse(xhr.responseText) );
             } else if ( status === "abort") {
-              
+
             } else {
               error( JSON.parse(xhr.responseText) );
             }
-          }          
+          }
         });
 
         var requestConfig = {
           resourceId: GET_REQUEST_ID,
           success: function(data, status) {
-            resolve(data,status);        
+            resolve(data,status);
           },
           error: function(errors) {
             reject(errors);
@@ -71,21 +69,16 @@ define([
       return new UriTemplate(APIURLS[this.analysis.type]).fillFromObject(this.analysis);
     },
 
-    getUse: function(use) {
-      var USENAME = _.filter(USENAMES, function(name){
-        return (use.indexOf(name) != -1)
-      });
-      
-      return (USENAME.length) ? USENAME[0] : use;
-    },
-
     buildAnalysisFromStatus: function(status) {
       return _.extend({}, status, {
         country: status.iso.country,
         region: status.iso.region,
         thresh: status.threshold,
         period: status.begin + ',' + status.end,
-        use: (!!status.use) ? this.getUse(status.use) : null
+
+        // If a userGeostore exists we need to set geostore and type manually
+        geostore: (status.useGeostore) ? status.useGeostore : status.geostore,
+        type: (status.useGeostore) ? 'use-geostore' : status.type
       });
     },
 
