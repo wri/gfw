@@ -1,5 +1,7 @@
 define([
-  'Class', 'uri', 'bluebird',
+  'Class',
+  'uri',
+  'bluebird',
   'map/services/DataService'
 ], function(Class, UriTemplate, Promise, ds) {
 
@@ -8,29 +10,27 @@ define([
   var GET_REQUEST_ID = 'GeostoreService:get',
       SAVE_REQUEST_ID = 'GeostoreService:save';
 
-  var URL = window.gfw.config.GFW_API_HOST_V2 + '/geostore/{id}';
+  var URL = window.gfw.config.GFW_API_HOST_NEW_API + '/geostore/{id}';
 
   var GeostoreService = Class.extend({
 
     get: function(id) {
       return new Promise(function(resolve, reject) {
 
-      var url = new UriTemplate(URL).fillFromObject({id: id});
+        var url = new UriTemplate(URL).fillFromObject({id: id});
 
-      ds.define(GET_REQUEST_ID, {
-        cache: {type: 'persist', duration: 1, unit: 'days'},
-        url: url,
-        type: 'GET'
-      });
+        ds.define(GET_REQUEST_ID, {
+          cache: false,
+          url: url,
+          type: 'GET'
+        });
 
-      var requestConfig = {
-        resourceId: GET_REQUEST_ID,
-        success: function(response) {
-          resolve(response.data);
-        },
-      };
+        var requestConfig = {
+          resourceId: GET_REQUEST_ID,
+          success: resolve
+        };
 
-      ds.request(requestConfig);
+        ds.request(requestConfig);
 
       });
     },
@@ -38,24 +38,57 @@ define([
     save: function(geojson) {
       return new Promise(function(resolve, reject) {
 
-      var url = new UriTemplate(URL).fillFromObject({});
+        var url = new UriTemplate(URL).fillFromObject({});
 
-      ds.define(SAVE_REQUEST_ID, {
-        url: url,
-        type: 'POST',
-        contentType: 'application/json'
+        ds.define(SAVE_REQUEST_ID, {
+          cache: false,
+          url: url,
+          type: 'POST',
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        });
+
+        var requestConfig = {
+          resourceId: SAVE_REQUEST_ID,
+          data: JSON.stringify({
+            geojson: geojson
+          }),
+          success: function(response) {
+            resolve(response.data.id);
+          },
+          error: reject
+        };
+
+        ds.request(requestConfig);
+
       });
+    },
 
-      var requestConfig = {
-        resourceId: SAVE_REQUEST_ID,
-        data: JSON.stringify({geojson: geojson}),
-        success: function(response) {
-          resolve(response.data.attributes.hash);
-        },
-        error: reject
-      };
+    use: function(provider) {
+      return new Promise(function(resolve, reject) {
 
-      ds.request(requestConfig);
+        var url = new UriTemplate(URL).fillFromObject({});
+
+        ds.define(SAVE_REQUEST_ID, {
+          cache: false,
+          url: url,
+          type: 'POST',
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        });
+
+        var requestConfig = {
+          resourceId: SAVE_REQUEST_ID,
+          data: JSON.stringify({
+            provider: provider
+          }),
+          success: function(response) {
+            resolve(response.data.id);
+          },
+          error: reject
+        };
+
+        ds.request(requestConfig);
 
       });
     }

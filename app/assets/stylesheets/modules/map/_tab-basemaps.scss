@@ -1,5 +1,5 @@
-$basemaps-class: grayscale, terrain, satellite, hybrid, treeheight, dark, positron, landsat;
-$basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, landsat;
+$basemaps-class: grayscale, terrain, satellite, hybrid, treeheight, dark, positron, landsat, openstreet;
+$basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, landsat, openstreet;
 .tab-basemaps{
   position: relative;
   .maptype-list{
@@ -7,51 +7,59 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, 
       max-height: 380px;
       overflow: auto;
     }
-    >li{
+
+    >li {
       position: relative;
       padding: 0 0 0 80px;
       border-top: 1px solid $border;
       cursor: pointer;
-      &:first-child{
+
+      &:first-child {
         border-top: none;
       }
+
       &:hover{
         background: darken($light,3%);
       }
+
       &.selected{ background: darken($light,3%);}
+
       @for $i from 1 through length($basemaps-img) {
         &.#{nth($basemaps-class, $i)} i {
           @include basemaps-sprite(nth($basemaps-img, $i));
         }
       }
-      span{
+
+      span {
         font-size: 12px;
         line-height: 70px;
         text-transform: uppercase;
       }
-      i{
+
+      i {
         width: 46px;
         height: 46px;
         position: absolute;
         top: 50%;
         left: 16px;
-        @include transform(translate(0,-50%));
+        transform: translate(0,-50%);
         background: #000;
         border-radius: 50%;
         border: 2px solid $border;
-
       }
-      .source{
+
+      .source {
         @extend .info-icon;
         display: block;
         position: absolute;
         top: 50%;
         right: 20px;
-        @include transform(translate(0,-50%));
+        transform: translate(0,-50%);
       }
     }
   }
-  .landsat-years{
+
+  .landsat-years {
     display: none;
     background: $white;
     width: 100%;
@@ -65,17 +73,19 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, 
       bottom: 0%;
       right: 100%;
     }
-    &.active{
-      @include display-flex();
+
+    &.active {
+      display: flex;
       min-width: 200px;
     }
-    &:after{
+
+    &:after {
       content: "";
       position: absolute;
       bottom: calc(70px/2 - 12px);
       right: 0;
       display: none;
-      @include transform(translate(50%,-50%) rotate(45deg));
+      transform: translate(50%,-50%) rotate(45deg);
       background: $white;
       width: 12px;
       height: 12px;
@@ -84,8 +94,10 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, 
         display: block;
       }
     }
-    > div{
+
+    > div {
       width: 50%;
+      
       > li {
         cursor: pointer;
         font-size: 12px;

@@ -14,7 +14,7 @@ define([
 
   var StatusModel = Backbone.Model.extend({
     defaults: {
-      tab: 'countries-tab',
+      tab: 'analysis-tab',
       iso: null,      
     }
   });
@@ -47,6 +47,10 @@ define([
     },{
       'Tab/open': function(id, backbutton) {
         this.view.openTab(id, backbutton);
+      }
+    },{
+      'Tab/toggle': function(id, active) {
+        this.view.toggleTab(id, active);
       }
     },{
       'Layers/toggle': function(toggle) {

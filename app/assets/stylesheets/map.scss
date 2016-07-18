@@ -1,9 +1,8 @@
 // Compass
 @import "compass/reset";
 @import "compass/css3";
-@import 'flexbox';
 
-  // Images
+// Images
 @import
   "icons/*.png",
   "logos/*.png",
@@ -13,24 +12,19 @@
   "country-icons/*.png",
   "stories-icons/*.png";
 
-// General
-@import "settings1600";
-@import "fonts1600";
-@import "mixins1600";
-@import "animations1600";
-@import "base1600";
+// Global
+// This will load all common settings, mixins and styles needed 
+@import "global/global";
 
-
-// Layout
-@import "header1600";
-@import "footer1600";
-@import "layouts/grid1600";
+// Layouts
+// This will load all common layouts styles
+@import "layouts/layouts";
 
 //modules
-@import "modules/shared1600";
-@import "modules/buttons1600";
-@import "modules/icons1600";
-@import "modules/slick1600";
+@import "modules/shared";
+@import "modules/buttons";
+@import "modules/icons";
+@import "modules/slick";
 @import "modules/notifications";
 @import "modules/modal";
 @import "modules/modal_new";
@@ -49,7 +43,6 @@
   // Modules
   "modules/notice",
   "modules/navbar",
-  "modules/dialog",
   "modules/guide",
 
   // layer nav
@@ -62,8 +55,10 @@
 
   // Real Modules
   "modules/map/module",
+  
   // legend
   "modules/map/module-legend",
+  
   // controls
   "modules/map/module-mapcontrols",
   "modules/map/control-searchbox",
@@ -77,22 +72,25 @@
   "modules/map/tab-countries",
   "modules/map/tab-highresolution",
   "modules/map/subscription-modal",
+
+  // analysis
+  "modules/map/analysis-draw",
+  "modules/map/analysis-country",
+  "modules/map/analysis-shape",
+  "modules/map/analysis-spinner",
+  "modules/map/analysis-results",
+  "modules/map/analysis-downloads",
+
   // timeline
   "modules/map/widget",
   "modules/map/timeline",
   "modules/map/timeline-btn",
   "modules/map/timeline-year",
   "modules/map/timeline-month",
-
   "modules/map/timeline-torque",
   "modules/map/timeline-torque-date-picker",
 
   //Nav mobile
   "modules/map/module-navmobile",
 
-
-
-  "modules/map/analysis-tool",
   "modules/map/infowindow";
-
-@import "states";

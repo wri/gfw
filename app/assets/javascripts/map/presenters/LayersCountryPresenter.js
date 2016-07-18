@@ -16,19 +16,21 @@ define([
 
   'use strict';
 
-  var StatusModel = Backbone.Model.extend({
-    defaults: {
-      iso: null,
-      dont_analyze: true
-    }
-  });
-
   var LayersCountryPresenter = PresenterClass.extend({
+
+    status: new (Backbone.Model.extend({
+      defaults: {
+        iso: {
+          country: 'ALL',
+          region: null
+        },
+        isoDisabled: true
+      }
+    })),
 
     init: function(view) {
       this.view = view;
       this._super();
-      this.status = new StatusModel();
       this.listeners();
       mps.publish('Place/register', [this]);
     },
@@ -36,12 +38,12 @@ define([
     getPlaceParams: function() {
       var p = {};
       p.iso = this.status.get('iso');
-      p.dont_analyze = this.status.get('dont_analyze');
       return p;
     },
 
     listeners: function() {
       this.status.on('change:iso', this.countryAtlas.bind(this));
+      // this.status.on('change:iso', this.countryBounds.bind(this));
     },
 
     /**
@@ -50,13 +52,13 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         var params = place.params;
-        
-        this.status.set('dont_analyze', params.dont_analyze);
 
         if(!!params.iso.country && params.iso.country !== 'ALL'){
-          this.view.setCountry(params.iso);          
+          this.view.setCountry(params.iso);
           this.status.set('iso', params.iso);
         }
+
+        this.status.set('isoDisabled', (!!params.dont_analyze) || !(!!params.iso.country && params.iso.country != 'ALL'))
       }
     },{
       'Country/update': function(iso) {
@@ -76,8 +78,28 @@ define([
         this.view.setLayers(layers);
       }
     },{
-      'Analysis/dont_analyze': function(enabled) {
-        this.status.set('dont_analyze', enabled);
+      'Analysis/iso': function(iso,isoDisabled) {
+        this.status.set('isoDisabled', isoDisabled);
+        if(!!iso.country && iso.country !== 'ALL' && !isoDisabled){
+          this.view.setCountry(iso);
+          this.status.set({
+            iso: iso,
+            isoDisabled: isoDisabled
+          });
+        }
+      }
+    },{
+      'Analysis/delete': function(options) {
+        var iso = this.status.get('iso');
+        if(!!iso.country && iso.country !== 'ALL'){
+          this.status.set({
+            iso: {
+              country: iso.country,
+              region: null
+            }
+          });
+        }
+
       }
     },{
       'Analysis/enabled': function(boolean) {
@@ -102,13 +124,8 @@ define([
      */
     publishIso: function(iso) {
       this.status.set('iso', iso);
-      this.status.set('dont_analyze', true);        
       mps.publish('Country/update', [iso]);
-      mps.publish('Analysis/dont_analyze', [this.status.get('dont_analyze')]);
       mps.publish('Place/update', [{go: false}]);
-
-      // Fit country bounds
-      this.countryBounds();
     },
 
     /**
@@ -120,17 +137,20 @@ define([
       var iso = this.status.get('iso');
 
       if(!!iso.country && iso.country !== 'ALL'){
-        countryService.execute(iso.country, _.bind(function(results) {
-          var objects = _.findWhere(results.topojson.objects, {
-            type: 'MultiPolygon'
-          });
-          var geojson = topojson.feature(results.topojson,objects);
+        countryService.show(iso.country)
+          .then(function(results,status) {
+            var objects = _.findWhere(results.topojson.objects, {
+              type: 'MultiPolygon'
+            });
+            var geojson = topojson.feature(results.topojson,objects),
+                bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson)
 
-          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
-          if (!!bounds) {
-            mps.publish('Map/fit-bounds', [bounds]);
-          }
-        },this));
+            // Get bounds and fit to them
+            if (!!bounds) {
+              mps.publish('Map/fit-bounds', [bounds]);
+            }
+
+          }.bind(this));
       }
     },
 
@@ -143,16 +163,16 @@ define([
       var iso = this.status.get('iso');
 
       if(!!iso && !!iso.country && iso.country !== 'ALL'){
-        countryService.execute(iso.country, _.bind(function(results) {
+        countryService.show(iso.country, _.bind(function(results) {
           var is_more = (!!results.indepth);
           var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
-          
+
           if (is_more) {
             this.view.renderAtlas({
               name: results.name,
-              url: results.indepth, 
+              url: results.indepth,
               is_idn: is_idn
-            });            
+            });
           }
 
         },this));
@@ -166,9 +186,8 @@ define([
      */
     analyzeIso: function() {
       var iso = this.status.get('iso');
-      this.status.set('dont_analyze', null);
       mps.publish('Analysis/iso', [iso]);
-      mps.publish('Tab/open', ['#analysis-tab-button']);      
+      mps.publish('Tab/open', ['#analysis-tab-button']);
     },
 
     /**
@@ -211,7 +230,7 @@ define([
         // Check if any of the regular layers is active and toggle it
         if (!!currentLayers[layer.slug]) {
           this._toggleLayer(layer.slug);
-        }        
+        }
       }
     },
 

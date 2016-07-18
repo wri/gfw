@@ -15,8 +15,6 @@ define([
   'map/views/layers/Forma250CoverLayer',
   'map/views/layers/ImazonLayer',
   'map/views/layers/ImazonCoverLayer',
-  'map/views/layers/ModisLayer',
-  'map/views/layers/ModisCoverLayer',
   'map/views/layers/Forest2000Layer',
   'map/views/layers/IntactForestLayer',
   'map/views/layers/IntactForestLayer2000',
@@ -145,7 +143,14 @@ define([
   'map/views/layers/MexForestCatLayer',
   'map/views/layers/MexForestSubCatLayer',
   'map/views/layers/Places2WatchLayer',
-
+  'map/views/layers/MexicoPaymentsLayer',
+  'map/views/layers/MexLandRightsLayer',
+  'map/views/layers/BraLoggingLayer',
+  'map/views/layers/MysWoodFiberSabahLayer',
+  'map/views/layers/MysLoggingSabahLayer',
+  'map/views/layers/MysPASabahLayer',
+  'map/views/layers/PerPALayer',
+  'map/views/layers/MexLandCoverLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -155,7 +160,6 @@ define([
   'map/views/timeline/FormaTimeline',
   'map/views/timeline/Forma250Timeline',
   'map/views/timeline/ImazonTimeline',
-  'map/views/timeline/ModisTimeline',
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
   'map/views/timeline/ProdesTimeline',
@@ -175,8 +179,6 @@ define([
   Forma250CoverLayer,
   ImazonLayer,
   ImazonCoverLayer,
-  ModisLayer,
-  ModisCoverLayer,
   Forest2000Layer,
   IntactForestLayer,
   IntactForestLayer2000,
@@ -305,6 +307,14 @@ define([
   MexForestCatLayer,
   MexForestSubCatLayer,
   Places2WatchLayer,
+  MexicoPaymentsLayer,
+  MexLandRightsLayer,
+  BraLoggingLayer,
+  MysWoodFiberSabahLayer,
+  MysLoggingSabahLayer,
+  MysPASabahLayer,
+  PerPALayer,
+  MexLandCoverLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -314,7 +324,6 @@ define([
   FormaTimeline,
   Forma250Timeline,
   ImazonTimeline,
-  ModisTimeline,
   FiresTimeline,
   TerraiTimeline,
   ProdesTimeline,
@@ -368,13 +377,6 @@ define([
     },
     imazon_cover: {
       view: ImazonCoverLayer
-    },
-    modis: {
-      view: ModisLayer,
-      timelineView: ModisTimeline
-    },
-    modis_cover: {
-      view: ModisCoverLayer
     },
     viirs_fires_alerts: {
       view: ViirsLayer,
@@ -759,11 +761,9 @@ define([
     mex_mining: {
       view:  MexMiningLayer
     },
-    
     per_mining: {
       view:  PerMiningLayer
     },
-    
     bra_mining: {
       view:  BraMiningLayer
     },
@@ -782,7 +782,30 @@ define([
     places_to_watch: {
       view:  Places2WatchLayer
     },
-    
+    mexican_psa: {
+      view:  MexicoPaymentsLayer
+    },
+    mex_land_rights: {
+      view:  MexLandRightsLayer
+    },
+    bra_logging: {
+      view:  BraLoggingLayer
+    },
+    mys_wood_fiber_sabah: {
+      view: MysWoodFiberSabahLayer
+    },
+    mys_proteced_areas_sabah: {
+      view:  MysPASabahLayer
+    },
+    mys_logging_sabah: {
+      view:  MysLoggingSabahLayer
+    },
+    per_protected_areas: {
+      view:  PerPALayer
+    },
+    mex_land_cover: {
+      view:  MexLandCoverLayer
+    },
     nothing: {
     }
   };

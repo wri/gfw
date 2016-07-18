@@ -68,6 +68,10 @@
       &.active-result {
         display: list-item;
         cursor: pointer;
+        
+        &.result-selected {
+          background: #DDD;
+        }
       }
       
       &.disabled-result {
@@ -223,7 +227,7 @@
       line-height: 16px;
       font-size: 10px;
       text-align: center;
-      @include transform(translate(0,-50%));
+      transform: translate(0,-50%);
       font-family: Arial;
       font-weight: 700;
       color: $dark;

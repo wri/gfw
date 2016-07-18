@@ -9,11 +9,11 @@
   padding: 0px 0 56px;
   z-index: 22;
   background: $white;
-  @include transition(all 0.25s $easeInOutSine);
-  @include transform(translate(0,100%));
+  transition: all 0.25s $easeInOutSine;
+  transform: translate(0,100%);
 
   &.active{
-    @include transform(translate(0,0));
+    transform: translate(0,0);
   }
 
   @media (min-width: $br-mobileMap){
@@ -23,7 +23,7 @@
     left: 35px;
     padding: 0;
     max-height: calc(100% - 310px);
-    @include transform(translate(0,0));
+    transform: translate(0,0);
   }
 
   .close{
@@ -48,6 +48,11 @@
     display: none;
   }
 
+  .legend-link {
+    font-size: 11px;
+    line-height: 14px;    
+  }
+
   // @ul
   .categories{
     margin: 20px 0 0;
@@ -70,20 +75,21 @@
 
     h2{
       padding: 10px 15px;
-      margin: 20px 0;
       background: #F0F0F0;
       font-weight: 500;
       color: $dark;
       font-size: 14px;
       text-transform: uppercase;
+      @media (min-width: $br-mobileMap){
+        padding: 10px 20px;
+      }
 
       &.-country {
         background: rgba($country-color, 0.25);  
-        margin: 0 0 20px;              
       }
 
-      @media (min-width: $br-mobileMap){
-        padding: 10px 20px;
+      .country-btns {
+        margin: 5px 0 0;
       }
     }
     
@@ -105,12 +111,12 @@
     // @li
     .category {
       padding: 0 20px;
-      margin-top: 25px;
+      margin-top: 20px;
 
       &.closed {
         .category-name {
           &:after { 
-            @include transform(translate(0,-100%) rotate(180deg));
+            transform: translate(0,-100%) rotate(180deg);
           }
 
           em { 
@@ -145,7 +151,7 @@
           right: 5px;
           width: 0;
           height: 0;
-          @include transform(translate(0,-100%));
+          transform: translate(0,-100%);
           border-left: 3px solid transparent;
           border-right: 3px solid transparent;
           border-top: 5px solid;
@@ -206,7 +212,7 @@
         .sublayer-title {
           font-size: 13px;
           margin-left: 5px;
-          color: #ccc;
+          color: #555;
           display: inline-block;
           .source {
             top: 9px;
@@ -275,7 +281,7 @@
         fill: #AAA;
         width: 10px;
         height: 10px;
-        @include transition(all,0s);
+        transition: all 0s ease;
         @media (min-width: $br-mobileMap){
           left: 0;
           right: 0;
@@ -352,7 +358,7 @@
     }
 
     .definition-list {
-      @include display-flex();
+      display: flex;
       width: 190px;
       font-size: 11px;
       line-height: 14px;      

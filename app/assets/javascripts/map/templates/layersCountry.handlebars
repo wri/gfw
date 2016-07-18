@@ -67,7 +67,7 @@
                 {{#each this.wrappers}}
                 <label data-layer="{{this.slug}}" class="layer wrapped">
                   <span></span>
-                  <input type="radio" />{{this.title}}
+                  <input type="radio" />{{this.radio_title}}
                 </label>
                 {{/each}}
               </span>                        
@@ -79,7 +79,7 @@
     {{else}}
       <div class="country-description">
         <p>Local datasets coming soon! </p>
-        <p>For now, <a href="#" class="source" data-source="view_existing_global_data">view global datasets</a> for this area, <a href="/getinvolved/share-data" target="_blank">suggest your own</a>, or use the buttons below to see statistics and infographics for this country.</p>
+        <p>For now, <a href="#" class="source" data-source="view_existing_global_data">view global datasets</a> for this area, <a href="#" class="data-suggestion-link" target="_blank">suggest your own</a>, or use the buttons below to see statistics and infographics for this country.</p>
       </div>
     {{/if}}
   {{else}}

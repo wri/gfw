@@ -60,7 +60,7 @@ define([
         this._setLayers(layerSpec.getLayers());
       }
     },{
-      'ThresholdControls/toggle': function() {
+      'ThresholdControls/show': function() {
         if (this.view.model.get('hidden')) {
           this.view.model.set('hidden',false);
         }else{

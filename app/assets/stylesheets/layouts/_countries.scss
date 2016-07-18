@@ -28,10 +28,10 @@
 .countries_list_index {
   @extend .clearfix;
 
-  @include display-flex();
-  @include flex-wrap(wrap);
-  @include justify-content(center);
-  @include align-content(center);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
   margin: 0 auto 85px;
 }
 
@@ -97,10 +97,10 @@
 .countries_list {
   @extend .clearfix;
 
-  @include display-flex();
-  @include flex-wrap(wrap);
-  @include justify-content(center);
-  @include align-content(center);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
 
   margin-bottom: 50px;
 }
@@ -136,7 +136,7 @@
     height: 30px;
     background: image-url('countries/search.svg') no-repeat center;
     background-size: contain;
-    @include translate(0, -50%);
+    transform: translate(0, -50%);
     visibility: visible;
   }
   input {

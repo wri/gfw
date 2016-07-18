@@ -785,82 +785,6 @@
         <p>This layer displays the geographic coverage of SAD alerts, which only cover the Brazilian Amazon.</p>
       </div>
     </li>
-    <li id='modis' class='source-item'>
-      <div class='source_header'>
-        <strong class='source_title'>QUICC alerts</strong>
-        <i class='expand_arrow'></i>
-        <em class='source_description'>(quarterly, 5km, &lt;37 degrees north, NASA)</em>
-      </div>
-
-      <div class='source_body'>
-        <div class='source_download'>
-          <a href='http://wri-01.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20quicc_alerts%20&format=shp' target='_blank' title='Download on CartoDB'>Download<i class='arrow_down'></i></a>
-        </div>
-
-        <div class='source_table'>
-          <dl class='sources_row'>
-            <dt>Function</dt>
-            <dd>Identifies areas of forested land that have lost at least 40% of their green vegetation cover compared to the same quarter of the previous year</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>RESOLUTION / SCALE</dt>
-            <dd>5 × 5 kilometers</dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>Geographic coverage</dt>
-            <dd>Global, except for areas >37 degrees north</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>Source data</dt>
-            <dd><a href='http://modis.gsfc.nasa.gov/about/' target='_blank'>MODIS</a></dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>Frequency of updates</dt>
-            <dd>Quarterly (April, July, October, January)</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>Date of content</dt>
-            <dd>October 2011–present</dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>Cautions</dt>
-            <dd>
-              <p>When zoomed out, this data layer displays some degree of inaccuracy because the data points must be collapsed to be visible on a larger scale. Zoom in for greater detail.</p>
-            </dd>
-          </dl>
-        </div>
-
-        <div class='source_summary'>
-          <h3 class='overview_title'>Overview</h3>
-
-          <p>The <a href='http://geo.arc.nasa.gov/sge/casa/latest.html' target='_blank'>Quarterly Indicator of Cover Change (QUICC)</a> product was developed at the NASA Ames Research Center by the <a href='http://geo.arc.nasa.gov/sge/casa/' target='_blank'>CASA</a> ecosystem modeling team. QUICC compares the MODIS global vegetation index (VI) images at the exact same time period each year on a quarterly basis (end of March, June, September, and December) and identifies land areas that have lost at least 40% of their green vegetation from the previous product and over the past year. This level of green vegetation loss is commonly associated with major forest or tree cover loss.</p>
-
-          <p>The CASA team updates the global QUICC products as soon as the newest quarterly MODIS worldwide VI image is produced. After September (Q3) 2012, the data were adjusted to exclude forest areas located >37 degrees north as a result of confusion caused by year-to-year variations in seasonal snow cover.</p>
-
-          <p class='credits'><strong>Citation:</strong> NASA-CASA Project. “CASA ‘Quarterly Indicator of Cover Change’ (QUICC).” Accessed on [date].<a href='http://geo.arc.nasa.gov/sge/casa/latest.html' target='_blank'>geo.arc.nasa.gov/sge/casa/latest.html</a>.</p>
-
-          <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> “QUICC Alerts.” NASA Ames Research Center and California State University. Accessed through Global Forest Watch on [date].<a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
-
-          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "http://data.globalforestwatch.org/datasets/e7bfe60d90ea4e5aa808eba4723ad3f8_0", :class => 'download-mobile-link' %></em></p>
-        </div>
-      </div>
-
-      <div class='source_coverage_header'>
-        <h3 class='source_coverage_title'>Geographic coverage of QUICC alerts</h3>
-      </div>
-
-      <div class='source_coverage'>
-        <p>The geographic coverage of QUICC alerts is global, except for areas >37 degrees north.</p>
-      </div>
-    </li>
-    <li id='modis_source' class='source-item'>
-      <div class='source_header'>
-        <strong class='source_title'>quicc geographic coverage</strong>
-      </div>
-      <div class='source_summary'>
-        <p>This layer displays the geographic coverage of QUICC alerts, which is all areas <37 degrees north.</p>
-      </div>
-    </li>
     <li id='fires' class='source-item'>
       <div class='source_header'>
         <strong class='source_title'>FIRMS active fires</strong>
@@ -6190,6 +6114,18 @@
         </div>
       </div>
     </li>
+    <li id='openstreet' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Open street map</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_summary'>
+          <p class='first'>Open Street Map is a free, editable map of the whole world that is crowd-sourced and released with an open-content license. Data can be edited or downloaded at <a href='http://www.openstreetmap.org/' target='_blank'>http://www.openstreetmap.org/</a></p>
+        </div>
+      </div>
+    </li>
     <li id='landsat' class='source-item last'>
       <div class='source_header'>
         <strong class='source_title'>Landsat Composites</strong>
@@ -6327,7 +6263,7 @@
 
             <li><strong>Photographs.</strong> Most of the photographs featured on this site have either been licensed under nontransferable terms, or have been acquired from photo-sharing sites such as Flickr that have their own policies for public use. Unless indicated otherwise, the Creative Commons CC BY 4.0 license described above does not apply to photographs and images used on this site.</li>
 
-            <li><strong>Charts, Graphs, & Maps.</strong> Charts, graphs, and maps produced by GFW may be used according to the Creative Commons CC BY 4.0 license. Where graphs employ data from third parties, we may not be able to grant permissions to the original data used in these charts, although such permissions may be granted by the owners of the data. In these cases, please contact the third-party organizations directly to ask about permissions. If you have any questions about citing or reusing GFW content, please visit the <a href="/howto">How to page</a> or <a href='mailto:gfw@wri.org'>contact us</a>.</li>
+            <li><strong>Charts, Graphs, & Maps.</strong> Charts, graphs, and maps produced by GFW may be used according to the Creative Commons CC BY 4.0 license. Where graphs employ data from third parties, we may not be able to grant permissions to the original data used in these charts, although such permissions may be granted by the owners of the data. In these cases, please contact the third-party organizations directly to ask about permissions. If you have any questions about citing or reusing GFW content, please visit the <a href="/howto">How to page</a> or <a class="contact-link" href='mailto:gfw@wri.org'>contact us</a>.</li>
           </ul>
         </div>
       </div>

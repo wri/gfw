@@ -2,10 +2,10 @@
 .cartodb-infowindow {
   background: $white;
   box-shadow: $shadow1;
-  @include transform(translate(-97px, -12px));
+  transform: translate(-97px, -12px);
 
 
-  &:after{
+  &:after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -15,30 +15,34 @@
     height: 14px;
     background: $white;
     box-shadow: 1px 1px 0 0 rgba($dark, 0.5);
-    @include transform(translate(-50%, 50%) rotate(45deg));
+    transform: translate(-50%, 50%) rotate(45deg);
   }
-  &.hidden{
+
+  &.-hidden {
+    display: none;
     visibility: hidden;
     opacity: 0;
   }
 
 
 
-  .cartodb-popup{
+  .cartodb-popup {
     position: relative;
     width: 250px;
-    @media (max-width: $br-mobile) {
-      width: 200px;
-    }
     height: auto;
     padding: 0;
     padding-right: 0;
     margin: 0;
     background: $white;
+    @media (max-width: $br-mobile) {
+      width: 200px;
+    }
+    
     .jspPane {
       padding: 0 !important;
     }
-    a.cartodb-popup-close-button{
+
+    a.cartodb-popup-close-button {
       position: absolute;
       top: 0px;
       right: 0px;
@@ -54,27 +58,30 @@
       z-index: 3;
     }
 
-    .cartodb-popup-content-wrapper{
+    .cartodb-popup-content-wrapper {
       width: 100%;
       max-width: none;
       padding: 0;
       overflow-x: hidden;
       background: $white;
       padding: 0;
-      &.analysis-active{
+
+      &.analysis-active {
         padding: 0 0 67px;
       }
-      .cartodb-popup-header{
-        h2{
+
+      .cartodb-popup-header {
+        h2 {
           font-size: 21px;
+          line-height: 1.25;
+          padding: 20px 20px 15px;
           @media (max-width: $br-mobile) {
             font-size: 18px;
           }
-          line-height: 1.25;
-          padding: 20px 20px 15px;
         }
       }
-      .cartodb-popup-fixed{
+
+      .cartodb-popup-fixed {
         position: absolute;
         bottom: 0;
         left: 0;
@@ -83,25 +90,27 @@
         z-index: 5;
         background: $white;
         border-top: 1px solid $border;
-        @include display-flex();
-        @include justify-content(space-between);
+        display: flex;
+        justify-content: space-between;
         @media (max-width: $br-mobile - 1) {
           padding: 0 10px;
         }
 
-        .btn{
+        .btn {
           width: 100%;
           margin: 15px 1px;
           @media (max-width: $br-mobileMap - 1){
             font-size: 12px;
           }
-          &.dont-analyze{
+
+          &.dont-analyze {
             // display: none !important;
             opacity: 0.5;
           }
         }
       }
-      .cartodb-popup-content{
+
+      .cartodb-popup-content {
         display: block;
         width: 100%;
         max-width: 100%;
@@ -114,29 +123,30 @@
         overflow-x: hidden!important;
         outline: none;
         text-align: left;
-        .cartodb-popup-content-inside{
+
+        .cartodb-popup-content-inside {
           padding: 20px 20px 10px;
           @include clearfix();
         }
-        h2,h3,h4,p{
+
+        h2,h3,h4,p {
           font-family: "Fira GFW Sans", "Fira Sans" , Helvetica;
           font-feature-settings: "liga" 0;
           width: 100%;
         }
-        h2{
+
+        h2 {
           font-size: 21px;
+          line-height: 1.25;
+          padding: 0 0 10px;
           @media (max-width: $br-mobile) {
             font-size: 18px;
           }
-          line-height: 1.25;
-          padding: 0 0 10px;
         }
-        h4{
+
+        h4 {
           color: $dark;
           font-size: 12px;
-          @media (max-width: $br-mobile) {
-            font-size: 10px;
-          }
           font-weight: 500;
           width: 50%;
           float: left;
@@ -144,36 +154,44 @@
           min-height: 1px;
           clear: both;
           padding: 8px 5px 0 0;
-          &.no-float{
+          @media (max-width: $br-mobile) {
+            font-size: 10px;
+          }
+
+          &.no-float {
             width: 100%;
             float: none;
             padding: 0 0 5px;
           }
         }
-        p{
+
+        p {
           color: $dark;
           font-size: 13px;
-          @media (max-width: $br-mobile) {
-            font-size: 11px;
-          }
           width: 50%;
           float: left;
           line-height: 1.25;
           min-height: 1px;
           padding: 8px 0 0;
-          &.no-float{
+          @media (max-width: $br-mobile) {
+            font-size: 11px;
+          }
+
+          &.no-float {
             width: 100%;
             float: none;
             padding: 0;
           }
         }
-        .btn{
+
+        .btn {
           width: 100%;
           margin: 5px 0;
         }
       }
     }
-    .cartodb-popup-tip-container{
+
+    .cartodb-popup-tip-container {
       display: none;
       background: none;
     }
@@ -204,7 +222,7 @@ $story-w: 215px;
     width: 10px;
     height: 10px;
     background: rgba(#000, 1);
-    @include transform(translate(-50%, 50%) rotate(45deg));
+    transform: translate(-50%, 50%) rotate(45deg);
   }
 
   .story-popup{

@@ -30,6 +30,7 @@ define([
       "WMSLayer",
       "global_land_cover",
       "us_land_cover",
+      "mex_land_cover",
       "gtm_forest_cover",
       "gtm_forest_density",
       "gtm_forest_change2",
@@ -75,6 +76,7 @@ define([
       "cri_land_rights",
       "nzl_land_rights",
       "raisg",
+      "mex_land_rights",
       // CONSERVATION
       "biodiversity_hotspots",
       "verified_carbon",
@@ -92,6 +94,8 @@ define([
       "per_nat_pa",
       "per_priv_pa",
       "per_reg_pa",
+      "mys_proteced_areas_sabah",
+      "per_protected_areas",
       // Land USE
       "dam_hotspots",
       "per_prod_for",
@@ -129,9 +133,13 @@ define([
       "cod_logging",
       "cog_logging",
       "mys_logging",
+      "mys_logging_sabah",
       "logging",
       "logging_roads",
       "raisg_mining",
+      "mexican_psa",
+      "bra_logging",
+      "mys_wood_fiber_sabah",
       //STORIES
       "infoamazonia",
       "mongabay",
@@ -142,14 +150,12 @@ define([
       "forma_cover",
       "forma_250_cover",
       "imazon_cover",
-      "modis_cover",
       "gran_chaco_extent",
       // FOREST CHANGE
       "per_minam_loss",
       "guyra",
       "terrailoss",
       "viirs_fires_alerts",
-      "modis",
       "imazon",
       "forma",
       "peru_forma_250",
@@ -223,6 +229,14 @@ define([
       return this.positionizer(this.get('forest_clearing') || {});
     },
 
+    getBaselayer: function() {
+      var baselayers = _.keys(this.positionizer(this.get('forest_clearing') || {}));
+      if (!!baselayers.length) {
+        return this.getLayer({ slug: baselayers[0] });
+      }
+      return {};
+    },
+
     /**
      * Return sublayers object.
      *
@@ -237,17 +251,6 @@ define([
         });
 
       return this.positionizer(layers);
-    },
-
-   /**
-     * Return an ordered array of layers. Order by layer position.
-     *
-     * @return {array} layers
-     */
-    getOrderedLayers: function() {
-      return _.sortBy(this.getLayers(), function(layer) {
-        return layer.position;
-      });
     },
 
     /**
@@ -269,16 +272,6 @@ define([
       }, this));
 
       return categories;
-    },
-
-    /**
-     * Check if (loss and/or gain) + cover
-     *
-     * @return {boolean} boolean
-     */    
-    checkLossGainExtent: function() {
-      var forest_clearing = this.get('forest_clearing');
-      return (!!forest_clearing && !!forest_clearing['forest2000'] && (!!forest_clearing['loss'] || !!forest_clearing['forestgain']));
     },
 
   });

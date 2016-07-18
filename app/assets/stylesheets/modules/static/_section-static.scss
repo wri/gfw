@@ -1,6 +1,6 @@
 .m-section-static {
   position: relative;
-  padding: 60px 0;
+  padding: 70px 0;
   
   &.-no-padding {
     padding: 0;
@@ -24,6 +24,7 @@
 
       &.-main-title {
         font-size: 35px;
+        font-weight: 400;
         @media only screen and (min-width: $br-mobile) {
           font-size: 47px;
         }
@@ -39,7 +40,7 @@
     p {
       font-size: 14px;
       line-height: 1.5;
-      padding: 20px 0 0;
+      padding: 35px 0 0;
       font-weight: 300;
       @media only screen and (min-width: $br-mobile) {
         font-size: 19px;

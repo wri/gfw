@@ -7,7 +7,7 @@
 .qtip-default {
   border: 1px solid #ccc;
   background: #fff;
-  @include border-radius(3px);
+  border-radius: 3px;
   @include box-shadow(0 0 3px rgba(#000, .2));
 }
 

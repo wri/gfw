@@ -243,7 +243,7 @@ define([
     fixLegibility: function(){
       this.$categoriesList.width('auto');
       var w = this.$categoriesList.width();
-      if (w%2 != 0) {
+      if (w%2 != 0 && window.innerWidth > 1500) {
         // This is for prevent blur on layers nav
         this.$categoriesList.width(w+1);
       }

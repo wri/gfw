@@ -13,7 +13,6 @@ define([
     forestgain: 'alerts/treegain',
     forma: 'alerts/forma',
     imazon: 'alerts/sad',
-    modis: 'alerts/quicc',
     terrailoss: 'alerts/terra',
     prodes: 'alerts/prodes',
     guyra: 'alerts/guyra',

@@ -23,7 +23,7 @@ $height: auto;
       opacity: 1;
       visibility: visible;
       @media (min-width: $br-mobile){
-        @include transform(translate(-50%,-50%));
+        transform: translate(-50%,-50%);
       }
     }
   }
@@ -78,7 +78,7 @@ $height: auto;
       width: $width;
       height: $height;
       min-height: 100px;
-      @include transform(translate(-50%,-60%));
+      transform: translate(-50%,-60%);
     }
 
     .modal-close {
@@ -202,11 +202,11 @@ $height: auto;
     margin: 15px 0;
     position: relative;
     left: 50%;
-    @include transform(translate(-50%,0));
+    transform: translate(-50%,0);
     float: left;
     padding: 4px;
-    @include display-flex();
-    @include justify-content(center);
+    display: flex;
+    justify-content: center;
     border: 1px solid $cGreen;
     border-radius: 45px;
 
@@ -254,6 +254,7 @@ $height: auto;
     border-bottom: 1px solid $border;
     @include gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
   }
+
 }
 
 // MODAL ARROWS
@@ -266,7 +267,7 @@ $height: auto;
   .btn-direction{
     position: absolute;
     top: 50%;
-    @include transform(translate(0,-50%));
+    transform: translate(0,-50%);
     
     &.is-left{
       right: 100%;

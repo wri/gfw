@@ -42,7 +42,7 @@
       line-height: 27px;
       text-transform: uppercase;
       color: #333;
-      @include border-radius(3px);
+      border-radius: 3px;
 
       span { background:none; }
 

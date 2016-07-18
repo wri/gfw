@@ -28,7 +28,12 @@ define([
       'Notification/close': function() {
         this.view.hide();
       }
-    }]
+    }],
+
+    publishAction: function(action, options) {
+      mps.publish(action, [options])
+    }
+
   });
 
   return SourceMobileFriendlyPresenter;

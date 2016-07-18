@@ -5,7 +5,7 @@ define([], function () {
 
   'use strict';
 
-  var darkMaptype = function() {
+  var DarkMaptype = function() {
     var config = {
       name: 'Dark Matter',
       alt: 'Global forest dark',
@@ -21,6 +21,6 @@ define([], function () {
     return new google.maps.ImageMapType(config);
   };
 
-  return darkMaptype;
+  return DarkMaptype;
 });
 

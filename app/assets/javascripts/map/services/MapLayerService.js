@@ -78,12 +78,12 @@ define([
           // Store the wrapped layers here
           layer.wrappers = {};
 
-          _.each(does_wrapper, function(wrap_layer) {
-
+          _.each(does_wrapper, function(wrap_layer) {            
             // Add the wrapped layer to the wrapper array            
             layer.wrappers[wrap_layer.slug] = _.findWhere(countryLayers, {
               slug: wrap_layer.slug
             });
+            layer.wrappers[wrap_layer.slug].radio_title = wrap_layer.title;
 
             countryLayers =_.without(countryLayers, _.findWhere(countryLayers, { 
               slug: wrap_layer.slug 

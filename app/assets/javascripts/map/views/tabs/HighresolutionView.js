@@ -188,9 +188,10 @@ define([
     },
 
     switchToggle: function(to) {
+      var was_active = this.$el.find('.onoffswitch').hasClass('checked');
       this.$el.find('.onoffswitch').toggleClass('checked', to);
       
-      if (to && !isMobile.any) {
+      if (to && !isMobile.any && !was_active) {
         var listenerMouseMove = google.maps.event.addListener(this.map, 'mousemove', function(e) {
           this.$highresolutionModal.toggleClass('-active', to);
           this.$highresolutionModal.css({
@@ -200,8 +201,12 @@ define([
           setTimeout(function() {
             google.maps.event.removeListener(listenerMouseMove);
             this.$highresolutionModal.toggleClass('-active', false);
-          }.bind(this), 5000)
+          }.bind(this), 4000)
         }.bind(this));        
+      } else {
+        if (listenerMouseMove) {
+          google.maps.event.removeListener(listenerMouseMove);  
+        }
       }
       
       this.toggleIconUrthe(to);
