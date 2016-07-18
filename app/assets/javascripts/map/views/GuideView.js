@@ -1,25 +1,13 @@
 define([
   'handlebars',
-  'mps',
-  'map/helpers/guides',
-  'map/presenters/GuidePresenter',  
+  'map/presenters/GuidePresenter',
   'text!map/templates/guideContainer.handlebars',
   'text!map/templates/guideBubble.handlebars'
-], function(Handlebars, mps, guides, GuidePresenter, tpl, tplBubble) {
+], function(Handlebars, GuidePresenter, tpl, tplBubble) {
 
   var GuideView = Backbone.View.extend({
-    
+
     el: '#guide-container',
-
-    tours: guides,
-
-    model: new (Backbone.Model.extend({
-      defaults: {
-        tour: null,
-        position: 0,
-        steps: null
-      }
-    })),
 
     defaults: {
       margin: 10
@@ -29,7 +17,6 @@ define([
       'click .js-skip-tour' : 'stop',
       'click .js-prev-button' : 'prevStep',
       'click .js-next-button' : 'nextStep',
-
     },
 
     template: Handlebars.compile(tpl),
@@ -38,7 +25,6 @@ define([
     initialize: function() {
       this.presenter = new GuidePresenter(this);
       this.render();
-      this.listeners()
     },
 
     render: function() {
@@ -55,20 +41,15 @@ define([
       this.$bubble = this.$el.find('.guideBubble');
     },
 
-    listeners: function() {
-      this.model.on('change:tour',this.start.bind(this));
-      this.model.on('change:position',this.gotoStep.bind(this));
-    },
-
     // START & STOP
     start: function() {
       // Set steps
       this.$el.addClass('-active');
-      this.model.set('steps', this.getSteps(this.model.get('tour')));
-      
+      // this.model.set('steps', this.getSteps(this.model.get('tour')));
+
       // Set initial styles
       this.setStyles();
-      this.gotoStep();
+      this.updatePosition();
       this.setArrowNavigation();
 
       // Analytics
@@ -88,42 +69,19 @@ define([
       // clear states
       this.clearStates();
 
-      // Hide el 
+      // Hide el
       this.$el.removeClass('-active');
 
-      if (this.model.get('tour') === 'default') {
-        // Pulse button
-        mps.publish('Tour/finish');
-      }
-
-      // Reset model
-      this.model.set('tour', null, { silent: true });
-      this.model.set('steps', null, { silent: true });
-      this.model.set('position', 0, { silent: true });
-      
       // Reset presenter status
       this.presenter.clearTour();
 
       // Reset events
       $(document).off('keyup.tour-arrows');
-      
-    },    
-
-    // PRESENTER
-    _setTour: function(tour) {
-      this.model.set('tour', tour);
     },
-
-
-
 
 
 
     // HELPERS
-    getSteps: function(tour) {
-      return (!!this.tours[tour]) ? this.tours[tour] : this.tours['default']
-    },
-
     getElementAttrs: function(element) {
       return {
         top: element.offset().top,
@@ -133,20 +91,8 @@ define([
       }
     },
 
-    getMaximumZIndex: function() {
-      var max = 0;
-      $("*").each(function() {
-        var current = parseInt($(this).css("zIndex"), 10);
-        if(current > max) {
-          max = current;
-        }
-      });
-      return max;
-    },
-
     setStyles: function() {
-      var zIndex = this.getMaximumZIndex();
-      this.$el.css("z-index", zIndex + 2);
+      this.$el.css("z-index", 9999999999);
     },
 
     clearStates: function() {
@@ -155,12 +101,9 @@ define([
 
 
 
-
-
-
     // POSITIONING
     positionMask: function(i) {
-      var steps = this.model.get('steps');
+      var steps = this.presenter.status.get('steps');
       var selector = steps[i].selector,
           margin = (steps[i].options && steps[i].options.margin != undefined) ? steps[i].options.margin : this.defaults.margin;
 
@@ -207,9 +150,9 @@ define([
         this.$rightMask.css({ top: "-9999px" });
       }
     },
-    
+
     positionBubble: function(i) {
-      var steps = this.model.get('steps');      
+      var steps = this.presenter.status.get('steps');
       var element = $(steps[i].selector),
           margin = (steps[i].options && steps[i].options.margin != undefined) ? steps[i].options.margin : this.defaults.margin,
           align = (steps[i].options && steps[i].options.align != undefined) ? steps[i].options.align : null,
@@ -219,7 +162,7 @@ define([
           width = (!!steps[i].selector) ? element.outerWidth() : 300,
           height = (!!steps[i].selector) ? element.outerHeight() : 300,
           css = {},
-          step = _.extend(steps[i],{ 
+          step = _.extend(steps[i],{
             index: i + 1,
             prev: (i != 0) ? true : false,
             next: (i != steps.length - 1) ? true : false,
@@ -274,9 +217,11 @@ define([
 
 
     // NAVIGATION
-    gotoStep: function() {
-      var position = this.model.get('position');
-      var steps = this.model.get('steps');
+    updatePosition: function() {
+      // var position = this.model.get('position');
+      // var steps = this.model.get('steps');
+      var position =this.presenter.status.get('position');
+      var steps = this.presenter.status.get('steps');
 
       if (!!steps[position].options && !!steps[position].options.callfront) {
         steps[position].options.callfront();
@@ -292,23 +237,11 @@ define([
     },
 
     nextStep: function() {
-      var position = this.model.get('position');
-
-      if (position == this.model.get('steps').length - 1) {
-        this.stop();
-      } else {
-        position++;
-        this.model.set('position', position);
-      }
+      this.presenter.goToNextStep();
     },
 
     prevStep: function() {
-      var position = this.model.get('position');
-
-      if (position > 0) {
-        position--;
-        this.model.set('position', position);
-      }
+      this.presenter.goToPrevStep();
     },
 
     setArrowNavigation: function() {
@@ -321,11 +254,11 @@ define([
             this.nextStep();
           break;
         }
-      }.bind(this));      
+      }.bind(this));
     },
 
     scrollIntoView: function() {
-      var position = this.model.get('position');
+      var position = this.presenter.status.get('position');
       var element = $(steps[position].selector);
       if (!!steps[position].selector) {
         if (($(document).scrollTop()>element.offset().top) || (($(document).scrollTop() + $("body").height())<element.offset().top)) {
@@ -343,4 +276,3 @@ define([
   return GuideView;
 
 });
-

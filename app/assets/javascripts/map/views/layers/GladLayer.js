@@ -1,10 +1,12 @@
 define([
-  'bluebird', 'uri', 'd3',
+  'bluebird', 'uri', 'd3', 'mps', 'moment',
   'abstract/layer/AnimatedCanvasLayerClass',
+  'map/services/GladDateService',
   'map/presenters/GladLayerPresenter'
 ], function(
-  Promise, UriTemplate, d3,
+  Promise, UriTemplate, d3, mps, moment,
   AnimatedCanvasLayerClass,
+  GladDateService,
   Presenter
 ) {
 
@@ -24,6 +26,7 @@ define([
       this._super(layer, options, map);
       this.presenter.setConfirmedStatus(options.layerOptions);
       this.options.showLoadingSpinner = true;
+      this.options.dataMaxZoom = 12;
       this._setupAnimation();
 
       this.currentDate = [
@@ -35,60 +38,25 @@ define([
     },
 
     _getLayer: function() {
-      return Promise.resolve(this);
+      return new Promise(function(resolve) {
+
+      var dateService = new GladDateService({
+        layer: 'glad-alerts' });
+
+      dateService.fetchDates().then(function(response) {
+        this.maxDate = moment(response.max_date);
+        this.currentDate[1] = this.maxDate;
+        mps.publish('Torque/date-range-change', [this.currentDate]);
+        mps.publish('Place/update', [{go: false}]);
+
+        resolve(this);
+      }.bind(this));
+
+      }.bind(this));
     },
 
     _getUrl: function(x, y, z) {
       return new UriTemplate(TILE_URL).fillFromObject({x: x, y: y, z: z});
-    },
-
-    decodeDate: function(r, g, b) {
-      // find the total days of the pixel by
-      // multiplying the red band by 255 and adding
-      // the green band to that
-      var total_days = r * 255 + g;
-
-      // take the total days value and divide by 365 to
-      // get the year_offset. Add 15 to this (i.e 0 + 15 = 2015)
-      // or 1 + 15 = 2016
-      var year = (parseInt(total_days / 365, 10) + 15);
-
-      return [total_days, year];
-    },
-
-    decodeConfidence: function(r, g, b) {
-      // Convert the blue band to string, leading
-      // zeros if it's not currently three digits
-      // this occurs very rarely; where there's an intensity
-      // value but no date/confidence for it. Due to bilinear
-      // resampling
-      var band3_str = padNumber(b.toString());
-
-      // Grab confidence (the first value) from this string
-      // confidence is stored as 1/2, subtract one to make it 0/1
-      return parseInt(band3_str[0], 10) - 1;
-    },
-
-    decodeIntensity: function(r, g, b) {
-      // Convert the blue band to string, leading
-      // zeros if it's not currently three digits
-      // this occurs very rarely; where there's an intensity
-      // value but no date/confidence for it. Due to bilinear
-      // resampling
-      var band3_str = padNumber(b.toString());
-
-      // Grab the raw intensity value from the pixel; ranges from 1 - 55
-      var intensity_raw = parseInt(band3_str.slice(1, 3), 10);
-
-      // Scale the intensity to make it visible
-      var intensity = intensity_raw * 50;
-
-      // Set intensity to 255 if it's > than that value
-      if (intensity > 255) {
-        intensity = 255;
-      }
-
-      return intensity;
     },
 
     filterCanvasImgdata: function(imgdata, w, h, z) {
@@ -114,42 +82,49 @@ define([
         confidenceValue = 1;
       }
 
-      var exp = z < 11 ? 0.2 + ((z - 3) / 20) : 1;
-      var intensityRange = d3.scale.pow()
-          .exponent(exp)
-          .domain([1,55])
-          .range([50,256]);
-
       var pixelComponents = 4; // RGBA
       var pixelPos, i, j;
       for(i = 0; i < w; ++i) {
         for(j = 0; j < h; ++j) {
           pixelPos = (j * w + i) * pixelComponents;
-          var date = this.decodeDate(imgdata[pixelPos],
-            imgdata[pixelPos+1], imgdata[pixelPos+2]);
-          var year = date[1],
-              day = date[0];
 
-          var confidence = this.decodeConfidence(imgdata[pixelPos],
-            imgdata[pixelPos+1], imgdata[pixelPos+2]);
-          var intensity = intensityRange(this.decodeIntensity(imgdata[pixelPos],
-            imgdata[pixelPos+1], imgdata[pixelPos+2]));
+          // find the total days of the pixel by
+          // multiplying the red band by 255 and adding
+          // the green band to that
+          var day = imgdata[pixelPos] * 255 + imgdata[pixelPos+1];
 
-          if (day >= startDay && day <= endDay && confidence >= confidenceValue) {
-            if (day >= recentRangeStartDay && day <= recentRangeEndDay) {
-              imgdata[pixelPos] = 219;
-              imgdata[pixelPos + 1] = 168;
-              imgdata[pixelPos + 2] = 0;
-              imgdata[pixelPos + 3] = intensity;
-            } else {
-              imgdata[pixelPos] = 220;
-              imgdata[pixelPos + 1] = 102;
-              imgdata[pixelPos + 2] = 153;
-              imgdata[pixelPos + 3] = intensity;
+          if (day >= startDay && day <= endDay) {
+            var band3_str = padNumber(imgdata[pixelPos+2].toString());
+
+            // Grab confidence (the first value) from this string
+            // confidence is stored as 1/2, subtract one to make it 0/1
+            var confidence = parseInt(band3_str[0], 10) - 1;
+
+            if (confidence >= confidenceValue) {
+              // Grab the raw intensity value from the pixel; ranges from 1 - 255
+              var intensity_raw = parseInt(band3_str.slice(1, 3), 10);
+              // Scale the intensity to make it visible
+              var intensity = intensity_raw * 50;
+              // Set intensity to 255 if it's > than that value
+              if (intensity > 255) { intensity = 255; }
+
+              if (day >= recentRangeStartDay && day <= recentRangeEndDay) {
+                imgdata[pixelPos] = 219;
+                imgdata[pixelPos + 1] = 168;
+                imgdata[pixelPos + 2] = 0;
+                imgdata[pixelPos + 3] = intensity;
+              } else {
+                imgdata[pixelPos] = 220;
+                imgdata[pixelPos + 1] = 102;
+                imgdata[pixelPos + 2] = 153;
+                imgdata[pixelPos + 3] = intensity;
+              }
+
+              continue;
             }
-          } else {
-            imgdata[pixelPos + 3] = 0;
           }
+
+          imgdata[pixelPos + 3] = 0;
         }
       }
     }

@@ -38,7 +38,7 @@ define([
             var $forestChangeDropDown = $('#layersnav-forest-change');
             var $forestChangeLoss = $forestChangeDropDown.find('.layer[data-layer="loss"]');
             var $forestChangeGain = $forestChangeDropDown.find('.layer[data-layer="forestgain"]');
-            
+
             $forestChangeDropDown.addClass('tour-active');
             if(!$forestChangeLoss.hasClass('selected')) {
               $forestChangeLoss.click();
@@ -69,19 +69,6 @@ define([
         options: {
           position: 'right',
           align: 'bottom'
-        }
-      },
-
-      // Country tab
-      {
-        selector: "#module-tabs",
-        text: guidetexts.default.countrytab,
-        options: {
-          position: 'left',
-          callfront: function() {
-            $('#countries-tab-button').removeClass('active').click();
-            $('#countries-country-select').val(null).trigger('change').trigger("chosen:updated");
-          }
         }
       },
 
@@ -147,7 +134,7 @@ define([
     glad: [
       // Intro
       {
-        selector: "", 
+        selector: "",
         text: guidetexts.glad.intro,
         options: {
           position: 'center',
@@ -159,7 +146,7 @@ define([
 
       // Layers module
       {
-        selector: "#layersnav-forest-change", 
+        selector: "#layersnav-forest-change",
         text: guidetexts.glad.layersmenu_1,
         options: {
           position: 'right',
@@ -175,7 +162,7 @@ define([
 
       // Legend module
       {
-        selector: "#module-legend", 
+        selector: "#module-legend",
         text: guidetexts.glad.legend,
         options: {
           position: 'right',
@@ -191,8 +178,8 @@ define([
 
       // Analysis tab
       {
-        selector: "#module-tabs", 
-        text: guidetexts.glad.analysistab_1, 
+        selector: "#module-tabs",
+        text: guidetexts.glad.analysistab_1,
         options: {
           position: 'left',
           callfront: function() {
@@ -203,8 +190,8 @@ define([
 
       // Analysis tab draw
       {
-        selector: "#module-tabs", 
-        text: guidetexts.glad.analysistab_2, 
+        selector: "#module-tabs",
+        text: guidetexts.glad.analysistab_2,
         options: {
           position: 'left',
           callfront: function() {
@@ -216,8 +203,8 @@ define([
 
       // Login
       {
-        selector: "", 
-        text: guidetexts.glad.analysistab_3, 
+        selector: "",
+        text: guidetexts.glad.analysistab_3,
         options: {
           position: 'center'
         }
@@ -225,8 +212,8 @@ define([
 
       // Analysis tab draw
       {
-        selector: "#module-tabs", 
-        text: guidetexts.glad.analysistab_4, 
+        selector: "#module-tabs",
+        text: guidetexts.glad.analysistab_4,
         options: {
           position: 'left',
           callfront: function() {
@@ -238,8 +225,8 @@ define([
 
       // Analysis tab draw
       {
-        selector: "#my-gfw-container", 
-        text: guidetexts.glad.log_in, 
+        selector: "#my-gfw-container",
+        text: guidetexts.glad.log_in,
         options: {
           position: 'bottom',
           callfront: function() {
@@ -250,8 +237,8 @@ define([
 
       // Analysis tab draw
       {
-        selector: "", 
-        text: guidetexts.glad.intro2, 
+        selector: "",
+        text: guidetexts.glad.intro2,
         options: {
           position: 'center'
         }
@@ -259,8 +246,8 @@ define([
 
       // Analysis tab draw
       {
-        selector: "#module-tabs", 
-        text: guidetexts.glad.analysistab_5, 
+        selector: "#module-tabs",
+        text: guidetexts.glad.analysistab_5,
         options: {
           position: 'left',
           callfront: function() {
@@ -272,8 +259,8 @@ define([
 
       // Timeline module
       {
-        selector: ".timeline-container", 
-        text: guidetexts.glad.timeline, 
+        selector: ".timeline-container",
+        text: guidetexts.glad.timeline,
         options: {
           position: 'top',
           callfront: function() {
@@ -284,8 +271,8 @@ define([
 
       // Analysis tab draw
       {
-        selector: "#module-tabs", 
-        text: guidetexts.glad.analysistab_6, 
+        selector: "#module-tabs",
+        text: guidetexts.glad.analysistab_6,
         options: {
           position: 'left',
           callfront: function() {
@@ -297,9 +284,7 @@ define([
 
     ]
   }
-  
+
   return guides;
 
 });
-
-

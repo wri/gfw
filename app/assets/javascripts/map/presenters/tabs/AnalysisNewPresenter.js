@@ -5,10 +5,10 @@
  */
 define([
   'map/presenters/PresenterClass',
-  'underscore', 
-  'backbone', 
+  'underscore',
+  'backbone',
   'mps',
-  'bluebird', 
+  'bluebird',
   'moment',
   'map/services/AnalysisNewService',
   'map/services/GeostoreService',
@@ -31,13 +31,13 @@ define([
         spinner: false,
         tab: null,
         subtab: 'default',
-        
+
         dataset: [],
 
         // Layers
         baselayers: [],
         baselayer: null,
-        
+
         // Dates
         begin: null,
         end: null,
@@ -72,7 +72,7 @@ define([
         type: 'draw',
         subtab: 'draw'
       },
-      
+
       // SHAPE
       {
         name: 'wdpaid',
@@ -89,7 +89,12 @@ define([
         type: 'use',
         subtab: 'shape'
       },
-      
+      {
+        name: 'useGeostore',
+        type: 'use',
+        subtab: 'shape'
+      },
+
       // COUNTRY
       {
         name: 'iso',
@@ -121,10 +126,6 @@ define([
         name: 'imazon',
         slug: 'imazon-alerts',
         subscription: true
-      },{
-        name: 'modis',
-        slug: 'quicc-alerts',
-        subscription: true        
       },{
         name: 'terrailoss',
         slug: 'terrai-alerts',
@@ -160,6 +161,8 @@ define([
       },
     ],
 
+    usenames: ['mining', 'oilpalm', 'fiber', 'logging'],
+
     init: function(view) {
       this.view = view;
       this._super();
@@ -175,7 +178,7 @@ define([
 
       // Baselayers
       this.status.on('change:baselayers', this.changeBaselayers.bind(this));
-      
+
       this.status.on('change:dataset', this.changeDataset.bind(this));
 
       // Enabled
@@ -192,7 +195,7 @@ define([
 
       // Geostore
       this.status.on('change:geostore', this.changeGeostore.bind(this));
-      
+
       // Countries
       this.status.on('change:isoDisabled', this.changeIso.bind(this));
       this.status.on('change:iso', this.changeIso.bind(this));
@@ -205,7 +208,7 @@ define([
       // Spinner
       this.status.on('change:spinner', this.changeSpinner.bind(this));
       this.status.on('change:subtab', this.changeSubtab.bind(this));
-      
+
     },
 
     /**
@@ -218,7 +221,7 @@ define([
 
       // Countries
       p.dont_analyze = !!this.status.get('isoDisabled');
-      
+
       // Geostore
       if (!!this.status.get('geostore')) {
         p.geostore = this.status.get('geostore');
@@ -226,7 +229,7 @@ define([
 
       if (!!this.status.get('iso') && !!this.status.get('isoDisabled')) {
         p.iso = this.status.get('iso');
-      }      
+      }
 
       // Areas
       if (!!this.status.get('wdpaid')) {
@@ -258,16 +261,16 @@ define([
         'Place/go': function(place) {
           var params = place.params;
           var layerSpec = place.layerSpec;
-          
+
           this.status.set({
             // Countries
             iso: {
               country: params.iso.country,
-              region: params.iso.region              
+              region: params.iso.region
             },
             // Check if param exists, if it doesn't check if country exists and it isn't equal to 'ALL'
             isoDisabled: (!!params.dont_analyze) || !(!!params.iso.country && params.iso.country != 'ALL'),
-            
+
             // Baselayer
             baselayers: _.pluck(params.baselayers, 'slug'),
             baselayer: layerSpec.getBaselayer(),
@@ -275,41 +278,39 @@ define([
             // Dates
             begin: (params.begin) ? params.begin : '2001-01-01',
             end: (params.begin) ? params.end : '2015-01-01',
-            
+
             // Options
             threshold: params.threshold,
             fit_to_geom: params.fit_to_geom,
 
             // Geostore
             geostore: params.geostore,
-            
+
             // Shapes
             wdpaid: params.wdpaid,
-            // Replace gfw_ from the use. 
-            // We should have a pair compare array intead of using a replace...
             use: params.use,
             useid: params.useid,
           })
-          
+
         }
       },
       {
         'LayerNav/change': function(layerSpec) {
           var currentBaselayers = this.status.get('baselayers');
           var newBaselayers = _.keys(layerSpec.getBaselayers());
-          
+
           var baselayers_change = !!_.difference(currentBaselayers, newBaselayers).length || !!_.difference(newBaselayers, currentBaselayers).length;
           if (baselayers_change) {
             this.status.set('baselayers', _.keys(layerSpec.getBaselayers()));
             this.status.set('baselayer', layerSpec.getBaselayer());
           }
         }
-      },      
+      },
       {
         'Threshold/update': function(threshold) {
           this.status.set('threshold', threshold);
         }
-      },      
+      },
 
 
       // DRAWING EVENTS
@@ -323,7 +324,8 @@ define([
         }
       },{
         'Analysis/store-geojson': function(geojson) {
-          if (!!geojson) {        
+          if (!!geojson) {
+            this.status.set('spinner', true);
             GeostoreService.save(geojson).then(function(geostoreId) {
               this.status.set('geostore', geostoreId);
             }.bind(this));
@@ -364,19 +366,19 @@ define([
       {
         'Timeline/date-change': function(layerSlug, date) {
           var dateFormat = 'YYYY-MM-DD';
-          var date = date.map(function(date) { 
-            return moment(date).format(dateFormat); 
+          var date = date.map(function(date) {
+            return moment(date).format(dateFormat);
           });
-          
+
           this.status.set('begin', date[0]);
           this.status.set('end', date[1]);
         }
-      }, 
+      },
       {
         'Timeline/start-playing': function() {
           this.status.set('enabledUpdating', false);
         }
-      }, 
+      },
       {
         'Timeline/stop-playing': function() {
           this.status.set('enabledUpdating', true);
@@ -404,7 +406,7 @@ define([
         'Analysis/refresh': function() {
           this.publishAnalysis();
         }
-      },      
+      },
       {
         'Analysis/delete': function(options) {
           this.deleteAnalysis(options);
@@ -419,7 +421,7 @@ define([
     /**
      * LISTENERS
      *
-     */    
+     */
     changeBaselayers: function() {
       // Set the baselayer to analyze
       this.status.set('dataset', this.setDataset());
@@ -435,18 +437,18 @@ define([
         this.status.get('baselayers'),
         _.pluck(_.where(this.datasets, {subscription: true}), 'name')
       ).length;
-      
+
       this.status.set('enabled', enabled);
       this.status.set('enabledSubscription', enabledSubscription);
-      
+
       if (this.status.get('dataset')) {
-        this.publishAnalysis();  
+        this.publishAnalysis();
       }
     },
 
     changeDataset: function() {
       if (!!this.status.get('dataset')) {
-        this.publishAnalysis();  
+        this.publishAnalysis();
       }
     },
 
@@ -462,8 +464,8 @@ define([
       var enabled = this.status.get('enabled');
       mps.publish('Analysis/enabled', [enabled]);
       this.view.toggleEnabledButtons();
-      
-      // Hide analysis tab if it's not enabled 
+
+      // Hide analysis tab if it's not enabled
       // to make an analysis
       if (!enabled) {
         mps.publish('Tab/toggle', ['analysis-tab', enabled]);
@@ -496,75 +498,49 @@ define([
      */
     changeGeostore: function() {
       if (!!this.status.get('geostore')) {
-        this.status.set({
-          active: true,
-          type: 'draw'
-        }, { 
-          silent: true 
-        });
-
-        this.deleteAnalysis({ 
-          silent: true,
-          type: 'draw'
-        });
-        this.publishAnalysis();
+        this.setAnalysis('draw');
       }
     },
 
     changeIso: function() {
       if (!!this.status.get('iso').country && this.status.get('iso').country != 'ALL') {
         if (!this.status.get('isoDisabled')) {
-          this.status.set({
-            active: true,
-            type: 'country'
-          }, { 
-            silent: true 
-          });
-  
-          this.deleteAnalysis({ 
-            silent: true,
-            type: 'country'
-          });       
-          this.publishAnalysis();
-        }                
+          this.setAnalysis('country');
+        }
       }
     },
 
     changeWdpaid: function() {
       if (!!this.status.get('wdpaid')) {
-        this.status.set({
-          active: true,
-          type: 'wdpaid'
-        }, { 
-          silent: true 
-        });
-
-        this.deleteAnalysis({ 
-          silent: true,
-          type: 'wdpaid'
-        });
-        this.publishAnalysis();
-
+        this.setAnalysis('wdpaid');
       }
     },
 
     changeUse: function() {
-      if (!!this.status.get('use') && !!this.status.get('useid')) {
-        this.status.set({
-          active: true,
-          type: 'use'
-        }, { 
-          silent: true 
-        });
+      var use = this.status.get('use'),
+          useid = this.status.get('useid')
 
-        this.deleteAnalysis({ 
-          silent: true,
-          type: 'use'
-        });
-        this.publishAnalysis();
+      if (!!use && !!useid) {
+        if (this.usenames.indexOf(use) !== -1) {
+          this.setAnalysis('use');
+        } else {
+          this.status.set('spinner', true);
 
+          var provider = {
+            table: use,
+            filter: 'cartodb_id = ' + useid,
+            user: 'wri-01',
+            type: 'carto'
+          }
+
+          GeostoreService.use(provider).then(function(useGeostoreId) {
+            this.status.set('useGeostore', useGeostoreId);
+            this.setAnalysis('use');
+          }.bind(this));
+        }
       }
     },
+
 
 
     /**
@@ -577,7 +553,27 @@ define([
         return _.contains(this.status.get('baselayers'), dataset.name);
       }.bind(this)), 'slug'));
       return dataset[0] || null;
-    },    
+    },
+
+    setAnalysis: function(type) {
+      this.status.set({
+        active: true,
+        type: type
+      }, {
+        silent: true
+      });
+
+      this.deleteAnalysis({
+        silent: true,
+        type: type
+      });
+      this.publishAnalysis();
+    },
+
+
+
+
+
 
     /**
      * PUBLISHERS
@@ -610,13 +606,13 @@ define([
             mps.publish('Analysis/results', [statusWithResults]);
 
           }.bind(this))
-          
-          .catch(function(errors){ 
+
+          .catch(function(errors){
             this.status.set('spinner', false);
 
             var statusWithErrors = _.extend({}, this.status.toJSON(), errors);
             mps.publish('Analysis/results-error', [statusWithErrors]);
-            
+
           }.bind(this))
 
           .finally(function(){
@@ -658,7 +654,7 @@ define([
 
     /**
      * HELPERS
-     * - deleteAnalysis 
+     * - deleteAnalysis
      */
     deleteAnalysis: function(options) {
       var type = (!!options) ? options.type : null;
@@ -666,7 +662,7 @@ define([
         return v.type != type;
       }.bind(this)) : this.types;
 
-      // If type exists delete all stuff related 
+      // If type exists delete all stuff related
       // to other analysis
       // 'iso' and 'isoDisabled' need a different treatment
       _.each(statusFiltered, function(v){
@@ -675,17 +671,17 @@ define([
             this.status.set('iso', {
               country: null,
               region: null
-            }, options);  
+            }, options);
           break;
           case 'isoDisabled':
-            this.status.set('isoDisabled', true);              
+            this.status.set('isoDisabled', true);
           break;
           default:
-            this.status.set(v.name, null, options);  
+            this.status.set(v.name, null, options);
           break;
         }
       }.bind(this));
-      
+
       // If type doesn't exist remove type, active and enabledUpdating
       if (! !!type) {
         this.status.set('type', null, options);

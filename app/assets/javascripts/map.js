@@ -87,6 +87,8 @@ require([
           enabled: true
         });
 
+        console.log(this.countries);
+
 
         new MapControlsView(this.map, this.countries);
         new TabsView(this.map, this.countries);

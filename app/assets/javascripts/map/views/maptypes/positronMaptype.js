@@ -5,7 +5,7 @@ define([], function () {
 
   'use strict';
 
-  var osmMaptype = function() {
+  var PositronMaptype = function() {
     var config = {
       name: 'Positron CartoDB',
       alt: 'Global forest Positron',
@@ -21,6 +21,6 @@ define([], function () {
     return new google.maps.ImageMapType(config);
   };
 
-  return osmMaptype;
+  return PositronMaptype;
 });
 

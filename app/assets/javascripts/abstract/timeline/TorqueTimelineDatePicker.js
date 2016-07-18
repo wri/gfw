@@ -6,13 +6,13 @@
 define([
   'underscore', 'backbone', 'moment', 'handlebars', 'picker', 'pickadate',
   'map/presenters/TorqueTimelinePresenter',
-  'map/services/TorqueDateService',
+  'map/services/GladDateService',
   'text!templates/datePickerTorque.handlebars',
   'text!templates/datePickerTorque-legend.handlebars'
 ], function(
   _, Backbone, moment, Handlebars, Picker, Pickadate,
   Presenter,
-  TorqueDateService,
+  GladDateService,
   tpl, legendTpl) {
 
   'use strict';
@@ -77,6 +77,13 @@ define([
     renderPickers: function() {
       var context = this;
 
+      var dayOfYear = function(date) {
+        var oneDay = 1000 * 60 * 60 * 24;
+        var start = new Date(date.getFullYear(), 0, 0),
+            diff = date - start;
+        return Math.floor(diff / oneDay);
+      };
+
       var onPickerRender = function() {
         var pickerContext = this;
 
@@ -84,28 +91,31 @@ define([
           var $el = $(this);
 
           var date = new Date($el.data('pick')),
-              dateUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
-          var availableDates = context.getAvailableDates();
+              dateUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds())),
+              day = dayOfYear(dateUTC);
 
-          if (availableDates.indexOf(dateUTC.getTime()) > -1) {
-            // Disabled dates to prevent inverted selected dates
-            //   e.g. picking 6/09 for start, and 4/09 for end
-            var id = pickerContext.component.$node.attr('id');
-            date = moment.utc(date);
+          var histogram = context.histograms[dateUTC.getFullYear()];
+          if (histogram) {
+            if (histogram[day-1] > 0) {
+              // Disabled dates to prevent inverted selected dates
+              //   e.g. picking 6/09 for start, and 4/09 for end
+              var id = pickerContext.component.$node.attr('id');
+              date = moment.utc(date);
 
-            if (id === 'startDate') {
-              var endDate = context.selectedDates.get('endDate');
-              if (!date.isAfter(endDate)) {
-                $el.addClass('picker__has_data');
+              if (id === 'startDate') {
+                var endDate = context.selectedDates.get('endDate');
+                if (!date.isAfter(endDate)) {
+                  $el.addClass('picker__has_data');
+                }
+              } else if (id === 'endDate') {
+                var startDate = context.selectedDates.get('startDate');
+                if (!date.isBefore(startDate)) {
+                  $el.addClass('picker__has_data');
+                }
               }
-            } else if (id === 'endDate') {
-              var startDate = context.selectedDates.get('startDate');
-              if (!date.isBefore(startDate)) {
-                $el.addClass('picker__has_data');
-              }
+
+              $el.addClass('picker__has_data');
             }
-
-            $el.addClass('picker__has_data');
           }
         });
 
@@ -170,17 +180,13 @@ define([
     },
 
     retrieveAvailableDates: function() {
-      this.availableDates = [];
+      this.histograms = [];
 
-      var torqueDateService = new TorqueDateService(this.layer);
-      torqueDateService.fetchDates().then(function(availableDates) {
-        this.availableDates = availableDates;
+      var dateService = new GladDateService({layer: 'glad-alerts'});
+      dateService.fetchDates().then(function(response) {
+        this.histograms = response.counts;
         this.renderPickers();
       }.bind(this));
-    },
-
-    getAvailableDates: function() {
-      return this.availableDates;
     }
 
   });

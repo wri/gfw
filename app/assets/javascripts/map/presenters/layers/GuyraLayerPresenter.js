@@ -1,7 +1,7 @@
 /**
- * The ModisLayerPresenter.
+ * The GuyraLayerPresenter.
  *
- * @return ModisLayerPresenter class
+ * @return GuyraLayerPresenter class
  */
 define([
   'underscore',
