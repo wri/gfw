@@ -8,8 +8,7 @@ define([
   var Stories = Backbone.Collection.extend({
     model: Story,
 
-    //url: window.gfw.config.GFW_API_HOST_V2 + '/user/stories',
-    url: 'http://api-gateway.globalforestwatch.dev:8000/story/user/57736ba451b9ca1300e39430',
+    url: window.gfw.config.GFW_API_HOST_NEW_API + '/user/stories',
 
     comparator: function(subscription) {
       return -moment(subscription.get('created')).unix();
