@@ -1,4 +1,4 @@
-idefine([
+define([
   'Class', 'jquery', 'backbone', 'mps', 'handlebars', 'jquery_fileupload', 'backbone.syphon', 'moment', 'underscore',
   'stories/models/StoryModel', 'stories/models/MediaModel',
   'stories/views/LatestStoriesView',
