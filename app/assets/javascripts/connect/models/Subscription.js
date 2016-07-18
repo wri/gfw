@@ -66,8 +66,8 @@ define([
     },
 
     parse: function(response) {
-      var attributes = response.data.attributes;
-      attributes.id = response.data.id;
+      var attributes = response.attributes;
+      attributes.id = response.id;
 
       return attributes;
     },

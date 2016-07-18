@@ -31,7 +31,7 @@ define([
 
       subscription.confirmationUrl = this.confirmationUrl();
       subscription.topic = this.subscription.formattedTopic();
-      subscription.params.geom = JSON.stringify(subscription.params.geom);
+      subscription.geom = subscription.geom && JSON.stringify(subscription.geom);
       if (subscription.created !== undefined) {
         subscription.created = moment(subscription.created).
           format('dddd, YYYY-MM-DD, h:mm a');
@@ -43,7 +43,7 @@ define([
     },
 
     confirmationUrl: function() {
-      return window.gfw.config.GFW_API_HOST + '/v2/subscriptions/' +
+      return window.gfw.config.GFW_API_HOST_NEW_API + '/subscriptions/' +
         this.subscription.id + '/send_confirmation';
     },
 
