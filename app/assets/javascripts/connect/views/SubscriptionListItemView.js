@@ -31,9 +31,11 @@ define([
 
       subscription.confirmationUrl = this.confirmationUrl();
       subscription.topic = this.subscription.formattedTopic();
-      subscription.geom = subscription.geom && JSON.stringify(subscription.geom);
-      if (subscription.created !== undefined) {
-        subscription.created = moment(subscription.created).
+      if (subscription.geom !== undefined) {
+        subscription.geom = JSON.stringify(subscription.geom);
+      }
+      if (subscription.createdAt !== undefined) {
+        subscription.createdAt = moment(subscription.createdAt).
           format('dddd, YYYY-MM-DD, h:mm a');
       }
 
