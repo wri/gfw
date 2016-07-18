@@ -78,39 +78,23 @@ define([
      },
 
      createSubscription: function(options) {
-       var analysisResource = options.analysisResource,
-           geostoreId = options.geostore;
+      var analysisResource = options.analysisResource;
 
-       this.subscription = new Subscription({
-         topic: TOPICS[options.baselayer.slug] || options.baselayer.title,
-         url: window.location.href
-       });
-       this.subscription.set(analysisResource);
+      var params = _.pick(analysisResource,
+        'iso', 'id1', 'geostore', 'wdpa', 'use', 'useid');
 
-       if (analysisResource) {
-         var geom;
-         if (analysisResource.type === 'geojson') {
-           geom = JSON.parse(analysisResource.geojson);
-         } else {
-           if (analysisResource.geom) {
-             geom = analysisResource.geom.geometry;
-           } else {
-             geom = this.geom_for_subscription;
-           }
-         }
-         this.subscription.set('geom', geom);
-       }
-
-       if (geostoreId) {
-         this.subscription.set('geostore_id', geostoreId);
-       }
+      this.subscription = new Subscription({
+        layers: [analysisResource.dataset],
+        geostoreId: options.geostore,
+        params: params
+      });
      },
 
      subscribe: function(name) {
        this.subscription.set('name', name);
 
        this.stopListening(this.user);
-       this.user.setEmailIfEmpty(this.subscription.get('email'));
+       this.user.setEmailIfEmpty(this.subscription.get('resource').content);
        this.user.save();
 
        this.subscription.save().
@@ -119,13 +103,16 @@ define([
      },
 
      askForName: function(email) {
-       this.subscription.set('email', email);
+       this.subscription.set('resource', {
+        type: 'EMAIL',
+        content: this.$el.find('#subscriptionEmail').val()
+      });
 
-       if (this.subscription.hasValidEmail()) {
-         this.nextStep();
-       } else {
-         this.notificate('notification-email-incorrect');
-       }
+      if (this.subscription.hasValidEmail()) {
+        this.nextStep();
+      } else {
+        this.presenter.notificate('notification-email-incorrect');
+      }
      },
 
      onSave: function() {

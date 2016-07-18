@@ -20,7 +20,7 @@ define([
       long_title: 'quarterly QUICC tree cover loss alerts',
       sub_title: 'quarterly, 5km, &lt;37 degrees north, NASA'
     },
-    'alerts/treeloss': {
+    'umd-loss-gain': {
       title: 'Tree cover loss',
       long_title: 'annual tree cover loss data',
       sub_title: 'annual, 30m, global, Hansen/UMD/Google/USGS/NASA'
@@ -53,9 +53,9 @@ define([
   };
 
   var Subscription = Backbone.Model.extend({
-    idAttribute: 'key',
+    type: 'subscription',
 
-    urlRoot: window.gfw.config.GFW_API_HOST + '/v2/subscriptions',
+    url: window.gfw.config.GFW_API_HOST_V2 + '/subscriptions',
 
     sync: function(method, model, options) {
       options || (options = {});
@@ -71,13 +71,20 @@ define([
       return Backbone.sync.call(this, method, model, options);
     },
 
-    formattedTopic: function(options) {
-      return DATASETS[this.get('topic')];
+    formattedTopic: function() {
+      return DATASETS[this.get('layers')[0]];
+    },
+
+    parse: function(response) {
+      var attributes = response.data.attributes;
+      attributes.id = response.data.id;
+
+      return attributes;
     },
 
     hasValidEmail: function() {
       var emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return emailRegex.test(this.get('email'));
+      return emailRegex.test(this.get('resource').content);
     }
   });
 

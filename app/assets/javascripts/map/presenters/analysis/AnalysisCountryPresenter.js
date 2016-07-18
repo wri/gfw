@@ -152,6 +152,7 @@ define([
      * - getRegions
      * - deleteAnalysis
      * - notificate
+     * - subscribeCountry
      */
     publishAnalysis: function() {
       mps.publish('Analysis/delete');
@@ -215,6 +216,10 @@ define([
 
     notificate: function(id){
       mps.publish('Notification/open', [id]);
+    },
+
+    subscribeCountry: function(){
+      mps.publish('Subscribe/show', [this.status.toJSON()]);
     },
 
 

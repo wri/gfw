@@ -107,8 +107,8 @@ define([
     onSubscribeClick: function() {
       this.showSpinner();
 
-      window.ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' +
-        this.presenter.subscription.get('topic') + ', Email: ' + this.presenter.subscription.get('email'));
+      // window.ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' +
+      //   this.presenter.subscription.get('topic') + ', Email: ' + this.presenter.subscription.get('email'));
 
       this.presenter.subscribe(this.$subscriptionName.val());
     }
