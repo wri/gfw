@@ -70,7 +70,7 @@ define([
 
     updateCurrentStep(step) {
       this.$steps.removeClass('current');
-      this.$steps.eq(this.currentStep).addClass('current');
+      this.$steps.eq(step).addClass('current');
     },
 
     isOpen: function() {

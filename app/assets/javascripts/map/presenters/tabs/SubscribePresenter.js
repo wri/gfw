@@ -66,7 +66,7 @@ define([
         'iso', 'geostore', 'wdpaid', 'use', 'useid');
 
       this.subscription = new Subscription({
-        dataset: options.dataset,
+        dataset: [options.dataset],
         geostoreId: options.geostore,
         params: params
       });
@@ -75,9 +75,8 @@ define([
      subscribe: function(name) {
        this.subscription.set('name', name);
 
-       this.stopListening(this.user);
        this.user.setEmailIfEmpty(this.subscription.get('resource').content);
-       this.user.save();
+       this.user.save({ email: this.user.attributes.email }, { patch: true });
 
        this.subscription.save()
         .then(this.onSave.bind(this))

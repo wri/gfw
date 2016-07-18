@@ -349,10 +349,14 @@ define([
 
       // SHAPE
       {
-        'Analysis/shape': function(useid, use, wdpaid) {
-          this.status.set('useid', useid);
-          this.status.set('use', use);
-          this.status.set('wdpaid', wdpaid);
+        'Analysis/shape': function(data) {
+          this.setShape(data);
+        }
+      },
+      {
+        'Subscribe/shape': function(data) {
+          this.setShape(data, true);
+          this.publishSubscribtion();
         }
       },
       {
@@ -568,6 +572,17 @@ define([
         type: type
       });
       this.publishAnalysis();
+    },
+
+    setShape: function(data, silent) {
+      silent = silent || false;
+      this.status.set({
+        useid: data.useid,
+        use: data.use,
+        wdpaid: data.wdpaid,
+      }, {
+        silent: silent
+      });
     },
 
 
