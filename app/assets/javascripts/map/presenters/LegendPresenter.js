@@ -99,6 +99,13 @@ define([
         this.status.set('iso', _.clone(iso));
         this.updateLegend();
       }
+    },{
+      'Analysis/iso': function(iso,isoDisabled) {
+        if(!!iso.country && iso.country !== 'ALL' && !isoDisabled){
+          this.status.set('iso', _.clone(iso));
+          this.updateLegend();
+        }
+      }
     },
     // Mobile events... we should standardise them
     {
