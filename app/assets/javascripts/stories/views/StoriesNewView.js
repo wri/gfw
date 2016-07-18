@@ -91,8 +91,19 @@ define([
 
     _getVideoID: function(url) {
       // template: http://img.youtube.com/vi/<video-id-here>/default.jpg
-      // a Youtube video ID has a 11 characters legngth
-      return 'http://img.youtube.com/vi/' + url.split('v=')[1].substring(0, 11) + '/default.jpg';
+
+      if (url.length) {
+        var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        var match = url.match(regExp);
+        if (match && match[2].length == 11) {
+          mps.publish('Notification/close');
+          return 'http://img.youtube.com/vi/' + match[2] + '/default.jpg';
+        } else {
+          mps.publish('Notification/open', ['notif-not-a-correct-youtube-link']);
+          return null;
+        }        
+      }
+      return null;
     },
 
     _addVideoThumbnail: function(url) {

@@ -135,9 +135,9 @@
   }
 
   tr {
-    @include display-flex;
-    @include justify-content(space-between);
-    @include align-items(stretch);
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
     padding: 20px 0;
     border-top: 1px solid $border;
     @media (min-width:$br-mobile){
@@ -174,7 +174,7 @@
 
     td:first-of-type, td:last-of-type {
       border-right: 0;
-      @include justify-content(flex-start);
+      justify-content: flex-start;
     }
 
     svg {

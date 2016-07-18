@@ -27,7 +27,7 @@
   text-align: center;
   font-weight: 500;
   white-space: nowrap;
-  @include transition(background .15s linear);
+  transition: background .15s linear;
 
   &:hover {
     background: $cGreen;
@@ -180,7 +180,7 @@
       top: 50%;
       right: 5px;
       fill: $dark;
-      @include transform(translate(0,-50%));
+      transform: translate(0,-50%);
     }
   }
 
@@ -197,7 +197,7 @@
       top: 50%;
       right: 0;
       fill: $white;
-      @include transform(translate(0px,-50%));
+      transform: translate(0px,-50%);
     }
   }
 }
@@ -247,12 +247,12 @@
 
 // Button containers
 .m-btncontainer {
-  @include display-flex();
-  @include align-items(center);
+  display: flex;
+  align-items: center;
 
   // Justify
   &.is-center {
-    @include justify-content(center);
+    justify-content: center;
 
     > * {
       margin: 0 0 0 10px;
@@ -264,7 +264,7 @@
   }
 
   &.is-space-between {
-    @include justify-content(space-between);
+    justify-content: space-between;
   }
 
   &.-fix-width-220 {
