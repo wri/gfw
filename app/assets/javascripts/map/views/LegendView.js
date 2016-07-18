@@ -251,7 +251,8 @@ define([
         categoriesIso: (_.isEmpty(categoriesIso)) ? false : categoriesIso,
         layersLength: layers.length,
         country: (!!iso) ? _.findWhere(this.countries, { iso: iso.country }) : null,
-        more: more
+        more: more,
+        countryVisibility: (!!more || !!categoriesIso.length)
       }));
       this.presenter.toggleLayerOptions();
     },
