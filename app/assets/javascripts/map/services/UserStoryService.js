@@ -13,7 +13,7 @@ define([
 
     requestId: 'UserStoryService',
 
-    url: window.gfw.config.GFW_API_HOST_V2 + '/story',
+    url: window.gfw.config.GFW_API_HOST_NEW_API + '/story',
 
     /**
      * Constructs a new instance of StoryService.
