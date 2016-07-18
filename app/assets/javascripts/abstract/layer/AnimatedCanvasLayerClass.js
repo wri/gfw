@@ -80,6 +80,7 @@ define([
       if (this.animationInterval !== undefined) { this.stop(); }
 
       var startDate = moment.utc(this.currentDate[0]),
+          endDate = this.currentDate[1],
           lastTimestamp = +new Date();
 
       var step = function() {
@@ -89,8 +90,15 @@ define([
 
         var duration = this.animationOptions.duration,
             currentOffset = this.animationOptions.currentOffset,
-            daysToAdd = ((currentOffset % duration)/duration)*this.numberOfDays,
+            daysToAdd = (currentOffset/duration)*this.numberOfDays,
             currentDate = startDate.clone().add('days', daysToAdd);
+
+        if (daysToAdd >= this.numberOfDays) {
+          this.renderTime(endDate);
+          this.presenter.animationStopped();
+          this.animationOptions.currentOffset = 0;
+          return this.stop();
+        }
 
         this.renderTime(currentDate);
 
@@ -112,19 +120,6 @@ define([
       } else {
         this.start();
       }
-    },
-
-    _drawCanvasImage: function(canvasData) {
-      var canvas = canvasData.canvas,
-          ctx = canvas.getContext('2d'),
-          image = canvasData.image;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(image, 0, 0);
-
-      var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      this.filterCanvasImgdata(I.data, canvas.width, canvas.height, canvasData.z);
-      ctx.putImageData(I, 0, 0);
     },
 
     filterCanvasImgdata: function() {

@@ -8,10 +8,11 @@ define([
   'handlebars',
   'map/presenters/analysis/AnalysisResultsPresenter',
   'map/views/analysis/AdvancedAnalysisView',
+  'views/ShareView',  
   'text!map/templates/analysis/analysisResults.handlebars',
   'text!map/templates/analysis/analysisResultsFailure.handlebars',
   'text!map/templates/analysis/analysisResultsFailureAPI.handlebars',
-], function(_, Handlebars, Presenter, AdvancedAnalysisView, tpl, failureTpl, failureAPITpl) {
+], function(_, Handlebars, Presenter, AdvancedAnalysisView, ShareView, tpl, failureTpl, failureAPITpl) {
 
   'use strict';
 
@@ -35,12 +36,13 @@ define([
     events:{
       'click #analysis-delete': '_deleteAnalysis',
       'click #analysis-subscribe': '_subscribe',
+      'click #analysis-share' : '_share',
       'click .js-dropdown-btn' :'_toggleDownloads',
       'click .canopy-button' : '_showCanopy',
       'click .advanced-analysis-button' : '_showAdvancedAnalysis',
       'click .close' : 'toogleAnalysis',
       'click #toggleIFL' : 'toogleIFL',
-      'click #btn-analysis-refresh' : 'refreshAnalysis'
+      'click #btn-analysis-refresh' : 'refreshAnalysis',
     },
 
     initialize: function() {
@@ -128,6 +130,11 @@ define([
       ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + this.params.layer.title);
     },
 
+    _share: function(e) {
+      var shareView = new ShareView().share(e);
+      $('body').append(shareView.el);
+    },
+
     _toggleDownloads: function(e) {
       if (e.target.tagName.toLowerCase() !== 'a') {
         $(e.currentTarget).toggleClass('-active');
@@ -156,7 +163,6 @@ define([
         'forma' : 'http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64',
         'terrailoss' : 'http://www.terra-i.org/terra-i/data.html',
         'imazon' : 'http://www.imazongeo.org.br/doc/downloads.php',
-
       }
       return links[layer];
     },

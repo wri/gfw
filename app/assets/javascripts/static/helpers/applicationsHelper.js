@@ -94,7 +94,7 @@ define([
       name: 'Open Landscape Partnership Platform',
       svg: '#shape-landscape',
       content: 'View and analyze ultra-high-resolution satellite imagery (up to 50 centimeters) for select forest landscapes.',
-      href: 'http://www.sustainablepalmoil.org/spott',
+      href: 'http://www.openlandscape.info/',
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',

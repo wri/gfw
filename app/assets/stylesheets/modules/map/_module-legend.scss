@@ -48,6 +48,11 @@
     display: none;
   }
 
+  .legend-link {
+    font-size: 11px;
+    line-height: 14px;    
+  }
+
   // @ul
   .categories{
     margin: 20px 0 0;
@@ -70,20 +75,21 @@
 
     h2{
       padding: 10px 15px;
-      margin: 20px 0;
       background: #F0F0F0;
       font-weight: 500;
       color: $dark;
       font-size: 14px;
       text-transform: uppercase;
+      @media (min-width: $br-mobileMap){
+        padding: 10px 20px;
+      }
 
       &.-country {
         background: rgba($country-color, 0.25);  
-        margin: 0 0 20px;              
       }
 
-      @media (min-width: $br-mobileMap){
-        padding: 10px 20px;
+      .country-btns {
+        margin: 5px 0 0;
       }
     }
     
@@ -105,7 +111,7 @@
     // @li
     .category {
       padding: 0 20px;
-      margin-top: 25px;
+      margin-top: 20px;
 
       &.closed {
         .category-name {
@@ -206,7 +212,7 @@
         .sublayer-title {
           font-size: 13px;
           margin-left: 5px;
-          color: #ccc;
+          color: #555;
           display: inline-block;
           .source {
             top: 9px;

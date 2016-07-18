@@ -2,10 +2,7 @@
   <%= yield :header %>
 <% else %>
   <h1>
-    <a href="/">
-      Global Forest Watch
-      <span class="ribbon"><span>Beta</span></span>
-    </a>
+    <a href="/">Global Forest Watch</a>
   </h1>
   <nav id="nav-mobile">
     <form class="mobile-show" action="/search">
@@ -16,7 +13,7 @@
     <div id="mobileMenu"></div>
     <ul class="mobile-hide">
       <li>
-        <a <% if controller?("static") && action?("explore") %>class="current"<% end %> href="/explore">Explore</a>
+        <span class="submenu-header" href="/explore">Explore</span>
         <ul class="submenu">
           <li><a href="/map">GFW Interactive Map</a></li>
           <li><a href="/countries">Countries</a></li>
@@ -24,21 +21,21 @@
           <li><a href="http://fires.globalforestwatch.org/">Fires</a></li>
           <li><a href="http://climate.globalforestwatch.org/">Climate</a></li>
           <li><a href="http://data.globalforestwatch.org/">Open Data Portal</a></li>
-          <li><a href="/explore/applications">All applications</a></li>
+          <li><a href="http://developers.globalforestwatch.org/gallery/">All applications</a></li>
         </ul>
       </li>
       <li>
-        <a <% if controller?("static") && action?("keep") || controller?("stories") && action?("show") %>class="current"<% end %> href="/stayinformed">Learn</a>
+        <span class="submenu-header" href="/stayinformed">Learn</span>
         <ul class="submenu">
           <li><a href="http://blog.globalforestwatch.org/">Blog</a></li>
-          <li><a href="/stayinformed/crowdsourced-stories">Crowdsourced stories</a></li>
+          <li><a href="/stories">Crowdsourced stories</a></li>
           <li><a class="newsletter-link" href="/stayinformed/newsletter">Newsletter</a></li>
           <li><a href="/howto">How to use GFW</a></li>
         </ul>
 
       </li>
       <li>
-        <a <% if controller?("static") && action?("getinvolved") || controller?("stories") && action?("new") %>class="current"<% end %> href="/getinvolved">Get involved</a>
+        <span class="submenu-header" href="/getinvolved">Get involved</span>
         <ul class="submenu">
           <li><a href="/developers-corner/">Develop your own app</a></li>
           <li><a href="/stories/new">Submit a story</a></li>
@@ -48,7 +45,7 @@
         </ul>
       </li>
       <li>
-        <a <% if controller?("static") && action?("about") %>class="current"<% end %> href="/about">About</a>
+        <a class="submenu-header <% if controller?("static") && action?("about") %>current<% end %>" href="/about">About</a>
         <ul class="submenu">
           <li><a href="/about/about-gfw">About GFW</a></li>
           <li><a href="/about/the-gfw-partnership">The GFW partnership</a></li>

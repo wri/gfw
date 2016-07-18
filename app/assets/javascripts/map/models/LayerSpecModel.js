@@ -30,6 +30,7 @@ define([
       "WMSLayer",
       "global_land_cover",
       "us_land_cover",
+      "mex_land_cover",
       "gtm_forest_cover",
       "gtm_forest_density",
       "gtm_forest_change2",
@@ -94,6 +95,7 @@ define([
       "per_priv_pa",
       "per_reg_pa",
       "mys_proteced_areas_sabah",
+      "per_protected_areas",
       // Land USE
       "dam_hotspots",
       "per_prod_for",
