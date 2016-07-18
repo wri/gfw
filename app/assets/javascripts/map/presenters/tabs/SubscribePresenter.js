@@ -13,22 +13,6 @@ define([
 
   'use strict';
 
-  var TOPICS = {
-    loss: 'alerts/treeloss',
-    forestgain: 'alerts/treegain',
-    forma: 'alerts/forma',
-    imazon: 'alerts/sad',
-    modis: 'alerts/quicc',
-    terrailoss: 'alerts/terra',
-    prodes: 'alerts/prodes',
-    guyra: 'alerts/guyra',
-    umd_as_it_happens: 'alerts/glad',
-    umd_as_it_happens_per: 'alerts/glad',
-    umd_as_it_happens_cog: 'alerts/glad',
-    umd_as_it_happens_idn: 'alerts/glad',
-    viirs_fires_alerts: 'alerts/viirs'
-  };
-
   var SubscribePresenter = PresenterClass.extend({
 
     init: function(view) {
@@ -78,13 +62,11 @@ define([
      },
 
      createSubscription: function(options) {
-      var analysisResource = options.analysisResource;
-
-      var params = _.pick(analysisResource,
-        'iso', 'id1', 'geostore', 'wdpa', 'use', 'useid');
+      var params = _.pick(options,
+        'iso', 'geostore', 'wdpaid', 'use', 'useid');
 
       this.subscription = new Subscription({
-        layers: [analysisResource.dataset],
+        dataset: options.dataset,
         geostoreId: options.geostore,
         params: params
       });
@@ -97,21 +79,21 @@ define([
        this.user.setEmailIfEmpty(this.subscription.get('resource').content);
        this.user.save();
 
-       this.subscription.save().
-         then(this.onSave.bind(this)).
-         fail(this.close.bind(this));
+       this.subscription.save()
+        .then(this.onSave.bind(this))
+        .fail(this.close.bind(this));
      },
 
      askForName: function(email) {
        this.subscription.set('resource', {
         type: 'EMAIL',
-        content: this.$el.find('#subscriptionEmail').val()
+        content: email
       });
 
       if (this.subscription.hasValidEmail()) {
         this.nextStep();
       } else {
-        this.presenter.notificate('notification-email-incorrect');
+        this.notificate('notification-email-incorrect');
       }
      },
 
@@ -138,8 +120,8 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Subscribe/show': function(options) {
-        this.show(options);
+      'Subscribe/show': function(status) {
+        this.show(status);
       }
     }, {
       'Subscribe/hide': function() {

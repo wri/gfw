@@ -218,10 +218,6 @@ define([
       mps.publish('Notification/open', [id]);
     },
 
-    subscribeCountry: function(){
-      mps.publish('Subscribe/show', [this.status.toJSON()]);
-    },
-
 
   });
 

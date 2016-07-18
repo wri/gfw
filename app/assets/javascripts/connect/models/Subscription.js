@@ -5,47 +5,37 @@ define([
   'use strict';
 
   var DATASETS = {
-    'alerts/terra': {
+    'terrai-alerts': {
       title: 'Terra-i',
       long_title: 'monthly Terra-i tree cover loss alerts',
       sub_title: 'monthly, 250m, Latin America, CIAT'
     },
-    'alerts/sad': {
+    'imazon-alerts': {
       title: 'SAD',
       long_title: 'monthly SAD tree cover loss alerts',
       sub_title: 'monthly, 250m, Brazilian Amazon, Imazon'
-    },
-    'alerts/quicc': {
-      title: 'QUICC',
-      long_title: 'quarterly QUICC tree cover loss alerts',
-      sub_title: 'quarterly, 5km, &lt;37 degrees north, NASA'
     },
     'umd-loss-gain': {
       title: 'Tree cover loss',
       long_title: 'annual tree cover loss data',
       sub_title: 'annual, 30m, global, Hansen/UMD/Google/USGS/NASA'
     },
-    'alerts/treegain': {
-      title: 'Tree cover gain',
-      long_title: '12-year tree cover gain data',
-      sub_title: '12 years, 30m, global, Hansen/UMD/Google/USGS/NASA'
-    },
-    'alerts/prodes': {
+    'prodes-loss': {
       title: 'PRODES deforestation',
       long_title: 'annual PRODES deforestation data',
       sub_title: 'annual, 30m, Brazilian Amazon, INPE'
     },
-    'alerts/guyra': {
+    'guira-loss': {
       title: 'Gran Chaco deforestation',
       long_title: 'monthly Gran Chaco deforestation data',
       sub_title: 'monthly, 30m, Gran Chaco, Guyra'
     },
-    'alerts/glad': {
+    'glad-alerts': {
       title: 'GLAD Tree Cover Loss Alerts',
       long_title: 'weekly GLAD tree cover loss alerts',
       sub_title: 'weekly, 30m, select countries, UMD/GLAD'
     },
-    'alerts/viirs': {
+    'viirs-active-fires': {
       title: 'VIIRS Active fires',
       long_title: 'daily VIIRS active fires alerts',
       sub_title: 'daily, 375 m, global, NASA'
@@ -55,7 +45,7 @@ define([
   var Subscription = Backbone.Model.extend({
     type: 'subscription',
 
-    url: window.gfw.config.GFW_API_HOST_V2 + '/subscriptions',
+    url: window.gfw.config.GFW_API_HOST_NEW_API + '/subscriptions',
 
     sync: function(method, model, options) {
       options || (options = {});
@@ -72,7 +62,7 @@ define([
     },
 
     formattedTopic: function() {
-      return DATASETS[this.get('layers')[0]];
+      return DATASETS[this.get('dataset')];
     },
 
     parse: function(response) {
