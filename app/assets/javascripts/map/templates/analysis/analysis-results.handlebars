@@ -81,7 +81,7 @@
 
 
     {{!-- GUYRA --}}
-    {{#ifCond resource.slug "===" 'guyra-loss'}}
+    {{#ifCond resource.slug "===" 'guira-loss'}}
       <li>
         <span class="stats-title">Grand Chaco tree cover loss:</span>
         <span class="stats-count" style="color: {{resource.baselayers.guyra.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> ha</span>
@@ -155,12 +155,12 @@
 
 {{!-- FOOTER --}}
 <footer class="analysis-footer">
-  {{!-- <div class="m-btncontainer -col100">
+{{!--   <div class="m-btncontainer -col100">
     <button class="btn green uppercase btn-analysis-subscribe {{#unless resource.options.enabledSubscription}}disabled{{/unless}}">Subscribe</button>
-  </div> --}}
-
+  </div>
+ --}}
   <div class="m-btncontainer is-center -col50">
-    <button class="btn gray little uppercase full-width btn-analysis-advanced {{#unless resource.options.enabledSubscription}}disabled{{/unless}}">Advanced analysis</button>
+    <button class="btn gray little uppercase full-width btn-analysis-advanced {{#unless resource.options.enabledAdvanced}}disabled{{/unless}}">Advanced analysis</button>
     <button class="btn green little uppercase full-width btn-analysis-subscribe {{#unless resource.options.enabledSubscription}}disabled{{/unless}}">Subscribe</button>
   </div>
 
