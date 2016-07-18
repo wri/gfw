@@ -66,7 +66,7 @@ define([
         'iso', 'geostore', 'wdpaid', 'use', 'useid');
 
       this.subscription = new Subscription({
-        dataset: [options.dataset],
+        datasets: [options.dataset],
         geostoreId: options.geostore,
         params: params
       });

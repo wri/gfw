@@ -62,12 +62,14 @@ define([
     },
 
     formattedTopic: function() {
-      return DATASETS[this.get('dataset')];
+      return DATASETS[this.get('datasets')[0]];
     },
 
     parse: function(response) {
-      var attributes = response.attributes;
-      attributes.id = response.id;
+      // if the fetch is directly to a detail the response will have the attributes
+      // within data but if not the model will take directly the attributes
+      var attributes = response.data && response.data.attributes || response.attributes;
+      attributes.id = response.data && response.data.attributes || response.id;
 
       return attributes;
     },

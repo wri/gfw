@@ -350,13 +350,26 @@ define([
       // SHAPE
       {
         'Analysis/shape': function(data) {
-          this.setShape(data);
+          this.status.set({
+            useid: data.useid,
+            use: data.use,
+            wdpaid: data.wdpaid,
+          })
         }
       },
       {
         'Subscribe/shape': function(data) {
-          this.setShape(data, true);
-          this.publishSubscribtion();
+          var subscritionObj = {
+            iso: {
+              country: null,
+              region: null
+            },
+            geostore: null,
+            useid: data.useid,
+            use: data.use,
+            wdpaid: data.wdpaid,
+          };
+          this.publishSubscribtion(_.extend({}, this.status.toJSON(), subscritionObj));
         }
       },
       {
@@ -574,17 +587,6 @@ define([
       this.publishAnalysis();
     },
 
-    setShape: function(data, silent) {
-      silent = silent || false;
-      this.status.set({
-        useid: data.useid,
-        use: data.use,
-        wdpaid: data.wdpaid,
-      }, {
-        silent: silent
-      });
-    },
-
 
 
 
@@ -644,8 +646,8 @@ define([
       mps.publish('Analysis/refresh');
     },
 
-    publishSubscribtion: function() {
-      mps.publish('Subscribe/show', [this.status.toJSON()]);
+    publishSubscribtion: function(data) {
+      mps.publish('Subscribe/show', [data || this.status.toJSON()]);
     },
 
     publishNotification: function(id){
