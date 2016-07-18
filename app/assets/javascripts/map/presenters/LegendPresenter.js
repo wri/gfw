@@ -197,6 +197,7 @@ define([
               resolve();
             }.bind(this));
         } else {
+          this.status.set('more', null);
           resolve();
         }
       }.bind(this));
