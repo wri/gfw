@@ -9,7 +9,7 @@
   }
 
   &.-big-padding {
-    padding: 100px 0;
+    padding: 50px 0;
 
     @media screen and (min-width: $br-mobile) {
       padding: 150px 0;
@@ -21,10 +21,10 @@
   }
 
   .introduction {
-    display: flex;
-    flex-direction: column-reverse;
 
     @media screen and (min-width: $br-mobile) {
+      display: flex;
+      flex-direction: column-reverse;
       flex-direction: row;
     }
   }
@@ -36,14 +36,14 @@
   }
 
   .introduction > .logo-container {
-    margin-bottom: 20px;
+    margin: 20px 0 0;
 
     @media screen and (min-width: $br-mobile) {
       display: flex;
       flex-basis: 25%;
       justify-content: flex-end;
 
-      margin-bottom: 0;
+      margin: 0;
     }
   }
 
@@ -108,12 +108,7 @@
   }
 
   .copyright {
-    margin-top: 25px;
-
+    margin: 0px 10px;
     font-size: 11px;
-
-    @media screen and (min-width: $br-mobile) {
-      margin: 0;
-    }
   }
 }
