@@ -27,7 +27,7 @@
 
     <form class="my-gfw-profile-form" method="POST" action="{{action}}">
       <label>Name</label>
-      <input type="text" placeholder="Your name" name="name" value="{{user.name}}">
+      <input type="text" placeholder="Your name" name="fullName" value="{{user.fullName}}">
 
       <label>
         Email
@@ -51,7 +51,7 @@
 
       <label class="m-multi-sel-container">
         Primary Responsibilities <em>(Select all that apply)</em>
-        <select class="default" multiple name="job">
+        <select class="default" multiple name="primaryResponsibilities">
           <option>Technical staff</option>
           <option>Researcher</option>
           <option>Project/program manager</option>
@@ -70,7 +70,7 @@
           <option>Other</option>
         </select>
 
-        <input type="text" name="job" placeholder="Other" class="hidden">
+        <input type="text" name="primaryResponsibilities" placeholder="Other" class="hidden">
       </label>
 
       <label class="m-sel-container">
@@ -337,7 +337,7 @@
 
       <label class="m-multi-sel-container">
         How do you use or plan to use Global Forest Watch? <em>(Select all that apply)</em>
-        <select class="default" multiple name="use">
+        <select class="default" multiple name="howDoYouUse">
           <option>Obtain maps and data on tree cover</option>
           <option>Obtain maps and data on land use</option>
           <option>Obtain maps and data on fires</option>
@@ -358,7 +358,7 @@
           <option>Other</option>
         </select>
 
-        <input type="text" name="use" placeholder="Other" class="hidden">
+        <input type="text" name="howDoYouUse" placeholder="Other" class="hidden">
       </label>
 
       <div class="m-improve-gfw">
@@ -368,12 +368,12 @@
         </p>
 
         <span>
-          <label><input type="radio" name="sign_up" value="yes" />Yes, sign me up</label>
-          <label><input type="radio" name="sign_up" value="no" />No thanks</label>
+          <label><input type="radio" name="signUpForTesting" value="true" />Yes, sign me up</label>
+          <label><input type="radio" name="signUpForTesting" value="false" />No thanks</label>
         </span>
 
-        {{#if errors.sign_up}}
-          <p class="my-gfw-form-error">{{errors.sign_up}}</p>
+        {{#if errors.signUpForTesting}}
+          <p class="my-gfw-form-error">{{errors.signUpForTesting}}</p>
         {{/if}}
       </div>
 

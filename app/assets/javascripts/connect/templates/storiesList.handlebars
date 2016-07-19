@@ -1,0 +1,49 @@
+<section class="header-static">
+  <div class="inner">
+    <header>
+      <h2>My Stories</h2>
+    </header>
+  </div>
+</section>
+
+<section class='section'>
+  <div class="my-gfw-story-container">
+    <div class="content-form my-gfw-stories-list-container inner">
+      {{#if showSpinner}}
+        <div class="spinner3">
+          <svg width="50" height="50">
+            <g>
+              <path class="background" d="M0,25A25,25 0 1,1 0,-25A25,25 0 1,1 0,25M0,20A20,20 0 1,0 0,-20A20,20 0 1,0 0,20Z"></path>
+              <path class="foreground" d="M1.5308084989341915e-15,-25A25,25 0 0,1 25,0L20,0A20,20 0 0,0 1.2246467991473533e-15,-20Z"></path>
+            </g>
+          </svg>
+        </div>
+      {{else}}
+        {{#if stories.length}}
+          <table class="my-gfw-stories-list">
+            <tbody id="my-gfw-stories-table-body">
+            </tbody>
+          </table>
+
+          <div id="my-gfw-stories-pagination"></div>
+        {{else}}
+          <div class="my-gfw-stories-empty">
+            <h4>You haven't created any stories yet</h4>
+            <h5>
+              We want to hear your stories about issues affecting
+              forests, forest communities, and how you use GFW to
+              monitor and protect forests. Share your report with the
+              world by putting it on the GFW Map.
+            </h5>
+
+            <div class="my-gfw-stories-how-to-create-story"></div>
+
+            <p>
+              <a href="/stories/new" class="btn green uppercase">Create a Story</a>
+            </p>
+          </div>
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
+</section>

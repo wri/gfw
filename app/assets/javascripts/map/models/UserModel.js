@@ -17,6 +17,13 @@ define([
       return !_.isEmpty(this.attributes);
     },
 
+    parse: function(response) {
+      var attributes = response.data.attributes;
+      attributes.id = response.data.id;
+
+      return attributes;
+    },
+
     sync: function(method, model, options) {
       options || (options = {});
 

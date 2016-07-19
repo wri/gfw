@@ -48,7 +48,7 @@ define([
 
         var request = requests[0];
         request.respond(200, { 'Content-Type': 'application/json' },
-          JSON.stringify(expectedGeojson));
+          JSON.stringify({data: expectedGeojson}));
       });
     });
 
@@ -61,7 +61,7 @@ define([
 
         var request = requests[0];
         request.respond(200, { 'Content-Type': 'application/json' },
-          JSON.stringify({id: 'ABCD'}));
+          JSON.stringify({data: {id: 'ABCD'}}));
       });
     });
   });

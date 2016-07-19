@@ -1,0 +1,22 @@
+<div class="inner">
+  <h2 class="section-title">More crowdsourced stories</h2>
+  <ul class='row'>
+    {{#each stories}}
+      <li class='col'>
+        <a href="/stories/{{id}}">
+          <div class="frame">
+            <img src="{{image}}" alt="" />
+          </div>
+          <h3>{{title}}</h3>
+        </a>
+      </li>
+    {{/each}}
+    <li class="col">
+      <a class="new-story" href="/stories/new">
+        <div class="frame">
+        </div>
+        <h3>Submit your story</h3>
+      </a>
+    </li>
+  </ul>
+</div>

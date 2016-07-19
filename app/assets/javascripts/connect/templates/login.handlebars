@@ -12,7 +12,11 @@
       <h2>Please log in</h2>
 
       <p>
-        You need to log in to view your profile or subscriptions.
+        {{#if message}}
+          {{message}}
+        {{else}}
+          You need to log in to view your profile or subscriptions.
+        {{/if}}
       </p>
 
       <ul class="my-gfw-authentication">

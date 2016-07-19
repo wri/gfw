@@ -97,7 +97,7 @@ $aside-width: 270px;
     left: 5px;
     background: $white;
     box-shadow: $shadow1;
-    
+
     button {
       display: block;
       width: 30px;
@@ -108,15 +108,15 @@ $aside-width: 270px;
       border-top: 1px solid $border;
       outline: none;
       cursor: pointer;
-      
+
       &:hover {
         background: darken($white,5%);
       }
-      
+
       &:first-child {
         border-top: none;
       }
-      
+
       svg {
         fill: $dark;
       }
@@ -138,7 +138,7 @@ $aside-width: 270px;
   .control-locate {
     left: auto;
     right: 5px;
-    
+
     svg {
       position: absolute;
       top: 50%;
@@ -147,7 +147,7 @@ $aside-width: 270px;
       height: 90%;
       transform: translate(-50%,-50%);
     }
-    
+
     &.active {
       svg {
         @include animation(loader,1s,infinite,$easeInOutCubic);
@@ -166,7 +166,7 @@ $aside-width: 270px;
     font-size: 12px;
     background: $white;
     box-shadow: $shadow1;
-    
+
     input {
       display: block;
       width: 100%;
@@ -180,4 +180,3 @@ $aside-width: 270px;
     }
   }
 }
-

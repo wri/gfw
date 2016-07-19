@@ -57,11 +57,12 @@ require.config({
     jasmine: "../../../vendor/assets/bower_components/jasmine",
     sinon: "../../../vendor/assets/bower_components/sinon/lib/sinon",
     bluebird: "../../../vendor/assets/bower_components/bluebird/js/browser/bluebird",
+    turf: "../../../vendor/assets/bower_components/turf/turf",
     helpers: "helpers",
     utils: "map/utils",
     abstract: "abstract",
     templates: "templates",
-    views: "views"
+    views: "views",
   },
 
   shim: {

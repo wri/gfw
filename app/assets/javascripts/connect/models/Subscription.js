@@ -6,19 +6,29 @@ define([
 
   var DATASETS = {
     'terrai-alerts': {
-      title: 'Terra-i',
+      title: 'Terra-i alerts',
       long_title: 'monthly Terra-i tree cover loss alerts',
       sub_title: 'monthly, 250m, Latin America, CIAT'
     },
     'imazon-alerts': {
-      title: 'SAD',
+      title: 'SAD aleerts',
       long_title: 'monthly SAD tree cover loss alerts',
       sub_title: 'monthly, 250m, Brazilian Amazon, Imazon'
+    },
+    'quicc-alerts': {
+      title: 'QUICC alerts',
+      long_title: 'quarterly QUICC tree cover loss alerts',
+      sub_title: 'quarterly, 5km, &lt;37 degrees north, NASA'
     },
     'umd-loss-gain': {
       title: 'Tree cover loss',
       long_title: 'annual tree cover loss data',
       sub_title: 'annual, 30m, global, Hansen/UMD/Google/USGS/NASA'
+    },
+    'alerts/treegain': {
+      title: 'Tree cover gain',
+      long_title: '12-year tree cover gain data',
+      sub_title: '12 years, 30m, global, Hansen/UMD/Google/USGS/NASA'
     },
     'prodes-loss': {
       title: 'PRODES deforestation',
@@ -65,12 +75,23 @@ define([
       return DATASETS[this.get('datasets')[0]];
     },
 
+    formattedTopics: function() {
+      return this.get('datasets').map(function(layerName) {
+        return DATASETS[layerName].title;
+      }).join(', ');
+    },
+
     parse: function(response) {
+      var attributes = {};
       // if the fetch is directly to a detail the response will have the attributes
       // within data but if not the model will take directly the attributes
-      var attributes = response.data && response.data.attributes || response.attributes;
-      attributes.id = response.data && response.data.attributes || response.id;
-
+      if (response.data !== undefined) {
+        attributes = response.data.attributes;
+        attributes.id = response.data.id;
+      } else {
+        attributes = response.attributes;
+        attributes.id = response.id;
+      }
       return attributes;
     },
 

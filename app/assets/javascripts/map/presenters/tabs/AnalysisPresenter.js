@@ -59,7 +59,7 @@ define([
       'imazon': 'imazon-alerts',
       'terrailoss': 'terrai-alerts',
       'prodes': 'prodes-loss',
-      'guyra': 'guyra-loss',
+      'guyra': 'guira-loss',
       'forest2000': 'umd-loss-gain',
       'viirs_fires_alerts': 'viirs-active-fires',
       'umd_as_it_happens':'glad-alerts',
@@ -81,7 +81,7 @@ define([
     _subscriptions: [{
       'Geostore/go': function(geostore) {
         this.status.set('geostore', geostore.id);
-        this._handlePlaceGo(geostore);
+        this._handlePlaceGo({geojson: geostore.attributes});
       }
     }, {
       'Place/go': function(place) {
@@ -344,7 +344,6 @@ define([
 
       // Build resource
       var resource = {
-        geojson: JSON.stringify(geojson),
         type: 'geojson'
       };
       mps.publish('Spinner/start');
@@ -621,7 +620,7 @@ define([
         this.status.set('geostore', geostoreId);
 
         var resource = {
-          geojson: JSON.stringify(geojson),
+          geojson: geojson,
           type: 'geojson'
         };
         resource = this._buildResource(resource);
@@ -666,6 +665,15 @@ define([
         resource.layer_options = JSON.stringify(resource.layer_options);
       } else {
         delete resource.layer_options;
+      }
+
+      if (resource.geojson) {
+        var geojson = geojsonUtilsHelper.featureCollectionToFeature(resource.geojson);
+        if (geojson.type === 'Feature') {
+          resource.geojson = geojson.geometry;
+        }
+
+        resource.geojson = JSON.stringify(resource.geojson);
       }
 
       resource.dataset = this.datasets[baselayer.slug];

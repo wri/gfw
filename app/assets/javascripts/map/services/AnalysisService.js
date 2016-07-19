@@ -26,9 +26,7 @@ define([
 
   'use strict';
 
-  var URL = window.gfw.config.GFW_API_HOST + '/forest-change';
-  //var URL = 'http://localhost:8080/forest-change';
-
+  var URL = window.gfw.config.GFW_API_HOST_NEW_API;
 
   var AnalysisService = Class.extend({
 
@@ -62,7 +60,7 @@ define([
       var success = _.bind(function(results) {
         mps.publish('AnalysisService/results', [results]);
         if (successCb) {
-          successCb(results);
+          successCb(results.data.attributes);
         }
       }, this);
 
@@ -96,9 +94,9 @@ define([
      */
     _defineRequests: function() {
       var datasets = [
-        'forma-alerts', 'umd-loss-gain', 'imazon-alerts',
-         'terrai-alerts', 'prodes-loss', 'loss-by-type',
-        'glad-alerts', 'guyra-loss','viirs-active-fires',
+        'terrai-alerts', 'umd-loss-gain', 'biomass-loss',
+        'viirs-active-fires', 'forma-alerts', 'glad-alerts',
+        'guira-loss', 'imazon-loss', 'prodes-loss'
       ];
 
       // Defines requests for each dataset (e.g., forma-alerts) and type (e.g.
@@ -107,7 +105,7 @@ define([
         _.each(this._urls(dataset), function(url, id) {
           var cache = this._cacheConfig;
           var config = {
-            cache: cache, url: url, type: 'POST',
+            cache: cache, url: url, type: 'GET',
             dataType: 'json'};
           ds.define(id, config);
         }, this);
@@ -182,7 +180,7 @@ define([
         return _.str.sprintf('%s:use', dataset);
       } else if (_.has(config, 'wdpaid')) {
         return _.str.sprintf('%s:wdpa', dataset);
-      } else if (_.has(config, 'geojson')) {
+      } else if (_.has(config, 'geostore')) {
         return _.str.sprintf('%s:world', dataset);
       }
 
