@@ -10,7 +10,7 @@ require([
   'map/utils',
   'enquire',
   'mps',
-  'bluebird',  
+  'bluebird',
   'handlebars',
   'map/router',
   'views/SourceModalView',
@@ -22,13 +22,13 @@ require([
   'map/collections/CountryCollection',
 
   'map/presenters/ExperimentsPresenter',
-  
+
   'map/services/AnalysisService',
 
   // Should we get rid of them?
   'map/services/CountryService',
   'map/services/DataService',
-  // 
+  //
   'map/views/MapView',
   'map/views/MapControlsView',
   'map/views/TabsView',
@@ -78,7 +78,7 @@ require([
     _initViews: function() {
 
       var map = new MapView();
-      
+
       // I was thinking that, without a map, an array of countries and an array of layers
       // we shouldn't create any view.
       countryService.get().then(function(results) {
@@ -87,7 +87,7 @@ require([
           enabled: true
         });
 
-        console.log(this.countries);
+        // console.log(this.countries);
 
 
         new MapControlsView(this.map, this.countries);
@@ -104,7 +104,7 @@ require([
         new SourceMobileFriendlyView(this.map, this.countries);
         new NotificationsView(this.map, this.countries);
         new GuideView(this.map, this.countries);
-        new GuideButtonView(this.map, this.countries);  
+        new GuideButtonView(this.map, this.countries);
 
         this._initApp();
 
@@ -165,7 +165,7 @@ require([
           cancellation: true,
           // Enable monitoring
           monitoring: true
-      });      
+      });
     }
 
   });

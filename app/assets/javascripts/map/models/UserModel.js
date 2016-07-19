@@ -36,6 +36,12 @@ define([
       }
 
       return Backbone.sync.call(this, method, model, options);
+    },
+
+    parse: function(response) {
+      response = response.data;
+      response.email = response.attributes.email;
+      return response;
     }
   });
 
