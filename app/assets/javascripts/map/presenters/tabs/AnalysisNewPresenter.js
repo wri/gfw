@@ -61,6 +61,7 @@ define([
         // Options
         threshold: 30,
         fit_to_geom: null,
+        mobileEnabled: false
 
       }
     })),
@@ -205,9 +206,12 @@ define([
       this.status.on('change:useid', this.changeUse.bind(this));
       this.status.on('change:wdpaid', this.changeWdpaid.bind(this));
 
-      // Spinner
+      // UI
       this.status.on('change:spinner', this.changeSpinner.bind(this));
       this.status.on('change:subtab', this.changeSubtab.bind(this));
+
+      // Mobile
+      this.status.on('change:mobileEnabled', this.changeMobileEnabled.bind(this));
 
     },
 
@@ -388,6 +392,11 @@ define([
 
       // GLOBAL ANALYSIS EVENTS
       {
+        'Analysis/toggle': function(toggle) {
+          this.status.set('mobileEnabled', toggle);
+        }
+      },
+      {
         'Analysis/subtab': function(subtab) {
           this.status.set('subtab', subtab);
         }
@@ -486,6 +495,10 @@ define([
 
     changeSubtab: function() {
       this.view.toggleSubtab();
+    },
+
+    changeMobileEnabled: function() {
+      this.view.toggleMobile();
     },
 
     /**
@@ -648,6 +661,10 @@ define([
     publishEnableds: function() {
       mps.publish('Analysis/enabled', [this.status.get('enabled')]);
       mps.publish('Analysis/enabled-subscription', [this.status.get('enabledSubscription')]);
+    },
+
+    publishMobileActive: function() {
+      mps.publish('Analysis/toggle', [!this.status.get('mobileEnabled')]);
     },
 
 

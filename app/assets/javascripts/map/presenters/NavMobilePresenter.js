@@ -96,6 +96,7 @@ define([
     },
 
     toggleCurrentTab: function(tab, toggle){
+      console.log(tab);
       mps.publish(tab+'/toggle', [toggle]);
     },
 

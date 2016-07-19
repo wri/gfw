@@ -1,23 +1,12 @@
 .analysis-results {
-  position: fixed;
-  width: 100%;
-  background: $white;
-  bottom: 0;
-  left: 0;
-  z-index: 22;
-  transform: translate(0,100%);
-  transition: all 0.25s $easeInOutSine;
+  position: relative;
+  bottom: auto;
+  left: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  
   &.active{
     transform: translate(0,0);
-  }
-
-  @media (min-width: $br-mobileMap){
-    position: relative;
-    bottom: auto;
-    left: auto;
-    transform: translate(0,0%);
-    overflow-x: hidden;
-    overflow-y: auto;
   }
 
   @media (min-height: 500px){
@@ -26,24 +15,6 @@
 
   @media (min-height: 750px){
     max-height: none;
-  }
-
-
-  .close{
-    position: absolute;
-    width: 34px;
-    height: 34px;
-    padding: 8px;
-    top: 0;
-    right: 0;
-    display: block;
-    z-index: 5;
-    svg{
-      stroke: $dark;
-    }
-    @media (min-width: $br-mobileMap){
-      display: none;
-    }
   }
 
   .analysis-stats {
