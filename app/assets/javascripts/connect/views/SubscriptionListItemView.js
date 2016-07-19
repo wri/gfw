@@ -38,7 +38,7 @@ define([
       subscription.topics = this.subscription.formattedTopics();
       if (subscription.createdAt !== undefined) {
         subscription.createdAt = moment(subscription.createdAt).
-          format('dddd, YYYY-MM-DD, h:mm a');
+        format('dddd, YYYY-MM-DD, h:mm a');
       }
 
       this.$el.html(this.template(subscription));
@@ -47,7 +47,7 @@ define([
     },
 
     confirmationUrl: function() {
-      return window.gfw.config.GFW_API_HOST + '/v2/subscriptions/' +
+      return window.gfw.config.GFW_API_HOST_NEW_API + '/subscriptions/' +
         this.subscription.id + '/send_confirmation';
     },
 
