@@ -83,7 +83,9 @@ define([
     videoInput: function(e) {
       if ($(e.target).val().length == 0) {
         var removable = document.getElementById('videothumbnail');
-        removable.parentNode.removeChild(removable);
+        if (removable) {
+          removable.parentNode.removeChild(removable);  
+        }
       } else {
         this._addVideoThumbnail($(e.target).val());
       }
@@ -113,26 +115,40 @@ define([
       var vidID  = this._getVideoID(url),
           $thumb = $('#videothumbnail');
       if ($thumb.length > 0) {
-        $thumb.find('.inner_box').css('background-image','url('+ vidID +')');
+        if (!!vidID) {
+          $thumb.find('.inner_box').css('background-image','url('+ vidID +')');
+          $thumb.data('uploadId', 'VID-'+vidID);          
+        } else {
+          this.uploadsIds = _.without(this.uploadsIds, 'VID-'+this.oldvID);
+          $("#story_uploads_ids").val(this.uploadsIds.join(","));
+          $thumb.fadeOut(250, function() {
+            $thumb.remove();
+          });
+        }
       } else {
-        $('.thumbnails').append('<li class="sortable thumbnail" draggable="true" id="videothumbnail" data-id="VID-'+vidID+'"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
-        $thumb = $('#videothumbnail');
-        $thumb.find('.destroy').on('click', function(e) {
-          e.preventDefault();
+        if (!!vidID) {
+          $('.thumbnails').append('<li class="sortable thumbnail" draggable="true" id="videothumbnail"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
+          this.uploadsIds.push('VID-'+vidID);
+          $("#story_uploads_ids").val(this.uploadsIds.join(","));
+          $thumb = $('#videothumbnail');
+          $thumb.data('uploadId', 'VID-'+vidID);
+          $thumb.find('.destroy').on('click', function(e) {
+              e.preventDefault();
 
-          var confirmation = confirm('Are you sure?');
+              var confirmation = confirm('Are you sure?')
 
-          if (confirmation == true) {
-            var video = this.story.get('media').where({embedUrl: url})[0];
-            this.story.get('media').remove(video);
-
-            $("#video").val('');
-            $thumb.fadeOut(250, function() {
-              $thumb.remove();
-            });
-          }
-        }.bind(this));
+              if (confirmation == true) {
+                this.uploadsIds = _.without(this.uploadsIds, 'VID-'+this.oldvID);
+                $("#story_uploads_ids").val(this.uploadsIds.join(","));
+                $("#story_video").val('');
+                $thumb.fadeOut(250, function() {
+                  $thumb.remove();
+                });
+              }
+            }.bind(this));          
+        }
       }
+      this.oldvID = vidID;
     },
 
     showFileSelector: function(event) {
