@@ -68,7 +68,7 @@ define([
       this.render();
     },
 
-    updateCurrentStep(step) {
+    updateCurrentStep: function(step) {
       this.$steps.removeClass('current');
       this.$steps.eq(step).addClass('current');
     },
