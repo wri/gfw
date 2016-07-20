@@ -163,8 +163,8 @@ define([
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
   'map/views/timeline/ProdesTimeline',
-  'map/views/timeline/AsItHappensTimeline',
   'map/views/timeline/GuyraTimeline',
+  'map/views/timeline/GladTimeline'
 ], function(
   // Layer Views
   LossLayer,
@@ -327,8 +327,8 @@ define([
   FiresTimeline,
   TerraiTimeline,
   ProdesTimeline,
-  AsItHappensTimeline,
-  GuyraTimeline
+  GuyraTimeline,
+  GladTimeline
 ) {
 
   'use strict';
@@ -701,19 +701,7 @@ define([
     },
     umd_as_it_happens: {
       view: GladLayer,
-      timelineView: AsItHappensTimeline
-    },
-    umd_as_it_happens_per: {
-      view: GladLayer,
-      timelineView: AsItHappensTimeline
-    },
-    umd_as_it_happens_cog: {
-      view: GladLayer,
-      timelineView: AsItHappensTimeline
-    },
-    umd_as_it_happens_idn: {
-      view: GladLayer,
-      timelineView: AsItHappensTimeline
+      timelineView: GladTimeline
     },
     gfw_landsat_alerts_coverage: {
       view: LandsatAlertsCoverLayer
