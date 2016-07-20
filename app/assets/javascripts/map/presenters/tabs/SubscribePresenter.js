@@ -17,7 +17,7 @@ define([
 
     status: new (Backbone.Model.extend({
       defaults: {
-        subscribe: false
+        subscribe: null
       }
     })),
 
