@@ -1,11 +1,14 @@
 define([
   'moment',
-  'abstract/timeline/TorqueTimelineClass'
-], function(moment, TorqueTimelineClass) {
+  'abstract/timeline/TorqueTimelineClass',
+  'abstract/timeline/GladTimelineDatePicker'
+], function(moment, TorqueTimelineClass, DatePicker) {
 
   'use strict';
 
   var GladTimeline = TorqueTimelineClass.extend({
+
+    DatePicker: DatePicker
 
   });
 

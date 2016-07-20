@@ -15,8 +15,11 @@ define([
     },
 
     _defineRequests: function() {
+      var endOfDay = moment().endOf('day'),
+          secondsToEndOfDay = endOfDay.diff(moment()) / 1000;
+
       var config = {
-        cache: {type: 'persist', duration: 1, unit: 'days'},
+        cache: {type: 'persist', duration: secondsToEndOfDay, unit: 'seconds'},
         url: this._getUrl(),
         type: 'POST',
         dataType: 'jsonp'
