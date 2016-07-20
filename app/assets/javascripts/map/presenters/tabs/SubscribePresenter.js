@@ -15,6 +15,12 @@ define([
 
   var SubscribePresenter = PresenterClass.extend({
 
+    status: new (Backbone.Model.extend({
+      defaults: {
+        subscribe: false
+      }
+    })),
+
     init: function(view) {
       this.view = view;
       this._super();
@@ -149,12 +155,12 @@ define([
     },
 
     setSubscribeState: function() {
-      this.subscribe = true;
+      this.status.set('subscribe', true);
       this.updateUrl();
     },
 
     unSetSubscribeState: function() {
-      delete this.subscribe;
+      this.status.set('subscribe', null);
       this.updateUrl();
     },
 
@@ -170,7 +176,7 @@ define([
         p.tab = 'analysis-tab';
       }
 
-      p.subscribe = this.subscribe;
+      p.subscribe = this.status.get('subscribe');
 
       return p;
     },
