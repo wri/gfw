@@ -1,6 +1,3 @@
-/**
- * The UMD/GLAd Alerts timeline.
- */
 define([
   'moment',
   'abstract/timeline/TorqueTimelineClass'
@@ -8,10 +5,11 @@ define([
 
   'use strict';
 
-  var AsItHappensTimeline = TorqueTimelineClass.extend({
+  var GladTimeline = TorqueTimelineClass.extend({
 
   });
 
-  return AsItHappensTimeline;
+  return GladTimeline;
 
 });
+
