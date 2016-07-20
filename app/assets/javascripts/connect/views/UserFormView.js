@@ -8,10 +8,10 @@ define([
 
   var UserFormValidator = Class.extend({
     validations: {
-      sign_up: {
+      signUpForTesting: {
         message: 'Please enter your email to sign up as an official tester',
         validator: function(user) {
-          return !(user.get('sign_up') === 'yes' && _.isEmpty(user.get('email')));
+          return !(user.get('signUpForTesting') === 'true' && _.isEmpty(user.get('email')));
         }
       }
     },
@@ -69,7 +69,7 @@ define([
     },
 
     _renderSelectedOptions: function() {
-      var selectFields = ['sector', 'job', 'country', 'use'],
+      var selectFields = ['sector', 'primaryResponsibilities', 'country', 'howDoYouUse'],
           attributes = this.user.toJSON();
 
       selectFields.forEach(function(field) {
@@ -78,16 +78,19 @@ define([
         if (!_.isEmpty(attributes[field])) {
           $select.val(attributes[field]);
 
-          var selected = $select.val() || [];
+          var selected = $select.val() || [],
+              $input = $select.siblings('input');
           if (selected.indexOf('Other') > -1) {
-            var $input = $select.siblings('input');
             $input.show();
             $input.val(_.last(attributes[field]));
+          } else {
+            $input.hide();
+            $input.val('');
           }
         }
       }.bind(this));
 
-      this.$('input[value="' + attributes.sign_up + '"]').
+      this.$('input[name="signUpForTesting"][value="'+(attributes.signUpForTesting==='true').toString()+'"]').
         prop('checked', true);
     },
 
@@ -136,7 +139,7 @@ define([
 
       this.user.set(formValues);
       if (this.validator.isValid(this.user)) {
-        this.user.save().then(this._redirect.bind(this));
+        this.user.save(formValues, {patch: true}).then(this._redirect.bind(this));
       } else {
         this.render();
         mps.publish('Notification/open', ['notification-my-gfw-profile-errors']);

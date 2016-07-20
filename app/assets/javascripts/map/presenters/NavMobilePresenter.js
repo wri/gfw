@@ -7,7 +7,7 @@ define([
   'underscore',
   'mps',
   'map/presenters/PresenterClass',
-  'map/services/CountryService'  
+  'map/services/CountryService'
 ], function(_, mps, PresenterClass, countryService) {
 
   'use strict';
@@ -26,7 +26,7 @@ define([
       this._super();
       this.status = new StatusModel();
 
-      this.listeners();      
+      this.listeners();
     },
 
     listeners: function() {
@@ -56,7 +56,6 @@ define([
     },{
       'Analysis/toggle': function(boolean) {
         this.view.toogleTimelineClass(false);
-        this.view.toogleAnalysisBtn($('#analysis-tab').hasClass('is-analysis'));        
       }
     },{
       'Analysis/visibility': function(to) {
@@ -83,18 +82,18 @@ define([
         this.view.toogleTimelineClass(false);
       }
     }],
-    
+
     changeIso: function() {
       var iso = this.status.get('iso');
 
       if(!!iso && !!iso.country && iso.country !== 'ALL'){
-        countryService.execute(iso.country, _.bind(function(results) {
+        countryService.show(iso.country, _.bind(function(results) {
           this.view.toogleCountryBtn(results.name);
         },this));
       } else {
         this.view.toogleCountryBtn(null);
       }
-    },  
+    },
 
     toggleCurrentTab: function(tab, toggle){
       mps.publish(tab+'/toggle', [toggle]);

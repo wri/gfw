@@ -53,7 +53,7 @@ define([
       'imazon': 'imazon-alerts',
       'terrailoss': 'terrai-alerts',
       'prodes': 'prodes-loss',
-      'guyra': 'guyra-loss',
+      'guyra': 'guira-loss',
       'forest2000': 'umd-loss-gain',
       'umd_as_it_happens':'glad-alerts',
       'umd_as_it_happens_per':'glad-alerts',
@@ -238,7 +238,6 @@ define([
       this.status.set('iso', null);
       this.status.set('resource', null);
       this.view.model.set('boxHidden', true);
-      mps.publish('Analysis/dont_analyze', [true]);
       mps.publish('AnalysisService/cancel', []);
       mps.publish('AnalysisResults/delete-analysis', []);
       mps.publish('Place/update', [{go: false}]);
@@ -364,7 +363,7 @@ define([
 
 
     showCanopy: function(){
-      mps.publish('ThresholdControls/toggle');
+      mps.publish('ThresholdControls/show');
     },
 
     toggleSubscribeButton: function() {

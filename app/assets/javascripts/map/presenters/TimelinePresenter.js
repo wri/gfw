@@ -89,7 +89,7 @@ define([
       var date;
       var currentTimeline = this.status.get('timeline');
       var baselayer = _.values(_.omit(
-        baselayers, ['forestgain','nothing']))[0];
+        baselayers, ['forestgain', 'forest2000' ,'nothing']))[0];
 
       if (!baselayer) {
         date = undefined;

@@ -49,6 +49,10 @@ define([
         this.view.openTab(id, backbutton);
       }
     },{
+      'Tab/toggle': function(id, active) {
+        this.view.toggleTab(id, active);
+      }
+    },{
       'Layers/toggle': function(toggle) {
         this.view.toggleMobileLayers(toggle);
       }

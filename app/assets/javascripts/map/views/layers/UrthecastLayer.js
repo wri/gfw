@@ -8,11 +8,12 @@ define([
   'uri',
   'moment',
   'map/views/layers/CustomInfowindow',
+
 ], function(ImageLayerClass, UriTemplate, moment, CustomInfowindow) {
 
   'use strict';
 
-  var API_URL = window.gfw.config.GFW_API_HOST;
+  var API_URL = window.gfw.config.GFW_API_HOST_NEW_API;
 
   var UrthecastLayer = ImageLayerClass.extend({
     options: {
@@ -26,7 +27,6 @@ define([
         'ndwi': 13,
         'false-color-nir' : 13
       },
-
       infowindowImagelayer: true
     },
 
@@ -181,8 +181,8 @@ define([
           infowindowData: {
             acquired: moment(data['acquired']).format("MMMM Do, YYYY"),
             platform: data['platform'].toUpperCase(),
-            sensor_platform: data['sensor_platform'].toUpperCase(),
-            cloud_coverage: (data['cloud_coverage']) ? Math.ceil( data['cloud_coverage'] * 10) / 10 : '0'
+            sensor_platform: data['sensorPlatform'].toUpperCase(),
+            cloud_coverage: (data['cloudCoverage']) ? Math.ceil( data['cloudCoverage'] * 10) / 10 : '0'
           }
         }
         this.infowindow = new CustomInfowindow(event.latLng, this.map, infoWindowOptions);
@@ -225,9 +225,9 @@ define([
           tileddate: moment(tomorrow).format("YYYY-MM-DD"),
         });
         var url = this._getBoundsUrl(options);
-        $.get(url).done(_.bind(function(data) {
+        $.get(url).done(_.bind(function(response) {
           this.hidenotification();
-          if (!!data && !!data.payload && !data.payload.length) {
+          if (!!response && !!response.data && !response.data.length) {
             this.notificate('notification-no-images-urthecast');
           }
         }, this ));
@@ -247,9 +247,11 @@ define([
       });
       var url = this._getInfoWindowUrl(options);
 
-      $.get(url).done(_.bind(function(data) {
+      $.get(url).done(_.bind(function(response) {
         this.removeInfoWindow();
-        this.setInfoWindow(data.payload[0], event);
+        if (!!response && !!response.data && !response.data.length) {
+          this.setInfoWindow(response.data[0].attributes, event);
+        }
       }, this ));
     },
 
@@ -257,15 +259,15 @@ define([
 
     // HELPERS
     setStyle: function() {
-      this.map.data.setStyle(_.bind(function(feature){
-        var strokeColor = (feature.getProperty('color')) ? feature.getProperty('color') : '#A2BC28';
+      this.map.data.setStyle(function(feature){
         return ({
+          editable: false,
           strokeWeight: 2,
           fillOpacity: 0,
           fillColor: '#FFF',
-          strokeColor: strokeColor
+          strokeColor: '#FF6633'
         });
-      }, this ));
+      });
     },
 
     drawMultipolygon: function(geom) {

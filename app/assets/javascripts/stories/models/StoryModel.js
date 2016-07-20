@@ -1,11 +1,19 @@
 define([
- 'backbone', 'moment', 'underscore'
-], function(Backbone, moment, _) {
+ 'backbone', 'moment', 'underscore',
+ 'stories/collections/MediaCollection'
+], function(
+  Backbone, moment, _,
+  MediaCollection
+) {
 
   'use strict';
 
   var Story = Backbone.Model.extend({
-    urlRoot: window.gfw.config.GFW_API_HOST + '/story/',
+    urlRoot: window.gfw.config.GFW_API_HOST_NEW_API + '/story/',
+
+    defaults: {
+      media: new MediaCollection()
+    },
 
     parse: function(response) {
       var attributes;
@@ -18,6 +26,23 @@ define([
       attributes.id = response.id;
 
       return attributes;
+    },
+
+    toJSON: function() {
+      var json = _.clone(this.attributes);
+
+      for(var attr in json) {
+        if((json[attr] instanceof Backbone.Model) || (json[attr] instanceof Backbone.Collection)) {
+          json[attr] = json[attr].toJSON();
+        }
+      }
+
+      return json;
+    },
+
+    addMedia: function(media) {
+      var mediaCollection = this.get('media');
+      mediaCollection.append(media);
     },
 
     formattedDate: function() {

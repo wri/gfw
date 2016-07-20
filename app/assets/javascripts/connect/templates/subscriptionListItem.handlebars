@@ -22,9 +22,12 @@
     {{/if}}
   </h4>
 
-  <ul>
-    <li>Data set: {{topic.title}} ({{topic.sub_title}})</li>
-    <li>Date of subscription: {{created}} UTC</li>
+  <ul class="metadata">
+    <li>
+      Data set:
+      <span class="dataset">{{topics}}</span>
+    </li>
+    <li>Date of subscription: {{createdAt}} UTC</li>
   </ul>
 </td>
 

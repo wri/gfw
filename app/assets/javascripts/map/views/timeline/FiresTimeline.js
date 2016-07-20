@@ -1,5 +1,5 @@
 /**
- * The Fires timeline.
+ * The FiresTimeline.
  *
  * @return FiresTimeline class (extends TimelineBtnClass)
  */

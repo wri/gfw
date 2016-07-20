@@ -16,7 +16,7 @@ define([
     /**
      * Spec for testing execute().
      */
-    describe('execute()', function() {
+    describe('show()', function() {
       var response = null;
       var callback = null;
 

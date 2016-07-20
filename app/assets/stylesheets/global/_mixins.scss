@@ -29,6 +29,18 @@
   }
 }
 
+// Loader spinner
+@mixin spinner(){
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: $dark;
+  @include animation(rotate,1s,infinite,$easeInOutCubic);
+}
+
 // Animation
 @mixin animation($name,$duration,$count: 1,$function: linear,$direction: normal,$fill : none,$delay : 0s, $play: running){
   -webkit-animation-name: $name;
@@ -74,4 +86,12 @@
     background-image: -o-linear-gradient($origin, $start, $stop);
     background-image: -ms-linear-gradient($origin, $start, $stop);
     background-image: linear-gradient($origin, $start, $stop);
+}
+
+
+@mixin keyframes($name) {
+  @-o-keyframes $name { @content };
+  @-moz-keyframes $name { @content };
+  @-webkit-keyframes $name { @content };
+  @-keyframes $name { @content };
 }

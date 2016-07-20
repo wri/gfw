@@ -1,12 +1,12 @@
 define([
   'jquery', 'backbone', 'underscore',
   'map/models/UserModel',
-  'connect/views/UserFormView', 'connect/views/SubscriptionListView', 'connect/views/LoginView',
+  'connect/views/UserFormView', 'connect/views/StoriesListView', 'connect/views/SubscriptionListView', 'connect/views/LoginView',
   'views/NotificationsView'
 ], function(
   $, Backbone, _,
   User,
-  UserFormView, SubscriptionListView, LoginView,
+  UserFormView, StoriesListView, SubscriptionListView, LoginView,
   NotificationsView) {
 
   'use strict';
@@ -57,6 +57,7 @@ define([
     availableViews: {
       'my_gfw': UserFormView,
       'subscriptions': SubscriptionListView,
+      'stories': StoriesListView,
       'login_modal': LoginView
     },
 

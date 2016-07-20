@@ -13,7 +13,7 @@
   "stories-icons/*.png";
 
 // Global
-// This will load all common settings, mixins and styles needed 
+// This will load all common settings, mixins and styles needed
 @import "global/global";
 
 // Layouts
@@ -55,8 +55,10 @@
 
   // Real Modules
   "modules/map/module",
+
   // legend
   "modules/map/module-legend",
+
   // controls
   "modules/map/module-mapcontrols",
   "modules/map/control-searchbox",
@@ -70,20 +72,25 @@
   "modules/map/tab-countries",
   "modules/map/tab-highresolution",
   "modules/map/subscription-modal",
+
+  // analysis
+  "modules/map/analysis-draw",
+  "modules/map/analysis-country",
+  "modules/map/analysis-shape",
+  "modules/map/analysis-spinner",
+  "modules/map/analysis-results",
+  "modules/map/analysis-downloads",
+
   // timeline
   "modules/map/widget",
   "modules/map/timeline",
   "modules/map/timeline-btn",
   "modules/map/timeline-year",
   "modules/map/timeline-month",
-
   "modules/map/timeline-torque",
   "modules/map/timeline-torque-date-picker",
 
   //Nav mobile
   "modules/map/module-navmobile",
 
-
-
-  "modules/map/analysis-tool",
   "modules/map/infowindow";

@@ -8,7 +8,6 @@ define([
   'handlebars',
   'map/presenters/LegendPresenter',
   'text!map/templates/legend/legend.handlebars',
-  'text!map/templates/legend/legendMore.handlebars',
   'text!map/templates/legend/loss.handlebars',
   'text!map/templates/legend/imazon.handlebars',
   'text!map/templates/legend/fires.handlebars',
@@ -57,7 +56,7 @@ define([
   'text!map/templates/legend/perPA.handlebars',
   'text!map/templates/legend/mex_land_cover.handlebars',
   
-], function(_, Handlebars, Presenter, tpl, tplMore, lossTpl, imazonTpl, firesTpl,
+], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
     global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
@@ -71,7 +70,6 @@ define([
     el: '#module-legend',
 
     template: Handlebars.compile(tpl),
-    templateMore: Handlebars.compile(tplMore),
 
     model: new (Backbone.Model.extend({
       defaults:{
@@ -250,8 +248,9 @@ define([
         categories: (_.isEmpty(categoriesGlobal)) ? false : categoriesGlobal,
         categoriesIso: (_.isEmpty(categoriesIso)) ? false : categoriesIso,
         layersLength: layers.length,
-        country: (!!iso) ? _.findWhere(this.countries.toJSON(), { iso: iso.country }) : null,
-        more: more
+        country: (!!iso) ? _.findWhere(this.countries, { iso: iso.country }) : null,
+        more: more,
+        countryVisibility: (!!more || !_.isEmpty(categoriesIso))
       }));
       this.presenter.toggleLayerOptions();
     },
@@ -396,10 +395,6 @@ define([
         var href = window.location.href.replace('/embed','');
         this.$linkLegendBox.attr('href', href);
       }
-    },
-
-    renderMore: function(data) {
-      this.$more.html(this.templateMore(data));
     },
 
 

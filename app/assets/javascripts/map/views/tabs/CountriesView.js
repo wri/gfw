@@ -64,6 +64,7 @@ define([
         },this)
       });
 
+      this.render();
       this.listeners();
 
     },
@@ -72,7 +73,7 @@ define([
       // Render different templates depending on the device
       var template = (this.model.get('mobile')) ? this.templateMobile : this.template;
       this.$el.html(template({
-        countries: this.countries.toJSON(),
+        countries: this.countries,
         country: this.model.get('country'),
         countryName: this.model.get('countryName') || 'Country',
         countryLayers: this.model.get('countryLayers'),
@@ -89,8 +90,6 @@ define([
 
     // INITS
     listeners: function() {
-      this.countries.on('sync', this.render.bind(this));
-
       this.model.on('change:country', this.setCountryLayers.bind(this));
       this.model.on('change:country', this.setCountryMobileButtons.bind(this));
 
@@ -136,7 +135,7 @@ define([
 
     setCountry: function(iso) {
       var country = (!!iso && !!iso.country) ? iso.country : null; 
-      var countryName = (!!iso && !!iso.country) ? _.findWhere(this.countries.toJSON(), {iso: iso.country }).name : null;
+      var countryName = (!!iso && !!iso.country) ? _.findWhere(this.countries, {iso: iso.country }).name : null;
       this.model.set('countryName', countryName);
       this.model.set('country', country);
       // Mobile

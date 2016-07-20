@@ -34,72 +34,15 @@
       display: none;
     }
   }
-
-
-  .tab-analysis{
-    nav{
-      display: none;
-    }
-  }
-
-  .analysis-tab-content.country-tab {
-    .select-box-mobile {
-      margin: 10px 0 0;
-      position: relative;
-
-      &:after{
-        content: "";
-        display: block;
-        position: absolute;
-        top: 50%;
-        right: 10px;
-        width: 16px;
-        height: 16px;
-        transform: translate(0,-50%);
-        background: image-url('svg-icons/arrow-down.svg') center no-repeat;
-        background-size: contain;
-      }
-
-      &:first-child {
-        margin: 0;
-      }
-    }
-
-    select {
-      -webkit-appearance: none;
-      width: 100%;
-      height: 36px;
-      padding: 0 10px;
-      font-size: 13px;
-      display: block;
-      font-family: inherit;
-      border: 1px solid #e5e5df;
-      border-radius: 0;
-      background: $white;
-      font-family: inherit;
-      text-transform: uppercase;
-      
-      option {
-        text-transform: none;
-      }
-    }
-  }
 }
 
 .tab-analysis {
-
-  .is-analysis & {
-    max-height: 60.1vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-  
   nav {
     display: block;
-    
+
     ul {
       display: flex;
-      
+
       li {
         position: relative;
         width: 100%;
@@ -132,468 +75,57 @@
           }
         }
 
-        &.active {
+        &.-active {
           &:after {
             background: $cGreen;
             width: 50%;
           }
         }
 
-        &.disabled {
+        &.-disabled {
           opacity: 0.5;
           // pointer-events: none;
           cursor: default;
-          
+
           &:hover {
             &:after {
               width: 0%;
-            }            
+            }
           }
         }
       }
     }
   }
-  .analysis-content,
-  .subscription-content{
-    .analysis-tab-content,
-    .subscription-tab-content{
-      display: none;
+
+
+  .analysis-tab-content,{
+    display: none;
+    padding: 15px;
+    @media (min-width: $br-mobileMap){
       padding: 15px;
-      @media (min-width: $br-mobileMap){
-        padding: 15px;
-      }
-      @media (min-width: 1500px){
-        padding: 20px;
-      }
-      &.active{
-        display: block;
-      }
-      &.hidden{
-        display: none;
-      }
-    }
-  }
-  .is-analysis &{
-    nav{
-      // display: none;
-    }
-    .analysis-content{
-      .analysis-tab-content{
-        padding: 15px 15px 0;
-        @media (min-width: 1500px){
-          padding: 20px 20px 0;
-        }
-
-      }
-    }
-  }
-}
-
-//DEFAULT
-.analysis-tab-content.default,
-.subscription-tab-content.default{
-  .arrow{
-    position: relative;
-    width: 100%;
-    padding-bottom: 75.454545454545%;
-    &:before{
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: image-url('backgrounds/explanation-arrow.png');
-      background-size: contain;
-    }
-  }
-}
-
-.subscription-tab-content.default-subscription{
-  position: absolute;
-  background: $white;
-  top: 0;
-  left: 0;
-  padding: 30px !important;
-  z-index: 5;
-}
-
-//DRAW TAB
-.analysis-tab-content.draw-tab,
-.subscription-tab-content.draw-tab{
-
-  .p-center {
-    text-align: center;
-    padding: 10px 0;      
-  }
-
-  .-terms {
-    font-size: 10px;
-    margin: 8px 0 0;
-    text-align: center;    
-  }
-
-  .image{
-    position: relative;
-    max-width: 50%;
-    margin: 20px auto;
-    display: none;
-  
-    @media (min-height: 645px){
-      display: block;
-    }
-
-
-
-    div{
-      position: relative;
-      padding-bottom: 82.417582417582%;
-    }
-
-    svg{
-      width: 105%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      fill: $cGreen;
-    }
-  }
-}
-
-//COUNTRY TAB
-.analysis-tab-content.country-tab,
-.subscription-tab-content.country-tab{
-  .chosen-container-single{
-    margin: 0 0 5px;
-  }
-}
-
-//PA & CONCESSIONS TAB
-.analysis-tab-content.data-tab,
-.subscription-tab-content.data-tab{
-  .see-gif {
-    margin: 15px 0 0;
-    padding: 5px 0;
-    display: inline-block;
-    @media (min-height: 770px){
-      display: none;
-    }
-  }
-  .img-box{
-    margin: 15px 0 0;
-    position: relative;
-    display: none;
-    @media (min-height: 770px){
-      display: block;
     }
     @media (min-width: 1500px){
-      margin: 20px 0 0;
+      padding: 20px;
     }
 
-    .play{
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: calc(100% + 30px);
-      height: calc(100% + 15px);
-      margin: 0 0 0 -15px;
-      z-index: 2;
-      background: rgba(#000, 0.75);
-      cursor: pointer;
-      @media (min-width: 1500px){
-        width: calc(100% + 40px);
-        height: calc(100% + 20px);
-        margin: 0 0 0 -20px;
-      }
-
-      &:hover{
-        &:before{
-          background: darken($white,5%);
-        }
-      }
-
-      &:after, &:before{
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-      }
-      &:before{
-        width: 50px;
-        height: 50px;
-        background: $white;
-        border-radius: 50%;
-      }
-      &:after{
-        width: 0;
-        height: 0;
-        border-width: 10px 0 10px 20px;
-        border-color: transparent transparent transparent $dark;
-        border-style: solid;
-        margin: 0 0 0 2px;
-      }
-    }
-
-    img{
-      width: 100%;
+    &.-active {
       display: block;
-      position: relative;
-    }
-  }
-}
-
-
-
-.analysis-result{
-  position: fixed;
-  width: 100%;
-  background: $white;
-  bottom: 0;
-  left: 0;
-  z-index: 22;
-  padding: 20px 20px 50px;
-  transform: translate(0,100%);
-  transition: all 0.25s $easeInOutSine;
-  &.active{
-    transform: translate(0,0);
-  }
-
-  @media (min-width: $br-mobileMap){
-    position: relative;
-    bottom: auto;
-    left: auto;
-    padding: 15px 15px 0px;
-    transform: translate(0,0%);
-  }
-
-  @media (min-width: 1500px){
-    padding: 20px 20px 0px;
-  }
-
-  .close{
-    position: absolute;
-    width: 34px;
-    height: 34px;
-    padding: 8px;
-    top: 0;
-    right: 0;
-    display: block;
-    z-index: 5;
-    svg{
-      stroke: $dark;
-    }
-    @media (min-width: $br-mobileMap){
-      display: none;
-    }
-  }
-
-  .analysis-stats {
-    background: white;
-    font-size: 12px;
-
-    > li {
-      padding: 6px 0;
-      // border-bottom: 1px solid #ddd;
-
-      &:first-child {
-        padding-top: 0;
-      }
-
-      &:last-child {
-        border: none;
-        padding-bottom: 0;
-      }
     }
 
-    .stats-title {
-      color: #999;
-      font-weight: 500;
-      font-size: 11px;
-      margin-bottom: 3px;
-      text-transform: uppercase;
-      display: block;
-      .stats-threshold {
-        text-transform: lowercase;
-        font-weight: normal;
-        font-size: 9px;
-        margin-left: 4px;
-      }
-    }
-    .stats-count {
-      font-weight: 500;
-      font-size: 15px;
-      color: #666;
-      strong {
-        font-size: 18px;
-        display: inline-block;
-      }
-    }
-
-    .stats-notice {
-      font-size: 11px;
-      background: $border;
-      border: 1px solid #CCC;
-      padding: 10px;
-      text-align: center;
-      line-height: 1.25;
-    }
-  }
-
-  .analysis-subscribe {
-    width: 100%;
-  }
-
-  // FOOTER ANALYSIS
-  .analysis-footer {
-    margin: 15px 0 0;
-
-
-    // GRID
-    > ul {
-      margin: 20px -15px 0;
-      display: flex;
-      justify-content: space-between;
-
-      @media (min-width: 1500px){
-        margin: 20px -20px 0;
-      }
-
-      > li {
-        width: 33.33333%;
-      }
-    }
-
-
-
-    // FOOTER BTN
-    .analysis-footer-btn {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      text-align: center;     
-      box-shadow: none;
-      border: none;
-      background: none;
-      font-family: inherit;
-      outline: none;
-      color: $dark;
-      background: #eeeeee;
-      cursor: pointer;
-      font-size: 10px;
-      line-height: 1;
-      
-      // ICON
-      svg {
-        fill: $dark;
-        width: 18px;
-        height: 18px;
-        margin: 0 auto 3px;
-
-        &.-inactive {
-          display: none;
-        }
-      }
-
-      > span {
-        font-size: 9px;
-        text-transform: uppercase;
-      }
-
-      // STATES
-      &:hover {
-        background: lighten(#eeeeee, 5%);
-      }
-
-      &.-active {
-        background: $white;
-        svg {
-          display: none;
-          &.-inactive {
-            display: block;
-          }              
-        }
-      }
-    }
-
-
-
-    // FOOTER DROPDOWN (we use this for the download "modal")
-    .analysis-footer-dropdown {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;      
-      width: 100%;
-      position: absolute;
-      bottom: 100px;
-      left: 0;
-      z-index: 2000;
-
-      transition: all 0.25s $easeInOutSine;
-      transform: translate(0,15px);
-
-      font-size: 13px;
-      text-align: left;
-      background-color: $white;
-      line-height: 1.5;
-      visibility: hidden;
-      opacity: 0;
+    &.-results {
+      padding: 20px 20px 50px;
 
       @media (min-width: $br-mobileMap){
-        bottom: 51px;
+        padding: 15px 15px 0px;
       }
 
-      // Toggle -active class
-      &.-active {
-        transform: translate(0,0);
-        visibility: visible;
-        opacity: 1;
+      @media (min-width: 1500px){
+        padding: 20px 20px 0px;
       }
+    }
 
-      // Overlay
-      &:before {
-        content: "";
-        display: block;
-        position: absolute;
-        width: 100%;
-        height: 400%;
-        background: rgba(#000, 0.25);
-        z-index: 2;
-        bottom: 100%;
-        left: 0%;
-      }
-
-      // Items
-      > li {
-        padding: 4px 15px;
-        border-bottom: 1px solid $border;
-        
-        &:first-child {
-          border-bottom: none;
-          font-size: 10px;
-          text-align: left;
-          border-bottom: none;  
-          padding: 10px 15px;
-
-          &:hover {
-            background-color: $white;
-          }              
-        }
-
-        &:last-child {
-          border-bottom: none;
-        }
-
-        &:hover {
-          background-color: darken($white,2.5%);
-        }
-
-        > a {
-          display: block;
-          color: $cGreen;
-        }
-      }
+    &.-hidden{
+      display: none;
     }
   }
 }
