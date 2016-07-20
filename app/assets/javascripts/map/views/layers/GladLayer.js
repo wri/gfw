@@ -40,8 +40,7 @@ define([
     _getLayer: function() {
       return new Promise(function(resolve) {
 
-      var dateService = new GladDateService({
-        layer: 'glad-alerts' });
+      var dateService = new GladDateService();
 
       dateService.fetchDates().then(function(response) {
         this.maxDate = moment(response.max_date);

@@ -7,7 +7,7 @@ define([
 
   var REQUEST_ID = 'GladDateService:fetchDates';
 
-  var URL_TEMPLATE = window.gfw.config.GFW_API_HOST + "/forest-change/{layer}/latest";
+  var URL = window.gfw.config.GFW_API_HOST + "/forest-change/glad-alerts/latest";
 
   var GladDateService = Class.extend({
 
@@ -22,16 +22,11 @@ define([
 
       var config = {
         cache: {type: 'persist', duration: secondsToEndOfDay, unit: 'seconds'},
-        url: this._getUrl(),
+        url: URL,
         type: 'GET'
       };
 
       ds.define(REQUEST_ID, config);
-    },
-
-    _getUrl: function() {
-      return new UriTemplate(URL_TEMPLATE).fillFromObject({
-        layer: this.options.layer});
     },
 
     fetchDates: function() {
