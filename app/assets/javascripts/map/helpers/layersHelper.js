@@ -123,6 +123,7 @@ define([
   'map/views/layers/GtmForestDensityLayer',
   'map/views/layers/AsItHappensHybridLayer',
   'map/views/layers/LandsatAlertsCoverLayer',
+  'map/views/layers/GladCoverageLayer',
   'map/views/layers/KhmProtectedAreasLayer',
   'map/views/layers/KhmEcoLandLayer',
   'map/views/layers/UsaForestOwnershipLayer',
@@ -290,6 +291,7 @@ define([
   GtmForestDensityLayer,
   AsItHappensHybridLayer,
   LandsatAlertsCoverLayer,
+  GladCoverageLayer,
   KhmProtectedAreasLayer,
   KhmEcoLandLayer,
   UsaForestOwnershipLayer,
@@ -718,6 +720,9 @@ define([
     },
     gfw_landsat_alerts_coverage: {
       view: LandsatAlertsCoverLayer
+    },
+    glad_coverage: {
+      view: GladCoverageLayer
     },
     khm_pa: {
       view: KhmProtectedAreasLayer
