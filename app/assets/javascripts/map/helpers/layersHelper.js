@@ -151,6 +151,9 @@ define([
   'map/views/layers/MysPASabahLayer',
   'map/views/layers/PerPALayer',
   'map/views/layers/MexLandCoverLayer',
+  'map/views/layers/MexForestConservLayer',
+  'map/views/layers/MexForestProdLayer',
+  'map/views/layers/MexForestRestLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -315,6 +318,9 @@ define([
   MysPASabahLayer,
   PerPALayer,
   MexLandCoverLayer,
+  MexForestConservLayer,
+  MexForestProdLayer,
+  MexForestRestLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -767,6 +773,16 @@ define([
     mex_forest_zoning_subcat: {
       view:  MexForestSubCatLayer
     },
+    mex_forest_zoning_conserv: {
+      view:  MexForestConservLayer
+    },
+    mex_forest_zoning_prod: {
+      view:  MexForestProdLayer
+    },
+    mex_forest_zoning_rest: {
+      view:  MexForestRestLayer
+    },
+
     places_to_watch: {
       view:  Places2WatchLayer
     },
@@ -794,6 +810,7 @@ define([
     mex_land_cover: {
       view:  MexLandCoverLayer
     },
+  
     nothing: {
     }
   };
