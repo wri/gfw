@@ -196,6 +196,7 @@ define([
 
       // Geostore
       this.status.on('change:geostore', this.changeGeostore.bind(this));
+      this.status.on('change:isDrawing', this.changeIsDrawing.bind(this));
 
       // Countries
       this.status.on('change:isoDisabled', this.changeIso.bind(this));
@@ -316,7 +317,6 @@ define([
         }
       },
 
-
       // DRAWING EVENTS
       {
         'Analysis/start-drawing': function() {
@@ -405,7 +405,6 @@ define([
         }
       },
 
-
       // TIMELINE
       {
         'Timeline/date-change': function(layerSlug, date) {
@@ -461,6 +460,14 @@ define([
           this.deleteAnalysis(options);
         }
       },
+
+      // DIALOGS
+      {
+        'Dialogs/close': function() {
+          this.status.set('mobileEnabled', false);
+        }
+      },
+
     ],
 
 
@@ -539,6 +546,11 @@ define([
 
     changeMobileEnabled: function() {
       this.view.toggleMobile();
+      mps.publish('Overlay/toggle', [this.status.get('mobileEnabled')]);
+    },
+
+    changeIsDrawing: function() {
+      this.status.set('mobileEnabled', !this.status.get('isDrawing'));
     },
 
     /**

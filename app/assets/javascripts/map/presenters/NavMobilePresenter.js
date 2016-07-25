@@ -55,15 +55,11 @@ define([
       }
     },{
       'Analysis/toggle': function(boolean) {
-        this.view.toogleTimelineClass(false);
+        this.view.toogleTimelineClass(boolean);
       }
     },{
       'Analysis/visibility': function(to) {
         this.view.toggleVisibilityAnalysis(to);
-      }
-    },{
-      'AnalysisResults/Delete': function() {
-        this.view.toogleAnalysisBtn(false);
       }
     },{
       'Country/update': function(iso) {
@@ -96,7 +92,6 @@ define([
     },
 
     toggleCurrentTab: function(tab, toggle){
-      console.log(tab);
       mps.publish(tab+'/toggle', [toggle]);
     },
 
