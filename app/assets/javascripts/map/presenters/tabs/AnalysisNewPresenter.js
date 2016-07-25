@@ -467,6 +467,11 @@ define([
           this.status.set('mobileEnabled', false);
         }
       },
+      {
+        'Layers/toggle': function() {
+          this.status.set('mobileEnabled', false);
+        }
+      },
 
     ],
 

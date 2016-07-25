@@ -13,12 +13,6 @@ define([
 
   'use strict';
 
-  var NavMobileModel = Backbone.Model.extend({
-    defaults: {
-      hidden: false,
-    }
-  });
-
   var NavMobileView = Backbone.View.extend({
 
     el: '#module-navmobile',
@@ -35,7 +29,6 @@ define([
       // It has a lot of hacks without any explanation (i.e.: line 58 ¿¿?¿?¿?)
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
-          this.model = new NavMobileModel();
           this.presenter = new Presenter(this);
           this.render(true);
         },this)
@@ -64,18 +57,14 @@ define([
       this.$layersBtn = $('#layers-navmobile-btn');
       this.$analysisBtn = $('#analysis-navmobile-btn');
       this.$countryBtn = $('#country-navmobile-btn');
-      this.$hresBtn = $('#hres-navmobile-btn');
     },
 
     showView: function(e){
       e && e.preventDefault();
       if (!$(e.currentTarget).hasClass('disabled')) {
         if (!$(e.currentTarget).hasClass('active')) {
-          this.resetBtns();
-          $(e.currentTarget).addClass('active');
           this.presenter.toggleCurrentTab($(e.currentTarget).data('tab'), true);
         }else{
-          this.resetBtns();
           this.presenter.toggleCurrentTab($(e.currentTarget).data('tab'), false);
         }
       }
@@ -87,34 +76,41 @@ define([
     },
 
     // Timeline
-    toggleTimelineBtn: function(toggle){
+    toogleTimeline: function(toggle){
+      this.resetBtns();
+      this.$timelineBtn.toggleClass('active', toggle);
+      this.$countryBtn.toggleClass('timeline-open',toggle);
+    },
+
+    enableTimelineBtn: function(toggle){
       this.$timelineBtn.toggleClass('disabled',toggle);
     },
 
-    toogleAnalysisBtn: function(toggle){
-      this.$analysisBtn.toggleClass('current',toggle);
-    },
-    
-    toogleHresBtn: function(toggle){
-      this.$hresBtn.toggleClass('current',toggle);
+
+    // Analysis
+    toogleAnalysis: function(toggle){
+      this.resetBtns();
+      this.$analysisBtn.toggleClass('active', toggle);
     },
 
-    toggleVisibilityAnalysis: function(toggle){
+    enableAnalysisBtn: function(toggle){
       this.$analysisBtn.toggleClass('disabled',toggle);
     },
 
-    toogleCountryBtn: function (name) {
-      this.$countryBtn.toggleClass('active',!!name);
+    currentAnalysisBtn: function(current) {
+      this.$analysisBtn.toggleClass('current', current);
+    },
+
+
+    // Country
+    toogleCountry: function (name) {
+      this.$countryBtn.toggleClass('active', !!name);
       this.$countryBtn.find('.name').text(name);
     },
 
     toggleCountriesTab: function(){
       this.presenter.openCountriesTab();
     },
-
-    toogleTimelineClass: function(toggle){
-      this.$countryBtn.toggleClass('timeline-open',toggle);
-    }
 
   });
 
