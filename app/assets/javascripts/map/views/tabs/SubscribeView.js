@@ -1,27 +1,10 @@
 define([
   'backbone', 'underscore', 'handlebars', 'moment',
-  'map/models/UserModel',
   'map/presenters/tabs/SubscribePresenter',
-  'connect/models/Subscription',
   'text!map/templates/tabs/subscribe.handlebars'
-], function(Backbone, _, Handlebars, moment, User, Presenter, Subscription, tpl) {
+], function(Backbone, _, Handlebars, moment, Presenter, tpl) {
 
   'use strict';
-
-  var TOPICS = {
-    loss: 'alerts/treeloss',
-    forestgain: 'alerts/treegain',
-    forma: 'alerts/forma',
-    imazon: 'alerts/sad',
-    terrailoss: 'alerts/terra',
-    prodes: 'alerts/prodes',
-    guyra: 'alerts/guyra',
-    umd_as_it_happens: 'alerts/glad',
-    umd_as_it_happens_per: 'alerts/glad',
-    umd_as_it_happens_cog: 'alerts/glad',
-    umd_as_it_happens_idn: 'alerts/glad',
-    viirs_fires_alerts: 'alerts/viirs'
-  };
 
   var SubscribeView = Backbone.View.extend({
 
@@ -31,87 +14,31 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .subscription-modal-close': 'close',
-      'click .subscription-modal-backdrop': 'close',
-      'click .subscription-sign-in': 'trackSignIn',
-      'click #returnToMap': 'close',
-      'click #showName': 'askForName',
-      'click #subscribe': 'subscribe',
+      'click .subscription-modal-close': 'onCloseClick',
+      'click .subscription-modal-backdrop': 'onCloseClick',
+      'click .subscription-sign-in': 'onTrackSignInClick',
+      'click #returnToMap': 'onCloseClick',
+      'click #showName': 'onAskForNameClick',
+      'click #subscribe': 'onSubscribeClick',
     },
 
     initialize: function(){
       this.presenter = new Presenter(this);
-
-      this.user = new User();
-      this.listenTo(this.user, 'sync', this.render);
-      this.user.fetch();
 
       this.render();
     },
 
     render: function(){
       this.$el.html(this.template({
-        email: this.user.get('email'),
-        loggedIn: this.user.isLoggedIn(),
+        email: this.presenter.user.get('email'),
+        loggedIn: this.presenter.user.isLoggedIn(),
         date: moment().format('MMM D, YYYY'),
-        dataset: this.subscription && this.subscription.formattedTopic().long_title
+        dataset: this.presenter.subscription &&
+                 this.presenter.subscription.formattedTopic().long_title
       }));
       this.setupAuthLinks();
-
+      this.cache();
       return this;
-    },
-
-    refreshEmail: function() {
-      if (_.isEmpty(this.user.get('email'))) {
-        this.showSpinner();
-        this.user.fetch();
-      }
-    },
-
-    show: function(options){
-      this.refreshEmail();
-
-      if (!this.user.isLoggedIn()) {
-        this.presenter.setSubscribeState();
-      }
-
-      this.$el.addClass('is-active');
-      this.presenter.updateUrl();
-
-      this.createSubscription(options);
-      this.currentStep = 0;
-
-      this.render();
-    },
-
-    close: function(event) {
-      if (event !== undefined && event.preventDefault) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-
-      this.$el.removeClass('is-active');
-      this.render();
-      this.presenter.unSetSubscribeState();
-      this.presenter.updateUrl();
-
-      if (this.subscription.isNew()) {
-        this.presenter.subscribeCancel();
-      } else {
-        this.presenter.subscribeEnd();
-      }
-    },
-
-    isOpen: function() {
-      return this.$el.hasClass('is-active');
-    },
-
-    showSpinner: function() {
-      this.$('.subscription-spinner-container').css('visibility', 'visible');
-    },
-
-    hideSpinner: function() {
-      this.$('.subscription-spinner-container').css('visibility', 'hidden');
     },
 
     setupAuthLinks: function() {
@@ -123,70 +50,67 @@ define([
       });
     },
 
-    trackSignIn: function() {
+    cache: function() {
+      this.$spinner = this.$('.subscription-spinner-container');
+      this.$subscriptionName = this.$el.find('#subscriptionName');
+      this.$subscriptionEmail = this.$('#subscriptionEmail');
+      this.$steps = this.$('.steps');
+    },
+
+    show: function(){
+      this.$el.addClass('is-active');
+
+      this.render();
+    },
+
+    setClose: function() {
+      this.$el.removeClass('is-active');
+      this.render();
+    },
+
+    updateCurrentStep: function(step) {
+      this.$steps.removeClass('current');
+      this.$steps.eq(step).addClass('current');
+    },
+
+    isOpen: function() {
+      return this.$el.hasClass('is-active');
+    },
+
+    showSpinner: function() {
+      this.$spinner.css('visibility', 'visible');
+    },
+
+    hideSpinner: function() {
+      this.$spinner.css('visibility', 'hidden');
+    },
+
+    /**
+     * Events handlers
+     */
+    onCloseClick: function(event) {
+      if (event !== undefined && event.preventDefault) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      this.presenter.close();
+    },
+
+    onTrackSignInClick: function() {
       window.ga('send', 'event', 'User Profile', 'Signin', 'menu');
     },
 
-    createSubscription: function(options) {
-      var analysisResource = options.analysisResource;
-
-      var params = _.pick(analysisResource,
-        'iso', 'id1', 'geostore', 'wdpa', 'use', 'useid');
-
-      this.subscription = new Subscription({
-        layers: [analysisResource.dataset],
-        geostoreId: options.geostore,
-        params: params
-      });
+    onAskForNameClick: function() {
+      this.presenter.askForName(this.$subscriptionEmail.val());
     },
 
-    askForName: function() {
-      this.subscription.set('resource', {
-        type: 'EMAIL',
-        content: this.$el.find('#subscriptionEmail').val()
-      });
-
-      if (this.subscription.hasValidEmail()) {
-        this.nextStep();
-      } else {
-        this.presenter.notificate('notification-email-incorrect');
-      }
-    },
-
-    subscribe: function() {
+    onSubscribeClick: function() {
       this.showSpinner();
 
-      this.subscription.set('name',
-        this.$el.find('#subscriptionName').val());
+      // window.ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' +
+      //   this.presenter.subscription.get('topic') + ', Email: ' + this.presenter.subscription.get('email'));
 
-      this.stopListening(this.user);
-      this.user.setEmailIfEmpty(this.subscription.get('resource').content);
-      this.user.save();
-
-      this.subscription.save().
-        then(this.onSave.bind(this)).
-        fail(this.close.bind(this));
-    },
-
-    onSave: function() {
-      this.hideSpinner();
-      this.nextStep();
-    },
-
-    nextStep: function(index) {
-      if (this.currentStep === undefined) {
-        this.currentStep = 0;
-      }
-
-      if (index !== undefined && _.isNumber(index)) {
-        this.currentStep = index;
-      } else {
-        this.currentStep += 1;
-      }
-
-      var $steps = this.$('.steps');
-      $steps.removeClass('current');
-      $steps.eq(this.currentStep).addClass('current');
+      this.presenter.subscribe(this.$subscriptionName.val());
     }
 
   });

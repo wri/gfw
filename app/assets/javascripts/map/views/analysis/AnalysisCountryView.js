@@ -4,11 +4,11 @@
  * @return AnalysisCountryView instance (extends Backbone.View).
  */
 define([
-  'underscore', 
-  'handlebars', 
-  'amplify', 
-  'chosen', 
-  'turf', 
+  'underscore',
+  'handlebars',
+  'amplify',
+  'chosen',
+  'turf',
   'mps',
   'helpers/geojsonUtilsHelper',
   'map/presenters/analysis/AnalysisCountryPresenter',
@@ -29,8 +29,7 @@ define([
       'change #analysis-country-select' : 'selectIso',
       'change #analysis-region-select' : 'selectRegion',
       // buttons
-      'click #analysis-country-button' : 'analyzeCountry',
-      'click #subscribe-country-button' : 'subscribeCountry',
+      'click #analysis-country-button' : 'analyzeCountry'
     },
 
     initialize: function(map, countries) {
@@ -53,7 +52,7 @@ define([
 
     cache: function() {
       this.$selects = this.$el.find('.chosen-select');
-      
+
       // Select
       this.$analysisCountrySelect = this.$el.find('#analysis-country-select');
       this.$analysisRegionSelect = this.$el.find('#analysis-region-select');
@@ -70,7 +69,7 @@ define([
         allow_single_deselect: true,
         inherit_select_classes: true,
         no_results_text: "Oops, nothing found!"
-      });      
+      });
     },
 
 
@@ -81,7 +80,7 @@ define([
 
     /**
      * UI EVENTS
-     * 
+     *
      * selectIso & selectRegion
      * @param  {object} e
      * @return {void}
@@ -113,16 +112,6 @@ define([
       this.presenter.status.set('isoDisabled', false);
     },
 
-    /**
-     * subscribeCountry
-     * @param  {object} e
-     * @return {void}
-     */
-    subscribeCountry: function(e) {
-      e && e.preventDefault();
-      this.presenter.subscribeCountry();
-    },
-
 
 
 
@@ -133,16 +122,16 @@ define([
 
     /**
      * PRESENTER ACTIONS
-     * 
+     *
      * loadRegions
      * @return {void}
-     */    
+     */
     toggleEnabledButtons: function() {
       var iso = this.presenter.status.get('iso');
-      
+
       if (!!iso && !!iso.country && iso.country != 'ALL') {
         this.$analysisBtn.toggleClass('disabled', !this.presenter.status.get('enabled'));
-        this.$subscribeBtn.toggleClass('disabled', !this.presenter.status.get('enabledSubscription'));        
+        this.$subscribeBtn.toggleClass('disabled', !this.presenter.status.get('enabledSubscription'));
       } else {
         this.$analysisBtn.toggleClass('disabled', true);
         this.$subscribeBtn.toggleClass('disabled', true);
@@ -164,9 +153,9 @@ define([
         _.each(this.presenter.status.get('regions'), function(region) {
           this.$analysisRegionSelect.append($("<option />").val(region.id_1).text(region.name_1));
         }.bind(this));
-        
+
         // Set the selected value
-        this.$analysisRegionSelect.val(region).attr('disabled', false).trigger('chosen:updated');  
+        this.$analysisRegionSelect.val(region).attr('disabled', false).trigger('chosen:updated');
       } else {
         // Remove the regions
         this.$analysisRegionSelect.html('');
@@ -174,7 +163,7 @@ define([
         // Remove the selected value
         this.$analysisRegionSelect.val(null).attr('disabled', true).trigger('chosen:updated');
       }
-      
+
     },
 
 
@@ -187,9 +176,9 @@ define([
      */
     getGeojson: function(overlay) {
       var paths = overlay.getPath().getArray();
-      return geojsonUtilsHelper.pathToGeojson(paths);            
+      return geojsonUtilsHelper.pathToGeojson(paths);
     },
-    
+
     /**
      * deleteGeojson
      * @param undefined
@@ -197,7 +186,7 @@ define([
      */
     deleteGeojson: function() {
       var overlay = this.presenter.status.get('overlay_country');
-      if (!!overlay) {        
+      if (!!overlay) {
         overlay.setMap(null);
         this.presenter.status.set('overlay_country', null);
         this.presenter.status.set('geojson_country', null);
@@ -224,7 +213,7 @@ define([
       });
 
       overlay.setMap(this.map);
-      
+
       this.presenter.status.set('overlay_country', overlay, { silent: true });
       this.presenter.status.set('geojson_country', this.getGeojson(overlay), { silent: true });
     }

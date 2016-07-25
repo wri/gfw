@@ -40,6 +40,8 @@ define([
     controlsTemplate: Handlebars.compile(controlsTpl),
     dateTemplate: Handlebars.compile(dateTpl),
 
+    DatePicker: TorqueTimelineDatePicker,
+
     events: {
       'click .play': '_toggleState',
     },
@@ -110,7 +112,7 @@ define([
         this.currentDate = dateRange;
       };
 
-      var datePicker = new TorqueTimelineDatePicker({
+      var datePicker = new this.DatePicker({
         layer: this.layer,
         presenter: this.presenter,
         dateRange: this.bounds,

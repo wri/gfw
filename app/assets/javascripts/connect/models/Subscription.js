@@ -11,7 +11,7 @@ define([
       sub_title: 'monthly, 250m, Latin America, CIAT'
     },
     'imazon-alerts': {
-      title: 'SAD alerts',
+      title: 'SAD aleerts',
       long_title: 'monthly SAD tree cover loss alerts',
       sub_title: 'monthly, 250m, Brazilian Amazon, Imazon'
     },
@@ -41,7 +41,7 @@ define([
       sub_title: 'monthly, 30m, Gran Chaco, Guyra'
     },
     'glad-alerts': {
-      title: 'GLAD Alerts',
+      title: 'GLAD Tree Cover Loss Alerts',
       long_title: 'weekly GLAD tree cover loss alerts',
       sub_title: 'weekly, 30m, select countries, UMD/GLAD'
     },
@@ -72,18 +72,19 @@ define([
     },
 
     formattedTopic: function() {
-      return DATASETS[this.get('layers')[0]];
+      return DATASETS[this.get('datasets')[0]];
     },
 
     formattedTopics: function() {
-      return this.get('layers').map(function(layerName) {
+      return this.get('datasets').map(function(layerName) {
         return DATASETS[layerName].title;
       }).join(', ');
     },
 
     parse: function(response) {
       var attributes = {};
-
+      // if the fetch is directly to a detail the response will have the attributes
+      // within data but if not the model will take directly the attributes
       if (response.data !== undefined) {
         attributes = response.data.attributes;
         attributes.id = response.data.id;
@@ -91,7 +92,6 @@ define([
         attributes = response.attributes;
         attributes.id = response.id;
       }
-
       return attributes;
     },
 

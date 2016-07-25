@@ -13,7 +13,7 @@
   "stories-icons/*.png";
 
 // Global
-// This will load all common settings, mixins and styles needed 
+// This will load all common settings, mixins and styles needed
 @import "global/global";
 
 // Layouts
@@ -55,10 +55,10 @@
 
   // Real Modules
   "modules/map/module",
-  
+
   // legend
   "modules/map/module-legend",
-  
+
   // controls
   "modules/map/module-mapcontrols",
   "modules/map/control-searchbox",

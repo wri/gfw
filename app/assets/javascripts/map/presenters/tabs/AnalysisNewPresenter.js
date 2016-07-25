@@ -353,10 +353,50 @@ define([
 
       // SHAPE
       {
-        'Analysis/shape': function(useid, use, wdpaid) {
-          this.status.set('useid', useid);
-          this.status.set('use', use);
-          this.status.set('wdpaid', wdpaid);
+        'Analysis/shape': function(data) {
+          this.status.set({
+            useid: data.useid,
+            use: data.use,
+            wdpaid: data.wdpaid,
+          })
+        }
+      },
+      {
+        'Subscribe/shape': function(data) {
+          var subscritionObj = {};
+          if (this.usenames.indexOf(data.use) !== -1) {
+            subscritionObj = {
+              iso: {
+                country: null,
+                region: null
+              },
+              geostore: null,
+              useid: data.useid,
+              use: data.use,
+              wdpaid: data.wdpaid,
+            };
+            this.publishSubscribtion(_.extend({}, this.status.toJSON(), subscritionObj));
+          } else {
+            var provider = {
+              table: data.use,
+              filter: 'cartodb_id = ' + data.useid,
+              user: 'wri-01',
+              type: 'carto'
+            }
+            GeostoreService.use(provider).then(function(useGeostoreId) {
+              subscritionObj = {
+                iso: {
+                  country: null,
+                  region: null
+                },
+                geostore: useGeostoreId,
+                useid: null,
+                use: null,
+                wdpaid: null
+              };
+              this.publishSubscribtion(_.extend({}, this.status.toJSON(), subscritionObj));
+            }.bind(this));
+          }
         }
       },
       {
@@ -642,8 +682,8 @@ define([
       mps.publish('Analysis/refresh');
     },
 
-    publishSubscribtion: function() {
-      mps.publish('Subscribe/show', [this.status.toJSON()]);
+    publishSubscribtion: function(data) {
+      mps.publish('Subscribe/show', [data || this.status.toJSON()]);
     },
 
     publishNotification: function(id){

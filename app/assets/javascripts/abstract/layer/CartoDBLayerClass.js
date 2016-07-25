@@ -15,7 +15,7 @@ define([
   'use strict';
 
   var CartoDBLayerClass = OverlayLayerClass.extend({
-       
+
     defaults: {
       user_name: 'wri-01',
       type: 'cartodb',
@@ -112,7 +112,7 @@ define([
       mps.subscribe('Analysis/enabled', function(enabled){
         this.infowindow.model.set('enabled', enabled)
       }.bind(this));
-      
+
       mps.subscribe('Analysis/enabled-subscription', function(enabledSubscription){
         this.infowindow.model.set('enabledSubscription', enabledSubscription)
       }.bind(this));
@@ -132,7 +132,7 @@ define([
         if (!!slope_semester) {
           this.prettySlopeSemester(slope_semester);
         }
-        
+
         // Set the ui events for the infowindow
         this.infowindowsUIEvents();
         this.infowindowsUIState();
@@ -145,41 +145,48 @@ define([
         this.infowindow.remove();
       }
     },
-  
+
     infowindowsUIEvents: function() {
-      $('#map').find('.cartodb-popup').on('click.infowindow', '.analyze-shape', function (e) {
+      var $map = $('#map');
+      $map.find('.cartodb-popup').on('click.infowindow', '.analyze-shape', function (e) {
         var isDisabled = $(e.currentTarget).hasClass('disabled');
-        
+
         if (!isDisabled) {
           $('#map').find('.cartodb-infowindow').hide(0);
-          var useid = $(this).data('useid'),
-              use = $(this).data('use'),
-              wdpaid = $(this).data('wdpaid');
-          
-          mps.publish('Analysis/shape', [useid, use, wdpaid]);
-          
+
+          var shapeData = {
+            useid: $(this).data('useid'),
+            use: $(this).data('use'),
+            wdpaid: $(this).data('wdpaid')
+          };
+
+          mps.publish('Analysis/shape', [shapeData]);
+
           // Analytics events
-          (wdpaid) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area' + wdpaid) : null;
-          (useid) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze ' + use.toUpperCase() + ' ' + useid) : null;
+          (shapeData.wdpaid) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area' + shapeData.wdpaid) : null;
+          (shapeData.useid) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze ' + shapeData.use.toUpperCase() + ' ' + shapeData.useid) : null;
         } else {
           mps.publish('Notification/open', ['notification-select-forest-change-layer']);
         }
       });
 
-      $('#map').find('.cartodb-popup').on('click.infowindow', '.subscribe-shape', function (e) {
+      $map.find('.cartodb-popup').on('click.infowindow', '.subscribe-shape', function (e) {
         var isDisabled = $(e.currentTarget).hasClass('disabled');
-        
+
         if (!isDisabled) {
           $('#map').find('.cartodb-infowindow').hide(0);
-          var useid = $(this).data('useid'),
-              use = $(this).data('use'),
-              wdpaid = $(this).data('wdpaid');
 
-          mps.publish('Subscription/shape', [useid, use, wdpaid]);
+          var shapeData = {
+            useid: $(this).data('useid'),
+            use: $(this).data('use'),
+            wdpaid: $(this).data('wdpaid')
+          };
+
+          mps.publish('Subscribe/shape', [shapeData]);
 
           // Analytics events
-          (wdpaid) ? ga('send', 'event', 'Map', 'Subscribe', 'Subscribe Protected Area' + wdpaid) : null;
-          (useid) ? ga('send', 'event', 'Map', 'Subscribe', 'Subscribe ' + use.toUpperCase() + ' ' + useid) : null;
+          (shapeData.wdpaid) ? ga('send', 'event', 'Map', 'Subscribe', 'Subscribe Protected Area' + shapeData.wdpaid) : null;
+          (shapeData.useid) ? ga('send', 'event', 'Map', 'Subscribe', 'Subscribe ' + shapeData.use.toUpperCase() + ' ' + shapeData.useid) : null;
         } else {
           mps.publish('Notification/open', ['notification-select-forest-change-layer-subscription']);
         }
@@ -203,8 +210,8 @@ define([
 
     /**
      * Slope graph
-     * @param slope  
-     * @param alerts 
+     * @param slope
+     * @param alerts
      */
     drawSlopeGraph: function(slope, alerts) {
       alerts = JSON.parse(alerts);

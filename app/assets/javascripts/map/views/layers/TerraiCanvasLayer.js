@@ -4,11 +4,10 @@
  * @return ForestLayer class (extends CanvasLayerClass)
  */
 define([
-  'd3',
-  'uri',
+  'd3', 'uri', 'moment',
   'abstract/layer/CanvasLayerClass',
   'map/presenters/layers/TerraiCanvasLayerPresenter'
-], function(d3,UriTemplate, CanvasLayerClass, Presenter) {
+], function(d3, UriTemplate, moment, CanvasLayerClass, Presenter) {
 
   'use strict';
 
@@ -16,11 +15,10 @@ define([
 
     options: {
       threshold: 30,
-      dataMaxZoom: 11,
+      dataMaxZoom: 10,
       //ATTENTION: check config.ru file to get the whole route, reverse proxying here
       //urlTemplate: '/latin-america/Z{z}/{y}/{x}.png'
-      urlTemplate: 'https://s3.amazonaws.com/wri-tiles/latin-decrease-current/{z}/{x}/{y}.png'
-
+      urlTemplate: 'http://wri-tiles.s3.amazonaws.com/terrai_test/test1/tiles/{z}/{x}/{y}.png'
     },
 
     init: function(layer, options, map) {
@@ -38,34 +36,31 @@ define([
     filterCanvasImgdata: function(imgdata, w, h) {
       var components = 4;
       var start = (moment(this.currentDate[0]).year()-2004)*23+Math.ceil((moment(this.currentDate[0]).dayOfYear()-1)/16);
-      if (start<1) start=1;
+      if (start<1) { start = 1; }
       var end   = (moment(this.currentDate[1]).year()-2004)*23+Math.floor((moment(this.currentDate[1]).dayOfYear()-1)/16);
+
       for(var i=0; i < w; ++i) {
         for(var j=0; j < h; ++j) {
           var pixelPos = (j*w + i) * components;
-       // var r = imgdata[pixelPos]; //left here for coherence
+
+          var r = imgdata[pixelPos];
           var g = imgdata[pixelPos+1];
           var b = imgdata[pixelPos+2];
-          // var timeLoss = b+(256*g); //old method, just in case, because we like the feeling of nostalgia
-          var timeLoss = null;
+          var intensity = Math.min(b * 4, 255);
 
-          if (b>0){
-            timeLoss=b;
-          }else if (g>0){
-            timeLoss=g+255;
-          }
-          //var timeLoss = b+g;
-
+          var timeLoss = r + g;
 
           if (timeLoss >= start && timeLoss <= end) {
             imgdata[pixelPos]     = 220;
             imgdata[pixelPos + 1] = 102;
             imgdata[pixelPos + 2] = 153;
-            imgdata[pixelPos + 3] = 256;
+            imgdata[pixelPos + 3] = intensity;
+
             if (timeLoss > this.top_date) {
               imgdata[pixelPos]     = 233;
               imgdata[pixelPos + 1] = 189;
               imgdata[pixelPos + 2] = 21;
+              imgdata[pixelPos + 3] = intensity;
             }
           } else {
             imgdata[pixelPos + 3] = 0;

@@ -5,6 +5,7 @@ define([
   'use strict';
 
   var User = Backbone.Model.extend({
+
     urlRoot: window.gfw.config.GFW_API_HOST_NEW_API + '/user',
 
     setEmailIfEmpty: function(email) {
@@ -37,6 +38,7 @@ define([
 
       return Backbone.sync.call(this, method, model, options);
     }
+
   });
 
   return User;
