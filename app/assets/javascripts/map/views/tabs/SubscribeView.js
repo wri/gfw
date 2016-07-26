@@ -38,6 +38,14 @@ define([
       }));
       this.setupAuthLinks();
       this.cache();
+
+      this.$('#subscriptionLanguage').chosen({
+        width: '100%',
+        allow_single_deselect: true,
+        inherit_select_classes: true,
+        no_results_text: 'Oops, nothing found!'
+      });
+
       return this;
     },
 
@@ -53,6 +61,7 @@ define([
     cache: function() {
       this.$spinner = this.$('.subscription-spinner-container');
       this.$subscriptionName = this.$el.find('#subscriptionName');
+      this.$subscriptionLanguage = this.$el.find('#subscriptionLanguage');
       this.$subscriptionEmail = this.$('#subscriptionEmail');
       this.$steps = this.$('.steps');
     },
@@ -107,10 +116,10 @@ define([
     onSubscribeClick: function() {
       this.showSpinner();
 
-      // window.ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' +
-      //   this.presenter.subscription.get('topic') + ', Email: ' + this.presenter.subscription.get('email'));
-
-      this.presenter.subscribe(this.$subscriptionName.val());
+      this.presenter.subscribe(
+        this.$subscriptionName.val(),
+        this.$subscriptionLanguage.val()
+      );
     }
 
   });
