@@ -25,6 +25,13 @@
   <ul>
     <li>Data set: {{topic.title}} ({{topic.sub_title}})</li>
     <li>Date of subscription: {{created}} UTC</li>
+    <li>Language:
+      <span id="subscriptionLanguage">{{language}}</span>
+      <select data-placeholder="Select language" class="chosen-select default notranslate" id="subscriptionLanguageSelector">
+        <option value="EN">English</option>
+        <option value="PT">Portuguese</option>
+      </select>
+    </li>
   </ul>
 </td>
 

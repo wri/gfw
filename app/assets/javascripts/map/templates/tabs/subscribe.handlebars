@@ -75,7 +75,14 @@
 
     <div class="subscription-name-container">
       <input class="field" type="text" id="subscriptionName" placeholder="Area name">
-      <label for="subscriptionName">{{date}}</label>
+    </div>
+
+    <div class="subscription-language-container">
+      <label for="subscriptionLanguage">Receive alert emails in...</label>
+      <select data-placeholder="Select language" class="chosen-select default notranslate" id="subscriptionLanguage">
+        <option value="EN">English</option>
+        <option value="PT">Portuguese</option>
+      </select>
     </div>
 
     <button class="btn green uppercase" id="subscribe">Save</button>
