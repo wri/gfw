@@ -18,7 +18,7 @@ define([
       dataMaxZoom: 10,
       //ATTENTION: check config.ru file to get the whole route, reverse proxying here
       //urlTemplate: '/latin-america/Z{z}/{y}/{x}.png'
-      urlTemplate: 'http://wri-tiles.s3.amazonaws.com/terrai_test/test1/tiles/{z}/{x}/{y}.png'
+      urlTemplate: 'http://wri-tiles.s3.amazonaws.com/terrai_prod/tiles/{z}/{x}/{y}.png'
     },
 
     init: function(layer, options, map) {
