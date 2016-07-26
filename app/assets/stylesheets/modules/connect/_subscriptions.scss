@@ -131,6 +131,18 @@
     }
   }
 
+  #subscriptionLanguage.editing {
+    display: none;
+  }
+
+  #subscriptionLanguageSelector_chosen {
+    display: none;
+
+    &.editing {
+      display: inline-block;
+    }
+  }
+
   tr {
     display: flex;
     justify-content: space-between;
@@ -212,7 +224,7 @@
   h3 {
     margin-bottom: 20px;
     line-height: 1.25;
-    font-size: 18px;    
+    font-size: 18px;
   }
 
   .delete-button-container {

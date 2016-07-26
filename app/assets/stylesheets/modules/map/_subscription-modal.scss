@@ -132,6 +132,23 @@
 
 .subscription-name-container {
   width: 100%;
+  font-family: "Fira GFW Sans", "Fira Sans";
+}
+
+.subscription-language-container {
+  width: 100%;
+
+  .chosen-container.default .chosen-single {
+    border-radius: 4px;
+    color: #000;
+    text-transform: none;
+    line-height: 1.5em;
+    font-weight: normal;
+  }
+
+  .chosen-container .chosen-single span {
+    font-size: 15px;
+  }
 }
 
 .subscription-authentication {

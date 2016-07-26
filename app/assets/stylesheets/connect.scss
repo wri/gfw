@@ -8,7 +8,7 @@
 @import "home-icons/*.png";
 
 // Global
-// This will load all common settings, mixins and styles needed 
+// This will load all common settings, mixins and styles needed
 @import "global/global";
 
 // Layouts
@@ -29,6 +29,7 @@
 @import "layouts/static";
 @import "modules/select";
 @import "modules/notifications";
+@import "modules/map/country-select";
 
 @import "modules/connect/shared";
 @import "modules/connect/profile-modal";
