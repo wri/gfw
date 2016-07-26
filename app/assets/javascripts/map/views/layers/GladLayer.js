@@ -12,7 +12,7 @@ define([
 
   'use strict';
 
-  var TILE_URL = 'http://wri-tiles.s3.amazonaws.com/glad_test/test2{/z}{/x}{/y}.png';
+  var TILE_URL = 'http://wri-tiles.s3.amazonaws.com/glad_prod/tiles{/z}{/x}{/y}.png';
 
   var padNumber = function(number) {
     var s = "00" + number;
