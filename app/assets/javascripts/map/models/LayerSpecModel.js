@@ -146,6 +146,7 @@ define([
       "user_stories",
       // FOREST CHANGE
       "gfw_landsat_alerts_coverage",
+      "glad_coverage",
       "terraicanvas_cover",
       "forma_cover",
       "forma_250_cover",
