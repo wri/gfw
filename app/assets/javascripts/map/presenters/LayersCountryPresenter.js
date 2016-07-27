@@ -80,7 +80,16 @@ define([
     },{
       'Analysis/iso': function(iso,isoDisabled) {
         this.status.set('isoDisabled', isoDisabled);
+
+        var currentIso = iso;
+        var previousIso = this.status.get('iso');
+
         if(!!iso.country && iso.country !== 'ALL' && !isoDisabled){
+
+          if (!!previousIso && (currentIso.country != previousIso.country || ! !!currentIso.country)) {
+            this.view.resetCountryLayers();
+          }
+
           this.view.setCountry(iso);
           this.status.set({
             iso: iso,

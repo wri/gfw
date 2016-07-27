@@ -1,5 +1,8 @@
 define([
-  'backbone', 'underscore', 'handlebars', 'moment',
+  'backbone',
+  'underscore',
+  'handlebars',
+  'moment',
   'map/presenters/tabs/SubscribePresenter',
   'text!map/templates/tabs/subscribe.handlebars'
 ], function(Backbone, _, Handlebars, moment, Presenter, tpl) {
@@ -8,30 +11,28 @@ define([
 
   var SubscribeView = Backbone.View.extend({
 
-    id: 'subscription-modal',
-    className: 'subscription-modal',
+    el: '#subscription-modal',
 
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .subscription-modal-close': 'onCloseClick',
-      'click .subscription-modal-backdrop': 'onCloseClick',
-      'click .subscription-sign-in': 'onTrackSignInClick',
-      'click #returnToMap': 'onCloseClick',
-      'click #showName': 'onAskForNameClick',
-      'click #subscribe': 'onSubscribeClick',
+      'click .subscription-modal-close': 'onClickClose',
+      'click .subscription-modal-backdrop': 'onClickClose',
+      'click .subscription-sign-in': 'onClickTrackSignIn',
+      'click #returnToMap': 'onClickClose',
+      'click #showName': 'onClickAskForName',
+      'click #subscribe': 'onClickSubscribe',
     },
 
     initialize: function(){
       this.presenter = new Presenter(this);
-
-      this.render();
     },
 
     render: function(){
+      console.log(this.presenter.user.toJSON());
       this.$el.html(this.template({
-        email: this.presenter.user.get('email'),
         loggedIn: this.presenter.user.isLoggedIn(),
+        email: this.presenter.user.get('email'),
         date: moment().format('MMM D, YYYY'),
         dataset: this.presenter.subscription &&
                  this.presenter.subscription.formattedTopic().long_title
@@ -43,6 +44,7 @@ define([
         width: '100%',
         allow_single_deselect: true,
         inherit_select_classes: true,
+        disable_search: true,
         no_results_text: 'Oops, nothing found!'
       });
 
@@ -95,25 +97,30 @@ define([
     },
 
     /**
-     * Events handlers
+     * UI EVENTS
+     * - onClickClose
+     * - onClickTrackSignIn
+     * - onClickAskForName
+     * - onClickSubscribe
+     * @param  {[object]} e
      */
-    onCloseClick: function(event) {
-      if (event !== undefined && event.preventDefault) {
-        event.preventDefault();
-        event.stopPropagation();
+    onClickClose: function(e) {
+      if (e !== undefined && e.preventDefault) {
+        e.preventDefault();
+        e.stopPropagation();
       }
       this.presenter.close();
     },
 
-    onTrackSignInClick: function() {
+    onClickTrackSignIn: function(e) {
       window.ga('send', 'event', 'User Profile', 'Signin', 'menu');
     },
 
-    onAskForNameClick: function() {
+    onClickAskForName: function(e) {
       this.presenter.askForName(this.$subscriptionEmail.val());
     },
 
-    onSubscribeClick: function() {
+    onClickSubscribe: function(e) {
       this.showSpinner();
 
       this.presenter.subscribe(

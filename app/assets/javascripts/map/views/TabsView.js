@@ -89,9 +89,7 @@ define([
       new CountriesView(this.map, this.countries);
       new BasemapsView(this.map, this.countries);
       new HighresolutionView(this.map, this.countries);
-
-      var subscribeView = new SubscribeView(this.map, this.countries);
-      $('body').append(subscribeView.el);
+      new SubscribeView(this.map, this.countries);
     },
 
     toggleTab: function(id, active) {
