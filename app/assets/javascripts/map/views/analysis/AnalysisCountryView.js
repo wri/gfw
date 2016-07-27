@@ -194,6 +194,30 @@ define([
     },
 
     /**
+     * showGeojson
+     * @param undefined
+     * @return {void}
+     */
+    showGeojson: function() {
+      var overlay = this.presenter.status.get('overlay_country');
+      if (!!overlay) {
+        overlay.setOptions({ strokeWeight: 2})
+      }
+    },
+
+    /**
+     * hideGeojson
+     * @param undefined
+     * @return {void}
+     */
+    hideGeojson: function() {
+      var overlay = this.presenter.status.get('overlay_country');
+      if (!!overlay) {
+        overlay.setOptions({ strokeWeight: 0})
+      }
+    },
+
+    /**
      * drawGeojson
      * @param  {object:geojson} geojson
      * @return {void}

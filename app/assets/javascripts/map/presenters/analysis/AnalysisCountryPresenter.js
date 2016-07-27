@@ -96,6 +96,14 @@ define([
           this.deleteAnalysis();
         }
       },{
+        'Analysis/hideGeojson': function() {
+          this.view.hideGeojson();
+        }
+      },{
+        'Analysis/showGeojson': function() {
+          this.view.showGeojson();
+        }
+      },{
         'Analysis/iso': function(iso,isoDisabled) {
           this.status.set('isoDisabled', isoDisabled);
 
