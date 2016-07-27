@@ -39,6 +39,7 @@ define([
       'click .btn-analysis-share' : 'onClickShare',
       'click .btn-analysis-advanced' : 'onClickAdvanced',
       'click .btn-analysis-downloads' : 'onClickDownloads',
+      'click .btn-analysis-toggle' : 'onClickToggle',
     },
 
     initialize: function(map, countries) {
@@ -165,6 +166,11 @@ define([
       this.presenter.publishDownloadsAnalysis(!is_active);
     },
 
+    onClickToggle: function(e) {
+      e && e.preventDefault() && e.stopPropagation();
+      this.presenter.publishMobileActive(!this.presenter.status.get('mobileActive'));
+    },
+
 
 
 
@@ -198,6 +204,10 @@ define([
       this.$subTabsContent.removeClass('-active');
       $('#'+subtab).addClass('-active');
     },
+
+    toggleMobile: function() {
+      this.$el.toggleClass('-active', this.presenter.status.get('mobileActive'));
+    }
 
 
   });

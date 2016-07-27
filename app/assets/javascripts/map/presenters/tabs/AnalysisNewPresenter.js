@@ -61,6 +61,7 @@ define([
         // Options
         threshold: 30,
         fit_to_geom: null,
+        mobileEnabled: false
 
       }
     })),
@@ -195,6 +196,7 @@ define([
 
       // Geostore
       this.status.on('change:geostore', this.changeGeostore.bind(this));
+      this.status.on('change:isDrawing', this.changeIsDrawing.bind(this));
 
       // Countries
       this.status.on('change:isoDisabled', this.changeIso.bind(this));
@@ -205,9 +207,12 @@ define([
       this.status.on('change:useid', this.changeUse.bind(this));
       this.status.on('change:wdpaid', this.changeWdpaid.bind(this));
 
-      // Spinner
+      // UI
       this.status.on('change:spinner', this.changeSpinner.bind(this));
       this.status.on('change:subtab', this.changeSubtab.bind(this));
+
+      // Mobile
+      this.status.on('change:mobileEnabled', this.changeMobileEnabled.bind(this));
 
     },
 
@@ -312,7 +317,6 @@ define([
         }
       },
 
-
       // DRAWING EVENTS
       {
         'Analysis/start-drawing': function() {
@@ -401,7 +405,6 @@ define([
         }
       },
 
-
       // TIMELINE
       {
         'Timeline/date-change': function(layerSlug, date) {
@@ -428,6 +431,11 @@ define([
 
       // GLOBAL ANALYSIS EVENTS
       {
+        'Analysis/toggle': function(toggle) {
+          this.status.set('mobileEnabled', toggle);
+        }
+      },
+      {
         'Analysis/subtab': function(subtab) {
           this.status.set('subtab', subtab);
         }
@@ -452,6 +460,19 @@ define([
           this.deleteAnalysis(options);
         }
       },
+
+      // DIALOGS
+      {
+        'Dialogs/close': function() {
+          this.status.set('mobileEnabled', false);
+        }
+      },
+      {
+        'Layers/toggle': function() {
+          this.status.set('mobileEnabled', false);
+        }
+      },
+
     ],
 
 
@@ -526,6 +547,15 @@ define([
 
     changeSubtab: function() {
       this.view.toggleSubtab();
+    },
+
+    changeMobileEnabled: function() {
+      this.view.toggleMobile();
+      mps.publish('Overlay/toggle', [this.status.get('mobileEnabled')]);
+    },
+
+    changeIsDrawing: function() {
+      this.status.set('mobileEnabled', !this.status.get('isDrawing'));
     },
 
     /**
@@ -688,6 +718,10 @@ define([
     publishEnableds: function() {
       mps.publish('Analysis/enabled', [this.status.get('enabled')]);
       mps.publish('Analysis/enabled-subscription', [this.status.get('enabledSubscription')]);
+    },
+
+    publishMobileActive: function() {
+      mps.publish('Analysis/toggle', [!this.status.get('mobileEnabled')]);
     },
 
 

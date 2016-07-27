@@ -7,6 +7,7 @@ $w-control: 44px;
   width: 100%;
   z-index: 22;
   position: static;
+
   @media (min-width: $br-mobileMap){
     position: absolute;
     background: $white;
@@ -162,6 +163,7 @@ $w-control: 44px;
         }
       }
     }
+
     ul {
       .tab-content {
         display: none;
@@ -172,6 +174,8 @@ $w-control: 44px;
       }
     }
   }
+
+
   .button-container {
     margin: 10px 0 0;
     display: flex;
@@ -221,18 +225,75 @@ $w-control: 44px;
 }
 
 
+.tabs-content {
+  header {
+    text-align: center;
+    font-size: 13px;
+    @include clearfix();
 
-// MOBILE TABS
-.tab-mobile-header{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: #EEE;
-  z-index: 21;
+    &.-last {
+      margin: 0 0 20px;
+    }
+    
+    h2 {
+      font-size: 21px;
+      padding: 0 0 15px;
+      text-align: center;
+      span {
+        color: $cGreen;
+        &.source{ 
+          cursor: pointer;
+        }
+      }
+    }
+    
+    p {
+      button {
+        margin: 7px auto 0;
+        display: block;
+      }
+    }
+
+    ol {
+      text-align: left;
+      list-style-type: decimal;
+      list-style-position: outside;
+      position: relative;
+      float: left;
+      max-width: 80%;
+      left: 50%;
+      transform: translate(-50%,0);
+      
+      li {
+        padding: 5px 0 0;
+        
+        &:first-child{ 
+          margin: 0;
+        }
+        
+        .source {
+          @extend .info-icon;
+          display: inline-block;
+          top: 2px;
+          position: relative;
+        }
+      }
+    }
+  }
+
+  ul {
+    .tab-content {
+      display: none;
+      
+      &.selected {
+        display: block;
+      }
+    }
+  }
+
 }
 
-
+// Mobile tabs
 .tab-mobile-content {
   position: absolute;
   top: 0;

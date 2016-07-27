@@ -7,19 +7,25 @@
     z-index: 101;
     bottom: 0;
   }
-  ul{
+
+  ul {
     background: $white;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    li{
+
+    li {
       position: relative;
       width: 33.33333333%;
       height: 44px;
       border-left: 1px solid $border;
       transition: all 0.25s $easeInOutSine;
-      &:first-child{ border-left: none;}
-      &:after{
+
+      &:first-child{ 
+        border-left: none;
+      }
+
+      &:after {
         content: "";
         height: 0px;
         width: 100%;
@@ -30,26 +36,30 @@
         transition: all 0.25s $easeInOutSine;
       }
 
-      &.active{
-        &:after { height: 2px;}
+      &.active {
         background: #F7F7F7;
+        &:after { 
+          height: 2px;
+        }
       }
-      &.current{
-        button{
-          div{
-            &:after{
+
+      &.current {
+        button {
+          div {
+            &:after {
               display: block;
             }
           }
         }
       }
-      &.disabled{
-        button{
+
+      &.disabled {
+        button {
           opacity: 0.5;
         }
       }
 
-      button{
+      button {
         @extend %reset-btn;
         text-transform: uppercase;
         width: 100%;
@@ -59,12 +69,14 @@
         border: none;
         // font-size: 12px;
         text-align: center;
-        div{
+
+        div {
           position: relative;
           float: left;
           left: 50%;
           transform: translate(-50%,0);
-          &:after{
+          
+          &:after {
             content: "1";
             color: $white;
             width: 14px;
@@ -81,20 +93,21 @@
             margin: -7px 0 0 -7px;
             -webkit-font-smoothing: subpixel-antialiased;
           }
-          span{
+
+          span {
             display: block;
             line-height: 1.1;
             text-align: left;
             padding: 1px 0 0 26px;
-            max-width: 90px;
+            max-width: 80px;
             font-size: 10px;
             @media (min-width: 360px){
               max-width: 94px;
               font-size: 11px;
             }
-
           }
-          .icon{
+
+          .icon {
             position: absolute;
             top: 50%;
             left: 0px;

@@ -3,7 +3,7 @@ $w-control: 38px;
   top: auto;
   bottom: 110px;
   right: 10px;
-  z-index: 21;
+  z-index: 20;
   transition: all 0.25s $easeInOutSine;
 
   &.timeline-open{
@@ -19,6 +19,7 @@ $w-control: 38px;
     bottom: 50px;
     left: 35px;
   }
+  
   ul{
     width: $w-control;
     display: flex;

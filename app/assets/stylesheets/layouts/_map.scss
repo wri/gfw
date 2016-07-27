@@ -76,7 +76,7 @@ body,html{
       width: 100%;
       height: 100%;
       background: $white;
-      z-index: 1;      
+      z-index: 1;
     }
 
     &.active {
@@ -88,23 +88,23 @@ body,html{
     // logos
     .map-logos {
       display: none;
-      height: 100%; 
+      height: 100%;
       position: relative;
-      z-index: 0;     
+      z-index: 0;
 
       @media (min-width:$br-mobile){
         display: flex;
         align-items: center;
       }
-    
+
       > li {
         display: inline-block;
         margin-left: 20px;
-        position: relative; 
-        
+        position: relative;
+
         &:first-child {
           margin-left: 35px;
-        }       
+        }
 
         a {
           position: relative;
@@ -115,7 +115,7 @@ body,html{
             display: none;
           }
         }
-        
+
       }
 
       img {
@@ -142,7 +142,7 @@ body,html{
       color: $cGreen;
       background: none;
       text-transform: none;
-      
+
       &:after {
         content: "";
       }
@@ -276,7 +276,7 @@ body,html{
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 22;
+  z-index: 21;
   background: rgba($dark,0.5);
   opacity: 0;
   visibility: hidden;
