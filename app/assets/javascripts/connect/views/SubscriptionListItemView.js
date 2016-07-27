@@ -38,7 +38,6 @@ define([
 
     render: function() {
       var subscription = this.subscription.toJSON();
-      console.log(subscription);
 
       subscription.language = LANGUAGE_MAP[subscription.language];
       subscription.confirmationUrl = this.confirmationUrl();
@@ -61,8 +60,9 @@ define([
     },
 
     confirmationUrl: function() {
+      var subscription = this.subscription.toJSON();
       return window.gfw.config.GFW_API_HOST_NEW_API + '/subscriptions/' +
-        this.subscription.id + '/send_confirmation';
+        subscription.id + '/send_confirmation';
     },
 
     viewOnMap: function() {
