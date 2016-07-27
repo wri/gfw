@@ -27,7 +27,9 @@ define([
 
       this.user = new User();
       this.user.on('sync', this.render);
-      this.user.fetch();
+      this.user.fetch().done(function(){
+        this.view.render();
+      }.bind(this));
 
       mps.publish('Place/register', [this]);
     },
