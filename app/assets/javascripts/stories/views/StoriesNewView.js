@@ -73,8 +73,6 @@ define([
       this.sourceDrag = undefined;
 
       this.story = new Story();
-      this.listenTo(this.story, 'change:lat change:lng', this.zoomToStory);
-
       this.validator = new StoryFormValidator();
 
       this.render();
@@ -255,8 +253,8 @@ define([
     setStoryLocationToCenter: function() {
       var center = this.map.getCenter();
       this.story.set('geojson', { "type": "Point", "coordinates": [center.lng(), center.lat()] });
-      this.story.set('lat', center.lat());
-      this.story.set('lng', center.lng());
+      this.story.set('lat', center.lat(), { silent: true });
+      this.story.set('lng', center.lng(), { silent: true });
     },
 
     renderMap: function() {
