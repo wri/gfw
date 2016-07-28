@@ -21,6 +21,8 @@ define([
         overlay: null,
         geojson: null,
         is_drawing: false,
+
+        overlay_stroke_weight: 2        
       }
     })),
 
@@ -33,19 +35,24 @@ define([
     /**
      * Application subscriptions.
      */
-    _subscriptions: [
-      {
+    _subscriptions: [{
         'Geostore/go': function(response) {
           this.status.set('geojson', response.data.attributes.geojson, {silent: true});
           this.view.drawGeojson(response.data.attributes.geojson.features[0].geometry);
         }
-      },
-      {
+      },{
+        'Analysis/hideGeojson': function() {
+          this.view.hideGeojson();
+        }
+      },{
+        'Analysis/showGeojson': function() {
+          this.view.showGeojson();
+        }
+      },{
         'Analysis/shape': function() {
           this.deleteAnalysis();
         }
-      },
-      {
+      },{
         'Analysis/delete': function() {
           this.deleteAnalysis();
         }

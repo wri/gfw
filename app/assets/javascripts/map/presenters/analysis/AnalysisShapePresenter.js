@@ -25,6 +25,8 @@ define([
         wdpaid: null,
         use: null,
         useid: null,               
+
+        overlay_stroke_weight: 2
       }
     })),
 
@@ -59,15 +61,23 @@ define([
             useid: params.useid,
           });
         }
-      },
-      {
-        'Analysis/shape': function(useid, use, wdpaid) {
-          this.status.set('useid', useid);
-          this.status.set('use', use);
-          this.status.set('wdpaid', wdpaid);
+      },{
+        'Analysis/shape': function(data) {
+          this.status.set({
+            useid: data.useid,
+            use: data.use,
+            wdpaid: data.wdpaid,
+          })
         }
-      },
-      {
+      },{
+        'Analysis/hideGeojson': function() {
+          this.view.hideGeojson();
+        }
+      },{
+        'Analysis/showGeojson': function() {
+          this.view.showGeojson();
+        }
+      },{
         'Analysis/delete': function() {
           this.deleteAnalysis();
         }
