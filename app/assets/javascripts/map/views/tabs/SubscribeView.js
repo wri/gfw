@@ -29,7 +29,6 @@ define([
     },
 
     render: function(){
-      console.log(this.presenter.user.toJSON());
       this.$el.html(this.template({
         loggedIn: this.presenter.user.isLoggedIn(),
         email: this.presenter.user.get('email'),

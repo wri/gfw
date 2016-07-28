@@ -75,7 +75,6 @@ define([
 
       this.subscription = new Subscription({
         datasets: [options.dataset],
-        geostoreId: options.geostore,
         params: params
       });
      },

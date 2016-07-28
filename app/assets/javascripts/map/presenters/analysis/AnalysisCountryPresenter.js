@@ -34,6 +34,8 @@ define([
         country: null,
         regions: null,
         region: null,
+
+        overlay_stroke_weight: 2
       }
     })),
 
@@ -94,6 +96,14 @@ define([
       },{
         'Analysis/delete': function() {
           this.deleteAnalysis();
+        }
+      },{
+        'Analysis/hideGeojson': function() {
+          this.view.hideGeojson();
+        }
+      },{
+        'Analysis/showGeojson': function() {
+          this.view.showGeojson();
         }
       },{
         'Analysis/iso': function(iso,isoDisabled) {

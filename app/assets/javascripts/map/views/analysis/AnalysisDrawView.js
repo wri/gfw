@@ -327,6 +327,32 @@ define([
       var paths = overlay.getPath().getArray();
       return geojsonUtilsHelper.pathToGeojson(paths);            
     },
+
+    /**
+     * showGeojson
+     * @param undefined
+     * @return {void}
+     */
+    showGeojson: function() {
+      var overlay = this.presenter.status.get('overlay');
+      this.presenter.status.set('overlay_stroke_weight', 2);
+      if (!!overlay) {
+        overlay.setOptions({ strokeWeight: 2});
+      }
+    },
+
+    /**
+     * hideGeojson
+     * @param undefined
+     * @return {void}
+     */
+    hideGeojson: function() {
+      var overlay = this.presenter.status.get('overlay');
+      this.presenter.status.set('overlay_stroke_weight', 0);
+      if (!!overlay) {
+        overlay.setOptions({ strokeWeight: 0});
+      }
+    },
     
     /**
      * drawGeojson
@@ -338,7 +364,7 @@ define([
       var overlay = new google.maps.Polygon({
         paths: paths,
         editable: true,
-        strokeWeight: 2,
+        strokeWeight: this.presenter.status.get('overlay_stroke_weight'),
         fillOpacity: 0,
         fillColor: '#FFF',
         strokeColor: '#A2BC28'

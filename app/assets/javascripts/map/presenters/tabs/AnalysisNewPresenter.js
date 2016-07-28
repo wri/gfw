@@ -364,7 +364,7 @@ define([
       {
         'Subscribe/shape': function(data) {
           var subscritionObj = {};
-          
+
           if (!!data.use && this.usenames.indexOf(data.use) === -1) {
             var provider = {
               table: data.use,
@@ -506,8 +506,14 @@ define([
       this.status.set('enabled', enabled);
       this.status.set('enabledSubscription', enabledSubscription);
 
+      // Check if there is a dataset
+      // If true => publishAnalysis and showGeojson
+      // If false => hideGeojson
       if (this.status.get('dataset')) {
         this.publishAnalysis();
+        mps.publish('Analysis/showGeojson');
+      } else {
+        mps.publish('Analysis/hideGeojson');
       }
     },
 
