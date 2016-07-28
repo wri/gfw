@@ -34,6 +34,8 @@ define([
         country: null,
         regions: null,
         region: null,
+
+        overlay_stroke_weight: 2
       }
     })),
 
