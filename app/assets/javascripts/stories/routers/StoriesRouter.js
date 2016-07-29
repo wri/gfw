@@ -56,8 +56,10 @@ define([
     },
 
     showStory: function(storyId) {
-      var storyView = new StoriesShowView({id: storyId});
-      this.el.html(storyView.render().el);
+      var storyView = new StoriesShowView({
+        el: '.layout-content',
+        id: storyId
+      });
     },
 
     show404: function() {

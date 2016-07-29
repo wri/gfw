@@ -32,7 +32,7 @@ define([
       },
 
       location: {
-        message: 'Please enter a title for your story',
+        message: 'Please enter a location for your story',
         validator: function(story) {
           return story.hasLocation();
         }
@@ -107,46 +107,54 @@ define([
     },
 
     _addVideoThumbnail: function(url) {
-      var media = new Media({embedUrl: url});
-      this.story.addMedia(media);
+      var media = new Media({
+        embedUrl: url
+      });
 
       var vidID  = this._getVideoID(url),
           $thumb = $('#videothumbnail');
+      
       if ($thumb.length > 0) {
         if (!!vidID) {
           $thumb.find('.inner_box').css('background-image','url('+ vidID +')');
-          $thumb.data('uploadId', 'VID-'+vidID);          
+          $thumb.data('orderid', url);
+          this.story.addMedia(media);
         } else {
-          this.uploadsIds = _.without(this.uploadsIds, 'VID-'+this.oldvID);
-          $("#story_uploads_ids").val(this.uploadsIds.join(","));
+          var videos = this.story.get('media').filter( function(model) {
+            return !!model.get('embedUrl')
+          });
+          this.story.get('media').remove(videos);
+
           $thumb.fadeOut(250, function() {
             $thumb.remove();
           });
         }
       } else {
         if (!!vidID) {
-          $('.thumbnails').append('<li class="sortable thumbnail" draggable="true" id="videothumbnail"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
-          this.uploadsIds.push('VID-'+vidID);
-          $("#story_uploads_ids").val(this.uploadsIds.join(","));
+          $('.thumbnails').append('<li class="sortable thumbnail" draggable="true" id="videothumbnail" data-orderid="'+ url +'"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
+          this.story.addMedia(media);
           $thumb = $('#videothumbnail');
-          $thumb.data('uploadId', 'VID-'+vidID);
           $thumb.find('.destroy').on('click', function(e) {
-              e.preventDefault();
+            e.preventDefault();
 
-              var confirmation = confirm('Are you sure?')
+            var confirmation = confirm('Are you sure?')
 
-              if (confirmation == true) {
-                this.uploadsIds = _.without(this.uploadsIds, 'VID-'+this.oldvID);
-                $("#story_uploads_ids").val(this.uploadsIds.join(","));
-                $("#story_video").val('');
-                $thumb.fadeOut(250, function() {
-                  $thumb.remove();
-                });
-              }
-            }.bind(this));          
+            if (confirmation == true) {
+              var videos = this.story.get('media').filter( function(model) {
+                return !!model.get('embedUrl')
+              });
+              this.story.get('media').remove(videos);
+
+              $("#video").val('');
+              $thumb.fadeOut(250, function() {
+                $thumb.remove();
+              });
+            }
+          }.bind(this));          
         }
       }
-      this.oldvID = vidID;
+
+      this.oldUrl = url;
     },
 
     showFileSelector: function(event) {
@@ -199,11 +207,14 @@ define([
         $.each(files, function (index, file) {
           remainingFiles -= 1;
 
-          var media = new Media({previewUrl: file.basename});
+          var media = new Media({
+            previewUrl: file.basename
+          });
+
           that.story.addMedia(media);
 
           var url = file.url.replace('https', 'http');
-          var $thumb = $("<li class='sortable thumbnail' draggable='true' data-id='"+file.basename+"'><div class='inner_box' style=' background-image: url("+url+");'></div><a href='#' class='destroy'><svg><use xlink:href='#shape-close'></use></svg></a></li>");
+          var $thumb = $('<li class="sortable thumbnail" draggable="true" data-orderid="'+ file.basename +'" ><div class="inner_box" style=" background-image: url('+url+');"></div><a href="#" class="destroy"><svg><use xlink:href="#shape-close"></use></svg></a></li>');
 
           var filename = that.prettifyFilename(file.basename).substring(45);
 
@@ -347,16 +358,17 @@ define([
         target = target.closest('.sortable');
       }
 
-      var currentOrder = this.$('.sortable').index(this.sourceDrag);
-
       if (this.isbefore(this.sourceDrag, target)) {
         target.parentNode.insertBefore(this.sourceDrag, target);
       } else {
         target.parentNode.insertBefore(this.sourceDrag, target.nextSibling);
       }
 
-      var newOrder = this.$('.sortable').index(this.sourceDrag);
-      this.story.get('media').move(currentOrder, newOrder);
+      var orderedArray = _.map(this.$('.sortable'), function(sort) {
+        return $(sort).data('orderid');
+      })
+
+      this.story.get('media').move(orderedArray);
     },
 
     dragstart: function(e) {
@@ -379,10 +391,16 @@ define([
 
     submit: function(event) {
       event.preventDefault();
+      
+      var attributesFromForm = Backbone.Syphon.serialize(this.$('form#new_story'));
+      
+      // Remove 'media' because we want to set it from the model
+      // I don't know why this serializing is returning 'media { image: "" }'
+      if (attributesFromForm.media) {
+        delete attributesFromForm.media;
+      }
 
-      var attributesFromForm = Backbone.Syphon.serialize(
-        this.$('form#new_story'));
-      this.story.set(attributesFromForm);
+      this.story.set(_.extend({}, this.story.toJSON(), attributesFromForm));
 
       if (this.validator.isValid(this.story)) {
         this.story.save().then(function(result) {

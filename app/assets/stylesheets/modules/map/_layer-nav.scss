@@ -189,7 +189,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           }
         }
       }
-      
+
       .country-description {
         color: $dark;
         font-size: 14px;
@@ -198,7 +198,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
 
         > * {
           margin: 10px 0 0;
-          
+
           &:first-child {
             margin-top: 0;
           }
@@ -227,7 +227,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         text-transform: uppercase;
         overflow: hidden;
         text-overflow: ellipsis;
-        white-space: nowrap;        
+        white-space: nowrap;
         @media (min-width: $br-mobileMap){
           display: block;
         }
@@ -241,7 +241,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           right: 10px;
           width: 14px;
           height: 14px;
-          margin: -7px 0 0; 
+          margin: -7px 0 0;
           border-radius: 50%;
           background: $dark;
 
@@ -260,7 +260,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         .m-btncontainer {
           margin-top: 10px;
           flex-wrap: wrap;
-          
+
           .btn-icon {
             display: block;
             width: 30px;
@@ -271,24 +271,23 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
 
 
             &:hover {
-              background: $country-color;
               svg {
                 fill: #000;
-              }              
+              }
               .tooltipmap {
                 opacity: 1;
-                visibility: visible;                
+                visibility: visible;
               }
             }
 
             &.-disabled {
               opacity: 0.5;
               pointer-events: none;
-              &:hover {              
+              &:hover {
                 background: transparent;
                 svg {
                   fill: $dark;
-                }              
+                }
               }
             }
 
@@ -298,7 +297,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
               height: 20px;
               top: 50%;
               left: 50%;
-              margin: -10px 0 0 -10px; 
+              margin: -10px 0 0 -10px;
               fill: $dark;
             }
           }
@@ -577,7 +576,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       &:hover {
         color: lighten($dark,5%);
       }
-      
+
       &.selected {
         color: $dark;
         span:before{

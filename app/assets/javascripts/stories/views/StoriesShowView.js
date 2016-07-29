@@ -1,19 +1,22 @@
 define([
-  'mps', 'backbone', 'handlebars', 'underscore',
+  'mps',
+  'backbone',
+  'handlebars',
+  'underscore',
   'stories/models/StoryModel',
-  'views/InterestingView', 'stories/views/CarrouselStoriesView', 'stories/views/MoreStoriesView',
+  'views/InterestingView',
+  'stories/views/CarrouselStoriesView',
+  'stories/views/MoreStoriesView',
   'text!stories/templates/story.handlebars',
-  'text!stories/templates/youtubeEmbed.handlebars', 'text!stories/templates/imageEmbed.handlebars'
+  'text!stories/templates/youtubeEmbed.handlebars',
+  'text!stories/templates/imageEmbed.handlebars'
 ], function(
   mps, Backbone, Handlebars, _,
-  Story,
-  InterestingView, CarrouselStoriesView, MoreStoriesView,
+  Story, InterestingView, CarrouselStoriesView, MoreStoriesView,
   tpl, youtubeTpl, imageTpl
 ) {
 
   'use strict';
-
-  var AWS_HOST = 'http://gfw2stories.s3.amazonaws.com/uploads';
 
   var youtubeEmbed = function(url) {
     var template = Handlebars.compile(youtubeTpl),
@@ -45,8 +48,9 @@ define([
     initialize: function(options) {
       var storyId = options.id;
       this.story = new Story({id: storyId});
-      this.listenTo(this.story, 'change', this.render);
-      this.story.fetch();
+      this.story.fetch().done(function(){
+        this.render();
+      }.bind(this));
     },
 
     render: function() {
@@ -73,13 +77,13 @@ define([
 
     getMap: function() {
       var coords = this.story.get('lat') + ',' + this.story.get('lng'),
-          marker = '&markers=icon:'+AWS_HOST+'/marker_exclamation.png%7C'+coords;
+          marker = '&markers=icon:'+window.gfw.config.AWS_HOST+'/marker_exclamation.png%7C'+coords;
 
       return 'http://maps.google.com/maps/api/staticmap?center='+coords+'&zoom=5&size=1600x500'+marker+'&maptype=terrain&sensor=false&scale=2';
     },
 
     getMedia: function() {
-      var media = this.story.get('media');
+      var media = _.sortBy(this.story.get('media'), 'order');
       if (_.isEmpty(media)) { return []; }
 
       return media.map(function(item) {
@@ -89,8 +93,8 @@ define([
           mediaItem.embed = youtubeEmbed(item.embedUrl);
         }
 
-        if (!_.isEmpty(item.url)) {
-          mediaItem.embed = imageEmbed(AWS_HOST + '/' + item.url);
+        if (!_.isEmpty(item.previewUrl)) {
+          mediaItem.embed = imageEmbed(window.gfw.config.AWS_HOST + '/' + item.previewUrl);
         }
 
         return mediaItem;
