@@ -117,6 +117,7 @@ define([
       if ($thumb.length > 0) {
         if (!!vidID) {
           $thumb.find('.inner_box').css('background-image','url('+ vidID +')');
+          $thumb.data('orderid', url);
           this.story.addMedia(media);
         } else {
           var videos = this.story.get('media').filter( function(model) {
@@ -130,7 +131,7 @@ define([
         }
       } else {
         if (!!vidID) {
-          $('.thumbnails').append('<li class="sortable thumbnail" draggable="true" id="videothumbnail"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
+          $('.thumbnails').append('<li class="sortable thumbnail" draggable="true" id="videothumbnail" data-orderid="'+ url +'"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
           this.story.addMedia(media);
           $thumb = $('#videothumbnail');
           $thumb.find('.destroy').on('click', function(e) {
@@ -206,11 +207,14 @@ define([
         $.each(files, function (index, file) {
           remainingFiles -= 1;
 
-          var media = new Media({previewUrl: file.basename});
+          var media = new Media({
+            previewUrl: file.basename
+          });
+
           that.story.addMedia(media);
 
           var url = file.url.replace('https', 'http');
-          var $thumb = $("<li class='sortable thumbnail' draggable='true' data-id='"+file.basename+"'><div class='inner_box' style=' background-image: url("+url+");'></div><a href='#' class='destroy'><svg><use xlink:href='#shape-close'></use></svg></a></li>");
+          var $thumb = $('<li class="sortable thumbnail" draggable="true" data-orderid="'+ file.basename +'" ><div class="inner_box" style=" background-image: url('+url+');"></div><a href="#" class="destroy"><svg><use xlink:href="#shape-close"></use></svg></a></li>');
 
           var filename = that.prettifyFilename(file.basename).substring(45);
 
@@ -354,16 +358,17 @@ define([
         target = target.closest('.sortable');
       }
 
-      var currentOrder = this.$('.sortable').index(this.sourceDrag);
-
       if (this.isbefore(this.sourceDrag, target)) {
         target.parentNode.insertBefore(this.sourceDrag, target);
       } else {
         target.parentNode.insertBefore(this.sourceDrag, target.nextSibling);
       }
 
-      var newOrder = this.$('.sortable').index(this.sourceDrag);
-      this.story.get('media').move(currentOrder, newOrder);
+      var orderedArray = _.map(this.$('.sortable'), function(sort) {
+        return $(sort).data('orderid');
+      })
+
+      this.story.get('media').move(orderedArray);
     },
 
     dragstart: function(e) {
@@ -386,19 +391,21 @@ define([
 
     submit: function(event) {
       event.preventDefault();
-      console.log(this.story.toJSON());
-      debugger;
+      
       var attributesFromForm = Backbone.Syphon.serialize(this.$('form#new_story'));
-      console.log(attributesFromForm);
-      this.story.set(_.extend({}, attributesFromForm, this.story.toJSON()));
-      console.log(this.story.toJSON());
-      debugger;
+      
+      // Remove 'media' because we want to set it from the model
+      // I don't know why this serializing is returning 'media { image: "" }'
+      if (attributesFromForm.media) {
+        delete attributesFromForm.media;
+      }
+
+      this.story.set(_.extend({}, this.story.toJSON(), attributesFromForm));
 
       if (this.validator.isValid(this.story)) {
         this.story.save().then(function(result) {
-          console.log(result);
-          // var id = result.data.id;
-          // window.location = '/stories/'+id;
+          var id = result.data.id;
+          window.location = '/stories/'+id;
         });
       } else {
         this.render(this.validator.messages);

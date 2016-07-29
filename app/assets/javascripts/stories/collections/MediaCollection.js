@@ -1,5 +1,6 @@
 define([
-  'backbone', 'underscore',
+  'backbone', 
+  'underscore',
   'stories/models/MediaModel'
 ], function(Backbone, _, Media) {
 
@@ -12,25 +13,13 @@ define([
       return _.last(this.sortBy('order'));
     },
 
-    move: function(previous, next) {
-      if (previous === next) { return; }
-
-      if (next > previous) {
-        this.each(function(model) {
-          if (model.get('order') > previous && model.get('order') <= next) {
-            model.set('order', model.get('order') - 1);
-          }
-        });
-      } else {
-        this.each(function(model) {
-          if (model.get('order') < previous && model.get('order') >= next) {
-            model.set('order', model.get('order') + 1);
-          }
-        });
-      }
-
-      var model = this.where({order: previous})[0];
-      model.set('order', next);
+    move: function(orderedArray) {
+      this.each(function(model) {
+        var url = model.get('embedUrl') || model.get('previewUrl');
+        var index = _.indexOf(orderedArray, url);
+        console.log(url, index);
+        model.set('order', index);
+      });
     },
 
     append: function(media) {

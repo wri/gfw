@@ -54,7 +54,7 @@ define([
     },
 
     render: function() {
-      console.log(this.story.toJSON());
+      console.log(this.getMedia());
       this.$el.html(this.template({
         currentUrl: window.location.href,
         story: this.story.toJSON(),
@@ -84,7 +84,7 @@ define([
     },
 
     getMedia: function() {
-      var media = this.story.get('media');
+      var media = _.sortBy(this.story.get('media'), 'order');
       if (_.isEmpty(media)) { return []; }
 
       return media.map(function(item) {
