@@ -7,9 +7,9 @@ require([
   'Class',
   'backbone',
   'mps',
+  'stories/handlebarsHelpers',  
   'static/RouterStatic',
   'static/CarrouselView',
-  'stories/views/StoriesIndexView',
   'static/VideoView',
   'static/SearchView',
   'static/FeedbackView',
@@ -23,8 +23,8 @@ require([
   'views/InterestingView',
   'views/SourceMobileFriendlyView',
   '_string'
-], function($, _, Class, Backbone, mps, RouterStatic, CarrouselView, StoriesIndexView, VideoView, SearchView, FeedbackView, ApplicationsNavView, ApplicationsGridView, ApplicationsModalView,
-            GalleryView, HowToToggleView, HeaderView, FooterView, TermsView, SidebarNavView, InterestingView, SourceMobileFriendlyView) {
+], function($, _, Class, Backbone, mps, handlebarsHelpers, RouterStatic, CarrouselView, VideoView, SearchView, FeedbackView, ApplicationsNavView, ApplicationsGridView, ApplicationsModalView,
+            GalleryView, HeaderView, FooterView, SidebarNavView, InterestingView, SourceMobileFriendlyView) {
   'use strict';
 
   var LandingPage = Class.extend({
@@ -32,6 +32,9 @@ require([
     $el: $('body'),
 
     init: function() {
+
+      handlebarsHelpers.register();
+      
       var router = new RouterStatic();
 
       this._initViews();
@@ -72,7 +75,6 @@ require([
       new SidebarNavView();
       new CarrouselView();
       new InterestingView();
-      new StoriesIndexView({el: '#storiesKeepView'});
       new VideoView();
       new SearchView();
       new FeedbackView();

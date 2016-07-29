@@ -1,12 +1,18 @@
 define([
-  'backbone', 'handlebars', 'simplePagination',
+  'backbone',
+  'handlebars',
+  'simplePagination',
   'stories/collections/StoriesCollection',
-  'stories/views/StoriesItemView', 'stories/views/StoriesPaginationView',
+  'stories/views/StoriesItemView',
+  'stories/views/StoriesPaginationView',
   'text!stories/templates/stories.handlebars'
 ], function(
-  Backbone, Handlebars, simplePagination,
+  Backbone,
+  Handlebars,
+  simplePagination,
   Stories,
-  StoryView, StoriesPaginationView,
+  StoryView,
+  StoriesPaginationView,
   tpl
 ) {
 

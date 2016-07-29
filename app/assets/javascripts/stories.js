@@ -1,12 +1,14 @@
 require([
   'backbone',
   'stories/handlebarsHelpers',
-  'views/HeaderView', 'views/FooterView',
+  'views/HeaderView',
+  'views/FooterView',
   'stories/routers/StoriesRouter'
 ], function(
   Backbone,
   handlebarsHelpers,
-  HeaderView, FooterView,
+  HeaderView,
+  FooterView,
   StoriesRouter) {
 
   'use strict';

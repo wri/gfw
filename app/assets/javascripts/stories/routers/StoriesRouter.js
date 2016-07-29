@@ -2,13 +2,19 @@ define([
   'jquery', 'backbone',
   'views/NotificationsView',
   'map/models/UserModel',
-  'stories/views/StoriesIndexView', 'stories/views/StoriesListView', 'stories/views/StoriesNewView', 'stories/views/StoriesShowView',
+  'stories/views/StoriesIndexView',
+  'stories/views/StoriesListView',
+  'stories/views/StoriesNewView',
+  'stories/views/StoriesShowView',
   'connect/views/LoginView'
 ], function(
   $, Backbone,
   NotificationsView,
   User,
-  StoriesIndexView, StoriesListView, StoriesNewView, StoriesShowView,
+  StoriesIndexView, 
+  StoriesListView, 
+  StoriesNewView, 
+  StoriesShowView,
   LoginView
 ) {
 
@@ -31,13 +37,15 @@ define([
     },
 
     index: function() {
-      var storyIndex = new StoriesIndexView();
-      this.el.html(storyIndex.render().el);
+      var storyIndex = new StoriesIndexView({
+        el: '.layout-content',        
+      });
     },
 
     listStories: function() {
-      var storiesList = new StoriesListView();
-      this.el.html(storiesList.render().el);
+      var storiesList = new StoriesListView({
+        el: '.layout-content',
+      });
     },
 
     checkLoggedIn: function() {
@@ -46,13 +54,16 @@ define([
     },
 
     newStory: function() {
-      this.checkLoggedIn().then(function() {
-        new StoriesNewView();
-      }.bind(this)).fail(function() {
-        var loginView = new LoginView({
-          message: 'Please log in to submit a story.' });
-        this.el.html(loginView.render().el);
-      }.bind(this));
+      this.checkLoggedIn()
+        .then(function() {
+          new StoriesNewView();    
+        }.bind(this))
+
+        .fail(function() {
+          var loginView = new LoginView({
+            message: 'Please log in to submit a story.' });
+          this.el.html(loginView.render().el);
+        }.bind(this));
     },
 
     showStory: function(storyId) {

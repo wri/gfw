@@ -17,7 +17,7 @@ define([
       this.each(function(model) {
         var url = model.get('embedUrl') || model.get('previewUrl');
         var index = _.indexOf(orderedArray, url);
-        console.log(url, index);
+
         model.set('order', index);
       });
     },
