@@ -54,7 +54,6 @@ define([
     },
 
     render: function() {
-      console.log(this.getMedia());
       this.$el.html(this.template({
         currentUrl: window.location.href,
         story: this.story.toJSON(),
