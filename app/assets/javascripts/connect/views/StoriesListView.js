@@ -1,10 +1,22 @@
 define([
-  'jquery', 'backbone', 'handlebars', 'underscore', 'mps', 'map/utils', 'simplePagination',
+  'jquery',
+  'backbone',
+  'handlebars',
+  'underscore',
+  'mps',
+  'map/utils',
+  'simplePagination',
   'connect/collections/Stories',
   'connect/views/StoriesListItemView',
   'text!connect/templates/storiesList.handlebars'
 ], function(
-  $, Backbone, Handlebars, _, mps, utils, simplePagination,
+  $,
+  Backbone,
+  Handlebars,
+  _,
+  mps,
+  utils,
+  simplePagination,
   Stories,
   StoriesListItemView,
   tpl
