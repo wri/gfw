@@ -1,14 +1,15 @@
 $basemaps-class: grayscale, terrain, satellite, hybrid, treeheight, dark, positron, landsat, openstreet;
 $basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, landsat, openstreet;
-.tab-basemaps{
+.tab-basemaps {
   position: relative;
+
   .maptype-list{
     @media (min-width: $br-mobileMap){
       max-height: 380px;
       overflow: auto;
     }
 
-    >li {
+    > li {
       position: relative;
       padding: 0 0 0 80px;
       border-top: 1px solid $border;
@@ -18,11 +19,19 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, 
         border-top: none;
       }
 
-      &:hover{
-        background: darken($light,3%);
+      &:hover {
+        i {
+          border-color: $cGreen;
+        }        
       }
 
-      &.selected{ background: darken($light,3%);}
+      &.selected{ 
+        background: $light;
+
+        i {
+          border-color: $cGreen;
+        }
+      }
 
       @for $i from 1 through length($basemaps-img) {
         &.#{nth($basemaps-class, $i)} i {
