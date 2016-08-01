@@ -50,6 +50,11 @@ textarea {
     &.-has-hint {
       top: 1px;
     }
+
+    &.-error {
+      color: $red;
+    }
+
   }
 
   textarea {

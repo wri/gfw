@@ -44,14 +44,14 @@
 
       <div class="m-form-stories">
         <form id="new_story">
-          <div class="field -required {{#if errors.title}}-with-errors{{/if}}">
+          <div class="field -required">
             <label for="title">Title *</label>
-            <input type="text" name="title" id="title" placeholder="Illegal Logging in National Park" value="{{story.title}}" class="{{#if errors.title}}-with-errors{{/if}}">
+            <input type="text" name="title" id="title" placeholder="Illegal Logging in National Park" value="{{story.title}}">
           </div>
 
-          <div class="field -required {{#if errors.location}}-with-errors{{/if}}">
+          <div class="field -required">
             <div>
-              <label>Location *</label>
+              <label for="geojson">Location *</label>
             </div>
 
             <p class='hint'>
@@ -61,7 +61,7 @@
               center indicates where your story will be placed.
             </p>
 
-            <div class="{{#if errors.location}}-with-errors{{/if}} m-stories-map" >
+            <div class="m-stories-map" >
               <div>
                 <div id="map" class="map"></div>
                 <div class="map-controls">
