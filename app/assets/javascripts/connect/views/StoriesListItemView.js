@@ -1,9 +1,13 @@
 define([
-  'backbone', 'handlebars', 'moment',
+  'backbone',
+  'handlebars',
+  'moment',
   'connect/views/ListItemDeleteConfirmView',
   'text!connect/templates/storiesListItem.handlebars'
 ], function(
-  Backbone, Handlebars, moment,
+  Backbone,
+  Handlebars,
+  moment,
   ListItemDeleteConfirmView,
   tpl
 ) {
