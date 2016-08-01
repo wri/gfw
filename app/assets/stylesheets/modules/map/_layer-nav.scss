@@ -561,6 +561,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     display: block;
     color: #AAA;
     word-wrap: break-word;
+    
     label {
       cursor: pointer;
       position: relative;
@@ -568,7 +569,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       font-weight: normal;
       color: #AAA;
       font-size: 11px;
-      margin: 8px 5px 5px 0px;
+      padding: 5px 5px 5px 0px;
       padding-left: 13px;
       text-transform: none;
       display: block;
@@ -589,7 +590,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         position: absolute;
         width: 10px;
         height: 10px;
-        top: -1px;
+        top: 5px;
         left: 0;
         border: 1px solid lighten($dark,10%);
         border-radius: 50%;
