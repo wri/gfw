@@ -1,11 +1,31 @@
 define([
-  'Class', 'jquery', 'backbone', 'mps', 'handlebars', 'jquery_fileupload', 'backbone.syphon', 'moment', 'underscore',
-  'stories/models/StoryModel', 'stories/models/MediaModel',
+  'Class',
+  'jquery',
+  'backbone',
+  'mps',
+  'handlebars',
+  'jquery_fileupload',
+  'backbone.syphon',
+  'moment',
+  'underscore',
+  'validate',
+  'stories/models/StoryModel',
+  'stories/models/MediaModel',
   'stories/views/LatestStoriesView',
   'text!stories/templates/new_story.handlebars'
 ], function(
-  Class, $, Backbone, mps, Handlebars, jquery_fileupload, BackboneSyphon, moment, _,
-  Story, Media,
+  Class,
+  $,
+  Backbone,
+  mps,
+  Handlebars,
+  jquery_fileupload,
+  BackboneSyphon,
+  moment,
+  _,
+  validate,
+  Story,
+  Media,
   LatestStoriesView,
   tpl
 ) {
@@ -22,35 +42,18 @@ define([
     disableDefaultUI: true,
   };
 
-  var StoryFormValidator = Class.extend({
-    validations: {
-      title: {
-        message: 'Please enter a title for your story',
-        validator: function(story) {
-          return !_.isEmpty(story.get('title'));
-        }
+  var constraints = {
+    'title': {
+      presence: {
+        message: "Please enter a title for your story"
       },
-
-      location: {
-        message: 'Please enter a location for your story',
-        validator: function(story) {
-          return story.hasLocation();
-        }
-      }
     },
-
-    isValid: function(story) {
-      this.messages = {};
-
-      _.each(this.validations, function(attribute, attributeName) {
-        if (attribute.validator(story) === false) {
-          this.messages[attributeName] = attribute.message;
-        }
-      }.bind(this));
-
-      return _.isEmpty(this.messages);
-    }
-  });
+    'geojson': {
+      presence: {
+        message: "Please enter a location for your story"
+      },
+    }    
+  };
 
   var StoriesNewView = Backbone.View.extend({
 
@@ -66,16 +69,20 @@ define([
       'dragenter .sortable' : 'dragenter',
       'dragstart .sortable' : 'dragstart',
       'click #submit': 'submit',
-      'click .upload_picture': 'showFileSelector'
+      'click .upload_picture': 'showFileSelector',
     },
 
     initialize: function() {
       this.sourceDrag = undefined;
-
+      this.errors = null;
       this.story = new Story();
-      this.validator = new StoryFormValidator();
 
       this.render();
+      this.cache();
+    },
+
+    cache: function() {
+      this.$form = $('#new_story');
     },
 
     videoInput: function(e) {
@@ -181,7 +188,9 @@ define([
         previewMaxHeight: 76,
         previewCrop: true,
         timeout: 3600000
-      }).on('fileuploadadd', function (e, data) {
+      })
+
+      .on('fileuploadadd', function (e, data) {
         data.context = $('<div/>').appendTo('#files');
 
         remainingFiles += _.size(data.files);
@@ -201,10 +210,12 @@ define([
             $submitButton.val('Please wait...');
           }
         });
-      }).on('fileuploaddone', function (e, data) {
+      })
+
+      .on('fileuploaddone', function (e, data) {
         var files = [data.result];
 
-        $.each(files, function (index, file) {
+        _.each(files, function (file) {
           remainingFiles -= 1;
 
           var media = new Media({
@@ -218,6 +229,7 @@ define([
 
           var filename = that.prettifyFilename(file.basename).substring(45);
 
+          // Remove the preview image
           $(".thumbnail[data-name='"+filename+"']").fadeOut(250, function() {
             $(this).remove();
 
@@ -231,11 +243,17 @@ define([
             var confirmation = confirm('Are you sure?')
 
             if (confirmation == true) {
+              
+              var image = this.story.get('media').filter( function(model) {
+                return model.get('previewUrl') == $thumb.data('orderid')
+              });
+              this.story.get('media').remove(image);
+
               $thumb.fadeOut(250, function() {
                 $thumb.remove();
               });
             }
-          });
+          }.bind(that));
         });
 
         if (remainingFiles <= 0) {
@@ -246,7 +264,9 @@ define([
         }
 
         ga('send', 'event', 'Stories', 'New story', 'submit');
-      }).on('fileuploadfail', function (e, data){
+      })
+
+      .on('fileuploadfail', function (e, data){
         mps.publish('Notification/open', ['upload-error-server']);
         var $submitButton = $("form input[type='submit']");
         $submitButton.val('Submit story');
@@ -402,23 +422,29 @@ define([
 
       this.story.set(_.extend({}, this.story.toJSON(), attributesFromForm));
 
-      if (this.validator.isValid(this.story)) {
+      if (this.validate()) {
         this.story.save().then(function(result) {
           var id = result.data.id;
           window.location = '/stories/'+id;
         });
       } else {
-        this.render(this.validator.messages);
+        this.updateForm();
         mps.publish('Notification/open', ['story-new-form-error']);
         $(document).scrollTop(0);
       }
     },
 
-    render: function(errors) {
-      errors = errors || {};
+    validate: function(e) {
+      e && e.preventDefault();
+      var attributes = this.story.toJSON();
 
+      // Validate form, if is valid the response will be undefined
+      this.errors = validate(attributes, constraints);
+      return ! !!this.errors;
+    },
+
+    render: function() {
       this.$el.html(this.template({
-        errors: errors,
         story: this.story.toJSON(),
         formatted_date: moment(this.story.date).format('YYYY-MM-DD')
       }));
@@ -433,7 +459,20 @@ define([
       document.title = 'Submit a story | Global Forest Watch';
 
       return this;
+    },
+
+    updateForm: function() {
+      this.$form.find('input, textarea, select').removeClass('-error');
+      this.$form.find('label').removeClass('-error');
+      for (var key in this.errors) {
+        var $input = this.$form.find('#'+key);
+        var $label = this.$form.find('label[for='+key+']');
+        $input.addClass('-error');
+        $label.addClass('-error');
+      }
     }
+
+
   });
 
   return StoriesNewView;

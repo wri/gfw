@@ -17,7 +17,7 @@ define([
     },
 
     parse: function(response) {
-      return response.data;
+      return (response.data.length) ? response.data.reverse() : response.data;
     },
 
     getPaginatedModels: function() {
