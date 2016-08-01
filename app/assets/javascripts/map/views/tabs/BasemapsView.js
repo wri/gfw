@@ -74,7 +74,11 @@ define([
      */
     selectMaptype: function(maptype) {
       this.$maptypes.removeClass('selected');
-      this.$maptypeslist.find('.' + maptype).addClass('selected');
+
+      if (!!maptype) {
+        var maptype = (maptype.indexOf('landsat') != -1) ? 'landsat' : maptype;
+        this.$maptypeslist.find('.' + maptype).addClass('selected');
+      }
     },
 
     showLandsat: function(){
