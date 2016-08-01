@@ -9,7 +9,6 @@ define([
       var media = story.media;
 
       // It seems that this !_.isEmpty(media[media.length-1].previewUrl) is not correct
-      console.log(media);
       if (media && media.length > 0 && !_.isEmpty(media[media.length-1].previewUrl)) {
         var url = media[media.length-1].previewUrl;
         story.image = 'http://gfw2stories.s3.amazonaws.com/uploads/' + url;

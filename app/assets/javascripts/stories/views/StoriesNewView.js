@@ -1,11 +1,29 @@
 define([
-  'Class', 'jquery', 'backbone', 'mps', 'handlebars', 'jquery_fileupload', 'backbone.syphon', 'moment', 'underscore',
-  'stories/models/StoryModel', 'stories/models/MediaModel',
+  'Class',
+  'jquery',
+  'backbone',
+  'mps',
+  'handlebars',
+  'jquery_fileupload',
+  'backbone.syphon',
+  'moment',
+  'underscore',
+  'stories/models/StoryModel',
+  'stories/models/MediaModel',
   'stories/views/LatestStoriesView',
   'text!stories/templates/new_story.handlebars'
 ], function(
-  Class, $, Backbone, mps, Handlebars, jquery_fileupload, BackboneSyphon, moment, _,
-  Story, Media,
+  Class,
+  $,
+  Backbone,
+  mps,
+  Handlebars,
+  jquery_fileupload,
+  BackboneSyphon,
+  moment,
+  _,
+  Story,
+  Media,
   LatestStoriesView,
   tpl
 ) {
@@ -181,7 +199,9 @@ define([
         previewMaxHeight: 76,
         previewCrop: true,
         timeout: 3600000
-      }).on('fileuploadadd', function (e, data) {
+      })
+
+      .on('fileuploadadd', function (e, data) {
         data.context = $('<div/>').appendTo('#files');
 
         remainingFiles += _.size(data.files);
@@ -201,10 +221,12 @@ define([
             $submitButton.val('Please wait...');
           }
         });
-      }).on('fileuploaddone', function (e, data) {
+      })
+
+      .on('fileuploaddone', function (e, data) {
         var files = [data.result];
 
-        $.each(files, function (index, file) {
+        _.each(files, function (file) {
           remainingFiles -= 1;
 
           var media = new Media({
@@ -218,6 +240,7 @@ define([
 
           var filename = that.prettifyFilename(file.basename).substring(45);
 
+          // Remove the preview image
           $(".thumbnail[data-name='"+filename+"']").fadeOut(250, function() {
             $(this).remove();
 
@@ -231,11 +254,17 @@ define([
             var confirmation = confirm('Are you sure?')
 
             if (confirmation == true) {
+              
+              var image = this.story.get('media').filter( function(model) {
+                return model.get('previewUrl') == $thumb.data('orderid')
+              });
+              this.story.get('media').remove(image);
+
               $thumb.fadeOut(250, function() {
                 $thumb.remove();
               });
             }
-          });
+          }.bind(that));
         });
 
         if (remainingFiles <= 0) {
@@ -246,7 +275,9 @@ define([
         }
 
         ga('send', 'event', 'Stories', 'New story', 'submit');
-      }).on('fileuploadfail', function (e, data){
+      })
+
+      .on('fileuploadfail', function (e, data){
         mps.publish('Notification/open', ['upload-error-server']);
         var $submitButton = $("form input[type='submit']");
         $submitButton.val('Submit story');
