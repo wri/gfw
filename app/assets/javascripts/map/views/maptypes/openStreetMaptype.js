@@ -1,5 +1,5 @@
 /**
- * Dark Matter Maptype.
+ * OpenStreetMaptype Matter Maptype.
  */
 define([], function () {
 
