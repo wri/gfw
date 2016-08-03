@@ -15,8 +15,9 @@ define([
   'map/views/maptypes/darkMaptype',
   'map/views/maptypes/positronMaptype',
   'map/views/maptypes/landsatMaptype',
+  'map/views/maptypes/openStreetMaptype',
   'map/helpers/layersHelper'
-], function(Backbone, _, mps, Cookies, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, layersHelper) {
+], function(Backbone, _, mps, Cookies, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, openStreetMaptype, layersHelper) {
 
   'use strict';
 
@@ -38,6 +39,21 @@ define([
       streetViewControl: false,
       overviewMapControl: false
     },
+
+    attributions: [
+      {
+        id: 'dark',
+        attribution: 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.',        
+      },
+      {
+        id: 'positron',
+        attribution: 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.',        
+      },
+      {
+        id: 'openstreet',
+        attribution: 'Map tiles by <a href="http://www.openstreetmap.org/">Open street map</a>',        
+      },
+    ],
 
     /**
      * Constructs a new MapView and its presenter.
@@ -133,7 +149,7 @@ define([
       }, this));
 
       google.maps.event.addListener(this.map, 'maptypeid_changed', _.bind(function() {
-        this.setCredit('Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.');
+        this.setAttribution();
       }, this ));
 
 
@@ -375,14 +391,16 @@ define([
       this.map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(this.creditNode);
     },
 
-    setCredit: function(credit){
+    setAttribution: function(){
       var maptype = this.getMapTypeId();
-      if (maptype == 'dark' || maptype == 'positron') {
+      var maptypeAttribution = _.findWhere(this.attributions, { id: maptype });
+
+      if (!!maptypeAttribution) {
         this.creditNode.style.display = 'block';
-        this.creditNode.innerHTML = credit + ' -';
-      }else{
+        this.creditNode.innerHTML = maptypeAttribution.attribution;        
+      } else {
         this.creditNode.style.display = 'none';
-        this.creditNode.innerHTML = '';
+        this.creditNode.innerHTML = '';        
       }
     },
 
@@ -432,6 +450,7 @@ define([
       this.map.mapTypes.set('treeheight', treeheightMaptype());
       this.map.mapTypes.set('dark', darkMaptype());
       this.map.mapTypes.set('positron', positronMaptype());
+      this.map.mapTypes.set('openstreet', openStreetMaptype());
       for (var i = 1999; i < 2015; i++) {
         this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
       }
