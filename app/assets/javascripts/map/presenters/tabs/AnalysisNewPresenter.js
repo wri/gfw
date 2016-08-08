@@ -60,7 +60,6 @@ define([
 
         // Options
         threshold: 30,
-        fit_to_geom: null,
         mobileEnabled: false,
         subscribe: false
 
@@ -250,10 +249,6 @@ define([
         p.useid = this.status.get('useid');
       }
 
-      if (this.status.get('fit_to_geom')) {
-        p.fit_to_geom = 'true';
-      }
-
       if (this.status.get('tab')) {
         p.tab = this.status.get('tab');
       }
@@ -300,7 +295,7 @@ define([
             use: params.use,
             useid: params.useid,
 
-            subscribe: params.subscribe
+            subscribe: !!params.subscribe
           })
 
         }
@@ -578,6 +573,7 @@ define([
       this.publishSubscribtion();
     },
 
+
     /**
      * TO-DO: improve this
      * 4 TYPES OF ANALYSIS
@@ -630,7 +626,6 @@ define([
         }
       }
     },
-
 
 
     /**

@@ -1,21 +1,66 @@
 define([
-  'backbone', 'handlebars', 'moment', 'chosen',
-  'connect/views/ListItemDeleteConfirmView', 'connect/views/SubscriptionListItemLayerSelectView',
+  'backbone',
+  'handlebars',
+  'moment',
+  'chosen',
+  'uri',  
+  'connect/views/ListItemDeleteConfirmView',
+  'connect/views/SubscriptionListItemLayerSelectView',
   'text!connect/templates/subscriptionListItem.handlebars'
 ], function(
-  Backbone, Handlebars, moment, chosen,
-  ListItemDeleteConfirmView, SubscriptionListItemLayerSelectView,
+  Backbone,
+  Handlebars,
+  moment,
+  chosen,
+  UriTemplate,
+  ListItemDeleteConfirmView,
+  SubscriptionListItemLayerSelectView,
   tpl
 ) {
 
   'use strict';
+
 
   var LANGUAGE_MAP = {
     'EN': 'English',
     'PT': 'Portuguese'
   };
 
+  var MAP_URL = '/map/3/0/0/{iso}/grayscale/{baselayers}{?fit_to_geom,geostore,wdpaid,use,useid}';
+
   var SubscriptionListItemView = Backbone.View.extend({
+    // We should change this to a common view
+    datasets: [
+      {
+        name: 'loss',
+        slug: 'umd-loss-gain',
+      },{
+        name: 'forestgain',
+        slug: 'umd-loss-gain'
+      },{
+        name: 'forma',
+        slug: 'forma-alerts'
+      },{
+        name: 'imazon',
+        slug: 'imazon-alerts',
+      },{
+        name: 'terrailoss',
+        slug: 'terrai-alerts',
+      },{
+        name: 'prodes',
+        slug: 'prodes-loss',
+      },{
+        name: 'guyra',
+        slug: 'guira-loss',
+      },{
+        name: 'viirs_fires_alerts',
+        slug: 'viirs-active-fires',
+      },{
+        name: 'umd_as_it_happens',
+        slug: 'glad-alerts',
+      }
+    ],
+
     events: {
       'click .subscriptions-delete-item': 'confirmDestroy',
       'click h4': 'editName',
@@ -41,6 +86,7 @@ define([
 
       subscription.language = LANGUAGE_MAP[subscription.language];
       subscription.confirmationUrl = this.confirmationUrl();
+      subscription.viewOnMapURL = this.viewOnMapURL();
       subscription.topics = this.subscription.formattedTopics();
       if (subscription.createdAt !== undefined) {
         subscription.createdAt = moment(subscription.createdAt).
@@ -65,6 +111,22 @@ define([
         subscription.id + '/send_confirmation';
     },
 
+    viewOnMapURL: function() {
+      var subscription = this.subscription.toJSON();
+      var iso = _.compact(_.values(subscription.params.iso)).join('-') || 'ALL';
+      var baselayers = _.pluck(_.where(this.datasets, { slug: subscription.datasets[0]}), 'name');
+      var mapObject = {
+        iso: iso,
+        baselayers: baselayers,
+        fit_to_geom: true,
+        geostore: subscription.params.geostore,
+        wdpaid: subscription.params.wdpaid,
+        use: subscription.params.use,
+        useid: subscription.params.useid,
+      }
+      return new UriTemplate(MAP_URL).fillFromObject(mapObject);
+    },
+
     viewOnMap: function() {
       window.ga('send', 'event', 'User Profile', 'Go to the Map');
     },
@@ -74,7 +136,9 @@ define([
 
       var confirmView = new ListItemDeleteConfirmView({
         model: this.subscription});
+      
       this.$el.append(confirmView.render().el);
+      
       this.listenTo(confirmView, 'confirmed', function() {
         this.destroy();
         window.ga('send', 'event', 'User Profile', 'Delete Subscription');

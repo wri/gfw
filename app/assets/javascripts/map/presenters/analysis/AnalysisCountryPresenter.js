@@ -31,6 +31,8 @@ define([
         enabled: true,
         enabledSubscription: true,
 
+        fit_to_geom: false,
+
         country: null,
         regions: null,
         region: null,
@@ -72,6 +74,8 @@ define([
               region: params.iso.region
             },
             isoDisabled: (!!params.dont_analyze) || !(!!params.iso.country && params.iso.country != 'ALL'),
+
+            fit_to_geom: !!params.fit_to_geom
           });
         }
       },

@@ -242,6 +242,11 @@ define([
 
       this.presenter.status.set('overlay_country', overlay, { silent: true });
       this.presenter.status.set('geojson_country', this.getGeojson(overlay), { silent: true });
+
+      if (this.presenter.status.get('fit_to_geom')) {
+        var bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+        this.map.fitBounds(bounds);
+      }
     }
 
 

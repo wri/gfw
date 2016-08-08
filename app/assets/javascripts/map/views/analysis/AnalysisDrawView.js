@@ -376,6 +376,11 @@ define([
       this.presenter.status.set('geojson', this.getGeojson(overlay), { silent: true });
 
       this.eventsDrawing();
+
+      if (this.presenter.status.get('fit_to_geom')) {
+        var bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+        this.map.fitBounds(bounds);
+      }
     }
 
   });
