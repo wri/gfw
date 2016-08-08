@@ -27,12 +27,39 @@ define([
 
       this.user = new User();
       this.user.on('sync', this.render);
-      this.user.fetch().done(function(){
-        this.view.render();
-      }.bind(this));
+      this.user.fetch()
+        .done(function(){
+          this.view.render();
+        }.bind(this))
+
+        .error(function(){
+          this.view.render();
+        }.bind(this))
+
 
       mps.publish('Place/register', [this]);
     },
+
+    /**
+     * Application subscriptions.
+     */
+    _subscriptions: [{
+      'Subscribe/show': function(status) {
+        this.show(status);
+      }
+    }, {
+      'Subscribe/hide': function() {
+        this.view.close();
+      }
+    },{
+      'Subscribe/geom': function(geom) {
+        this.geom_for_subscription = geom;
+      }
+    },{
+      'Subscribe/reload': function() {
+        this.view.refreshEmail();
+      }
+    }],
 
     /**
      * Presenter methods.
@@ -66,7 +93,7 @@ define([
        } else {
          this.subscribeEnd();
        }
-       this.view.setClose();
+       this.view.hide();
      },
 
      createSubscription: function(options) {
@@ -121,27 +148,6 @@ define([
 
        this.view.updateCurrentStep(this.currentStep);
      },
-
-    /**
-     * Application subscriptions.
-     */
-    _subscriptions: [{
-      'Subscribe/show': function(status) {
-        this.show(status);
-      }
-    }, {
-      'Subscribe/hide': function() {
-        this.view.close();
-      }
-    },{
-      'Subscribe/geom': function(geom) {
-        this.geom_for_subscription = geom;
-      }
-    },{
-      'Subscribe/reload': function() {
-        this.view.refreshEmail();
-      }
-    }],
 
     subscribeEnd: function(){
       mps.publish('Subscribe/end');
