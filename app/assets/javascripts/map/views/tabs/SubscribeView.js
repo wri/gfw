@@ -20,7 +20,7 @@ define([
       'click .subscription-modal-backdrop': 'onClickClose',
       'click .subscription-sign-in': 'onClickTrackSignIn',
       'click #returnToMap': 'onClickClose',
-      'click #showName': 'onClickAskForName',
+      'click #showName': 'onClickCheckEmail',
       'click #subscribe': 'onClickSubscribe',
     },
 
@@ -50,15 +50,6 @@ define([
       return this;
     },
 
-    setupAuthLinks: function() {
-      var apiHost = window.gfw.config.GFW_API_HOST;
-
-      this.$('.subscription-sign-in').each(function() {
-        var $link = $(this);
-        $link.attr('href', apiHost + $link.attr('href'));
-      });
-    },
-
     cache: function() {
       this.$spinner = this.$el.find('.subscription-spinner-container');
       this.$subscriptionName = this.$el.find('#subscriptionName');
@@ -77,15 +68,21 @@ define([
       this.render();
     },
 
+    setupAuthLinks: function() {
+      var apiHost = window.gfw.config.GFW_API_HOST;
+
+      this.$('.subscription-sign-in').each(function() {
+        var $link = $(this);
+        $link.attr('href', apiHost + $link.attr('href'));
+      });
+    },
+
     updateCurrentStep: function(step) {
       this.$steps.removeClass('current');
       this.$steps.eq(step).addClass('current');
     },
 
-    isOpen: function() {
-      return this.$el.hasClass('is-active');
-    },
-
+    // Spinners
     showSpinner: function() {
       this.$spinner.css('visibility', 'visible');
     },
@@ -98,7 +95,7 @@ define([
      * UI EVENTS
      * - onClickClose
      * - onClickTrackSignIn
-     * - onClickAskForName
+     * - onClickCheckEmail
      * - onClickSubscribe
      * @param  {[object]} e
      */
@@ -107,24 +104,24 @@ define([
         e.preventDefault();
         e.stopPropagation();
       }
-      this.presenter.close();
+      this.presenter.hide();
     },
 
     onClickTrackSignIn: function(e) {
       window.ga('send', 'event', 'User Profile', 'Signin', 'menu');
     },
 
-    onClickAskForName: function(e) {
-      this.presenter.askForName(this.$subscriptionEmail.val());
+    onClickCheckEmail: function(e) {
+      this.presenter.checkEmail(this.$subscriptionEmail.val());
     },
 
     onClickSubscribe: function(e) {
       this.showSpinner();
 
-      this.presenter.subscribe(
-        this.$subscriptionName.val(),
-        this.$subscriptionLanguage.val()
-      );
+      this.presenter.subscribe({        
+        name: this.$subscriptionName.val(),
+        language: this.$subscriptionLanguage.val()
+      });
     }
 
   });

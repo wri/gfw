@@ -41,15 +41,35 @@ define([
     },
 
     /**
+     * Used by PlaceService to get the current iso/geom params.
+     *
+     * @return {object} iso/geom params
+     */
+    getPlaceParams: function() {
+      var p = {};
+
+      p.subscribe = this.status.get('subscribe');
+
+      return p;
+    },
+
+    /**
      * Application subscriptions.
      */
     _subscriptions: [{
+      'Place/go': function(place) {
+        var params = place.params;
+        this.status.set({
+          subscribe: params.subscribe
+        });
+      }
+    },{
       'Subscribe/show': function(status) {
         this.show(status);
       }
     }, {
       'Subscribe/hide': function() {
-        this.view.close();
+        this.view.hide();
       }
     },{
       'Subscribe/geom': function(geom) {
@@ -64,61 +84,56 @@ define([
     /**
      * Presenter methods.
      */
-     refreshEmail: function() {
-       if (_.isEmpty(this.user.get('email'))) {
-         this.view.showSpinner();
-         this.user.fetch();
-       }
-     },
+    show: function(options) {
+      this.refreshEmail();
 
-     show: function(options) {
-       this.refreshEmail();
+      this.setSubscribeState(!this.user.isLoggedIn());       
+      this.setSubscription(options);
+      this.publishUpdateUrl();
 
-       if (!this.user.isLoggedIn()) {
-         this.setSubscribeState();
-       }
-       this.updateUrl();
+      this.currentStep = 0;
+      this.view.show();
+    },
 
-       this.createSubscription(options);
-       this.currentStep = 0;
-       this.view.show();
-     },
+    hide: function() {
+      this.setSubscribeState(null);
+      this.publishUpdateUrl();
 
-     close: function() {
-       this.unSetSubscribeState();
-       this.updateUrl();
+      (this.subscription.isNew()) ? this.publishSubscribeCancel() : this.publishSubscribeEnd();
 
-       if (this.subscription.isNew()) {
-         this.subscribeCancel();
-       } else {
-         this.subscribeEnd();
-       }
-       this.view.hide();
-     },
+      this.view.hide();
+    },
 
-     createSubscription: function(options) {
-      var params = _.pick(options,
-        'iso', 'geostore', 'wdpaid', 'use', 'useid');
+    nextStep: function(index) {
+      if (this.currentStep === undefined) {
+        this.currentStep = 0;
+      }
 
-      this.subscription = new Subscription({
-        datasets: [options.dataset],
-        params: params
-      });
-     },
+      if (index !== undefined && _.isNumber(index)) {
+        this.currentStep = index;
+      } else {
+        this.currentStep += 1;
+      }
 
-     subscribe: function(name) {
-       this.subscription.set('name', name);
+      this.view.updateCurrentStep(this.currentStep);
+    },
 
-       this.user.setEmailIfEmpty(this.subscription.get('resource').content);
-       this.user.save({ email: this.user.attributes.email }, { patch: true });
+    subscribe: function(status) {
+      // Set name and language
+      this.subscription.set(status);
 
-       this.subscription.save()
-        .then(this.onSave.bind(this))
-        .fail(this.close.bind(this));
-     },
+      // Set email and save it in the user Model
+      this.user.setEmailIfEmpty(this.subscription.get('resource').content);
+      this.user.save({ email: this.user.attributes.email }, { patch: true });
 
-     askForName: function(email) {
-       this.subscription.set('resource', {
+      this.subscription.save()
+          .then(this.onSubscriptionSave.bind(this))
+          .fail(this.onSubscriptionFail.bind(this));
+    },
+
+    // Email
+    checkEmail: function(email) {
+      this.subscription.set('resource', {
         type: 'EMAIL',
         content: email
       });
@@ -126,71 +141,72 @@ define([
       if (this.subscription.hasValidEmail()) {
         this.nextStep();
       } else {
-        this.notificate('notification-email-incorrect');
+        this.publishNotification('notification-email-incorrect');
       }
-     },
-
-     onSave: function() {
-       this.view.hideSpinner();
-       this.nextStep();
-     },
-
-     nextStep: function(index) {
-       if (this.currentStep === undefined) {
-         this.currentStep = 0;
-       }
-
-       if (index !== undefined && _.isNumber(index)) {
-         this.currentStep = index;
-       } else {
-         this.currentStep += 1;
-       }
-
-       this.view.updateCurrentStep(this.currentStep);
-     },
-
-    subscribeEnd: function(){
-      mps.publish('Subscribe/end');
     },
 
-    subscribeCancel: function(){
-      mps.publish('Subscribe/cancel');
+    refreshEmail: function() {
+      if (_.isEmpty(this.user.get('email'))) {
+        this.view.showSpinner();
+        this.user.fetch();
+      }
+    },    
+
+    // Subscription
+    onSubscriptionSave: function() {
+      this.view.hideSpinner();
+      this.nextStep();
     },
 
-    updateUrl: function() {
-      mps.publish('Place/update', [{go: false}]);
-    },
-
-    setSubscribeState: function() {
-      this.status.set('subscribe', true);
-      this.updateUrl();
-    },
-
-    unSetSubscribeState: function() {
-      this.status.set('subscribe', null);
-      this.updateUrl();
+    onSubscriptionFail: function() {
+      this.view.hideSpinner();
+      this.hide();
+      this.publishNotification('notification-subscription-incorrect');
     },
 
     /**
-     * Used by PlaceService to get the current iso/geom params.
-     *
-     * @return {object} iso/geom params
+     * PUBLISHERS
+     * - publishSubscribeEnd
+     * - publishSubscribeCancel
+     * - publishUpdateUrl
+     * - publishNotification
      */
-    getPlaceParams: function() {
-      var p = {};
-
-      if (this.view.isOpen()) {
-        p.tab = 'analysis-tab';
-      }
-
-      p.subscribe = this.status.get('subscribe');
-
-      return p;
+    publishSubscribeEnd: function(){
+      mps.publish('Subscribe/end');
     },
 
-    notificate: function(id){
+    publishSubscribeCancel: function(){
+      mps.publish('Subscribe/cancel');
+    },
+
+    publishUpdateUrl: function() {
+      mps.publish('Place/update', [{go: false}]);
+    },
+
+    publishNotification: function(id){
       mps.publish('Notification/open', [id]);
-    }
+    },
+
+
+
+    /**
+     * SETTERS
+     * - setSubscription
+     * - setSubscribeState
+     */
+    setSubscription: function(options) {
+      var params = _.pick(options, 'iso', 'geostore', 'wdpaid', 'use', 'useid');
+      this.subscription = new Subscription({
+        datasets: [options.dataset],
+        params: params
+      });
+    },
+
+    setSubscribeState: function(to) {
+      this.status.set('subscribe', to);
+      this.publishUpdateUrl();
+    },
+
 
   });
 
