@@ -61,7 +61,8 @@ define([
         // Options
         threshold: 30,
         fit_to_geom: null,
-        mobileEnabled: false
+        mobileEnabled: false,
+        subscribe: false
 
       }
     })),
@@ -211,6 +212,9 @@ define([
       this.status.on('change:spinner', this.changeSpinner.bind(this));
       this.status.on('change:subtab', this.changeSubtab.bind(this));
 
+      // Subscription
+      this.status.on('change:subscribe', this.changeSubscribe.bind(this));
+
       // Mobile
       this.status.on('change:mobileEnabled', this.changeMobileEnabled.bind(this));
 
@@ -295,6 +299,8 @@ define([
             wdpaid: params.wdpaid,
             use: params.use,
             useid: params.useid,
+
+            subscribe: params.subscribe
           })
 
         }
@@ -566,6 +572,10 @@ define([
 
     changeIsDrawing: function() {
       this.status.set('mobileEnabled', !this.status.get('isDrawing'));
+    },
+
+    changeSubscribe: function() {
+      this.publishSubscribtion();
     },
 
     /**

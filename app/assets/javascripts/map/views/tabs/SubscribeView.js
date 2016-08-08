@@ -28,6 +28,14 @@ define([
       this.presenter = new Presenter(this);
     },
 
+    cache: function() {
+      this.$spinner = this.$el.find('.subscription-spinner-container');
+      this.$subscriptionName = this.$el.find('#subscriptionName');
+      this.$subscriptionLanguage = this.$el.find('#subscriptionLanguage');
+      this.$subscriptionEmail = this.$el.find('#subscriptionEmail');
+      this.$steps = this.$el.find('.steps');
+    },
+
     render: function(){
       this.$el.html(this.template({
         loggedIn: this.presenter.user.isLoggedIn(),
@@ -36,27 +44,22 @@ define([
         dataset: this.presenter.subscription &&
                  this.presenter.subscription.formattedTopic().long_title
       }));
-      this.setupAuthLinks();
-      this.cache();
 
-      this.$('#subscriptionLanguage').chosen({
+      this.setupAuthLinks();
+      
+      this.cache();
+      this.renderChosen();
+    },
+
+    renderChosen: function() {
+      this.$subscriptionLanguage.chosen({
         width: '100%',
         allow_single_deselect: true,
         inherit_select_classes: true,
         disable_search: true,
         no_results_text: 'Oops, nothing found!'
       });
-
-      return this;
-    },
-
-    cache: function() {
-      this.$spinner = this.$el.find('.subscription-spinner-container');
-      this.$subscriptionName = this.$el.find('#subscriptionName');
-      this.$subscriptionLanguage = this.$el.find('#subscriptionLanguage');
-      this.$subscriptionEmail = this.$('#subscriptionEmail');
-      this.$steps = this.$('.steps');
-    },
+    },   
 
     show: function(){
       this.$el.addClass('is-active');
@@ -68,8 +71,17 @@ define([
       this.render();
     },
 
+    // Spinners
+    showSpinner: function() {
+      this.$spinner.css('visibility', 'visible');
+    },
+
+    hideSpinner: function() {
+      this.$spinner.css('visibility', 'hidden');
+    },
+
     setupAuthLinks: function() {
-      var apiHost = window.gfw.config.GFW_API_HOST;
+      var apiHost = window.gfw.config.GFW_API_HOST_NEW_API;
 
       this.$('.subscription-sign-in').each(function() {
         var $link = $(this);
@@ -82,14 +94,6 @@ define([
       this.$steps.eq(step).addClass('current');
     },
 
-    // Spinners
-    showSpinner: function() {
-      this.$spinner.css('visibility', 'visible');
-    },
-
-    hideSpinner: function() {
-      this.$spinner.css('visibility', 'hidden');
-    },
 
     /**
      * UI EVENTS
@@ -100,11 +104,8 @@ define([
      * @param  {[object]} e
      */
     onClickClose: function(e) {
-      if (e !== undefined && e.preventDefault) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      this.presenter.hide();
+      e && e.preventDefault() && e.stopPropagation()
+      this.presenter.status.set('visibility', false);
     },
 
     onClickTrackSignIn: function(e) {
@@ -118,7 +119,7 @@ define([
     onClickSubscribe: function(e) {
       this.showSpinner();
 
-      this.presenter.subscribe({        
+      this.presenter.saveSubscription({        
         name: this.$subscriptionName.val(),
         language: this.$subscriptionLanguage.val()
       });

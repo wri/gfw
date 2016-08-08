@@ -17,7 +17,7 @@ define([
 
     status: new (Backbone.Model.extend({
       defaults: {
-        subscribe: null
+        visibility: false
       }
     })),
 
@@ -26,7 +26,6 @@ define([
       this._super();
 
       this.user = new User();
-      this.user.on('sync', this.render);
       this.user.fetch()
         .done(function(){
           this.view.render();
@@ -36,8 +35,13 @@ define([
           this.view.render();
         }.bind(this))
 
+      this.listeners();
 
       mps.publish('Place/register', [this]);
+    },
+
+    listeners: function() {
+      this.status.on('change:visibility', this.changeVisibility.bind(this));
     },
 
     /**
@@ -48,7 +52,7 @@ define([
     getPlaceParams: function() {
       var p = {};
 
-      p.subscribe = this.status.get('subscribe');
+      p.subscribe = !!this.status.get('visibility') || null;
 
       return p;
     },
@@ -57,51 +61,27 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Place/go': function(place) {
-        var params = place.params;
-        this.status.set({
-          subscribe: params.subscribe
-        });
-      }
-    },{
-      'Subscribe/show': function(status) {
-        this.show(status);
+      'Subscribe/show': function(analysisStatus) {
+        this.setSubscription(analysisStatus);
+        this.status.set('visibility', true);
       }
     }, {
       'Subscribe/hide': function() {
-        this.view.hide();
-      }
-    },{
-      'Subscribe/geom': function(geom) {
-        this.geom_for_subscription = geom;
-      }
-    },{
-      'Subscribe/reload': function() {
-        this.view.refreshEmail();
+        this.status.set('visibility', false);
       }
     }],
 
     /**
      * Presenter methods.
      */
-    show: function(options) {
-      this.refreshEmail();
-
-      this.setSubscribeState(!this.user.isLoggedIn());       
-      this.setSubscription(options);
-      this.publishUpdateUrl();
-
+    show: function() { 
       this.currentStep = 0;
       this.view.show();
     },
 
     hide: function() {
-      this.setSubscribeState(null);
-      this.publishUpdateUrl();
-
-      (this.subscription.isNew()) ? this.publishSubscribeCancel() : this.publishSubscribeEnd();
-
       this.view.hide();
+      this.view.hideSpinner();
     },
 
     nextStep: function(index) {
@@ -118,19 +98,6 @@ define([
       this.view.updateCurrentStep(this.currentStep);
     },
 
-    subscribe: function(status) {
-      // Set name and language
-      this.subscription.set(status);
-
-      // Set email and save it in the user Model
-      this.user.setEmailIfEmpty(this.subscription.get('resource').content);
-      this.user.save({ email: this.user.attributes.email }, { patch: true });
-
-      this.subscription.save()
-          .then(this.onSubscriptionSave.bind(this))
-          .fail(this.onSubscriptionFail.bind(this));
-    },
-
     // Email
     checkEmail: function(email) {
       this.subscription.set('resource', {
@@ -145,40 +112,50 @@ define([
       }
     },
 
-    refreshEmail: function() {
-      if (_.isEmpty(this.user.get('email'))) {
-        this.view.showSpinner();
-        this.user.fetch();
-      }
-    },    
-
     // Subscription
+    saveSubscription: function(status) {
+      // Set name and language
+      this.subscription.set(status);
+
+      // Set email and save it in the user Model
+      this.user.setEmailIfEmpty(this.subscription.get('resource').content);
+      this.user.save({ email: this.user.attributes.email }, { patch: true });
+
+      this.subscription.save()
+          .then(this.onSubscriptionSave.bind(this))
+          .fail(this.onSubscriptionFail.bind(this));
+    },
+
     onSubscriptionSave: function() {
       this.view.hideSpinner();
       this.nextStep();
     },
 
     onSubscriptionFail: function() {
-      this.view.hideSpinner();
-      this.hide();
+      this.status.set('Subscribe/geom', false);
       this.publishNotification('notification-subscription-incorrect');
     },
 
+
+    /**
+     * CHANGES
+     */
+    changeVisibility: function() {
+      if (this.status.get('visibility')) {
+        this.show();
+      } else {
+        this.hide();
+      }
+      this.publishUpdateUrl();
+    },
+
+
+
     /**
      * PUBLISHERS
-     * - publishSubscribeEnd
-     * - publishSubscribeCancel
      * - publishUpdateUrl
      * - publishNotification
      */
-    publishSubscribeEnd: function(){
-      mps.publish('Subscribe/end');
-    },
-
-    publishSubscribeCancel: function(){
-      mps.publish('Subscribe/cancel');
-    },
-
     publishUpdateUrl: function() {
       mps.publish('Place/update', [{go: false}]);
     },
@@ -192,21 +169,15 @@ define([
     /**
      * SETTERS
      * - setSubscription
-     * - setSubscribeState
      */
-    setSubscription: function(options) {
-      var params = _.pick(options, 'iso', 'geostore', 'wdpaid', 'use', 'useid');
+    setSubscription: function(analysisStatus) {
+      var params = _.pick(analysisStatus, 'iso', 'geostore', 'wdpaid', 'use', 'useid');
+      
       this.subscription = new Subscription({
-        datasets: [options.dataset],
+        datasets: [analysisStatus.dataset],
         params: params
       });
     },
-
-    setSubscribeState: function(to) {
-      this.status.set('subscribe', to);
-      this.publishUpdateUrl();
-    },
-
 
   });
 
