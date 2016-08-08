@@ -60,7 +60,7 @@ define([
     },
 
     cache: function() {
-      this.$spinner = this.$('.subscription-spinner-container');
+      this.$spinner = this.$el.find('.subscription-spinner-container');
       this.$subscriptionName = this.$el.find('#subscriptionName');
       this.$subscriptionLanguage = this.$el.find('#subscriptionLanguage');
       this.$subscriptionEmail = this.$('#subscriptionEmail');
@@ -69,11 +69,10 @@ define([
 
     show: function(){
       this.$el.addClass('is-active');
-
       this.render();
     },
 
-    setClose: function() {
+    hide: function() {
       this.$el.removeClass('is-active');
       this.render();
     },
