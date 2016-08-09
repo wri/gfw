@@ -10,8 +10,9 @@ define([
   'mps', 
   'bluebird', 
   'moment',
+  'map/services/GeostoreService'  
 
-], function(PresenterClass, _, Backbone, mps, Promise, moment) {
+], function(PresenterClass, _, Backbone, mps, Promise, moment, GeostoreService) {
 
   'use strict';
 
@@ -38,13 +39,21 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-        'Geostore/go': function(response, fit_to_geom) {
+        'Place/go': function(place) {
+          var params = place.params;
           this.status.set({
-            geojson: response.data.attributes.geojson,
-            fit_to_geom: !!fit_to_geom
-          }, { silent: true });
+            geostore: params.geostore,
+            fit_to_geom: !!params.fit_to_geom,
+          });
+        }
+      },{
+        'Geostore/go': function(response) {
+          var geojson = response.data.attributes.geojson;
 
-          this.view.drawGeojson(response.data.attributes.geojson.features[0].geometry);
+          this.status.set({
+            geojson: geojson
+          }, { silent: true });
+          this.view.drawGeojson(geojson.features[0].geometry);
         }
       },{
         'Analysis/hideGeojson': function() {
@@ -68,7 +77,9 @@ define([
     listeners: function() {
       this.status.on('change:is_drawing', this.changeIsDrawing.bind(this));
       this.status.on('change:geojson', this.changeGeojson.bind(this));
+      this.status.on('change:geostore', this.changeGeostore.bind(this));
     },
+
 
     // DRAW
     changeIsDrawing: function() {
@@ -80,6 +91,13 @@ define([
       }
     },
 
+    changeGeostore: function() {
+      if (!!this.status.get('geostore')) {
+        GeostoreService.get(this.status.get('geostore')).then(function(geojson) {
+          mps.publish('Geostore/go', [geojson]);
+        });
+      }
+    },
 
     // GEOJSON
     changeGeojson: function() {
