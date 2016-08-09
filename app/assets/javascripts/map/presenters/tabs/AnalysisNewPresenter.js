@@ -281,7 +281,7 @@ define([
 
             // Dates
             begin: (!params.begin && !this.status.get('begin')) ? '2001-01-01' : params.begin || this.status.get('begin'),
-            end: (!params.end && !this.status.get('end')) ? '2015-01-01' : params.begin || this.status.get('end'),
+            end: (!params.end && !this.status.get('end')) ? '2015-01-01' : params.end || this.status.get('end'),
 
             // Options
             threshold: params.threshold,
