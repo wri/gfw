@@ -418,8 +418,10 @@ define([
             return moment(date).format(dateFormat);
           });
 
-          this.status.set('begin', date[0]);
-          this.status.set('end', date[1]);
+          this.status.set({
+            begin: date[0],
+            end: date[1]
+          });
         }
       },
       {
