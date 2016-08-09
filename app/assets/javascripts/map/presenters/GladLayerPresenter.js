@@ -46,8 +46,7 @@ define([
 
     setConfirmedStatus: function(layerOptions) {
       layerOptions = layerOptions || [];
-      this.status.set('hideUnconfirmed',
-        layerOptions.indexOf('glad_confirmed_only') > -1);
+      this.status.set('hideUnconfirmed', layerOptions.indexOf('gladConfirmOnly') > -1);
     },
 
     animationStarted: function(bounds) {

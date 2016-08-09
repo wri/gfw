@@ -61,7 +61,9 @@ define([
         // Options
         threshold: 30,
         mobileEnabled: false,
-        subscribe: false
+        subscribe: false,
+
+        layerOptions: null
 
       }
     })),
@@ -182,6 +184,8 @@ define([
 
       this.status.on('change:dataset', this.changeDataset.bind(this));
 
+      this.status.on('change:layerOptions', this.changeLayerOptions.bind(this));
+
       // Enabled
       this.status.on('change:enabled', this.changeEnabled.bind(this));
       this.status.on('change:enabledSubscription', this.changeEnabledSubscription.bind(this));
@@ -278,6 +282,7 @@ define([
             // Baselayer
             baselayers: _.pluck(params.baselayers, 'slug'),
             baselayer: layerSpec.getBaselayer(),
+            layerOptions: params.layerOptions,
 
             // Dates
             begin: (!params.begin && !this.status.get('begin')) ? '2001-01-01' : params.begin || this.status.get('begin'),
@@ -310,6 +315,11 @@ define([
             this.status.set('baselayers', _.keys(layerSpec.getBaselayers()));
             this.status.set('baselayer', layerSpec.getBaselayer());
           }
+        }
+      },
+      {
+        'LayerNav/changeLayerOptions': function(layerOptions) {
+          this.status.set('layerOptions', _.clone(layerOptions));
         }
       },
       {
@@ -524,6 +534,10 @@ define([
       if (!!this.status.get('dataset')) {
         this.publishAnalysis();
       }
+    },
+
+    changeLayerOptions: function() {
+      this.publishAnalysis();
     },
 
     changeActive: function() {
