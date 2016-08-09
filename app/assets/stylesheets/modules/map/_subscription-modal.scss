@@ -111,7 +111,8 @@
     }
 
     label {
-      margin-top: 7px;
+      display: block;
+      margin: 7px 0 5px;
       text-transform: none;
       font-size: 14px;
       font-weight: 500;
@@ -137,18 +138,6 @@
 
 .subscription-language-container {
   width: 100%;
-
-  .chosen-container.default .chosen-single {
-    border-radius: 4px;
-    color: #000;
-    text-transform: none;
-    line-height: 1.5em;
-    font-weight: normal;
-  }
-
-  .chosen-container .chosen-single span {
-    font-size: 15px;
-  }
 }
 
 .subscription-authentication {

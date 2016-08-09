@@ -163,6 +163,11 @@ define([
       
       this.presenter.status.set('overlay_shape', overlay, { silent: true });
       this.presenter.status.set('geojson_shape', this.getGeojson(overlay), { silent: true });
+
+      if (this.presenter.status.get('fit_to_geom')) {
+        var bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+        this.map.fitBounds(bounds);
+      }
     }
 
   });

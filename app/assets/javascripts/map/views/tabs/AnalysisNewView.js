@@ -135,7 +135,6 @@ define([
 
     onClickSubscribe: function(e) {
       e && e.preventDefault() && e.stopPropagation();
-      console.log('Subscribe analysis');
       if (this.presenter.status.get('enabledSubscription')) {
         this.presenter.publishSubscribtion();
         // ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + this.params.layer.title);

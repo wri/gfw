@@ -21,7 +21,9 @@ define([
         overlay: null,
         geojson: null,
         is_drawing: false,
-
+        
+        fit_to_geom: false,
+        
         overlay_stroke_weight: 2        
       }
     })),
@@ -36,8 +38,12 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-        'Geostore/go': function(response) {
-          this.status.set('geojson', response.data.attributes.geojson, {silent: true});
+        'Geostore/go': function(response, fit_to_geom) {
+          this.status.set({
+            geojson: response.data.attributes.geojson,
+            fit_to_geom: !!fit_to_geom
+          }, { silent: true });
+
           this.view.drawGeojson(response.data.attributes.geojson.features[0].geometry);
         }
       },{

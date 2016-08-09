@@ -60,8 +60,10 @@ define([
 
         // Options
         threshold: 30,
-        fit_to_geom: null,
-        mobileEnabled: false
+        mobileEnabled: false,
+        subscribe: false,
+
+        layerOptions: null
 
       }
     })),
@@ -182,6 +184,8 @@ define([
 
       this.status.on('change:dataset', this.changeDataset.bind(this));
 
+      this.status.on('change:layerOptions', this.changeLayerOptions.bind(this));
+
       // Enabled
       this.status.on('change:enabled', this.changeEnabled.bind(this));
       this.status.on('change:enabledSubscription', this.changeEnabledSubscription.bind(this));
@@ -210,6 +214,9 @@ define([
       // UI
       this.status.on('change:spinner', this.changeSpinner.bind(this));
       this.status.on('change:subtab', this.changeSubtab.bind(this));
+
+      // Subscription
+      this.status.on('change:subscribe', this.changeSubscribe.bind(this));
 
       // Mobile
       this.status.on('change:mobileEnabled', this.changeMobileEnabled.bind(this));
@@ -246,10 +253,6 @@ define([
         p.useid = this.status.get('useid');
       }
 
-      if (this.status.get('fit_to_geom')) {
-        p.fit_to_geom = 'true';
-      }
-
       if (this.status.get('tab')) {
         p.tab = this.status.get('tab');
       }
@@ -279,10 +282,11 @@ define([
             // Baselayer
             baselayers: _.pluck(params.baselayers, 'slug'),
             baselayer: layerSpec.getBaselayer(),
+            layerOptions: params.layerOptions,
 
             // Dates
-            begin: (params.begin) ? params.begin : '2001-01-01',
-            end: (params.begin) ? params.end : '2015-01-01',
+            begin: (!params.begin && !this.status.get('begin')) ? '2001-01-01' : params.begin || this.status.get('begin'),
+            end: (!params.end && !this.status.get('end')) ? '2015-01-01' : params.end || this.status.get('end'),
 
             // Options
             threshold: params.threshold,
@@ -295,6 +299,8 @@ define([
             wdpaid: params.wdpaid,
             use: params.use,
             useid: params.useid,
+
+            subscribe: !!params.subscribe
           })
 
         }
@@ -309,6 +315,11 @@ define([
             this.status.set('baselayers', _.keys(layerSpec.getBaselayers()));
             this.status.set('baselayer', layerSpec.getBaselayer());
           }
+        }
+      },
+      {
+        'LayerNav/changeLayerOptions': function(layerOptions) {
+          this.status.set('layerOptions', _.clone(layerOptions));
         }
       },
       {
@@ -417,8 +428,10 @@ define([
             return moment(date).format(dateFormat);
           });
 
-          this.status.set('begin', date[0]);
-          this.status.set('end', date[1]);
+          this.status.set({
+            begin: date[0],
+            end: date[1]
+          });
         }
       },
       {
@@ -523,6 +536,10 @@ define([
       }
     },
 
+    changeLayerOptions: function() {
+      this.publishAnalysis();
+    },
+
     changeActive: function() {
       this.publishAnalysis();
     },
@@ -567,6 +584,14 @@ define([
     changeIsDrawing: function() {
       this.status.set('mobileEnabled', !this.status.get('isDrawing'));
     },
+
+    changeSubscribe: function() {
+      // This function is used to show the subscription modal view whenever you find
+      if (!!this.status.get('subscribe')) {
+        this.publishSubscribtion();
+      }
+    },
+
 
     /**
      * TO-DO: improve this
@@ -620,7 +645,6 @@ define([
         }
       }
     },
-
 
 
     /**

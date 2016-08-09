@@ -12,11 +12,11 @@ define([
   var APIURL = window.gfw.config.GFW_API_HOST_NEW_API;
 
   var APIURLS = {
-    'draw'         : '/{dataset}{?geostore,period,thresh}',
-    'country'      : '/{dataset}/admin{/country}{/region}{?period,thresh}',
-    'wdpaid'       : '/{dataset}/wdpa{/wdpaid}{?period,thresh}',
-    'use'          : '/{dataset}/use{/use}{/useid}{?period,thresh}',
-    'use-geostore' : '/{dataset}{?geostore,period,thresh}',
+    'draw'         : '/{dataset}{?geostore,period,thresh,gladConfirmOnly}',
+    'country'      : '/{dataset}/admin{/country}{/region}{?period,thresh,gladConfirmOnly}',
+    'wdpaid'       : '/{dataset}/wdpa{/wdpaid}{?period,thresh,gladConfirmOnly}',
+    'use'          : '/{dataset}/use{/use}{/useid}{?period,thresh,gladConfirmOnly}',
+    'use-geostore' : '/{dataset}{?geostore,period,thresh,gladConfirmOnly}',
   };
 
   var AnalysisService = Class.extend({
@@ -66,7 +66,14 @@ define([
     },
 
     buildAnalysisFromStatus: function(status) {
-      return _.extend({}, status, {
+      // To allow layerOptions
+      // I really think that this should be an object instead of an array, or an array of objects
+      var layerOptions = {};
+      _.each(status.layerOptions, function(val) {
+        layerOptions[val] = true;
+      });
+
+      return _.extend({}, status, layerOptions, {
         country: status.iso.country,
         region: status.iso.region,
         thresh: status.threshold,
@@ -75,7 +82,7 @@ define([
         // If a userGeostore exists we need to set geostore and type manually
         geostore: (status.useGeostore) ? status.useGeostore : status.geostore,
         type: (status.useGeostore) ? 'use-geostore' : status.type
-      });
+      }, layerOptions);
     },
 
     /**
