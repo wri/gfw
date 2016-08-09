@@ -132,7 +132,7 @@ define([
     },
 
     onSubscriptionFail: function() {
-      this.status.set('Subscribe/geom', false);
+      this.status.set('visibility', false);
       this.publishNotification('notification-subscription-incorrect');
     },
 

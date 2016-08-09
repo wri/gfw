@@ -38,10 +38,6 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-        'Place/go': function(place) {
-          var params = place.params;
-        }
-      },{
         'Geostore/go': function(response, fit_to_geom) {
           this.status.set({
             geojson: response.data.attributes.geojson,

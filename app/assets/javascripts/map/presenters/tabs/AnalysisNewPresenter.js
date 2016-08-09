@@ -570,7 +570,10 @@ define([
     },
 
     changeSubscribe: function() {
-      this.publishSubscribtion();
+      // This function is used to show the subscription modal view whenever you find
+      if (!!this.status.get('subscribe')) {
+        this.publishSubscribtion();
+      }
     },
 
 
