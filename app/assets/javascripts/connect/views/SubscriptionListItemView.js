@@ -119,10 +119,10 @@ define([
         iso: iso,
         baselayers: baselayers,
         fit_to_geom: true,
-        geostore: subscription.params.geostore,
-        wdpaid: subscription.params.wdpaid,
-        use: subscription.params.use,
-        useid: subscription.params.useid,
+        geostore: (!!subscription.params.geostore) ? subscription.params.geostore : null,
+        wdpaid: (!!subscription.params.wdpaid) ? subscription.params.wdpaid : null,
+        use: (!!subscription.params.use) ? subscription.params.use : null,
+        useid: (!!subscription.params.useid) ? subscription.params.useid : null,
       }
       return new UriTemplate(MAP_URL).fillFromObject(mapObject);
     },
