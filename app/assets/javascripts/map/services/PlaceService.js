@@ -137,12 +137,6 @@ define([
           mps.publish('Place/go', [place]);
         }, this)
       );
-
-      if (place.params.geostore) {
-        GeostoreService.get(place.params.geostore).then(function(geostore) {
-          mps.publish('Geostore/go', [geostore, place.params.fit_to_geom]);
-        });
-      }
     },
 
     /**

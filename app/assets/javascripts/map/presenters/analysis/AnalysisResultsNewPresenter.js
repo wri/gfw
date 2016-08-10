@@ -10,8 +10,7 @@ define([
   'moment',
   'mps',
   'map/services/RegionService',
-  'helpers/geojsonUtilsHelper'
-], function(PresenterClass, _, Backbone, moment, mps, RegionService, geojsonUtilsHelper) {
+], function(PresenterClass, _, Backbone, moment, mps, RegionService) {
 
   'use strict';
 
@@ -42,16 +41,6 @@ define([
       {
         'LayerNav/change': function(layerSpec) {
           this.status.set('baselayers_full', layerSpec.getBaselayers(), {silent: true});
-        }
-      },
-      {
-        'Geostore/go': function(response) {
-          this.status.set('geojson', response.data.attributes.geojson, {silent: true});
-        }
-      },
-      {
-        'Analysis/store-geojson': function(geojson) {
-          this.status.set('geojson', geojson, {silent: true});
         }
       },
       {
