@@ -104,6 +104,8 @@ define([
 
     setTargetOfLinks: function() {
       this.$el.find('a').attr('target', '_blank');
+      // Buff, such a selector...
+      this.$el.find('a[href^="mailto:gfw"]').addClass('data-suggestion-link');
     },
 
     /**
