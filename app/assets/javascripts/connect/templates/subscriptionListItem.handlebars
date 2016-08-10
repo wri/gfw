@@ -14,7 +14,7 @@
   </div>
   {{/unless}}
 
-  <h4>
+  <h4 class="btn-edit-name-subscription">
     {{#if name}}
       {{name}}
     {{else}}
@@ -22,29 +22,36 @@
     {{/if}}
   </h4>
 
-  <ul class="metadata">
+  <ul class="metadata-list">
     <li>
-      Data set:
-      <span class="dataset">{{topics}}</span>
+      <span class="metadata-title">Data set:</span>
+      <span class="metadata-info">{{topics}}</span>
     </li>
-    <li>Date of subscription: {{createdAt}} UTC</li>
-    <li>Language:
-      <span id="subscriptionLanguage">{{language}}</span>
-      <select data-placeholder="Select language" class="chosen-select default notranslate" id="subscriptionLanguageSelector">
-        <option value="EN">English</option>
-        <option value="PT">Portuguese</option>
-      </select>
+
+    <li>
+      <span class="metadata-title">Date of subscription:</span>
+      <span class="metadata-info">{{createdAt}} UTC</span>
+    </li>
+    
+    <li>
+      <span class="metadata-title">Language:</span>
+      <span class="metadata-info">
+        <select data-placeholder="Select language" class="chosen-select default notranslate" id="select-language-subscription">
+          <option value="en">English</option>
+          <option value="pt">Portuguese</option>
+        </select>
+      </span>
     </li>
   </ul>
 </td>
 
 <td>
   <svg><use xlink:href="#icon-h-map"></use></svg>
-  <span><a href="{{viewOnMapURL}}" target="_blank" class="view-on-map">View on Map</a></span>
+  <span><a href="{{viewOnMapURL}}" target="_blank" class="btn-view-on-map-subscription">View on Map</a></span>
 </td>
 
 <td>
   <svg><use xlink:href="#icon-analysis-remove"></use></svg>
-  <a href="#" class="subscriptions-delete-item">Delete</a>
+  <a href="#" class="btn-delete-subscription">Delete</a>
 </td>
 

@@ -107,39 +107,43 @@
     color: $dark;
     font-size: 21px;
     margin: 0 0 5px;
+    display: flex;
+    justify-content: flex-start;
+    border: 1px solid transparent;
     @media (min-width:$br-mobile){
       line-height: 39px;
     }
 
   }
 
-  h4.editing input {
+  h4 input {
+    display: block;
     width: 100%;
     font-size: 21px;
     color: $dark;
     font-family: inherit;
     border: none;
+    @media (min-width:$br-mobile){
+      line-height: 37px;
+    }
   }
 
-  ul {
-    font-weight: 200;
+  .metadata-list {
+    font-weight: 400;
     color: #9f9f9f;
     font-size: 14px;
 
     li {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      min-height: 20px;
       margin-top: 5px;
-    }
-  }
 
-  #subscriptionLanguage.editing {
-    display: none;
-  }
-
-  #subscriptionLanguageSelector_chosen {
-    display: none;
-
-    &.editing {
-      display: inline-block;
+      .metadata-title {
+        color: $dark;
+        margin: 0 5px 0 0;
+      }
     }
   }
 
@@ -234,11 +238,5 @@
     a {
       width: 45%;
     }
-  }
-}
-
-.my-gfw-subscription-select {
-  &.m-select {
-    display: inline-block;
   }
 }

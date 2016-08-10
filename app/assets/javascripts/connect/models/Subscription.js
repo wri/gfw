@@ -5,6 +5,11 @@ define([
   'use strict';
 
   var DATASETS = {
+    'umd-loss-gain': {
+      title: 'Tree cover loss',
+      long_title: 'annual tree cover loss data',
+      sub_title: 'annual, 30m, global, Hansen/UMD/Google/USGS/NASA'
+    },
     'terrai-alerts': {
       title: 'Terra-i alerts',
       long_title: 'monthly Terra-i tree cover loss alerts',
@@ -19,16 +24,6 @@ define([
       title: 'QUICC alerts',
       long_title: 'quarterly QUICC tree cover loss alerts',
       sub_title: 'quarterly, 5km, &lt;37 degrees north, NASA'
-    },
-    'umd-loss-gain': {
-      title: 'Tree cover loss',
-      long_title: 'annual tree cover loss data',
-      sub_title: 'annual, 30m, global, Hansen/UMD/Google/USGS/NASA'
-    },
-    'alerts/treegain': {
-      title: 'Tree cover gain',
-      long_title: '12-year tree cover gain data',
-      sub_title: '12 years, 30m, global, Hansen/UMD/Google/USGS/NASA'
     },
     'prodes-loss': {
       title: 'PRODES deforestation',

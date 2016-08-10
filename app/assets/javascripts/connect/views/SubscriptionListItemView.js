@@ -3,7 +3,8 @@ define([
   'handlebars',
   'moment',
   'chosen',
-  'uri',  
+  'uri',
+  'mps',  
   'connect/views/ListItemDeleteConfirmView',
   'connect/views/SubscriptionListItemLayerSelectView',
   'text!connect/templates/subscriptionListItem.handlebars'
@@ -13,6 +14,7 @@ define([
   moment,
   chosen,
   UriTemplate,
+  mps,
   ListItemDeleteConfirmView,
   SubscriptionListItemLayerSelectView,
   tpl
@@ -22,8 +24,8 @@ define([
 
 
   var LANGUAGE_MAP = {
-    'EN': 'English',
-    'PT': 'Portuguese'
+    'en': 'English',
+    'pt': 'Portuguese'
   };
 
   var MAP_URL = '/map/3/0/0/{iso}/grayscale/{baselayers}{?fit_to_geom,geostore,wdpaid,use,useid}';
@@ -62,13 +64,12 @@ define([
     ],
 
     events: {
-      'click .subscriptions-delete-item': 'confirmDestroy',
-      'click h4': 'editName',
-      'click #subscriptionLanguage': 'editLanguage',
-      'click .view-on-map': 'viewOnMap',
-      'click .dataset': 'editLayers',
-      'blur h4': 'saveName',
-      'keyup': 'handleKeyUp'
+      'click .btn-edit-name-subscription': 'onClickEditName',
+      'blur  .btn-edit-name-subscription': 'onBlurEditName',
+      'change #select-language-subscription': 'onChangeLanguage',
+      'click .btn-delete-subscription': 'onClickDestroy',
+      'click .btn-view-on-map-subscription': 'onClickViewOnMap',
+      'click .btn-dataset-subscription': 'onClickDataset'
     },
 
     tagName: 'tr',
@@ -77,41 +78,50 @@ define([
 
     initialize: function(options) {
       this.subscription = options.subscription;
-
       this.render();
     },
 
     render: function() {
-      var subscription = this.subscription.toJSON();
-
-      subscription.language = LANGUAGE_MAP[subscription.language];
-      subscription.confirmationUrl = this.confirmationUrl();
-      subscription.viewOnMapURL = this.viewOnMapURL();
-      subscription.topics = this.subscription.formattedTopics();
-      if (subscription.createdAt !== undefined) {
-        subscription.createdAt = moment(subscription.createdAt).
-        format('dddd, YYYY-MM-DD, h:mm a');
-      }
-
-      this.$el.html(this.template(subscription));
-
-      this.$('#subscriptionLanguageSelector').chosen({
-        width: '150px',
-        allow_single_deselect: true,
-        inherit_select_classes: true,
-        no_results_text: 'Oops, nothing found!'
+      var subscription = _.extend({}, this.subscription.toJSON(), {
+        confirmationUrl: this.getConfirmationURL(),
+        viewOnMapURL: this.getViewOnMapURL(),
+        topics: this.subscription.formattedTopics(),
+        createdAt: (!!this.subscription.get('createdAt')) ? moment(this.subscription.get('createdAt')).format('dddd, YYYY-MM-DD, h:mm a') : this.subscription.get('createdAt')
       });
-
+      console.log(subscription);
+      this.$el.html(this.template(subscription));
+      this.cache();
+      this.renderChosen();
       return this;
     },
 
-    confirmationUrl: function() {
-      var subscription = this.subscription.toJSON();
-      return window.gfw.config.GFW_API_HOST_NEW_API + '/subscriptions/' +
-        subscription.id + '/send_confirmation';
+    cache: function() {
+      this.$selectLanguage = this.$el.find('#select-language-subscription');
     },
 
-    viewOnMapURL: function() {
+    renderChosen: function() {
+      this.$selectLanguage
+        .val(this.subscription.get('language'))
+        // .chosen({
+        //   width: '150px',
+        //   disable_search: true,
+        //   allow_single_deselect: true,
+        //   inherit_select_classes: true,
+        //   no_results_text: 'Oops, nothing found!'
+        // });
+    },
+
+    /**
+     * GETTERS
+     * - getConfirmationURL
+     * - getViewOnMapURL
+     */
+    getConfirmationURL: function() {
+      var subscription = this.subscription.toJSON();
+      return window.gfw.config.GFW_API_HOST_NEW_API + '/subscriptions/' + subscription.id + '/send_confirmation';
+    },
+
+    getViewOnMapURL: function() {
       var subscription = this.subscription.toJSON();
       var iso = _.compact(_.values(subscription.params.iso)).join('-') || 'ALL';
       var baselayers = _.pluck(_.where(this.datasets, { slug: subscription.datasets[0]}), 'name');
@@ -127,108 +137,38 @@ define([
       return new UriTemplate(MAP_URL).fillFromObject(mapObject);
     },
 
-    viewOnMap: function() {
-      window.ga('send', 'event', 'User Profile', 'Go to the Map');
-    },
-
-    confirmDestroy: function(event) {
-      event.preventDefault();
-
-      var confirmView = new ListItemDeleteConfirmView({
-        model: this.subscription});
-      
-      this.$el.append(confirmView.render().el);
-      
-      this.listenTo(confirmView, 'confirmed', function() {
-        this.destroy();
-        window.ga('send', 'event', 'User Profile', 'Delete Subscription');
-      }.bind(this));
-    },
-
-    destroy: function() {
-      this.subscription.destroy({
-        success: this.remove.bind(this)});
-    },
-
-    editLayers: function() {
-      var layerSelectView = new SubscriptionListItemLayerSelectView({
-        subscription: this.subscription});
-      this.$('.dataset').replaceWith(layerSelectView.render().el);
-
-      this.listenTo(layerSelectView, 'complete', this.render);
-    },
-
-    editName: function(event) {
-      var $el = $(event.currentTarget);
-      if (!$el.hasClass('editing')) {
+    /**
+     * UI EVENTS
+     * - onClickEditName
+     * - onBlurEditName
+     * - onChangeLanguage
+     * - onClickDestroy
+     * - onClickViewOnMap
+     * - onClickDataset
+     * - onKeyUp
+     */
+    // Name
+    onClickEditName: function(e) {
+      var $el = $(e.currentTarget);
+      if (!$el.hasClass('-editing')) {
         var value = this.subscription.get('name');
 
-        $el.addClass('editing').
+        $el.addClass('-editing').
           html('<input />').
           find('input').val(value).
           focus();
+
+        $el.on('keyup.'+this.subscription.get('id'), this.onKeyUpEditName.bind(this));
       }
     },
 
-    editLanguage: function(event) {
-      var $el = $(event.currentTarget);
-      if (!$el.hasClass('editing')) {
-        $el.addClass('editing');
-
-        var value = this.subscription.get('language');
-        this.$('#subscriptionLanguageSelector').
-          val(value).
-          on('change', this.saveLanguage.bind(this)).
-          trigger('chosen:updated');
-        this.$('#subscriptionLanguageSelector_chosen').addClass('editing');
-      }
-    },
-
-    saveLanguage: function(event) {
-      var $el = this.$('#subscriptionLanguageSelector_chosen');
-      if ($el.hasClass('editing')) {
-        var $selector = this.$('#subscriptionLanguageSelector'),
-            old_value = this.subscription.get('language'),
-            new_value = $selector.val();
-
-        this.subscription.save('language', new_value, {
-          wait: true,
-          silent: true,
-          success: this.resetLanguage.bind(this),
-          error: function() {
-            $selector.
-              addClass('error').
-              val(old_value);
-          }
-        });
-      }
-    },
-
-    resetLanguage: function() {
-      var $el = this.$('#subscriptionLanguage'),
-          $selector = this.$('#subscriptionLanguageSelector'),
-          value = this.subscription.get('language');
-
-      $el.removeClass('editing').html(LANGUAGE_MAP[value]);
-      $selector.removeClass('editing').val(value).trigger('chosen:updated');
-    },
-
-    handleKeyUp: function(event) {
-      if (event.keyCode === 13) {
-        return $(event.currentTarget).blur();
-      }
-
-      if (event.keyCode === 27) {
-        this.resetLanguage();
-        return this.resetName();
-      }
-    },
-
-    saveName: function(event) {
-      var $el = $(event.currentTarget);
-      if ($el.hasClass('editing')) {
+    onBlurEditName: function(e) {
+      var $el = $(e.currentTarget);
+      if ($el.hasClass('-editing')) {
         var old_value = this.subscription.get('name'),
             new_value = $el.find('input').val();
+
+        $el.off('keyup.'+this.subscription.get('id'));
 
         this.subscription.save('name', new_value, {
           patch: true,
@@ -245,10 +185,81 @@ define([
       }
     },
 
+    onKeyUpEditName: function(e) {
+      console.log(e.keyCode);
+      if (e.keyCode === 13) {
+        return $(e.currentTarget).blur();
+      }
+
+      if (e.keyCode === 27) {
+        return this.resetName();
+      }
+    },
+
+    // Language
+    onChangeLanguage: function(e) {
+      var $el = $(e.currentTarget),
+          old_value = this.subscription.get('language'),
+          new_value = $el.val();
+
+      this.subscription.save('language', new_value, {
+        wait: true,
+        silent: true,
+        patch: true,
+        success: function() {
+          $el
+            .removeClass('error')
+            .val(new_value)
+        },
+        error: function() {
+          $el
+            .addClass('error')
+            .val(old_value);
+        }
+      });      
+    },
+
+    // Destroy
+    onClickDestroy: function(e) {
+      e.preventDefault();
+
+      // Create and append confirm view
+      var confirmView = new ListItemDeleteConfirmView({
+        model: this.subscription
+      });
+      this.$el.append(confirmView.render().el);
+      
+      // Listen to confirmed param of confirmView
+      this.listenTo(confirmView, 'confirmed', function() {
+        this.subscription.destroy({
+          success: this.remove.bind(this)
+        });
+        mps.publish('Notification/open', ['notification-my-gfw-subscription-deleted']);       
+        window.ga('send', 'event', 'User Profile', 'Delete Subscription');
+      }.bind(this));
+    },
+
+    // View on map
+    onClickViewOnMap: function() {
+      window.ga('send', 'event', 'User Profile', 'Go to the Map');
+    },
+
+    // Datasets
+    onClickDataset: function() {
+      var layerSelectView = new SubscriptionListItemLayerSelectView({subscription: this.subscription});
+      this.$('.dataset').replaceWith(layerSelectView.render().el);
+
+      this.listenTo(layerSelectView, 'complete', this.render);
+    },
+
+    /**
+     * HELPERS
+     * - resetName
+     */
     resetName: function() {
-      var $el = this.$('h4'),
+      var $el = this.$('.btn-edit-name-subscription'),
           value = this.subscription.get('name');
-      $el.removeClass('editing').html(value);
+      $el.removeClass('-editing').html(value);
     }
   });
 
