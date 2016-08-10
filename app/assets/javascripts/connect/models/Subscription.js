@@ -72,8 +72,8 @@ define([
 
     formattedTopics: function() {
       return this.get('datasets').map(function(layerName) {
-        return DATASETS[layerName].title;
-      }).join(', ');
+        return DATASETS[layerName];
+      });
     },
 
     parse: function(response) {

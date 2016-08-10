@@ -22,27 +22,29 @@
     {{/if}}
   </h4>
 
-  <ul class="metadata-list">
-    <li>
-      <span class="metadata-title">Data set:</span>
-      <span class="metadata-info">{{topics}}</span>
-    </li>
+  {{#each topics}}
+    <ul class="metadata-list">
+      <li>
+        <span class="metadata-title">Data set:</span>
+        <span class="metadata-info">{{title}}</span>
+      </li>
 
-    <li>
-      <span class="metadata-title">Date of subscription:</span>
-      <span class="metadata-info">{{createdAt}} UTC</span>
-    </li>
-    
-    <li>
-      <span class="metadata-title">Language:</span>
-      <span class="metadata-info">
-        <select data-placeholder="Select language" class="chosen-select default notranslate" id="select-language-subscription">
-          <option value="en">English</option>
-          <option value="pt">Portuguese</option>
-        </select>
-      </span>
-    </li>
-  </ul>
+      <li>
+        <span class="metadata-title">Date of subscription:</span>
+        <span class="metadata-info">{{../createdAt}} UTC</span>
+      </li>
+      
+      <li>
+        <span class="metadata-title">Language:</span>
+        <span class="metadata-info">
+          <select data-placeholder="Select language" class="chosen-select default notranslate" id="select-language-subscription">
+            <option value="en">English</option>
+            <option value="pt">Portuguese</option>
+          </select>
+        </span>
+      </li>
+    </ul>
+  {{/each}}
 </td>
 
 <td>

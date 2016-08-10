@@ -88,7 +88,7 @@ define([
         topics: this.subscription.formattedTopics(),
         createdAt: (!!this.subscription.get('createdAt')) ? moment(this.subscription.get('createdAt')).format('dddd, YYYY-MM-DD, h:mm a') : this.subscription.get('createdAt')
       });
-      console.log(subscription);
+
       this.$el.html(this.template(subscription));
       this.cache();
       this.renderChosen();
@@ -101,7 +101,7 @@ define([
 
     renderChosen: function() {
       this.$selectLanguage
-        .val(this.subscription.get('language'))
+        .val(this.subscription.get('language') || 'en')
         // .chosen({
         //   width: '150px',
         //   disable_search: true,
