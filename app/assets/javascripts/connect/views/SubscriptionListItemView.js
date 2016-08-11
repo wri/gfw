@@ -3,65 +3,25 @@ define([
   'handlebars',
   'moment',
   'chosen',
-  'uri',
   'mps',  
   'connect/views/ListItemDeleteConfirmView',
-  'connect/views/SubscriptionListItemLayerSelectView',
+  'connect/views/ListItemDatasetsConfirmView',
   'text!connect/templates/subscriptionListItem.handlebars'
 ], function(
   Backbone,
   Handlebars,
   moment,
   chosen,
-  UriTemplate,
   mps,
   ListItemDeleteConfirmView,
-  SubscriptionListItemLayerSelectView,
+  ListItemDatasetsConfirmView,
   tpl
 ) {
 
   'use strict';
 
-
-  var LANGUAGE_MAP = {
-    'en': 'English',
-    'pt': 'Portuguese'
-  };
-
-  var MAP_URL = '/map/3/0/0/{iso}/grayscale/{baselayers}{?fit_to_geom,geostore,wdpaid,use,useid}';
-
   var SubscriptionListItemView = Backbone.View.extend({
     // We should change this to a common view
-    datasets: [
-      {
-        name: 'loss',
-        slug: 'umd-loss-gain',
-      },{
-        name: 'forestgain',
-        slug: 'umd-loss-gain'
-      },{
-        name: 'forma',
-        slug: 'forma-alerts'
-      },{
-        name: 'imazon',
-        slug: 'imazon-alerts',
-      },{
-        name: 'terrailoss',
-        slug: 'terrai-alerts',
-      },{
-        name: 'prodes',
-        slug: 'prodes-loss',
-      },{
-        name: 'guyra',
-        slug: 'guira-loss',
-      },{
-        name: 'viirs_fires_alerts',
-        slug: 'viirs-active-fires',
-      },{
-        name: 'umd_as_it_happens',
-        slug: 'glad-alerts',
-      }
-    ],
 
     events: {
       'click .btn-edit-name-subscription': 'onClickEditName',
@@ -69,10 +29,11 @@ define([
       'change #select-language-subscription': 'onChangeLanguage',
       'click .btn-delete-subscription': 'onClickDestroy',
       'click .btn-view-on-map-subscription': 'onClickViewOnMap',
-      'click .btn-dataset-subscription': 'onClickDataset'
+      'click .btn-dataset-subscription': 'onClickDataset',
+      'click .btn-dataset-remove': 'onClickDatasetRemove',
     },
 
-    tagName: 'tr',
+    tagName: 'li',
 
     template: Handlebars.compile(tpl),
 
@@ -84,8 +45,8 @@ define([
     render: function() {
       var subscription = _.extend({}, this.subscription.toJSON(), {
         confirmationUrl: this.getConfirmationURL(),
-        viewOnMapURL: this.getViewOnMapURL(),
         topics: this.subscription.formattedTopics(),
+        topicsDelete: (this.subscription.get('datasets').length > 1) ? true : false,
         createdAt: (!!this.subscription.get('createdAt')) ? moment(this.subscription.get('createdAt')).format('dddd, YYYY-MM-DD, h:mm a') : this.subscription.get('createdAt')
       });
 
@@ -121,22 +82,6 @@ define([
       return window.gfw.config.GFW_API_HOST_NEW_API + '/subscriptions/' + subscription.id + '/send_confirmation';
     },
 
-    getViewOnMapURL: function() {
-      var subscription = this.subscription.toJSON();
-      var iso = _.compact(_.values(subscription.params.iso)).join('-') || 'ALL';
-      var baselayers = _.pluck(_.where(this.datasets, { slug: subscription.datasets[0]}), 'name');
-      var mapObject = {
-        iso: iso,
-        baselayers: baselayers,
-        fit_to_geom: true,
-        geostore: (!!subscription.params.geostore) ? subscription.params.geostore : null,
-        wdpaid: (!!subscription.params.wdpaid) ? subscription.params.wdpaid : null,
-        use: (!!subscription.params.use) ? subscription.params.use : null,
-        useid: (!!subscription.params.useid) ? subscription.params.useid : null,
-      }
-      return new UriTemplate(MAP_URL).fillFromObject(mapObject);
-    },
-
     /**
      * UI EVENTS
      * - onClickEditName
@@ -170,18 +115,22 @@ define([
 
         $el.off('keyup.'+this.subscription.get('id'));
 
-        this.subscription.save('name', new_value, {
-          patch: true,
-          wait: true,
-          silent: true,
-          success: this.resetName.bind(this),
-          error: function() {
-            $el.find('input').
-              addClass('error').
-              val(old_value).
-              focus();
-          }
-        });
+        // Check if the value has changed before save it
+        if (old_value != new_value) {        
+          this.subscription.save('name', new_value, {
+            patch: true,
+            wait: true,
+            silent: true,
+            success: this.resetName.bind(this),
+            error: function() {
+              $el.find('input').
+                addClass('error').
+                val(old_value).
+                focus();
+            }
+          });
+        }
+
       }
     },
 
@@ -207,14 +156,12 @@ define([
         silent: true,
         patch: true,
         success: function() {
-          $el
-            .removeClass('error')
-            .val(new_value)
+          $el.val(new_value);
+          mps.publish('Notification/open', ['notification-my-gfw-subscription-correct']);
         },
         error: function() {
-          $el
-            .addClass('error')
-            .val(old_value);
+          $el.val(old_value);
+          mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
         }
       });      
     },
@@ -246,16 +193,42 @@ define([
 
     // Datasets
     onClickDataset: function() {
-      var layerSelectView = new SubscriptionListItemLayerSelectView({subscription: this.subscription});
-      this.$('.dataset').replaceWith(layerSelectView.render().el);
+      var confirmView = new ListItemDatasetsConfirmView({
+        model: this.subscription
+      });
 
-      this.listenTo(layerSelectView, 'complete', this.render);
+      this.$el.append(confirmView.render().el);
+      
+      // Listen to confirmed param of confirmView
+      this.listenTo(confirmView, 'confirmed', function(datasets) {
+        this.saveDatasets(datasets);
+      }.bind(this));      
+    },
+
+    onClickDatasetRemove: function(e) {
+      e && e.preventDefault();
+      var datasets = _.without(this.subscription.get('datasets'),$(e.currentTarget).data('dataset'));
+      this.saveDatasets(datasets);
     },
 
     /**
      * HELPERS
      * - resetName
      */
+    saveDatasets: function(datasets) {
+      this.subscription.save('datasets', datasets, {
+        wait: true,
+        silent: true,
+        patch: true,
+        success: function() {
+          mps.publish('Notification/open', ['notification-my-gfw-subscription-correct']);
+        },
+        error: function() {
+          mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
+        }
+      });
+    },
+
     resetName: function() {
       var $el = this.$('.btn-edit-name-subscription'),
           value = this.subscription.get('name');
