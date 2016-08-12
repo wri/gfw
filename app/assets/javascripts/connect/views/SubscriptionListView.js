@@ -1,9 +1,24 @@
 define([
-  'jquery', 'backbone', 'handlebars', 'underscore', 'mps', 'map/utils', 'simplePagination',
+  'jquery',
+  'backbone',
+  'handlebars',
+  'underscore',
+  'mps',
+  'map/utils',
+  'simplePagination',
   'connect/collections/Subscriptions',
   'connect/views/SubscriptionListItemView',
   'text!connect/templates/subscriptionList.handlebars'
-], function($, Backbone, Handlebars, _, mps, utils, simplePagination, Subscriptions, SubscriptionListItemView, tpl) {
+], function($,
+  Backbone,
+  Handlebars,
+  _,
+  mps,
+  utils,
+  simplePagination,
+  Subscriptions,
+  SubscriptionListItemView,
+  tpl) {
 
   'use strict';
 
@@ -34,7 +49,7 @@ define([
         subscriptions: this.subscriptions.toJSON()
       }));
 
-      var $tableBody = this.$('#my-gfw-subscriptions-table-body');
+      var $tableBody = this.$('#subscriptions-list');
       var paginatedSubscriptions = this.getPaginateSubscriptions();
       if (!!paginatedSubscriptions.length) {
         _.each(paginatedSubscriptions, function(subscription) {

@@ -1,54 +1,62 @@
 define([
- 'backbone'
-], function(Backbone) {
+  'backbone',
+  'uri',
+
+], function(Backbone, UriTemplate) {
 
   'use strict';
 
+  var MAP_URL = '/map/3/0/0/{iso}/grayscale/{baselayers}{?fit_to_geom,geostore,wdpaid,use,useid}';
+
   var DATASETS = {
-    'terrai-alerts': {
-      title: 'Terra-i alerts',
-      long_title: 'monthly Terra-i tree cover loss alerts',
-      sub_title: 'monthly, 250m, Latin America, CIAT'
-    },
-    'imazon-alerts': {
-      title: 'SAD aleerts',
-      long_title: 'monthly SAD tree cover loss alerts',
-      sub_title: 'monthly, 250m, Brazilian Amazon, Imazon'
-    },
-    'quicc-alerts': {
-      title: 'QUICC alerts',
-      long_title: 'quarterly QUICC tree cover loss alerts',
-      sub_title: 'quarterly, 5km, &lt;37 degrees north, NASA'
-    },
     'umd-loss-gain': {
       title: 'Tree cover loss',
       long_title: 'annual tree cover loss data',
-      sub_title: 'annual, 30m, global, Hansen/UMD/Google/USGS/NASA'
+      sub_title: 'annual, 30m, global, Hansen/UMD/Google/USGS/NASA',
+      layerSlug: ['loss','gain'],
+      slug: 'umd-loss-gain'
     },
-    'alerts/treegain': {
-      title: 'Tree cover gain',
-      long_title: '12-year tree cover gain data',
-      sub_title: '12 years, 30m, global, Hansen/UMD/Google/USGS/NASA'
+    'terrai-alerts': {
+      title: 'Terra-i Alerts',
+      long_title: 'monthly Terra-i tree cover loss alerts',
+      sub_title: 'monthly, 250m, Latin America, CIAT',
+      layerSlug: ['terrailoss'],
+      slug: 'terrai-alerts'
+    },
+    'imazon-alerts': {
+      title: 'SAD Alerts',
+      long_title: 'monthly SAD tree cover loss alerts',
+      sub_title: 'monthly, 250m, Brazilian Amazon, Imazon',
+      layerSlug: ['imazon'],
+      slug: 'imazon-alerts'
     },
     'prodes-loss': {
       title: 'PRODES deforestation',
       long_title: 'annual PRODES deforestation data',
-      sub_title: 'annual, 30m, Brazilian Amazon, INPE'
+      sub_title: 'annual, 30m, Brazilian Amazon, INPE',
+      layerSlug: ['prodes'],
+      slug: 'prodes-loss'
     },
     'guira-loss': {
       title: 'Gran Chaco deforestation',
       long_title: 'monthly Gran Chaco deforestation data',
-      sub_title: 'monthly, 30m, Gran Chaco, Guyra'
+      sub_title: 'monthly, 30m, Gran Chaco, Guyra',
+      layerSlug: ['guyra'],
+      slug: 'guira-loss'
     },
     'glad-alerts': {
       title: 'GLAD Tree Cover Loss Alerts',
       long_title: 'weekly GLAD tree cover loss alerts',
-      sub_title: 'weekly, 30m, select countries, UMD/GLAD'
+      sub_title: 'weekly, 30m, select countries, UMD/GLAD',
+      layerSlug: ['umd_as_it_happens'],
+      slug: 'glad-alerts'
     },
     'viirs-active-fires': {
       title: 'VIIRS Active fires',
       long_title: 'daily VIIRS active fires alerts',
-      sub_title: 'daily, 375 m, global, NASA'
+      sub_title: 'daily, 375 m, global, NASA',
+      layerSlug: ['viirs_fires_alerts'],
+      slug: 'viirs-active-fires'
     }
   };
 
@@ -77,8 +85,25 @@ define([
 
     formattedTopics: function() {
       return this.get('datasets').map(function(layerName) {
-        return DATASETS[layerName].title;
-      }).join(', ');
+        var topic = DATASETS[layerName];
+        topic.viewOnMapUrl = this.getViewOnMapURL(topic.layerSlug);
+        return topic;
+      }.bind(this));
+    },
+
+    getViewOnMapURL: function(baselayers) {
+      var subscription = this.toJSON();
+      var iso = _.compact(_.values(subscription.params.iso)).join('-') || 'ALL';
+      var mapObject = {
+        iso: iso,
+        baselayers: baselayers,
+        fit_to_geom: true,
+        geostore: (!!subscription.params.geostore) ? subscription.params.geostore : null,
+        wdpaid: (!!subscription.params.wdpaid) ? subscription.params.wdpaid : null,
+        use: (!!subscription.params.use) ? subscription.params.use : null,
+        useid: (!!subscription.params.useid) ? subscription.params.useid : null,
+      }
+      return new UriTemplate(MAP_URL).fillFromObject(mapObject);
     },
 
     parse: function(response) {
