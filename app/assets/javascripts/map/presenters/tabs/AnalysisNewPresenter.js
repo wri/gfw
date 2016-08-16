@@ -348,6 +348,10 @@ define([
             this.status.set('geostore', null);
           }
         }
+      },{
+        'Analysis/store-geostore': function(geostore) {
+          this.status.set('geostore', geostore);
+        }
       },
 
 

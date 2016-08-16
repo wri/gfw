@@ -17,28 +17,18 @@ define([], function() {
     },
 
     glad: {
-      intro:            '<p>Welcome to the Interactive Map! This walk-through will show you <strong>how to subscribe to GLAD Tree Cover Loss Alerts.</strong></p>' +
-                        '<p>Already familiar with GFW? <a href="/map" class="js-skip-tour">Skip the walk through</a>.</p>',
-      layersmenu_1:     '<p>First, select <strong>GLAD Tree Cover Loss Alerts</strong> from the <strong>Forest Change</strong> drop down menu.</p>',
-      legend:           '<p>Then zoom in to one of the areas covered by GLAD Alerts – Peru, the Republic of Congo, or Kalimantan.</p>',
-      analysistab_1:    '<p>Click on the <strong>Analyze and Subscribe icon</strong> to select an area that you want to subscribe to. There are several ways to define your area of interest.</p>',
-      analysistab_2:    '<p>For example, you can draw or upload a custom shape. <strong>Click “Start Drawing”</strong> to outline an area on the map, <strong>or select a file from your computer</strong>. Once your area is defined on the map, click on the <strong>green Subscribe button</strong> to sign up to receive notifications when new GLAD Alerts are detected.</p>' + 
-                        '<p><strong>Note</strong>: You will only be subscribed to GLAD Alerts if they are activated on the map.</p>',
-      analysistab_3:    '<p>You will be prompted to <strong>log in to My GFW</strong> using your Facebook, Twitter, or Google account and create a profile. Then you can enter the email address where you would like to receive alerts, and name your area.</p>' + 
-                        '<p><strong>Note</strong>: You will receive an email from GFW asking you to confirm your subscription. You must confirm your subscription to save it.</p>',
-      analysistab_4:    '<p>You can also select a <strong>country or subnational region</strong> (Peru, the Republic of Congo, or Kalimantan, Indonesia), or a <strong>shape from another data layer</strong> (like Protected Areas), to subscribe to.</p>',
-      log_in:           '<p>Once you subscribe, you can <strong>view and manage your subscriptions</strong> through the <strong>My GFW</strong> feature.</p>',
-      intro2:           '<p>Interested in learning more?</p>' + 
-                        '<p>You can also <strong class="js-next-button">Analyze and Download</strong> GLAD Tree Cover Loss Alerts.</p>' +
-                        '<p>Or <a href="/map" class="js-skip-tour">End Walk Through</a></p>',
-      analysistab_5:    '<p><strong>Analyze</strong> GLAD Alerts for your area of interest by clicking the <strong>green Analyze button</strong> once you have defined an area on the map.</p>' + 
-                        '<p><strong>Reminder</strong>: you can define an area by drawing or uploading a custom shape, selecting a country or subnational region, or clicking on an individual shape from another data layer.</p>',
-      timeline:         '<p>Use the <strong>time selector</strong> at the bottom of the map to change the time interval that you want to analyze.</p>' +
-                        '<p><strong>Note</strong>: dates with a green dot below them indicate that GLAD Alerts were detected on those days.</p>',
-      analysistab_6:    '<p>Once you have completed an analysis, you can <strong>download GLAD Alerts</strong> for your area of interest by clicking on the “Download and Export Data” icon. The analysis can be downloaded in the following file formats: SVG, GeoJSON, SHP, KML, CSV, or opened in Carto DB.</p>'
+      intro:            '<p>Welcome to the <strong>Global Forest Watch Interactive Map</strong>, where you can monitor tree clearing in Brazil and around the world. This short tour will teach you how to use the map to <strong>view, analyze, and subscribe to notifications</strong> for <strong>GLAD alerts in Brazil</strong>: the most up-to-date data on where trees are being lost.</p>',
+      layersmenu_1:     '<p>First, select <strong>GLAD alerts</strong> from the <strong>Forest Change</strong> menu to see where loss is happening. Click on the green information icon to learn more about the data set.</p>',
+      timeline:         '<p>You can change the <strong>start and end dates</strong> for the data you want to display on the map using the calendar. Click the play button to animate the data over time.</p>',
+      analysistab_1:    '<p><strong>Analyze</strong> how many GLAD alerts occurred in a custom area by <strong>drawing a shape</strong> in the map. Your analysis results will show up here. Use the calendar to change the dates of your analysis.</p>',
+      analysistab_2:    '<p>To receive notifications when new GLAD Alerts are detected in your custom area, click <strong>Subscribe</strong>. You will be prompted to <strong>log in to My GFW</strong> using a Facebook, Twitter, or Google+ account. Then you can enter the email address where you want to receive your alerts and name your area.</p>',
+      analysistab_3:    '<p>You can also analyze or subscribe to a <strong>country or subnational region</strong></p>',
+      analysistab_4:    '<p>Or to <strong>a shape</strong> from another data layer using the tabs at the top of the map (ex. Land Use, Conservation, People)</p>'+
+                        '<p>To learn more about how you can use Global Forest Watch to monitor forests, visit our <a href="/howto">How to Portal.</a></p>',
     }
   }
   return guideTexts;
 
 });
+
 

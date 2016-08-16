@@ -1,6 +1,7 @@
 define([
+  'mps',
   'map/helpers/guidetexts',
-],function(guidetexts) {
+],function(mps, guidetexts) {
 
   var guidetexts = guidetexts;
 
@@ -139,6 +140,7 @@ define([
         options: {
           position: 'center',
           callfront: function() {
+            mps.publish('Country/update', [{ country: 'BRA', region: null}]);
             $('#layersnav-forest-change').removeClass('tour-active');
           }
         }
@@ -160,14 +162,13 @@ define([
         }
       },
 
-      // Legend module
+      // Timeline module
       {
-        selector: "#module-legend",
-        text: guidetexts.glad.legend,
+        selector: ".timeline-container",
+        text: guidetexts.glad.timeline,
         options: {
-          position: 'right',
+          position: 'top',
           callfront: function() {
-            // WOOOWWWWW mega selectors...
             $('#layersnav-forest-change').removeClass('tour-active');
             if(!$('#module-legend .layer-sublayer[data-sublayer="gfw_landsat_alerts_coverage"] .onoffswitch').hasClass('checked')) {
               $('#module-legend .layer-sublayer[data-sublayer="gfw_landsat_alerts_coverage"]').click();
@@ -183,6 +184,7 @@ define([
         options: {
           position: 'left',
           callfront: function() {
+            mps.publish('Analysis/store-geostore',['d535e6f303c70181d7f71477139e6f81']);
             $('#analysis-tab-button').removeClass('active').click();
           }
         }
@@ -196,17 +198,20 @@ define([
           position: 'left',
           callfront: function() {
             $('#analysis-tab-button').removeClass('active').click();
-            $('#draw-tab-button').removeClass('active').click();
           }
         }
       },
 
-      // Login
+      // Analysis tab draw
       {
-        selector: "",
+        selector: "#module-tabs",
         text: guidetexts.glad.analysistab_3,
         options: {
-          position: 'center'
+          position: 'left',
+          callfront: function() {
+            $('#analysis-tab-button').removeClass('active').click();
+            mps.publish('Analysis/iso', [{ country: 'BRA', region: null}, false]);
+          }
         }
       },
 
@@ -218,70 +223,10 @@ define([
           position: 'left',
           callfront: function() {
             $('#analysis-tab-button').removeClass('active').click();
-            $('#country-tab-button').removeClass('active').click();
+            mps.publish('Analysis/shape', [{ wdpaid: 352203, use: null, useid: null }]);
           }
         }
       },
-
-      // Analysis tab draw
-      {
-        selector: "#my-gfw-container",
-        text: guidetexts.glad.log_in,
-        options: {
-          position: 'bottom',
-          callfront: function() {
-            $('#analysis-tab-button').addClass('active').click();
-          }
-        }
-      },
-
-      // Analysis tab draw
-      {
-        selector: "",
-        text: guidetexts.glad.intro2,
-        options: {
-          position: 'center'
-        }
-      },
-
-      // Analysis tab draw
-      {
-        selector: "#module-tabs",
-        text: guidetexts.glad.analysistab_5,
-        options: {
-          position: 'left',
-          callfront: function() {
-            $('#analysis-tab-button').removeClass('active').click();
-            $('#draw-tab-button').removeClass('active').click();
-          }
-        }
-      },
-
-      // Timeline module
-      {
-        selector: ".timeline-container",
-        text: guidetexts.glad.timeline,
-        options: {
-          position: 'top',
-          callfront: function() {
-            $('#analysis-tab-button').addClass('active').click();
-          }
-        }
-      },
-
-      // Analysis tab draw
-      {
-        selector: "#module-tabs",
-        text: guidetexts.glad.analysistab_6,
-        options: {
-          position: 'left',
-          callfront: function() {
-            $('#analysis-tab-button').removeClass('active').click();
-            $('#draw-tab-button').removeClass('active').click();
-          }
-        }
-      },
-
     ]
   }
 

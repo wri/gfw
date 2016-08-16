@@ -80,6 +80,18 @@ define([
       'Tour/open': function(tour) {
         this.status.set('tour',tour);
       }
+    },{
+      'Analysis/results': function() {
+        setTimeout(function(){
+          this.view.updatePosition();
+        }.bind(this), 0);
+      }
+    },{
+      'Analysis/results-error': function() {
+        setTimeout(function(){
+          this.view.updatePosition();
+        }.bind(this), 0);
+      }
     }],
 
     getTour: function(tour) {
