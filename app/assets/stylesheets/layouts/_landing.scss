@@ -385,14 +385,14 @@
       font-weight: 300;
       @media (min-width: $br-mobile) {
         font-size: 31px;
-        line-height: 0.5;
+        line-height: 1;
         overflow: hidden;
         span {
           display: inline-block;
           float: left;
           clear: both;
           background: rgba($white,0.75);
-          padding: 12px;
+          padding: 8px 10px 0px;
         }
       }
     }

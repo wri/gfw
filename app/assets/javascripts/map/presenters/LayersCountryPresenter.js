@@ -78,6 +78,10 @@ define([
         this.view.setLayers(layers);
       }
     },{
+      'Country/bounds': function() {
+        this.countryBounds();
+      }
+    },{
       'Analysis/iso': function(iso,isoDisabled) {
         this.status.set('isoDisabled', isoDisabled);
 

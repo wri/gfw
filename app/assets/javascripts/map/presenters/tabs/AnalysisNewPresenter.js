@@ -338,7 +338,7 @@ define([
           this.status.set('isDrawing', false);
         }
       },{
-        'Analysis/store-geojson': function(geojson) {
+        'Analysis/geojson': function(geojson) {
           if (!!geojson) {
             this.status.set('spinner', true);
             GeostoreService.save(geojson).then(function(geostoreId) {
@@ -347,6 +347,11 @@ define([
           } else {
             this.status.set('geostore', null);
           }
+        }
+      },{
+        'Analysis/geostore': function(geostore, fit_to_geom) {
+          this.status.set('fit_to_geom', fit_to_geom);
+          this.status.set('geostore', geostore);
         }
       },
 
@@ -372,6 +377,11 @@ define([
           })
         }
       },
+      {
+        'Subscribe/toggle': function(toggle) {
+          this.status.set('subscribe', !!toggle);
+        }
+      },      
       {
         'Subscribe/shape': function(data) {
           var subscritionObj = {};
@@ -589,6 +599,8 @@ define([
       // This function is used to show the subscription modal view whenever you find
       if (!!this.status.get('subscribe')) {
         this.publishSubscribtion();
+      } else {
+        mps.publish('Subscribe/hide');
       }
     },
 

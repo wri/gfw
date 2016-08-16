@@ -42,8 +42,8 @@ define([
         'Place/go': function(place) {
           var params = place.params;
           this.status.set({
-            geostore: params.geostore,
             fit_to_geom: !!params.fit_to_geom,
+            geostore: params.geostore,
           });
         }
       },{
@@ -54,6 +54,11 @@ define([
             geojson: geojson
           }, { silent: true });
           this.view.drawGeojson(geojson.features[0].geometry);
+        }
+      },{
+        'Analysis/geostore': function(geostore, fit_to_geom) {
+          this.status.set('fit_to_geom', !!fit_to_geom);
+          this.status.set('geostore', geostore);
         }
       },{
         'Analysis/hideGeojson': function() {
@@ -101,7 +106,7 @@ define([
 
     // GEOJSON
     changeGeojson: function() {
-      mps.publish('Analysis/store-geojson', [this.status.get('geojson')]);
+      mps.publish('Analysis/geojson', [this.status.get('geojson')]);
     },
 
 

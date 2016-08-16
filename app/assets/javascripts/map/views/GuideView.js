@@ -220,7 +220,7 @@ define([
     updatePosition: function() {
       // var position = this.model.get('position');
       // var steps = this.model.get('steps');
-      var position =this.presenter.status.get('position');
+      var position = this.presenter.status.get('position');
       var steps = this.presenter.status.get('steps');
 
       if (!!steps[position].options && !!steps[position].options.callfront) {
