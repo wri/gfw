@@ -158,11 +158,15 @@ define([
 
     onClickDownloads: function(e) {
       var $current = $(e.currentTarget),
-          is_active = $current.hasClass('-active');
+          is_active = $current.hasClass('-active'),
+          is_disabled = $current.hasClass('-disabled');
 
-      this.$el.find('.btn-analysis-downloads').toggleClass('-active', !is_active);
-
-      this.presenter.publishDownloadsAnalysis(!is_active);
+      if (!is_disabled) {
+        this.$el.find('.btn-analysis-downloads').toggleClass('-active', !is_active);
+        this.presenter.publishDownloadsAnalysis(!is_active);
+      } else {
+        this.presenter.publishNotification('notification-download-analysis');
+      }
     },
 
     onClickToggle: function(e) {

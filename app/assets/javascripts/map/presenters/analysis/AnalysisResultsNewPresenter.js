@@ -115,6 +115,7 @@ define([
       p.options = {};
       p.options.threshold = this.status.get('threshold');
       p.options.enabledSubscription = this.status.get('enabledSubscription');
+      p.options.enabledDownload = !!results.downloadUrls;
 
       if (!!results.downloadUrls) {
         mps.publish('Analysis/downloads', [results.downloadUrls]);
