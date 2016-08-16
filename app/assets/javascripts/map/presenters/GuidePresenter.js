@@ -82,15 +82,19 @@ define([
       }
     },{
       'Analysis/results': function() {
-        setTimeout(function(){
-          this.view.updatePosition();
-        }.bind(this), 0);
+        if (!!this.status.get('tour')) {        
+          setTimeout(function(){
+            this.view.updatePosition();
+          }.bind(this), 0);
+        }
       }
     },{
       'Analysis/results-error': function() {
-        setTimeout(function(){
-          this.view.updatePosition();
-        }.bind(this), 0);
+        if (!!this.status.get('tour')) {        
+          setTimeout(function(){
+            this.view.updatePosition();
+          }.bind(this), 0);
+        }
       }
     }],
 

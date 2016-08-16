@@ -80,7 +80,7 @@ define([
         options: {
           position: 'left',
           callfront: function() {
-            $('#analysis-tab-button').removeClass('active').click();
+            mps.publish('Tab/toggle', ['analysis-tab', true]);
           }
         }
       },
@@ -140,7 +140,7 @@ define([
         options: {
           position: 'center',
           callfront: function() {
-            mps.publish('Country/update', [{ country: 'BRA', region: null}]);
+            mps.publish('Country/update', [{ country: 'BRA', region: null}]);            
             $('#layersnav-forest-change').removeClass('tour-active');
           }
         }
@@ -153,7 +153,9 @@ define([
         options: {
           position: 'right',
           callfront: function() {
-            // WOOOWWWWW mega selectors...
+            mps.publish('Country/bounds');
+            
+            // TO-DO: develop a toggle layer mps event
             $('#layersnav-forest-change').addClass('tour-active');
             if(!$('#layersnav-forest-change .layer[data-layer="umd_as_it_happens"]').hasClass('selected')) {
               $('#layersnav-forest-change .layer[data-layer="umd_as_it_happens"]').click();
@@ -170,9 +172,6 @@ define([
           position: 'top',
           callfront: function() {
             $('#layersnav-forest-change').removeClass('tour-active');
-            if(!$('#module-legend .layer-sublayer[data-sublayer="gfw_landsat_alerts_coverage"] .onoffswitch').hasClass('checked')) {
-              $('#module-legend .layer-sublayer[data-sublayer="gfw_landsat_alerts_coverage"]').click();
-            }
           }
         }
       },
@@ -184,20 +183,22 @@ define([
         options: {
           position: 'left',
           callfront: function() {
-            mps.publish('Analysis/store-geostore',['d535e6f303c70181d7f71477139e6f81']);
-            $('#analysis-tab-button').removeClass('active').click();
+            mps.publish('Tab/toggle', ['analysis-tab', true]);
+            mps.publish('Subscribe/toggle', [ false ]);            
+            mps.publish('Analysis/geostore',['d535e6f303c70181d7f71477139e6f81', true]);
           }
         }
       },
 
       // Analysis tab draw
       {
-        selector: "#module-tabs",
+        selector: "#subscription-modal .subscription-modal-window",
         text: guidetexts.glad.analysistab_2,
         options: {
           position: 'left',
           callfront: function() {
-            $('#analysis-tab-button').removeClass('active').click();
+            mps.publish('Tab/toggle', ['analysis-tab', true]);
+            mps.publish('Subscribe/toggle', [ true ]);
           }
         }
       },
@@ -209,8 +210,10 @@ define([
         options: {
           position: 'left',
           callfront: function() {
-            $('#analysis-tab-button').removeClass('active').click();
+            mps.publish('Tab/toggle', ['analysis-tab', true]);
+            mps.publish('Subscribe/toggle', [ false ]);
             mps.publish('Analysis/iso', [{ country: 'BRA', region: null}, false]);
+            mps.publish('Country/bounds');
           }
         }
       },
@@ -222,8 +225,13 @@ define([
         options: {
           position: 'left',
           callfront: function() {
-            $('#analysis-tab-button').removeClass('active').click();
+            mps.publish('Tab/toggle', ['analysis-tab', true]);
             mps.publish('Analysis/shape', [{ wdpaid: 352203, use: null, useid: null }]);
+
+            // TO-DO: develop a toggle layer mps event
+            if(!$('#layersnav-conservation .layer[data-layer="protected_areasCDB"]').hasClass('selected')) {
+              $('#layersnav-conservation .layer[data-layer="protected_areasCDB"]').click();
+            }
           }
         }
       },
