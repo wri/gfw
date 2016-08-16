@@ -170,12 +170,13 @@
           <span>Download data</span>
         </a>
       {{else}}
-        <button class="analysis-footer-btn btn-analysis-downloads">
+        <button class="analysis-footer-btn btn-analysis-downloads {{#unless resource.options.enabledDownload}}-disabled{{/unless}}">
           <div>
             <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
             <svg class="icon -inactive"><use xlink:href="#shape-close"></use></svg>
           </div>
           <span>Download data</span>
+          <div class="tooltipmap">Coming soon</div>
         </button>
       {{/ifCond}}
     </li>

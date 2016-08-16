@@ -85,19 +85,19 @@ define([
 
     sourceError: function(error) {
       this.$current.find('svg').attr('class','');
-      console.info('The id you are searching for does not exist in the API');
-      this.sourceStatic(this.sourceModel.get('slug'));
+      console.info('The id '+this.sourceModel.get('slug')+' you are searching for does not exist in the API');
+      this.sourceStatic();
     },
 
     // Fetch content when click fails
-    sourceStatic: function(slug) {
-      var $clone = $('#' + slug).clone();
+    sourceStatic: function() {
+      var $clone = $('#' + this.sourceModel.get('slug')).clone();
       if (!!$clone.length) {
         this.$el.html(this.templateStatic({ clone: $clone.html() }));
         this.show();
         this.setTargetOfLinks();
       } else {
-        console.info('The id you are searching for does not exist');
+        console.info('The id '+ this.sourceModel.get('slug') +' you are searching for does not exist');
         this.presenter.notificate('notification-no-metadata')
       }
     },

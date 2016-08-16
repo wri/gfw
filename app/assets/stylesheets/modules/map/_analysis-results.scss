@@ -112,6 +112,7 @@
     cursor: pointer;
     font-size: 10px;
     line-height: 1;
+    position: relative;
 
     // ICON
     svg {
@@ -133,6 +134,11 @@
     // STATES
     &:hover {
       background: lighten(#eeeeee, 5%);
+
+      .tooltipmap {
+        visibility: visible;
+        opacity: 1;
+      }
     }
 
     &.-active {
@@ -142,6 +148,16 @@
         &.-inactive {
           display: block;
         }
+      }
+    }
+
+    &.-disabled {
+      > span, svg {
+        opacity: 0.5;
+      }
+
+      &:hover {
+        background: #eeeeee;
       }
     }
   }
