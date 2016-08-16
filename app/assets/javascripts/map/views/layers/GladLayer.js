@@ -30,8 +30,8 @@ define([
       this._setupAnimation();
 
       this.currentDate = [
-        moment('2015-01-01'),
-        moment()
+        (!!options.currentDate && !!options.currentDate[0]) ? options.currentDate[0] : moment('2015-01-01'),
+        (!!options.currentDate && !!options.currentDate[1]) ? options.currentDate[1] : moment(),
       ];
 
       this.maxDate = moment();
