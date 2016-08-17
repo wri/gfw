@@ -13,6 +13,7 @@ define([
   'use strict';
 
   var TILE_URL = 'http://wri-tiles.s3.amazonaws.com/glad_prod/tiles{/z}{/x}{/y}.png';
+  var START_DATE = '2015-01-01';
 
   var padNumber = function(number) {
     var s = "00" + number;
@@ -30,11 +31,13 @@ define([
       this._setupAnimation();
 
       this.currentDate = [
-        (!!options.currentDate && !!options.currentDate[0]) ? options.currentDate[0] : moment('2015-01-01'),
-        (!!options.currentDate && !!options.currentDate[1]) ? options.currentDate[1] : moment(),
+        (!!options.currentDate && !!options.currentDate[0]) ?
+          moment.utc(options.currentDate[0]) : moment.utc(START_DATE),
+        (!!options.currentDate && !!options.currentDate[1]) ?
+          moment.utc(options.currentDate[1]) : moment.utc(),
       ];
 
-      this.maxDate = moment();
+      this.maxDate = this.currentDate[1];
     },
 
     _getLayer: function() {
@@ -43,8 +46,8 @@ define([
       var dateService = new GladDateService();
 
       dateService.fetchDates().then(function(response) {
-        this.maxDate = moment(response.max_date);
-        this.currentDate[1] = this.maxDate;
+        // Check max date
+        this._checkMaxDate(response);
         mps.publish('Torque/date-range-change', [this.currentDate]);
         mps.publish('Place/update', [{go: false}]);
 
@@ -58,10 +61,18 @@ define([
       return new UriTemplate(TILE_URL).fillFromObject({x: x, y: y, z: z});
     },
 
+    _checkMaxDate: function(response) {
+      var maxDataDate = moment.utc(response.max_date);
+      if (this.maxDate.isAfter(maxDataDate)) {
+        this.maxDate = maxDataDate;
+        this.currentDate[1] = this.maxDate;
+      }
+    },
+
     filterCanvasImgdata: function(imgdata, w, h, z) {
       if (this.timelineExtent === undefined) {
-        this.timelineExtent = [moment(this.currentDate[0]),
-          moment(this.currentDate[1])];
+        this.timelineExtent = [moment.utc(this.currentDate[0]),
+          moment.utc(this.currentDate[1])];
       }
 
       var startYear = this.timelineExtent[0].year(),
