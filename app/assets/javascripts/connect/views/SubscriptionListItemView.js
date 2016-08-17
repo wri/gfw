@@ -135,7 +135,6 @@ define([
     },
 
     onKeyUpEditName: function(e) {
-      console.log(e.keyCode);
       if (e.keyCode === 13) {
         return $(e.currentTarget).blur();
       }
@@ -170,6 +169,8 @@ define([
     onClickDestroy: function(e) {
       e.preventDefault();
 
+      this.subscription.set('from', 'your profile');
+      
       // Create and append confirm view
       var confirmView = new ListItemDeleteConfirmView({
         model: this.subscription
