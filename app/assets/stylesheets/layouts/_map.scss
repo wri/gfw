@@ -108,11 +108,19 @@ body,html{
 
         a {
           position: relative;
-          &.google-logo, &.gee-logo {
+          
+          &.google-logo, &.gee-logo, &.cartodb-logo {
             top: 2px;
           }
+
           &.uc-logo {
             display: none;
+          }
+
+          &.cartodb-logo {
+            img {
+              max-height: 26px;
+            }
           }
         }
 
