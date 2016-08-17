@@ -1,5 +1,6 @@
 define([
-  'handlebars', 'mps',
+  'handlebars',
+  'mps',
   'map/presenters/GuidePresenter',
   'text!map/templates/guideContainer.handlebars',
   'text!map/templates/guideBubble.handlebars'
@@ -116,7 +117,7 @@ define([
         height = attrs.height;
 
         this.$topMask.css({
-          height: (top - margin) + "px"
+          height: (top - margin > 0) ? (top - margin) : 0
         });
 
         this.$bottomMask.css({
