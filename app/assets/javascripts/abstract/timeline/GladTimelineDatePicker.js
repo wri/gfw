@@ -90,31 +90,29 @@ define([
         this.$root.find('.picker__day').each(function() {
           var $el = $(this);
 
-          var date = new Date($el.data('pick')),
-              dateUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds())),
-              day = dayOfYear(dateUTC);
+          var date = new Date($el.data('pick'));
+          var dateUTC = moment($el.data('pick'));
+          var day = dateUTC.dayOfYear() - 1;
 
-          var histogram = context.histograms[dateUTC.getFullYear()];
+          var histogram = context.histograms[date.getFullYear()];
           if (histogram) {
-            if (histogram[day-1] > 0) {
+            if (histogram[day] > 0) {
               // Disabled dates to prevent inverted selected dates
               //   e.g. picking 6/09 for start, and 4/09 for end
               var id = pickerContext.component.$node.attr('id');
-              date = moment.utc(date);
+              var utcDate = moment.utc(date);
+              var endDate = context.selectedDates.get('endDate');
+              var startDate = context.selectedDates.get('startDate');
 
               if (id === 'startDate') {
-                var endDate = context.selectedDates.get('endDate');
-                if (!date.isAfter(endDate)) {
+                if (!utcDate.isAfter(endDate)) {
                   $el.addClass('picker__has_data');
                 }
               } else if (id === 'endDate') {
-                var startDate = context.selectedDates.get('startDate');
-                if (!date.isBefore(startDate)) {
+                if (!utcDate.isBefore(startDate)) {
                   $el.addClass('picker__has_data');
                 }
               }
-
-              $el.addClass('picker__has_data');
             }
           }
         });
