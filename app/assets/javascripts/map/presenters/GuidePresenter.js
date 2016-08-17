@@ -85,7 +85,7 @@ define([
         if (!!this.status.get('tour')) {        
           setTimeout(function(){
             this.view.updatePosition();
-          }.bind(this), 0);
+          }.bind(this), 50);
         }
       }
     },{
@@ -93,7 +93,7 @@ define([
         if (!!this.status.get('tour')) {        
           setTimeout(function(){
             this.view.updatePosition();
-          }.bind(this), 0);
+          }.bind(this), 50);
         }
       }
     }],

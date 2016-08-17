@@ -18,20 +18,8 @@ define([
 
       // Layers module
       {
-        selector: ".categories-list",
-        text: guidetexts.default.layersmenu_1,
-        options: {
-          position: 'bottom',
-          callfront: function() {
-            $('#layersnav-forest-change').removeClass('tour-active');
-          }
-        }
-      },
-
-      // Layers module
-      {
         selector: "#layersnav-forest-change",
-        text: guidetexts.default.layersmenu_2,
+        text: guidetexts.default.layersmenu_1,
         options: {
           position: 'right',
           callfront: function() {
@@ -85,30 +73,6 @@ define([
         }
       },
 
-      // Basemap tab
-      {
-        selector: "#module-tabs",
-        text: guidetexts.default.basemaptab,
-        options: {
-          position: 'left',
-          callfront: function() {
-            $('#basemaps-tab-button').removeClass('active').click();
-          }
-        }
-      },
-
-      // High resolution tab
-      {
-        selector: "#module-tabs",
-        text: guidetexts.default.hrestab,
-        options: {
-          position: 'left',
-          callfront: function() {
-            $('#hd-tab-button').removeClass('active').click();
-          }
-        }
-      },
-
       // Timeline module
       {
         selector: ".timeline-container",
@@ -116,14 +80,13 @@ define([
         options: {
           position: 'top',
           callfront: function() {
-            $('#basemaps-tab-button').addClass('active').click();
           }
         }
       },
 
       // How to module
       {
-        selector: ".shape-howto",
+        selector: ".m-header-item.shape-howto",
         text: guidetexts.default.howto,
         options: {
           position: 'bottom',
