@@ -663,7 +663,7 @@
 
       >li{
         margin: 20px;
-        
+
         img {
           border: none;
         }
@@ -924,6 +924,7 @@
 }
 .applications-section {
   padding-bottom: 50px;
+  @include clearfix();
   &#develop-your-own-app{
     padding-bottom: 80px;
     .source-article{
@@ -937,7 +938,6 @@
     font-size: 35px;
     color: $dark;
     padding: 40px 20px;
-    text-align: center;
     &:first-child {
       border: 0;
     }
@@ -945,8 +945,7 @@
 
   .subsection-title{
     color: $dark;
-    margin: -20px 0 20px;
-    text-align: center;
+    margin: -20px 20px 20px;
     a{
       margin: 10px auto 0;
        @media (min-width: $br-mobile-portrait) {
@@ -1040,7 +1039,7 @@
   @media (min-width: $br-mobile) {
     padding: 30px 20px 0;
   }
-  
+
   .application-modal-header {
     width: 100%;
     position: relative;
@@ -1308,7 +1307,7 @@
           padding: 0;
         }
       }
-    }  
+    }
 
     .img-two-columns {
       display: flex;
@@ -1319,7 +1318,7 @@
         width: 47.5%;
         margin: 10px 0;
       }
-    }  
+    }
 
     .read_more {
       padding: 10px 0;
@@ -1474,7 +1473,8 @@
   .overview_title,
   .source_coverage_title {
     margin: 30px 0 10px;
-    font: 16px/1.1 "Fira Sans";
+    font: 16px/1.1 "Fira GFW Sans", "Fira Sans";
+    font-feature-settings: "liga" 0;
     font-weight: 500;
     color: $dark;
   }

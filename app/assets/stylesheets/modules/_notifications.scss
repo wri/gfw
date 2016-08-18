@@ -16,12 +16,16 @@
   .close {
     display: block;
     position: absolute;
-    top: 50%; right: 0px;
+    top: 10px;
+    right: 0px;
     width: 40px;
     height: 40px;
     z-index: 20;
-    transform: translate(0,-50%);
-    
+    @media (min-width: $br-mobile){
+      top: 50%;
+      transform: translate(0,-50%);
+    }
+
     svg {
       position: absolute;
       top: 50%;
@@ -31,7 +35,7 @@
       fill: $white;
       transform: translate(-50%,-50%);
     }
-    
+
     &:hover {
       svg {
         fill: darken($white,10%);
@@ -42,8 +46,14 @@
 
   .content {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    @media (min-width: $br-mobile){
+      justify-content: center;
+      align-items: center;
+    }
+
     svg {
       width: 26px;
       height: 26px;
@@ -54,8 +64,19 @@
     p {
       color: $white;
       font-size: 16px;
+      line-height: 1.25;
+      width: 100%;
+      @media (min-width: $br-mobile){
+        width: auto;
+      }
+
       button {
-        margin: 0 0 0 10px;
+        margin: 7px 0 0;
+        display: block;
+        @media (min-width: $br-mobile){
+          margin: 0 0 0 10px;
+          display: inline-block;
+        }
       }
     }
   }
@@ -87,13 +108,13 @@
         color: $dark;
       }
     }
-    
+
     // Close btn
-    .close {     
+    .close {
       svg {
         fill: $dark;
       }
-      
+
       &:hover {
         svg {
           fill: darken($dark,10%);

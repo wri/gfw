@@ -154,28 +154,21 @@
       }
     }
 
-
-    &.chosen-with-drop {
-      .chosen-single {
-        border-radius: 10px 10px 0 0;
-      }
-
-      .chosen-drop {
-        left: 0;
-      }
+    &.chosen-with-drop .chosen-drop {
+      left: 0;
     }
     // Default theme
     &.default{
       .chosen-single{
         color: $dark;
         background-color: $white;
-        border: 1px solid $border;
-
+        border: 1px solid $border1;
+        
         .chosen-default {
           color: $dark;
         }
-        
-        abbr{
+
+        abbr {
           display: block;
         }
       }

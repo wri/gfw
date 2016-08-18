@@ -1,0 +1,35 @@
+<div class="l-inner">
+	<header style="position: relative;">
+		<h2>All the maps<span class="-font-small">({{this.gallery_length}})</span></h2>
+
+	  <div class="m-gallery-select m-select -abs-right">
+	  	<div class="arrow-mobile">
+	  		<svg><use xlink:href="#icon-arrowdown"></use></svg>
+	  	</div>
+	    <select id="gallery-filter">
+	      <option value="all">View all maps</option>
+	      <option value="wri1">Wri 1</option>
+	      <option value="wri2">Wri 2</option>
+	      <option value="wri3">Wri 3</option>
+	    </select>
+	  </div>
+
+
+	</header>
+	<ul class="m-grid -margin">
+		{{#each this.gallery}}	
+			<li class="m-card -gallery">
+				<div class="img" style="background-image: url({{this.thumbnail}})"></div>
+				<h3 class="-primary">{{this.title}}</h3>
+				<p class="-uppercase">{{this.organization}}</p>
+			</li>
+		{{/each}}
+		<li class="m-card -gallery -submit">
+			<a href="#" class="-center">			
+				<svg><use xlink:href="#icon-addmore"></use></svg>
+				<h3 class="-primary">SUBMIT YOUR MAP</h3>
+			</a>
+		</li>
+	</ul>	
+	<div id="gallery-paginator"></div>
+</div>

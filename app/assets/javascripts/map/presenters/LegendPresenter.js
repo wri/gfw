@@ -11,7 +11,7 @@ define([
   'map/presenters/PresenterClass',
   'map/services/LayerSpecService',
   'map/services/CountryService',
-], function(_, Backbone, Promise, mps, PresenterClass, layerSpecService, countryService) {
+], function(_, Backbone, Promise, mps, PresenterClass, layerSpecService, CountryService) {
 
   'use strict';
 
@@ -99,6 +99,13 @@ define([
         this.status.set('iso', _.clone(iso));
         this.updateLegend();
       }
+    },{
+      'Analysis/iso': function(iso,isoDisabled) {
+        if(!!iso.country && iso.country !== 'ALL' && !isoDisabled){
+          this.status.set('iso', _.clone(iso));
+          this.updateLegend();
+        }
+      }
     },
     // Mobile events... we should standardise them
     {
@@ -164,7 +171,7 @@ define([
     },
 
     toggleThreshold: function(){
-      mps.publish('ThresholdControls/toggle');
+      mps.publish('ThresholdControls/show');
     },
 
     toggleOverlay: function(to){
@@ -181,23 +188,25 @@ define([
         var iso = this.status.get('iso');
 
         if(!!iso && !!iso.country && iso.country !== 'ALL'){
-          countryService.execute(iso.country, _.bind(function(results) {
-            var is_more = (!!results.indepth);
-            var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
-            if (is_more) {
-              this.status.set('more', {
-                name: results.name,
-                url: results.indepth,
-                is_idn: is_idn
-              });
-            } else {
-              this.status.set('more', null);
-            }
-            resolve();
-          },this));
+          CountryService.show(iso.country)
+            .then(function(results,status) {
+              var is_more = (!!results.indepth);
+              var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
+              if (is_more) {
+                this.status.set('more', {
+                  name: results.name,
+                  url: results.indepth,
+                  is_idn: is_idn
+                });
+              } else {
+                this.status.set('more', null);
+              }
+              resolve();
+            }.bind(this));
         } else {
+          this.status.set('more', null);
           resolve();
-        }        
+        }
       }.bind(this));
     },
 

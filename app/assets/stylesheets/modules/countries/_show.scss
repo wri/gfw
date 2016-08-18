@@ -11,9 +11,6 @@
 
     .icon-share {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       width: 12px;
       height: 12px;
     }
@@ -1167,6 +1164,7 @@
   } // country-alerts-section
 
   .country-burned_forests {
+
     .burned_forests-graph path {
       stroke: $cGreen;
       stroke-width: 4px;
@@ -1181,6 +1179,32 @@
       stroke-width: 0;
       fill: none;
     }
+
+    .burned_forests-graph .axis {
+      .tick text{
+        font-size: 10px;
+      }
+
+      &.x {
+        .tick text {
+          transform: translate(-50%,0);
+        }        
+      }
+
+      &.y {
+        .tick text {
+          transform: translate(-5px,0);
+        }
+      }
+
+      .tick line{
+        opacity: 0.2;
+        stroke: $dark;
+        stroke-dasharray: 2;        
+      }      
+    }
+
+
 
     .burned_forests-graph {
       position: relative;

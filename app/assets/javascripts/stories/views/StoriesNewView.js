@@ -1,106 +1,96 @@
-/**
- * The StoriesEdit view.
- */
 define([
+  'Class',
   'jquery',
   'backbone',
-  'mps'
-], function($,Backbone,mps) {
+  'mps',
+  'handlebars',
+  'jquery_fileupload',
+  'backbone.syphon',
+  'moment',
+  'underscore',
+  'validate',
+  'stories/models/StoryModel',
+  'stories/models/MediaModel',
+  'stories/views/LatestStoriesView',
+  'text!stories/templates/new_story.handlebars'
+], function(
+  Class,
+  $,
+  Backbone,
+  mps,
+  Handlebars,
+  jquery_fileupload,
+  BackboneSyphon,
+  moment,
+  _,
+  validate,
+  Story,
+  Media,
+  LatestStoriesView,
+  tpl
+) {
 
   'use strict';
 
-
-  var config = {
-    ZOOM: 3,
-    MINZOOM: 3,
-    MAXZOOM: 20,
-    LAT: 15,
-    LNG: 27,
-    ISO: 'ALL',
-    BASEMAP: 'grayscale',
-    BASELAYER: 'loss',
-    MONTHNAMES: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-    MONTHNAMES_SHORT: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
-    QUARTERNAMES: ["JAN - MAR", "APR - JUN", "JUL - SEP", "OCT - DEC"],
-    mapLoaded: false
-  };
-
-  config.MAPOPTIONS = {
-    zoom: config.ZOOM,
-    minZoom: config.MINZOOM,
-    maxZoom: config.MAXZOOM,
-    center: new google.maps.LatLng(config.LAT, config.LNG),
+  var MAP_CONFIG = {
+    zoom: 3,
+    minZoom: 3,
+    maxZoom: 20,
+    center: new google.maps.LatLng(15, 27),
     mapTypeId: google.maps.MapTypeId.HYBRID,
     backgroundColor: '#99b3cc',
     disableDefaultUI: true,
   };
 
+  var constraints = {
+    'title': {
+      presence: {
+        message: "Please enter a title for your story"
+      },
+    },
+    'geojson': {
+      presence: {
+        message: "Please enter a location for your story"
+      },
+    }    
+  };
+
   var StoriesNewView = Backbone.View.extend({
 
-    el: '#storiesNewView',
+    el: '.layout-content',
+
+    template: Handlebars.compile(tpl),
 
     events: {
       'click #controlZoomIn': '_zoomIn',
       'click #controlZoomOut': '_zoomOut',
       'click #autoLocate': '_autoLocate',
-      'input #story_video' : '_videoInput',
-      'dragenter .sortable' : '_dragenter',
-      'dragstart .sortable' : '_dragstart'
+      'input #video' : 'videoInput',
+      'dragenter .sortable' : 'dragenter',
+      'dragstart .sortable' : 'dragstart',
+      'click #submit': 'submit',
+      'click .upload_picture': 'showFileSelector',
     },
-
-    model: new (Backbone.Model.extend({
-      defaults: {
-        the_geom: null
-      }
-    })),
 
     initialize: function() {
-      if (!this.$el.length) {
-        return
-      }
-
-      this.uploadsIds = [];
-      this.filesAdded = 0;
       this.sourceDrag = undefined;
-
-      this._initViews();
-      this._initBindings();
+      this.errors = null;
+      this.story = new Story();
 
       this.render();
+      this.cache();
     },
 
-    /**
-     * UI EVENTS
-     */
-
-    _dragenter: function(e) {
-      var target = e.target;
-      if (! !!target.classList.contains('sortable')) {
-        //check we're dropping the element in a proper draggable element
-        target = target.closest('.sortable');
-      }
-      if (this.isbefore(this.sourceDrag, target)) {
-        target.parentNode.insertBefore(this.sourceDrag, target);
-      } else {
-        target.parentNode.insertBefore(this.sourceDrag, target.nextSibling);
-      }
-      var sortables = document.getElementsByClassName('sortable');
-      for (var i = 0; i < sortables.length; i++) {
-        this.uploadsIds[i] = $(sortables[i]).data('uploadId');
-      }
-      $("#story_uploads_ids").val(this.uploadsIds.join(","));
+    cache: function() {
+      this.$form = $('#new_story');
     },
 
-    _dragstart: function(e) {
-      this.sourceDrag = e.target;
-      (e.originalEvent || e).dataTransfer.effectAllowed = 'move';
-    },
-
-
-    _videoInput: function(e) {
+    videoInput: function(e) {
       if ($(e.target).val().length == 0) {
         var removable = document.getElementById('videothumbnail');
-        removable.parentNode.removeChild(removable);
+        if (removable) {
+          removable.parentNode.removeChild(removable);  
+        }
       } else {
         this._addVideoThumbnail($(e.target).val());
       }
@@ -108,70 +98,105 @@ define([
 
     _getVideoID: function(url) {
       // template: http://img.youtube.com/vi/<video-id-here>/default.jpg
-      // a Youtube video ID has a 11 characters legngth
-      return 'http://img.youtube.com/vi/' + url.split('v=')[1].substring(0, 11) + '/default.jpg';
+
+      if (url.length) {
+        var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        var match = url.match(regExp);
+        if (match && match[2].length == 11) {
+          mps.publish('Notification/close');
+          return 'http://img.youtube.com/vi/' + match[2] + '/default.jpg';
+        } else {
+          mps.publish('Notification/open', ['notif-not-a-correct-youtube-link']);
+          return null;
+        }        
+      }
+      return null;
     },
 
     _addVideoThumbnail: function(url) {
+      var media = new Media({
+        embedUrl: url
+      });
+
       var vidID  = this._getVideoID(url),
           $thumb = $('#videothumbnail');
+      
       if ($thumb.length > 0) {
-        $thumb.find('.inner_box').css('background-image','url('+ vidID +')')
-        $thumb.data('uploadId', 'VID-'+vidID);
+        if (!!vidID) {
+          $thumb.find('.inner_box').css('background-image','url('+ vidID +')');
+          $thumb.data('orderid', url);
+          this.story.addMedia(media);
+        } else {
+          var videos = this.story.get('media').filter( function(model) {
+            return !!model.get('embedUrl')
+          });
+          this.story.get('media').remove(videos);
+
+          $thumb.fadeOut(250, function() {
+            $thumb.remove();
+          });
+        }
       } else {
-        $('.thumbnails').append('<li class="sortable thumbnail" draggable="true" id="videothumbnail"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
-        this.uploadsIds.push('VID-'+vidID);
-        $("#story_uploads_ids").val(this.uploadsIds.join(","));
-        $thumb = $('#videothumbnail');
-        $thumb.data('uploadId', 'VID-'+vidID);
-        $thumb.find('.destroy').on('click', function(e) {
+        if (!!vidID) {
+          $('.thumbnails').append('<li class="sortable thumbnail" draggable="true" id="videothumbnail" data-orderid="'+ url +'"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
+          this.story.addMedia(media);
+          $thumb = $('#videothumbnail');
+          $thumb.find('.destroy').on('click', function(e) {
             e.preventDefault();
 
             var confirmation = confirm('Are you sure?')
 
             if (confirmation == true) {
-              this.uploadsIds = _.without(this.uploadsIds, 'VID-'+vidID);
-              $("#story_uploads_ids").val(this.uploadsIds.join(","));
-              $("#story_video").val('');
+              var videos = this.story.get('media').filter( function(model) {
+                return !!model.get('embedUrl')
+              });
+              this.story.get('media').remove(videos);
+
+              $("#video").val('');
               $thumb.fadeOut(250, function() {
                 $thumb.remove();
               });
             }
-          });
+          }.bind(this));          
+        }
       }
+
+      this.oldUrl = url;
     },
 
-    _initBindings: function() {
+    showFileSelector: function(event) {
+      event.preventDefault();
+      this.$('#fileupload').click();
+    },
+
+    renderFileUploader: function() {
       var that = this;
 
-      $('.upload_picture').on('click', function(e) {
-        e.preventDefault();
-
-        $('#fileupload').click();
-      });
-
+      var remainingFiles = 0;
       $('#fileupload').fileupload({
-          url: '/media/upload',
-          dataType: 'json',
-          autoUpload: true,
-          acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-          maxFileSize: 4000000, // 4 MB
-          // Enable image resizing, except for Android and Opera,
-          // which actually support image resizing, but fail to
-          // send Blob objects via XHR requests:
-          disableImageResize: /Android(?!.*Chrome)|Opera/
-            .test(window.navigator.userAgent),
-          previewMaxWidth: 132,
-          previewMaxHeight: 76,
-          previewCrop: true,
-          timeout: 3600000
-      }).on('fileuploadadd', function (e, data) {
+        url: '/media/upload',
+        dataType: 'json',
+        autoUpload: true,
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+        maxFileSize: 4000000, // 4 MB
+        // Enable image resizing, except for Android and Opera,
+        // which actually support image resizing, but fail to
+        // send Blob objects via XHR requests:
+        disableImageResize: /Android(?!.*Chrome)|Opera/
+        .test(window.navigator.userAgent),
+        previewMaxWidth: 132,
+        previewMaxHeight: 76,
+        previewCrop: true,
+        timeout: 3600000
+      })
+
+      .on('fileuploadadd', function (e, data) {
         data.context = $('<div/>').appendTo('#files');
 
-        that.filesAdded += _.size(data.files);
+        remainingFiles += _.size(data.files);
         _.each(data.files, function(file) {
           if (file && file.size > 4000000) {
-            mps.publish('Notification/open', ['notification-limit-exceed']);
+            mps.publish('Notification/open', ['notif-limit-exceed']);
             return;
           } else {
             var filename = that.prettifyFilename(file.name);
@@ -185,21 +210,26 @@ define([
             $submitButton.val('Please wait...');
           }
         });
+      })
 
-        // data.submit();
-      }).on('fileuploaddone', function (e, data) {
+      .on('fileuploaddone', function (e, data) {
         var files = [data.result];
 
-        $.each(files, function (index, file) {
-          that.filesAdded--;
-          that.uploadsIds.push(file.basename);
+        _.each(files, function (file) {
+          remainingFiles -= 1;
+
+          var media = new Media({
+            previewUrl: file.basename
+          });
+
+          that.story.addMedia(media);
 
           var url = file.url.replace('https', 'http');
-          var $thumb = $("<li class='sortable thumbnail' draggable='true'><div class='inner_box' style=' background-image: url("+url+");'></div><a href='#' class='destroy'><svg><use xlink:href='#shape-close'></use></svg></a></li>");
-          $thumb.data('uploadId', file.basename);
+          var $thumb = $('<li class="sortable thumbnail" draggable="true" data-orderid="'+ file.basename +'" ><div class="inner_box" style=" background-image: url('+url+');"></div><a href="#" class="destroy"><svg><use xlink:href="#shape-close"></use></svg></a></li>');
 
           var filename = that.prettifyFilename(file.basename).substring(45);
 
+          // Remove the preview image
           $(".thumbnail[data-name='"+filename+"']").fadeOut(250, function() {
             $(this).remove();
 
@@ -213,27 +243,31 @@ define([
             var confirmation = confirm('Are you sure?')
 
             if (confirmation == true) {
-              that.uploadsIds = _.without(that.uploadsIds, file.basename);
-              $("#story_uploads_ids").val(that.uploadsIds.join(","));
+              
+              var image = this.story.get('media').filter( function(model) {
+                return model.get('previewUrl') == $thumb.data('orderid')
+              });
+              this.story.get('media').remove(image);
 
               $thumb.fadeOut(250, function() {
                 $thumb.remove();
               });
             }
-          });
+          }.bind(that));
         });
 
-        if (that.filesAdded <= 0) {
+        if (remainingFiles <= 0) {
           var $submitButton = $("form input[type='submit']");
           $submitButton.val('Submit story');
           $submitButton.removeClass('disabled');
           $submitButton.attr('disabled', false);
         }
 
-        $('#story_uploads_ids').val(that.uploadsIds.join(','));
         ga('send', 'event', 'Stories', 'New story', 'submit');
-      }).on('fileuploadfail', function (e, data){
-        mps.publish('Notification/open', ['notification-upload-error-server']);
+      })
+
+      .on('fileuploadfail', function (e, data){
+        mps.publish('Notification/open', ['upload-error-server']);
         var $submitButton = $("form input[type='submit']");
         $submitButton.val('Submit story');
         $submitButton.removeClass('disabled');
@@ -241,23 +275,40 @@ define([
       });
     },
 
-    _initViews: function() {
-      var that = this;
+    zoomToStory: function() {
+      var pos = new google.maps.LatLng(this.story.get('lat'), this.story.get('lng'));
+      this.map.panTo(pos);
+      this.map.setZoom(18);
+    },
+
+    setStoryLocationToCenter: function() {
+      var center = this.map.getCenter();
+      this.story.set('geojson', { "type": "Point", "coordinates": [center.lng(), center.lat()] });
+      this.story.set('lat', center.lat(), { silent: true });
+      this.story.set('lng', center.lng(), { silent: true });
+    },
+
+    renderMap: function() {
       var $searchInput = $('.map-search-input');
 
       // Load map
-      this.map = new google.maps.Map(document.getElementById('map'),config.MAPOPTIONS);
+      this.map = new google.maps.Map($('#map')[0], MAP_CONFIG);
 
       // Listen to map loaded
-      google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function(){
-        this._autoLocate();
-      }, this ));
+      google.maps.event.addListenerOnce(
+        this.map, 'idle', function() {
+          if (this.story.hasLocation()) {
+            this.zoomToStory();
+          } else {
+            this._autoLocate();
+          }
+        }.bind(this)
+      );
 
       // Set autocomplete search input
       this.autocomplete = new google.maps.places.Autocomplete($searchInput[0], {types: ['geocode']});
-
       // Listen to selected areas (search)
-      google.maps.event.addListener(this.autocomplete, 'place_changed', _.bind(function() {
+      google.maps.event.addListener(this.autocomplete, 'place_changed', function() {
         var place = this.autocomplete.getPlace();
         if (place && place.geometry && place.geometry.viewport) {
           this.map.fitBounds(place.geometry.viewport)
@@ -269,7 +320,7 @@ define([
           }
           this.map.setCenter(new google.maps.LatLng(place.geometry.location[index[0]], place.geometry.location[index[1]]));
         }
-      }, this ));
+      }.bind(this));
 
       google.maps.event.addDomListener($searchInput[0], 'keydown', function(e) {
         if (e.keyCode == 13) {
@@ -277,30 +328,35 @@ define([
         }
       });
 
-
-      // Google Maps
-      google.maps.event.addListener(this.map, 'zoom_changed', this.setCenter.bind(this));
-      google.maps.event.addListener(this.map, 'dragend', this.setCenter.bind(this));
+      google.maps.event.addListener(
+        this.map, 'zoom_changed', this.setStoryLocationToCenter.bind(this));
+      google.maps.event.addListener(
+        this.map, 'dragend', this.setStoryLocationToCenter.bind(this));
     },
 
     _autoLocate: function(e){
-      this.$autoLocate.addClass('active');
-      if(navigator.geolocation) {
+      var $autoLocate = this.$('#autoLocate');
+      $autoLocate.addClass('active');
+
+      if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-          _.bind(function(position) {
-            this.$autoLocate.removeClass('active');
-            var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-            this.map.panTo(pos);
-            this.map.setZoom(18);
-            this.setCenter();
-          }, this ),
-          _.bind(function() {
-            this.$autoLocate.removeClass('active');
-            mps.publish('Notification/open', ['notification-enable-location']);
-          }, this )
+          function(position) {
+            $autoLocate.removeClass('active');
+            var lat = position.coords.latitude,
+                lng = position.coords.longitude;
+            this.story.set('geojson', { "type": "Point", "coordinates": [lng, lat] });
+            this.story.set('lat', lat, {silent: true});
+            this.story.set('lng', lng, {silent: true});
+            this.zoomToStory();
+          }.bind(this),
+
+          function() {
+            $autoLocate.removeClass('active');
+            mps.publish('Notification/open', ['notif-enable-location']);
+          }
         );
-      }else{
-        this.$autoLocate.removeClass('active');
+      } else {
+        $autoLocate.removeClass('active');
       }
     },
 
@@ -315,27 +371,37 @@ define([
       return false;
     },
 
+    dragenter: function(e) {
+      var target = e.target;
+      if (! !!target.classList.contains('sortable')) {
+        // check we're dropping the element in a proper draggable element
+        target = target.closest('.sortable');
+      }
+
+      if (this.isbefore(this.sourceDrag, target)) {
+        target.parentNode.insertBefore(this.sourceDrag, target);
+      } else {
+        target.parentNode.insertBefore(this.sourceDrag, target.nextSibling);
+      }
+
+      var orderedArray = _.map(this.$('.sortable'), function(sort) {
+        return $(sort).data('orderid');
+      })
+
+      this.story.get('media').move(orderedArray);
+    },
+
+    dragstart: function(e) {
+      this.sourceDrag = e.target;
+      (e.originalEvent || e).dataTransfer.effectAllowed = 'move';
+    },
+
     //ZOOM
     _zoomIn: function() {
-      this.map.setZoom(this.getZoom() + 1);
+      this.map.setZoom(this.map.getZoom() + 1);
     },
-
     _zoomOut: function(){
-      this.map.setZoom(this.getZoom() - 1);
-    },
-
-    getZoom: function(){
-      return this.map.getZoom();
-    },
-
-    setCenter: function() {
-      var center = this.map.getCenter();
-      var the_geom = JSON.stringify({
-        'type': 'Point',
-        'coordinates': [ center.lng(), center.lat() ]
-      });
-      this.model.set('the_geom',the_geom);
-      this.$the_geom.val(this.model.get('the_geom'));
+      this.map.setZoom(this.map.getZoom() - 1);
     },
 
     prettifyFilename: function (filename) {
@@ -343,20 +409,72 @@ define([
       return file.toLowerCase().replace(/ /g,"_");
     },
 
-    render: function() {
-      this.$the_geom = this.$('#story_the_geom');
-      this.$autoLocate = this.$('#autoLocate');
+    submit: function(event) {
+      event.preventDefault();
+      
+      var attributesFromForm = Backbone.Syphon.serialize(this.$('form#new_story'));
+      
+      // Remove 'media' because we want to set it from the model
+      // I don't know why this serializing is returning 'media { image: "" }'
+      if (attributesFromForm.media) {
+        delete attributesFromForm.media;
+      }
 
-      var the_geom = this.$the_geom.val()
-      this.model.set('the_geom', the_geom);
+      this.story.set(_.extend({}, this.story.toJSON(), attributesFromForm));
+
+      if (this.validate()) {
+        this.story.save().then(function(result) {
+          var id = result.data.id;
+          window.location = '/stories/'+id;
+        });
+      } else {
+        this.updateForm();
+        mps.publish('Notification/open', ['story-new-form-error']);
+        $(document).scrollTop(0);
+      }
+    },
+
+    validate: function(e) {
+      e && e.preventDefault();
+      var attributes = this.story.toJSON();
+
+      // Validate form, if is valid the response will be undefined
+      this.errors = validate(attributes, constraints);
+      return ! !!this.errors;
+    },
+
+    render: function() {
+      this.$el.html(this.template({
+        story: this.story.toJSON(),
+        formatted_date: moment(this.story.date).format('YYYY-MM-DD')
+      }));
+
+      this.renderMap();
+      this.renderFileUploader();
+
+      var latestStoriesView = new LatestStoriesView();
+      this.$('#latestStories').html(latestStoriesView.render().el);
+
+      $('#submitAStory').addClass('current');
+      document.title = 'Submit a story | Global Forest Watch';
 
       return this;
-    }
-  });
+    },
 
+    updateForm: function() {
+      this.$form.find('input, textarea, select').removeClass('-error');
+      this.$form.find('label').removeClass('-error');
+      for (var key in this.errors) {
+        var $input = this.$form.find('#'+key);
+        var $label = this.$form.find('label[for='+key+']');
+        $input.addClass('-error');
+        $label.addClass('-error');
+      }
+    }
+
+
+  });
 
   return StoriesNewView;
 
 });
-
-

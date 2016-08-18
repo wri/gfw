@@ -5,14 +5,7 @@
   </a>
 
   <div class="subscription-spinner-container">
-    <div class="spinner3 my-gfw-spinner">
-      <svg width="50" height="50">
-        <g>
-          <path class="background" d="M0,25A25,25 0 1,1 0,-25A25,25 0 1,1 0,25M0,20A20,20 0 1,0 0,-20A20,20 0 1,0 0,20Z"></path>
-          <path class="foreground" d="M1.5308084989341915e-15,-25A25,25 0 0,1 25,0L20,0A20,20 0 0,0 1.2246467991473533e-15,-20Z"></path>
-        </g>
-      </svg>
-    </div>
+    <div class="loading-spinner"></div>
   </div>
 
   {{#if loggedIn}}
@@ -75,7 +68,14 @@
 
     <div class="subscription-name-container">
       <input class="field" type="text" id="subscriptionName" placeholder="Area name">
-      <label for="subscriptionName">{{date}}</label>
+    </div>
+
+    <div class="subscription-language-container">
+      <label for="subscriptionLanguage">Receive alert emails in...</label>
+      <select data-placeholder="Select language" class="chosen-select default notranslate" id="subscriptionLanguage">
+        <option value="en">English</option>
+        <option value="pt">Portuguese</option>
+      </select>
     </div>
 
     <button class="btn green uppercase" id="subscribe">Save</button>

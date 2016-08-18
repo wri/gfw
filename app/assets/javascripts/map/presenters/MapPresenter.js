@@ -34,22 +34,22 @@ define([
       'Place/go': function(place) {
         this._onPlaceGo(place);
       }
-    }, {
-      'Geostore/go': function(geostore) {
-        this.status.set('geostore', geostore);
-      }
-    }, {
+    },{
       'LayerNav/change': function(layerSpec) {
         this._setLayers(layerSpec);
         this._fitToLayers(layerSpec.getLayers());
       }
-    }, {
+    },{
       'Map/fit-bounds': function(bounds) {
         this.view.fitBounds(bounds);
       }
-    }, {
+    },{
       'Map/set-center': function(lat, lng) {
         this.view.setCenter(lat, lng);
+      }
+    },{
+      'Map/set-zoom': function(zoom) {
+        this.view.setZoom(zoom);
       }
     },{
       'Map/autolocate' : function(){
@@ -129,10 +129,6 @@ define([
 
       if (params.layer_options) {
         this.status.set('layerOptions', params.layer_options);
-      }
-
-      if (params.fit_to_geom) {
-        this.status.set('fit_to_geom', params.fit_to_geom === 'true');
       }
     },
 

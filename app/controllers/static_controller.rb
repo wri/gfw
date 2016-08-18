@@ -1,6 +1,5 @@
 class StaticController < ApplicationController
   skip_before_action :check_browser, :only => :old
-  #before_filter :load_stories
   respond_to :html
   respond_to :json, :only => :keepstories
 
@@ -48,15 +47,7 @@ class StaticController < ApplicationController
     @keywords = 'GFW, stay informed, stories, read, news, blog, newsletter, sign up, publications, browse, updates, keep udated, submit, upload, share'
     @currentNavigation = '.shape-keep'
 
-    stories_per_page = 5
-
     @page        = (params[:page] || 1).to_i
-    @total_stories = Api::Story.visible.count
-    @stories_per_page = stories_per_page
-    @visible     = Api::Story.find_by_page(@page, stories_per_page)
-
-    respond_with @stories
-
   end
 
   def keepstories
@@ -68,7 +59,6 @@ class StaticController < ApplicationController
     @visible     = Api::Story.find_by_page(@page, stories_per_page)
 
     respond_with @visible
-
   end
 
   def getinvolved
@@ -92,7 +82,11 @@ class StaticController < ApplicationController
     email    = params["email"]
     feedback = params["feedback"]
 
-    YourMailer.feedback(feedback,signup,email).deliver
+    FeedbackMailer.feedback(feedback,signup,email).deliver
+
+    if signup == 'true' && email.present?
+      Api::Feedback.add_as_tester(email)
+    end
   end
 
   def feedback_jsonp
@@ -101,45 +95,20 @@ class StaticController < ApplicationController
     feedback = params["feedback"]
     hostname = params["hostname"]
 
-    YourMailer.feedback(feedback,signup,email,hostname).deliver
+    FeedbackMailer.feedback(feedback,signup,email,hostname).deliver
+    if signup == 'true' && email.present?
+      Api::Feedback.add_as_tester(email)
+    end
+
     respond_to do |format|
       format.js do
-
         render :json => true, :callback => params[:callback]
       end
     end
-
   end
 
   def old
     @title = "Oops, your browser isn't supported."
     render layout: 'old_browser'
   end
-
-  private
-
-    def load_stories
-      @stories = Api::Story.visible.sample(5)
-    end
-
-    def access_through_token?(story)
-      # params[:id] === story.token
-      false
-    end
-
-    def check_token
-      unless access_through_token?(@story)
-        flash[:notice] = "You don't have permissions to edit this story."
-        redirect_to story_path(@story)
-      end
-    end
-
-    def load_story
-      story = Api::Story.find_by_id_or_token(params[:id])
-
-      not_found unless story.present?
-
-      @story = story
-    end
-
 end

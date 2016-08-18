@@ -8,7 +8,7 @@ define([
   var Stories = Backbone.Collection.extend({
     model: Story,
 
-    url: window.gfw.config.GFW_API_HOST + '/story/',
+    url: window.gfw.config.GFW_API_HOST_NEW_API + '/story/',
 
     initialize: function(models, options) {
       options = options || {};
@@ -17,7 +17,7 @@ define([
     },
 
     parse: function(response) {
-      return response.data;
+      return (response.data.length) ? response.data.reverse() : response.data;
     },
 
     getPaginatedModels: function() {

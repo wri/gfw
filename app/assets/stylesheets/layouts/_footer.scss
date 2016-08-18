@@ -422,7 +422,7 @@
       }
     }
     &.cartodb {
-      height: 39px; width: 110px; @include logos-sprite(cartodb);
+      height: 47px; width: 120px; @include logos-sprite(cartodb);
       &:hover{
         @include logos-sprite(cartodbhover);
       }
@@ -694,6 +694,13 @@
       height: 73px; width: 146px; @include logos-sprite(cargill);
       &:hover{
         @include logos-sprite(cargillhover);
+      }
+    }
+
+    &.astrodigital {
+      height: 29px; width: 120px; @include logos-sprite(astrodigital);
+      &:hover{
+        @include logos-sprite(astrodigitalhover);
       }
     }
   }

@@ -2,7 +2,7 @@
 <h3 id="title-dialog-legend" class="title-dialog noselect js-toggle-embed-legend">Legend <span>(Click to expand)</span></h3>
 <span class="close js-toggle-legend"><svg><use xlink:href="#shape-close"></use></svg></span>
 
-{{#if this.country}}
+{{#if this.countryVisibility}}
   <ul class="categories -divided -country">
     <h2 class="-country">
       {{this.country.name}} data
@@ -66,8 +66,8 @@
 {{/if}}
 
 {{#if categories}}
-<ul class="categories {{#if this.country}}-divided{{/if}}">
-  {{#if this.country}}
+<ul class="categories {{#if this.countryVisibility}}-divided{{/if}}">
+  {{#if this.countryVisibility}}
     <h2>Global data</h2>
   {{/if}}
   {{#each categories}}

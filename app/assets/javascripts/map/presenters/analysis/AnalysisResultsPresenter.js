@@ -34,7 +34,6 @@ define([
     'umd_as_it_happens_per',
     'umd_as_it_happens_cog',
     'umd_as_it_happens_idn',
-    'modis',
     'viirs_fires_alerts'
   ];
 
@@ -52,10 +51,9 @@ define([
       'forestgain': 'umd-loss-gain',
       'forma': 'forma-alerts',
       'imazon': 'imazon-alerts',
-      'modis': 'quicc-alerts',
       'terrailoss': 'terrai-alerts',
       'prodes': 'prodes-loss',
-      'guyra': 'guyra-loss',
+      'guyra': 'guira-loss',
       'forest2000': 'umd-loss-gain',
       'umd_as_it_happens':'glad-alerts',
       'umd_as_it_happens_per':'glad-alerts',
@@ -76,11 +74,13 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         this._setBaselayer(place.layerSpec.getBaselayers());
+        this.status.set('loss_gain_and_extent', place.layerSpec.checkLossGainExtent());
         if ( place.params.subscribe_alerts ) this.subscribeAnalysis();
       }
     }, {
       'LayerNav/change': function(layerSpec) {
         this._setBaselayer(layerSpec.getBaselayers());
+        this.status.set('loss_gain_and_extent', layerSpec.checkLossGainExtent());
       }
     }, {
       'AnalysisService/results': function(results) {
@@ -173,7 +173,7 @@ define([
         this.view.renderFailure();
       } else if (results.failure) {
         mps.publish('Spinner/stop');
-        this.view.renderFailure();
+        this.view.renderFailureOnApi();
       } else {
         mps.publish('Spinner/stop');
         this._renderAnalysis(results);
@@ -364,7 +364,7 @@ define([
 
 
     showCanopy: function(){
-      mps.publish('ThresholdControls/toggle');
+      mps.publish('ThresholdControls/show');
     },
 
     toggleSubscribeButton: function() {

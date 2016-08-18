@@ -56,15 +56,16 @@
     line-color: #FFF;
     line-opacity: 0;
   }
-  
-  [layer='gfw_landsat_alerts_extent'] {
+
+  [layer='gfw_landsat_alerts_extent'],
+  [layer='glad_coverage'] {
     polygon-fill: #f69;
     polygon-opacity: 0.3;
     line-width: 1;
     line-color: #FFF;
     line-opacity: 0;
   }
-  
+
   //deprecated
   [layer='logging'] {
     polygon-fill: #fecc5c;
@@ -163,7 +164,7 @@
     line-clip: false;
     polygon-clip: false;
   }
-  
+
   //deprecated
   [layer='mining_permits_merge'] {
     polygon-fill: #fd8d3c;
@@ -178,7 +179,7 @@
     line-clip: false;
     polygon-clip: false;
   }
-  
+
   //deprecated
   [layer='mining'] {
     polygon-fill: #fd8d3c;
@@ -328,7 +329,7 @@
     line-clip: false;
     polygon-clip: false;
   }
-  
+
   //deprecated
   [layer='woodfiber'] {
     polygon-fill: #e6adb9;
@@ -385,16 +386,6 @@
     line-opacity: 0;
   }
 
-
-  [layer='quicc_alerts'] {
-    marker-fill: black;
-    marker-opacity: 0.9;
-    marker-allow-overlap: true;
-    marker-placement: point;
-    marker-type: ellipse;
-    marker-width: 3;
-  }
-
   [layer='biodiversity_hotspots'] {
     polygon-fill: #49A39A;
     line-color: #49A39A;
@@ -406,13 +397,6 @@
     line-opacity: 0.8;
   }
 
-  [layer='quicc_bounding_box_extent'] {
-    polygon-fill: #f69;
-    polygon-opacity: 0.3;
-    line-width: 0;
-    line-color: #FFF;
-    line-opacity: 1;
-  }
 
   [layer='imazon_sad_geografic_extent'] {
     polygon-fill: #f69;
@@ -542,7 +526,7 @@
       line-width: 1;
       line-opacity: 1;
   }
-  
+
   [layer='wdpa_protected_areas'] {
     polygon-fill: #2167AB;
     polygon-opacity: 0.5;
@@ -575,7 +559,7 @@
     line-width: 1.5;
     line-opacity: 1;
   }
-  
+
   [layer='verifed_carbon_standard'] {
     polygon-fill: #247490;
     polygon-opacity: 0.7;
@@ -583,7 +567,7 @@
     line-width: 1;
     line-opacity: 1;
   }
-  
+
   [layer='usa_conservation_easements']{
     polygon-fill: #1a4075;
     polygon-opacity: 0.7;
@@ -591,7 +575,7 @@
     line-width: 0.1;
     line-opacity: 1;
   }
-  
+
   [layer='idn_leuser']{
     polygon-fill: #5CA2AA;
     polygon-opacity: 0.7;
@@ -647,7 +631,7 @@
     line-width: 0;
     line-opacity: 1;
   }
-  
+
   [layer='khm_protected_areas'] {
     polygon-fill: #3182BD;
     polygon-opacity: 0.6;
@@ -655,7 +639,7 @@
     line-width: 0.25;
     line-opacity: 1;
   }
-  
+
   [layer='gfw_land_rights'] {
     polygon-fill: #4d658f;
     polygon-opacity: 0.7;

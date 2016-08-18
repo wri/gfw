@@ -20,9 +20,9 @@ define([
       "urthe",
       //-
       "grump2000",
-      //FOREST COVER
       "mex_forest_zoning_cat",
       "mex_forest_zoning_subcat",
+      //FOREST/LAND COVER
       "forest2000",
       "per_minam_tree_cover",
       "cod_primary_forest_wgs",
@@ -139,24 +139,24 @@ define([
       "raisg_mining",
       "mexican_psa",
       "bra_logging",
+      "mys_wood_fiber_sabah",
       //STORIES
       "infoamazonia",
       "mongabay",
       "user_stories",
       // FOREST CHANGE
       "gfw_landsat_alerts_coverage",
+      "glad_coverage",
       "terraicanvas_cover",
       "forma_cover",
       "forma_250_cover",
       "imazon_cover",
-      "modis_cover",
       "gran_chaco_extent",
       // FOREST CHANGE
       "per_minam_loss",
       "guyra",
       "terrailoss",
       "viirs_fires_alerts",
-      "modis",
       "imazon",
       "forma",
       "peru_forma_250",
@@ -230,6 +230,14 @@ define([
       return this.positionizer(this.get('forest_clearing') || {});
     },
 
+    getBaselayer: function() {
+      var baselayers = _.keys(this.positionizer(this.get('forest_clearing') || {}));
+      if (!!baselayers.length) {
+        return this.getLayer({ slug: baselayers[0] });
+      }
+      return {};
+    },
+
     /**
      * Return sublayers object.
      *
@@ -244,17 +252,6 @@ define([
         });
 
       return this.positionizer(layers);
-    },
-
-   /**
-     * Return an ordered array of layers. Order by layer position.
-     *
-     * @return {array} layers
-     */
-    getOrderedLayers: function() {
-      return _.sortBy(this.getLayers(), function(layer) {
-        return layer.position;
-      });
     },
 
     /**
@@ -276,7 +273,7 @@ define([
       }, this));
 
       return categories;
-    }
+    },
 
   });
 

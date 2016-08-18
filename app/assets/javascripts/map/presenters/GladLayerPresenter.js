@@ -1,15 +1,12 @@
 define([
-  'map/presenters/TorqueLayerPresenter'
-], function(TorqueLayerPresenter) {
-
+  'mps', 'backbone', 'map/presenters/PresenterClass'
+], function(mps, Backbone, PresenterClass) {
   'use strict';
 
 
-  var StatusModel = Backbone.Model.extend({
-  });
+  var StatusModel = Backbone.Model.extend({});
 
-
-  var GladLayerPresenter = TorqueLayerPresenter.extend({
+  var GladLayerPresenter = PresenterClass.extend({
 
     init: function(view) {
       this.view = view;
@@ -20,6 +17,27 @@ define([
     },
 
     _subscriptions: [{
+      'TorqueTimeline/date-change': function(layerName, date) {
+        if (this.view.getName() === layerName) {
+          this.view.setDate(date);
+          this.view.stop();
+        }
+      },
+      'Timeline/date-range-change': function(layerName, dates) {
+        if (this.view.getName() === layerName) {
+          this.view.setDateRange(dates);
+          this.view.stop();
+        }
+      },
+      'Timeline/toggle-playing': function() {
+        this.view.toggle();
+      },
+      'Timeline/start-playing': function() {
+        this.view.start();
+      },
+      'Timeline/stop-playing': function() {
+        this.view.stop();
+      },
       'LayerNav/changeLayerOptions': function(layerOptions) {
         this.setConfirmedStatus(layerOptions);
       }
@@ -27,8 +45,19 @@ define([
 
     setConfirmedStatus: function(layerOptions) {
       layerOptions = layerOptions || [];
-      this.status.set('hideUnconfirmed',
-        layerOptions.indexOf('glad_confirmed_only') > -1);
+      this.status.set('hideUnconfirmed', layerOptions.indexOf('gladConfirmOnly') > -1);
+    },
+
+    animationStarted: function(bounds) {
+      mps.publish('Torque/started', [bounds]);
+    },
+
+    animationStopped: function() {
+      mps.publish('Torque/stopped', []);
+    },
+
+    updateTimelineDate: function(change) {
+      mps.publish('Torque/date-change', [change]);
     }
 
   });

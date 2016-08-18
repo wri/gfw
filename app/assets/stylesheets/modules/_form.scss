@@ -50,6 +50,10 @@ textarea {
     &.-has-hint {
       top: 1px;
     }
+
+    &.-error {
+      color: $red;
+    }
   }
 
   textarea {
@@ -169,14 +173,14 @@ textarea {
 .checkbox-box {
   @include clearfix();
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   padding: 15px 0;
+  font-size: 12px;
 
-  .custom-radio {
-    margin: 0 0 0 20px;
-    &:first-child {
-      margin: 0;
-    }
+  .custom-checkbox {
+    display: flex;
+    width: 50%;
   }
 
   label {
@@ -191,8 +195,8 @@ textarea {
       position: absolute;
       top: 50%;
       left: 0;
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       border: 1px solid $dark;
       transform: translate(0,-50%);
       
@@ -222,4 +226,3 @@ textarea {
     }
   }
 }
-

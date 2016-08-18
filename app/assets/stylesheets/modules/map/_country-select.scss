@@ -68,6 +68,10 @@
       &.active-result {
         display: list-item;
         cursor: pointer;
+        
+        &.result-selected {
+          background: #DDD;
+        }
       }
       
       &.disabled-result {
@@ -124,6 +128,12 @@
     
     .chosen-results {
       max-height: 150px;
+      padding: 0;
+      margin: 0;
+
+      li {
+        padding: 8px 10px 4px;
+      }
     }
   }
 

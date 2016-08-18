@@ -80,6 +80,22 @@ define([
       'Tour/open': function(tour) {
         this.status.set('tour',tour);
       }
+    },{
+      'Analysis/results': function() {
+        if (!!this.status.get('tour')) {        
+          setTimeout(function(){
+            this.view.updatePosition();
+          }.bind(this), 50);
+        }
+      }
+    },{
+      'Analysis/results-error': function() {
+        if (!!this.status.get('tour')) {        
+          setTimeout(function(){
+            this.view.updatePosition();
+          }.bind(this), 50);
+        }
+      }
     }],
 
     getTour: function(tour) {

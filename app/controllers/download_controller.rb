@@ -1,5 +1,4 @@
 class DownloadController < ApplicationController
-
   skip_before_filter :verify_authenticity_token, only: [:create_download]
 
   def create_download
@@ -12,6 +11,7 @@ class DownloadController < ApplicationController
 
       return render json: true
     end
+
     return render json: false, status: :unprocessable_entity
   end
 end

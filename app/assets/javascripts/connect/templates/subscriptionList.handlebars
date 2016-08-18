@@ -8,7 +8,7 @@
         your area of interest. The Forest Change data set you are
         subscribed to for each area of interest is included in the
         subscription information below. Take a look at our
-        <a href="/howto/categories/subscribe-to-alerts/">How To guide</a>
+        <a target="_blank" href="/howto/categories/subscribe-to-alerts/">How To guide</a>
         for more information.
       </h3>
     </header>
@@ -33,16 +33,17 @@
 
     <div class="content-form my-gfw-subscriptions-list-container inner">
       {{#if showSpinner}}
-        <div class="spinner3">
-          <svg width="50" height="50">
-            <g>
-              <path class="background" d="M0,25A25,25 0 1,1 0,-25A25,25 0 1,1 0,25M0,20A20,20 0 1,0 0,-20A20,20 0 1,0 0,20Z"></path>
-              <path class="foreground" d="M1.5308084989341915e-15,-25A25,25 0 0,1 25,0L20,0A20,20 0 0,0 1.2246467991473533e-15,-20Z"></path>
-            </g>
-          </svg>
+        <div id="subscriptionSpinner" class="m-spinner -fixed">
+          <div class="spinner-box">
+            <div class="icon"></div>
+          </div>    
         </div>
       {{else}}
         {{#if subscriptions.length}}
+
+          <ul id="subscriptions-list" class="c-subscriptions">
+          </ul>
+
           <table class="my-gfw-subscriptions-list">
             <tbody id="my-gfw-subscriptions-table-body">
             </tbody>

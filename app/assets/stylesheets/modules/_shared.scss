@@ -217,7 +217,8 @@
   padding: 6px 8px;
   white-space: nowrap;
   pointer-events: none;
-  transform: translate(-50%,5px);
+  transform: translate(-50%,0px);
+
   &:after{
     content: "";
     display: block;
@@ -233,6 +234,7 @@
     border-color: transparent lighten($border,5%) lighten($border,5%) transparent;
     border-style: solid;
   }
+
   &.bottom{
     bottom: auto;
     top: 100%;
@@ -247,6 +249,7 @@
       border-style: solid;
     }
   }
+  
   &.left{
     bottom: auto;
     top: 50%;

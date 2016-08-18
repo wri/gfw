@@ -1,6 +1,13 @@
 $letterW: 20px;
 .tab-highresolution {
 
+  @media screen and ( max-height: 679px ) and ( min-width: $br-mobile){
+    max-height: calc(100vh - 234px);
+    overflow: auto;
+    select {display: block!important; width: 100%;}
+    .chosen-container {display: none;}
+  }
+
   .highresolution-modal {
     position: fixed;
     top: 50%;
@@ -53,7 +60,7 @@ $letterW: 20px;
     // HRES SECTION
     section {
       margin: 11px 0 0 0;
-      
+
       // TITLES
       h3 {
         display: block;
@@ -110,7 +117,7 @@ $letterW: 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        
+
         .slash {
           margin: 0 5px;
           font-size: 13px;
@@ -127,12 +134,11 @@ $letterW: 20px;
       text-transform: uppercase;
       margin: 0 -15px;
       font-weight: 500;
-      
       padding: 14px 15px;
       text-align: center;
       font-size: 10px;
-      background: #eeeeee;      
-      
+      background: #eeeeee;
+
       @media (min-width: $br-mobile){
         display: block;
       }

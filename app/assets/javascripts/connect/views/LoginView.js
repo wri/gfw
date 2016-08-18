@@ -14,13 +14,16 @@ define([
       'click .my-gfw-login-modal-backdrop': 'close'
     },
 
-    initialize: function() {
+    initialize: function(options) {
+      options = options || {};
+      this.message = options.message;
       this.render();
     },
 
     render: function() {
       this.$el.html(this.template({
-        apiHost: window.gfw.config.GFW_API_HOST
+        apiHost: window.gfw.config.GFW_API_HOST_NEW_API,
+        message: this.message
       }));
 
       return this;

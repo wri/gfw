@@ -19,7 +19,7 @@ define([
       interactivity: 'cartodb_id, name, tablename, analysis',
       cartocss: idn_peatCartoCSS,
       analysis: true
-    },
+    }
   
   });
 

@@ -40,6 +40,8 @@ define([
     controlsTemplate: Handlebars.compile(controlsTpl),
     dateTemplate: Handlebars.compile(dateTpl),
 
+    DatePicker: TorqueTimelineDatePicker,
+
     events: {
       'click .play': '_toggleState',
     },
@@ -112,17 +114,23 @@ define([
         this.renderDate();
       };
 
-      this.datePicker = new TorqueTimelineDatePicker({
+      var datePicker = new this.DatePicker({
         layer: this.layer,
         presenter: this.presenter,
         dateRange: this.bounds,
         onChange: onChange.bind(this)
       });
-      this.$el.prepend(this.datePicker.render().el);
+
+      if (this.datePicker) {
+        this.datePicker.remove();
+      }
+
+      this.$el.prepend(datePicker.render().el);
+      this.datePicker = datePicker;
     },
 
     _onTorqueStop: function() {
-      var $el = $(event.currentTarget).find('div');
+      var $el = this.$('.play').find('div');
       if ($el.hasClass('play-icon')) {
         this.status.set('running', true);
       } else {

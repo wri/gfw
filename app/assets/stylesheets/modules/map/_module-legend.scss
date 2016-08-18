@@ -50,13 +50,13 @@
 
   .legend-link {
     font-size: 11px;
-    line-height: 14px;    
+    line-height: 14px;
   }
 
   // @ul
   .categories{
     margin: 20px 0 0;
-    
+
     > * {
       margin-bottom: 10px;
       &:last-child {
@@ -70,7 +70,7 @@
 
     &.-country {
       padding: 0;
-      margin: 0;     
+      margin: 0;
     }
 
     h2{
@@ -85,19 +85,19 @@
       }
 
       &.-country {
-        background: rgba($country-color, 0.25);  
+        background: rgba($country-color, 0.25);
       }
 
       .country-btns {
         margin: 5px 0 0;
       }
     }
-    
+
     .m-btncontainer {
       padding: 0 20px;
       margin-top: 5px;
       flex-wrap: wrap;
-      
+
       > * {
         margin-right: 5px;
         margin-bottom: 5px;
@@ -107,7 +107,6 @@
       }
     }
 
-
     // @li
     .category {
       padding: 0 20px;
@@ -115,11 +114,11 @@
 
       &.closed {
         .category-name {
-          &:after { 
+          &:after {
             transform: translate(0,-100%) rotate(180deg);
           }
 
-          em { 
+          em {
             display: inline-block;
           }
         }
@@ -201,6 +200,7 @@
           word-wrap: break-word;
         }
       }
+
       .layer-sublayer {
         cursor: pointer;
         padding: 10px 5px 5px 14px;
@@ -217,6 +217,12 @@
           .source {
             top: 9px;
           }
+        }
+      }
+
+      .layer-sublayer.layer-option {
+        .sublayer-title {
+          color: #555;
         }
       }
     }
@@ -361,16 +367,16 @@
       display: flex;
       width: 190px;
       font-size: 11px;
-      line-height: 14px;      
+      line-height: 14px;
       margin: 5px 0 0;
 
       &:first-child {
         margin: 0;
       }
-      
+
       .-title {
         display: inline-block;
-        width: 55px;        
+        width: 55px;
       }
 
       span {
@@ -383,7 +389,7 @@
       height: 12px;
       width: 100%;
       border: 1px solid $border;
-      border-radius: 10px;      
+      border-radius: 10px;
       margin: 5px 0 30px;
       position: relative;
 
@@ -393,20 +399,20 @@
         max-width: 50%;
         position: absolute;
         top: 100%;
-        padding: 5px 0 0;        
+        padding: 5px 0 0;
         font-size: 8px;
         line-height: 1;
-        
+
         &.-left {
           left: 0;
         }
-        
+
         &.-right {
           right: 0;
           text-align: right;
         }
       }
-    }    
+    }
 
     sup {
       vertical-align: top;
