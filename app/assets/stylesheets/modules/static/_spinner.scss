@@ -13,6 +13,10 @@
     position: fixed;
   }
 
+  &.-relative {
+    position: relative;
+  }
+
   &.-start {
     visibility: visible;
     opacity: 1;
