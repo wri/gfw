@@ -74,13 +74,6 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    model: new (Backbone.Model.extend({
-      defaults:{
-        hidden: true,
-        categories_status: [],
-      }
-    })),
-
     /**
      * Optional layers detail templates.
      */
