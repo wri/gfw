@@ -365,7 +365,19 @@ define([
           });
         }
       },
-
+      {
+        'Subscribe/iso': function(iso) {
+          var subscritionObj = {};
+          subscritionObj = {
+            iso: iso,
+            geostore: null,
+            useid: null,
+            use: null,
+            wdpaid: null
+          };
+          this.publishSubscribtion(_.extend({}, this.status.toJSON(), subscritionObj));
+        }
+      },
 
       // SHAPE
       {
@@ -377,11 +389,6 @@ define([
           })
         }
       },
-      {
-        'Subscribe/toggle': function(toggle) {
-          this.status.set('subscribe', !!toggle);
-        }
-      },      
       {
         'Subscribe/shape': function(data) {
           var subscritionObj = {};
@@ -462,6 +469,11 @@ define([
           this.status.set('mobileEnabled', toggle);
         }
       },
+      {
+        'Subscribe/toggle': function(toggle) {
+          this.status.set('subscribe', !!toggle);
+        }
+      },            
       {
         'Analysis/subtab': function(subtab) {
           this.status.set('subtab', subtab);
