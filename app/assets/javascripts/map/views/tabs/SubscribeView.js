@@ -59,6 +59,13 @@ define([
       }));
       this.setupAuthLinks();
 
+      this.$('#subscriptionLanguage').chosen({
+        width: '100%',
+        allow_single_deselect: true,
+        inherit_select_classes: true,
+        no_results_text: 'Oops, nothing found!'
+      });
+
       return this;
     },
 
@@ -174,6 +181,8 @@ define([
 
       this.subscription.set('name',
         this.$el.find('#subscriptionName').val());
+      this.subscription.set('language',
+        this.$el.find('#subscriptionLanguage').val());
 
       this.stopListening(this.user);
       this.user.setEmailIfEmpty(this.subscription.get('email'));

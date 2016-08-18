@@ -121,8 +121,9 @@ define([
   'map/views/layers/GtmForestChange2Layer',
   'map/views/layers/GtmForestCoverLayer',
   'map/views/layers/GtmForestDensityLayer',
-  'map/views/layers/AsItHappensHybridLayer',
+  'map/views/layers/GladLayer',
   'map/views/layers/LandsatAlertsCoverLayer',
+  'map/views/layers/GladCoverageLayer',
   'map/views/layers/KhmProtectedAreasLayer',
   'map/views/layers/KhmEcoLandLayer',
   'map/views/layers/UsaForestOwnershipLayer',
@@ -166,8 +167,8 @@ define([
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
   'map/views/timeline/ProdesTimeline',
-  'map/views/timeline/AsItHappensTimeline',
   'map/views/timeline/GuyraTimeline',
+  'map/views/timeline/GladTimeline'
 ], function(
   // Layer Views
   LossLayer,
@@ -288,8 +289,9 @@ define([
   GtmForestChange2Layer,
   GtmForestCoverLayer,
   GtmForestDensityLayer,
-  AsItHappensHybridLayer,
+  GladLayer,
   LandsatAlertsCoverLayer,
+  GladCoverageLayer,
   KhmProtectedAreasLayer,
   KhmEcoLandLayer,
   UsaForestOwnershipLayer,
@@ -333,8 +335,8 @@ define([
   FiresTimeline,
   TerraiTimeline,
   ProdesTimeline,
-  AsItHappensTimeline,
-  GuyraTimeline
+  GuyraTimeline,
+  GladTimeline
 ) {
 
   'use strict';
@@ -713,23 +715,14 @@ define([
       view: GtmForestDensityLayer
     },
     umd_as_it_happens: {
-      view: AsItHappensHybridLayer,
-      timelineView: AsItHappensTimeline
-    },
-    umd_as_it_happens_per: {
-      view: AsItHappensHybridLayer,
-      timelineView: AsItHappensTimeline
-    },
-    umd_as_it_happens_cog: {
-      view: AsItHappensHybridLayer,
-      timelineView: AsItHappensTimeline
-    },
-    umd_as_it_happens_idn: {
-      view: AsItHappensHybridLayer,
-      timelineView: AsItHappensTimeline
+      view: GladLayer,
+      timelineView: GladTimeline
     },
     gfw_landsat_alerts_coverage: {
       view: LandsatAlertsCoverLayer
+    },
+    glad_coverage: {
+      view: GladCoverageLayer
     },
     khm_pa: {
       view: KhmProtectedAreasLayer
