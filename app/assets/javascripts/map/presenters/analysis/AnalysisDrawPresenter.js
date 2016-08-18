@@ -47,18 +47,12 @@ define([
           });
         }
       },{
-        'Geostore/go': function(response) {
-          var geojson = response.data.attributes.geojson;
-
+        'Analysis/drawGeojson': function(geojson, fit_to_geom) {
           this.status.set({
+            fit_to_geom: !!fit_to_geom,
             geojson: geojson
           }, { silent: true });
-          this.view.drawGeojson(geojson.features[0].geometry);
-        }
-      },{
-        'Analysis/geostore': function(geostore, fit_to_geom) {
-          this.status.set('fit_to_geom', !!fit_to_geom);
-          this.status.set('geostore', geostore);
+          this.view.drawGeojson(geojson.geometry);
         }
       },{
         'Analysis/hideGeojson': function() {
@@ -98,8 +92,8 @@ define([
 
     changeGeostore: function() {
       if (!!this.status.get('geostore')) {
-        GeostoreService.get(this.status.get('geostore')).then(function(geojson) {
-          mps.publish('Geostore/go', [geojson]);
+        GeostoreService.get(this.status.get('geostore')).then(function(response) {
+          mps.publish('Analysis/drawGeojson', [response.data.attributes.geojson]);
         });
       }
     },

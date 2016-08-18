@@ -146,9 +146,16 @@ define([
         options: {
           position: 'left',
           callfront: function() {
+            var geojson = {
+              geometry: {
+                type: "Polygon",
+                coordinates: [[[-55.1953,-0.5273],[-56.4258,-2.9869],[-54.4922,-2.9869],[-55.1953,-0.5273]]]
+              }
+            };          
             mps.publish('Tab/toggle', ['analysis-tab', true]);
-            mps.publish('Subscribe/toggle', [ false ]);            
-            mps.publish('Analysis/geostore',['d535e6f303c70181d7f71477139e6f81', true]);
+            mps.publish('Subscribe/toggle', [ false ]);
+            mps.publish('Analysis/geojson',[geojson.geometry]);
+            mps.publish('Analysis/drawGeojson',[geojson, true]);
           }
         }
       },

@@ -328,6 +328,7 @@ define([
         }
       },
 
+
       // DRAWING EVENTS
       {
         'Analysis/start-drawing': function() {
@@ -342,16 +343,14 @@ define([
           if (!!geojson) {
             this.status.set('spinner', true);
             GeostoreService.save(geojson).then(function(geostoreId) {
+              if (geostoreId === this.status.get('geostore')) {
+                this.status.set('spinner', false);
+              }
               this.status.set('geostore', geostoreId);
             }.bind(this));
           } else {
             this.status.set('geostore', null);
           }
-        }
-      },{
-        'Analysis/geostore': function(geostore, fit_to_geom) {
-          this.status.set('fit_to_geom', fit_to_geom);
-          this.status.set('geostore', geostore);
         }
       },
 
