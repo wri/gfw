@@ -14,12 +14,6 @@ define([
       }
     },
 
-    setEmailIfEmpty: function(email) {
-      if (_.isEmpty(this.get('email'))) {
-        this.set('email', email);
-      }
-    },
-
     isLoggedIn: function() {
       return !_.isEmpty(this.attributes);
     },
