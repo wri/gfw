@@ -79,7 +79,7 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Geostore/go': function(geostore) {
+      'Analysis/drawGeojson': function(geostore) {
         this.status.set('geostore', geostore.id);
         this._handlePlaceGo({geojson: geostore.attributes});
       }

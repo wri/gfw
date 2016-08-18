@@ -84,7 +84,7 @@ define([
       'Analysis/results': function() {
         if (!!this.status.get('tour')) {        
           setTimeout(function(){
-            this.view.updatePosition();
+            this.view.updateMask();
           }.bind(this), 50);
         }
       }
@@ -92,7 +92,7 @@ define([
       'Analysis/results-error': function() {
         if (!!this.status.get('tour')) {        
           setTimeout(function(){
-            this.view.updatePosition();
+            this.view.updateMask();
           }.bind(this), 50);
         }
       }
