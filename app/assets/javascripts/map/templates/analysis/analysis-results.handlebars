@@ -176,7 +176,9 @@
             <svg class="icon -inactive"><use xlink:href="#shape-close"></use></svg>
           </div>
           <span>Download data</span>
-          <div class="tooltipmap">Coming soon</div>
+          {{#unless resource.options.enabledDownload}}
+            <div class="tooltipmap">Coming soon</div>
+          {{/unless}}
         </button>
       {{/ifCond}}
     </li>

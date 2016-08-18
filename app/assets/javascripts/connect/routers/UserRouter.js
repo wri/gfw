@@ -65,13 +65,18 @@ define([
       var viewName = _.last(_.compact(routeName.split('/')));
 
       this.subViews = this.subViews || {};
-      if (this.subViews[viewName] === undefined) {
-        var View = this.availableViews[viewName];
-        if (View === undefined) { this.show404(); }
-
-        this.subViews[viewName] = new View();
-        this.subViews[viewName].render();
+      
+      if (!!this.subViews[viewName]) {
+        this.subViews[viewName].remove();
       }
+
+      var View = this.availableViews[viewName];
+      if (View === undefined) { 
+        this.show404(); 
+      }
+
+      this.subViews[viewName] = new View();
+      this.subViews[viewName].render();
 
       this.el.html(this.subViews[viewName].el);
       this.subViews[viewName].delegateEvents();

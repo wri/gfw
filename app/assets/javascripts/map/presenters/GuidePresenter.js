@@ -84,16 +84,16 @@ define([
       'Analysis/results': function() {
         if (!!this.status.get('tour')) {        
           setTimeout(function(){
-            this.view.updatePosition();
-          }.bind(this), 0);
+            this.view.updateMask();
+          }.bind(this), 50);
         }
       }
     },{
       'Analysis/results-error': function() {
         if (!!this.status.get('tour')) {        
           setTimeout(function(){
-            this.view.updatePosition();
-          }.bind(this), 0);
+            this.view.updateMask();
+          }.bind(this), 50);
         }
       }
     }],
