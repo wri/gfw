@@ -237,6 +237,10 @@ define([
 
     },
 
+    updateMask: function() {
+      this.positionMask(this.presenter.status.get('position'));
+    },
+
     nextStep: function() {
       this.presenter.goToNextStep();
     },
