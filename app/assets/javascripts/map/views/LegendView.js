@@ -83,6 +83,13 @@ define([
       }
     })),
 
+    model: new (Backbone.Model.extend({
+      defaults:{
+        hidden: true,
+        categories_status: [],
+      }
+    })),
+
     /**
      * Optional layers detail templates.
      */
