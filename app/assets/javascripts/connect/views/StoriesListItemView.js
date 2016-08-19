@@ -45,8 +45,11 @@ define([
     confirmDestroy: function(event) {
       event.preventDefault();
 
+      this.story.set('from', 'Global Forest Watch');
+      
       var confirmView = new ListItemDeleteConfirmView({
-        model: this.story});
+        model: this.story
+      });
       this.$el.append(confirmView.render().el);
       this.listenTo(confirmView, 'confirmed', this.destroy.bind(this));
     },

@@ -50,6 +50,7 @@
     .module{
       box-shadow: $shadow1;
       .title-dialog{
+        display: block;
         position: relative;
         cursor: pointer;
         text-transform: uppercase;
