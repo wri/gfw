@@ -205,6 +205,17 @@ define([
           }
         }
       },
+      // Analysis tab draw
+      {
+        selector: "#module-tabs",
+        text: guidetexts.glad.highresolutiontab,
+        options: {
+          position: 'left',
+          callfront: function() {
+            mps.publish('Tab/toggle', ['hd-tab', true]);
+          }
+        }
+      },
     ]
   }
 

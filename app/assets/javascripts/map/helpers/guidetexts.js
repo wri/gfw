@@ -25,8 +25,9 @@ define([], function() {
       analysistab_1:    '<p><strong>Analyze</strong> how many GLAD alerts occurred in a custom area by <strong>drawing a shape</strong> in the map. Your analysis results will show up here. Use the calendar to change the dates of your analysis.</p>',
       analysistab_2:    '<p>To receive notifications when new GLAD Alerts are detected in your custom area, click <strong>Subscribe</strong>. You will be prompted to <strong>log in to My GFW</strong> using a Facebook, Twitter, or Google+ account. Then you can enter the email address where you want to receive your alerts and name your area.</p>',
       analysistab_3:    '<p>You can also analyze or subscribe to a <strong>country or subnational region</strong></p>',
-      analysistab_4:    '<p>Or to <strong>a shape</strong> from another data layer using the tabs at the top of the map (ex. Land Use, Conservation, People)</p>'+
-                        '<p>To learn more about how you can use Global Forest Watch to monitor forests, visit our <a href="/howto">How to Portal.</a></p>',
+      analysistab_4:    '<p>Or to <strong>a shape</strong> from another data layer using the tabs at the top of the map (ex. Land Use, Conservation, People)</p>',
+      highresolutiontab:'<p>View the latest <strong>high resolution satellite imagery</strong> to verify alerts here.</p>'+
+                        '<p>To learn more about how you can use Global Forest Watch to monitor forests, visit our <a href="/howto">How to Portal.</a></p>',              
     }
   }
   return guideTexts;
