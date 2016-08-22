@@ -62,6 +62,7 @@ define([
         threshold: 30,
         mobileEnabled: false,
         subscribe: false,
+        fit_to_geom: false,
 
         layerOptions: null
 
