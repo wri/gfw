@@ -363,7 +363,7 @@ define([
       var paths = geojsonUtilsHelper.geojsonToPath(geojson);
       var overlay = new google.maps.Polygon({
         paths: paths,
-        editable: true,
+        editable: (geojson.type == 'Polygon'),
         strokeWeight: this.presenter.status.get('overlay_stroke_weight'),
         fillOpacity: 0,
         fillColor: '#FFF',

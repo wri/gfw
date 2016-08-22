@@ -93,8 +93,8 @@ define([
     changeGeostore: function() {
       if (!!this.status.get('geostore')) {
         GeostoreService.get(this.status.get('geostore')).then(function(response) {
-          mps.publish('Analysis/drawGeojson', [response.data.attributes.geojson.features[0], true]);
-        });
+          mps.publish('Analysis/drawGeojson', [response.data.attributes.geojson.features[0], this.status.get('fit_to_geom')]);
+        }.bind(this));
       }
     },
 
