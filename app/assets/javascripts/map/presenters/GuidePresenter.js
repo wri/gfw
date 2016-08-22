@@ -81,6 +81,22 @@ define([
         this.status.set('tour',tour);
       }
     },{
+      'Tab/toggle': function() {
+        if (!!this.status.get('tour')) {        
+          setTimeout(function(){
+            this.view.updateMask();
+          }.bind(this), 50);
+        }        
+      }
+    },{
+      'Analysis/subtab': function() {
+        if (!!this.status.get('tour')) {        
+          setTimeout(function(){
+            this.view.updateMask();
+          }.bind(this), 50);
+        }        
+      }
+    },{
       'Analysis/results': function() {
         if (!!this.status.get('tour')) {        
           setTimeout(function(){
