@@ -9,33 +9,19 @@ require([
   'bluebird',
   'handlebars',
   'connect/router',
-  'connect/views/UserFormView',
-  'connect/views/SubscriptionListView',
-  'connect/views/StoriesListView',
-  'connect/views/LoginView',
-  'views/NotificationsView'
-], function($, _, Class, Backbone, chosen, utils, mps, Promise, Handlebars, Router, UserFormView, SubscriptionListView, StoriesListView, LoginView, NotificationsView) {
+], function($, _, Class, Backbone, chosen, utils, mps, Promise, Handlebars, Router) {
 
   'use strict';
 
   var ConnectPage = Class.extend({
 
-    el: $('.my-gfw-container'),
-
     init: function() {
       this.router = new Router(this);
-      this.listeners();
       this._cartodbHack();
       this._handlebarsPlugins();
       this._googleMapsHelper();
       this._configPromise();
       this._initApp();
-    },
-
-    listeners: function() {
-      this.router.on('route:myProfilePage', this.myProfilePage.bind(this));
-      this.router.on('route:mySubscriptionsPage', this.mySubscriptionsPage.bind(this));
-      this.router.on('route:myStoriesPage', this.myStoriesPage.bind(this));
     },
 
     /**
@@ -47,61 +33,6 @@ require([
           root: '/my_gfw',
           pushState: true
         });
-      }
-    },
-
-    /**
-     * ROUTE PAGES
-     * - myProfilePage
-     * - mySubscriptionsPage
-     * - myStoriesPage
-     */
-    myProfilePage: function() {
-      // Remove if it exists
-      if (!!this.userFormView) {
-        this.userFormView.remove();
-      }
-      this.userFormView = new UserFormView();
-      this.userFormView.render();
-
-      this.el.html(this.userFormView.el);
-      this.userFormView.delegateEvents();
-
-      if (this.userFormView.show !== undefined) {
-        this.userFormView.show();
-      }
-    },
-
-    mySubscriptionsPage: function() {
-      console.log(arguments);
-      // Remove if it exists
-      if (!!this.subscriptionListView) {
-        this.subscriptionListView.remove();
-      }
-      this.subscriptionListView = new SubscriptionListView();
-      this.subscriptionListView.render();
-
-      this.el.html(this.subscriptionListView.el);
-      this.subscriptionListView.delegateEvents();
-
-      if (this.subscriptionListView.show !== undefined) {
-        this.subscriptionListView.show();
-      }
-    },
-
-    myStoriesPage: function() {
-      // Remove if it exists
-      if (!!this.storiesListView) {
-        this.storiesListView.remove();
-      }
-      this.storiesListView = new StoriesListView();
-      this.storiesListView.render();
-
-      this.el.html(this.storiesListView.el);
-      this.storiesListView.delegateEvents();
-
-      if (this.storiesListView.show !== undefined) {
-        this.storiesListView.show();
       }
     },
 
@@ -150,7 +81,7 @@ require([
         google.maps.Polygon.prototype.getBounds = function() {
           var bounds = new google.maps.LatLngBounds();
           var paths = this.getPaths();
-          var path;        
+          var path;
           for (var i = 0; i < paths.getLength(); i++) {
             path = paths.getAt(i);
             for (var ii = 0; ii < path.getLength(); ii++) {

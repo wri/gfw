@@ -44,7 +44,6 @@ define([
     },
 
     render: function() {
-      console.log(this.stories);
       var calledAfterSync = arguments.length > 0;
       this.$el.html(this.template({
         showSpinner: !calledAfterSync && this.stories.length === 0,
