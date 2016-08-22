@@ -328,7 +328,7 @@ define([
 
       if (area) {
         this.router.navigate('country/' + this.country.get('iso') + '/' + String(area.get('id_1')), {trigger: true});
-        this.$el.find('#url_analysis').attr('href', '/map/6/'+ area.attributes.bounds._northEast.lat + '/'+ area.attributes.bounds._northEast.lng + '/'+ area.attributes.iso + '-' + String(area.get('id_1')) +'/grayscale/loss,forestgain?begin=2001-01-01&end=2014-12-31&threshold='+(this.helper.config.canopy_choice || 30));
+        this.$el.find('#url_analysis').attr('href', '/map/6/'+ area.attributes.bounds._northEast.lat + '/'+ area.attributes.bounds._northEast.lng + '/'+ area.attributes.iso + '-' + String(area.get('id_1')) +'/grayscale/loss,forestgain?begin=2001-01-01&end=2014-12-31&fit_to_geom=true&threshold='+(this.helper.config.canopy_choice || 30));
       } else {
         this._navigateCountry();
       }
@@ -337,7 +337,7 @@ define([
 
     _navigateCountry: function() {
       this.router.navigate('country/' + this.country.get('iso'), {trigger: true});
-      this.$el.find('#url_analysis').attr('href', '/map/5/0/0/'+ this.country.get('iso') +'/grayscale/loss,forestgain?begin=2001-01-01&end=2014-12-31&threshold='+(this.helper.config.canopy_choice || 30));
+      this.$el.find('#url_analysis').attr('href', '/map/5/0/0/'+ this.country.get('iso') +'/grayscale/loss,forestgain?begin=2001-01-01&end=2014-12-31&fit_to_geom=true&threshold='+(this.helper.config.canopy_choice || 30));
     },
 
     _initMap: function(callback) {
@@ -487,7 +487,7 @@ define([
 
     _displayArea: function(area) {
       var self = this;
-      this.$el.find('#url_analysis').attr('href', '/map/6/'+ area.attributes.bounds._northEast.lat + '/'+ area.attributes.bounds._northEast.lng + '/'+ area.attributes.iso + '-' + String(area.get('id_1')) +'/grayscale/loss,forestgain?begin=2001-01-01&end=2014-12-30&threshold='+(this.helper.config.canopy_choice || 30));
+      this.$el.find('#url_analysis').attr('href', '/map/6/'+ area.attributes.bounds._northEast.lat + '/'+ area.attributes.bounds._northEast.lng + '/'+ area.attributes.iso + '-' + String(area.get('id_1')) +'/grayscale/loss,forestgain?begin=2001-01-01&end=2014-12-30&fit_to_geom=true&threshold='+(this.helper.config.canopy_choice || 30));
       this.map.fitBounds(area.get('bounds'), {reset: true});
       this._removeCartodblayer();
 
