@@ -2,7 +2,7 @@ Gfw::Application.routes.draw do
 
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
 
-  #legacy
+  # legacy
   # 2004-2009 era
   get '/english' => redirect('/')
   get '/french' => redirect('/')
@@ -44,10 +44,13 @@ Gfw::Application.routes.draw do
   get '/about/testers' => redirect("/about")
   get '/getinvolved/provide-feedback' => redirect("/getinvolved")
 
+  # stories
   get '/stayinformed/crowdsourced-stories' => redirect('/stories')
   get '/stories' => 'stories#index'
   get '/stories/new' => 'stories#index', as: 'new_story'
   get '/stories/*all' => 'stories#index'
+
+
 
   # static
   get '/data' => redirect("sources")
@@ -67,16 +70,24 @@ Gfw::Application.routes.draw do
   get '/feedback' => 'static#feedback'
   get '/feedback_jsonp' => 'static#feedback_jsonp'
 
+
   # about
   get '/about' => 'static#about'
   get '/about(/:section)' => 'static#about'
 
-  # explore
-  get '/explore' => 'static#explore'
-  get '/explore(/:section)' => 'static#explore'
 
-  get '/notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'
+  # explore
+  get '/explore' , to: redirect('/developers-corner/gallery/')
+  get '/explore(/:section)' , to: redirect('/developers-corner/gallery/')
+
+
+  # terms
   get '/terms' => 'static#terms'
+
+
+  # not supported
+  get '/notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'
+
 
   # map
   get '/map' => 'map#index'
@@ -92,25 +103,27 @@ Gfw::Application.routes.draw do
   get '/embed/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
   get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
 
+
   # countries
   get '/countries' => 'countries#index'
   get '/country/:id' => 'countries#show', :as => 'country'
-
-  get '/country_info/:id/:box',to: redirect('/country/%{id}#%{box}')
-  # todo => validate id
   get '/country/:id/:area_id' => 'countries#show', :as => 'country_area'
-
   get '/countries/overview' => 'countries#overview'
+  get '/country_info/:id/:box',to: redirect('/country/%{id}#%{box}')
+
 
   # search
   get '/search(/:query)(/:page)' => 'search#index'
 
+
   # download links
   post '/download' => 'download#create_download'
+
 
   # media
   post 'media/upload' => 'media#upload'
   get 'media/show' => 'media#show'
+
 
   # embed
   get '/embed/country/:id' => 'embed#countries_show'
@@ -119,6 +132,7 @@ Gfw::Application.routes.draw do
   get '/embed/countries/overview' => 'embed#countries_overview'
 
   get '/landing' => 'landing#index'
+
 
   # sitemap
   get '/sitemap' => 'sitemap#index'
