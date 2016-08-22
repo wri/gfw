@@ -2,8 +2,7 @@ Gfw::Application.routes.draw do
 
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
 
-  # legacy
-  # 2004-2009 era
+  ########### LEGACY #############
   get '/english' => redirect('/')
   get '/french' => redirect('/')
   get '/bahasa' => redirect('/')
@@ -46,14 +45,32 @@ Gfw::Application.routes.draw do
 
   # stories
   get '/stayinformed/crowdsourced-stories' => redirect('/stories')
+
+  # static
+  get '/data' => redirect("sources")
+  get '/getinvolved/apply-to-the-small-grants-fund' => redirect('/small-grants-fund')
+  get '/getinvolved/develop-your-own-app' => redirect('/developers-corner')
+
+  # explore
+  get '/explore' , to: redirect('/developers-corner/gallery/')
+  get '/explore(/:section)' , to: redirect('/developers-corner/gallery/')
+
+  # howto
+  get '/howto', to: redirect('/howto/')
+
+  # developers corner
+  get '/developers-corner', to: redirect('/developers-corner/')
+
+  ########### /LEGACY #############
+  
+
+  # stories #
   get '/stories' => 'stories#index'
   get '/stories/new' => 'stories#index', as: 'new_story'
   get '/stories/*all' => 'stories#index'
 
 
-
-  # static
-  get '/data' => redirect("sources")
+  # static #
   get '/sources' => 'static#data'
   get '/sources(/:section)' => 'static#data'
 
@@ -63,8 +80,6 @@ Gfw::Application.routes.draw do
   get '/stayinformed' => 'static#keep'
   get '/stayinformed(/:section)' => 'static#keep'
 
-  get '/getinvolved/apply-to-the-small-grants-fund' => redirect('/small-grants-fund')
-  get '/getinvolved/develop-your-own-app' => redirect('/developers-corner')
   get '/getinvolved' => 'static#getinvolved'
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'
@@ -74,11 +89,6 @@ Gfw::Application.routes.draw do
   # about
   get '/about' => 'static#about'
   get '/about(/:section)' => 'static#about'
-
-
-  # explore
-  get '/explore' , to: redirect('/developers-corner/gallery/')
-  get '/explore(/:section)' , to: redirect('/developers-corner/gallery/')
 
 
   # terms
@@ -122,7 +132,7 @@ Gfw::Application.routes.draw do
 
   # media
   post 'media/upload' => 'media#upload'
-  get 'media/show' => 'media#show'
+  get  'media/show' => 'media#show'
 
 
   # embed
@@ -136,8 +146,6 @@ Gfw::Application.routes.draw do
 
   # sitemap
   get '/sitemap' => 'sitemap#index'
-  get '/howto', to: redirect('/howto/')
-  get '/developers-corner', to: redirect('/developers-corner/')
 
   # Small Grunts Fund
   get '/small-grants-fund' => 'small_grants_fund#index'
