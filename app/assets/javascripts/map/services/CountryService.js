@@ -24,14 +24,38 @@ define([
         var url = new UriTemplate(URL).fillFromObject({});
 
         ds.define(GET_REQUEST_ID, {
-          cache: {type: 'persist', duration: 1, unit: 'days'},
+          // cache: {type: 'persist', duration: 1, unit: 'days'},
+          cache: false,
           url: url,
-          type: 'GET'
+          type: 'GET',
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8',          
+
+          decoder: function ( data, status, xhr, success, error ) {
+            if ( status === "success" ) {
+              data.countries = _.filter(data.countries, function(country){
+                return country.iso !== null
+              });
+              success( data, xhr );
+            } else if ( status === "fail" || status === "error" ) {
+              error( JSON.parse(xhr.responseText) );
+            } else if ( status === "abort") {
+              
+            } else {
+              error( JSON.parse(xhr.responseText) );
+            }
+          }          
+
         });
 
         var requestConfig = {
           resourceId: GET_REQUEST_ID,
-          success: resolve
+          success: function(data, status) {
+            resolve(data,status);        
+          },
+          error: function(errors) {
+            reject(errors);
+          }
         };
 
         ds.request(requestConfig);
