@@ -22,10 +22,17 @@
       </aside>
 
       <div class="m-form">
-        <form id="new_story">
+        <form id="new-subscription">
           <div class="field -required">
-            <label for="title">Title *</label>
-            <input type="text" name="title" id="title" placeholder="Illegal Logging in National Park" value="{{story.title}}">
+            <label for="aoi">AOI *</label>
+            <div class="m-select">
+              <select id="aoi" data-placeholder="Select your area of interest (country or upload your own shapefile)">
+                <option value=""></option>
+                <option value="country">Country or Jurisdiction</option>
+                <option value="draw">Draw or upload your area of interest</option>
+              </select>
+            </div>
+            
           </div>
 
           <div class="field -required">
