@@ -24,7 +24,8 @@ define([
         var url = new UriTemplate(URL).fillFromObject({});
 
         ds.define(GET_REQUEST_ID, {
-          cache: {type: 'persist', duration: 1, unit: 'days'},
+          // cache: {type: 'persist', duration: 1, unit: 'days'},
+          cache: false,
           url: url,
           type: 'GET',
           dataType: 'json',
