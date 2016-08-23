@@ -19,8 +19,12 @@ define([
       var xhr = new XMLHttpRequest();
       xhr.open("POST", URL, true);
       xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          deferred.resolve(JSON.parse(xhr.responseText));
+        if (xhr.readyState == 4) {
+          if (xhr.status == 200) {
+            deferred.resolve(JSON.parse(xhr.responseText));
+          } else {
+            deferred.reject(JSON.parse(xhr.responseText));
+          } 
         }
       };
 
