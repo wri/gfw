@@ -6,10 +6,11 @@ define([
   'connect/views/UserFormView',
   'connect/views/StoriesListView',
   'connect/views/SubscriptionListView',
+  'connect/views/SubscriptionNewView',
   'connect/views/LoginView',
   'connect/views/SubHeaderView',
   'views/NotificationsView'
-], function($, Backbone, _, User, UserFormView, StoriesListView, SubscriptionListView, LoginView, SubHeaderView, NotificationsView) {
+], function($, Backbone, _, User, UserFormView, StoriesListView, SubscriptionListView, SubscriptionNewView, LoginView, SubHeaderView, NotificationsView) {
 
   'use strict';
 
@@ -35,7 +36,7 @@ define([
       'profile': UserFormView,
       'stories': StoriesListView,
       'subscriptions': SubscriptionListView,
-      'subscriptions/new': SubscriptionListView,
+      'subscriptions/new': SubscriptionNewView,
     },
 
     initialize: function() {

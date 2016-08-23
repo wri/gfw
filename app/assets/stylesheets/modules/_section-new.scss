@@ -1,11 +1,11 @@
 $aside-width: 270px;
 
 // NEW
-.m-new-stories {
+.m-new {
   display: flex;
   justify-content: space-between;
 
-  .m-aside-stories {
+  .m-aside {
     display: none;
     width: $aside-width;
     @media (min-width: $br-mobile) {
@@ -13,7 +13,7 @@ $aside-width: 270px;
     }
   }
 
-  .m-form-stories {
+  .m-form {
     width: 100%;
     @media (min-width: $br-mobile) {
       width: calc(100% - #{$aside-width});
@@ -22,7 +22,7 @@ $aside-width: 270px;
   }
 }
 
-.m-aside-stories {
+.m-aside {
   margin: 12px 0 0;
 
   > * {
@@ -80,7 +80,7 @@ $aside-width: 270px;
 
 
 // MAP CONTAINER
-.m-stories-map {
+.m-map {
   position: relative;
   overflow: hidden;
   width: 100%;

@@ -26,12 +26,14 @@
 @import "modules/slick";
 @import "modules/carrousel";
 @import "modules/pagination";
-@import "modules/pagination";
-@import "layouts/static";
 @import "modules/select";
 @import "modules/notifications";
+@import "modules/header-static";
+@import "modules/section-static";
+@import "modules/section-new";
 @import "modules/map/country-select";
 @import "modules/static/spinner";
+@import "layouts/static";
 
 @import "modules/connect/shared";
 @import "modules/connect/profile-modal";

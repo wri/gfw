@@ -12,7 +12,7 @@ define([
   'stories/models/StoryModel',
   'stories/models/MediaModel',
   'stories/views/LatestStoriesView',
-  'text!stories/templates/new_story.handlebars'
+  'text!stories/templates/storiesNew.handlebars'
 ], function(
   Class,
   $,
