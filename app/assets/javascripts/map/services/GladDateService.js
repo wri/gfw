@@ -17,11 +17,8 @@ define([
     },
 
     _defineRequests: function() {
-      var endOfDay = moment().endOf('day'),
-          secondsToEndOfDay = endOfDay.diff(moment()) / 1000;
-
       var config = {
-        cache: {type: 'persist', duration: secondsToEndOfDay, unit: 'seconds'},
+        cache: false,
         url: URL,
         type: 'GET'
       };
