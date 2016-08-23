@@ -24,6 +24,13 @@
 @import "modules/slick";
 @import "modules/carrousel";
 @import "modules/pagination";
-@import "layouts/static";
 @import "modules/terms";
 @import "modules/notifications";
+@import "modules/static/spinner";
+
+// Gallery
+@import "modules/card";
+@import "modules/grid";
+@import "modules/select";
+
+@import "layouts/static";

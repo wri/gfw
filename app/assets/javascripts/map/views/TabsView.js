@@ -9,7 +9,7 @@ define([
   'd3',
   'mps',
   'map/presenters/TabsPresenter',
-  'map/views/tabs/AnalysisView',
+  'map/views/tabs/AnalysisNewView',
   'map/views/tabs/CountriesView',
   'map/views/tabs/BasemapsView',
   'map/views/tabs/HighresolutionView',
@@ -17,7 +17,7 @@ define([
   'views/ShareView',
   'text!map/templates/tabs.handlebars',
   'text!map/templates/tabs-mobile.handlebars'
-], function(_, Handlebars, d3, mps, Presenter, AnalysisView, CountriesView, BasemapsView, HighresolutionView, SubscribeView, ShareView, tpl, tplMobile) {
+], function(_, Handlebars, d3, mps, Presenter, AnalysisNewView, CountriesView, BasemapsView, HighresolutionView, SubscribeView, ShareView, tpl, tplMobile) {
 
   'use strict';
 
@@ -59,6 +59,7 @@ define([
 
     cacheVars: function(){
       this.$tabs = this.$el.find('.tab');
+      this.$tabList = this.$el.find('.tab-list');
       this.$tabMobileButtons = $('.tab-mobile');
       this.$tabMobileBackButtons = $('.tab-mobile-back');
       this.$settingsTabButton = $('#settings-tab-button');
@@ -84,13 +85,39 @@ define([
     },
 
     initCustomViews: function(){
-      new AnalysisView(this.map, this.countries);
+      new AnalysisNewView(this.map, this.countries);
       new CountriesView(this.map, this.countries);
       new BasemapsView(this.map, this.countries);
       new HighresolutionView(this.map, this.countries);
+      new SubscribeView(this.map, this.countries);
+    },
 
-      var subscribeView = new SubscribeView(this.map, this.countries);
-      $('body').append(subscribeView.el);
+    toggleTab: function(id, active) {
+      var id = id,
+          active = active,
+          $tabButton = this.$tabList.find('[data-tab="'+id+'"]'),
+          is_active = $tabButton.hasClass('active');
+      
+      // If it's already closed or opened we don't need to do anything
+      if (active != is_active) {
+        if (active) {
+          // container
+          this.$container.toggleClass('active', active);
+          
+          // tabs
+          this.$tabs.removeClass('active').addClass('inactive');
+          $tabButton.toggleClass('inactive', !active).toggleClass('active', active);
+
+          // tabs content
+          this.$tabsContent.removeClass('selected');
+          this.$el.find('#'+ id).toggleClass('selected', active);
+          
+        } else {
+          this.$container.removeClass('active')
+          this.$tabs.removeClass('inactive active');
+          this.$tabsContent.removeClass('selected');
+        }
+      }
     },
 
     toggleTabs: function(e){

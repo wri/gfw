@@ -10,6 +10,7 @@ require([
   'map/utils',
   'enquire',
   'mps',
+  'bluebird',
   'handlebars',
   'map/router',
   'views/SourceModalView',
@@ -18,15 +19,19 @@ require([
   'views/SourceBottomView',
   'views/SourceMobileFriendlyView',
 
-  'map/collections/CountryCollection',  
+  'map/collections/CountryCollection',
+
   'map/presenters/ExperimentsPresenter',
+
   'map/services/AnalysisService',
+
+  // Should we get rid of them?
   'map/services/CountryService',
   'map/services/DataService',
+  //
   'map/views/MapView',
   'map/views/MapControlsView',
   'map/views/TabsView',
-  'map/views/analysis/AnalysisResultsView',
   'map/views/LayersNavView',
   'map/views/LegendView',
   'map/views/TimelineView',
@@ -39,8 +44,8 @@ require([
   'views/NotificationsView',
   'views/DownloadView',
   '_string'
-], function($, _, Class, Backbone, chosen, utils, enquire, mps, Handlebars, Router, SourceModalView, ConfirmModalView, SourceBottomView, SourceMobileFriendlyView, CountryCollection, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
-    MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, GuideView, GuideButtonView, UserFormModalView, HeaderView, FooterView, NotificationsView, DownloadView) {
+], function($, _, Class, Backbone, chosen, utils, enquire, mps, Promise, Handlebars, Router, SourceModalView, ConfirmModalView, SourceBottomView, SourceMobileFriendlyView, CountryCollection, ExperimentsPresenter, AnalysisService, countryService, DataService, MapView,
+    MapControlsView, TabsView, LayersNavView, LegendView, TimelineView, NavMobileView, GuideView, GuideButtonView, UserFormModalView, HeaderView, FooterView, NotificationsView, DownloadView) {
 
   'use strict';
 
@@ -51,15 +56,10 @@ require([
     init: function() {
       var router = new Router(this);
       this._cartodbHack();
-      this._handlebarsPlugins()
+      this._handlebarsPlugins();
+      this._googleMapsHelper();
+      this._configPromise();
       this._initViews();
-
-      // // For dev
-      // window.router = router;
-      // window.mps = mps;
-      // window.analysis = AnalysisService;
-      // window.countryService = CountryService;
-      // window.ds = DataService;
     },
 
     /**
@@ -80,30 +80,37 @@ require([
 
       var map = new MapView();
 
-      this.map = map.map;
-      this.countries = new CountryCollection();
-      
-      new MapControlsView(this.map, this.countries);
-      new TabsView(this.map, this.countries);
-      new AnalysisResultsView(this.map, this.countries);
-      new LayersNavView(this.map, this.countries);
-      new LegendView(this.map, this.countries);
-      new TimelineView(this.map, this.countries);
-      new NavMobileView(this.map, this.countries);
-      new FooterView(this.map, this.countries);
-      new HeaderView(this.map, this.countries);
-      new SourceModalView(this.map, this.countries);
-      new ConfirmModalView(this.map, this.countries);
-      new SourceBottomView(this.map, this.countries);
-      new SourceMobileFriendlyView(this.map, this.countries);
-      new NotificationsView(this.map, this.countries);
-      new GuideView(this.map, this.countries);
-      new GuideButtonView(this.map, this.countries);  
+      // I was thinking that, without a map, an array of countries and an array of layers
+      // we shouldn't create any view.
+      countryService.get().then(function(results) {
+        this.map = map.map;
+        this.countries = _.where(results.countries, {
+          enabled: true
+        });
 
-      // Init views
-      this.countries.fetch().done(function(){
+        // console.log(this.countries);
+
+
+        new MapControlsView(this.map, this.countries);
+        new TabsView(this.map, this.countries);
+        new LayersNavView(this.map, this.countries);
+        new LegendView(this.map, this.countries);
+        new TimelineView(this.map, this.countries);
+        new NavMobileView(this.map, this.countries);
+        new FooterView(this.map, this.countries);
+        new HeaderView(this.map, this.countries);
+        new SourceModalView(this.map, this.countries);
+        new ConfirmModalView(this.map, this.countries);
+        new SourceBottomView(this.map, this.countries);
+        new SourceMobileFriendlyView(this.map, this.countries);
+        new NotificationsView(this.map, this.countries);
+        new GuideView(this.map, this.countries);
+        new GuideButtonView(this.map, this.countries);
+
         this._initApp();
-      }.bind(this))
+
+      }.bind(this));
+
 
       // What is this? Are we already using it?
       $('body').append(new UserFormModalView().el);
@@ -146,6 +153,36 @@ require([
           default:
             return options.inverse(this);
         }
+      });
+    },
+
+    _googleMapsHelper: function() {
+      if (!google.maps.Polygon.prototype.getBounds) {
+        google.maps.Polygon.prototype.getBounds = function() {
+          var bounds = new google.maps.LatLngBounds();
+          var paths = this.getPaths();
+          var path;        
+          for (var i = 0; i < paths.getLength(); i++) {
+            path = paths.getAt(i);
+            for (var ii = 0; ii < path.getLength(); ii++) {
+              bounds.extend(path.getAt(ii));
+            }
+          }
+          return bounds;
+        }
+      }
+    },
+
+    _configPromise: function() {
+      Promise.config({
+          // Enable warnings
+          warnings: true,
+          // Enable long stack traces
+          longStackTraces: true,
+          // Enable cancellation
+          cancellation: true,
+          // Enable monitoring
+          monitoring: true
       });
     }
 

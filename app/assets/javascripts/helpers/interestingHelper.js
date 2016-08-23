@@ -96,6 +96,7 @@ define([], function() {
       description: 'Contact the GFW team with questions, comments, and feedback.',
       link: '/about/contact-us',
       button_text: 'Contact us',
+      adittionalClass: 'contact-link'
     },
     explore_applications: {
       title: 'Explore GFW applications',

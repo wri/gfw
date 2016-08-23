@@ -20,11 +20,17 @@
   <div id="notification-select-forest-change-layer" data-type="warning">
     <p>Please turn on a Forest Change layer to analyze before using the analysis tool.</p>
   </div>
+  <div id="notification-select-forest-change-layer-subscription" data-type="warning">
+    <p>Please turn on a Forest Change layer that allows subscription before using the subscription tool.</p>
+  </div>
   <div id="notification-delete-analysis" data-type="error">
-    <p>Please discard your current analysis <button class="btn little white action" data-action="#analysis-delete">Discard analysis</button></p>
+    <p>Please discard your current analysis <button class="btn little white action" data-action="Analysis/delete">Discard analysis</button></p>
   </div>
   <div id="notification-enable-location" data-type="warning">
     <p>Please enable location services for this site to find your location on the map and reload the page</p>
+  </div>
+  <div id="notification-download-analysis" data-type="warning">
+    <p>Download is not currently available for this layer</p>
   </div>
 
 
@@ -35,6 +41,13 @@
   <div id="notification-upload-error-server" data-type="error">
     <p>Sorry, there was an error uploading the picture, please retry</p>
   </div>
+  <div id="notif-not-a-correct-youtube-link" data-type="error">
+    <p>The YouTube link you have entered is incorrect</p>
+  </div>
+  <div id="story-new-form-error" data-type="error">
+    <p>Sorry, there was an error submitting your story.</p>
+  </div>
+
 
 
   <!-- DOWNLOAD -->
@@ -54,7 +67,7 @@
 
   <!-- URTHECAST -->
   <div id="notification-zoom-not-reached" data-type="warning">
-    <p>Please move to zoom level 5 to activate this imagery.</p>
+    <p>Please move to zoom level 5 to activate this imagery. <button class="btn little white action" data-action="Map/set-zoom" data-options="5">Move to zoom 5</button></p>
   </div>
   <div id="notification-no-images-urthecast" data-type="error">
     <p>No imagery is available in this area for the selected time period and settings.</p>
@@ -67,7 +80,7 @@
   </div>
 
 
-  <!-- USER -->
+  <!-- USER && SUBSCRIPTIONS -->
   <div id="notification-my-gfw-profile-saved" data-type="success">
     <p>Your profile has been saved.</p>
   </div>
@@ -76,8 +89,20 @@
     <p>Please enter your email to sign up as an official tester.</p>
   </div>
 
+  <div id="notification-my-gfw-subscription-correct" data-type="success">
+    <p>Your subscription has been saved correctly.</p>
+  </div>
+
+  <div id="notification-my-gfw-subscription-incorrect" data-type="error">
+    <p>Sorry, there was an error submitting your subscription.</p>
+  </div>
+
   <div id="notification-my-gfw-subscription-confirmed" data-type="success">
     <p>Your subscription has been confirmed.</p>
+  </div>
+
+  <div id="notification-my-gfw-subscription-dataset-required" data-type="error">
+    <p>You must select at least one data set</p>
   </div>
 
   <div id="notification-my-gfw-subscription-confirmation-sent" data-type="success">

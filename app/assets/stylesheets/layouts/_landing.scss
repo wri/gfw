@@ -346,7 +346,7 @@
   &.slide4 { background-image:url('backgrounds/home-slider/bg_slide4.jpg');}
   &.slide5 { background-image:url('http://gfw.blog.s3.amazonaws.com/Carousel/PALM%20Risk%20Tool%20Carousel.jpg');}
   &.slide6 { background-image:url('backgrounds/home-slider/bg_slide6.jpg');}
-  &.slide7 { background-image:url('http://gfw.blog.s3.amazonaws.com/Carousel/Fire%20Risk%20Blog%20Carousel%20Slide.jpg');}
+  &.slide7 { background-image:url('backgrounds/home-slider/Fire-Risk-Blog-Carousel-Slide.jpg');}
 
   aside {
     position: absolute;
@@ -385,14 +385,14 @@
       font-weight: 300;
       @media (min-width: $br-mobile) {
         font-size: 31px;
-        line-height: 0.5;
+        line-height: 1;
         overflow: hidden;
         span {
           display: inline-block;
           float: left;
           clear: both;
           background: rgba($white,0.75);
-          padding: 12px;
+          padding: 8px 10px 0px;
         }
       }
     }

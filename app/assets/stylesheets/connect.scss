@@ -8,7 +8,7 @@
 @import "home-icons/*.png";
 
 // Global
-// This will load all common settings, mixins and styles needed 
+// This will load all common settings, mixins and styles needed
 @import "global/global";
 
 // Layouts
@@ -26,11 +26,16 @@
 @import "modules/slick";
 @import "modules/carrousel";
 @import "modules/pagination";
+@import "modules/pagination";
 @import "layouts/static";
+@import "modules/select";
 @import "modules/notifications";
+@import "modules/map/country-select";
+@import "modules/static/spinner";
 
 @import "modules/connect/shared";
 @import "modules/connect/profile-modal";
 @import "modules/connect/user-form";
 @import "modules/connect/login";
 @import "modules/connect/subscriptions";
+@import "modules/connect/stories";

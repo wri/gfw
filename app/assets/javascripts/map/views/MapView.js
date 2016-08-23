@@ -272,6 +272,11 @@ define([
       return {lat: center.lat(), lng: center.lng()};
     },
 
+    setZoom: function(zoom) {
+      this.map.setZoom(zoom);
+    },
+
+
     fitBounds: function(bounds) {
       this.center_moved = false;
       this.map.fitBounds(bounds);

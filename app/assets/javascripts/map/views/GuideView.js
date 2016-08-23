@@ -1,9 +1,10 @@
 define([
   'handlebars',
+  'mps',
   'map/presenters/GuidePresenter',
   'text!map/templates/guideContainer.handlebars',
   'text!map/templates/guideBubble.handlebars'
-], function(Handlebars, GuidePresenter, tpl, tplBubble) {
+], function(Handlebars, mps, GuidePresenter, tpl, tplBubble) {
 
   var GuideView = Backbone.View.extend({
 
@@ -116,7 +117,7 @@ define([
         height = attrs.height;
 
         this.$topMask.css({
-          height: (top - margin) + "px"
+          height: (top - margin > 0) ? (top - margin) : 0
         });
 
         this.$bottomMask.css({
@@ -220,7 +221,7 @@ define([
     updatePosition: function() {
       // var position = this.model.get('position');
       // var steps = this.model.get('steps');
-      var position =this.presenter.status.get('position');
+      var position = this.presenter.status.get('position');
       var steps = this.presenter.status.get('steps');
 
       if (!!steps[position].options && !!steps[position].options.callfront) {
@@ -234,6 +235,10 @@ define([
         steps[position].options.callback();
       }
 
+    },
+
+    updateMask: function() {
+      this.positionMask(this.presenter.status.get('position'));
     },
 
     nextStep: function() {

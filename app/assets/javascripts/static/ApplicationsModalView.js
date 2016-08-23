@@ -15,7 +15,8 @@ define([
 
   var ApplicationModalStatus = Backbone.Model.extend({
     defaults: {
-      current: null
+      current: null,
+      filteredApps: []
     }
   })
 
@@ -48,12 +49,19 @@ define([
         this.status.set('current', id);
         this.show();
       }, this ));
+      mps.subscribe('App/filters', _.bind(function(filters){
+        this.status.set('filteredApps', this.filterApps(filters));
+      }, this ));
 
       this.status.on('change:current', this.render, this);
+      this.status.on('change:filteredApps', this.render, this);
+
     },
 
     render: function(){
-      var app = _.findWhere(this.helper, {id: this.status.get('current')}); 
+      var app = this.status.get('filteredApps').length > 0 ?
+        this.status.get('filteredApps')[this.status.get('current')] :
+        this.helper[this.status.get('current')];
       this.$el.html(this.template({ app: app }));
       return this;
     },
@@ -62,15 +70,28 @@ define([
       e && e.preventDefault();
       var dir = $(e.currentTarget).data('dir');
       var current = this.status.get('current');
+      var apps = this.status.get('filteredApps').length > 0 ?
+        this.status.get('filteredApps') :
+        this.helper;
       switch(dir) {
         case 'left':
-          (current == 1) ? current = this.helper.length - 1 : current--;
+          (current == 0) ? current = apps.length - 1 : current--;
         break;
         case 'right':
-          (current == this.helper.length - 1) ? current = 1 : current++;
+          (current == apps.length - 1) ? current = 0 : current++;
         break;
       }
       this.status.set('current', current);
+    },
+
+    filterApps: function(filters){
+      var apps = _.filter(this.helper, _.bind(function(app){
+        if (!!app.tags) {
+          var filter_found = _.intersection(filters, app.tags);
+          return !!filter_found.length;
+        }
+      }, this ));
+      return apps;
     }
 
   });

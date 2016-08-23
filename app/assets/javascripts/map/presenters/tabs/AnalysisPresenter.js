@@ -25,7 +25,6 @@ define([
     'umd_as_it_happens_per',
     'umd_as_it_happens_cog',
     'umd_as_it_happens_idn',
-    'modis',
     'viirs_fires_alerts'
   ];
 
@@ -58,10 +57,9 @@ define([
       'forestgain': 'umd-loss-gain',
       'forma': 'forma-alerts',
       'imazon': 'imazon-alerts',
-      'modis': 'quicc-alerts',
       'terrailoss': 'terrai-alerts',
       'prodes': 'prodes-loss',
-      'guyra': 'guyra-loss',
+      'guyra': 'guira-loss',
       'forest2000': 'umd-loss-gain',
       'viirs_fires_alerts': 'viirs-active-fires',
       'umd_as_it_happens':'glad-alerts',
@@ -81,9 +79,9 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Geostore/go': function(geostore) {
+      'Analysis/drawGeojson': function(geostore) {
         this.status.set('geostore', geostore.id);
-        this._handlePlaceGo(geostore);
+        this._handlePlaceGo({geojson: geostore.attributes});
       }
     }, {
       'Place/go': function(place) {
@@ -93,13 +91,16 @@ define([
         }
         this.status.set('threshold', place.params.threshold);
         this.status.set('dont_analyze', place.params.dont_analyze);
+        this.status.set('layerOptions', place.params.layer_options);
         this._handlePlaceGo(place.params);
       }
     }, {
       'LayerNav/change': function(layerSpec) {
         var baselayer = this.status.get('baselayer');
         var both = this.status.get('both');
+        var loss_gain_and_extent = this.status.get('loss_gain_and_extent');
         this._setBaselayer(layerSpec.getBaselayers());
+        this.status.set('loss_gain_and_extent', layerSpec.checkLossGainExtent());
 
         this.view.toggleCountrySubscribeBtn();
         this.view.toggleDoneSubscribeBtn();
@@ -112,6 +113,11 @@ define([
             this._updateAnalysis();
             this.openAnalysisTab();
           }
+        }
+
+        if (loss_gain_and_extent != this.status.get('loss_gain_and_extent')) {
+          this._updateAnalysis();
+          this.openAnalysisTab();
         }
       }
     }, {
@@ -170,13 +176,12 @@ define([
       }
     },{
       'Analysis/toggle': function(boolean) {
-        console.log('Analysis/toggle '+boolean);
         this.view.toggleAnalysis($('#analysis-tab').hasClass('is-analysis'));
       }
     },{
       'Analysis/upload': function(geojson) {
-        ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');
         this._saveAndAnalyzeGeojson(geojson, {draw: true});
+        ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');
       }
     },
     // Timeline
@@ -261,6 +266,11 @@ define([
           $('#subscriptionBtn').addClass('disabled');
         }
       }
+    }, {
+      'LayerNav/changeLayerOptions': function(layerOptions) {
+        this.status.set('layerOptions', layerOptions || []);
+        this._updateAnalysis();
+      }
     }],
 
     openAnalysisTab: function(open){
@@ -334,7 +344,6 @@ define([
 
       // Build resource
       var resource = {
-        geojson: JSON.stringify(geojson),
         type: 'geojson'
       };
       mps.publish('Spinner/start');
@@ -611,7 +620,7 @@ define([
         this.status.set('geostore', geostoreId);
 
         var resource = {
-          geojson: JSON.stringify(geojson),
+          geojson: geojson,
           type: 'geojson'
         };
         resource = this._buildResource(resource);
@@ -621,7 +630,7 @@ define([
         if (baselayer) {
           this.status.set('subscribe_only', true);
           this.status.set('resource', resource);
-          this.setDontAnalyze(null);          
+          this.setDontAnalyze(null);
           mps.publish('Place/update', [{go: false}]);
           this._subscribeAnalysis();
         }
@@ -645,6 +654,26 @@ define([
 
       if (this.status.get('geostore')) {
         resource.geostore = this.status.get('geostore');
+      }
+
+      var options = this.status.get('layerOptions') || [];
+      if (options.length > 0) {
+        resource.layer_options = {};
+        options.forEach(function(option) {
+          resource.layer_options[option] = true;
+        });
+        resource.layer_options = JSON.stringify(resource.layer_options);
+      } else {
+        delete resource.layer_options;
+      }
+
+      if (resource.geojson) {
+        var geojson = geojsonUtilsHelper.featureCollectionToFeature(resource.geojson);
+        if (geojson.type === 'Feature') {
+          resource.geojson = geojson.geometry;
+        }
+
+        resource.geojson = JSON.stringify(resource.geojson);
       }
 
       resource.dataset = this.datasets[baselayer.slug];
@@ -758,7 +787,6 @@ define([
       }
 
       mps.publish('Analysis/enabled', [!!baselayer]);
-      
       $('#analyzeBtn').toggleClass('dont-analyze', !!!baselayer);
       this.status.set('baselayer', baselayer);
       this._setAnalysisBtnVisibility();

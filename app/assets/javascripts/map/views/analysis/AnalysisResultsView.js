@@ -11,7 +11,8 @@ define([
   'views/ShareView',  
   'text!map/templates/analysis/analysisResults.handlebars',
   'text!map/templates/analysis/analysisResultsFailure.handlebars',
-], function(_, Handlebars, Presenter, AdvancedAnalysisView, ShareView, tpl, failureTpl) {
+  'text!map/templates/analysis/analysisResultsFailureAPI.handlebars',
+], function(_, Handlebars, Presenter, AdvancedAnalysisView, ShareView, tpl, failureTpl, failureAPITpl) {
 
   'use strict';
 
@@ -29,6 +30,7 @@ define([
 
     templates: {
       failure: Handlebars.compile(failureTpl),
+      failureAPI: Handlebars.compile(failureAPITpl),
     },
 
     events:{
@@ -84,8 +86,16 @@ define([
      * Render failure analysis request message.
      */
     renderFailure: function() {
-      // this._update(this.templates.failure());
       this.$el.html(this.templates.failure()).removeClass('hidden');
+      this._cacheSelector();
+      this.$resultsHide.addClass('hidden');
+    },
+
+    /**
+     * Render failure analysis on API request message.
+     */
+    renderFailureOnApi: function() {
+      this.$el.html(this.templates.failureAPI()).removeClass('hidden');
       this._cacheSelector();
       this.$resultsHide.addClass('hidden');
     },
@@ -93,6 +103,7 @@ define([
     setParams: function(params){
       this.params = params;
       this.params.warning_text = (this.$analysisTab.find('li.active').data('analysis') === 'draw-tab');
+      this.params.warning_extent_text = this.presenter.status.get('loss_gain_and_extent');
       this.params.downloadVisible = ((this.params.loss || this.params.forestgain) && this.mobile) ? false : true;
       this.params.url = this.setDownloadLink(params.layer.slug);
     },
@@ -152,8 +163,6 @@ define([
         'forma' : 'http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64',
         'terrailoss' : 'http://www.terra-i.org/terra-i/data.html',
         'imazon' : 'http://www.imazongeo.org.br/doc/downloads.php',
-        'modis' : 'http://data.globalforestwatch.org/datasets/e7bfe60d90ea4e5aa808eba4723ad3f8_0'
-
       }
       return links[layer];
     },

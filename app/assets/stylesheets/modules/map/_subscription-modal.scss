@@ -111,7 +111,8 @@
     }
 
     label {
-      margin-top: 7px;
+      display: block;
+      margin: 7px 0 5px;
       text-transform: none;
       font-size: 14px;
       font-weight: 500;
@@ -131,6 +132,11 @@
 }
 
 .subscription-name-container {
+  width: 100%;
+  font-family: "Fira GFW Sans", "Fira Sans";
+}
+
+.subscription-language-container {
   width: 100%;
 }
 
@@ -204,6 +210,10 @@
 
   z-index: 10;
   background: rgba(255,255,255,0.5);
+
+  > .loading-spinner {
+    @include spinner();
+  }
 }
 
 .subscription-successful {

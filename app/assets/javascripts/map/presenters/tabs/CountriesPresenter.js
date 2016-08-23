@@ -18,8 +18,7 @@ define([
 
   var StatusModel = Backbone.Model.extend({
     defaults: {
-      iso: null,
-      dont_analyze: true
+      iso: null
     }
   });
 
@@ -35,7 +34,6 @@ define([
     getPlaceParams: function() {
       var p = {};
       p.iso = this.status.get('iso');
-      p.dont_analyze = this.status.get('dont_analyze');
       return p;
     },
 
@@ -46,8 +44,6 @@ define([
       'Place/go': function(place) {
         var params = place.params;
         var layerSpec = place.layerSpec;
-
-        this.status.set('dont_analyze', params.dont_analyze);
         
         if(!!params.iso.country && params.iso.country !== 'ALL'){
           this.status.set('iso', params.iso);
@@ -68,10 +64,6 @@ define([
       'LayerNav/change': function(layerSpec) {
         this.view._toggleSelected(layerSpec.getLayers());
       }
-    },{
-      'Analysis/dont_analyze': function(enabled) {
-        this.status.set('dont_analyze', enabled);
-      }
     }],
 
     notificate: function(id){
@@ -85,9 +77,6 @@ define([
      */
     publishIso: function(iso) {
       this.status.set('iso', iso);
-      this.status.set('dont_analyze', true);        
-
-      mps.publish('Analysis/dont_analyze', [this.status.get('dont_analyze')]);
       mps.publish('Country/update', [iso]);
       mps.publish('Place/update', [{go: false}]);
 
@@ -104,7 +93,7 @@ define([
       var iso = this.status.get('iso');
 
       if(!!iso && !!iso.country && iso.country !== 'ALL'){
-        countryService.execute(iso.country, _.bind(function(results) {
+        countryService.show(iso.country, _.bind(function(results) {
           var objects = _.findWhere(results.topojson.objects, {
             type: 'MultiPolygon'
           });
@@ -127,7 +116,7 @@ define([
       var iso = this.status.get('iso');
 
       if(!!iso && !!iso.country && iso.country !== 'ALL'){
-        countryService.execute(iso.country, _.bind(function(results) {
+        countryService.show(iso.country, _.bind(function(results) {
           var is_more = (!!results.indepth);
           var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
           

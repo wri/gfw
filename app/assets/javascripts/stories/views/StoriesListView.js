@@ -1,137 +1,70 @@
-/**
- * The StoriesKeep view.
- */
 define([
-  'jquery',
   'backbone',
-  'underscore',
   'handlebars',
   'simplePagination',
-  'text!stories/templates/storiesList.handlebars',
-], function($,Backbone,underscore,Handlebars,simplePagination, storiesTPL) {
+  'stories/collections/StoriesCollection',
+  'stories/views/StoriesItemView',
+  'stories/views/StoriesPaginationView',
+  'text!stories/templates/stories.handlebars'
+], function(
+  Backbone,
+  Handlebars,
+  simplePagination,
+  Stories,
+  StoryView,
+  StoriesPaginationView,
+  tpl
+) {
 
   'use strict';
 
   var StoriesListView = Backbone.View.extend({
 
-    el: '#storiesListView',
-
-    model: new (Backbone.Model.extend({
-      defaults: {
-        total: null,
-        perpage: null,
-        page: null
-      },
-    })),
-
-    collection: new (Backbone.Collection.extend({
-      url: '/stayinformed-stories.json',
-
-      parse: function(response) {
-        return _.map(response, function(story){
-          var img = (! story.media.length) ? null : story.media[story.media.length -1].preview_url;
-          var detail = (story.details.length > 295) ? story.details.substr(0, 295)+'...' : story.details;
-          return {
-            id: story.id,
-            title: story.title,
-            details: detail,
-            link: '/stories/'+story.id,
-            map: (img) ? 'http://gfw2stories.s3.amazonaws.com/uploads/' + img : 'https://maps.googleapis.com/maps/api/staticmap?center=' + story.lat + ',' + story.lng + '&zoom=2&size=80x80',
-          }
-        });
-      }
-    })),
-
-    template: Handlebars.compile(storiesTPL),
+    template: Handlebars.compile(tpl),
 
     initialize: function() {
-      if (!this.$el.length) {
-        return
-      }
-      this.cache();
-      this.listeners();
+      this.stories = new Stories([], {perPage: 5});
+      this.stories.setPage(this.$el.data('page') || 1);
+      this.listenTo(this.stories, 'sync', this.renderStories);
+      this.listenTo(this.stories, 'sync', this.renderPaginationControls);
+      this.stories.fetch();
 
-      /**
-       * Inits
-       */
-      // Init model
-      this.model.set({
-        total: this.$storiesPagination.data('total'),
-        perpage: this.$storiesPagination.data('perpage'),
-        page: this.$storiesPagination.data('page')
-      }, { silent: true });
-
-      // Init pagination
-      this.pagination();
+      this.render();
     },
 
-    cache: function() {
-      this.$htmlbody = $('html, body');
-      this.$storiesList = $('#storiesList');
-      this.$storiesSpinner = $('#storiesSpinner');
-      this.$storiesPagination = $('#storiesPagination');
-      this.$storiesResetPosition = $('#storiesResetPosition');
+    render: function() {
+      this.$el.html(this.template());
+      this.$('#storiesSpinner').addClass('-start');
+      this.renderPaginationControls();
+
+      $('#crowdsourcedStories').addClass('current');
+      document.title = 'Crowdsourced Stories | Global Forest Watch';
+
+      return this;
     },
 
-    listeners: function() {
-      this.model.on('change:page', this.changePage.bind(this));
+    renderStories: function() {
+      var $storiesList = this.$('#storiesList');
+      $storiesList.empty();
+
+      this.stories.getPaginatedModels().forEach(function(story) {
+        var view = new StoryView({story: story});
+        $storiesList.append(view.render().el);
+      }.bind(this));
+
+      this.$('#storiesSpinner').removeClass('-start');
     },
 
-    render: function(){
-      this.$storiesList.html(this.template({ stories : this.collection.toJSON() }));
-    },
-
-    /**
-     * Listeners
-     */
-    changePage: function() {
-      this.$htmlbody.animate({ scrollTop: this.$storiesResetPosition.offset().top }, 500);
-      this.$storiesSpinner.toggleClass('-start', true);
-      this.collection.fetch({
-        data: {
-          for_stay: true,
-          page: this.model.get('page'),
-          perpage: this.model.get('perpage')
-        },
-
-        success: function () {
-          this.$storiesSpinner.toggleClass('-start', false);
-          this.render();
-        }.bind(this),
-        
-        error: function (e) {
-          this.$storiesSpinner.toggleClass('-start', false);
-          alert(' Service request failure: ' + e);
-        }.bind(this),
-        
-      })
-    },
-
-    /**
-     * Pagination
-     */
-    pagination: function(){
-      // We are using simple-pagination plugin
-      this.$storiesPagination.pagination({
-        items: this.model.get('total'),
-        itemsOnPage : this.model.get('perpage'),
-        currentPage : this.model.get('page'),
-        displayedPages: 3,
-        edges: 1,        
-        selectOnClick: false,
-        prevText: '<svg><use xlink:href="#shape-arrow-left"></use></svg>',
-        nextText: '<svg><use xlink:href="#shape-arrow-right"></use></svg>',
-        onPageClick: function(page, e){
-          e && e.preventDefault();
-          this.$storiesPagination.pagination('drawPage', page);
-          this.model.set('page', page);
-        }.bind(this)
+    renderPaginationControls: function() {
+      var paginationView = new StoriesPaginationView({
+        el: '#pagination-container',
+        stories: this.stories
       });
-    },
+      this.listenTo(paginationView, 'change', this.renderStories);
+    }
 
   });
 
   return StoriesListView;
 
 });
-

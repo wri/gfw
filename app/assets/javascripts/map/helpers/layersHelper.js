@@ -15,8 +15,6 @@ define([
   'map/views/layers/Forma250CoverLayer',
   'map/views/layers/ImazonLayer',
   'map/views/layers/ImazonCoverLayer',
-  'map/views/layers/ModisLayer',
-  'map/views/layers/ModisCoverLayer',
   'map/views/layers/Forest2000Layer',
   'map/views/layers/IntactForestLayer',
   'map/views/layers/IntactForestLayer2000',
@@ -121,8 +119,9 @@ define([
   'map/views/layers/GtmForestChange2Layer',
   'map/views/layers/GtmForestCoverLayer',
   'map/views/layers/GtmForestDensityLayer',
-  'map/views/layers/AsItHappensHybridLayer',
+  'map/views/layers/GladLayer',
   'map/views/layers/LandsatAlertsCoverLayer',
+  'map/views/layers/GladCoverageLayer',
   'map/views/layers/KhmProtectedAreasLayer',
   'map/views/layers/KhmEcoLandLayer',
   'map/views/layers/UsaForestOwnershipLayer',
@@ -153,6 +152,9 @@ define([
   'map/views/layers/MysPASabahLayer',
   'map/views/layers/PerPALayer',
   'map/views/layers/MexLandCoverLayer',
+  'map/views/layers/MexForestConservLayer',
+  'map/views/layers/MexForestProdLayer',
+  'map/views/layers/MexForestRestLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -162,12 +164,11 @@ define([
   'map/views/timeline/FormaTimeline',
   'map/views/timeline/Forma250Timeline',
   'map/views/timeline/ImazonTimeline',
-  'map/views/timeline/ModisTimeline',
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
   'map/views/timeline/ProdesTimeline',
-  'map/views/timeline/AsItHappensTimeline',
   'map/views/timeline/GuyraTimeline',
+  'map/views/timeline/GladTimeline'
 ], function(
   // Layer Views
   LossLayer,
@@ -182,8 +183,6 @@ define([
   Forma250CoverLayer,
   ImazonLayer,
   ImazonCoverLayer,
-  ModisLayer,
-  ModisCoverLayer,
   Forest2000Layer,
   IntactForestLayer,
   IntactForestLayer2000,
@@ -288,8 +287,9 @@ define([
   GtmForestChange2Layer,
   GtmForestCoverLayer,
   GtmForestDensityLayer,
-  AsItHappensHybridLayer,
+  GladLayer,
   LandsatAlertsCoverLayer,
+  GladCoverageLayer,
   KhmProtectedAreasLayer,
   KhmEcoLandLayer,
   UsaForestOwnershipLayer,
@@ -320,6 +320,9 @@ define([
   MysPASabahLayer,
   PerPALayer,
   MexLandCoverLayer,
+  MexForestConservLayer,
+  MexForestProdLayer,
+  MexForestRestLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -329,12 +332,11 @@ define([
   FormaTimeline,
   Forma250Timeline,
   ImazonTimeline,
-  ModisTimeline,
   FiresTimeline,
   TerraiTimeline,
   ProdesTimeline,
-  AsItHappensTimeline,
-  GuyraTimeline
+  GuyraTimeline,
+  GladTimeline
 ) {
 
   'use strict';
@@ -383,13 +385,6 @@ define([
     },
     imazon_cover: {
       view: ImazonCoverLayer
-    },
-    modis: {
-      view: ModisLayer,
-      timelineView: ModisTimeline
-    },
-    modis_cover: {
-      view: ModisCoverLayer
     },
     viirs_fires_alerts: {
       view: ViirsLayer,
@@ -713,23 +708,14 @@ define([
       view: GtmForestDensityLayer
     },
     umd_as_it_happens: {
-      view: AsItHappensHybridLayer,
-      timelineView: AsItHappensTimeline
-    },
-    umd_as_it_happens_per: {
-      view: AsItHappensHybridLayer,
-      timelineView: AsItHappensTimeline
-    },
-    umd_as_it_happens_cog: {
-      view: AsItHappensHybridLayer,
-      timelineView: AsItHappensTimeline
-    },
-    umd_as_it_happens_idn: {
-      view: AsItHappensHybridLayer,
-      timelineView: AsItHappensTimeline
+      view: GladLayer,
+      timelineView: GladTimeline
     },
     gfw_landsat_alerts_coverage: {
       view: LandsatAlertsCoverLayer
+    },
+    glad_coverage: {
+      view: GladCoverageLayer
     },
     khm_pa: {
       view: KhmProtectedAreasLayer
@@ -791,6 +777,15 @@ define([
     },
     mex_forest_zoning_subcat: {
       view:  MexForestSubCatLayer
+    },
+    mex_forest_zoning_conserv: {
+      view:  MexForestConservLayer
+    },
+    mex_forest_zoning_prod: {
+      view:  MexForestProdLayer
+    },
+    mex_forest_zoning_rest: {
+      view:  MexForestRestLayer
     },
     places_to_watch: {
       view:  Places2WatchLayer

@@ -9,42 +9,105 @@ define([
 
   'use strict';
 
+  var GET_REQUEST_ID = 'RegionService:get',
+      SHOW_REQUEST_ID = 'RegionService:show';
+
+
+  var URL = 'http://wri-01.cartodb.com/api/v1/sql?q={sql}&format={format}';
+
+  var SQLGET = 'SELECT id_1, name_1 FROM gadm2_provinces_simple where iso=\'{country}\' ORDER BY name_1';
+  var SQLSHOW = 'SELECT * FROM gadm2_provinces_simple where iso=\'{country}\' and id_1=\'{region}\' ORDER BY name_1';
+
+
   var RegionService = Class.extend({
 
-    requestId: 'RegionService',
+    get: function(country) {
+      return new Promise(function(resolve, reject) {
 
-    _uriTemplate:'http://wri-01.cartodb.com/api/v1/sql?q=SELECT%20*%20FROM%20gadm2_provinces_simple%20where%20iso=%27{iso}%27%20and%20id_1={id1}&format=geojson',
+        var sql = new UriTemplate(SQLGET).fillFromObject({
+          country: country
+        });
 
-    /**
-     * Constructs a new instance of RegionService.
-     *
-     * @return {RegionService} instance
-     */
-    init: function() {
-      this._defineRequests();
+        var url = new UriTemplate(URL).fillFromObject({
+          sql: sql
+        });
+
+        ds.define(GET_REQUEST_ID, {
+          cache: {type: 'persist', duration: 1, unit: 'days'},
+          url: url,
+          type: 'GET',
+
+          // TO-DO We should move this to the DataService
+          decoder: function ( data, status, xhr, success, error ) {
+            if ( status === "success" ) {
+              success( data, xhr );
+            } else if ( status === "fail" || status === "error" ) {
+              error( JSON.parse(xhr.responseText) );
+            } else if ( status === "abort") {
+              
+            } else {
+              error( JSON.parse(xhr.responseText) );
+            }
+          }          
+        });
+
+        var requestConfig = {
+          resourceId: GET_REQUEST_ID,
+          success: resolve
+        };
+
+        ds.request(requestConfig);
+
+      });
     },
 
-    /**
-     * The configuration for client side caching of results.
-     */
-    _cacheConfig: {type: 'persist', duration: 1, unit: 'days'},
+    show: function(country,region) {
+      return new Promise(function(resolve, reject) {
 
-    /**
-     * Defines requests used by RegionService.
-     */
-    _defineRequests: function() {
-      var cache = this._cacheConfig;
-      var config = {cache: cache, url: this._uriTemplate};
+        var sql = new UriTemplate(SQLSHOW).fillFromObject({
+          country: country,
+          region: region
+        });
 
-      ds.define(this.requestId, config);
+        var url = new UriTemplate(URL).fillFromObject({
+          sql: sql,
+          format: 'geojson'
+        });
+
+        ds.define(SHOW_REQUEST_ID, {
+          cache: {type: 'persist', duration: 1, unit: 'days'},
+          url: url,
+          type: 'GET',
+          // TO-DO We should move this to the DataService
+          decoder: function ( data, status, xhr, success, error ) {
+            if ( status === "success" ) {
+              success( data, xhr );
+            } else if ( status === "fail" || status === "error" ) {
+              error( JSON.parse(xhr.responseText) );
+            } else if ( status === "abort") {
+              
+            } else {
+              error( JSON.parse(xhr.responseText) );
+            }
+          }          
+
+        });
+
+        var requestConfig = {
+          resourceId: SHOW_REQUEST_ID,
+          success: function(data, status) {
+            resolve(data,status);        
+          },
+          error: function(errors) {
+            reject(errors);
+          }
+        };
+
+        ds.request(requestConfig);
+
+      }.bind(this));
     },
 
-    execute: function(data, successCb, failureCb) {
-      var config = {resourceId: this.requestId, data: data,
-        success: successCb, error: failureCb};
-
-      ds.request(config);
-    }
   });
 
   var service = new RegionService();

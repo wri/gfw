@@ -1,6 +1,7 @@
 define([
+  'mps',
   'map/helpers/guidetexts',
-],function(guidetexts) {
+],function(mps, guidetexts) {
 
   var guidetexts = guidetexts;
 
@@ -17,20 +18,8 @@ define([
 
       // Layers module
       {
-        selector: ".categories-list",
-        text: guidetexts.default.layersmenu_1,
-        options: {
-          position: 'bottom',
-          callfront: function() {
-            $('#layersnav-forest-change').removeClass('tour-active');
-          }
-        }
-      },
-
-      // Layers module
-      {
         selector: "#layersnav-forest-change",
-        text: guidetexts.default.layersmenu_2,
+        text: guidetexts.default.layersmenu_1,
         options: {
           position: 'right',
           callfront: function() {
@@ -79,31 +68,7 @@ define([
         options: {
           position: 'left',
           callfront: function() {
-            $('#analysis-tab-button').removeClass('active').click();
-          }
-        }
-      },
-
-      // Basemap tab
-      {
-        selector: "#module-tabs",
-        text: guidetexts.default.basemaptab,
-        options: {
-          position: 'left',
-          callfront: function() {
-            $('#basemaps-tab-button').removeClass('active').click();
-          }
-        }
-      },
-
-      // High resolution tab
-      {
-        selector: "#module-tabs",
-        text: guidetexts.default.hrestab,
-        options: {
-          position: 'left',
-          callfront: function() {
-            $('#hd-tab-button').removeClass('active').click();
+            mps.publish('Tab/toggle', ['analysis-tab', true]);
           }
         }
       },
@@ -115,14 +80,13 @@ define([
         options: {
           position: 'top',
           callfront: function() {
-            $('#basemaps-tab-button').addClass('active').click();
           }
         }
       },
 
       // How to module
       {
-        selector: ".shape-howto",
+        selector: ".m-header-item.shape-howto",
         text: guidetexts.default.howto,
         options: {
           position: 'bottom',
@@ -139,6 +103,7 @@ define([
         options: {
           position: 'center',
           callfront: function() {
+            mps.publish('Country/update', [{ country: 'BRA', region: null}]);            
             $('#layersnav-forest-change').removeClass('tour-active');
           }
         }
@@ -151,108 +116,13 @@ define([
         options: {
           position: 'right',
           callfront: function() {
-            // WOOOWWWWW mega selectors...
+            mps.publish('Country/bounds');
+            
+            // TO-DO: develop a toggle layer mps event
             $('#layersnav-forest-change').addClass('tour-active');
             if(!$('#layersnav-forest-change .layer[data-layer="umd_as_it_happens"]').hasClass('selected')) {
               $('#layersnav-forest-change .layer[data-layer="umd_as_it_happens"]').click();
             }
-          }
-        }
-      },
-
-      // Legend module
-      {
-        selector: "#module-legend",
-        text: guidetexts.glad.legend,
-        options: {
-          position: 'right',
-          callfront: function() {
-            // WOOOWWWWW mega selectors...
-            $('#layersnav-forest-change').removeClass('tour-active');
-            if(!$('#module-legend .layer-sublayer[data-sublayer="gfw_landsat_alerts_coverage"] .onoffswitch').hasClass('checked')) {
-              $('#module-legend .layer-sublayer[data-sublayer="gfw_landsat_alerts_coverage"]').click();
-            }
-          }
-        }
-      },
-
-      // Analysis tab
-      {
-        selector: "#module-tabs",
-        text: guidetexts.glad.analysistab_1,
-        options: {
-          position: 'left',
-          callfront: function() {
-            $('#analysis-tab-button').removeClass('active').click();
-          }
-        }
-      },
-
-      // Analysis tab draw
-      {
-        selector: "#module-tabs",
-        text: guidetexts.glad.analysistab_2,
-        options: {
-          position: 'left',
-          callfront: function() {
-            $('#analysis-tab-button').removeClass('active').click();
-            $('#draw-tab-button').removeClass('active').click();
-          }
-        }
-      },
-
-      // Login
-      {
-        selector: "",
-        text: guidetexts.glad.analysistab_3,
-        options: {
-          position: 'center'
-        }
-      },
-
-      // Analysis tab draw
-      {
-        selector: "#module-tabs",
-        text: guidetexts.glad.analysistab_4,
-        options: {
-          position: 'left',
-          callfront: function() {
-            $('#analysis-tab-button').removeClass('active').click();
-            $('#country-tab-button').removeClass('active').click();
-          }
-        }
-      },
-
-      // Analysis tab draw
-      {
-        selector: "#my-gfw-container",
-        text: guidetexts.glad.log_in,
-        options: {
-          position: 'bottom',
-          callfront: function() {
-            $('#analysis-tab-button').addClass('active').click();
-          }
-        }
-      },
-
-      // Analysis tab draw
-      {
-        selector: "",
-        text: guidetexts.glad.intro2,
-        options: {
-          position: 'center'
-        }
-      },
-
-      // Analysis tab draw
-      {
-        selector: "#module-tabs",
-        text: guidetexts.glad.analysistab_5,
-        options: {
-          position: 'left',
-          callfront: function() {
-            $('#analysis-tab-button').removeClass('active').click();
-            $('#draw-tab-button').removeClass('active').click();
           }
         }
       },
@@ -264,7 +134,41 @@ define([
         options: {
           position: 'top',
           callfront: function() {
-            $('#analysis-tab-button').addClass('active').click();
+            $('#layersnav-forest-change').removeClass('tour-active');
+          }
+        }
+      },
+
+      // Analysis tab
+      {
+        selector: "#module-tabs",
+        text: guidetexts.glad.analysistab_1,
+        options: {
+          position: 'left',
+          callfront: function() {
+            var geojson = {
+              geometry: {
+                type: "Polygon",
+                coordinates: [[[-55.1953,-0.5273],[-56.4258,-2.9869],[-54.4922,-2.9869],[-55.1953,-0.5273]]]
+              }
+            };          
+            mps.publish('Tab/toggle', ['analysis-tab', true]);
+            mps.publish('Subscribe/toggle', [ false ]);
+            mps.publish('Analysis/geojson',[geojson.geometry]);
+            mps.publish('Analysis/drawGeojson',[geojson, true]);
+          }
+        }
+      },
+
+      // Analysis tab draw
+      {
+        selector: "#subscription-modal .subscription-modal-window",
+        text: guidetexts.glad.analysistab_2,
+        options: {
+          position: 'left',
+          callfront: function() {
+            mps.publish('Tab/toggle', ['analysis-tab', true]);
+            mps.publish('Subscribe/toggle', [ true ]);
           }
         }
       },
@@ -272,16 +176,46 @@ define([
       // Analysis tab draw
       {
         selector: "#module-tabs",
-        text: guidetexts.glad.analysistab_6,
+        text: guidetexts.glad.analysistab_3,
         options: {
           position: 'left',
           callfront: function() {
-            $('#analysis-tab-button').removeClass('active').click();
-            $('#draw-tab-button').removeClass('active').click();
+            mps.publish('Tab/toggle', ['analysis-tab', true]);
+            mps.publish('Subscribe/toggle', [ false ]);
+            mps.publish('Analysis/iso', [{ country: 'BRA', region: null}, false]);
+            mps.publish('Country/bounds');
           }
         }
       },
 
+      // Analysis tab draw
+      {
+        selector: "#module-tabs",
+        text: guidetexts.glad.analysistab_4,
+        options: {
+          position: 'left',
+          callfront: function() {
+            mps.publish('Tab/toggle', ['analysis-tab', true]);
+            mps.publish('Analysis/shape', [{ wdpaid: 352203, use: null, useid: null }]);
+
+            // TO-DO: develop a toggle layer mps event
+            if(!$('#layersnav-conservation .layer[data-layer="protected_areasCDB"]').hasClass('selected')) {
+              $('#layersnav-conservation .layer[data-layer="protected_areasCDB"]').click();
+            }
+          }
+        }
+      },
+      // Analysis tab draw
+      {
+        selector: "#module-tabs",
+        text: guidetexts.glad.highresolutiontab,
+        options: {
+          position: 'left',
+          callfront: function() {
+            mps.publish('Tab/toggle', ['hd-tab', true]);
+          }
+        }
+      },
     ]
   }
 

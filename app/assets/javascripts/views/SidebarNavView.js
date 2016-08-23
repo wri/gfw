@@ -76,7 +76,7 @@ define([
       mps.subscribe('SubItem/change',_.bind(this.calculateOffsets,this));
 
       _.delay(_.bind(function(){
-        this.$loaderMobile.addClass('loaded');
+        this.$loaderMobile.removeClass('-start');
       }, this ), 250)
 
     },
@@ -140,7 +140,7 @@ define([
 
     changeSource: function(params){
       //spinner
-      this.$sourceSpinner.removeClass('start');
+      this.$sourceSpinner.removeClass('-start');
       if (params.section) {
         this.section = true;
         this.model.set('section', params.section);

@@ -97,11 +97,7 @@ define([
 
   });
 
-
-
   var CarrouselStoriesView = Backbone.View.extend({
-    el: $('#carrousel-stories'),
-
     defaults: {
       speed: 300
     },
@@ -112,9 +108,8 @@ define([
     },
 
     initialize: function() {
-      if (!this.$el.length) {
-        return
-      }
+      if (!this.$el.length) { return; }
+
       mps.publish('Interesting/update',['discussion_forum, how_to, submit_a_story']);
 
       this.current = 0;
@@ -125,7 +120,6 @@ define([
       //Init Pagination
       this.pagination = new PaginationView({ len: this.len });
       this.fullscreen = new FullScreenView();
-
 
       // inits
       this.setCurrent();

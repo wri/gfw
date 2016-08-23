@@ -1,6 +1,6 @@
 {{#each applications}}
   <div class="col">
-    <div class="little-card" data-id="{{this.id}}">
+    <div class="little-card" data-id="{{@index}}">
       <div class="icon"><svg><use xlink:href="{{this.svg}}"></use></svg></div>
       <header>
         <h2>{{this.name}}</h2>

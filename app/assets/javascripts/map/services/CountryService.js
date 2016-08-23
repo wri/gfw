@@ -4,47 +4,83 @@
 define([
   'Class',
   'uri',
+  'bluebird',  
   'map/services/DataService'
-], function (Class, UriTemplate, ds) {
+], function (Class, UriTemplate, Promise, ds) {
 
   'use strict';
 
+  var GET_REQUEST_ID = 'CountryService:get',
+      SHOW_REQUEST_ID = 'CountryService:show';
+
+  var URL = window.gfw.config.GFW_API_HOST + '/countries/{id}';
+
+
   var CountryService = Class.extend({
 
-    requestId: 'CountryService',
+    get: function() {
+      return new Promise(function(resolve, reject) {
 
-    _uriTemplate: window.gfw.config.GFW_API_HOST + '/countries/{iso}',
+        var url = new UriTemplate(URL).fillFromObject({});
 
-    /**
-     * Constructs a new instance of CountryService.
-     *
-     * @return {CountryService} instance
-     */
-    init: function() {
-      this._defineRequests();
+        ds.define(GET_REQUEST_ID, {
+          cache: {type: 'persist', duration: 1, unit: 'days'},
+          url: url,
+          type: 'GET'
+        });
+
+        var requestConfig = {
+          resourceId: GET_REQUEST_ID,
+          success: resolve
+        };
+
+        ds.request(requestConfig);
+
+      });
     },
 
-    /**
-     * The configuration for client side caching of results.
-     */
-    _cacheConfig: {type: 'persist', duration: 1, unit: 'days'},
+    show: function(id) {
+      return new Promise(function(resolve, reject) {
 
-    /**
-     * Defines requests used by CountryService.
-     */
-    _defineRequests: function() {
-      var cache = this._cacheConfig;
-      var config = {cache: cache, url: this._uriTemplate};
+        var url = new UriTemplate(URL).fillFromObject({id: id});
 
-      ds.define(this.requestId, config);
+        ds.define(SHOW_REQUEST_ID, {
+          cache: {type: 'persist', duration: 1, unit: 'days'},
+          url: url,
+          type: 'GET',
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8',          
+
+          // TO-DO We should move this to the DataService
+          decoder: function ( data, status, xhr, success, error ) {
+            if ( status === "success" ) {
+              success( data, xhr );
+            } else if ( status === "fail" || status === "error" ) {
+              error( JSON.parse(xhr.responseText) );
+            } else if ( status === "abort") {
+              
+            } else {
+              error( JSON.parse(xhr.responseText) );
+            }
+          }          
+
+        });
+
+        var requestConfig = {
+          resourceId: SHOW_REQUEST_ID,
+          success: function(data, status) {
+            resolve(data,status);        
+          },
+          error: function(errors) {
+            reject(errors);
+          }
+        };
+
+        ds.request(requestConfig);
+
+      }.bind(this));
     },
 
-    execute: function(iso, successCb, failureCb) {
-      var config = {resourceId: this.requestId, data: {iso: iso},
-        success: successCb, error: failureCb};
-
-      ds.request(config);
-    }
   });
 
   var service = new CountryService();

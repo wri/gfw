@@ -5,7 +5,7 @@
   <a href="#" class="modal-close">
     <svg><use xlink:href="#shape-close"></use></svg>
   </a>
-  <div class="modal-wrapper scroll-dark {{#if download_data}}has-footer{{/if}}">
+  <div class="modal-wrapper scroll-dark {{#if footer}}has-footer{{/if}}">
     <div class="modal-content">
       <div class='modal-source'>
 
@@ -101,10 +101,16 @@
 
       </div>
     </div>
-    {{#if download_data}}
+    {{#if footer}}
       <div class="modal-footer">
         <div class="m-btncontainer is-center">
-          <a href="{{download_data}}" target="_blank" class="btn green uppercase download-mobile-link">Download data</a>
+          <a href="{{download_data}}" target="_blank" class="btn little green uppercase download-mobile-link">Download data</a>
+          {{#if open_in_arcgis}}
+            <a href="{{open_in_arcgis}}" target="_blank" class="btn little green uppercase download-mobile-link">Open in ArcGIS</a>
+          {{/if}}
+          {{!-- {{#if open_in_carto}}
+            <a href="{{open_in_carto}}" target="_blank" class="btn little green uppercase download-mobile-link">Open in Cartodb</a>
+          {{/if}} --}}
         </div>
       </div>
     {{/if}}

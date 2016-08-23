@@ -7,59 +7,41 @@ define([
   'underscore',
   'mps',
   'map/presenters/PresenterClass',
-], function(_, mps, PresenterClass) {
+  'map/models/UserModel',
+  'connect/models/Subscription',
+], function(_, mps, PresenterClass, User, Subscription) {
 
   'use strict';
 
   var SubscribePresenter = PresenterClass.extend({
 
+    status: new (Backbone.Model.extend({
+      defaults: {
+        visibility: false
+      }
+    })),
+
     init: function(view) {
       this.view = view;
       this._super();
+
+      this.user = new User();
+      this.user.fetch()
+        .done(function(){
+          this.view.render();
+        }.bind(this))
+
+        .error(function(){
+          this.view.render();
+        }.bind(this))
+
+      this.listeners();
+
       mps.publish('Place/register', [this]);
     },
 
-    /**
-     * Application subscriptions.
-     */
-    _subscriptions: [{
-      'Subscribe/show': function(options) {
-        this.view.show(options);
-      }
-    }, {
-      'Subscribe/hide': function() {
-        this.view.close();
-      }
-    },{
-      'Subscribe/geom': function(geom) {
-        this.geom_for_subscription = geom;
-      }
-    },{
-      'Subscribe/reload': function() {
-        this.view.refreshEmail();
-      }
-    }],
-
-    subscribeEnd: function(){
-      mps.publish('Subscribe/end');
-    },
-
-    subscribeCancel: function(){
-      mps.publish('Subscribe/cancel');
-    },
-
-    updateUrl: function() {
-      mps.publish('Place/update', [{go: false}]);
-    },
-
-    setSubscribeState: function() {
-      this.subscribe = true;
-      this.updateUrl();
-    },
-
-    unSetSubscribeState: function() {
-      delete this.subscribe;
-      this.updateUrl();
+    listeners: function() {
+      this.status.on('change:visibility', this.changeVisibility.bind(this));
     },
 
     /**
@@ -70,18 +52,132 @@ define([
     getPlaceParams: function() {
       var p = {};
 
-      if (this.view.isOpen()) {
-        p.tab = 'analysis-tab';
-      }
-
-      p.subscribe = this.subscribe;
+      p.subscribe = !!this.status.get('visibility') || null;
 
       return p;
     },
 
-    notificate: function(id){
+    /**
+     * Application subscriptions.
+     */
+    _subscriptions: [{
+      'Subscribe/show': function(analysisStatus) {
+        this.setSubscription(analysisStatus);
+        this.status.set('visibility', true);
+      }
+    }, {
+      'Subscribe/hide': function() {
+        this.status.set('visibility', false);
+      }
+    }],
+
+    /**
+     * Presenter methods.
+     */
+    show: function() { 
+      this.currentStep = 0;
+      this.view.show();
+    },
+
+    hide: function() {
+      this.view.hide();
+      this.view.hideSpinner();
+    },
+
+    nextStep: function(index) {
+      if (this.currentStep === undefined) {
+        this.currentStep = 0;
+      }
+
+      if (index !== undefined && _.isNumber(index)) {
+        this.currentStep = index;
+      } else {
+        this.currentStep += 1;
+      }
+
+      this.view.updateCurrentStep(this.currentStep);
+    },
+
+    // Email
+    checkEmail: function(email) {
+      this.subscription.set('resource', {
+        type: 'EMAIL',
+        content: email
+      });
+
+      if (this.subscription.hasValidEmail()) {
+        this.nextStep();
+      } else {
+        this.publishNotification('notification-email-incorrect');
+      }
+    },
+
+    // Subscription
+    saveSubscription: function(status) {
+      // Set name and language
+      this.subscription.set(status);
+
+      // Set email and save it in the user Model
+      this.user.setEmailIfEmpty(this.subscription.get('resource').content);
+      this.user.save({ email: this.user.attributes.email }, { patch: true });
+
+      this.subscription.save()
+          .then(this.onSubscriptionSave.bind(this))
+          .fail(this.onSubscriptionFail.bind(this));
+    },
+
+    onSubscriptionSave: function() {
+      this.view.hideSpinner();
+      this.nextStep();
+    },
+
+    onSubscriptionFail: function() {
+      this.status.set('visibility', false);
+      this.publishNotification('notification-subscription-incorrect');
+    },
+
+
+    /**
+     * CHANGES
+     */
+    changeVisibility: function() {
+      if (this.status.get('visibility')) {
+        this.show();
+      } else {
+        this.hide();
+      }
+      this.publishUpdateUrl();
+    },
+
+
+
+    /**
+     * PUBLISHERS
+     * - publishUpdateUrl
+     * - publishNotification
+     */
+    publishUpdateUrl: function() {
+      mps.publish('Place/update', [{go: false}]);
+    },
+
+    publishNotification: function(id){
       mps.publish('Notification/open', [id]);
-    }
+    },
+
+
+
+    /**
+     * SETTERS
+     * - setSubscription
+     */
+    setSubscription: function(analysisStatus) {
+      var params = _.pick(analysisStatus, 'iso', 'geostore', 'wdpaid', 'use', 'useid');
+      
+      this.subscription = new Subscription({
+        datasets: [analysisStatus.dataset],
+        params: params
+      });
+    },
 
   });
 

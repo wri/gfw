@@ -95,6 +95,22 @@
     font-size: 14px;
     color: $dark;
     line-height: 1.4;
+    
+    ul {
+      list-style-type: disc;
+      color: $dark;
+      margin: 10px 0 0;
+      
+      > li{
+        padding: 10px 0 0;
+        margin-left: 20px;
+        
+        &:first-child{
+          padding: 0;
+        }
+      }
+    }
+
     strong {
       font-weight: 500;
     }

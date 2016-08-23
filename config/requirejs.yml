@@ -47,6 +47,7 @@ paths:
   jquery_fileupload: "jquery-file-upload/js/jquery.fileupload"
   jquery_migrate: "jquery-migrate/jquery-migrate"
   geojson: "geojson-google-maps/GeoJSON"
+  validate: "validate"
 
   wax: "wax.g.min"
   store: "store"

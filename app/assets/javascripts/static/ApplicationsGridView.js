@@ -37,6 +37,8 @@ define([
       this.model = new ApplicationGridModel();
       this.helper = applicationsHelper;
 
+      this.$cutTop = $('#cutTop');
+
       //init
       this.setListeners();
       this.render();
@@ -48,12 +50,19 @@ define([
       }, this ));
 
       this.model.on('change:filters', this.render, this);
+      this.model.on('change:filters', this.scrollTo, this);
 
     },
 
     render: function(){
       this.$el.html(this.template({ applications: this.parseData() }));
       mps.publish('App/render');
+    },
+
+    scrollTo: function() {
+      $('html,body').animate({
+        scrollTop: this.$cutTop.offset().top
+      },500)
     },
 
     parseData: function() {

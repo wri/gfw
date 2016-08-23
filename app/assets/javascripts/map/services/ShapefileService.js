@@ -3,7 +3,7 @@ define([
   'jquery'
 ], function(Class, $) {
 
-  var CONVERTER_URL = "http://ogre.adc4gis.com/convert";
+  var CONVERTER_URL = window.gfw.config.GFW_API_HOST + "/api/ogr/convert";
 
   var ShapefileService = Class.extend({
 
@@ -19,13 +19,12 @@ define([
       xhr.open("POST", CONVERTER_URL, true);
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
-          deferred.resolve(JSON.parse(xhr.responseText));
+          deferred.resolve(JSON.parse(xhr.responseText).data.attributes);
         }
       };
 
       var formData = new FormData();
-      formData.append('upload', this.shapefile);
-      formData.append('targetSrs', 'EPSG:4326');
+      formData.append('file', this.shapefile);
       xhr.send(formData);
 
       return deferred.promise();

@@ -56,13 +56,16 @@ define([
   'text!map/templates/legend/mexPA.handlebars',
   'text!map/templates/legend/perPA.handlebars',
   'text!map/templates/legend/mex_land_cover.handlebars',
+  'text!map/templates/legend/mex_forest_conserv.handlebars',
+  'text!map/templates/legend/mex_forest_prod.handlebars',
+  'text!map/templates/legend/mex_forest_rest.handlebars',
   
 ], function(_, Handlebars, Presenter, tpl, tplMore, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
     global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
     gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl,
-    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl, paTpl, places2watchTPL, mex_landrightsTpl, mexPATpl, perPATpl,mex_land_coverTpl) {
+    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl, paTpl, places2watchTPL, mex_landrightsTpl, mexPATpl, perPATpl,mex_land_coverTpl,mex_forest_conservTPL,mex_forest_prodTPL,mex_forest_restTPL) {
 
   'use strict';
 
@@ -143,6 +146,9 @@ define([
       viirs_fires_alerts: Handlebars.compile(firesTpl),
       mex_forest_zoning_cat: Handlebars.compile(mex_forest_catTpl),
       mex_forest_zoning_subcat: Handlebars.compile(mex_forest_subcatTpl),
+      mex_forest_zoning_conserv:Handlebars.compile(mex_forest_conservTPL),
+      mex_forest_zoning_prod:Handlebars.compile(mex_forest_prodTPL),
+      mex_forest_zoning_rest:Handlebars.compile(mex_forest_restTPL),
       urthe: Handlebars.compile(urtheTpl),
       protected_areasCDB:Handlebars.compile(paTpl),
       places_to_watch:Handlebars.compile(places2watchTPL),
@@ -250,8 +256,9 @@ define([
         categories: (_.isEmpty(categoriesGlobal)) ? false : categoriesGlobal,
         categoriesIso: (_.isEmpty(categoriesIso)) ? false : categoriesIso,
         layersLength: layers.length,
-        country: (!!iso) ? _.findWhere(this.countries.toJSON(), { iso: iso.country }) : null,
-        more: more
+        country: (!!iso) ? _.findWhere(this.countries, { iso: iso.country }) : null,
+        more: more,
+        countryVisibility: (!!more || !_.isEmpty(categoriesIso))
       }));
       this.presenter.toggleLayerOptions();
     },
@@ -397,13 +404,6 @@ define([
         this.$linkLegendBox.attr('href', href);
       }
     },
-
-    renderMore: function(data) {
-      this.$more.html(this.templateMore(data));
-    },
-
-
-
   });
 
   return LegendView;

@@ -1,7 +1,6 @@
 define([
-  'd3', 'underscore',
-  'geojsonArea'
-], function(d3, _, geojsonArea) {
+  'd3', 'underscore', 'turf', 'geojsonArea'
+], function(d3, _, turf, geojsonArea) {
 
   var geojsonUtilsHelper = {
     /**
@@ -28,6 +27,14 @@ define([
       };
     },
 
+    featureCollectionToFeature: function(geojson) {
+      if (geojson.type === 'FeatureCollection') {
+        return geojson.features.reduce(turf.union);
+      } else {
+        return {};
+      }
+    },
+
     /**
      * Generates a path from a Geojson.
      *
@@ -46,8 +53,11 @@ define([
             return new google.maps.LatLng(coords[1], coords[0]);
           });
         });
+      } else if (geojson.type === 'FeatureCollection') {
+        return this.geojsonToPath(
+          this.featureCollectionToFeature(geojson).geometry);
       } else {
-        return false;
+        return [];
       }
     },
 
