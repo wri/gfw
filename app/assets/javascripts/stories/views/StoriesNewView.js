@@ -13,7 +13,7 @@ define([
   'stories/models/MediaModel',
   'stories/models/UserModel',
   'stories/views/LatestStoriesView',
-  'text!stories/templates/new_story.handlebars'
+  'text!stories/templates/storiesNew.handlebars'
 ], function(
   Class,
   $,
