@@ -7,7 +7,7 @@ define([
 
   var REQUEST_ID = 'GladDateService:fetchDates';
 
-  var URL = window.gfw.config.GFW_API_HOST + "/forest-change/glad-alerts/latest";
+  var URL = window.gfw.config.GFW_API_HOST_NEW_API + "/glad-alerts/latest";
 
   var GladDateService = Class.extend({
 
@@ -30,7 +30,9 @@ define([
       var deferred = new $.Deferred();
 
       var onSuccess = function(result) {
-        deferred.resolve(_.pick(result, 'max_date', 'counts'));
+        var data = result.data && result.data.attributes ?
+          result.data.attributes : [];
+        deferred.resolve(_.pick(data, 'max-date', 'counts'));
       };
 
       var config = {
