@@ -37,7 +37,7 @@ define([
 
         var latlng = new google.maps.LatLng(story.lat, story.lng);
 
-        var thumb = !!(this.options.template && story.media && story.media[1] && story.media[1].preview_url !== '');
+        // var thumb = !!(this.options.template && story.media && story.media[1] && story.media[1].previewUrl !== '');
 
         infoWindowOptions = {
           className: 'story-infowindow',
@@ -46,22 +46,24 @@ define([
           width: 215
         };
 
-        if (thumb) {
-          infoWindowOptions = _.extend({}, infoWindowOptions, {
-            offset: [-42, -3]
-          });
-          markerOptions = _.extend({}, this.options, {
-            offset: [-30, -30],
-            size: [60, 60],
-            className: 'thumb-marker',
-            content: (thumb) ? this.options.template({ image: story.media[1].preview_url }) : false
-          });
-        } else {
-          infoWindowOptions = _.extend({}, infoWindowOptions, {
-            offset: [-30, 0],
-          });
-          markerOptions = this.options;
-        }
+        // if (thumb) {
+        //   infoWindowOptions = _.extend({}, infoWindowOptions, {
+        //     offset: [-42, -3]
+        //   });
+        //   markerOptions = _.extend({}, this.options, {
+        //     offset: [-30, -30],
+        //     size: [60, 60],
+        //     className: 'thumb-marker',
+        //     // content: (thumb) ? this.options.template({ image: story.media[1].previewUrl }) : false
+        //     content: false
+        //   });
+        // }
+
+        infoWindowOptions = _.extend({}, infoWindowOptions, {
+          offset: [-30, 0],
+        });
+        markerOptions = this.options;
+
 
         var marker = new CustomMarker(latlng, this.map, markerOptions);
 
