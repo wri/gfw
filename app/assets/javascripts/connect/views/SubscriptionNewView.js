@@ -5,17 +5,23 @@ define([
   'underscore',
   'mps',
   'text!connect/templates/subscriptionNew.handlebars'
-], function($, Backbone, Handlebars, _, mps, tpl) {
+  'text!connect/templates/subscriptionNewDraw.handlebars'
+  'text!connect/templates/subscriptionNewCountry.handlebars'
+], function($, Backbone, Handlebars, _, mps, tpl, tplDraw, tplCountry) {
 
   'use strict';
 
   var SubscriptionNewView = Backbone.View.extend({
     
     status: new (Backbone.Model.extend({
-      aoi: null
+      aoi: null,
     })),
 
-    template: Handlebars.compile(tpl),
+    templates: {
+      default: Handlebars.compile(tpl),
+      draw: Handlebars.compile(tplDraw),
+      country: Handlebars.compile(tplCountry),
+    },
 
     events: {
       'change #aoi': 'onChangeAOI'
@@ -31,8 +37,13 @@ define([
     },
 
     render: function() {
-      this.$el.html(this.template({}));
+      this.$el.html(this.templates.default({}));
       this.cache();
+    },
+
+    renderAOI: function() {
+      // this.$el.html(this.templates.default({}));
+      // this.cache();
     },
 
     cache: function() {
