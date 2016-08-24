@@ -365,7 +365,7 @@ define([
 
           function() {
             $autoLocate.removeClass('active');
-            mps.publish('Notification/open', ['notif-enable-location']);
+            mps.publish('Notification/open', ['notification-enable-location']);
           }
         );
       } else {
