@@ -4,10 +4,12 @@ define([
   'handlebars',
   'underscore',
   'mps',
-  'text!connect/templates/subscriptionNew.handlebars'
-  'text!connect/templates/subscriptionNewDraw.handlebars'
+  'connect/views/MapMiniView',
+  'connect/views/MapMiniControlsView',
+  'text!connect/templates/subscriptionNew.handlebars',
+  'text!connect/templates/subscriptionNewDraw.handlebars',
   'text!connect/templates/subscriptionNewCountry.handlebars'
-], function($, Backbone, Handlebars, _, mps, tpl, tplDraw, tplCountry) {
+], function($, Backbone, Handlebars, _, mps, MapMiniView, MapMiniControlsView, tpl, tplDraw, tplCountry) {
 
   'use strict';
 
@@ -24,7 +26,7 @@ define([
     },
 
     events: {
-      'change #aoi': 'onChangeAOI'
+      'change #aoi': 'onChangeAOI',
     },
 
     initialize: function() {
@@ -41,13 +43,26 @@ define([
       this.cache();
     },
 
-    renderAOI: function() {
-      // this.$el.html(this.templates.default({}));
-      // this.cache();
+    renderType: function() {
+      var aoi = this.status.get('aoi');
+      if (!!aoi) {
+        this.$formType.html(this.templates[aoi]({}));
+        this.cache();
+        this.initSubViews();        
+      } else {
+        this.$formType.html('');
+      }
     },
 
     cache: function() {
       this.$form = this.$el.find('#new-subscription');
+      this.$formType = this.$el.find('#new-subscription-content');
+    },
+
+    initSubViews: function() {
+      var mapView = new MapMiniView();
+
+      new MapMiniControlsView(mapView.map);
     },
 
     /**
@@ -56,7 +71,7 @@ define([
      */
     changeAOI: function() {
       var aoi = this.status.get('aoi');
-      console.log(aoi);
+      this.renderType();
     },
 
 

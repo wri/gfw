@@ -49,8 +49,8 @@
     </div>
 
     <!-- Javascript -->
-    <script src="//maps.googleapis.com/maps/api/js?libraries=drawing,places&sensor=false"></script>
-    <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+    <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA&v=3.12" %>
+    <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/3.15.8/cartodb.js" %>
     <%= requirejs_include_tag 'connect' %>
     <%= render 'shared/js_footer' %>
   </body>
