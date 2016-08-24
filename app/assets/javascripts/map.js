@@ -84,12 +84,7 @@ require([
       // we shouldn't create any view.
       countryService.get().then(function(results) {
         this.map = map.map;
-        this.countries = _.where(results.countries, {
-          enabled: true
-        });
-
-        // console.log(this.countries);
-
+        this.countries = results.countries;
 
         new MapControlsView(this.map, this.countries);
         new TabsView(this.map, this.countries);

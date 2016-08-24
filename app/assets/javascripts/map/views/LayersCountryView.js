@@ -106,8 +106,8 @@ define([
     },
 
     setCountry: function(iso) {
-      var country = (!!iso && !!iso.country) ? iso.country : null; 
-      var countryName = (!!iso && !!iso.country) ? _.findWhere(this.countries, {iso: iso.country }).name : null;
+      var country = (!!iso && !!iso.country && iso.country != 'ALL') ? iso.country : null; 
+      var countryName = (!!iso && !!iso.country && iso.country != 'ALL') ? _.findWhere(this.countries, {iso: iso.country }).name : null;
       this.model.set('countryName', countryName);
       this.model.set('country', country);
     },
