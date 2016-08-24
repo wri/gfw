@@ -23,7 +23,8 @@
       position: relative;
       border: 1px dashed $cGreen;
       display: inline-flex;
-      height: 36px;
+      height: auto;
+      padding: 5px 0;
       justify-content: center;
       align-items: center;
       text-align: center;
