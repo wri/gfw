@@ -32,100 +32,11 @@
                 <option value="draw">Draw or upload your area of interest</option>
               </select>
             </div>
-            
           </div>
 
-          <div class="field -required">
-            <div>
-              <label for="geojson">Location *</label>
-            </div>
+          <div id="new-subscription-content">
 
-            <p class='hint'>
-              Select a location for your story by entering an address in
-              the search box, by dragging the map, or by clicking the
-              target icon to find your current location. The flag in the
-              center indicates where your story will be placed.
-            </p>
-
-            <div class="m-map" >
-              <div>
-                <div id="map" class="map"></div>
-                <div class="map-controls">
-                  <div class="control-zoom">
-                    <button type="button" id="controlZoomIn"><svg><use xlink:href="#icon-control-plus"></use></svg></button>
-                    <button type="button" id="controlZoomOut"><svg><use xlink:href="#icon-control-minus"></use></svg></button>
-                  </div>
-                  <div class="control-pin"></div>
-                  <div class="control-locate" id="autoLocate">
-                    <button type="button"><svg><use xlink:href="#icon-control-locate"></use></svg></button>
-                  </div>
-                  <div class="control-search">
-                    <input class="map-search-input" type="text" placeholder="Search..."/>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
-
-          <div class="field">
-            <label for="location">Location</label>
-            <input type="text" name="location" id="location" placeholder="“Katingan Peatland area, Indonesia,” “Near Ambanja, Mozambique”" value="{{story.location}}">
-          </div>
-
-          <div class="field short">
-            <label for="date">Date</label>
-            <input type="date" name="date" id="date" value="{{formatted_date}}">
-          </div>
-
-          <div class="field">
-            <label for="details">Details</label>
-            <textarea name="details" id="details" placeholder="“Selective logging with chainsaws,” “Burning peatland,” “Forest cleared for agriculture,” “Affected species”">{{story.details}}</textarea>
-          </div>
-
-          <div class="field">
-            <label for="video">Video</label>
-            <input type="text" name="video" id="video" placeholder="http://www.youtube.com/watch?v=lTG-0brb98I" value="{{video}}">
-          </div>
-
-          <div class="field">
-            <label for="media" class="-has-hint">Media</label>
-            <p class="hint mobile-hide">
-              Select images and videos to add
-              to your story. Drag &amp; drop to reorder them within the
-              carousel. The first one will become the default image for
-              the story. The maximum file size for uploads is 4 MB.
-            </p>
-
-            <p class="mobile-show">
-              Click below to upload photos or
-              videos to your story. The first photo will become the
-              default image. The maximum file size for uploads is 4
-              MB. If you are on an iOS device you must upload pictures
-              one by one.
-            </p>
-
-            <ul class="thumbnails">
-              <li><a href='#' class='upload_picture'></a></li>
-            </ul>
-          </div>
-
-          <div class="field">
-            <label>
-              <input type="checkbox" name="hideUser" id="hideUser" {{#if story.hideUser}}checked{{/if}}>
-            </label>
-
-            <p class="hint">
-              In some areas, forest clearing information is considered
-              to be highly sensitive—users are encouraged to be cautious
-              when sharing identifiable information. Tick this box to
-              hide your details.
-            </p>
-          </div>
-
-          <div class="field">
-            <input type="submit" id="submit" name="submit" value="Subscribe" class="btn green medium">
-          </div>
-
         </form>
       </div>
     </div>
