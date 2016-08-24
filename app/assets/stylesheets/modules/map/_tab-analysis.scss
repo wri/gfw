@@ -43,11 +43,12 @@
 
     ul {
       display: flex;
+      align-items: flex-start;
 
       li {
         position: relative;
         width: 100%;
-        padding: 14px 4px;
+        padding: 14px 5px;
         text-transform: uppercase;
         text-align: center;
         font-size: 12px;
