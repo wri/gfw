@@ -24,8 +24,8 @@ define([
         var url = new UriTemplate(URL).fillFromObject({});
 
         ds.define(GET_REQUEST_ID, {
-          // cache: {type: 'persist', duration: 1, unit: 'days'},
-          cache: false,
+          cache: {type: 'persist', duration: 1, unit: 'days'},
+          // cache: false,
           url: url,
           type: 'GET',
           dataType: 'json',
@@ -34,7 +34,7 @@ define([
           decoder: function ( data, status, xhr, success, error ) {
             if ( status === "success" ) {
               data.countries = _.filter(data.countries, function(country){
-                return country.iso !== null
+                return country.iso !== null && country.enabled == true
               });
               success( data, xhr );
             } else if ( status === "fail" || status === "error" ) {
