@@ -21,11 +21,11 @@ define([
     },
 
     listeners: function() {
-      if (!!Transifex) {
-        Transifex.live.onTranslatePage(function(language_code) {
+      if (!!window.Transifex) {
+        window.Transifex.live.onTranslatePage(function(language_code) {
           this.view.fixLegibility();
         }.bind(this));
-        Transifex.live.onDynamicContent(function(new_strings) {
+        window.Transifex.live.onDynamicContent(function(new_strings) {
           this.view.fixLegibility();
         }.bind(this));
       }
