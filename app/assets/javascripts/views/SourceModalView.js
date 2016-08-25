@@ -114,16 +114,18 @@ define([
      */
     getData: function() {
       var data = this.sourceModel.toJSON();
+      
       if (data.amazon_link) {
         // var file = encodeURIComponent(data.sql_api + '&format=geojson').replace(/%20/g, "%2520");
-        data.open_in_carto = 'http://oneclick.cartodb.com?file='+encodeURIComponent(data.amazon_link);
+        // data.open_in_carto = 'http://oneclick.cartodb.com?file='+encodeURIComponent(data.amazon_link);
       }
 
       if (data.map_service) {
         data.open_in_arcgis = 'http://www.arcgis.com/home/webmap/viewer.html?url='+ data.map_service;
       }
 
-      if (data.download_data || data.open_in_carto || data.open_in_arcgis) {
+      // Check if there is any button to display
+      if (!!data.download_data || !!data.open_in_carto || !!data.open_in_arcgis) {
         data.footer = true;
       }
 
