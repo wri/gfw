@@ -73,6 +73,7 @@ Almost there! Final steps are to update your `.env` file:
 
 ```bash
 RACK_ENV=development
+GFW_API_HOST_NEW_API=https://production-api.globalforestwatch.org
 GFW_API_HOST=http://api.globalforestwatch.org/
 AWS_HOST=/uploads
 LAYER_SPEC=layerspec_nuclear_hazard
@@ -87,6 +88,7 @@ GFW_ASSETS_URL=http://gfw-assets.s3.amazonaws.com/static/gfw-assets.nightly.js
 HOWTO_URL=http://vizzuality.github.io/gfw-howto
 DEVELOPERS_URL=http://vizzuality.github.io/gfw-atlas
 BLOG_HOST=http://blog.globalforestwatch.org
+GOOGLE_MAPS_API_KEY=xxx
 ```
 
 Last step. For real. Start the app server and access it at
