@@ -420,7 +420,7 @@ define([
         delete attributesFromForm.media;
       }
 
-      this.story.set(_.extend({}, this.story.toJSON(), attributesFromForm));
+      this.story.set(_.extend({ visible: true }, this.story.toJSON(), attributesFromForm));
 
       if (this.validate()) {
         this.story.save().then(function(result) {
