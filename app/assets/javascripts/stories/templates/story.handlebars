@@ -15,11 +15,12 @@
         {{/if}}
 
         <span>{{formattedDate}}</span>
-
-        {{#if story.name}}
-          <span>&middot;</span>
-          <span>Submitted by {{story.name}}</span>
-        {{/if}}
+        {{#unless story.hideUser}}
+          {{#if story.name}}
+            <span>&middot;</span>
+            <span>Submitted by {{story.name}}</span>
+          {{/if}}
+        {{/unless}}
       </p>
     </header>
   </div>
