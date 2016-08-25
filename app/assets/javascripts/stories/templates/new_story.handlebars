@@ -137,6 +137,16 @@
           </div>
 
           <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" placeholder="" class="{{#if user.fullName}}-disabled{{/if}}" value="{{user.fullName}}" {{#if user.fullName}}readonly disabled{{/if}}>
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" placeholder="" class="{{#if user.email}}-disabled{{/if}}" value="{{user.email}}" {{#if user.email}}readonly disabled{{/if}}>
+          </div>
+
+          <div class="field">
             <input type="submit" id="submit" name="submit" value="Submit story" class="btn green medium">
             <p class="-terms">By uploading data you agree to the <a href="/terms">GFW Terms of Service</a></p>
           </div>

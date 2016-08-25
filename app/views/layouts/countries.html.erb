@@ -61,10 +61,8 @@
     </div>
     
     <!-- Javascript -->
-    <script src="//maps.googleapis.com/maps/api/js?libraries=drawing,places&sensor=false"></script>
-    <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+    <%= render 'shared/google_carto' %>
     <%= requirejs_include_tag "countries" %>
-    <%#= javascript_include_tag 'countries' %>
     <%= render 'shared/js_footer' %>
     <div id='sources' class='sources notranslate is-hidden'>
       <%= render 'countries' %>
