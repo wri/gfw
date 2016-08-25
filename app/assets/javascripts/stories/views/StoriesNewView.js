@@ -11,6 +11,7 @@ define([
   'validate',
   'stories/models/StoryModel',
   'stories/models/MediaModel',
+  'stories/models/UserModel',
   'stories/views/LatestStoriesView',
   'text!stories/templates/new_story.handlebars'
 ], function(
@@ -26,6 +27,7 @@ define([
   validate,
   Story,
   Media,
+  User,
   LatestStoriesView,
   tpl
 ) {
@@ -75,10 +77,14 @@ define([
     initialize: function() {
       this.sourceDrag = undefined;
       this.errors = null;
-      this.story = new Story();
+      this.user = new User();
+      this.user.fetch()
+        .then(function(){
+          this.story = new Story();
+          this.render();
+          this.cache();          
+        }.bind(this))
 
-      this.render();
-      this.cache();
     },
 
     cache: function() {
@@ -420,13 +426,21 @@ define([
         delete attributesFromForm.media;
       }
 
-      this.story.set(_.extend({}, this.story.toJSON(), attributesFromForm));
+      this.story.set(_.extend({ visible: true }, this.story.toJSON(), attributesFromForm));
 
       if (this.validate()) {
-        this.story.save().then(function(result) {
-          var id = result.data.id;
+        
+        $.when(
+          this.user.save({ 
+            fullName: this.story.attributes.name,
+            email: this.story.attributes.email 
+          }, { patch: true }),
+          this.story.save()
+        )
+        .then(function(user,story){
+          var id = story[0].data.id;
           window.location = '/stories/'+id;
-        });
+        });        
       } else {
         this.updateForm();
         mps.publish('Notification/open', ['story-new-form-error']);
@@ -445,6 +459,7 @@ define([
 
     render: function() {
       this.$el.html(this.template({
+        user: this.user.toJSON(),
         story: this.story.toJSON(),
         formatted_date: moment(this.story.date).format('YYYY-MM-DD')
       }));

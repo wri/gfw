@@ -14,8 +14,13 @@ textarea {
   font-size: 14px;
   border-radius: 4px;
   outline: none;
+  
   &:focus {
     border-color: darken($border,10%);
+  }
+
+  &.-disabled {
+    opacity: 0.5;
   }
 }
 
