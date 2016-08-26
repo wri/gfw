@@ -14,13 +14,8 @@ textarea {
   font-size: 14px;
   border-radius: 4px;
   outline: none;
-  
   &:focus {
     border-color: darken($border,10%);
-  }
-
-  &.-disabled {
-    opacity: 0.5;
   }
 }
 
@@ -177,15 +172,25 @@ textarea {
  */
 .checkbox-box {
   @include clearfix();
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  padding: 15px 0;
+  padding: 6px 0;
   font-size: 12px;
 
   .custom-checkbox {
     display: flex;
-    width: 50%;
+    width: 100%;
+  }
+
+  &.-divided {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding: 15px 0;
+
+    .custom-checkbox {
+      display: flex;
+      width: 50%;
+    }
+
   }
 
   label {
@@ -195,8 +200,16 @@ textarea {
     padding-left: 25px;
     line-height: 28px;
     cursor: pointer;
+    width: auto;
+    top: 0;
+    left: 0;
 
-    span{
+    &.-uppercase {
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    span {
       position: absolute;
       top: 50%;
       left: 0;
