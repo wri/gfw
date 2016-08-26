@@ -124,10 +124,12 @@
           </div>
 
           <div class="field">
-            <label>
-              <input type="checkbox" name="hideUser" id="hideUser" checked>
-            </label>
-
+            <div class="checkbox-box">
+              <div class="custom-checkbox">
+                <input type="checkbox" name="hideUser" id="hideUser">
+                <label for="hideUser" class="-uppercase"><span></span> Check this box to publish your name with your story.</label>
+              </div>
+            </div>
             <p class="hint">
               In some areas, forest clearing information is considered
               to be highly sensitive—users are encouraged to be cautious
@@ -136,14 +138,16 @@
             </p>
           </div>
 
-          <div class="field">
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" placeholder="" value="{{user.fullName}}">
-          </div>
+          <div id="field-personal-info" class="field -hidden -no-padding">
+            <div class="field">
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name" placeholder="" value="{{user.fullName}}">
+            </div>
 
-          <div class="field">
-            <label for="email">Email</label>
-            <input type="text" name="email" id="email" placeholder="" value="{{user.email}}">
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="text" name="email" id="email" placeholder="" value="{{user.email}}">
+            </div>
           </div>
 
           <div class="field">
