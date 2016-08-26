@@ -1,43 +1,94 @@
-/**
- * The Forest2000 layer module for use on canvas.
- *
- * @return ForestLayer class (extends CanvasLayerClass)
- */
 define([
-  'd3', 'uri', 'moment',
-  'abstract/layer/CanvasLayerClass',
-  'map/presenters/layers/TerraiCanvasLayerPresenter'
-], function(d3, UriTemplate, moment, CanvasLayerClass, Presenter) {
+  'bluebird', 'uri', 'd3', 'mps', 'moment',
+  'abstract/layer/AnimatedCanvasLayerClass',
+  'map/services/TerraiDateService',
+  'map/presenters/GladLayerPresenter'
+], function(
+  Promise, UriTemplate, d3, mps, moment,
+  AnimatedCanvasLayerClass,
+  TerraiDateService,
+  Presenter
+) {
 
   'use strict';
 
-  var TerraiCanvasLayer = CanvasLayerClass.extend({
+  var TILE_URL = 'http://wri-tiles.s3.amazonaws.com/terrai_prod/tiles/{z}/{x}/{y}.png';
+  var START_DATE = '2004-01-01';
+  var START_YEAR = '2004';
 
-    options: {
-      threshold: 30,
-      dataMaxZoom: 10,
-      //ATTENTION: check config.ru file to get the whole route, reverse proxying here
-      //urlTemplate: '/latin-america/Z{z}/{y}/{x}.png'
-      urlTemplate: 'http://wri-tiles.s3.amazonaws.com/terrai_prod/tiles/{z}/{x}/{y}.png'
-    },
+  var padNumber = function(number) {
+    var s = "00" + number;
+    return s.substr(s.length - 3);
+  };
+
+  var TerraiCanvasLayer = AnimatedCanvasLayerClass.extend({
 
     init: function(layer, options, map) {
       this.presenter = new Presenter(this);
-      this.currentDate = options.currentDate || [(layer.mindate), (layer.maxdate)];
       this._super(layer, options, map);
-      this.top_date = (moment(layer.maxdate).year()-2004)*23+Math.floor(moment(layer.maxdate).dayOfYear()/16);
-      this.top_date -= 16;
+      this.presenter.setConfirmedStatus(options.layerOptions);
+      this.options.showLoadingSpinner = true;
+      this.options.dataMaxZoom = 12;
+      this._setupAnimation();
+
+      this.currentDate = [
+        (!!options.currentDate && !!options.currentDate[0]) ?
+          moment.utc(options.currentDate[0]) : moment.utc(START_DATE),
+        (!!options.currentDate && !!options.currentDate[1]) ?
+          moment.utc(options.currentDate[1]) : moment.utc(),
+      ];
+
+      this.maxDate = this.currentDate[1];
     },
 
-    /**
-     * Filters the canvas imgdata.
-     * @override
-     */
-    filterCanvasImgdata: function(imgdata, w, h) {
+    _getLayer: function() {
+      return new Promise(function(resolve) {
+
+      var dateService = new TerraiDateService();
+
+      dateService.fetchDates().then(function(response) {
+        // Check max date
+        this._checkMaxDate(response);
+        mps.publish('Torque/date-range-change', [this.currentDate]);
+        mps.publish('Place/update', [{go: false}]);
+
+        resolve(this);
+      }.bind(this));
+
+      }.bind(this));
+    },
+
+    _getUrl: function(x, y, z) {
+      return new UriTemplate(TILE_URL).fillFromObject({x: x, y: y, z: z});
+    },
+
+    _checkMaxDate: function(response) {
+      var maxDataDate = moment.utc(response.maxDate);
+      if (this.maxDate.isAfter(maxDataDate)) {
+        this.maxDate = maxDataDate;
+        this.currentDate[1] = this.maxDate;
+      }
+    },
+
+    filterCanvasImgdata: function(imgdata, w, h, z) {
       var components = 4;
-      var start = (moment(this.currentDate[0]).year()-2004)*23+Math.ceil((moment(this.currentDate[0]).dayOfYear()-1)/16);
-      if (start<1) { start = 1; }
-      var end   = (moment(this.currentDate[1]).year()-2004)*23+Math.floor((moment(this.currentDate[1]).dayOfYear()-1)/16);
+      var start = (this.currentDate[0].year() - START_YEAR) * 23 +
+        Math.ceil((this.currentDate[0].dayOfYear() - 1) / 16);
+      var end = (this.currentDate[1].year()- START_YEAR) * 23 +
+        Math.floor((this.currentDate[1].dayOfYear() - 1) / 16);
+
+      if (start < 1) {
+        start = 1;
+      }
+
+      if (this.timelineExtent === undefined) {
+        this.timelineExtent = [moment.utc(this.currentDate[0]),
+          moment.utc(this.currentDate[1])];
+      }
+
+      // console.log(this.currentDate);
+      //
+      // console.log(start, end);
 
       for(var i=0; i < w; ++i) {
         for(var j=0; j < h; ++j) {
@@ -67,17 +118,7 @@ define([
           }
         }
       } //end first for loop
-    },
-
-    /**
-     * Used by TerraiCanvasLayerPresenter to set the dates for the tile.
-     *
-     * @param {Array} date 2D array of moment dates [begin, end]
-     */
-    setTimelineDate: function(date) {
-      this.currentDate = date;
-      this.updateTiles();
-    },
+    }
   });
 
   return TerraiCanvasLayer;

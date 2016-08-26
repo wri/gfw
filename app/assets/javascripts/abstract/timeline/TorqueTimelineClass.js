@@ -48,12 +48,15 @@ define([
 
     initialize: function(layer, currentDate) {
       this.layer = layer;
+      // console.log(layer, currentDate);
       this.currentDate = _.compact(currentDate).map(
         function(c) { return moment.utc(c); });
 
       this.status = new TimelineStatus();
 
       this.presenter = new Presenter(this);
+
+      // console.log(this.currentDate, this.status, this.presenter);
     },
 
     render: function() {
@@ -79,7 +82,7 @@ define([
         extent: [moment.utc(this.bounds.start).toDate(),
           moment.utc(this.bounds.end).toDate()],
         el: this.$('.timeline-slider svg')[0],
-        width: 230,
+        width: 250,
         height: 50,
         callback: this.setTorqueDate.bind(this)
       });
@@ -108,6 +111,7 @@ define([
 
     renderDatePicker: function() {
       var onChange = function(dateRange) {
+        console.log(dateRange);
         this.slider.reScale(dateRange);
         this.currentDate = dateRange;
       };
@@ -116,7 +120,8 @@ define([
         layer: this.layer,
         presenter: this.presenter,
         dateRange: this.bounds,
-        onChange: onChange.bind(this)
+        onChange: onChange.bind(this),
+        dataService: this.dataService || null
       });
 
       if (this.datePicker) {

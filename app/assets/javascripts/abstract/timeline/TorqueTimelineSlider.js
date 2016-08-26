@@ -41,7 +41,7 @@ define([
   TorqueTimelineSlider.prototype.setupScales = function() {
     timeScale = d3.time.scale()
       .domain(extent)
-      .range([0, width])
+      .range([0, width-40])
       .clamp(true);
   };
 
@@ -108,7 +108,7 @@ define([
       .insert('svg:line', ':first-child')
       .attr('class', 'domain')
       .attr('x1', 0)
-      .attr('x2', width)
+      .attr('x2', width - 40)
       .attr('y1', height / 2)
       .attr('y2', height / 2);
   };

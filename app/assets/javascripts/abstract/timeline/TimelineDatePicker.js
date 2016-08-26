@@ -6,13 +6,11 @@
 define([
   'underscore', 'backbone', 'moment', 'handlebars', 'picker', 'pickadate',
   'map/presenters/TorqueTimelinePresenter',
-  'map/services/GladDateService',
   'text!templates/datePickerTorque.handlebars',
   'text!templates/datePickerTorque-legend.handlebars'
 ], function(
   _, Backbone, moment, Handlebars, Picker, Pickadate,
   Presenter,
-  GladDateService,
   tpl, legendTpl) {
 
   'use strict';
@@ -50,6 +48,7 @@ define([
     initialize: function(options) {
       options = options || {};
       this.presenter = options.presenter;
+      this.dataService = options.dataService;
       this.layer = options.layer;
       this.onChange = options.onChange;
 
@@ -76,7 +75,6 @@ define([
 
     renderPickers: function() {
       var context = this;
-
       var dayOfYear = function(date) {
         var oneDay = 1000 * 60 * 60 * 24;
         var start = new Date(date.getFullYear(), 0, 0),
@@ -144,14 +142,14 @@ define([
       var minDate = moment.utc(this.layer.mindate).
         add(tzOffset, 'minutes').
         toDate();
-      var maxDate = moment.utc(this.layer.maxdate).
-        add(tzOffset, 'minutes').
-        toDate();
+
+      var maxDate = this.maxDate ? this.maxDate.toDate() :
+        moment.utc().add(tzOffset, 'minutes').toDate();
 
       this.$('.timeline-date-picker').pickadate({
         today: 'Jump to Today',
         min: minDate,
-        max: maxDate || moment.utc().add(tzOffset, 'minutes').toDate(),
+        max: maxDate,
         selectYears: true,
         selectMonths: true,
         format: 'd mmm yyyy',
@@ -178,10 +176,11 @@ define([
     },
 
     retrieveAvailableDates: function() {
+      var dateService = new this.dataService();
       this.histograms = [];
 
-      var dateService = new GladDateService();
       dateService.fetchDates().then(function(response) {
+        this.maxDate = moment.utc(response.maxDate);
         this.histograms = response.counts;
         this.renderPickers();
       }.bind(this));
