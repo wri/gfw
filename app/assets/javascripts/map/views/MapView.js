@@ -37,7 +37,8 @@ define([
       mapTypeControl: false,
       scaleControl: true,
       streetViewControl: false,
-      overviewMapControl: false
+      overviewMapControl: false,
+      tilt: 0
     },
 
     attributions: [
