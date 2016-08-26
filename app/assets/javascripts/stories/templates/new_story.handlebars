@@ -125,7 +125,7 @@
 
           <div class="field">
             <label>
-              <input type="checkbox" name="hideUser" id="hideUser" {{#if story.hideUser}}checked{{/if}}>
+              <input type="checkbox" name="hideUser" id="hideUser" checked>
             </label>
 
             <p class="hint">
@@ -138,12 +138,12 @@
 
           <div class="field">
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" placeholder="" class="{{#if user.fullName}}-disabled{{/if}}" value="{{user.fullName}}" {{#if user.fullName}}readonly disabled{{/if}}>
+            <input type="text" name="name" id="name" placeholder="" value="{{user.fullName}}">
           </div>
 
           <div class="field">
             <label for="email">Email</label>
-            <input type="text" name="email" id="email" placeholder="" class="{{#if user.email}}-disabled{{/if}}" value="{{user.email}}" {{#if user.email}}readonly disabled{{/if}}>
+            <input type="text" name="email" id="email" placeholder="" value="{{user.email}}">
           </div>
 
           <div class="field">

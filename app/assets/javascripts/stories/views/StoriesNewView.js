@@ -429,18 +429,11 @@ define([
       this.story.set(_.extend({ visible: true }, this.story.toJSON(), attributesFromForm));
 
       if (this.validate()) {
-        
-        $.when(
-          this.user.save({ 
-            fullName: this.story.attributes.name,
-            email: this.story.attributes.email 
-          }, { patch: true }),
-          this.story.save()
-        )
-        .then(function(user,story){
-          var id = story[0].data.id;
-          window.location = '/stories/'+id;
-        });        
+        this.story.save()
+          .then(function(story){
+            var id = story.data.id;
+            window.location = '/stories/'+id;
+          });        
       } else {
         this.updateForm();
         mps.publish('Notification/open', ['story-new-form-error']);
