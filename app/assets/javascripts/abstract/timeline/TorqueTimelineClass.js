@@ -79,7 +79,7 @@ define([
         extent: [moment.utc(this.bounds.start).toDate(),
           moment.utc(this.bounds.end).toDate()],
         el: this.$('.timeline-slider svg')[0],
-        width: 230,
+        width: 250,
         height: 50,
         callback: this.setTorqueDate.bind(this)
       });
@@ -116,7 +116,8 @@ define([
         layer: this.layer,
         presenter: this.presenter,
         dateRange: this.bounds,
-        onChange: onChange.bind(this)
+        onChange: onChange.bind(this),
+        dataService: this.dataService || null
       });
 
       if (this.datePicker) {
@@ -125,6 +126,7 @@ define([
 
       this.$el.prepend(datePicker.render().el);
       this.datePicker = datePicker;
+      this.setSliderDates();
     },
 
     _onTorqueStop: function() {
@@ -191,6 +193,19 @@ define([
 
     getName: function() {
       return this.layer.slug;
+    },
+
+    /*
+     * Updates the current date in the slider
+     */
+    setSliderDates: function() {
+      if (this.currentDate.length) {
+        var currentDate = this.getCurrentDate();
+
+        this.setCurrentDate({
+          time: currentDate[1]
+        });
+      }
     }
 
   });
