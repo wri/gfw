@@ -13,23 +13,41 @@ define([
 
   var MapMiniControlsView = Backbone.View.extend({
 
+    status: new (Backbone.Model.extend({
+      defaults: {
+        is_drawing: false
+      }
+    })),
+
     el: '#map-controls',
 
     events: {
       'click .js-map-controls-zoom-in' : 'onClickZoomIn',
       'click .js-map-controls-zoom-out' : 'onClickZoomOut',
       'click .js-map-controls-autolocate' : 'onClickLocate',
+      'click .js-map-controls-drawing' : 'onClickDrawing',
       // 'click .js-map-controls-zoom-search' : 'onClickZoomOut',
     },
 
     initialize: function(map) {
       this.map = map;
       this.cache();
+      this.listeners();
 
       this.renderGoogleAutocomplete();
     },
 
+    listeners: function() {
+      this.status.on('change:is_drawing', this.changeIsDrawing.bind(this));
+
+      // MPS listeners
+      mps.subscribe('Drawing/toggle', function(toggle){
+        this.status.set('is_drawing', toggle);
+      }.bind(this))
+    },
+
     cache: function() {
+      this.$drawing = this.$el.find('#map-controls-drawing');
       this.$autolocate = this.$el.find('#map-controls-autolocate');
       this.$autocomplete = this.$el.find('#map-controls-search');
     },
@@ -66,8 +84,19 @@ define([
           break;
         }
       }.bind(this));
-
     },
+
+
+
+    /**
+     * CHANGE EVENTS
+     * - changeIsDrawing
+     */
+    changeIsDrawing: function() {
+      this.$drawing.toggleClass('-drawing', this.status.get('is_drawing')); 
+    },
+
+
 
     /**
      * UI EVENTS
@@ -89,12 +118,12 @@ define([
 
     onClickLocate: function(e){
       e && e.preventDefault();
-      this.$autolocate.toggleClass('active', true);
+      this.$autolocate.toggleClass('-loading', true);
 
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           function(position) {
-            this.$autolocate.toggleClass('active', false);
+            this.$autolocate.toggleClass('-loading', false);
             
             var lat = position.coords.latitude,
                 lng = position.coords.longitude;
@@ -104,14 +133,20 @@ define([
           }.bind(this),
 
           function() {
-            this.$autolocate.toggleClass('active', false);
+            this.$autolocate.toggleClass('-loading', false);
             mps.publish('Notification/open', ['notification-enable-location']);
           }.bind(this)
         );
       } else {
-        $autoLocate.removeClass('active');
+        this.$autolocate.toggleClass('-loading', false);
       }
     },
+
+    onClickDrawing: function(e) {
+      e && e.preventDefault();
+      var is_drawing = $(e.currentTarget).hasClass('-drawing');
+      mps.publish('Drawing/toggle', [!is_drawing]);
+    }
 
   });
 
