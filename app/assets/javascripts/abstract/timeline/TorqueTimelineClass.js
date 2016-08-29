@@ -48,15 +48,12 @@ define([
 
     initialize: function(layer, currentDate) {
       this.layer = layer;
-      // console.log(layer, currentDate);
       this.currentDate = _.compact(currentDate).map(
         function(c) { return moment.utc(c); });
 
       this.status = new TimelineStatus();
 
       this.presenter = new Presenter(this);
-
-      // console.log(this.currentDate, this.status, this.presenter);
     },
 
     render: function() {
@@ -111,7 +108,6 @@ define([
 
     renderDatePicker: function() {
       var onChange = function(dateRange) {
-        console.log(dateRange);
         this.slider.reScale(dateRange);
         this.currentDate = dateRange;
       };
@@ -130,6 +126,7 @@ define([
 
       this.$el.prepend(datePicker.render().el);
       this.datePicker = datePicker;
+      this.setSliderDates();
     },
 
     _onTorqueStop: function() {
@@ -196,6 +193,19 @@ define([
 
     getName: function() {
       return this.layer.slug;
+    },
+
+    /*
+     * Updates the current date in the slider
+     */
+    setSliderDates: function() {
+      if (this.currentDate.length) {
+        var currentDate = this.getCurrentDate();
+
+        this.setCurrentDate({
+          time: currentDate[1]
+        });
+      }
     }
 
   });
