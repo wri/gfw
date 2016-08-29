@@ -703,6 +703,27 @@
         @include logos-sprite(astrodigitalhover);
       }
     }
+
+    &.agrosatelite {
+      height: 80px; width: 120px; @include logos-sprite(agrosatelite);
+      &:hover{
+        @include logos-sprite(agrosatelitehover);
+      }
+    }
+
+    &.lapig {
+      height: 80px; width: 120px; @include logos-sprite(lapig);
+      &:hover{
+        @include logos-sprite(lapighover);
+      }
+    }
+
+    &.minepat {
+      height: 85px; width: 85px; @include logos-sprite(minepat);
+      &:hover{
+        @include logos-sprite(minepathover);
+      }
+    }
   }
 }
 
