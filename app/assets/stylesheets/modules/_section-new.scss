@@ -90,35 +90,63 @@ $aside-width: 270px;
     height: 295px;
   }
 
-  .control-zoom, .control-locate{
-    display: block;
+  // TOP BOTTOM RIGHT LEFT - MAP CONTROLS
+  .map-controls-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     position: absolute;
-    top: 5px;
-    left: 5px;
+
+    > * {
+      margin: 0 5px 0 0px;
+      &:last-child {
+        margin: 0px;
+      }
+    }
+
+    &.-top { top: 5px;}
+    &.-bottom { bottom: 5px;}
+    &.-left { left: 5px;}
+    &.-right { right: 5px;}
+  }
+
+  // BUTTONS
+  .map-control-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
     background: $white;
     box-shadow: $shadow1;
+    border:none;
+    outline: none;
+    cursor: pointer;
 
-    button {
+    &:hover {
+      background: darken($white,5%);
+    }
+
+    svg {
       display: block;
-      width: 30px;
-      height: 30px;
-      background: $white;
-      box-shadow: none;
-      border:none;
-      border-top: 1px solid $border;
-      outline: none;
-      cursor: pointer;
-
-      &:hover {
-        background: darken($white,5%);
+      fill: $dark;
+      &.-inactive {
+        display: none;
       }
+    }
 
-      &:first-child {
-        border-top: none;
-      }
-
+    &.-loading {
       svg {
-        fill: $dark;
+        @include animation(loader2,1s,infinite,$easeInOutCubic);
+      }
+    }
+
+    &.-drawing {
+      svg {
+        display: none;
+        &.-inactive {
+          display: block;
+        }
       }
     }
 
@@ -135,37 +163,15 @@ $aside-width: 270px;
     margin: -20px 0 0 -20px;
   }
 
-  .control-locate {
-    left: auto;
-    right: 5px;
-
-    svg {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 90%;
-      height: 90%;
-      transform: translate(-50%,-50%);
-    }
-
-    &.active {
-      svg {
-        @include animation(loader,1s,infinite,$easeInOutCubic);
-      }
-    }
-  }
-
   .control-search {
-    position: absolute;
-    top: 5px;
-    right: 40px;
-    width: 60%;
-    min-width: 175px;
-    max-width: 300px;
+    width: 175px;
     padding: 0;
     font-size: 12px;
     background: $white;
     box-shadow: $shadow1;
+    @media (min-width: $br-mobile) {
+      width: 300px;
+    }
 
     input {
       display: block;
@@ -176,7 +182,6 @@ $aside-width: 270px;
       border-radius: 0;
       box-shadow: none;
       border:none;
-
     }
   }
 }

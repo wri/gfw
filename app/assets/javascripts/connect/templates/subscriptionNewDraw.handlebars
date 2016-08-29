@@ -13,15 +13,25 @@
     <div>
       <div id="map" class="map"></div>
       <div id="map-controls" class="map-controls">
-        <div class="control-zoom">
-          <button type="button" class="js-map-controls-zoom-in"><svg><use xlink:href="#icon-control-plus"></use></svg></button>
-          <button type="button" class="js-map-controls-zoom-out"><svg><use xlink:href="#icon-control-minus"></use></svg></button>
+        <div class="map-controls-box -top -left">
+          <div class="control-zoom">
+            <button type="button" class="map-control-btn js-map-controls-zoom-in"><svg><use xlink:href="#icon-control-plus"></use></svg></button>
+            <button type="button" class="map-control-btn js-map-controls-zoom-out"><svg><use xlink:href="#icon-control-minus"></use></svg></button>
+          </div>
         </div>
-        <div class="control-locate js-map-controls-autolocate" id="map-controls-autolocate">
-          <button type="button"><svg><use xlink:href="#icon-control-locate"></use></svg></button>
-        </div>
-        <div class="control-search">
-          <input class="map-search-input" id="map-controls-search" type="text" placeholder="Search..."/>
+        <div class="map-controls-box -top -right">
+          <div class="control-search">
+            <input class="map-search-input" id="map-controls-search" type="text" placeholder="Search..."/>
+          </div>
+          <div>
+            <button id="map-controls-autolocate" class="map-control-btn js-map-controls-autolocate" type="button"><svg><use xlink:href="#icon-control-locate"></use></svg></button>
+          </div>
+          <div>
+            <button id="map-controls-drawing" class="map-control-btn js-map-controls-drawing" type="button">
+              <svg><use xlink:href="#icon-analysis-draw"></use></svg>
+              <svg class="-inactive"><use xlink:href="#shape-close"></use></svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
