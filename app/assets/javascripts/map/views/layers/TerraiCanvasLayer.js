@@ -16,11 +16,6 @@ define([
   var START_DATE = '2004-01-01';
   var START_YEAR = '2004';
 
-  var padNumber = function(number) {
-    var s = "00" + number;
-    return s.substr(s.length - 3);
-  };
-
   var TerraiCanvasLayer = AnimatedCanvasLayerClass.extend({
 
     init: function(layer, options, map) {
