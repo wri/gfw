@@ -71,24 +71,20 @@ define([
     },
 
     filterCanvasImgdata: function(imgdata, w, h, z) {
-      var components = 4;
-      var start = (this.currentDate[0].year() - START_YEAR) * 23 +
-        Math.ceil((this.currentDate[0].dayOfYear() - 1) / 16);
-      var end = (this.currentDate[1].year()- START_YEAR) * 23 +
-        Math.floor((this.currentDate[1].dayOfYear() - 1) / 16);
-
-      if (start < 1) {
-        start = 1;
-      }
-
       if (this.timelineExtent === undefined) {
         this.timelineExtent = [moment.utc(this.currentDate[0]),
           moment.utc(this.currentDate[1])];
       }
 
-      // console.log(this.currentDate);
-      //
-      // console.log(start, end);
+      var components = 4;
+      var start = (this.timelineExtent[0].year() - START_YEAR) * 23 +
+        Math.ceil((this.timelineExtent[0].dayOfYear() - 1) / 16);
+      var end = (this.timelineExtent[1].year()- START_YEAR) * 23 +
+        Math.floor((this.timelineExtent[1].dayOfYear() - 1) / 16);
+
+      if (start < 1) {
+        start = 1;
+      }
 
       for(var i=0; i < w; ++i) {
         for(var j=0; j < h; ++j) {
