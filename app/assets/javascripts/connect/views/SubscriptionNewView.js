@@ -1,6 +1,7 @@
 define([
   'jquery',
-  'backbone', 
+  'backbone',
+  'backbone.syphon',   
   'handlebars',
   'underscore',
   'mps',
@@ -10,7 +11,7 @@ define([
   'text!connect/templates/subscriptionNew.handlebars',
   'text!connect/templates/subscriptionNewDraw.handlebars',
   'text!connect/templates/subscriptionNewCountry.handlebars'
-], function($, Backbone, Handlebars, _, mps, MapMiniView, MapMiniControlsView, MapMiniDrawingView, tpl, tplDraw, tplCountry) {
+], function($, Backbone, BackboneSyphon, Handlebars, _, mps, MapMiniView, MapMiniControlsView, MapMiniDrawingView, tpl, tplDraw, tplCountry) {
 
   'use strict';
 
@@ -131,8 +132,12 @@ define([
 
     onSubmitSubscription: function(e) {
       e && e.preventDefault();
-      debugger;
+      var attributesFromForm = Backbone.Syphon.serialize(this.$form);
       console.log(this.status.toJSON());
+      console.log(attributesFromForm);
+
+      debugger;
+
             
       // // Remove 'media' because we want to set it from the model
       // // I don't know why this serializing is returning 'media { image: "" }'
