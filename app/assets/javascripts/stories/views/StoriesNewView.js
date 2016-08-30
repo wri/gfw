@@ -54,6 +54,11 @@ define([
       presence: {
         message: "Please enter a location for your story"
       },
+    },
+    'email': {
+      email: {
+        message: "Please enter a correct email"
+      },
     }    
   };
 
@@ -72,6 +77,7 @@ define([
       'dragstart .sortable' : 'dragstart',
       'click #submit': 'submit',
       'click .upload_picture': 'showFileSelector',
+      'change #hideUser' : 'onChangeHideUser'
     },
 
     initialize: function() {
@@ -89,6 +95,7 @@ define([
 
     cache: function() {
       this.$form = $('#new_story');
+      this.$personalInfo = $('#field-personal-info');
     },
 
     videoInput: function(e) {
@@ -419,7 +426,9 @@ define([
       event.preventDefault();
       
       var attributesFromForm = Backbone.Syphon.serialize(this.$('form#new_story'));
-      
+      // As long as the checkbox is for just the oposite
+      attributesFromForm.hideUser = !attributesFromForm.hideUser;
+
       // Remove 'media' because we want to set it from the model
       // I don't know why this serializing is returning 'media { image: "" }'
       if (attributesFromForm.media) {
@@ -429,18 +438,11 @@ define([
       this.story.set(_.extend({ visible: true }, this.story.toJSON(), attributesFromForm));
 
       if (this.validate()) {
-        
-        $.when(
-          this.user.save({ 
-            fullName: this.story.attributes.name,
-            email: this.story.attributes.email 
-          }, { patch: true }),
-          this.story.save()
-        )
-        .then(function(user,story){
-          var id = story[0].data.id;
-          window.location = '/stories/'+id;
-        });        
+        this.story.save()
+          .then(function(story){
+            var id = story.data.id;
+            window.location = '/stories/'+id;
+          });        
       } else {
         this.updateForm();
         mps.publish('Notification/open', ['story-new-form-error']);
@@ -485,6 +487,14 @@ define([
         $input.addClass('-error');
         $label.addClass('-error');
       }
+    },
+
+    /**
+     * UI EVENTS
+     */
+    onChangeHideUser: function(e) {
+      var is_checked = $(e.currentTarget).is(':checked');
+      this.$personalInfo.toggleClass('-hidden', !is_checked);
     }
 
 
