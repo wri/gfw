@@ -1,4 +1,4 @@
-$label-width: 85px;
+$label-width: 100px;
 
 
 input[type="password"],
@@ -19,12 +19,41 @@ textarea {
   }
 }
 
+.field-fieldset {
+  margin: 0 0 75px;
+  &:last-child {
+    margin: 0;
+  }
+}
+
+.field-header {
+  &.-padding-top {
+    padding-top: 20px;
+  }
+  &.-padding-bottom {
+    padding-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 35px;
+    padding: 0 0 15px;
+    color: $dark;
+  }
+
+  h3 {
+    font-weight: 500;
+    font-size: 14px;
+    color: $dark;
+    line-height: 1.5;
+  }
+}
+
 /**
  * Field
  */
 .field {
   @include clearfix();
-  position: relative;  
+  position: relative;
   width: 100%;
   margin: 0 0 25px;
   @media (min-width: $br-mobile) {
@@ -39,7 +68,6 @@ textarea {
     padding: 0;
   }
 
-
   label {
     padding: 0 15px 0 0;
     width: 100%;
@@ -53,11 +81,9 @@ textarea {
       width: $label-width;
       position: absolute;
       left: 0;
-      top: 12px;
-    }
-
-    &.-has-hint {
-      top: 1px;
+      top: 21px;
+      transform: translate(0,-50%);
+      line-height: 1;
     }
 
     &.-error {
@@ -74,7 +100,13 @@ textarea {
     color: $dark;
     font-size: 14px;
     line-height: 1.5;
-    margin: 0 0 15px;
+    margin: 0 0 5px;
+
+    &.-hint {
+      font-size: 12px;
+      margin: 5px 0;
+      font-style: italic;
+    }
 
     &.-terms {
       font-size: 10px;
@@ -109,44 +141,52 @@ textarea {
       font-size: 12px;
       color: $red;
       text-transform: uppercase;
-    }    
+    }
   }
 }
-
 
 /**
  * Radio
  */
 .radio-box {
   @include clearfix();
-  display: flex;
-  justify-content: center;
-  padding: 15px 0;
+  padding: 6px 0;
+  font-size: 12px;
 
   .custom-radio {
-    margin: 0 0 0 20px;
-    &:first-child {
-      margin: 0;
-    }
+    display: flex;
+    width: 100%;
   }
 
   label {
+    padding: 8px 0;
     font-weight: 400;
     text-transform: none;
     position: relative;
     padding-left: 25px;
-    line-height: 28px;
+    line-height: 1;
     cursor: pointer;
+    width: auto;
+    top: 0;
+    left: 0;
+    transform: none;
+    text-align: left;
 
-    span{
+    &.-uppercase {
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    span {
       position: absolute;
       top: 50%;
       left: 0;
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       border: 1px solid $dark;
       border-radius: 50%;
       transform: translate(0,-50%);
+
       &:after {
         content: "";
         position: absolute;
@@ -154,8 +194,8 @@ textarea {
         left: 50%;
         width: 50%;
         height: 50%;
-        border-radius: 50%;
         background: $cGreen;
+        border-radius: 50%;
         display: none;
         transform: translate(-50%,-50%);
       }
@@ -203,15 +243,18 @@ textarea {
   }
 
   label {
+    padding: 8px 0;
     font-weight: 400;
     text-transform: none;
     position: relative;
     padding-left: 25px;
-    line-height: 28px;
+    line-height: 1;
     cursor: pointer;
     width: auto;
     top: 0;
     left: 0;
+    transform: none;
+    text-align: left;
 
     &.-uppercase {
       text-transform: uppercase;
@@ -226,7 +269,7 @@ textarea {
       height: 16px;
       border: 1px solid $dark;
       transform: translate(0,-50%);
-      
+
       &:after {
         content: "";
         position: absolute;
