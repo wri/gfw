@@ -7,7 +7,7 @@ require([
   'Class',
   'backbone',
   'mps',
-  'stories/handlebarsHelpers',  
+  'stories/handlebarsHelpers',
   'static/RouterStatic',
   'static/CarrouselView',
   'static/VideoView',
@@ -16,15 +16,17 @@ require([
   'static/ApplicationsNavView',
   'static/ApplicationsGridView',
   'static/ApplicationsModalView',
+  'static/ContributeDataView',
   'static/GalleryView',
   'views/HeaderView',
   'views/FooterView',
   'views/SidebarNavView',
   'views/InterestingView',
   'views/SourceMobileFriendlyView',
+  'views/NotificationsView',
   '_string'
-], function($, _, Class, Backbone, mps, handlebarsHelpers, RouterStatic, CarrouselView, VideoView, SearchView, FeedbackView, ApplicationsNavView, ApplicationsGridView, ApplicationsModalView,
-            GalleryView, HeaderView, FooterView, SidebarNavView, InterestingView, SourceMobileFriendlyView) {
+], function($, _, Class, Backbone, mps, handlebarsHelpers, RouterStatic, CarrouselView, VideoView, SearchView, FeedbackView, ApplicationsNavView, ApplicationsGridView, ApplicationsModalView, ContributeDataView,
+            GalleryView, HeaderView, FooterView, SidebarNavView, InterestingView, SourceMobileFriendlyView, NotificationsView) {
   'use strict';
 
   var LandingPage = Class.extend({
@@ -34,7 +36,7 @@ require([
     init: function() {
 
       handlebarsHelpers.register();
-      
+
       var router = new RouterStatic();
 
       this._initViews();
@@ -81,7 +83,9 @@ require([
       new ApplicationsNavView();
       new ApplicationsGridView();
       new ApplicationsModalView();
+      new ContributeDataView();
       new GalleryView();
+      new NotificationsView();
     }
   });
 

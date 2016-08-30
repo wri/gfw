@@ -45,6 +45,22 @@ textarea {
     font-size: 14px;
     color: $dark;
     line-height: 1.5;
+    &.-error {
+      color: $red;
+    }    
+  }
+
+  > p {
+    color: $dark;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 5px;
+
+    &.-hint {
+      font-size: 12px;
+      margin: 5px 0;
+      font-style: italic;
+    }
   }
 }
 
@@ -58,6 +74,21 @@ textarea {
   margin: 0 0 25px;
   @media (min-width: $br-mobile) {
     padding: 0px 0px 0px $label-width;
+  }
+
+  &.-default {
+    padding: 0;
+
+    > label {
+      display: block;
+      text-align: left;
+      width: 100%;
+      position: relative;
+      left: auto;
+      top: auto;
+      transform: none;
+      margin: 0 0 3px;
+    }
   }
 
   &.-hidden {

@@ -107,6 +107,12 @@ class StaticController < ApplicationController
     end
   end
 
+  def contribute
+    @title = 'Contribute data'
+    @desc = 'Share your data with the GFW community by adding it to the GFW Interactive Map.'
+    @keywords = 'GFW, forests, forest data, forest monitoring, forest landscapes, maps, apps, applications, fires, commodities, open landscape partnership, map, palm oil transparency toolkit, forest atlas, develop your own app, climate, biodiversity, deforestation, mobile, explore, browse, tools'
+  end
+
   def old
     @title = "Oops, your browser isn't supported."
     render layout: 'old_browser'
