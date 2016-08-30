@@ -14,7 +14,7 @@ define([
 
   var TILE_URL = 'http://wri-tiles.s3.amazonaws.com/terrai_prod/tiles/{z}/{x}/{y}.png';
   var START_DATE = '2004-01-01';
-  var START_YEAR = '2004';
+  var START_YEAR = 2004;
 
   var TerraiCanvasLayer = AnimatedCanvasLayerClass.extend({
 
@@ -74,12 +74,19 @@ define([
       var components = 4;
       var start = (this.timelineExtent[0].year() - START_YEAR) * 23 +
         Math.ceil((this.timelineExtent[0].dayOfYear() - 1) / 16);
-      var end = (this.timelineExtent[1].year()- START_YEAR) * 23 +
+
+      var end = (this.timelineExtent[1].year() - START_YEAR) * 23 +
         Math.floor((this.timelineExtent[1].dayOfYear() - 1) / 16);
 
       if (start < 1) {
         start = 1;
       }
+
+      var baseDate = moment.utc().year(START_YEAR).startOf('year').unix();
+      var recentStartDate = this.maxDate.clone().subtract(1, 'month').unix();
+      var recentEndDate = this.maxDate.clone().unix();
+      var recentStartRange = Math.ceil( (recentStartDate - baseDate) / (24 * 60 * 60 * 16) );
+      var recentEndRange = Math.ceil( (recentEndDate - baseDate) / (24 * 60 * 60 * 16) );
 
       for(var i=0; i < w; ++i) {
         for(var j=0; j < h; ++j) {
@@ -92,7 +99,12 @@ define([
 
           var timeLoss = r + g;
 
-          if (timeLoss >= start && timeLoss <= end) {
+          if (timeLoss >= recentStartRange && timeLoss <= recentEndRange) {
+            imgdata[pixelPos] = 219;
+            imgdata[pixelPos + 1] = 168;
+            imgdata[pixelPos + 2] = 0;
+            imgdata[pixelPos + 3] = intensity;
+          } else if (timeLoss >= start && timeLoss <= end) {
             imgdata[pixelPos]     = 220;
             imgdata[pixelPos + 1] = 102;
             imgdata[pixelPos + 2] = 153;
