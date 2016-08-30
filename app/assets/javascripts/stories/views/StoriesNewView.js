@@ -11,6 +11,7 @@ define([
   'validate',
   'stories/models/StoryModel',
   'stories/models/MediaModel',
+  'stories/models/UserModel',
   'stories/views/LatestStoriesView',
   'text!stories/templates/storiesNew.handlebars'
 ], function(
@@ -26,6 +27,7 @@ define([
   validate,
   Story,
   Media,
+  User,
   LatestStoriesView,
   tpl
 ) {
@@ -52,6 +54,11 @@ define([
       presence: {
         message: "Please enter a location for your story"
       },
+    },
+    'email': {
+      email: {
+        message: "Please enter a correct email"
+      },
     }    
   };
 
@@ -70,19 +77,25 @@ define([
       'dragstart .sortable' : 'dragstart',
       'click #submit': 'submit',
       'click .upload_picture': 'showFileSelector',
+      'change #hideUser' : 'onChangeHideUser'
     },
 
     initialize: function() {
       this.sourceDrag = undefined;
       this.errors = null;
-      this.story = new Story();
+      this.user = new User();
+      this.user.fetch()
+        .then(function(){
+          this.story = new Story();
+          this.render();
+          this.cache();          
+        }.bind(this))
 
-      this.render();
-      this.cache();
     },
 
     cache: function() {
       this.$form = $('#new_story');
+      this.$personalInfo = $('#field-personal-info');
     },
 
     videoInput: function(e) {
@@ -413,20 +426,23 @@ define([
       event.preventDefault();
       
       var attributesFromForm = Backbone.Syphon.serialize(this.$('form#new_story'));
-      
+      // As long as the checkbox is for just the oposite
+      attributesFromForm.hideUser = !attributesFromForm.hideUser;
+
       // Remove 'media' because we want to set it from the model
       // I don't know why this serializing is returning 'media { image: "" }'
       if (attributesFromForm.media) {
         delete attributesFromForm.media;
       }
 
-      this.story.set(_.extend({}, this.story.toJSON(), attributesFromForm));
+      this.story.set(_.extend({ visible: true }, this.story.toJSON(), attributesFromForm));
 
       if (this.validate()) {
-        this.story.save().then(function(result) {
-          var id = result.data.id;
-          window.location = '/stories/'+id;
-        });
+        this.story.save()
+          .then(function(story){
+            var id = story.data.id;
+            window.location = '/stories/'+id;
+          });        
       } else {
         this.updateForm();
         mps.publish('Notification/open', ['story-new-form-error']);
@@ -445,6 +461,7 @@ define([
 
     render: function() {
       this.$el.html(this.template({
+        user: this.user.toJSON(),
         story: this.story.toJSON(),
         formatted_date: moment(this.story.date).format('YYYY-MM-DD')
       }));
@@ -470,6 +487,14 @@ define([
         $input.addClass('-error');
         $label.addClass('-error');
       }
+    },
+
+    /**
+     * UI EVENTS
+     */
+    onChangeHideUser: function(e) {
+      var is_checked = $(e.currentTarget).is(':checked');
+      this.$personalInfo.toggleClass('-hidden', !is_checked);
     }
 
 

@@ -13,7 +13,7 @@ define([
 
     requestId: 'UserStoryService',
 
-    url: window.gfw.config.GFW_API_HOST_NEW_API + '/story',
+    url: window.gfw.config.GFW_API_HOST_NEW_API + '/story?fields=title,lat,lng',
 
     /**
      * Constructs a new instance of StoryService.
@@ -28,7 +28,7 @@ define([
      * Defines JSON requests used by StoryService.
      */
     _defineRequests: function() {
-      var cache = {type: 'persist', duration: 1, unit: 'days'};
+      var cache = false;
       var url = this.url;
       var config = {cache: cache, url: url, type: 'GET', dataType: 'json'};
       ds.define(this.requestId, config);

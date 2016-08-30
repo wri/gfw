@@ -299,19 +299,30 @@ define([
 
       // mps.publish('Spinner/start', []);
 
-      ShapefileService.save(file).then(function(response) {
-        var features = response.data.attributes.features;
-        if (!!features) {
-          var geojson = features.reduce(turf.union),
-              bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson),
-              geometry = geojson.geometry;
-          
-          this.drawGeojson(geometry);
-          this.map.fitBounds(bounds);
+      ShapefileService.save(file)
+        .then(function(response) {
+          var features = response.data.attributes.features;
+          if (!!features) {
+            var geojson = features.reduce(turf.union),
+                bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson),
+                geometry = geojson.geometry;
+            
+            this.drawGeojson(geometry);
+            this.map.fitBounds(bounds);
 
-          this.presenter.status.set('geojson', geometry);
-        }
-      }.bind(this));
+            this.presenter.status.set('geojson', geometry);
+          }
+        }.bind(this))
+
+        .fail(function(response){
+          var errors = response.errors;
+          _.each(errors, function(error){
+            if (error.detail == 'File not valid') {
+              this.presenter.publishNotification('notification-file-not-valid');
+            }
+          }.bind(this))
+          
+        }.bind(this));
 
       this.$dropable.removeClass('-moving');      
     },

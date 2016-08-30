@@ -84,9 +84,7 @@ require([
       // we shouldn't create any view.
       countryService.get().then(function(results) {
         this.map = map.map;
-        this.countries = _.where(results.countries, {
-          enabled: true
-        });
+        this.countries = results.countries;
 
         new MapControlsView(this.map, this.countries);
         new TabsView(this.map, this.countries);
@@ -158,7 +156,7 @@ require([
         google.maps.Polygon.prototype.getBounds = function() {
           var bounds = new google.maps.LatLngBounds();
           var paths = this.getPaths();
-          var path;        
+          var path;
           for (var i = 0; i < paths.getLength(); i++) {
             path = paths.getAt(i);
             for (var ii = 0; ii < path.getLength(); ii++) {
