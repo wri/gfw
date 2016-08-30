@@ -62,7 +62,7 @@ Gfw::Application.routes.draw do
   get '/developers-corner', to: redirect('/developers-corner/')
 
   ########### /LEGACY #############
-  
+
 
   # stories #
   get '/stories' => 'stories#index'
@@ -71,19 +71,21 @@ Gfw::Application.routes.draw do
 
 
   # static #
+  # TO-DO: we should redirect these pages. We are not allowed to see them anymore
   get '/sources' => 'static#data'
   get '/sources(/:section)' => 'static#data'
-
-  get '/my_gfw/' => 'connect#index', as: 'user_index'
-  get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
-
   get '/stayinformed' => 'static#keep'
   get '/stayinformed(/:section)' => 'static#keep'
-
   get '/getinvolved' => 'static#getinvolved'
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'
   get '/feedback_jsonp' => 'static#feedback_jsonp'
+
+  # connect
+  get '/my_gfw/' => 'connect#index', as: 'user_index'
+  get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
+  get '/contribute-data' => 'connect#contribute'
+
 
 
   # about
