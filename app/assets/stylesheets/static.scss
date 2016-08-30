@@ -6,7 +6,7 @@
 @import "logos/*.png";
 
 // Global
-// This will load all common settings, mixins and styles needed 
+// This will load all common settings, mixins and styles needed
 @import "global/global";
 
 // Layouts
@@ -24,13 +24,10 @@
 @import "modules/slick";
 @import "modules/carrousel";
 @import "modules/pagination";
-@import "modules/terms";
-@import "modules/notifications";
-@import "modules/static/spinner";
-
-// Gallery
-@import "modules/card";
-@import "modules/grid";
 @import "modules/select";
-
+@import "modules/notifications";
+@import "modules/header-static";
+@import "modules/section-static";
+@import "modules/section-new";
+@import "modules/static/spinner";
 @import "layouts/static";

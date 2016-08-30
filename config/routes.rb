@@ -80,12 +80,12 @@ Gfw::Application.routes.draw do
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'
   get '/feedback_jsonp' => 'static#feedback_jsonp'
+  get '/contribute-data' => 'static#contribute'
+
 
   # connect
   get '/my_gfw/' => 'connect#index', as: 'user_index'
   get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
-  get '/contribute-data' => 'connect#contribute'
-
 
 
   # about
