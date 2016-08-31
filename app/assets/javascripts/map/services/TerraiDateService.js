@@ -5,11 +5,11 @@ define([
 
   'use strict';
 
-  var REQUEST_ID = 'GladDateService:fetchDates';
+  var REQUEST_ID = 'TerraiDateService:fetchDates';
 
-  var URL = window.gfw.config.GFW_API_HOST_NEW_API + "/glad-alerts/latest";
+  var URL = window.gfw.config.GFW_API_HOST_NEW_API + "/terrai-alerts/latest";
 
-  var GladDateService = Class.extend({
+  var TerraiDateService = Class.extend({
 
     init: function(options) {
       this.options = options || {};
@@ -48,6 +48,6 @@ define([
 
   });
 
-  return GladDateService;
+  return TerraiDateService;
 
 });

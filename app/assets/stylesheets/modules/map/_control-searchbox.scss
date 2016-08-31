@@ -98,7 +98,7 @@ $search-br: 600px;
     }
 
     .coord-box, .deg-box, .utm-box {
-      @media (max-width: $search-br){
+      @media (min-width: $search-br){
         display: flex;
         justify-content: space-between;
         align-items: center;
