@@ -3,18 +3,6 @@
   position: relative;
   z-index: 10;
 
-  &.-abs-right {
-    padding: 0 20px;
-    @media (min-width: $br-mobile){
-      padding: 0;
-      width: 260px;
-      position: absolute;
-      top: 50%;
-      right: 20px;
-      transform: translate(0,-60%);
-    }
-  }
-
   select {
     -webkit-appearance: none;
     appearance: none;
@@ -39,7 +27,7 @@
 
   .arrow-mobile {
     width: 20px;
-    height: 15px;      
+    height: 15px;
     position: absolute;
     top: 50%;
     right: 10px;
@@ -48,11 +36,11 @@
     transform: translate(0,-50%);
     @media (min-width: $br-mobile){
       display: none;
-    }    
+    }
 
     svg {
       width: 20px;
-      height: 15px;      
+      height: 15px;
       fill: $dark;
       stroke: $dark;
     }
@@ -73,7 +61,7 @@
       display: block;
       overflow: hidden;
       padding: 16px;
-      border-radius: 10px;
+      border-radius: 4px;
       background: #FFF;
       background-clip: padding-box;
       color: $dark;
