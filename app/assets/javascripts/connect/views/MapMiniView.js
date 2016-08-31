@@ -41,6 +41,9 @@ define([
      * Constructs a new MapMiniView and its presenter.
      */
     initialize: function() {
+      if (!this.$el.length) {
+        return;
+      }
       this.render();
     },
 
@@ -163,11 +166,12 @@ define([
      *
      * @param {Number} lat The center latitude
      * @param {Number} lng The center longitude
-     */
+    */
+    // Center
     getCenter: function() {
       var center = this.map.getCenter();
       return {
-        lat: center.lat(), 
+        lat: center.lat(),
         lng: center.lng()
       };
     },
@@ -175,6 +179,7 @@ define([
       this.map.setCenter(new google.maps.LatLng(lat, lng));
     },
 
+    // Zoom
     getZoom: function() {
       this.map.getZoom();
     },
@@ -182,7 +187,7 @@ define([
       this.map.setZoom(zoom);
     },
 
-
+    // Bounds
     fitBounds: function(bounds) {
       this.map.fitBounds(bounds);
     },

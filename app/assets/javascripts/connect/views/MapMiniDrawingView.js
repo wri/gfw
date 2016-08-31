@@ -18,16 +18,26 @@ define([
 
   var MapMiniDrawingView = Backbone.View.extend({
 
+    el: '#map-drawing',
+
+    events: {
+      'click' : 'onClickDrawing'
+    },
+
     status: new (Backbone.Model.extend({
       defaults: {
         is_drawing: false,
         geosjon: null,
         overlay: null,
-        overlay_stroke_weight: 2        
+        overlay_stroke_weight: 2
       }
     })),
 
     initialize: function(map) {
+      if (!this.$el.length) {
+        return;
+      }
+      
       this.map = map;
       this.listeners();
     },
@@ -48,9 +58,13 @@ define([
     // CHANGE EVENTS
     changeIsDrawing: function() {
       var is_drawing = this.status.get('is_drawing');
+      this.setDrawingButton();
+
       if (is_drawing) {
+        this.$el.text('Cancel');
         this.startDrawingManager();
       } else {
+        this.$el.text('Start drawing');
         this.stopDrawingManager();
       }
     },
@@ -71,7 +85,21 @@ define([
     },
 
 
+    setDrawingButton: function() {
+      var is_drawing = this.status.get('is_drawing');
+      this.$el.toggleClass('-drawing', is_drawing);
 
+    },
+
+    /**
+     * DRAWING MANAGER
+     * - onClickDrawing
+     */
+    onClickDrawing: function(e) {
+      e && e.preventDefault();
+      var is_drawing = $(e.currentTarget).hasClass('-drawing');
+      mps.publish('Drawing/toggle', [!is_drawing]);
+    },
 
 
     /**

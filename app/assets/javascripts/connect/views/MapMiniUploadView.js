@@ -42,6 +42,10 @@ define([
     })),
 
     initialize: function(map) {
+      if (!this.$el.length) {
+        return;
+      }
+      
       this.map = map;
       this.cache();
       this.listeners();
