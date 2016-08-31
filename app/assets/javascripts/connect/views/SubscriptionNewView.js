@@ -1,7 +1,7 @@
 define([
   'jquery',
   'backbone',
-  'backbone.syphon',   
+  'backbone.syphon',
   'handlebars',
   'underscore',
   'mps',
@@ -16,9 +16,9 @@ define([
   'use strict';
 
   var SubscriptionNewView = Backbone.View.extend({
-    
+
     status: new (Backbone.Model.extend({
-      defaults: {      
+      defaults: {
         aoi: null,
         lang: 'en',
         name: 'Testing',
@@ -67,7 +67,7 @@ define([
           },
           wdpaid: null,
           use: null,
-          useid: null,          
+          useid: null,
         });
       }.bind(this));
     },
@@ -75,6 +75,7 @@ define([
     render: function() {
       this.$el.html(this.templates.default({}));
       this.cache();
+      this.renderChosen();
     },
 
     renderType: function() {
@@ -82,16 +83,32 @@ define([
       if (!!aoi) {
         this.$formType.html(this.templates[aoi]({}));
         this.cache();
-        this.initSubViews();        
+        this.renderChosen();
+        this.initSubViews();
       } else {
         this.$formType.html('');
       }
+    },
+
+    renderChosen: function() {
+      _.each(this.$selects, function(select){
+        var $select = $(select);
+        if (! !!$select.data('chosen')) {
+          $select.chosen({
+            width: '100%',
+            disable_search: true,
+            inherit_select_classes: true,
+            no_results_text: "Oops, nothing found!"
+          });
+        }
+      })
     },
 
     cache: function() {
       this.$form = this.$el.find('#new-subscription');
       this.$formType = this.$el.find('#new-subscription-content');
       this.$datasetCheckboxs = this.$el.find('.dataset-checkbox');
+      this.$selects = this.$el.find('select.chosen-select');
     },
 
     initSubViews: function() {
@@ -138,7 +155,7 @@ define([
 
       debugger;
 
-            
+
       // // Remove 'media' because we want to set it from the model
       // // I don't know why this serializing is returning 'media { image: "" }'
       // if (attributesFromForm.media) {
