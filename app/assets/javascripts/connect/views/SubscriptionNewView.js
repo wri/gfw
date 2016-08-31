@@ -8,10 +8,11 @@ define([
   'connect/views/MapMiniView',
   'connect/views/MapMiniControlsView',
   'connect/views/MapMiniDrawingView',
+  'connect/views/MapMiniUploadView',
   'text!connect/templates/subscriptionNew.handlebars',
   'text!connect/templates/subscriptionNewDraw.handlebars',
   'text!connect/templates/subscriptionNewCountry.handlebars'
-], function($, Backbone, BackboneSyphon, Handlebars, _, mps, MapMiniView, MapMiniControlsView, MapMiniDrawingView, tpl, tplDraw, tplCountry) {
+], function($, Backbone, BackboneSyphon, Handlebars, _, mps, MapMiniView, MapMiniControlsView, MapMiniDrawingView, MapMiniUploadView, tpl, tplDraw, tplCountry) {
 
   'use strict';
 
@@ -81,7 +82,7 @@ define([
     renderType: function() {
       var aoi = this.status.get('aoi');
       if (!!aoi) {
-        this.$formType.html(this.templates[aoi]({}));
+        this.$formType.html(this.templates[aoi]());
         this.cache();
         this.renderChosen();
         this.initSubViews();
@@ -116,6 +117,7 @@ define([
 
       new MapMiniControlsView(mapView.map);
       new MapMiniDrawingView(mapView.map);
+      new MapMiniUploadView(mapView.map);
     },
 
     /**
@@ -124,6 +126,11 @@ define([
      */
     changeAOI: function() {
       var aoi = this.status.get('aoi');
+      this.renderType();
+    },
+
+    changeAOIType: function() {
+      var aoiType = this.status.get('aoiType');
       this.renderType();
     },
 
