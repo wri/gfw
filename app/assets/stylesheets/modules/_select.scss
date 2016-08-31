@@ -58,7 +58,7 @@
       position: relative;
       display: block;
       overflow: hidden;
-      padding: 16px;
+      padding: 12px 10px;
       border-radius: 4px;
       background: #FFF;
       background-clip: padding-box;
@@ -67,7 +67,6 @@
       white-space: nowrap;
       line-height: 1;
       font-weight: 400;
-      text-transform: uppercase;
       outline: none;
       cursor: pointer;
       border: 1px solid $border;
