@@ -10,14 +10,26 @@ define([
   'mps',
   'cookie',
   'map/views/maptypes/grayscaleMaptype',
-  'map/helpers/layersHelper'
-], function(Backbone, _, mps, Cookies, grayscaleMaptype, layersHelper) {
+  'map/helpers/layersHelper',
+  'map/services/GeostoreService',
+  'helpers/geojsonUtilsHelper',
+], function(Backbone, _, mps, Cookies, grayscaleMaptype, layersHelper, GeostoreService, geojsonUtilsHelper) {
 
   'use strict';
 
   var MapMiniView = Backbone.View.extend({
 
     el: '#map',
+
+    status: new (Backbone.Model.extend({
+      defaults: {
+        is_drawing: false,
+        geojson: null,
+        geostore: null,
+        overlay: null,
+        overlay_stroke_weight: 2
+      }
+    })),
 
     /**
      * Google Map Options.
@@ -45,6 +57,34 @@ define([
         return;
       }
       this.render();
+      this.listeners();
+    },
+
+    listeners: function() {
+      this.status.on('change:geojson', this.changeGeojson.bind(this));
+      this.status.on('change:geostore', this.changeGeostore.bind(this));
+
+      mps.subscribe('Drawing/toggle', function(toggle){
+        this.status.set('is_drawing', toggle);
+      }.bind(this));
+
+      mps.subscribe('Drawing/overlay', function(overlay){
+        this.status.set('overlay', overlay);
+        this.status.set('geojson', this.getGeojson(overlay));
+        this.eventsGeojson();
+      }.bind(this));
+
+      mps.subscribe('Drawing/geojson', function(geojson){
+        this.status.set('geojson', geojson);
+      }.bind(this));
+
+      mps.subscribe('Drawing/bounds', function(bounds){
+        this.map.fitBounds(bounds);
+      }.bind(this));
+
+      mps.subscribe('Drawing/delete', function(){
+        this.deleteGeojson();
+      }.bind(this));
     },
 
     /**
@@ -53,15 +93,14 @@ define([
     render: function() {
       this.map = new google.maps.Map(this.el, _.extend({}, this.options));
       this._setMaptypes();
-      this._addListeners();
+      this._addMapListeners();
     },
 
     /**
      * Wires up Google Maps API listeners so that the view can respond to user
      * events fired by the UI.
      */
-    _addListeners: function() {
-
+    _addMapListeners: function() {
     },
 
 
@@ -211,6 +250,101 @@ define([
      */
     _setMaptypes: function() {
       this.map.mapTypes.set('grayscale', grayscaleMaptype());
+    },
+
+    /**
+     * CHANGE EVENTS
+     * - changeGeojson
+     * - changeGeostore
+    */
+    changeGeojson: function() {
+      var geojson = this.status.get('geojson');
+      console.log(geojson);
+      if (!!geojson) {
+        GeostoreService.save(geojson).then(function(geostoreId) {
+          this.status.set('geostore', geostoreId);
+        }.bind(this));
+      } else {
+        this.status.set('geostore', null);
+      }
+    },
+
+    changeGeostore: function() {
+      mps.publish('Drawing/geostore', [this.status.get('geostore')]);
+    },
+
+
+
+    /**
+     * GEOJSON
+     * - drawGeojson
+     * - deleteGeojson
+     * - getGeojson
+     * - updateGeojson
+     * - eventsGeojson
+    */
+
+    drawGeojson: function(geojson) {
+      var paths = geojsonUtilsHelper.geojsonToPath(geojson);
+      var overlay = new google.maps.Polygon({
+        paths: paths,
+        editable: (geojson.type == 'Polygon'),
+        strokeWeight: this.status.get('overlay_stroke_weight'),
+        fillOpacity: 0,
+        fillColor: '#FFF',
+        strokeColor: '#A2BC28'
+      });
+
+      overlay.setMap(this.map);
+
+      this.status.set('overlay', overlay, { silent: true });
+      this.status.set('geojson', this.getGeojson(overlay), { silent: true });
+
+      this.eventsGeojson();
+
+      if (this.status.get('fit_to_geom')) {
+        this.map.fitBounds(overlay.getBounds());
+      }
+    },
+
+    deleteGeojson: function() {
+      var overlay = this.status.get('overlay');
+      if (!!overlay) {
+        overlay.setMap(null);
+        this.status.set('overlay', null);
+        this.status.set('geojson', null);
+      }
+    },
+
+    getGeojson: function(overlay) {
+      var paths = overlay.getPath().getArray();
+      return geojsonUtilsHelper.pathToGeojson(paths);
+    },
+
+    /**
+    * updateGeojson
+    * @param  {[object]} overlay
+    * @return {void}
+    */
+    updateGeojson: function(overlay) {
+      this.status.set('overlay', overlay);
+      this.status.set('geojson', this.getGeojson(overlay));
+    },
+
+    eventsGeojson: function() {
+      var overlay = this.status.get('overlay');
+
+      google.maps.event.addListener(overlay.getPath(), 'set_at', function () {
+        this.updateGeojson(overlay);
+      }.bind(this));
+
+      google.maps.event.addListener(overlay.getPath(), 'insert_at', function () {
+        this.updateGeojson(overlay);
+      }.bind(this));
+
+      google.maps.event.addListener(overlay.getPath(), 'remove_at', function () {
+        this.updateGeojson(overlay);
+      }.bind(this));
     },
 
   });

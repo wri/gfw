@@ -70,6 +70,7 @@ define([
           use: null,
           useid: null,
         });
+        console.log(this.status.get('params'));
       }.bind(this));
     },
 
