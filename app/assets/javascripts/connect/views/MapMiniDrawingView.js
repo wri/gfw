@@ -5,10 +5,10 @@
  * @return MapMiniDrawingView view (extends Backbone.View)
  */
 define([
-  'underscore', 
-  'handlebars', 
-  'amplify', 
-  'turf', 
+  'underscore',
+  'handlebars',
+  'amplify',
+  'turf',
   'mps',
   'map/services/GeostoreService',
   'helpers/geojsonUtilsHelper',
@@ -23,6 +23,7 @@ define([
         is_drawing: false,
         geosjon: null,
         overlay: null,
+        overlay_stroke_weight: 2        
       }
     })),
 
@@ -89,7 +90,7 @@ define([
           strokeWeight: 2,
           fillOpacity: 0,
           fillColor: '#FFF',
-          strokeColor: '#A2BC28',          
+          strokeColor: '#A2BC28',
         },
         panControl: false,
       });
@@ -101,7 +102,7 @@ define([
         }
       }.bind(this));
 
-      google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this.completeDrawing.bind(this));      
+      google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this.completeDrawing.bind(this));
     },
 
     /**
@@ -128,9 +129,9 @@ define([
       this.status.set('overlay', e.overlay);
 
       // Check if the drawing is enabled
-      if (this.status.get('is_drawing')) {      
+      if (this.status.get('is_drawing')) {
         this.status.set('geojson', this.getGeojson(e.overlay));
-        
+
         this.eventsDrawing();
         mps.publish('Drawing/toggle', [false]);
       } else {
@@ -156,7 +157,7 @@ define([
      */
     deleteDrawing: function() {
       var overlay = this.status.get('overlay');
-      if (!!overlay) {        
+      if (!!overlay) {
         overlay.setMap(null);
         this.status.set('overlay', null);
         this.status.set('geojson', null);
@@ -172,7 +173,7 @@ define([
 
       google.maps.event.addListener(overlay.getPath(), 'set_at', function () {
         this.updateDrawing(overlay);
-      }.bind(this));      
+      }.bind(this));
 
       google.maps.event.addListener(overlay.getPath(), 'insert_at', function () {
         this.updateDrawing(overlay);
@@ -192,10 +193,10 @@ define([
      */
     getGeojson: function(overlay) {
       var paths = overlay.getPath().getArray();
-      return geojsonUtilsHelper.pathToGeojson(paths);            
+      return geojsonUtilsHelper.pathToGeojson(paths);
     },
 
-    
+
     /**
      * drawGeojson
      * @param  {object:geojson} geojson
