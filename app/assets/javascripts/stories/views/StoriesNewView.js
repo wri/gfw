@@ -13,7 +13,7 @@ define([
   'stories/models/MediaModel',
   'stories/models/UserModel',
   'stories/views/LatestStoriesView',
-  'text!stories/templates/new_story.handlebars'
+  'text!stories/templates/storiesNew.handlebars'
 ], function(
   Class,
   $,
@@ -365,7 +365,7 @@ define([
 
           function() {
             $autoLocate.removeClass('active');
-            mps.publish('Notification/open', ['notif-enable-location']);
+            mps.publish('Notification/open', ['notification-enable-location']);
           }
         );
       } else {

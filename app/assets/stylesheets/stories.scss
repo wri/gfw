@@ -26,22 +26,19 @@
 @import "modules/slick";
 @import "modules/pagination";
 @import "modules/notifications";
+@import "modules/header-static";
+@import "modules/section-static";
+@import "modules/section-new";
 
 // Static Modules
-@import "modules/static/header-static";
-@import "modules/static/section-static";
 @import "modules/static/spinner-static";
 @import "modules/static/cover-static";
 @import "modules/static/interesting-static";
 
 // Stories Modules
 @import "modules/static/list-stories";
-@import "modules/static/new-stories";
 @import "modules/static/latest-stories";
 @import "modules/static/spinner";
-
-@import "modules/static/list-stories";
-@import "modules/static/new-stories";
 
 @import "modules/connect/login";
 @import "modules/connect/user-form";

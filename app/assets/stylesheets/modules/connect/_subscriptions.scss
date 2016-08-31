@@ -2,6 +2,10 @@
   .tabs {
     width: 100%;
     background: #EEE;
+    padding: 0 15px;
+    @media (min-width:$br-mobile){
+      padding: 0;
+    }
 
     .inner {
       display: flex;
@@ -44,7 +48,11 @@
 
 .my-gfw-subscriptions-list-container {
   @include clearfix();
-  padding: 50px 0;
+  padding: 50px 15px;
+  @media (min-width:$br-mobile){
+    padding: 50px 0;
+  }
+
 }
 
 .my-gfw-subscriptions-empty {
@@ -134,6 +142,7 @@
         display: flex;
         justify-content: flex-start;
         border: 1px solid transparent;
+        word-break: break-word;
         @media (min-width:$br-mobile){
           line-height: 39px;
         }
