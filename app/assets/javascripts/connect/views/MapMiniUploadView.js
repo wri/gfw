@@ -33,19 +33,11 @@ define([
       'drop' : 'onDropShape'
     },
 
-    status: new (Backbone.Model.extend({
-      defaults: {
-        geosjon: null,
-        overlay: null,
-        overlay_stroke_weight: 2
-      }
-    })),
-
     initialize: function(map) {
       if (!this.$el.length) {
         return;
       }
-      
+
       this.map = map;
       this.cache();
       this.listeners();
@@ -100,6 +92,7 @@ define([
     uploadFile: function(file) {
       if (file.size > this.config.FILE_SIZE_LIMIT && !window.confirm(this.config.FILE_SIZE_MESSAGE)) {
         this.$el.removeClass('-moving');
+        mps.publish('Drawing/delete');
         return;
       }
 
@@ -113,10 +106,8 @@ define([
                 bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson),
                 geometry = geojson.geometry;
 
-            this.drawGeojson(geometry);
-            this.map.fitBounds(bounds);
-
-            this.status.set('geojson', geometry);
+            mps.publish('Drawing/geojson', [geometry]);
+            mps.publish('Drawing/bounds', [bounds]);
           }
         }.bind(this))
 
@@ -124,7 +115,7 @@ define([
           var errors = response.errors;
           _.each(errors, function(error){
             if (error.detail == 'File not valid') {
-              this.publishNotification('notification-file-not-valid');
+              mps.publish('Notification/open', ['notification-file-not-valid'])
             }
           }.bind(this))
 
@@ -132,48 +123,6 @@ define([
 
       this.$el.removeClass('-moving');
     },
-
-    /**
-     * HELPERS
-     * getGeojson
-     * @param  {object} overlay
-     * @return {object:geojson}
-     */
-    getGeojson: function(overlay) {
-      var paths = overlay.getPath().getArray();
-      return geojsonUtilsHelper.pathToGeojson(paths);
-    },
-
-    /**
-     * drawGeojson
-     * @param  {object:geojson} geojson
-     * @return {void}
-     */
-    drawGeojson: function(geojson) {
-      var paths = geojsonUtilsHelper.geojsonToPath(geojson);
-      var overlay = new google.maps.Polygon({
-        paths: paths,
-        editable: (geojson.type == 'Polygon'),
-        strokeWeight: this.status.get('overlay_stroke_weight'),
-        fillOpacity: 0,
-        fillColor: '#FFF',
-        strokeColor: '#A2BC28'
-      });
-
-      overlay.setMap(this.map);
-
-      this.status.set('overlay', overlay, { silent: true });
-      this.status.set('geojson', this.getGeojson(overlay), { silent: true });
-
-      // this.eventsDrawing();
-
-      if (this.status.get('fit_to_geom')) {
-        this.map.fitBounds(overlay.getBounds());
-      }
-    }
-
-
-
 
   });
 
