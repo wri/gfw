@@ -44,9 +44,13 @@ define([
     },
 
     cache: function() {
+      this.$inputUploadShape = this.$el.find('#input-upload-shape');
     },
 
     listeners: function() {
+      mps.subscribe('Drawing/toggle', function(toggle){
+        this.$inputUploadShape.val('')
+      }.bind(this));
     },
 
     /**
@@ -92,11 +96,9 @@ define([
     uploadFile: function(file) {
       if (file.size > this.config.FILE_SIZE_LIMIT && !window.confirm(this.config.FILE_SIZE_MESSAGE)) {
         this.$el.removeClass('-moving');
-        mps.publish('Drawing/delete');
         return;
       }
-
-      // mps.publish('Spinner/start', []);
+      mps.publish('Drawing/delete');
 
       ShapefileService.save(file)
         .then(function(response) {

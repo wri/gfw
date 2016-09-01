@@ -79,6 +79,7 @@ define([
     onClickDrawing: function(e) {
       e && e.preventDefault();
       var is_drawing = $(e.currentTarget).hasClass('-drawing');
+      mps.publish('Drawing/delete');
       mps.publish('Drawing/toggle', [!is_drawing]);
     },
 
