@@ -12,7 +12,7 @@ define([
     url: window.gfw.config.GFW_API_HOST_NEW_API + '/subscriptions',
 
     comparator: function(subscription) {
-      return -moment(subscription.get('created')).unix()
+      return -moment(subscription.get('createdAt')).unix()
     },
 
     sync: function(method, model, options) {
