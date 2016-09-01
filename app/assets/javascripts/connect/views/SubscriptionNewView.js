@@ -57,8 +57,9 @@ define([
       'change input,textarea,select' : 'onChangeInput',
     },
 
-    initialize: function(router) {
+    initialize: function(router, user) {
       this.router = router;
+      this.user = user;
       this.listeners();
       this.render();
     },
@@ -171,7 +172,13 @@ define([
     onSubmitSubscription: function(e) {
       e && e.preventDefault();
 
-      var attributesFromForm = _.extend({}, _.omit(validate.collectFormValues(this.$form, {
+      var attributesFromForm = _.extend({
+        language: 'en',
+        resource: {
+          type: 'EMAIL',
+          content: this.user.get('email')
+        }
+      }, _.omit(validate.collectFormValues(this.$form, {
         trim: true,
         nullify: true
       }), 'datasets'), this.subscription.toJSON());

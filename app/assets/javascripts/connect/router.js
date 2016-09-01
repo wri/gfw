@@ -92,7 +92,7 @@ define([
       }.bind(this));
 
       // Add new view
-      var view = new this.routeViews[page](this);
+      var view = new this.routeViews[page](this, this.user);
       this.$el.html(view.el);
       view.delegateEvents();
 
