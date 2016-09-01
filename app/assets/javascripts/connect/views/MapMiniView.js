@@ -56,6 +56,7 @@ define([
       if (!this.$el.length) {
         return;
       }
+      this.layerInst = {};
       this.render();
       this.listeners();
     },

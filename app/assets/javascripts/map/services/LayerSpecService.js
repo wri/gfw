@@ -52,10 +52,10 @@ define([
     toggle: function(where, success, error) {
       mapLayerService.getLayers(
         where,
-        _.bind(function(layers) {
+        function(layers) {
           _.each(layers, this._toggleLayer, this);
           success(this.model);
-        }, this),
+        }.bind(this),
         error);
     },
 
@@ -126,6 +126,14 @@ define([
       if (_.isEmpty(this.model.get(layer.category_slug))) {
         this._removeCategory(layer.category_slug);
       }
+    },
+
+    /**
+     * Remove all the active layers.
+     * @param  {object} layer The layer object
+     */
+    _removeAllLayers: function() {
+      this.model.clear();
     },
 
     /**
