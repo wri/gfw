@@ -64,6 +64,15 @@ define([
       this.status.on('change:geojson', this.changeGeojson.bind(this));
       this.status.on('change:geostore', this.changeGeostore.bind(this));
 
+      // LAYERS
+      mps.subscribe('LayerNav/change', function(layerSpec){
+        var options = {};
+        var layers = layerSpec.getLayers();
+        this.status.set('layers',layers);
+        this.setLayers(layers, options);
+      }.bind(this));
+
+      // DRAWING
       mps.subscribe('Drawing/toggle', function(toggle){
         this.status.set('is_drawing', toggle);
       }.bind(this));
