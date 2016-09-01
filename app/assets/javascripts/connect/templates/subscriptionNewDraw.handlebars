@@ -1,14 +1,4 @@
 <div class="field -required">
-  <label for="aoi-type">AOI 2 *</label>
-  <div class="m-select">
-    <select id="aoi-type" data-placeholder="Select your area of interest (country or upload your own shapefile)">
-      <option value="aoi-draw" selected>Draw</option>
-      <option value="aoi-upload">Upload your area of interest</option>
-    </select>
-  </div>
-</div>
-
-<div class="field -required">
   <div class="m-map">
     <div>
       <div id="map" class="map"></div>
@@ -26,17 +16,50 @@
           <div>
             <button id="map-controls-autolocate" class="map-control-btn js-map-controls-autolocate" type="button"><svg><use xlink:href="#icon-control-locate"></use></svg></button>
           </div>
-          <div>
-            <button id="map-controls-drawing" class="map-control-btn js-map-controls-drawing" type="button">
-              <svg><use xlink:href="#icon-analysis-draw"></use></svg>
-              <svg class="-inactive"><use xlink:href="#shape-close"></use></svg>
+          <!-- <div>
+            <button id="map-controls-delete-drawing" class="map-control-btn js-map-controls-delete-drawing" type="button">
+              <svg><use xlink:href="#icon-analysis-remove"></use></svg>
             </button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<div class="field">
+  <ul class="m-btncontainer is-space-between -col50">
+    <li>
+      <button type="button" class="btn green medium uppercase full-width">
+        <div id="map-drawing">
+          Start drawing
+        </div>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="btn gray medium uppercase full-width">
+        Upload a file
+        <div id="map-upload" class="m-upload">
+          <input type="file" id="input-upload-shape">
+
+          <!-- <div class="analysis-dropable">
+          <div id="area-dropable-shape" class="shape-droppable">
+
+          <div class="drop-shape-text">
+          <span>Click to pick a file or drop one here</span>
+          <a href="#" data-source="drop-shapefile" class="source">
+          <svg><use xlink:href="#shape-info"></use></svg>
+        </a>
+      </div>
+    </div>
+  </div>     -->
+</div>
+</button>
+    </li>
+  </ul>
+
+</div>
+
 
 <div class="field">
   <label>Data set</label>
