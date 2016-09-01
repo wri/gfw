@@ -165,6 +165,18 @@ define([
       this.renderType();
     },
 
+    changeLayers: function() {
+      var layers = this.subscription.get('layers');
+      var where = [{ slug: layers[0] }];
+
+      LayerSpecService._removeAllLayers();
+
+      LayerSpecService.toggle(where,
+        function(layerSpec) {
+          mps.publish('LayerNav/change', [layerSpec]);
+          mps.publish('Place/update', [{go: false}]);
+        }.bind(this));
+    },
 
     /**
      * UI EVENTS
@@ -227,21 +239,6 @@ define([
         this.updateForm();
         mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
       }
-    },
-
-    /**
-     * LAYERS
-     * - toggleLayer
-     */
-    changeLayers: function() {
-      var layers = this.subscription.get('layers');
-      var where = [{ slug: layers[0].slug }];
-
-      LayerSpecService.toggle(where,
-        _.bind(function(layerSpec) {
-          mps.publish('LayerNav/change', [layerSpec]);
-          mps.publish('Place/update', [{go: false}]);
-        }, this));
     },
 
 
