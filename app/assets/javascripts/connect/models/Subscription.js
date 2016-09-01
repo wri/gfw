@@ -86,7 +86,9 @@ define([
     formattedTopics: function() {
       return this.get('datasets').map(function(layerName) {
         var topic = DATASETS[layerName];
-        topic.viewOnMapUrl = this.getViewOnMapURL(topic.layerSlug);
+        if (!!topic) {
+          topic.viewOnMapUrl = this.getViewOnMapURL(topic.layerSlug);
+        }
         return topic;
       }.bind(this));
     },
