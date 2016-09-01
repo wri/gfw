@@ -32,6 +32,7 @@ define([
         aoi: null,
         language: 'en',
         datasets: [],
+        activeLayers: [],
         params: {
           geostore: null,
           iso: {
@@ -54,6 +55,7 @@ define([
     events: {
       'change #aoi': 'onChangeAOI',
       'change .dataset-checkbox' : 'onChangeDataset',
+      'change #select-layers': 'onChangeLayers',
       'submit #new-subscription': 'onSubmitSubscription',
       'change input,textarea,select' : 'onChangeInput',
     },
@@ -66,7 +68,7 @@ define([
         function(layer){
           return !layer.iso && !!layer.analyzable;
         }.bind(this),
-        
+
         function(layers){
           this.layers = _.groupBy(_.sortBy(layers, 'title'), 'category_name');
         }.bind(this),
@@ -83,6 +85,7 @@ define([
     listeners: function() {
       // STATUS
       this.subscription.on('change:aoi', this.changeAOI.bind(this));
+      this.subscription.on('change:layers', this.changeLayers.bind(this));
 
       // MPS
       mps.subscribe('Drawing/geostore', function(geostore){
@@ -182,6 +185,12 @@ define([
       this.subscription.set('datasets', _.clone(datasets));
     },
 
+    onChangeLayers: function(e) {
+      e && e.preventDefault();
+      var layers = [$(e.currentTarget).val()];
+      this.subscription.set('layers', _.clone(layers));
+    },
+
     onChangeInput: function(e) {
       this.validateInput(e.currentTarget.name, e.currentTarget.value);
       this.updateForm();
@@ -219,6 +228,22 @@ define([
         mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
       }
     },
+
+    /**
+     * LAYERS
+     * - toggleLayer
+     */
+    changeLayers: function() {
+      var layers = this.subscription.get('layers');
+      var where = [{ slug: layers[0].slug }];
+
+      LayerSpecService.toggle(where,
+        _.bind(function(layerSpec) {
+          mps.publish('LayerNav/change', [layerSpec]);
+          mps.publish('Place/update', [{go: false}]);
+        }, this));
+    },
+
 
     /**
      * VALIDATIONS && FORM UPDATE
