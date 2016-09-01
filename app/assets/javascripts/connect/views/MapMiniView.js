@@ -76,6 +76,7 @@ define([
 
       mps.subscribe('Drawing/geojson', function(geojson){
         this.status.set('geojson', geojson);
+        this.drawGeojson();
       }.bind(this));
 
       mps.subscribe('Drawing/bounds', function(bounds){
@@ -259,7 +260,7 @@ define([
     */
     changeGeojson: function() {
       var geojson = this.status.get('geojson');
-      console.log(geojson);
+
       if (!!geojson) {
         GeostoreService.save(geojson).then(function(geostoreId) {
           this.status.set('geostore', geostoreId);
@@ -276,7 +277,7 @@ define([
 
 
     /**
-     * GEOJSON
+     * DRAW & DELETE & UPDATE GEOJSONS
      * - drawGeojson
      * - deleteGeojson
      * - getGeojson
@@ -284,7 +285,8 @@ define([
      * - eventsGeojson
     */
 
-    drawGeojson: function(geojson) {
+    drawGeojson: function() {
+      var geojson = this.status.get('geojson');
       var paths = geojsonUtilsHelper.geojsonToPath(geojson);
       var overlay = new google.maps.Polygon({
         paths: paths,
