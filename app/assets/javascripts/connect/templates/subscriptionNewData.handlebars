@@ -1,4 +1,20 @@
-<!-- <div class="field -required">
+<div class="field">
+  <label for="aoi">Data layer</label>
+  <div class="m-select">
+    <select id="select-layers" class="chosen-select default" data-placeholder="Select a custom layer">
+      <option value=""></option>
+      {{#each layers}}
+        <optgroup label="{{@key}}">
+          {{#each this}}
+            <option value="{{this.slug}}">{{this.title}}</option>
+          {{/each}}
+        </optgroup>
+      {{/each}}
+    </select>
+  </div>
+</div>
+
+<div class="field -required">
   <div class="m-map">
     <div>
       <div id="map" class="map"></div>
@@ -20,7 +36,7 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>
 
 <div class="field">
   <label>Data set</label>

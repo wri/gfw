@@ -63,6 +63,10 @@ define([
       return this.model.getLayers();
     },
 
+    _getAllLayers: function(filterFn, successCb, errorCb) {
+      mapLayerService.getAllLayers(filterFn, successCb, errorCb);
+    },
+
     /**
      * Add/delete a layer from the model.
      *

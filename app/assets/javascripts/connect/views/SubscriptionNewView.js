@@ -5,6 +5,7 @@ define([
   'underscore',
   'mps',
   'validate',
+  'map/services/LayerSpecService',
   'connect/models/Subscription',
   'connect/views/MapMiniView',
   'connect/views/MapMiniControlsView',
@@ -12,8 +13,8 @@ define([
   'connect/views/MapMiniUploadView',
   'text!connect/templates/subscriptionNew.handlebars',
   'text!connect/templates/subscriptionNewDraw.handlebars',
-  'text!connect/templates/subscriptionNewCountry.handlebars'
-], function($, Backbone, Handlebars, _, mps, validate, Subscription, MapMiniView, MapMiniControlsView, MapMiniDrawingView, MapMiniUploadView, tpl, tplDraw, tplCountry) {
+  'text!connect/templates/subscriptionNewData.handlebars'
+], function($, Backbone, Handlebars, _, mps, validate, LayerSpecService, Subscription, MapMiniView, MapMiniControlsView, MapMiniDrawingView, MapMiniUploadView, tpl, tplDraw, tplData) {
 
   'use strict';
 
@@ -29,7 +30,7 @@ define([
     subscription: new Subscription({
       defaults: {
         aoi: null,
-        lang: 'en',
+        language: 'en',
         datasets: [],
         params: {
           geostore: null,
@@ -47,7 +48,7 @@ define([
     templates: {
       default: Handlebars.compile(tpl),
       draw: Handlebars.compile(tplDraw),
-      country: Handlebars.compile(tplCountry),
+      data: Handlebars.compile(tplData),
     },
 
     events: {
@@ -60,6 +61,21 @@ define([
     initialize: function(router, user) {
       this.router = router;
       this.user = user;
+
+      LayerSpecService._getAllLayers(
+        function(layer){
+          return !layer.iso && !!layer.analyzable;
+        }.bind(this),
+        
+        function(layers){
+          this.layers = _.groupBy(_.sortBy(layers, 'title'), 'category_name');
+        }.bind(this),
+
+        function(error){
+          console.log(error);
+        }.bind(this)
+      );
+
       this.listeners();
       this.render();
     },
@@ -92,7 +108,9 @@ define([
     renderType: function() {
       var aoi = this.subscription.get('aoi');
       if (!!aoi) {
-        this.$formType.html(this.templates[aoi]());
+        this.$formType.html(this.templates[aoi]({
+          layers: this.layers
+        }));
         this.cache();
         this.renderChosen();
         this.initSubViews();
@@ -220,7 +238,7 @@ define([
             },
           }
         break;
-        case 'country':
+        case 'data':
         break;
       }
       // Validate form, if is valid the response will be undefined
