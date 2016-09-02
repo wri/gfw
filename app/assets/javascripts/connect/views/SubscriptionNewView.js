@@ -88,17 +88,22 @@ define([
       this.subscription.on('change:layers', this.changeLayers.bind(this));
 
       // MPS
+      mps.subscribe('LayerNav/change', function(layerSpec){
+        var defaults = this.subscription.get('defaults').params;
+        this.subscription.set('params', defaults);
+        console.log(this.subscription.get('params'));
+      }.bind(this));
+
+      mps.subscribe('Highlight/shape', function(data){
+        var defaults = this.subscription.get('defaults').params;
+        this.subscription.set('params', _.extend(defaults, data));
+        console.log(this.subscription.get('params'));
+      }.bind(this));
+
       mps.subscribe('Drawing/geostore', function(geostore){
-        this.subscription.set('params', {
-          geostore: geostore,
-          iso: {
-            country: null,
-            region: null
-          },
-          wdpaid: null,
-          use: null,
-          useid: null,
-        });
+        var defaults = this.subscription.get('defaults').params;
+        this.subscription.set('params', _.extend(defaults, { geostore: geostore }));
+        console.log(this.subscription.get('params'));
       }.bind(this));
     },
 
