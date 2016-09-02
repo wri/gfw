@@ -2,9 +2,8 @@
   <div class="inner">
     <header>
       <h2>Contribute data to Global Forest Watch</h2>
-      <h3>Share your data with the GFW community by adding it to the GFW Interactive Map</h3>
-      <p>Would you like to publish your data to the <a href="/map">GFW Interactive Map</a>? Just complete this form!</p>
-      <p>Please submit this form for each data set you would like to contribute. Although the GFW team will make every effort to add all data submitted via this form, there may be instances where GFW does not support the type or format of data. We will contact you if we are unable to add your data to GFW.</p>
+      <h3>Would you like to publish your data to the <a href="/map">GFW Interactive Map</a>? Just complete this form!</h3>
+      <p>NOTE: Although the GFW team will make every effort to add all data submitted via this form, there may be instances where GFW does not support the type or format of data. We will contact you if we are unable to add your data to GFW.</p>
     </header>
   </div>
 </section>
@@ -52,35 +51,35 @@
               <p class="-hint">Note: We will do our best to accommodate all types of data, but in some cases we may be unable to add your data to the GFW Interactive map due to the type or format of the data</p>
               <div class="radio-box">
                 <div class="custom-radio">
-                  <input id="show_protected_areas" type="radio" name="data_show" value="Protected areas">
+                  <input id="show_protected_areas" data-fieldset="protected_areas" type="radio" name="data_show" class="js-radio-fieldset" value="Protected areas">
                   <label for="show_protected_areas"><span></span> Protected areas</label>
                 </div>
                 <div class="custom-radio">
-                  <input id="show_project_areas" type="radio" name="data_show" value="Project areas">
+                  <input id="show_project_areas" data-fieldset="project_areas" type="radio" name="data_show" class="js-radio-fieldset" value="Project areas">
                   <label for="show_project_areas"><span></span> Project areas</label>
                 </div>
                 <div class="custom-radio">
-                  <input id="show_indigenous_lands" type="radio" name="data_show" value="Indigenous territories or community lands">
+                  <input id="show_indigenous_lands" data-fieldset="indigenous_lands" type="radio" name="data_show" class="js-radio-fieldset" value="Indigenous territories or community lands">
                   <label for="show_indigenous_lands"><span></span> Indigenous territories or community lands</label>
                 </div>
                 <div class="custom-radio">
-                  <input id="show_managed_forest_concessions" type="radio" name="data_show" value="Managed forest concessions">
+                  <input id="show_managed_forest_concessions" data-fieldset="concessions" type="radio" name="data_show" class="js-radio-fieldset" value="Managed forest concessions">
                   <label for="show_managed_forest_concessions"><span></span> Managed forest concessions</label>
                 </div>
                 <div class="custom-radio">
-                  <input id="show_mining_concessions" type="radio" name="data_show" value="Mining concessions">
+                  <input id="show_mining_concessions" data-fieldset="concessions" type="radio" name="data_show" class="js-radio-fieldset" value="Mining concessions">
                   <label for="show_mining_concessions"><span></span> Mining concessions</label>
                 </div>
                 <div class="custom-radio">
-                  <input id="show_oil_palm_concessions" type="radio" name="data_show" value="Oil palm concessions">
+                  <input id="show_oil_palm_concessions" data-fieldset="concessions" type="radio" name="data_show" class="js-radio-fieldset" value="Oil palm concessions">
                   <label for="show_oil_palm_concessions"><span></span> Oil palm concessions</label>
                 </div>
                 <div class="custom-radio">
-                  <input id="show_wood_fiber_concessions" type="radio" name="data_show" value="Wood fiber concessions">
+                  <input id="show_wood_fiber_concessions" data-fieldset="concessions" type="radio" name="data_show" class="js-radio-fieldset" value="Wood fiber concessions">
                   <label for="show_wood_fiber_concessions"><span></span> Wood fiber concessions</label>
                 </div>
                 <div class="custom-radio">
-                  <input id="show_other" type="radio" name="data_show" value"other">
+                  <input id="show_other" data-fieldset="other" type="radio" name="data_show" class="js-radio-fieldset" value"other">
                   <label for="show_other"><span></span> Other</label>
                 </div>
               </div>
@@ -89,7 +88,7 @@
 
 
           <!-- Protected areas -->
-          <div class="field-fieldset">
+          <div id="fieldset-protected_areas" class="field-fieldset -js-fieldset">
             <div class="field-header -padding-bottom">
               <h2>Protected areas</h2>
               <h3>Please enter the field name in the submitted data that corresponds to the following attributes (leave blank if no information):</h3>
@@ -124,7 +123,7 @@
 
 
           <!-- Project areas -->
-          <div class="field-fieldset">
+          <div id="fieldset-project_areas" class="field-fieldset -js-fieldset">
             <div class="field-header -padding-bottom">
               <h2>Project areas</h2>
               <h3>Please enter the field name in the submitted data that corresponds to the following attributes (leave blank if no information):</h3>
@@ -154,7 +153,7 @@
 
 
           <!-- Indigenous territories or community lands -->
-          <div class="field-fieldset">
+          <div id="fieldset-indigenous_lands" class="field-fieldset -js-fieldset">
             <div class="field-header -padding-bottom">
               <h2>Indigenous territories or community lands</h2>
               <h3>Please enter the field name in the submitted data that corresponds to the following attributes (leave blank if no information):</h3>
@@ -190,7 +189,7 @@
 
 
           <!-- Concessions -->
-          <div class="field-fieldset">
+          <div id="fieldset-concessions" class="field-fieldset -js-fieldset">
             <div class="field-header -padding-bottom">
               <h2>Concessions</h2>
               <h3>Please enter the field name in the submitted data that corresponds to the following attributes (leave blank if no information):</h3>
@@ -241,7 +240,7 @@
 
 
           <!-- Other -->
-          <div class="field-fieldset">
+          <div id="fieldset-other" class="field-fieldset -js-fieldset">
             <div class="field-header -padding-bottom">
               <h2>Other</h2>
               <h3>Please list all attribute field names to display on the website, along with a brief description of each.</h3>
@@ -325,7 +324,7 @@
               <label for="data_email">Email *</label>
               <input type="text" name="data_email">
               <div class="field-header -padding-top">
-                <h3>Would you like you email address to be publicly available on the GFW website for other users to contact you with comments or questions regarding these data?</h3>
+                <h3>Would you like your email address to be publicly available on the GFW website for other users to contact you with comments or questions regarding these data?</h3>
               </div>
               <div class="field -no-padding">
                 <div class="radio-box">

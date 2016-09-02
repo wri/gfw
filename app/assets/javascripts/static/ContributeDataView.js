@@ -62,6 +62,7 @@ define([
     })),
 
     events: {
+      'change .js-radio-fieldset' : 'onChangeFieldset',
       'change input,textarea,select' : 'onChangeInput',
       'submit #new-contribution': 'onSubmitContribution',
     },
@@ -79,6 +80,7 @@ define([
 
     cache: function() {
       this.$form = this.$el.find('#new-contribution');
+      this.$fieldsets = this.$el.find('.-js-fieldset');
     },
 
     /**
@@ -115,9 +117,16 @@ define([
 
     /**
      * UI EVENTS
+     * - onChangeFieldset
      * - onChangeInput
      * - onSubmitContribution
      */
+    onChangeFieldset: function(e) {
+      var fieldset = this.$form.find('input[name="data_show"]:checked').data('fieldset');
+      this.$fieldsets.toggleClass('-active', false);
+      this.$fieldsets.filter('#fieldset-'+fieldset).toggleClass('-active', true);
+    },
+
     onChangeInput: function(e) {
       this.validateInput(e.currentTarget.name, e.currentTarget.value);
       this.updateForm();
@@ -129,6 +138,13 @@ define([
 
       if (this.validate(attributesFromForm)) {
         this.model.set(attributesFromForm).save()
+          .then(function(){
+            mps.publish('Notification/open', ['contribution-new-form-success']);
+          })
+          .fail(function(){
+            mps.publish('Notification/open', ['contribution-new-form-error']);
+          })
+
       } else {
         this.updateForm();
         mps.publish('Notification/open', ['contribution-new-form-error']);
