@@ -32,7 +32,7 @@ define([
       var onSuccess = function(result) {
         var data = result.data && result.data.attributes ?
           result.data.attributes : [];
-        deferred.resolve(_.pick(data, 'maxDate', 'counts'));
+        deferred.resolve(_.pick(data, 'minDate', 'maxDate', 'counts'));
       };
 
       var config = {

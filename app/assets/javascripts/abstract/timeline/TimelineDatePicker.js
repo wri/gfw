@@ -184,7 +184,6 @@ define([
       this.histograms = [];
 
       dateService.fetchDates().then(function(response) {
-        this.maxDate = moment.utc(response.maxDate);
         this.histograms = response.counts;
         this.renderPickers();
         this.setMinMaxDate(response);
