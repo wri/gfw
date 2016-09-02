@@ -167,18 +167,25 @@ define([
       this.presenter.setTorqueDateRange(dateRange);
     },
 
+    setMinMaxDate: function(data) {
+      var tzOffset = new Date().getTimezoneOffset();
+      this.minDate = moment.utc(data.minDate).endOf('day');
+      this.maxDate = moment.utc(data.maxDate);
+
+      var minDate = this.minDate.clone().add(tzOffset, 'minutes').toDate();
+      var maxDate = this.maxDate.clone().add(tzOffset, 'minutes').toDate();
+      this.$('#startDate').pickadate('picker').set('min', minDate);
+      this.$('#endDate').pickadate('picker').set('max', maxDate);
+    },
+
     retrieveAvailableDates: function() {
       var dateService = new this.dataService();
       this.histograms = [];
 
       dateService.fetchDates().then(function(response) {
-        this.maxDate = moment.utc(response.maxDate);
         this.histograms = response.counts;
         this.renderPickers();
-
-        var tzOffset = new Date().getTimezoneOffset();
-        var maxDate = this.maxDate.clone().add(tzOffset, 'minutes').toDate();
-        this.$('#endDate').pickadate('picker').set('max', maxDate);
+        this.setMinMaxDate(response);
       }.bind(this));
     }
 
