@@ -206,7 +206,8 @@ define([
     },
 
     setHighlight: function(layer) {
-      this.cdbLayer.setInteraction(true);
+      var subLayer = this.cdbLayer.getSubLayer(0);
+      subLayer.setInteraction(true);
       this.cdbLayer.on('featureClick', function(e, pos, latlng, data) {
         var data = {
           useid: data.cartodb_id,
