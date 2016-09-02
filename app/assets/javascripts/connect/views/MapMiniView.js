@@ -10,10 +10,11 @@ define([
   'mps',
   'cookie',
   'map/views/maptypes/grayscaleMaptype',
-  'map/helpers/layersHelper',
   'map/services/GeostoreService',
+  'map/services/ShapeService',
+  'map/helpers/layersHelper',
   'helpers/geojsonUtilsHelper',
-], function(Backbone, _, mps, Cookies, grayscaleMaptype, layersHelper, GeostoreService, geojsonUtilsHelper) {
+], function(Backbone, _, mps, Cookies, grayscaleMaptype, GeostoreService, ShapeService, layersHelper, geojsonUtilsHelper) {
 
   'use strict';
 
@@ -56,6 +57,7 @@ define([
       if (!this.$el.length) {
         return;
       }
+      this.layerInst = {};
       this.render();
       this.listeners();
     },
@@ -64,6 +66,37 @@ define([
       this.status.on('change:geojson', this.changeGeojson.bind(this));
       this.status.on('change:geostore', this.changeGeostore.bind(this));
 
+      mps.subscribe('Map/fit-bounds', function(bounds){
+        this.map.fitBounds(bounds)
+      }.bind(this));
+
+      // LAYERS
+      mps.subscribe('LayerNav/change', function(layerSpec){
+        var options = {
+          highlight: true
+        };
+        var layers = layerSpec.getLayers();
+        this.status.set('layers',layers);
+        this.setLayers(layers, options);
+
+        // Delete geojson if it exists
+        this.deleteGeojson();
+
+      }.bind(this));
+
+      // HIGHLIGHT
+      mps.subscribe('Highlight/shape', function(data){
+        if (!!data.wdpaid) {
+          this.getShape('protected_areas', data.wdpaid);
+        }
+
+        if (!!data.use && !!data.useid) {
+          this.getShape(data.use, data.useid);
+        }
+
+      }.bind(this));
+
+      // DRAWING
       mps.subscribe('Drawing/toggle', function(toggle){
         this.status.set('is_drawing', toggle);
       }.bind(this));
@@ -153,6 +186,7 @@ define([
           _addNext();
           return;
         }
+
         var layerView = this.layerInst[layer.slug] =
           new layersHelper[layer.slug].view(layer, options, this.map);
 
@@ -227,11 +261,30 @@ define([
       this.map.setZoom(zoom);
     },
 
-    // Bounds
-    fitBounds: function(bounds) {
-      this.map.fitBounds(bounds);
-    },
+    // SHAPES
+    getShape: function(type, id) {
+      ShapeService.get(type, id)
+        .then(function(geojson, status){
+          var geojson = geojson,
+              bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
 
+          // Get bounds and fit to them
+          if (!!bounds) {
+            mps.publish('Map/fit-bounds', [bounds]);
+          }
+
+          // Draw geojson of shape
+          if (!!geojson) {
+            this.deleteGeojson();
+            this.drawGeojson(geojson);
+          }
+        }.bind(this))
+
+        .catch(function(error){
+          console.log(arguments);
+        }.bind(this))
+
+    },
 
     /**
      * Used by MapPresenter to set the map type.
@@ -285,8 +338,8 @@ define([
      * - eventsGeojson
     */
 
-    drawGeojson: function() {
-      var geojson = this.status.get('geojson');
+    drawGeojson: function(geojson) {
+      var geojson = geojson || this.status.get('geojson');
       var paths = geojsonUtilsHelper.geojsonToPath(geojson);
       var overlay = new google.maps.Polygon({
         paths: paths,

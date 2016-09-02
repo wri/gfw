@@ -5,15 +5,17 @@ define([
   'underscore',
   'mps',
   'validate',
+  'map/services/LayerSpecService',
   'connect/models/Subscription',
   'connect/views/MapMiniView',
   'connect/views/MapMiniControlsView',
   'connect/views/MapMiniDrawingView',
   'connect/views/MapMiniUploadView',
+  'map/services/GeostoreService',
   'text!connect/templates/subscriptionNew.handlebars',
   'text!connect/templates/subscriptionNewDraw.handlebars',
-  'text!connect/templates/subscriptionNewCountry.handlebars'
-], function($, Backbone, Handlebars, _, mps, validate, Subscription, MapMiniView, MapMiniControlsView, MapMiniDrawingView, MapMiniUploadView, tpl, tplDraw, tplCountry) {
+  'text!connect/templates/subscriptionNewData.handlebars'
+], function($, Backbone, Handlebars, _, mps, validate, LayerSpecService, Subscription, MapMiniView, MapMiniControlsView, MapMiniDrawingView, MapMiniUploadView, GeostoreService, tpl, tplDraw, tplData) {
 
   'use strict';
 
@@ -25,12 +27,14 @@ define([
 
 
   var SubscriptionNewView = Backbone.View.extend({
+    usenames: ['mining', 'oilpalm', 'fiber', 'logging'],
 
     subscription: new Subscription({
       defaults: {
         aoi: null,
-        lang: 'en',
+        language: 'en',
         datasets: [],
+        activeLayers: [],
         params: {
           geostore: null,
           iso: {
@@ -47,12 +51,13 @@ define([
     templates: {
       default: Handlebars.compile(tpl),
       draw: Handlebars.compile(tplDraw),
-      country: Handlebars.compile(tplCountry),
+      data: Handlebars.compile(tplData),
     },
 
     events: {
       'change #aoi': 'onChangeAOI',
       'change .dataset-checkbox' : 'onChangeDataset',
+      'change #select-layers': 'onChangeLayers',
       'submit #new-subscription': 'onSubmitSubscription',
       'change input,textarea,select' : 'onChangeInput',
     },
@@ -60,6 +65,21 @@ define([
     initialize: function(router, user) {
       this.router = router;
       this.user = user;
+
+      LayerSpecService._getAllLayers(
+        function(layer){
+          return !layer.iso && !!layer.analyzable;
+        }.bind(this),
+
+        function(layers){
+          this.layers = _.groupBy(_.sortBy(layers, 'title'), 'category_name');
+        }.bind(this),
+
+        function(error){
+          console.log(error);
+        }.bind(this)
+      );
+
       this.listeners();
       this.render();
     },
@@ -67,19 +87,39 @@ define([
     listeners: function() {
       // STATUS
       this.subscription.on('change:aoi', this.changeAOI.bind(this));
+      this.subscription.on('change:layers', this.changeLayers.bind(this));
 
       // MPS
-      mps.subscribe('Drawing/geostore', function(geostore){
-        this.subscription.set('params', {
-          geostore: geostore,
-          iso: {
-            country: null,
-            region: null
-          },
-          wdpaid: null,
-          use: null,
-          useid: null,
-        });
+      mps.subscribe('LayerNav/change', function(layerSpec) {
+        var defaults = this.subscription.get('defaults').params;
+        this.subscription.set('params', defaults);
+        console.log(this.subscription.get('params'));
+      }.bind(this));
+
+      mps.subscribe('Highlight/shape', function(data) {
+        var defaults = this.subscription.get('defaults').params;
+        if (!!data.use && this.usenames.indexOf(data.use) === -1) {
+          var provider = {
+            table: data.use,
+            filter: 'cartodb_id = ' + data.useid,
+            user: 'wri-01',
+            type: 'carto'
+          };
+
+          GeostoreService.use(provider).then(function(useGeostoreId) {
+            this.subscription.set('params', _.extend(defaults, { geostore: useGeostoreId }));
+            console.log(this.subscription.get('params'));
+          }.bind(this));
+        } else {
+          this.subscription.set('params', _.extend(defaults, data));
+          console.log(this.subscription.get('params'));
+        }
+      }.bind(this));
+
+      mps.subscribe('Drawing/geostore', function(geostore) {
+        var defaults = this.subscription.get('defaults').params;
+        this.subscription.set('params', _.extend(defaults, { geostore: geostore }));
+        console.log(this.subscription.get('params'));
       }.bind(this));
     },
 
@@ -92,7 +132,9 @@ define([
     renderType: function() {
       var aoi = this.subscription.get('aoi');
       if (!!aoi) {
-        this.$formType.html(this.templates[aoi]());
+        this.$formType.html(this.templates[aoi]({
+          layers: this.layers
+        }));
         this.cache();
         this.renderChosen();
         this.initSubViews();
@@ -144,6 +186,18 @@ define([
       this.renderType();
     },
 
+    changeLayers: function() {
+      var layers = this.subscription.get('layers');
+      var where = [{ slug: layers[0] }];
+
+      LayerSpecService._removeAllLayers();
+
+      LayerSpecService.toggle(where,
+        function(layerSpec) {
+          mps.publish('LayerNav/change', [layerSpec]);
+          mps.publish('Place/update', [{go: false}]);
+        }.bind(this));
+    },
 
     /**
      * UI EVENTS
@@ -162,6 +216,12 @@ define([
       }.bind(this)));
 
       this.subscription.set('datasets', _.clone(datasets));
+    },
+
+    onChangeLayers: function(e) {
+      e && e.preventDefault();
+      var layers = [$(e.currentTarget).val()];
+      this.subscription.set('layers', _.clone(layers));
     },
 
     onChangeInput: function(e) {
@@ -202,6 +262,7 @@ define([
       }
     },
 
+
     /**
      * VALIDATIONS && FORM UPDATE
      * - validate
@@ -220,7 +281,7 @@ define([
             },
           }
         break;
-        case 'country':
+        case 'data':
         break;
       }
       // Validate form, if is valid the response will be undefined
