@@ -11,10 +11,11 @@ define([
   'connect/views/MapMiniControlsView',
   'connect/views/MapMiniDrawingView',
   'connect/views/MapMiniUploadView',
+  'map/services/GeostoreService',
   'text!connect/templates/subscriptionNew.handlebars',
   'text!connect/templates/subscriptionNewDraw.handlebars',
   'text!connect/templates/subscriptionNewData.handlebars'
-], function($, Backbone, Handlebars, _, mps, validate, LayerSpecService, Subscription, MapMiniView, MapMiniControlsView, MapMiniDrawingView, MapMiniUploadView, tpl, tplDraw, tplData) {
+], function($, Backbone, Handlebars, _, mps, validate, LayerSpecService, Subscription, MapMiniView, MapMiniControlsView, MapMiniDrawingView, MapMiniUploadView, GeostoreService, tpl, tplDraw, tplData) {
 
   'use strict';
 
@@ -26,6 +27,7 @@ define([
 
 
   var SubscriptionNewView = Backbone.View.extend({
+    usenames: ['mining', 'oilpalm', 'fiber', 'logging'],
 
     subscription: new Subscription({
       defaults: {
@@ -88,19 +90,33 @@ define([
       this.subscription.on('change:layers', this.changeLayers.bind(this));
 
       // MPS
-      mps.subscribe('LayerNav/change', function(layerSpec){
+      mps.subscribe('LayerNav/change', function(layerSpec) {
         var defaults = this.subscription.get('defaults').params;
         this.subscription.set('params', defaults);
         console.log(this.subscription.get('params'));
       }.bind(this));
 
-      mps.subscribe('Highlight/shape', function(data){
+      mps.subscribe('Highlight/shape', function(data) {
         var defaults = this.subscription.get('defaults').params;
-        this.subscription.set('params', _.extend(defaults, data));
-        console.log(this.subscription.get('params'));
+        if (!!data.use && this.usenames.indexOf(data.use) === -1) {
+          var provider = {
+            table: data.use,
+            filter: 'cartodb_id = ' + data.useid,
+            user: 'wri-01',
+            type: 'carto'
+          };
+
+          GeostoreService.use(provider).then(function(useGeostoreId) {
+            this.subscription.set('params', _.extend(defaults, { geostore: useGeostoreId }));
+            console.log(this.subscription.get('params'));
+          }.bind(this));
+        } else {
+          this.subscription.set('params', _.extend(defaults, data));
+          console.log(this.subscription.get('params'));
+        }
       }.bind(this));
 
-      mps.subscribe('Drawing/geostore', function(geostore){
+      mps.subscribe('Drawing/geostore', function(geostore) {
         var defaults = this.subscription.get('defaults').params;
         this.subscription.set('params', _.extend(defaults, { geostore: geostore }));
         console.log(this.subscription.get('params'));
