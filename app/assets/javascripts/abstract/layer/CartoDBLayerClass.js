@@ -205,7 +205,17 @@ define([
       }
     },
 
-
+    setHighlight: function(layer) {
+      this.cdbLayer.setInteraction(true);
+      this.cdbLayer.on('featureClick', function(e, pos, latlng, data) {
+        var data = {
+          useid: data.cartodb_id,
+          use: data.tablename,
+          wdpaid: data.id
+        };
+        mps.publish('Highlight/shape', [data]);
+      }.bind(this));
+    },
 
 
     /**
