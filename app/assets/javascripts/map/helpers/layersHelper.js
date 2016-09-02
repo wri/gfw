@@ -75,7 +75,7 @@ define([
   'map/views/layers/ConcesionesForestalesLayer',
   'map/views/layers/ConcesionesForestalesNotSupervisedLayer',
   'map/views/layers/TerraiCanvasLayer',
-  'map/views/layers/TerraicanvasCoverageLayer',
+  'map/views/layers/TerraiCoverageLayer',
   'map/views/layers/WWFLayer',
   'map/views/layers/BirdlifeLayer',
   'map/views/layers/AzepolyLayer',
@@ -243,7 +243,7 @@ define([
   ConcesionesForestalesLayer,
   ConcesionesForestalesNotSupervisedLayer,
   TerraiCanvasLayer,
-  TerraicanvasCoverageLayer,
+  TerraiCoverageLayer,
   WWFLayer,
   BirdlifeLayer,
   AzepolyLayer,
@@ -572,7 +572,7 @@ define([
       timelineView: TerraiTimeline
     },
     terraicanvas_cover :{
-      view: TerraicanvasCoverageLayer
+      view: TerraiCoverageLayer
     },
     wwf: {
       view: WWFLayer
@@ -815,7 +815,7 @@ define([
     mex_land_cover: {
       view:  MexLandCoverLayer
     },
-  
+
     nothing: {
     }
   };
