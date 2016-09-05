@@ -5,6 +5,16 @@ $aside-width: 270px;
   display: flex;
   justify-content: space-between;
 
+  &.-no-aside {
+    .m-form {
+      @media (min-width: $br-mobile) {
+        width: 100%;
+        padding: 0;
+      }
+    }
+  }
+
+
   .m-aside {
     display: none;
     width: $aside-width;
@@ -15,6 +25,7 @@ $aside-width: 270px;
 
   .m-form {
     width: 100%;
+    max-width: 800px;
     @media (min-width: $br-mobile) {
       width: calc(100% - #{$aside-width});
       padding: 0 0px 0 60px;

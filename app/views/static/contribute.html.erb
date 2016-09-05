@@ -10,8 +10,8 @@
 
 <section class="m-section-static" id="contributeDataView">
   <div class="inner">
-    <div class="m-new">
-      <aside class="m-aside">
+    <div class="m-new -no-aside">
+      <!-- <aside class="m-aside">
         <h3>HOW TO CREATE YOUR SUBSCRIPTIONS</h3>
 
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris faucibus dolor a suscipit tincidunt. Ut sagittis porta nunc, nec pellentesque dolor ornare ut. Sed vitae.</p>
@@ -20,7 +20,7 @@
           <li>Country or Jurisdiction</li>
           <li>Draw or upload your area of interest</li>
         </ul>
-      </aside>
+      </aside> -->
 
       <div class="m-form">
         <form id="new-contribution">
@@ -350,16 +350,23 @@
             </div>
 
 
-            <div class="field-header -padding-bottom">
-              <h3>Please upload your data</h3>
+            <div class="field-header">
+              <h3 for="data_uploaded">Please upload your data *</h3>
+              <p class="-hint">NOTE: Accepted file formats include shapefile, tiff, kml (with associated attribute table), file database, csv, etc. Please let us know if you have any questions on data format.</p>
             </div>
             <div class="field -no-padding">
-              <label></label>
-              <input id="fileupload" type="file" name="data_upload" multiple>
+              <div class="file-box">
+                <div class="file-btn-container">
+                  <p id="fileupload-name">No file chosen</p>
+                  <button class="btn gray medium uppercase">Upload file</button>
+                </div>
+                <input id="fileupload" type="file" name="data_upload">
+                <input id="fileuploaded" type="hidden" name="data_uploaded">
+              </div>
             </div>
 
             <div class="field -no-padding">
-              <input type="submit" id="submit" name="submit" value="Submit data" class="btn green medium">
+              <input type="submit" id="submit" name="submit" value="Submit data" class="btn green huge-padding uppercase">
             </div>
 
           </div>
