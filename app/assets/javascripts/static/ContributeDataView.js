@@ -121,9 +121,8 @@ define([
       .on('fileuploaddone', function (e, data) {
         mps.publish('Notification/open', ['notification-upload-success-server']);
         // Set 'data_uploaded' val and trigger the change
-        that.$fieldFileUploaded.val(data.result.basename).trigger("change");
+        that.$fieldFileUploaded.val(data.result.url).trigger("change");
         // Set name of file
-        console.log();
         that.$fieldFileName.text(data.files[0].name);
         // Set submit button
         that.$fieldSubmit.toggleClass('disabled', false);
