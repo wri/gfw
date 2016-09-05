@@ -14,7 +14,7 @@
 </section>
 {{/unless}}
 
-<section class="section" id="user-profile">
+<section class="m-section-static" id="user-profile">
   <div class="my-gfw-profile inner">
     {{#unless isModal}}
     <h2>Your profile information</h2>
@@ -46,6 +46,18 @@
           <option>Private company (private sector)</option>
           <option>University or other school (academia/education)</option>
           <option>Media or journalism</option>
+        </select>
+      </label>
+
+      <label class="m-sel-container">
+        Language
+        <select class="default" name="language">
+          <option value="en">English</option>
+          <option value="zh">中文</option>
+          <option value="fr">Français</option>
+          <option value="id">Bahasa Indonesia</option>
+          <option value="pt_BR">Português (Brasil)</option>
+          <option value="es_MX">Español (Mexico)</option>
         </select>
       </label>
 
