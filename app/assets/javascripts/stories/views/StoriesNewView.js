@@ -59,7 +59,7 @@ define([
       email: {
         message: "Please enter a correct email"
       },
-    }    
+    }
   };
 
   var StoriesNewView = Backbone.View.extend({
@@ -88,7 +88,7 @@ define([
         .then(function(){
           this.story = new Story();
           this.render();
-          this.cache();          
+          this.cache();
         }.bind(this))
 
     },
@@ -102,7 +102,7 @@ define([
       if ($(e.target).val().length == 0) {
         var removable = document.getElementById('videothumbnail');
         if (removable) {
-          removable.parentNode.removeChild(removable);  
+          removable.parentNode.removeChild(removable);
         }
       } else {
         this._addVideoThumbnail($(e.target).val());
@@ -121,7 +121,7 @@ define([
         } else {
           mps.publish('Notification/open', ['notif-not-a-correct-youtube-link']);
           return null;
-        }        
+        }
       }
       return null;
     },
@@ -133,7 +133,7 @@ define([
 
       var vidID  = this._getVideoID(url),
           $thumb = $('#videothumbnail');
-      
+
       if ($thumb.length > 0) {
         if (!!vidID) {
           $thumb.find('.inner_box').css('background-image','url('+ vidID +')');
@@ -170,7 +170,7 @@ define([
                 $thumb.remove();
               });
             }
-          }.bind(this));          
+          }.bind(this));
         }
       }
 
@@ -209,7 +209,7 @@ define([
         remainingFiles += _.size(data.files);
         _.each(data.files, function(file) {
           if (file && file.size > 4000000) {
-            mps.publish('Notification/open', ['notif-limit-exceed']);
+            mps.publish('Notification/open', ['notification-limit-exceed']);
             return;
           } else {
             var filename = that.prettifyFilename(file.name);
@@ -256,7 +256,7 @@ define([
             var confirmation = confirm('Are you sure?')
 
             if (confirmation == true) {
-              
+
               var image = this.story.get('media').filter( function(model) {
                 return model.get('previewUrl') == $thumb.data('orderid')
               });
@@ -280,7 +280,7 @@ define([
       })
 
       .on('fileuploadfail', function (e, data){
-        mps.publish('Notification/open', ['upload-error-server']);
+        mps.publish('Notification/open', ['notification-upload-error-server']);
         var $submitButton = $("form input[type='submit']");
         $submitButton.val('Submit story');
         $submitButton.removeClass('disabled');
@@ -424,7 +424,7 @@ define([
 
     submit: function(event) {
       event.preventDefault();
-      
+
       var attributesFromForm = Backbone.Syphon.serialize(this.$('form#new_story'));
       // As long as the checkbox is for just the oposite
       attributesFromForm.hideUser = !attributesFromForm.hideUser;
@@ -442,7 +442,7 @@ define([
           .then(function(story){
             var id = story.data.id;
             window.location = '/stories/'+id;
-          });        
+          });
       } else {
         this.updateForm();
         mps.publish('Notification/open', ['story-new-form-error']);

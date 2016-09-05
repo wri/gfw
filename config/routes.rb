@@ -137,6 +137,11 @@ Gfw::Application.routes.draw do
   get  'media/show' => 'media#show'
 
 
+  # data
+  post 'data/upload' => 'data#upload'
+  get  'data/show' => 'data#show'
+
+
   # embed
   get '/embed/country/:id' => 'embed#countries_show'
   get '/embed/country_info/:id/:box' => 'embed#countries_show_info', :as => 'embed_country_box'
