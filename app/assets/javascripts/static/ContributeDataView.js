@@ -5,10 +5,14 @@ define([
   'underscore',
   'mps',
   'validate',
+  'jquery_fileupload',
 
-], function($, Backbone, Handlebars, _, mps, validate) {
+], function($, Backbone, Handlebars, _, mps, validate, jquery_fileupload) {
 
   'use strict';
+
+  var MAXFILESIZE = 10000000;
+  var TIMEOUT = 3600000;
 
   var constraints = {
     'data_format': {
@@ -32,6 +36,9 @@ define([
       inclusion: {
         within: [true],
       }
+    },
+    'data_uploaded': {
+      presence: true
     },
     'metadata_title': {
       presence: true
@@ -73,6 +80,7 @@ define([
       }
       this.cache();
       this.listeners();
+      this.setUploadField();
     },
 
     listeners: function() {
@@ -81,6 +89,61 @@ define([
     cache: function() {
       this.$form = this.$el.find('#new-contribution');
       this.$fieldsets = this.$el.find('.-js-fieldset');
+      this.$fieldSubmit = this.$el.find('#submit');
+      this.$fieldFileUpload = this.$el.find('#fileupload');
+      this.$fieldFileUploaded = this.$el.find('#fileuploaded');
+      this.$fieldFileName = this.$el.find('#fileupload-name');
+    },
+
+    setUploadField: function() {
+      var that = this;
+
+      this.$fieldFileUpload.fileupload({
+        url: '/data/upload',
+        dataType: 'json',
+        autoUpload: true,
+        maxFileSize: MAXFILESIZE, // 10 MB
+        timeout: TIMEOUT
+      })
+
+      .on('fileuploadadd', function (e, data) {
+        _.each(data.files, function(file) {
+          if (file && file.size > MAXFILESIZE) {
+            mps.publish('Notification/open', ['notification-limit-exceed']);
+            return;
+          } else {
+            // Set submit button
+            that.$fieldSubmit.toggleClass('disabled', true);
+            that.$fieldSubmit.prop('disabled', true);
+            that.$fieldSubmit.val('Please wait...');
+          }
+        });
+      })
+
+      .on('fileuploaddone', function (e, data) {
+        mps.publish('Notification/open', ['notification-upload-success-server']);
+        // Set 'data_uploaded' val and trigger the change
+        that.$fieldFileUploaded.val(data.result.url).trigger("change");
+        // Set name of file
+        that.$fieldFileName.text(data.files[0].name);
+        // Set submit button
+        that.$fieldSubmit.toggleClass('disabled', false);
+        that.$fieldSubmit.prop('disabled', false);
+        that.$fieldSubmit.val('Submit data');
+
+      })
+
+      .on('fileuploadfail', function (e, data){
+        mps.publish('Notification/open', ['notification-upload-error-server']);
+        // Set 'data_uploaded' val and trigger the change
+        that.$fieldFileUploaded.val(null).trigger("change");
+        // Set name of file
+        that.$fieldFileName.text('');
+        // Set submit button
+        that.$fieldSubmit.toggleClass('disabled', false);
+        that.$fieldSubmit.prop('disabled', false);
+        that.$fieldSubmit.val('Submit data');
+      });
     },
 
     /**
@@ -106,7 +169,7 @@ define([
 
     updateForm: function() {
       this.$form.find('input, textarea, select').removeClass('-error');
-      this.$form.find('label').removeClass('-error');
+      this.$form.find('[for]').removeClass('-error');
       for (var key in this.errors) {
         var $input = this.$form.find('[name='+key+']');
         var $label = this.$form.find('[for='+key+']');
@@ -128,7 +191,10 @@ define([
     },
 
     onChangeInput: function(e) {
-      this.validateInput(e.currentTarget.name, e.currentTarget.value);
+      var name = e.currentTarget.name,
+          value = (e.currentTarget.value == 'on') ? true : e.currentTarget.value;
+
+      this.validateInput(name, value);
       this.updateForm();
     },
 
@@ -140,6 +206,8 @@ define([
         this.model.set(attributesFromForm).save()
           .then(function(){
             mps.publish('Notification/open', ['contribution-new-form-success']);
+            $(document).scrollTop(0);
+            setTimeout(function(){ window.location.reload(); }, 1000);
           })
           .fail(function(){
             mps.publish('Notification/open', ['contribution-new-form-error']);
