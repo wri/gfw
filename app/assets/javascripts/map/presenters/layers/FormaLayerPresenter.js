@@ -14,8 +14,8 @@ define([
   var FormaLayerPresenter = PresenterClass.extend({
 
     init: function(view) {
-      this._super();
       this.view = view;
+      this._super();
     },
 
     /**
@@ -26,9 +26,30 @@ define([
         if (this.view.getName() !== layerSlug) {
           return;
         }
-        this.view.setTimelineDate(date);
+        this.view.setCurrentDate(date);
+      }
+    }, {
+      'Threshold/update': function(threshold) {
+        this.view.setThreshold(threshold);
       }
     }],
+
+    updateLayer: function() {
+      mps.publish('Layer/update', [this.view.getName()]);
+    },
+
+    animationStarted: function(bounds) {
+      mps.publish('Torque/started', [bounds]);
+    },
+
+    animationStopped: function() {
+      mps.publish('Torque/stopped', []);
+    },
+
+    updateTimelineDate: function(change) {
+      mps.publish('Torque/date-change', [change]);
+    }
+
 
   });
 
