@@ -156,6 +156,7 @@ define([
       "glad_coverage",
       "terraicanvas_cover",
       "forma_cover",
+      "forma_250_2016",
       "forma_250_cover",
       "imazon_cover",
       "gran_chaco_extent",
