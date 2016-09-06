@@ -69,7 +69,7 @@ define([
     },
 
     _renderSelectedOptions: function() {
-      var selectFields = ['sector', 'primaryResponsibilities', 'country', 'howDoYouUse'],
+      var selectFields = ['sector', 'primaryResponsibilities', 'country', 'howDoYouUse', 'language'],
           attributes = this.user.toJSON();
 
       selectFields.forEach(function(field) {
