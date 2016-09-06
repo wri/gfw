@@ -11,6 +11,9 @@ define([
 
   'use strict';
 
+  var MAXFILESIZE = 10000000;
+  var TIMEOUT = 3600000;
+
   var constraints = {
     'data_format': {
       presence: true,
@@ -99,14 +102,13 @@ define([
         url: '/data/upload',
         dataType: 'json',
         autoUpload: true,
-        // acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-        maxFileSize: 10000000, // 10 MB
-        timeout: 3600000
+        maxFileSize: MAXFILESIZE, // 10 MB
+        timeout: TIMEOUT
       })
 
       .on('fileuploadadd', function (e, data) {
         _.each(data.files, function(file) {
-          if (file && file.size > 10000000) {
+          if (file && file.size > MAXFILESIZE) {
             mps.publish('Notification/open', ['notification-limit-exceed']);
             return;
           } else {
@@ -142,7 +144,6 @@ define([
         that.$fieldSubmit.prop('disabled', false);
         that.$fieldSubmit.val('Submit data');
       });
-
     },
 
     /**
@@ -205,6 +206,8 @@ define([
         this.model.set(attributesFromForm).save()
           .then(function(){
             mps.publish('Notification/open', ['contribution-new-form-success']);
+            $(document).scrollTop(0);
+            setTimeout(function(){ window.location.reload(); }, 1000);
           })
           .fail(function(){
             mps.publish('Notification/open', ['contribution-new-form-error']);

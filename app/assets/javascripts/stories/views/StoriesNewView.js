@@ -159,7 +159,7 @@ define([
 
             var confirmation = confirm('Are you sure?')
 
-            if (confirmation == true) {
+            if (confirmation === true) {
               var videos = this.story.get('media').filter( function(model) {
                 return !!model.get('embedUrl')
               });
