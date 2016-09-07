@@ -57,7 +57,7 @@ class CountriesController < ApplicationController
 
     def find_by_iso(iso)
       unless iso.blank?
-        # &cache=bust if you want to flush the cache
+        # CACHE: &bust=true if you want to flush the cache
         iso = iso.downcase
         response = Typhoeus.get(
             "#{ENV['GFW_API_HOST']}/countries/#{iso}?thresh=30",
