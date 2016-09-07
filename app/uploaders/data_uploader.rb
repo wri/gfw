@@ -1,10 +1,24 @@
 # encoding: utf-8
 
 class DataUploader < CarrierWave::Uploader::Base
+  # Choose what kind of storage to use for this uploader:
+  storage :fog
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
+
+  def initialize(*)
+    super
+
+    self.fog_credentials = {
+      :provider               => 'AWS',
+      :aws_access_key_id      => ENV['AWS_ACCESS_KEY_ID'],
+      :aws_secret_access_key  => ENV['AWS_SECRET_ACCESS_KEY'],
+    }
+    self.fog_directory = ENV['S3_DATA_BUCKET_NAME']
+  end
+
 
   # Choose what kind of storage to use for this uploader:
   # storage :file
