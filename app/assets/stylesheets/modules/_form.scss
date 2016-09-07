@@ -341,13 +341,6 @@ textarea {
 .file-box {
   position: relative;
   display: inline-block;
-  cursor: pointer;
-
-  &:hover {
-    .file-btn-container > button {
-      background: darken($white,5%);
-    }
-  }
 
   .file-btn-container {
     display: flex;
