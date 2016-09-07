@@ -76,40 +76,31 @@ define([
 
     renderPickers: function() {
       var context = this;
-
-      var dayOfYear = function(date) {
-        var oneDay = 1000 * 60 * 60 * 24;
-        var start = new Date(date.getFullYear(), 0, 0),
-            diff = date - start;
-        return Math.floor(diff / oneDay);
-      };
-
       var onPickerRender = function() {
         var pickerContext = this;
 
         this.$root.find('.picker__day').each(function() {
           var $el = $(this);
 
-          var date = new Date($el.data('pick'));
-          var dateUTC = moment($el.data('pick'));
-          var day = dateUTC.dayOfYear() - 1;
+          var date = moment($el.data('pick'));
+          var day = date.dayOfYear();
 
-          var histogram = context.histograms[date.getFullYear()];
+          var histogram = context.histograms[date.year()];
           if (histogram) {
-            if (histogram[day] > 0) {
+            if (histogram[day - 1] > 0) {
+
               // Disabled dates to prevent inverted selected dates
               //   e.g. picking 6/09 for start, and 4/09 for end
               var id = pickerContext.component.$node.attr('id');
-              var utcDate = moment.utc(date);
               var endDate = context.selectedDates.get('endDate');
               var startDate = context.selectedDates.get('startDate');
 
               if (id === 'startDate') {
-                if (!utcDate.isAfter(endDate)) {
+                if (!date.isAfter(endDate)) {
                   $el.addClass('picker__has_data');
                 }
               } else if (id === 'endDate') {
-                if (!utcDate.isBefore(startDate)) {
+                if (!date.isBefore(startDate)) {
                   $el.addClass('picker__has_data');
                 }
               }
@@ -144,15 +135,15 @@ define([
       var minDate = moment.utc(this.layer.mindate).
         add(tzOffset, 'minutes').
         toDate();
-      var maxDate = moment.utc(this.layer.maxdate).
-        add(tzOffset, 'minutes').
-        toDate();
+
+      var maxDate = this.maxDate ? this.maxDate.toDate() :
+        moment.utc().add(tzOffset, 'minutes').toDate();
 
       this.$('.timeline-date-picker').pickadate({
         today: 'Jump to Today',
         min: minDate,
-        max: maxDate || moment.utc().add(tzOffset, 'minutes').toDate(),
-        selectYears: true,
+        max: maxDate,
+        selectYears: 20,
         selectMonths: true,
         format: 'd mmm yyyy',
         onRender: onPickerRender,
@@ -177,6 +168,17 @@ define([
       this.presenter.setTorqueDateRange(dateRange);
     },
 
+    setMinMaxDate: function(data) {
+      var tzOffset = new Date().getTimezoneOffset();
+      this.minDate = moment.utc(data.minDate).endOf('day');
+      this.maxDate = moment.utc(data.maxDate);
+
+      var minDate = this.minDate.clone().add(tzOffset, 'minutes').toDate();
+      var maxDate = this.maxDate.clone().add(tzOffset, 'minutes').toDate();
+      this.$('#startDate').pickadate('picker').set('min', minDate);
+      this.$('#endDate').pickadate('picker').set('max', maxDate);
+    },
+
     retrieveAvailableDates: function() {
       this.histograms = [];
 
@@ -184,6 +186,7 @@ define([
       dateService.fetchDates().then(function(response) {
         this.histograms = response.counts;
         this.renderPickers();
+        this.setMinMaxDate(response);
       }.bind(this));
     }
 
