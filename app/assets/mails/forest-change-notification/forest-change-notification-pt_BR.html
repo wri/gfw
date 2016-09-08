@@ -97,9 +97,6 @@
 												<td width="90" valign="top" class="img2" style="font-size:0pt; line-height:0pt; text-align:left">
 													<div class="fluid-img" style="font-size:0pt; line-height:0pt; text-align:left"><a href="#" target="_blank"><img src="http://www.globalforestwatch.org/assets/logo-new-b989ed109810f4bc3ddfe0fb21d204bd.png" border="0" width="90" height="90" alt="" /></a></div>
 												</td>
-												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="60" valign="top">
-													<div class="img" style="font-size:0pt; line-height:0pt; text-align:left"><a href="#" target="_blank"><img src="http://fires.globalforestwatch.org/images/gfwFires-logo-new.png" border="0" width="60" height="60" alt="" /></a></div>
-												</td>
 												<td valign="top">
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#333333">
 														<tr>
@@ -130,11 +127,11 @@
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">
 											<tr>
 												<td>
-													<div class="h2" style="color:#555555; font-family:Arial,sans-serif; font-size:30px; line-height:34px; text-align:left; font-weight:bold">Fire Alerts</div>
+													<div class="h2" style="color:#555555; font-family:Arial,sans-serif; font-size:30px; line-height:34px; text-align:left; font-weight:bold">Alertas de Alterações de Florestas</div>
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
 
-													<div class="h4" style="color:#555555; font-family:Arial,sans-serif; font-size:20px; line-height:26px; text-align:left">O Global Forest Watch detectou <span style="color:#ff0000;">{{alert_count}} novos incêndios</span> em sua região:</div>
+													<div class="h4" style="color:#555555; font-family:Arial,sans-serif; font-size:20px; line-height:26px; text-align:left">O Global Forest Watch detectou <span style="color:#9abe16;">{{alert_count}} novos alertas de alteração de florestas</span> em sua região:</div>
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="30" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
 												</td>
@@ -190,13 +187,13 @@
 																	<tr>
 																		<td width="126" class="w100" valign="top">
 																			<div class="text-tb1" style="color:#9b9b9b; font-family:Arial,sans-serif; font-size:11px; line-height:16px; text-align:left; text-transform:uppercase">
-																				NOVOS INCÊNDIOS
+																				NOVOS ALERTAS
 																			</div>
 																		</td>
 																		<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="10"></td>
 																		<td valign="top">
 																			<div class="text2-tb1" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:left">
-																				{{alert_count}} incêndios
+																				{{alert_count}}
 																			</div>
 																		</td>
 																	</tr>
@@ -213,7 +210,12 @@
 																		<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="10"></td>
 																		<td valign="top">
 																			<div class="text2-tb1" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:left">
-																				incêndios ativos do VIIRS diários (atualizados duas vezes por dia)
+																				{{ if layerSlug == "glad-alerts"}}
+                                                                                    Alertas semanais de perda de cobertura arbórea do GLAD
+                                                                                {{ end }}
+																				{{ if layerSlug == "terrai-alerts"}}
+                                                                                    Alertas mensais de perda de cobertura arbórea do Terra-i
+                                                                                {{ end }}
 																			</div>
 																		</td>
 																	</tr>
@@ -230,7 +232,7 @@
 																		<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="10"></td>
 																		<td valign="top">
 																			<div class="text2-tb1" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:left">
-																				{{alert_date}} (últimas 24 horas)
+																				{{alert_date}}
 																			</div>
 																		</td>
 																	</tr>
@@ -247,7 +249,13 @@
 																		<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="10"></td>
 																		<td valign="top">
 																			<div class="text2-tb1" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:left">
-Exibe dados de incêndios das últimas 24 horas, 48 horas, 72 horas ou 7 dias em uma resolução de 375 x 375 metros. Cobertura global. A fonte é a NASA/NOAA. Dados disponíveis dos últimos 7 dias, atualizados duas vezes por dia.																			</div>
+                                                                            {{ if layerSlug == "glad-alerts"}}
+                                                                                Identifica áreas de provável perda de cobertura arbórea em tempo quase real em uma 30 × 30 metros (Landsat) resolução. Cobertura de Brasil, Peru, República do Congo e Kalimantan (Indonésia), eventualmente cobrirão os trópicos úmidos. A fonte é UMD/GLAD. Dados disponíveis de 1 de janeiro de 2015-presente, atualizado semanal.
+                                                                            {{ end }}
+                                                                            {{ if layerSlug == "terrai-alerts"}}
+                                                                                Identifica áreas de provável perda de cobertura arbórea em uma 250 x 250 metros (MODIS) resolução. Cobertura de América Latina. A fonte é CIAT. Dados disponíveis de Janeiro de 2004-presente, atualizado Mensal.
+                                                                            {{ end }}
+								  										</div>
 																		</td>
 																	</tr>
 																</table>
@@ -263,94 +271,6 @@ Exibe dados de incêndios das últimas 24 horas, 48 horas, 72 horas ou 7 dias em
 										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
 										<!-- END Section 2 -->
-
-										<!-- Map -->
-										<div class="fluid-img" style="font-size:0pt; line-height:0pt; text-align:left"><img src="{{{map_image}}}" border="0" width="630" height="406" alt="" /></div>
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="38" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-										<!-- Map -->
-
-										<!-- Table Secondary -->
-										<div class="h4" style="color:#555555; font-family:Arial,sans-serif; font-size:20px; line-height:26px; text-align:left">
-											<strong>10 Alertas Mais Recentes</strong>
-										</div>
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-
-										<table width="100%" border="0" cellspacing="0" cellpadding="0">
-											<tr>
-												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" bgcolor="#9bbf19" width="10"></td>
-												<td width="152" bgcolor="#9bbf19">
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-													<div class="text-th" style="color:#fff; font-family:Arial,sans-serif; font-size:13px; line-height:18px; text-align:center; text-transform:uppercase">
-														Latitude
-													</div>
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-												</td>
-												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" bgcolor="#9bbf19" width="10"></td>
-												<td bgcolor="#9bbf19" width="152">
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-													<div class="text-th" style="color:#fff; font-family:Arial,sans-serif; font-size:13px; line-height:18px; text-align:center; text-transform:uppercase">
-														Longitude
-													</div>
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-												</td>
-												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" bgcolor="#9bbf19" width="10"></td>
-												<td class="wauto" bgcolor="#9bbf19">
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-													<div class="text-th" style="color:#fff; font-family:Arial,sans-serif; font-size:13px; line-height:18px; text-align:center; text-transform:uppercase">
-														DATA e HORA
-													</div>
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-												</td>
-												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" bgcolor="#9bbf19" width="10"></td>
-											</tr>
-
-											{{each fire_alerts}}
-											<tr>
-												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="10"></td>
-												<td width="152">
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-													<div class="text-td" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:center; text-transform:uppercase">
-														{{loop_vars.fire_alerts.latitude}}
-													</div>
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-												</td>
-												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="10"></td>
-												<td width="152">
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-													<div class="text-td" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:center; text-transform:uppercase">
-														{{loop_vars.fire_alerts.longitude}}
-													</div>
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-												</td>
-												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="10"></td>
-												<td class="wauto">
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-													<div class="text-td" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:center; text-transform:uppercase">
-														{{loop_vars.fire_alerts.acq_date}} {{loop_vars.fire_alerts.acq_time}}
-													</div>
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-												</td>
-												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="10"></td>
-											</tr>
-											{{end}}
-										</table>
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-										<!-- END Table Secondary -->
 
 										<!-- Button -->
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -391,11 +311,7 @@ Exibe dados de incêndios das últimas 24 horas, 48 horas, 72 horas ou 7 dias em
 											<tr>
 												<td>
 													<div class="text" style="color:#949494; font-family:Arial,sans-serif; font-size:14px; line-height:20px; text-align:left">
-														Esta notificação relata novos alertas de incêndio para a região de interesse em que você se inscreveu. Você receberá um e-mail separado sobre a alteração do conjunto de dados para cada região e cada floresta que você tenha assinado. A Data dos Alertas se refere ao intervalo de datas em que uma alteração foi realmente detectada. Pode haver um pequeno atraso entre a detecção e o recebimento deste e-mail. Observe que a <strong>camada de incêndios ativos do VIIRS só mostra incêndios ativos durante a última semana</strong>, e os alertas são atualizados duas vezes por dia.
-														<br />
-														<br />
-														Para saber mais sobre incêndios, visite <a href="http://fires.globalforestwatch.org" target="_blank" class="link-u" style="color:#9abe16; text-decoration:underline"><span class="link-u" style="color:#9abe16; text-decoration:underline">GFW Fires</span></a>. Para dúvidas ou se quiser mais informações, envie um e-mail para gfwfires@wri.org.
-														<br />
+														Esta notificação relata novos alertas de alteração de floresta para a região de interesse em que você se inscreveu. Você receberá um e-mail separado sobre a alteração do conjunto de dados para cada região e cada floresta que você tenha assinado. A Data dos Alertas se refere ao intervalo de datas em que uma alteração foi realmente detectada. Pode haver um pequeno atraso entre a detecção e o recebimento deste e-mail.														<br />
 														<br />
 														Observe que estas informações estão sujeitas aos Termos de Serviço do Global Forest Watch. Você pode cancelar a assinatura ou administrar suas assinaturas <a href="{{{subscriptions_url}}}" target="_blank" class="link-u" style="color:#9abe16; text-decoration:underline"><span class="link-u" style="color:#9abe16; text-decoration:underline">aqui</span></a>.
 													</div>
