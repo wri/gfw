@@ -190,8 +190,11 @@
         }
         .circle{
           position: absolute;
-          top: -2px;
+          top: 2px;
           left: 0;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
         }
         .subtitle {
           font-size: 11px;
@@ -298,12 +301,6 @@
   }
 
 
-  .circle:before {
-    content: ' \25CF';
-    font-size: 16px;
-    margin: 0 4px 0 -1px;
-  }
-
   /*****************/
   /* Layer details */
   /*****************/
@@ -320,14 +317,17 @@
     .layer-colors li {
       margin-bottom: 4px;
       position: relative;
-      padding: 0 0 0 14px;
+      padding: 0 0 0 16px;
       &:last-child {
         margin-bottom: 0;
       }
       .circle{
         position: absolute;
-        top: -2px;
+        top: 0;
         left: 0;
+        width: 12px;
+        height: 12px;
+
         &.is-border{
           //text-shadow: 1px 0 0px #000, -1px 0 0px #000, 0px 1px 0px #000, 0px -1px 0px #000;
           text-shadow: 0px 0 1px #000;
@@ -527,8 +527,8 @@
   /****************************/
   .layer-details-imazon {
     .layer-colors {
-      .deforestation {color: #F13689;}
-      .degradation {color: #FA98B9;}
+      .deforestation {background: #F13689;}
+      .degradation {background: #FA98B9;}
       .alerts {
         color: rgb(255, 189, 21);
         &:before {
@@ -549,8 +549,8 @@
   /****************************/
   .layer-details-intact-2013 {
     .layer-colors {
-      .intact {color: rgb(22, 133, 0);}
-      .degraded {color: rgb(152, 155, 5);}
+      .intact {background: rgb(22, 133, 0);}
+      .degraded {background: rgb(152, 155, 5);}
     }
   }
 
@@ -559,8 +559,8 @@
   /*********************************/
   .layer-details-idn-primary {
     .layer-colors {
-      .intact {color: #007A4D;}
-      .degraded {color: #97BD3D;}
+      .intact {background: #007A4D;}
+      .degraded {background: #97BD3D;}
     }
   }
 
