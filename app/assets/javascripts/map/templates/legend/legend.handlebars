@@ -15,7 +15,7 @@
             <a href="{{this.more.url}}" target="_blank" class="legend-link">WRI in Indonesia &#10148;</a>
           {{else}}
             <a href="{{this.more.url}}" target="_blank" class="legend-link">Visit Forest Atlas &#10148;</a>
-          {{/if}}      
+          {{/if}}
         </div>
       </li>
     {{/if}}
@@ -35,7 +35,7 @@
             {{#each this}}
               <li class="layer">
                 <span class="layer-name">
-                  <i class="circle" style="color:{{this.title_color}};"></i>
+                  <i class="circle" style="background:{{this.title_color}};"></i>
                   {{this.title}}
                   {{#if this.subtitle}}<span class="subtitle">{{this.subtitle}}</span>{{/if}}
                   <a href='#' class='layer-close js-layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
@@ -84,7 +84,7 @@
         {{#each this}}
           <li class="layer">
             <span class="layer-name">
-              <i class="circle" style="color:{{this.title_color}};"></i>
+              <i class="circle" style="background:{{this.title_color}};"></i>
                 {{this.title}}
                 {{#if this.subtitle}}<span class="subtitle">{{this.subtitle}}</span>{{/if}}
               <a href='#' class='layer-close js-layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>

@@ -13,7 +13,7 @@ define([
 
     options: {
       urlTemplate: 'http://gis-gfw.wri.org/arcgis/rest/services/cached/mex_land_cover/MapServer/tile/{z}/{y}/{x}',
-      dataMaxZoom: 12
+      dataMaxZoom: 9
     }
 
   });
