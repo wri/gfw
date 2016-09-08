@@ -109,7 +109,6 @@ define([
       })
 
       .on('fileuploadadd', function (e, data) {
-        console.log(data);
         _.each(data.files, function(file) {
           if (file && file.size > MAXFILESIZE) {
             mps.publish('Notification/open', ['notification-limit-exceed']);
@@ -126,7 +125,7 @@ define([
       })
 
       .on('fileuploaddone', function (e, data) {
-        mps.publish('Notification/open', ['contribution-limit-exceed']);
+        mps.publish('Notification/open', ['notification-upload-success-server']);
         // Set 'data_uploaded' val and trigger the change
         that.$fieldFileUploaded.val(data.result.url).trigger("change");
         // Set upload spinner
