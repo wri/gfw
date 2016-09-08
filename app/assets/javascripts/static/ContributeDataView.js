@@ -11,7 +11,7 @@ define([
 
   'use strict';
 
-  var MAXFILESIZE = 10000000;
+  var MAXFILESIZE = 2000000000;
   var TIMEOUT = 3600000;
 
   var constraints = {
@@ -71,6 +71,7 @@ define([
     events: {
       'change .js-radio-fieldset' : 'onChangeFieldset',
       'change input,textarea,select' : 'onChangeInput',
+      'click .js-upload-file' : 'onClickFileUpload',
       'submit #new-contribution': 'onSubmitContribution',
     },
 
@@ -93,6 +94,7 @@ define([
       this.$fieldFileUpload = this.$el.find('#fileupload');
       this.$fieldFileUploaded = this.$el.find('#fileuploaded');
       this.$fieldFileName = this.$el.find('#fileupload-name');
+      this.$fieldFileBtn = this.$el.find('#fileupload-btn');
     },
 
     setUploadField: function() {
@@ -103,7 +105,7 @@ define([
         dataType: 'json',
         autoUpload: true,
         maxFileSize: MAXFILESIZE, // 10 MB
-        timeout: TIMEOUT
+        timeout: TIMEOUT,
       })
 
       .on('fileuploadadd', function (e, data) {
@@ -112,6 +114,8 @@ define([
             mps.publish('Notification/open', ['notification-limit-exceed']);
             return;
           } else {
+            // Set upload spinner
+            that.$fieldFileBtn.find('.m-spinner').toggleClass('-start', true);
             // Set submit button
             that.$fieldSubmit.toggleClass('disabled', true);
             that.$fieldSubmit.prop('disabled', true);
@@ -124,6 +128,8 @@ define([
         mps.publish('Notification/open', ['notification-upload-success-server']);
         // Set 'data_uploaded' val and trigger the change
         that.$fieldFileUploaded.val(data.result.url).trigger("change");
+        // Set upload spinner
+        that.$fieldFileBtn.find('.m-spinner').toggleClass('-start', false);
         // Set name of file
         that.$fieldFileName.text(data.files[0].name);
         // Set submit button
@@ -136,9 +142,11 @@ define([
       .on('fileuploadfail', function (e, data){
         mps.publish('Notification/open', ['notification-upload-error-server']);
         // Set 'data_uploaded' val and trigger the change
-        that.$fieldFileUploaded.val(null).trigger("change");
+        that.$fieldFileUploaded.val(null);
+        // Set upload spinner
+        that.$fieldFileBtn.find('.m-spinner').toggleClass('-start', false);
         // Set name of file
-        that.$fieldFileName.text('');
+        that.$fieldFileName.text('No file chosen');
         // Set submit button
         that.$fieldSubmit.toggleClass('disabled', false);
         that.$fieldSubmit.prop('disabled', false);
@@ -196,6 +204,11 @@ define([
 
       this.validateInput(name, value);
       this.updateForm();
+    },
+
+    onClickFileUpload: function(e) {
+      e && e.preventDefault();
+      this.$fieldFileUpload.trigger('click');
     },
 
     onSubmitContribution: function(e) {

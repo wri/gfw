@@ -17,6 +17,15 @@
     position: relative;
   }
 
+  &.-little {
+    .spinner-box {
+      .icon {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
   &.-start {
     visibility: visible;
     opacity: 1;
@@ -36,8 +45,8 @@
       border-radius: 50%;
       border: 3px solid transparent;
       border-top-color: $dark;
-      @include animation(rotate,1s,infinite,$easeInOutCubic);     
-    } 
+      @include animation(rotate,1s,infinite,$easeInOutCubic);
+    }
 
     button {
       margin: 10px 0 0;

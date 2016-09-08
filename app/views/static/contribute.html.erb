@@ -90,7 +90,7 @@
           <!-- Protected areas -->
           <div id="fieldset-protected_areas" class="field-fieldset -js-fieldset">
             <div class="field-header -padding-bottom">
-              <h2>Protected areas</h2>
+              <h2>Attribute fields (protected areas)</h2>
               <h3>Please enter the field name in the submitted data that corresponds to the following attributes (leave blank if no information):</h3>
             </div>
             <div class="field -default">
@@ -125,7 +125,7 @@
           <!-- Project areas -->
           <div id="fieldset-project_areas" class="field-fieldset -js-fieldset">
             <div class="field-header -padding-bottom">
-              <h2>Project areas</h2>
+              <h2>Attribute fields (project areas)</h2>
               <h3>Please enter the field name in the submitted data that corresponds to the following attributes (leave blank if no information):</h3>
             </div>
             <div class="field -default">
@@ -155,7 +155,7 @@
           <!-- Indigenous territories or community lands -->
           <div id="fieldset-indigenous_lands" class="field-fieldset -js-fieldset">
             <div class="field-header -padding-bottom">
-              <h2>Indigenous territories or community lands</h2>
+              <h2>Attribute fields (indigenous territories or community lands)</h2>
               <h3>Please enter the field name in the submitted data that corresponds to the following attributes (leave blank if no information):</h3>
             </div>
             <div class="field -default">
@@ -191,7 +191,7 @@
           <!-- Concessions -->
           <div id="fieldset-concessions" class="field-fieldset -js-fieldset">
             <div class="field-header -padding-bottom">
-              <h2>Concessions</h2>
+              <h2>Attribute fields (concessions)</h2>
               <h3>Please enter the field name in the submitted data that corresponds to the following attributes (leave blank if no information):</h3>
             </div>
             <div class="field -default">
@@ -358,7 +358,14 @@
               <div class="file-box">
                 <div class="file-btn-container">
                   <p id="fileupload-name">No file chosen</p>
-                  <button class="btn gray medium uppercase">Upload file</button>
+                  <button type="button" id="fileupload-btn" class="btn gray medium uppercase js-upload-file">
+                    Upload file
+                    <div class="m-spinner -little">
+                      <div class="spinner-box">
+                        <div class="icon"></div>
+                      </div>
+                    </div>
+                  </button>
                 </div>
                 <input id="fileupload" type="file" name="data_upload">
                 <input id="fileuploaded" type="hidden" name="data_uploaded">
