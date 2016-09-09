@@ -139,6 +139,12 @@ define([
 
       })
 
+      .on('fileuploadprogress', function (e, data) {
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        console.log(data);
+        console.log(progress);
+      })
+
       .on('fileuploadfail', function (e, data){
         mps.publish('Notification/open', ['notification-upload-error-server']);
         // Set 'data_uploaded' val and trigger the change
