@@ -95,6 +95,7 @@ define([
       this.$fieldFileUploaded = this.$el.find('#fileuploaded');
       this.$fieldFileName = this.$el.find('#fileupload-name');
       this.$fieldFileBtn = this.$el.find('#fileupload-btn');
+      this.$fieldFileProgress = this.$el.find('#fileupload-progress');
     },
 
     setUploadField: function() {
@@ -114,6 +115,9 @@ define([
             mps.publish('Notification/open', ['notification-limit-exceed']);
             return;
           } else {
+            // Set progress bar
+            that.$fieldFileProgress.toggleClass('-uploading', true);
+            that.$fieldFileProgress.find('span').width(0);
             // Set upload spinner
             that.$fieldFileBtn.find('.m-spinner').toggleClass('-start', true);
             // Set submit button
@@ -128,6 +132,8 @@ define([
         mps.publish('Notification/open', ['notification-upload-success-server']);
         // Set 'data_uploaded' val and trigger the change
         that.$fieldFileUploaded.val(data.result.url).trigger("change");
+        // Set progress bar
+        that.$fieldFileProgress.find('span').width('100%');
         // Set upload spinner
         that.$fieldFileBtn.find('.m-spinner').toggleClass('-start', false);
         // Set name of file
@@ -141,14 +147,15 @@ define([
 
       .on('fileuploadprogress', function (e, data) {
         var progress = parseInt(data.loaded / data.total * 100, 10);
-        console.log(data);
-        console.log(progress);
+        that.$fieldFileProgress.find('span').width(progress + '%');
       })
 
       .on('fileuploadfail', function (e, data){
         mps.publish('Notification/open', ['notification-upload-error-server']);
         // Set 'data_uploaded' val and trigger the change
         that.$fieldFileUploaded.val(null);
+        // Set progress bar
+        that.$fieldFileProgress.toggleClass('-uploading', false);
         // Set upload spinner
         that.$fieldFileBtn.find('.m-spinner').toggleClass('-start', false);
         // Set name of file
