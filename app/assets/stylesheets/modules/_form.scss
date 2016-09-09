@@ -367,6 +367,24 @@ textarea {
     > button {
       border-radius: 0;
     }
+
+  }
+
+  .file-progress {
+    display: block;
+    height: 5px;
+    width: 100%;
+
+    > span {
+      display: block;
+      background: $cGreen;
+      width: 0;
+      height: 100%;
+    }
+
+    &.-uploading {
+      background: $dark;
+    }
   }
 
   input[type="file"] {

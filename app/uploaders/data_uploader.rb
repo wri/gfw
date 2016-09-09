@@ -2,7 +2,7 @@
 
 class DataUploader < CarrierWave::Uploader::Base
   # Choose what kind of storage to use for this uploader:
-  storage :fog
+  storage (Rails.env.production? ? :fog : :file)
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
