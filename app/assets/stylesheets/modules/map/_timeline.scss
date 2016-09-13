@@ -3,7 +3,6 @@
     bottom: 94px;
     left: 0;
     width: 100%;
-    min-width: 700px;
     height: 45px;
     border-bottom: 1px solid $border;
     transform: translate(0,100%);
@@ -13,7 +12,7 @@
     }
     @media (min-width: $br-mobile){
       bottom: 44px;
-
+      min-width: 700px;
     }
 
     @media (min-width: $br-mobileMap){
@@ -56,15 +55,19 @@
     display: none;
     height: 20px;
     width: 100%;
-    min-width: 700px;
     position: absolute;
     top: -18px;
     color: #333;
     font-weight: 500;
     font-size: 12px;
     text-shadow: 0px 0px 3px #fff;
+
     @media (min-width: $br-mobileMap){
       display: block;
+    }
+
+    @media (min-width: $br-mobile) {
+      min-width: 700px;
     }
 
     span {

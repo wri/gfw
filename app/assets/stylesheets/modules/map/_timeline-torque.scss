@@ -4,18 +4,26 @@
   .timeline-date-pickers {
     display: inline-flex;
     align-items: center;
-
-    min-width: 350px;
     height: 50px;
-
     font-size: 11px;
-
     float: left;
+
+    @media (min-width: $br-mobile) {
+      min-width: 350px;
+    }
   }
 
   .timeline-date-pickers input {
     width: 100px;
     margin: 0 10px;
+
+    @media (max-width: $br-mobile) {
+      height: 25px;
+      font-size: 10px;
+      font-weight: 500;
+      line-height: 24px;
+      white-space: nowrap;
+    }
   }
 
   .slider .handle {
@@ -25,6 +33,10 @@
   .play {
     display: inline-block;
     left: auto;
+
+    @media (max-width: $br-mobile) {
+      display: none;
+    }
   }
 
   .play:after {
@@ -78,6 +90,10 @@
 
     margin-left: 40px;
     width: 299px;
+
+    @media (max-width: $br-mobile) {
+      display: none;
+    }
   }
 
   .timeline-slider svg {
