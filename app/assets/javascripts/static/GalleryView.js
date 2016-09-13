@@ -59,8 +59,11 @@ define([
     },
 
     initialize: function() {
+      if (!this.$el.length) {
+        return
+      }
       this.setListeners();
-      
+
       // Fetch collection
       this.collection = new GalleryCollection();
       this.collection.reset(galleryHelper)
