@@ -75,7 +75,12 @@ input.picker__input[type="text"].picker__input--active {
   opacity: 0;
   transform: translateY(-1em) perspective(600px) rotateX(10deg);
   transition: transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s 0.15s, border-width 0s 0.15s;
-  @media (min-width: $br-mobile){
+
+  @media (max-width: $br-mobile) {
+    margin: -356px 0 0 -140px;
+  }
+
+  @media (min-width: $br-mobile) {
     position: absolute;
     top: auto;
     bottom: 5px; 
