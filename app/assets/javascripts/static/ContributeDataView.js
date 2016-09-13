@@ -257,8 +257,6 @@ define([
       var name = e.currentTarget.name,
           value = (e.currentTarget.value == 'on') ? true : e.currentTarget.value;
 
-      console.log(name, value);
-
       this.validateInput(name, value);
       this.updateForm();
     },
