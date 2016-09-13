@@ -36,7 +36,7 @@
               <div class="radio-box">
                 <div class="custom-radio">
                   <input id="format_vector" type="radio" name="data_format" value="Vector">
-                  <label for="format_vector"><span></span> Vector</label>
+                  <label for="format_vector"><span></span> Vector (preferred)</label>
                 </div>
                 <div class="custom-radio">
                   <input id="format_raster" type="radio" name="data_format" value="Raster">
@@ -78,9 +78,10 @@
                   <input id="show_wood_fiber_concessions" data-fieldset="concessions" type="radio" name="data_show" class="js-radio-fieldset" value="Wood fiber concessions">
                   <label for="show_wood_fiber_concessions"><span></span> Wood fiber concessions</label>
                 </div>
-                <div class="custom-radio">
+                <div class="custom-radio -with-input">
                   <input id="show_other" data-fieldset="other" type="radio" name="data_show" class="js-radio-fieldset" value"other">
-                  <label for="show_other"><span></span> Other</label>
+                  <label for="show_other"><span></span> Other (please specify)</label>
+                  <input id="other_name" class="-disabled" type="text" disabled>
                 </div>
               </div>
             </div>
@@ -303,21 +304,43 @@
               <div class="checkbox-box">
                 <div class="custom-checkbox">
                   <input type="checkbox" name="data_agree" id="data_agree_handler">
-                  <label for="data_agree_handler"><span></span> I agree to make these data available under a Creative Commons CC BY 4.0</label>
+                  <label for="data_agree_handler"><span></span> I agree to make these data available under a <a href="https://creativecommons.org/licenses/by/4.0/legalcode" target="_blank">Creative Commons CC BY 4.0 license</a></label>
                 </div>
               </div>
               <!-- <p class="-hint">You must agree to share these data under a Creative Commons CC BY 4.0 data to contribute data to GFW.</p> -->
             </div>
 
             <div class="field -default">
+              <label for="data_permission">Permission to share *</label>
+              <div class="checkbox-box">
+                <div class="custom-checkbox">
+                  <input type="checkbox" name="data_permission" id="data_permission_handler">
+                  <label for="data_permission_handler"><span></span> I agree that I have permission to share these data with Global Forest Watch</label>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="field -default">
               <label for="data_terms">Terms of service *</label>
               <div class="checkbox-box">
                 <div class="custom-checkbox">
                   <input type="checkbox" name="data_terms" id="data_terms_handler">
-                  <label for="data_terms_handler"><span></span> I agree to the Global Forest Watch Terms of Service</label>
+                  <label for="data_terms_handler"><span></span> I agree to the <a href="/terms" target="_blank">Global Forest Watch Terms of Service</a></label>
                 </div>
               </div>
               <!-- <p class="-hint">You must agree to the Global Forest Watch Terms of Service to contribute data to GFW.</p> -->
+            </div>
+
+            <div class="field -default">
+              <label for="data_updating">Updating data *</label>
+              <div class="checkbox-box">
+                <div class="custom-checkbox">
+                  <input type="checkbox" name="data_updating" id="data_updating_handler">
+                  <label for="data_updating_handler"><span></span> I agree to email <a href="mailto:GFWdata@wri.org" class="data-suggestion-link" target="_blank">GFWdata@wri.org</a> when these data need to be updated or removed from the GFW website.</label>
+                </div>
+              </div>
             </div>
 
             <div class="field -default">
@@ -349,37 +372,65 @@
               <textarea name="data_description_more"></textarea>
             </div>
 
-
+          </div>
+          <div class="field-fieldset">
             <div class="field-header">
-              <h3 for="data_uploaded">Please upload your data *</h3>
-              <p class="-hint">NOTE: Accepted file formats include shapefile, tiff, kml (with associated attribute table), file database, csv, etc. Please let us know if you have any questions on data format.</p>
+              <h2>Share your data</h2>
+              <input id="fileuploaded" type="hidden" name="data_uploaded">
+            </div>
+            <div class="field-header">
+              <h3 for="data_uploaded">Please upload your data or provide a link to your data *</h3>
             </div>
             <div class="field -no-padding">
-              <div class="file-box">
-                <div class="file-btn-container">
-                  <p id="fileupload-name">No file chosen</p>
-                  <button type="button" id="fileupload-btn" class="btn gray medium uppercase js-upload-file">
-                    Upload file
-                    <div class="m-spinner -little">
-                      <div class="spinner-box">
-                        <div class="icon"></div>
-                      </div>
-                    </div>
-                  </button>
+              <div class="radio-box">
+                <div class="custom-radio">
+                  <input id="data_uploadtype_upload" type="radio" name="data_uploadtype" value="Upload" class="js-radio-uploadtype" data-uploadtype="upload" checked>
+                  <label for="data_uploadtype_upload"><span></span> Upload data</label>
                 </div>
-                <div class="file-progress" id="fileupload-progress">
-                  <span></span>
+                <div class="custom-radio">
+                  <input id="data_uploadtype_link" type="radio" name="data_uploadtype" value="Link" class="js-radio-uploadtype" data-uploadtype="link">
+                  <label for="data_uploadtype_link"><span></span> Provide a link to your data (Link to a map service, Dropbox, etc)</label>
                 </div>
+              </div>
+            </div>
 
-                <input id="fileupload" type="file" name="data_upload">
-                <input id="fileuploaded" type="hidden" name="data_uploaded">
+            <div id="uploadtype-upload" class="field-uploadtype -active">
+              <div class="field-header">
+                <p class="-hint">NOTE: Accepted file formats include shapefile, tiff, kml (with associated attribute table), file database, csv, etc. Please let us know if you have any questions on data format.</p>
+              </div>
+
+              <div class="field -no-padding">
+                <div class="file-box">
+                  <div class="file-btn-container">
+                    <p id="fileupload-name">No file chosen</p>
+                    <button type="button" id="fileupload-btn" class="btn gray medium uppercase js-upload-file">
+                      Upload file
+                      <div class="m-spinner -little">
+                        <div class="spinner-box">
+                          <div class="icon"></div>
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                  <div class="file-progress" id="fileupload-progress">
+                    <span></span>
+                  </div>
+
+                  <input id="fileupload" type="file" name="data_upload">
+                </div>
+              </div>
+            </div>
+
+            <div id="uploadtype-link" class="field-uploadtype">
+              <div class="field -default">
+                <label for="data_uploadlink">Link</label>
+                <input type="text" name="data_uploadlink" class="js-upload-link">
               </div>
             </div>
 
             <div class="field -no-padding">
               <input type="submit" id="submit" name="submit" value="Submit data" class="btn green huge-padding uppercase">
             </div>
-
           </div>
         </form>
       </div>

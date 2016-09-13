@@ -31,7 +31,19 @@ define([
         within: [true],
       }
     },
+    'data_permission': {
+      presence: true,
+      inclusion: {
+        within: [true],
+      }
+    },
     'data_terms': {
+      presence: true,
+      inclusion: {
+        within: [true],
+      }
+    },
+    'data_updating': {
       presence: true,
       inclusion: {
         within: [true],
@@ -70,8 +82,10 @@ define([
 
     events: {
       'change .js-radio-fieldset' : 'onChangeFieldset',
+      'change .js-radio-uploadtype' : 'onChangeUploadType',
       'change input,textarea,select' : 'onChangeInput',
       'click .js-upload-file' : 'onClickFileUpload',
+      'change .js-upload-link' : 'onChangeFileLink',
       'submit #new-contribution': 'onSubmitContribution',
     },
 
@@ -91,6 +105,10 @@ define([
       this.$form = this.$el.find('#new-contribution');
       this.$fieldsets = this.$el.find('.-js-fieldset');
       this.$fieldSubmit = this.$el.find('#submit');
+      // Other
+      this.$fieldOtherName = this.$el.find('#other_name');
+      // Uploads
+      this.$fieldFileUploadType = this.$el.find('.field-uploadtype');
       this.$fieldFileUpload = this.$el.find('#fileupload');
       this.$fieldFileUploaded = this.$el.find('#fileuploaded');
       this.$fieldFileName = this.$el.find('#fileupload-name');
@@ -207,8 +225,32 @@ define([
      */
     onChangeFieldset: function(e) {
       var fieldset = this.$form.find('input[name="data_show"]:checked').data('fieldset');
+      // Hide/open current filedset
       this.$fieldsets.toggleClass('-active', false);
       this.$fieldsets.filter('#fieldset-'+fieldset).toggleClass('-active', true);
+
+      // Handle exceptions
+      switch (fieldset) {
+        case 'other':
+          this.$fieldOtherName
+            .toggleClass('-disabled', false)
+            .prop('disabled', false);
+          this.$fieldOtherName.focus();
+        break;
+        default:
+          this.$fieldOtherName
+            .toggleClass('-disabled', true)
+            .prop('disabled', true);
+      }
+
+    },
+
+    onChangeUploadType: function() {
+      var uploadtype = this.$form.find('input[name="data_uploadtype"]:checked').data('uploadtype');
+      // Hide/open current filedset
+      this.$fieldFileUploadType.toggleClass('-active', false);
+      this.$fieldFileUploadType.filter('#uploadtype-'+ uploadtype).toggleClass('-active', true);
+
     },
 
     onChangeInput: function(e) {
@@ -222,6 +264,11 @@ define([
     onClickFileUpload: function(e) {
       e && e.preventDefault();
       this.$fieldFileUpload.trigger('click');
+    },
+
+    onChangeFileLink: function(e) {
+      e && e.preventDefault();
+      this.$fieldFileUploaded.val($(e.currentTarget).val()).trigger("change");
     },
 
     onSubmitContribution: function(e) {
