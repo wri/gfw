@@ -73,12 +73,9 @@
     <div class="subscription-language-container">
       <label for="subscriptionLanguage">Receive alert emails in...</label>
       <select data-placeholder="Select language" class="chosen-select default notranslate" id="subscriptionLanguage">
-        <option value="en">English</option>
-        <option value="zh">中文</option>
-        <option value="fr">Français</option>
-        <option value="id">Bahasa Indonesia</option>
-        <option value="pt_BR">Português (Brasil)</option>
-        <option value="es_MX">Español (Mexico)</option>
+        {{#each languages}}
+          <option value="{{key}}" {{selected}}>{{name}}</option>
+        {{/each}}
       </select>
     </div>
 

@@ -4,8 +4,9 @@ define([
   'handlebars',
   'moment',
   'map/presenters/tabs/SubscribePresenter',
+  'helpers/languagesHelper',
   'text!map/templates/tabs/subscribe.handlebars'
-], function(Backbone, _, Handlebars, moment, Presenter, tpl) {
+], function(Backbone, _, Handlebars, moment, Presenter, languagesHelper, tpl) {
 
   'use strict';
 
@@ -37,16 +38,20 @@ define([
     },
 
     render: function(){
+      var userLang = this.presenter.user.getLanguage();
+      var languagesList = languagesHelper.getListSelected(userLang);
+
       this.$el.html(this.template({
         loggedIn: this.presenter.user.isLoggedIn(),
         email: this.presenter.user.get('email'),
         date: moment().format('MMM D, YYYY'),
+        languages: languagesList,
         dataset: this.presenter.subscription &&
                  this.presenter.subscription.formattedTopic().long_title
       }));
 
       this.setupAuthLinks();
-      
+
       this.cache();
       this.renderChosen();
     },
@@ -59,7 +64,7 @@ define([
         disable_search: true,
         no_results_text: 'Oops, nothing found!'
       });
-    },   
+    },
 
     show: function(){
       this.$el.addClass('is-active');
@@ -119,7 +124,7 @@ define([
     onClickSubscribe: function(e) {
       this.showSpinner();
 
-      this.presenter.saveSubscription({        
+      this.presenter.saveSubscription({
         name: this.$subscriptionName.val(),
         language: this.$subscriptionLanguage.val()
       });

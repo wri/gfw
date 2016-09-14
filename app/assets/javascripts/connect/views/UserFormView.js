@@ -46,14 +46,13 @@ define([
     initialize: function(options) {
       options = options || {};
       this.isModal = options.isModal;
-
-      this.user = new User();
-      this.listenTo(this.user, 'sync', this.render);
-      this.user.fetch();
-
+      this.user = options.user;
       this.validator = new UserFormValidator();
 
-      this.render();
+      if (this.user) {
+        this.listenTo(this.user, 'sync', this.render);
+        this.render();
+      }
     },
 
     render: function() {
