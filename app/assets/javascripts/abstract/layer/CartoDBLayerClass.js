@@ -53,6 +53,7 @@ define([
           _.bind(function(layer) {
             this.cdbLayer = layer;
             deferred.resolve(this.cdbLayer);
+            mps.publish('Map/loading', [false]);
           }, this)
         );
 
@@ -209,11 +210,11 @@ define([
       var subLayer = this.cdbLayer.getSubLayer(0);
       subLayer.setInteraction(true);
       this.cdbLayer.on('featureClick', function(e, pos, latlng, data) {
-        var data = {
+        var data = _.extend({}, data,{
           useid: data.cartodb_id,
           use: data.tablename,
           wdpaid: data.id
-        };
+        });
         mps.publish('Highlight/shape', [data]);
       }.bind(this));
     },

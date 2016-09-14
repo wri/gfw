@@ -3,12 +3,15 @@
  * @return TorqueLayerClass (extends LayerClass).
  */
 define([
-  'underscore', 'moment', 'handlebars',
+  'underscore',
+  'mps',
+  'moment',
+  'handlebars',
   'abstract/layer/OverlayLayerClass',
   'map/presenters/TorqueLayerPresenter',
   'text!map/cartocss/default_torque_style.cartocss',
   'text!map/queries/default_torque.sql.hbs',
-], function(_, moment, Handlebars, OverlayLayerClass, Presenter, CARTOCSS, SQL) {
+], function(_, mps, moment, Handlebars, OverlayLayerClass, Presenter, CARTOCSS, SQL) {
 
   'use strict';
 
@@ -111,6 +114,7 @@ define([
           this.stop();
 
           deferred.resolve(this.torqueLayer);
+          mps.publish('Map/loading', [false]);
         }
       }.bind(this);
 
