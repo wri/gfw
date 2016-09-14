@@ -29,7 +29,10 @@ define([
     render: function() {
       this.$el.html(this.template());
 
-      this.userForm = new UserFormView({ isModal: true });
+      this.userForm = new UserFormView({
+        isModal: true
+      });
+      
       this.listenTo(this.userForm, 'saved', this.close);
       this.$('.my-gfw-profile-modal-content').html(this.userForm.el);
 
