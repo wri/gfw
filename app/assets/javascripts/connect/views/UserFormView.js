@@ -1,6 +1,6 @@
 define([
   'Class', 'backbone', 'underscore', 'handlebars', 'mps',
-  'map/models/UserModel',
+  'models/UserModel',
   'text!connect/templates/userForm.handlebars'
 ], function(Class, Backbone, _, Handlebars, mps, User, tpl) {
 
