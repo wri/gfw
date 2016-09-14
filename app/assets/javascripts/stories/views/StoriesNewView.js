@@ -11,7 +11,7 @@ define([
   'validate',
   'stories/models/StoryModel',
   'stories/models/MediaModel',
-  'stories/models/UserModel',
+  'models/UserModel',
   'stories/views/LatestStoriesView',
   'text!stories/templates/storiesNew.handlebars'
 ], function(

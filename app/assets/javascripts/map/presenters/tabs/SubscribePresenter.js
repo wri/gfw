@@ -7,7 +7,7 @@ define([
   'underscore',
   'mps',
   'map/presenters/PresenterClass',
-  'map/models/UserModel',
+  'models/UserModel',
   'connect/models/Subscription',
 ], function(_, mps, PresenterClass, User, Subscription) {
 
@@ -74,7 +74,7 @@ define([
     /**
      * Presenter methods.
      */
-    show: function() { 
+    show: function() {
       this.currentStep = 0;
       this.view.show();
     },
@@ -172,7 +172,7 @@ define([
      */
     setSubscription: function(analysisStatus) {
       var params = _.pick(analysisStatus, 'iso', 'geostore', 'wdpaid', 'use', 'useid');
-      
+
       this.subscription = new Subscription({
         datasets: [analysisStatus.dataset],
         params: params
