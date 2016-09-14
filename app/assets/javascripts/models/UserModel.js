@@ -48,6 +48,8 @@ define([
         if (browserLang.indexOf('_') !== -1) {
           var lang = browserLang.split('_');
           userLanguage = lang[0].toLowerCase() + '_' + lang[1].toUpperCase();
+        } else {
+          userLanguage = browserLang;
         }
       }
 
