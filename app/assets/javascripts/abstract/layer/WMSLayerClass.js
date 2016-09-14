@@ -6,11 +6,12 @@
 define([
   'underscore',
   'amplify',
+  'mps',
   'uri',
   'abstract/layer/OverlayLayerClass',
   'map/views/layers/CustomInfowindow',
 
-], function(_, amplify, UriTemplate, OverlayLayerClass, CustomInfowindow) {
+], function(_, amplify, mps, UriTemplate, OverlayLayerClass, CustomInfowindow) {
 
   'use strict';
 
@@ -86,6 +87,7 @@ define([
     _getLayer: function() {
       var deferred = new $.Deferred();
       deferred.resolve(this._imageMaptype);
+      mps.publish('Map/loading', [false]);
       return deferred.promise();
     },
 
@@ -144,7 +146,7 @@ define([
             this.infowindow.remove();
           }
           var data = JSON.parse(data);
-          if (!!data && !!data.features && !!data.features[0]) {          
+          if (!!data && !!data.features && !!data.features[0]) {
             var infoWindowOptions = {
               offset: [0, 100],
               infowindowData: {

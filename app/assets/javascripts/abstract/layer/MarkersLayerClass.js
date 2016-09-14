@@ -6,13 +6,14 @@
 define([
   'Class',
   'underscore',
+  'mps',
   '_string',
   'handlebars',
   'markerclusterer',
   'map/views/layers/CustomMarker',
   'map/views/layers/CustomInfowindow',
   'text!map/templates/storyInfowindow.handlebars'
-], function(Class, _, _string, Handlebars, MarkerClustererLib, CustomMarker, CustomInfowindow, tpl) {
+], function(Class, _, mps, _string, Handlebars, MarkerClustererLib, CustomMarker, CustomInfowindow, tpl) {
 
   'use strict';
 
@@ -127,6 +128,7 @@ define([
     addLayer: function(position, success) {
       this._getLayer();
       success();
+      mps.publish('Map/loading', [false]);
     },
 
     removeLayer: function() {

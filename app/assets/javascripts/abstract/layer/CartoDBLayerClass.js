@@ -53,6 +53,7 @@ define([
           _.bind(function(layer) {
             this.cdbLayer = layer;
             deferred.resolve(this.cdbLayer);
+            mps.publish('Map/loading', [false]);
           }, this)
         );
 

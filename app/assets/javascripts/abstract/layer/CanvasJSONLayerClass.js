@@ -5,9 +5,10 @@
  */
 define([
   'underscore',
+  'mps',
   '_string',
   'abstract/layer/OverlayLayerClass'
-], function(_, _string, OverlayLayerClass) {
+], function(_, mps, _string, OverlayLayerClass) {
 
   'use strict';
 
@@ -35,6 +36,7 @@ define([
     _getLayer: function() {
       var deferred = new $.Deferred();
       deferred.resolve(this);
+      mps.publish('Map/loading', [false]);
       return deferred.promise();
     },
 
