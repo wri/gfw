@@ -2,7 +2,7 @@ define([
   'jquery',
   'backbone',
   'underscore',
-  'map/models/UserModel',
+  'models/UserModel',
   'connect/views/UserFormView',
   'connect/views/StoriesListView',
   'connect/views/SubscriptionListView',

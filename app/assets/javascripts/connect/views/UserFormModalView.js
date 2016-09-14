@@ -1,6 +1,6 @@
 define([
   'backbone', 'handlebars', 'mps',
-  'map/models/UserModel',
+  'models/UserModel',
   'connect/views/UserFormView',
   'text!connect/templates/userFormModal.handlebars'
 ], function(Backbone, Handlebars, mps, User, UserFormView, tpl) {
