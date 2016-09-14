@@ -37,6 +37,7 @@ define([
     },
 
     addLayer: function(position, success) {
+      mps.publish('Map/loading', [true]);
       this._getLayer().then(_.bind(function(layer) {
         this.map.overlayMapTypes.setAt(position, layer);
 

@@ -59,7 +59,12 @@ define([
       }
       this.layerInst = {};
       this.render();
+      this.cache();
       this.listeners();
+    },
+
+    cache: function() {
+      this.$mapLoader = $('#map-loader');
     },
 
     listeners: function() {
@@ -68,6 +73,13 @@ define([
 
       mps.subscribe('Map/fit-bounds', function(bounds){
         this.map.fitBounds(bounds)
+      }.bind(this));
+
+      mps.subscribe('Map/loading', function(loading){
+        var time = (!loading) ? 250 : 0;
+        setTimeout(function(){
+          this.$mapLoader.toggleClass('-start', loading);
+        }.bind(this), time);
       }.bind(this));
 
       // LAYERS
