@@ -23,7 +23,7 @@
       </header>
 
       <input class="field" type="email" id="subscriptionEmail" placeholder="Enter your email" value="{{email}}">
-      <button class="btn green uppercase" id="showName">Next</button>
+      <button class="btn medium green uppercase" id="showName">Next</button>
     </div>
   {{else}}
     <div class="steps current">
@@ -82,7 +82,7 @@
       </select>
     </div>
 
-    <button class="btn green uppercase" id="subscribe">Save</button>
+    <button class="btn medium green uppercase" id="subscribe">Save</button>
   </div>
 
   <div class="steps">
@@ -99,7 +99,9 @@
       <a href="/my_gfw/subscriptions">saved subscriptions<a/> to manage
       them.
     </p>
-
-    <button class="btn green uppercase" id="returnToMap">Return to map</button>
+    <div class="m-btncontainer is-center">
+      <a href="/contribute-data" target="_blank" class="btn medium gray uppercase">Add your own data</a>
+      <button class="btn medium green uppercase" id="returnToMap">Return to map</button>
+    </div>
   </div>
 </div>

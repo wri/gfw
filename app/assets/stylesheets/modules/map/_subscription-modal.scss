@@ -106,10 +106,6 @@
       display: none;
     }
 
-    button {
-      width: 250px;
-    }
-
     label {
       display: block;
       margin: 7px 0 5px;
@@ -151,7 +147,8 @@
   flex-direction: column;
 
   li {
-    width: 250px;
+    width: 100%;
+    max-width: 250px;
     display: block;
     height: 50px;
     text-align: center;

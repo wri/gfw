@@ -190,6 +190,14 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         }
       }
 
+      .country-add {
+        padding: 10px 0 0;
+        white-space: normal;
+        text-transform: none;
+        line-height: 1.25;
+        font-weight: 400;
+      }
+
       .country-description {
         color: $dark;
         font-size: 14px;
@@ -204,8 +212,35 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           }
         }
 
+        ul {
+          color: $dark;
+
+          > li {
+            position: relative;
+            padding: 0px 0 0 13px;
+            margin: 5px 0 0;
+            font-size: 13px;
+
+            &:before {
+              content: '';
+              position: absolute;
+              top: 6px;
+              left: 2px;
+              width: 4px;
+              height: 4px;
+              border-radius: 50%;
+              background: $dark;
+            }
+
+            &:first-child{
+              margin: 0;
+            }
+          }
+        }
+
         a {
           color: $cGreen;
+
           &:hover {
             text-decoration: underline;
           }
@@ -561,7 +596,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     display: block;
     color: #AAA;
     word-wrap: break-word;
-    
+
     label {
       cursor: pointer;
       position: relative;
