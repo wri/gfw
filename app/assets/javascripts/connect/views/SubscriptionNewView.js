@@ -11,11 +11,12 @@ define([
   'connect/views/MapMiniControlsView',
   'connect/views/MapMiniDrawingView',
   'connect/views/MapMiniUploadView',
+  'connect/views/MapMiniSelectedView',
   'map/services/GeostoreService',
   'text!connect/templates/subscriptionNew.handlebars',
   'text!connect/templates/subscriptionNewDraw.handlebars',
   'text!connect/templates/subscriptionNewData.handlebars'
-], function($, Backbone, Handlebars, _, mps, validate, LayerSpecService, Subscription, MapMiniView, MapMiniControlsView, MapMiniDrawingView, MapMiniUploadView, GeostoreService, tpl, tplDraw, tplData) {
+], function($, Backbone, Handlebars, _, mps, validate, LayerSpecService, Subscription, MapMiniView, MapMiniControlsView, MapMiniDrawingView, MapMiniUploadView, MapMiniSelectedView, GeostoreService, tpl, tplDraw, tplData) {
 
   'use strict';
 
@@ -90,6 +91,12 @@ define([
       this.subscription.on('change:layers', this.changeLayers.bind(this));
 
       // MPS
+      mps.subscribe('Params/reset', function(layerSpec) {
+        var defaults = this.subscription.get('defaults').params;
+        this.subscription.set('params', defaults);
+        console.log(this.subscription.get('params'));
+      }.bind(this));
+
       mps.subscribe('LayerNav/change', function(layerSpec) {
         var defaults = this.subscription.get('defaults').params;
         this.subscription.set('params', defaults);
@@ -98,6 +105,7 @@ define([
 
       mps.subscribe('Highlight/shape', function(data) {
         var defaults = this.subscription.get('defaults').params;
+        console.log(data);
         if (!!data.use && this.usenames.indexOf(data.use) === -1) {
           var provider = {
             table: data.use,
@@ -107,11 +115,11 @@ define([
           };
 
           GeostoreService.use(provider).then(function(useGeostoreId) {
-            this.subscription.set('params', _.extend(defaults, { geostore: useGeostoreId }));
+            this.subscription.set('params', _.extend({}, defaults, { geostore: useGeostoreId }));
             console.log(this.subscription.get('params'));
           }.bind(this));
         } else {
-          this.subscription.set('params', _.extend(defaults, data));
+          this.subscription.set('params', _.extend({}, defaults, data));
           console.log(this.subscription.get('params'));
         }
       }.bind(this));
@@ -170,6 +178,7 @@ define([
       new MapMiniControlsView(mapView.map);
       new MapMiniDrawingView(mapView.map);
       new MapMiniUploadView(mapView.map);
+      new MapMiniSelectedView(mapView.map);
     },
 
     /**

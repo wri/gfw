@@ -97,7 +97,7 @@ define([
       }.bind(this));
 
       // HIGHLIGHT
-      mps.subscribe('Highlight/shape', function(data){
+      mps.subscribe('Highlight/shape', function(data) {
         if (!!data.wdpaid) {
           this.getShape('protected_areas', data.wdpaid);
         }
