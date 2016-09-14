@@ -57,7 +57,7 @@
 
   &.huge-padding {
     height: 48px;
-    line-height: 50px;    
+    line-height: 50px;
     padding: 0 50px;
   }
 
@@ -90,7 +90,7 @@
       background: darken($dark,25%);
     }
   }
-  
+
   &.white {
     color: $dark;
     background: $white;
@@ -98,7 +98,7 @@
       background: darken($white,10%);
     }
   }
-  
+
   &.gray {
     color: $dark;
     background: $white;
@@ -107,7 +107,7 @@
       background: darken($white,5%);
     }
   }
-  
+
   &.green {
     color: $white;
     background: $cGreen;
@@ -120,7 +120,7 @@
       }
     }
   }
-  
+
   &.red {
     color: $white;
     background: $red;
@@ -133,7 +133,7 @@
       }
     }
   }
-  
+
   &.light {
     color: $white;
     background: #CBCCBF;
@@ -141,7 +141,7 @@
       background: darken(#CBCCBF,5%);
     }
   }
-  
+
   &.light2 {
     color: $dark;
     background: $border;
@@ -150,7 +150,7 @@
       background: darken($border,5%);
     }
   }
-  
+
   &.soon {
     color: #ccc;
     background: none;
@@ -158,7 +158,7 @@
     text-transform: uppercase;
     cursor: default;
   }
-  
+
   &.disabled{
     opacity: 0.25;
     cursor: default;
@@ -167,7 +167,7 @@
   &.invisible{
     display: none;
   }
-  
+
   &.with-icon{
     min-width: 0;
     @media (min-width: $br-mobile) {
@@ -183,7 +183,7 @@
       transform: translate(0,-50%);
     }
   }
-  
+
   &.with-center-icon{
     min-width: 0;
     span{
@@ -249,14 +249,25 @@
 .m-btncontainer {
   display: flex;
   align-items: center;
-  
+
   // Justify
-  &.is-center {
-    justify-content: center;
-    
+  &.is-flex-start {
+    justify-content: flex-start;
     > * {
       margin: 0 0 0 10px;
-      
+
+      &:first-child {
+        margin: 0;
+      }
+    }
+  }
+
+  &.is-center {
+    justify-content: center;
+
+    > * {
+      margin: 0 0 0 10px;
+
       &:first-child {
         margin: 0;
       }
@@ -279,7 +290,7 @@
       > * {
         width: 100%;
         margin: 15px 0 0;
-        
+
         &:first-child {
           margin: 0;
         }
@@ -304,7 +315,7 @@
   &.is-steps {
     .btn {
       display: none;
-      
+
       &.is-active {
         display: block;
       }

@@ -1,5 +1,5 @@
 <span class="category-name">
-  {{this.countryName}} DATA 
+  {{this.countryName}} DATA
   <i id="forest_clearing-category-num" class="category-num"></i>
 </span>
 <div id="country-layers-nav" class="layers-nav">
@@ -12,7 +12,7 @@
 
   {{#if country}}
     {{!-- TITLE --}}
-    <div class="country-title">{{this.countryName}} 
+    <div class="country-title">{{this.countryName}}
       <span id="layers-country-reset"><svg><use xlink:href="#shape-close"></use></svg></span>
       <ul class="m-btncontainer is-space-between">
         <li>
@@ -40,12 +40,15 @@
           </a>
         </li>
         {{!-- <li id="layers-country-atlas"></li> --}}
-      </ul>      
+      </ul>
+      <div class="country-add">
+        <p><a href="/contribute-data" target="_blank">Add your own data</a> to the GFW Interactive Map</p>
+      </div>
     </div>
 
 
     {{!-- LAYERS --}}
-    {{#if countryLayers}}    
+    {{#if countryLayers}}
     <ul class="layers-list scroll-thin-dark">
       {{#each countryLayers}}
         <li class="{{#if this.does_wrapper}}wrapped-layer{{else}}layer{{/if}}" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">
@@ -70,7 +73,7 @@
                   <input type="radio" />{{this.radio_title}}
                 </label>
                 {{/each}}
-              </span>                        
+              </span>
             </span>
           {{/if}}
         </li>
@@ -78,8 +81,13 @@
     </ul>
     {{else}}
       <div class="country-description">
-        <p>Local datasets coming soon! </p>
-        <p>For now, <a href="#" class="source" data-source="view_existing_global_data">view global datasets</a> for this area, <a href="#" class="data-suggestion-link" target="_blank">suggest your own</a>, or use the buttons below to see statistics and infographics for this country.</p>
+        <p>GFW doesn't have additional data for this country yet. You can:</p>
+        <ul>
+          <li><a href="#" class="source" data-source="view_existing_global_data">View global datasets</a> for this area</li>
+          <li><a href="/contribute-data" target="_blank">Add your own data</a> to the GFW Interactive Map</li>
+          <li><a href="/country/{{this.country}}" target="_blank">View the country profile</a> page</li>
+        </ul>
+        {{!-- <p>For now, <a href="#" class="source" data-source="view_existing_global_data">view global datasets</a> for this area, <a href="#" class="data-suggestion-link" target="_blank">suggest your own</a>, or use the buttons below to see statistics and infographics for this country.</p> --}}
       </div>
     {{/if}}
   {{else}}
