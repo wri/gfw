@@ -96,6 +96,17 @@
 </div>
 
 <div class="field">
+  <label for="select-language">Language</label>
+  <div class="m-select">
+    <select id="select-language" class="chosen-select default" data-placeholder="Select a language">
+      {{#each languages}}
+        <option value="{{key}}" {{selected}}>{{name}}</option>
+      {{/each}}
+    </select>
+  </div>
+</div>
+
+<div class="field">
   <div class="m-btncontainer is-flex-start">
     <input type="submit" id="submit" name="submit" value="Subscribe" class="btn medium green medium">
     <a href="/contribute-data" target="_blank" class="btn medium gray uppercase">Add your own data</a>
