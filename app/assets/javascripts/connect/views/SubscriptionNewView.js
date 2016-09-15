@@ -286,7 +286,6 @@ define([
       e && e.preventDefault();
 
       var attributesFromForm = _.extend({
-        language: 'en',
         resource: {
           type: 'EMAIL',
           content: this.user.get('email')
