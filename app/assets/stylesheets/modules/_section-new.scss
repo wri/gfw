@@ -25,7 +25,7 @@ $aside-width: 270px;
 
   .m-form {
     width: 100%;
-    max-width: 800px;
+    max-width: 950px;
     @media (min-width: $br-mobile) {
       width: calc(100% - #{$aside-width});
       padding: 0 0px 0 60px;

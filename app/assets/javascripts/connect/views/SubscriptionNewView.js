@@ -13,13 +13,34 @@ define([
   'connect/views/MapMiniUploadView',
   'connect/views/MapMiniSelectedView',
   'connect/views/CountrySelectionView',
+  'connect/views/LayerSelectionView',
   'map/services/GeostoreService',
-  'map/services/LayerSpecService',
   'text!connect/templates/subscriptionNew.handlebars',
   'text!connect/templates/subscriptionNewDraw.handlebars',
   'text!connect/templates/subscriptionNewData.handlebars',
   'text!connect/templates/subscriptionNewCountry.handlebars',
-], function($, Backbone, Handlebars, _, mps, validate, languagesHelper, Subscription, MapMiniView, MapMiniControlsView, MapMiniDrawingView, MapMiniUploadView, MapMiniSelectedView, CountrySelectionView, GeostoreService, LayerSpecService, tpl, tplDraw, tplData, tplCountry) {
+], function(
+  $,
+  Backbone,
+  Handlebars,
+  _,
+  mps,
+  validate,
+  languagesHelper,
+  Subscription,
+  MapMiniView,
+  MapMiniControlsView,
+  MapMiniDrawingView,
+  MapMiniUploadView,
+  MapMiniSelectedView,
+  CountrySelectionView,
+  LayerSelectionView,
+  GeostoreService,
+  tpl,
+  tplDraw,
+  tplData,
+  tplCountry
+) {
 
   'use strict';
 
@@ -62,7 +83,6 @@ define([
     events: {
       'change #aoi': 'onChangeAOI',
       'change .dataset-checkbox' : 'onChangeDataset',
-      'change #select-layers': 'onChangeLayers',
       'submit #new-subscription': 'onSubmitSubscription',
       'change input,textarea,select' : 'onChangeInput',
     },
@@ -71,24 +91,6 @@ define([
       this.router = router;
       this.user = user;
 
-      // Load global layers
-      LayerSpecService._getAllLayers(
-        // Filter
-        function(layer){
-          return !layer.iso && !!layer.analyzable;
-        }.bind(this),
-
-        // Success
-        function(layers){
-          this.layers = _.groupBy(_.sortBy(layers, 'title'), 'category_name');
-        }.bind(this),
-
-        // Error
-        function(error){
-          console.log(error);
-        }.bind(this)
-      );
-
       this.listeners();
       this.render();
     },
@@ -96,7 +98,6 @@ define([
     listeners: function() {
       // STATUS
       this.subscription.on('change:aoi', this.changeAOI.bind(this));
-      this.subscription.on('change:layers', this.changeLayers.bind(this));
 
       // MPS
       mps.subscribe('Params/reset', function(layerSpec) {
@@ -158,9 +159,7 @@ define([
 
       if (!!aoi) {
         this.$formType.html(this.templates[aoi]({
-          layers: this.layers,
-          languages: languagesList,
-          countries: this.countries
+          languages: languagesList
         }));
         this.cache();
         this.renderChosen();
@@ -199,6 +198,7 @@ define([
       new MapMiniUploadView(mapView.map);
       new MapMiniSelectedView(mapView.map);
       new CountrySelectionView(mapView.map);
+      new LayerSelectionView(mapView.map);
     },
 
     /**
@@ -211,28 +211,12 @@ define([
       this.renderType();
     },
 
-    changeLayers: function() {
-      var layers = this.subscription.get('layers');
-      var where = [{ slug: layers[0] }];
-
-      LayerSpecService._removeAllLayers();
-
-      LayerSpecService.toggle(where,
-        function(layerSpec) {
-          mps.publish('LayerNav/change', [layerSpec]);
-          mps.publish('Place/update', [{go: false}]);
-        }.bind(this));
-    },
-
-
-
 
 
     /**
      * UI EVENTS
      * - onChangeAOI
      * - onChangeDataset
-     * - onChangeLayers
      * - onChangeInput
      * - onSubmitSubscription
      */
@@ -249,12 +233,6 @@ define([
       }.bind(this)));
 
       this.subscription.set('datasets', _.clone(datasets));
-    },
-
-    onChangeLayers: function(e) {
-      e && e.preventDefault();
-      var layers = [$(e.currentTarget).val()];
-      this.subscription.set('layers', _.clone(layers));
     },
 
     onChangeInput: function(e) {

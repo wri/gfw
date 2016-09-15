@@ -103,6 +103,8 @@ define([
     */
     renderCountries: function() {
       this.$countryField.html(this.templateCountries({
+        name: 'Country',
+        placeholder: 'Select a country',
         countries: this.countries
       }));
       this.renderChosen();
