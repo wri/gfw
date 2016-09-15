@@ -80,6 +80,15 @@ textarea {
   }
 }
 
+.field-column {
+  display: flex;
+
+  &.-j-center { justify-content: center; }
+  &.-j-between { justify-content: space-between; }
+  &.-j-start { justify-content: flex-start; }
+  &.-j-end { justify-content: flex-end; }
+}
+
 /**
  * Field
  */
@@ -88,6 +97,7 @@ textarea {
   position: relative;
   width: 100%;
   margin: 0 0 25px;
+
   @media (min-width: $br-mobile) {
     padding: 0px 0px 0px $label-width;
   }
@@ -110,6 +120,20 @@ textarea {
   &.-hidden {
     display: none;
   }
+
+  // SIZES
+  &.-little {
+    max-width: 200px;
+  }
+
+  &.-medium {
+    max-width: 350px;
+  }
+
+  &.-huge {
+    max-width: 500px;
+  }
+
 
   &.-no-padding {
     padding: 0;

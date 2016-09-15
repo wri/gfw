@@ -1,23 +1,12 @@
-<div class="field">
-  <label for="select-layers">Data layer</label>
-  <div class="m-select">
-    <select id="select-layers" class="chosen-select default" data-placeholder="Select a custom layer">
-      <option value=""></option>
-      {{#each layers}}
-        <optgroup label="{{@key}}">
-          {{#each this}}
-            <option value="{{this.slug}}">{{this.title}}</option>
-          {{/each}}
-        </optgroup>
-      {{/each}}
-    </select>
+<div id="layer-selection" class="field-column -j-between">
+  <div id="layers-field" class="field -default -medium"></div>
+  <div class="field -default -medium">
+    <div id="country-field" class="field -default -medium"></div>
+    <div id="layers-country-field" class="field -default -medium"></div>
   </div>
-  <p class="-hint">
-    After selecting a layer, please choose one shape of the map by clicking it (Please, send me this text. Miguel)
-  </p>
 </div>
 
-<div class="field -required">
+<div class="field -default">
   <div class="m-map">
     <div>
       <div id="map" class="map -loading"></div>
@@ -49,7 +38,7 @@
   </div>
 </div>
 
-<div class="field">
+<div class="field -default">
   <label>Data set</label>
   <div class="checkbox-box">
     <div class="custom-checkbox">
@@ -83,7 +72,7 @@
   </div>
 </div>
 
-<div class="field">
+<div class="field -default -little">
   <label for="select-language">Language</label>
   <div class="m-select">
     <select id="select-language" name="language" class="chosen-select default" data-placeholder="Select a language">
@@ -94,9 +83,9 @@
   </div>
 </div>
 
-<div class="field">
+<div class="field -default">
   <div class="m-btncontainer is-flex-start">
-    <input type="submit" id="submit" name="submit" value="Subscribe" class="btn medium green medium">
+    <input type="submit" id="submit" name="submit" value="Subscribe" class="btn medium green medium huge-padding">
     <a href="/contribute-data" target="_blank" class="btn medium gray uppercase">Add your own data</a>
   </div>
 </div>
