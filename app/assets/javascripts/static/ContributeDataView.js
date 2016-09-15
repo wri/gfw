@@ -133,11 +133,15 @@ define([
       var that = this;
 
       this.$fieldFileUpload.fileupload({
-        url: '/data/upload',
-        dataType: 'json',
+        url: this.$form.data('url'),
+        formData: this.$form.data('form-data'),
+        paramName: 'file',
+        type: 'POST',
+        dataType: 'XML',
         autoUpload: true,
         maxFileSize: MAXFILESIZE, // 10 MB
         timeout: TIMEOUT,
+        fileInput: this.$fieldFileUpload
       })
 
       .on('fileuploadadd', function (e, data) {
