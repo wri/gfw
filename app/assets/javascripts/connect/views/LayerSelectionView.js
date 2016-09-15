@@ -129,12 +129,33 @@ define([
      * RENDERS
     */
     renderCountries: function() {
-      this.$countryField.html(this.templateCountries({
-        name: 'Country layers',
-        placeholder: 'Select a country',
-        countries: this.countries
-      }));
-      this.renderChosen();
+      // Filter to show only the countries that have layers
+      LayerSpecService._getAllLayers(
+        // Filter
+        function(layer){
+          return !!layer.iso && !!layer.analyzable;
+        }.bind(this),
+
+        // Success
+        function(layers){
+          var isos = _.uniq(_.pluck(layers, 'iso'));
+
+          this.$countryField.html(this.templateCountries({
+            name: 'Country layers',
+            placeholder: 'Select a country',
+            countries: _.filter(this.countries, function(country) {
+              return (isos.indexOf(country.iso) != -1)
+            })
+          }));
+          this.renderChosen();
+
+        }.bind(this),
+
+        // Error
+        function(error){
+          console.log(error);
+        }.bind(this)
+      );
     },
 
     renderLayers: function() {
