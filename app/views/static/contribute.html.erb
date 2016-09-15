@@ -23,7 +23,7 @@
       </aside> -->
 
       <div class="m-form">
-        <form id="new-contribution">
+        <form id="new-contribution" data-form-data="<%= @s3_direct_post.fields %>" data-url="<%= @s3_direct_post.url %>" data-host="<%= URI.parse(@s3_direct_post.url).host %>">
 
           <!-- Tell us about your data -->
           <div class="field-fieldset">

@@ -4,6 +4,7 @@ define([
   'moment',
   'chosen',
   'mps',
+  'helpers/languagesHelper',
   'connect/views/ListItemDeleteConfirmView',
   'connect/views/ListItemDatasetsConfirmView',
   'text!connect/templates/subscriptionListItem.handlebars'
@@ -13,6 +14,7 @@ define([
   moment,
   chosen,
   mps,
+  languagesHelper,
   ListItemDeleteConfirmView,
   ListItemDatasetsConfirmView,
   tpl
@@ -42,11 +44,13 @@ define([
     },
 
     render: function() {
+      var languagesList = languagesHelper.getList();
       var subscription = _.extend({}, this.subscription.toJSON(), {
         confirmationUrl: this.getConfirmationURL(),
         topics: this.subscription.formattedTopics(),
         topicsDelete: (this.subscription.get('datasets').length > 1) ? true : false,
-        createdAt: (!!this.subscription.get('createdAt')) ? moment(this.subscription.get('createdAt')).format('dddd, YYYY-MM-DD, h:mm a') : this.subscription.get('createdAt')
+        createdAt: (!!this.subscription.get('createdAt')) ? moment(this.subscription.get('createdAt')).format('dddd, YYYY-MM-DD, h:mm a') : this.subscription.get('createdAt'),
+        languages: languagesList
       });
 
       this.$el.html(this.template(subscription));

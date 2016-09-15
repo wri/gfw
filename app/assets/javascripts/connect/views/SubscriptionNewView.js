@@ -5,6 +5,7 @@ define([
   'underscore',
   'mps',
   'validate',
+  'helpers/languagesHelper',
   'connect/models/Subscription',
   'connect/views/MapMiniView',
   'connect/views/MapMiniControlsView',
@@ -18,7 +19,28 @@ define([
   'text!connect/templates/subscriptionNewDraw.handlebars',
   'text!connect/templates/subscriptionNewData.handlebars',
   'text!connect/templates/subscriptionNewCountry.handlebars',
-], function($, Backbone, Handlebars, _, mps, validate, Subscription, MapMiniView, MapMiniControlsView, MapMiniDrawingView, MapMiniUploadView, MapMiniSelectedView, CountrySelectionView, GeostoreService, LayerSpecService, tpl, tplDraw, tplData, tplCountry) {
+], function(
+  $,
+  Backbone,
+  Handlebars,
+  _,
+  mps,
+  validate,
+  languagesHelper,
+  Subscription,
+  MapMiniView,
+  MapMiniControlsView,
+  MapMiniDrawingView,
+  MapMiniUploadView,
+  MapMiniSelectedView,
+  CountrySelectionView,
+  GeostoreService,
+  LayerSpecService,
+  tpl,
+  tplDraw,
+  tplData,
+  tplCountry
+) {
 
   'use strict';
 
@@ -152,10 +174,13 @@ define([
 
     renderType: function() {
       var aoi = this.subscription.get('aoi');
+      var userLang = this.user.getLanguage();
+      var languagesList = languagesHelper.getListSelected(userLang);
+
       if (!!aoi) {
         this.$formType.html(this.templates[aoi]({
           layers: this.layers,
-          countries: this.countries
+          languages: languagesList
         }));
         this.cache();
         this.renderChosen();
