@@ -1,0 +1,9 @@
+<label for="select-layers">Country</label>
+<div class="m-select">
+  <select id="select-country" class="chosen-select default js-select-country" data-placeholder="Select a country">
+    <option value=""></option>
+    {{#each countries}}
+      <option value="{{this.iso}}">{{this.name}}</option>
+    {{/each}}
+  </select>
+</div>

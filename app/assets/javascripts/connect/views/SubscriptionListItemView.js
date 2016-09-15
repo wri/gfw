@@ -23,7 +23,6 @@ define([
   'use strict';
 
   var SubscriptionListItemView = Backbone.View.extend({
-    // We should change this to a common view
 
     events: {
       'click .btn-edit-name-subscription': 'onClickEditName',

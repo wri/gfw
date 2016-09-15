@@ -5,7 +5,6 @@ define([
   'underscore',
   'mps',
   'validate',
-  'map/services/LayerSpecService',
   'helpers/languagesHelper',
   'connect/models/Subscription',
   'connect/views/MapMiniView',
@@ -13,30 +12,14 @@ define([
   'connect/views/MapMiniDrawingView',
   'connect/views/MapMiniUploadView',
   'connect/views/MapMiniSelectedView',
+  'connect/views/CountrySelectionView',
   'map/services/GeostoreService',
+  'map/services/LayerSpecService',
   'text!connect/templates/subscriptionNew.handlebars',
   'text!connect/templates/subscriptionNewDraw.handlebars',
-  'text!connect/templates/subscriptionNewData.handlebars'
-], function(
-  $,
-  Backbone,
-  Handlebars,
-  _,
-  mps,
-  validate,
-  LayerSpecService,
-  languagesHelper,
-  Subscription,
-  MapMiniView,
-  MapMiniControlsView,
-  MapMiniDrawingView,
-  MapMiniUploadView,
-  MapMiniSelectedView,
-  GeostoreService,
-  tpl,
-  tplDraw,
-  tplData
-) {
+  'text!connect/templates/subscriptionNewData.handlebars',
+  'text!connect/templates/subscriptionNewCountry.handlebars',
+], function($, Backbone, Handlebars, _, mps, validate, languagesHelper, Subscription, MapMiniView, MapMiniControlsView, MapMiniDrawingView, MapMiniUploadView, MapMiniSelectedView, CountrySelectionView, GeostoreService, LayerSpecService, tpl, tplDraw, tplData, tplCountry) {
 
   'use strict';
 
@@ -73,6 +56,7 @@ define([
       default: Handlebars.compile(tpl),
       draw: Handlebars.compile(tplDraw),
       data: Handlebars.compile(tplData),
+      country: Handlebars.compile(tplCountry),
     },
 
     events: {
@@ -87,15 +71,19 @@ define([
       this.router = router;
       this.user = user;
 
+      // Load global layers
       LayerSpecService._getAllLayers(
+        // Filter
         function(layer){
           return !layer.iso && !!layer.analyzable;
         }.bind(this),
 
+        // Success
         function(layers){
           this.layers = _.groupBy(_.sortBy(layers, 'title'), 'category_name');
         }.bind(this),
 
+        // Error
         function(error){
           console.log(error);
         }.bind(this)
@@ -123,9 +111,15 @@ define([
         console.log(this.subscription.get('params'));
       }.bind(this));
 
+      mps.subscribe('Country/update', function(iso) {
+        var defaults = this.subscription.get('defaults').params;
+        this.subscription.set('params', _.extend({}, defaults, { iso: iso }));
+        console.log(this.subscription.get('params'));
+      }.bind(this));
+
       mps.subscribe('Highlight/shape', function(data) {
         var defaults = this.subscription.get('defaults').params;
-        console.log(data);
+
         if (!!data.use && this.usenames.indexOf(data.use) === -1) {
           var provider = {
             table: data.use,
@@ -165,7 +159,8 @@ define([
       if (!!aoi) {
         this.$formType.html(this.templates[aoi]({
           layers: this.layers,
-          languages: languagesList
+          languages: languagesList,
+          countries: this.countries
         }));
         this.cache();
         this.renderChosen();
@@ -186,7 +181,7 @@ define([
             no_results_text: "Oops, nothing found!"
           });
         }
-      })
+      });
     },
 
     cache: function() {
@@ -203,6 +198,7 @@ define([
       new MapMiniDrawingView(mapView.map);
       new MapMiniUploadView(mapView.map);
       new MapMiniSelectedView(mapView.map);
+      new CountrySelectionView(mapView.map);
     },
 
     /**
@@ -210,12 +206,8 @@ define([
      * - changeAOI
      */
     changeAOI: function() {
+      mps.publish('Params/reset', []);
       var aoi = this.subscription.get('aoi');
-      this.renderType();
-    },
-
-    changeAOIType: function() {
-      var aoiType = this.subscription.get('aoiType');
       this.renderType();
     },
 
@@ -232,9 +224,17 @@ define([
         }.bind(this));
     },
 
+
+
+
+
     /**
      * UI EVENTS
      * - onChangeAOI
+     * - onChangeDataset
+     * - onChangeLayers
+     * - onChangeInput
+     * - onSubmitSubscription
      */
     onChangeAOI: function(e) {
       e && e.preventDefault();
@@ -294,6 +294,8 @@ define([
         mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
       }
     },
+
+
 
 
     /**

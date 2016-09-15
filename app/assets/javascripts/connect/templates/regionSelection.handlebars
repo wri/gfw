@@ -1,0 +1,9 @@
+<label for="select-layers">Region</label>
+<div class="m-select">
+  <select id="select-region" class="chosen-select default disabled js-select-region" data-placeholder="Select a region" disabled>
+    <option value=""></option>
+    {{#each regions}}
+      <option value="{{this.id_1}}">{{this.name_1}}</option>
+    {{/each}}
+  </select>
+</div>
