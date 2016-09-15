@@ -52,12 +52,9 @@
       <label class="m-sel-container">
         Language
         <select class="default" name="language">
-          <option value="en">English</option>
-          <option value="zh">中文</option>
-          <option value="fr">Français</option>
-          <option value="id">Bahasa Indonesia</option>
-          <option value="pt_BR">Português (Brasil)</option>
-          <option value="es_MX">Español (Mexico)</option>
+          {{#each languages}}
+            <option value="{{@key}}">{{this}}</option>
+          {{/each}}
         </select>
       </label>
 

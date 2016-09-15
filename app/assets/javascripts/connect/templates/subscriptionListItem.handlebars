@@ -40,12 +40,9 @@
     <span class="metadata-title">Language:</span>
     <span class="metadata-info">
       <select data-placeholder="Select language" class="chosen-select default notranslate" id="select-language-subscription">
-        <option value="en">English</option>
-        <option value="zh">中文</option>
-        <option value="fr">Français</option>
-        <option value="id">Bahasa Indonesia</option>
-        <option value="pt_BR">Português (Brasil)</option>
-        <option value="es_MX">Español (Mexico)</option>
+        {{#each languages}}
+          <option value="{{@key}}">{{this}}</option>
+        {{/each}}
       </select>
     </span>
   </li>

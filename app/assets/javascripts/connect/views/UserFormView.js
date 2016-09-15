@@ -1,8 +1,9 @@
 define([
   'Class', 'backbone', 'underscore', 'handlebars', 'mps',
+  'helpers/languagesHelper',
   'models/UserModel',
   'text!connect/templates/userForm.handlebars'
-], function(Class, Backbone, _, Handlebars, mps, User, tpl) {
+], function(Class, Backbone, _, Handlebars, mps, languagesHelper, User, tpl) {
 
   'use strict';
 
@@ -56,12 +57,15 @@ define([
     },
 
     render: function() {
+      var languagesList = languagesHelper.getList();
+
       this.$el.html(this.template({
         action: window.gfw.config.GFW_API_HOST+'/user',
         redirect: window.location.href,
         user: this.user.toJSON(),
         errors: this.validator.messages,
-        isModal: this.isModal
+        isModal: this.isModal,
+        languages: languagesList
       }));
 
       this._renderSelectedOptions();

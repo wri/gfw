@@ -6,6 +6,7 @@ define([
   'mps',
   'validate',
   'map/services/LayerSpecService',
+  'helpers/languagesHelper',
   'connect/models/Subscription',
   'connect/views/MapMiniView',
   'connect/views/MapMiniControlsView',
@@ -16,7 +17,26 @@ define([
   'text!connect/templates/subscriptionNew.handlebars',
   'text!connect/templates/subscriptionNewDraw.handlebars',
   'text!connect/templates/subscriptionNewData.handlebars'
-], function($, Backbone, Handlebars, _, mps, validate, LayerSpecService, Subscription, MapMiniView, MapMiniControlsView, MapMiniDrawingView, MapMiniUploadView, MapMiniSelectedView, GeostoreService, tpl, tplDraw, tplData) {
+], function(
+  $,
+  Backbone,
+  Handlebars,
+  _,
+  mps,
+  validate,
+  LayerSpecService,
+  languagesHelper,
+  Subscription,
+  MapMiniView,
+  MapMiniControlsView,
+  MapMiniDrawingView,
+  MapMiniUploadView,
+  MapMiniSelectedView,
+  GeostoreService,
+  tpl,
+  tplDraw,
+  tplData
+) {
 
   'use strict';
 
@@ -139,9 +159,13 @@ define([
 
     renderType: function() {
       var aoi = this.subscription.get('aoi');
+      var userLang = this.user.getLanguage();
+      var languagesList = languagesHelper.getListSelected(userLang);
+
       if (!!aoi) {
         this.$formType.html(this.templates[aoi]({
-          layers: this.layers
+          layers: this.layers,
+          languages: languagesList
         }));
         this.cache();
         this.renderChosen();
