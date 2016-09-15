@@ -190,7 +190,7 @@ define([
     switchToggle: function(to) {
       var was_active = this.$el.find('.onoffswitch').hasClass('checked');
       this.$el.find('.onoffswitch').toggleClass('checked', to);
-      
+
       if (to && !isMobile.any && !was_active) {
         var listenerMouseMove = google.maps.event.addListener(this.map, 'mousemove', function(e) {
           this.$highresolutionModal.toggleClass('-active', to);
@@ -202,13 +202,13 @@ define([
             google.maps.event.removeListener(listenerMouseMove);
             this.$highresolutionModal.toggleClass('-active', false);
           }.bind(this), 4000)
-        }.bind(this));        
+        }.bind(this));
       } else {
         if (listenerMouseMove) {
-          google.maps.event.removeListener(listenerMouseMove);  
+          google.maps.event.removeListener(listenerMouseMove);
         }
       }
-      
+
       this.toggleIconUrthe(to);
     },
 
@@ -242,7 +242,7 @@ define([
 
       var startHRdate = $('.timeline-date-picker-start').pickadate({
         today: TODAY_TEXT,
-        min: moment('2013').toDate(),
+        min: moment('2013', 'YYYY').toDate(),
         max: TODAY,
         selectYears: true,
         selectMonths: true,
@@ -252,7 +252,7 @@ define([
         onOpen: onPickerOpen,
         klass: {
           picker: 'picker -left',
-        },        
+        },
         onSet: function(event) {
           if ( event.select ) {
             endHRdate_picker.set('min', startHRdate_picker.get('select'));
@@ -274,7 +274,7 @@ define([
         onOpen: onPickerOpen,
         klass: {
           picker: 'picker -left',
-        },        
+        },
         onSet: function(event) {
           if ( event.select ) {
             startHRdate_picker.set('max', endHRdate_picker.get('select'));
@@ -299,4 +299,3 @@ define([
   return HighresolutionView;
 
 });
-
