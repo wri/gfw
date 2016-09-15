@@ -18,6 +18,8 @@ gem 'mini_magick'
 gem 'unf'
 gem 'requirejs-rails', '0.9.5'
 gem 'rack-reverse-proxy', '~> 0.11.0', :require => 'rack/reverse_proxy'
+# Amazon Ruby sdk for file upload to S3
+gem 'aws-sdk', '~> 2'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
@@ -41,3 +43,5 @@ end
 
 gem 'newrelic_rpm'
 gem 'puma'
+
+gem 'dotenv-rails', :groups => [:development, :test]
