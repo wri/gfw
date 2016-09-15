@@ -6,29 +6,19 @@ require([
   'underscore',
   'Class',
   'backbone',
-  'chosen',
-  'map/utils',
-  'enquire',
-  'mps',
   'bluebird',
   'handlebars',
   'map/router',
   'views/SourceModalView',
   'views/ConfirmModalView',
+
   // we should merge these views with the ModalClass
   'views/SourceBottomView',
   'views/SourceMobileFriendlyView',
 
-  'map/collections/CountryCollection',
-
-  'map/presenters/ExperimentsPresenter',
-
-  'map/services/AnalysisService',
-
   // Should we get rid of them?
   'map/services/CountryService',
-  'map/services/DataService',
-  //
+
   'map/views/MapView',
   'map/views/MapControlsView',
   'map/views/TabsView',
@@ -38,14 +28,37 @@ require([
   'map/views/NavMobileView',
   'map/views/GuideView',
   'map/views/controls/GuideButtonView',
-  'connect/views/UserFormModalView',
   'views/HeaderView',
   'views/FooterView',
   'views/NotificationsView',
-  'views/DownloadView',
-  '_string'
-], function($, _, Class, Backbone, chosen, utils, enquire, mps, Promise, Handlebars, Router, SourceModalView, ConfirmModalView, SourceBottomView, SourceMobileFriendlyView, CountryCollection, ExperimentsPresenter, AnalysisService, countryService, DataService, MapView,
-    MapControlsView, TabsView, LayersNavView, LegendView, TimelineView, NavMobileView, GuideView, GuideButtonView, UserFormModalView, HeaderView, FooterView, NotificationsView, DownloadView) {
+  'views/DownloadView'
+], function(
+  $,
+  _,
+  Class,
+  Backbone,
+  Promise,
+  Handlebars,
+  Router,
+  SourceModalView,
+  ConfirmModalView,
+  SourceBottomView,
+  SourceMobileFriendlyView,
+  countryService,
+  MapView,
+  MapControlsView,
+  TabsView,
+  LayersNavView,
+  LegendView,
+  TimelineView,
+  NavMobileView,
+  GuideView,
+  GuideButtonView,
+  HeaderView,
+  FooterView,
+  NotificationsView,
+  DownloadView
+) {
 
   'use strict';
 
@@ -107,10 +120,6 @@ require([
         this._initApp();
 
       }.bind(this));
-
-
-      // What is this? Are we already using it?
-      $('body').append(new UserFormModalView().el);
     },
 
     /**
