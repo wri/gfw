@@ -81,7 +81,11 @@ textarea {
 }
 
 .field-column {
-  display: flex;
+  display: block;
+  @media (min-width: 1450px) {
+    display: flex;
+  }
+
 
   &.-j-center { justify-content: center; }
   &.-j-between { justify-content: space-between; }
