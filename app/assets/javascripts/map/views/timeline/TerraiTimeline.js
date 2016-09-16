@@ -6,15 +6,15 @@
 define([
   'moment',
   'abstract/timeline/TorqueTimelineClass',
-  'abstract/timeline/TimelineDatePicker',
+  'abstract/timeline/TimelineMonthlyPicker',
   'map/services/TerraiDateService'
-], function(moment, TorqueTimelineClass, DatePicker, TerraiDateService) {
+], function(moment, TorqueTimelineClass, TimelineMonthlyPicker, TerraiDateService) {
 
   'use strict';
 
   var TerraiTimeline = TorqueTimelineClass.extend({
 
-    DatePicker: DatePicker,
+    DatePicker: TimelineMonthlyPicker,
     dataService: TerraiDateService
 
   });

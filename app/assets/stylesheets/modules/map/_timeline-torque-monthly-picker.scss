@@ -1,0 +1,60 @@
+.timeline-torque-monthly-picker {
+
+  min-width: 320px;
+  height: 50px;
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  float: left;
+  margin-right: 20px;
+  justify-content: space-between;
+
+  .monthly-picker {
+    width: 96px;
+    height: 32px;
+    border: 1px solid $cGreen;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    color: $dark;
+
+    &:after {
+      content: '';
+      width: 1px;
+      height: 32px;
+      background: $cGreen;
+      margin: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+
+    .action {
+      width: 50%;
+      height: 32px;
+      font-size: 13px;
+      color: $cGreen;
+      line-height: 32px;
+      text-align: center;
+      text-transform: uppercase;
+      border: 0;
+      padding: 0;
+      margin: 1px;
+      cursor: pointer;
+
+      &.-active {
+        background: $cGreen;
+        color: $white;
+      }
+
+      &:hover {
+        background: #f2f2f2;
+      }
+    }
+  }
+}
