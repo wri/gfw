@@ -1,104 +1,121 @@
-<div class="subscription-modal-backdrop"></div>
-<div class="subscription-modal-window {{#unless loggedIn}}subscription-modal-unauthenticated{{/unless}}">
-  <a href="#" class="subscription-modal-close">
-    <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg>
+{{!-- BACKDROP --}}
+<div class="modal-backdrop"></div>
+{{!-- WINDOW --}}
+<div class="modal-window">
+  <a href="#" class="modal-close">
+    <svg><use xlink:href="#shape-close"></use></svg>
   </a>
+  <div class="modal-wrapper scroll-dark -no-scroll">
+    <div class="modal-content">
+      <div id="modal-loader-subcribe" class="m-spinner">
+        <div class="spinner-box">
+          <div class="icon"></div>
+        </div>
+      </div>
 
-  <div class="subscription-spinner-container">
-    <div class="loading-spinner"></div>
-  </div>
+      <div class="modal-subscribe">
+        {{#if loggedIn}}
+          <div class="steps current">
+            <header>
+              <h2>Subscribe to alerts</h2>
+              <p>
+                {{#if dataset}}
+                  Enter your email below to receive an email notification when
+                  there are new <strong>{{dataset}}</strong> available for this area.
+                {{else}}
+                  Enter your email below to subscribe to this area.
+                {{/if}}
+              </p>
+            </header>
 
-  {{#if loggedIn}}
-    <div class="steps current">
-      <header>
-        <h2>Subscribe to alerts</h2>
-        <p>
-          {{#if dataset}}
-            Enter your email below to receive an email notification when
-            there are new <strong>{{dataset}}</strong> available for this area.
-          {{else}}
-            Enter your email below to subscribe to this area.
-          {{/if}}
-        </p>
-      </header>
+            <input class="field" type="email" id="subscriptionEmail" placeholder="Enter your email" value="{{email}}">
+            <div class="m-btncontainer is-center">
+              <button class="btn medium green uppercase" id="showName">Next</button>
+            </div>
+          </div>
+        {{else}}
+          <div class="steps current">
+            <header>
+              <h2>You need to be logged in to save your subscriptions</h2>
+              <h3>
+                Log in is required so you can return to Global Forest Watch
+                to view, manage, and delete your subscriptions.
+                Questions? <a class="contact-link" href="mailto:gfw@wri.org">Contact us</a>.
+              </h3>
+            </header>
 
-      <input class="field" type="email" id="subscriptionEmail" placeholder="Enter your email" value="{{email}}">
-      <button class="btn medium green uppercase" id="showName">Next</button>
-    </div>
-  {{else}}
-    <div class="steps current">
-      <header>
-        <h2>You need to be logged in to save your subscriptions</h2>
-        <h3>
-          Log in is required so you can return to Global Forest Watch
-          to view, manage, and delete your subscriptions.
-          Questions? <a href="mailto:gfw@wri.org">Contact us</a>.
-        </h3>
-      </header>
+            <ul class="subscription-authentication">
+              <li>
+                <a href="{{this.apiHost}}/auth/twitter" class="-twitter">
+                  <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use></svg>
+                  Log in with Twitter
+                </a>
+              </li>
 
-      <ul class="subscription-authentication">
-        <li class="subscription-sign-in-twitter">
-          <a href="/auth/twitter" class="subscription-sign-in subscription-sign-in-twitter">
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use></svg>
-            Log in with Twitter
-          </a>
-        </li>
+              <li>
+                <a href="{{this.apiHost}}/auth/facebook" class="-facebook">
+                  <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use></svg>
+                  Log in with Facebook
+                </a>
+              </li>
 
-        <li class="subscription-sign-in-facebook">
-          <a href="/auth/facebook" class="subscription-sign-in">
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use></svg>
-            Log in with Facebook
-          </a>
-        </li>
+              <li>
+                <a href="{{this.apiHost}}/auth/google" class="-google">
+                  <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-googleplus"></use></svg>
+                  Log in with Google
+                </a>
+              </li>
+            </ul>
+          </div>
+        {{/if}}
 
-        <li class="subscription-sign-in-google">
-          <a href="/auth/google" class="subscription-sign-in">
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-googleplus"></use></svg>
-            Log in with Google
-          </a>
-        </li>
-      </ul>
-    </div>
-  {{/if}}
+          <div class="steps">
+            <header>
+              <h2>Name your subscription</h2>
+            </header>
 
-  <div class="steps">
-    <header>
-      <h2>Name your subscription</h2>
-    </header>
+            <div class="field -default -medium">
+              <label for="name">Name *</label>
+              <input type="text" id="subscriptionName" placeholder="Area name">
+            </div>
 
-    <div class="subscription-name-container">
-      <input class="field" type="text" id="subscriptionName" placeholder="Area name">
-    </div>
+            <div class="field -default -little">
+              <label for="subscriptionLanguage">Receive alert emails in...</label>
+              <div class="m-select">
+                <select data-placeholder="Select language" class="chosen-select default notranslate" id="subscriptionLanguage">
+                  {{#each languages}}
+                    <option value="{{key}}" {{selected}}>{{name}}</option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
 
-    <div class="subscription-language-container">
-      <label for="subscriptionLanguage">Receive alert emails in...</label>
-      <select data-placeholder="Select language" class="chosen-select default notranslate" id="subscriptionLanguage">
-        {{#each languages}}
-          <option value="{{key}}" {{selected}}>{{name}}</option>
-        {{/each}}
-      </select>
-    </div>
+            <div class="m-btncontainer is-center">
+              <button class="btn medium green uppercase" id="subscribe">Save</button>
+            </div>
+          </div>
 
-    <button class="btn medium green uppercase" id="subscribe">Save</button>
-  </div>
+          <div class="steps">
+            <header>
+              <h2>Subscription saved</h2>
+            </header>
 
-  <div class="steps">
-    <header>
-      <h2>Subscription saved</h2>
-    </header>
+            <div class="subscription-successful"></div>
 
-    <div class="subscription-successful"></div>
-
-    <p>
-      This subscription has been added to your profile. <strong>Please
-      check your email and click on the link to confirm your
-      subscription.</strong> Visit your
-      <a href="/my_gfw/subscriptions">saved subscriptions<a/> to manage
-      them.
-    </p>
-    <div class="m-btncontainer is-center">
-      <a href="/contribute-data" target="_blank" class="btn medium gray uppercase">Add your own data</a>
-      <button class="btn medium green uppercase" id="returnToMap">Return to map</button>
+            <p>
+              This subscription has been added to your profile. <strong>Please
+              check your email and click on the link to confirm your
+              subscription.</strong> Visit your
+              <a href="/my_gfw/subscriptions">saved subscriptions<a/> to manage
+              them.
+            </p>
+            <div class="m-btncontainer is-center">
+              {{!-- <a href="/contribute-data" target="_blank" class="btn medium gray uppercase">Add your own data</a> --}}
+              <button class="btn medium green uppercase" id="returnToMap">Return to map</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
