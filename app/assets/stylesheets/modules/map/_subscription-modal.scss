@@ -1,80 +1,14 @@
-// This reimplements the .modal classes to use flexbox, which is nicer
-// to deal with. At some point we should port the other modals to use
-// this.
+.modal-subscribe {
+  padding: 20px;
 
-.subscription-modal {
-  display: none;
-  justify-content: center;
-  align-items: center;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 10000;
-  width: 100%;
-  height: 100%;
-
-  &.is-active {
-    display: flex;
-  }
-}
-
-.subscription-modal-backdrop {
-  background: rgba(0,0,0,0.25);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  transition: all 0.2s $easeInOutSine;
-}
-
-.subscription-modal-window {
-  background: $white;
-  border: none;
-  box-shadow: $shadow1;
-  z-index: 2;
-
-  position: relative;
-  width: 475px;
-  height: 315px;
-  padding: 30px 50px;
-}
-
-.subscription-modal-unauthenticated {
-  height: 375px;
-}
-
-.subscription-modal-close {
-  display: block;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 20px;
-  height: 20px;
-
-  svg{
-    fill: $dark;
-  }
-
-  &:hover {
-    svg {
-      fill: darken($dark,10%);
-    }
-  }
-}
-
-.subscription-modal {
+  // Header
   header {
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 
     h2 {
       font-size: 24px;
-      width: 300px;
+      max-width: 300px;
+      margin: 0 auto;
     }
 
     h3 {
@@ -89,21 +23,13 @@
     }
   }
 
+
+  // Steps
   .steps {
     display: none;
-    width: 100%;
-    height: 100%;
-
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
 
     &.current{
-      display: flex;
-    }
-
-    .spinner3 {
-      display: none;
+      display: block;
     }
 
     label {
@@ -125,6 +51,55 @@
       font-weight: 400;
     }
   }
+
+
+  // Login authentication
+  .subscription-authentication {
+    margin: 20px auto 0;
+    width: 100%;
+
+    > li {
+      display: block;
+      position: relative;
+      width: 100%;
+      max-width: 250px;
+      margin: 0 auto 10px;
+      padding: 0;
+      text-align: center;
+
+      &:last-child {
+        margin: 0 auto;
+      }
+
+      > a {
+        padding: 20px;
+        color: white;
+        text-transform: uppercase;
+        font-size: 14px;
+
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.-twitter { background-color: #598dca;}
+        &.-facebook { background-color: #39579b;}
+        &.-google { background-color: #da4735;}
+
+        svg {
+          fill: white;
+
+          position: absolute;
+          top: 18px;
+          left: 18px;
+
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
 }
 
 .subscription-name-container {
@@ -134,83 +109,6 @@
 
 .subscription-language-container {
   width: 100%;
-}
-
-.subscription-authentication {
-  margin-top: 20px;
-  width: 100%;
-  height: 165px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-
-  li {
-    width: 100%;
-    max-width: 250px;
-    display: block;
-    height: 50px;
-    text-align: center;
-
-    position: relative;
-  }
-
-  li a {
-    color: white;
-    text-transform: uppercase;
-    font-size: 14px;
-
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  li a svg {
-    fill: white;
-
-    position: absolute;
-    top: 7px;
-    left: 15px;
-
-    width: 18px;
-    height: 35px;
-  }
-
-  .subscription-sign-in-twitter {
-    background-color: #598dca;
-  }
-
-  .subscription-sign-in-facebook {
-    background-color: #39579b;
-  }
-
-  .subscription-sign-in-google {
-    background-color: #da4735;
-  }
-}
-
-.subscription-spinner-container {
-  visibility: hidden;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  z-index: 10;
-  background: rgba(255,255,255,0.5);
-
-  > .loading-spinner {
-    @include spinner();
-  }
 }
 
 .subscription-successful {

@@ -39,7 +39,7 @@ define([
       this.status = new ApplicationModalStatus();
       this.helper = applicationsHelper;
       this.render();
-      this._initVars();
+      this._cache();
       this.setListeners();
       this.$body.append(this.el);
     },
