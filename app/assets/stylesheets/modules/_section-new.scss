@@ -217,6 +217,7 @@ $aside-width: 270px;
     font-size: 21px;
     margin: 0 0 10px;
     padding: 0 150px 0 0;
+    color: $dark;
   }
 
   ul {
@@ -224,6 +225,7 @@ $aside-width: 270px;
       display: flex;
       justify-content: flex-start;
       margin: 0 0 8px;
+      color: $dark;
 
       &:last-child {
         margin: 0;
@@ -238,10 +240,21 @@ $aside-width: 270px;
 
       h4 {
         font-size: 13px;
+        font-weight: 500;
       }
       p {
         font-size: 13px;
       }
     }
+  }
+}
+
+.layer-selection {
+  #country-field {
+    margin-bottom: 10px;
+  }
+
+  #layers-country-field {
+    margin-bottom: 0;
   }
 }

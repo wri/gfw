@@ -162,7 +162,8 @@ define([
       this.$layersField.html(this.templateLayers({
         name: 'Global layers',
         placeholder: 'Select a global layer',
-        layers: this.layers
+        layers: this.layers,
+        hint: 'After selecting a layer, please choose one shape of the map by clicking it (Please, send me this text. Miguel)'
       }));
       this.renderChosen();
     },
@@ -171,7 +172,8 @@ define([
       this.$layersCountryField.html(this.templateLayers({
         name: '',
         placeholder: 'Select a country layer',
-        layers: (!_.isEmpty(this.countryLayers)) ? this.countryLayers : null
+        layers: (!_.isEmpty(this.countryLayers)) ? this.countryLayers : null,
+        hint: ''
       }));
       this.renderChosen();
     },
