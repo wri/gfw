@@ -43,7 +43,7 @@ define([
       this.constructor.__super__.initialize.apply(this);
       this.presenter = new SourceModalPresenter(this);
       this.render();
-      this._initVars();
+      this._cache();
       this.setListeners();
       this.$body.append(this.el);
     },
@@ -114,7 +114,7 @@ define([
      */
     getData: function() {
       var data = this.sourceModel.toJSON();
-      
+
       if (data.amazon_link) {
         // var file = encodeURIComponent(data.sql_api + '&format=geojson').replace(/%20/g, "%2520");
         // data.open_in_carto = 'http://oneclick.cartodb.com?file='+encodeURIComponent(data.amazon_link);

@@ -15,12 +15,6 @@ define([
 
   var SubscribePresenter = PresenterClass.extend({
 
-    status: new (Backbone.Model.extend({
-      defaults: {
-        visibility: false
-      }
-    })),
-
     init: function(view) {
       this.view = view;
       this._super();
@@ -41,7 +35,15 @@ define([
     },
 
     listeners: function() {
-      this.status.on('change:visibility', this.changeVisibility.bind(this));
+      this.view.model.on('change:hidden', this.changeHidden.bind(this));
+    },
+
+    /**
+     * MODEL CHANGES
+     * - changeHidden
+    */
+    changeHidden: function() {
+      mps.publish('Place/update', [{go: false}]);
     },
 
     /**
@@ -52,7 +54,7 @@ define([
     getPlaceParams: function() {
       var p = {};
 
-      p.subscribe = !!this.status.get('visibility') || null;
+      p.subscribe = ! !!this.view.model.get('hidden') || null;
 
       return p;
     },
@@ -63,26 +65,13 @@ define([
     _subscriptions: [{
       'Subscribe/show': function(analysisStatus) {
         this.setSubscription(analysisStatus);
-        this.status.set('visibility', true);
+        this.view.show();
       }
     }, {
       'Subscribe/hide': function() {
-        this.status.set('visibility', false);
+        this.view.hide();
       }
     }],
-
-    /**
-     * Presenter methods.
-     */
-    show: function() {
-      this.currentStep = 0;
-      this.view.show();
-    },
-
-    hide: function() {
-      this.view.hide();
-      this.view.hideSpinner();
-    },
 
     nextStep: function(index) {
       if (this.currentStep === undefined) {
@@ -132,34 +121,15 @@ define([
     },
 
     onSubscriptionFail: function() {
-      this.status.set('visibility', false);
+      this.hide();
       this.publishNotification('notification-subscription-incorrect');
     },
 
 
     /**
-     * CHANGES
-     */
-    changeVisibility: function() {
-      if (this.status.get('visibility')) {
-        this.show();
-      } else {
-        this.hide();
-      }
-      this.publishUpdateUrl();
-    },
-
-
-
-    /**
      * PUBLISHERS
-     * - publishUpdateUrl
      * - publishNotification
-     */
-    publishUpdateUrl: function() {
-      mps.publish('Place/update', [{go: false}]);
-    },
-
+    */
     publishNotification: function(id){
       mps.publish('Notification/open', [id]);
     },

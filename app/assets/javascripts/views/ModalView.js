@@ -26,7 +26,7 @@ define([
       this.model.on("change:hidden", this._toggle, this);
     },
 
-    _initVars: function() {
+    _cache: function() {
       this.$window = $(window);
       this.$document = $(document);
       this.$body = $('body');
