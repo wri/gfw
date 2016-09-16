@@ -5,10 +5,17 @@
  */
 define([
   'underscore',
+  'moment',
   'mps',
   '_string',
   'abstract/layer/OverlayLayerClass'
-], function(_, mps, _string, OverlayLayerClass) {
+], function(
+  _,
+  moment,
+  mps,
+  _string,
+  OverlayLayerClass
+) {
 
   'use strict';
 
@@ -25,7 +32,7 @@ define([
     init: function(layer, options, map) {
       this.tiles = {};
       this.layer = layer;
-      this.top_date = (((moment(this.layer.maxdate).year()  - moment(this.layer.mindate).year()) * 12) + moment(this.layer.maxdate).month()) - 2;
+      this.top_date = (((moment(this.layer.maxdate).year() - moment(this.layer.mindate).year()) * 12) + moment(this.layer.maxdate).month()) - 2;
       this._super(layer, options, map);
       this.getDates();
       this.cartoSQL = new cartodb.SQL({
