@@ -65,10 +65,13 @@ define([
     _subscriptions: [{
       'Subscribe/show': function(analysisStatus) {
         this.setSubscription(analysisStatus);
+        this.currentStep = 0;
+        this.view.render();
         this.view.show();
       }
     }, {
       'Subscribe/hide': function() {
+        this.currentStep = 0;
         this.view.hide();
       }
     }],

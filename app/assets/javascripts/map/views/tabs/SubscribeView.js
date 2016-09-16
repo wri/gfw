@@ -37,7 +37,7 @@ define([
     },
 
     cache: function() {
-      this.$spinner = this.$el.find('.subscription-spinner-container');
+      this.$spinner = this.$el.find('#modal-loader-subcribe');
       this.$subscriptionName = this.$el.find('#subscriptionName');
       this.$subscriptionLanguage = this.$el.find('#subscriptionLanguage');
       this.$subscriptionEmail = this.$el.find('#subscriptionEmail');
@@ -75,11 +75,11 @@ define([
 
     // Spinners
     showSpinner: function() {
-      this.$spinner.css('visibility', 'visible');
+      this.$spinner.toggleClass('-start', true);
     },
 
     hideSpinner: function() {
-      this.$spinner.css('visibility', 'hidden');
+      this.$spinner.toggleClass('-start', false);
     },
 
     updateCurrentStep: function(step) {
@@ -98,7 +98,7 @@ define([
      */
     onClickClose: function(e) {
       e && e.preventDefault() && e.stopPropagation()
-      this.presenter.status.set('visibility', false);
+      this.hide();
     },
 
     onClickTrackSignIn: function(e) {

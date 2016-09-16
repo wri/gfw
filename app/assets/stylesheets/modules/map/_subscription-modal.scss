@@ -4,6 +4,7 @@
   // Header
   header {
     text-align: center;
+    margin: 0 0 20px;
 
     h2 {
       font-size: 24px;
@@ -54,6 +55,10 @@
     strong {
       font-weight: 400;
     }
+
+    .m-btncontainer {
+      margin-top: 15px;
+    }
   }
 
   // Login authentication
@@ -86,9 +91,26 @@
         justify-content: center;
         align-items: center;
 
-        &.-twitter { background-color: #598dca;}
-        &.-facebook { background-color: #39579b;}
-        &.-google { background-color: #da4735;}
+        &.-twitter {
+          background-color: #598dca;
+          &:hover {
+            background-color: darken(#598dca, 5%);
+          }
+        }
+
+        &.-facebook {
+          background-color: #39579b;
+          &:hover {
+            background-color: darken(#39579b, 5%);
+          }
+        }
+
+        &.-google {
+          background-color: #da4735;
+          &:hover {
+            background-color: darken(#da4735, 5%);
+          }
+        }
 
         svg {
           fill: white;
@@ -105,17 +127,9 @@
   }
 }
 
-.subscription-name-container {
-  width: 100%;
-  font-family: "Fira GFW Sans", "Fira Sans";
-}
-
-.subscription-language-container {
-  width: 100%;
-}
-
 .subscription-successful {
   width: 64px;
   height: 64px;
+  margin: 10px auto;
   background: image-url('subscriptions/success.svg');
 }
