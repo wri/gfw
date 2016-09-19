@@ -110,7 +110,7 @@ define([
       this.$el.find('.js-list-selector').undelegate('.item', 'click');
     },
 
-    _setListSelectorPosition($element) {
+    _setListSelectorPosition: function($element) {
       var $parent = $element.parentNode;
       var leftParent = $parent.offsetLeft;
       var left = $element.offsetLeft;
