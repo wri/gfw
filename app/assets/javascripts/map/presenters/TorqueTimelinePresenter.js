@@ -36,7 +36,6 @@ define([
         if (this.view.bounds !== undefined) {
           this.view.status.set('running', true);
         }
-
         this.view.setBounds(bounds);
         this.view.render();
       },
