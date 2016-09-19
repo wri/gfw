@@ -12,7 +12,7 @@ define([
     this.defauls = {
       template: tpl,
       offset: [-113, 85],
-      width: 226,
+      width: 250,
       className: 'cartodb-infowindow'
     };
 
@@ -41,7 +41,7 @@ define([
       div.style.width = this.options.width + 'px';
 
       div.innerHTML = this.options.infowindowContent || this.template({content: {data: this.options.infowindowData}});
-      
+
       popup = $(div).find('.cartodb-popup')[0];
       closeButton = $(div).find('.close')[0];
       analyseButton = $(div).find('.analyse')[0];
@@ -63,12 +63,12 @@ define([
         google.maps.event.addDomListener(popup, 'mouseout', _.bind(function(ev) {
           ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
           this.enableScrollwheel();
-        }, this));        
+        }, this));
       }
 
       if (closeButton) {
         google.maps.event.addDomListener(closeButton, 'click', _.bind(function(ev) {
-          ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+          ev && ev.stopPropagation() && ev.preventDefault();
           this.remove();
         }, this));
       }
