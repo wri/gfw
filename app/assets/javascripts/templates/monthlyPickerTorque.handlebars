@@ -3,13 +3,18 @@
 {{#if isMobile}}
 
 {{else}}
+  <div class="list js-list-selector">
+    <div class="content">
+    </div>
+  </div>
+
   <div class="monthly-picker">
-    <input class="action js-month" data-value="AUG" value="AUG" id="" class="" type="text" readonly="" />
-    <input class="action js-year" data-value="2008" value="2008" id="" class="" type="text" readonly="" />
+    <input class="action js-start-month" data-selector="startDate" data-type="month" data-value="" value="" id="" class="" type="text" readonly="" />
+    <input class="action js-start-year" data-selector="startDate" data-type="year"  data-value="" value="" id="" class="" type="text" readonly="" />
   </div>
   <span>to</span>
   <div class="monthly-picker">
-    <input class="action js-month" data-value="AUG" value="AUG" id="" class="" type="text" readonly="" />
-    <input class="action js-year" data-value="2008" value="2008" id="" class="" type="text" readonly="" />
+    <input class="action js-end-month" data-selector="endDate" data-type="month"  data-value="" value="" id="" class="" type="text" readonly="" />
+    <input class="action js-end-year"  data-selector="endDate" data-type="year" data-value="" value="" id="" class="" type="text" readonly="" />
   </div>
 {{/if}}
