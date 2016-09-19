@@ -249,7 +249,7 @@ define([
 
       $.get(url).done(_.bind(function(response) {
         this.removeInfoWindow();
-        if (!!response && !!response.data && !response.data.length) {
+        if (!!response && !!response.data && !!response.data.length) {
           this.setInfoWindow(response.data[0].attributes, event);
         }
       }, this ));
