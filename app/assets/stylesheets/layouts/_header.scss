@@ -127,6 +127,21 @@
           font-weight: 500;
           font-size: 10px;
           text-transform: uppercase;
+          white-space: nowrap;
+
+          &.-desktop {
+            display: none;
+            @media (min-width: $br-mobile){
+              display: block;
+            }
+          }
+
+          &.-mobile {
+            display: block;
+            @media (min-width: $br-mobile){
+              display: none;
+            }
+          }
         }
 
         &:after {
