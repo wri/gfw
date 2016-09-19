@@ -43,6 +43,18 @@ Gfw::Application.routes.draw do
   get '/about/testers' => redirect("/about")
   get '/getinvolved/provide-feedback' => redirect("/getinvolved")
 
+  # sources
+  get '/sources' => redirect("http://data.globalforestwatch.org/")
+  get '/sources(/:section)' => redirect("http://data.globalforestwatch.org/")
+
+  # stayinformed
+  get '/stayinformed' => redirect("/")
+  get '/stayinformed(/:section)' => redirect("/")
+
+  # getinvolved
+  get '/getinvolved' => redirect("/developers-corner")
+  get '/getinvolved(/:section)' => redirect("/developers-corner")
+
   # stories
   get '/stayinformed/crowdsourced-stories' => redirect('/stories')
 
@@ -71,13 +83,6 @@ Gfw::Application.routes.draw do
 
 
   # static #
-  # TO-DO: we should redirect these pages. We are not allowed to see them anymore
-  get '/sources' => 'static#data'
-  get '/sources(/:section)' => 'static#data'
-  get '/stayinformed' => 'static#keep'
-  get '/stayinformed(/:section)' => 'static#keep'
-  get '/getinvolved' => 'static#getinvolved'
-  get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'
   get '/feedback_jsonp' => 'static#feedback_jsonp'
   get '/contribute-data' => 'static#contribute'
