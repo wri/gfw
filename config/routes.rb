@@ -44,27 +44,25 @@ Gfw::Application.routes.draw do
   get '/about/testers' => redirect("/about")
   get '/getinvolved/provide-feedback' => redirect("/getinvolved")
 
+  # sources
+  get '/sources' => redirect("http://data.globalforestwatch.org/")
+  get '/sources(/:section)' => redirect("http://data.globalforestwatch.org/")
+
+  # stayinformed
+  get '/stayinformed' => redirect("/")
+  get '/stayinformed(/:section)' => redirect("/")
+
+  # getinvolved
+  get '/getinvolved' => redirect("/developers-corner")
+  get '/getinvolved(/:section)' => redirect("/developers-corner")
+
+  # stories
   get '/stayinformed/crowdsourced-stories' => redirect('/stories')
   get '/stories' => 'stories#index'
   get '/stories/new' => 'stories#index', as: 'new_story'
   get '/stories/*all' => 'stories#index'
 
-  # static
-  get '/data' => redirect("sources")
-  get '/sources' => 'static#data'
-  get '/sources(/:section)' => 'static#data'
-
-  get '/my_gfw/' => 'connect#index', as: 'user_index'
-  get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
-
-  get '/stayinformed/crowdsourced-stories' => redirect('/stories')
-  get '/stayinformed' => 'static#keep'
-  get '/stayinformed(/:section)' => 'static#keep'
-
-  get '/getinvolved/apply-to-the-small-grants-fund' => redirect('/small-grants-fund')
-  get '/getinvolved/develop-your-own-app' => redirect('/developers-corner')
-  get '/getinvolved' => 'static#getinvolved'
-  get '/getinvolved(/:section)' => 'static#getinvolved'
+  # static #
   get '/feedback' => 'static#feedback'
   get '/feedback_jsonp' => 'static#feedback_jsonp'
 
