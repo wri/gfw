@@ -73,9 +73,8 @@ define([
     },
 
     listeners: function() {
-      // We should start using listenTo and handle the remove views
-      this.model.on('change:country', this.changeCountry.bind(this));
-      this.model.on('change:layers', this.changeLayers.bind(this));
+      this.listenTo(this.model, 'change:country', this.changeCountry.bind(this));
+      this.listenTo(this.model, 'change:layers', this.changeLayers.bind(this));
     },
 
     cache: function() {

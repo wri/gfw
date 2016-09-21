@@ -163,6 +163,7 @@ define([
         }));
         this.cache();
         this.renderChosen();
+        this.removeSubViews();
         this.initSubViews();
       } else {
         this.$formType.html('');
@@ -192,13 +193,22 @@ define([
 
     initSubViews: function() {
       var mapView = new MapMiniView();
+      this.subViews = {
+        mapView: mapView,
+        mapControlsView: new MapMiniControlsView(mapView.map),
+        mapDrawingView: new MapMiniDrawingView(mapView.map),
+        mapUploadView: new MapMiniUploadView(mapView.map),
+        mapSelectedView: new MapMiniSelectedView(mapView.map),
+        countrySelectionView: new CountrySelectionView(mapView.map),
+        layerSelectionView: new LayerSelectionView(mapView.map),
+      };
+    },
 
-      new MapMiniControlsView(mapView.map);
-      new MapMiniDrawingView(mapView.map);
-      new MapMiniUploadView(mapView.map);
-      new MapMiniSelectedView(mapView.map);
-      new CountrySelectionView(mapView.map);
-      new LayerSelectionView(mapView.map);
+    removeSubViews: function() {
+      _.each(this.subViews, function(view){
+        view.undelegateEvents();
+        view.remove();
+      })
     },
 
     /**

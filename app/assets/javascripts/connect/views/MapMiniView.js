@@ -362,6 +362,9 @@ define([
         strokeColor: '#A2BC28'
       });
 
+      console.log(geojson);
+      console.log(this.map);
+      console.log(overlay);
       overlay.setMap(this.map);
 
       this.status.set('overlay', overlay, { silent: true });
