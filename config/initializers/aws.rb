@@ -1,5 +1,5 @@
 Aws.config.update({
-  region: 'us-west-2',
+  region: ENV['S3_DATA_BUCKET_REGION'],
   credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
 })
 
