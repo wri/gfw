@@ -10,12 +10,11 @@
 
   .list {
     width: 100px;
-    max-height: 250px;
+    max-height: 235px;
     background: $white;
     color: $dark;
     position: absolute;
-    bottom: 60px;
-    padding: 15px;
+    bottom: 58px;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
     display: none;
 
@@ -23,7 +22,10 @@
       display: flex;
 
       > .content {
-        overflow-y: scroll;
+        overflow: scroll;
+        overflow-x: hidden;
+        max-height: 220px;
+        margin-bottom: 15px;
       }
     }
 
@@ -32,21 +34,20 @@
       position: absolute;
       width: 0;
       height: 0;
-      bottom: -20px;
+      bottom: -14px;
       left: 50%;
-      margin-left: -15px;
+      margin-left: -10px;
       box-sizing: border-box;
-      border: 11px solid black;
+      border: 7px solid black;
       border-color: transparent transparent #FFFFFF #FFFFFF;
       transform-origin: 0 0;
       transform: rotate(-45deg);
-      box-shadow: -3px 3px 3px 0 rgba(0, 0, 0, 0.15);
+      box-shadow: -3px 3px 3px 0 rgba(0, 0, 0, 0.05);
     }
 
     > .content {
       width: 100%;
-      height: inherit;
-      overflow: auto;
+      padding: 15px 15px 0 15px;
 
       > .item {
         width: 100%;
@@ -78,7 +79,7 @@
 
   .monthly-picker {
     width: 96px;
-    height: 32px;
+    height: auto;
     border: 1px solid $cGreen;
     border-radius: 20px;
     display: flex;
@@ -114,11 +115,12 @@
       cursor: pointer;
       user-select: none;
       background: transparent;
+      appearance: none;
+      margin: 0;
+      border-radius: 0;
 
       &.-active {
         background: $cGreen;
-        margin: 0;
-        border-radius: 0;
         color: $white;
 
         &:hover {
@@ -126,8 +128,29 @@
         }
       }
 
+      &:focus {
+        outline: none;
+      }
+
       &:hover {
         background: #f2f2f2;
+      }
+
+      &.-selector {
+        font-size: 10px;
+        color: $dark;
+        margin-left: 15px;
+        font-weight: 500;
+        height: 25px;
+        line-height: 24px;
+
+        &.-right {
+          margin-left: 5px;
+        }
+
+        &:hover {
+          background: transparent;
+        }
       }
     }
   }
