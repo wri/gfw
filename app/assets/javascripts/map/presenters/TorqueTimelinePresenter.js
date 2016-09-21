@@ -35,9 +35,10 @@ define([
       'Torque/started': function(bounds) {
         if (this.view.bounds !== undefined) {
           this.view.status.set('running', true);
+        } else {          
+          this.view.setBounds(bounds);
+          this.view.render();
         }
-        this.view.setBounds(bounds);
-        this.view.render();
       },
 
       'Torque/stopped': function() {

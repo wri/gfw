@@ -10,12 +10,14 @@ define([
   'backbone',
   'moment',
   'handlebars',
+  'enquire',
   'text!templates/monthlyPickerTorque.handlebars'
 ], function(
   _,
   Backbone,
   moment,
   Handlebars,
+  enquire,
   tpl
 ) {
 
@@ -26,17 +28,30 @@ define([
       return [this.get('startDate'), this.get('endDate')];
     },
 
-    setDate: function(id, date) {
-      var otherDate;
-      if (id === 'startDate') {
-        otherDate = this.get('endDate');
-        if (date.isAfter(otherDate)) { return; }
-      } else if (id === 'endDate') {
-        otherDate = this.get('startDate');
-        if (date.isBefore(otherDate)) { return; }
-      }
+    setDates: function(dates) {
+      var startDate = this.get('startDate');
+      var endDate = this.get('endDate');
+      var maxDate = this.get('maxDate');
 
-      this.set(id, date);
+      for (var key in dates) {
+        var currentDate = dates[key];
+
+        switch (key) {
+          case 'endDate':
+            if (currentDate.isBefore(startDate)) {
+              currentDate = startDate.clone().subtract(1, 'months');
+            } else if (currentDate.isAfter(maxDate)) {
+              currentDate = maxDate.clone();
+            }
+          break;
+          case 'startDate':
+            if (currentDate.isAfter(endDate)) {
+              currentDate = endDate.clone().subtract(1, 'months');
+            }
+          break;
+        }
+        this.set(key, currentDate);
+      }
     }
   });
 
@@ -46,14 +61,13 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    months: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL',
-    'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+    months: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
 
     defaults: {
     },
 
     events: {
-      'click .action': '_onClickInput',
+      'click .js-input-action': '_onClickInput',
       'change .action': '_onValueChange'
     },
 
@@ -63,13 +77,21 @@ define([
       this.dataService = options.dataService;
       this.layer = options.layer;
       this.onChange = options.onChange;
+      this.isMobile = false;
 
       this.selectedDates = new SelectedDates();
-      this.selectedDates.setDate('startDate',
-        moment.utc(options.dateRange.start));
-      this.selectedDates.setDate('endDate',
-        moment.utc(options.dateRange.end));
+      this.selectedDates.set({
+        startDate: moment.utc(options.dateRange.start),
+        endDate: moment.utc(options.dateRange.end)
+      });
+
       this.listenTo(this.selectedDates, 'change', this._updateTorque);
+
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.isMobile = true;
+        }, this)
+      });
 
       this._retrieveAvailableDates();
     },
@@ -85,7 +107,8 @@ define([
     render: function() {
       this.$el.html(this.template({
         title: this.layer.title,
-        months: this.months
+        months: this.months,
+        isMobile: this.isMobile
       }));
 
       this._cacheVars();
@@ -93,6 +116,12 @@ define([
       this._setDates();
 
       return this;
+    },
+
+    _afterRender: function() {
+      if (this.isMobile) {
+        this._renderMobileSelectors();
+      }
     },
 
     setListeners: function() {
@@ -128,9 +157,9 @@ define([
       $content.innerHTML = '';
 
       if (type === 'month') {
-        this._renderMonths($content, selector, type);
+        this._renderMonths($content, selector, type, 'div');
       } else if (type === 'year') {
-        this._renderYears($content, selector, type);
+        this._renderYears($content, selector, type, 'div');
       }
 
       if (this.scrollTimeout) {
@@ -142,41 +171,69 @@ define([
       }, 10);
     },
 
-    _renderMonths: function($content, selector, type) {
-      var startMonth = this.months[this.selectedDates.get('startDate').month()];
-      var endMonth = this.months[this.selectedDates.get('endDate').month()];
-
+    _renderMonths: function($content, selector, type, htmlTag) {
       for (var month in this.months) {
-        var newMonth = document.createElement('div');
-        var currentMonth = this.months[month];
-        newMonth.dataset.value = currentMonth;
+        var newMonth = document.createElement(htmlTag);
+        var currentMonthName = this.months[month];
+        var currentMonth = parseInt(month, 10);
+
+        newMonth.dataset.value = currentMonthName;
         newMonth.dataset.selector = selector;
         newMonth.dataset.type = type;
-        newMonth.innerHTML = currentMonth;
+        newMonth.innerHTML = currentMonthName;
         newMonth.classList.add('item');
 
-        if (selector === 'startDate') {
-          if (currentMonth === startMonth) {
-            newMonth.classList.add('-active');
-          }
-        } else if (selector === 'endDate') {
-          if (currentMonth ===endMonth) {
-            newMonth.classList.add('-active');
-          }
-        }
+        this._validateMonth(newMonth, selector, currentMonth);
+
         $content.appendChild(newMonth);
       }
     },
 
-    _renderYears: function($content, selector, type) {
-      var startYear = this.minDate.year();
-      var endYear = this.maxDate.year();
-      var yearsList = _.range(startYear, (endYear + 1), 1);
+    _validateMonth: function(newMonth, selector, currentMonth) {
+      var maxYear = this.maxDate.year();
+      var maxMonth = this.maxDate.month()
+      var startMonth = this.selectedDates.get('startDate').month();
+      var endMonth = this.selectedDates.get('endDate').month();
+      var startYear = this.selectedDates.get('startDate').year();
+      var endYear = this.selectedDates.get('endDate').year();
+
+      switch (selector) {
+        case 'startDate':
+          if ((startYear === endYear) && currentMonth > endMonth) {
+            newMonth.classList.add('-disabled');
+            newMonth.disabled = true;
+          }
+          if (currentMonth === startMonth) {
+            newMonth.selected = true;
+            newMonth.classList.add('-active');
+          }
+        break;
+
+        case 'endDate':
+          if ((startYear === endYear) && currentMonth < startMonth) {
+            newMonth.classList.add('-disabled');
+            newMonth.disabled = true;
+          } else if ((endYear === maxYear) && currentMonth > maxMonth) {
+            newMonth.classList.add('-disabled');
+            newMonth.disabled = true;
+          }
+          if (currentMonth === endMonth) {
+            newMonth.selected = true;
+            newMonth.classList.add('-active');
+          }
+        break;
+      }
+    },
+
+    _renderYears: function($content, selector, type, htmlTag) {
+      var startMinYear = this.minDate.year();
+      var endMaxYear = this.maxDate.year();
+      var yearsList = _.range(startMinYear, (endMaxYear + 1), 1);
       var startYear = this.selectedDates.get('startDate').year();
       var endYear = this.selectedDates.get('endDate').year();
 
       for (var year in yearsList) {
-        var newYear = document.createElement('div');
+        var newYear = document.createElement(htmlTag);
         var currentYear = yearsList[year];
         newYear.dataset.value = currentYear;
         newYear.dataset.selector = selector;
@@ -184,20 +241,28 @@ define([
         newYear.innerHTML = currentYear;
         newYear.classList.add('item');
 
-        if (selector === 'startDate') {
-          if (currentYear > endYear) {
-            newYear.classList.add('-disabled');
-          }
-          if (currentYear === startYear) {
-            newYear.classList.add('-active');
-          }
-        } else if (selector === 'endDate') {
-          if (currentYear < startYear) {
-            newYear.classList.add('-disabled');
-          }
-          if (currentYear ===endYear) {
-            newYear.classList.add('-active');
-          }
+        switch (selector) {
+          case 'startDate':
+            if (currentYear > endYear) {
+              newYear.classList.add('-disabled');
+              newYear.disabled = true;
+            }
+            if (currentYear === startYear) {
+              newYear.selected = true;
+              newYear.classList.add('-active');
+            }
+          break;
+
+          case 'endDate':
+            if (currentYear < startYear) {
+              newYear.classList.add('-disabled');
+              newYear.disabled = true;
+            }
+            if (currentYear === endYear) {
+              newYear.selected = true;
+              newYear.classList.add('-active');
+            }
+          break;
         }
         $content.appendChild(newYear);
       }
@@ -208,24 +273,32 @@ define([
     },
 
     _hideSelector: function() {
-      this.$listSelector.classList.remove('-visible');
+      if (this.$listSelector) {
+        this.$listSelector.classList.remove('-visible');
 
-      this._clearInputSelection();
+        this._clearInputSelection();
+      }
     },
 
     _clearInputSelection: function() {
       var $currentSelected = this.el.querySelectorAll('.-active');
 
       if ($currentSelected) {
-        $currentSelected.forEach(function(selected) {
-          selected.classList.remove('-active');
-        });
+        for (var x = 0; x < $currentSelected.length; x++) {
+          $currentSelected[x].classList.remove('-active');
+        }
       }
     },
 
     _setMinMaxDate: function(data) {
       this.minDate = moment.utc(data.minDate).endOf('day');
       this.maxDate = moment.utc(data.maxDate);
+
+      this.selectedDates.set({
+        maxDate: this.maxDate.clone()
+      }, {
+        silent: true
+      });
     },
 
     _setDates: function() {
@@ -246,7 +319,7 @@ define([
       var endDate = moment.utc(this.$endMonth.value + '-' + this.$endYear.value,
         'MMM-YYYY').endOf('month');
 
-      this.selectedDates.set({
+      this.selectedDates.setDates({
         startDate: startDate,
         endDate: endDate
       });
@@ -262,9 +335,21 @@ define([
       var dateService = new this.dataService();
 
       dateService.fetchDates().then(function(response) {
+        this.render();
         this._setMinMaxDate(response);
+        this._afterRender();
         this._setDates();
       }.bind(this));
+    },
+
+    _renderMobileSelectors: function() {
+      // Start date
+      this._renderMonths(this.$startMonth, 'startDate', 'month', 'option');
+      this._renderYears(this.$startYear, 'startDate', 'year', 'option');
+
+      // End date
+      this._renderMonths(this.$endMonth, 'endDate', 'month', 'option');
+      this._renderYears(this.$endYear, 'endDate', 'year', 'option');
     },
 
     // Events
