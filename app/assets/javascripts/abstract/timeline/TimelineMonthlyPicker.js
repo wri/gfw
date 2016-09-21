@@ -36,20 +36,20 @@ define([
       for (var key in dates) {
         var currentDate = dates[key];
 
-        if (key === 'endDate') {
-          console.log(currentDate.format());
-          if (currentDate.isBefore(startDate)) {
-            console.log('is before start');
-            currentDate = startDate.clone().subtract(1, 'months');
-          } else if (currentDate.isAfter(maxDate)) {
-            console.log('is after max');
-            currentDate = maxDate.clone();
-          }
-        } else if ((key === 'startDate') && currentDate.isAfter(endDate)) {
-          currentDate = endDate.clone().subtract(1, 'months');
+        switch (key) {
+          case 'endDate':
+            if (currentDate.isBefore(startDate)) {
+              currentDate = startDate.clone().subtract(1, 'months');
+            } else if (currentDate.isAfter(maxDate)) {
+              currentDate = maxDate.clone();
+            }
+          break;
+          case 'startDate':
+            if (currentDate.isAfter(endDate)) {
+              currentDate = endDate.clone().subtract(1, 'months');
+            }
+          break;
         }
-
-        console.log(currentDate.format());
         this.set(key, currentDate);
       }
     }
@@ -61,8 +61,7 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    months: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL',
-    'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+    months: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
 
     defaults: {
     },
@@ -85,6 +84,7 @@ define([
         startDate: moment.utc(options.dateRange.start),
         endDate: moment.utc(options.dateRange.end)
       });
+
       this.listenTo(this.selectedDates, 'change', this._updateTorque);
 
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
@@ -286,18 +286,16 @@ define([
       this.minDate = moment.utc(data.minDate).endOf('day');
       this.maxDate = moment.utc(data.maxDate);
 
-      // this.selectedDates.set({
-      //   maxDate: this.maxDate.clone()
-      // }, {
-      //   silent: true
-      // });
+      this.selectedDates.set({
+        maxDate: this.maxDate.clone()
+      }, {
+        silent: true
+      });
     },
 
     _setDates: function() {
       var startDate = this.selectedDates.get('startDate');
       var endDate = this.selectedDates.get('endDate');
-
-      console.log('end date', endDate.format());
 
       this.$startMonth.value = this.months[startDate.month()];
       this.$startYear.value = startDate.year();
