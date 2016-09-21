@@ -91,6 +91,10 @@ Gfw::Application.routes.draw do
   get '/embed/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
   get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
 
+  # users
+  get '/my_gfw/' => 'connect#index', as: 'user_index'
+  get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
+
   # countries
   get '/countries' => 'countries#index'
   get '/country/:id' => 'countries#show', :as => 'country'
