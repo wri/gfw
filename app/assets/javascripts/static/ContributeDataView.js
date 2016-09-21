@@ -133,15 +133,15 @@ define([
       var that = this;
 
       this.$fieldFileUpload.fileupload({
+        fileInput: this.$fieldFileUpload,
         url: this.$form.data('url'),
+        type: 'POST',
+        autoUpload: true,
         formData: this.$form.data('form-data'),
         paramName: 'file',
-        type: 'POST',
         dataType: 'XML',
-        autoUpload: true,
         maxFileSize: MAXFILESIZE, // 10 MB
-        timeout: TIMEOUT,
-        fileInput: this.$fieldFileUpload
+        timeout: TIMEOUT
       })
 
       .on('fileuploadadd', function (e, data) {
@@ -165,8 +165,13 @@ define([
 
       .on('fileuploaddone', function (e, data) {
         mps.publish('Notification/open', ['notification-upload-success-server']);
+
+        // extract key and generate URL from response
+        var key   = $(data.jqXHR.responseXML).find('Key').text();
+        var url   = '//' + that.$form.data('host') + '/' + key;
+
         // Set 'data_uploaded' val and trigger the change
-        that.$fieldFileUploaded.val(data.result.url).trigger("change");
+        that.$fieldFileUploaded.val(url).trigger('change');
         // Set progress bar
         that.$fieldFileProgress.find('span').width('100%');
         // Set upload spinner
