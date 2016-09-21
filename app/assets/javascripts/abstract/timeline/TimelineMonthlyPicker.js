@@ -197,27 +197,31 @@ define([
       var startYear = this.selectedDates.get('startDate').year();
       var endYear = this.selectedDates.get('endDate').year();
 
-      if (selector === 'startDate') {
-        if ((startYear === endYear) && currentMonth > endMonth) {
-          newMonth.classList.add('-disabled');
-          newMonth.disabled = true;
-        }
-        if (currentMonth === startMonth) {
-          newMonth.selected = true;
-          newMonth.classList.add('-active');
-        }
-      } else if (selector === 'endDate') {
-        if ((startYear === endYear) && currentMonth < startMonth) {
-          newMonth.classList.add('-disabled');
-          newMonth.disabled = true;
-        } else if ((endYear === maxYear) && currentMonth > maxMonth) {
-          newMonth.classList.add('-disabled');
-          newMonth.disabled = true;
-        }
-        if (currentMonth === endMonth) {
-          newMonth.selected = true;
-          newMonth.classList.add('-active');
-        }
+      switch (selector) {
+        case 'startDate':
+          if ((startYear === endYear) && currentMonth > endMonth) {
+            newMonth.classList.add('-disabled');
+            newMonth.disabled = true;
+          }
+          if (currentMonth === startMonth) {
+            newMonth.selected = true;
+            newMonth.classList.add('-active');
+          }
+        break;
+
+        case 'endDate':
+          if ((startYear === endYear) && currentMonth < startMonth) {
+            newMonth.classList.add('-disabled');
+            newMonth.disabled = true;
+          } else if ((endYear === maxYear) && currentMonth > maxMonth) {
+            newMonth.classList.add('-disabled');
+            newMonth.disabled = true;
+          }
+          if (currentMonth === endMonth) {
+            newMonth.selected = true;
+            newMonth.classList.add('-active');
+          }
+        break;
       }
     },
 
@@ -237,24 +241,28 @@ define([
         newYear.innerHTML = currentYear;
         newYear.classList.add('item');
 
-        if (selector === 'startDate') {
-          if (currentYear > endYear) {
-            newYear.classList.add('-disabled');
-            newYear.disabled = true;
-          }
-          if (currentYear === startYear) {
-            newYear.selected = true;
-            newYear.classList.add('-active');
-          }
-        } else if (selector === 'endDate') {
-          if (currentYear < startYear) {
-            newYear.classList.add('-disabled');
-            newYear.disabled = true;
-          }
-          if (currentYear === endYear) {
-            newYear.selected = true;
-            newYear.classList.add('-active');
-          }
+        switch (selector) {
+          case 'startDate':
+            if (currentYear > endYear) {
+              newYear.classList.add('-disabled');
+              newYear.disabled = true;
+            }
+            if (currentYear === startYear) {
+              newYear.selected = true;
+              newYear.classList.add('-active');
+            }
+          break;
+
+          case 'endDate':
+            if (currentYear < startYear) {
+              newYear.classList.add('-disabled');
+              newYear.disabled = true;
+            }
+            if (currentYear === endYear) {
+              newYear.selected = true;
+              newYear.classList.add('-active');
+            }
+          break;
         }
         $content.appendChild(newYear);
       }
