@@ -11,7 +11,7 @@
 #mex_forest_zoning[subcat="Terrenos con pendientes mayores al cien por ciento o cuarenta y cinco grados"] { polygon-fill: #fd8d3c;}
 #mex_forest_zoning[subcat="Áreas cubiertas con vegetación de manglar o bosque mesófilo de montaña"] { polygon-fill: #0cc0aa;}
 #mex_forest_zoning[subcat="Áreas cubiertas con selvas altas perennifolias"] { polygon-fill: #ffffcc;}
-#mex_forest_zoning[subcat="Áreas cubiertas con vegetación de galería"] { polygon-fill: #a1def0;}
+#mex_forest_zoning[subcat="Áreas cubiertas con vegetación de galería"] { polygon-fill: #683B11;}
 #mex_forest_zoning[subcat="*"] { polygon-fill: #bbb;}
 
 #mex_forest_zoning[subcat="Terrenos forestales de productividad alta"] { polygon-fill: #00441b;}
