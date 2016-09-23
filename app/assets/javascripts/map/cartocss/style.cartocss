@@ -657,7 +657,7 @@
     line-opacity: 0;
   }
 
-  [layer='mys_protected_areas_sabah'] {
+  [layer='mys_protected_areas_sabah'],[layer='uga_protected_areas'] {
     polygon-fill: #1F78B4;
     polygon-opacity: 0.7;
     line-color: #FFF;
