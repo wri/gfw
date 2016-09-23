@@ -329,6 +329,8 @@ define([
       var dateRange = this.selectedDates.getRange();
       this.onChange(dateRange);
       this.presenter.setTorqueDateRange(dateRange);
+      this.render();
+      this._afterRender();
     },
 
     _retrieveAvailableDates: function() {
