@@ -118,7 +118,7 @@ define([
         console.log(this.subscription.get('params'));
       }.bind(this));
 
-      mps.subscribe('Highlight/shape', function(data) {
+      mps.subscribe('Shape/update', function(data) {
         var defaults = this.subscription.get('defaults').params;
 
         if (!!data.use && this.usenames.indexOf(data.use) === -1) {
@@ -210,6 +210,10 @@ define([
         if (!!view.model) {
           view.model.clear({ silent: true })
         }
+        if (!!view._unsubscribe) {
+          view._unsubscribe();
+        }
+
         view.undelegateEvents();
         view.remove();
       })

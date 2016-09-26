@@ -215,7 +215,7 @@ define([
           use: data.tablename,
           wdpaid: data.id
         });
-        mps.publish('Highlight/shape', [data]);
+        mps.publish('Shape/update', [data]);
       }.bind(this));
     },
 
