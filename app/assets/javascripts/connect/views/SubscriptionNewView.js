@@ -159,6 +159,7 @@ define([
 
       if (!!aoi) {
         this.$formType.html(this.templates[aoi]({
+          email: this.user.get('email'),
           languages: languagesList
         }));
         this.cache();
