@@ -39,7 +39,7 @@ define([
       this.model.on('change', this.render.bind(this));
 
       // HIGHLIGHT
-      mps.subscribe('Highlight/shape', function(data){
+      mps.subscribe('Shape/update', function(data){
         this.model.clear({ silent: true }).set(data);
       }.bind(this));
     },

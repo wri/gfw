@@ -61,6 +61,7 @@ define([
         return;
       }
       this.layerInst = {};
+      this._cachedSubscriptions = [];
       this.render();
       this.cache();
       this.listeners();
@@ -73,73 +74,115 @@ define([
     listeners: function() {
       this.status.on('change:geojson', this.changeGeojson.bind(this));
       this.status.on('change:geostore', this.changeGeostore.bind(this));
+      this._subscribe();
+    },
 
-      mps.subscribe('Map/fit-bounds', function(bounds){
-        this.map.fitBounds(bounds)
-      }.bind(this));
-
-      mps.subscribe('Map/loading', function(loading){
-        var time = (!loading) ? 250 : 0;
-        setTimeout(function(){
-          this.$mapLoader.toggleClass('-start', loading);
-        }.bind(this), time);
-      }.bind(this));
+    _subscriptions: [
+      // MAP STATE
+      {
+        'Map/loading': function(loading){
+          var time = (!loading) ? 250 : 0;
+          setTimeout(function(){
+            this.$mapLoader.toggleClass('-start', loading);
+          }.bind(this), time);
+        }
+      },
+      {
+        'Map/fit-bounds': function(bounds){
+          this.map.fitBounds(bounds)
+        }
+      },
 
       // LAYERS
-      mps.subscribe('LayerNav/change', function(layerSpec){
-        var options = {
-          highlight: true
-        };
-        var layers = layerSpec.getLayers();
-        this.status.set('layers',layers);
-        this.setLayers(layers, options);
+      {
+        'LayerNav/change': function(layerSpec){
+          var options = {
+            highlight: true
+          };
+          var layers = layerSpec.getLayers();
+          this.status.set('layers',layers);
+          this.setLayers(layers, options);
 
-        // Delete geojson if it exists
-        this.deleteGeojson();
-
-      }.bind(this));
+          // Delete geojson if it exists
+          this.deleteGeojson();
+        }
+      },
 
       // HIGHLIGHT
-      mps.subscribe('Country/update', function(iso) {
-        var iso = iso;
-        if (!!iso && !!iso.country) {
-          this.getCountryShape(iso);
+      {
+        'Country/update': function(iso) {
+          var iso = iso;
+          if (!!iso && !!iso.country) {
+            this.getCountryShape(iso);
+          }
         }
-      }.bind(this));
+      },
 
-      mps.subscribe('Highlight/shape', function(data) {
-        if (!!data.wdpaid) {
-          this.getShape('protected_areas', data.wdpaid);
-        }
+      {
+        'Shape/update': function(data) {
+          console.log(data);
+          if (!!data.wdpaid) {
+            this.getShape('protected_areas', data.wdpaid);
+          }
 
-        if (!!data.use && !!data.useid) {
-          this.getShape(data.use, data.useid);
+          if (!!data.use && !!data.useid) {
+            this.getShape(data.use, data.useid);
+          }
         }
-      }.bind(this));
+      },
 
       // DRAWING
-      mps.subscribe('Drawing/toggle', function(toggle){
-        this.status.set('is_drawing', toggle);
-      }.bind(this));
+      {
+        'Drawing/toggle': function(toggle){
+          this.status.set('is_drawing', toggle);
+        }
+      },
 
-      mps.subscribe('Drawing/overlay', function(overlay){
-        this.status.set('overlay', overlay);
-        this.status.set('geojson', this.getGeojson(overlay));
-        this.eventsGeojson();
-      }.bind(this));
+      {
+        'Drawing/overlay': function(overlay){
+          this.status.set('overlay', overlay);
+          this.status.set('geojson', this.getGeojson(overlay));
+          this.eventsGeojson();
+        }
+      },
 
-      mps.subscribe('Drawing/geojson', function(geojson){
-        this.status.set('geojson', geojson);
-        this.drawGeojson();
-      }.bind(this));
+      {
+        'Drawing/geojson': function(geojson){
+          this.status.set('geojson', geojson);
+          this.drawGeojson();
+        }
+      },
 
-      mps.subscribe('Drawing/bounds', function(bounds){
-        this.map.fitBounds(bounds);
-      }.bind(this));
+      {
+        'Drawing/bounds': function(bounds){
+          this.map.fitBounds(bounds);
+        }
+      },
 
-      mps.subscribe('Drawing/delete', function(){
-        this.deleteGeojson();
-      }.bind(this));
+      {
+        'Drawing/delete': function(){
+          this.deleteGeojson();
+        }
+      },
+
+    ],
+
+    /**
+     * Subscribe && unsubscribe to events and append them to this._cachedSubscriptions.
+     */
+    _subscribe: function() {
+      _.each(this._subscriptions, _.bind(function(subscription) {
+        _.each(subscription, _.bind(function(callback, name) {
+          this._cachedSubscriptions.push(
+            mps.subscribe(name, _.bind(callback, this)));
+        },this));
+      }, this));
+    },
+
+    _unsubscribe: function() {
+      for (var i = 0; i < this._cachedSubscriptions.length; i++) {
+        mps.unsubscribe(this._cachedSubscriptions[i]);
+      }
     },
 
     /**
