@@ -36,7 +36,7 @@ define([
       if (!this.$el.length) {
         return;
       }
-      
+
       View.prototype.initialize.apply(this);
 
       this.map = map;

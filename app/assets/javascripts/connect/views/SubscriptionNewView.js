@@ -6,6 +6,7 @@ define([
   'mps',
   'validate',
   'helpers/languagesHelper',
+  'core/View',
   'connect/models/Subscription',
   'connect/views/MapMiniView',
   'connect/views/MapMiniControlsView',
@@ -27,6 +28,7 @@ define([
   mps,
   validate,
   languagesHelper,
+  View,
   Subscription,
   MapMiniView,
   MapMiniControlsView,
@@ -51,7 +53,7 @@ define([
   };
 
 
-  var SubscriptionNewView = Backbone.View.extend({
+  var SubscriptionNewView = View.extend({
     usenames: ['mining', 'oilpalm', 'fiber', 'logging'],
 
     subscription: new Subscription({
@@ -88,6 +90,8 @@ define([
     },
 
     initialize: function(router, user) {
+      View.prototype.initialize.apply(this);
+
       this.router = router;
       this.user = user;
 
@@ -95,55 +99,67 @@ define([
       this.render();
     },
 
-    listeners: function() {
-      // STATUS
-      this.subscription.on('change:aoi', this.changeAOI.bind(this));
-
+    _subscriptions: [
       // MPS
-      mps.subscribe('Params/reset', function(layerSpec) {
-        var defaults = this.subscription.get('defaults').params;
-        this.subscription.set('params', defaults);
-        console.log(this.subscription.get('params'));
-      }.bind(this));
-
-      mps.subscribe('LayerNav/change', function(layerSpec) {
-        var defaults = this.subscription.get('defaults').params;
-        this.subscription.set('params', defaults);
-        console.log(this.subscription.get('params'));
-      }.bind(this));
-
-      mps.subscribe('Country/update', function(iso) {
-        var defaults = this.subscription.get('defaults').params;
-        this.subscription.set('params', _.extend({}, defaults, { iso: iso }));
-        console.log(this.subscription.get('params'));
-      }.bind(this));
-
-      mps.subscribe('Shape/update', function(data) {
-        var defaults = this.subscription.get('defaults').params;
-
-        if (!!data.use && this.usenames.indexOf(data.use) === -1) {
-          var provider = {
-            table: data.use,
-            filter: 'cartodb_id = ' + data.useid,
-            user: 'wri-01',
-            type: 'carto'
-          };
-
-          GeostoreService.use(provider).then(function(useGeostoreId) {
-            this.subscription.set('params', _.extend({}, defaults, { geostore: useGeostoreId }));
-            console.log(this.subscription.get('params'));
-          }.bind(this));
-        } else {
-          this.subscription.set('params', _.extend({}, defaults, data));
+      {
+        'Params/reset': function(layerSpec) {
+          var defaults = this.subscription.get('defaults').params;
+          this.subscription.set('params', defaults);
           console.log(this.subscription.get('params'));
         }
-      }.bind(this));
+      },
 
-      mps.subscribe('Drawing/geostore', function(geostore) {
-        var defaults = this.subscription.get('defaults').params;
-        this.subscription.set('params', _.extend(defaults, { geostore: geostore }));
-        console.log(this.subscription.get('params'));
-      }.bind(this));
+      {
+        'LayerNav/change': function(layerSpec) {
+          var defaults = this.subscription.get('defaults').params;
+          this.subscription.set('params', defaults);
+          console.log(this.subscription.get('params'));
+        }
+      },
+
+      {
+        'Country/update': function(iso) {
+          var defaults = this.subscription.get('defaults').params;
+          this.subscription.set('params', _.extend({}, defaults, { iso: iso }));
+          console.log(this.subscription.get('params'));
+        }
+      },
+
+      {
+        'Shape/update': function(data) {
+          var defaults = this.subscription.get('defaults').params;
+
+          if (!!data.use && this.usenames.indexOf(data.use) === -1) {
+            var provider = {
+              table: data.use,
+              filter: 'cartodb_id = ' + data.useid,
+              user: 'wri-01',
+              type: 'carto'
+            };
+
+            GeostoreService.use(provider).then(function(useGeostoreId) {
+              this.subscription.set('params', _.extend({}, defaults, { geostore: useGeostoreId }));
+              console.log(this.subscription.get('params'));
+            }.bind(this));
+          } else {
+            this.subscription.set('params', _.extend({}, defaults, data));
+            console.log(this.subscription.get('params'));
+          }
+        }
+      },
+
+      {
+        'Drawing/geostore': function(geostore) {
+          var defaults = this.subscription.get('defaults').params;
+          this.subscription.set('params', _.extend(defaults, { geostore: geostore }));
+          console.log(this.subscription.get('params'));
+        }
+      },
+    ],
+
+    listeners: function() {
+      // STATUS
+      this.listenTo(this.subscription, 'change:aoi', this.changeAOI.bind(this));
     },
 
     render: function() {
