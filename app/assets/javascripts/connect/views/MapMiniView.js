@@ -122,7 +122,6 @@ define([
 
       {
         'Shape/update': function(data) {
-          console.log(data);
           if (!!data.wdpaid) {
             this.getShape('protected_areas', data.wdpaid);
           }

@@ -49,6 +49,7 @@ define([
       this.model && this.model.clear({ silent: true });
       this._unsubscribe && this._unsubscribe();
       this.undelegateEvents();
+      this.remove();
     }
 
   });
