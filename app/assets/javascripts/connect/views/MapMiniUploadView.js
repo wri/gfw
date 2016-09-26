@@ -10,13 +10,14 @@ define([
   'amplify',
   'turf',
   'mps',
+  'core/View',
   'map/services/ShapefileNewService',
   'helpers/geojsonUtilsHelper',
-], function(_, Handlebars, amplify, turf, mps, ShapefileService, geojsonUtilsHelper) {
+], function(_, Handlebars, amplify, turf, mps, View, ShapefileService, geojsonUtilsHelper) {
 
   'use strict';
 
-  var MapMiniUploadView = Backbone.View.extend({
+  var MapMiniUploadView = View.extend({
 
     config: {
       FILE_SIZE_LIMIT: 1000000,
@@ -38,19 +39,27 @@ define([
         return;
       }
 
+      View.prototype.initialize.apply(this);
+
       this.map = map;
       this.cache();
       this.listeners();
     },
+
+    _subscriptions: [
+      // HIGHLIGHT
+      {
+        'Drawing/toggle': function(toggle){
+          this.$inputUploadShape.val('')
+        }
+      }
+    ],
 
     cache: function() {
       this.$inputUploadShape = this.$el.find('#input-upload-shape');
     },
 
     listeners: function() {
-      mps.subscribe('Drawing/toggle', function(toggle){
-        this.$inputUploadShape.val('')
-      }.bind(this));
     },
 
     /**
