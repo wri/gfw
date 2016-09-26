@@ -110,9 +110,7 @@ define([
           is_drawn = this.status.get('is_drawn');
 
       mps.publish('Drawing/delete');
-      if (!is_drawn) {
-        mps.publish('Drawing/toggle', [!is_drawing]);
-      }
+      mps.publish('Drawing/toggle', [!is_drawing && !is_drawn]);
     },
 
 
@@ -168,15 +166,17 @@ define([
      * @return {void}
      */
     completeDrawing: function(e) {
+      this.stopDrawingManager();
+
       // Check if the drawing is enabled
       if (this.status.get('is_drawing')) {
-        mps.publish('Drawing/overlay', [e.overlay]);
+        mps.publish('Drawing/overlay', [e.overlay], { save: true });
         mps.publish('Drawing/toggle', [false]);
       } else {
+        mps.publish('Drawing/overlay', [e.overlay], { save: false });
+        mps.publish('Drawing/toggle', [false]);
         mps.publish('Drawing/delete');
       }
-
-      this.stopDrawingManager();
     },
 
   });

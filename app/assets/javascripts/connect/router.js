@@ -9,8 +9,9 @@ define([
   'connect/views/SubscriptionNewView',
   'connect/views/LoginView',
   'connect/views/SubHeaderView',
-  'views/NotificationsView'
-], function($, Backbone, _, User, UserFormView, StoriesListView, SubscriptionListView, SubscriptionNewView, LoginView, SubHeaderView, NotificationsView) {
+  'views/NotificationsView',
+  'views/SourceModalView'
+], function($, Backbone, _, User, UserFormView, StoriesListView, SubscriptionListView, SubscriptionNewView, LoginView, SubHeaderView, NotificationsView, SourceModalView) {
 
   'use strict';
 
@@ -115,6 +116,7 @@ define([
         router: this
       });
 
+      new SourceModalView();
       new NotificationsView();
     },
 
