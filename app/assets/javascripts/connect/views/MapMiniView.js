@@ -9,12 +9,15 @@ define([
   'underscore',
   'mps',
   'cookie',
+  'topojson',
   'map/views/maptypes/grayscaleMaptype',
   'map/services/GeostoreService',
   'map/services/ShapeService',
+  'map/services/CountryService',
+  'map/services/RegionService',
   'map/helpers/layersHelper',
   'helpers/geojsonUtilsHelper',
-], function(Backbone, _, mps, Cookies, grayscaleMaptype, GeostoreService, ShapeService, layersHelper, geojsonUtilsHelper) {
+], function(Backbone, _, mps, Cookies, topojson, grayscaleMaptype, GeostoreService, ShapeService, CountryService, RegionService, layersHelper, geojsonUtilsHelper) {
 
   'use strict';
 
@@ -97,6 +100,13 @@ define([
       }.bind(this));
 
       // HIGHLIGHT
+      mps.subscribe('Country/update', function(iso) {
+        var iso = iso;
+        if (!!iso && !!iso.country) {
+          this.getCountryShape(iso);
+        }
+      }.bind(this));
+
       mps.subscribe('Highlight/shape', function(data) {
         if (!!data.wdpaid) {
           this.getShape('protected_areas', data.wdpaid);
@@ -105,7 +115,6 @@ define([
         if (!!data.use && !!data.useid) {
           this.getShape(data.use, data.useid);
         }
-
       }.bind(this));
 
       // DRAWING
@@ -273,6 +282,51 @@ define([
       this.map.setZoom(zoom);
     },
 
+    // COUNTRIES
+    getCountryShape: function(iso) {
+      var iso = iso;
+      if (!!iso.country) {
+        if (!!iso.region) {
+          RegionService.show(iso.country, iso.region)
+            .then(function(results,status) {
+              var geojson = results.features[0].geometry,
+                  bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+
+              // Get bounds and fit to them
+              if (!!bounds) {
+                mps.publish('Map/fit-bounds', [bounds]);
+              }
+
+              // Draw geojson of country
+              this.deleteGeojson();
+              this.drawGeojson(geojson);
+            }.bind(this));
+
+        } else {
+          CountryService.show(iso.country)
+            .then(function(results,status) {
+              var objects = _.findWhere(results.topojson.objects, {
+                type: 'MultiPolygon'
+              });
+              var topoJson = topojson.feature(results.topojson,objects),
+                  geojson = topoJson.geometry,
+                  bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+
+              // Get bounds and fit to them
+              if (!!bounds) {
+                mps.publish('Map/fit-bounds', [bounds]);
+              }
+
+              // Draw geojson of country
+              this.deleteGeojson();
+              this.drawGeojson(geojson);
+
+            }.bind(this));
+        }
+      }
+
+    },
+
     // SHAPES
     getShape: function(type, id) {
       ShapeService.get(type, id)
@@ -355,16 +409,14 @@ define([
       var paths = geojsonUtilsHelper.geojsonToPath(geojson);
       var overlay = new google.maps.Polygon({
         paths: paths,
-        editable: (geojson.type == 'Polygon'),
+        // TODO: Editable if it's a drawn Polygon
+        editable: false,
         strokeWeight: this.status.get('overlay_stroke_weight'),
         fillOpacity: 0,
         fillColor: '#FFF',
         strokeColor: '#A2BC28'
       });
 
-      console.log(geojson);
-      console.log(this.map);
-      console.log(overlay);
       overlay.setMap(this.map);
 
       this.status.set('overlay', overlay, { silent: true });
