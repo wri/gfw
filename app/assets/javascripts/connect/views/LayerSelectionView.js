@@ -187,6 +187,7 @@ define([
           $select.chosen({
             width: '100%',
             disable_search: true,
+            allow_single_deselect: true,
             inherit_select_classes: true,
             no_results_text: "Oops, nothing found!"
           });

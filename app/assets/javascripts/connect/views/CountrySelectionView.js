@@ -134,6 +134,7 @@ define([
         if (! !!$select.data('chosen')) {
           $select.chosen({
             width: '100%',
+            allow_single_deselect: true,
             inherit_select_classes: true,
             no_results_text: "Oops, nothing found!"
           });

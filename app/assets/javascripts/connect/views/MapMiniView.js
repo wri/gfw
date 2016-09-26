@@ -116,6 +116,8 @@ define([
           var iso = iso;
           if (!!iso && !!iso.country) {
             this.getCountryShape(iso);
+          } else {
+            this.deleteGeojson();
           }
         }
       },
@@ -312,6 +314,8 @@ define([
     getCountryShape: function(iso) {
       var iso = iso;
       if (!!iso.country) {
+        mps.publish('Map/loading', [true]);
+
         if (!!iso.region) {
           RegionService.show(iso.country, iso.region)
             .then(function(results,status) {
@@ -326,6 +330,8 @@ define([
               // Draw geojson of country
               this.deleteGeojson();
               this.drawGeojson(geojson);
+
+              mps.publish('Map/loading', [false]);
             }.bind(this));
 
         } else {
@@ -347,6 +353,7 @@ define([
               this.deleteGeojson();
               this.drawGeojson(geojson);
 
+              mps.publish('Map/loading', [false]);
             }.bind(this));
         }
       }
