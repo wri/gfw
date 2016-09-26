@@ -206,6 +206,9 @@ define([
 
     removeSubViews: function() {
       _.each(this.subViews, function(view){
+        if (!!view.model) {
+          view.model.clear({ silent: true })
+        }
         view.undelegateEvents();
         view.remove();
       })
