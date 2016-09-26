@@ -142,10 +142,12 @@ define([
       },
 
       {
-        'Drawing/overlay': function(overlay){
+        'Drawing/overlay': function(overlay, options){
           this.status.set('overlay', overlay);
-          this.status.set('geojson', this.getGeojson(overlay));
-          this.eventsGeojson();
+          if (!!options && options.save) {
+            this.status.set('geojson', this.getGeojson(overlay));
+            this.eventsGeojson();
+          }
         }
       },
 
