@@ -7,12 +7,13 @@ define([
   'underscore',
   'handlebars',
   'mps',
+  'core/View',
   'text!connect/templates/subscriptionNewDataSelection.handlebars',
-], function(_, Handlebars, mps, tpl) {
+], function(_, Handlebars, mps, View, tpl) {
 
   'use strict';
 
-  var MapMiniSelectedView = Backbone.View.extend({
+  var MapMiniSelectedView = View.extend({
     model: new (Backbone.Model.extend({
 
     })),
@@ -30,18 +31,24 @@ define([
         return;
       }
 
+      View.prototype.initialize.apply(this);
+
       this.map = map;
       this.cache();
       this.listeners();
     },
 
-    listeners: function() {
-      this.model.on('change', this.render.bind(this));
-
+    _subscriptions: [
       // HIGHLIGHT
-      mps.subscribe('Shape/update', function(data){
-        this.model.clear({ silent: true }).set(data);
-      }.bind(this));
+      {
+        'Shape/update': function(data){
+          this.model.clear({ silent: true }).set(data);
+        }
+      }
+    ],
+
+    listeners: function() {
+      this.listenTo(this.model, 'change', this.render.bind(this));
     },
 
     cache: function() {

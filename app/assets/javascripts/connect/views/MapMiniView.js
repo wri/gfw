@@ -10,6 +10,7 @@ define([
   'mps',
   'cookie',
   'topojson',
+  'core/View',
   'map/views/maptypes/grayscaleMaptype',
   'map/services/GeostoreService',
   'map/services/ShapeService',
@@ -17,11 +18,11 @@ define([
   'map/services/RegionService',
   'map/helpers/layersHelper',
   'helpers/geojsonUtilsHelper',
-], function(Backbone, _, mps, Cookies, topojson, grayscaleMaptype, GeostoreService, ShapeService, CountryService, RegionService, layersHelper, geojsonUtilsHelper) {
+], function(Backbone, _, mps, Cookies, topojson, View, grayscaleMaptype, GeostoreService, ShapeService, CountryService, RegionService, layersHelper, geojsonUtilsHelper) {
 
   'use strict';
 
-  var MapMiniView = Backbone.View.extend({
+  var MapMiniView = View.extend({
 
     el: '#map',
 
@@ -60,8 +61,10 @@ define([
       if (!this.$el.length) {
         return;
       }
+
+      View.prototype.initialize.apply(this);
+
       this.layerInst = {};
-      this._cachedSubscriptions = [];
       this.render();
       this.cache();
       this.listeners();
@@ -72,9 +75,8 @@ define([
     },
 
     listeners: function() {
-      this.status.on('change:geojson', this.changeGeojson.bind(this));
-      this.status.on('change:geostore', this.changeGeostore.bind(this));
-      this._subscribe();
+      this.listenTo(this.status, 'change:geojson', this.changeGeojson.bind(this));
+      this.listenTo(this.status, 'change:geostore', this.changeGeostore.bind(this));
     },
 
     _subscriptions: [
@@ -166,24 +168,6 @@ define([
       },
 
     ],
-
-    /**
-     * Subscribe && unsubscribe to events and append them to this._cachedSubscriptions.
-     */
-    _subscribe: function() {
-      _.each(this._subscriptions, _.bind(function(subscription) {
-        _.each(subscription, _.bind(function(callback, name) {
-          this._cachedSubscriptions.push(
-            mps.subscribe(name, _.bind(callback, this)));
-        },this));
-      }, this));
-    },
-
-    _unsubscribe: function() {
-      for (var i = 0; i < this._cachedSubscriptions.length; i++) {
-        mps.unsubscribe(this._cachedSubscriptions[i]);
-      }
-    },
 
     /**
      * Creates the Google Maps and attaches it to the DOM.

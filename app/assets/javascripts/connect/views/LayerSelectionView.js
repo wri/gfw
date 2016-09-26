@@ -7,15 +7,16 @@ define([
   'underscore',
   'handlebars',
   'mps',
+  'core/View',
   'map/services/LayerSpecService',
   'map/services/CountryService',
   'text!connect/templates/countrySelection.handlebars',
   'text!connect/templates/layerSelection.handlebars',
-], function(_, Handlebars, mps, LayerSpecService, CountryService, countryTpl, layerTpl) {
+], function(_, Handlebars, mps, View, LayerSpecService, CountryService, countryTpl, layerTpl) {
 
   'use strict';
 
-  var CountrySelectionView = Backbone.View.extend({
+  var CountrySelectionView = View.extend({
     model: new (Backbone.Model.extend({
       country: null,
       layers: null,
@@ -35,6 +36,8 @@ define([
       if (!this.$el.length) {
         return;
       }
+      
+      View.prototype.initialize.apply(this);
 
       this.map = map;
       this.cache();

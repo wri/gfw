@@ -10,13 +10,14 @@ define([
   'amplify',
   'turf',
   'mps',
+  'core/View',
   'map/services/GeostoreService',
   'helpers/geojsonUtilsHelper',
-], function(_, Handlebars, amplify, turf, mps, GeostoreService, geojsonUtilsHelper) {
+], function(_, Handlebars, amplify, turf, mps, View, GeostoreService, geojsonUtilsHelper) {
 
   'use strict';
 
-  var MapMiniDrawingView = Backbone.View.extend({
+  var MapMiniDrawingView = View.extend({
 
     el: '#map-drawing',
 
@@ -38,18 +39,24 @@ define([
         return;
       }
 
+      View.prototype.initialize.apply(this);
+
       this.map = map;
       this.listeners();
     },
 
+    _subscriptions: [
+      // HIGHLIGHT
+      {
+        'Drawing/toggle': function(toggle){
+          this.status.set('is_drawing', toggle);
+        }
+      }
+    ],
+
     listeners: function() {
       // Status listeners
-      this.status.on('change:is_drawing', this.changeIsDrawing.bind(this));
-
-      // MPS listeners
-      mps.subscribe('Drawing/toggle', function(toggle){
-        this.status.set('is_drawing', toggle);
-      }.bind(this))
+      this.listenTo(this.status, 'change:is_drawing', this.changeIsDrawing.bind(this));
     },
 
 
