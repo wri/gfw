@@ -1,7 +1,7 @@
 define([
-  'backbone', 'handlebars',
-  'text!connect/templates/login.handlebars'
-], function(Backbone, Handlebars, tpl) {
+  'backbone',
+  'handlebars',
+], function(Backbone, Handlebars) {
 
   'use strict';
 
@@ -21,7 +21,7 @@ define([
      */
     navigateTo: function(e) {
       e & e.preventDefault();
-      var href = $(e.currentTarget).attr('href');
+      var href = $(e.currentTarget).data('href');
       this.router.navigateTo(href, { trigger: true });
     },
 
