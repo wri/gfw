@@ -285,7 +285,7 @@ define([
             this.router.navigateTo('subscriptions', {
               trigger: true
             });
-            mps.publish('Notification/open', ['notification-my-gfw-subscription-correct']);
+            mps.publish('Notification/open', ['notification-my-gfw-subscription-correct2']);
           }.bind(this))
 
           .fail(function(){
