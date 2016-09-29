@@ -85,7 +85,7 @@ Gfw::Application.routes.draw do
   # static #
   get '/feedback' => 'static#feedback'
   get '/feedback_jsonp' => 'static#feedback_jsonp'
-  get '/contribute-data' => 'static#contribute'
+  # get '/contribute-data' => 'static#contribute'
 
 
   # connect

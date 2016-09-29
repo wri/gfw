@@ -28,7 +28,7 @@ define([
       'login': 'loginPage',
       'stories': 'storiesPage',
       'subscriptions': 'subscriptionsPage',
-      'subscriptions/new': 'subscriptionsNewPage',
+      // 'subscriptions/new': 'subscriptionsNewPage',
     },
 
     routeViews: {
