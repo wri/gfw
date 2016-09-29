@@ -1,5 +1,10 @@
 .widget-timeline .timeline-year.timeline-torque {
   padding-left: 10px;
+  display: flex;
+  justify-content: center;
+  @media (min-width: $br-mobileMap) {
+    display: block;
+  }
 
   .timeline-date-pickers {
     display: inline-flex;
