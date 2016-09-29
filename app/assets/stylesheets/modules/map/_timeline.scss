@@ -12,7 +12,6 @@
     }
     @media (min-width: $br-mobile){
       bottom: 44px;
-      min-width: 700px;
     }
 
     @media (min-width: $br-mobileMap){
@@ -31,7 +30,7 @@
       bottom: 50px;
       left: 50%;
       right: auto;
-      margin-left: -405px; // => calc(itemwith/2); Firefox issue
+      margin-left: -350px; // => calc(itemwith/2); Firefox issue
       // @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
       //   right: 35px;
       //   left: auto;
@@ -64,10 +63,6 @@
 
     @media (min-width: $br-mobileMap){
       display: block;
-    }
-
-    @media (min-width: $br-mobile) {
-      min-width: 700px;
     }
 
     span {
