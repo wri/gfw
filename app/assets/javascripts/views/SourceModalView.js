@@ -67,12 +67,17 @@ define([
       this.sourceModel = new SourceModel({
         slug: this.$current.data('source'),
       });
-      this.sourceModel.fetch({
-        update:true,
-        parse: true,
-        success: this.sourceSuccess.bind(this),
-        error: this.sourceError.bind(this),
-      });
+
+      if (!!this.$current.data('static')) {
+        this.sourceStatic();
+      } else {
+        this.sourceModel.fetch({
+          update:true,
+          parse: true,
+          success: this.sourceSuccess.bind(this),
+          error: this.sourceError.bind(this),
+        });
+      }
     },
 
     sourceSuccess: function() {

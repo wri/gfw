@@ -24,9 +24,10 @@ define([
       FILE_SIZE_MESSAGE: 'The selected file is quite large and uploading it might result in browser instability. Do you want to continue?'
     },
 
-    el: '#map-upload',
+    el: '#map-uploading',
 
     events: {
+      'click' : 'onClickUploading',
       'change #input-upload-shape' : 'onChangeFileShape',
       'dragenter' : 'onDragenterShape',
       'dragleave' : 'onDragleaveShape',
@@ -64,11 +65,18 @@ define([
 
     /**
      * UI EVENTS
+     * - onClickUploading
      * - onChangeFileShape
      * - onDragoverShape
      * - onDragendShape
      * - onDropShape
     */
+    onClickUploading: function(e) {
+      if (e.target.id === 'map-uploading') {
+        this.$inputUploadShape.trigger('click');
+      }
+    },
+
     onChangeFileShape: function(e) {
       var file = e.currentTarget.files[0];
       if (file) {
