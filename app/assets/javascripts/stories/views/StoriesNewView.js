@@ -11,9 +11,9 @@ define([
   'validate',
   'stories/models/StoryModel',
   'stories/models/MediaModel',
-  'stories/models/UserModel',
+  'models/UserModel',
   'stories/views/LatestStoriesView',
-  'text!stories/templates/new_story.handlebars'
+  'text!stories/templates/storiesNew.handlebars'
 ], function(
   Class,
   $,
@@ -54,7 +54,12 @@ define([
       presence: {
         message: "Please enter a location for your story"
       },
-    }    
+    },
+    'email': {
+      email: {
+        message: "Please enter a correct email"
+      },
+    }
   };
 
   var StoriesNewView = Backbone.View.extend({
@@ -72,6 +77,7 @@ define([
       'dragstart .sortable' : 'dragstart',
       'click #submit': 'submit',
       'click .upload_picture': 'showFileSelector',
+      'change #hideUser' : 'onChangeHideUser'
     },
 
     initialize: function() {
@@ -82,20 +88,21 @@ define([
         .then(function(){
           this.story = new Story();
           this.render();
-          this.cache();          
+          this.cache();
         }.bind(this))
 
     },
 
     cache: function() {
       this.$form = $('#new_story');
+      this.$personalInfo = $('#field-personal-info');
     },
 
     videoInput: function(e) {
       if ($(e.target).val().length == 0) {
         var removable = document.getElementById('videothumbnail');
         if (removable) {
-          removable.parentNode.removeChild(removable);  
+          removable.parentNode.removeChild(removable);
         }
       } else {
         this._addVideoThumbnail($(e.target).val());
@@ -114,7 +121,7 @@ define([
         } else {
           mps.publish('Notification/open', ['notif-not-a-correct-youtube-link']);
           return null;
-        }        
+        }
       }
       return null;
     },
@@ -126,7 +133,7 @@ define([
 
       var vidID  = this._getVideoID(url),
           $thumb = $('#videothumbnail');
-      
+
       if ($thumb.length > 0) {
         if (!!vidID) {
           $thumb.find('.inner_box').css('background-image','url('+ vidID +')');
@@ -152,7 +159,7 @@ define([
 
             var confirmation = confirm('Are you sure?')
 
-            if (confirmation == true) {
+            if (confirmation === true) {
               var videos = this.story.get('media').filter( function(model) {
                 return !!model.get('embedUrl')
               });
@@ -163,7 +170,7 @@ define([
                 $thumb.remove();
               });
             }
-          }.bind(this));          
+          }.bind(this));
         }
       }
 
@@ -202,7 +209,7 @@ define([
         remainingFiles += _.size(data.files);
         _.each(data.files, function(file) {
           if (file && file.size > 4000000) {
-            mps.publish('Notification/open', ['notif-limit-exceed']);
+            mps.publish('Notification/open', ['notification-limit-exceed']);
             return;
           } else {
             var filename = that.prettifyFilename(file.name);
@@ -249,7 +256,7 @@ define([
             var confirmation = confirm('Are you sure?')
 
             if (confirmation == true) {
-              
+
               var image = this.story.get('media').filter( function(model) {
                 return model.get('previewUrl') == $thumb.data('orderid')
               });
@@ -273,7 +280,7 @@ define([
       })
 
       .on('fileuploadfail', function (e, data){
-        mps.publish('Notification/open', ['upload-error-server']);
+        mps.publish('Notification/open', ['notification-upload-error-server']);
         var $submitButton = $("form input[type='submit']");
         $submitButton.val('Submit story');
         $submitButton.removeClass('disabled');
@@ -358,7 +365,7 @@ define([
 
           function() {
             $autoLocate.removeClass('active');
-            mps.publish('Notification/open', ['notif-enable-location']);
+            mps.publish('Notification/open', ['notification-enable-location']);
           }
         );
       } else {
@@ -417,9 +424,11 @@ define([
 
     submit: function(event) {
       event.preventDefault();
-      
+
       var attributesFromForm = Backbone.Syphon.serialize(this.$('form#new_story'));
-      
+      // As long as the checkbox is for just the oposite
+      attributesFromForm.hideUser = !attributesFromForm.hideUser;
+
       // Remove 'media' because we want to set it from the model
       // I don't know why this serializing is returning 'media { image: "" }'
       if (attributesFromForm.media) {
@@ -429,18 +438,11 @@ define([
       this.story.set(_.extend({ visible: true }, this.story.toJSON(), attributesFromForm));
 
       if (this.validate()) {
-        
-        $.when(
-          this.user.save({ 
-            fullName: this.story.attributes.name,
-            email: this.story.attributes.email 
-          }, { patch: true }),
-          this.story.save()
-        )
-        .then(function(user,story){
-          var id = story[0].data.id;
-          window.location = '/stories/'+id;
-        });        
+        this.story.save()
+          .then(function(story){
+            var id = story.data.id;
+            window.location = '/stories/'+id;
+          });
       } else {
         this.updateForm();
         mps.publish('Notification/open', ['story-new-form-error']);
@@ -485,6 +487,14 @@ define([
         $input.addClass('-error');
         $label.addClass('-error');
       }
+    },
+
+    /**
+     * UI EVENTS
+     */
+    onChangeHideUser: function(e) {
+      var is_checked = $(e.currentTarget).is(':checked');
+      this.$personalInfo.toggleClass('-hidden', !is_checked);
     }
 
 

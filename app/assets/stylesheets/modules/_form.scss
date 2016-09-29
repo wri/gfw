@@ -1,4 +1,4 @@
-$label-width: 85px;
+$label-width: 100px;
 
 
 input[type="password"],
@@ -14,14 +14,83 @@ textarea {
   font-size: 14px;
   border-radius: 4px;
   outline: none;
-  
   &:focus {
     border-color: darken($border,10%);
   }
+}
 
-  &.-disabled {
-    opacity: 0.5;
+.field-fieldset {
+  margin: 0 0 75px;
+  &:last-child {
+    margin: 0;
   }
+
+  &.-js-fieldset {
+    display: none;
+  }
+
+  &.-active {
+    display: block;
+  }
+}
+
+.field-uploadtype {
+  display: none;
+
+  &.-active {
+    display: block;
+  }
+}
+
+.field-header {
+  &.-padding-top {
+    padding-top: 20px;
+  }
+  &.-padding-bottom {
+    padding-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 35px;
+    padding: 0 0 15px;
+    color: $dark;
+  }
+
+  h3 {
+    font-weight: 500;
+    font-size: 14px;
+    color: $dark;
+    line-height: 1.5;
+    &.-error {
+      color: $red;
+    }
+  }
+
+  > p {
+    color: $dark;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 5px;
+
+    &.-hint {
+      font-size: 12px;
+      margin: 5px 0;
+      font-style: italic;
+    }
+  }
+}
+
+.field-column {
+  display: block;
+  @media (min-width: 1450px) {
+    display: flex;
+  }
+
+
+  &.-j-center { justify-content: center; }
+  &.-j-between { justify-content: space-between; }
+  &.-j-start { justify-content: flex-start; }
+  &.-j-end { justify-content: flex-end; }
 }
 
 /**
@@ -29,11 +98,49 @@ textarea {
  */
 .field {
   @include clearfix();
-  position: relative;  
+  position: relative;
   width: 100%;
   margin: 0 0 25px;
+
   @media (min-width: $br-mobile) {
     padding: 0px 0px 0px $label-width;
+  }
+
+  &.-default {
+    padding: 0;
+
+    > label {
+      display: block;
+      text-align: left;
+      width: 100%;
+      position: relative;
+      left: auto;
+      top: auto;
+      transform: none;
+      margin: 0 0 3px;
+    }
+  }
+
+  &.-hidden {
+    display: none;
+  }
+
+  // SIZES
+  &.-little {
+    max-width: 200px;
+  }
+
+  &.-medium {
+    max-width: 350px;
+  }
+
+  &.-huge {
+    max-width: 500px;
+  }
+
+
+  &.-no-padding {
+    padding: 0;
   }
 
   label {
@@ -49,16 +156,15 @@ textarea {
       width: $label-width;
       position: absolute;
       left: 0;
-      top: 12px;
-    }
-
-    &.-has-hint {
-      top: 1px;
+      top: 21px;
+      transform: translate(0,-50%);
+      line-height: 1;
     }
 
     &.-error {
       color: $red;
     }
+
   }
 
   textarea {
@@ -70,7 +176,13 @@ textarea {
     color: $dark;
     font-size: 14px;
     line-height: 1.5;
-    margin: 0 0 15px;
+    margin: 0 0 5px;
+
+    &.-hint {
+      font-size: 12px;
+      margin: 5px 0;
+      font-style: italic;
+    }
 
     &.-terms {
       font-size: 10px;
@@ -105,44 +217,65 @@ textarea {
       font-size: 12px;
       color: $red;
       text-transform: uppercase;
-    }    
+    }
   }
 }
-
 
 /**
  * Radio
  */
 .radio-box {
   @include clearfix();
-  display: flex;
-  justify-content: center;
-  padding: 15px 0;
+  padding: 6px 0;
+  font-size: 12px;
 
   .custom-radio {
-    margin: 0 0 0 20px;
-    &:first-child {
-      margin: 0;
+    display: flex;
+    width: 100%;
+
+    &.-with-input {
+      flex-wrap: wrap;
+
+      label {
+        width: 100%;
+      }
+
+      input[type=text] {
+        max-width: 250px;
+        margin: 0 0 0 25px;
+      }
     }
   }
 
   label {
+    padding: 8px 0;
     font-weight: 400;
     text-transform: none;
     position: relative;
     padding-left: 25px;
-    line-height: 28px;
+    line-height: 1;
     cursor: pointer;
+    width: auto;
+    top: 0;
+    left: 0;
+    transform: none;
+    text-align: left;
 
-    span{
+    &.-uppercase {
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    span {
       position: absolute;
       top: 50%;
       left: 0;
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       border: 1px solid $dark;
       border-radius: 50%;
       transform: translate(0,-50%);
+
       &:after {
         content: "";
         position: absolute;
@@ -150,8 +283,8 @@ textarea {
         left: 50%;
         width: 50%;
         height: 50%;
-        border-radius: 50%;
         background: $cGreen;
+        border-radius: 50%;
         display: none;
         transform: translate(-50%,-50%);
       }
@@ -177,26 +310,47 @@ textarea {
  */
 .checkbox-box {
   @include clearfix();
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  padding: 15px 0;
+  padding: 6px 0;
   font-size: 12px;
 
   .custom-checkbox {
     display: flex;
-    width: 50%;
+    width: 100%;
+  }
+
+  &.-divided {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding: 15px 0;
+
+    .custom-checkbox {
+      display: flex;
+      width: 50%;
+    }
+
   }
 
   label {
+    padding: 8px 0;
     font-weight: 400;
     text-transform: none;
     position: relative;
     padding-left: 25px;
-    line-height: 28px;
+    line-height: 1;
     cursor: pointer;
+    width: auto;
+    top: 0;
+    left: 0;
+    transform: none;
+    text-align: left;
 
-    span{
+    &.-uppercase {
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    span {
       position: absolute;
       top: 50%;
       left: 0;
@@ -204,7 +358,7 @@ textarea {
       height: 16px;
       border: 1px solid $dark;
       transform: translate(0,-50%);
-      
+
       &:after {
         content: "";
         position: absolute;
@@ -229,5 +383,67 @@ textarea {
         display: block;
       }
     }
+  }
+}
+
+.file-box {
+  position: relative;
+  display: inline-block;
+
+  .file-btn-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    z-index: 0;
+
+    > p {
+      display: block;
+      width: 100%;
+      border: 1px solid $border;
+      padding: 10px;
+      margin: 0;
+      font-size: 14px;
+      border-radius: 4px;
+      outline: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 250px;
+    }
+
+    > button {
+      border-radius: 0;
+    }
+
+  }
+
+  .file-progress {
+    display: block;
+    height: 5px;
+    width: 100%;
+
+    > span {
+      display: block;
+      background: $cGreen;
+      width: 0;
+      height: 100%;
+    }
+
+    &.-uploading {
+      background: $dark;
+    }
+  }
+
+  input[type="file"] {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
   }
 }

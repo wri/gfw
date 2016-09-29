@@ -16,11 +16,25 @@ require([
   'landing/views/SlideView',
   'landing/views/StoriesView',
   'landing/views/FeedView',
-  'landing/views/TwitterStyleView',
-  'connect/views/UserFormModalView',
-  'handlebars',
-  '_string',
-], function($, _, Class, Backbone, amplify, mps, HeaderView, FooterView, SourceWindowView, SourceMobileFriendlyView, SpinnerView, SlideView, StoriesView, FeedView, TwitterStyleView, UserFormModalView, Handlebars) {
+  'landing/views/TwitterStyleView'
+], function(
+  $,
+  _,
+  Class,
+  Backbone,
+  amplify,
+  mps,
+  HeaderView,
+  FooterView,
+  SourceWindowView,
+  SourceMobileFriendlyView,
+  SpinnerView,
+  SlideView,
+  StoriesView,
+  FeedView,
+  TwitterStyleView
+) {
+
   'use strict';
 
   var LandingPage = Class.extend({
@@ -48,8 +62,6 @@ require([
       new StoriesView();
       new FeedView();
       new TwitterStyleView();
-
-      $('body').append(new UserFormModalView().el);
 
       // this.initSurvey();
     },

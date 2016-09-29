@@ -3,7 +3,8 @@ define([
   'handlebars',
   'moment',
   'chosen',
-  'mps',  
+  'mps',
+  'helpers/languagesHelper',
   'connect/views/ListItemDeleteConfirmView',
   'connect/views/ListItemDatasetsConfirmView',
   'text!connect/templates/subscriptionListItem.handlebars'
@@ -13,6 +14,7 @@ define([
   moment,
   chosen,
   mps,
+  languagesHelper,
   ListItemDeleteConfirmView,
   ListItemDatasetsConfirmView,
   tpl
@@ -21,7 +23,6 @@ define([
   'use strict';
 
   var SubscriptionListItemView = Backbone.View.extend({
-    // We should change this to a common view
 
     events: {
       'click .btn-edit-name-subscription': 'onClickEditName',
@@ -43,11 +44,13 @@ define([
     },
 
     render: function() {
+      var languagesList = languagesHelper.getList();
       var subscription = _.extend({}, this.subscription.toJSON(), {
         confirmationUrl: this.getConfirmationURL(),
         topics: this.subscription.formattedTopics(),
         topicsDelete: (this.subscription.get('datasets').length > 1) ? true : false,
-        createdAt: (!!this.subscription.get('createdAt')) ? moment(this.subscription.get('createdAt')).format('dddd, YYYY-MM-DD, h:mm a') : this.subscription.get('createdAt')
+        createdAt: (!!this.subscription.get('createdAt')) ? moment(this.subscription.get('createdAt')).format('dddd, YYYY-MM-DD, h:mm a') : this.subscription.get('createdAt'),
+        languages: languagesList
       });
 
       this.$el.html(this.template(subscription));
@@ -116,7 +119,7 @@ define([
         $el.off('keyup.'+this.subscription.get('id'));
 
         // Check if the value has changed before save it
-        if (old_value != new_value) {        
+        if (old_value != new_value) {
           this.subscription.save('name', new_value, {
             patch: true,
             wait: true,
@@ -162,7 +165,7 @@ define([
           $el.val(old_value);
           mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
         }
-      });      
+      });
     },
 
     // Destroy
@@ -170,19 +173,19 @@ define([
       e.preventDefault();
 
       this.subscription.set('from', 'your profile');
-      
+
       // Create and append confirm view
       var confirmView = new ListItemDeleteConfirmView({
         model: this.subscription
       });
       this.$el.append(confirmView.render().el);
-      
+
       // Listen to confirmed param of confirmView
       this.listenTo(confirmView, 'confirmed', function() {
         this.subscription.destroy({
           success: this.remove.bind(this)
         });
-        mps.publish('Notification/open', ['notification-my-gfw-subscription-deleted']);       
+        mps.publish('Notification/open', ['notification-my-gfw-subscription-deleted']);
         window.ga('send', 'event', 'User Profile', 'Delete Subscription');
       }.bind(this));
     },
@@ -199,11 +202,11 @@ define([
       });
 
       this.$el.append(confirmView.render().el);
-      
+
       // Listen to confirmed param of confirmView
       this.listenTo(confirmView, 'confirmed', function(datasets) {
         this.saveDatasets(datasets);
-      }.bind(this));      
+      }.bind(this));
     },
 
     onClickDatasetRemove: function(e) {

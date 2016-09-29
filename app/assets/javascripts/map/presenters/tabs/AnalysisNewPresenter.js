@@ -635,6 +635,10 @@ define([
       if (!!this.status.get('iso').country && this.status.get('iso').country != 'ALL') {
         if (!this.status.get('isoDisabled')) {
           this.setAnalysis('country');
+          var country = _.findWhere(this.view.countries, { iso: this.status.get('iso').country })
+          if(country) {
+            ga('send', 'event', 'Map', 'Analyse', country.name);
+          }
         }
       }
     },

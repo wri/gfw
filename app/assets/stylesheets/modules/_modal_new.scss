@@ -10,7 +10,7 @@ $height: auto;
   width: 100%;
   height: 100%;
   display: none;
-  
+
   &.is-active {
     display: block;
 
@@ -32,7 +32,7 @@ $height: auto;
     .modal-window {
       width: 820px;
       height: 80%;
-      
+
       .modal-wrapper {
         padding: 0;
         max-height: none;
@@ -43,7 +43,7 @@ $height: auto;
   &.is-mini {
     .modal-window {
       max-width: 300px;
-    }    
+    }
   }
 
   .is-italic {
@@ -148,7 +148,7 @@ $height: auto;
   }
 
   // MODAL WRAPPER
-  .modal-wrapper{
+  .modal-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
     height: 100%;
@@ -160,6 +160,15 @@ $height: auto;
     @media (min-width: $br-mobile){
       max-height: 450px;
     }
+
+    &.-no-scroll {
+      @media (min-width: $br-mobile){
+        overflow-x: visible;
+        overflow-y: visible;
+        max-height: none;
+      }
+    }
+
 
     &.has-footer {
       border-bottom: 66px solid transparent;
@@ -217,12 +226,12 @@ $height: auto;
       cursor: pointer;
       font-weight: 500;
       border-radius: 40px;
-      
+
       &:hover {
         background: darken($white,1%);
         text-decoration: underline;
       }
-     
+
       &.is-active {
         color: $white;
         background: $cGreen;
@@ -242,7 +251,7 @@ $height: auto;
   padding: 15px 0;
   @include clearfix();
   border-top: 1px solid $border;
-  
+
   // GRADIENTS
   .gradient {
     content: "";
@@ -262,21 +271,21 @@ $height: auto;
   display: none;
   @media (min-width: $br-mobile) {
     display: block;
-  }  
-  
+  }
+
   .btn-direction{
     position: absolute;
     top: 50%;
     transform: translate(0,-50%);
-    
+
     &.is-left{
       right: 100%;
     }
-    
+
     &.is-right{
       left: 100%;
     }
-    
+
     .icon{
       padding: 10px;
       width: 60px;
@@ -285,7 +294,7 @@ $height: auto;
         stroke: $white;
       }
     }
-  }  
+  }
 }
 
 // MODAL CONTENT
@@ -330,7 +339,7 @@ $height: auto;
 
     a:not(.btn){
       color: $cGreen;
-      
+
       &:hover{
         color: darken($cGreen,5%);
       }
@@ -343,17 +352,17 @@ $height: auto;
   padding: 20px 20px 70px;
   > li {
     display: none;
-    
+
     &.is-active {
       display: block;
     }
-    
+
     .modal-step-content {
       padding: 20px 0 0;
-      
+
       > * {
         margin: 15px 0 0;
-        
+
         &:first-child {
           margin: 0;
         }
@@ -373,7 +382,7 @@ $height: auto;
     text-transform: uppercase;
     color: $dark;
     padding-right: 30px;
-    line-height: 1.25;    
+    line-height: 1.25;
   }
 
   // Subtitle

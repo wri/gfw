@@ -49,9 +49,8 @@ define([
   'mps',
   'uri',
   'map/presenters/PresenterClass',
-  'map/services/LayerSpecService',
-  'map/services/GeostoreService'
-], function (_, mps, UriTemplate, PresenterClass, layerSpecService, GeostoreService) {
+  'map/services/LayerSpecService'
+], function (_, mps, UriTemplate, PresenterClass, layerSpecService) {
 
   'use strict';
 

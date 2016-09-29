@@ -2,21 +2,15 @@
   <h1><a href="/">Global Forest Watch</a></h1>
 
   <nav id="nav-mobile">
-    <form class="mobile-show" action="/search">
-      <svg class="icon"><use xlink:href="#shape-search"></use></svg>
-      <input type="text" name="query" id="search-input" placeholder="Search GFW website">
-    </form>
-    <div id="google_translate_element_box2"></div>
-    <div id="mobileMenu"></div>
     <ul class="mobile-hide my-gfw-nav" id="my-gfw-profile-nav">
       <li>
-        <a href="/my_gfw/subscriptions" id="my-gfw-nav-subscriptions">My Subscriptions</a>
+        <a href="/my_gfw/subscriptions" data-href="/subscriptions" data-page="subscriptions">My Subscriptions</a>
       </li>
       <li>
-        <a href="/my_gfw/stories" id="my-gfw-nav-stories">My Stories</a>
+        <a href="/my_gfw/stories" data-href="/stories" data-page="stories">My Stories</a>
       </li>
       <li>
-        <a href="/my_gfw" id="my-gfw-nav-my_gfw">My Profile</a>
+        <a href="/my_gfw" data-href="/" data-page="profile">My Profile</a>
       </li>
     </ul>
   </nav>
@@ -26,6 +20,6 @@
   <div class="m-spinner -fixed -start">
     <div class="spinner-box">
       <div class="icon"></div>
-    </div>    
+    </div>
   </div>
 </div>

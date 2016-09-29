@@ -6,8 +6,9 @@
 define([
   'underscore',
   'uri',
+  'mps',
   'abstract/layer/OverlayLayerClass',
-], function(_, UriTemplate, OverlayLayerClass) {
+], function(_, mps, UriTemplate, OverlayLayerClass) {
 
   'use strict';
 
@@ -26,6 +27,7 @@ define([
     _getLayer: function() {
       var deferred = new $.Deferred();
       deferred.resolve(this._imageMaptype);
+      mps.publish('Map/loading', [false]);
       return deferred.promise();
     },
 

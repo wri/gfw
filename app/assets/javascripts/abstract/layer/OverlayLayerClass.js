@@ -26,7 +26,7 @@ define([
       this.layer = layer;
       this.name = layer.slug;
       this.tileSize = new google.maps.Size(256, 256);
-      this.options = _.extend({}, this.defaults, this.options || {});
+      this.options = _.extend({}, this.defaults, options || {}, this.options || {});
       this.setListeners();
     },
 
@@ -37,10 +37,15 @@ define([
     },
 
     addLayer: function(position, success) {
+      mps.publish('Map/loading', [true]);
       this._getLayer().then(_.bind(function(layer) {
         this.map.overlayMapTypes.setAt(position, layer);
-        if (this.options.infowindow && this.options.interactivity) {
+
+        if (this.options.infowindow && this.options.interactivity && !this.options.highlight) {
           this.setInfowindow(layer);
+        }
+        if (this.options.highlight) {
+          this.setHighlight(layer);
         }
         if (this.options.urlBounds) {
           this.checkForImagesInBounds();
@@ -100,6 +105,10 @@ define([
       if (this.infowindow) {
         this.infowindow.remove();
       }
+    },
+
+    setHighlight: function(layer) {
+      console.log('set Highlight');
     },
 
     removeMultipolygon: function() {

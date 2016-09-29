@@ -1,0 +1,57 @@
+<div id="country-selection">
+  <div id="country-field" class="field -default -medium"></div>
+  <div id="region-field" class="field -default -medium"></div>
+</div>
+
+
+<div class="field -default">
+  <label>Data set</label>
+  <div class="checkbox-box">
+    <div class="custom-checkbox">
+      <input class="dataset-checkbox" type="checkbox" name="datasets" id="umd-loss-gain">
+      <label for="umd-loss-gain"><span></span> Tree cover loss </label>
+    </div>
+    <div class="custom-checkbox">
+      <input class="dataset-checkbox" type="checkbox" name="datasets" id="guira-loss">
+      <label for="guira-loss"><span></span> Gran Chaco deforestation</label>
+    </div>
+    <div class="custom-checkbox">
+      <input class="dataset-checkbox" type="checkbox" name="datasets" id="prodes-loss">
+      <label for="prodes-loss"><span></span> PRODES deforestation</label>
+    </div>
+    <div class="custom-checkbox">
+      <input class="dataset-checkbox" type="checkbox" name="datasets" id="glad-alerts">
+      <label for="glad-alerts"><span></span> GLAD Tree Cover Loss Alerts</label>
+    </div>
+    <div class="custom-checkbox">
+      <input class="dataset-checkbox" type="checkbox" name="datasets" id="terrai-alerts">
+      <label for="terrai-alerts"><span></span> Terra-i Alerts</label>
+    </div>
+    <div class="custom-checkbox">
+      <input class="dataset-checkbox" type="checkbox" name="datasets" id="imazon-alerts">
+      <label for="imazon-alerts"><span></span> SAD Alerts</label>
+    </div>
+    <div class="custom-checkbox">
+      <input class="dataset-checkbox" type="checkbox" name="datasets" id="viirs-active-fires">
+      <label for="viirs-active-fires"><span></span> VIIRS Active fires</label>
+    </div>
+  </div>
+</div>
+
+<div class="field -default -little">
+  <label for="select-language">Language</label>
+  <div class="m-select">
+    <select id="select-language" name="language" class="chosen-select default" data-placeholder="Select a language">
+      {{#each languages}}
+        <option value="{{key}}" {{selected}}>{{name}}</option>
+      {{/each}}
+    </select>
+  </div>
+</div>
+
+<div class="field -default">
+  <div class="m-btncontainer is-flex-start">
+    <input type="submit" id="submit" name="submit" value="Subscribe" class="btn medium green medium huge-padding">
+    <a href="/contribute-data" target="_blank" class="btn medium gray uppercase">Add your own data</a>
+  </div>
+</div>

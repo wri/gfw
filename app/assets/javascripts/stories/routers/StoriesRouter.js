@@ -1,7 +1,7 @@
 define([
   'jquery', 'backbone',
   'views/NotificationsView',
-  'map/models/UserModel',
+  'models/UserModel',
   'stories/views/StoriesIndexView',
   'stories/views/StoriesListView',
   'stories/views/StoriesNewView',
@@ -11,9 +11,9 @@ define([
   $, Backbone,
   NotificationsView,
   User,
-  StoriesIndexView, 
-  StoriesListView, 
-  StoriesNewView, 
+  StoriesIndexView,
+  StoriesListView,
+  StoriesNewView,
   StoriesShowView,
   LoginView
 ) {
@@ -38,7 +38,7 @@ define([
 
     index: function() {
       var storyIndex = new StoriesIndexView({
-        el: '.layout-content',        
+        el: '.layout-content',
       });
     },
 
@@ -56,7 +56,7 @@ define([
     newStory: function() {
       this.checkLoggedIn()
         .then(function() {
-          new StoriesNewView();    
+          new StoriesNewView();
         }.bind(this))
 
         .fail(function() {

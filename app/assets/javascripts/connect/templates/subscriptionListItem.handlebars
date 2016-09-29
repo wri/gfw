@@ -35,13 +35,14 @@
     <span class="metadata-title">Date of subscription:</span>
     <span class="metadata-info">{{this.createdAt}} UTC</span>
   </li>
-  
+
   <li>
     <span class="metadata-title">Language:</span>
     <span class="metadata-info">
       <select data-placeholder="Select language" class="chosen-select default notranslate" id="select-language-subscription">
-        <option value="en">English</option>
-        <option value="pt">Portuguese</option>
+        {{#each languages}}
+          <option value="{{@key}}">{{this}}</option>
+        {{/each}}
       </select>
     </span>
   </li>
@@ -70,7 +71,7 @@
               </svg>
               <span class="tooltipmap">Delete</span>
             </a>
-          </td>        
+          </td>
         {{/if}}
       </tr>
     {{/each}}
@@ -97,7 +98,7 @@
         <span class="metadata-title">Date of subscription:</span>
         <span class="metadata-info">{{../createdAt}} UTC</span>
       </li>
-      
+
       <li>
         <span class="metadata-title">Language:</span>
         <span class="metadata-info">

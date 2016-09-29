@@ -6,29 +6,19 @@ require([
   'underscore',
   'Class',
   'backbone',
-  'chosen',
-  'map/utils',
-  'enquire',
-  'mps',
   'bluebird',
   'handlebars',
   'map/router',
   'views/SourceModalView',
   'views/ConfirmModalView',
+
   // we should merge these views with the ModalClass
   'views/SourceBottomView',
   'views/SourceMobileFriendlyView',
 
-  'map/collections/CountryCollection',
-
-  'map/presenters/ExperimentsPresenter',
-
-  'map/services/AnalysisService',
-
   // Should we get rid of them?
   'map/services/CountryService',
-  'map/services/DataService',
-  //
+
   'map/views/MapView',
   'map/views/MapControlsView',
   'map/views/TabsView',
@@ -38,14 +28,37 @@ require([
   'map/views/NavMobileView',
   'map/views/GuideView',
   'map/views/controls/GuideButtonView',
-  'connect/views/UserFormModalView',
   'views/HeaderView',
   'views/FooterView',
   'views/NotificationsView',
-  'views/DownloadView',
-  '_string'
-], function($, _, Class, Backbone, chosen, utils, enquire, mps, Promise, Handlebars, Router, SourceModalView, ConfirmModalView, SourceBottomView, SourceMobileFriendlyView, CountryCollection, ExperimentsPresenter, AnalysisService, countryService, DataService, MapView,
-    MapControlsView, TabsView, LayersNavView, LegendView, TimelineView, NavMobileView, GuideView, GuideButtonView, UserFormModalView, HeaderView, FooterView, NotificationsView, DownloadView) {
+  'views/DownloadView'
+], function(
+  $,
+  _,
+  Class,
+  Backbone,
+  Promise,
+  Handlebars,
+  Router,
+  SourceModalView,
+  ConfirmModalView,
+  SourceBottomView,
+  SourceMobileFriendlyView,
+  countryService,
+  MapView,
+  MapControlsView,
+  TabsView,
+  LayersNavView,
+  LegendView,
+  TimelineView,
+  NavMobileView,
+  GuideView,
+  GuideButtonView,
+  HeaderView,
+  FooterView,
+  NotificationsView,
+  DownloadView
+) {
 
   'use strict';
 
@@ -84,7 +97,9 @@ require([
       // we shouldn't create any view.
       countryService.get().then(function(results) {
         this.map = map.map;
-        this.countries = results.countries;
+        this.countries = _.where(results.countries, {
+          enabled: true
+        });
 
         new MapControlsView(this.map, this.countries);
         new TabsView(this.map, this.countries);
@@ -105,10 +120,6 @@ require([
         this._initApp();
 
       }.bind(this));
-
-
-      // What is this? Are we already using it?
-      $('body').append(new UserFormModalView().el);
     },
 
     /**
@@ -156,7 +167,7 @@ require([
         google.maps.Polygon.prototype.getBounds = function() {
           var bounds = new google.maps.LatLngBounds();
           var paths = this.getPaths();
-          var path;        
+          var path;
           for (var i = 0; i < paths.getLength(); i++) {
             path = paths.getAt(i);
             for (var ii = 0; ii < path.getLength(); ii++) {

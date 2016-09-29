@@ -86,14 +86,20 @@ define([
     formattedTopics: function() {
       return this.get('datasets').map(function(layerName) {
         var topic = DATASETS[layerName];
-        topic.viewOnMapUrl = this.getViewOnMapURL(topic.layerSlug);
+        if (!!topic) {
+          topic.viewOnMapUrl = this.getViewOnMapURL(topic.layerSlug);
+        }
         return topic;
       }.bind(this));
     },
 
     getViewOnMapURL: function(baselayers) {
       var subscription = this.toJSON();
-      var iso = _.compact(_.values(subscription.params.iso)).join('-') || 'ALL';
+      var iso = _.compact(_.values({
+        country: subscription.params.iso.country,
+        region: subscription.params.iso.region,
+      })).join('-') || 'ALL';
+
       var mapObject = {
         iso: iso,
         baselayers: baselayers,

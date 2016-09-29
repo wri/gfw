@@ -1,8 +1,9 @@
 define([
   'Class', 'backbone', 'underscore', 'handlebars', 'mps',
-  'map/models/UserModel',
+  'helpers/languagesHelper',
+  'models/UserModel',
   'text!connect/templates/userForm.handlebars'
-], function(Class, Backbone, _, Handlebars, mps, User, tpl) {
+], function(Class, Backbone, _, Handlebars, mps, languagesHelper, User, tpl) {
 
   'use strict';
 
@@ -46,30 +47,32 @@ define([
     initialize: function(options) {
       options = options || {};
       this.isModal = options.isModal;
-
-      this.user = new User();
-      this.listenTo(this.user, 'sync', this.render);
-      this.user.fetch();
-
+      this.user = options.user;
       this.validator = new UserFormValidator();
 
-      this.render();
+      if (this.user) {
+        this.listenTo(this.user, 'sync', this.render);
+        this.render();
+      }
     },
 
     render: function() {
+      var languagesList = languagesHelper.getList();
+
       this.$el.html(this.template({
         action: window.gfw.config.GFW_API_HOST+'/user',
         redirect: window.location.href,
         user: this.user.toJSON(),
         errors: this.validator.messages,
-        isModal: this.isModal
+        isModal: this.isModal,
+        languages: languagesList
       }));
 
       this._renderSelectedOptions();
     },
 
     _renderSelectedOptions: function() {
-      var selectFields = ['sector', 'primaryResponsibilities', 'country', 'howDoYouUse'],
+      var selectFields = ['sector', 'primaryResponsibilities', 'country', 'howDoYouUse', 'language'],
           attributes = this.user.toJSON();
 
       selectFields.forEach(function(field) {

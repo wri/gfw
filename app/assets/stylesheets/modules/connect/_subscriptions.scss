@@ -2,6 +2,10 @@
   .tabs {
     width: 100%;
     background: #EEE;
+    padding: 0 15px;
+    @media (min-width:$br-mobile){
+      padding: 0;
+    }
 
     .inner {
       display: flex;
@@ -44,7 +48,11 @@
 
 .my-gfw-subscriptions-list-container {
   @include clearfix();
-  padding: 50px 0;
+  padding: 50px 15px;
+  @media (min-width:$br-mobile){
+    padding: 50px 0;
+  }
+
 }
 
 .my-gfw-subscriptions-empty {
@@ -115,7 +123,7 @@
           width: 200px;
           white-space: normal;
         }
-  
+
         &:hover {
           .tooltipmap {
             display: block;
@@ -149,7 +157,7 @@
         @media (min-width:$br-mobile){
           line-height: 37px;
         }
-      }  
+      }
     }
 
     .actions {
@@ -193,7 +201,7 @@
         color: $dark;
         margin: 0 5px 0 0;
       }
-    }    
+    }
   }
 
   .dataset-list {
@@ -223,17 +231,17 @@
         display: block;
         position: relative;
         cursor: pointer;
-        
+
         svg {
           width: 16px;
           height: 16px;
-          fill: $dark;          
+          fill: $dark;
         }
 
         &:hover {
-          
+
           svg {
-            fill: $cGreen;  
+            fill: $cGreen;
           }
 
           &.btn-dataset-remove {
@@ -245,7 +253,7 @@
           .tooltipmap {
             opacity: 1;
             visibility: visible;
-          }          
+          }
         }
       }
     }

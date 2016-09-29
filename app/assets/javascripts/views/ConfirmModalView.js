@@ -29,7 +29,7 @@ define([
       this.presenter = new ConfirmModalPresenter(this);
       this.confirmModel = new ConfirmModel(this);
       this.render();
-      this._initVars();
+      this._cache();
       this.setListeners();
       this.$body.append(this.el);
     },
