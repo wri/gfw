@@ -13,9 +13,9 @@
  stop(7, #77c86c)
  stop(8, #157764)
  stop(9, #91dd86)
- stop(10, #fbb685)
- stop(11, #CCDC94)
- stop(12, #b8d1ba)
- stop(13, #d0dd86)
- stop(14, #989b05)
- stop(15, #7DBCE7)}
+ stop(10, #d0dd86)
+ stop(11, #F41E65)
+ stop(12, #fbb685)
+ stop(13, #7DBCE7)
+ stop(14, #dd86d8)
+ stop(15, #b8d1ba)}

@@ -157,6 +157,7 @@ define([
   'map/views/layers/MexForestProdLayer',
   'map/views/layers/MexForestRestLayer',
   'map/views/layers/UgaPALayer',
+  'map/views/layers/BraLandCoverLayer',
   'map/views/layers/LbrMinExL',
   'map/views/layers/LbrMinDevAg',
   'map/views/layers/LbrDevExL',
@@ -334,6 +335,7 @@ define([
   MexForestProdLayer,
   MexForestRestLayer,
   UgaPALayer,
+  BraLandCoverLayer,
   LbrMinExL,
   LbrMinDevAg,
   LbrDevExL,
@@ -838,7 +840,9 @@ define([
     uga_protected_areas: {
       view:  UgaPALayer
     },
-    lbr_mineral_exploration_license: {
+    bra_land_cover: {
+      view:  BraLandCoverLayer
+    },    lbr_mineral_exploration_license: {
       view:  LbrMinExL
     },
     lbr_mineral_development_agreement: {
