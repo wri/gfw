@@ -12,7 +12,7 @@ define([
 
   'use strict';
 
-  var TILE_URL = 'http://wri-tiles.s3.amazonaws.com/glad_prod/tiles{/z}{/x}{/y}.png';
+  var TILE_URL = 'http://wri-tiles.s3.amazonaws.com/glad_staging/tiles{/z}{/x}{/y}.png';
   var START_DATE = '2015-01-01';
 
   var padNumber = function(number) {
