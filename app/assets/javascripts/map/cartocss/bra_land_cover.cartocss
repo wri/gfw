@@ -18,5 +18,4 @@
  stop(12, #fbb685) 
  stop(13, #7DBCE7) 
  stop(14, #dd86d8) 
- stop(15, #b8d1ba)
- stop (255, #ffffff)}
+ stop(15, #b8d1ba)}
