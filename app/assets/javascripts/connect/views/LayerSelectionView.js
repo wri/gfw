@@ -1,7 +1,7 @@
 /**
- * The CountrySelectionView view.
+ * The LayerSelectionView view.
  *
- * @return CountrySelectionView view (extends Backbone.View)
+ * @return LayerSelectionView view (extends Backbone.View)
  */
 define([
   'underscore',
@@ -16,7 +16,7 @@ define([
 
   'use strict';
 
-  var CountrySelectionView = View.extend({
+  var LayerSelectionView = View.extend({
     model: new (Backbone.Model.extend({
       country: null,
       layers: null,
@@ -143,8 +143,8 @@ define([
           var isos = _.uniq(_.pluck(layers, 'iso'));
 
           this.$countryField.html(this.templateCountries({
-            name: 'Country layers',
-            placeholder: 'Select a country',
+            name: 'Select an area from a country-specific data set',
+            placeholder: 'Select a country...',
             countries: _.filter(this.countries, function(country) {
               return (isos.indexOf(country.iso) != -1)
             })
@@ -162,10 +162,10 @@ define([
 
     renderLayers: function() {
       this.$layersField.html(this.templateLayers({
-        name: 'Global layers',
-        placeholder: 'Select a global layer',
+        name: 'Select an area from a global data set',
+        placeholder: 'Select a data set...',
         layers: this.layers,
-        hint: 'After selecting a layer, please choose one shape of the map by clicking it (Please, send me this text. Miguel)'
+        hint: 'Select an area by clicking a shape on the map'
       }));
       this.renderChosen();
     },
@@ -173,7 +173,7 @@ define([
     renderCountryLayers: function() {
       this.$layersCountryField.html(this.templateLayers({
         name: '',
-        placeholder: 'Select a country layer',
+        placeholder: 'Select a data set...',
         layers: (!_.isEmpty(this.countryLayers)) ? this.countryLayers : null,
         hint: ''
       }));
@@ -217,6 +217,6 @@ define([
     }
   });
 
-  return CountrySelectionView;
+  return LayerSelectionView;
 
 });

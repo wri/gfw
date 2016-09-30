@@ -35,7 +35,7 @@
 
 
 <div class="field -default">
-  <label>Data set</label>
+  <label>Select the forest change alerts you would like to receive *</label>
   <div class="checkbox-box">
     <div class="custom-checkbox">
       <input class="dataset-checkbox" type="checkbox" name="datasets" id="umd-loss-gain">
@@ -69,17 +69,17 @@
 </div>
 
 <div class="field -default -medium">
-  <label for="name">Name *</label>
+  <label for="name">Name your subscription *</label>
   <input type="text" name="name" placeholder="Enter the name of your subscription">
 </div>
 
 <div class="field -default -medium">
-  <label for="email">Email *</label>
+  <label for="email">Enter your email address *</label>
   <input type="email" name="email" placeholder="Enter your email" value="{{email}}">
 </div>
 
-<div class="field -default -little">
-  <label for="select-language">Language</label>
+<div class="field -default -medium">
+  <label for="select-language">Select a language for notification emails *</label>
   <div class="m-select">
     <select id="select-language" name="language" class="chosen-select default" data-placeholder="Select a language">
       {{#each languages}}
