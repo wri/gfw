@@ -1,21 +1,22 @@
 /**
- * The CountrySelectionView view.
+ * The LayerSelectionView view.
  *
- * @return CountrySelectionView view (extends Backbone.View)
+ * @return LayerSelectionView view (extends Backbone.View)
  */
 define([
   'underscore',
   'handlebars',
   'mps',
+  'core/View',
   'map/services/LayerSpecService',
   'map/services/CountryService',
   'text!connect/templates/countrySelection.handlebars',
   'text!connect/templates/layerSelection.handlebars',
-], function(_, Handlebars, mps, LayerSpecService, CountryService, countryTpl, layerTpl) {
+], function(_, Handlebars, mps, View, LayerSpecService, CountryService, countryTpl, layerTpl) {
 
   'use strict';
 
-  var CountrySelectionView = Backbone.View.extend({
+  var LayerSelectionView = View.extend({
     model: new (Backbone.Model.extend({
       country: null,
       layers: null,
@@ -35,6 +36,8 @@ define([
       if (!this.$el.length) {
         return;
       }
+
+      View.prototype.initialize.apply(this);
 
       this.map = map;
       this.cache();
@@ -73,9 +76,8 @@ define([
     },
 
     listeners: function() {
-      // We should start using listenTo and handle the remove views
-      this.model.on('change:country', this.changeCountry.bind(this));
-      this.model.on('change:layers', this.changeLayers.bind(this));
+      this.listenTo(this.model, 'change:country', this.changeCountry.bind(this));
+      this.listenTo(this.model, 'change:layers', this.changeLayers.bind(this));
     },
 
     cache: function() {
@@ -141,8 +143,8 @@ define([
           var isos = _.uniq(_.pluck(layers, 'iso'));
 
           this.$countryField.html(this.templateCountries({
-            name: 'Country layers',
-            placeholder: 'Select a country',
+            name: 'Select an area from a country-specific data set',
+            placeholder: 'Select a country...',
             countries: _.filter(this.countries, function(country) {
               return (isos.indexOf(country.iso) != -1)
             })
@@ -160,10 +162,10 @@ define([
 
     renderLayers: function() {
       this.$layersField.html(this.templateLayers({
-        name: 'Global layers',
-        placeholder: 'Select a global layer',
+        name: 'Select an area from a global data set',
+        placeholder: 'Select a data set...',
         layers: this.layers,
-        hint: 'After selecting a layer, please choose one shape of the map by clicking it (Please, send me this text. Miguel)'
+        hint: 'Select an area by clicking a shape on the map'
       }));
       this.renderChosen();
     },
@@ -171,7 +173,7 @@ define([
     renderCountryLayers: function() {
       this.$layersCountryField.html(this.templateLayers({
         name: '',
-        placeholder: 'Select a country layer',
+        placeholder: 'Select a data set...',
         layers: (!_.isEmpty(this.countryLayers)) ? this.countryLayers : null,
         hint: ''
       }));
@@ -185,6 +187,7 @@ define([
           $select.chosen({
             width: '100%',
             disable_search: true,
+            allow_single_deselect: true,
             inherit_select_classes: true,
             no_results_text: "Oops, nothing found!"
           });
@@ -214,6 +217,6 @@ define([
     }
   });
 
-  return CountrySelectionView;
+  return LayerSelectionView;
 
 });

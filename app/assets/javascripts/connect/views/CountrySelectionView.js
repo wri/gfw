@@ -7,15 +7,16 @@ define([
   'underscore',
   'handlebars',
   'mps',
+  'core/View',
   'map/services/CountryService',
   'map/services/RegionService',
   'text!connect/templates/countrySelection.handlebars',
   'text!connect/templates/regionSelection.handlebars',
-], function(_, Handlebars, mps, CountryService, RegionService, countryTpl, regionTpl) {
+], function(_, Handlebars, mps, View, CountryService, RegionService, countryTpl, regionTpl) {
 
   'use strict';
 
-  var CountrySelectionView = Backbone.View.extend({
+  var CountrySelectionView = View.extend({
     model: new (Backbone.Model.extend({
       country: null,
       region: null,
@@ -36,6 +37,12 @@ define([
         return;
       }
 
+      View.prototype.initialize.apply(this);
+
+      this.map = map;
+      this.cache();
+      this.listeners();
+
       // Load countries
       CountryService.get()
         .then(function(results) {
@@ -47,16 +54,12 @@ define([
         .error(function(error) {
           console.log(error);
         }.bind(this))
-
-      this.map = map;
-      this.cache();
-      this.listeners();
     },
 
     listeners: function() {
       // We should start using listenTo and handle the remove views
-      this.model.on('change:country', this.changeCountry.bind(this));
-      this.model.on('change:region', this.changeRegion.bind(this));
+      this.listenTo(this.model, 'change:country', this.changeCountry.bind(this));
+      this.listenTo(this.model, 'change:region', this.changeRegion.bind(this));
     },
 
     cache: function() {
@@ -103,7 +106,7 @@ define([
     */
     renderCountries: function() {
       this.$countryField.html(this.templateCountries({
-        name: 'Country',
+        name: 'Select a country',
         placeholder: 'Select a country',
         countries: this.countries
       }));
@@ -131,7 +134,7 @@ define([
         if (! !!$select.data('chosen')) {
           $select.chosen({
             width: '100%',
-            disable_search: true,
+            allow_single_deselect: true,
             inherit_select_classes: true,
             no_results_text: "Oops, nothing found!"
           });

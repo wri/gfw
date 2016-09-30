@@ -6,6 +6,7 @@ define([
   'mps',
   'validate',
   'helpers/languagesHelper',
+  'core/View',
   'connect/models/Subscription',
   'connect/views/MapMiniView',
   'connect/views/MapMiniControlsView',
@@ -27,6 +28,7 @@ define([
   mps,
   validate,
   languagesHelper,
+  View,
   Subscription,
   MapMiniView,
   MapMiniControlsView,
@@ -51,7 +53,7 @@ define([
   };
 
 
-  var SubscriptionNewView = Backbone.View.extend({
+  var SubscriptionNewView = View.extend({
     usenames: ['mining', 'oilpalm', 'fiber', 'logging'],
 
     subscription: new Subscription({
@@ -88,6 +90,8 @@ define([
     },
 
     initialize: function(router, user) {
+      View.prototype.initialize.apply(this);
+
       this.router = router;
       this.user = user;
 
@@ -95,55 +99,67 @@ define([
       this.render();
     },
 
-    listeners: function() {
-      // STATUS
-      this.subscription.on('change:aoi', this.changeAOI.bind(this));
-
+    _subscriptions: [
       // MPS
-      mps.subscribe('Params/reset', function(layerSpec) {
-        var defaults = this.subscription.get('defaults').params;
-        this.subscription.set('params', defaults);
-        console.log(this.subscription.get('params'));
-      }.bind(this));
-
-      mps.subscribe('LayerNav/change', function(layerSpec) {
-        var defaults = this.subscription.get('defaults').params;
-        this.subscription.set('params', defaults);
-        console.log(this.subscription.get('params'));
-      }.bind(this));
-
-      mps.subscribe('Country/update', function(iso) {
-        var defaults = this.subscription.get('defaults').params;
-        this.subscription.set('params', _.extend({}, defaults, { iso: iso }));
-        console.log(this.subscription.get('params'));
-      }.bind(this));
-
-      mps.subscribe('Highlight/shape', function(data) {
-        var defaults = this.subscription.get('defaults').params;
-
-        if (!!data.use && this.usenames.indexOf(data.use) === -1) {
-          var provider = {
-            table: data.use,
-            filter: 'cartodb_id = ' + data.useid,
-            user: 'wri-01',
-            type: 'carto'
-          };
-
-          GeostoreService.use(provider).then(function(useGeostoreId) {
-            this.subscription.set('params', _.extend({}, defaults, { geostore: useGeostoreId }));
-            console.log(this.subscription.get('params'));
-          }.bind(this));
-        } else {
-          this.subscription.set('params', _.extend({}, defaults, data));
+      {
+        'Params/reset': function(layerSpec) {
+          var defaults = this.subscription.get('defaults').params;
+          this.subscription.set('params', defaults);
           console.log(this.subscription.get('params'));
         }
-      }.bind(this));
+      },
 
-      mps.subscribe('Drawing/geostore', function(geostore) {
-        var defaults = this.subscription.get('defaults').params;
-        this.subscription.set('params', _.extend(defaults, { geostore: geostore }));
-        console.log(this.subscription.get('params'));
-      }.bind(this));
+      {
+        'LayerNav/change': function(layerSpec) {
+          var defaults = this.subscription.get('defaults').params;
+          this.subscription.set('params', defaults);
+          console.log(this.subscription.get('params'));
+        }
+      },
+
+      {
+        'Country/update': function(iso) {
+          var defaults = this.subscription.get('defaults').params;
+          this.subscription.set('params', _.extend({}, defaults, { iso: iso }));
+          console.log(this.subscription.get('params'));
+        }
+      },
+
+      {
+        'Shape/update': function(data) {
+          var defaults = this.subscription.get('defaults').params;
+
+          if (!!data.use && this.usenames.indexOf(data.use) === -1) {
+            var provider = {
+              table: data.use,
+              filter: 'cartodb_id = ' + data.useid,
+              user: 'wri-01',
+              type: 'carto'
+            };
+
+            GeostoreService.use(provider).then(function(useGeostoreId) {
+              this.subscription.set('params', _.extend({}, defaults, { geostore: useGeostoreId }));
+              console.log(this.subscription.get('params'));
+            }.bind(this));
+          } else {
+            this.subscription.set('params', _.extend({}, defaults, data));
+            console.log(this.subscription.get('params'));
+          }
+        }
+      },
+
+      {
+        'Drawing/geostore': function(geostore) {
+          var defaults = this.subscription.get('defaults').params;
+          this.subscription.set('params', _.extend(defaults, { geostore: geostore }));
+          console.log(this.subscription.get('params'));
+        }
+      },
+    ],
+
+    listeners: function() {
+      // STATUS
+      this.listenTo(this.subscription, 'change:aoi', this.changeAOI.bind(this));
     },
 
     render: function() {
@@ -159,10 +175,12 @@ define([
 
       if (!!aoi) {
         this.$formType.html(this.templates[aoi]({
+          email: this.user.get('email'),
           languages: languagesList
         }));
         this.cache();
         this.renderChosen();
+        this.removeSubViews();
         this.initSubViews();
       } else {
         this.$formType.html('');
@@ -192,13 +210,21 @@ define([
 
     initSubViews: function() {
       var mapView = new MapMiniView();
+      this.subViews = {
+        mapView: mapView,
+        mapControlsView: new MapMiniControlsView(mapView.map),
+        mapDrawingView: new MapMiniDrawingView(mapView.map),
+        mapUploadView: new MapMiniUploadView(mapView.map),
+        mapSelectedView: new MapMiniSelectedView(mapView.map),
+        countrySelectionView: new CountrySelectionView(mapView.map),
+        layerSelectionView: new LayerSelectionView(mapView.map),
+      };
+    },
 
-      new MapMiniControlsView(mapView.map);
-      new MapMiniDrawingView(mapView.map);
-      new MapMiniUploadView(mapView.map);
-      new MapMiniSelectedView(mapView.map);
-      new CountrySelectionView(mapView.map);
-      new LayerSelectionView(mapView.map);
+    removeSubViews: function() {
+      _.each(this.subViews, function(view){
+        view._remove();
+      })
     },
 
     /**
@@ -259,7 +285,7 @@ define([
             this.router.navigateTo('subscriptions', {
               trigger: true
             });
-            mps.publish('Notification/open', ['notification-my-gfw-subscription-correct']);
+            mps.publish('Notification/open', ['notification-my-gfw-subscription-correct2']);
           }.bind(this))
 
           .fail(function(){

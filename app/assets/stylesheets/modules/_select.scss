@@ -212,7 +212,7 @@
       abbr {
         position: absolute;
         top: 50%;
-        right: 30px;
+        right: 50px;
         display: none;
         width: 16px;
         height: 16px;
@@ -257,10 +257,10 @@
       position: relative;
       z-index: 1010;
       margin: 0;
-      padding: 3px 16px;
+      padding: 10px 16px 0;
       white-space: nowrap;
       input {
-        margin: 1px 0;
+        margin: 0;
         padding: 8px 4px 8px 26px;
         width: 100%;
         outline: 0;
@@ -268,7 +268,7 @@
         border: 1px solid $border;
         font-size: 1em;
         font-family: sans-serif;
-        // background: url('svg-map/control-search.svg') no-repeat 5px center;
+        background: url('svg-map/control-search.svg') no-repeat 5px center;
       }
     }
 
