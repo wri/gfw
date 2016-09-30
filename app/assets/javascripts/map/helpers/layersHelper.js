@@ -157,6 +157,7 @@ define([
   'map/views/layers/MexForestProdLayer',
   'map/views/layers/MexForestRestLayer',
   'map/views/layers/UgaPALayer',
+  'map/views/layers/BraLandCoverLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -327,6 +328,7 @@ define([
   MexForestProdLayer,
   MexForestRestLayer,
   UgaPALayer,
+  BraLandCoverLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -825,6 +827,9 @@ define([
     },
     uga_protected_areas: {
       view:  UgaPALayer
+    },
+    bra_land_cover: {
+      view:  BraLandCoverLayer
     },
     
     nothing: {
