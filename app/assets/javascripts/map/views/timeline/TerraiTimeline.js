@@ -5,31 +5,19 @@
  */
 define([
   'moment',
-  'abstract/timeline/TimelineMonthClass',
-  'map/presenters/TimelineClassPresenter'
-], function(moment, TimelineMonthClass, Presenter) {
+  'abstract/timeline/TorqueTimelineClass',
+  'abstract/timeline/TimelineMonthlyPicker',
+  'map/services/TerraiDateService'
+], function(moment, TorqueTimelineClass, TimelineMonthlyPicker, TerraiDateService) {
 
   'use strict';
 
-  var TerraiTimeline = TimelineMonthClass.extend({
+  var TerraiTimeline = TorqueTimelineClass.extend({
 
-    /**
-     * Get the layer spec.
-     *
-     * @param  {object} layer The layer object
-     */
-    initialize: function(layer, currentDate) {
-      this.options = {
-        dateRange: [layer.mindate, layer.maxdate],
-        playSpeed: 120
-      };
+    DatePicker: TimelineMonthlyPicker,
+    dataService: TerraiDateService
 
-      this.presenter = new Presenter(this);
-      TerraiTimeline.__super__.initialize.apply(this, [layer, currentDate]);
-    }
   });
 
   return TerraiTimeline;
 });
-
-

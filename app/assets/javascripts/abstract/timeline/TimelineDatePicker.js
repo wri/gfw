@@ -6,13 +6,11 @@
 define([
   'underscore', 'backbone', 'moment', 'handlebars', 'picker', 'pickadate',
   'map/presenters/TorqueTimelinePresenter',
-  'map/services/GladDateService',
   'text!templates/datePickerTorque.handlebars',
   'text!templates/datePickerTorque-legend.handlebars'
 ], function(
   _, Backbone, moment, Handlebars, Picker, Pickadate,
   Presenter,
-  GladDateService,
   tpl, legendTpl) {
 
   'use strict';
@@ -50,6 +48,7 @@ define([
     initialize: function(options) {
       options = options || {};
       this.presenter = options.presenter;
+      this.dataService = options.dataService;
       this.layer = options.layer;
       this.onChange = options.onChange;
 
@@ -76,6 +75,7 @@ define([
 
     renderPickers: function() {
       var context = this;
+
       var onPickerRender = function() {
         var pickerContext = this;
 
@@ -180,9 +180,9 @@ define([
     },
 
     retrieveAvailableDates: function() {
+      var dateService = new this.dataService();
       this.histograms = [];
 
-      var dateService = new GladDateService();
       dateService.fetchDates().then(function(response) {
         this.histograms = response.counts;
         this.renderPickers();

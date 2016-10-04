@@ -4,6 +4,7 @@
   justify-content: center;
   @media (min-width: $br-mobileMap) {
     display: block;
+    min-width: 700px;
   }
 
   .timeline-date-pickers {
@@ -64,6 +65,7 @@
 
   .timeline-date {
     width: 80px;
+    margin-top: 6px;
 
     font-size: 12px;
     color: #97bd3d;

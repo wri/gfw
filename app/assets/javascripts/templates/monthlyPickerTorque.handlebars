@@ -1,0 +1,28 @@
+{{title}} from
+
+{{#if isMobile}}
+  <div class="monthly-picker">
+    <select class="action js-start-month -selector" data-selector="startDate" data-type="month" data-value="" value="" id="" class="" type="text" readonly=""></select>
+    <select class="action js-start-year -selector -right" data-selector="startDate" data-type="year"  data-value="" value="" id="" class="" type="text" readonly=""></select>
+  </div>
+  <span>to</span>
+  <div class="monthly-picker">
+    <select class="action js-end-month -selector" data-selector="endDate" data-type="month"  data-value="" value="" id="" class="" type="text" readonly=""></select>
+    <select class="action js-end-year -selector -right"  data-selector="endDate" data-type="year" data-value="" value="" id="" class="" type="text" readonly=""></select>
+  </div>
+{{else}}
+  <div class="list js-list-selector">
+    <div class="content scroll-dark">
+    </div>
+  </div>
+
+  <div class="monthly-picker">
+    <input class="action js-input-action js-start-month" data-selector="startDate" data-type="month" data-value="" value="" id="" class="" type="text" readonly="" />
+    <input class="action js-input-action js-start-year" data-selector="startDate" data-type="year"  data-value="" value="" id="" class="" type="text" readonly="" />
+  </div>
+  <span>to</span>
+  <div class="monthly-picker">
+    <input class="action js-input-action js-end-month" data-selector="endDate" data-type="month"  data-value="" value="" id="" class="" type="text" readonly="" />
+    <input class="action js-input-action js-end-year"  data-selector="endDate" data-type="year" data-value="" value="" id="" class="" type="text" readonly="" />
+  </div>
+{{/if}}

@@ -5,12 +5,13 @@ define([
   'use strict';
 
   var svg, timeScale, brush, margin, width, height, el, extent, callback,
-    handle, startingDate, slider;
+    handle, startingDate, slider, padding;
 
   var TorqueTimelineSlider = function(options) {
     options = options || {};
 
     margin = {top: 0, right: 0, bottom: 0, left: 10};
+    padding = 40;
     width = options.width - margin.left - margin.right;
     height = options.height - margin.bottom - margin.top;
 
@@ -41,7 +42,7 @@ define([
   TorqueTimelineSlider.prototype.setupScales = function() {
     timeScale = d3.time.scale()
       .domain(extent)
-      .range([0, width])
+      .range([0, width - padding])
       .clamp(true);
   };
 
@@ -107,7 +108,7 @@ define([
       .insert('svg:line', ':first-child')
       .attr('class', 'domain')
       .attr('x1', 0)
-      .attr('x2', width)
+      .attr('x2', width - padding)
       .attr('y1', height / 2)
       .attr('y2', height / 2);
   };

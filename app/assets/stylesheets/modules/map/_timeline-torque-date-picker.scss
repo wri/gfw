@@ -7,21 +7,19 @@
   z-index: 10000;
   user-select: none;
 
-  &.-top { 
+  &.-top {
     @media (min-width: $br-mobile){
       top: 0;
     }
 
     .picker__holder {
-      margin: -356px 0 0 -140px;
       @media (min-width: $br-mobile){
         left: auto;
-        margin: -356px 0 0 -225px;
       }
     }
   }
   &.-bottom { }
-  &.-left { 
+  &.-left {
     .picker__holder {
       margin: -140px 0 0 -140px;
       @media (min-width: $br-mobile){
@@ -70,7 +68,7 @@ input.picker__input[type="text"].picker__input--active {
   background: #ffffff;
   box-sizing: border-box;
   width: 280px;
-  
+
   max-height: 0;
   opacity: 0;
   transform: translateY(-1em) perspective(600px) rotateX(10deg);
@@ -83,7 +81,7 @@ input.picker__input[type="text"].picker__input--active {
   @media (min-width: $br-mobile) {
     position: absolute;
     top: auto;
-    bottom: 5px; 
+    bottom: 5px;
     width: 300px;
   }
 }
