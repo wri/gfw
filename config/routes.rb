@@ -47,6 +47,9 @@ Gfw::Application.routes.draw do
   get '/sources' => redirect("http://data.globalforestwatch.org/")
   get '/sources(/:section)' => redirect("http://data.globalforestwatch.org/")
 
+  # stories
+  get '/stayinformed/crowdsourced-stories' => redirect('/stories')
+
   # stayinformed
   get '/stayinformed' => redirect("/")
   get '/stayinformed(/:section)' => redirect("/")
@@ -54,9 +57,6 @@ Gfw::Application.routes.draw do
   # getinvolved
   get '/getinvolved' => redirect("/developers-corner")
   get '/getinvolved(/:section)' => redirect("/developers-corner")
-
-  # stories
-  get '/stayinformed/crowdsourced-stories' => redirect('/stories')
 
   # static
   get '/data' => redirect("sources")
