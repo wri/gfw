@@ -37,34 +37,17 @@
 <div class="field -default">
   <label>Select the forest change alerts you would like to receive *</label>
   <div class="checkbox-box">
-    <div class="custom-checkbox">
-      <input class="dataset-checkbox" type="checkbox" name="datasets" id="umd-loss-gain">
-      <label for="umd-loss-gain"><span></span> Tree cover loss </label>
-    </div>
-    <div class="custom-checkbox">
-      <input class="dataset-checkbox" type="checkbox" name="datasets" id="guira-loss">
-      <label for="guira-loss"><span></span> Gran Chaco deforestation</label>
-    </div>
-    <div class="custom-checkbox">
-      <input class="dataset-checkbox" type="checkbox" name="datasets" id="prodes-loss">
-      <label for="prodes-loss"><span></span> PRODES deforestation</label>
-    </div>
-    <div class="custom-checkbox">
-      <input class="dataset-checkbox" type="checkbox" name="datasets" id="glad-alerts">
-      <label for="glad-alerts"><span></span> GLAD Tree Cover Loss Alerts</label>
-    </div>
-    <div class="custom-checkbox">
-      <input class="dataset-checkbox" type="checkbox" name="datasets" id="terrai-alerts">
-      <label for="terrai-alerts"><span></span> Terra-i Alerts</label>
-    </div>
-    <div class="custom-checkbox">
-      <input class="dataset-checkbox" type="checkbox" name="datasets" id="imazon-alerts">
-      <label for="imazon-alerts"><span></span> SAD Alerts</label>
-    </div>
-    <div class="custom-checkbox">
-      <input class="dataset-checkbox" type="checkbox" name="datasets" id="viirs-active-fires">
-      <label for="viirs-active-fires"><span></span> VIIRS Active fires</label>
-    </div>
+    {{#each datasets}}
+      <div class="custom-checkbox">
+        <input class="dataset-checkbox" type="checkbox" name="datasets" id="{{slug}}">
+        <label for="{{slug}}">
+          <span></span>
+          {{title}}
+          <svg data-source="{{slug_source}}" class="source"><use xlink:href="#shape-info"></use></svg>
+          <em>({{sub_title}})</em>
+        </label>
+      </div>
+    {{/each}}
   </div>
 </div>
 
