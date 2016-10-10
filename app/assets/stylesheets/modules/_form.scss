@@ -349,14 +349,31 @@ textarea {
       font-weight: 500;
     }
 
+    em {
+      color: #999;
+      font-style: italic;
+      font-size: 12px;
+      display: block;
+    }
+
+    svg {
+      width: 12px;
+      height: 12px;
+      padding: 2px;
+      position: relative;
+      top: 0px;
+      fill: white;
+      background: #97bd3d;
+      border-radius: 50%;
+    }
+
     span {
       position: absolute;
-      top: 50%;
+      top: 8px;
       left: 0;
       width: 16px;
       height: 16px;
       border: 1px solid $dark;
-      transform: translate(0,-50%);
 
       &:after {
         content: "";

@@ -6,6 +6,7 @@ define([
   'mps',
   'validate',
   'helpers/languagesHelper',
+  'helpers/datasetsHelper',
   'core/View',
   'connect/models/Subscription',
   'connect/views/MapMiniView',
@@ -28,6 +29,7 @@ define([
   mps,
   validate,
   languagesHelper,
+  datasetsHelper,
   View,
   Subscription,
   MapMiniView,
@@ -172,11 +174,13 @@ define([
       var aoi = this.subscription.get('aoi');
       var userLang = this.user.getLanguage();
       var languagesList = languagesHelper.getListSelected(userLang);
+      var datasetsList = datasetsHelper.getList();
 
       if (!!aoi) {
         this.$formType.html(this.templates[aoi]({
           email: this.user.get('email'),
-          languages: languagesList
+          languages: languagesList,
+          datasets: datasetsList
         }));
         this.cache();
         this.renderChosen();
