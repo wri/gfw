@@ -1,6 +1,6 @@
-<label for="select-layers">Select a jurisdiction</label>
+<label for="select-layers">{{name}}</label>
 <div class="m-select">
-  <select id="select-region" class="chosen-select default disabled js-select-region" data-placeholder="Select a jurisdiction" disabled>
+  <select id="select-region" class="chosen-select default disabled js-select-region" data-placeholder="{{placeholder}}" disabled>
     <option value=""></option>
     {{#each regions}}
       <option value="{{this.id_1}}">{{this.name_1}}</option>
