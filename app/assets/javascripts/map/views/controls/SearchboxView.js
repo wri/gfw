@@ -136,7 +136,7 @@ define([
 
       if (!_.isNaN(lat) && !_.isNaN(lng)) {
         this.presenter.setCenter(lat,lng);
-        this.addMarker(lat,lng);        
+        this.addMarker(lat,lng);
         this.model.set('hidden', false);
       }
     },
@@ -219,25 +219,94 @@ define([
 
     addMarker: function(_lat,_lng) {
       this.removeMarker();
-      
+
       var latLng = {
         lat: _lat,
-        lng: _lng        
+        lng: _lng
       };
 
       this.marker = new google.maps.Marker({
         position: latLng,
-        // icon: icons[feature.type].icon,
-        map: this.map
-      });      
+        map: this.map,
+        zIndex: 0,
+        optimized: false
+      });
+
+      this.markerMask = new google.maps.Marker({
+        position: latLng,
+        icon: this.getMarkerMaskIcon(),
+        map: this.map,
+        zIndex: 1,
+        optimized: false
+      });
+
+      this.markerClose = new google.maps.Marker({
+        position: latLng,
+        icon: this.getMarkerRemoveIcon(),
+        map: this.map,
+        zIndex: 2,
+        optimized: false
+      });
+      this.markerClose.setVisible(false);
+
+      this.setMarkerEvents();
     },
 
     removeMarker: function() {
       if (!!this.marker) {
         this.marker.setMap(null);
+        this.markerClose.setMap(null);
+        this.markerMask.setMap(null);
       }
-    }
+    },
 
+    setMarkerEvents: function() {
+      this.markerMask.addListener('mouseover', function() {
+        this.markerClose.setVisible(true);
+      }.bind(this));
+
+      this.markerMask.addListener('mouseout', function() {
+        this.markerClose.setVisible(false);
+      }.bind(this));
+
+      this.markerClose.addListener('mouseover', function() {
+        this.markerClose.setVisible(true);
+      }.bind(this));
+
+      this.markerClose.addListener('mouseout', function() {
+        this.markerClose.setVisible(false);
+      }.bind(this));
+
+      this.markerClose.addListener('click', function() {
+        this.removeMarker();
+      }.bind(this));
+    },
+
+    getMarkerRemoveIcon: function() {
+      return {
+        path: 'M 5 19 L 19 5 L 21 7 L 7 21 L 5 19 ZM 7 5 L 21 19 L 19 21 L 5 7 L 7 5 Z',
+        fillOpacity: 1,
+        fillColor: '#333333',
+        scale: 0.6,
+        strokeWeight: 0,
+        size: new google.maps.Size(10, 10),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(-14, 85)
+      };
+    },
+
+    getMarkerMaskIcon: function() {
+      return {
+        path: 'M.45.2c0 1.004.25 51.674.25 51.674l50.835.98L49.355.21S.45-.802.45.2z',
+        fillOpacity: 0,
+        scale: 1,
+        strokeWeight: 0,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(25, 50),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+    }
   });
 
   return Searchbox;
