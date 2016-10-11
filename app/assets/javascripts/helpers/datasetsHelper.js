@@ -81,7 +81,7 @@ define([], function() {
      */
     getListSelected: function(selectedDatasets) {
       for (var dataset in datasetList) {
-        if (selectedDatasets.indexOf(dataset) != -1) {
+        if (selectedDatasets && selectedDatasets.indexOf(dataset) != -1) {
           datasetList[dataset].checked = true
         }
       }
