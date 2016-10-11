@@ -4,10 +4,10 @@
  * @return AnalysisDrawView instance (extends Backbone.View).
  */
 define([
-  'underscore', 
-  'handlebars', 
-  'amplify', 
-  'turf', 
+  'underscore',
+  'handlebars',
+  'amplify',
+  'turf',
   'mps',
   'helpers/geojsonUtilsHelper',
   'map/presenters/analysis/AnalysisDrawPresenter',
@@ -33,13 +33,13 @@ define([
       //draw
       'click #btn-start-drawing' : 'onClickStartDrawing',
 
-      //upload   
+      //upload
       'change #file-upload-shape' : 'onChangeFileShape',
       'dragenter' : 'onDragenterShape',
       'dragleave' : 'onDragleaveShape',
       'dragend' : 'onDragendShape',
       'drop' : 'onDropShape'
-      
+
     },
 
     initialize: function(map, countries) {
@@ -71,23 +71,23 @@ define([
 
     /**
      * UI EVENTS
-     * 
+     *
      * - onClickStartDrawing
      * @param  {[object]} e
      * @return {void}
-     * 
+     *
      * - onChangeFileShape
      * @param  {[object]} e
      * @return {void}
-     * 
+     *
      * - onDragoverShape
      * @param  {[object]} e
      * @return {void}
-     * 
+     *
      * - onDragendShape
      * @param  {[object]} e
      * @return {void}
-     * 
+     *
      * - onDropShape
      * @param  {[object]} e
      * @return {void}
@@ -102,29 +102,29 @@ define([
 
       } else {
         this.presenter.status.set('is_drawing', false);
-        this.presenter.publishDeleteAnalysis();        
+        this.presenter.publishDeleteAnalysis();
         ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
       }
     },
 
     onChangeFileShape: function(e) {
       var file = e.currentTarget.files[0];
-      if (file) { 
-        this.uploadFile(file); 
+      if (file) {
+        this.uploadFile(file);
       }
     },
 
     onDragenterShape: function(e) {
-      this.$dropable.addClass('-moving'); 
+      this.$dropable.addClass('-moving');
       return false;
     },
 
     onDragleaveShape: function(e) {
-      this.$dropable.removeClass('-moving'); 
+      this.$dropable.removeClass('-moving');
     },
-    
+
     onDragendShape: function(e) {
-      this.$dropable.removeClass('-moving'); 
+      this.$dropable.removeClass('-moving');
       return false;
     },
 
@@ -143,10 +143,10 @@ define([
 
     /**
      * PRESENTER ACTIONS
-     * 
+     *
      * changeIsDrawing
      * @return {void}
-     */    
+     */
     changeIsDrawing: function() {
       var is_drawing = this.presenter.status.get('is_drawing');
       if (is_drawing) {
@@ -183,7 +183,7 @@ define([
           strokeWeight: 2,
           fillOpacity: 0,
           fillColor: '#FFF',
-          strokeColor: '#A2BC28',          
+          strokeColor: '#A2BC28',
         },
         panControl: false,
       });
@@ -197,7 +197,7 @@ define([
         }
       }.bind(this));
 
-      google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this.completeDrawing.bind(this));      
+      google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this.completeDrawing.bind(this));
     },
 
     /**
@@ -225,9 +225,9 @@ define([
       this.presenter.status.set('overlay', e.overlay);
 
       // Check if the drawing is enabled
-      if(this.presenter.status.get('is_drawing')) {      
+      if(this.presenter.status.get('is_drawing')) {
         this.presenter.status.set('geojson', this.getGeojson(e.overlay));
-        
+
         this.eventsDrawing();
         this.presenter.status.set('is_drawing', false);
 
@@ -253,7 +253,7 @@ define([
      */
     deleteDrawing: function() {
       var overlay = this.presenter.status.get('overlay');
-      if (!!overlay) {        
+      if (!!overlay) {
         overlay.setMap(null);
         this.presenter.status.set('overlay', null);
         this.presenter.status.set('geojson', null);
@@ -269,7 +269,7 @@ define([
 
       google.maps.event.addListener(overlay.getPath(), 'set_at', function () {
         this.updateDrawing(overlay);
-      }.bind(this));      
+      }.bind(this));
 
       google.maps.event.addListener(overlay.getPath(), 'insert_at', function () {
         this.updateDrawing(overlay);
@@ -288,7 +288,7 @@ define([
 
     /**
      * UPLOAD FILES
-     * 
+     *
      * - uploadFile
      */
     uploadFile: function(file) {
@@ -306,7 +306,7 @@ define([
             var geojson = features.reduce(turf.union),
                 bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson),
                 geometry = geojson.geometry;
-            
+
             this.drawGeojson(geometry);
             this.map.fitBounds(bounds);
 
@@ -321,10 +321,10 @@ define([
               this.presenter.publishNotification('notification-file-not-valid');
             }
           }.bind(this))
-          
+
         }.bind(this));
 
-      this.$dropable.removeClass('-moving');      
+      this.$dropable.removeClass('-moving');
     },
 
 
@@ -336,7 +336,7 @@ define([
      */
     getGeojson: function(overlay) {
       var paths = overlay.getPath().getArray();
-      return geojsonUtilsHelper.pathToGeojson(paths);            
+      return geojsonUtilsHelper.pathToGeojson(paths);
     },
 
     /**
@@ -348,7 +348,7 @@ define([
       var overlay = this.presenter.status.get('overlay');
       this.presenter.status.set('overlay_stroke_weight', 2);
       if (!!overlay) {
-        overlay.setOptions({ strokeWeight: 2});
+        overlay.setOptions({ strokeWeight: 2, editable: true});
       }
     },
 
@@ -361,10 +361,10 @@ define([
       var overlay = this.presenter.status.get('overlay');
       this.presenter.status.set('overlay_stroke_weight', 0);
       if (!!overlay) {
-        overlay.setOptions({ strokeWeight: 0});
+        overlay.setOptions({ strokeWeight: 0, editable: false});
       }
     },
-    
+
     /**
      * drawGeojson
      * @param  {object:geojson} geojson
