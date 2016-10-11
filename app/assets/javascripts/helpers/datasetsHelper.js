@@ -71,7 +71,23 @@ define([], function() {
      */
     getList: function() {
       return datasetList;
+    },
+
+    /**
+     * Returns a list of the key datasets
+     * with the selected option passed by param
+     * @param {string} selected language
+     * @returns {Array} list of languages with selection
+     */
+    getListSelected: function(selectedDatasets) {
+      for (var dataset in datasetList) {
+        if (selectedDatasets.indexOf(dataset) != -1) {
+          datasetList[dataset].checked = true
+        }
+      }
+      return datasetList;
     }
+
   }
 
   return datasetHelper;
