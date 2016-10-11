@@ -4,18 +4,18 @@
   raster-colorizer-default-color: transparent;
   raster-colorizer-epsilon:0.41;
   raster-colorizer-stops:
- stop(1, #C3B42F)
- stop(2, #CCDC94)
- stop(3, #97A470) 
- stop(4, #989b05) 
- stop(5, #157764) 
- stop(6, #3ccb49) 
- stop(7, #69e459)
- stop(8, #77c86c)
+ stop(1, #3ccb49)
+ stop(2, transparent)
+ stop(3, #F41E65) 
+ stop(4, #C3B42F)
+ stop(5, #dd86d8) 
+ stop(6, #69e459)
+ stop(7, #77c86c)
+ stop(8, #157764)
  stop(9, #91dd86)
- stop(10, #d0dd86) 
- stop(11, #F41E65) 
- stop(12, #fbb685) 
- stop(13, #7DBCE7) 
- stop(14, #dd86d8) 
- stop(15, #b8d1ba)}
+ stop(10, #fbb685) 
+ stop(11, #CCDC94) 
+ stop(12, #b8d1ba) 
+ stop(13, #d0dd86) 
+ stop(14, #989b05) 
+ stop(15, #7DBCE7)}
