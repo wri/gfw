@@ -6,6 +6,7 @@ define([
   'mps',
   'validate',
   'helpers/languagesHelper',
+  'helpers/datasetsHelper',
   'core/View',
   'connect/models/Subscription',
   'connect/views/MapMiniView',
@@ -28,6 +29,7 @@ define([
   mps,
   validate,
   languagesHelper,
+  datasetsHelper,
   View,
   Subscription,
   MapMiniView,
@@ -89,14 +91,20 @@ define([
       'change input,textarea,select' : 'onChangeInput',
     },
 
-    initialize: function(router, user) {
+    initialize: function(router, user, params) {
       View.prototype.initialize.apply(this);
 
       this.router = router;
       this.user = user;
+      this.subscription.set(params, { silent: true });
 
-      this.listeners();
       this.render();
+      this.listeners();
+
+      // Set params
+      setTimeout(function () {
+        this.renderType();
+      }.bind(this), 0);
     },
 
     _subscriptions: [
@@ -105,7 +113,7 @@ define([
         'Params/reset': function(layerSpec) {
           var defaults = this.subscription.get('defaults').params;
           this.subscription.set('params', defaults);
-          console.log(this.subscription.get('params'));
+          mps.publish('Router/change', [this.subscription.toJSON()]);
         }
       },
 
@@ -113,7 +121,7 @@ define([
         'LayerNav/change': function(layerSpec) {
           var defaults = this.subscription.get('defaults').params;
           this.subscription.set('params', defaults);
-          console.log(this.subscription.get('params'));
+          mps.publish('Router/change', [this.subscription.toJSON()]);
         }
       },
 
@@ -121,7 +129,7 @@ define([
         'Country/update': function(iso) {
           var defaults = this.subscription.get('defaults').params;
           this.subscription.set('params', _.extend({}, defaults, { iso: iso }));
-          console.log(this.subscription.get('params'));
+          mps.publish('Router/change', [this.subscription.toJSON()]);
         }
       },
 
@@ -139,11 +147,12 @@ define([
 
             GeostoreService.use(provider).then(function(useGeostoreId) {
               this.subscription.set('params', _.extend({}, defaults, { geostore: useGeostoreId }));
-              console.log(this.subscription.get('params'));
+              mps.publish('Router/change', [this.subscription.toJSON()]);
             }.bind(this));
+
           } else {
             this.subscription.set('params', _.extend({}, defaults, data));
-            console.log(this.subscription.get('params'));
+            mps.publish('Router/change', [this.subscription.toJSON()]);
           }
         }
       },
@@ -152,7 +161,7 @@ define([
         'Drawing/geostore': function(geostore) {
           var defaults = this.subscription.get('defaults').params;
           this.subscription.set('params', _.extend(defaults, { geostore: geostore }));
-          console.log(this.subscription.get('params'));
+          mps.publish('Router/change', [this.subscription.toJSON()]);
         }
       },
     ],
@@ -163,7 +172,9 @@ define([
     },
 
     render: function() {
-      this.$el.html(this.templates.default({}));
+      this.$el.html(this.templates.default({
+        aoi: this.subscription.get('aoi')
+      }));
       this.cache();
       this.renderChosen();
     },
@@ -172,11 +183,13 @@ define([
       var aoi = this.subscription.get('aoi');
       var userLang = this.user.getLanguage();
       var languagesList = languagesHelper.getListSelected(userLang);
+      var datasetsList = datasetsHelper.getListSelected(this.subscription.get('datasets'));
 
       if (!!aoi) {
         this.$formType.html(this.templates[aoi]({
           email: this.user.get('email'),
-          languages: languagesList
+          languages: languagesList,
+          datasets: datasetsList
         }));
         this.cache();
         this.renderChosen();
@@ -209,7 +222,10 @@ define([
     },
 
     initSubViews: function() {
-      var mapView = new MapMiniView();
+      var mapView = new MapMiniView({
+        el: '#map'
+      });
+
       this.subViews = {
         mapView: mapView,
         mapControlsView: new MapMiniControlsView(mapView.map),
@@ -233,7 +249,6 @@ define([
      */
     changeAOI: function() {
       mps.publish('Params/reset', []);
-      var aoi = this.subscription.get('aoi');
       this.renderType();
     },
 
@@ -259,6 +274,7 @@ define([
       }.bind(this)));
 
       this.subscription.set('datasets', _.clone(datasets));
+      mps.publish('Router/change', [this.subscription.toJSON()]);
     },
 
     onChangeInput: function(e) {

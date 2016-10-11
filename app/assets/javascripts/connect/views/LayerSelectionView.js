@@ -20,6 +20,7 @@ define([
     model: new (Backbone.Model.extend({
       country: null,
       layers: null,
+      layerSelectId: null
     })),
 
     el: '#layer-selection',
@@ -78,6 +79,7 @@ define([
     listeners: function() {
       this.listenTo(this.model, 'change:country', this.changeCountry.bind(this));
       this.listenTo(this.model, 'change:layers', this.changeLayers.bind(this));
+      this.listenTo(this.model, 'change:layerSelectId', this.changeLayerSelectId.bind(this));
     },
 
     cache: function() {
@@ -126,6 +128,17 @@ define([
         }.bind(this));
     },
 
+    changeLayerSelectId: function() {
+      var layerSelectId = this.model.get('layerSelectId');
+      _.each(this.$el.find('select.js-select-layer'), function(select){
+        var id = $(select).attr('id');
+
+        if (id != layerSelectId) {
+          $(select).val('').trigger('chosen:updated');
+        }
+      }.bind(this));
+    },
+
 
     /**
      * RENDERS
@@ -162,6 +175,7 @@ define([
 
     renderLayers: function() {
       this.$layersField.html(this.templateLayers({
+        id: 'select-layers',
         name: 'Select an area from a global data set',
         placeholder: 'Select a data set...',
         layers: this.layers,
@@ -172,6 +186,7 @@ define([
 
     renderCountryLayers: function() {
       this.$layersCountryField.html(this.templateLayers({
+        id: 'select-country-layers',
         name: '',
         placeholder: 'Select a data set...',
         layers: (!_.isEmpty(this.countryLayers)) ? this.countryLayers : null,
@@ -205,14 +220,19 @@ define([
       var country = $(e.currentTarget).val();
       this.model.set({
         country: country,
+        layers: (! !!country) ? [] : this.model.get('layers')
+        // layers: [],
       });
     },
 
     onChangeLayer: function(e) {
       e && e.preventDefault();
       var layers = [$(e.currentTarget).val()];
+      var id = $(e.currentTarget).attr('id');
+
       this.model.set({
-        layers: _.clone(layers)
+        layers: _.clone(layers),
+        layerSelectId: id
       });
     }
   });

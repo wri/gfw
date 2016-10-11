@@ -170,10 +170,10 @@ define([
 
       // Check if the drawing is enabled
       if (this.status.get('is_drawing')) {
-        mps.publish('Drawing/overlay', [e.overlay], { save: true });
+        mps.publish('Drawing/overlay', [e.overlay, { save: true }]);
         mps.publish('Drawing/toggle', [false]);
       } else {
-        mps.publish('Drawing/overlay', [e.overlay], { save: false });
+        mps.publish('Drawing/overlay', [e.overlay, { save: false }]);
         mps.publish('Drawing/toggle', [false]);
         mps.publish('Drawing/delete');
       }

@@ -20,11 +20,11 @@
           <div class="field -default -medium">
             <label for="aoi">Select the area you’d like to receive alerts for *</label>
             <div class="m-select">
-              <select id="aoi" class="chosen-select default" data-placeholder="Select your area of interest">
+              <select id="aoi" class="chosen-select default" data-placeholder="Select your area of interest" value="{{aoi}}">
                 <option value=""></option>
-                <option value="draw">Draw or upload a shape</option>
-                <option value="data">Select an area from a GFW data set</option>
-                <option value="country">Select a country or jurisdiction</option>
+                <option value="draw" {{#ifCond aoi "==" "draw"}}selected{{/ifCond}}>Draw or upload a shape</option>
+                <option value="data" {{#ifCond aoi "==" "data"}}selected{{/ifCond}}>Select an area from a GFW data set</option>
+                <option value="country" {{#ifCond aoi "==" "country"}}selected{{/ifCond}}>Select a country or jurisdiction</option>
               </select>
             </div>
           </div>

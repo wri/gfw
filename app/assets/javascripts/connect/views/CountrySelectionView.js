@@ -91,13 +91,12 @@ define([
     changeRegion: function() {
       var country = this.model.get('country');
       var region = this.model.get('region');
-      if (!!region) {
-        // Publish the current country-region selection
-        mps.publish('Country/update', [{
-          country: country,
-          region: region
-        }])
-      }
+
+      // Publish the current country-region selection
+      mps.publish('Country/update', [{
+        country: country,
+        region: region
+      }]);
     },
 
 
@@ -107,7 +106,7 @@ define([
     renderCountries: function() {
       this.$countryField.html(this.templateCountries({
         name: 'Select a country',
-        placeholder: 'Select a country',
+        placeholder: 'Select a country...',
         countries: this.countries
       }));
       this.renderChosen();
@@ -115,6 +114,8 @@ define([
 
     renderRegions: function() {
       this.$regionField.html(this.templateRegions({
+        name: 'Select a jurisdiction',
+        placeholder: 'Select a jurisdiction...',
         regions: this.regions
       }));
 

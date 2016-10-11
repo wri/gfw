@@ -24,8 +24,6 @@ define([
 
   var MapMiniView = View.extend({
 
-    el: '#map',
-
     status: new (Backbone.Model.extend({
       defaults: {
         is_drawing: false,
@@ -414,7 +412,6 @@ define([
     */
     changeGeojson: function() {
       var geojson = this.status.get('geojson');
-
       if (!!geojson) {
         GeostoreService.save(geojson).then(function(geostoreId) {
           this.status.set('geostore', geostoreId);
