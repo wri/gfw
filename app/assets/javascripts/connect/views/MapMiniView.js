@@ -24,8 +24,6 @@ define([
 
   var MapMiniView = View.extend({
 
-    el: '#map',
-
     status: new (Backbone.Model.extend({
       defaults: {
         is_drawing: false,

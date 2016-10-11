@@ -39,7 +39,7 @@
   <div class="checkbox-box">
     {{#each datasets}}
       <div class="custom-checkbox">
-        <input class="dataset-checkbox" type="checkbox" name="datasets" id="{{slug}}">
+        <input class="dataset-checkbox" type="checkbox" name="datasets" id="{{slug}}" {{#if checked}}checked{{/if}}>
         <label for="{{slug}}">
           <span></span>
           {{title}}
