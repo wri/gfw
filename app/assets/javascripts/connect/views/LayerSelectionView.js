@@ -132,7 +132,7 @@ define([
       var layerSelectId = this.model.get('layerSelectId');
       _.each(this.$el.find('select.js-select-layer'), function(select){
         var id = $(select).attr('id');
-        
+
         if (id != layerSelectId) {
           $(select).val('').trigger('chosen:updated');
         }
@@ -220,6 +220,8 @@ define([
       var country = $(e.currentTarget).val();
       this.model.set({
         country: country,
+        layers: (! !!country) ? [] : this.model.get('layers')
+        // layers: [],
       });
     },
 
