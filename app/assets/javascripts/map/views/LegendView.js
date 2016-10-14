@@ -264,7 +264,7 @@ define([
 
     getLayersByCategory: function(layers){
       return _.groupBy(layers, function(layer){
-        // Hack to keep the forest_clearing slug in layers which has to be analyzed but not grouped by them in the legend
+        // Hack to keep the forest_clearing slug in layers which have to be analyzed but not grouped by the said slug in the legend
         if (layer.category_slug === 'forest_clearing' && !layer.is_forest_clearing) return 'forest_clearing_2';
         return layer.category_slug;
       })
