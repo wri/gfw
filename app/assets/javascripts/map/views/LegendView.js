@@ -59,7 +59,7 @@ define([
   'text!map/templates/legend/mex_forest_prod.handlebars',
   'text!map/templates/legend/mex_forest_rest.handlebars',
   'text!map/templates/legend/bra_landcover.handlebars',
-  
+
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
@@ -156,7 +156,7 @@ define([
       per_protected_areas:Handlebars.compile(perPATpl),
       mex_land_cover:Handlebars.compile(mex_land_coverTpl),
       bra_land_cover:Handlebars.compile(bra_landcoverTPL)
-      
+
     },
 
     events: {
@@ -248,9 +248,8 @@ define([
 
       }, this);
 
-      categoriesGlobal = this.statusCategories(_.groupBy(layersGlobal, function(layer){ return layer.category_slug }));
-      categoriesIso = this.statusCategories(_.groupBy(layersIso, function(layer){ return layer.category_slug }));
-
+      categoriesGlobal = this.statusCategories(this.getLayersByCategory(layersGlobal));
+      categoriesIso = this.statusCategories(this.getLayersByCategory(layersIso));
       // Render
       this.render(this.template({
         categories: (_.isEmpty(categoriesGlobal)) ? false : categoriesGlobal,
@@ -263,13 +262,21 @@ define([
       this.presenter.toggleLayerOptions();
     },
 
+    getLayersByCategory: function(layers){
+      return _.groupBy(layers, function(layer){
+        // Hack to keep the forest_clearing slug in layers which has to be analyzed but not grouped by them in the legend
+        if (layer.category_slug === 'forest_clearing' && !layer.is_forest_clearing) return 'forest_clearing_2';
+        return layer.category_slug;
+      })
+    },
+
     statusCategories: function(array){
       // Search for layer 'nothing'
       var categories_status = this.model.get('categories_status');
       _.each(array, function(category) {
         for (var i = 0; i< category.length; i++) {
           // Mantain categories closed in rendering
-          (categories_status.indexOf(category[i]['category_status']) != -1) ? category['closed'] = true : category['closed'] = false;
+          category['closed'] = categories_status.indexOf(category[i]['category_status']) != -1;
           // Get layer's length of each category
           category['layers_length'] = i + 1;
         }
