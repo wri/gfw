@@ -126,6 +126,7 @@ define([
                 source_json, \
                 category_color, \
                 category_slug, \
+                is_forest_clearing, \
                 category_name, \
                 external, \
                 iso, \
