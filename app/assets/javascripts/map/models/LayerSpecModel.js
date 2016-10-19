@@ -171,7 +171,8 @@ define([
       "umd_as_it_happens",
       "umd_as_it_happens_per",
       "umd_as_it_happens_idn",
-      "umd_as_it_happens_cog"
+      "umd_as_it_happens_cog",
+      "places_to_watch"
     ],
 
     categoryOrder: [

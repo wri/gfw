@@ -155,6 +155,7 @@ define([
   'map/views/layers/MexForestConservLayer',
   'map/views/layers/MexForestProdLayer',
   'map/views/layers/MexForestRestLayer',
+  'map/views/layers/UgaPALayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -323,6 +324,7 @@ define([
   MexForestConservLayer,
   MexForestProdLayer,
   MexForestRestLayer,
+  UgaPALayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -813,6 +815,9 @@ define([
     },
     mex_land_cover: {
       view:  MexLandCoverLayer
+    },
+    uga_protected_areas: {
+      view:  UgaPALayer
     },
     nothing: {
     }
