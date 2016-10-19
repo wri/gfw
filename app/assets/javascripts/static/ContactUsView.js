@@ -64,6 +64,7 @@ define([
     events: {
       'click .js-btn-submit': 'actionSubmit',
       'change input, textarea, select': 'changeInput',
+      'change #contact-topic': 'changeTopic'
     },
 
     initialize: function() {
