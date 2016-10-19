@@ -208,7 +208,7 @@ define([
 
     validateInput(name, value) {
       let errors = validate.single(value, constraints[name]);
-      if (!!errors) {
+      if (!!errors && this.errors) {
         this.errors[name] = errors[0];
       } else {
         this.errors && this.errors[name] && delete this.errors[name];
