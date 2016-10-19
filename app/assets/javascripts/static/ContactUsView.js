@@ -5,7 +5,7 @@ define([
 
   'use strict';
 
-  const topics = {
+  var topics = {
     'report-a-bug-or-error-on-gfw': {
       name: 'Report a bug or error on GFW',
       placeholder: 'Explain the bug or error and tell us where on the website you encountered it. What browser (e.g., Chrome version 50.0.2661.94 m) and operating system (e.g., Windows 8.1) do you use?',
@@ -44,7 +44,7 @@ define([
     },
   }
 
-  const constraints = {
+  var constraints = {
     'contact-email': {
       presence: true,
       email: true
@@ -77,13 +77,13 @@ define([
       this.$container = $('.content-static');
     },
 
-    actionSubmit(e) {
+    actionSubmit: function(e) {
       e && e.preventDefault();
-      (this.validate(e)) ? this.sendForm() : this.updateForm();
+      this.validate(e) ? this.sendForm() : this.updateForm();
     },
 
     // Send the data to the API
-    sendForm() {
+    sendForm: function() {
       // Production send request
       // Send request
       this.$spinner.addClass('-start');
@@ -106,10 +106,10 @@ define([
         }
       }.bind(this);
 
-      xhr.onerror = () => {
+      xhr.onerror = function() {
         this.changeStep('error');
         this.$spinner.removeClass('-start');
-      }
+      }.bind(this);
 
       xhr.send(JSON.stringify(this.serialize(this.$form[0])));
 
@@ -124,7 +124,7 @@ define([
       // }
     },
 
-    updateForm() {
+    updateForm: function() {
       this.$form.find('input, textarea, select').removeClass('-error');
       this.$form.find('label').removeClass('-error');
       for (var key in this.errors) {
@@ -135,16 +135,16 @@ define([
       }
     },
 
-    resetForm() {
+    resetForm: function() {
       this.$form.find('input, textarea, select').val(null);
     },
 
-    serialize(form) {
+    serialize: function(form) {
     	if (!form || form.nodeName !== "FORM") {
     		return;
     	}
-    	let obj = {};
-    	for (let i = form.elements.length - 1; i >= 0; i = i - 1) {
+    	var obj = {};
+    	for (var i = form.elements.length - 1; i >= 0; i = i - 1) {
     		if (form.elements[i].name === "") {
     			continue;
     		}
@@ -177,43 +177,43 @@ define([
     			break;
     		case 'SELECT':
     			switch (form.elements[i].type) {
-    			case 'select-one':
-    				obj[form.elements[i].name] = form.elements[i].value;
-    				break;
-    			case 'select-multiple':
-    				for (let j = form.elements[i].options.length - 1; j >= 0; j = j - 1) {
-    					if (form.elements[i].options[j].selected) {
-    						obj[form.elements[i].name] = form.elements[i].options[j].value;
-    					}
-    				}
-    				break;
+      			case 'select-one':
+      				obj[form.elements[i].name] = form.elements[i].value;
+      				break;
+      			case 'select-multiple':
+      				for (var j = form.elements[i].options.length - 1; j >= 0; j = j - 1) {
+      					if (form.elements[i].options[j].selected) {
+      						obj[form.elements[i].name] = form.elements[i].options[j].value;
+      					}
+      				}
+      				break;
     			}
     			break;
     		case 'BUTTON':
     			switch (form.elements[i].type) {
-    			case 'reset':
-    			case 'submit':
-    			case 'button':
-    				obj[form.elements[i].name] = form.elements[i].value;
-    				break;
-    			}
+      			case 'reset':
+      			case 'submit':
+      			case 'button':
+      				obj[form.elements[i].name] = form.elements[i].value;
+      				break;
+      		}
     			break;
     		}
     	}
     	return obj;
     },
 
-    validate(e) {
+    validate: function(e) {
       e && e.preventDefault();
-      let attributes = this.serialize(this.$form[0]);
+      var attributes = this.serialize(this.$form[0]);
 
       // Validate form, if is valid the response will be undefined
       this.errors = validate(attributes, constraints);
       return ! !!this.errors;
     },
 
-    validateInput(name, value) {
-      let errors = validate.single(value, constraints[name]);
+    validateInput: function(name, value) {
+      var errors = validate.single(value, constraints[name]);
       if (!!errors && this.errors) {
         this.errors[name] = errors[0];
       } else {
@@ -221,13 +221,13 @@ define([
       }
     },
 
-    changeInput(e) {
+    changeInput: function(e) {
       e && e.preventDefault();
       this.validateInput(e.currentTarget.name, e.currentTarget.value);
       this.updateForm();
     },
 
-    changeStep(step) {
+    changeStep: function(step) {
       this.$step.removeClass('-active');
       this.$stepBtn.removeClass('-active');
 
@@ -236,7 +236,7 @@ define([
       this.$el.find('.step-btn[data-step="'+step+'"]').addClass('-active');
     },
 
-    changeTopic(e) {
+    changeTopic: function(e) {
       var topic = e.currentTarget.value;
       if (!!topic) {
         var placeholder = topics[topic]['placeholder'];
