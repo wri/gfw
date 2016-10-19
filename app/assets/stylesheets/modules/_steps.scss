@@ -1,0 +1,15 @@
+.steps {
+
+  > li {
+    display: none;
+    text-transform: none;
+
+    &.-active {
+      display: block;
+    }
+
+    .step-content {
+      padding: 20px 0 0;
+    }
+  }
+}
