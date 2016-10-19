@@ -95,6 +95,12 @@ define([
     changeCountry: function() {
       var country = this.model.get('country');
 
+      // Publish the current country selection
+      mps.publish('Country/update', [{
+        country: country,
+        region: null
+      }])
+
       LayerSpecService._getAllLayers(
         // Filter
         function(layer){
