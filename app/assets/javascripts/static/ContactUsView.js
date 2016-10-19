@@ -73,6 +73,8 @@ define([
       this.$step = this.$el.find('.step');
       this.$stepBtn = this.$el.find('.step-btn');
       this.$contactMessage = this.$el.find('#contact-message');
+      this.$body = $('html, body');
+      this.$container = $('.content-static');
     },
 
     actionSubmit(e) {
@@ -92,6 +94,9 @@ define([
 
       xhr.onload = function() {
         if (xhr.status === 200 || xhr.status === 201) {
+          this.$body.animate({
+            scrollTop: this.$container.offset().top
+          }, 'slow');
           this.changeStep('success');
           this.resetForm();
           this.$spinner.removeClass('-start');
