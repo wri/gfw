@@ -16,6 +16,7 @@ define([
   'connect/views/MapMiniSelectedView',
   'connect/views/CountrySelectionView',
   'connect/views/LayerSelectionView',
+  'connect/views/SubscriptionNewConfirmationView',
   'map/services/GeostoreService',
   'text!connect/templates/subscriptionNew.handlebars',
   'text!connect/templates/subscriptionNewDraw.handlebars',
@@ -39,6 +40,7 @@ define([
   MapMiniSelectedView,
   CountrySelectionView,
   LayerSelectionView,
+  SubscriptionNewConfirmationView,
   GeostoreService,
   tpl,
   tplDraw,
@@ -100,6 +102,9 @@ define([
 
       this.render();
       this.listeners();
+
+      this.confimationView = new SubscriptionNewConfirmationView();
+      this.$el.append(this.confimationView.render().el);
 
       // Set params
       setTimeout(function () {
@@ -298,7 +303,8 @@ define([
       if (this.validate(attributesFromForm)) {
         this.subscription.set(attributesFromForm, { silent: true }).save()
           .then(function(){
-            this.router.navigateTo('subscriptions', {
+            // Scroll to top
+            this.router.navigateTo('my_gfw/subscriptions', {
               trigger: true
             });
             mps.publish('Notification/open', ['notification-my-gfw-subscription-correct2']);
