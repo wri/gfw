@@ -51,7 +51,11 @@
 
       <label class="m-sel-container">
         Language
+        {{#if errors.language}}
+          <span class="my-gfw-form-error">{{errors.language}}</span>
+        {{/if}}
         <select class="default" name="language">
+          <option disabled selected>Choose your language</option>
           {{#each languages}}
             <option value="{{@key}}">{{this}}</option>
           {{/each}}
