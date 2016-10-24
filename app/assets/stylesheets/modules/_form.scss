@@ -190,6 +190,14 @@ textarea {
     }
   }
 
+  > span {
+    &.-legend {
+      font-size: 14px;
+      margin: 5px 0;
+      display: inline-block;
+    }
+  }
+
   // STATES
   &.-short {
     input[type="password"],
