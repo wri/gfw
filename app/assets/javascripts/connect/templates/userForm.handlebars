@@ -26,11 +26,12 @@
     </p>
 
     <form class="my-gfw-profile-form" method="POST" action="{{action}}">
+
       <label>Name</label>
       <input type="text" placeholder="Your name" name="fullName" value="{{user.fullName}}">
 
       <label>
-        Email
+        Email *
         {{#if errors.email}}
           <span class="my-gfw-form-error">{{errors.email}}</span>
         {{/if}}
@@ -50,7 +51,7 @@
       </label>
 
       <label class="m-sel-container">
-        Language
+        Language *
         {{#if errors.language}}
           <span class="my-gfw-form-error">{{errors.language}}</span>
         {{/if}}
@@ -420,6 +421,10 @@
         <a class="contact-link" href="mailto:gfw@wri.org">email us</a>.
       </p>
       {{/unless}}
+
+      <div class="field -default -medium">
+        <span class="-legend">(*) Required field.</span>
+      </div>
 
     </form>
   </div>
