@@ -3,6 +3,7 @@ define([
   'backbone',
   'handlebars',
   'underscore',
+  'core/View',
   'mps',
   'map/utils',
   'simplePagination',
@@ -13,6 +14,7 @@ define([
   Backbone,
   Handlebars,
   _,
+  View,
   mps,
   utils,
   simplePagination,
@@ -30,7 +32,7 @@ define([
   });
 
 
-  var SubscriptionListView = Backbone.View.extend({
+  var SubscriptionListView = View.extend({
     template: Handlebars.compile(tpl),
 
     initialize: function() {
@@ -41,6 +43,15 @@ define([
 
       this.render();
     },
+
+    _subscriptions: [
+      // MPS
+      {
+        'Subscriptions/new': function() {
+          console.log('show views');
+        }
+      }
+    ],
 
     render: function() {
       var calledAfterSync = arguments.length > 0;
@@ -67,6 +78,11 @@ define([
           this.render();
         }
       }
+
+      setTimeout(function() {
+        console.log('hola');
+        mps.publish('Subscriptions/new', ['lalala']);
+      }, 5000);
     },
 
     renderList: function() {

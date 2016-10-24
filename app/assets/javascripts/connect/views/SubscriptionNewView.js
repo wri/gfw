@@ -101,10 +101,8 @@ define([
       this.subscription.set(params, { silent: true });
 
       this.render();
-      this.listeners();
 
-      this.confimationView = new SubscriptionNewConfirmationView();
-      this.$el.append(this.confimationView.render().el);
+      this.listeners();
 
       // Set params
       setTimeout(function () {
@@ -248,6 +246,14 @@ define([
       })
     },
 
+    confirmationView: function() {
+      console.log(this.subscription.toJSON());
+      this.confimationView = new SubscriptionNewConfirmationView();
+      this.$el.append(this.confimationView.render({
+        uploadedData: false
+      }).el);
+    },
+
     /**
      * CHANGE EVENTS
      * - changeAOI
@@ -307,7 +313,7 @@ define([
             this.router.navigateTo('my_gfw/subscriptions', {
               trigger: true
             });
-            mps.publish('Notification/open', ['notification-my-gfw-subscription-correct2']);
+            mps.publish('Subscriptions/new', []);
           }.bind(this))
 
           .fail(function(){

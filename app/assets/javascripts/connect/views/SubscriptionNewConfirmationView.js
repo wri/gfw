@@ -17,8 +17,8 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    render: function() {
-      this.$el.html(this.template({}));
+    render: function(params) {
+      this.$el.html(this.template(params));
       return this;
     },
 
