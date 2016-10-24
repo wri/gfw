@@ -481,7 +481,6 @@ define([
           return el;
         }
         return null;
-        
       }));
 
       if (! !!json || !json.length) {
@@ -536,7 +535,10 @@ define([
         .orient("left")
         .ticks(5)
         .tickSize(-w,0)
-        .tickFormat(d3.format("s"));
+        .tickFormat(function(d) {
+          var prefix = d3.formatPrefix(d);
+          return prefix.scale(d).toFixed() + 'Mha';
+        });
 
       graph.append("g")
         .attr("class", "y axis")
