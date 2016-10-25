@@ -149,6 +149,7 @@ define([
 
     infowindowsUIEvents: function() {
       var $map = $('#map');
+      var self = this;
       $map.find('.cartodb-popup').on('click.infowindow', '.analyze-shape', function (e) {
         var isDisabled = $(e.currentTarget).hasClass('disabled');
 
@@ -186,8 +187,14 @@ define([
           mps.publish('Subscribe/shape', [shapeData]);
 
           // Analytics events
-          (shapeData.wdpaid) ? ga('send', 'event', 'Map', 'Subscribe', 'Subscribe Protected Area' + shapeData.wdpaid) : null;
-          (shapeData.useid) ? ga('send', 'event', 'Map', 'Subscribe', 'Subscribe ' + shapeData.use.toUpperCase() + ' ' + shapeData.useid) : null;
+          if (self.clickTimer) {
+            clearTimeout(self.clickTimer);
+            self.clickTimer = null;
+          }
+          self.clickTimer = setTimeout(function() {
+            (shapeData.wdpaid) ? ga('send', 'event', 'Subscribe', 'Click infowindow to subscribe', 'Protected Area ' + shapeData.wdpaid) : null;
+            (shapeData.useid) ? ga('send', 'event', 'Subscribe', 'Click infowindow to subscribe', 'Use ' + shapeData.use.toUpperCase() + ' ' + shapeData.useid) : null;
+          }, 100);
         } else {
           mps.publish('Notification/open', ['notification-select-forest-change-layer-subscription']);
         }

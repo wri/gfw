@@ -473,7 +473,7 @@ define([
         'Subscribe/toggle': function(toggle) {
           this.status.set('subscribe', !!toggle);
         }
-      },            
+      },
       {
         'Analysis/subtab': function(subtab) {
           this.status.set('subtab', subtab);
