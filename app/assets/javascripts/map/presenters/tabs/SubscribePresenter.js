@@ -7,9 +7,10 @@ define([
   'underscore',
   'mps',
   'map/presenters/PresenterClass',
+  'helpers/gaEventsHelper',
   'models/UserModel',
   'connect/models/Subscription',
-], function(_, mps, PresenterClass, User, Subscription) {
+], function(_, mps, PresenterClass, GaEventsHelper, User, Subscription) {
 
   'use strict';
 
@@ -120,12 +121,23 @@ define([
 
     onSubscriptionSave: function() {
       this.view.hideSpinner();
+      this.trackEvent();
       this.nextStep();
     },
 
     onSubscriptionFail: function() {
       this.hide();
       this.publishNotification('notification-subscription-incorrect');
+    },
+
+    trackEvent: function() {
+      var subscription = this.subscription.toJSON();
+      var params = subscription.params;
+
+      if (params) {
+        var eventData = GaEventsHelper.getSubscription(params);
+        ga('send', 'event', 'Subscribe', 'Save subscription', eventData);
+      }
     },
 
 
