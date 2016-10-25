@@ -9,6 +9,7 @@ define([
   'simplePagination',
   'connect/collections/Subscriptions',
   'connect/views/SubscriptionListItemView',
+  'connect/views/SubscriptionNewConfirmationView',
   'text!connect/templates/subscriptionList.handlebars'
 ], function($,
   Backbone,
@@ -20,6 +21,7 @@ define([
   simplePagination,
   Subscriptions,
   SubscriptionListItemView,
+  SubscriptionNewConfirmationView,
   tpl) {
 
   'use strict';
@@ -36,6 +38,8 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
+      View.prototype.initialize.apply(this);
+
       this.model = new SubscriptionListModel();
       this.subscriptions = new Subscriptions();
       this.listenTo(this.subscriptions, 'sync remove', this.render);
@@ -48,7 +52,7 @@ define([
       // MPS
       {
         'Subscriptions/new': function() {
-          console.log('show views');
+          this.confirmationView();
         }
       }
     ],
@@ -78,11 +82,6 @@ define([
           this.render();
         }
       }
-
-      setTimeout(function() {
-        console.log('hola');
-        mps.publish('Subscriptions/new', ['lalala']);
-      }, 5000);
     },
 
     renderList: function() {
@@ -142,6 +141,15 @@ define([
           window.scrollTo(0,0);
         }.bind(this)
       };
+    },
+
+    confirmationView: function() {
+      setTimeout(function() {
+        this.confimationView = new SubscriptionNewConfirmationView();
+        this.$el.append(this.confimationView.render({
+          uploadedData: false
+        }).el);
+      }, 1000);
     }
 
   });

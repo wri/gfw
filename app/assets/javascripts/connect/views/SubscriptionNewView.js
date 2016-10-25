@@ -16,7 +16,6 @@ define([
   'connect/views/MapMiniSelectedView',
   'connect/views/CountrySelectionView',
   'connect/views/LayerSelectionView',
-  'connect/views/SubscriptionNewConfirmationView',
   'map/services/GeostoreService',
   'text!connect/templates/subscriptionNew.handlebars',
   'text!connect/templates/subscriptionNewDraw.handlebars',
@@ -40,7 +39,6 @@ define([
   MapMiniSelectedView,
   CountrySelectionView,
   LayerSelectionView,
-  SubscriptionNewConfirmationView,
   GeostoreService,
   tpl,
   tplDraw,
@@ -246,13 +244,6 @@ define([
       })
     },
 
-    confirmationView: function() {
-      console.log(this.subscription.toJSON());
-      this.confimationView = new SubscriptionNewConfirmationView();
-      this.$el.append(this.confimationView.render({
-        uploadedData: false
-      }).el);
-    },
 
     /**
      * CHANGE EVENTS
