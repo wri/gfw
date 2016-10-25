@@ -31,7 +31,7 @@
       <input type="text" placeholder="Your name" name="fullName" value="{{user.fullName}}">
 
       <label>
-        Email *
+        Email <span class="-required">(required)</span>
         {{#if errors.email}}
           <span class="my-gfw-form-error">{{errors.email}}</span>
         {{/if}}
@@ -51,7 +51,7 @@
       </label>
 
       <label class="m-sel-container">
-        Language *
+        Language <span class="-required">(required)</span>
         {{#if errors.language}}
           <span class="my-gfw-form-error">{{errors.language}}</span>
         {{/if}}
@@ -421,10 +421,6 @@
         <a class="contact-link" href="mailto:gfw@wri.org">email us</a>.
       </p>
       {{/unless}}
-
-      <div class="field -default -medium">
-        <span class="-legend">(*) Required field.</span>
-      </div>
 
     </form>
   </div>
