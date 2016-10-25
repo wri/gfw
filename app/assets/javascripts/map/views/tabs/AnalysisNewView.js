@@ -10,6 +10,7 @@ define([
   'chosen',
   'turf',
   'views/ShareView',
+  'helpers/gaEventsHelper',
   'map/views/analysis/AnalysisDrawView',
   'map/views/analysis/AnalysisCountryView',
   'map/views/analysis/AnalysisShapeView',
@@ -18,7 +19,7 @@ define([
   'map/presenters/tabs/AnalysisNewPresenter',
   'text!map/templates/tabs/analysis-new.handlebars',
   'text!map/templates/tabs/analysis-mobile-new.handlebars'
-], function(_, Handlebars, amplify, chosen, turf, ShareView, AnalysisDrawView, AnalysisCountryView, AnalysisShapeView, AnalysisResultsNewView, AnalysisDownloadView, Presenter, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, turf, ShareView, GaEventsHelper, AnalysisDrawView, AnalysisCountryView, AnalysisShapeView, AnalysisResultsNewView, AnalysisDownloadView, Presenter, tpl, tplMobile) {
 
   'use strict';
 
@@ -137,7 +138,10 @@ define([
       e && e.preventDefault() && e.stopPropagation();
       if (this.presenter.status.get('enabledSubscription')) {
         this.presenter.publishSubscribtion();
-        // ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + this.params.layer.title);
+
+        var params = this.presenter.status.toJSON();
+        var eventData = GaEventsHelper.getSubscription(params);
+        ga('send', 'event', 'Subscribe', 'Click right menu to subscribe', eventData);
       }
     },
 
