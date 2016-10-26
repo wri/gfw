@@ -81,11 +81,7 @@ textarea {
 }
 
 .field-column {
-  display: block;
-  @media (min-width: 1450px) {
-    display: flex;
-  }
-
+  display: flex;
 
   &.-j-center { justify-content: center; }
   &.-j-between { justify-content: space-between; }
@@ -136,6 +132,17 @@ textarea {
 
   &.-huge {
     max-width: 500px;
+  }
+
+  &.-separator {
+    width: 80px;
+    text-align: center;
+    padding: 25px 0 0 0;
+
+    span {
+      font-size: 14px;
+      font-weight: 400;
+    }
   }
 
 
