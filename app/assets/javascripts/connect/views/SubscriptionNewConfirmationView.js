@@ -30,8 +30,8 @@ define([
     goToContributeData: function(event) {
       event.preventDefault();
 
-      // Redirect
       this.remove();
+      window.location.href = '/contribute-data';
     }
 
   });
