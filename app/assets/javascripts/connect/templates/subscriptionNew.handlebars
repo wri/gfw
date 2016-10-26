@@ -17,7 +17,7 @@
 
       <div class="m-form">
         <form id="new-subscription">
-          <div class="field -default -medium">
+          <div class="field -default -medium {{#unless loggedIn}}-disabled{{/unless}}">
             <label for="aoi">Select the area you’d like to receive alerts for *</label>
             <div class="m-select">
               <select id="aoi" class="chosen-select default" data-placeholder="Select your area of interest" value="{{aoi}}">
@@ -28,6 +28,36 @@
               </select>
             </div>
           </div>
+
+          {{#unless loggedIn}}
+            <div class="login-notice">
+              <div class="text">Please log in to be able to use this feature</div>
+
+              <ul class="my-gfw-authentication">
+                <li class="my-gfw-sign-in-twitter">
+                  <a href="{{apiHost}}/auth/twitter" class="my-gfw-sign-in my-gfw-sign-in-twitter">
+                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use></svg>
+                    Log in with Twitter
+                  </a>
+                </li>
+
+                <li class="my-gfw-sign-in-facebook">
+                  <a href="{{apiHost}}/auth/facebook" class="my-gfw-sign-in">
+                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use></svg>
+                    Log in with Facebook
+                  </a>
+                </li>
+
+                <li class="my-gfw-sign-in-google">
+                  <a href="{{apiHost}}/auth/google" class="my-gfw-sign-in">
+                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-googleplus"></use></svg>
+                    Log in with Google
+                  </a>
+                </li>
+              </ul>
+
+            </div>
+          {{/unless}}
 
           <div id="new-subscription-content">
 

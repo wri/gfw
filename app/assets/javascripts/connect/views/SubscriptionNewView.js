@@ -174,7 +174,9 @@ define([
 
     render: function() {
       this.$el.html(this.templates.default({
-        aoi: this.subscription.get('aoi')
+        aoi: this.subscription.get('aoi'),
+        loggedIn: this.router.alreadyLoggedIn,
+        apiHost: window.gfw.config.GFW_API_HOST_NEW_API
       }));
       this.cache();
       this.renderChosen();
@@ -264,8 +266,10 @@ define([
      * - onSubmitSubscription
      */
     onChangeAOI: function(e) {
-      e && e.preventDefault();
-      this.subscription.set('aoi', $(e.currentTarget).val());
+      if (this.router.alreadyLoggedIn) {
+        e && e.preventDefault();
+        this.subscription.set('aoi', $(e.currentTarget).val());
+      }
     },
 
     onChangeDataset: function(e) {
@@ -297,7 +301,7 @@ define([
         nullify: true
       }), 'datasets'), this.subscription.toJSON());
 
-      if (this.validate(attributesFromForm)) {
+      if (this.validate(attributesFromForm) && this.router.alreadyLoggedIn) {
         this.subscription.set(attributesFromForm, { silent: true }).save()
           .then(function(){
             // Scroll to top
