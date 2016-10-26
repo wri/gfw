@@ -304,7 +304,7 @@ define([
             this.router.navigateTo('my_gfw/subscriptions', {
               trigger: true
             });
-            mps.publish('Subscriptions/new', []);
+            mps.publish('Subscriptions/new', [this.subscription.toJSON()]);
           }.bind(this))
 
           .fail(function(){

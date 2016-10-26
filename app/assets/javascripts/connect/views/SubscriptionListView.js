@@ -51,11 +51,15 @@ define([
     _subscriptions: [
       // MPS
       {
-        'Subscriptions/new': function() {
-          this.confirmationView();
+        'Subscriptions/new': function(subscription) {
+          this.confirmationView(subscription);
         }
       }
     ],
+
+    cache: function() {
+      this.$container = $('.my-gfw-container');
+    },
 
     render: function() {
       var calledAfterSync = arguments.length > 0;
@@ -82,6 +86,7 @@ define([
           this.render();
         }
       }
+      this.cache();
     },
 
     renderList: function() {
@@ -143,13 +148,11 @@ define([
       };
     },
 
-    confirmationView: function() {
-      setTimeout(function() {
-        this.confimationView = new SubscriptionNewConfirmationView();
-        this.$el.append(this.confimationView.render({
-          uploadedData: false
-        }).el);
-      }, 1000);
+    confirmationView: function(subscription) {
+      this.confimationView = new SubscriptionNewConfirmationView();
+      this.$container.append(this.confimationView.render({
+        uploadedData: subscription.params.geostore
+      }).el);
     }
 
   });
