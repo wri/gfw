@@ -134,6 +134,11 @@ textarea {
     max-width: 500px;
   }
 
+  &.-disabled {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
   &.-separator {
     width: 80px;
     text-align: center;
