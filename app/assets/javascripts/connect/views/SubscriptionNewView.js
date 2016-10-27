@@ -16,7 +16,9 @@ define([
   'connect/views/MapMiniSelectedView',
   'connect/views/CountrySelectionView',
   'connect/views/LayerSelectionView',
+  'connect/views/DatasetsListView',
   'map/services/GeostoreService',
+  'map/services/CoverageService',
   'text!connect/templates/subscriptionNew.handlebars',
   'text!connect/templates/subscriptionNewDraw.handlebars',
   'text!connect/templates/subscriptionNewData.handlebars',
@@ -39,7 +41,9 @@ define([
   MapMiniSelectedView,
   CountrySelectionView,
   LayerSelectionView,
+  DatasetsListView,
   GeostoreService,
+  CoverageService,
   tpl,
   tplDraw,
   tplData,
@@ -237,6 +241,7 @@ define([
         mapSelectedView: new MapMiniSelectedView(mapView.map),
         countrySelectionView: new CountrySelectionView(mapView.map),
         layerSelectionView: new LayerSelectionView(mapView.map),
+        datasetsListView: new DatasetsListView()
       };
     },
 
