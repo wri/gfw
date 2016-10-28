@@ -158,14 +158,21 @@ define([
         this.user = new User();
         this.user.fetch()
           .then(function() {
+            this.alreadyLoggedIn = true;
             if (callback) {
               callback.apply(this, args);
             }
-            this.alreadyLoggedIn = true;
           }.bind(this))
 
           .fail(function() {
-            this.loginPage();
+            var currentPage = this.getCurrent();
+
+            if (currentPage === 'subscriptionsNewPage') {
+              this.alreadyLoggedIn = false;
+              this.subscriptionsNewPage();
+            } else {
+              this.loginPage();
+            }
           }.bind(this));
 
       } else {
@@ -238,7 +245,9 @@ define([
       var uri = new URI();
       var newParams = uri.search(true);
 
-      this.setParams(newParams);
+      if (this.alreadyLoggedIn) {
+        this.setParams(newParams);
+      }
       this.status.set('page','subscriptions/new');
     },
 

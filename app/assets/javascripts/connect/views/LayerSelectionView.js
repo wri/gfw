@@ -95,6 +95,14 @@ define([
     changeCountry: function() {
       var country = this.model.get('country');
 
+      this.resetLayers();
+
+      // Publish the current country selection
+      mps.publish('Country/update', [{
+        country: country,
+        region: null
+      }]);
+
       LayerSpecService._getAllLayers(
         // Filter
         function(layer){
@@ -210,6 +218,14 @@ define([
       });
     },
 
+    resetLayers: function() {
+      LayerSpecService._removeAllLayers();
+      this.model.set({
+        layerSelectId: '',
+        layers: []
+      });
+    },
+
     /**
      * UI EVENTS
      * - onChangeCountry
@@ -226,9 +242,21 @@ define([
     },
 
     onChangeLayer: function(e) {
+      mps.publish('MapSelection/clear', []);
+
       e && e.preventDefault();
       var layers = [$(e.currentTarget).val()];
       var id = $(e.currentTarget).attr('id');
+
+      if (id === 'select-layers') {
+        this.model.set({
+          country: '',
+          region: null
+        }, { silent: true });
+        this.countryLayers = [];
+        this.renderCountries();
+        this.renderCountryLayers();
+      }
 
       this.model.set({
         layers: _.clone(layers),

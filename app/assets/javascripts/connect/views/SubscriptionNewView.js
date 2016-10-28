@@ -6,7 +6,6 @@ define([
   'mps',
   'validate',
   'helpers/languagesHelper',
-  'helpers/datasetsHelper',
   'core/View',
   'connect/models/Subscription',
   'connect/views/MapMiniView',
@@ -16,6 +15,7 @@ define([
   'connect/views/MapMiniSelectedView',
   'connect/views/CountrySelectionView',
   'connect/views/LayerSelectionView',
+  'connect/views/DatasetsListView',
   'map/services/GeostoreService',
   'text!connect/templates/subscriptionNew.handlebars',
   'text!connect/templates/subscriptionNewDraw.handlebars',
@@ -29,7 +29,6 @@ define([
   mps,
   validate,
   languagesHelper,
-  datasetsHelper,
   View,
   Subscription,
   MapMiniView,
@@ -39,6 +38,7 @@ define([
   MapMiniSelectedView,
   CountrySelectionView,
   LayerSelectionView,
+  DatasetsListView,
   GeostoreService,
   tpl,
   tplDraw,
@@ -86,7 +86,6 @@ define([
 
     events: {
       'change #aoi': 'onChangeAOI',
-      'change .dataset-checkbox' : 'onChangeDataset',
       'submit #new-subscription': 'onSubmitSubscription',
       'change input,textarea,select' : 'onChangeInput',
     },
@@ -99,6 +98,7 @@ define([
       this.subscription.set(params, { silent: true });
 
       this.render();
+
       this.listeners();
 
       // Set params
@@ -162,6 +162,14 @@ define([
           var defaults = this.subscription.get('defaults').params;
           this.subscription.set('params', _.extend(defaults, { geostore: geostore }));
           mps.publish('Router/change', [this.subscription.toJSON()]);
+          this.changeDatasets();
+        }
+      },
+
+      {
+        'Datasets/update': function(datasets) {
+          this.subscription.set('datasets', datasets);
+          mps.publish('Router/change', [this.subscription.toJSON()]);
         }
       },
     ],
@@ -169,11 +177,14 @@ define([
     listeners: function() {
       // STATUS
       this.listenTo(this.subscription, 'change:aoi', this.changeAOI.bind(this));
+      this.listenTo(this.subscription, 'change:params', this.changeDatasets.bind(this));
     },
 
     render: function() {
       this.$el.html(this.templates.default({
-        aoi: this.subscription.get('aoi')
+        aoi: this.subscription.get('aoi'),
+        loggedIn: this.router.alreadyLoggedIn,
+        apiHost: window.gfw.config.GFW_API_HOST_NEW_API
       }));
       this.cache();
       this.renderChosen();
@@ -183,13 +194,11 @@ define([
       var aoi = this.subscription.get('aoi');
       var userLang = this.user.getLanguage();
       var languagesList = languagesHelper.getListSelected(userLang);
-      var datasetsList = datasetsHelper.getListSelected(this.subscription.get('datasets'));
 
       if (!!aoi) {
         this.$formType.html(this.templates[aoi]({
           email: this.user.get('email'),
-          languages: languagesList,
-          datasets: datasetsList
+          languages: languagesList
         }));
         this.cache();
         this.renderChosen();
@@ -217,7 +226,6 @@ define([
     cache: function() {
       this.$form = this.$el.find('#new-subscription');
       this.$formType = this.$el.find('#new-subscription-content');
-      this.$datasetCheckboxs = this.$el.find('.dataset-checkbox');
       this.$selects = this.$el.find('select.chosen-select');
     },
 
@@ -234,6 +242,7 @@ define([
         mapSelectedView: new MapMiniSelectedView(mapView.map),
         countrySelectionView: new CountrySelectionView(mapView.map),
         layerSelectionView: new LayerSelectionView(mapView.map),
+        datasetsListView: new DatasetsListView()
       };
     },
 
@@ -243,13 +252,30 @@ define([
       })
     },
 
+
     /**
      * CHANGE EVENTS
      * - changeAOI
+     * - changeDatasets
      */
     changeAOI: function() {
       mps.publish('Params/reset', []);
       this.renderType();
+    },
+
+    changeDatasets: function() {
+      var subscription = this.subscription.toJSON();
+      var params = subscription.params;
+
+      mps.publish('Datasets/change', [{
+        use: params.use,
+        useid: params.useid,
+        wdpaid: params.wdpaid,
+        geostore: params.geostore,
+        country: params.iso.country,
+        region: params.iso.region,
+        datasets: subscription.datasets
+      }]);
     },
 
 
@@ -257,24 +283,14 @@ define([
     /**
      * UI EVENTS
      * - onChangeAOI
-     * - onChangeDataset
      * - onChangeInput
      * - onSubmitSubscription
      */
     onChangeAOI: function(e) {
-      e && e.preventDefault();
-      this.subscription.set('aoi', $(e.currentTarget).val());
-    },
-
-    onChangeDataset: function(e) {
-      e && e.preventDefault();
-      var datasets = _.compact(_.map(this.$datasetCheckboxs, function(el){
-        var isChecked = $(el).is(':checked');
-        return (isChecked) ? $(el).attr('id') : null;
-      }.bind(this)));
-
-      this.subscription.set('datasets', _.clone(datasets));
-      mps.publish('Router/change', [this.subscription.toJSON()]);
+      if (this.router.alreadyLoggedIn) {
+        e && e.preventDefault();
+        this.subscription.set('aoi', $(e.currentTarget).val());
+      }
     },
 
     onChangeInput: function(e) {
@@ -295,13 +311,14 @@ define([
         nullify: true
       }), 'datasets'), this.subscription.toJSON());
 
-      if (this.validate(attributesFromForm)) {
+      if (this.validate(attributesFromForm) && this.router.alreadyLoggedIn) {
         this.subscription.set(attributesFromForm, { silent: true }).save()
           .then(function(){
-            this.router.navigateTo('subscriptions', {
+            // Scroll to top
+            this.router.navigateTo('my_gfw/subscriptions', {
               trigger: true
             });
-            mps.publish('Notification/open', ['notification-my-gfw-subscription-correct2']);
+            mps.publish('Subscriptions/new', [this.subscription.toJSON()]);
           }.bind(this))
 
           .fail(function(){

@@ -13,6 +13,14 @@ define([], function() {
       slug: 'umd-loss-gain',
       slug_source: 'tree_cover_loss'
     },
+    'viirs-active-fires': {
+      title: 'VIIRS Active fires',
+      long_title: 'daily VIIRS active fires alerts',
+      sub_title: 'daily, 375 m, global, NASA',
+      layerSlug: ['viirs_fires_alerts'],
+      slug: 'viirs-active-fires',
+      slug_source: 'viirs_fires'
+    },
     'terrai-alerts': {
       title: 'Terra-i Alerts',
       long_title: 'monthly Terra-i tree cover loss alerts',
@@ -52,14 +60,6 @@ define([], function() {
       layerSlug: ['umd_as_it_happens'],
       slug: 'glad-alerts',
       slug_source: 'umd_landsat_alerts'
-    },
-    'viirs-active-fires': {
-      title: 'VIIRS Active fires',
-      long_title: 'daily VIIRS active fires alerts',
-      sub_title: 'daily, 375 m, global, NASA',
-      layerSlug: ['viirs_fires_alerts'],
-      slug: 'viirs-active-fires',
-      slug_source: 'viirs_fires'
     }
   };
 
@@ -71,6 +71,29 @@ define([], function() {
      */
     getList: function() {
       return datasetList;
+    },
+
+    /**
+     * Returns a filtered list of key datasets
+     * @param {Object} datasets slugs
+     * @returns {Object} key languages list
+     */
+    getFilteredList: function(datasets) {
+      var filteredDatasets = [];
+
+      // Global layers
+      filteredDatasets.push(datasetList['umd-loss-gain']);
+      filteredDatasets.push(datasetList['viirs-active-fires']);
+
+      if (datasets) {
+        for (var dataset in datasetList) {
+          if (datasets.indexOf(datasetList[dataset].layerSlug[0]) !== -1) {
+            filteredDatasets.push(datasetList[dataset]);
+          }
+        }
+      }
+
+      return filteredDatasets;
     },
 
     /**
