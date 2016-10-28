@@ -21,10 +21,11 @@ define([
 
     el: '#datasets-selection',
 
-    templateDatasets: Handlebars.compile(datasetTpl),
-
     events: {
+      'change .dataset-checkbox' : 'onChangeDataset'
     },
+
+    templateDatasets: Handlebars.compile(datasetTpl),
 
     initialize: function() {
       if (!this.$el.length) {
@@ -33,7 +34,6 @@ define([
 
       View.prototype.initialize.apply(this);
 
-      this.cache();
       this.renderDatasetsList();
     },
 
@@ -46,18 +46,14 @@ define([
       }
     ],
 
-    listeners: function() {
-    },
-
-    cache: function() {
-    },
-
 
     /**
      * CHANGE EVENTS
     */
     changeDatasets: function(params) {
-      var values = _.compact(_.values(params));
+      var paramsValues = _.pick(params, 'use', 'useid', 'wdpaid',
+      'geostore', 'country', 'region');
+      var values = _.compact(_.values(paramsValues));
 
       if (values.length) {
         this.$el.html(this.templateDatasets({
@@ -91,19 +87,21 @@ define([
       }));
     },
 
+
     /**
      * UI EVENTS
-     * - onChangeCountry
-     * - onChangeLayer
-    */
-    onChangeCountry: function(e) {
+     * - onChangeDataset
+     */
+    onChangeDataset: function(e) {
       e && e.preventDefault();
+      var $datasetCheckboxs = this.$el.find('.dataset-checkbox');
 
-    },
+      var datasets = _.compact(_.map($datasetCheckboxs, function(el) {
+        var isChecked = $(el).is(':checked');
+        return (isChecked) ? $(el).attr('id') : null;
+      }.bind(this)));
 
-    onChangeLayer: function(e) {
-      e && e.preventDefault();
-
+      mps.publish('Datasets/update', [_.clone(datasets)]);
     }
   });
 

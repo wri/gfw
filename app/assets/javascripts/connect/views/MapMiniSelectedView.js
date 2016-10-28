@@ -44,6 +44,12 @@ define([
         'Shape/update': function(data){
           this.model.clear({ silent: true }).set(data);
         }
+      },
+
+      {
+        'MapSelection/clear': function(){
+          this.clearSelection();
+        }
       }
     ],
 
@@ -59,6 +65,17 @@ define([
     */
     render: function() {
       this.$el.addClass('-active').html(this.template(this.model.toJSON()));
+    },
+
+
+    /**
+     * CHANGE EVENTS
+     * - clearSelection
+     */
+
+    clearSelection: function() {
+      this.model.clear();
+      this.$el.removeClass('-active');
     },
 
 

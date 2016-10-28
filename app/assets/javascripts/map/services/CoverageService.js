@@ -29,7 +29,7 @@ define([
           var url = this.getUrl();
 
           ds.define(GET_REQUEST_ID, {
-            cache: {type: 'persist', duration: 1, unit: 'days'},
+            cache: false,
             url: APIURL + url,
             type: 'GET',
             dataType: 'json',

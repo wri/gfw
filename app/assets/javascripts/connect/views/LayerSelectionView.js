@@ -242,6 +242,8 @@ define([
     },
 
     onChangeLayer: function(e) {
+      mps.publish('MapSelection/clear', []);
+
       e && e.preventDefault();
       var layers = [$(e.currentTarget).val()];
       var id = $(e.currentTarget).attr('id');
