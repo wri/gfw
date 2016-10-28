@@ -86,7 +86,6 @@ define([
 
     events: {
       'change #aoi': 'onChangeAOI',
-      'change .dataset-checkbox' : 'onChangeDataset',
       'submit #new-subscription': 'onSubmitSubscription',
       'change input,textarea,select' : 'onChangeInput',
     },
@@ -163,6 +162,14 @@ define([
           var defaults = this.subscription.get('defaults').params;
           this.subscription.set('params', _.extend(defaults, { geostore: geostore }));
           mps.publish('Router/change', [this.subscription.toJSON()]);
+          this.changeDatasets();
+        }
+      },
+
+      {
+        'Datasets/update': function(datasets) {
+          this.subscription.set('datasets', datasets);
+          mps.publish('Router/change', [this.subscription.toJSON()]);
         }
       },
     ],
@@ -219,7 +226,6 @@ define([
     cache: function() {
       this.$form = this.$el.find('#new-subscription');
       this.$formType = this.$el.find('#new-subscription-content');
-      this.$datasetCheckboxs = this.$el.find('.dataset-checkbox');
       this.$selects = this.$el.find('select.chosen-select');
     },
 
@@ -267,7 +273,8 @@ define([
         wdpaid: params.wdpaid,
         geostore: params.geostore,
         country: params.iso.country,
-        region: params.iso.region
+        region: params.iso.region,
+        datasets: subscription.datasets
       }]);
     },
 
@@ -276,7 +283,6 @@ define([
     /**
      * UI EVENTS
      * - onChangeAOI
-     * - onChangeDataset
      * - onChangeInput
      * - onSubmitSubscription
      */
@@ -285,17 +291,6 @@ define([
         e && e.preventDefault();
         this.subscription.set('aoi', $(e.currentTarget).val());
       }
-    },
-
-    onChangeDataset: function(e) {
-      e && e.preventDefault();
-      var datasets = _.compact(_.map(this.$datasetCheckboxs, function(el){
-        var isChecked = $(el).is(':checked');
-        return (isChecked) ? $(el).attr('id') : null;
-      }.bind(this)));
-
-      this.subscription.set('datasets', _.clone(datasets));
-      mps.publish('Router/change', [this.subscription.toJSON()]);
     },
 
     onChangeInput: function(e) {
