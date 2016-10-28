@@ -6,7 +6,6 @@ define([
   'mps',
   'validate',
   'helpers/languagesHelper',
-  'helpers/datasetsHelper',
   'core/View',
   'connect/models/Subscription',
   'connect/views/MapMiniView',
@@ -18,7 +17,6 @@ define([
   'connect/views/LayerSelectionView',
   'connect/views/DatasetsListView',
   'map/services/GeostoreService',
-  'map/services/CoverageService',
   'text!connect/templates/subscriptionNew.handlebars',
   'text!connect/templates/subscriptionNewDraw.handlebars',
   'text!connect/templates/subscriptionNewData.handlebars',
@@ -31,7 +29,6 @@ define([
   mps,
   validate,
   languagesHelper,
-  datasetsHelper,
   View,
   Subscription,
   MapMiniView,
@@ -43,7 +40,6 @@ define([
   LayerSelectionView,
   DatasetsListView,
   GeostoreService,
-  CoverageService,
   tpl,
   tplDraw,
   tplData,
@@ -174,6 +170,7 @@ define([
     listeners: function() {
       // STATUS
       this.listenTo(this.subscription, 'change:aoi', this.changeAOI.bind(this));
+      this.listenTo(this.subscription, 'change:params', this.changeDatasets.bind(this));
     },
 
     render: function() {
@@ -190,13 +187,11 @@ define([
       var aoi = this.subscription.get('aoi');
       var userLang = this.user.getLanguage();
       var languagesList = languagesHelper.getListSelected(userLang);
-      var datasetsList = datasetsHelper.getListSelected(this.subscription.get('datasets'));
 
       if (!!aoi) {
         this.$formType.html(this.templates[aoi]({
           email: this.user.get('email'),
-          languages: languagesList,
-          datasets: datasetsList
+          languages: languagesList
         }));
         this.cache();
         this.renderChosen();
@@ -255,10 +250,25 @@ define([
     /**
      * CHANGE EVENTS
      * - changeAOI
+     * - changeDatasets
      */
     changeAOI: function() {
       mps.publish('Params/reset', []);
       this.renderType();
+    },
+
+    changeDatasets: function() {
+      var subscription = this.subscription.toJSON();
+      var params = subscription.params;
+
+      mps.publish('Datasets/change', [{
+        use: params.use,
+        useid: params.useid,
+        wdpaid: params.wdpaid,
+        geostore: params.geostore,
+        country: params.iso.country,
+        region: params.iso.region
+      }]);
     },
 
 

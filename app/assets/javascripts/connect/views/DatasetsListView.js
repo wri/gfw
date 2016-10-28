@@ -8,8 +8,10 @@ define([
   'handlebars',
   'mps',
   'core/View',
+  'helpers/datasetsHelper',
+  'map/services/CoverageService',
   'text!connect/templates/subscriptionDatasetsList.handlebars',
-], function(_, Handlebars, mps, View, datasetTpl) {
+], function(_, Handlebars, mps, View, datasetsHelper, CoverageService, datasetTpl) {
 
   'use strict';
 
@@ -17,7 +19,7 @@ define([
     model: new (Backbone.Model.extend({
     })),
 
-    el: '#datasets-list',
+    el: '#datasets-selection',
 
     templateDatasets: Handlebars.compile(datasetTpl),
 
@@ -25,12 +27,9 @@ define([
     },
 
     initialize: function() {
-      // console.log('lalala dataset');
-      // console.log(this.$el);
-      // if (!this.$el.length) {
-      //   console.log('bye', this.$el.length);
-      //   return;
-      // }
+      if (!this.$el.length) {
+        return;
+      }
 
       View.prototype.initialize.apply(this);
 
@@ -38,24 +37,46 @@ define([
       this.renderDatasetsList();
     },
 
+    _subscriptions: [
+      // MPS
+      {
+        'Datasets/change': function(params) {
+          this.changeDatasets(params);
+        }
+      }
+    ],
+
     listeners: function() {
     },
 
     cache: function() {
-      this.$datasetsField = this.$el.find('#datasets-field');
     },
 
 
     /**
      * CHANGE EVENTS
     */
-    changeCountry: function() {
-    },
+    changeDatasets: function(params) {
+      var values = _.compact(_.values(params));
 
-    changeLayers: function() {
-    },
+      if (values.length) {
+        this.$el.html(this.templateDatasets({
+          datasets: []
+        }));
 
-    changeLayerSelectId: function() {
+        CoverageService.get(params)
+          .then(function(layers) {
+            this.$el.html(this.templateDatasets({
+              datasets: datasetsHelper.getFilteredList(layers)
+            }));
+          }.bind(this))
+
+          .error(function(error) {
+            console.log(error);
+          }.bind(this));
+      } else {
+        this.renderDatasetsList();
+      }
     },
 
 
@@ -63,21 +84,12 @@ define([
      * RENDERS
     */
     renderDatasetsList: function() {
-      console.log('render');
-      // this.$datasetsField.html('lala');
-      console.log(this.datasetsField);
-      // this.$datasetsField.html(this.templateDatasets({
-      //   id: 'select-layers'
-      // }));
+      var datasetsList = datasetsHelper.getListSelected([]);
 
-      // this.$datasetsField.html('lalala');
-      //
-      // console.log('hola', this.$datasetsField);
+      this.$el.html(this.templateDatasets({
+        datasets: datasetsList
+      }));
     },
-
-    renderCountries: function() {
-    },
-
 
     /**
      * UI EVENTS
