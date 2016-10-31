@@ -176,6 +176,10 @@ textarea {
     &.-error {
       color: $red;
     }
+
+    &.-no-padding {
+      padding: 0;
+    }
   }
 
   textarea {
