@@ -164,7 +164,7 @@ define([
           var isos = _.uniq(_.pluck(layers, 'iso'));
 
           this.$countryField.html(this.templateCountries({
-            name: 'Select an area from a country-specific data set',
+            name: 'Select an area from a country-specific data set *',
             placeholder: 'Select a country...',
             countries: _.filter(this.countries, function(country) {
               return (isos.indexOf(country.iso) != -1)
@@ -184,10 +184,10 @@ define([
     renderLayers: function() {
       this.$layersField.html(this.templateLayers({
         id: 'select-layers',
-        name: 'Select an area from a global data set',
+        name: 'Select an area from a global data set *',
         placeholder: 'Select a data set...',
         layers: this.layers,
-        hint: 'Select an area by clicking a shape on the map'
+        hint: ''
       }));
       this.renderChosen();
     },
