@@ -724,8 +724,12 @@
         @include logos-sprite(minepathover);
       }
     }
+
+    &.conservationinternational {
+      height: 38px; width: 120px; @include logos-sprite(conservationinternational);
+      &:hover{
+        @include logos-sprite(conservationinternationalhover);
+      }
+    }
   }
 }
-
-
-
