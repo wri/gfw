@@ -45,14 +45,14 @@ define([
   }
 
   var constraints = {
-    'contact-email': {
+    'email': {
       presence: true,
       email: true
     },
-    'contact-topic': {
+    'topic': {
       presence: true
     },
-    'contact-message': {
+    'message': {
       presence: true
     }
   };
@@ -89,11 +89,11 @@ define([
       this.$spinner.addClass('-start');
       var xhr = new XMLHttpRequest();
 
-      xhr.open('POST', window.gfw.config.GFW_API_HOST + '/emails');
+      xhr.open('POST', window.gfw.config.GFW_API_HOST_NEW_API + '/form/contact-us');
       xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
       xhr.onload = function() {
-        if (xhr.status === 200 || xhr.status === 201) {
+        if (xhr.status === 200 || xhr.status === 201 || xhr.status === 204) {
           this.$body.animate({
             scrollTop: this.$container.offset().top
           }, 'slow');
