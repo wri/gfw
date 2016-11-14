@@ -58,6 +58,14 @@
     &.-middle {
       margin-top: -15px;
     }
+
+    > span {
+      &.-required {
+        font-size: 12px;
+        font-weight: 400;
+        text-transform: lowercase;
+      }
+    }
   }
 
   input:not([type="radio"]),

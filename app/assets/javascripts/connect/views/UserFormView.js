@@ -9,10 +9,22 @@ define([
 
   var UserFormValidator = Class.extend({
     validations: {
+      email: {
+        message: 'Please enter your email',
+        validator: function(user) {
+          return ! _.isEmpty(user.get('email'));
+        }
+      },
+      language: {
+        message: 'Please enter your language',
+        validator: function(user) {
+          return ! _.isEmpty(user.get('language'));
+        }
+      },
       signUpForTesting: {
         message: 'Please enter your email to sign up as an official tester',
         validator: function(user) {
-          return !(user.get('signUpForTesting') === 'true' && _.isEmpty(user.get('email')));
+          return !(user.get('signUpForTesting') && _.isEmpty(user.get('email')));
         }
       }
     },
@@ -52,6 +64,7 @@ define([
 
       if (this.user) {
         this.listenTo(this.user, 'sync', this.render);
+        this._checkProfileStatus();
         this.render();
       }
     },
@@ -69,6 +82,13 @@ define([
       }));
 
       this._renderSelectedOptions();
+    },
+
+    _checkProfileStatus: function() {
+      var profileComplete = this.user.attributes.profileComplete;
+      if (!profileComplete) {
+        mps.publish('Notification/open', ['notification-my-gfw-profile-incomplete']);
+      }
     },
 
     _renderSelectedOptions: function() {
@@ -93,7 +113,7 @@ define([
         }
       }.bind(this));
 
-      this.$('input[name="signUpForTesting"][value="'+(attributes.signUpForTesting==='true').toString()+'"]').
+      this.$('input[name="signUpForTesting"][value="'+(attributes.signUpForTesting===true).toString()+'"]').
         prop('checked', true);
     },
 
@@ -142,6 +162,10 @@ define([
 
       this.user.set(formValues);
       if (this.validator.isValid(this.user)) {
+        formValues.profileComplete = true;
+        this.user.set({
+          profileComplete: true
+        });
         this.user.save(formValues, {patch: true}).then(this._redirect.bind(this));
       } else {
         this.render();
