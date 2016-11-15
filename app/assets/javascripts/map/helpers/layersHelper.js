@@ -158,6 +158,7 @@ define([
   'map/views/layers/MexForestRestLayer',
   'map/views/layers/UgaPALayer',
   'map/views/layers/BraLandCoverLayer',
+  'map/views/layers/CanProtectedAreasLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -329,6 +330,7 @@ define([
   MexForestRestLayer,
   UgaPALayer,
   BraLandCoverLayer,
+  CanProtectedAreasLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -831,7 +833,9 @@ define([
     bra_land_cover: {
       view:  BraLandCoverLayer
     },
-    
+    can_protected_areas: {
+      view:  CanProtectedAreasLayer
+    },
     nothing: {
     }
   };
