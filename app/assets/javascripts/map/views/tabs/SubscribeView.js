@@ -60,6 +60,7 @@ define([
 
       this.$el.html(this.template({
         apiHost: window.gfw.config.GFW_API_HOST_NEW_API,
+        callbackUrl: window.location,
         loggedIn: this.presenter.user.isLoggedIn(),
         email: this.presenter.user.get('email'),
         date: moment().format('MMM D, YYYY'),
