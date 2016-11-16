@@ -23,6 +23,7 @@ define([
     render: function() {
       this.$el.html(this.template({
         apiHost: window.gfw.config.GFW_API_HOST_NEW_API,
+        callbackUrl: window.location,
         message: this.message
       }));
 
