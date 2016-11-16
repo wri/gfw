@@ -19,8 +19,12 @@ define([
     },
 
     parse: function(response) {
-      var attributes = response.data.attributes;
-      attributes.id = response.data.id;
+      var attributes = {};
+
+      if (response.data) {
+        attributes = response.data.attributes;
+        attributes.id = response.data.id;
+      }
 
       return attributes;
     },
