@@ -47,10 +47,11 @@ define([
     },
 
     sensors : {
-      'landsat-8,theia,deimos-1': 'All sensors',
+      'landsat-8,theia,deimos-1,sentinel-2a': 'All sensors',
       'landsat-8': 'Landsat 8 (15 m)',
       'theia': 'Theia (5 m)',
       'deimos-1': 'Deimos 1 (22 m)',
+      'sentinel-2a': 'Sentinel 2 (10 m)',
     },
 
     initialize: function(map) {

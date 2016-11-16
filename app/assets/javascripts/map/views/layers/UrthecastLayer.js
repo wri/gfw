@@ -55,7 +55,7 @@ define([
          'cloud':        params.cloud        || '100',
          'mindate':      params.mindate      || '2000-09-01',
          'maxdate':      params.maxdate      || '2015-09-01',
-         'sensor_platform' : params.sensor_platform || 'theia,landsat-8,deimos-1'
+         'sensor_platform' : params.sensor_platform || 'theia,landsat-8,deimos-1,sentinel-2a'
         }
       return params;
     },
