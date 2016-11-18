@@ -115,7 +115,7 @@ define([
      */
     updateUrl: function() {
       var uri = new URI();
-      var params = _.omit(this.getParams(), 'vars', 'defaults','params');
+      var params = _.omit(this.getParams(), 'vars', 'defaults','params', 'isUpload');
       uri.query(this._serializeParams(params));
       this.navigate(uri.path().slice(1) + uri.search(), { trigger: false });
     },
