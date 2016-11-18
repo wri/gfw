@@ -171,7 +171,6 @@ define([
       {
         'Drawing/geostore': function(geostore) {
           var defaults = this.subscription.get('defaults').params;
-          this.subscription.set({ isUpload: false }, { silent: true });
           this.subscription.set('params', _.extend(defaults, { geostore: geostore }));
           mps.publish('Router/change', [this.subscription.toJSON()]);
           this.changeDatasets();

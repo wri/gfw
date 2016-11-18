@@ -167,7 +167,8 @@ define([
      */
     completeDrawing: function(e) {
       this.stopDrawingManager();
-
+      mps.publish('Shape/upload', [false]);
+      
       // Check if the drawing is enabled
       if (this.status.get('is_drawing')) {
         mps.publish('Drawing/overlay', [e.overlay, { save: true }]);
