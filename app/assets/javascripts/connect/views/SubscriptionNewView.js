@@ -64,6 +64,7 @@ define([
         language: 'en',
         datasets: [],
         activeLayers: [],
+        isUpload: false,
         params: {
           geostore: null,
           iso: {
@@ -72,7 +73,7 @@ define([
           },
           wdpaid: null,
           use: null,
-          useid: null,
+          useid: null
         }
       }
     }),
@@ -112,6 +113,7 @@ define([
       {
         'Params/reset': function(layerSpec) {
           var defaults = this.subscription.get('defaults').params;
+          this.subscription.set({ isUpload: false }, { silent: true });
           this.subscription.set('params', defaults);
           mps.publish('Router/change', [this.subscription.toJSON()]);
         }
@@ -146,7 +148,9 @@ define([
             };
 
             GeostoreService.use(provider).then(function(useGeostoreId) {
-              this.subscription.set('params', _.extend({}, defaults, { geostore: useGeostoreId }));
+              this.subscription.set('params', _.extend({}, defaults, {
+                geostore: useGeostoreId
+              }));
               mps.publish('Router/change', [this.subscription.toJSON()]);
             }.bind(this));
 
@@ -154,6 +158,13 @@ define([
             this.subscription.set('params', _.extend({}, defaults, data));
             mps.publish('Router/change', [this.subscription.toJSON()]);
           }
+        }
+      },
+
+      {
+        'Shape/upload': function(uploaded) {
+          var defaults = this.subscription.get('defaults').params;
+          this.subscription.set({ isUpload: uploaded }, { silent: true });
         }
       },
 

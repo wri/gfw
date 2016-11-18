@@ -151,7 +151,7 @@ define([
     confirmationView: function(subscription) {
       this.confimationView = new SubscriptionNewConfirmationView();
       this.$container.append(this.confimationView.render({
-        uploadedData: subscription.params.geostore
+        uploadedData: subscription.isUpload
       }).el);
     }
 

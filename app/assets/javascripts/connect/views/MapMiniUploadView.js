@@ -127,6 +127,7 @@ define([
 
             mps.publish('Drawing/geojson', [geometry]);
             mps.publish('Drawing/bounds', [bounds]);
+            mps.publish('Shape/upload', [true]);
           }
         }.bind(this))
 
