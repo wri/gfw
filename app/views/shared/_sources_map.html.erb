@@ -6431,15 +6431,16 @@
   <div class='source_body'>
     <div class='source_summary'>
       <p class='first'>
-        Drop a file on the designated area to analyze it
-        or subscribe to it. The recommended maximum file size is 1MB.
-        Anything larger than that may not work properly.
+        Drop a file in the designated area to analyze or subscribe to it. The recommended <strong>maximum file size is 1MB.</strong> Anything larger than that may not work properly.
+      </p>
+      <p>
+        NOTE: This feature counts alerts or hectares inside of polygons; therefore, <strong>only polygon data is supported,</strong> not point and line data. Please ensure that your file only contains polygon data. 
       </p>
 
-      <p>List of supported file formats <strong>(only polygon data is supported, not point and line data)</strong>:</p>
+      <p><strong>List of supported file formats</strong>:</p>
       <ul class='bullets'>
-        <li>Unzipped: .bna, .csv, .dxf, .gtx, .txt, json, .geojson, .rss, .georss, .xml, .gml, .gmt, . gpx, .itf, .kml, .kmz</li>
-        <li>Zipped: .shp, dbf, .shx, .gml, .xsd, .itf, .ili, .tab, .map, .id, .dat, .vr (zipped shapefiles must include .shp, .shx, .dbf, and .prj files)</li>
+        <li>Unzipped: .csv, .json, .geojson, .kml, .kmz (.csv files must contain a geom column that contains geographic information)</li>
+        <li>Zipped: .shp (zipped shapefiles must include .shp, .shx, .dbf, and .prj files)</li>
       </ul>
     </div>
   </div>
