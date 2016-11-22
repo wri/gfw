@@ -27,10 +27,11 @@ define([
 
     templateDatasets: Handlebars.compile(datasetTpl),
 
-    initialize: function() {
+    initialize: function(params) {
       if (!this.$el.length) {
         return;
       }
+      this.params = params;
 
       View.prototype.initialize.apply(this);
 
@@ -80,7 +81,8 @@ define([
      * RENDERS
     */
     renderDatasetsList: function() {
-      var datasetsList = datasetsHelper.getListSelected([]);
+      var selected = this.params.datasets || [];
+      var datasetsList = datasetsHelper.getListSelected(selected);
 
       this.$el.html(this.templateDatasets({
         datasets: datasetsList
