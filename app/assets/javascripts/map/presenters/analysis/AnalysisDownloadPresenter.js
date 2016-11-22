@@ -63,9 +63,19 @@ define([
      * HELPERS
      */
     parseDownloads: function(downloads) {
-      if (!!downloads) {
-        return  _.extend({}, downloads, {
-          cdb: (!!downloads.kml) ? encodeURIComponent(downloads.kml + '&filename=GFW_Analysis_Results') : null
+      var parseDownloads = {};
+
+      _.each(downloads, function(link, key) {
+        if ((key === 'csv' || key === 'json') && link.indexOf('/download/') !== -1) {
+          parseDownloads[key] = window.gfw.config.GFW_API_HOST_NEW_API + link;
+        } else {
+          parseDownloads[key] = link;
+        }
+      });
+
+      if (!!parseDownloads) {
+        return  _.extend({}, parseDownloads, {
+          cdb: (!!parseDownloads.kml) ? encodeURIComponent(parseDownloads.kml + '&filename=GFW_Analysis_Results') : null
         });
       }
       return null;
