@@ -96,7 +96,7 @@ define([
 
       this.router = router;
       this.user = user;
-      this.subscription.set(params, { silent: true });
+      this._setParams(params);
 
       this.render();
 
@@ -113,9 +113,16 @@ define([
       {
         'Params/reset': function(layerSpec) {
           var defaults = this.subscription.get('defaults').params;
-          this.subscription.set({ isUpload: false }, { silent: true });
+          this.subscription.set({
+            isUpload: false,
+            geostore: null
+          }, { silent: true });
           this.subscription.set('params', defaults);
-          mps.publish('Router/change', [this.subscription.toJSON()]);
+          mps.publish('Router/change', [
+            {
+              aoi: this.subscription.attributes.aoi
+            }
+          ]);
         }
       },
 
@@ -241,8 +248,10 @@ define([
     },
 
     initSubViews: function() {
+      var params = this.subscription.toJSON();
       var mapView = new MapMiniView({
-        el: '#map'
+        el: '#map',
+        params: params
       });
 
       this.subViews = {
@@ -253,7 +262,7 @@ define([
         mapSelectedView: new MapMiniSelectedView(mapView.map),
         countrySelectionView: new CountrySelectionView(mapView.map),
         layerSelectionView: new LayerSelectionView(mapView.map),
-        datasetsListView: new DatasetsListView()
+        datasetsListView: new DatasetsListView(params)
       };
     },
 
@@ -289,6 +298,36 @@ define([
       }]);
     },
 
+    _setParams: function(params) {
+      var currentParams = {};
+      currentParams.aoi = params.aoi;
+      currentParams.params = this.subscription.get('defaults').params;;
+
+      if (params.country) {
+        currentParams.params.iso = params.country;
+      }
+      if (params.region) {
+        currentParams.params.region = params.region;
+      }
+      if (params.geostore) {
+        currentParams.geostore = params.geostore;
+      }
+      if (params.use) {
+        currentParams.use = params.use;
+      }
+      if (params.useid) {
+        currentParams.useid = params.useid;
+      }
+      if (params.wdpaid) {
+        currentParams.wdpaid = params.wdpaid;
+      }
+      if (params.datasets) {
+        currentParams.datasets = params.datasets;
+      }
+
+      this.subscription.set(currentParams, { silent: true });
+    },
+
 
 
     /**
@@ -312,6 +351,8 @@ define([
     onSubmitSubscription: function(e) {
       e && e.preventDefault();
 
+      var currentParams = this.subscription.toJSON();
+
       var attributesFromForm = _.extend({
         resource: {
           type: 'EMAIL',
@@ -324,7 +365,10 @@ define([
 
       if (this.validate(attributesFromForm) && this.router.alreadyLoggedIn) {
         this.subscription.set(attributesFromForm, { silent: true }).save()
-          .then(function(){
+          .then(function() {
+            this.subscription.clear({ silent: true })
+              .set(currentParams);
+
             // Scroll to top
             this.router.navigateTo('my_gfw/subscriptions', {
               trigger: true

@@ -55,10 +55,11 @@ define([
     /**
      * Constructs a new MapMiniView and its presenter.
      */
-    initialize: function() {
+    initialize: function(options) {
       if (!this.$el.length) {
         return;
       }
+      this.params = options.params;
 
       View.prototype.initialize.apply(this);
 
@@ -66,6 +67,7 @@ define([
       this.render();
       this.cache();
       this.listeners();
+      this._setParams();
     },
 
     cache: function() {
@@ -168,6 +170,20 @@ define([
         }
       },
 
+      {
+        'Drawing/geostore': function(geostoreId){
+          GeostoreService.get(geostoreId).then(function(response) {
+            var geometry = response.data.attributes.geojson.features[0].geometry;
+
+            this.status.set({
+              'fit_to_geom': true,
+              'geojson': geometry
+            }, { silent: true });
+            this.drawGeojson();
+          }.bind(this));
+        }
+      }
+
     ],
 
     /**
@@ -196,6 +212,15 @@ define([
       this.map.setOptions(options);
       this.onCenterChange();
       this.presenter.onMaptypeChange(options.mapTypeId);
+    },
+
+    /**
+     * Sets params from the URL
+     */
+    _setParams: function() {
+      if (this.params.geostore) {
+        mps.publish('Drawing/geostore', [this.params.geostore]);
+      }
     },
 
     /**
@@ -437,6 +462,7 @@ define([
     */
 
     drawGeojson: function(geojson) {
+      console.log('draw geojson');
       var geojson = geojson || this.status.get('geojson');
       var paths = geojsonUtilsHelper.geojsonToPath(geojson);
       var overlay = new google.maps.Polygon({
@@ -462,11 +488,17 @@ define([
     },
 
     deleteGeojson: function() {
+      console.log(this.status.attributes.overlay);
+
       var overlay = this.status.get('overlay');
       if (!!overlay) {
+        console.log('remove overlay');
         overlay.setMap(null);
-        this.status.set('overlay', null);
-        this.status.set('geojson', null);
+        this.status.set({
+          overlay: null,
+          geojson: null,
+          geostore: null
+        }, { silent: true });
       }
     },
 
