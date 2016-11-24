@@ -42,7 +42,8 @@ define([
 
     render: function(){
       this.$el.removeClass('-results').html(this.template({
-        countries: this.countries
+        countries: this.countries,
+        showRegions: this._showRegions()
       }));
 
       this.cache();
@@ -72,7 +73,28 @@ define([
       });
     },
 
+    // TEMP: To disable regions for GLAD & Terra-i
+    _showRegions: function() {
+      var layers = this.presenter.status.attributes.layers;
+      var layersSlugs = [];
+      var showRegions = true;
 
+      _.each(layers, function(layer) {
+        if (layer.slug) {
+          layersSlugs.push(layer.slug);
+        } else {
+          _.each(layer, function(sublayer) {
+            layersSlugs.push(sublayer.slug);
+          });
+        }
+      });
+
+      if (layersSlugs.indexOf('umd_as_it_happens') !== -1 ||
+        layersSlugs.indexOf('terrailoss') !== -1) {
+        showRegions = false;
+      }
+      return showRegions;
+    },
 
 
 
