@@ -71,7 +71,8 @@ define([
 
       this.$el.addClass('-results').html(this.templates.success({
         resource: this.presenter.status.get('resource'),
-        countries: (!!country && country != 'ALL') ? this.countries : null
+        countries: (!!country && country != 'ALL') ? this.countries : null,
+        showRegions: this._showRegions()
       }));
 
       this.cache();
@@ -148,6 +149,23 @@ define([
         no_results_text: "Oops, nothing found!"
       });
     },
+
+    // Temp to disable GLAD and terra-i
+    _showRegions: function() {
+      var layers = this.presenter.status.attributes.baselayers_full;
+      var layersSlugs = [];
+      var showRegions = true;
+
+      _.each(layers, function(val, key) {
+        layersSlugs.push(key);
+      });
+
+      if (layersSlugs.indexOf('umd_as_it_happens') !== -1 ||
+        layersSlugs.indexOf('terrailoss') !== -1) {
+        showRegions = false;
+      }
+      return showRegions;
+    }
 
 
   });

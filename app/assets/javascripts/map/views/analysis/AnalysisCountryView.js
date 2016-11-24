@@ -92,6 +92,11 @@ define([
       if (layersSlugs.indexOf('umd_as_it_happens') !== -1 ||
         layersSlugs.indexOf('terrailoss') !== -1) {
         showRegions = false;
+        this.presenter.status.set({
+          iso: _.extend({}, this.presenter.status.attributes.iso, {
+            region: null
+          })
+        });
       }
       return showRegions;
     },
