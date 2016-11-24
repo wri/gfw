@@ -98,15 +98,17 @@ define([
       // LAYERS
       {
         'LayerNav/change': function(layerSpec){
-          var options = {
-            highlight: true
-          };
-          var layers = layerSpec.getLayers();
-          this.status.set('layers',layers);
-          this.setLayers(layers, options);
+          if (layerSpec) {
+            var options = {
+              highlight: true
+            };
+            var layers = layerSpec.getLayers();
+            this.status.set('layers',layers);
+            this.setLayers(layers, options);
 
-          // Delete geojson if it exists
-          this.deleteGeojson();
+            // Delete geojson if it exists
+            this.deleteGeojson();
+          }
         }
       },
 
@@ -462,7 +464,6 @@ define([
     */
 
     drawGeojson: function(geojson) {
-      console.log('draw geojson');
       var geojson = geojson || this.status.get('geojson');
       var paths = geojsonUtilsHelper.geojsonToPath(geojson);
       var overlay = new google.maps.Polygon({
@@ -488,11 +489,8 @@ define([
     },
 
     deleteGeojson: function() {
-      console.log(this.status.attributes.overlay);
-
       var overlay = this.status.get('overlay');
       if (!!overlay) {
-        console.log('remove overlay');
         overlay.setMap(null);
         this.status.set({
           overlay: null,

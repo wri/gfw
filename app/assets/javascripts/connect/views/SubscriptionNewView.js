@@ -111,11 +111,18 @@ define([
     _subscriptions: [
       // MPS
       {
-        'Params/reset': function(layerSpec) {
+        'Router/params': function(params) {
+          this.updateView(params);
+        }
+      },
+      {
+        'Params/reset': function() {
           var defaults = this.subscription.get('defaults').params;
           this.subscription.set({
             isUpload: false,
-            geostore: null
+            geostore: null,
+            datasets: [],
+            activeLayers: []
           }, { silent: true });
           this.subscription.set('params', defaults);
           mps.publish('Router/change', [
@@ -128,7 +135,16 @@ define([
 
       {
         'LayerNav/change': function(layerSpec) {
-          var defaults = this.subscription.get('defaults').params;
+          var layers = null;
+          var defaults = $.extend({}, this.subscription.attributes.params);
+
+          if (layerSpec) {
+            layers = _.keys(layerSpec.getLayers());
+          }
+
+          this.subscription.set({
+            activeLayers: layers
+          }, { silent: true });
           this.subscription.set('params', defaults);
           mps.publish('Router/change', [this.subscription.toJSON()]);
         }
@@ -136,8 +152,15 @@ define([
 
       {
         'Country/update': function(iso) {
-          var defaults = this.subscription.get('defaults').params;
-          this.subscription.set('params', _.extend({}, defaults, { iso: iso }));
+          var defaults = $.extend({}, this.subscription.get('defaults').params);
+
+          this.subscription.set(
+            {
+              params: _.extend({}, defaults, {
+                iso: iso
+              })
+            }, { silent: true }
+          );
           mps.publish('Router/change', [this.subscription.toJSON()]);
         }
       },
@@ -227,6 +250,17 @@ define([
       }
     },
 
+    updateView: function(params) {
+      var currentParams = this.subscription.toJSON();
+
+      if (params.aoi && params.aoi !== currentParams.aoi) {
+        var newParams = _.extend(_.clone(currentParams), params);
+        this.subscription.set(newParams, { silent: true });
+        this.render();
+        this.renderType();
+      }
+    },
+
     renderChosen: function() {
       _.each(this.$selects, function(select){
         var $select = $(select);
@@ -261,7 +295,7 @@ define([
         mapUploadView: new MapMiniUploadView(mapView.map),
         mapSelectedView: new MapMiniSelectedView(mapView.map),
         countrySelectionView: new CountrySelectionView(mapView.map),
-        layerSelectionView: new LayerSelectionView(mapView.map),
+        layerSelectionView: new LayerSelectionView(mapView.map, params),
         datasetsListView: new DatasetsListView(params)
       };
     },
@@ -301,13 +335,14 @@ define([
     _setParams: function(params) {
       var currentParams = {};
       currentParams.aoi = params.aoi;
-      currentParams.params = this.subscription.get('defaults').params;;
+      currentParams.params = _.extend({}, this.subscription.attributes.defaults.params);
+      currentParams.params.iso = _.extend({}, this.subscription.attributes.defaults.params.iso);
 
       if (params.country) {
-        currentParams.params.iso = params.country;
+        currentParams.params.iso.country = params.country;
       }
       if (params.region) {
-        currentParams.params.region = params.region;
+        currentParams.params.iso.region = params.region;
       }
       if (params.geostore) {
         currentParams.geostore = params.geostore;
@@ -323,6 +358,9 @@ define([
       }
       if (params.datasets) {
         currentParams.datasets = params.datasets;
+      }
+      if (params.activeLayers) {
+        currentParams.activeLayers = params.activeLayers;
       }
 
       this.subscription.set(currentParams, { silent: true });

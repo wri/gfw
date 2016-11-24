@@ -118,6 +118,7 @@ define([
       var params = _.omit(this.getParams(), 'vars', 'defaults', 'isUpload');
       uri.query(this._serializeParams(params));
       this.navigate(uri.path().slice(1) + uri.search(), { trigger: false });
+      mps.publish('Router/params', [params]);
     },
 
     /**

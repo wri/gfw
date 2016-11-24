@@ -118,12 +118,15 @@ define([
      * @returns {Array} list of languages with selection
      */
     getListSelected: function(selectedDatasets) {
+      var selectedList = {};
       for (var dataset in datasetList) {
+        selectedList[dataset] = _.extend({}, datasetList[dataset]);
+
         if (selectedDatasets && selectedDatasets.indexOf(dataset) != -1) {
-          datasetList[dataset].checked = true
+          selectedList[dataset].checked = true
         }
       }
-      return datasetList;
+      return selectedList;
     }
 
   }

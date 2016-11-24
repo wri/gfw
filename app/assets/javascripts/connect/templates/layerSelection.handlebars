@@ -5,7 +5,7 @@
     {{#each layers}}
       <optgroup label="{{@key}}">
         {{#each this}}
-          <option value="{{this.slug}}">{{this.title}}</option>
+          <option value="{{this.slug}}" {{#if selected}}selected{{/if}}>{{this.title}}</option>
         {{/each}}
       </optgroup>
     {{/each}}
