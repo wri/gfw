@@ -36,6 +36,7 @@ define([
         country: null,
         regions: null,
         region: null,
+        layers: [],
 
         overlay_stroke_weight: 2
       }
@@ -52,6 +53,8 @@ define([
       this.status.on('change:isoDisabled', this.changeIso.bind(this));
 
       this.status.on('change:regions', this.changeRegions.bind(this));
+
+      this.status.on('change:layers', this.changeLayers.bind(this));
 
       this.status.on('change:enabled', this.changeEnabled.bind(this));
       this.status.on('change:enabledSubscription', this.changeEnabledSubscription.bind(this));
@@ -74,8 +77,18 @@ define([
               region: params.iso.region
             },
             isoDisabled: (!!params.dont_analyze) || !(!!params.iso.country && params.iso.country != 'ALL'),
+            fit_to_geom: !!params.fit_to_geom,
+            layers: params.baselayers
 
-            fit_to_geom: !!params.fit_to_geom
+          });
+        }
+      },
+      // Temp: to disable the regions selector
+      // for GLAD and terra-i
+      {
+        'LayerNav/change': function(layerSpec) {
+          this.status.set({
+            layers: _.clone(layerSpec.attributes)
           });
         }
       },
@@ -156,6 +169,10 @@ define([
 
     changeRegions: function() {
       this.view.setSelects();
+    },
+
+    changeLayers: function() {
+      this.view.render();
     },
 
 
