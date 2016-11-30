@@ -115,9 +115,10 @@ define([
      */
     updateUrl: function() {
       var uri = new URI();
-      var params = _.omit(this.getParams(), 'vars', 'defaults','params', 'isUpload');
+      var params = _.omit(this.getParams(), 'vars', 'defaults', 'isUpload');
       uri.query(this._serializeParams(params));
       this.navigate(uri.path().slice(1) + uri.search(), { trigger: false });
+      mps.publish('Router/params', [params]);
     },
 
     /**
@@ -144,7 +145,27 @@ define([
      */
     _serializeParams: function(params) {
       var uri = new URI();
-      uri.search(params);
+
+      if (params.params) {
+        var mainParams = _.omit(params, 'params');
+        var extraParams = {};
+
+        _.each(params.params, function(value, key) {
+          if (!_.isObject(value) && value) {
+            mainParams[key] = value;
+          } else if (_.isObject(value)) {
+            _.each(value, function(objectValue, objectKey) {
+              if (objectValue) {
+                mainParams[objectKey] = objectValue;
+              }
+            });
+          }
+        });
+
+        uri.search(mainParams);
+      } else {
+        uri.search(params);
+      }
       return uri.search();
     },
 

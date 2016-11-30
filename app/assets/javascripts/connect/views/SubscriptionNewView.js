@@ -65,6 +65,7 @@ define([
         datasets: [],
         activeLayers: [],
         isUpload: false,
+        metadata: null,
         params: {
           geostore: null,
           iso: {
@@ -96,7 +97,7 @@ define([
 
       this.router = router;
       this.user = user;
-      this.subscription.set(params, { silent: true });
+      this._setParams(params);
 
       this.render();
 
@@ -111,17 +112,41 @@ define([
     _subscriptions: [
       // MPS
       {
-        'Params/reset': function(layerSpec) {
-          var defaults = this.subscription.get('defaults').params;
-          this.subscription.set({ isUpload: false }, { silent: true });
+        'Router/params': function(params) {
+          this.updateView(params);
+        }
+      },
+      {
+        'Params/reset': function() {
+          var defaults = _.extend({}, this.subscription.get('defaults').params, {
+            geostore: null
+          });
+
+          this.subscription.set({
+            isUpload: false,
+            datasets: [],
+            activeLayers: []
+          }, { silent: true });
           this.subscription.set('params', defaults);
+          this.subscription.unset('geostore', { silent: true });
+          this.subscription.unset('metadata', { silent: true });
+
           mps.publish('Router/change', [this.subscription.toJSON()]);
         }
       },
 
       {
         'LayerNav/change': function(layerSpec) {
-          var defaults = this.subscription.get('defaults').params;
+          var layers = null;
+          var defaults = $.extend({}, this.subscription.attributes.params);
+
+          if (layerSpec) {
+            layers = _.keys(layerSpec.getLayers());
+          }
+
+          this.subscription.set({
+            activeLayers: layers
+          }, { silent: true });
           this.subscription.set('params', defaults);
           mps.publish('Router/change', [this.subscription.toJSON()]);
         }
@@ -129,8 +154,14 @@ define([
 
       {
         'Country/update': function(iso) {
-          var defaults = this.subscription.get('defaults').params;
-          this.subscription.set('params', _.extend({}, defaults, { iso: iso }));
+          var defaults = $.extend({}, this.subscription.get('defaults').params);
+          this.subscription.set(
+            {
+              params: _.extend({}, defaults, {
+                iso: iso
+              })
+            }, { silent: true }
+          );
           mps.publish('Router/change', [this.subscription.toJSON()]);
         }
       },
@@ -155,7 +186,14 @@ define([
             }.bind(this));
 
           } else {
-            this.subscription.set('params', _.extend({}, defaults, data));
+            this.subscription.set({
+              metadata: JSON.stringify(data)
+            }, { silent: true });
+            this.subscription.set('params', _.extend({}, defaults, {
+              use: data.use,
+              useid: data.useid,
+              wdpaid: data.wdpaid
+            }));
             mps.publish('Router/change', [this.subscription.toJSON()]);
           }
         }
@@ -171,7 +209,7 @@ define([
       {
         'Drawing/geostore': function(geostore) {
           var defaults = this.subscription.get('defaults').params;
-          this.subscription.set('params', _.extend(defaults, { geostore: geostore }));
+          this.subscription.set('params', _.extend({}, defaults, { geostore: geostore }));
           mps.publish('Router/change', [this.subscription.toJSON()]);
           this.changeDatasets();
         }
@@ -183,6 +221,37 @@ define([
           mps.publish('Router/change', [this.subscription.toJSON()]);
         }
       },
+
+      {
+        'Datasets/clear': function(datasets) {
+          this.subscription.set('datasets', [], {
+            silent: true
+          });
+          mps.publish('Router/change', [this.subscription.toJSON()]);
+        }
+      },
+
+      {
+        'Datasets/refresh': function() {
+          this.changeDatasets();
+        }
+      },
+
+      {
+        'Selected/reset': function() {
+          var defaults = _.extend({}, this.subscription.get('defaults').params, {
+            geostore: null,
+            useId: null
+          });
+
+          this.subscription.set('params', defaults);
+          this.subscription.unset('geostore', { silent: true });
+          this.subscription.unset('metadata', { silent: true });
+
+          mps.publish('Router/change', [this.subscription.toJSON()]);
+        }
+      }
+
     ],
 
     listeners: function() {
@@ -220,6 +289,17 @@ define([
       }
     },
 
+    updateView: function(params) {
+      var currentParams = this.subscription.toJSON();
+
+      if (params.aoi && params.aoi !== currentParams.aoi) {
+        var newParams = _.extend(_.clone(currentParams), params);
+        this.subscription.set(newParams, { silent: true });
+        this.render();
+        this.renderType();
+      }
+    },
+
     renderChosen: function() {
       _.each(this.$selects, function(select){
         var $select = $(select);
@@ -241,19 +321,24 @@ define([
     },
 
     initSubViews: function() {
+      var params = this.subscription.toJSON();
+
+      var datasetsList = new DatasetsListView(params);
+
       var mapView = new MapMiniView({
-        el: '#map'
+        el: '#map',
+        params: params
       });
 
       this.subViews = {
+        datasetsListView: datasetsList,
         mapView: mapView,
         mapControlsView: new MapMiniControlsView(mapView.map),
         mapDrawingView: new MapMiniDrawingView(mapView.map),
         mapUploadView: new MapMiniUploadView(mapView.map),
-        mapSelectedView: new MapMiniSelectedView(mapView.map),
+        mapSelectedView: new MapMiniSelectedView(mapView.map, params),
         countrySelectionView: new CountrySelectionView(mapView.map),
-        layerSelectionView: new LayerSelectionView(mapView.map),
-        datasetsListView: new DatasetsListView()
+        layerSelectionView: new LayerSelectionView(mapView.map, params)
       };
     },
 
@@ -289,6 +374,43 @@ define([
       }]);
     },
 
+    _setParams: function(params) {
+      var currentParams = {};
+      currentParams.aoi = params.aoi;
+      currentParams.params = _.extend({}, this.subscription.attributes.defaults.params);
+      currentParams.params.iso = _.extend({}, this.subscription.attributes.defaults.params.iso);
+
+      if (params.country) {
+        currentParams.params.iso.country = params.country;
+      }
+      if (params.region) {
+        currentParams.params.iso.region = params.region;
+      }
+      if (params.use) {
+        currentParams.params.use = params.use;
+      }
+      if (params.useid) {
+        currentParams.params.useid = params.useid;
+      }
+      if (params.wdpaid) {
+        currentParams.params.wdpaid = params.wdpaid;
+      }
+      if (params.geostore) {
+        currentParams.geostore = params.geostore;
+      }
+      if (params.datasets) {
+        currentParams.datasets = params.datasets;
+      }
+      if (params.activeLayers) {
+        currentParams.activeLayers = params.activeLayers;
+      }
+      if (params.metadata) {
+        currentParams.metadata = params.metadata;
+      }
+
+      this.subscription.set(currentParams, { silent: true });
+    },
+
 
 
     /**
@@ -312,6 +434,8 @@ define([
     onSubmitSubscription: function(e) {
       e && e.preventDefault();
 
+      var currentParams = this.subscription.toJSON();
+
       var attributesFromForm = _.extend({
         resource: {
           type: 'EMAIL',
@@ -324,7 +448,10 @@ define([
 
       if (this.validate(attributesFromForm) && this.router.alreadyLoggedIn) {
         this.subscription.set(attributesFromForm, { silent: true }).save()
-          .then(function(){
+          .then(function() {
+            this.subscription.clear({ silent: true })
+              .set(currentParams);
+
             // Scroll to top
             this.router.navigateTo('my_gfw/subscriptions', {
               trigger: true

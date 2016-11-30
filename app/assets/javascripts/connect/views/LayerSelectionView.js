@@ -33,16 +33,18 @@ define([
       'change .js-select-layer' : 'onChangeLayer',
     },
 
-    initialize: function(map) {
+    initialize: function(map, params) {
       if (!this.$el.length) {
         return;
       }
+      this.params = params;
 
       View.prototype.initialize.apply(this);
 
       this.map = map;
       this.cache();
       this.listeners();
+      this._setParams();
 
       // Load global layers
       LayerSpecService._getAllLayers(
@@ -69,6 +71,11 @@ define([
           this.countries = results.countries;
           this.renderCountries();
           this.renderCountryLayers();
+
+          if (this.model.attributes.country) {
+            this.changeCountry();
+          }
+          return null;
         }.bind(this))
 
         .error(function(error) {
@@ -95,13 +102,13 @@ define([
     changeCountry: function() {
       var country = this.model.get('country');
 
-      this.resetLayers();
-
       // Publish the current country selection
       mps.publish('Country/update', [{
         country: country,
         region: null
       }]);
+
+      // this.resetLayers();
 
       LayerSpecService._getAllLayers(
         // Filter
@@ -120,7 +127,6 @@ define([
           console.log(error);
         }.bind(this)
       );
-
     },
 
     changeLayers: function() {
@@ -166,9 +172,7 @@ define([
           this.$countryField.html(this.templateCountries({
             name: 'Select an area from a country-specific data set *',
             placeholder: 'Select a country...',
-            countries: _.filter(this.countries, function(country) {
-              return (isos.indexOf(country.iso) != -1)
-            })
+            countries: this._getParsedCountries(isos)
           }));
           this.renderChosen();
 
@@ -186,7 +190,7 @@ define([
         id: 'select-layers',
         name: 'Select an area from a global data set *',
         placeholder: 'Select a data set...',
-        layers: this.layers,
+        layers: this._getParsedLayers(),
         hint: ''
       }));
       this.renderChosen();
@@ -197,7 +201,7 @@ define([
         id: 'select-country-layers',
         name: '',
         placeholder: 'Select a data set...',
-        layers: (!_.isEmpty(this.countryLayers)) ? this.countryLayers : null,
+        layers: (!_.isEmpty(this.countryLayers)) ? this._getParsedCountryLayers() : null,
         hint: ''
       }));
       this.renderChosen();
@@ -227,18 +231,100 @@ define([
     },
 
     /**
+     * Sets params from the URL
+     */
+    _setParams: function() {
+      if (this.params.activeLayers) {
+        this.model.set({
+          layers: [this.params.activeLayers]
+        }, { silent: true });
+        this.changeLayers();
+      }
+      if (this.params.params.iso.country) {
+        this.model.set({
+          country: this.params.params.iso.country
+        }, { silent: true });
+      }
+    },
+
+    _getParsedLayers: function() {
+      var layersGroup = {};
+      var selectedLayer = this.model.attributes.layers &&
+        this.model.attributes.layers[0] ? this.model.attributes.layers[0] : null;
+
+      _.each(this.layers, function(group, key) {
+        var currentGroup = _.extend({}, group);
+        currentGroup = _.map(currentGroup, function(layer) {
+          var currentLayer = _.extend({}, layer);
+          if (selectedLayer && currentLayer.slug === selectedLayer) {
+            currentLayer.selected = true;
+          }
+          return currentLayer;
+        });
+        layersGroup[key] = currentGroup;
+      });
+
+      return layersGroup;
+    },
+
+    _getParsedCountries: function(isos) {
+      var countriesData = [];
+      var selectedCountry = this.model.attributes.country || null;
+      var countries = _.filter(this.countries, function(country) {
+        return (isos.indexOf(country.iso) != -1)
+      });
+
+      _.each(countries, function(country) {
+        var currentCountry = _.extend({}, country);
+        if (selectedCountry && currentCountry.iso === selectedCountry) {
+          currentCountry.selected = true;
+        }
+        countriesData.push(currentCountry);
+      });
+
+      return countriesData;
+    },
+
+    _getParsedCountryLayers: function() {
+      var layersGroup = {};
+      var selectedLayer = this.model.attributes.layers &&
+        this.model.attributes.layers[0] ? this.model.attributes.layers[0] : null;
+
+      _.each(this.countryLayers, function(group, key) {
+        var currentGroup = _.extend({}, group);
+        currentGroup = _.map(currentGroup, function(layer) {
+          var currentLayer = _.extend({}, layer);
+          if (selectedLayer && layer.slug === selectedLayer) {
+            currentLayer.selected = true;
+          }
+          return currentLayer;
+        });
+        layersGroup[key] = currentGroup;
+      });
+
+      return layersGroup;
+    },
+
+    /**
      * UI EVENTS
      * - onChangeCountry
      * - onChangeLayer
     */
     onChangeCountry: function(e) {
       e && e.preventDefault();
+      //
+      // mps.publish('Datasets/clear', []);
+      // mps.publish('Selected/reset', []);
+
       var country = $(e.currentTarget).val();
       this.model.set({
         country: country,
-        layers: (! !!country) ? [] : this.model.get('layers')
-        // layers: [],
+        // layers: [(! !!country) ? [] : this.model.get('layers')]
+        layers: []
       });
+      this.renderLayers();
+
+      // mps.publish('LayerNav/change', []);
     },
 
     onChangeLayer: function(e) {
@@ -250,9 +336,15 @@ define([
 
       if (id === 'select-layers') {
         this.model.set({
-          country: '',
+          country: null,
           region: null
         }, { silent: true });
+
+        mps.publish('Country/update', [{
+          country: null,
+          region: null
+        }]);
+
         this.countryLayers = [];
         this.renderCountries();
         this.renderCountryLayers();
@@ -262,6 +354,9 @@ define([
         layers: _.clone(layers),
         layerSelectId: id
       });
+
+      mps.publish('Datasets/clear', []);
+      mps.publish('Selected/reset', []);
     }
   });
 

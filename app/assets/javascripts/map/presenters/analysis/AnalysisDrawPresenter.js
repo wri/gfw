@@ -5,12 +5,12 @@
  */
 define([
   'map/presenters/PresenterClass',
-  'underscore', 
-  'backbone', 
-  'mps', 
-  'bluebird', 
+  'underscore',
+  'backbone',
+  'mps',
+  'bluebird',
   'moment',
-  'map/services/GeostoreService'  
+  'map/services/GeostoreService'
 
 ], function(PresenterClass, _, Backbone, mps, Promise, moment, GeostoreService) {
 
@@ -22,10 +22,10 @@ define([
         overlay: null,
         geojson: null,
         is_drawing: false,
-        
+
         fit_to_geom: false,
-        
-        overlay_stroke_weight: 2        
+
+        overlay_stroke_weight: 2
       }
     })),
 
@@ -110,7 +110,7 @@ define([
      * - publishNotification
      * - deleteAnalysis
      * @return {void}
-     */    
+     */
     publishDeleteAnalysis: function() {
       mps.publish('Analysis/delete');
     },

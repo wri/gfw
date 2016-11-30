@@ -55,10 +55,11 @@ define([
     /**
      * Constructs a new MapMiniView and its presenter.
      */
-    initialize: function() {
+    initialize: function(options) {
       if (!this.$el.length) {
         return;
       }
+      this.params = options.params;
 
       View.prototype.initialize.apply(this);
 
@@ -66,6 +67,7 @@ define([
       this.render();
       this.cache();
       this.listeners();
+      this._setParams();
     },
 
     cache: function() {
@@ -96,15 +98,17 @@ define([
       // LAYERS
       {
         'LayerNav/change': function(layerSpec){
-          var options = {
-            highlight: true
-          };
-          var layers = layerSpec.getLayers();
-          this.status.set('layers',layers);
-          this.setLayers(layers, options);
+          if (layerSpec) {
+            var options = {
+              highlight: true
+            };
+            var layers = layerSpec.getLayers();
+            this.status.set('layers',layers);
+            this.setLayers(layers, options);
 
-          // Delete geojson if it exists
-          this.deleteGeojson();
+            // Delete geojson if it exists
+            this.deleteGeojson();
+          }
         }
       },
 
@@ -168,6 +172,20 @@ define([
         }
       },
 
+      {
+        'Drawing/geostore': function(geostoreId){
+          GeostoreService.get(geostoreId).then(function(response) {
+            var geometry = response.data.attributes.geojson.features[0].geometry;
+
+            this.status.set({
+              'fit_to_geom': true,
+              'geojson': geometry
+            }, { silent: true });
+            this.drawGeojson();
+          }.bind(this));
+        }
+      }
+
     ],
 
     /**
@@ -196,6 +214,23 @@ define([
       this.map.setOptions(options);
       this.onCenterChange();
       this.presenter.onMaptypeChange(options.mapTypeId);
+    },
+
+    /**
+     * Sets params from the URL
+     */
+    _setParams: function() {
+      var data = this.params;
+      var params = data.params;
+
+      if (data.geostore) {
+        mps.publish('Drawing/geostore', [data.geostore]);
+        mps.publish('Datasets/refresh', []);
+      }
+      if (data.metadata && (params.wdpaid || params.use)) {
+        mps.publish('Shape/update', [JSON.parse(data.metadata)]);
+        mps.publish('Datasets/refresh', []);
+      }
     },
 
     /**
@@ -465,8 +500,11 @@ define([
       var overlay = this.status.get('overlay');
       if (!!overlay) {
         overlay.setMap(null);
-        this.status.set('overlay', null);
-        this.status.set('geojson', null);
+        this.status.set({
+          overlay: null,
+          geojson: null,
+          geostore: null
+        }, { silent: true });
       }
     },
 
