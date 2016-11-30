@@ -34,7 +34,6 @@ define([
       this.params = params;
 
       View.prototype.initialize.apply(this);
-
       this.renderDatasetsList();
     },
 
@@ -43,6 +42,12 @@ define([
       {
         'Datasets/change': function(params) {
           this.changeDatasets(params);
+        }
+      },
+
+      {
+        'Datasets/clear': function() {
+          this.clearDatasets();
         }
       }
     ],
@@ -55,6 +60,7 @@ define([
       var paramsValues = _.pick(params, 'use', 'useid', 'wdpaid',
       'geostore', 'country', 'region');
       var values = _.compact(_.values(paramsValues));
+      this.params.datasets = params.datasets
 
       if (values.length) {
         this.$el.html(this.templateDatasets({
@@ -64,7 +70,7 @@ define([
         CoverageService.get(params)
           .then(function(layers) {
             this.$el.html(this.templateDatasets({
-              datasets: datasetsHelper.getFilteredList(layers)
+              datasets: datasetsHelper.getFilteredList(layers, this.params.datasets)
             }));
           }.bind(this))
 
@@ -74,6 +80,11 @@ define([
       } else {
         this.renderDatasetsList();
       }
+    },
+
+    clearDatasets: function() {
+      this.params.datasets = [];
+      this.renderDatasetsList();
     },
 
 

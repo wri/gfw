@@ -220,8 +220,16 @@ define([
      * Sets params from the URL
      */
     _setParams: function() {
-      if (this.params.geostore) {
-        mps.publish('Drawing/geostore', [this.params.geostore]);
+      var data = this.params;
+      var params = data.params;
+
+      if (data.geostore) {
+        mps.publish('Drawing/geostore', [data.geostore]);
+        mps.publish('Datasets/refresh', []);
+      }
+      if (data.metadata && (params.wdpaid || params.use)) {
+        mps.publish('Shape/update', [JSON.parse(data.metadata)]);
+        mps.publish('Datasets/refresh', []);
       }
     },
 
