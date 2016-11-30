@@ -249,57 +249,57 @@ define([
 
     _getParsedLayers: function() {
       var layersGroup = {};
-      var currentLayer = this.model.attributes.layers &&
+      var selectedLayer = this.model.attributes.layers &&
         this.model.attributes.layers[0] ? this.model.attributes.layers[0] : null;
 
       _.each(this.layers, function(group, key) {
         var currentGroup = _.extend({}, group);
         currentGroup = _.map(currentGroup, function(layer) {
-          if (currentLayer && layer.slug === currentLayer) {
-            layer.selected = true;
+          var currentLayer = _.extend({}, layer);
+          if (selectedLayer && currentLayer.slug === selectedLayer) {
+            currentLayer.selected = true;
           }
-          return layer;
+          return currentLayer;
         });
-        layersGroup[key] = group;
+        layersGroup[key] = currentGroup;
       });
 
       return layersGroup;
     },
 
     _getParsedCountries: function(isos) {
-      var currentCountry = this.model.attributes.country || null;
-      console.log('current', currentCountry);
+      var countriesData = [];
+      var selectedCountry = this.model.attributes.country || null;
       var countries = _.filter(this.countries, function(country) {
         return (isos.indexOf(country.iso) != -1)
       });
 
-      countries = _.map(countries, function(country) {
-        if (currentCountry && country.iso === currentCountry) {
-          console.log('selected');
-          country.selected = true;
+      _.each(countries, function(country) {
+        var currentCountry = _.extend({}, country);
+        if (selectedCountry && currentCountry.iso === selectedCountry) {
+          currentCountry.selected = true;
         }
-        return country;
+        countriesData.push(currentCountry);
       });
 
-      console.log(countries);
-
-      return countries;
+      return countriesData;
     },
 
     _getParsedCountryLayers: function() {
       var layersGroup = {};
-      var currentLayer = this.model.attributes.layers &&
+      var selectedLayer = this.model.attributes.layers &&
         this.model.attributes.layers[0] ? this.model.attributes.layers[0] : null;
 
       _.each(this.countryLayers, function(group, key) {
         var currentGroup = _.extend({}, group);
         currentGroup = _.map(currentGroup, function(layer) {
-          if (currentLayer && layer.slug === currentLayer) {
-            layer.selected = true;
+          var currentLayer = _.extend({}, layer);
+          if (selectedLayer && layer.slug === selectedLayer) {
+            currentLayer.selected = true;
           }
-          return layer;
+          return currentLayer;
         });
-        layersGroup[key] = group;
+        layersGroup[key] = currentGroup;
       });
 
       return layersGroup;
@@ -312,6 +312,10 @@ define([
     */
     onChangeCountry: function(e) {
       e && e.preventDefault();
+      //
+      // mps.publish('Datasets/clear', []);
+      // mps.publish('Selected/reset', []);
+
       var country = $(e.currentTarget).val();
       this.model.set({
         country: country,
@@ -341,8 +345,6 @@ define([
           region: null
         }]);
 
-        console.log(this.model.attributes);
-
         this.countryLayers = [];
         this.renderCountries();
         this.renderCountryLayers();
@@ -352,6 +354,9 @@ define([
         layers: _.clone(layers),
         layerSelectId: id
       });
+
+      mps.publish('Datasets/clear', []);
+      mps.publish('Selected/reset', []);
     }
   });
 

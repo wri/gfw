@@ -26,16 +26,18 @@ define([
       'click .js-map-selection-delete' : 'onClickDeleteSelection'
     },
 
-    initialize: function(map) {
+    initialize: function(map, params) {
       if (!this.$el.length) {
         return;
       }
+      this.params = params;
 
       View.prototype.initialize.apply(this);
 
       this.map = map;
       this.cache();
       this.listeners();
+      this._setParams();
     },
 
     _subscriptions: [
@@ -58,6 +60,17 @@ define([
     },
 
     cache: function() {
+    },
+
+    /**
+     * Sets params from the URL
+     */
+    _setParams: function() {
+      var data = this.params;
+
+      if (data.metadata) {
+        this.model.clear().set(JSON.parse(data.metadata));
+      }
     },
 
     /**
@@ -86,7 +99,7 @@ define([
       e && e.preventDefault();
       this.$el.removeClass('-active');
       mps.publish('Drawing/delete');
-      mps.publish('Params/reset');
+      mps.publish('Selected/reset');
     }
   });
 

@@ -65,6 +65,7 @@ define([
         datasets: [],
         activeLayers: [],
         isUpload: false,
+        metadata: null,
         params: {
           geostore: null,
           iso: {
@@ -117,19 +118,20 @@ define([
       },
       {
         'Params/reset': function() {
-          var defaults = this.subscription.get('defaults').params;
+          var defaults = _.extend({}, this.subscription.get('defaults').params, {
+            geostore: null
+          });
+
           this.subscription.set({
             isUpload: false,
-            geostore: null,
             datasets: [],
             activeLayers: []
           }, { silent: true });
           this.subscription.set('params', defaults);
-          mps.publish('Router/change', [
-            {
-              aoi: this.subscription.attributes.aoi
-            }
-          ]);
+          this.subscription.unset('geostore', { silent: true });
+          this.subscription.unset('metadata', { silent: true });
+
+          mps.publish('Router/change', [this.subscription.toJSON()]);
         }
       },
 
@@ -153,7 +155,6 @@ define([
       {
         'Country/update': function(iso) {
           var defaults = $.extend({}, this.subscription.get('defaults').params);
-
           this.subscription.set(
             {
               params: _.extend({}, defaults, {
@@ -185,7 +186,14 @@ define([
             }.bind(this));
 
           } else {
-            this.subscription.set('params', _.extend({}, defaults, data));
+            this.subscription.set({
+              metadata: JSON.stringify(data)
+            }, { silent: true });
+            this.subscription.set('params', _.extend({}, defaults, {
+              use: data.use,
+              useid: data.useid,
+              wdpaid: data.wdpaid
+            }));
             mps.publish('Router/change', [this.subscription.toJSON()]);
           }
         }
@@ -201,7 +209,7 @@ define([
       {
         'Drawing/geostore': function(geostore) {
           var defaults = this.subscription.get('defaults').params;
-          this.subscription.set('params', _.extend(defaults, { geostore: geostore }));
+          this.subscription.set('params', _.extend({}, defaults, { geostore: geostore }));
           mps.publish('Router/change', [this.subscription.toJSON()]);
           this.changeDatasets();
         }
@@ -213,6 +221,37 @@ define([
           mps.publish('Router/change', [this.subscription.toJSON()]);
         }
       },
+
+      {
+        'Datasets/clear': function(datasets) {
+          this.subscription.set('datasets', [], {
+            silent: true
+          });
+          mps.publish('Router/change', [this.subscription.toJSON()]);
+        }
+      },
+
+      {
+        'Datasets/refresh': function() {
+          this.changeDatasets();
+        }
+      },
+
+      {
+        'Selected/reset': function() {
+          var defaults = _.extend({}, this.subscription.get('defaults').params, {
+            geostore: null,
+            useId: null
+          });
+
+          this.subscription.set('params', defaults);
+          this.subscription.unset('geostore', { silent: true });
+          this.subscription.unset('metadata', { silent: true });
+
+          mps.publish('Router/change', [this.subscription.toJSON()]);
+        }
+      }
+
     ],
 
     listeners: function() {
@@ -283,20 +322,23 @@ define([
 
     initSubViews: function() {
       var params = this.subscription.toJSON();
+
+      var datasetsList = new DatasetsListView(params);
+
       var mapView = new MapMiniView({
         el: '#map',
         params: params
       });
 
       this.subViews = {
+        datasetsListView: datasetsList,
         mapView: mapView,
         mapControlsView: new MapMiniControlsView(mapView.map),
         mapDrawingView: new MapMiniDrawingView(mapView.map),
         mapUploadView: new MapMiniUploadView(mapView.map),
-        mapSelectedView: new MapMiniSelectedView(mapView.map),
+        mapSelectedView: new MapMiniSelectedView(mapView.map, params),
         countrySelectionView: new CountrySelectionView(mapView.map),
-        layerSelectionView: new LayerSelectionView(mapView.map, params),
-        datasetsListView: new DatasetsListView(params)
+        layerSelectionView: new LayerSelectionView(mapView.map, params)
       };
     },
 
@@ -344,23 +386,26 @@ define([
       if (params.region) {
         currentParams.params.iso.region = params.region;
       }
-      if (params.geostore) {
-        currentParams.geostore = params.geostore;
-      }
       if (params.use) {
-        currentParams.use = params.use;
+        currentParams.params.use = params.use;
       }
       if (params.useid) {
-        currentParams.useid = params.useid;
+        currentParams.params.useid = params.useid;
       }
       if (params.wdpaid) {
-        currentParams.wdpaid = params.wdpaid;
+        currentParams.params.wdpaid = params.wdpaid;
+      }
+      if (params.geostore) {
+        currentParams.geostore = params.geostore;
       }
       if (params.datasets) {
         currentParams.datasets = params.datasets;
       }
       if (params.activeLayers) {
         currentParams.activeLayers = params.activeLayers;
+      }
+      if (params.metadata) {
+        currentParams.metadata = params.metadata;
       }
 
       this.subscription.set(currentParams, { silent: true });

@@ -89,20 +89,29 @@ define([
      * @param {Object} datasets slugs
      * @returns {Object} key languages list
      */
-    getFilteredList: function(datasets) {
+    getFilteredList: function(datasets, selected) {
+      var layersSelected = selected || [];
       var filteredDatasets = [];
 
       // Global layers
-      filteredDatasets.push(datasetList['umd-loss-gain']);
-      filteredDatasets.push(datasetList['viirs-active-fires']);
+      filteredDatasets.push(_.extend({}, datasetList['umd-loss-gain']));
+      filteredDatasets.push(_.extend({}, datasetList['viirs-active-fires']));
 
       if (datasets) {
         for (var dataset in datasetList) {
-          if (datasets.indexOf(datasetList[dataset].layerSlug[0]) !== -1) {
-            filteredDatasets.push(datasetList[dataset]);
+          var currentDataset = _.extend({}, datasetList[dataset]);
+          if (datasets.indexOf(currentDataset.layerSlug[0]) !== -1) {
+            filteredDatasets.push(currentDataset);
           }
         }
       }
+
+      filteredDatasets = _.map(filteredDatasets, function(dataset) {
+        if (layersSelected.indexOf(dataset.slug) !== -1) {
+          dataset.checked = true;
+        }
+        return dataset;
+      });
 
       filteredDatasets = _.sortBy(filteredDatasets, function(data) {
         return data.order;
