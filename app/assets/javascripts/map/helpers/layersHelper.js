@@ -159,6 +159,10 @@ define([
   'map/views/layers/UgaPALayer',
   'map/views/layers/BraLandCoverLayer',
   'map/views/layers/CanProtectedAreasLayer',
+  'map/views/layers/LbrMinExL',
+  'map/views/layers/LbrMinDevAg',
+  'map/views/layers/LbrDevExL',
+  'map/views/layers/LbrPrivUseP',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -331,6 +335,10 @@ define([
   UgaPALayer,
   BraLandCoverLayer,
   CanProtectedAreasLayer,
+  LbrMinExL,
+  LbrMinDevAg,
+  LbrDevExL,
+  LbrPrivUseP,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -835,6 +843,18 @@ define([
     },
     can_protected_areas: {
       view:  CanProtectedAreasLayer
+    },
+    lbr_mineral_exploration_license: {
+      view:  LbrMinExL
+    },
+    lbr_mineral_development_agreement: {
+      view:  LbrMinDevAg
+    },
+    lbr_development_exploration_license: {
+      view:  LbrDevExL
+    },
+    lbr_private_use_permit: {
+      view:  LbrPrivUseP
     },
     nothing: {
     }
