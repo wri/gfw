@@ -337,7 +337,7 @@ define([
         mapDrawingView: new MapMiniDrawingView(mapView.map),
         mapUploadView: new MapMiniUploadView(mapView.map),
         mapSelectedView: new MapMiniSelectedView(mapView.map, params),
-        countrySelectionView: new CountrySelectionView(mapView.map),
+        countrySelectionView: new CountrySelectionView(mapView.map, params),
         layerSelectionView: new LayerSelectionView(mapView.map, params)
       };
     },
@@ -435,6 +435,7 @@ define([
       e && e.preventDefault();
 
       var currentParams = this.subscription.toJSON();
+      currentParams.aoi = null;
 
       var attributesFromForm = _.extend({
         resource: {
@@ -456,6 +457,7 @@ define([
             this.router.navigateTo('my_gfw/subscriptions', {
               trigger: true
             });
+            console.log(this.subscription.toJSON());
             mps.publish('Subscriptions/new', [this.subscription.toJSON()]);
           }.bind(this))
 

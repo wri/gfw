@@ -59,6 +59,7 @@ define([
     changeDatasets: function(params) {
       var paramsValues = _.pick(params, 'use', 'useid', 'wdpaid',
       'geostore', 'country', 'region');
+
       var values = _.compact(_.values(paramsValues));
       this.params.datasets = params.datasets
 

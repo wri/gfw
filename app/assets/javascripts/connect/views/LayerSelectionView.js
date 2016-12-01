@@ -108,7 +108,7 @@ define([
         region: null
       }]);
 
-      // this.resetLayers();
+      this.resetLayers();
 
       LayerSpecService._getAllLayers(
         // Filter
