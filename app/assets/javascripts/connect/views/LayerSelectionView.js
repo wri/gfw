@@ -108,7 +108,7 @@ define([
         region: null
       }]);
 
-      this.resetLayers();
+      // this.resetLayers();
 
       LayerSpecService._getAllLayers(
         // Filter
@@ -313,18 +313,17 @@ define([
     onChangeCountry: function(e) {
       e && e.preventDefault();
       //
-      // mps.publish('Datasets/clear', []);
-      // mps.publish('Selected/reset', []);
+      mps.publish('MapSelection/clear', []);
 
       var country = $(e.currentTarget).val();
       this.model.set({
         country: country,
-        // layers: [(! !!country) ? [] : this.model.get('layers')]
         layers: []
       });
       this.renderLayers();
 
-      // mps.publish('LayerNav/change', []);
+      // mps.publish('Datasets/clear', []);
+      mps.publish('Selected/reset', []);
     },
 
     onChangeLayer: function(e) {
@@ -355,7 +354,7 @@ define([
         layerSelectId: id
       });
 
-      mps.publish('Datasets/clear', []);
+      // mps.publish('Datasets/clear', []);
       mps.publish('Selected/reset', []);
     }
   });

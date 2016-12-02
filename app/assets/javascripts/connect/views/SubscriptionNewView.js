@@ -457,7 +457,6 @@ define([
             this.router.navigateTo('my_gfw/subscriptions', {
               trigger: true
             });
-            console.log(this.subscription.toJSON());
             mps.publish('Subscriptions/new', [this.subscription.toJSON()]);
           }.bind(this))
 

@@ -250,6 +250,8 @@ define([
 
       categoriesGlobal = this.statusCategories(this.getLayersByCategory(layersGlobal));
       categoriesIso = this.statusCategories(this.getLayersByCategory(layersIso));
+
+      console.log(categoriesGlobal, categoriesIso);
       // Render
       this.render(this.template({
         categories: (_.isEmpty(categoriesGlobal)) ? false : categoriesGlobal,

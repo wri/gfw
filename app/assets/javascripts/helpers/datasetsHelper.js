@@ -100,6 +100,7 @@ define([
       if (datasets) {
         for (var dataset in datasetList) {
           var currentDataset = _.extend({}, datasetList[dataset]);
+
           if (datasets.indexOf(currentDataset.layerSlug[0]) !== -1) {
             filteredDatasets.push(currentDataset);
           }
@@ -107,7 +108,8 @@ define([
       }
 
       filteredDatasets = _.map(filteredDatasets, function(dataset) {
-        if (layersSelected.indexOf(dataset.slug) !== -1) {
+        if (layersSelected.indexOf(dataset.slug) !== -1 ||
+          layersSelected.indexOf(dataset.layerSlug[0]) !== -1) {
           dataset.checked = true;
         }
         return dataset;
@@ -131,7 +133,8 @@ define([
       for (var dataset in datasetList) {
         selectedList[dataset] = _.extend({}, datasetList[dataset]);
 
-        if (selectedDatasets && selectedDatasets.indexOf(dataset) != -1) {
+        if (selectedDatasets && (selectedDatasets.indexOf(dataset) != -1 || 
+          selectedDatasets.indexOf(selectedList[dataset].layerSlug[0]) != -1)) {
           selectedList[dataset].checked = true
         }
       }
