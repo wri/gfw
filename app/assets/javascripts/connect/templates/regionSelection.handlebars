@@ -3,7 +3,7 @@
   <select id="select-region" class="chosen-select default disabled js-select-region" data-placeholder="{{placeholder}}" disabled>
     <option value=""></option>
     {{#each regions}}
-      <option value="{{this.id_1}}">{{this.name_1}}</option>
+      <option value="{{this.id_1}}" {{#if selected}}selected{{/if}}>{{this.name_1}}</option>
     {{/each}}
   </select>
 </div>
