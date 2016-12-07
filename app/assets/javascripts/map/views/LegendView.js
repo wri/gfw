@@ -60,13 +60,17 @@ define([
   'text!map/templates/legend/mex_forest_rest.handlebars',
   'text!map/templates/legend/bra_landcover.handlebars',
   'text!map/templates/legend/lbr_mining.handlebars',
+  'text!map/templates/legend/lbr_forest.handlebars',
+  'text!map/templates/legend/lbr_community.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
     global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
     gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl,
-    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl, paTpl, places2watchTPL, mex_landrightsTpl, mexPATpl, perPATpl,mex_land_coverTpl,mex_forest_conservTPL,mex_forest_prodTPL,mex_forest_restTPL, bra_landcoverTPL, lbr_miningTPL) {
+    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl,
+    paTpl, places2watchTPL, mex_landrightsTpl, mexPATpl, perPATpl,mex_land_coverTpl,mex_forest_conservTPL,mex_forest_prodTPL,mex_forest_restTPL, bra_landcoverTPL, lbr_miningTPL,
+    lbr_forestTpl,lbr_communityTpl) {
 
   'use strict';
 
@@ -157,11 +161,9 @@ define([
       per_protected_areas:Handlebars.compile(perPATpl),
       mex_land_cover:Handlebars.compile(mex_land_coverTpl),
       bra_land_cover:Handlebars.compile(bra_landcoverTPL),
-      lbr_logging:Handlebars.compile(lbr_miningTPL),
-      lbr_private_use_permit:Handlebars.compile(lbr_miningTPL),
-      lbr_development_exploration_license:Handlebars.compile(lbr_miningTPL),
-      lbr_mineral_development_agreement:Handlebars.compile(lbr_miningTPL),
+      lbr_logging:Handlebars.compile(lbr_forestTpl),
       lbr_mineral_exploration_license:Handlebars.compile(lbr_miningTPL),
+      lbr_resource_rights:Handlebars.compile(lbr_communityTpl),
       
 
     },
