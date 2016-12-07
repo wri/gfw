@@ -3,21 +3,25 @@ define([
   'backbone',
   'handlebars',
   'underscore',
+  'core/View',
   'mps',
   'map/utils',
   'simplePagination',
   'connect/collections/Subscriptions',
   'connect/views/SubscriptionListItemView',
+  'connect/views/SubscriptionNewConfirmationView',
   'text!connect/templates/subscriptionList.handlebars'
 ], function($,
   Backbone,
   Handlebars,
   _,
+  View,
   mps,
   utils,
   simplePagination,
   Subscriptions,
   SubscriptionListItemView,
+  SubscriptionNewConfirmationView,
   tpl) {
 
   'use strict';
@@ -30,16 +34,31 @@ define([
   });
 
 
-  var SubscriptionListView = Backbone.View.extend({
+  var SubscriptionListView = View.extend({
     template: Handlebars.compile(tpl),
 
     initialize: function() {
+      View.prototype.initialize.apply(this);
+
       this.model = new SubscriptionListModel();
       this.subscriptions = new Subscriptions();
       this.listenTo(this.subscriptions, 'sync remove', this.render);
       this.subscriptions.fetch();
 
       this.render();
+    },
+
+    _subscriptions: [
+      // MPS
+      {
+        'Subscriptions/new': function(subscription) {
+          this.confirmationView(subscription);
+        }
+      }
+    ],
+
+    cache: function() {
+      this.$container = $('.my-gfw-container');
     },
 
     render: function() {
@@ -67,6 +86,7 @@ define([
           this.render();
         }
       }
+      this.cache();
     },
 
     renderList: function() {
@@ -126,6 +146,13 @@ define([
           window.scrollTo(0,0);
         }.bind(this)
       };
+    },
+
+    confirmationView: function(subscription) {
+      this.confimationView = new SubscriptionNewConfirmationView();
+      this.$container.append(this.confimationView.render({
+        uploadedData: subscription.isUpload
+      }).el);
     }
 
   });

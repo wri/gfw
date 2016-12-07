@@ -1,3 +1,19 @@
+.my-gfw-container {
+  .login-notice {
+
+    > .text {
+      padding: 0 15px 0 0;
+      width: 100%;
+      color: $dark;
+      font-weight: 500;
+      font-size: 13px;
+      text-transform: uppercase;
+      text-align: left;
+      line-height: 1.5;
+    }
+  }
+}
+
 .my-gfw-subscription-container {
   .tabs {
     width: 100%;
@@ -72,15 +88,6 @@
     color: #555;
     margin-bottom: 20px;
   }
-}
-
-.my-gfw-subscriptions-how-to-subscribe {
-  background-image: image-url("my_gfw/how-to-subscribe.png");
-  background-size: 100%;
-
-  margin-bottom: 20px;
-  width: 507px;
-  height: 367px;
 }
 
 

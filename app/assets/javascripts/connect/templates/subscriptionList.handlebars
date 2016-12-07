@@ -11,6 +11,7 @@
         <a target="_blank" href="/howto/categories/subscribe-to-alerts/">How To guide</a>
         for more information.
       </h3>
+      <a class="btn green uppercase" href="./subscriptions/new">Create new subscription</a>
     </header>
   </div>
 </section>
@@ -36,7 +37,7 @@
         <div id="subscriptionSpinner" class="m-spinner -fixed">
           <div class="spinner-box">
             <div class="icon"></div>
-          </div>    
+          </div>
         </div>
       {{else}}
         {{#if subscriptions.length}}
@@ -54,14 +55,11 @@
           <div class="my-gfw-subscriptions-empty">
             <h4>You don't have any subscriptions yet</h4>
             <h5>
-              Visit the map to subscribe to forest change data for your
-              area of interest.
+              Subscribe to receive forest loss alerts for an area of interest
             </h5>
 
-            <div class="my-gfw-subscriptions-how-to-subscribe"></div>
-
             <p>
-              <a href="/map?tab=analysis-tab" class="btn green uppercase">Go to the map</a>
+              <a href="./subscriptions/new" class="btn green uppercase">Subscribe</a>
             </p>
           </div>
         {{/if}}

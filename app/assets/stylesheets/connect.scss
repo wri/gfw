@@ -34,9 +34,11 @@
 @import "modules/section-new";
 @import "modules/static/spinner";
 @import "layouts/static";
+@import "modules/common/subscription-modal";
 
 @import "modules/connect/shared";
 @import "modules/connect/user-form";
 @import "modules/connect/login";
 @import "modules/connect/subscriptions";
+@import "modules/connect/subscription";
 @import "modules/connect/stories";

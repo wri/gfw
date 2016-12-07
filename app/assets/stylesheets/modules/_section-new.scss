@@ -149,16 +149,6 @@ $aside-width: 270px;
         @include animation(loader2,1s,infinite,$easeInOutCubic);
       }
     }
-
-    &.-drawing {
-      svg {
-        display: none;
-        &.-inactive {
-          display: block;
-        }
-      }
-    }
-
   }
 
   .control-pin {

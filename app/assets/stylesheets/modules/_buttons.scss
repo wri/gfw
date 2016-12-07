@@ -173,7 +173,7 @@
     @media (min-width: $br-mobile) {
       padding-right: 36px;
     }
-    svg{
+    svg {
       width: 26px;
       height: 26px;
       position: absolute;
@@ -181,6 +181,20 @@
       right: 5px;
       fill: $dark;
       transform: translate(0,-50%);
+    }
+  }
+
+  &.with-inline-icon {
+    svg {
+      width: 16px;
+      height: 16px;
+      padding: 3px;
+      position: relative;
+      top: 3px;
+      fill: $white;
+      background: $cGreen;
+      border-radius: 50%;
+      margin: 0 0 0 5px;
     }
   }
 

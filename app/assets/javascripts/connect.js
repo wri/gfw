@@ -28,12 +28,7 @@ require([
      * Initialize the map by starting the history.
      */
     _initApp: function() {
-      if (!Backbone.History.started) {
-        Backbone.history.start({
-          root: '/my_gfw',
-          pushState: true
-        });
-      }
+      this.router.startHistory()
     },
 
     /**

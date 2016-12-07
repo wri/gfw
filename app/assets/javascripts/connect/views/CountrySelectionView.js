@@ -7,15 +7,16 @@ define([
   'underscore',
   'handlebars',
   'mps',
+  'core/View',
   'map/services/CountryService',
   'map/services/RegionService',
   'text!connect/templates/countrySelection.handlebars',
   'text!connect/templates/regionSelection.handlebars',
-], function(_, Handlebars, mps, CountryService, RegionService, countryTpl, regionTpl) {
+], function(_, Handlebars, mps, View, CountryService, RegionService, countryTpl, regionTpl) {
 
   'use strict';
 
-  var CountrySelectionView = Backbone.View.extend({
+  var CountrySelectionView = View.extend({
     model: new (Backbone.Model.extend({
       country: null,
       region: null,
@@ -31,10 +32,18 @@ define([
       'change .js-select-region' : 'onChangeRegion',
     },
 
-    initialize: function(map) {
+    initialize: function(map, params) {
       if (!this.$el.length) {
         return;
       }
+
+      View.prototype.initialize.apply(this);
+
+      this.params = params;
+      this.map = map;
+      this.cache();
+      this.listeners();
+      this._setParams();
 
       // Load countries
       CountryService.get()
@@ -47,16 +56,12 @@ define([
         .error(function(error) {
           console.log(error);
         }.bind(this))
-
-      this.map = map;
-      this.cache();
-      this.listeners();
     },
 
     listeners: function() {
       // We should start using listenTo and handle the remove views
-      this.model.on('change:country', this.changeCountry.bind(this));
-      this.model.on('change:region', this.changeRegion.bind(this));
+      this.listenTo(this.model, 'change:country', this.changeCountry.bind(this));
+      this.listenTo(this.model, 'change:region', this.changeRegion.bind(this));
     },
 
     cache: function() {
@@ -64,6 +69,24 @@ define([
       this.$regionField = this.$el.find('#region-field');
     },
 
+    /**
+     * Sets params from the URL
+     */
+    _setParams: function() {
+      if (this.params.params.iso.country) {
+        this.model.set({
+          country: this.params.params.iso.country
+        }, { silent: true });
+        this.changeCountry();
+      }
+
+      if (this.params.params.iso.region) {
+        this.model.set({
+          region: this.params.params.iso.region
+        }, { silent: true });
+        this.changeRegion();
+      }
+    },
 
     /**
      * CHANGE EVENTS
@@ -75,7 +98,9 @@ define([
       mps.publish('Country/update', [{
         country: country,
         region: null
-      }])
+      }]);
+
+      mps.publish('Datasets/refresh', []);
 
       // Get the regions for this country
       RegionService.get(country)
@@ -88,13 +113,14 @@ define([
     changeRegion: function() {
       var country = this.model.get('country');
       var region = this.model.get('region');
-      if (!!region) {
-        // Publish the current country-region selection
-        mps.publish('Country/update', [{
-          country: country,
-          region: region
-        }])
-      }
+
+      // Publish the current country-region selection
+      mps.publish('Country/update', [{
+        country: country,
+        region: region
+      }]);
+
+      mps.publish('Datasets/refresh', []);
     },
 
 
@@ -103,16 +129,18 @@ define([
     */
     renderCountries: function() {
       this.$countryField.html(this.templateCountries({
-        name: 'Country',
-        placeholder: 'Select a country',
-        countries: this.countries
+        name: 'Select a country',
+        placeholder: 'Select a country...',
+        countries: this._getParsedCountries()
       }));
       this.renderChosen();
     },
 
     renderRegions: function() {
       this.$regionField.html(this.templateRegions({
-        regions: this.regions
+        name: 'Select a jurisdiction',
+        placeholder: 'Select a jurisdiction...',
+        regions: this._getParsedRegions()
       }));
 
       // Set the state of the region select
@@ -131,12 +159,42 @@ define([
         if (! !!$select.data('chosen')) {
           $select.chosen({
             width: '100%',
-            disable_search: true,
+            allow_single_deselect: true,
             inherit_select_classes: true,
             no_results_text: "Oops, nothing found!"
           });
         }
       });
+    },
+
+    _getParsedCountries: function() {
+      var countriesData = [];
+      var selectedCountry = this.model.attributes.country || null;
+
+      _.each(this.countries, function(country) {
+        var currentCountry = _.extend({}, country);
+        if (selectedCountry && currentCountry.iso === selectedCountry) {
+          currentCountry.selected = true;
+        }
+        countriesData.push(currentCountry);
+      });
+
+      return countriesData;
+    },
+
+    _getParsedRegions: function() {
+      var regionsData = [];
+      var selectedRegion = parseInt(this.model.attributes.region, 10) || null;
+
+      _.each(this.regions, function(region) {
+        var currentRegion = _.extend({}, region);
+        if (selectedRegion && currentRegion.id_1 === selectedRegion) {
+          currentRegion.selected = true;
+        }
+        regionsData.push(currentRegion);
+      });
+
+      return regionsData;
     },
 
     /**

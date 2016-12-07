@@ -6,17 +6,13 @@
  */
 define([
   'underscore',
-  'handlebars',
-  'amplify',
-  'turf',
   'mps',
-  'map/services/GeostoreService',
-  'helpers/geojsonUtilsHelper',
-], function(_, Handlebars, amplify, turf, mps, GeostoreService, geojsonUtilsHelper) {
+  'core/View',
+], function(_, mps, View) {
 
   'use strict';
 
-  var MapMiniDrawingView = Backbone.View.extend({
+  var MapMiniDrawingView = View.extend({
 
     el: '#map-drawing',
 
@@ -27,6 +23,7 @@ define([
     status: new (Backbone.Model.extend({
       defaults: {
         is_drawing: false,
+        is_drawn: false,
         geosjon: null,
         overlay: null,
         overlay_stroke_weight: 2
@@ -38,38 +35,69 @@ define([
         return;
       }
 
+      View.prototype.initialize.apply(this);
+
       this.map = map;
       this.listeners();
     },
 
+    _subscriptions: [
+      // HIGHLIGHT
+      {
+        'Drawing/toggle': function(toggle){
+          this.status.set('is_drawing', toggle);
+        }
+      },
+      {
+        'Drawing/overlay': function(overlay){
+          this.status.set('is_drawn', true);
+        }
+      },
+      {
+        'Drawing/delete': function(overlay){
+          this.status.set('is_drawn', false);
+        }
+      }
+    ],
+
     listeners: function() {
       // Status listeners
-      this.status.on('change:is_drawing', this.changeIsDrawing.bind(this));
-
-      // MPS listeners
-      mps.subscribe('Drawing/toggle', function(toggle){
-        this.status.set('is_drawing', toggle);
-      }.bind(this))
+      this.listenTo(this.status, 'change:is_drawing', this.changeIsDrawing.bind(this));
+      this.listenTo(this.status, 'change:is_drawn', this.changeIsDrawing.bind(this));
     },
 
 
     // CHANGE EVENTS
     changeIsDrawing: function() {
       var is_drawing = this.status.get('is_drawing');
+      var is_drawn = this.status.get('is_drawn');
       this.setDrawingButton();
 
       if (is_drawing) {
         this.$el.text('Cancel');
         this.startDrawingManager();
       } else {
-        this.$el.text('Start drawing');
+        if (is_drawn) {
+          this.$el.text('Delete drawing');
+        } else {
+          this.$el.text('Start drawing');
+        }
         this.stopDrawingManager();
       }
     },
 
     setDrawingButton: function() {
-      var is_drawing = this.status.get('is_drawing');
-      this.$el.toggleClass('-drawing', is_drawing);
+      var is_drawing = this.status.get('is_drawing'),
+          is_drawn = this.status.get('is_drawn'),
+          green = !is_drawing && !is_drawn,
+          gray = is_drawing && !is_drawn,
+          red = !is_drawing && is_drawn;
+
+      this.$el
+        .toggleClass('green', green)
+        .toggleClass('gray', gray)
+        .toggleClass('red', red);
+
     },
 
     /**
@@ -78,9 +106,11 @@ define([
      */
     onClickDrawing: function(e) {
       e && e.preventDefault();
-      var is_drawing = $(e.currentTarget).hasClass('-drawing');
+      var is_drawing = this.status.get('is_drawing'),
+          is_drawn = this.status.get('is_drawn');
+
       mps.publish('Drawing/delete');
-      mps.publish('Drawing/toggle', [!is_drawing]);
+      mps.publish('Drawing/toggle', [!is_drawing && !is_drawn]);
     },
 
 
@@ -136,15 +166,18 @@ define([
      * @return {void}
      */
     completeDrawing: function(e) {
+      this.stopDrawingManager();
+      mps.publish('Shape/upload', [false]);
+      
       // Check if the drawing is enabled
       if (this.status.get('is_drawing')) {
-        mps.publish('Drawing/overlay', [e.overlay]);
+        mps.publish('Drawing/overlay', [e.overlay, { save: true }]);
         mps.publish('Drawing/toggle', [false]);
       } else {
+        mps.publish('Drawing/overlay', [e.overlay, { save: false }]);
+        mps.publish('Drawing/toggle', [false]);
         mps.publish('Drawing/delete');
       }
-
-      this.stopDrawingManager();
     },
 
   });

@@ -165,72 +165,6 @@
       }
     }
   }
-  // @ul
-  .layers {
-    &.closed{
-      display: none;
-    }
-    // @li
-    .layer {
-      width: 100%;
-      margin-bottom: 10px;
-      @include clearfix();
-      &:last-child {
-        margin-bottom: 0;
-      }
-
-      .layer-name {
-        display: block;
-        position: relative;
-        padding: 0 75px 0 13px;
-        font-size: 13px;
-        @media (min-width: $br-mobileMap){
-          padding: 0 38px 0 13px;
-        }
-        .circle{
-          position: absolute;
-          top: 2px;
-          left: 0;
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-        }
-        .subtitle {
-          font-size: 11px;
-          padding: 5px 8px 0 0px;
-          display: block;
-          color: #AAA;
-          word-wrap: break-word;
-        }
-      }
-
-      .layer-sublayer {
-        cursor: pointer;
-        padding: 10px 5px 5px 14px;
-        position: relative;
-        .onoffswitch {
-          margin-top: 1px;
-        }
-
-        .sublayer-title {
-          font-size: 13px;
-          margin-left: 5px;
-          color: #ccc;
-          display: inline-block;
-          .source {
-            top: 9px;
-          }
-        }
-      }
-
-      .layer-sublayer.layer-option {
-        .sublayer-title {
-          color: #555;
-        }
-      }
-    }
-  }
-
 
   // @div
   .source, .layer-close {
@@ -263,6 +197,7 @@
       font-size: 9px;
       line-height: 14px;
       border-radius: 14px;
+
       @media (min-width: $br-mobileMap){
         padding: 0;
         width: 14px;
@@ -294,6 +229,100 @@
         @media (min-width: $br-mobileMap){
           left: 0;
           right: 0;
+        }
+      }
+    }
+  }
+
+  .alerts {
+    @extend .info-icon;
+    display: inline-block;
+    position: absolute;
+    top: -2px;
+    right: 0;
+    background: $white;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    &:hover{
+      background: $white;
+      opacity: 0.8;
+    }
+  }
+
+  // @ul
+  .layers {
+    &.closed{
+      display: none;
+    }
+    // @li
+    .layer {
+      width: 100%;
+      margin-bottom: 10px;
+      @include clearfix();
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .layer-name {
+        display: block;
+        position: relative;
+        padding: 0 75px 0 13px;
+        font-size: 13px;
+        @media (min-width: $br-mobileMap){
+          padding: 0 51px 0 13px;
+        }
+        .circle{
+          position: absolute;
+          top: 2px;
+          left: 0;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+        }
+        .subtitle {
+          font-size: 11px;
+          padding: 5px 8px 0 0px;
+          display: block;
+          color: #AAA;
+          word-wrap: break-word;
+        }
+
+        &.-alerts {
+          .layer-close {
+            right: 36px;
+          }
+          .source {
+            right: 18px;
+          }
+        }
+      }
+
+      .layer-sublayer {
+        cursor: pointer;
+        padding: 10px 5px 5px 14px;
+        position: relative;
+        .onoffswitch {
+          margin-top: 1px;
+        }
+
+        .sublayer-title {
+          font-size: 13px;
+          margin-left: 5px;
+          color: #ccc;
+          display: inline-block;
+          .source {
+            top: 9px;
+          }
+        }
+      }
+
+      .layer-sublayer.layer-option {
+        .sublayer-title {
+          color: #555;
         }
       }
     }

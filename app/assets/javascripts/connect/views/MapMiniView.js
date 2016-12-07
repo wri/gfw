@@ -9,18 +9,20 @@ define([
   'underscore',
   'mps',
   'cookie',
+  'topojson',
+  'core/View',
   'map/views/maptypes/grayscaleMaptype',
   'map/services/GeostoreService',
   'map/services/ShapeService',
+  'map/services/CountryService',
+  'map/services/RegionService',
   'map/helpers/layersHelper',
   'helpers/geojsonUtilsHelper',
-], function(Backbone, _, mps, Cookies, grayscaleMaptype, GeostoreService, ShapeService, layersHelper, geojsonUtilsHelper) {
+], function(Backbone, _, mps, Cookies, topojson, View, grayscaleMaptype, GeostoreService, ShapeService, CountryService, RegionService, layersHelper, geojsonUtilsHelper) {
 
   'use strict';
 
-  var MapMiniView = Backbone.View.extend({
-
-    el: '#map',
+  var MapMiniView = View.extend({
 
     status: new (Backbone.Model.extend({
       defaults: {
@@ -53,14 +55,19 @@ define([
     /**
      * Constructs a new MapMiniView and its presenter.
      */
-    initialize: function() {
+    initialize: function(options) {
       if (!this.$el.length) {
         return;
       }
+      this.params = options.params;
+
+      View.prototype.initialize.apply(this);
+
       this.layerInst = {};
       this.render();
       this.cache();
       this.listeners();
+      this._setParams();
     },
 
     cache: function() {
@@ -68,70 +75,118 @@ define([
     },
 
     listeners: function() {
-      this.status.on('change:geojson', this.changeGeojson.bind(this));
-      this.status.on('change:geostore', this.changeGeostore.bind(this));
+      this.listenTo(this.status, 'change:geojson', this.changeGeojson.bind(this));
+      this.listenTo(this.status, 'change:geostore', this.changeGeostore.bind(this));
+    },
 
-      mps.subscribe('Map/fit-bounds', function(bounds){
-        this.map.fitBounds(bounds)
-      }.bind(this));
-
-      mps.subscribe('Map/loading', function(loading){
-        var time = (!loading) ? 250 : 0;
-        setTimeout(function(){
-          this.$mapLoader.toggleClass('-start', loading);
-        }.bind(this), time);
-      }.bind(this));
+    _subscriptions: [
+      // MAP STATE
+      {
+        'Map/loading': function(loading){
+          var time = (!loading) ? 250 : 0;
+          setTimeout(function(){
+            this.$mapLoader.toggleClass('-start', loading);
+          }.bind(this), time);
+        }
+      },
+      {
+        'Map/fit-bounds': function(bounds){
+          this.map.fitBounds(bounds)
+        }
+      },
 
       // LAYERS
-      mps.subscribe('LayerNav/change', function(layerSpec){
-        var options = {
-          highlight: true
-        };
-        var layers = layerSpec.getLayers();
-        this.status.set('layers',layers);
-        this.setLayers(layers, options);
+      {
+        'LayerNav/change': function(layerSpec){
+          if (layerSpec) {
+            var options = {
+              highlight: true
+            };
+            var layers = layerSpec.getLayers();
+            this.status.set('layers',layers);
+            this.setLayers(layers, options);
 
-        // Delete geojson if it exists
-        this.deleteGeojson();
-
-      }.bind(this));
+            // Delete geojson if it exists
+            this.deleteGeojson();
+          }
+        }
+      },
 
       // HIGHLIGHT
-      mps.subscribe('Highlight/shape', function(data) {
-        if (!!data.wdpaid) {
-          this.getShape('protected_areas', data.wdpaid);
+      {
+        'Country/update': function(iso) {
+          var iso = iso;
+          if (!!iso && !!iso.country) {
+            this.getCountryShape(iso);
+          } else {
+            this.deleteGeojson();
+          }
         }
+      },
 
-        if (!!data.use && !!data.useid) {
-          this.getShape(data.use, data.useid);
+      {
+        'Shape/update': function(data) {
+          if (!!data.wdpaid) {
+            this.getShape('protected_areas', data.wdpaid);
+          }
+
+          if (!!data.use && !!data.useid) {
+            this.getShape(data.use, data.useid);
+          }
         }
-
-      }.bind(this));
+      },
 
       // DRAWING
-      mps.subscribe('Drawing/toggle', function(toggle){
-        this.status.set('is_drawing', toggle);
-      }.bind(this));
+      {
+        'Drawing/toggle': function(toggle){
+          this.status.set('is_drawing', toggle);
+        }
+      },
 
-      mps.subscribe('Drawing/overlay', function(overlay){
-        this.status.set('overlay', overlay);
-        this.status.set('geojson', this.getGeojson(overlay));
-        this.eventsGeojson();
-      }.bind(this));
+      {
+        'Drawing/overlay': function(overlay, options){
+          this.status.set('overlay', overlay);
+          if (!!options && options.save) {
+            this.status.set('geojson', this.getGeojson(overlay));
+            this.eventsGeojson();
+          }
+        }
+      },
 
-      mps.subscribe('Drawing/geojson', function(geojson){
-        this.status.set('geojson', geojson);
-        this.drawGeojson();
-      }.bind(this));
+      {
+        'Drawing/geojson': function(geojson){
+          this.status.set('geojson', geojson);
+          this.drawGeojson();
+        }
+      },
 
-      mps.subscribe('Drawing/bounds', function(bounds){
-        this.map.fitBounds(bounds);
-      }.bind(this));
+      {
+        'Drawing/bounds': function(bounds){
+          this.map.fitBounds(bounds);
+        }
+      },
 
-      mps.subscribe('Drawing/delete', function(){
-        this.deleteGeojson();
-      }.bind(this));
-    },
+      {
+        'Drawing/delete': function(){
+          this.deleteGeojson();
+        }
+      },
+
+      {
+        'Drawing/geostore': function(geostoreId){
+          GeostoreService.get(geostoreId).then(function(response) {
+            var geometry = response.data.attributes.geojson.features[0].geometry;
+
+            this.status.set({
+              'fit_to_geom': true,
+              'geojson': geometry
+            }, { silent: true });
+            this.drawGeojson();
+          }.bind(this));
+        }
+      }
+
+    ],
 
     /**
      * Creates the Google Maps and attaches it to the DOM.
@@ -159,6 +214,23 @@ define([
       this.map.setOptions(options);
       this.onCenterChange();
       this.presenter.onMaptypeChange(options.mapTypeId);
+    },
+
+    /**
+     * Sets params from the URL
+     */
+    _setParams: function() {
+      var data = this.params;
+      var params = data.params;
+
+      if (data.geostore) {
+        mps.publish('Drawing/geostore', [data.geostore]);
+        mps.publish('Datasets/refresh', []);
+      }
+      if (data.metadata && (params.wdpaid || params.use)) {
+        mps.publish('Shape/update', [JSON.parse(data.metadata)]);
+        mps.publish('Datasets/refresh', []);
+      }
     },
 
     /**
@@ -273,6 +345,56 @@ define([
       this.map.setZoom(zoom);
     },
 
+    // COUNTRIES
+    getCountryShape: function(iso) {
+      var iso = iso;
+      if (!!iso.country) {
+        mps.publish('Map/loading', [true]);
+
+        if (!!iso.region) {
+          RegionService.show(iso.country, iso.region)
+            .then(function(results,status) {
+              var geojson = results.features[0].geometry,
+                  bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+
+              // Get bounds and fit to them
+              if (!!bounds) {
+                mps.publish('Map/fit-bounds', [bounds]);
+              }
+
+              // Draw geojson of country
+              this.deleteGeojson();
+              this.drawGeojson(geojson);
+
+              mps.publish('Map/loading', [false]);
+            }.bind(this));
+
+        } else {
+          CountryService.show(iso.country)
+            .then(function(results,status) {
+              var objects = _.findWhere(results.topojson.objects, {
+                type: 'MultiPolygon'
+              });
+              var topoJson = topojson.feature(results.topojson,objects),
+                  geojson = topoJson.geometry,
+                  bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+
+              // Get bounds and fit to them
+              if (!!bounds) {
+                mps.publish('Map/fit-bounds', [bounds]);
+              }
+
+              // Draw geojson of country
+              this.deleteGeojson();
+              this.drawGeojson(geojson);
+
+              mps.publish('Map/loading', [false]);
+            }.bind(this));
+        }
+      }
+
+    },
+
     // SHAPES
     getShape: function(type, id) {
       ShapeService.get(type, id)
@@ -325,7 +447,6 @@ define([
     */
     changeGeojson: function() {
       var geojson = this.status.get('geojson');
-
       if (!!geojson) {
         GeostoreService.save(geojson).then(function(geostoreId) {
           this.status.set('geostore', geostoreId);
@@ -355,7 +476,8 @@ define([
       var paths = geojsonUtilsHelper.geojsonToPath(geojson);
       var overlay = new google.maps.Polygon({
         paths: paths,
-        editable: (geojson.type == 'Polygon'),
+        // TODO: Editable if it's a drawn Polygon
+        editable: false,
         strokeWeight: this.status.get('overlay_stroke_weight'),
         fillOpacity: 0,
         fillColor: '#FFF',
@@ -378,8 +500,11 @@ define([
       var overlay = this.status.get('overlay');
       if (!!overlay) {
         overlay.setMap(null);
-        this.status.set('overlay', null);
-        this.status.set('geojson', null);
+        this.status.set({
+          overlay: null,
+          geojson: null,
+          geostore: null
+        }, { silent: true });
       }
     },
 

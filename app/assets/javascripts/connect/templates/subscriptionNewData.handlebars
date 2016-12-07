@@ -1,5 +1,6 @@
 <div id="layer-selection" class="layer-selection field-column -j-between">
   <div id="layers-field" class="field -default -medium"></div>
+  <div class="field -separator"><span>or<span></div>
   <div class="field -default -medium">
     <div id="country-field" class="field -default -medium"></div>
     <div id="layers-country-field" class="field -default -medium"></div>
@@ -7,6 +8,8 @@
 </div>
 
 <div class="field -default">
+  <label for="name">Select an area by clicking a shape on the map *</label>
+
   <div class="m-map">
     <div>
       <div id="map" class="map -loading"></div>
@@ -38,42 +41,20 @@
   </div>
 </div>
 
-<div class="field -default">
-  <label>Data set</label>
-  <div class="checkbox-box">
-    <div class="custom-checkbox">
-      <input class="dataset-checkbox" type="checkbox" name="datasets" id="umd-loss-gain">
-      <label for="umd-loss-gain"><span></span> Tree cover loss </label>
-    </div>
-    <div class="custom-checkbox">
-      <input class="dataset-checkbox" type="checkbox" name="datasets" id="guira-loss">
-      <label for="guira-loss"><span></span> Gran Chaco deforestation</label>
-    </div>
-    <div class="custom-checkbox">
-      <input class="dataset-checkbox" type="checkbox" name="datasets" id="prodes-loss">
-      <label for="prodes-loss"><span></span> PRODES deforestation</label>
-    </div>
-    <div class="custom-checkbox">
-      <input class="dataset-checkbox" type="checkbox" name="datasets" id="glad-alerts">
-      <label for="glad-alerts"><span></span> GLAD Tree Cover Loss Alerts</label>
-    </div>
-    <div class="custom-checkbox">
-      <input class="dataset-checkbox" type="checkbox" name="datasets" id="terrai-alerts">
-      <label for="terrai-alerts"><span></span> Terra-i Alerts</label>
-    </div>
-    <div class="custom-checkbox">
-      <input class="dataset-checkbox" type="checkbox" name="datasets" id="imazon-alerts">
-      <label for="imazon-alerts"><span></span> SAD Alerts</label>
-    </div>
-    <div class="custom-checkbox">
-      <input class="dataset-checkbox" type="checkbox" name="datasets" id="viirs-active-fires">
-      <label for="viirs-active-fires"><span></span> VIIRS Active fires</label>
-    </div>
-  </div>
+<div id="datasets-selection" class="datasets-selection"></div>
+
+<div class="field -default -medium">
+  <label for="name">Name your subscription *</label>
+  <input type="text" name="name" placeholder="Enter the name of your subscription">
 </div>
 
-<div class="field -default -little">
-  <label for="select-language">Language</label>
+<div class="field -default -medium">
+  <label for="email">Enter your email address *</label>
+  <input type="email" name="email" placeholder="Enter your email" value="{{email}}">
+</div>
+
+<div class="field -default -medium">
+  <label for="select-language">Select a language for notification emails *</label>
   <div class="m-select">
     <select id="select-language" name="language" class="chosen-select default" data-placeholder="Select a language">
       {{#each languages}}

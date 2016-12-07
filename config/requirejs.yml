@@ -38,6 +38,7 @@ paths:
   picker: "pickadate/lib/picker"
   pickadate: "pickadate/lib/picker.date"
   cookie: "js-cookie/src/js.cookie"
+  urijs: "urijs/src"
 
   #countries
   scrollit: "ScrollIt.js/scrollIt"

@@ -30,6 +30,7 @@
 @import "modules/modal_new";
 @import "modules/form";
 @import "modules/static/spinner";
+@import "modules/common/subscription-modal";
 
 @import "modules/connect/user-form";
 
@@ -71,7 +72,6 @@
   "modules/map/tab-basemaps",
   "modules/map/tab-countries",
   "modules/map/tab-highresolution",
-  "modules/map/subscription-modal",
 
   // analysis
   "modules/map/analysis-draw",
@@ -90,7 +90,7 @@
   "modules/map/timeline-torque",
   "modules/map/timeline-torque-date-picker",
   "modules/map/timeline-torque-monthly-picker",
-  
+
   //Nav mobile
   "modules/map/module-navmobile",
   

@@ -7,11 +7,13 @@ define([
   'underscore',
   'handlebars',
   'mps',
-], function(_, Handlebars, mps) {
+  'core/View',
+
+], function(_, Handlebars, mps, View) {
 
   'use strict';
 
-  var MapMiniControlsView = Backbone.View.extend({
+  var MapMiniControlsView = View.extend({
 
     el: '#map-controls',
 
@@ -26,7 +28,9 @@ define([
       if (!this.$el.length) {
         return;
       }
-      
+
+      View.prototype.initialize.apply(this);
+
       this.map = map;
       this.cache();
       this.listeners();

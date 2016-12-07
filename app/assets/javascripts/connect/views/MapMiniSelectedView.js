@@ -7,12 +7,13 @@ define([
   'underscore',
   'handlebars',
   'mps',
+  'core/View',
   'text!connect/templates/subscriptionNewDataSelection.handlebars',
-], function(_, Handlebars, mps, tpl) {
+], function(_, Handlebars, mps, View, tpl) {
 
   'use strict';
 
-  var MapMiniSelectedView = Backbone.View.extend({
+  var MapMiniSelectedView = View.extend({
     model: new (Backbone.Model.extend({
 
     })),
@@ -25,26 +26,51 @@ define([
       'click .js-map-selection-delete' : 'onClickDeleteSelection'
     },
 
-    initialize: function(map) {
+    initialize: function(map, params) {
       if (!this.$el.length) {
         return;
       }
+      this.params = params;
+
+      View.prototype.initialize.apply(this);
 
       this.map = map;
       this.cache();
       this.listeners();
+      this._setParams();
     },
 
-    listeners: function() {
-      this.model.on('change', this.render.bind(this));
-
+    _subscriptions: [
       // HIGHLIGHT
-      mps.subscribe('Highlight/shape', function(data){
-        this.model.clear({ silent: true }).set(data);
-      }.bind(this));
+      {
+        'Shape/update': function(data){
+          this.model.clear({ silent: true }).set(data);
+        }
+      },
+
+      {
+        'MapSelection/clear': function(){
+          this.clearSelection();
+        }
+      }
+    ],
+
+    listeners: function() {
+      this.listenTo(this.model, 'change', this.render.bind(this));
     },
 
     cache: function() {
+    },
+
+    /**
+     * Sets params from the URL
+     */
+    _setParams: function() {
+      var data = this.params;
+
+      if (data.metadata) {
+        this.model.clear().set(JSON.parse(data.metadata));
+      }
     },
 
     /**
@@ -56,13 +82,24 @@ define([
 
 
     /**
+     * CHANGE EVENTS
+     * - clearSelection
+     */
+
+    clearSelection: function() {
+      this.model.clear();
+      this.$el.removeClass('-active');
+    },
+
+
+    /**
      * UI EVENTS
     */
     onClickDeleteSelection: function(e) {
       e && e.preventDefault();
       this.$el.removeClass('-active');
       mps.publish('Drawing/delete');
-      mps.publish('Params/reset');
+      mps.publish('Selected/reset');
     }
   });
 

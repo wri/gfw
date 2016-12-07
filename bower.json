@@ -50,7 +50,8 @@
     "turf": "~2.0.2",
     "lory": "^2.1.0",
     "backbone.syphon": "^0.6.3",
-    "validate": "^0.10.0"
+    "validate": "^0.10.0",
+    "urijs": "URIjs#^1.18.2"
   },
   "resolutions": {
     "jquery": "1.11.1"

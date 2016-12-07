@@ -10,22 +10,24 @@ define([
   'amplify',
   'turf',
   'mps',
+  'core/View',
   'map/services/ShapefileNewService',
   'helpers/geojsonUtilsHelper',
-], function(_, Handlebars, amplify, turf, mps, ShapefileService, geojsonUtilsHelper) {
+], function(_, Handlebars, amplify, turf, mps, View, ShapefileService, geojsonUtilsHelper) {
 
   'use strict';
 
-  var MapMiniUploadView = Backbone.View.extend({
+  var MapMiniUploadView = View.extend({
 
     config: {
       FILE_SIZE_LIMIT: 1000000,
       FILE_SIZE_MESSAGE: 'The selected file is quite large and uploading it might result in browser instability. Do you want to continue?'
     },
 
-    el: '#map-upload',
+    el: '#map-uploading',
 
     events: {
+      'click' : 'onClickUploading',
       'change #input-upload-shape' : 'onChangeFileShape',
       'dragenter' : 'onDragenterShape',
       'dragleave' : 'onDragleaveShape',
@@ -38,28 +40,43 @@ define([
         return;
       }
 
+      View.prototype.initialize.apply(this);
+
       this.map = map;
       this.cache();
       this.listeners();
     },
+
+    _subscriptions: [
+      // HIGHLIGHT
+      {
+        'Drawing/toggle': function(toggle){
+          this.$inputUploadShape.val('')
+        }
+      }
+    ],
 
     cache: function() {
       this.$inputUploadShape = this.$el.find('#input-upload-shape');
     },
 
     listeners: function() {
-      mps.subscribe('Drawing/toggle', function(toggle){
-        this.$inputUploadShape.val('')
-      }.bind(this));
     },
 
     /**
      * UI EVENTS
+     * - onClickUploading
      * - onChangeFileShape
      * - onDragoverShape
      * - onDragendShape
      * - onDropShape
     */
+    onClickUploading: function(e) {
+      if (e.target.id === 'map-uploading') {
+        this.$inputUploadShape.trigger('click');
+      }
+    },
+
     onChangeFileShape: function(e) {
       var file = e.currentTarget.files[0];
       if (file) {
@@ -110,6 +127,7 @@ define([
 
             mps.publish('Drawing/geojson', [geometry]);
             mps.publish('Drawing/bounds', [bounds]);
+            mps.publish('Shape/upload', [true]);
           }
         }.bind(this))
 
