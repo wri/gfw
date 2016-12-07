@@ -1,14 +1,13 @@
 #layer {
    polygon-opacity: 0.5;
-   line-color: #a63603;
+   line-color: #993404;
    line-width: 0.5;
    line-opacity: 1;
 }
 
 #layer [contractst="Active"] {
-   polygon-fill: #a63603;
+   polygon-fill: #fed98e;
 }
 #layer [contractst="Pending"] {
-   polygon-fill: #fdbe85
-;
+   polygon-fill: #d95f0e;
 }
