@@ -1,5 +1,5 @@
 .modal-subscribe {
-  padding: 20px;
+  padding: 10px 0 10px 0;
 
   // Header
   header {
@@ -34,7 +34,7 @@
       display: block;
     }
 
-    label {
+    > label {
       display: block;
       margin: 7px 0 5px;
       text-transform: none;
@@ -44,7 +44,7 @@
     }
 
     p {
-      text-align: center;
+      text-align: left;
       font-weight: 200;
       line-height: 1.5em;
       color: $dark;
@@ -59,6 +59,12 @@
     }
   }
 
+  // Datasets
+  .datasets-list {
+    width: 100%;
+    min-height: 95px;
+    position: relative;
+  }
   // Login authentication
   .subscription-authentication {
     margin: 20px auto 0;
