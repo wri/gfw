@@ -35,16 +35,15 @@ define([
     events: {
       'change #layers-country-select' : 'changeIso',
       'click #layers-country-reset' : 'resetIso',
-      'click #layers-country-analyze' : 'analyzeIso',
-      'click #layers-country-subscribe' : 'subscribeIso',
+      'click #layers-country-analyze' : 'analyzeIso'
     },
 
     initialize: function(map, countries) {
       // Init presenter
-      this.presenter = new Presenter(this);        
+      this.presenter = new Presenter(this);
       this.map = map;
       this.countries = countries;
-      
+
       this.render();
       this.listeners();
     },
@@ -56,7 +55,7 @@ define([
         countryName: this.model.get('countryName') || 'Country',
         countryLayers: this.model.get('countryLayers')
       }));
-      
+
       this.cache();
       this.renderChosen();
     },
@@ -74,7 +73,7 @@ define([
       this.model.on('change:country', this.setCountryLayers.bind(this));
     },
 
-    // Plugins & helpers    
+    // Plugins & helpers
     renderChosen: function() {
       this.$select.chosen({
         width: '100%',
@@ -90,7 +89,7 @@ define([
       $(this.$selectChosenId + ' .chosen-results, '+this.$selectChosenId+' .chosen-single').on("mousedown", function(e){
         e && e.stopPropagation() && e.preventDefault();
         if (!$(e.currentTarget).hasClass('chosen-results')) {
-          this.$select.trigger('chosen:open');  
+          this.$select.trigger('chosen:open');
         }
         return false;
       }.bind(this))
@@ -106,7 +105,7 @@ define([
     },
 
     setCountry: function(iso) {
-      var country = (!!iso && !!iso.country && iso.country != 'ALL') ? iso.country : null; 
+      var country = (!!iso && !!iso.country && iso.country != 'ALL') ? iso.country : null;
       var countryName = (!!iso && !!iso.country && iso.country != 'ALL') ? _.findWhere(this.countries, {iso: iso.country }).name : null;
       this.model.set('countryName', countryName);
       this.model.set('country', country);
@@ -116,12 +115,12 @@ define([
       var country = this.model.get('country'),
           layers = this.model.get('layers'),
           countryLayers = (!!country) ? _.where(layers, {iso: country}) : null;
-      
-      // Set country layers, if they don't exists we need to 
-      // set it to null because visualization depends 
+
+      // Set country layers, if they don't exists we need to
+      // set it to null because visualization depends
       // on the existence of countryLayers
       this.model.set('countryLayers', countryLayers);
-      
+
       this.render();
     },
 
@@ -129,14 +128,14 @@ define([
     changeIso: function(e) {
       var country = this.$select.val();
       this.presenter.publishIso({
-        country: country, 
+        country: country,
         region: null
       });
     },
 
-    resetIso: function() {      
+    resetIso: function() {
       this.presenter.publishIso({
-        country: null, 
+        country: null,
         region: null
       });
     },
@@ -150,11 +149,6 @@ define([
     analyzeIso: function(e) {
       e && e.preventDefault();
       this.presenter.analyzeIso();
-    },
-
-    subscribeIso: function(e) {
-      e && e.preventDefault();
-      this.presenter.subscribeIso();
     },
 
     setAnalysisButtonStatus: function(boolean) {

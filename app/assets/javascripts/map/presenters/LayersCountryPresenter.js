@@ -204,16 +204,6 @@ define([
     },
 
     /**
-     * Subscribe iso
-     *
-     * @param  {object} iso: {country:'xxx', region: null}
-     */
-    subscribeIso: function() {
-      var iso = this.status.get('iso');
-      mps.publish('Subscribe/iso', [iso]);
-    },
-
-    /**
      * Publish a a LayerNav/change.
      *
      * @param  {object} layerSpec
