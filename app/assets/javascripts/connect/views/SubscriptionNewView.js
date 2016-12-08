@@ -450,14 +450,14 @@ define([
       if (this.validate(attributesFromForm) && this.router.alreadyLoggedIn) {
         this.subscription.set(attributesFromForm, { silent: true }).save()
           .then(function() {
-            this.subscription.clear({ silent: true })
-              .set(currentParams);
-
             // Scroll to top
             this.router.navigateTo('my_gfw/subscriptions', {
               trigger: true
             });
             mps.publish('Subscriptions/new', [this.subscription.toJSON()]);
+
+            this.subscription.clear({ silent: true })
+              .set(currentParams);
           }.bind(this))
 
           .fail(function(){
