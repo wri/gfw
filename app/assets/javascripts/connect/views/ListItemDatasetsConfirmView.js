@@ -3,8 +3,10 @@ define([
   'handlebars',
   'moment',
   'mps',
+  'helpers/datasetsHelper',
+  'map/services/CoverageService',
   'text!connect/templates/listItemDatasetsConfirm.handlebars'
-], function(Backbone, Handlebars, moment, mps, tpl) {
+], function(Backbone, Handlebars, moment, mps, datasetsHelper, CoverageService, tpl) {
 
   'use strict';
 
@@ -25,26 +27,43 @@ define([
       this.model = options.model;
     },
 
-    cache: function() {
-      this.$datasetCheckboxs = this.$el.find('.dataset-checkbox');
-    },
-
     render: function() {
-      this.$el.html(this.template({
-        model: this.model.toJSON()
-      }));
-      this.cache();
+      var params = this.model.attributes.params;
+      params = _.extend({}, params, params.iso);
+      var paramsValues = _.pick(params, 'use', 'useid', 'wdpaid',
+      'geostore', 'country', 'region');
 
-      this.selectDatasets();
+      var values = _.compact(_.values(paramsValues));
+
+      if (values.length) {
+        this.$el.html(this.template({
+          datasets: []
+        }));
+
+        CoverageService.get(params)
+          .then(function(layers) {
+            this.$el.html(this.template({
+              datasets: datasetsHelper.getFilteredList(layers, this.model.attributes.datasets)
+            }));
+          }.bind(this))
+
+          .error(function(error) {
+            console.log(error);
+          }.bind(this));
+      } else {
+        this.renderDatasetsList();
+      }
 
       return this;
     },
 
-    selectDatasets: function() {
-      _.each(this.$datasetCheckboxs, function(el){
-        var isChecked = _.indexOf(this.model.get('datasets'), $(el).attr('id')) != -1;
-        $(el).prop('checked', isChecked);
-      }.bind(this));
+    renderDatasetsList: function() {
+      var selected = this.model.attributes.datasets || [];
+      var datasetsList = datasetsHelper.getListSelected(selected);
+
+      this.$el.html(this.template({
+        datasets: datasetsList
+      }));
     },
 
     cancel: function(e) {
@@ -54,7 +73,7 @@ define([
 
     confirm: function(e) {
       e.preventDefault();
-      if (!!this.model.get('datasets').length) {      
+      if (!!this.model.get('datasets').length) {
         this.trigger('confirmed', this.model.get('datasets'));
         this.remove();
       } else {
@@ -64,7 +83,9 @@ define([
 
     onChangeDataset: function(e){
       e && e.preventDefault();
-      var datasets = _.compact(_.map(this.$datasetCheckboxs, function(el){
+      var $datasetCheckboxs = this.$el.find('.dataset-checkbox');
+
+      var datasets = _.compact(_.map($datasetCheckboxs, function(el) {
         var isChecked = $(el).is(':checked');
         return (isChecked) ? $(el).attr('id') : null;
       }.bind(this)));

@@ -61,7 +61,7 @@ define([
       'geostore', 'country', 'region');
 
       var values = _.compact(_.values(paramsValues));
-      this.params.datasets = params.datasets
+      this.params.datasets = params.datasets;
 
       if (values.length) {
         this.$el.html(this.templateDatasets({
