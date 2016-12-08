@@ -181,6 +181,10 @@ $height: auto;
 
       font-size: 15px;
       color: $dark;
+
+      &.-compact {
+        padding: 15px 6px 15px 6px;
+      }
     }
   }
 }

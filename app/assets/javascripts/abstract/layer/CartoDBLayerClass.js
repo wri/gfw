@@ -173,31 +173,25 @@ define([
       });
 
       $map.find('.cartodb-popup').on('click.infowindow', '.subscribe-shape', function (e) {
-        var isDisabled = $(e.currentTarget).hasClass('disabled');
+        $('#map').find('.cartodb-infowindow').hide(0);
 
-        if (!isDisabled) {
-          $('#map').find('.cartodb-infowindow').hide(0);
+        var shapeData = {
+          useid: $(this).data('useid'),
+          use: $(this).data('use'),
+          wdpaid: $(this).data('wdpaid')
+        };
 
-          var shapeData = {
-            useid: $(this).data('useid'),
-            use: $(this).data('use'),
-            wdpaid: $(this).data('wdpaid')
-          };
+        mps.publish('Subscribe/shape', [shapeData]);
 
-          mps.publish('Subscribe/shape', [shapeData]);
-
-          // Analytics events
-          if (self.clickTimer) {
-            clearTimeout(self.clickTimer);
-            self.clickTimer = null;
-          }
-          self.clickTimer = setTimeout(function() {
-            (shapeData.wdpaid) ? ga('send', 'event', 'Subscribe', 'Click infowindow to subscribe', 'Protected Area ' + shapeData.wdpaid) : null;
-            (shapeData.useid) ? ga('send', 'event', 'Subscribe', 'Click infowindow to subscribe', 'Use ' + shapeData.use.toUpperCase() + ' ' + shapeData.useid) : null;
-          }, 100);
-        } else {
-          mps.publish('Notification/open', ['notification-select-forest-change-layer-subscription']);
+        // Analytics events
+        if (self.clickTimer) {
+          clearTimeout(self.clickTimer);
+          self.clickTimer = null;
         }
+        self.clickTimer = setTimeout(function() {
+          (shapeData.wdpaid) ? ga('send', 'event', 'Subscribe', 'Click infowindow to subscribe', 'Protected Area ' + shapeData.wdpaid) : null;
+          (shapeData.useid) ? ga('send', 'event', 'Subscribe', 'Click infowindow to subscribe', 'Use ' + shapeData.use.toUpperCase() + ' ' + shapeData.useid) : null;
+        }, 100);
       });
     },
 
@@ -205,7 +199,6 @@ define([
       var model = this.infowindow.model;
 
       $('#map').find('.cartodb-popup .analyze-shape').toggleClass('disabled', !model.get('enabled'))
-      $('#map').find('.cartodb-popup .subscribe-shape').toggleClass('disabled', !model.get('enabledSubscription'))
 
       $('#map').find('.cartodb-infowindow').toggleClass('-hidden', !!model.get('hidden'));
       if (!!model.get('hidden')) {

@@ -6,8 +6,10 @@ define([
   'views/ModalView',
   'map/presenters/tabs/SubscribePresenter',
   'helpers/languagesHelper',
+  'text!map/templates/tabs/subscribeDatasets.handlebars',
   'text!map/templates/tabs/subscribe.handlebars'
-], function(Backbone, _, Handlebars, moment, ModalView, Presenter, languagesHelper, tpl) {
+], function(Backbone, _, Handlebars, moment, ModalView,
+  Presenter, languagesHelper, subscribeDatasetsTpl, tpl) {
 
   'use strict';
 
@@ -19,11 +21,15 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    templateDatasets: Handlebars.compile(subscribeDatasetsTpl),
+
     events: function(){
       return _.extend({},ModalView.prototype.events,{
         'click .subscription-sign-in': 'onClickTrackSignIn',
         'click #returnToMap': 'onClickClose',
         'click #showName': 'onClickCheckEmail',
+        'click #datasets': 'onClickCheckDatasets',
+        'change .dataset-checkbox' : 'onChangeDataset',
         'click #subscribe': 'onClickSubscribe',
       });
     },
@@ -41,12 +47,16 @@ define([
       this.$subscriptionName = this.$el.find('#subscriptionName');
       this.$subscriptionLanguage = this.$el.find('#subscriptionLanguage');
       this.$subscriptionEmail = this.$el.find('#subscriptionEmail');
+      this.$subscriptionDatasets = this.$el.find('#subscription-datasets');
       this.$steps = this.$el.find('.steps');
     },
 
     render: function(){
       var userLang = this.presenter.user.getLanguage();
       var languagesList = languagesHelper.getListSelected(userLang);
+      var dataset = this.presenter.subscription &&
+        this.presenter.subscription.formattedTopic() ?
+        this.presenter.subscription.formattedTopic().long_title : '';
 
       this.$el.html(this.template({
         apiHost: window.gfw.config.GFW_API_HOST_NEW_API,
@@ -54,13 +64,16 @@ define([
         email: this.presenter.user.get('email'),
         date: moment().format('MMM D, YYYY'),
         languages: languagesList,
-        dataset: this.presenter.subscription &&
-                 this.presenter.subscription.formattedTopic().long_title
+        dataset: dataset
       }));
 
       this.cache();
       this.renderChosen();
       return this;
+    },
+
+    renderDatasets: function(data) {
+      this.$subscriptionDatasets.html(this.templateDatasets(data));
     },
 
     renderChosen: function() {
@@ -93,6 +106,8 @@ define([
      * - onClickClose
      * - onClickTrackSignIn
      * - onClickCheckEmail
+     * - onClickCheckDatasets
+     * - onChangeDataset
      * - onClickSubscribe
      * @param  {[object]} e
      */
@@ -107,6 +122,22 @@ define([
 
     onClickCheckEmail: function(e) {
       this.presenter.checkEmail(this.$subscriptionEmail.val());
+    },
+
+    onClickCheckDatasets: function(e) {
+      this.presenter.checkDatasets();
+    },
+
+    onChangeDataset: function(e) {
+      e && e.preventDefault();
+      var $datasetCheckboxs = this.$el.find('.dataset-checkbox');
+
+      var datasets = _.compact(_.map($datasetCheckboxs, function(el) {
+        var isChecked = $(el).is(':checked');
+        return (isChecked) ? $(el).attr('id') : null;
+      }.bind(this)));
+
+      this.presenter.updateDatasets(_.clone(datasets));
     },
 
     onClickSubscribe: function(e) {
