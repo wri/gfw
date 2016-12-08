@@ -6,7 +6,7 @@
     <svg><use xlink:href="#shape-close"></use></svg>
   </a>
   <div class="modal-wrapper scroll-dark -no-scroll">
-    <div class="modal-content">
+    <div class="modal-content -compact">
       <div id="modal-loader-subcribe" class="m-spinner">
         <div class="spinner-box">
           <div class="icon"></div>
@@ -69,52 +69,63 @@
           </div>
         {{/if}}
 
-          <div class="steps">
-            <header>
-              <h2>Name your subscription</h2>
-            </header>
+        <div class="steps">
+          <header>
+            <h2>Forest change alerts</h2>
+          </header>
 
-            <div class="field -default -medium">
-              <label for="name">Name *</label>
-              <input type="text" id="subscriptionName" placeholder="Area name">
-            </div>
+          <p>Select the forest change alerts you would like to receive</p>
 
-            <div class="field -default -little">
-              <label for="subscriptionLanguage">Receive alert emails in...</label>
-              <div class="m-select">
-                <select data-placeholder="Select language" class="chosen-select default notranslate" id="subscriptionLanguage">
-                  {{#each languages}}
-                    <option value="{{key}}" {{selected}}>{{name}}</option>
-                  {{/each}}
-                </select>
-              </div>
-            </div>
+          <div id="subscription-datasets"></div>
 
-            <div class="m-btncontainer is-center">
-              <button class="btn medium green uppercase" id="subscribe">Save</button>
+        </div>
+
+        <div class="steps">
+          <header>
+            <h2>Name your subscription</h2>
+          </header>
+
+          <div class="field -default -medium">
+            <label for="name">Name *</label>
+            <input type="text" id="subscriptionName" placeholder="Area name">
+          </div>
+
+          <div class="field -default -little">
+            <label for="subscriptionLanguage">Receive alert emails in...</label>
+            <div class="m-select">
+              <select data-placeholder="Select language" class="chosen-select default notranslate" id="subscriptionLanguage">
+                {{#each languages}}
+                  <option value="{{key}}" {{selected}}>{{name}}</option>
+                {{/each}}
+              </select>
             </div>
           </div>
 
-          <div class="steps">
-            <header>
-              <h2>Subscription saved</h2>
-            </header>
-
-            <div class="subscription-successful"></div>
-
-            <p>
-              This subscription has been added to your profile. <strong>Please
-              check your email and click on the link to confirm your
-              subscription.</strong> Visit your
-              <a href="/my_gfw/subscriptions">saved subscriptions<a/> to manage
-              them.
-            </p>
-            <div class="m-btncontainer is-center">
-              <a href="/contribute-data" target="_blank" class="btn medium gray uppercase">Add this data to the map</a>
-              <button class="btn medium green uppercase" id="returnToMap">Return to map</button>
-            </div>
+          <div class="m-btncontainer is-center">
+            <button class="btn medium green uppercase" id="subscribe">Save</button>
           </div>
         </div>
+
+        <div class="steps">
+          <header>
+            <h2>Subscription saved</h2>
+          </header>
+
+          <div class="subscription-successful"></div>
+
+          <p>
+            This subscription has been added to your profile. <strong>Please
+            check your email and click on the link to confirm your
+            subscription.</strong> Visit your
+            <a href="/my_gfw/subscriptions">saved subscriptions<a/> to manage
+            them.
+          </p>
+          <div class="m-btncontainer is-center">
+            <a href="/contribute-data" target="_blank" class="btn medium gray uppercase">Add this data to the map</a>
+            <button class="btn medium green uppercase" id="returnToMap">Return to map</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
