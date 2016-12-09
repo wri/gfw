@@ -7,6 +7,7 @@ define([
   'underscore',
   'handlebars',
   'map/presenters/LegendPresenter',
+  'helpers/datasetsHelper',
   'text!map/templates/legend/legend.handlebars',
   'text!map/templates/legend/legendMore.handlebars',
   'text!map/templates/legend/loss.handlebars',
@@ -58,9 +59,8 @@ define([
   'text!map/templates/legend/mex_land_cover.handlebars',
   'text!map/templates/legend/mex_forest_conserv.handlebars',
   'text!map/templates/legend/mex_forest_prod.handlebars',
-  'text!map/templates/legend/mex_forest_rest.handlebars',
-
-], function(_, Handlebars, Presenter, tpl, tplMore, lossTpl, imazonTpl, firesTpl,
+  'text!map/templates/legend/mex_forest_rest.handlebars'
+], function(_, Handlebars, Presenter, datasetsHelper, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
     global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
@@ -156,7 +156,6 @@ define([
       mexican_pa:Handlebars.compile(mexPATpl),
       per_protected_areas:Handlebars.compile(perPATpl),
       mex_land_cover:Handlebars.compile(mex_land_coverTpl)
-
     },
 
     events: {
@@ -251,6 +250,8 @@ define([
       categoriesGlobal = this.statusCategories(this.getLayersByCategory(layersGlobal));
       categoriesIso = this.statusCategories(this.getLayersByCategory(layersIso));
 
+      console.log(categoriesGlobal, categoriesIso);
+
       // Render
       this.render(this.template({
         categories: (_.isEmpty(categoriesGlobal)) ? false : categoriesGlobal,
@@ -263,8 +264,11 @@ define([
       this.presenter.toggleLayerOptions();
     },
 
-    getLayersByCategory: function(layers){
-      return _.groupBy(layers, function(layer){
+    getLayersByCategory: function(layers) {
+      var subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
+      return _.groupBy(layers, function(layer) {
+        layer.allowSubscription = layer && subscriptionsAllowed.indexOf(layer.slug) > -1;
+
         // Hack to keep the forest_clearing slug in layers which have to be analyzed but not grouped by the said slug in the legend
         if (layer.category_slug === 'forest_clearing' && !layer.is_forest_clearing) return 'forest_clearing_2';
         return layer.category_slug;

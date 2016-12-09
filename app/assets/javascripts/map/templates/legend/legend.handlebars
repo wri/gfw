@@ -34,7 +34,7 @@
           <ul class="layers {{#if this.closed}}closed{{/if}}">
             {{#each this}}
               <li class="layer">
-                <span class="layer-name">
+                <span class="layer-name {{#if this.allowSubscription}}-alerts{{/if}}">
                   <i class="circle" style="background:{{this.title_color}};"></i>
                   {{this.title}}
                   {{#if this.subtitle}}<span class="subtitle">{{this.subtitle}}</span>{{/if}}
@@ -45,6 +45,9 @@
                     {{#if this.source}}
                       <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
                     {{/if}}
+                  {{/if}}
+                  {{#if this.allowSubscription}}
+                    <a href="/my_gfw/subscriptions/new?aoi=data&datasets={{this.slug}}" class="alerts" title="Receive forest loss alerts"><svg><use xlink:href="#shape-alerts-subscriptions"></use></svg></a>
                   {{/if}}
                 </span>
                 {{#if this.detailsTpl}}
@@ -83,7 +86,7 @@
       <ul class="layers {{#if this.closed}}closed{{/if}}">
         {{#each this}}
           <li class="layer">
-            <span class="layer-name {{#if this.is_forest_clearing}}-alerts{{/if}}">
+            <span class="layer-name {{#if this.allowSubscription}}-alerts{{/if}}">
               <i class="circle" style="background:{{this.title_color}};"></i>
                 {{this.title}}
                 {{#if this.subtitle}}<span class="subtitle">{{this.subtitle}}</span>{{/if}}
@@ -95,7 +98,7 @@
                   <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
                 {{/if}}
               {{/if}}
-              {{#if this.is_forest_clearing}}
+              {{#if this.allowSubscription}}
                 <a href="/my_gfw/subscriptions/new?aoi=data&datasets={{this.slug}}" class="alerts" title="Receive forest loss alerts"><svg><use xlink:href="#shape-alerts-subscriptions"></use></svg></a>
               {{/if}}
             </span>
