@@ -5,7 +5,7 @@ define([
 ) {
 
   /**
-  * List of the key languages of the platform
+  * List of the datasets of the platform
   */
 
   var datasetList = {
@@ -74,6 +74,23 @@ define([
     }
   };
 
+  /**
+  * List of the datasets that allows subscriptions
+  */
+
+  var subscriptionsAllowed = [
+    'loss',
+    'imazon',
+    'terrailoss',
+    'prodes',
+    'guyra',
+    'umd_as_it_happens',
+    'umd_as_it_happens_per',
+    'umd_as_it_happens_cog',
+    'umd_as_it_happens_idn',
+    'viirs_fires_alerts'
+  ];
+
   var datasetHelper = {
 
     /**
@@ -139,6 +156,15 @@ define([
         }
       }
       return selectedList;
+    },
+
+    /**
+     * Returns a list of the datasets
+     * that allow subscriptions
+     * @returns {Array} list of the datasets
+     */
+    getListSubscriptionsAllowed: function() {
+      return subscriptionsAllowed;
     }
 
   }

@@ -10,23 +10,13 @@ define([
   'map/helpers/FiresDatesHelper',
   'map/services/CountryService',
   'map/services/RegionService',
-  'map/services/GeostoreService'
-], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment, geojsonUtilsHelper, FiresDatesHelper, countryService, regionService, GeostoreService) {
+  'map/services/GeostoreService',
+  'helpers/datasetsHelper'
+], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment,
+  geojsonUtilsHelper, FiresDatesHelper, countryService, regionService,
+  GeostoreService, datasetsHelper) {
 
   'use strict';
-
-  var SUBSCRIPTION_ALLOWED = [
-    'loss',
-    'imazon',
-    'terrailoss',
-    'prodes',
-    'guyra',
-    'umd_as_it_happens',
-    'umd_as_it_happens_per',
-    'umd_as_it_happens_cog',
-    'umd_as_it_happens_idn',
-    'viirs_fires_alerts'
-  ];
 
   var StatusModel = Backbone.Model.extend({
     defaults: {
@@ -260,7 +250,8 @@ define([
     }, {
       'Infowindow/toggleSubscribeButton': function() {
         var baselayer = this.status.get('baselayer');
-        if (baselayer && SUBSCRIPTION_ALLOWED.indexOf(baselayer.slug) > -1) {
+        var subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
+        if (baselayer && subscriptionsAllowed.indexOf(baselayer.slug) > -1) {
           $('#subscriptionBtn').removeClass('disabled');
         } else {
           $('#subscriptionBtn').addClass('disabled');
@@ -907,8 +898,9 @@ define([
 
     layerAvailableForSubscription: function() {
       var baselayer = this.status.get('baselayer');
-      mps.publish('Subscribe/enabled', [(baselayer && SUBSCRIPTION_ALLOWED.indexOf(baselayer.slug) > -1)]);
-      return (baselayer && SUBSCRIPTION_ALLOWED.indexOf(baselayer.slug) > -1);
+      var subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
+      mps.publish('Subscribe/enabled', [(baselayer && subscriptionsAllowed.indexOf(baselayer.slug) > -1)]);
+      return (baselayer && subscriptionsAllowed.indexOf(baselayer.slug) > -1);
     }
 
   });
