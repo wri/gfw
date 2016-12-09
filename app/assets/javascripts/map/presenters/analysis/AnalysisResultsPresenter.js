@@ -9,8 +9,10 @@ define([
   'backbone',
   'moment',
   'mps',
+  'helpers/datasetsHelper',
   'helpers/geojsonUtilsHelper'
-], function(PresenterClass, _, Backbone, moment, mps, geojsonUtilsHelper) {
+], function(PresenterClass, _, Backbone, moment, mps,
+  datasetsHelper, geojsonUtilsHelper) {
 
   'use strict';
 
@@ -23,19 +25,6 @@ define([
       resource: null // analysis resource
     }
   });
-
-  var SUBSCRIPTION_ALLOWED = [
-    'loss',
-    'imazon',
-    'terrailoss',
-    'prodes',
-    'guyra',
-    'umd_as_it_happens',
-    'umd_as_it_happens_per',
-    'umd_as_it_happens_cog',
-    'umd_as_it_happens_idn',
-    'viirs_fires_alerts'
-  ];
 
   var AnalysisResultsPresenter = PresenterClass.extend({
 
@@ -368,8 +357,9 @@ define([
     },
 
     toggleSubscribeButton: function() {
+      var subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
       var baselayer = this.status.get('baselayer').slug;
-      if (SUBSCRIPTION_ALLOWED.indexOf(baselayer) === -1) {
+      if (subscriptionsAllowed.indexOf(baselayer) === -1) {
         this.view.$('#analysis-subscribe').addClass('disabled');
       } else {
         this.view.$('#analysis-subscribe').removeClass('disabled');
