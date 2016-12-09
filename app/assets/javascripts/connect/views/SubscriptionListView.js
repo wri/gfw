@@ -103,7 +103,7 @@ define([
         mps.publish('Notification/open', ['notification-my-gfw-subscription-confirmation-sent']);
       }
 
-      if (urlParams.unsubscribed === 'true') {
+      if (urlParams.unsubscribed === 'true' || urlParams.unsubscription_confirmed === 'true') {
         mps.publish('Notification/open', ['notification-my-gfw-subscription-deleted']);
       }
 
