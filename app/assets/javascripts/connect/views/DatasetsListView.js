@@ -41,6 +41,7 @@ define([
       // MPS
       {
         'Datasets/change': function(params) {
+          this.renderLoading();
           this.changeDatasets(params);
         }
       },
@@ -57,6 +58,7 @@ define([
      * CHANGE EVENTS
     */
     changeDatasets: function(params) {
+      params = _.extend({}, params, params.iso);
       var paramsValues = _.pick(params, 'use', 'useid', 'wdpaid',
       'geostore', 'country', 'region');
 
@@ -64,9 +66,7 @@ define([
       this.params.datasets = params.datasets;
 
       if (values.length) {
-        this.$el.html(this.templateDatasets({
-          datasets: []
-        }));
+        this.renderLoading();
 
         CoverageService.get(params)
           .then(function(layers) {
@@ -98,6 +98,12 @@ define([
 
       this.$el.html(this.templateDatasets({
         datasets: datasetsList
+      }));
+    },
+
+    renderLoading: function() {
+      this.$el.html(this.templateDatasets({
+        datasets: []
       }));
     },
 
