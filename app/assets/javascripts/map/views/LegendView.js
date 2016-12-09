@@ -1,4 +1,4 @@
-/** 
+/**
  * Legend module.
  *
  * @return singleton instance of the legend class (extends Widget).
@@ -7,6 +7,7 @@ define([
   'underscore',
   'handlebars',
   'map/presenters/LegendPresenter',
+  'helpers/datasetsHelper',
   'text!map/templates/legend/legend.handlebars',
   'text!map/templates/legend/loss.handlebars',
   'text!map/templates/legend/imazon.handlebars',
@@ -63,7 +64,7 @@ define([
   'text!map/templates/legend/lbr_forest.handlebars',
   'text!map/templates/legend/lbr_community.handlebars',
 
-], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
+], function(_, Handlebars, Presenter, datasetsHelper, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
     global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
@@ -164,7 +165,7 @@ define([
       lbr_logging:Handlebars.compile(lbr_forestTpl),
       lbr_mineral_exploration_license:Handlebars.compile(lbr_miningTPL),
       lbr_resource_rights:Handlebars.compile(lbr_communityTpl),
-      
+
 
     },
 
@@ -272,8 +273,11 @@ define([
       this.presenter.toggleLayerOptions();
     },
 
-    getLayersByCategory: function(layers){
-      return _.groupBy(layers, function(layer){
+    getLayersByCategory: function(layers) {
+      var subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
+      return _.groupBy(layers, function(layer) {
+        layer.allowSubscription = layer && subscriptionsAllowed.indexOf(layer.slug) > -1;
+
         // Hack to keep the forest_clearing slug in layers which have to be analyzed but not grouped by the said slug in the legend
         if (layer.category_slug === 'forest_clearing' && !layer.is_forest_clearing) return 'forest_clearing_2';
         return layer.category_slug;
