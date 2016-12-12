@@ -9,8 +9,11 @@ define([
   'map/presenters/PresenterClass',
   'helpers/gaEventsHelper',
   'models/UserModel',
+  'helpers/datasetsHelper',
+  'map/services/CoverageService',
   'connect/models/Subscription',
-], function(_, mps, PresenterClass, GaEventsHelper, User, Subscription) {
+], function(_, mps, PresenterClass, GaEventsHelper,
+  User, datasetsHelper, CoverageService, Subscription) {
 
   'use strict';
 
@@ -99,9 +102,54 @@ define([
       });
 
       if (this.subscription.hasValidEmail()) {
+        this.getDatasets();
         this.nextStep();
       } else {
         this.publishNotification('notification-email-incorrect');
+      }
+    },
+
+    getDatasets: function() {
+      var params = this.subscription.attributes.params;
+      params = _.extend({}, params, params.iso);
+      var paramsValues = _.pick(params, 'use', 'useid', 'wdpaid',
+      'geostore', 'country', 'region');
+
+      var values = _.compact(_.values(paramsValues));
+
+      if (values.length) {
+        this.view.renderDatasets({
+          datasets: []
+        });
+
+        CoverageService.get(params)
+          .then(function(layers) {
+            this.view.renderDatasets({
+              datasets: datasetsHelper.getFilteredList(layers, this.subscription.attributes.datasets)
+            });
+          }.bind(this))
+
+          .error(function(error) {
+            console.log(error);
+          }.bind(this));
+      } else {
+        this.view.renderDatasets({
+          datasets: datasetsHelper.getListSelected(this.subscription.attributes.datasets)
+        });
+      }
+    },
+
+    updateDatasets: function(datasets) {
+      this.subscription.set({
+        datasets: datasets
+      }, { silent: true });
+    },
+
+    checkDatasets: function() {
+      if (this.subscription.attributes.datasets.length) {
+        this.nextStep();
+      } else {
+        this.publishNotification('notification-my-gfw-subscription-dataset-required');
       }
     },
 

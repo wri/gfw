@@ -162,12 +162,15 @@ define([
               })
             }, { silent: true }
           );
+
+          this.changeDatasets();
           mps.publish('Router/change', [this.subscription.toJSON()]);
         }
       },
 
       {
         'Shape/update': function(data) {
+          var currentParams = this.subscription.attributes.params;
           var defaults = this.subscription.get('defaults').params;
 
           if (!!data.use && this.usenames.indexOf(data.use) === -1) {
@@ -179,8 +182,15 @@ define([
             };
 
             GeostoreService.use(provider).then(function(useGeostoreId) {
+              this.subscription.set({
+                metadata: JSON.stringify(data)
+              }, { silent: true });
               this.subscription.set('params', _.extend({}, defaults, {
-                geostore: useGeostoreId
+                geostore: useGeostoreId,
+                iso: {
+                  country: currentParams.iso.country,
+                  region: currentParams.iso.region
+                }
               }));
               mps.publish('Router/change', [this.subscription.toJSON()]);
             }.bind(this));
@@ -192,7 +202,11 @@ define([
             this.subscription.set('params', _.extend({}, defaults, {
               use: data.use,
               useid: data.useid,
-              wdpaid: data.wdpaid
+              wdpaid: data.wdpaid,
+              iso: {
+                country: currentParams.iso.country,
+                region: currentParams.iso.region
+              }
             }));
             mps.publish('Router/change', [this.subscription.toJSON()]);
           }
@@ -239,12 +253,12 @@ define([
 
       {
         'Selected/reset': function() {
-          var defaults = _.extend({}, this.subscription.get('defaults').params, {
+          var defaults = _.extend({}, this.subscription.attributes.params, {
             geostore: null,
             useId: null
           });
 
-          this.subscription.set('params', defaults);
+          this.subscription.set('params', defaults, { silent: true });
           this.subscription.unset('geostore', { silent: true });
           this.subscription.unset('metadata', { silent: true });
 
@@ -450,14 +464,14 @@ define([
       if (this.validate(attributesFromForm) && this.router.alreadyLoggedIn) {
         this.subscription.set(attributesFromForm, { silent: true }).save()
           .then(function() {
-            this.subscription.clear({ silent: true })
-              .set(currentParams);
-
             // Scroll to top
             this.router.navigateTo('my_gfw/subscriptions', {
               trigger: true
             });
             mps.publish('Subscriptions/new', [this.subscription.toJSON()]);
+
+            this.subscription.clear({ silent: true })
+              .set(currentParams);
           }.bind(this))
 
           .fail(function(){

@@ -292,6 +292,11 @@
     text-align: center;
     padding: 30px 50px;
     line-height: 2em;
+
+    .m-spinner {
+      display: inline-block;
+      margin: 20px 0 50px 0;
+    }
   }
 
   h3 {
