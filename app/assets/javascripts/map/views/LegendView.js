@@ -74,7 +74,6 @@ define([
     el: '#module-legend',
 
     template: Handlebars.compile(tpl),
-    templateMore: Handlebars.compile(tplMore),
 
     model: new (Backbone.Model.extend({
       defaults:{
