@@ -49,7 +49,8 @@ define([
       mapTypeControl: false,
       scaleControl: true,
       streetViewControl: false,
-      overviewMapControl: false
+      overviewMapControl: false,
+      editable: false
     },
 
     /**
@@ -139,7 +140,10 @@ define([
       // DRAWING
       {
         'Drawing/toggle': function(toggle){
-          this.status.set('is_drawing', toggle);
+          this.status.set({
+            'is_drawing': toggle,
+            'editable': true
+          });
         }
       },
 
@@ -177,6 +181,7 @@ define([
           GeostoreService.get(geostoreId).then(function(response) {
             var geometry = response.data.attributes.geojson.features[0].geometry;
 
+            this.deleteGeojson();
             this.status.set({
               'fit_to_geom': true,
               'geojson': geometry
@@ -476,8 +481,7 @@ define([
       var paths = geojsonUtilsHelper.geojsonToPath(geojson);
       var overlay = new google.maps.Polygon({
         paths: paths,
-        // TODO: Editable if it's a drawn Polygon
-        editable: false,
+        editable: this.status.get('editable'),
         strokeWeight: this.status.get('overlay_stroke_weight'),
         fillOpacity: 0,
         fillColor: '#FFF',
