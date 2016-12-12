@@ -60,7 +60,7 @@ define([
   'text!map/templates/legend/mex_forest_conserv.handlebars',
   'text!map/templates/legend/mex_forest_prod.handlebars',
   'text!map/templates/legend/mex_forest_rest.handlebars'
-], function(_, Handlebars, Presenter, datasetsHelper, tpl, lossTpl, imazonTpl, firesTpl,
+], function(_, Handlebars, Presenter, datasetsHelper, tpl, tplMore, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
     global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
@@ -74,6 +74,7 @@ define([
     el: '#module-legend',
 
     template: Handlebars.compile(tpl),
+    templateMore: Handlebars.compile(tplMore),
 
     model: new (Backbone.Model.extend({
       defaults:{
