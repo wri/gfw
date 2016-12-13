@@ -164,9 +164,7 @@ define([
       bra_land_cover:Handlebars.compile(bra_landcoverTPL),
       lbr_logging:Handlebars.compile(lbr_forestTpl),
       lbr_mineral_exploration_license:Handlebars.compile(lbr_miningTPL),
-      lbr_resource_rights:Handlebars.compile(lbr_communityTpl),
-
-
+      lbr_resource_rights:Handlebars.compile(lbr_communityTpl)
     },
 
     events: {
@@ -257,6 +255,7 @@ define([
         layer.geographic = geographic ? 'checked' : '';
 
       }, this);
+
 
       categoriesGlobal = this.statusCategories(this.getLayersByCategory(layersGlobal));
       categoriesIso = this.statusCategories(this.getLayersByCategory(layersIso));

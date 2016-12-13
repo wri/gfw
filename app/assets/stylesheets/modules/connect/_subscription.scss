@@ -10,4 +10,36 @@
       }
     }
   }
+
+  .m-map {
+    .map {
+      height: 400px;
+    }
+
+    .map-controls-box {
+      &.-zoom {
+        top: 40px;
+      }
+    }
+
+    .module-legend {
+      width: 240px;
+      min-height: 100px;
+      max-height: 340px;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+
+      &.hide {
+        min-height: 0;
+      }
+
+      &.-compact {
+        .button-box-embed-legend,
+        .layer-close {
+          display: none;
+        }
+      }
+    }
+  }
 }
