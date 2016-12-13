@@ -247,6 +247,7 @@ define([
 
       }, this);
 
+
       categoriesGlobal = this.statusCategories(this.getLayersByCategory(layersGlobal));
       categoriesIso = this.statusCategories(this.getLayersByCategory(layersIso));
 
