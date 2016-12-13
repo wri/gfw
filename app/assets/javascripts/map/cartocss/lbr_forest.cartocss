@@ -5,9 +5,9 @@
    line-opacity: 1;
 }
 
-#layer [contractst="Active"] {
+#layer [status="Active"] {
    polygon-fill: #fed98e;
 }
-#layer [contractst="Pending"] {
+#layer [status="Proposed"] {
    polygon-fill: #d95f0e;
 }
