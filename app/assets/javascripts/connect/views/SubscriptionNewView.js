@@ -124,7 +124,6 @@ define([
 
           this.subscription.set({
             isUpload: false,
-            datasets: [],
             activeLayers: []
           }, { silent: true });
           this.subscription.set('params', defaults);
@@ -450,6 +449,7 @@ define([
 
       var currentParams = this.subscription.toJSON();
       currentParams.aoi = null;
+      currentParams.datasets = [];
 
       var attributesFromForm = _.extend({
         resource: {
@@ -477,7 +477,6 @@ define([
           .fail(function(){
             mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
           }.bind(this));
-
       } else {
         this.updateForm();
         mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
