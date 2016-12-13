@@ -73,6 +73,7 @@ define([
             this.$el.html(this.templateDatasets({
               datasets: datasetsHelper.getFilteredList(layers, this.params.datasets)
             }));
+            this.validateDatasets();
           }.bind(this))
 
           .error(function(error) {
@@ -107,13 +108,11 @@ define([
       }));
     },
 
+    validateDatasets: function() {
+      mps.publish('Datasets/update', [this.getSelectedDatasets()]);
+    },
 
-    /**
-     * UI EVENTS
-     * - onChangeDataset
-     */
-    onChangeDataset: function(e) {
-      e && e.preventDefault();
+    getSelectedDatasets: function() {
       var $datasetCheckboxs = this.$el.find('.dataset-checkbox');
 
       var datasets = _.compact(_.map($datasetCheckboxs, function(el) {
@@ -121,7 +120,18 @@ define([
         return (isChecked) ? $(el).attr('id') : null;
       }.bind(this)));
 
-      mps.publish('Datasets/update', [_.clone(datasets)]);
+      return _.clone(datasets);
+    },
+
+
+    /**
+     * UI EVENTS
+     * - onChangeDataset
+     */
+    onChangeDataset: function(e) {
+      e && e.preventDefault();
+
+      mps.publish('Datasets/update', [this.getSelectedDatasets()]);
     }
   });
 
