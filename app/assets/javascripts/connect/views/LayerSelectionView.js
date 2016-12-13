@@ -174,8 +174,9 @@ define([
             placeholder: 'Select a country...',
             countries: this._getParsedCountries(isos)
           }));
-          this.renderChosen();
-
+          this.renderChosen(this.$countryField.find('#select-country'), {
+            search: true
+          });
         }.bind(this),
 
         // Error
@@ -193,7 +194,7 @@ define([
         layers: this._getParsedLayers(),
         hint: ''
       }));
-      this.renderChosen();
+      this.renderChosen(this.$layersField.find('#select-layers'));
     },
 
     renderCountryLayers: function() {
@@ -204,22 +205,23 @@ define([
         layers: (!_.isEmpty(this.countryLayers)) ? this._getParsedCountryLayers() : null,
         hint: ''
       }));
-      this.renderChosen();
+      this.renderChosen(this.$layersCountryField.find('#select-country-layers'));
     },
 
-    renderChosen: function() {
-      _.each(this.$el.find('select'), function(select){
-        var $select = $(select);
-        if (! !!$select.data('chosen')) {
-          $select.chosen({
-            width: '100%',
-            disable_search: true,
-            allow_single_deselect: true,
-            inherit_select_classes: true,
-            no_results_text: "Oops, nothing found!"
-          });
-        }
-      });
+    renderChosen: function(el, searchOption) {
+      var opts = {
+        width: '100%',
+        disable_search: true,
+        allow_single_deselect: true,
+        inherit_select_classes: true
+      };
+
+      if (searchOption && searchOption.search) {
+        opts.disable_search = false;
+        opts.no_results_text = 'Oops, nothing found!';
+      }
+
+      el.chosen(opts);
     },
 
     resetLayers: function() {
