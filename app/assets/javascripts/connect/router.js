@@ -147,8 +147,14 @@ define([
       var uri = new URI();
 
       if (params.params) {
-        var mainParams = _.omit(params, 'params');
-        var extraParams = {};
+        var currentParams = _.omit(params, 'params');
+        var mainParams = {};
+
+        _.each(currentParams, function(value, key) {
+          if (value) {
+            mainParams[key] = value;
+          }
+        });
 
         _.each(params.params, function(value, key) {
           if (!_.isObject(value) && value) {
