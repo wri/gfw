@@ -190,7 +190,7 @@ define([
     },
 
     listeners: function() {
-      this.model.on('change:hidden', this.toogleModule, this);
+      this.listenTo(this.model, 'change:hidden', this.toogleModule, this);
     },
 
     render: function(html) {
