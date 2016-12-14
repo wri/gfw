@@ -13,6 +13,7 @@ define([
   'connect/views/MapMiniDrawingView',
   'connect/views/MapMiniUploadView',
   'connect/views/MapMiniSelectedView',
+  'map/views/LegendView',
   'connect/views/CountrySelectionView',
   'connect/views/LayerSelectionView',
   'connect/views/DatasetsListView',
@@ -36,6 +37,7 @@ define([
   MapMiniDrawingView,
   MapMiniUploadView,
   MapMiniSelectedView,
+  LegendView,
   CountrySelectionView,
   LayerSelectionView,
   DatasetsListView,
@@ -343,6 +345,7 @@ define([
         params: params
       });
 
+
       this.subViews = {
         datasetsListView: datasetsList,
         mapView: mapView,
@@ -350,6 +353,7 @@ define([
         mapDrawingView: new MapMiniDrawingView(mapView.map),
         mapUploadView: new MapMiniUploadView(mapView.map),
         mapSelectedView: new MapMiniSelectedView(mapView.map, params),
+        mapLegend: new LegendView(mapView.map, []),
         countrySelectionView: new CountrySelectionView(mapView.map, params),
         layerSelectionView: new LayerSelectionView(mapView.map, params)
       };
