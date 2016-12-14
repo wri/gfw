@@ -138,7 +138,6 @@ define([
 
       {
         'LayerNav/change': function(layerSpec) {
-          console.log('layer nav change');
           var layers = null;
           var defaults = $.extend({}, this.subscription.attributes.params);
 

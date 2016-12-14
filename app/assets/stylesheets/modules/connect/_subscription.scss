@@ -32,10 +32,13 @@
 
       &.hide {
         min-height: 0;
+        max-height: 0;
       }
 
       &.-compact {
         .button-box-embed-legend,
+        .-country h2,
+        .legend-link,
         .layer-close {
           display: none;
         }

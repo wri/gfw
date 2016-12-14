@@ -123,15 +123,19 @@ define([
      */
     updateLegend: function() {
       this.getCountryMore().then(function() {
-        var categories = this.status.get('layerSpec').getLayersByCategory(),
-            options = {
-              threshold: this.status.get('threshold'),
-              hresolution: this.getHresolutionParams()
-            },
-            iso = this.status.get('iso'),
-            geographic = !! this.status.get('layerSpec').attributes.geographic_coverage,
-            more = this.status.get('more');
+        var categories = [],
+          options = {
+            threshold: this.status.get('threshold'),
+            hresolution: this.getHresolutionParams()
+          },
+          geographic = null,
+          iso = this.status.get('iso'),
+          more = this.status.get('more');
 
+        if (this.status.get('layerSpec')) {
+          categories = this.status.get('layerSpec').getLayersByCategory();
+          geographic = !! this.status.get('layerSpec').attributes.geographic_coverage;
+        }
         this.view.update(categories, options, geographic, iso, more);
       }.bind(this));
     },
