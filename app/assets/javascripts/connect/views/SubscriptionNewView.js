@@ -361,7 +361,11 @@ define([
 
     removeSubViews: function() {
       _.each(this.subViews, function(view){
-        view._remove();
+        if (view._remove) {
+          view._remove();
+        } else {
+          view.remove();
+        }
       })
     },
 
