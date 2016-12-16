@@ -65,7 +65,7 @@ define([
 
     events: {
       'click .js-btn-submit': 'actionSubmit',
-      'click .js-nesletter-sign-up': 'onNewsletterSignup',
+      'click .js-newsletter-sign-up': 'onNewsletterSignup',
       'change input, textarea, select': 'changeInput',
       'change #contact-topic': 'changeTopic'
     },
