@@ -77,6 +77,22 @@ define([
         this.toggleSelected();
       }
     }, {
+      'LayerOptions/update': function(options) {
+        this.status.set({
+          layerOptions: options
+        });
+        this.toggleLayerOptions();
+      }
+    }, {
+      'LayerOptions/delete': function() {
+        this.status.set({
+          layerOptions: []
+        });
+        this.toggleLayerOptions({
+          reset: true
+        });
+      }
+    }, {
       'AnalysisTool/stop-drawing': function() {
         this.view.model.set({ hidden: false });
       }
@@ -146,10 +162,12 @@ define([
       mps.publish('Place/update', [{go: false}]);
     },
 
-    toggleLayerOptions: function() {
-      mps.publish('LayerNav/changeLayerOptions',
-        [this.status.get('layerOptions')]);
-      this.view.toggleLayerOptions(this.status.get('layerOptions') || []);
+    toggleLayerOptions: function(opts) {
+      if (this.status.get('layerOptions') || (opts && opts.reset)) {
+        mps.publish('LayerNav/changeLayerOptions',
+          [this.status.get('layerOptions')]);
+        this.view.toggleLayerOptions(this.status.get('layerOptions') || []);
+      }
     },
 
     /**
