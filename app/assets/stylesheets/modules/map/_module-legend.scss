@@ -275,9 +275,19 @@
         position: relative;
         padding: 0 75px 0 13px;
         font-size: 13px;
+
+        &.-no-padding {
+          padding: 0 75px 0 4px;
+        }
+
         @media (min-width: $br-mobileMap){
           padding: 0 48px 0 13px;
+
+          &.-no-padding {
+            padding: 0 48px 0 4px;
+          }
         }
+
         .circle{
           position: absolute;
           top: 2px;
