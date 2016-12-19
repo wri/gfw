@@ -352,9 +352,10 @@ define([
         var $div = $(div);
         var $toggle = $div.find('.onoffswitch');
         var optionSelected = layerOptions.indexOf($div.data('option')) > -1;
+        var color = $toggle.data('color') || '#F69';
 
         if (optionSelected) {
-          $toggle.addClass('checked').css('background', '#F69');
+          $toggle.addClass('checked').css('background', color);
         } else {
           $toggle.removeClass('checked').css('background', '');
         }
