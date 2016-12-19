@@ -96,6 +96,7 @@ define([
       var xhr = new XMLHttpRequest();
 
       xhr.open('POST', window.gfw.config.GFW_API_HOST_NEW_API + '/form/contact-us');
+      xhr.withCredentials = true;
       xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
       xhr.onload = function() {
