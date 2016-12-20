@@ -15,15 +15,22 @@ define([
       media: new MediaCollection()
     },
 
+    initialize: function(params) {
+      this.edit = params && params.edit || null;
+    },
+
     parse: function(response) {
       var attributes;
       if (response.data) {
         attributes = response.data.attributes;
+        attributes.id = response.data.id;
       } else {
         attributes = response.attributes;
       }
 
-      attributes.id = response.id;
+      if (this.edit && attributes.media) {
+        attributes.media = new MediaCollection(attributes.media);
+      }
 
       return attributes;
     },
@@ -67,7 +74,7 @@ define([
 
       return Backbone.sync.call(this, method, model, options);
     }
-    
+
   });
 
   return Story;

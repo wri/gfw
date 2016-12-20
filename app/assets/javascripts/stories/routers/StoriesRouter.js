@@ -28,6 +28,7 @@ define([
       'stories': 'index',
       'stories/crowdsourcedstories': 'listStories',
       'stories/new': 'newStory',
+      'stories/edit/:id': 'editStory',
       'stories/:id': 'showStory',
       '*path': 'show404'
     },
@@ -69,6 +70,12 @@ define([
     showStory: function(storyId) {
       var storyView = new StoriesShowView({
         el: '.layout-content',
+        id: storyId
+      });
+    },
+
+    editStory: function(storyId) {
+      var editStoryView = new StoriesNewView({
         id: storyId
       });
     },

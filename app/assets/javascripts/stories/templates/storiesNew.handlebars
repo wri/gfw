@@ -38,8 +38,6 @@
           <li><strong>Highlight your organization:</strong> Include the name of your organization on the story, as well as your website or contact information.
         </ul>
 
-        <h3>EDITING OR DELETING REPORTS</h3>
-        <p>Would you like to edit or delete a story you submitted?  No problem!  Just email us <a class="contact-link" href="mailto:gfw@wri.org">gfw@wri.org</a> explaining the change you would like to make or the story you would like to delete.</p>
       </aside>
 
       <div class="m-form">
@@ -130,7 +128,7 @@
           <div class="field">
             <div class="checkbox-box">
               <div class="custom-checkbox">
-                <input type="checkbox" name="hideUser" id="hideUser">
+                <input type="checkbox" name="hideUser" id="hideUser" {{#if hideUser}}checked{{/if}}>
                 <label for="hideUser" class="-uppercase"><span></span> Check this box to publish your name with your story.</label>
               </div>
             </div>
@@ -142,7 +140,7 @@
             </p>
           </div>
 
-          <div id="field-personal-info" class="field -hidden -no-padding">
+          <div id="field-personal-info" class="field {{#unless hideUser}}-hidden{{/unless}} -no-padding">
             <div class="field">
               <label for="name">Name</label>
               <input type="text" name="name" id="name" placeholder="" value="{{user.fullName}}">
@@ -155,7 +153,7 @@
           </div>
 
           <div class="field">
-            <input type="submit" id="submit" name="submit" value="Submit story" class="btn green medium">
+            <input type="submit" id="submit" name="submit" value="{{#if edition}}Edit story{{else}}Submit story{{/if}}" class="btn green medium">
             <p class="-terms">By uploading data you agree to the <a href="/terms">GFW Terms of Service</a></p>
           </div>
 
