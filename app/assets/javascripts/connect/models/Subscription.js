@@ -7,7 +7,7 @@ define([
 
   'use strict';
 
-  var MAP_URL = '/map/3/0/0/{iso}/grayscale/{baselayers}{?fit_to_geom,geostore,wdpaid,use,useid}';
+  var MAP_URL = '/map/3/0/0/{iso}/grayscale/{baselayers}/{layerId}{?fit_to_geom,geostore,wdpaid,use,useid}';
 
   var DATASETS = datasetsHelper.getList();;
 
@@ -38,13 +38,13 @@ define([
       return this.get('datasets').map(function(layerName) {
         var topic = DATASETS[layerName];
         if (!!topic) {
-          topic.viewOnMapUrl = this.getViewOnMapURL(topic.layerSlug);
+          topic.viewOnMapUrl = this.getViewOnMapURL(topic);
         }
         return topic;
       }.bind(this));
     },
 
-    getViewOnMapURL: function(baselayers) {
+    getViewOnMapURL: function(topic) {
       var subscription = this.toJSON();
       var iso = _.compact(_.values({
         country: subscription.params.iso.country,
@@ -53,8 +53,9 @@ define([
 
       var mapObject = {
         iso: iso,
-        baselayers: baselayers,
+        baselayers: !topic.layer_id ? topic.layerSlug : 'none',
         fit_to_geom: true,
+        layerId: topic.layer_id || null,
         geostore: (!!subscription.params.geostore) ? subscription.params.geostore : null,
         wdpaid: (!!subscription.params.wdpaid) ? subscription.params.wdpaid : null,
         use: (!!subscription.params.use) ? subscription.params.use : null,

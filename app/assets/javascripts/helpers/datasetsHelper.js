@@ -16,6 +16,7 @@ define([
       layerSlug: ['umd_as_it_happens'],
       slug: 'glad-alerts',
       slug_source: 'umd_landsat_alerts',
+      layer_id: null,
       order: 10
     },
     'terrai-alerts': {
@@ -25,6 +26,7 @@ define([
       layerSlug: ['terrailoss'],
       slug: 'terrai-alerts',
       slug_source: 'terra_i_alerts',
+      layer_id: null,
       order: 20
     },
     'imazon-alerts': {
@@ -34,6 +36,7 @@ define([
       layerSlug: ['imazon'],
       slug: 'imazon-alerts',
       slug_source: 'imazon_sad',
+      layer_id: null,
       order: 30
     },
     'viirs-active-fires': {
@@ -43,6 +46,7 @@ define([
       layerSlug: ['viirs_fires_alerts'],
       slug: 'viirs-active-fires',
       slug_source: 'viirs_fires',
+      layer_id: null,
       order: 40
     },
     'guira-loss': {
@@ -52,6 +56,7 @@ define([
       layerSlug: ['guyra'],
       slug: 'guira-loss',
       slug_source: 'gran_chaco_deforestation',
+      layer_id: null,
       order: 50
     },
     'umd-loss-gain': {
@@ -61,6 +66,7 @@ define([
       layerSlug: ['loss','gain'],
       slug: 'umd-loss-gain',
       slug_source: 'tree_cover_loss',
+      layer_id: null,
       order: 60
     },
     'prodes-loss': {
@@ -70,7 +76,18 @@ define([
       layerSlug: ['prodes'],
       slug: 'prodes-loss',
       slug_source: 'prodes',
+      layer_id: null,
       order: 70
+    },
+    'story': {
+      title: 'Stories',
+      long_title: '',
+      sub_title: 'Users stories',
+      layerSlug: ['story'],
+      slug: 'story',
+      slug_source: 'stories',
+      layer_id: 580,
+      order: 80
     }
   };
 
@@ -113,6 +130,7 @@ define([
       // Global layers
       filteredDatasets.push(_.extend({}, datasetList['umd-loss-gain']));
       filteredDatasets.push(_.extend({}, datasetList['viirs-active-fires']));
+      filteredDatasets.push(_.extend({}, datasetList['story']));
 
       if (datasets) {
         for (var dataset in datasetList) {
