@@ -108,7 +108,6 @@ define([
     },
 
     setHighlight: function(layer) {
-      console.log('set Highlight');
     },
 
     removeMultipolygon: function() {

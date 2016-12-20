@@ -13,6 +13,7 @@ define([
   'connect/views/MapMiniDrawingView',
   'connect/views/MapMiniUploadView',
   'connect/views/MapMiniSelectedView',
+  'map/views/LegendView',
   'connect/views/CountrySelectionView',
   'connect/views/LayerSelectionView',
   'connect/views/DatasetsListView',
@@ -36,6 +37,7 @@ define([
   MapMiniDrawingView,
   MapMiniUploadView,
   MapMiniSelectedView,
+  LegendView,
   CountrySelectionView,
   LayerSelectionView,
   DatasetsListView,
@@ -124,7 +126,6 @@ define([
 
           this.subscription.set({
             isUpload: false,
-            datasets: [],
             activeLayers: []
           }, { silent: true });
           this.subscription.set('params', defaults);
@@ -344,6 +345,7 @@ define([
         params: params
       });
 
+
       this.subViews = {
         datasetsListView: datasetsList,
         mapView: mapView,
@@ -351,6 +353,7 @@ define([
         mapDrawingView: new MapMiniDrawingView(mapView.map),
         mapUploadView: new MapMiniUploadView(mapView.map),
         mapSelectedView: new MapMiniSelectedView(mapView.map, params),
+        mapLegend: new LegendView(mapView.map, []),
         countrySelectionView: new CountrySelectionView(mapView.map, params),
         layerSelectionView: new LayerSelectionView(mapView.map, params)
       };
@@ -358,7 +361,11 @@ define([
 
     removeSubViews: function() {
       _.each(this.subViews, function(view){
-        view._remove();
+        if (view._remove) {
+          view._remove();
+        } else {
+          view.remove();
+        }
       })
     },
 
@@ -450,6 +457,7 @@ define([
 
       var currentParams = this.subscription.toJSON();
       currentParams.aoi = null;
+      currentParams.datasets = [];
 
       var attributesFromForm = _.extend({
         resource: {
@@ -477,7 +485,6 @@ define([
           .fail(function(){
             mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
           }.bind(this));
-
       } else {
         this.updateForm();
         mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);

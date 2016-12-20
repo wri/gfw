@@ -190,7 +190,7 @@ define([
     },
 
     listeners: function() {
-      this.model.on('change:hidden', this.toogleModule, this);
+      this.listenTo(this.model, 'change:hidden', this.toogleModule, this);
     },
 
     render: function(html) {
@@ -246,6 +246,7 @@ define([
         layer.geographic = geographic ? 'checked' : '';
 
       }, this);
+
 
       categoriesGlobal = this.statusCategories(this.getLayersByCategory(layersGlobal));
       categoriesIso = this.statusCategories(this.getLayersByCategory(layersIso));
