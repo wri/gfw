@@ -44,6 +44,8 @@ define([
     disableDefaultUI: true,
   };
 
+  var BASE_URL = 'http://gfw2stories.s3.amazonaws.com/uploads/';
+
   var constraints = {
     'title': {
       presence: {
@@ -80,15 +82,14 @@ define([
       'change #hideUser' : 'onChangeHideUser'
     },
 
-    initialize: function() {
+    initialize: function(params) {
       this.sourceDrag = undefined;
       this.errors = null;
       this.user = new User();
+      this.id = params && params.id || null;
       this.user.fetch()
         .then(function(){
-          this.story = new Story();
-          this.render();
-          this.cache();
+          this.initStory();
         }.bind(this))
 
     },
@@ -98,6 +99,26 @@ define([
       this.$personalInfo = $('#field-personal-info');
     },
 
+    initStory: function() {
+      if (this.id) {
+        this.story = new Story({
+          id: this.id,
+          edit: true
+        });
+        this.story
+          .fetch()
+          .done(function(res) {
+            this.render(res);
+            this.renderMedia();
+            this.cache();
+          }.bind(this));
+      } else {
+        this.story = new Story();
+        this.render();
+        this.cache();
+      }
+    },
+
     videoInput: function(e) {
       if ($(e.target).val().length == 0) {
         var removable = document.getElementById('videothumbnail');
@@ -105,7 +126,11 @@ define([
           removable.parentNode.removeChild(removable);
         }
       } else {
-        this._addVideoThumbnail($(e.target).val());
+        var media = new Media({
+          embedUrl: $(e.target).val()
+        });
+        this.story.addMedia(media);
+        this._addVideoThumbnail(media);
       }
     },
 
@@ -126,19 +151,14 @@ define([
       return null;
     },
 
-    _addVideoThumbnail: function(url) {
-      var media = new Media({
-        embedUrl: url
-      });
-
-      var vidID  = this._getVideoID(url),
+    _addVideoThumbnail: function(media) {
+      var vidID  = this._getVideoID(media.attributes.embedUrl),
           $thumb = $('#videothumbnail');
 
       if ($thumb.length > 0) {
         if (!!vidID) {
           $thumb.find('.inner_box').css('background-image','url('+ vidID +')');
-          $thumb.data('orderid', url);
-          this.story.addMedia(media);
+          $thumb.data('orderid', media.attributes.embedUrl);
         } else {
           var videos = this.story.get('media').filter( function(model) {
             return !!model.get('embedUrl')
@@ -151,8 +171,7 @@ define([
         }
       } else {
         if (!!vidID) {
-          $('.thumbnails').append('<li class="sortable thumbnail" draggable="true" id="videothumbnail" data-orderid="'+ url +'"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
-          this.story.addMedia(media);
+          $('.thumbnails').append('<li class="sortable thumbnail" draggable="true" id="videothumbnail" data-orderid="'+ media.attributes.embedUrl +'"><div class="inner_box" style=" background-image: url('+ vidID +');"></div><a href="#" class="destroy"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg></a></li>');
           $thumb = $('#videothumbnail');
           $thumb.find('.destroy').on('click', function(e) {
             e.preventDefault();
@@ -174,7 +193,31 @@ define([
         }
       }
 
-      this.oldUrl = url;
+      this.oldUrl = media.attributes.embedUrl;
+    },
+
+    _addImageThumbnail: function(media) {
+      var $thumb = $('<li class="sortable thumbnail" draggable="true" data-orderid="'+ media.attributes.previewUrl +'" ><div class="inner_box" style=" background-image: url('+ BASE_URL + media.attributes.previewUrl +');"></div><a href="#" class="destroy"><svg><use xlink:href="#shape-close"></use></svg></a></li>');
+
+      $(".thumbnails").append($thumb);
+
+      $thumb.find('.destroy').on('click', function(e) {
+        e.preventDefault();
+
+        var confirmation = confirm('Are you sure?')
+
+        if (confirmation == true) {
+
+          var image = this.story.get('media').filter( function(model) {
+            return model.get('previewUrl') == $thumb.data('orderid')
+          });
+          this.story.get('media').remove(image);
+
+          $thumb.fadeOut(250, function() {
+            $thumb.remove();
+          });
+        }
+      }.bind(this));
     },
 
     showFileSelector: function(event) {
@@ -241,6 +284,7 @@ define([
           var $thumb = $('<li class="sortable thumbnail" draggable="true" data-orderid="'+ file.basename +'" ><div class="inner_box" style=" background-image: url('+url+');"></div><a href="#" class="destroy"><svg><use xlink:href="#shape-close"></use></svg></a></li>');
 
           var filename = that.prettifyFilename(file.basename).substring(45);
+
 
           // Remove the preview image
           $(".thumbnail[data-name='"+filename+"']").fadeOut(250, function() {
@@ -460,10 +504,14 @@ define([
     },
 
     render: function() {
+      var story = this.story.toJSON();
+
       this.$el.html(this.template({
         user: this.user.toJSON(),
         story: this.story.toJSON(),
-        formatted_date: moment(this.story.date).format('YYYY-MM-DD')
+        edition: this.id,
+        formatted_date: moment(this.story.date).format('YYYY-MM-DD'),
+        hideUser: story.hideUser === false ? true : false
       }));
 
       this.renderMap();
@@ -476,6 +524,19 @@ define([
       document.title = 'Submit a story | Global Forest Watch';
 
       return this;
+    },
+
+    renderMedia: function() {
+      var mediaList = this.story.get('media');
+
+      _.each(mediaList.models, function(media) {
+        if (media.attributes.embedUrl) {
+          this._addVideoThumbnail(media);
+        }
+        if (media.attributes.previewUrl) {
+          this._addImageThumbnail(media);
+        }
+      }.bind(this));
     },
 
     updateForm: function() {
