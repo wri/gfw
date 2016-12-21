@@ -2,8 +2,9 @@ define([
   'jquery',
   'handlebars',
   'backbone',
+  'helpers/languagesHelper',
   'text!static/templates/contactUsNewsletter.handlebars'
-], function($, Handlebars, Backbone, tplNewsletter) {
+], function($, Handlebars, Backbone, languagesHelper, tplNewsletter) {
 
   'use strict';
 
@@ -207,7 +208,8 @@ define([
     			break;
     		}
     	}
-    	return obj;
+      obj.language = languagesHelper.getTransifexLanguage();
+      return obj;
     },
 
     validate: function(e) {
