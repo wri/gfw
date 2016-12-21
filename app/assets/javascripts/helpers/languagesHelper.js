@@ -1,5 +1,7 @@
 define([], function() {
 
+  var DEFAULT_LANGUAGE = 'en';
+
   /**
   * List of the key languages of the platform
   */
@@ -40,6 +42,18 @@ define([], function() {
         });
       }
       return langList;
+    },
+
+    /**
+     * Returns the current language from Transifex
+     * @returns {string} language selected
+     */
+    getTransifexLanguage: function() {
+      var lang = DEFAULT_LANGUAGE;
+      if (window.Transifex) {
+        lang = window.Transifex.live.getSelectedLanguageCode();
+      }
+      return lang;
     }
   }
   return languagesHelper;
