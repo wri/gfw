@@ -70,7 +70,8 @@ define([
     },
 
     render: function() {
-      var languagesList = languagesHelper.getList();
+      var userLang = this.user.getLanguage();
+      var languagesList = languagesHelper.getListSelected(userLang);
 
       this.$el.html(this.template({
         action: window.gfw.config.GFW_API_HOST+'/user',
@@ -92,7 +93,7 @@ define([
     },
 
     _renderSelectedOptions: function() {
-      var selectFields = ['sector', 'primaryResponsibilities', 'country', 'howDoYouUse', 'language'],
+      var selectFields = ['sector', 'primaryResponsibilities', 'country', 'howDoYouUse'],
           attributes = this.user.toJSON();
 
       selectFields.forEach(function(field) {
