@@ -126,6 +126,12 @@
           </div>
 
           <div class="field">
+            <p>Enter the email address you would like to recieve the confirmation email. This information will not be visible on the GFW website.</p>
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" placeholder="" value="{{user.email}}">
+          </div>
+
+          <div class="field">
             <div class="checkbox-box">
               <div class="custom-checkbox">
                 <input type="checkbox" name="hideUser" id="hideUser" {{#if hideUser}}checked{{/if}}>
@@ -135,8 +141,7 @@
             <p class="hint">
               In some areas, forest clearing information is considered
               to be highly sensitive—users are encouraged to be cautious
-              when sharing identifiable information. Tick this box to
-              hide your details.
+              when sharing identifiable information.
             </p>
           </div>
 
@@ -144,11 +149,6 @@
             <div class="field">
               <label for="name">Name</label>
               <input type="text" name="name" id="name" placeholder="" value="{{user.fullName}}">
-            </div>
-
-            <div class="field">
-              <label for="email">Email</label>
-              <input type="text" name="email" id="email" placeholder="" value="{{user.email}}">
             </div>
           </div>
 
