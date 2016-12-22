@@ -156,6 +156,7 @@ define([
       "gran_chaco_extent",
       // FOREST CHANGE
       "per_minam_loss",
+      "mangrove_2",
       "guyra",
       "terrailoss",
       "viirs_fires_alerts",
