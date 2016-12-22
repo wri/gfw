@@ -80,12 +80,12 @@ define([
       order: 70
     },
     'story': {
-      title: 'Stories',
+      title: 'User stories',
       long_title: '',
-      sub_title: 'Users stories',
+      sub_title: 'stories submitted by GFW users',
       layerSlug: ['story'],
       slug: 'story',
-      slug_source: 'stories',
+      slug_source: 'user_stories',
       layer_id: 580,
       order: 80
     }
