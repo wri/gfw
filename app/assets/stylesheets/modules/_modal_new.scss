@@ -185,6 +185,29 @@ $height: auto;
       &.-compact {
         padding: 15px 6px 15px 6px;
       }
+
+      header {
+        text-align: center;
+        margin: 0 0 20px;
+
+        h2 {
+          font-size: 24px;
+          max-width: 300px;
+          margin: 0 auto;
+          color: $dark;
+        }
+      }
+
+      p {
+        font-weight: 300;
+      }
+
+      .successful {
+        width: 64px;
+        height: 64px;
+        margin: 10px auto;
+        background: image-url('svg-icons/success.svg');
+      }
     }
   }
 }
