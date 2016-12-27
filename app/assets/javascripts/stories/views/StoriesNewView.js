@@ -118,6 +118,17 @@ define([
         this.render();
         this.cache();
       }
+      this.setListeners();
+    },
+
+    setListeners: function() {
+      $(document).on('keyup keypress', 'input, textarea', function(e){
+        var charCode = (e.which) ? e.which : e.keyCode;
+        if( charCode === 13 ) {
+          e.preventDefault();
+          return false;
+        }
+      });
     },
 
     videoInput: function(e) {
