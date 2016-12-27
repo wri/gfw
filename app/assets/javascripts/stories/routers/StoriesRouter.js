@@ -22,6 +22,10 @@ define([
 
   var StoriesRouter = Backbone.Router.extend({
 
+    status: new (Backbone.Model.extend({
+      params: null
+    })),
+
     el: $('.layout-content'),
 
     routes: {
@@ -37,9 +41,29 @@ define([
       new NotificationsView();
     },
 
+    navigateTo(route, params) {
+      window.scrollTo(0, 0);
+      this.setParams(params);
+      this.navigate(route, {
+        trigger: true
+      });
+    },
+
+    setParams: function(params) {
+      this.status.set({
+        params: params
+      });
+    },
+
+    clearParams: function() {
+      this.status.set({
+        params: null
+      });
+    },
+
     index: function() {
-      var storyIndex = new StoriesIndexView({
-        el: '.layout-content',
+      new StoriesIndexView({
+        el: '.layout-content'
       });
     },
 
@@ -57,7 +81,9 @@ define([
     newStory: function() {
       this.checkLoggedIn()
         .then(function() {
-          new StoriesNewView();
+          new StoriesNewView({
+            router: this
+          });
         }.bind(this))
 
         .fail(function() {
@@ -68,10 +94,15 @@ define([
     },
 
     showStory: function(storyId) {
-      var storyView = new StoriesShowView({
+      if (this.storyView) {
+        this.storyView.remove();
+      }
+      this.storyView = new StoriesShowView({
         el: '.layout-content',
-        id: storyId
+        id: storyId,
+        opts: _.clone(this.status.attributes.params)
       });
+      this.clearParams();
     },
 
     editStory: function(storyId) {
