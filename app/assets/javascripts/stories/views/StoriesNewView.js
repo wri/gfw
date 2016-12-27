@@ -88,10 +88,16 @@ define([
       this.user = new User();
       this.id = params && params.id || null;
       this.router = params.router;
-      this.user.fetch()
-        .then(function(){
-          this.initStory();
-        }.bind(this))
+      this.alreadyLoggedIn = params.alreadyLoggedIn;
+
+      if (this.alreadyLoggedIn) {
+        this.user.fetch()
+          .then(function(){
+            this.initStory();
+          }.bind(this))
+      } else {
+        this.renderPlaceHolder();
+      }
 
     },
 
@@ -524,6 +530,7 @@ define([
         user: this.user.toJSON(),
         story: this.story.toJSON(),
         edition: this.id,
+        alreadyLoggedIn: this.alreadyLoggedIn,
         formatted_date: moment(this.story.date).format('YYYY-MM-DD'),
         hideUser: story.hideUser === false ? true : false
       }));
@@ -537,6 +544,14 @@ define([
       $('#submitAStory').addClass('current');
       document.title = 'Submit a story | Global Forest Watch';
 
+      return this;
+    },
+
+    renderPlaceHolder: function() {
+      this.$el.html(this.template({
+        alreadyLoggedIn: this.alreadyLoggedIn,
+        apiHost: window.gfw.config.GFW_API_HOST_NEW_API
+      }));
       return this;
     },
 
