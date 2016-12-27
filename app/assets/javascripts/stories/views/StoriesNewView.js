@@ -87,6 +87,7 @@ define([
       this.errors = null;
       this.user = new User();
       this.id = params && params.id || null;
+      this.router = params.router;
       this.user.fetch()
         .then(function(){
           this.initStory();
@@ -485,8 +486,10 @@ define([
         this.story.save()
           .then(function(story){
             var id = story.data.id;
-            window.location = '/stories/'+id;
-          });
+            this.router.navigateTo('stories/' + id, {
+              newStory: true
+            });
+          }.bind(this));
       } else {
         this.updateForm();
         mps.publish('Notification/open', ['story-new-form-error']);
