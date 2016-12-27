@@ -39,7 +39,7 @@ define([
       new NotificationsView();
     },
 
-    navigateTo(route, params) {
+    navigateTo: function(route, params) {
       window.scrollTo(0, 0);
       this.setParams(params);
       this.navigate(route, {
