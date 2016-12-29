@@ -47,6 +47,7 @@ define([
       this.$subscriptionName = this.$el.find('#subscriptionName');
       this.$subscriptionLanguage = this.$el.find('#subscriptionLanguage');
       this.$subscriptionEmail = this.$el.find('#subscriptionEmail');
+      this.$subscriptionUrl = this.$el.find('#subscriptionUrl');
       this.$subscriptionDatasets = this.$el.find('#subscription-datasets');
       this.$steps = this.$el.find('.steps');
     },
@@ -121,7 +122,10 @@ define([
     },
 
     onClickCheckEmail: function(e) {
-      this.presenter.checkEmail(this.$subscriptionEmail.val());
+      this.presenter.checkEmailOrURL({
+        email: this.$subscriptionEmail.val(),
+        url: this.$subscriptionUrl.val()
+      });
     },
 
     onClickCheckDatasets: function(e) {

@@ -369,6 +369,22 @@ define([
       })
     },
 
+    getResource: function(formData) {
+      var type = 'EMAIL';
+      var content = this.user.get('email');
+
+      if (formData.url && formData.url.length > 0) {
+        type = 'URL';
+        content = formData.url;
+      }
+
+      return {
+        resource: {
+          type: type,
+          content: content
+        }
+      }
+    },
 
     /**
      * CHANGE EVENTS

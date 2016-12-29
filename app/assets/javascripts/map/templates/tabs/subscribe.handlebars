@@ -28,7 +28,25 @@
               </p>
             </header>
 
-            <input class="field" type="email" id="subscriptionEmail" placeholder="Enter your email" value="{{email}}">
+            <ul class="m-tabs">
+              <div class="tabs">
+                <div class="tab">
+                  <input type="radio" name="tabs" id="tab1" checked />
+                  <label for="tab1" tabindex="0">E-mail</label>
+                  <div id="tab-content1" class="tab-content">
+                    <input class="field" type="email" id="subscriptionEmail" placeholder="Enter your email" value="{{email}}">
+                  </div>
+                </div>
+                <div class="tab">
+                  <input type="radio" name="tabs" id="tab2" />
+                  <label for="tab2">URL (Webhook)</label>
+                  <div id="tab-content2" class="tab-content">
+                    <input class="field" type="text" id="subscriptionUrl" placeholder="Enter your url" value="{{url}}">
+                  </div>
+                </div>
+              </div>
+            </ul>
+
             <div class="m-btncontainer is-center">
               <button class="btn medium green uppercase" id="showName">Next</button>
             </div>
