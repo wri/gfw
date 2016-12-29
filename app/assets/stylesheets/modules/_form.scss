@@ -234,6 +234,22 @@ textarea {
       text-transform: uppercase;
     }
   }
+
+  .separator {
+    width: 100%;
+    height: 11px;
+    border-bottom: 1px solid $border;
+    text-align: center;
+    margin-bottom: 16px;
+    margin-top: 11px;
+
+    span {
+      font-size: 14px;
+      color: $dark;
+      background-color: #FFF;
+      padding: 0 10px;
+    }
+  }
 }
 
 /**
