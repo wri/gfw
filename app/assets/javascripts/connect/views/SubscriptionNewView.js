@@ -369,6 +369,22 @@ define([
       })
     },
 
+    getResource: function(formData) {
+      var type = 'EMAIL';
+      var content = this.user.get('email');
+
+      if (formData.url && formData.url.length > 0) {
+        type = 'URL';
+        content = formData.url;
+      }
+
+      return {
+        resource: {
+          type: type,
+          content: content
+        }
+      }
+    },
 
     /**
      * CHANGE EVENTS
@@ -457,19 +473,19 @@ define([
 
       var currentParams = this.subscription.toJSON();
       currentParams.aoi = null;
+      currentParams.resource = null;
       currentParams.datasets = [];
 
-      var attributesFromForm = _.extend({
-        resource: {
-          type: 'EMAIL',
-          content: this.user.get('email')
-        }
-      }, _.omit(validate.collectFormValues(this.$form, {
+      var formData = validate.collectFormValues(this.$form, {
         trim: true,
         nullify: true
-      }), 'datasets'), this.subscription.toJSON());
+      });
+      var resource = this.getResource(formData);
+      var attributesFromForm = _.extend(resource, _.omit(formData, 'datasets'),
+        this.subscription.toJSON());
 
       if (this.validate(attributesFromForm) && this.router.alreadyLoggedIn) {
+        this.subscription.set(attributesFromForm, { silent: true });
         this.subscription.set(attributesFromForm, { silent: true }).save()
           .then(function() {
             // Scroll to top
