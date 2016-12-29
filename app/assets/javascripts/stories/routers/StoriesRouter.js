@@ -118,7 +118,7 @@ define([
 
         .fail(function() {
           var loginView = new LoginView({
-            message: 'Please log in to submit a story.' });
+            message: 'Please log in to edit a story.' });
           this.el.html(loginView.render().el);
         }.bind(this));
     },
