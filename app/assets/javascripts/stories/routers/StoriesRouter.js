@@ -6,6 +6,7 @@ define([
   'stories/views/StoriesListView',
   'stories/views/StoriesNewView',
   'stories/views/StoriesShowView',
+  'connect/views/LoginView'
 ], function(
   $, Backbone,
   NotificationsView,
@@ -13,7 +14,8 @@ define([
   StoriesIndexView,
   StoriesListView,
   StoriesNewView,
-  StoriesShowView
+  StoriesShowView,
+  LoginView
 ) {
 
   'use strict';
@@ -106,9 +108,19 @@ define([
     },
 
     editStory: function(storyId) {
-      var editStoryView = new StoriesNewView({
-        id: storyId
-      });
+      this.checkLoggedIn()
+        .then(function() {
+          var editStoryView = new StoriesNewView({
+            id: storyId,
+            alreadyLoggedIn: true
+          });
+        }.bind(this))
+
+        .fail(function() {
+          var loginView = new LoginView({
+            message: 'Please log in to submit a story.' });
+          this.el.html(loginView.render().el);
+        }.bind(this));
     },
 
     show404: function() {
