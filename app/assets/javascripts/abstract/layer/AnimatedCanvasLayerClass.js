@@ -87,6 +87,9 @@ define([
         var now = +new Date(),
             dt = now - lastTimestamp;
         this.animationOptions.currentOffset += dt;
+        if (this.animationOptions.currentOffset === this.animationOptions.duration) {
+          this.animationOptions.currentOffset = 0;
+        }
 
         var duration = this.animationOptions.duration,
             currentOffset = this.animationOptions.currentOffset,
