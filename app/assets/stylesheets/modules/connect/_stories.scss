@@ -177,11 +177,17 @@
       justify-content: flex-start;
     }
 
-    svg {
+    .icon {
       width: 15px;
       height: 15px;
       margin: -4px 7px 0 0px;
       fill: $dark;
+
+      &.-edit {
+        width: 12px;
+        height: 12px;
+        margin: 0px 7px 0 0;
+      }
     }
   }
 }
@@ -215,7 +221,7 @@
   h3 {
     margin-bottom: 20px;
     line-height: 1.25;
-    font-size: 18px;    
+    font-size: 18px;
   }
 
   .delete-button-container {

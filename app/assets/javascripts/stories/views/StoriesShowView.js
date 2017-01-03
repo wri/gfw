@@ -7,12 +7,13 @@ define([
   'views/InterestingView',
   'stories/views/CarrouselStoriesView',
   'stories/views/MoreStoriesView',
+  'stories/views/StoriesNewConfirmationView',
   'text!stories/templates/story.handlebars',
   'text!stories/templates/youtubeEmbed.handlebars',
   'text!stories/templates/imageEmbed.handlebars'
 ], function(
   mps, Backbone, Handlebars, _,
-  Story, InterestingView, CarrouselStoriesView, MoreStoriesView,
+  Story, InterestingView, CarrouselStoriesView, MoreStoriesView, StoriesNewConfirmationView,
   tpl, youtubeTpl, imageTpl
 ) {
 
@@ -45,12 +46,19 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    initialize: function(options) {
-      var storyId = options.id;
+    initialize: function(params) {
+      var storyId = params.id;
+      this.params = params.opts;
       this.story = new Story({id: storyId});
+      this.cache();
+      this.confirmationView();
       this.story.fetch().done(function(){
         this.render();
       }.bind(this));
+    },
+
+    cache: function() {
+      this.$container = $('body');
     },
 
     render: function() {
@@ -99,6 +107,13 @@ define([
 
         return mediaItem;
       });
+    },
+
+    confirmationView: function() {
+      if (this.params && this.params.newStory) {
+        this.confimationView = new StoriesNewConfirmationView();
+        this.$container.append(this.confimationView.render({}).el);
+      }
     }
 
   });
