@@ -130,8 +130,6 @@ define([
     },
 
     _onTorqueStop: function() {
-      var $el = this.$('.play').find('div');
-
       this.status.set('running', false);
 
       this.renderControls();
