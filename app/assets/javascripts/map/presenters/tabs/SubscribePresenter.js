@@ -94,19 +94,30 @@ define([
       this.view.updateCurrentStep(this.currentStep);
     },
 
-    // Email
-    checkEmail: function(email) {
-      this.subscription.set('resource', {
-        type: 'EMAIL',
-        content: email
-      });
+    // Email or URL (Webhook)
+    checkEmailOrURL: function(params) {
+      var type = 'EMAIL';
+      var content = params.email;
 
-      if (this.subscription.hasValidEmail()) {
+      if (params.url && params.url.length > 0) {
+        type = 'URL';
+        content = params.url;
+
         this.getDatasets();
         this.nextStep();
       } else {
-        this.publishNotification('notification-email-incorrect');
+        if (params.email || this.subscription.hasValidEmail()) {
+          this.getDatasets();
+          this.nextStep();
+        } else {
+          this.publishNotification('notification-email-incorrect');
+        }
       }
+
+      this.subscription.set('resource', {
+        type: type,
+        content: content
+      });
     },
 
     getDatasets: function() {

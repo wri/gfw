@@ -30,6 +30,15 @@ $aside-width: 270px;
       width: calc(100% - #{$aside-width});
       padding: 0 0px 0 60px;
     }
+
+    h3 {
+      padding: 0 0 10px;
+      border-bottom: 1px solid $border;
+      font-weight: 500;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: $dark;
+    }
   }
 }
 

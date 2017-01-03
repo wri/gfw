@@ -63,7 +63,7 @@ define([
   'text!map/templates/legend/lbr_mining.handlebars',
   'text!map/templates/legend/lbr_forest.handlebars',
   'text!map/templates/legend/lbr_community.handlebars',
-
+  'text!map/templates/legend/mangrove_2.handlebars',
 ], function(_, Handlebars, Presenter, datasetsHelper, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
@@ -71,7 +71,7 @@ define([
     gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl,
     rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl,
     paTpl, places2watchTPL, mex_landrightsTpl, mexPATpl, perPATpl,mex_land_coverTpl,mex_forest_conservTPL,mex_forest_prodTPL,mex_forest_restTPL, bra_landcoverTPL, lbr_miningTPL,
-    lbr_forestTpl,lbr_communityTpl) {
+    lbr_forestTpl,lbr_communityTpl, mangrove2Tpl) {
 
   'use strict';
 
@@ -164,7 +164,8 @@ define([
       bra_land_cover:Handlebars.compile(bra_landcoverTPL),
       lbr_logging:Handlebars.compile(lbr_forestTpl),
       lbr_mineral_exploration_license:Handlebars.compile(lbr_miningTPL),
-      lbr_resource_rights:Handlebars.compile(lbr_communityTpl)
+      lbr_resource_rights:Handlebars.compile(lbr_communityTpl),
+      mangrove_2:Handlebars.compile(mangrove2Tpl)
     },
 
     events: {
@@ -351,9 +352,10 @@ define([
         var $div = $(div);
         var $toggle = $div.find('.onoffswitch');
         var optionSelected = layerOptions.indexOf($div.data('option')) > -1;
+        var color = $toggle.data('color') || '#F69';
 
         if (optionSelected) {
-          $toggle.addClass('checked').css('background', '#F69');
+          $toggle.addClass('checked').css('background', color);
         } else {
           $toggle.removeClass('checked').css('background', '');
         }

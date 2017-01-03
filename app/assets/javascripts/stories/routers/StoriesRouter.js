@@ -22,12 +22,17 @@ define([
 
   var StoriesRouter = Backbone.Router.extend({
 
+    status: new (Backbone.Model.extend({
+      params: null
+    })),
+
     el: $('.layout-content'),
 
     routes: {
       'stories': 'index',
       'stories/crowdsourcedstories': 'listStories',
       'stories/new': 'newStory',
+      'stories/edit/:id': 'editStory',
       'stories/:id': 'showStory',
       '*path': 'show404'
     },
@@ -36,9 +41,29 @@ define([
       new NotificationsView();
     },
 
+    navigateTo: function(route, params) {
+      window.scrollTo(0, 0);
+      this.setParams(params);
+      this.navigate(route, {
+        trigger: true
+      });
+    },
+
+    setParams: function(params) {
+      this.status.set({
+        params: params
+      });
+    },
+
+    clearParams: function() {
+      this.status.set({
+        params: null
+      });
+    },
+
     index: function() {
-      var storyIndex = new StoriesIndexView({
-        el: '.layout-content',
+      new StoriesIndexView({
+        el: '.layout-content'
       });
     },
 
@@ -56,21 +81,47 @@ define([
     newStory: function() {
       this.checkLoggedIn()
         .then(function() {
-          new StoriesNewView();
+          new StoriesNewView({
+            router: this,
+            alreadyLoggedIn: true
+          });
         }.bind(this))
 
         .fail(function() {
-          var loginView = new LoginView({
-            message: 'Please log in to submit a story.' });
-          this.el.html(loginView.render().el);
+          new StoriesNewView({
+            router: this,
+            alreadyLoggedIn: false
+          });
         }.bind(this));
     },
 
     showStory: function(storyId) {
-      var storyView = new StoriesShowView({
+      if (this.storyView) {
+        this.storyView.remove();
+      }
+      this.storyView = new StoriesShowView({
         el: '.layout-content',
-        id: storyId
+        id: storyId,
+        opts: _.clone(this.status.attributes.params)
       });
+      this.clearParams();
+    },
+
+    editStory: function(storyId) {
+      this.checkLoggedIn()
+        .then(function() {
+          var editStoryView = new StoriesNewView({
+            id: storyId,
+            alreadyLoggedIn: true,
+            router: this
+          });
+        }.bind(this))
+
+        .fail(function() {
+          var loginView = new LoginView({
+            message: 'Please log in to edit a story.' });
+          this.el.html(loginView.render().el);
+        }.bind(this));
     },
 
     show404: function() {

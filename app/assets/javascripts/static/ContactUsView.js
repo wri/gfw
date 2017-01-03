@@ -1,7 +1,10 @@
 define([
   'jquery',
-  'backbone'
-], function($, Backbone) {
+  'handlebars',
+  'backbone',
+  'helpers/languagesHelper',
+  'text!static/templates/contactUsNewsletter.handlebars'
+], function($, Handlebars, Backbone, languagesHelper, tplNewsletter) {
 
   'use strict';
 
@@ -63,9 +66,12 @@ define([
 
     events: {
       'click .js-btn-submit': 'actionSubmit',
+      'click .js-newsletter-sign-up': 'onNewsletterSignup',
       'change input, textarea, select': 'changeInput',
       'change #contact-topic': 'changeTopic'
     },
+
+    templateNewsletter: Handlebars.compile(tplNewsletter),
 
     initialize: function() {
       this.$spinner = this.$el.find('.m-spinner');
@@ -75,6 +81,7 @@ define([
       this.$contactMessage = this.$el.find('#contact-message');
       this.$body = $('html, body');
       this.$container = $('.content-static');
+      this.$newsletter = this.$el.find('#newsletter');
     },
 
     actionSubmit: function(e) {
@@ -90,6 +97,7 @@ define([
       var xhr = new XMLHttpRequest();
 
       xhr.open('POST', window.gfw.config.GFW_API_HOST_NEW_API + '/form/contact-us');
+      xhr.withCredentials = true;
       xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
       xhr.onload = function() {
@@ -200,7 +208,8 @@ define([
     			break;
     		}
     	}
-    	return obj;
+      obj.language = languagesHelper.getTransifexLanguage();
+      return obj;
     },
 
     validate: function(e) {
@@ -221,6 +230,19 @@ define([
       }
     },
 
+    onNewsletterSignup: function(e) {
+      e && e.preventDefault();
+      e.currentTarget.classList.add('-hidden');
+
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
+      this.$newsletter.html(this.templateNewsletter({}));
+      this.timer = setTimeout(function() {
+        this.$newsletter.find('.-js-newsletter').removeClass('-loading');
+      }.bind(this), 2000);
+    },
+
     changeInput: function(e) {
       e && e.preventDefault();
       this.validateInput(e.currentTarget.name, e.currentTarget.value);
@@ -238,6 +260,7 @@ define([
 
     changeTopic: function(e) {
       var topic = e.currentTarget.value;
+      e.currentTarget.classList.add('hide');
       if (!!topic) {
         var placeholder = topics[topic]['placeholder'];
         this.$contactMessage.attr('placeholder', placeholder);
