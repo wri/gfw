@@ -112,7 +112,8 @@ define([
         .then(function() {
           var editStoryView = new StoriesNewView({
             id: storyId,
-            alreadyLoggedIn: true
+            alreadyLoggedIn: true,
+            router: this
           });
         }.bind(this))
 

@@ -47,7 +47,6 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function(params) {
-      console.log('init');
       var storyId = params.id;
       this.params = params.opts;
       this.story = new Story({id: storyId});

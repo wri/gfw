@@ -504,7 +504,7 @@ define([
           .then(function(story){
             var id = story.data.id;
             this.router.navigateTo('stories/' + id, {
-              newStory: true
+              newStory: !this.id ? true : false
             });
           }.bind(this));
       } else {
