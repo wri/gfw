@@ -1,4 +1,4 @@
-$width: 500px;
+$width: 750px;
 $height: auto;
 
 // Layout
@@ -159,6 +159,7 @@ $height: auto;
     padding: 20px;
     @media (min-width: $br-mobile){
       max-height: 450px;
+      overflow-x: auto;
     }
 
     &.-no-scroll {
