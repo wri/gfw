@@ -6436,7 +6436,7 @@
         Drop a file in the designated area to analyze or subscribe to it. The recommended <strong>maximum file size is 1MB.</strong> Anything larger than that may not work properly.
       </p>
       <p>
-        NOTE: This feature counts alerts or hectares inside of polygons; therefore, <strong>only polygon data is supported,</strong> not point and line data. Please ensure that your file only contains polygon data. 
+        NOTE: This feature counts alerts or hectares inside of polygons; therefore, <strong>only polygon data is supported,</strong> not point and line data. Please ensure that your file only contains polygon data.
       </p>
 
       <p><strong>List of supported file formats</strong>:</p>
@@ -6500,48 +6500,52 @@
           <table class="modal-table">
             <thead>
               <tr>
-                <th class="no-border"></th>
-                <th>Theia</th>
-                <th>Landsat 8</th>
-                <th>Deimos-1</th>
+                <th width="90px">Sensor</th>
+                <th>Owner</th>
+                <th>Platform</th>
+                <th>Resolution</th>
+                <th>Revisit Time</th>
+                <th>Minimum Date</th>
+                <th>Geographic Coverage</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td class="td-header">Owner</td>
+                <td class="td-header">Theia</td>
                 <td>UrtheCast</td>
-                <td>USGS</td>
-                <td>UrtheCast</td>
-              </tr>
-              <tr>
-                <td class="td-header">Platform</td>
                 <td>ISS</td>
-                <td>Landsat 8</td>
-                <td>Deimos-1</td>
-              </tr>
-              <tr>
-                <td class="td-header">Resolution</td>
                 <td>5 m</td>
-                <td>15 m (pansharpened) for RGB, 30 m for other renderers</td>
-                <td>22 m</td>
-              </tr>
-              <tr>
-                <td class="td-header">Revisit Time</td>
                 <td>1-2x / month</td>
-                <td>every 16 days</td>
-                <td>every 3 days</td>
-              </tr>
-              <tr>
-                <td class="td-header">Minimum Date</td>
                 <td>March 2014</td>
-                <td>January 2013</td>
-                <td>January 2013</td>
+                <td>Global</td>
               </tr>
               <tr>
-                <td class="td-header">Geographic Coverage</td>
+                <td class="td-header">Landsat 8</td>
+                <td>USGS</td>
+                <td>Landsat 8</td>
+                <td>15 m (pansharpened) for RGB, 30 m for other renderers</td>
+                <td>every 16 days</td>
+                <td>January 2013</td>
                 <td>Global</td>
-                <td>Global</td>
+              </tr>
+              <tr>
+                <td class="td-header">Deimos-1</td>
+                <td>UrtheCast</td>
+                <td>Deimos-1</td>
+                <td>22 m</td>
+                <td>every 3 days</td>
+                <td>January 2013</td>
                 <td>Contiguous United States</td>
+              </tr>
+
+              <tr>
+                <td class="td-header">Sentinel-2A</td>
+                <td>ESA</td>
+                <td>-</td>
+                <td>10 m</td>
+                <td>every 10 days</td>
+                <td>-</td>
+                <td>-</td>
               </tr>
             </tbody>
           </table>
@@ -6587,48 +6591,52 @@
           <table class="modal-table">
             <thead>
               <tr>
-                <th class="no-border"></th>
-                <th>Theia</th>
-                <th>Landsat 8</th>
-                <th>Deimos-1</th>
+                <th width="90px">Sensor</th>
+                <th>Owner</th>
+                <th>Platform</th>
+                <th>Resolution</th>
+                <th>Revisit Time</th>
+                <th>Minimum Date</th>
+                <th>Geographic Coverage</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td class="td-header">Owner</td>
+                <td class="td-header">Theia</td>
                 <td>UrtheCast</td>
-                <td>USGS</td>
-                <td>UrtheCast</td>
-              </tr>
-              <tr>
-                <td class="td-header">Platform</td>
                 <td>ISS</td>
-                <td>Landsat 8</td>
-                <td>Deimos-1</td>
-              </tr>
-              <tr>
-                <td class="td-header">Resolution</td>
                 <td>5 m</td>
-                <td>15 m (pansharpened) for RGB, 30 m for other renderers</td>
-                <td>22 m</td>
-              </tr>
-              <tr>
-                <td class="td-header">Revisit Time</td>
                 <td>1-2x / month</td>
-                <td>every 16 days</td>
-                <td>every 3 days</td>
-              </tr>
-              <tr>
-                <td class="td-header">Minimum Date</td>
                 <td>March 2014</td>
-                <td>January 2013</td>
-                <td>January 2013</td>
+                <td>Global</td>
               </tr>
               <tr>
-                <td class="td-header">Geographic Coverage</td>
+                <td class="td-header">Landsat 8</td>
+                <td>USGS</td>
+                <td>Landsat 8</td>
+                <td>15 m (pansharpened) for RGB, 30 m for other renderers</td>
+                <td>every 16 days</td>
+                <td>January 2013</td>
                 <td>Global</td>
-                <td>Global</td>
+              </tr>
+              <tr>
+                <td class="td-header">Deimos-1</td>
+                <td>UrtheCast</td>
+                <td>Deimos-1</td>
+                <td>22 m</td>
+                <td>every 3 days</td>
+                <td>January 2013</td>
                 <td>Contiguous United States</td>
+              </tr>
+
+              <tr>
+                <td class="td-header">Sentinel-2A</td>
+                <td>ESA</td>
+                <td>-</td>
+                <td>10 m</td>
+                <td>every 10 days</td>
+                <td>-</td>
+                <td>-</td>
               </tr>
             </tbody>
           </table>
