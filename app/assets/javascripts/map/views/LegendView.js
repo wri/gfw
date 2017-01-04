@@ -241,6 +241,7 @@ define([
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
             hresolution: options.hresolution,
+            startYear: options.startYear,
             layerTitle: layer.title
           });
         }
