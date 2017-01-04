@@ -177,7 +177,8 @@ define([
   'map/views/timeline/TerraiTimeline',
   'map/views/timeline/ProdesTimeline',
   'map/views/timeline/GuyraTimeline',
-  'map/views/timeline/GladTimeline'
+  'map/views/timeline/GladTimeline',
+  'map/views/timeline/MangroveTimeline',
 ], function(
   // Layer Views
   LossLayer,
@@ -354,7 +355,8 @@ define([
   TerraiTimeline,
   ProdesTimeline,
   GuyraTimeline,
-  GladTimeline
+  GladTimeline,
+  MangroveTimeline
 ) {
 
   'use strict';
@@ -581,7 +583,8 @@ define([
       view: MangroveLayer
     },
     mangrove_2 :{
-      view: Mangrove2Layer
+      view: Mangrove2Layer,
+      timelineView: MangroveTimeline
     },
     WMSLayer :{
       view: WMSLayer

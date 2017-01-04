@@ -10,8 +10,10 @@ define([
   'mps',
   'abstract/layer/CartoDBLayerClass',
   'text!map/cartocss/mangrove_2.cartocss',
-  'map/presenters/layers/Mangrove2LayerPresenter'
-], function(_, moment, UriTemplate, mps, CartoDBLayerClass, Mangrove2Carto, Presenter) {
+  'map/presenters/layers/Mangrove2LayerPresenter',
+  'map/services/MangroveDateService'
+], function(_, moment, UriTemplate, mps, CartoDBLayerClass,
+  Mangrove2Carto, Presenter, MangroveDateService) {
 
   'use strict';
 
@@ -20,7 +22,7 @@ define([
 
   var Mangrove2 = CartoDBLayerClass.extend({
     options: {
-      sql: "SELECT * FROM {tableName} {filters}",
+      sql: "SELECT * FROM {tableName} WHERE year = {year} {filters}",
       interactivity: '',
       cartocss: Mangrove2Carto,
       infowindow: false
@@ -29,6 +31,10 @@ define([
     init: function(layer, options, map) {
       this.presenter = new Presenter(this, SLUG);
       this._super(layer, options, map);
+
+      var currentDate = options.currentDate ||
+        [moment.utc(), moment.utc()];
+      this.setCurrentDate(MangroveDateService.getRangeForDates(currentDate));
       this.setFilters();
     },
 
@@ -36,6 +42,7 @@ define([
       var query = new UriTemplate(this.options.sql)
         .fillFromObject({
           tableName: this.layer.table_name,
+          year: moment(this.currentDate[0]).year(),
           filters: this.getFilters()
         });
 
@@ -56,7 +63,7 @@ define([
       var queryFilters = '';
 
       if (filters && filters.length) {
-        queryFilters += 'WHERE';
+        queryFilters += 'AND';
         filters.forEach(function(value, key) {
           queryFilters += ' change=\''+ value +'\'';
 
@@ -65,9 +72,18 @@ define([
           }
         });
       } else {
-        queryFilters = 'WHERE change is null';
+        queryFilters = 'AND change is null';
       }
       return queryFilters;
+    },
+
+    /**
+     * Used by Mangrove2Presenter to set the dates for the tile.
+     *
+     * @param {Array} date 2D array of moment dates [begin, end]
+     */
+    setCurrentDate: function(date) {
+      this.currentDate = date;
     }
   });
 

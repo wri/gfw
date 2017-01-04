@@ -42,6 +42,13 @@ define([
         if (!isLayerSelected) {
           mps.publish('LayerOptions/delete', []);
         }
+      },
+      'Timeline/date-change': function(layerSlug, date) {
+        if (this.view.getName() !== layerSlug) {
+          return;
+        }
+        this.view.setCurrentDate(date);
+        this.view.updateTiles();
       }
     }],
 
