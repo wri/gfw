@@ -63,7 +63,7 @@ define([
   'text!map/templates/legend/lbr_mining.handlebars',
   'text!map/templates/legend/lbr_forest.handlebars',
   'text!map/templates/legend/lbr_community.handlebars'
-], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
+], function(_, Handlebars, Presenter, datasetsHelper, tpl, tplMore, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
     global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
@@ -161,10 +161,7 @@ define([
       mexican_pa:Handlebars.compile(mexPATpl),
       per_protected_areas:Handlebars.compile(perPATpl),
       mex_land_cover:Handlebars.compile(mex_land_coverTpl),
-      lbr_logging:Handlebars.compile(lbr_miningTPL),
-      lbr_private_use_permit:Handlebars.compile(lbr_miningTPL),
-      lbr_development_exploration_license:Handlebars.compile(lbr_miningTPL),
-      lbr_mineral_development_agreement:Handlebars.compile(lbr_miningTPL),
+      lbr_logging:Handlebars.compile(lbr_forestTpl),
       lbr_mineral_exploration_license:Handlebars.compile(lbr_miningTPL),
       lbr_resource_rights:Handlebars.compile(lbr_communityTpl)
     },
