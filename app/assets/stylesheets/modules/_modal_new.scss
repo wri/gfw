@@ -738,6 +738,23 @@ $height: auto;
       margin-bottom: 20px;
     }
 
+    .source_snippet {
+      pre {
+        border: 1px solid #cccccc;
+        padding: 10px 10px;
+        margin: 20px;
+      }
+      .json-key {
+        color: #D46C75;
+      }
+      .json-value {
+        color: #C99C4A;
+      }
+      .json-string {
+        color: #67995A;
+      }
+    }
+
     .modal-table {
       border-collapse: collapse;
       font-size: 11px;

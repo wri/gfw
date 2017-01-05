@@ -18,6 +18,10 @@
       [id^="tab"]:checked + label {
         background-color: #eeeeee;
         color: #7b7b7b;
+
+        svg {
+          fill: #7b7b7b;
+        }
       }
       [id^="tab"]:checked ~ [id^="tab-content"] {
         display: block;
@@ -59,6 +63,19 @@
     background: #7b7b7b;
     color: #eeeeee;
     transition: .2s ease;
+
+    .source {
+      width: 16px;
+      height: 12px;
+      display: inline-block;
+      padding-left: 4px;
+
+      svg {
+        width: 8px;
+        height: 8px;
+        fill: #eeeeee;
+      }
+    }
   }
   .tab-content{
     width: 100%;
