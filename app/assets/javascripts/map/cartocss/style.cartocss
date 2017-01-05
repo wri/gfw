@@ -680,9 +680,21 @@
     polygon-clip: false;
   }
 
-  [layer='bra_logging'] {
+  [layer='lbr_private_use'] {
     polygon-fill: #fecc5c;
     line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='lbr_mineral_development_agreements'] {
+    polygon-fill: #fdbf6f;
+    line-color: #fdbf6f;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='lbr_development_exploration_license'] {
+    polygon-fill: #b15928;
+    line-color: #b15928;
     line-clip: false;
     polygon-clip: false;
   }

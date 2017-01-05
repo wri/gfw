@@ -156,6 +156,10 @@ define([
   'map/views/layers/MexForestProdLayer',
   'map/views/layers/MexForestRestLayer',
   'map/views/layers/UgaPALayer',
+  'map/views/layers/LbrMinExL',
+  'map/views/layers/LbrMinDevAg',
+  'map/views/layers/LbrDevExL',
+  'map/views/layers/LbrPrivUseP',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -325,6 +329,10 @@ define([
   MexForestProdLayer,
   MexForestRestLayer,
   UgaPALayer,
+  LbrMinExL,
+  LbrMinDevAg,
+  LbrDevExL,
+  LbrPrivUseP,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -818,6 +826,18 @@ define([
     },
     uga_protected_areas: {
       view:  UgaPALayer
+    },
+    lbr_mineral_exploration_license: {
+      view:  LbrMinExL
+    },
+    lbr_mineral_development_agreement: {
+      view:  LbrMinDevAg
+    },
+    lbr_development_exploration_license: {
+      view:  LbrDevExL
+    },
+    lbr_private_use_permit: {
+      view:  LbrPrivUseP
     },
     nothing: {
     }
