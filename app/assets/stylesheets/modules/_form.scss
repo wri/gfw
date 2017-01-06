@@ -114,6 +114,19 @@ textarea {
       top: auto;
       transform: none;
       margin: 0 0 3px;
+
+      .source {
+        svg {
+          width: 12px;
+          height: 12px;
+          padding: 2px;
+          position: relative;
+          top: 0px;
+          fill: white;
+          background: #97bd3d;
+          border-radius: 50%;
+        }
+      }
     }
   }
 

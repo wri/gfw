@@ -40,9 +40,8 @@
         border-top-right-radius: 50px;
         border-bottom-right-radius: 50px;
 
-        [id^="tab"]:checked + label {
-          border-top-left-radius: 50px;
-          border-bottom-left-radius: 50px;
+        label {
+          border-radius: 50px;
         }
       }
     }
@@ -67,8 +66,10 @@
     .source {
       width: 16px;
       height: 12px;
-      display: inline-block;
       padding-left: 4px;
+      position: absolute;
+      top: 6px;
+      right: 6px;
 
       svg {
         width: 8px;
