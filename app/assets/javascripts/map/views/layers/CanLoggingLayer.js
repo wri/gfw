@@ -11,10 +11,10 @@ define([
 
   var CanLoggingLayer = CartoDBLayerClass.extend({
 
-    options: {
-      sql: 'SELECT \'can_logging\' as tablename, cartodb_id, the_geom_webmercator, company, country, round(area_ha::float) as area_ha, name, source, type, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
+options: {
+      sql: 'SELECT cartodb_id,  \'{tableName}\' as tablename, the_geom_webmercator, name, class, start_date, end_date, jurisdicti, company1, area_ha,  {analysis} AS analysis, \'{tableName}\' AS layer FROM {tableName}',
       infowindow: true,
-      interactivity: 'cartodb_id, tablename, name, company, area_ha, analysis',
+      interactivity: 'cartodb_id, tablename, layer, end_date, name, class, jurisdicti, company1, area_ha, start_date, analysis',
       analysis: true
     }
   });
@@ -22,3 +22,4 @@ define([
   return CanLoggingLayer;
 
 });
+
