@@ -160,6 +160,7 @@ define([
   'map/views/layers/LbrMinDevAg',
   'map/views/layers/LbrDevExL',
   'map/views/layers/LbrPrivUseP',
+  'map/views/layers/PakUserMangrovesLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -333,6 +334,7 @@ define([
   LbrMinDevAg,
   LbrDevExL,
   LbrPrivUseP,
+  PakUserMangrovesLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -838,6 +840,9 @@ define([
     },
     lbr_private_use_permit: {
       view:  LbrPrivUseP
+    },
+    pak_user_mangroves: {
+      view: PakUserMangrovesLayer
     },
     nothing: {
     }
