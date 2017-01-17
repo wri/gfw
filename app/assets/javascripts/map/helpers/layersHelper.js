@@ -159,7 +159,6 @@ define([
   'map/views/layers/LbrMinExL',
   'map/views/layers/LbrMinDevAg',
   'map/views/layers/LbrDevExL',
-  'map/views/layers/LbrPrivUseP',
   'map/views/layers/PakUserMangrovesLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
@@ -333,7 +332,6 @@ define([
   LbrMinExL,
   LbrMinDevAg,
   LbrDevExL,
-  LbrPrivUseP,
   PakUserMangrovesLayer,
   //highres layers
   UrthecastLayer,
@@ -837,9 +835,6 @@ define([
     },
     lbr_development_exploration_license: {
       view:  LbrDevExL
-    },
-    lbr_private_use_permit: {
-      view:  LbrPrivUseP
     },
     pak_user_mangroves: {
       view: PakUserMangrovesLayer

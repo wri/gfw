@@ -673,12 +673,6 @@
     polygon-clip: false;
   }
 
-  [layer='lbr_private_use'] {
-    polygon-fill: #fecc5c;
-    line-color: #B38E3B;
-    line-clip: false;
-    polygon-clip: false;
-  }
   [layer='lbr_mineral_development_agreements'] {
     polygon-fill: #fdbf6f;
     line-color: #fdbf6f;
