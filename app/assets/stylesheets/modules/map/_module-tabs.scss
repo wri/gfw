@@ -68,7 +68,6 @@ $w-control: 44px;
             }
           }
           &.disabled{
-            pointer-events: none;
             cursor: default;
             svg{
               opacity: 0.5;
