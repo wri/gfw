@@ -140,6 +140,7 @@ define([
                 ST_YMIN(the_geom) AS ymin, \
                 tileurl, \
                 does_wrapper, \
+                user_data, \
                 true AS visible \
               FROM \
                 '+window.gfw.layer_spec+' \
