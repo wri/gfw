@@ -7,10 +7,10 @@
 }
 
 #layer[change="Gain"] {
-   polygon-fill: #ff00d3;
+   polygon-fill: #195ab5;
 }
 #layer[change="Loss"] {
-   polygon-fill: #195ab5;
+   polygon-fill: #ff00d3;
 }
 #layer[change="Cover"] {
    polygon-fill: #05ffaa;
