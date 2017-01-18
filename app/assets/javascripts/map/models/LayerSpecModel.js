@@ -63,7 +63,10 @@ define([
       "khm_eco_land_conc",
       "usa_forest_ownership",
       "idn_peat_lands",
-      "pak_user_mangroves",      
+      "pak_user_mangroves",
+      "sen_user_protected_areas",
+      "ecu_user_protected_areas",
+      "bol_user_fire_frequency",
       // PEOPLE
       "resource_rights",
       "cmr_resource_rights",

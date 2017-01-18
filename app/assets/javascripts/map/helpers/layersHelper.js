@@ -164,6 +164,9 @@ define([
   'map/views/layers/LbrMinDevAg',
   'map/views/layers/LbrDevExL',
   'map/views/layers/PakUserMangrovesLayer',
+  'map/views/layers/SenUserProtectedAreasLayer',
+  'map/views/layers/EcuUserProtectedAreasLayer',
+  'map/views/layers/BolUserFireFrequencyLayer',
   // high resolution maps
   'map/views/layers/UrthecastLayer',
   // Layer dialog templates
@@ -341,7 +344,10 @@ define([
   LbrMinExL,
   LbrMinDevAg,
   LbrDevExL,
-  PakUserMangrovesLayer,  
+  PakUserMangrovesLayer, 
+  SenUserProtectedAreasLayer, 
+  EcuUserProtectedAreasLayer,
+  BolUserFireFrequencyLayer,
   //highres layers
   UrthecastLayer,
   // Layer dialog templates
@@ -863,6 +869,15 @@ define([
     },
     pak_user_mangroves: {
       view: PakUserMangrovesLayer
+    },
+    sen_user_protected_areas: {
+      view: SenUserProtectedAreasLayer
+    },
+    ecu_user_protected_areas: {
+      view: EcuUserProtectedAreasLayer
+    },
+    bol_user_fire_frequency: {
+      view: BolUserFireFrequencyLayer
     },
     nothing: {
     }
