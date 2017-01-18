@@ -35,29 +35,29 @@ $w-control: 44px;
           @media (min-width: $br-mobileMap){
             float: none;
             width: 33.33333%;
-            
+
             &:first-child{
               border-left: none;
             }
-            
+
             &:hover{
               background: $light;
-              
+
               .tooltipmap{
                 opacity: 1;
                 visibility: visible;
               }
             }
           }
-          
+
           &:active{ background: darken($light,5%);}
-          
+
           &.active{ background: $white;}
-          
+
           &.inactive {
             background: #EEEEEE;
-            
-            &:hover { 
+
+            &:hover {
               background: lighten(#EEEEEE, 5%);
             }
           }
@@ -104,7 +104,7 @@ $w-control: 44px;
   .content {
     display: none;
     position: relative;
-    
+
     &.active {
       display: block;
     }
@@ -117,19 +117,19 @@ $w-control: 44px;
       &.-last {
         margin: 0 0 20px;
       }
-      
+
       h2 {
         font-size: 21px;
         padding: 0 0 15px;
         text-align: center;
         span {
           color: $cGreen;
-          &.source{ 
+          &.source{
             cursor: pointer;
           }
         }
       }
-      
+
       p {
         button {
           margin: 7px auto 0;
@@ -146,14 +146,14 @@ $w-control: 44px;
         max-width: 80%;
         left: 50%;
         transform: translate(-50%,0);
-        
+
         li {
           padding: 5px 0 0;
-          
-          &:first-child{ 
+
+          &:first-child{
             margin: 0;
           }
-          
+
           .source {
             @extend .info-icon;
             display: inline-block;
@@ -167,7 +167,7 @@ $w-control: 44px;
     ul {
       .tab-content {
         display: none;
-        
+
         &.selected {
           display: block;
         }
@@ -199,7 +199,7 @@ $w-control: 44px;
 
       .btn {
         width: 100%;
-        
+
         &.-invisible {
           display: none;
         }
@@ -216,9 +216,55 @@ $w-control: 44px;
     }
 
     &.one{
-      li { 
+      li {
         width: 100%;
       }
+    }
+  }
+
+  &.-layer-nav {
+    width: 200px;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    background: none;
+
+    nav {
+      ul {
+        float: none;
+        padding-right: 0;
+        display: flex;
+
+        li {
+          width: auto;
+          height: 34px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex: 1;
+          top: 0;
+          margin: 0;
+          padding: 0;
+          font-weight: 300;
+          font-size: 12px;
+          text-transform: uppercase;
+
+          &.inactive {
+            border-bottom: 1px solid #e5e5df;
+          }
+        }
+      }
+    }
+
+    .layer-title {
+      width: 140px;
+    }
+
+    .content {
+      font-size: 14px;
+      min-height: 80px;
     }
   }
 }
@@ -233,19 +279,19 @@ $w-control: 44px;
     &.-last {
       margin: 0 0 20px;
     }
-    
+
     h2 {
       font-size: 21px;
       padding: 0 0 15px;
       text-align: center;
       span {
         color: $cGreen;
-        &.source{ 
+        &.source{
           cursor: pointer;
         }
       }
     }
-    
+
     p {
       button {
         margin: 7px auto 0;
@@ -262,14 +308,14 @@ $w-control: 44px;
       max-width: 80%;
       left: 50%;
       transform: translate(-50%,0);
-      
+
       li {
         padding: 5px 0 0;
-        
-        &:first-child{ 
+
+        &:first-child{
           margin: 0;
         }
-        
+
         .source {
           @extend .info-icon;
           display: inline-block;
@@ -283,7 +329,7 @@ $w-control: 44px;
   ul {
     .tab-content {
       display: none;
-      
+
       &.selected {
         display: block;
       }
