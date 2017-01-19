@@ -12,9 +12,9 @@ define([
   var SenUserProtectedAreaLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: "SELECT \'{tableName}\' as tablename, cartodb_id, the_geom_webmercator, area_ha, date_crea, iucn_cat, legal_des, name, source , \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}" ,
+      sql: 'SELECT cartodb_id, the_geom_webmercator, \'{tableName}\' as tablename, area_ha, date_crea, iucn_cat, legal_des, name, source , \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}',
       infowindow: true,
-      interactivity: 'cartodb_id, area_ha, date_crea, iucn_cat, legal_des, name, source, analysis',
+      interactivity: 'cartodb_id, tablename, area_ha, date_crea, iucn_cat, legal_des, name, source, analysis',
       analysis: true
     }
     
