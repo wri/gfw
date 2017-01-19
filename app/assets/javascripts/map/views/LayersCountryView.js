@@ -33,6 +33,7 @@ define([
     })),
 
     events: {
+      'click .tab' : 'toggleTabs',
       'change #layers-country-select' : 'changeIso',
       'click #layers-country-reset' : 'resetIso',
       'click #layers-country-analyze' : 'analyzeIso'
@@ -53,7 +54,8 @@ define([
         countries: this.countries,
         country: this.model.get('country'),
         countryName: this.model.get('countryName') || 'Country',
-        countryLayers: this.model.get('countryLayers')
+        countryGFWLayers: this.getCountriesGFWLayers(),
+        countryUserLayers: this.getCountriesUserLayers()
       }));
 
       this.cache();
@@ -67,6 +69,12 @@ define([
 
       this.$btnAnalysis = this.$el.find('#layers-country-analyze');
       this.$btnSubscribe = this.$el.find('#layers-country-subscribe');
+
+      // Tabs
+      this.$tabs = this.$el.find('.tab');
+      this.$tabList = this.$el.find('.tab-list');
+      this.$tabsContent = this.$el.find('.tab-content');
+      this.$container = this.$el.find('.content');
     },
 
     listeners: function() {
@@ -97,6 +105,14 @@ define([
 
     renderAtlas: function(data) {
       this.$atlas.html(this.templateAtlas(data));
+    },
+
+    getCountriesGFWLayers: function() {
+      return _.where(this.model.get('countryLayers'), { user_data: false });
+    },
+
+    getCountriesUserLayers: function() {
+      return _.where(this.model.get('countryLayers'), { user_data: true });
     },
 
     // SETTERS
@@ -158,6 +174,29 @@ define([
     setSubscribeButtonStatus: function(boolean) {
       this.$btnSubscribe.toggleClass('-disabled', !boolean);
     },
+
+    toggleTabs: function(e){
+      if ($(e.currentTarget).hasClass('active')) {
+        // Close all tabs and reset tabs styles
+        this.$container.removeClass('active')
+        this.$tabs.removeClass('inactive active');
+        this.$tabsContent.removeClass('selected');
+      } else {
+        if (!$(e.currentTarget).hasClass('disabled')) {
+          // Open current tab
+          var id = $(e.currentTarget).data('tab');
+          this.$container.addClass('active');
+
+          // tabs
+          this.$tabs.removeClass('active').addClass('inactive');
+          $(e.currentTarget).removeClass('inactive').addClass('active');
+
+          // tabs content
+          this.$tabsContent.removeClass('selected');
+          $('#'+ id).addClass('selected');
+        }
+      }
+    }
 
   });
 

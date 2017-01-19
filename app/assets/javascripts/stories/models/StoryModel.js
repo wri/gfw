@@ -26,6 +26,7 @@ define([
         attributes.id = response.data.id;
       } else {
         attributes = response.attributes;
+        attributes.id = response.id;
       }
 
       if (this.edit && attributes.media) {
