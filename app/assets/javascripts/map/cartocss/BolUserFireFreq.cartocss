@@ -1,8 +1,8 @@
 #bol_user_fire_frequency {
    polygon-opacity: 0.7;
    line-color: #FFF;
-   line-width: 0.5;
-   line-opacity: 1;
+   line-width: 0;
+   line-opacity: 0;
 
 #bol_user_fire_frequency[fire_freq=1] {
    polygon-fill: #5b3f95;
@@ -21,6 +21,9 @@
 }
 #bol_user_fire_frequency[fire_freq=14] {
    polygon-fill: #ba0040;
+}
+#bol_user_fire_frequency[fire_freq=15] {
+   polygon-fill: #3f0000;
 }
 #bol_user_fire_frequency[fire_freq=2] {
    polygon-fill: #445796;
