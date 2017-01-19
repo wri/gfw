@@ -12,9 +12,9 @@ define([
   var EcuUserProtectedAreasLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: "SELECT \'{tableName}\' as tablename, cartodb_id, the_geom_webmercator, contact, area_ha, date_crea AS date_created, data_cite as citation, data_funct, data_sourc as source, iucn_cat, name, geog_cover, legal_des, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}" ,
+      sql: 'SELECT cartodb_id, the_geom_webmercator, \'{tableName}\' AS tablename, area_ha, data_sourc as source, name, legal_des, {analysis} AS analysis, \'{tableName}\' AS layer FROM {tableName}',
       infowindow: true,
-      interactivity: 'cartodb_id, contact, area_ha, data_funct, citation, source, name, geog_cover, legal_des, analysis, iucn_cat, date_created',
+      interactivity: 'cartodb_id, tablename, area_ha, source, name, legal_des, analysis',
       analysis: true
     }
     
