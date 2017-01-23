@@ -77,7 +77,7 @@ define([
     el: '#contributeDataView',
 
     model: new (Backbone.Model.extend({
-      urlRoot: window.gfw.config.GFW_API_HOST_NEW_API + '/contribution-data/',
+      urlRoot: window.gfw.config.GFW_API_HOST_NEW_API + '/form/contribution-data/',
       sync: function(method, model, options) {
         options || (options = {});
 
@@ -90,7 +90,7 @@ define([
         }
 
         return Backbone.sync.call(this, method, model, options);
-      },      
+      },
     })),
 
     events: {
