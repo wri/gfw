@@ -170,7 +170,7 @@ define([
           var isos = _.uniq(_.pluck(layers, 'iso'));
 
           this.$countryField.html(this.templateCountries({
-            name: 'Select an area from a country-specific data set *',
+            name: 'Select an area from a country-specific data set',
             placeholder: 'Select a country...',
             countries: this._getParsedCountries(isos)
           }));
@@ -189,7 +189,7 @@ define([
     renderLayers: function() {
       this.$layersField.html(this.templateLayers({
         id: 'select-layers',
-        name: 'Select an area from a global data set *',
+        name: 'Select an area from a global data set',
         placeholder: 'Select a data set...',
         layers: this._getParsedLayers(),
         hint: ''
