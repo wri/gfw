@@ -62,7 +62,7 @@ define([
   'text!map/templates/legend/mex_forest_rest.handlebars',
   'text!map/templates/legend/lbr_mining.handlebars',
   'text!map/templates/legend/lbr_forest.handlebars',
-  'text!map/templates/legend/lbr_community.handlebars'
+  'text!map/templates/legend/lbr_community.handlebars',
   'text!map/templates/legend/bol_user_fire_frequency.handlebars',
 ], function(_, Handlebars, Presenter, datasetsHelper, tpl, tplMore, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
