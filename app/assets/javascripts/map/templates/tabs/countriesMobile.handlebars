@@ -10,51 +10,122 @@
           <li><a class="btn gray uppercase little" href="/country/{{this.country}}">Country profile</a></li>
         </ul>
         <div id="countries-more">
-        </div>        
+        </div>
       </div>
-      
-      {{!-- Check if there are country layers --}}
-      {{#if countryLayers}}
-      
-      <ul class="layers-list scroll-thin-dark">
-        {{#each countryLayers}}
-          <li class="{{#if this.does_wrapper}}wrapped-layer{{else}}layer{{/if}}" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">
-            <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">
-              {{this.title}}
-              {{#if this.source_json}}
-                <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+
+      <div id="module-tabs-mobile" class="module module-tabs module-toggle -layer-nav -mobile">
+        <header>
+          <nav class="noselect">
+            <ul class="tab-list">
+              <li id="country-layers-gfw-data-tab-button-mobile" class="tab active" data-tab="country-layers-gfw-data-tab-mobile">GFW Data</li>
+              <li id="country-layers-users-data-tab-button-mobile" class="tab inactive" data-tab="country-layers-users-data-tab-mobile">User Data</li>
+            </ul>
+          </nav>
+        </header>
+        <div class="content active">
+          <ul>
+            <li id="country-layers-gfw-data-tab-mobile" class="tab-content selected">
+
+              {{!-- LAYERS --}}
+              {{#if countryGFWLayers}}
+              <ul class="layers-list scroll-thin-dark">
+                {{#each countryGFWLayers}}
+                  <li class="{{#if this.does_wrapper}}wrapped-layer{{else}}layer{{/if}}" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">
+                    <span class="onoffswitch"><span></span></span>
+                    <span class="layer-title">
+                      {{this.title}}
+                      {{#if this.source_json}}
+                        <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                      {{else}}
+                        <a href='#' data-source='{{this.slug}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                      {{/if}}
+                    </span>
+                    {{#if this.subtitle}}
+                      <span class="layer-info">{{this.subtitle}}</span>
+                    {{/if}}
+                    {{#if this.does_wrapper}}
+                      <span class="does_wrapper">
+                        <span class="layer-info">
+                          {{#each this.wrappers}}
+                          <label data-layer="{{this.slug}}" class="layer wrapped">
+                            <span></span>
+                            <input type="radio" />{{this.radio_title}}
+                          </label>
+                          {{/each}}
+                        </span>
+                      </span>
+                    {{/if}}
+                  </li>
+                {{/each}}
+              </ul>
               {{else}}
-                <a href='#' data-source='{{this.slug}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                <div class="country-description">
+                  <p>GFW doesn't have additional data for this country yet. You can:</p>
+                  <ul>
+                    <li><a href="#" class="source" data-source="view_existing_global_data">View global datasets</a> for this area</li>
+                    <li><a href="/contribute-data" target="_blank">Add your own data</a> to the GFW Interactive Map</li>
+                    <li><a href="/country/{{this.country}}" target="_blank">View the country profile</a> page</li>
+                  </ul>
+                  {{!-- <p>For now, <a href="#" class="source" data-source="view_existing_global_data">view global datasets</a> for this area, <a href="#" class="data-suggestion-link" target="_blank">suggest your own</a>, or use the buttons below to see statistics and infographics for this country.</p> --}}
+                </div>
               {{/if}}
-            </span>
-            {{#if this.subtitle}}
-              <span class="layer-info">{{this.subtitle}}</span>
-            {{/if}}
-            {{#if this.does_wrapper}}
-              <span class="does_wrapper">
-                <span class="layer-info">
-                  {{#each this.wrappers}}
-                  <label data-layer="{{this.slug}}" class="layer wrapped">
-                    <span></span>
-                    <input type="radio" />{{this.title}}
-                  </label>
-                  {{/each}}
-                </span>                        
-              </span>
-            {{/if}}
-          </li>
-        {{/each}}
-      </ul>
 
-      {{else}}
+            </li>
+            <li id="country-layers-users-data-tab-mobile" class="tab-content">
+              {{!-- LAYERS --}}
+              {{#if countryUserLayers}}
+              <ul class="layers-list scroll-thin-dark">
+                {{#each countryUserLayers}}
+                  <li class="{{#if this.does_wrapper}}wrapped-layer{{else}}layer{{/if}}" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">
+                    <span class="onoffswitch"><span></span></span>
+                    <span class="layer-title">
+                      {{this.title}}
+                      {{#if this.source_json}}
+                        <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                      {{else}}
+                        <a href='#' data-source='{{this.slug}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                      {{/if}}
+                    </span>
+                    {{#if this.subtitle}}
+                      <span class="layer-info">{{this.subtitle}}</span>
+                    {{/if}}
+                    {{#if this.does_wrapper}}
+                      <span class="does_wrapper">
+                        <span class="layer-info">
+                          {{#each this.wrappers}}
+                          <label data-layer="{{this.slug}}" class="layer wrapped">
+                            <span></span>
+                            <input type="radio" />{{this.radio_title}}
+                          </label>
+                          {{/each}}
+                        </span>
+                      </span>
+                    {{/if}}
+                  </li>
+                {{/each}}
+              </ul>
+              {{else}}
+                <div class="country-description">
+                  <p>GFW doesn't have additional data for this country yet. You can:</p>
+                  <ul>
+                    <li><a href="#" class="source" data-source="view_existing_global_data">View global datasets</a> for this area</li>
+                    <li><a href="/contribute-data" target="_blank">Add your own data</a> to the GFW Interactive Map</li>
+                    <li><a href="/country/{{this.country}}" target="_blank">View the country profile</a> page</li>
+                  </ul>
+                  {{!-- <p>For now, <a href="#" class="source" data-source="view_existing_global_data">view global datasets</a> for this area, <a href="#" class="data-suggestion-link" target="_blank">suggest your own</a>, or use the buttons below to see statistics and infographics for this country.</p> --}}
+                </div>
+              {{/if}}
 
-        <div class="country-description">
-          <p>Local datasets coming soon! </p>
-          <p>For now, <a href="#" class="source" data-source="view_existing_global_data">view global datasets</a> for this area, <a href="#" class="data-suggestion-link" target="_blank">suggest your own</a>, or use the buttons below to see statistics and infographics for this country.</p>
+              <div class="country-description">
+                <div class="country-add">
+                  <p><a href="/contribute-data" target="_blank">Add your own data</a> to the GFW Interactive Map</p>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
 
-      {{/if}}
+      </div>
 
     {{else}}
 
@@ -75,6 +146,6 @@
       </ul>
 
     {{/if}}
-    
+
   </div>
  </div>

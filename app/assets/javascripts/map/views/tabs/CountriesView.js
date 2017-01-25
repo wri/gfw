@@ -4,7 +4,7 @@
  */
 define([
   'backbone',
-  'underscore', 
+  'underscore',
   'chosen',
   'map/presenters/tabs/CountriesPresenter',
   'map/collections/CountryCollection',
@@ -38,7 +38,7 @@ define([
       // Layer click
       'click .layer': 'changeLayer',
       'click .wrapped-layer': 'changeWrappedLayer',
-      
+
       // Mobile Events
       'click #country-letters li' : 'changeLetter',
       'click #country-ul li' : 'changeIsoMobile',
@@ -76,7 +76,8 @@ define([
         countries: this.countries,
         country: this.model.get('country'),
         countryName: this.model.get('countryName') || 'Country',
-        countryLayers: this.model.get('countryLayers'),
+        countryGFWLayers: this.getCountriesGFWLayers(),
+        countryUserLayers: this.getCountriesUserLayers(),
         // mobile params
         alphabet: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
       }));
@@ -95,6 +96,9 @@ define([
 
       this.model.on('change:letter', this.setLetter.bind(this));
       this.model.on('change:letter', this.setCountryUl.bind(this));
+
+      // Mobile tabs-mobile
+      this.$el.delegate('.tab', 'click', this.toggleTabs.bind(this));
     },
 
     cache: function() {
@@ -134,15 +138,15 @@ define([
     },
 
     setCountry: function(iso) {
-      var country = (!!iso && !!iso.country) ? iso.country : null; 
+      var country = (!!iso && !!iso.country) ? iso.country : null;
       var countryName = (!!iso && !!iso.country) ? _.findWhere(this.countries, {iso: iso.country }).name : null;
       this.model.set('countryName', countryName);
       this.model.set('country', country);
       // Mobile
-      this.model.set('letter', null); 
+      this.model.set('letter', null);
 
       // Load the third button if it exists
-      this.presenter.countryMore();      
+      this.presenter.countryMore();
     },
 
     setCountryLayers: function() {
@@ -191,7 +195,7 @@ define([
     changeIso: function(e) {
       var country = this.$select.val();
       this.presenter.publishIso({
-        country: country, 
+        country: country,
         region: null
       });
     },
@@ -201,12 +205,12 @@ define([
       e && e.preventDefault() && e.stopPropagation();
       var is_source = $(e.target).hasClass('source') || $(e.target).parents().hasClass('source');
       var is_wrapped = $(e.target).hasClass('wrapped') || $(e.target).parents().hasClass('wrapped');
-      
+
       // this prevents layer change when you click in source link or in a wrapped layer
       if (!is_source && !is_wrapped) {
         var layerSlug = $(e.currentTarget).data('layer');
         this.publishToggleLayer(layerSlug);
-      }      
+      }
     },
 
     changeWrappedLayer: function(e) {
@@ -231,7 +235,7 @@ define([
 
         } else {
           var $selected = $layers.filter('.selected'),
-              index = ($layers.index($selected) == -1) ? 0 : $layers.index($selected);          
+              index = ($layers.index($selected) == -1) ? 0 : $layers.index($selected);
         }
 
         // Publish toggle layer
@@ -245,7 +249,13 @@ define([
       ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
     },
 
+    getCountriesGFWLayers: function() {
+      return _.where(this.model.get('countryLayers'), { user_data: false });
+    },
 
+    getCountriesUserLayers: function() {
+      return _.where(this.model.get('countryLayers'), { user_data: true });
+    },
 
 
 
@@ -253,7 +263,7 @@ define([
     changeIsoMobile: function(e) {
       var country = $(e.currentTarget).data('country');
       this.presenter.publishIso({
-        country: country, 
+        country: country,
         region: null
       });
     },
@@ -264,11 +274,37 @@ define([
           // Check if the current letter isn't enabled
           letter = (!$current.hasClass('-current')) ? $current.data('letter') : null;
       if (!disabled) {
-        this.model.set('letter', letter);  
+        this.model.set('letter', letter);
       }
-    },  
+    },
 
+    toggleTabs: function(e) {
+      // Tabs
+      var $tabs = this.$el.find('.tab');
+      var $tabsContent = this.$el.find('.tab-content');
+      var $container = this.$el.find('.content');
 
+      if ($(e.currentTarget).hasClass('active')) {
+        // Close all tabs and reset tabs styles
+        $container.removeClass('active')
+        $tabs.removeClass('inactive active');
+        $tabsContent.removeClass('selected');
+      } else {
+        if (!$(e.currentTarget).hasClass('disabled')) {
+          // Open current tab
+          var id = $(e.currentTarget).data('tab');
+          $container.addClass('active');
+
+          // tabs
+          $tabs.removeClass('active').addClass('inactive');
+          $(e.currentTarget).removeClass('inactive').addClass('active');
+
+          // tabs content
+          $tabsContent.removeClass('selected');
+          $('#'+ id).addClass('selected');
+        }
+      }
+    },
 
 
     // SELECTED LAYERS
@@ -276,7 +312,7 @@ define([
     // we need to differenciate between simple layers and wrapped layers
     _toggleSelected: function(layers) {
       var activeLayers = _.keys(layers);
-      
+
       _.each(this.model.get('countryLayers'), function(layer){
         if (!layer.wrappers) {
           // Toggle simple layers
@@ -284,10 +320,10 @@ define([
               $toggle = $layer.find('.onoffradio, .onoffswitch'),
               // Is selected?
               is_selected = _.contains(activeLayers, layer.slug);
-          
+
           $layer.toggleClass('selected', is_selected);
           $toggle.toggleClass('checked', is_selected).css('background', (is_selected) ? layer.title_color : '');
-        
+
         } else {
           // Toggle wrapped layers
           var $wraplayer = this.$el.find('[data-layer="'+layer.slug+'"]'),
@@ -300,7 +336,7 @@ define([
                 is_selected = _.contains(activeLayers, _layer.slug);
 
             $layer.toggleClass('selected', is_selected);
-            
+
             if (is_selected) {
               is_wrapSelected = true;
             }
