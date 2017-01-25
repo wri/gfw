@@ -15,10 +15,15 @@ define([
 
   'use strict';
 
-  var TILE_URL = 'https://storage.googleapis.com/forma-2016/projects/wri-datalab/f250_biweekly_alerts_2014{/z}{/x}{/y}';
-  var START_DATE = '2010-01-01';
-  var END_DATE = '2015-01-01';
-  var START_YEAR = 2010;
+  var TILE_URL = 'https://storage.googleapis.com/forma-2016/projects/wri-datalab/tile_tests/20161219/forma_ui_biweekly_20151219{/z}{/x}{/y}';
+  var START_DATE = '2012-01-01';
+  var END_DATE = '2016-12-31';
+  var START_YEAR = 2012;
+
+  var padNumber = function(number) {
+    var s = "00" + number;
+    return s.substr(s.length - 3);
+  };
 
   var Forma2016Layer = AnimatedCanvasLayerClass.extend({
 
@@ -92,14 +97,17 @@ define([
           var r = imgdata[pixelPos];
           var g = imgdata[pixelPos + 1];
           var b = imgdata[pixelPos + 2];
-          var timeLoss = (b + 256) * g;
+          var timeLoss = (255 * g) + b;
           var intensity = 0;
 
-          if (r > 0 || g > 0) {
-            intensity = 255;
-          }
-
           if (timeLoss >= start && timeLoss <= end) {
+            var band3_str = padNumber(imgdata[pixelPos].toString());
+            var intensity_raw = parseInt(band3_str.slice(1, 3), 10);
+            // Scale the intensity to make it visible
+            var intensity = intensity_raw * 55;
+            // Set intensity to 255 if it's > than that value
+            if (intensity > 255) { intensity = 255; }
+
             imgdata[pixelPos] = 220;
             imgdata[pixelPos + 1] = 102;
             imgdata[pixelPos + 2] = 153;
