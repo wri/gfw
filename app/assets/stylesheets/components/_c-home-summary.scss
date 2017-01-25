@@ -3,37 +3,74 @@
   background-color: $white;
   overflow: hidden;
 
-  @media screen and (min-width: $screen-m) {
-    padding: rem(60px) 0;
+  .slider {
+    width: 100%;
   }
-
-  .slider {}
 
   .frame {
     position: relative;
     font-size: 0;
     line-height: 0;
     white-space: nowrap;
+    padding: 0 rem(16px);
   }
 
   .slides {
     display: inline-block;
+    width: 100%;
   }
 
   .slide {
     position: relative;
     display: inline-block;
     white-space: normal;
+    padding-right: rem(16px);
+  }
+
+  .c-home-summary__arrow-button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: rem(50px);
+    margin: auto;
+    width: rem(60px);
+    height: rem(60px);
+    display: none;
+  }
+
+  @media screen and (min-width: $screen-m) {
+    padding: rem(60px) 0;
+
+    .c-home-summary__arrow-button {
+      display: block;
+    }
+
+    .frame {
+      padding: 0 rem(80px);
+    }
+
+    .slide {
+      padding-right: rem(40px);
+    }
   }
 }
 
 .c-home-summary-item {
-  width: rem(274px);
-  height: rem(362px);
-  margin-right: rem(14px);
+  position: relative;
+  width: 100%;
+  height: rem(360px);
   padding: rem(17px) rem(16px);
   background-color: $grey-light;
-  border: solid rem(1px) #d6d6d9;
+
+  &:before {
+    content: "";
+    position: absolute;
+    left: rem(-1px);
+    top: rem(-1px);
+    width: calc(100% + #{rem(2px)});
+    height: calc(100% + #{rem(2px)});
+    border: solid rem(1px) #d6d6d9;
+  }
 
   .c-home-summary-item__title {
     margin-bottom: rem(8px);
@@ -46,9 +83,7 @@
   }
 
   @media screen and (min-width: $screen-m) {
-    width: rem(494px);
-    height: rem(522px);
-    margin-right: rem(38px);
+    height: rem(520px);
     padding: rem(39px) rem(48px) rem(40px) rem(48px);
 
     .c-home-summary-item__title {
