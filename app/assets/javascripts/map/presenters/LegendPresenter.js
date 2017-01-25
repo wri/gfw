@@ -126,7 +126,11 @@ define([
       }
     },{
       'Timeline/date-change': function(layerSlug, date) {
-        this.status.set('startYear', date[0].year());
+        var startDate = date[0];
+        if (!moment.isMoment(startDate)) {
+          startDate = moment.utc(startDate);
+        }
+        this.status.set('startYear', startDate.year());
         this.updateLegend();
       }
     },
