@@ -62,7 +62,8 @@ define([
   'text!map/templates/legend/mex_forest_rest.handlebars',
   'text!map/templates/legend/lbr_mining.handlebars',
   'text!map/templates/legend/lbr_forest.handlebars',
-  'text!map/templates/legend/lbr_community.handlebars'
+  'text!map/templates/legend/lbr_community.handlebars',
+  'text!map/templates/legend/bol_user_fire_frequency.handlebars',
 ], function(_, Handlebars, Presenter, datasetsHelper, tpl, tplMore, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
@@ -70,7 +71,7 @@ define([
     gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl,
     rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl,
     paTpl, places2watchTPL, mex_landrightsTpl, mexPATpl, perPATpl,mex_land_coverTpl,mex_forest_conservTPL,mex_forest_prodTPL,mex_forest_restTPL, lbr_miningTPL,
-    lbr_forestTpl,lbr_communityTpl) {
+    lbr_forestTpl,lbr_communityTpl, bol_user_fire_frequencyTpl) {
 
   'use strict';
 
@@ -163,7 +164,8 @@ define([
       mex_land_cover:Handlebars.compile(mex_land_coverTpl),
       lbr_logging:Handlebars.compile(lbr_forestTpl),
       lbr_mineral_exploration_license:Handlebars.compile(lbr_miningTPL),
-      lbr_resource_rights:Handlebars.compile(lbr_communityTpl)
+      lbr_resource_rights:Handlebars.compile(lbr_communityTpl),
+      bol_user_fire_frequency:Handlebars.compile(bol_user_fire_frequencyTpl)
     },
 
     events: {

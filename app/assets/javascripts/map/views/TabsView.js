@@ -31,7 +31,7 @@ define([
       'click .tab-mobile' : 'toggleTabsMobile',
       'click .tab-mobile-close' : 'hideTabsMobile',
       'click .tab-mobile-reset-country' : 'resetCountry',
-      'click ul' : 'checkForestChangeAvailability'
+      'click li' : 'checkForestChangeAvailability'
     },
 
     template: Handlebars.compile(tpl),
@@ -203,7 +203,7 @@ define([
 
     checkForestChangeAvailability: function(e) {
       // If the user clicks the analysis icon and having this LI item an EVENT POINTER NONE style attribute, what the user actually clicks is the UL
-      if (e.target.tagName === 'UL' && $('#analysis-tab-button').hasClass('disabled')) {
+      if ($(e.currentTarget).data('tab') === 'analysis-tab' && $('#analysis-tab-button').hasClass('disabled')) {
         mps.publish('Notification/open', ['notification-select-forest-change-layer']);
       }
     }

@@ -89,13 +89,6 @@
     polygon-clip: false;
   }
 
-  [layer='can_logging'] {
-    polygon-fill: #fecc5c;
-    line-color: #B38E3B;
-    line-clip: false;
-    polygon-clip: false;
-  }
-
   [layer='cmr_logging'] {
     polygon-fill: #fecc5c;
     line-color: #B38E3B;
@@ -680,12 +673,6 @@
     polygon-clip: false;
   }
 
-  [layer='lbr_private_use'] {
-    polygon-fill: #fecc5c;
-    line-color: #B38E3B;
-    line-clip: false;
-    polygon-clip: false;
-  }
   [layer='lbr_mineral_development_agreements'] {
     polygon-fill: #fdbf6f;
     line-color: #fdbf6f;
@@ -698,4 +685,24 @@
     line-clip: false;
     polygon-clip: false;
   }
+  [layer='pak_user_mangroves'] {
+  polygon-fill: #fecc5c;
+  polygon-opacity: 0.7;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+}
+  [layer='sen_user_protected_areas'] {
+    polygon-fill: #fecc5c;
+    line-color: #b15928;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='ecu_user_protected_areas'] {
+    polygon-fill: #fecc5c;
+    line-color: #b15928;
+    line-clip: false;
+    polygon-clip: false;
+  }
+    
 }
