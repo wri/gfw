@@ -1,0 +1,25 @@
+.c-regular-button {
+  width: rem(200px);
+  height: rem(48px);
+  border-radius: rem(27px);
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &.-green {
+    background-color: $green-gfw;
+    color: $white;
+
+    &:hover {
+      background-color: darken($green-gfw, 10%);
+    }
+  }
+
+  @media screen and (min-width: $screen-m) {
+    height: rem(39px);
+  }
+}
