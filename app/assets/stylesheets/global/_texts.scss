@@ -13,6 +13,10 @@
     color: $font-color-3;
   }
 
+  &.-color-4 {
+    color: $font-color-4;
+  }
+
   &.-light {
     font-weight: 300;
   }
@@ -52,7 +56,16 @@
 
     @media screen and (min-width: $screen-m) {
       font-size: 30px;
-      line-height: 1.33;
+    }
+  }
+
+  &.-title-small {
+    font-size: 16px;
+    line-height: 1.5;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: 18px;
+      line-height: 2.22;
     }
   }
 
@@ -74,6 +87,16 @@
     @media screen and (min-width: $screen-m) {
       font-size: 30px;
       letter-spacing: -1px;
+    }
+  }
+
+  &.-paragraph-2 {
+    font-size: 16px;
+    line-height: 1.31;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: 18px;
+      line-height: 1.17;
     }
   }
 }
