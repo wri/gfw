@@ -1,5 +1,5 @@
 /* FONTS */
-@import 'https://fonts.googleapis.com/css?family=Fira+Sans:300,400,400i,500';
+@import 'https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500';
 $font-family-1: 'Fira Sans', sans-serif;
 
 /* SCREENS */
@@ -14,6 +14,7 @@ $screen-xxl: 2000px;
 $white: #ffffff;
 $green-gfw: #97be32;
 $grey-light: #f7f7f7;
+$grey-dark: #d6d6d9;
 $slate: #555555;
 $slate-dark: #444444;
 
@@ -21,3 +22,4 @@ $slate-dark: #444444;
 $font-color-1: $white;
 $font-color-2: $slate;
 $font-color-3: $slate-dark;
+$font-color-4: $green-gfw;

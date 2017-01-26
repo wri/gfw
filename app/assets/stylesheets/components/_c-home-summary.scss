@@ -77,7 +77,7 @@
     top: rem(-1px);
     width: calc(100% + #{rem(2px)});
     height: calc(100% + #{rem(2px)});
-    border: solid rem(1px) #d6d6d9;
+    border: solid rem(1px) $grey-dark;
   }
 
   .c-home-summary-item__title {

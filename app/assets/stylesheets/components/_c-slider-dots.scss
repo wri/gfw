@@ -4,13 +4,13 @@
   .c-slider-dots__item {
     position: relative;
     display: inline-block;
-    width: rem(15px);
-    height: rem(15px);
-    border-radius: 50%;
+    width: rem(13px);
+    height: rem(13px);
+    border-radius: 100%;
     cursor: pointer;
 
     &:not(:last-of-type) {
-      margin-right: rem(25px);
+      margin-right: rem(27px);
     }
 
     &:before {
@@ -24,15 +24,15 @@
       width: rem(9px);
       height: rem(9px);
       background-color: #e0e0e4;
-      border-radius: 50%;
+      border-radius: 100%;
       transition: all 0.1s ease-out;
     }
 
     &.active {
 
       &:before {
-        width: rem(15px);
-        height: rem(15px);
+        width: rem(13px);
+        height: rem(13px);
         background-color: $green-gfw;
       }
     }
