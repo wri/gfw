@@ -6,6 +6,10 @@
 
   }
 
+  .c-home-use-examples__title {
+    opacity: 0.5;
+  }
+
   .c-home-use-examples__users {
     display: flex;
     justify-content: space-around;
@@ -63,7 +67,7 @@
   @media screen and (min-width: $screen-m) {
 
     .c-home-use-examples__content {
-      padding: rem(50px) 0 rem(99px) 0;
+      padding: rem(50px) 0 rem(100px) 0;
     }
 
     .c-home-use-examples__users {
@@ -71,7 +75,7 @@
     }
 
     .c-home-use-examples__testimonials {
-      margin-top: rem(68px);
+      margin-top: rem(67px);
     }
 
     .c-home-use-examples__slider-dots {
