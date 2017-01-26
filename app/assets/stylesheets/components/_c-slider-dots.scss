@@ -1,0 +1,40 @@
+.c-slider-dots {
+  font-size: 0;
+
+  .c-slider-dots__item {
+    position: relative;
+    display: inline-block;
+    width: rem(15px);
+    height: rem(15px);
+    border-radius: 50%;
+    cursor: pointer;
+
+    &:not(:last-of-type) {
+      margin-right: rem(25px);
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: rem(9px);
+      height: rem(9px);
+      background-color: #e0e0e4;
+      border-radius: 50%;
+      transition: all 0.1s ease-out;
+    }
+
+    &.active {
+
+      &:before {
+        width: rem(15px);
+        height: rem(15px);
+        background-color: $green-gfw;
+      }
+    }
+  }
+}

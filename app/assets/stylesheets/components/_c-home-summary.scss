@@ -4,6 +4,7 @@
   overflow: hidden;
 
   .slider {
+    position: relative;
     width: 100%;
   }
 
@@ -36,6 +37,13 @@
     width: rem(60px);
     height: rem(60px);
     display: none;
+  }
+
+  .c-home-summary__slider-dots {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: rem(-37px);
   }
 
   @media screen and (min-width: $screen-m) {
