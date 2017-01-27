@@ -1,4 +1,5 @@
 .c-home-use-examples {
+  position: relative;
   background-color: $grey-light;
   border-top: rem(1px) solid $grey-dark;
 
@@ -56,7 +57,10 @@
   }
 
   .c-home-use-examples__cover {
-    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
     height: 100%;
     background-size: cover;
     background-repeat: no-repeat;
