@@ -60,7 +60,17 @@
     }
   }
 
-  &.-title-small {
+  &.-title-s {
+    font-size: 16px;
+    line-height: 1.88;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: 21px;
+      line-height: 1.43;
+    }
+  }
+
+  &.-title-xs {
     font-size: 16px;
     line-height: 1.5;
 

@@ -81,13 +81,28 @@
   }
 
   .c-home-summary-item__title {
+    position: relative;
     margin-bottom: rem(8px);
+    z-index: 2;
+  }
+
+  .c-home-summary-item__paragraph {
+    position: relative;
+    z-index: 2;
   }
 
   .c-home-summary-item__button {
     position: absolute;
     left: rem(24px);
     bottom: rem(24px);
+    z-index: 2;
+  }
+
+  .c-home-summary-item__background {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
   }
 
   @media screen and (min-width: $screen-m) {
