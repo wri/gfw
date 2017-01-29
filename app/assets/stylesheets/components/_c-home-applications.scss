@@ -69,9 +69,25 @@
     height: 100%;
     z-index: -1;
 
-    [data-section="fires"] {
+    li {
+      position: relative;
       width: 100%;
       height: 100%;
+    }
+
+    img {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      width: 100%;
+      max-width: rem(850px);
+      padding: 0 rem(80px);
+      z-index: 1;
+    }
+
+    [data-section="fires"] {
       background-color: #f22542;
     }
   }

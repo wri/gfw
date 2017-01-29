@@ -3,7 +3,10 @@ $item-height-screen-m: rem(391px);
 $item-padding-screen-m: rem(40px);
 
 .c-home-news {
-  background-color: dodgerblue;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url('/assets/home/news_background.jpg');
 
   .c-home-news__title {
     text-align: center;
@@ -29,6 +32,7 @@ $item-padding-screen-m: rem(40px);
   .slide {
     position: relative;
     display: inline-block;
+    white-space: normal;
   }
 
   .c-home-news__button {
@@ -57,10 +61,19 @@ $item-padding-screen-m: rem(40px);
 
 .c-home-news-item {
   width: 100%;
-  height: $item-height;
+  min-height: $item-height;
   background-color: $white;
 
+  .c-home-news-item__description {
+
+  }
+
   @media screen and (min-width: $screen-m) {
-    height: $item-height-screen-m;
+    min-height: $item-height-screen-m;
+    padding: rem(122px) rem(38px) rem(30px) rem(38px);
+
+    .c-home-news-item__description {
+      margin-top: rem(20px);
+    }
   }
 }
