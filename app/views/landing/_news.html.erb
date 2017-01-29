@@ -1,0 +1,30 @@
+<div class="c-home-news">
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="c-home-news__title text -title-big -light -color-1">New in Global Forest Watch</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="slider js_slider">
+        <div class="frame js_frame">
+          <ul class="slides js_slides">
+            <% (0..3).each do |i| %>
+              <li class="slide js_slide">
+                <div class="c-home-news-item">
+                  <div>CUSTOMIZE REPORTS</div>
+                  <div>To show the data you want to see, the way you want to see it. Combine your indicators then save, print or share your report with the world.</div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+          <div class="c-home-news__arrow-button js_prev prev"></div>
+          <div class="c-home-news__arrow-button js_next next"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="c-home-news__button">
+    <%= render 'shared/buttons/regular', text: 'MY GFW', color: 'white' %>
+  </div>
+</div>
