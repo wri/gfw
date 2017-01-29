@@ -19,6 +19,15 @@
     }
   }
 
+  &.-white {
+    background-color: $white;
+    color: $green-gfw;
+
+    &:hover {
+      background-color: darken($white, 10%);
+    }
+  }
+
   @media screen and (min-width: $screen-m) {
     height: rem(39px);
   }
