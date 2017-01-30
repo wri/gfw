@@ -3,15 +3,15 @@
     <div class="slider js_slider">
       <div class="frame js_frame">
         <ul class="slides js_slides">
-          <% (0..3).each do |i| %>
+          <% cards.each do |card| %>
             <li class="slide js_slide small-12 medium-6">
               <div class="c-home-summary-item">
-                <div class="c-home-summary-item__title text -title -light -color-2">Be the first to know about deforestation</div>
-                <div class="c-home-summary-item__paragraph text -paragraph -color-2">Get email notifications straight to your inbox as forest clearing happens with our subscription feature.</div>
+                <div class="c-home-summary-item__title text -title -light -color-2"><%= card['title'] %></div>
+                <div class="c-home-summary-item__paragraph text -paragraph -color-2"><%= card['paragraph'] %></div>
                 <div class="c-home-summary-item__button">
-                  <%= render 'shared/buttons/regular', text: 'CREATE A SUBSCRIPTION', color: 'green' %>
+                  <%= render 'shared/buttons/regular', text: card['button'], color: 'green', url: card['url'] %>
                 </div>
-                <img class="c-home-summary-item__background" src="/assets/home/card-<%= i %>@2x.png" width="482" />
+                <img class="c-home-summary-item__background" src="/assets/home/card-0@2x.png" width="482" />
               </div>
             </li>
           <% end %>

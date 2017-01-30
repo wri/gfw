@@ -1,14 +1,17 @@
 .c-home-use-examples {
   position: relative;
   background-color: $grey-light;
-  border-top: rem(1px) solid $grey-dark;
 
   .c-home-use-examples__content {
-
+    padding: rem(23px) 0;
   }
 
   .c-home-use-examples__title {
     opacity: 0.5;
+
+    span:before {
+      content: attr(data-gfw-text);
+    }
   }
 
   .c-home-use-examples__users {
@@ -50,6 +53,14 @@
     }
   }
 
+  .c-home-use-examples__testimonials-container {
+    display: none;
+
+    &.-selected {
+      display: block;
+    }
+  }
+
   .c-home-use-examples__testimonials {
 
     li {
@@ -82,12 +93,18 @@
     background-repeat: no-repeat;
     background-position: center;
     background-image: url('/assets/home/man-ipad.jpg');
+    display: none;
   }
 
   @media screen and (min-width: $screen-m) {
+    border-top: rem(1px) solid $grey-dark;
 
     .c-home-use-examples__content {
       padding: rem(50px) 0 rem(100px) 0;
+    }
+
+    .c-home-use-examples__title span:before {
+      content: attr(data-gfw-text-screen-m);
     }
 
     .c-home-use-examples__users {
@@ -100,6 +117,13 @@
 
     .c-home-use-examples__slider-dots {
       margin-top: rem(16px);
+    }
+  }
+
+  @media screen and (min-width: $screen-l) {
+
+    .c-home-use-examples__cover {
+      display: block;
     }
   }
 }

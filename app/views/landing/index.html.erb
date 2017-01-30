@@ -1,6 +1,6 @@
 <%= render 'shared/svg_icons_home' %>
-<%= render 'cover' %>
-<%= render 'summary' %>
-<%= render 'use_examples' %>
+<%= render 'cover', title: @title, description: @desc %>
+<%= render 'summary', cards: @summary %>
+<%= render 'use_examples', uses: @uses %>
 <%= render 'applications' %>
 <%= render 'news' %>

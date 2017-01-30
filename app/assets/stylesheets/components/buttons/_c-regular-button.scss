@@ -1,4 +1,5 @@
 .c-regular-button {
+  position: relative;
   width: rem(200px);
   height: rem(48px);
   border-radius: rem(27px);
@@ -26,6 +27,14 @@
     &:hover {
       background-color: darken($white, 10%);
     }
+  }
+
+  .c-regular-button__linker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 
   @media screen and (min-width: $screen-m) {
