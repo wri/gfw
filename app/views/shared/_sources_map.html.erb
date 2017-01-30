@@ -6680,22 +6680,118 @@
 <article id="webhook">
   <div class='source_body'>
     <div class='source_summary'>
-      <p>Example of payload:</p>
+      <strong class='source_title'>What does the payload look like?</strong>
+
+      <p>We use the following standard:</p>
+
+      <p>All alerts include the following information:</p>
 
       <div class='source_snippet'>
         <pre>
           <code>
             {
-              <span class="json-key">layerSlug</span>: <span class="json-string">"alert-slug"</span>
+              <span class="json-key">layerSlug</span>: <span class="json-string">"layer slug"</span>
               <span class="json-key">alert_name</span>: <span class="json-string">"subscription name"</span>,
               <span class="json-key">selected_area</span>: <span class="json-string">"area in meters"</span>,
               <span class="json-key">unsubscribe_url</span>: <span class="json-string">"url"</span> ,
-              <span class="json-key">subscriptions_url</span>: <span class="json-string">"http://www.globalforestwatch.org/my_gfw/subscriptions"</span>,
+              <span class="json-key">subscriptions_url</span>: <span class="json-string">"url of the user subscriptions (../my_gfw/subscriptions)"</span>,
               <span class="json-key">alert_link</span>: <span class="json-string">"url of the map with the subscription"</span>,
-              <span class="json-key">alert_type</span>: <span class="json-string">"glad-alerts"</span>,
-              <span class="json-key">alert_summary</span>: <span class="json-string">"Alert summary"</span>,
-              <span class="json-key">alert_date_begin</span>: <span class="json-string">"2016-12-16"</span>,
-              <span class="json-key">alert_date_end</span>: <span class="json-string">"2016-12-29"</span>
+              <span class="json-key">alert_type</span>: <span class="json-string">"description of the layer"</span>,
+              <span class="json-key">alert_summary</span>: <span class="json-string">"description of the alert"</span>,
+              <span class="json-key">alert_date_begin</span>: <span class="json-string">"beginDate"</span>,
+              <span class="json-key">alert_date_end</span>: <span class="json-string">"endDate"</span>
+            }
+          </code>
+        </pre>
+      </div>
+
+      <p>VIIRS active fire alerts also include:</p>
+
+      <div class='source_snippet'>
+        <pre>
+          <code>
+            {
+              <span class="json-key">alert_count</span>: <span class="json-value">"number of alert"</span>,
+              <span class="json-key">map_image</span>: <span class="json-string">"url of the image"</span>,
+              <span class="json-key">fire_alerts</span>: [
+                {
+                  <span class="json-key">acq_date</span>: <span class="json-string">"date of the alert"</span>,
+                  <span class="json-key">acq_time</span>: <span class="json-string">"time of the alert"</span>,
+                  <span class="json-key">latitude</span>: <span class="json-string">"latitude in decimal degree"</span>,
+                  <span class="json-key">longitude</span>: <span class="json-string">"longitude in decimal degree"</span>
+                },
+                {...}
+              ],
+              <span class="json-key">alert_download</span>: <span class="json-value">"url"</span>
+            }
+          </code>
+        </pre>
+      </div>
+
+      <p>GLAD and Terra-i alerts also include:</p>
+
+      <div class='source_snippet'>
+        <pre>
+          <code>
+            {
+              <span class="json-key">alert_count</span>: <span class="json-value">"number of alert"</span>,
+              <span class="json-key">map_image</span>: <span class="json-string">"url of the image"</span>,
+              <span class="json-key">fire_alerts</span>: [
+                {
+                  <span class="json-key">acq_date</span>: <span class="json-string">"date of the alert"</span>,
+                  <span class="json-key">acq_time</span>: <span class="json-string">"time of the alert"</span>,
+                  <span class="json-key">confirmed</span>: <span class="json-boolean">"true or false"</span>,
+                  <span class="json-key">latitude</span>: <span class="json-string">"latitude in decimal degree"</span>,
+                  <span class="json-key">longitude</span>: <span class="json-string">"longitude in decimal degree"</span>
+                },
+                {...}
+              ],
+              <span class="json-key">alert_download</span>: <span class="json-value">"url"</span>
+            }
+          </code>
+        </pre>
+      </div>
+
+      <p>SAD alerts also include:</p>
+
+      <div class='source_snippet'>
+        <pre>
+          <code>
+            {
+              <span class="json-key">alert_count_degradation</span>: <span class="json-value">"num degradation alerts"</span>,
+              <span class="json-key">alert_count_deforestation</span>: <span class="json-value">"num deforestation alerts"</span>,
+              <span class="json-key">alerts</span>: [
+                {
+                  <span class="json-key">acq_date</span>: <span class="json-string">"date of the alert"</span>,
+                  <span class="json-key">acq_time</span>: <span class="json-string">"time of the alert"</span>,
+                  <span class="json-key">type</span>: <span class="json-string">"deforestation or degradation"</span>,
+                  <span class="json-key">latitude</span>: <span class="json-string">"latitude in decimal degree"</span>,
+                  <span class="json-key">longitude</span>: <span class="json-string">"longitude in decimal degree"</span>
+                },
+                {...}
+              ],
+              <span class="json-key">alert_download</span>: <span class="json-value">"url"</span>
+            }
+          </code>
+        </pre>
+      </div>
+
+      <p>User story alerts also include:</p>
+
+      <div class='source_snippet'>
+        <pre>
+          <code>
+            {
+              <span class="json-key">alert_count</span>: <span class="json-value">"number of stories"</span>,
+              <span class="json-key">stories</span>: [
+                {
+                  <span class="json-key">title</span>: <span class="json-string">"story title"</span>,
+                  <span class="json-key">description</span>: <span class="json-string">"story description"</span>,
+                  <span class="json-key">url</span>: <span class="json-string">"link to the GFW story"</span>,
+                  <span class="json-key">image</span>: <span class="json-string">"url to the image"</span>
+                },
+                {...}
+              ]
             }
           </code>
         </pre>
@@ -6708,7 +6804,150 @@
 <article id="webhook_description">
   <div class='source_body'>
     <div class='source_summary'>
-      <p>Text for Webhooks</p>
+
+      <strong class='source_title'>Do you need deforestation alerts sent directly to your application?</strong>
+      <p>Use our WebHooks to receive deforestation alerts in a machine readable format.</p>
+
+      <strong class='source_title'>How does it work?</strong>
+      <p>A WebHook is an HTTP callback: an HTTP POST that occurs when something happens. Global Forest Watch will POST a message to a URL on your webserver when new alerts are available for the area of interest you subscribed to. The payload of the POST request contains all of your subscription's information in a machine readable format. Your webserver must be capable of accepting POST requests at the given URL. You can implement your own logic on your webserver to process the incoming alerts and include them directly in your application.</p>
+
+      <strong class='source_title'>What information do I receive?</strong>
+      <p>We attach a JSON blob as a payload to the POST request. The blob includes general metadata for your subscription, the time period covered, the number of alerts, as well as a link to the GFW map. Depending on the type of subscription, you may receive additional information.</p>
+
+      <p>For fire and deforestation alerts, this includes:</p>
+      <ul class="bullets">
+        <li>A link to an image showing all of the alerts on map</li>
+        <li>A list of coordinate pairs representing the alerts themselves</li>
+      </ul>
+
+      <p>For user story alerts, this includes:</p>
+      <ul class="bullets">
+        <li>Title and description of the story</li>
+        <li>A link to an attached image</li>
+        <li>A link to the story itself</li>
+      </ul>
+
+      <strong class='source_title'></strong>
+      <p>We currently only send you the 10 most recent alerts. If there are more than 10 alerts, we will provide a link where you can download all alerts in <strong>CSV</strong> or <strong>GeoJSON</strong> format.</p>
+
+      <strong class='source_title'>What does the payload look like?</strong>
+
+      <p>We use the following standard:</p>
+
+      <p>All alerts include the following information:</p>
+
+      <div class='source_snippet'>
+        <pre>
+          <code>
+            {
+              <span class="json-key">layerSlug</span>: <span class="json-string">"layer slug"</span>
+              <span class="json-key">alert_name</span>: <span class="json-string">"subscription name"</span>,
+              <span class="json-key">selected_area</span>: <span class="json-string">"area in meters"</span>,
+              <span class="json-key">unsubscribe_url</span>: <span class="json-string">"url"</span> ,
+              <span class="json-key">subscriptions_url</span>: <span class="json-string">"url of the user subscriptions (../my_gfw/subscriptions)"</span>,
+              <span class="json-key">alert_link</span>: <span class="json-string">"url of the map with the subscription"</span>,
+              <span class="json-key">alert_type</span>: <span class="json-string">"description of the layer"</span>,
+              <span class="json-key">alert_summary</span>: <span class="json-string">"description of the alert"</span>,
+              <span class="json-key">alert_date_begin</span>: <span class="json-string">"beginDate"</span>,
+              <span class="json-key">alert_date_end</span>: <span class="json-string">"endDate"</span>
+            }
+          </code>
+        </pre>
+      </div>
+
+      <p>VIIRS active fire alerts also include:</p>
+
+      <div class='source_snippet'>
+        <pre>
+          <code>
+            {
+              <span class="json-key">alert_count</span>: <span class="json-value">"number of alert"</span>,
+              <span class="json-key">map_image</span>: <span class="json-string">"url of the image"</span>,
+              <span class="json-key">fire_alerts</span>: [
+                {
+                  <span class="json-key">acq_date</span>: <span class="json-string">"date of the alert"</span>,
+                  <span class="json-key">acq_time</span>: <span class="json-string">"time of the alert"</span>,
+                  <span class="json-key">latitude</span>: <span class="json-string">"latitude in decimal degree"</span>,
+                  <span class="json-key">longitude</span>: <span class="json-string">"longitude in decimal degree"</span>
+                },
+                {...}
+              ],
+              <span class="json-key">alert_download</span>: <span class="json-value">"url"</span>
+            }
+          </code>
+        </pre>
+      </div>
+
+      <p>GLAD and Terra-i alerts also include:</p>
+
+      <div class='source_snippet'>
+        <pre>
+          <code>
+            {
+              <span class="json-key">alert_count</span>: <span class="json-value">"number of alert"</span>,
+              <span class="json-key">map_image</span>: <span class="json-string">"url of the image"</span>,
+              <span class="json-key">fire_alerts</span>: [
+                {
+                  <span class="json-key">acq_date</span>: <span class="json-string">"date of the alert"</span>,
+                  <span class="json-key">acq_time</span>: <span class="json-string">"time of the alert"</span>,
+                  <span class="json-key">confirmed</span>: <span class="json-boolean">"true or false"</span>,
+                  <span class="json-key">latitude</span>: <span class="json-string">"latitude in decimal degree"</span>,
+                  <span class="json-key">longitude</span>: <span class="json-string">"longitude in decimal degree"</span>
+                },
+                {...}
+              ],
+              <span class="json-key">alert_download</span>: <span class="json-value">"url"</span>
+            }
+          </code>
+        </pre>
+      </div>
+
+      <p>SAD alerts also include:</p>
+
+      <div class='source_snippet'>
+        <pre>
+          <code>
+            {
+              <span class="json-key">alert_count_degradation</span>: <span class="json-value">"num degradation alerts"</span>,
+              <span class="json-key">alert_count_deforestation</span>: <span class="json-value">"num deforestation alerts"</span>,
+              <span class="json-key">alerts</span>: [
+                {
+                  <span class="json-key">acq_date</span>: <span class="json-string">"date of the alert"</span>,
+                  <span class="json-key">acq_time</span>: <span class="json-string">"time of the alert"</span>,
+                  <span class="json-key">type</span>: <span class="json-string">"deforestation or degradation"</span>,
+                  <span class="json-key">latitude</span>: <span class="json-string">"latitude in decimal degree"</span>,
+                  <span class="json-key">longitude</span>: <span class="json-string">"longitude in decimal degree"</span>
+                },
+                {...}
+              ],
+              <span class="json-key">alert_download</span>: <span class="json-value">"url"</span>
+            }
+          </code>
+        </pre>
+      </div>
+
+      <p>User story alerts also include:</p>
+
+      <div class='source_snippet'>
+        <pre>
+          <code>
+            {
+              <span class="json-key">alert_count</span>: <span class="json-value">"number of stories"</span>,
+              <span class="json-key">stories</span>: [
+                {
+                  <span class="json-key">title</span>: <span class="json-string">"story title"</span>,
+                  <span class="json-key">description</span>: <span class="json-string">"story description"</span>,
+                  <span class="json-key">url</span>: <span class="json-string">"link to the GFW story"</span>,
+                  <span class="json-key">image</span>: <span class="json-string">"url to the image"</span>
+                },
+                {...}
+              ]
+            }
+          </code>
+        </pre>
+      </div>
+
+
     </div>
   </div>
 </article>

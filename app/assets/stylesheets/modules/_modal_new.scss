@@ -741,8 +741,9 @@ $height: auto;
     .source_snippet {
       pre {
         border: 1px solid #cccccc;
-        padding: 10px 10px;
-        margin: 20px;
+        padding: 0;
+        margin: 0;
+        font-size: 14px;
       }
       .json-key {
         color: #D46C75;
@@ -752,6 +753,9 @@ $height: auto;
       }
       .json-string {
         color: #67995A;
+      }
+      .json-boolean {
+        color: #89682D;
       }
     }
 
