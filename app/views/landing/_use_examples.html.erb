@@ -1,48 +1,34 @@
 <div class="c-home-use-examples">
   <div class="row">
-    <div class="small-6 columns">
+    <div class="small-12 large-6 columns">
       <div class="c-home-use-examples__content">
-        <div class="c-home-use-examples__title text -title-xs -color-3">WHAT CAN YOU DO WITH GLOBAL FOREST WATCH?</div>
+        <div class="c-home-use-examples__title text -title-xs -color-3">WHAT CAN YOU DO WITH <span data-gfw-text="GFW" data-gfw-text-screen-m="GLOBAL FOREST WATCH?"></span></div>
         <ul class="c-home-use-examples__users">
-          <li>
-            <div class="c-home-use-examples__avatar -selected">
-              <svg class="icon">
-                <use xlink:href="#icon-profile"></use>
-              </svg>
-            </div>
-            <div class="text -paragraph-2 -color-2">Conservation Orgs</div>
-          </li>
-          <li>
-            <div class="c-home-use-examples__avatar">
-              <svg class="icon">
-                <use xlink:href="#icon-profile"></use>
-              </svg>
-            </div>
-            <div class="text -paragraph-2 -color-2">Investor</div>
-          </li>
-          <li>
-            <div class="c-home-use-examples__avatar">
-              <svg class="icon">
-                <use xlink:href="#icon-profile"></use>
-              </svg>
-            </div>
-            <div class="text -paragraph-2 -color-2">Policy Maker</div>
-          </li>
-          <li>
-            <div class="c-home-use-examples__avatar">
-              <svg class="icon">
-                <use xlink:href="#icon-profile"></use>
-              </svg>
-            </div>
-            <div class="text -paragraph-2 -color-2">You</div>
-          </li>
+          <% uses.each_with_index do |item, i| %>
+            <li>
+              <div class="c-home-use-examples__avatar <% if i == 0 %>-selected<% end %>">
+                <svg class="icon">
+                  <use xlink:href="#icon-profile"></use>
+                </svg>
+              </div>
+              <div class="text -paragraph-2 -color-2"><%= item['profile'] %></div>
+            </li>
+          <% end %>
         </ul>
-        <ul class="c-home-use-examples__testimonials">
-          <li class="text -title -light -italic -color-2 -selected"><span class="text -bold -color-4">“</span>We shared our project's carbon story with donors and partners. Explored opportunities for new projects, and found the justifi-cation we needed to get them funded.<span class="text -bold -color-4">”</span></li>
-        </ul>
-        <div class="c-home-use-examples__slider-dots">
-          <%= render 'shared/slider_dots', count: 4 %>
-        </div>
+        <% uses.each_with_index do |item, i| %>
+          <div class="c-home-use-examples__testimonials-container <% if i == 0 %>-selected<% end %>">
+            <ul class="c-home-use-examples__testimonials">
+              <% item['examples'].each_with_index do |example, j| %>
+                <li class="text -title -light -italic -color-2 <% if j == 0 %>-selected<% end %>">
+                  <span class="text -bold -color-4">“</span><%= example %><span class="text -bold -color-4">”</span>
+                </li>
+              <% end %>
+            </ul>
+            <div class="c-home-use-examples__slider-dots">
+              <%= render 'shared/slider_dots', count: item['examples'].size %>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
