@@ -1,27 +1,29 @@
 <div class="c-home-summary">
   <div class="row">
-    <div class="slider js_slider">
-      <div class="frame js_frame">
-        <ul class="slides js_slides">
-          <% cards.each do |card| %>
-            <li class="slide js_slide small-12 medium-6">
-              <div class="c-home-summary-item">
-                <div class="c-home-summary-item__title text -title -light -color-2"><%= card['title'] %></div>
-                <div class="c-home-summary-item__paragraph text -paragraph -color-2"><%= card['paragraph'] %></div>
-                <div class="c-home-summary-item__button">
-                  <%= render 'shared/buttons/regular', text: card['button'], color: 'green', url: card['url'] %>
+    <div class="small-12 columns">
+      <div class="slider js_slider">
+        <div class="frame js_frame">
+          <ul class="slides js_slides">
+            <% cards.each do |card| %>
+              <li class="slide js_slide">
+                <div class="c-home-summary-item">
+                  <div class="c-home-summary-item__title text -title -light -color-2"><%= card['title'] %></div>
+                  <div class="c-home-summary-item__paragraph text -paragraph -color-2"><%= card['paragraph'] %></div>
+                  <div class="c-home-summary-item__button">
+                    <%= render 'shared/buttons/regular', text: card['button'], color: 'green', url: card['url'] %>
+                  </div>
+                  <img class="c-home-summary-item__background" src="/assets/home/card-0@2x.png" width="482" />
                 </div>
-                <img class="c-home-summary-item__background" src="/assets/home/card-0@2x.png" width="482" />
-              </div>
-            </li>
-          <% end %>
-        </ul>
-        <div class="c-home-summary__arrow-button js_next next">
-          <%= render 'shared/buttons/arrow', orientation: 'right' %>
+              </li>
+            <% end %>
+          </ul>
+          <div class="c-home-summary__arrow-button js_next next">
+            <%= render 'shared/buttons/arrow', orientation: 'right' %>
+          </div>
         </div>
-      </div>
-      <div class="c-home-summary__slider-dots">
-        <%= render 'shared/slider_dots', count: 3 %>
+        <div class="c-home-summary__slider-dots">
+          <%= render 'shared/slider_dots', count: cards.size %>
+        </div>
       </div>
     </div>
   </div>
