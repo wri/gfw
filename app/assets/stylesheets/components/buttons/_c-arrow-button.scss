@@ -20,6 +20,10 @@
     border-radius: 50%;
   }
 
+  &:hover:before {
+    background-color: darken($green-gfw, 10%);
+  }
+
   .icon {
     position: absolute;
     bottom: 0;
