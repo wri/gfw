@@ -1,4 +1,4 @@
-#ptw_grid_only_scoreover0[zoom<6]{
+#ptw_grid_score_gt_0[zoom<6]{
   marker-opacity: 1;
   marker-multi-policy: whole;
   marker-placement: point;
@@ -6,7 +6,7 @@
   marker-ignore-placement: false;
   marker-spacing:50;
   marker-max-error:5;
-  
+
   marker-allow-overlap: true;
   [emissions_sum > 0.5]{
    marker-fill: #F03B20;
@@ -16,16 +16,16 @@
     marker-comp-op:dst-atop;
     marker-fill: #FFA300;
     marker-line-color: #FFA300;}
-  
-  
+
+
 }
 
 
-#ptw_grid_only_scoreover0[zoom>5]{
+#ptw_grid_score_gt_0[zoom>5]{
   polygon-fill: transparent;
   line-width:2;
   polygon-opacity: 0.75;
-  
+
   [ emissions_sum <= 0.5] {
    line-color: #FFA300;
 	}
