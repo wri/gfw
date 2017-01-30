@@ -1,0 +1,47 @@
+$logo-size: rem(88px);
+
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.c-default-header {
+  position: relative;
+  width: 100%;
+  background-color: rgba($white, 0.9);
+
+  .c-default-header__content {
+    position: relative;
+    width: 100%;
+    height: rem(58px);
+  }
+
+  h1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: $logo-size;
+    height: $logo-size;
+    text-indent: -9999px;
+    background-image: image-url("logo-new@2x.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
+
+.c-default-header-navigation {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: calc(100% - #{$logo-size});
+  margin-left: $logo-size;
+
+  li {
+    margin-left: rem(40px);
+    color: rgba(51, 51, 51, 0.8);
+    font-size: 14px;
+  }
+}
