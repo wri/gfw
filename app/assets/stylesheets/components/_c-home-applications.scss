@@ -18,7 +18,8 @@
     flex-direction: column;
 
     .icon {
-      height: rem(48px);
+      position: relative;
+      fill: $white;
     }
 
     .c-home-applications__section-title {
@@ -26,7 +27,7 @@
     }
 
     .c-home-applications__section-description {
-      width: 65%;
+
     }
   }
 
@@ -51,13 +52,29 @@
     height: rem(73px);
     background-color: rgba($white, 0.5);
     border-radius: 100%;
+    font-size: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 
     &.-left {
-      left: rem(0px);
+      left: 0;
     }
 
     &.-right {
-      right: rem(0px);
+      right: 0;
+    }
+
+    li {
+      margin-left: rem(18px);
+    }
+
+    .icon {
+      width: rem(36px);
+      height: rem(36px);
+      fill: $white;
     }
   }
 
@@ -95,6 +112,20 @@
   @media screen and (min-width: $screen-m) {
     height: rem(640px);
 
+    .c-home-applications__section .icon {
+      top: rem(-7px);
+      height: rem(48px);
+    }
+
+    .c-home-applications__section-title {
+      margin-top: rem(3px);
+    }
+
+    .c-home-applications__section-description {
+      width: 65%;
+      margin-top: rem(16px);
+    }
+
     .c-home-applications__apps-buttons,
     .c-home-applications__apps-buttons .columns {
       height: rem(640px);
@@ -111,3 +142,5 @@
     }
   }
 }
+
+

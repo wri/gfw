@@ -30,8 +30,24 @@
     margin: 0 auto rem(5px) auto;
     width: rem(49px);
     height: rem(49px);
-    background-color: red;
+    background-color: $grey-dark;
     border-radius: 50%;
+
+    &.-selected {
+      background-color: $green-gfw;
+    }
+
+    .icon {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: rem(37px);
+      height: rem(42px);
+      fill: $white;
+    }
   }
 
   .c-home-use-examples__testimonials {
