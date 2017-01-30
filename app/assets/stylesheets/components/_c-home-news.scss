@@ -13,7 +13,7 @@ $item-padding-screen-m: rem(40px);
   }
 
   .slider {
-
+    position: relative;
   }
 
   .frame {
@@ -39,6 +39,19 @@ $item-padding-screen-m: rem(40px);
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .c-home-news__arrow-button {
+    position: absolute;
+
+    .icon {
+      width: 20px;
+      height: 20px;
+      fill: $white;
+
+      &.-right {
+      }
+    }
   }
 
   @media screen and (min-width: $screen-m) {

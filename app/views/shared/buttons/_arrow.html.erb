@@ -1,1 +1,6 @@
-<div class="c-arrow-button"></div>
+<% orientation ||= nil %>
+<div class="c-arrow-button <%= orientation != nil ? "-#{orientation}" : "" %>">
+  <svg class="icon">
+    <use xlink:href="#icon-arrow"></use>
+  </svg>
+</div>

@@ -19,4 +19,25 @@
     background-color: $green-gfw;
     border-radius: 50%;
   }
+
+  .icon {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: rem(16px);
+    height: rem(16px);
+    fill: $white;
+  }
+
+  &.-down .icon {
+    top: rem(3px);
+  }
+
+  &.-right .icon {
+    top: 0;
+    left: rem(1px);
+    transform: rotateZ(-90deg);
+  }
 }
