@@ -1,3 +1,6 @@
+$item-padding: rem(16px);
+$item-padding-screen-m: rem(40px);
+
 .c-home-summary {
   padding: rem(31px) 0 rem(55px) 0;
   background-color: $white;
@@ -5,7 +8,6 @@
 
   .slider {
     position: relative;
-    width: 100%;
   }
 
   .frame {
@@ -13,7 +15,6 @@
     font-size: 0;
     line-height: 0;
     white-space: nowrap;
-    padding: 0 rem(16px);
   }
 
   .slides {
@@ -25,15 +26,15 @@
     position: relative;
     display: inline-block;
     white-space: normal;
-    vertical-align:top;
-    padding-right: rem(16px);
+    vertical-align: top;
+    padding-right: $item-padding;
   }
 
   .c-home-summary__arrow-button {
     position: absolute;
     top: 0;
     bottom: 0;
-    right: rem(50px);
+    right: rem(-70px);
     margin: auto;
     width: rem(60px);
     height: rem(60px);
@@ -51,16 +52,13 @@
   @media screen and (min-width: $screen-m) {
     padding: rem(60px) 0;
 
+    .slide {
+      width: calc(50% + #{$item-padding-screen-m / 2});
+      padding-right: $item-padding-screen-m;
+    }
+
     .c-home-summary__arrow-button {
       display: block;
-    }
-
-    .frame {
-      padding: 0 rem(80px);
-    }
-
-    .slide {
-      padding-right: rem(40px);
     }
   }
 }
