@@ -23,7 +23,7 @@
     <meta name="google-site-verification" content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak" />
 
     <%= csrf_meta_tags %>
-
+    <%= render 'shared/gfw_assets' %>
     <%= render 'shared/icons' %>
 
     <%= controller_stylesheet_link_tag %>
@@ -35,5 +35,7 @@
 
     <%= requirejs_include_tag "landing" %>
     <%= render "shared/track" %>
+
+    <div id="footerGfw"></div>
   </body>
 </html>
