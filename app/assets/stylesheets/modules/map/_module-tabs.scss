@@ -266,6 +266,20 @@ $w-control: 44px;
       font-size: 14px;
       min-height: 80px;
     }
+
+    &.-mobile {
+      width: 100%;
+
+      nav {
+        ul {
+          li {
+            &:first-child {
+              border-left: 0;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
