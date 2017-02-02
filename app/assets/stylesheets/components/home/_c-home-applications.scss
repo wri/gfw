@@ -1,13 +1,15 @@
 .c-home-applications {
   position: relative;
+  height: rem(448px);
+  overflow: hidden;
 
   .c-home-applications__title {
-    margin-top: rem(50px);
+    margin-top: rem(23px);
     opacity: 0.5;
   }
 
   .c-home-applications__descriptions {
-
+    margin-top: rem(40px);
   }
 
   .c-home-applications__section {
@@ -20,14 +22,15 @@
     .icon {
       position: relative;
       fill: $white;
+      height: rem(35px);
     }
 
     .c-home-applications__section-title {
-
+      margin-top: rem(7px);
     }
 
     .c-home-applications__section-description {
-
+      margin-top: rem(15px);
     }
   }
 
@@ -45,11 +48,10 @@
 
   .c-home-applications__app-button {
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: rem(72px);
     margin: auto;
-    width: rem(73px);
-    height: rem(73px);
+    width: rem(64px);
+    height: rem(64px);
     background-color: rgba($white, 0.5);
     border-radius: 100%;
     font-size: 0;
@@ -60,15 +62,15 @@
     cursor: pointer;
 
     &.-left {
-      left: 0;
+      left: rem(-27px);
     }
 
     &.-right {
-      right: 0;
+      right: rem(-27px);
     }
 
     li {
-      margin-left: rem(18px);
+      margin-left: rem(14px);
     }
 
     .icon {
@@ -98,9 +100,8 @@
       right: 0;
       bottom: 0;
       margin: auto;
-      width: 100%;
-      max-width: rem(850px);
-      padding: 0 rem(80px);
+      max-height: rem(180px);
+      padding: 0 rem(16px);
       z-index: 1;
     }
 
@@ -111,6 +112,10 @@
 
   @media screen and (min-width: $screen-m) {
     height: rem(640px);
+
+    .c-home-applications__title {
+      margin-top: rem(50px);
+    }
 
     .c-home-applications__section .icon {
       top: rem(-7px);
@@ -132,6 +137,11 @@
     }
 
     .c-home-applications__app-button {
+      top: 0;
+      bottom: 0;
+      width: rem(73px);
+      height: rem(73px);
+
       &.-left {
         left: rem(42px);
       }
@@ -139,8 +149,20 @@
       &.-right {
         right: rem(42px);
       }
+
+      li {
+        margin-left: rem(18px);
+      }
+    }
+
+    .c-home-applications__background {
+
+      img {
+        width: 100%;
+        max-width: rem(850px);
+        max-height: none;
+        padding: 0 rem(80px);
+      }
     }
   }
 }
-
-
