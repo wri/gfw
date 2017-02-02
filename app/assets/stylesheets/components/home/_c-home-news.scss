@@ -1,8 +1,11 @@
 $item-height: rem(272px);
 $item-height-screen-m: rem(391px);
+$item-padding: rem(16px);
 $item-padding-screen-m: rem(40px);
 
 .c-home-news {
+  padding: rem(17px) 0 rem(24px) 0;
+  overflow: hidden;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -10,17 +13,21 @@ $item-padding-screen-m: rem(40px);
 
   .c-home-news__title {
     text-align: center;
+
+    span:before {
+      content: attr(data-gfw-text);
+    }
   }
 
   .slider {
     position: relative;
+    margin-top: rem(16px);
   }
 
   .frame {
     position: relative;
     font-size: 0;
     line-height: 0;
-    overflow: hidden;
     white-space: nowrap;
   }
 
@@ -33,13 +40,8 @@ $item-padding-screen-m: rem(40px);
     position: relative;
     display: inline-block;
     white-space: normal;
-    vertical-align: top
-  }
-
-  .c-home-news__button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    vertical-align: top;
+    padding-right: $item-padding;
   }
 
   .c-home-news__arrow-button {
@@ -55,16 +57,41 @@ $item-padding-screen-m: rem(40px);
     }
   }
 
+  .c-home-news__slider-dots {
+    width: 100%;
+    text-align: center;
+    margin-top: rem(14px);
+  }
+
+  .c-home-news__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: rem(13px);
+  }
+
   @media screen and (min-width: $screen-m) {
     padding: rem(57px) 0 rem(40px) 0;
+
+    .c-home-news__title span:before {
+      content: attr(data-gfw-text-screen-m);
+    }
 
     .slider {
       margin-top: rem(34px);
     }
 
+    .frame {
+      overflow: hidden;
+    }
+
     .slide {
       width: calc(33.33333% + #{$item-padding-screen-m / 3});
       padding-right: $item-padding-screen-m;
+    }
+
+    .c-home-news__slider-dots {
+      display: none;
     }
 
     .c-home-news__button {
@@ -74,17 +101,32 @@ $item-padding-screen-m: rem(40px);
 }
 
 .c-home-news-item {
+  position: relative;
   width: 100%;
   min-height: $item-height;
+  padding: rem(53px) rem(16px) rem(20px) rem(16px);
   background-color: $white;
 
-  .c-home-news-item__description {
+  .icon {
+    position: absolute;
+    top: rem(16px);
+    left: rem(12px);
+    width: rem(30px);
+    height: rem(30px);
+  }
 
+  .c-home-news-item__description {
+    margin-top: rem(-4px);
   }
 
   @media screen and (min-width: $screen-m) {
     min-height: $item-height-screen-m;
     padding: rem(122px) rem(38px) rem(30px) rem(38px);
+
+    .icon {
+      top: rem(60px);
+      left: rem(36px);
+    }
 
     .c-home-news-item__description {
       margin-top: rem(20px);
