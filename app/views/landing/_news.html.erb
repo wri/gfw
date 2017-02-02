@@ -1,7 +1,7 @@
 <div class="c-home-news">
   <div class="row">
     <div class="small-12 columns">
-      <div class="c-home-news__title text -title-big -light -color-1">New in Global Forest Watch</div>
+      <div class="c-home-news__title text -title-big -light -color-1">New in <span data-gfw-text="GFW" data-gfw-text-screen-m="GLOBAL FOREST WATCH?"></span></div>
     </div>
   </div>
   <div class="row">
@@ -12,6 +12,9 @@
             <% (0..7).each do |i| %>
               <li class="slide js_slide">
                 <div class="c-home-news-item">
+                  <svg class="icon">
+                    <use xlink:href="#icon-upload"></use>
+                  </svg>
                   <div class="text -title-s -color-3">CUSTOMIZE REPORTS</div>
                   <div class="c-home-news-item__description text -paragraph -color-3">To show the data you want to see, the way you want to see it. Combine your indicators then save, print or share your report with the world.</div>
                 </div>
@@ -31,6 +34,9 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="c-home-news__slider-dots">
+    <%= render 'shared/slider_dots', count: 3, color: 'white' %>
   </div>
   <div class="c-home-news__button">
     <%= render 'shared/buttons/regular', text: 'MY GFW', color: 'white' %>

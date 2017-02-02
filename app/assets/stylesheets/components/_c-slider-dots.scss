@@ -23,17 +23,49 @@
       margin: auto;
       width: rem(9px);
       height: rem(9px);
-      background-color: #e0e0e4;
       border-radius: 100%;
       transition: all 0.1s ease-out;
     }
 
-    &.active {
+    &.-selected {
 
       &:before {
         width: rem(13px);
         height: rem(13px);
-        background-color: $green-gfw;
+      }
+    }
+  }
+
+  &.-green {
+
+    .c-slider-dots__item {
+
+      &:before {
+        background-color: #e0e0e4;
+      }
+
+      &.-selected {
+
+        &:before {
+          background-color: $green-gfw;
+        }
+      }
+    }
+  }
+
+  &.-white {
+
+    .c-slider-dots__item {
+
+      &:before {
+        background-color: rgba($white, 0.5);
+      }
+
+      &.-selected {
+
+        &:before {
+          background-color: $white;
+        }
       }
     }
   }

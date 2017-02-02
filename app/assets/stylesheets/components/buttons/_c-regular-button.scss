@@ -3,7 +3,7 @@
   width: rem(200px);
   height: rem(48px);
   border-radius: rem(27px);
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1;
   letter-spacing: 0.1px;
   display: flex;
@@ -39,5 +39,6 @@
 
   @media screen and (min-width: $screen-m) {
     height: rem(39px);
+    font-size: 14px;
   }
 }

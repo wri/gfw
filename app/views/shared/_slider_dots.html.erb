@@ -1,5 +1,5 @@
-<ul class="c-slider-dots js_dots">
+<ul class="c-slider-dots -<%= color %> js_dots">
   <% (0..count).each do |i| %>
-    <li class="c-slider-dots__item <% if i == 0 %>active<% end %>"></li>
+    <li class="c-slider-dots__item <% if i == 0 %>-selected<% end %>"></li>
   <% end %>
 </ul>
