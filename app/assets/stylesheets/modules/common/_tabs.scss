@@ -18,6 +18,10 @@
       [id^="tab"]:checked + label {
         background-color: #eeeeee;
         color: #7b7b7b;
+
+        svg {
+          fill: #7b7b7b;
+        }
       }
       [id^="tab"]:checked ~ [id^="tab-content"] {
         display: block;
@@ -36,9 +40,8 @@
         border-top-right-radius: 50px;
         border-bottom-right-radius: 50px;
 
-        [id^="tab"]:checked + label {
-          border-top-left-radius: 50px;
-          border-bottom-left-radius: 50px;
+        label {
+          border-radius: 50px;
         }
       }
     }
@@ -59,6 +62,21 @@
     background: #7b7b7b;
     color: #eeeeee;
     transition: .2s ease;
+
+    .source {
+      width: 16px;
+      height: 12px;
+      padding-left: 4px;
+      position: absolute;
+      top: 6px;
+      right: 6px;
+
+      svg {
+        width: 8px;
+        height: 8px;
+        fill: #eeeeee;
+      }
+    }
   }
   .tab-content{
     width: 100%;
