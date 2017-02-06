@@ -4,8 +4,8 @@
       <div class="slider js_slider">
         <div class="frame js_frame">
           <ul class="slides js_slides">
-            <% cards.each do |card| %>
-              <li class="slide js_slide">
+            <% cards.each_with_index do |card, index| %>
+              <li class="slide js_slide <% if index == 0 %>active<% end %>">
                 <div class="c-home-summary-item">
                   <div class="c-home-summary-item__title text -title -light -color-2"><%= card['title'] %></div>
                   <div class="c-home-summary-item__paragraph text -paragraph -color-2"><%= card['paragraph'] %></div>
@@ -17,11 +17,14 @@
               </li>
             <% end %>
           </ul>
-          <div class="c-home-summary__arrow-button js_next next">
+          <div class="c-home-summary__arrow-button -left js_slide_prev">
+            <%= render 'shared/buttons/arrow', orientation: 'left' %>
+          </div>
+          <div class="c-home-summary__arrow-button -right js_slide_next">
             <%= render 'shared/buttons/arrow', orientation: 'right' %>
           </div>
         </div>
-        <div class="c-home-summary__slider-dots">
+        <div class="c-home-summary__slider-dots js_slider_dots">
           <%= render 'shared/slider_dots', count: cards.size, color: 'green' %>
         </div>
       </div>

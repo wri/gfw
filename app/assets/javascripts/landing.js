@@ -16,7 +16,10 @@ require([
   'landing/views/SlideView',
   'landing/views/StoriesView',
   'landing/views/FeedView',
-  'landing/views/TwitterStyleView'
+  'landing/views/TwitterStyleView',
+
+
+  'landing/views/SummaryView'
 ], function(
   $,
   _,
@@ -24,15 +27,7 @@ require([
   Backbone,
   amplify,
   mps,
-  HeaderView,
-  FooterView,
-  SourceWindowView,
-  SourceMobileFriendlyView,
-  SpinnerView,
-  SlideView,
-  StoriesView,
-  FeedView,
-  TwitterStyleView
+  SummaryView
 ) {
 
   'use strict';
@@ -49,29 +44,8 @@ require([
      * Initialize Landing Views.
      */
     _initViews: function() {
-      //shared
-      new HeaderView();
-      new FooterView();
-      new SourceWindowView();
-      new SourceMobileFriendlyView();
-
-
-      //landing
-      new SpinnerView();
-      new SlideView();
-      new StoriesView();
-      new FeedView();
-      new TwitterStyleView();
-
-      // this.initSurvey();
+      new SummaryView();
     },
-
-    initSurvey: function() {
-      if (! !!amplify.store('survey_improve')) {
-        amplify.store('survey_improve', true, { expires: 2628000000 });
-        mps.publish('Source/open',['help_improve_GFW']);
-      }
-    }
 
   });
 
