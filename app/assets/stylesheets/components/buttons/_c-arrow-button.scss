@@ -35,13 +35,24 @@
     fill: $white;
   }
 
+  &.-up .icon {
+    top: 0;
+    transform: rotateZ(180deg);
+  }
+
   &.-down .icon {
     top: rem(3px);
   }
 
+  &.-left .icon {
+    top: 0;
+    left: rem(-4px);
+    transform: rotateZ(90deg);
+  }
+
   &.-right .icon {
     top: 0;
-    left: rem(1px);
+    left: rem(2px);
     transform: rotateZ(-90deg);
   }
 }

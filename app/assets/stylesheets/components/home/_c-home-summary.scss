@@ -28,18 +28,35 @@ $item-padding-screen-m: rem(40px);
     white-space: normal;
     vertical-align: top;
     padding-right: $item-padding;
+    opacity: 0.5;
+    transition: opacity 0.5s ease-out;
+
+    &.active {
+      opacity: 1;
+
+      & + li {
+        opacity: 1;
+      }
+    }
   }
 
   .c-home-summary__arrow-button {
     position: absolute;
     top: 0;
     bottom: 0;
-    right: rem(-70px);
     margin: auto;
     width: rem(60px);
     height: rem(60px);
     z-index: 1;
     display: none;
+
+    &.-left {
+      left: rem(-70px);
+    }
+
+    &.-right {
+      right: rem(-70px);
+    }
   }
 
   .c-home-summary__slider-dots {
@@ -52,9 +69,14 @@ $item-padding-screen-m: rem(40px);
   @media screen and (min-width: $screen-m) {
     padding: rem(60px) 0;
 
-    .slide {
+    .slide:not(:last-child) {
       width: calc(50% + #{$item-padding-screen-m / 2});
       padding-right: $item-padding-screen-m;
+    }
+
+    .slide:last-child {
+      width: calc(50% - #{$item-padding-screen-m / 2});
+      padding-right: 0;
     }
 
     .c-home-summary__arrow-button {
