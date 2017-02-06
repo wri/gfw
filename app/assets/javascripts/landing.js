@@ -8,17 +8,6 @@ require([
   'backbone',
   'amplify',
   'mps',
-  'views/HeaderView',
-  'views/FooterView',
-  'views/SourceWindowView',
-  'views/SourceMobileFriendlyView',
-  'landing/views/SpinnerView',
-  'landing/views/SlideView',
-  'landing/views/StoriesView',
-  'landing/views/FeedView',
-  'landing/views/TwitterStyleView',
-
-
   'landing/views/SummaryView'
 ], function(
   $,
