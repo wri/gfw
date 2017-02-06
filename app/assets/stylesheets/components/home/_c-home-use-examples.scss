@@ -1,9 +1,14 @@
+$item-user-padding: rem(16px);
+$item-user-padding-screen-m: rem(39px);
+
 .c-home-use-examples {
   position: relative;
+  height: rem(448px);
   background-color: $grey-light;
+  overflow: hidden;
 
   .c-home-use-examples__content {
-    padding: rem(23px) 0;
+    padding-top: rem(23px);
   }
 
   .c-home-use-examples__title {
@@ -15,22 +20,37 @@
   }
 
   .c-home-use-examples__users {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
 
-    li {
+    .slider {
+      position: relative;
+    }
+
+    .frame {
+      position: relative;
+      font-size: 0;
+      line-height: 0;
+      white-space: nowrap;
+    }
+
+    .slides {
+      display: inline-block;
+      width: 100%;
+    }
+
+    .slide {
+      position: relative;
+      display: inline-block;
       width: 25%;
-      min-height: rem(96px);
+      padding-right: rem(16px);
       text-align: center;
+      white-space: normal;
+      vertical-align: top;
     }
   }
 
   .c-home-use-examples__avatar {
     position: relative;
     left: 0;
-    right: 0;
-    margin: 0 auto rem(5px) auto;
     width: rem(49px);
     height: rem(49px);
     background-color: $grey-dark;
@@ -53,24 +73,43 @@
     }
   }
 
-  .c-home-use-examples__testimonials-container {
+  .c-home-use-examples__avatar-title {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+
+  .c-home-use-examples__testimonials {
+    position: relative;
     display: none;
 
     &.-selected {
       display: block;
     }
+
+    .frame {
+      position: relative;
+      font-size: 0;
+      line-height: 0;
+      white-space: nowrap;
+    }
+
+    .slides {
+      display: inline-block;
+      width: 100%;
+    }
+
+    .slide {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      margin-right: rem(93px);
+      white-space: normal;
+      vertical-align: top;
+    }
   }
 
-  .c-home-use-examples__testimonials {
-
-    li {
-      position: relative;
-      display: none;
-
-      &.-selected {
-        display: block;
-      }
-    }
+  .c-home-use-examples__testimonials-quote {
 
     span:first-of-type {
       position: absolute;
@@ -93,14 +132,16 @@
     background-repeat: no-repeat;
     background-position: center;
     background-image: url('/assets/home/man-ipad.jpg');
+    background-color: $grey-light;
     display: none;
   }
 
   @media screen and (min-width: $screen-m) {
+    height: rem(640px);
     border-top: rem(1px) solid $grey-dark;
 
     .c-home-use-examples__content {
-      padding: rem(50px) 0 rem(100px) 0;
+      padding-top: rem(50px);
     }
 
     .c-home-use-examples__title span:before {
@@ -109,10 +150,19 @@
 
     .c-home-use-examples__users {
       margin-top: rem(18px);
+
+      .slide {
+        width: calc(25% + #{$item-user-padding-screen-m / 2});
+        padding-right: $item-user-padding-screen-m;
+      }
+    }
+
+    .c-home-use-examples__avatar-title {
+      top: rem(54px);
     }
 
     .c-home-use-examples__testimonials {
-      margin-top: rem(67px);
+      margin-top: rem(114px);
     }
 
     .c-home-use-examples__slider-dots {
