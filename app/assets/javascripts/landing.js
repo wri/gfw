@@ -6,16 +6,12 @@ require([
   'underscore',
   'Class',
   'backbone',
-  'amplify',
-  'mps',
   'landing/views/SummaryView'
 ], function(
   $,
   _,
   Class,
   Backbone,
-  amplify,
-  mps,
   SummaryView
 ) {
 
@@ -26,13 +22,6 @@ require([
     $el: $('body'),
 
     init: function() {
-      this._initViews();
-    },
-
-    /**
-     * Initialize Landing Views.
-     */
-    _initViews: function() {
       new SummaryView();
     },
 
