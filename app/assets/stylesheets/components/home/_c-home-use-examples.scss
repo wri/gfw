@@ -102,8 +102,8 @@ $item-user-padding-screen-m: rem(39px);
     .slide {
       position: relative;
       display: inline-block;
-      width: 100%;
-      margin-right: rem(93px);
+      width: calc(100% + #{rem(120px)});
+      padding-right: rem(120px);
       white-space: normal;
       vertical-align: top;
     }
@@ -163,6 +163,15 @@ $item-user-padding-screen-m: rem(39px);
 
     .c-home-use-examples__testimonials {
       margin-top: rem(114px);
+
+      .slide {
+        opacity: 0;
+        transition: opacity 0.5s ease-out;
+
+        &.active {
+          opacity: 1;
+        }
+      }
     }
 
     .c-home-use-examples__slider-dots {

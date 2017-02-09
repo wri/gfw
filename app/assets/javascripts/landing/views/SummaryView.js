@@ -19,7 +19,7 @@ define([
     },
 
     _initSlider: function(){
-      this.$slider = new SliderView({
+      new SliderView({
         el: this.$el.find('.js_slider')
       });
     },
