@@ -20,7 +20,7 @@
           </div>
         </div>
         <% uses.each_with_index do |item, i| %>
-          <div class="c-home-use-examples__testimonials slider js_slide <% if i == 0 %>-selected<% end %>">
+          <div class="c-home-use-examples__testimonials slider js_slider <% if i == 0 %>-selected<% end %>">
             <div class="frame js_frame">
               <ul class="slides js_slides">
                 <% item['examples'].each do |example| %>
@@ -32,7 +32,7 @@
                 <% end %>
               </ul>
             </div>
-            <div class="c-home-use-examples__slider-dots">
+            <div class="c-home-use-examples__slider-dots js_slider_dots">
               <%= render 'shared/slider_dots', count: item['examples'].size, color: 'green' %>
             </div>
           </div>

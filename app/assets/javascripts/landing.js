@@ -6,13 +6,15 @@ require([
   'underscore',
   'Class',
   'backbone',
-  'landing/views/SummaryView'
+  'landing/views/SummaryView',
+  'landing/views/UseExamplesView',
 ], function(
   $,
   _,
   Class,
   Backbone,
-  SummaryView
+  SummaryView,
+  UseExamplesView
 ) {
 
   'use strict';
@@ -23,6 +25,7 @@ require([
 
     init: function() {
       new SummaryView();
+      new UseExamplesView();
     },
 
   });
