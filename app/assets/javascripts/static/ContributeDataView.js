@@ -296,6 +296,7 @@ define([
     onSubmitContribution: function(e) {
       e && e.preventDefault();
       var attributesFromForm = validate.collectFormValues(this.$form);
+
       if (this.validate(attributesFromForm)) {
         this.model.set(attributesFromForm).save()
           .then(function(){
