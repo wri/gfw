@@ -73,6 +73,7 @@ define([
   'map/views/layers/GrumpLayer',
   'map/views/layers/MangroveLayer',
   'map/views/layers/Mangrove2Layer',
+  'map/views/layers/MangroveWatchLayer',
   'map/views/layers/WMSLayer',
   'map/views/layers/ConcesionesForestalesLayer',
   'map/views/layers/ConcesionesForestalesNotSupervisedLayer',
@@ -254,6 +255,7 @@ define([
   GrumpLayer,
   MangroveLayer,
   Mangrove2Layer,
+  MangroveWatchLayer,
   WMSLayer,
   ConcesionesForestalesLayer,
   ConcesionesForestalesNotSupervisedLayer,
@@ -344,8 +346,8 @@ define([
   LbrMinExL,
   LbrMinDevAg,
   LbrDevExL,
-  PakUserMangrovesLayer, 
-  SenUserProtectedAreasLayer, 
+  PakUserMangrovesLayer,
+  SenUserProtectedAreasLayer,
   EcuUserProtectedAreasLayer,
   BolUserFireFrequencyLayer,
   //highres layers
@@ -591,6 +593,9 @@ define([
     mangrove_2 :{
       view: Mangrove2Layer,
       timelineView: MangroveTimeline
+    },
+    mangrove_watch :{
+      view: MangroveWatchLayer,
     },
     WMSLayer :{
       view: WMSLayer
