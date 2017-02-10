@@ -297,8 +297,6 @@ define([
         return;
       }
 
-      // mps.publish('Spinner/start', []);
-
       ShapefileService.save(file)
         .then(function(response) {
           var features = response.data.attributes.features;
@@ -312,6 +310,7 @@ define([
             });
 
             this.drawGeojson(geometry);
+            ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');
           }
         }.bind(this))
 
