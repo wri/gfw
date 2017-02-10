@@ -310,7 +310,7 @@ define([
             });
 
             this.drawGeojson(geometry);
-            ga('send', 'event', 'map', 'analysis', 'upload shapefile');
+            ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');
           }
         }.bind(this))
 
