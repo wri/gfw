@@ -301,18 +301,32 @@ define([
         this.model.set(attributesFromForm).save()
           .then(function(){
             mps.publish('Notification/open', ['contribution-new-form-success']);
+            this.trackForm(attributesFromForm, false);
             $(document).scrollTop(0);
             setTimeout(function(){ window.location.reload(); }, 1000);
-          })
+          }.bind(this))
           .fail(function(){
             mps.publish('Notification/open', ['contribution-new-form-error']);
-          })
+            this.trackForm(attributesFromForm, true);
+          }.bind(this))
 
       } else {
         this.updateForm();
         mps.publish('Notification/open', ['contribution-new-form-error']);
+        this.trackForm(attributesFromForm, true);
         $(document).scrollTop(0);
       }
+    },
+
+    trackForm: function (attributesFromForm, error) {
+      var label = error
+        ? "Incomplete Form"
+        : (
+          attributesFromForm.data_uploadtype === "Link"
+            ? "Link by URL"
+            : "Upload a shape file"
+      );
+      ga('send', 'event', 'Get Involved', 'Contribute Data', label);
     }
   });
 
