@@ -572,11 +572,10 @@ define([
      * Update the timeline date. (calls updateCurrentDate)
      */
     onBrushEnd: function() {
-
       // give time to finish animations.
       setTimeout(function() {
         var startYear = Math.round(this.xscale.invert(this.handlers.left.attr('x')));
-        var endYear = Math.round(this.xscale.invert(this.handlers.right.attr('x')));
+        var endYear = Math.round(this.xscale.invert(this.handlers.right.attr('x'))) - 1;
 
         this.updateCurrentDate([moment([startYear]), moment([endYear])]);
       }.bind(this), 100);
