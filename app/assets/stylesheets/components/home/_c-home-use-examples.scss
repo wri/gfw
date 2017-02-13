@@ -55,9 +55,14 @@ $item-user-padding-screen-m: rem(39px);
     height: rem(49px);
     background-color: $grey-dark;
     border-radius: 50%;
+    cursor: pointer;
 
     &.-selected {
       background-color: $green-gfw;
+
+      .c-home-use-examples__avatar-title {
+        opacity: 1;
+      }
     }
 
     .icon {
@@ -77,6 +82,7 @@ $item-user-padding-screen-m: rem(39px);
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
+    opacity: 0.5;
   }
 
   .c-home-use-examples__testimonials {
