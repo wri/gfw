@@ -8,13 +8,15 @@ require([
   'backbone',
   'landing/views/SummaryView',
   'landing/views/UseExamplesView',
+  'landing/views/NewsView',
 ], function(
   $,
   _,
   Class,
   Backbone,
   SummaryView,
-  UseExamplesView
+  UseExamplesView,
+  NewsView
 ) {
 
   'use strict';
@@ -26,6 +28,7 @@ require([
     init: function() {
       new SummaryView();
       new UseExamplesView();
+      new NewsView();
     },
 
   });

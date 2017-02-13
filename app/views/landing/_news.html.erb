@@ -9,7 +9,7 @@
       <div class="slider js_slider">
         <div class="frame js_frame">
           <ul class="slides js_slides">
-            <% (0..7).each do |i| %>
+            <% (0..4).each do |i| %>
               <li class="slide js_slide">
                 <div class="c-home-news-item">
                   <svg class="icon">
@@ -36,7 +36,7 @@
     </div>
   </div>
   <div class="c-home-news__slider-dots">
-    <%= render 'shared/slider_dots', count: 3, color: 'white' %>
+    <%= render 'shared/slider_dots', count: 5, color: 'white' %>
   </div>
   <div class="c-home-news__button">
     <%= render 'shared/buttons/regular', text: 'MY GFW', color: 'white' %>
