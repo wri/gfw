@@ -7,7 +7,7 @@
           <div class="frame js_frame">
             <ul class="slides js_slides">
               <% uses.each_with_index do |item, i| %>
-                <li class="slide js_slide">
+                <li class="slide js_slide" data-index="<%= i %>">
                   <div class="c-home-use-examples__avatar <% if i == 0 %>-selected<% end %>">
                     <svg class="icon">
                       <use xlink:href="#icon-profile"></use>
@@ -20,7 +20,7 @@
           </div>
         </div>
         <% uses.each_with_index do |item, i| %>
-          <div class="c-home-use-examples__testimonials slider js_slider <% if i == 0 %>-selected<% end %>">
+          <div class="c-home-use-examples__testimonials slider js_slider <% if i == 0 %>-selected<% end %>" data-index="<%= i %>">
             <div class="frame js_frame">
               <ul class="slides js_slides">
                 <% item['examples'].each do |example| %>
