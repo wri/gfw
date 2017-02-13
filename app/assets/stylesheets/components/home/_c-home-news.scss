@@ -88,6 +88,11 @@ $item-padding-screen-m: rem(40px);
     .slide {
       width: calc(33.33333% + #{$item-padding-screen-m / 3});
       padding-right: $item-padding-screen-m;
+
+      &:last-child {
+        width: calc(33.33333% + #{$item-padding-screen-m / 3} - #{$item-padding-screen-m});
+        padding-right: 0;
+      }
     }
 
     .c-home-news__slider-dots {
