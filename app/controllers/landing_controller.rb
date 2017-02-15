@@ -80,6 +80,26 @@ class LandingController < ApplicationController
         ]
       }
     ]
+    @apps = [
+      {
+        "key" => "fires",
+        "title" => "Fires",
+        "description" => "Track fires and haze in the ASEAN region. View the latest data on fire locations and air quality and do you own analysis",
+        "background" => "/assets/home/app_mockup.png"
+      },
+      {
+        "key" => "commodities",
+        "title" => "Commodities",
+        "description" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum posuere odio lacinia, congue orci eu, rutrum neque",
+        "background" => "/assets/home/app_mockup.png"
+      },
+      {
+        "key" => "map",
+        "title" => "Map",
+        "description" => "Nulla in ex maximus felis porttitor venenatis quis non neque. Praesent consectetur odio urna, nec tempor tellus ultricies id",
+        "background" => "/assets/home/app_mockup.png"
+      }
+    ]
   end
 
 end

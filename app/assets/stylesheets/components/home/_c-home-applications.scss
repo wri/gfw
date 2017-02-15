@@ -4,8 +4,10 @@
   overflow: hidden;
 
   .c-home-applications__title {
+    position: relative;
     margin-top: rem(23px);
     opacity: 0.5;
+    z-index: 2;
   }
 
   .c-home-applications__descriptions {
@@ -34,18 +36,6 @@
     }
   }
 
-  .c-home-applications__apps-buttons {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    .columns {
-      position: relative;
-    }
-  }
-
   .c-home-applications__app-button {
     position: absolute;
     top: rem(72px);
@@ -60,6 +50,7 @@
     display: flex;
     align-items: center;
     cursor: pointer;
+    z-index: 2;
 
     &.-left {
       left: rem(-27px);
@@ -86,12 +77,46 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: 1;
 
-    li {
+    .slider {
       position: relative;
+      height: 100%;
+    }
+
+    .frame {
+      position: relative;
+      height: 100%;
+      font-size: 0;
+      line-height: 0;
+      white-space: nowrap;
+    }
+
+    .slides {
+      display: inline-block;
       width: 100%;
       height: 100%;
+    }
+
+    .slide {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      white-space: normal;
+      vertical-align: top;
+
+      &[data-section="fires"] .c-home-applications__background-color {
+        background-color: #f22542;
+      }
+
+      &[data-section="commodities"] .c-home-applications__background-color {
+        background-color: #e98300;
+      }
+
+      &[data-section="map"] .c-home-applications__background-color {
+        background-color: #97bd3d;
+      }
     }
 
     img {
@@ -102,12 +127,16 @@
       margin: auto;
       max-height: rem(180px);
       padding: 0 rem(16px);
-      z-index: 1;
     }
+  }
 
-    [data-section="fires"] {
-      background-color: #f22542;
-    }
+  .c-home-applications__background-color {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
   }
 
   @media screen and (min-width: $screen-m) {
@@ -129,11 +158,6 @@
     .c-home-applications__section-description {
       width: 65%;
       margin-top: rem(16px);
-    }
-
-    .c-home-applications__apps-buttons,
-    .c-home-applications__apps-buttons .columns {
-      height: rem(640px);
     }
 
     .c-home-applications__app-button {
