@@ -4,62 +4,56 @@
       <div class="c-home-applications__title text -title-xs -color-1">BROWSE APPLICATIONS</div>
     </div>
   </div>
-  <div class="row">
+  <div class="row" style="display:none;">
     <div class="small-12 columns">
       <div class="c-home-applications__descriptions">
-        <div class="c-home-applications__section">
-          <svg class="icon">
-            <use xlink:href="#icon-app-fires"></use>
-          </svg>
-          <div class="c-home-applications__section-title text -title-big -light -color-1">Fires</div>
-          <div class="c-home-applications__section-description text -paragraph -color-1">Track fires and haze in the ASEAN region. View the latest data on fire locations and air quality and do you own analysis</div>
-        </div>
+        <% apps.each_with_index do |app, i| %>
+          <div class="c-home-applications__section <%= i == 0 ? '-selected' : '' %>" data-section="<%= app['key'] %>" data-position="<%= app['key'] %>">
+            <svg class="icon">
+              <use xlink:href="#icon-app-<%= app['key'] %>"></use>
+            </svg>
+            <div class="c-home-applications__section-title text -title-big -light -color-1"><%= app['title'] %></div>
+            <div class="c-home-applications__section-description text -paragraph -color-1"><%= app['description'] %></div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
-  <div class="c-home-applications__apps-buttons">
-    <div class="row">
-      <div class="small-12 columns">
-        <ul class="c-home-applications__app-button -left">
-          <li>
-            <svg class="icon">
-              <use xlink:href="#icon-app-map"></use>
-            </svg>
-          </li>
-          <li>
-            <svg class="icon">
-              <use xlink:href="#icon-app-fires"></use>
-            </svg>
-          </li>
-          <li>
-            <svg class="icon">
-              <use xlink:href="#icon-app-commodities"></use>
-            </svg>
-          </li>
-        </ul>
-        <ul class="c-home-applications__app-button -right">
-          <li>
-            <svg class="icon">
-              <use xlink:href="#icon-app-commodities"></use>
-            </svg>
-          </li>
-          <li>
-            <svg class="icon">
-              <use xlink:href="#icon-app-map"></use>
-            </svg>
-          </li>
-          <li>
-            <svg class="icon">
-              <use xlink:href="#icon-app-fires"></use>
-            </svg>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <ul class="c-home-applications__background">
-    <li data-section="fires">
-      <img src="/assets/home/app_mockup.png" />
+  <ul class="c-home-applications__app-button -left js_slide_prev">
+    <li>
+      <svg class="icon">
+        <use xlink:href="#icon-app-<%= apps.last['key'] %>"></use>
+      </svg>
     </li>
+  </ul>
+  <ul class="c-home-applications__app-button -right js_slide_next">
+    <li>
+      <svg class="icon">
+        <use xlink:href="#icon-app-<%= apps[1]['key'] %>"></use>
+      </svg>
+    </li>
+  </ul>
+  <ul class="c-home-applications__background">
+    <div class="slider js_slider">
+      <div class="frame js_frame">
+        <ul class="slides js_slides">
+          <% apps.each_with_index do |app, i| %>
+            <li class="slide js_slide" data-section="<%= app['key'] %>" data-position="<%= i %>">
+              <div class="c-home-applications__descriptions">
+                <div class="c-home-applications__section">
+                  <svg class="icon">
+                    <use xlink:href="#icon-app-<%= app['key'] %>"></use>
+                  </svg>
+                  <div class="c-home-applications__section-title text -title-big -light -color-1"><%= app['title'] %></div>
+                  <div class="c-home-applications__section-description text -paragraph -color-1"><%= app['description'] %></div>
+                </div>
+              </div>
+              <img src="<%= app['background'] %>" />
+              <div class="c-home-applications__background-color"></div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
   </ul>
 </div>

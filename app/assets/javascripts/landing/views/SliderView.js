@@ -20,12 +20,21 @@ define([
 
     options: {
       hiddenClass: '-hidden',
-      dotsSelectedClass: '-selected'
+      dotsSelectedClass: '-selected',
     },
 
-    initialize: function() {
+    sliderDefaultOptions: {
+      enableMouseEvents: true,
+    },
+
+    initialize: function(settings) {
       if (!this.el) {
         return;
+      }
+      if (settings) {
+        this.sliderOptions = _.extend({}, this.sliderDefaultOptions, settings.sliderOptions ? settings.sliderOptions : {});
+        this.beforeSlideCallback = settings.beforeSlideCallback ? settings.beforeSlideCallback : null;
+        this.afterSlideCallback = settings.afterSlideCallback ? settings.afterSlideCallback : null;
       }
 
       this._cache();
@@ -38,16 +47,27 @@ define([
       this.$sliderNext = this.$el.find('.js_slide_next');
       this.$dots = this.$el.find('.js_slider_dots');
       this.$dotsItems = this.$dots.find('li');
+      this.lastSlideDirection = null;
     },
 
-    _initSlider: function(){
-      this.$el[0].addEventListener('after.lory.slide', this._handleSliderEvent.bind(this));
-      this.$slider = lory.lory(this.$el[0], {
-        enableMouseEvents: true,
-      });
+    _initSlider: function() {
+      this.$el[0].addEventListener('before.lory.slide', this._beforeSlide.bind(this));
+      this.$el[0].addEventListener('after.lory.slide', this._afterSlide.bind(this));
+      this.$slider = lory.lory(this.$el[0], this.sliderOptions);
     },
 
-    _handleSliderEvent: function() {
+    _beforeSlide: function (e) {
+      this.lastSlideDirection = e.detail.nextSlide > e.detail.index ? 'next' : 'prev';
+
+      if(this.beforeSlideCallback !== null) {
+        this.beforeSlideCallback();
+      }
+    },
+
+    _afterSlide: function() {
+      if(this.afterSlideCallback !== null) {
+        this.afterSlideCallback();
+      }
       this._checkButtonsVisibility();
       this._checkDots();
     },

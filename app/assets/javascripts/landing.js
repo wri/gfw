@@ -8,6 +8,7 @@ require([
   'backbone',
   'landing/views/SummaryView',
   'landing/views/UseExamplesView',
+  'landing/views/AppsView',
   'landing/views/NewsView',
 ], function(
   $,
@@ -16,6 +17,7 @@ require([
   Backbone,
   SummaryView,
   UseExamplesView,
+  AppsView,
   NewsView
 ) {
 
@@ -28,6 +30,7 @@ require([
     init: function() {
       new SummaryView();
       new UseExamplesView();
+      new AppsView();
       new NewsView();
     },
 
