@@ -4,21 +4,6 @@
       <div class="c-home-applications__title text -title-xs -color-1">BROWSE APPLICATIONS</div>
     </div>
   </div>
-  <div class="row" style="display:none;">
-    <div class="small-12 columns">
-      <div class="c-home-applications__descriptions">
-        <% apps.each_with_index do |app, i| %>
-          <div class="c-home-applications__section <%= i == 0 ? '-selected' : '' %>" data-section="<%= app['key'] %>" data-position="<%= app['key'] %>">
-            <svg class="icon">
-              <use xlink:href="#icon-app-<%= app['key'] %>"></use>
-            </svg>
-            <div class="c-home-applications__section-title text -title-big -light -color-1"><%= app['title'] %></div>
-            <div class="c-home-applications__section-description text -paragraph -color-1"><%= app['description'] %></div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
   <ul class="c-home-applications__app-button -left js_slide_prev">
     <li>
       <svg class="icon">
@@ -39,14 +24,12 @@
         <ul class="slides js_slides">
           <% apps.each_with_index do |app, i| %>
             <li class="slide js_slide" data-section="<%= app['key'] %>" data-position="<%= i %>">
-              <div class="c-home-applications__descriptions">
-                <div class="c-home-applications__section">
-                  <svg class="icon">
-                    <use xlink:href="#icon-app-<%= app['key'] %>"></use>
-                  </svg>
-                  <div class="c-home-applications__section-title text -title-big -light -color-1"><%= app['title'] %></div>
-                  <div class="c-home-applications__section-description text -paragraph -color-1"><%= app['description'] %></div>
-                </div>
+              <div class="c-home-applications__section">
+                <svg class="icon">
+                  <use xlink:href="#icon-app-<%= app['key'] %>"></use>
+                </svg>
+                <div class="c-home-applications__section-title text -title-big -light -color-1"><%= app['title'] %></div>
+                <div class="c-home-applications__section-description text -paragraph -color-1"><%= app['description'] %></div>
               </div>
               <img src="<%= app['background'] %>" />
               <div class="c-home-applications__background-color"></div>
