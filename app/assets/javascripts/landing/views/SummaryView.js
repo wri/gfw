@@ -14,6 +14,10 @@ define([
 
     el: '.c-home-summary',
 
+    events: {
+      'click .js_summary_anchor' : '_onClickSummaryAnchor',
+    },
+
     initialize: function() {
       this._initSlider();
     },
@@ -23,6 +27,12 @@ define([
         el: this.$el.find('.js_slider')
       });
     },
+
+    _onClickSummaryAnchor: function () {
+      $('html, body').animate({
+        scrollTop: this.$el.offset().top
+      }, 500);
+    }
 
   });
   return SummaryView;
