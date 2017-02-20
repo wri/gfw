@@ -29,9 +29,14 @@ define([
     },
 
     _initVisibleSliders: function () {
-      new SliderView({
-        el: this.$el.find('.c-home-use-examples__users.js_slider')
+      enquire.register("screen and (max-width: 540px)", {
+        match: function() {
+          new SliderView({
+            el: this.$el.find('.c-home-use-examples__users.js_slider')
+          });
+        }.bind(this)
       });
+
       new SliderView({
         el: this.$el.find('.c-home-use-examples__testimonials.js_slider.' + this.options.selectedClass)
       });
