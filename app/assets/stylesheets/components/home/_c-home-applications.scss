@@ -10,16 +10,13 @@
     z-index: 2;
   }
 
-  .c-home-applications__descriptions {
-    margin-top: rem(40px);
-  }
-
   .c-home-applications__section {
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding-top: rem(87px);
 
     .icon {
       position: relative;
@@ -32,6 +29,7 @@
     }
 
     .c-home-applications__section-description {
+      width: 80%;
       margin-top: rem(15px);
     }
   }
@@ -143,21 +141,25 @@
     height: rem(640px);
 
     .c-home-applications__title {
-      margin-top: rem(50px);
+      margin-top: rem(51px);
     }
 
-    .c-home-applications__section .icon {
-      top: rem(-7px);
-      height: rem(48px);
-    }
+    .c-home-applications__section {
+      padding-top: rem(90px);
 
-    .c-home-applications__section-title {
-      margin-top: rem(3px);
-    }
+      .icon {
+        top: rem(-7px);
+        height: rem(48px);
+      }
 
-    .c-home-applications__section-description {
-      width: 65%;
-      margin-top: rem(16px);
+      .c-home-applications__section-title {
+        margin-top: rem(3px);
+      }
+
+      .c-home-applications__section-description {
+        width: 45%;
+        margin-top: rem(16px);
+      }
     }
 
     .c-home-applications__app-button {
