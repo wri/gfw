@@ -110,6 +110,7 @@ define([
     onChangeFileShape: function(e) {
       var file = e.currentTarget.files[0];
       if (file) {
+        this.$dropable.addClass('-moving');
         this.uploadFile(file);
       }
     },
@@ -131,6 +132,7 @@ define([
     onDropShape: function(e, data, clone, element) {
       e && e.preventDefault();
       var file = e.originalEvent.dataTransfer.files[0];
+      this.$dropable.addClass('-moving');
       this.uploadFile(file);
       return false;
     },
@@ -299,11 +301,9 @@ define([
 
       ShapefileService.save(file)
         .then(function(response) {
-          if (!response.length) {
-            this.presenter.publishNotification('notification-file-not-valid');
-          } else {
             var features = response.data.attributes.features;
-            if (!!features) {
+            if (!!features && features.length < 1000) {
+              debugger
               var geojson = features.reduce(turf.union),
               geometry = geojson.geometry;
 
@@ -314,16 +314,23 @@ define([
 
               this.drawGeojson(geometry);
               ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');
+            } else {
+              this.presenter.publishNotification('notification-over-limit');
             }
-          }
+          // }
         }.bind(this))
 
         .fail(function(response) {
           var errors = response.errors;
           _.each(errors, function(error){
-            console.log(error);
-            if (error.detail == 'File not valid') {
-              this.presenter.publishNotification('notification-file-not-valid');
+            if (error.status == 400) {
+              if (error.detail.indexOf('ERROR 6') > -1) {
+                this.presenter.publishNotification('notification-multilayer-not-supported');
+              } else if (error.detail.indexOf('ERROR 4') > -1) {
+                this.presenter.publishNotification('notification-file-corrupt');
+              } else {
+                this.presenter.publishNotification('notification-file-not-valid');
+              }
             }
           }.bind(this))
         }.bind(this));
