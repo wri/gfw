@@ -2,7 +2,7 @@ $item-padding: rem(16px);
 $item-padding-screen-m: rem(40px);
 
 .c-home-summary {
-  padding: rem(31px) 0 rem(55px) 0;
+  padding: rem(32px) 0 rem(56px) 0;
   background-color: $white;
   overflow: hidden;
 
@@ -53,7 +53,7 @@ $item-padding-screen-m: rem(40px);
     position: absolute;
     width: 100%;
     text-align: center;
-    bottom: rem(-37px);
+    bottom: rem(-35px);
   }
 
   @media screen and (min-width: $screen-m) {
@@ -87,6 +87,7 @@ $item-padding-screen-m: rem(40px);
     }
 
     .c-home-summary__slider-dots {
+      bottom: rem(-37px);
 
       .c-slider-dots__item:last-child {
         display: none;
