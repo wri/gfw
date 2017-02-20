@@ -6,6 +6,7 @@ require([
   'underscore',
   'Class',
   'backbone',
+  'landing/views/CoverView',
   'landing/views/SummaryView',
   'landing/views/UseExamplesView',
   'landing/views/AppsView',
@@ -15,6 +16,7 @@ require([
   _,
   Class,
   Backbone,
+  CoverView,
   SummaryView,
   UseExamplesView,
   AppsView,
@@ -28,6 +30,7 @@ require([
     $el: $('body'),
 
     init: function() {
+      new CoverView();
       new SummaryView();
       new UseExamplesView();
       new AppsView();
