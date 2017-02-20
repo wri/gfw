@@ -1,6 +1,6 @@
 define([
-  'Class', 
-  'uri', 
+  'Class',
+  'uri',
   'bluebird',
   'map/services/DataService'
 ], function(Class, UriTemplate, Promise, ds) {
@@ -9,7 +9,7 @@ define([
 
   var SAVE_REQUEST_ID = 'ShapefileService:save';
 
-  var URL = window.gfw.config.GFW_API_HOST_NEW_API + '/ogr/convert';
+  var URL = 'http://tower.dev:9000' + '/ogr/convert';
 
   var ShapefileService = Class.extend({
 
@@ -19,8 +19,12 @@ define([
       var xhr = new XMLHttpRequest();
       xhr.open("POST", URL, true);
       xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          deferred.resolve(JSON.parse(xhr.responseText));
+        if (xhr.readyState == 4) {
+          if (xhr.status == 200) {
+            deferred.resolve(JSON.parse(xhr.responseText));
+          } else {
+            deferred.reject(JSON.parse(xhr.responseText));
+          }
         }
       };
 

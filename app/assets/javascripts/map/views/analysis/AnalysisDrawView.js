@@ -299,24 +299,29 @@ define([
 
       ShapefileService.save(file)
         .then(function(response) {
-          var features = response.data.attributes.features;
-          if (!!features) {
-            var geojson = features.reduce(turf.union),
-                geometry = geojson.geometry;
+          if (!response.length) {
+            this.presenter.publishNotification('notification-file-not-valid');
+          } else {
+            var features = response.data.attributes.features;
+            if (!!features) {
+              var geojson = features.reduce(turf.union),
+              geometry = geojson.geometry;
 
-            this.presenter.status.set({
-              geojson: geometry,
-              fit_to_geom: true
-            });
+              this.presenter.status.set({
+                geojson: geometry,
+                fit_to_geom: true
+              });
 
-            this.drawGeojson(geometry);
-            ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');
+              this.drawGeojson(geometry);
+              ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');
+            }
           }
         }.bind(this))
 
         .fail(function(response) {
           var errors = response.errors;
           _.each(errors, function(error){
+            console.log(error);
             if (error.detail == 'File not valid') {
               this.presenter.publishNotification('notification-file-not-valid');
             }
