@@ -11,7 +11,7 @@ define([
 
   'use strict';
 
-  var NewsView = Backbone.View.extend({
+  var AppsView = Backbone.View.extend({
 
     el: '.c-home-applications',
 
@@ -111,6 +111,6 @@ define([
     }
 
   });
-  return NewsView;
+  return AppsView;
 
 });
