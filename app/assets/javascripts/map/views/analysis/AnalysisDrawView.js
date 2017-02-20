@@ -303,7 +303,6 @@ define([
         .then(function(response) {
             var features = response.data.attributes.features;
             if (!!features && features.length < 1000) {
-              debugger
               var geojson = features.reduce(turf.union),
               geometry = geojson.geometry;
 
