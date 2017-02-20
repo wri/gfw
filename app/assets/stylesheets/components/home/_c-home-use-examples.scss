@@ -20,6 +20,7 @@ $item-user-padding-screen-m: rem(39px);
   }
 
   .c-home-use-examples__users {
+    margin-top: rem(17px);
 
     .slider {
       position: relative;
@@ -40,8 +41,8 @@ $item-user-padding-screen-m: rem(39px);
     .slide {
       position: relative;
       display: inline-block;
-      width: 25%;
-      padding-right: rem(16px);
+      width: rem(130px);
+      padding-right: rem(32px);
       text-align: center;
       white-space: normal;
       vertical-align: top;
@@ -51,6 +52,8 @@ $item-user-padding-screen-m: rem(39px);
   .c-home-use-examples__avatar {
     position: relative;
     left: 0;
+    right: 0;
+    margin: auto;
     width: rem(49px);
     height: rem(49px);
     background-color: $grey-dark;
@@ -80,6 +83,7 @@ $item-user-padding-screen-m: rem(39px);
 
   .c-home-use-examples__avatar-title {
     position: absolute;
+    top: rem(57px);
     left: 50%;
     transform: translate(-50%, 0);
     opacity: 0.5;
@@ -87,6 +91,7 @@ $item-user-padding-screen-m: rem(39px);
 
   .c-home-use-examples__testimonials {
     position: relative;
+    margin-top: rem(65px);
     display: none;
 
     &.-selected {
@@ -116,16 +121,18 @@ $item-user-padding-screen-m: rem(39px);
   }
 
   .c-home-use-examples__testimonials-quote {
+    padding: 0 rem(8px);
 
     span:first-of-type {
       position: absolute;
       top: 0;
-      left: rem(-15px);
+      left: rem(-8px);
     }
   }
 
   .c-home-use-examples__slider-dots {
-
+    margin-top: rem(13px);
+    text-align: center;
   }
 
   .c-home-use-examples__cover {
@@ -163,6 +170,11 @@ $item-user-padding-screen-m: rem(39px);
       }
     }
 
+    .c-home-use-examples__avatar {
+      right: auto;
+      margin: 0;
+    }
+
     .c-home-use-examples__avatar-title {
       top: rem(54px);
     }
@@ -180,8 +192,17 @@ $item-user-padding-screen-m: rem(39px);
       }
     }
 
+    .c-home-use-examples__testimonials-quote {
+      padding: 0;
+
+      span:first-of-type {
+        left: rem(-15px);
+      }
+    }
+
     .c-home-use-examples__slider-dots {
       margin-top: rem(16px);
+      text-align: left;
     }
   }
 
