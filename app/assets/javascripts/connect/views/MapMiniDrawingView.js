@@ -81,7 +81,6 @@ define([
 
       if (is_drawing) {
         this.$el.text('Cancel');
-        this.$el.text('Cancel');
         this.startDrawingManager();
       } else {
         if (is_drawn) {
@@ -108,7 +107,7 @@ define([
     },
 
     addTooltip: function() {
-      this.$map.append('<div class="tooltip">click map to draw</div>');
+      this.$map.append('<div class="tooltip">Click to start drawing shape</div>');
       this.$map.mousemove(this.showTooltip.bind(this));
       this.$tooltip = $('.tooltip');
     },

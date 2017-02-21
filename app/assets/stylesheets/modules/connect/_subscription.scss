@@ -17,17 +17,19 @@
       position: relative;
 
       &:hover .tooltip {
-        opacity: 1;
+        opacity: 0.6;
         transition: opacity 0.5s ease-in-out;
       }
 
       .tooltip {
-          opacity: 0;
-          background: #ffffff;
-          margin-left: 5px;
-          padding: 10px 20px;
-          position: absolute;
-          z-index: 1000;
+        opacity: 0;
+        background: #000000;
+        color: $white;
+        margin-left: 15px;
+        padding: 15px;
+        position: absolute;
+        z-index: 1000;
+        font-size: 12px;
       }
     }
 
