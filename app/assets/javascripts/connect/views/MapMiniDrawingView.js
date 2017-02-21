@@ -38,6 +38,7 @@ define([
       View.prototype.initialize.apply(this);
 
       this.map = map;
+      this._cache();
       this.listeners();
     },
 
@@ -60,6 +61,11 @@ define([
       }
     ],
 
+    _cache: function() {
+      this.$map = $('#map');
+      this.$offset = this.$map.offset();
+    },
+
     listeners: function() {
       // Status listeners
       this.listenTo(this.status, 'change:is_drawing', this.changeIsDrawing.bind(this));
@@ -74,6 +80,7 @@ define([
       this.setDrawingButton();
 
       if (is_drawing) {
+        this.$el.text('Cancel');
         this.$el.text('Cancel');
         this.startDrawingManager();
       } else {
@@ -99,6 +106,25 @@ define([
         .toggleClass('red', red);
 
     },
+
+    addTooltip: function() {
+      this.$map.append('<div class="tooltip">click map to draw</div>');
+      this.$map.mousemove(this.showTooltip.bind(this));
+      this.$tooltip = $('.tooltip');
+    },
+
+    showTooltip: function(e) {
+      for (var i = this.$tooltip.length; i--;) {
+          this.$tooltip[i].style.left = e.pageX - this.$offset.left + 'px';
+          this.$tooltip[i].style.top = e.pageY - this.$offset.top + 'px';
+      }
+    },
+
+    removeTooltip: function() {
+      this.$tooltip.remove();
+      this.$map.off('mousemove');
+    },
+
 
     /**
      * DRAWING MANAGER
@@ -142,6 +168,8 @@ define([
         }
       }.bind(this));
 
+      this.addTooltip();
+
       google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this.completeDrawing.bind(this));
     },
 
@@ -154,6 +182,8 @@ define([
         this.drawingManager.setDrawingMode(null);
         this.drawingManager.setMap(null);
       }
+
+      this.removeTooltip();
 
       // Bindings
       $(document).off('keyup.drawing');
@@ -168,7 +198,7 @@ define([
     completeDrawing: function(e) {
       this.stopDrawingManager();
       mps.publish('Shape/upload', [false]);
-      
+
       // Check if the drawing is enabled
       if (this.status.get('is_drawing')) {
         mps.publish('Drawing/overlay', [e.overlay, { save: true }]);
