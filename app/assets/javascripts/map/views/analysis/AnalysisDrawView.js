@@ -63,6 +63,10 @@ define([
       // Upload
       this.$dropable = this.$el.find('#area-dropable-shape');
       this.$fileSelector = this.$el.find('#file-upload-shape');
+
+      // Map for tooltip
+      this.$map = $('#map');
+      this.$offset = this.$map.offset();
     },
 
 
@@ -138,8 +142,23 @@ define([
       return false;
     },
 
+    addTooltip: function() {
+      this.$map.append('<div class="tooltip">Click to start drawing shape</div>');
+      this.$map.mousemove(this.showTooltip.bind(this));
+      this.$tooltip = $('.tooltip');
+    },
 
+    showTooltip: function(e) {
+      for (var i = this.$tooltip.length; i--;) {
+          this.$tooltip[i].style.left = e.pageX - this.$offset.left + 'px';
+          this.$tooltip[i].style.top = e.pageY - this.$offset.top + 'px';
+      }
+    },
 
+    removeTooltip: function() {
+      this.$tooltip.remove();
+      this.$map.off('mousemove');
+    },
 
 
 
@@ -200,6 +219,8 @@ define([
         }
       }.bind(this));
 
+      this.addTooltip();
+
       google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this.completeDrawing.bind(this));
     },
 
@@ -215,6 +236,8 @@ define([
 
       // Bindings
       $(document).off('keyup.drawing');
+
+      this.removeTooltip();
 
       google.maps.event.clearListeners(this.drawingManager, 'overlaycomplete');
     },
