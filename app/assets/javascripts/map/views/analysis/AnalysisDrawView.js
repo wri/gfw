@@ -26,7 +26,8 @@ define([
 
     config: {
       FILE_SIZE_LIMIT: 1000000,
-      FILE_SIZE_MESSAGE: 'The selected file is quite large and uploading it might result in browser instability. Do you want to continue?'
+      FILE_SIZE_MESSAGE: 'The selected file is quite large and uploading it might result in browser instability. Do you want to continue?',
+      FILE_FEATURE_LIMIT: 1000
     },
 
     events: {
@@ -302,10 +303,11 @@ define([
       ShapefileService.save(file)
         .then(function(response) {
             var features = response.data.attributes.features;
-            if (!!features && features.length < 1000) {
+            if (!!features && features.length < this.config.FILE_FEATURE_LIMIT) {
+              debugger
               var geojson = features.reduce(turf.union),
               geometry = geojson.geometry;
-
+              debugger
               this.presenter.status.set({
                 geojson: geometry,
                 fit_to_geom: true
@@ -328,8 +330,8 @@ define([
               } else if (error.detail.indexOf('ERROR 4') > -1) {
                 this.presenter.publishNotification('notification-file-corrupt');
               } else {
-                this.presenter.publishNotification('notification-file-not-valid');
-              }
+                this.presenter.publishCustomNotification('<p>File issue: ' + error.detail + '</p>', 'error');
+               }
             }
           }.bind(this))
         }.bind(this));
