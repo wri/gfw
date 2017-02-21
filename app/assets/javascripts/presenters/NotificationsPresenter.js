@@ -27,6 +27,9 @@ define([
       },
       'Notification/close': function() {
         this.view.hide();
+      },
+      'Notification/custom': function(info, type) {
+        this.view.showCustom(info, type);
       }
     }],
 

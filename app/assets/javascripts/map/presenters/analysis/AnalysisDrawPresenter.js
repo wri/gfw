@@ -119,6 +119,10 @@ define([
       mps.publish('Notification/open', [id]);
     },
 
+    publishCustomNotification: function(info, type){
+      mps.publish('Notification/custom', [info, type]);
+    },
+
     deleteAnalysis: function() {
       this.status.set('is_drawing', false);
       this.view.deleteDrawing();

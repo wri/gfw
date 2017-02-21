@@ -1,6 +1,6 @@
 define([
-  'Class', 
-  'uri', 
+  'Class',
+  'uri',
   'bluebird',
   'map/services/DataService'
 ], function(Class, UriTemplate, Promise, ds) {
@@ -24,7 +24,7 @@ define([
             deferred.resolve(JSON.parse(xhr.responseText));
           } else {
             deferred.reject(JSON.parse(xhr.responseText));
-          } 
+          }
         }
       };
 
