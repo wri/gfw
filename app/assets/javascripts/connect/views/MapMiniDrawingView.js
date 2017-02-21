@@ -107,9 +107,11 @@ define([
     },
 
     addTooltip: function() {
+      this.clickState = 0;
       this.$map.append('<div class="tooltip">Click to start drawing shape</div>');
       this.$map.mousemove(this.showTooltip.bind(this));
       this.$tooltip = $('.tooltip');
+      this.$map.click(this.updateTooltip.bind(this));
     },
 
     showTooltip: function(e) {
@@ -119,8 +121,22 @@ define([
       }
     },
 
+    updateTooltip: function() {
+      this.clickState++;
+      var newText = '';
+      if (this.clickState === 0) {
+        newText = 'Click to start drawing shape';
+      } else if (this.clickState === 1) {
+        newText = 'Click to continue drawing shape';
+      } else {
+        newText = 'Click the first point to close shape';
+      }
+      this.$tooltip.html(newText);
+    },
+
     removeTooltip: function() {
       this.$tooltip.remove();
+      this.$map.off('click');
       this.$map.off('mousemove');
     },
 
