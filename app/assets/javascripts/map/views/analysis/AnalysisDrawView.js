@@ -26,7 +26,8 @@ define([
 
     config: {
       FILE_SIZE_LIMIT: 1000000,
-      FILE_SIZE_MESSAGE: 'The selected file is quite large and uploading it might result in browser instability. Do you want to continue?'
+      FILE_SIZE_MESSAGE: 'The selected file is quite large and uploading it might result in browser instability. Do you want to continue?',
+      FILE_FEATURE_LIMIT: 1000
     },
 
     events: {
@@ -110,6 +111,7 @@ define([
     onChangeFileShape: function(e) {
       var file = e.currentTarget.files[0];
       if (file) {
+        this.$dropable.addClass('-moving');
         this.uploadFile(file);
       }
     },
@@ -131,6 +133,7 @@ define([
     onDropShape: function(e, data, clone, element) {
       e && e.preventDefault();
       var file = e.originalEvent.dataTransfer.files[0];
+      this.$dropable.addClass('-moving');
       this.uploadFile(file);
       return false;
     },
@@ -299,26 +302,36 @@ define([
 
       ShapefileService.save(file)
         .then(function(response) {
-          var features = response.data.attributes.features;
-          if (!!features) {
-            var geojson = features.reduce(turf.union),
-                geometry = geojson.geometry;
+            var features = response.data.attributes.features;
+            if (!!features && features.length < this.config.FILE_FEATURE_LIMIT) {
+              debugger
+              var geojson = features.reduce(turf.union),
+              geometry = geojson.geometry;
+              debugger
+              this.presenter.status.set({
+                geojson: geometry,
+                fit_to_geom: true
+              });
 
-            this.presenter.status.set({
-              geojson: geometry,
-              fit_to_geom: true
-            });
-
-            this.drawGeojson(geometry);
-            ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');
-          }
+              this.drawGeojson(geometry);
+              ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');
+            } else {
+              this.presenter.publishNotification('notification-over-limit');
+            }
+          // }
         }.bind(this))
 
         .fail(function(response) {
           var errors = response.errors;
           _.each(errors, function(error){
-            if (error.detail == 'File not valid') {
-              this.presenter.publishNotification('notification-file-not-valid');
+            if (error.status == 400) {
+              if (error.detail.indexOf('ERROR 6') > -1) {
+                this.presenter.publishNotification('notification-multilayer-not-supported');
+              } else if (error.detail.indexOf('ERROR 4') > -1) {
+                this.presenter.publishNotification('notification-file-corrupt');
+              } else {
+                this.presenter.publishCustomNotification('<p>File issue: ' + error.detail + '</p>', 'error');
+               }
             }
           }.bind(this))
         }.bind(this));

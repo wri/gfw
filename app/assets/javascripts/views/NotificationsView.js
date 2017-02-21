@@ -71,6 +71,16 @@ define([
       this.model.set('hidden', false);
     },
 
+    showCustom: function(info, type) {
+      // Add class of notification to this.$el
+      this.$el.removeClass('success warning info error').addClass(type);
+      // Add content to notification content
+      this.$notifContent.html(info);
+      this.$notifContent.prepend('<svg><use xlink:href="#icon-'+type+'"></use></svg>');
+      //Active notifications
+      this.model.set('hidden', false);
+    },
+
     triggerAction: function(e){
       var action = $(e.currentTarget).data('action');
       var options = $(e.currentTarget).data('options') || {};
