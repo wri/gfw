@@ -343,10 +343,8 @@ define([
         .then(function(response) {
             var features = response.data.attributes.features;
             if (!!features && features.length < this.config.FILE_FEATURE_LIMIT) {
-              debugger
               var geojson = features.reduce(turf.union),
               geometry = geojson.geometry;
-              debugger
               this.presenter.status.set({
                 geojson: geometry,
                 fit_to_geom: true
@@ -369,7 +367,8 @@ define([
               } else if (error.detail.indexOf('ERROR 4') > -1) {
                 this.presenter.publishNotification('notification-file-corrupt');
               } else {
-                this.presenter.publishCustomNotification('<p>File issue: ' + error.detail + '</p>', 'error');
+                var error = JSON.parse(error.detail);
+                this.presenter.publishCustomNotification('<p>File issue: ' + error.errors[0].detail + '</p>', 'error');
                }
             }
           }.bind(this))
