@@ -12,58 +12,59 @@
     <div class="m-new">
       <aside class="m-aside">
         <h3>How it works</h3>
-        <p>GFW offers the latest data and tools for monitoring forests. Our satellite-based forest loss alerts notify you where deforestation is happening on a weekly, monthly, or annual basis, depending on the geographic area.</p>
-        <p>Subscribing to GFW's forest loss alerts is easy. Select the area you want to monitor, choose the data you want to subscribe to, and start receiving email notifications when new alerts are detected within your area.</p>
+        <p>Global Forest Watch offers the latest data and tools for monitoring forests. Our satellite-based forest loss alerts notify you where deforestation is happening on a weekly, monthly, or annual basis, depending on the geographic area.</p>
+        <p>Subscribing to GFW's forest loss alerts is easy. Just log in to GFW, select the area you want to monitor, choose the data you want to subscribe to, and start receiving email notifications when new alerts are detected within your area.</p>
       </aside>
 
       <div class="m-form">
-        <form id="new-subscription" class="m-subscription">
-          <div class="field -default -medium {{#unless loggedIn}}-disabled{{/unless}}">
-            <label for="aoi">Select the area you’d like to receive alerts for *</label>
-            <div class="m-select">
-              <select id="aoi" class="chosen-select default" data-placeholder="Select your area of interest" value="{{aoi}}">
-                <option value=""></option>
-                <option value="draw" {{#ifCond aoi "==" "draw"}}selected{{/ifCond}}>Draw or upload a shape</option>
-                <option value="data" {{#ifCond aoi "==" "data"}}selected{{/ifCond}}>Select an area from a GFW data set</option>
-                <option value="country" {{#ifCond aoi "==" "country"}}selected{{/ifCond}}>Select a country or jurisdiction</option>
-              </select>
+        {{#if loggedIn }}
+          <form id="new-subscription" class="m-subscription">
+            <div class="field -default -medium">
+              <label for="aoi">Select the area you’d like to receive alerts for</label>
+              <div class="m-select">
+                <select id="aoi" class="chosen-select default" data-placeholder="Select your area of interest" value="{{aoi}}">
+                  <option value=""></option>
+                  <option value="draw" {{#ifCond aoi "==" "draw"}}selected{{/ifCond}}>Draw or upload a shape</option>
+                  <option value="data" {{#ifCond aoi "==" "data"}}selected{{/ifCond}}>Select an area from a GFW data set</option>
+                  <option value="country" {{#ifCond aoi "==" "country"}}selected{{/ifCond}}>Select a country or jurisdiction</option>
+                </select>
+              </div>
             </div>
-          </div>
-
-          {{#unless loggedIn}}
-            <div class="login-notice">
-              <div class="text">Please log in to be able to use this feature</div>
-
-              <ul class="my-gfw-authentication">
-                <li class="my-gfw-sign-in-twitter">
-                  <a href="{{apiHost}}/auth/twitter" class="my-gfw-sign-in my-gfw-sign-in-twitter">
-                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use></svg>
-                    Log in with Twitter
-                  </a>
-                </li>
-
-                <li class="my-gfw-sign-in-facebook">
-                  <a href="{{apiHost}}/auth/facebook" class="my-gfw-sign-in">
-                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use></svg>
-                    Log in with Facebook
-                  </a>
-                </li>
-
-                <li class="my-gfw-sign-in-google">
-                  <a href="{{apiHost}}/auth/google" class="my-gfw-sign-in">
-                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-googleplus"></use></svg>
-                    Log in with Google
-                  </a>
-                </li>
-              </ul>
+            <div id="new-subscription-content">
 
             </div>
-          {{/unless}}
+          </form>
 
-          <div id="new-subscription-content">
+        {{else}}
+          <div class="login-notice">
+            <div class="text">Please log in to be able to use this feature</div>
+
+            <ul class="my-gfw-authentication">
+              <li class="my-gfw-sign-in-twitter">
+                <a href="{{apiHost}}/auth/twitter" class="my-gfw-sign-in my-gfw-sign-in-twitter">
+                  <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use></svg>
+                  Log in with Twitter
+                </a>
+              </li>
+
+              <li class="my-gfw-sign-in-facebook">
+                <a href="{{apiHost}}/auth/facebook" class="my-gfw-sign-in">
+                  <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use></svg>
+                  Log in with Facebook
+                </a>
+              </li>
+
+              <li class="my-gfw-sign-in-google">
+                <a href="{{apiHost}}/auth/google" class="my-gfw-sign-in">
+                  <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-googleplus"></use></svg>
+                  Log in with Google
+                </a>
+              </li>
+            </ul>
 
           </div>
-        </form>
+        {{/if}}
+
       </div>
     </div>
   </div>
