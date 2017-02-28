@@ -3,13 +3,13 @@
   p {
     &.-center {
       text-align: center;
-      padding: 10px 0;      
+      padding: 10px 0;
     }
 
     &.-terms {
       font-size: 10px;
       margin: 8px 0 0;
-      text-align: center;    
+      text-align: center;
     }
   }
 
@@ -34,6 +34,11 @@
       border-radius: 40px;
       text-transform: uppercase;
       cursor: pointer;
+
+      .m-spinner {
+        border-radius: 40px;
+        cursor: default;
+      }
 
       input {
         appearance: none;
@@ -60,7 +65,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-  
+
       span {
         display: block;
         width: 200px;
