@@ -63,6 +63,10 @@ define([
       // Upload
       this.$dropable = this.$el.find('#area-dropable-shape');
       this.$fileSelector = this.$el.find('#file-upload-shape');
+
+      // Map for tooltip
+      this.$map = $('#map');
+      this.$offset = this.$map.offset();
     },
 
 
@@ -138,8 +142,39 @@ define([
       return false;
     },
 
+    addTooltip: function() {
+      this.clickState = 0;
+      this.$map.append('<div class="tooltip">Click to start drawing shape</div>');
+      this.$map.mousemove(this.showTooltip.bind(this));
+      this.$tooltip = $('.tooltip');
+      this.$map.click(this.updateTooltip.bind(this));
+    },
 
+    showTooltip: function(e) {
+      for (var i = this.$tooltip.length; i--;) {
+          this.$tooltip[i].style.left = e.pageX - this.$offset.left + 'px';
+          this.$tooltip[i].style.top = e.pageY - this.$offset.top + 'px';
+      }
+    },
 
+    updateTooltip: function() {
+      this.clickState++;
+      var newText = '';
+      if (this.clickState === 0) {
+        newText = 'Click to start drawing shape';
+      } else if (this.clickState === 1) {
+        newText = 'Click to continue drawing shape';
+      } else {
+        newText = 'Click the first point to close shape';
+      }
+      this.$tooltip.html(newText);
+    },
+
+    removeTooltip: function() {
+      this.$tooltip.remove();
+      this.$map.off('click');
+      this.$map.off('mousemove');
+    },
 
 
 
@@ -200,6 +235,8 @@ define([
         }
       }.bind(this));
 
+      this.addTooltip();
+
       google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this.completeDrawing.bind(this));
     },
 
@@ -215,6 +252,8 @@ define([
 
       // Bindings
       $(document).off('keyup.drawing');
+
+      this.removeTooltip();
 
       google.maps.event.clearListeners(this.drawingManager, 'overlaycomplete');
     },
@@ -304,10 +343,8 @@ define([
         .then(function(response) {
             var features = response.data.attributes.features;
             if (!!features && features.length < this.config.FILE_FEATURE_LIMIT) {
-              debugger
               var geojson = features.reduce(turf.union),
               geometry = geojson.geometry;
-              debugger
               this.presenter.status.set({
                 geojson: geometry,
                 fit_to_geom: true
@@ -330,7 +367,8 @@ define([
               } else if (error.detail.indexOf('ERROR 4') > -1) {
                 this.presenter.publishNotification('notification-file-corrupt');
               } else {
-                this.presenter.publishCustomNotification('<p>File issue: ' + error.detail + '</p>', 'error');
+                var error = JSON.parse(error.detail);
+                this.presenter.publishCustomNotification('<p>File issue: ' + error.errors[0].detail + '</p>', 'error');
                }
             }
           }.bind(this))

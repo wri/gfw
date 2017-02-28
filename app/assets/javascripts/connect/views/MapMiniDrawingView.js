@@ -38,6 +38,7 @@ define([
       View.prototype.initialize.apply(this);
 
       this.map = map;
+      this._cache();
       this.listeners();
     },
 
@@ -59,6 +60,11 @@ define([
         }
       }
     ],
+
+    _cache: function() {
+      this.$map = $('#map');
+      this.$offset = this.$map.offset();
+    },
 
     listeners: function() {
       // Status listeners
@@ -99,6 +105,41 @@ define([
         .toggleClass('red', red);
 
     },
+
+    addTooltip: function() {
+      this.clickState = 0;
+      this.$map.append('<div class="tooltip">Click to start drawing shape</div>');
+      this.$map.mousemove(this.showTooltip.bind(this));
+      this.$tooltip = $('.tooltip');
+      this.$map.click(this.updateTooltip.bind(this));
+    },
+
+    showTooltip: function(e) {
+      for (var i = this.$tooltip.length; i--;) {
+          this.$tooltip[i].style.left = e.pageX - this.$offset.left + 'px';
+          this.$tooltip[i].style.top = e.pageY - this.$offset.top + 'px';
+      }
+    },
+
+    updateTooltip: function() {
+      this.clickState++;
+      var newText = '';
+      if (this.clickState === 0) {
+        newText = 'Click to start drawing shape';
+      } else if (this.clickState === 1) {
+        newText = 'Click to continue drawing shape';
+      } else {
+        newText = 'Click the first point to close shape';
+      }
+      this.$tooltip.html(newText);
+    },
+
+    removeTooltip: function() {
+      this.$tooltip.remove();
+      this.$map.off('click');
+      this.$map.off('mousemove');
+    },
+
 
     /**
      * DRAWING MANAGER
@@ -142,6 +183,8 @@ define([
         }
       }.bind(this));
 
+      this.addTooltip();
+
       google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this.completeDrawing.bind(this));
     },
 
@@ -154,6 +197,8 @@ define([
         this.drawingManager.setDrawingMode(null);
         this.drawingManager.setMap(null);
       }
+
+      this.removeTooltip();
 
       // Bindings
       $(document).off('keyup.drawing');
@@ -168,7 +213,7 @@ define([
     completeDrawing: function(e) {
       this.stopDrawingManager();
       mps.publish('Shape/upload', [false]);
-      
+
       // Check if the drawing is enabled
       if (this.status.get('is_drawing')) {
         mps.publish('Drawing/overlay', [e.overlay, { save: true }]);
