@@ -62,6 +62,7 @@ define([
 
       // Upload
       this.$dropable = this.$el.find('#area-dropable-shape');
+      this.$uploadLoader = this.$el.find('#area-upload-loader');
       this.$fileSelector = this.$el.find('#file-upload-shape');
 
       // Map for tooltip
@@ -116,6 +117,8 @@ define([
       var file = e.currentTarget.files[0];
       if (file) {
         this.$dropable.addClass('-moving');
+
+        this.$uploadLoader.addClass('-start');
         this.uploadFile(file);
       }
     },
@@ -138,6 +141,7 @@ define([
       e && e.preventDefault();
       var file = e.originalEvent.dataTransfer.files[0];
       this.$dropable.addClass('-moving');
+      this.$uploadLoader.addClass('-start');
       this.uploadFile(file);
       return false;
     },
@@ -335,6 +339,7 @@ define([
      */
     uploadFile: function(file) {
       if (file.size > this.config.FILE_SIZE_LIMIT && !window.confirm(this.config.FILE_SIZE_MESSAGE)) {
+        this.$uploadLoader.removeClass('-start');
         this.$dropable.removeClass('-moving');
         return;
       }
@@ -355,6 +360,7 @@ define([
             } else {
               this.presenter.publishNotification('notification-over-limit');
             }
+            this.$uploadLoader.removeClass('-start');
           // }
         }.bind(this))
 
@@ -372,6 +378,7 @@ define([
                }
             }
           }.bind(this))
+          this.$uploadLoader.removeClass('-start');
         }.bind(this));
 
       this.$dropable.removeClass('-moving');
