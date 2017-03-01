@@ -26,7 +26,7 @@ define([
           el: '#SFGSliderView',
           options: {
             defaultSlider: {
-              autoplay: true,
+              autoplay: false,
               navigation: false
             }
           }
