@@ -1,4 +1,40 @@
-#ptw_grid_score_gt_0[zoom<6]{
+#ptw_grid_score_gt_0[dtype=false]{
+  marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/wri-01/assets/20170302154721ptw-rectangle-marker.svg);
+  marker-fill-opacity: 0;
+  marker-line-color: #FFEE00;
+  marker-line-width: 2;
+  marker-line-opacity: 1;
+  marker-placement: point;
+  marker-type: ellipse;
+  marker-allow-overlap: true;
+  marker-width: 74;
+
+  [zoom>8]{
+    marker-width: 64;
+    marker-allow-overlap: false;
+  }
+  [zoom<7]{marker-width: 54;}
+  [zoom<6]{marker-width: 44;}
+  [zoom<5]{marker-width: 34;}
+  [zoom<4]{marker-width: 24;}
+}
+
+#ptw_grid_score_gt_0[zoom>=9][dtype=false]{
+  marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/wri-01/assets/20170302110128ptw-icon-outline.svg);
+  [zoom>8]{marker-width: 124;marker-opacity:0;}
+}
+
+#ptw_grid_score_gt_0[zoom<5][dtype=true]{
+  polygon-fill: transparent;
+  line-width:0;
+  polygon-opacity: 0;
+  line-color: transparent;
+  marker-fill-opacity: 0;
+  marker-line-color: transparent;
+  marker-width: 0;
+}
+
+#ptw_grid_score_gt_0[zoom>6][dtype=true]{
   marker-opacity: 1;
   marker-multi-policy: whole;
   marker-placement: point;
@@ -6,22 +42,11 @@
   marker-ignore-placement: false;
   marker-spacing:50;
   marker-max-error:5;
-
+  marker-fill-opacity: 0;
   marker-allow-overlap: true;
-  [emissions_sum > 0.5]{
-   marker-fill: #F03B20;
-    marker-line-color: #F03B20;}
-  [ emissions_sum <= 0.5] {
-    marker-clip: false;
-    marker-comp-op:dst-atop;
-    marker-fill: #FFA300;
-    marker-line-color: #FFA300;}
+  marker-width: 0;
+  marker-line-opacity: 0;
 
-
-}
-
-
-#ptw_grid_score_gt_0[zoom>5]{
   polygon-fill: transparent;
   line-width:2;
   polygon-opacity: 0.75;
