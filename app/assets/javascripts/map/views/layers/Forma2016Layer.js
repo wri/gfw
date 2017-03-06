@@ -15,7 +15,7 @@ define([
 
   'use strict';
 
-  var TILE_URL = 'https://storage.googleapis.com/forma-2016/projects/wri-datalab/tile_tests/20161219/forma_ui_biweekly_20151219{/z}{/x}{/y}';
+  var TILE_URL = 'https://storage.googleapis.com/forma-public/FORMA_TILES/biweekly/run_20170203-173006/forma_biweekly_2016_19/{/z}{/x}{/y}';
   var START_DATE = '2012-01-01';
   var END_DATE = '2016-12-31';
   var START_YEAR = 2012;
