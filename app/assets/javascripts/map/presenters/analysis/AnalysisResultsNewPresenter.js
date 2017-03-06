@@ -115,8 +115,7 @@ define([
       p.options = {};
       p.options.threshold = this.status.get('threshold');
       p.options.enabledSubscription = this.status.get('enabledSubscription');
-      // Provisional: Disabling glad until the backend is ready
-      p.options.enabledDownload = (p.slug === 'glad-alerts') ? false : !!results.downloadUrls;
+      p.options.enabledDownload = !!results.downloadUrls;
 
       if (!!results.downloadUrls) {
         mps.publish('Analysis/downloads', [results.downloadUrls]);
