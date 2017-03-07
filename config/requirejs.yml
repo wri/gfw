@@ -40,10 +40,6 @@ paths:
   cookie: "js-cookie/src/js.cookie"
   urijs: "urijs/src"
 
-  #countries
-  scrollit: "ScrollIt.js/scrollIt"
-  qtip: "qtip2/jquery.qtip.min"
-
   # stories
   jquery_fileupload: "jquery-file-upload/js/jquery.fileupload"
   jquery_migrate: "jquery-migrate/jquery-migrate"
@@ -122,11 +118,6 @@ shim:
     deps:
       - "jquery"
     exports: "jqueryujs"
-
-  scrollit:
-    deps:
-      - "jquery"
-    exports: "scrollit"
 
   jquery_migrate:
     deps:

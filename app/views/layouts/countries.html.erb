@@ -19,54 +19,27 @@
 
     <link rel="canonical" href="<%= request.original_url %>" />
 
-
-    <link href='http://fonts.googleapis.com/css?family=Fira+Sans:400,500,300' rel='stylesheet' type='text/css'>
-
     <meta name="google-translate-customization" content="af2414ea962843fc-f48b15cdb6a3ab9b-gd8c738d3a7ff42de-1a">
     <meta name="google-site-verification" content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak" />
     <%= render 'shared/icons' %>
 
-    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
     <%= controller_stylesheet_link_tag %>
     <%= yield :js %>
     <%= csrf_meta_tags %>
     <%= render 'shared/gfw_assets' %>
-
   </head>
-  <% content_for :headerMobile do %>
-    <a href="#" class="menu-section-link" data-hideembed="1">Countries <svg><use xlink:href="#shape-country"></use></svg></a>
-    <ul id="menu-section-dropdown" class="menu-section-dropdown">
-      <li>
-        <a class="btn gray uppercase <% if (controller?("countries") && action?("index")) || (controller?("countries") && action?("show")) %> current<% end %>" href="/countries">Country Profiles</a>
-      </li>
-      <li>
-        <a class="btn gray uppercase <% if controller?("countries") && action?("overview") %>current<% end %>" href="/countries/overview">Country Rankings</a>
-      </li>
-    </ul>
-  <% end %>
 
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
-    <%= render 'layouts/svg_icons' %>
-    
-    <%= render 'shared/svg_icons_footer' %>
-    <%= render 'shared/modal' %>
-    <%= render 'shared/notifications' %>
-
     <div class="wrap">
         <%= render "shared/header_landing" %>
         <div class="layout-content">
           <%= yield %>
         </div>
-        <%= render 'shared/footer_landing' %>
+        <!-- Footer -->
+        <div id="footerGfw"></div>
     </div>
-    
+
     <!-- Javascript -->
-    <%= render 'shared/google_carto' %>
     <%= requirejs_include_tag "countries" %>
-    <%= render 'shared/js_footer' %>
-    <div id='sources' class='sources notranslate is-hidden'>
-      <%= render 'countries' %>
-      <%= render 'shared/sources' %>
-    </div>
   </body>
 </html>

@@ -2,34 +2,19 @@
 @import "compass/reset";
 @import "compass/css3";
 
-// Images
-@import "logos/*.png";
-@import "country-icons/*.png";
-@import "home-icons/*.png";
-
-// Global
-// This will load all common settings, mixins and styles needed 
-@import "global/global";
+// Settings
+@import "settings/settings";
+@import "global/base";
+@import "global/utils";
+@import "global/common";
+@import "global/texts";
+@import "global/mixins";
 
 // Layouts
-// This will load all common layouts styles
-@import "layouts/layouts";
-
+@import "layouts/foundation-grid";
+@import "layouts/grid";
+@import "layouts/header";
 
 // Modules
-@import "modules/modal";
-@import "modules/modal_new";
-@import "modules/form";
-@import "modules/shared";
-@import "modules/buttons";
-@import "modules/icons";
-@import "modules/slick";
-@import "modules/countries/country";
-@import "modules/countries/overview";
 @import "modules/countries/show";
-@import "modules/dropdowns";
-@import "modules/map/control-threshold";
-@import "modules/notifications";
-
-// Layouts
-@import "layouts/countries";
+@import "modules/countries/country";
