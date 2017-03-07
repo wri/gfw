@@ -537,9 +537,15 @@
       }
     }
     &.zsl{
-      height: 73px; width: 110px; @include logos-sprite(zsl);
+      height: 56px; width: 80px; @include logos-sprite(zsl);
       &:hover{
         @include logos-sprite(zslhover);
+      }
+    }
+    &.conafor{
+      height: 48px; width: 110px; @include logos-sprite(conafor);
+      &:hover{
+        @include logos-sprite(conaforhover);
       }
     }
     &.clua{
