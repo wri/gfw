@@ -7,7 +7,7 @@ class DownloadController < ApplicationController
         params[:email],
         params[:link],
         params[:type],
-      ).deliver
+      ).deliver_now
 
       return render json: true
     end
