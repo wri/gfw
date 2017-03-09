@@ -2,10 +2,10 @@ source 'https://rubygems.org'
 
 ruby '2.4.0'
 
-gem 'rails', '4.2.0'
+gem 'rails', '5.0.0'
 gem 'jquery-rails'
 gem 'autoprefixer-rails', '~> 6.3.6.2'
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails', '~> 5.0.6'
 gem 'compass-rails', '1.1.2'
 gem 'compass-flexbox'
 gem 'uglifier', '>= 1.3.0'
@@ -28,7 +28,7 @@ gem 'responders', '~> 2.0'
 gem 'nokogiri', '~> 1.7.0.1'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-rails', '~> 3.5.2'
   gem 'show_me_the_cookies'
   gem 'factory_girl_rails'
   gem 'shoulda-matchers'
