@@ -1,8 +1,8 @@
 define([
-  'Class', 
-  'uri', 
+  'Class',
+  'uri',
   'bluebird',
-  'map/services/DataService'
+  'services/DataService'
 ], function(Class, UriTemplate, Promise, ds) {
 
   'use strict';
@@ -34,17 +34,17 @@ define([
             } else if ( status === "fail" || status === "error" ) {
               error( xhr );
             } else if ( status === "abort") {
-              
+
             } else {
               error( xhr );
             }
-          }          
+          }
         });
 
         var requestConfig = {
           resourceId: GET_REQUEST_ID,
           success: function(data, status) {
-            resolve(JSON.parse(data.rows[0].st_asgeojson),status);        
+            resolve(JSON.parse(data.rows[0].st_asgeojson),status);
           },
           error: function(error) {
             reject(error);

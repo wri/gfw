@@ -10,7 +10,7 @@ define([
   'helpers/gaEventsHelper',
   'models/UserModel',
   'helpers/datasetsHelper',
-  'map/services/CoverageService',
+  'services/CoverageService',
   'connect/models/Subscription',
 ], function(_, mps, PresenterClass, GaEventsHelper,
   User, datasetsHelper, CoverageService, Subscription) {

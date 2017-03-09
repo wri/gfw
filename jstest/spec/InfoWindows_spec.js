@@ -2,7 +2,7 @@
  * Unit test coverage for InfoWindowa.
  */
 define([
-  'map/services/DataService',
+  'services/DataService',
 ], function(service) {
 
 });
