@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
-ruby '2.3.1'
 
-gem 'rails', '4.1.0'
+ruby '2.4.0'
+
+gem 'rails', '4.2.0'
 gem 'jquery-rails'
 gem 'autoprefixer-rails', '~> 6.3.6.2'
 gem 'sass-rails', '~> 4.0.3'
@@ -20,6 +21,8 @@ gem 'requirejs-rails', '0.9.5'
 gem 'rack-reverse-proxy', '~> 0.11.0', :require => 'rack/reverse_proxy'
 # Amazon Ruby sdk for file upload to S3
 gem 'aws-sdk', '~> 2'
+
+gem 'nokogiri', '~> 1.7.0.1'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
