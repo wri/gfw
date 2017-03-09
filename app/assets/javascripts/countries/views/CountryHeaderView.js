@@ -194,14 +194,14 @@ define([
 
       var Router = Backbone.Router.extend({
         routes: {
-          'country/:id': 'loadCountry',
-          'country/:id/': 'loadCountry',
-          'country/:id/:areaId': 'loadArea',
-          'country/:id/:areaId/': 'loadArea',
-          'embed/country/:id': 'loadCountry',
-          'embed/country/:id/': 'loadCountry',
-          'embed/country/:id/:areaId': 'loadArea',
-          'embed/country/:id/:areaId/': 'loadArea',
+          'countries/:id': 'loadCountry',
+          'countries/:id/': 'loadCountry',
+          'countries/:id/:areaId': 'loadArea',
+          'countries/:id/:areaId/': 'loadArea',
+          'embed/countries/:id': 'loadCountry',
+          'embed/countries/:id/': 'loadCountry',
+          'embed/countries/:id/:areaId': 'loadArea',
+          'embed/countries/:id/:areaId/': 'loadArea',
           'embed/country_info/:id/:box': 'loadBox',
           'embed/country_info/:id/:box/': 'loadBox'
         },
