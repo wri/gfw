@@ -35,6 +35,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'foreman'
   gem 'capistrano'
+  gem 'spring'
 end
 
 group :production do
