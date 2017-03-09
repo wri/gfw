@@ -82,7 +82,7 @@ class StaticController < ApplicationController
     email    = params["email"]
     feedback = params["feedback"]
 
-    FeedbackMailer.feedback(feedback,signup,email).deliver
+    FeedbackMailer.feedback(feedback,signup,email).deliver_now
 
     if signup == 'true' && email.present?
       Api::Feedback.add_as_tester(email)
@@ -95,7 +95,7 @@ class StaticController < ApplicationController
     feedback = params["feedback"]
     hostname = params["hostname"]
 
-    FeedbackMailer.feedback(feedback,signup,email,hostname).deliver
+    FeedbackMailer.feedback(feedback,signup,email,hostname).deliver_now
     if signup == 'true' && email.present?
       Api::Feedback.add_as_tester(email)
     end
