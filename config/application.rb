@@ -60,7 +60,6 @@ module Gfw
       :domain => 'globalforestwatch.org',
     }
 
-    config.active_record.raise_in_transactional_callbacks = true
     config.action_controller.per_form_csrf_tokens = true
     config.action_controller.forgery_protection_origin_check = true
 
