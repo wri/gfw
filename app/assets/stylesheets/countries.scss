@@ -2,11 +2,11 @@
 
 // Settings
 @import "settings/settings";
+@import "global/mixins";
 @import "global/base";
 @import "global/utils";
 @import "global/states";
 @import "global/texts";
-@import "global/mixins";
 
 // Layouts
 @import "layouts/foundation-grid";

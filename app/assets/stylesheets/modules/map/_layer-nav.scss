@@ -408,7 +408,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       opacity: 0;
       overflow: hidden;
       max-height: 0;
-      @include box-shadow(0px 2px 3px 1px rgba(#000, .15));
+      box-shadow: 0px 2px 3px 1px rgba(#000, .15);
 
       &.tour-active {
         opacity: 1;

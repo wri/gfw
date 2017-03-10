@@ -8,7 +8,7 @@
   border: 1px solid #ccc;
   background: #fff;
   border-radius: 3px;
-  @include box-shadow(0 0 3px rgba(#000, .2));
+  box-shadow: 0 0 3px rgba(#000, .2);
 }
 
 .qtip-content {
@@ -17,11 +17,13 @@
   li {
     &:first-child a {
       border-top: 0;
-      @include border-top-radius(2px);
+      border-top-left-radius: 2px;
+      border-top-right-radius: 2px;
     }
 
     &:last-child a {
-      @include border-bottom-radius(2px);
+      border-bottom-left-radius: 2px;
+      border-bottom-right-radius: 2px;
     }
 
     a {
