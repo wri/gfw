@@ -519,7 +519,7 @@
 	.row {
     display: flex;
     justify-content: space-between;
-    align-items: stretch;		
+    align-items: stretch;
     flex-wrap: wrap;
     @media (min-width: $br-tablet) {
       padding: 0 10%;
@@ -956,7 +956,7 @@
           font-size: 14px;
           font-weight: 300;
           word-break: break-word;
-          
+
           @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
             top: 120%;
             left: 0%;

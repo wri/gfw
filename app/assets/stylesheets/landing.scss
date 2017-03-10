@@ -1,7 +1,10 @@
+@import "compass/utilities/sprites/base";
+@import "compass/reset";
+
 // Images
-// @import "logos/*.png",
-//         "getting-started/*.png",
-//         "blog-categories/*.png";
+@import "logos/*.png",
+        "getting-started/*.png",
+        "blog-categories/*.png";
 
 // Global
 // This will load all common settings, mixins and styles needed
@@ -9,17 +12,17 @@
 
 // Layouts
 // This will load all common layouts styles
-// @import "layouts/layouts";
+@import "layouts/layouts";
+@import "layouts/landing";
 
 // // Modules
-// @import "modules/modal";
-// @import "modules/modal_new";
-// @import "modules/form";
-// @import "modules/shared";
-// @import "modules/buttons";
-// @import "modules/icons";
-// @import "modules/slick";
-// @import "layouts/landing";
-// @import "modules/notifications";
+@import "modules/modal";
+@import "modules/modal_new";
+@import "modules/form";
+@import "modules/shared";
+@import "modules/buttons";
+@import "modules/icons";
+@import "modules/slick";
+@import "modules/notifications";
 
-// @import "modules/connect/user-form";
+@import "modules/connect/user-form";
