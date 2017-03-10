@@ -13,11 +13,11 @@ $letterW: 20px;
       border-bottom: none;
       @media (min-width: $br-mobileMap){
         overflow-y: auto;
-        max-height: 180px;        
+        max-height: 180px;
       }
     }
 
-    // Descriptions    
+    // Descriptions
     .country-description {
       text-align: center;
       color: $dark;
@@ -27,7 +27,7 @@ $letterW: 20px;
 
       > * {
         margin: 10px 0 0;
-        
+
         &:first-child {
           margin-top: 0;
         }
@@ -35,7 +35,7 @@ $letterW: 20px;
 
       a {
         color: $cGreen;
-        
+
         &:hover {
           text-decoration: underline;
         }
@@ -47,7 +47,7 @@ $letterW: 20px;
       position: relative;
       margin: -15px -15px 0;
       border-bottom: 1px solid $border;
-      
+
       &:before, &:after{
         content: "";
         position: absolute;
@@ -55,18 +55,18 @@ $letterW: 20px;
         width: 15px;
         height: 100%;
       }
-      
+
       // Gradients on each side
       &:before{
         left: 0;
-        @include gradient(left,rgba(255,255,255,1),rgba(255,255,255,0));
+        @include gradient(to right,rgba(255,255,255,1),rgba(255,255,255,0));
       }
 
       &:after{
         right: 0;
         @include gradient(to left,rgba(255,255,255,1),rgba(255,255,255,0));
       }
-      
+
       // Scroll box
       .scroll-none {
         overflow: auto;
@@ -87,12 +87,12 @@ $letterW: 20px;
           line-height: $letterW;
           text-align: center;
           text-transform: uppercase;
-          
+
           &.-disabled {
             color: $dark;
             opacity: 0.75;
           }
-          
+
           &.-active {
             position: relative;
             top: -2px;
@@ -105,7 +105,7 @@ $letterW: 20px;
     // Country mobile list
     .country-ul{
       margin: 0 -15px;
-      
+
       > li {
         padding: 10px 20px;
         border-bottom: 1px solid $border;
@@ -114,7 +114,7 @@ $letterW: 20px;
         &.-no-visible {
           display: none;
         }
-        
+
         &:last-child {
           border-bottom: none;
         }

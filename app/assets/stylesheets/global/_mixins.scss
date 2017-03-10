@@ -55,6 +55,6 @@
 
 
 // Degradado
-@mixin gradient($origin: left, $start: #ffffff, $stop: #000000) {
+@mixin gradient($origin: to bottom, $start: #ffffff, $stop: #000000) {
     background-image: linear-gradient($origin, $start, $stop);
 }

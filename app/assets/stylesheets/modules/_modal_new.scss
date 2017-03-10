@@ -126,12 +126,12 @@ $height: auto;
 
   &:before {
     top: 0;
-    @include gradient(top,rgba(255,255,255,1),rgba(255,255,255,0));
+    @include gradient(to bottom,rgba(255,255,255,1),rgba(255,255,255,0));
   }
 
   &:after {
     bottom: 0;
-    @include gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+    @include gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,1));
   }
 
   // MODAL CLOSE BTN
@@ -232,7 +232,7 @@ $height: auto;
     width: 100%;
     left: 0;
     top: 100%;
-    @include gradient(top,rgba(255,255,255,1),rgba(255,255,255,0));
+    @include gradient(to bottom,rgba(255,255,255,1),rgba(255,255,255,0));
   }
 
   ul{
@@ -289,7 +289,7 @@ $height: auto;
     left: 0;
     bottom: 100%;
     border-bottom: 1px solid $border;
-    @include gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+    @include gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,1));
   }
 
 }
