@@ -1,6 +1,6 @@
 define([
   'Class', 'bluebird',
-  'map/services/DataService'
+  'services/DataService'
 ], function (Class, Promise, ds) {
 
   'use strict';

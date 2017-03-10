@@ -8,7 +8,7 @@ define([
 
   var Router = Backbone.Router.extend({
     routes: {
-      'country/:iso': 'showCountry'
+      'countries/:iso': 'showCountry'
     },
 
     showCountry: function(iso) {

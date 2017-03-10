@@ -4,7 +4,7 @@
 define([
   'Class',
   'uri',
-  'map/services/DataService'
+  'services/DataService'
 ], function (Class, UriTemplate, ds) {
 
   'use strict';
@@ -44,11 +44,11 @@ define([
             } else if ( status === "fail" || status === "error" ) {
               error( JSON.parse(xhr.responseText) );
             } else if ( status === "abort") {
-              
+
             } else {
               error( JSON.parse(xhr.responseText) );
             }
-          }          
+          }
         });
 
         var requestConfig = {
@@ -85,18 +85,18 @@ define([
             } else if ( status === "fail" || status === "error" ) {
               error( JSON.parse(xhr.responseText) );
             } else if ( status === "abort") {
-              
+
             } else {
               error( JSON.parse(xhr.responseText) );
             }
-          }          
+          }
 
         });
 
         var requestConfig = {
           resourceId: SHOW_REQUEST_ID,
           success: function(data, status) {
-            resolve(data,status);        
+            resolve(data,status);
           },
           error: function(errors) {
             reject(errors);

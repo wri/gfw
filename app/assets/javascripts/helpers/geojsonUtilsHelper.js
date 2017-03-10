@@ -1,6 +1,6 @@
 define([
-  'd3', 'underscore', 'turf', 'geojsonArea'
-], function(d3, _, turf, geojsonArea) {
+  'd3', 'underscore', 'turf'
+], function(d3, _, turf) {
 
   var geojsonUtilsHelper = {
     /**
@@ -80,33 +80,7 @@ define([
 
       var bounds = new google.maps.LatLngBounds(a, b);
       return bounds;
-    },
-
-    /**
-     * Get total hectares from a geojson.
-     *
-     * @param  {Object} geojson  polygon/multipolygon
-     * @return {String} hectares
-     */
-    getHectares: function(geojson) {
-      return Math.round((geojsonArea(geojson) / 10000)).toLocaleString();
-      // changed function to calculate areas in cartodb instead of using the google library
-
-      // var area;
-      // var theurl="http://wri-01.cartodb.com/api/v2/sql";
-      // var thequery="select st_area(st_geomfromgeojson('"+JSON.stringify(geojson)+"')::geography)/10000 as area_ha";
-      // $.ajax({
-      //    url: theurl,
-      //    data: { q: thequery} ,
-      //    success: function(result) {
-      //                 area= Math.round(result.rows[0].area_ha).toLocaleString();
-      //             },
-      //    async:   false,
-      //    method: 'POST'
-      // });
-      // return area;
     }
-
   };
 
   return geojsonUtilsHelper;
