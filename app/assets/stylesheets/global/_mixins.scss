@@ -43,30 +43,6 @@
 
 // Animation
 @mixin animation($name,$duration,$count: 1,$function: linear,$direction: normal,$fill : none,$delay : 0s, $play: running){
-  -webkit-animation-name: $name;
-  -webkit-animation-duration: $duration;
-  -webkit-animation-iteration-count: $count;
-  -webkit-animation-timing-function: $function;
-  -webkit-animation-direction: $direction;
-  -webkit-animation-fill-mode:$fill;
-  -webkit-animation-delay:$delay;
-  -webkit-animation-play-state: $play;
-  -moz-animation-name: $name;
-  -moz-animation-duration: $duration;
-  -moz-animation-iteration-count: $count;
-  -moz-animation-timing-function: $function;
-  -moz-animation-direction: $direction;
-  -moz-animation-fill-mode:$fill;
-  -moz-animation-delay:$delay;
-  -moz-animation-play-state: $play;
-  -ms-animation-name: $name;
-  -ms-animation-duration: $duration;
-  -ms-animation-iteration-count: $count;
-  -ms-animation-timing-function: $function;
-  -ms-animation-direction: $direction;
-  -ms-animation-fill-mode:$fill;
-  -ms-animation-delay:$delay;
-  -ms-animation-play-state: $play;
   animation-name: $name;
   animation-duration: $duration;
   animation-iteration-count: $count;
@@ -80,18 +56,5 @@
 
 // Degradado
 @mixin gradient($origin: left, $start: #ffffff, $stop: #000000) {
-    // background-color: $start;
-    background-image: -webkit-linear-gradient($origin, $start, $stop);
-    background-image: -moz-linear-gradient($origin, $start, $stop);
-    background-image: -o-linear-gradient($origin, $start, $stop);
-    background-image: -ms-linear-gradient($origin, $start, $stop);
     background-image: linear-gradient($origin, $start, $stop);
-}
-
-
-@mixin keyframes($name) {
-  @-o-keyframes $name { @content };
-  @-moz-keyframes $name { @content };
-  @-webkit-keyframes $name { @content };
-  @-keyframes $name { @content };
 }
