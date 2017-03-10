@@ -4,7 +4,8 @@ class CountriesController < ApplicationController
   layout 'countries'
 
   def index
-    @countries = find_countries
+    # @countries = find_countries
+    @countries = []
     @title = 'Country Profiles'
     @desc = 'Explore country-specific statistics and graphs to see the how forests change and contribute to various sectors.'
     @keywords = 'GFW, list, forest data, visualization, data, national, country, analysis, statistic, tree cover loss, tree cover gain, climate domain, boreal, tropical, subtropical, temperate, deforestation, overview'

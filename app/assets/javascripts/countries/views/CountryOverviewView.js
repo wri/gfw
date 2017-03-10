@@ -243,7 +243,7 @@ define([
 
           _.each(data, _.bind(function(val, key) {
             var ord = e ? (key+11) : (key+1),
-                enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
+                enabled = val.enabled ? '<a href="/countries/'+val.iso+'">'+val.name+'</a>' : val.name;
 
             var max_trigger = data.length -1;
             $.ajax({
@@ -333,7 +333,7 @@ define([
 
           _.each(data, function(val, key) {
             var ord = e ? (key+11) : (key+1),
-                enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
+                enabled = val.enabled ? '<a href="/countries/'+val.iso+'">'+val.name+'</a>' : val.name;
             if (! !!mode || (mode.mode != 'percent')) {
               $.ajax({
                 url: window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=30',
@@ -420,7 +420,7 @@ define([
           var max_trigger = data.length -1;
           _.each(data, function(val, key) {
             var ord = e ? (key+11) : (key+1),
-                enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
+                enabled = val.enabled ? '<a href="/countries/'+val.iso+'">'+val.name+'</a>' : val.name;
                 if (! !!mode || mode.mode == 'total'){
                   var e_mha, l_mha,
                     ex = val.extent,
@@ -489,7 +489,7 @@ define([
           var max_trigger = data.length -1;
           _.each(data, _.bind(function(val, key) {
             var ord = e ? (key+11) : (key+1),
-                enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
+                enabled = val.enabled ? '<a href="/countries/'+val.iso+'">'+val.name+'</a>' : val.name;
 
             markup_list += '<li>\
                               <div class="countries_list__minioverview_number countries_list__minioverview medium countries_list__minioverview_'+val.iso+'" class="loss">'+this.helper.formatNumber(parseFloat(val.ratio).toFixed(2))+'</div>\
@@ -1139,7 +1139,7 @@ define([
             .data(data_link_)
             .enter()
             .append('a')
-            .attr('xlink:href', function(d) { return '/country/' + d.iso})
+            .attr('xlink:href', function(d) { return '/countries/' + d.iso})
             .append('svg:circle')
             .attr(circle_attr)
             .style('fill', function(d) {
