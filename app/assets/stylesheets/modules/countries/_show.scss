@@ -76,7 +76,7 @@
       }
     }
 
-    @include box-sizing(border-box);
+    box-sizing: border-box;
 
     .country-icons-share {
       height: 16px;
@@ -86,7 +86,6 @@
       margin-left: 5px;
       position: relative;
       top: -4px;
-      // @include country-icons-sprite(share);
     }
 
     &:hover {

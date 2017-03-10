@@ -76,7 +76,7 @@
 
     &:hover {
       z-index: 1000;
-      @include box-shadow(0 0 1px rgba(#000, .1));
+      box-shadow: 0 0 1px rgba(#000, .1);
 
       .country_main,
       .country_alt {
