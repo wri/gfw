@@ -4,8 +4,7 @@ class DataUploader < CarrierWave::Uploader::Base
   # Choose what kind of storage to use for this uploader:
   storage (Rails.env.production? ? :fog : :file)
 
-  # Include RMagick or MiniMagick support:
-  # include CarrierWave::RMagick
+  # Include MiniMagick support:
   include CarrierWave::MiniMagick
 
   def initialize(*)

@@ -10,7 +10,7 @@ define([
   'helpers/gaEventsHelper',
   'models/UserModel',
   'helpers/datasetsHelper',
-  'map/services/CoverageService',
+  'services/CoverageService',
   'connect/models/Subscription',
 ], function(_, mps, PresenterClass, GaEventsHelper,
   User, datasetsHelper, CoverageService, Subscription) {
@@ -24,14 +24,14 @@ define([
       this._super();
 
       this.user = new User();
-      this.user.fetch()
-        .done(function(){
+      this.user.fetch({
+        success: function () {
           this.view.render();
-        }.bind(this))
-
-        .error(function(){
+        }.bind(this),
+        error: function () {
           this.view.render();
-        }.bind(this))
+        }.bind(this)
+      });
 
       this.listeners();
 

@@ -4,7 +4,7 @@ define([
   'moment',
   'mps',
   'helpers/datasetsHelper',
-  'map/services/CoverageService',
+  'services/CoverageService',
   'text!connect/templates/listItemDatasetsConfirm.handlebars'
 ], function(Backbone, Handlebars, moment, mps, datasetsHelper, CoverageService, tpl) {
 

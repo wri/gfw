@@ -22,6 +22,8 @@ Gfw::Application.routes.draw do
   get '/common(/:section)(/:section)' => redirect("sources")
   get '/common(/:section)(/:section)(/:section)' => redirect("sources")
   get '/assets(/:content)' => redirect('/')
+  get '/country/:id(/:area_id)' => redirect('/countries/:id(/:area_id)')
+  get '/embed/country/:id(/:area_id)' => redirect('/embed/countries/:id(/:area_id)')
 
   # howto
   get '/howto/video' => redirect("/howto")
@@ -123,10 +125,10 @@ Gfw::Application.routes.draw do
 
   # countries
   get '/countries' => 'countries#index'
-  get '/country/:id' => 'countries#show', :as => 'country'
-  get '/country/:id/:area_id' => 'countries#show', :as => 'country_area'
   get '/countries/overview' => 'countries#overview'
-  get '/country_info/:id/:box',to: redirect('/country/%{id}#%{box}')
+  get '/countries/:id' => 'countries#show', :as => 'country'
+  get '/countries/:id/:area_id' => 'countries#show', :as => 'country_area'
+  get '/countries_info/:id/:box',to: redirect('/countries/%{id}#%{box}')
 
 
   # search
@@ -148,10 +150,10 @@ Gfw::Application.routes.draw do
 
 
   # embed
-  get '/embed/country/:id' => 'embed#countries_show'
-  get '/embed/country_info/:id/:box' => 'embed#countries_show_info', :as => 'embed_country_box'
-  get '/embed/country/:id/:area_id' => 'embed#countries_show'
   get '/embed/countries/overview' => 'embed#countries_overview'
+  get '/embed/countries/:id' => 'embed#countries_show'
+  get '/embed/countries/:id/:area_id' => 'embed#countries_show'
+  get '/embed/country_info/:id/:box' => 'embed#countries_show_info', :as => 'embed_country_box'
 
   get '/landing' => 'landing#index'
 

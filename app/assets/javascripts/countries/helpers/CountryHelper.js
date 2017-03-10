@@ -1,9 +1,8 @@
 define([
   'd3',
   'topojson',
-  'geojsonArea',
   'countries/helpers/CountryConfig'
-], function(d3, topojson, geojsonArea, config) {
+], function(d3, topojson, config) {
 
   var CountryHelper = {
     config: config,

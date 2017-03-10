@@ -5,7 +5,7 @@
 define([
   'underscore',
   'Class',
-  'map/services/DataService'
+  'services/DataService'
 ], function (_, Class, ds) {
 
   'use strict';

@@ -4,12 +4,10 @@
  */
 define([
   'Class',
-  'mps',
-  'store',
   'moment',
   'amplify',
   'underscore'
-], function (Class, mps, store, moment, amplify, _) {
+], function (Class, moment, amplify, _) {
 
   'use strict';
 
@@ -23,8 +21,7 @@ define([
      *
      * @return {DataService} instance
      */
-    init: function() {
-    },
+    init: function() {},
 
     /**
      * Define a data service with supplied id and config object.
@@ -78,8 +75,7 @@ define([
      * @return {moment.Duration} The duration object
      */
     _getDuration: function(number, unit) {
-      var units = ['seconds', 'minutes', 'hours', 'days', 'weeks', 'months',
-        'years'];
+      var units = ['seconds', 'minutes', 'hours', 'days', 'weeks', 'months','years'];
 
       // Check for valid unit
       if (_.indexOf(units, unit) === -1) {

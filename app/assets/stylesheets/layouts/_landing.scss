@@ -184,7 +184,7 @@
 
 
   .circle-marker {
-    @extend .btn-arrow;
+    @extend .btn-arrow-box;
     display: none;
     top: auto;
     bottom: 0;
@@ -532,7 +532,7 @@
 			width: 10%;
 			height: 100%;
 			button {
-				@extend .btn-arrow;
+				@extend .btn-arrow-box;
 			}
 			&.left {
 				left: 0;

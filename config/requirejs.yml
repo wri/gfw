@@ -28,7 +28,6 @@ paths:
   jqueryui: "jquery-ui-1.10.4.custom.min"
   jqueryujs: "jquery-ujs/src/rails"
   markerclusterer: "gmaps-markerclusterer-plus/src/markerclusterer"
-  geojsonArea: "geojson-area"
   uri: "uri-templates/uri-templates"
   handlebars: "handlebars/handlebars"
   slick: "slick.js/slick/slick.min"
@@ -46,7 +45,6 @@ paths:
   geojson: "geojson-google-maps/GeoJSON"
   validate: "validate"
 
-  wax: "wax.g.min"
   store: "store"
   Class: "Class.js/Class"
   jasmine: "jasmine"
