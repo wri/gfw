@@ -4,7 +4,7 @@
 define([
   'Class',
   'uri',
-  'bluebird',  
+  'bluebird',
   'map/services/DataService'
 ], function (Class, UriTemplate, Promise, ds) {
 
@@ -29,7 +29,7 @@ define([
           url: url,
           type: 'GET',
           dataType: 'json',
-          contentType: 'application/json; charset=utf-8',          
+          contentType: 'application/json; charset=utf-8',
 
           decoder: function ( data, status, xhr, success, error ) {
             if ( status === "success" ) {
@@ -40,18 +40,18 @@ define([
             } else if ( status === "fail" || status === "error" ) {
               error( JSON.parse(xhr.responseText) );
             } else if ( status === "abort") {
-              
+
             } else {
               error( JSON.parse(xhr.responseText) );
             }
-          }          
+          }
 
         });
 
         var requestConfig = {
           resourceId: GET_REQUEST_ID,
           success: function(data, status) {
-            resolve(data,status);        
+            resolve(data,status);
           },
           error: function(errors) {
             reject(errors);
@@ -73,7 +73,7 @@ define([
           url: url,
           type: 'GET',
           dataType: 'json',
-          contentType: 'application/json; charset=utf-8',          
+          contentType: 'application/json; charset=utf-8',
 
           // TO-DO We should move this to the DataService
           decoder: function ( data, status, xhr, success, error ) {
@@ -82,18 +82,18 @@ define([
             } else if ( status === "fail" || status === "error" ) {
               error( JSON.parse(xhr.responseText) );
             } else if ( status === "abort") {
-              
+
             } else {
               error( JSON.parse(xhr.responseText) );
             }
-          }          
+          }
 
         });
 
         var requestConfig = {
           resourceId: SHOW_REQUEST_ID,
           success: function(data, status) {
-            resolve(data,status);        
+            resolve(data,status);
           },
           error: function(errors) {
             reject(errors);

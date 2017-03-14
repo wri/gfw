@@ -74,7 +74,14 @@ Almost there! Final steps are to update your `.env` file:
 ```bash
 RACK_ENV=development
 GFW_API_HOST_NEW_API=https://production-api.globalforestwatch.org
+GFW_API_HOST_PROD=https://production-api.globalforestwatch.org
 GFW_API_HOST=http://api.globalforestwatch.org/
+GFW_COUNTRIES_DATASET=
+GFW_COUNTRIES_TABLE=
+GFW_REGIONS_DATASET=
+GFW_REGIONS_TABLE=
+GFW_SUB_REGIONS_DATASET=
+GFW_SUB_REGIONS_TABLE=
 AWS_HOST=/uploads
 LAYER_SPEC=layerspec
 TERMS_COOKIE=true

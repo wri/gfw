@@ -17,7 +17,7 @@ require([
   'views/SourceMobileFriendlyView',
 
   // Should we get rid of them?
-  'map/services/CountryService',
+  'services/CountryService',
 
   'map/views/MapView',
   'map/views/MapControlsView',
@@ -95,9 +95,9 @@ require([
 
       // I was thinking that, without a map, an array of countries and an array of layers
       // we shouldn't create any view.
-      countryService.get().then(function(results) {
+      countryService.getCountries().then(function(results) {
         this.map = map.map;
-        this.countries = results.countries;
+        this.countries = results;
 
         new MapControlsView(this.map, this.countries);
         new TabsView(this.map, this.countries);
