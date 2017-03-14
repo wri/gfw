@@ -11,11 +11,10 @@ define([
   'topojson',
   'bluebird',
   'moment',
-  'map/services/CountryService',
-  'map/services/RegionService',
+  'services/CountryService',
   'helpers/geojsonUtilsHelper',
 
-], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment, CountryService, RegionService, geojsonUtilsHelper) {
+], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment, CountryService, geojsonUtilsHelper) {
 
   'use strict';
 
@@ -192,12 +191,13 @@ define([
     showCountry: function() {
       var iso = this.status.get('iso');
 
-      CountryService.show(iso.country)
-        .then(function(results,status) {
-          var objects = _.findWhere(results.topojson.objects, {
+      CountryService.showCountry({ iso: iso.country })
+        .then(function(results) {
+          var resTopojson = JSON.parse(results.topojson);
+          var objects = _.findWhere(resTopojson.objects, {
             type: 'MultiPolygon'
           });
-          var geojson = topojson.feature(results.topojson,objects),
+          var geojson = topojson.feature(resTopojson, objects),
               geometry = geojson.geometry
 
           // Draw geojson of country if isoDisabled is equal to true
@@ -209,10 +209,10 @@ define([
     getRegions: function() {
       var iso = this.status.get('iso');
 
-      RegionService.get(iso.country)
-        .then(function(results,status) {
+      CountryService.getRegionsList({ iso: iso.country })
+        .then(function(results) {
           this.status.set({
-            regions: results.rows
+            regions: results
           })
         }.bind(this));
     },
@@ -220,12 +220,12 @@ define([
     showRegion: function() {
       var iso = this.status.get('iso');
 
-      RegionService.show(iso.country, iso.region)
-        .then(function(results,status) {
-          var geometry = results.features[0].geometry
-
-          // Draw geojson of country if isoDisabled is equal to true
-          this.view.drawGeojson(geometry);
+      CountryService.showRegion({ iso: iso.country, region: iso.region })
+        .then(function(results) {
+          // var geometry = results.features[0].geometry
+          //
+          // // Draw geojson of country if isoDisabled is equal to true
+          // this.view.drawGeojson(geometry);
         }.bind(this));
     },
 

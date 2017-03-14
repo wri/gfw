@@ -7,8 +7,8 @@ define([
   'underscore',
   'mps',
   'map/presenters/PresenterClass',
-  'map/services/CountryService'
-], function(_, mps, PresenterClass, countryService) {
+  'services/CountryService'
+], function(_, mps, PresenterClass, CountryService) {
 
   'use strict';
 
@@ -201,11 +201,10 @@ define([
 
     changeIso: function() {
       var iso = this.status.get('iso');
-      console.log(iso);
 
       if(!!iso && !!iso.country && iso.country !== 'ALL') {
-        countryService.show(iso.country)
-          .then(function(results, status) {
+        CountryService.showCountry({ iso: iso.country })
+          .then(function(results) {
             this.view.toogleCountry(results.name);
           }.bind(this));
       } else {

@@ -9,8 +9,8 @@ define([
   'backbone',
   'moment',
   'mps',
-  'map/services/RegionService',
-], function(PresenterClass, _, Backbone, moment, mps, RegionService) {
+  'services/CountryService',
+], function(PresenterClass, _, Backbone, moment, mps, CountryService) {
 
   'use strict';
 
@@ -74,10 +74,10 @@ define([
     getRegions: function() {
       var iso = this.status.get('iso');
 
-      RegionService.get(iso.country)
-        .then(function(results,status) {
+      CountryService.getRegionsList({ iso: iso.country })
+        .then(function(results) {
           this.status.set({
-            regions: results.rows
+            regions: results
           });
           this.view.render();
         }.bind(this));
