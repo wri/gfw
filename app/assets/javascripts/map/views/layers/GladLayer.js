@@ -12,9 +12,7 @@ define([
 
   'use strict';
 
-  // var TILE_URL = 'http://wri-tiles.s3.amazonaws.com/glad_staging/tiles{/z}{/x}{/y}.png';
-  var TILE_URL = 'http://52.200.102.67/osm_tiles2{/z}{/x}{/y}.png';
-
+  var TILE_URL = 'http://wri-tiles.s3.amazonaws.com/glad_staging/tiles{/z}{/x}{/y}.png';
   var START_DATE = '2015-01-01';
 
   var padNumber = function(number) {
@@ -96,49 +94,49 @@ define([
 
       var pixelComponents = 4; // RGBA
       var pixelPos, i, j;
-      // for(i = 0; i < w; ++i) {
-      //   for(j = 0; j < h; ++j) {
-      //     pixelPos = (j * w + i) * pixelComponents;
-      //
-      //     // find the total days of the pixel by
-      //     // multiplying the red band by 255 and adding
-      //     // the green band to that
-      //     var day = imgdata[pixelPos] * 255 + imgdata[pixelPos+1];
-      //
-      //     if (day >= startDay && day <= endDay) {
-      //       var band3_str = padNumber(imgdata[pixelPos+2].toString());
-      //
-      //       // Grab confidence (the first value) from this string
-      //       // confidence is stored as 1/2, subtract one to make it 0/1
-      //       var confidence = parseInt(band3_str[0], 10) - 1;
-      //
-      //       if (confidence >= confidenceValue) {
-      //         // Grab the raw intensity value from the pixel; ranges from 1 - 255
-      //         var intensity_raw = parseInt(band3_str.slice(1, 3), 10);
-      //         // Scale the intensity to make it visible
-      //         var intensity = intensity_raw * 50;
-      //         // Set intensity to 255 if it's > than that value
-      //         if (intensity > 255) { intensity = 255; }
-      //
-      //         if (day >= recentRangeStartDay && day <= recentRangeEndDay) {
-      //           imgdata[pixelPos] = 219;
-      //           imgdata[pixelPos + 1] = 168;
-      //           imgdata[pixelPos + 2] = 0;
-      //           imgdata[pixelPos + 3] = intensity;
-      //         } else {
-      //           imgdata[pixelPos] = 220;
-      //           imgdata[pixelPos + 1] = 102;
-      //           imgdata[pixelPos + 2] = 153;
-      //           imgdata[pixelPos + 3] = intensity;
-      //         }
-      //
-      //         continue;
-      //       }
-      //     }
-      //
-      //     imgdata[pixelPos + 3] = 0;
-      //   }
-      // }
+      for(i = 0; i < w; ++i) {
+        for(j = 0; j < h; ++j) {
+          pixelPos = (j * w + i) * pixelComponents;
+
+          // find the total days of the pixel by
+          // multiplying the red band by 255 and adding
+          // the green band to that
+          var day = imgdata[pixelPos] * 255 + imgdata[pixelPos+1];
+
+          if (day >= startDay && day <= endDay) {
+            var band3_str = padNumber(imgdata[pixelPos+2].toString());
+
+            // Grab confidence (the first value) from this string
+            // confidence is stored as 1/2, subtract one to make it 0/1
+            var confidence = parseInt(band3_str[0], 10) - 1;
+
+            if (confidence >= confidenceValue) {
+              // Grab the raw intensity value from the pixel; ranges from 1 - 255
+              var intensity_raw = parseInt(band3_str.slice(1, 3), 10);
+              // Scale the intensity to make it visible
+              var intensity = intensity_raw * 50;
+              // Set intensity to 255 if it's > than that value
+              if (intensity > 255) { intensity = 255; }
+
+              if (day >= recentRangeStartDay && day <= recentRangeEndDay) {
+                imgdata[pixelPos] = 219;
+                imgdata[pixelPos + 1] = 168;
+                imgdata[pixelPos + 2] = 0;
+                imgdata[pixelPos + 3] = intensity;
+              } else {
+                imgdata[pixelPos] = 220;
+                imgdata[pixelPos + 1] = 102;
+                imgdata[pixelPos + 2] = 153;
+                imgdata[pixelPos + 3] = intensity;
+              }
+
+              continue;
+            }
+          }
+
+          imgdata[pixelPos + 3] = 0;
+        }
+      }
     }
   });
 
