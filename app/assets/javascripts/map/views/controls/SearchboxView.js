@@ -8,9 +8,10 @@ define([
   'backbone',
   'handlebars',
   'proj4',
+  'enquire',
   'map/presenters/controls/SearchboxPresenter',
   'text!map/templates/controls/searchbox.handlebars'
-], function(_, Backbone, Handlebars, proj4, Presenter, tpl) {
+], function(_, Backbone, Handlebars, proj4, enquire, Presenter, tpl) {
 
   'use strict';
 

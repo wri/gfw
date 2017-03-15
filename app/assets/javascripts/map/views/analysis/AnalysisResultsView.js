@@ -6,13 +6,14 @@
 define([
   'underscore',
   'handlebars',
+  'enquire',
   'map/presenters/analysis/AnalysisResultsPresenter',
   'map/views/analysis/AdvancedAnalysisView',
-  'views/ShareView',  
+  'views/ShareView',
   'text!map/templates/analysis/analysisResults.handlebars',
   'text!map/templates/analysis/analysisResultsFailure.handlebars',
   'text!map/templates/analysis/analysisResultsFailureAPI.handlebars',
-], function(_, Handlebars, Presenter, AdvancedAnalysisView, ShareView, tpl, failureTpl, failureAPITpl) {
+], function(_, Handlebars, enquire, Presenter, AdvancedAnalysisView, ShareView, tpl, failureTpl, failureAPITpl) {
 
   'use strict';
 

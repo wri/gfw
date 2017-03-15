@@ -6,6 +6,7 @@
 define([
   'underscore',
   'handlebars',
+  'enquire',
   'map/presenters/LegendPresenter',
   'helpers/datasetsHelper',
   'text!map/templates/legend/legend.handlebars',
@@ -64,7 +65,7 @@ define([
   'text!map/templates/legend/lbr_forest.handlebars',
   'text!map/templates/legend/lbr_community.handlebars',
   'text!map/templates/legend/bol_user_fire_frequency.handlebars',
-], function(_, Handlebars, Presenter, datasetsHelper, tpl, tplMore, lossTpl, imazonTpl, firesTpl,
+], function(_, Handlebars, enquire, Presenter, datasetsHelper, tpl, tplMore, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
     global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
