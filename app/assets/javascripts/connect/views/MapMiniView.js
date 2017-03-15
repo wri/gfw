@@ -358,30 +358,7 @@ define([
         if (!!iso.region) {
           CountryService.showRegion({ iso: iso.country, region: iso.region })
             .then(function(results) {
-              // var geojson = results.features[0].geometry,
-              //     bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
-              //
-              // // Get bounds and fit to them
-              // if (!!bounds) {
-              //   mps.publish('Map/fit-bounds', [bounds]);
-              // }
-              //
-              // // Draw geojson of country
-              // this.deleteGeojson();
-              // this.drawGeojson(geojson);
-
-              mps.publish('Map/loading', [false]);
-            }.bind(this));
-
-        } else {
-          CountryService.showCountry({ iso: iso.country })
-            .then(function(results) {
-              var resTopojson = JSON.parse(results.topojson);
-              var objects = _.findWhere(resTopojson.objects, {
-                type: 'MultiPolygon'
-              });
-              var topoJson = topojson.feature(resTopojson,objects),
-                  geojson = topoJson.geometry,
+              var geojson = JSON.parse(results.geojson),
                   bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
 
               // Get bounds and fit to them
@@ -394,6 +371,33 @@ define([
               this.drawGeojson(geojson);
 
               mps.publish('Map/loading', [false]);
+            }.bind(this));
+
+        } else {
+          CountryService.showCountry({ iso: iso.country })
+            .then(function(results) {
+              try {
+                var resTopojson = JSON.parse(results.topojson);
+                var objects = _.findWhere(resTopojson.objects, {
+                  type: 'MultiPolygon'
+                });
+                var topoJson = topojson.feature(resTopojson,objects),
+                    geojson = topoJson.geometry,
+                    bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+
+                // Get bounds and fit to them
+                if (!!bounds) {
+                  mps.publish('Map/fit-bounds', [bounds]);
+                }
+
+                // Draw geojson of country
+                this.deleteGeojson();
+                this.drawGeojson(geojson);
+                mps.publish('Map/loading', [false]);
+              } catch (error) {
+                this.deleteGeojson();
+                mps.publish('Map/loading', [false]);
+              }
             }.bind(this));
         }
       }

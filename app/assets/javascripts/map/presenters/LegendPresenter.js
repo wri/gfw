@@ -8,10 +8,11 @@ define([
   'backbone',
   'bluebird',
   'mps',
+  'moment',
   'map/presenters/PresenterClass',
   'map/services/LayerSpecService',
-  'map/services/CountryService',
-], function(_, Backbone, Promise, mps, PresenterClass, layerSpecService, CountryService) {
+  'services/CountryService'
+], function(_, Backbone, Promise, mps, moment, PresenterClass, layerSpecService, CountryService) {
 
   'use strict';
 
@@ -192,8 +193,8 @@ define([
         var iso = this.status.get('iso');
 
         if(!!iso && !!iso.country && iso.country !== 'ALL'){
-          CountryService.show(iso.country)
-            .then(function(results,status) {
+          CountryService.showCountry({ iso: iso.country })
+            .then(function(results) {
               var is_more = (!!results.indepth);
               var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
               if (is_more) {
