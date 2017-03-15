@@ -9,10 +9,11 @@ define([
   'amplify',
   'chosen',
   'handlebars',
+  'enquire',
   'map/presenters/LayersNavPresenter',
   'text!map/templates/layersNav.handlebars',
   'map/views/LayersCountryView',
-], function(Backbone, _, amplify, chosen, Handlebars, Presenter, tpl, LayersCountryView) {
+], function(Backbone, _, amplify, chosen, Handlebars, enquire, Presenter, tpl, LayersCountryView) {
 
   'use strict';
 

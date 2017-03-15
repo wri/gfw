@@ -9,6 +9,7 @@ define([
   'underscore',
   'mps',
   'cookie',
+  'enquire',
   'map/presenters/MapPresenter',
   'map/views/maptypes/grayscaleMaptype',
   'map/views/maptypes/treeheightMaptype',
@@ -17,7 +18,7 @@ define([
   'map/views/maptypes/landsatMaptype',
   'map/views/maptypes/openStreetMaptype',
   'map/helpers/layersHelper'
-], function(Backbone, _, mps, Cookies, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, openStreetMaptype, layersHelper) {
+], function(Backbone, _, mps, Cookies, enquire, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, openStreetMaptype, layersHelper) {
 
   'use strict';
 
@@ -44,15 +45,15 @@ define([
     attributions: [
       {
         id: 'dark',
-        attribution: 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.',        
+        attribution: 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.',
       },
       {
         id: 'positron',
-        attribution: 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.',        
+        attribution: 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.',
       },
       {
         id: 'openstreet',
-        attribution: 'Map tiles by <a href="http://www.openstreetmap.org/">Open street map</a>',        
+        attribution: 'Map tiles by <a href="http://www.openstreetmap.org/">Open street map</a>',
       },
     ],
 
@@ -403,10 +404,10 @@ define([
 
       if (!!maptypeAttribution) {
         this.creditNode.style.display = 'block';
-        this.creditNode.innerHTML = maptypeAttribution.attribution;        
+        this.creditNode.innerHTML = maptypeAttribution.attribution;
       } else {
         this.creditNode.style.display = 'none';
-        this.creditNode.innerHTML = '';        
+        this.creditNode.innerHTML = '';
       }
     },
 

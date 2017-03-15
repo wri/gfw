@@ -6,10 +6,11 @@
 define([
   'underscore',
   'handlebars',
+  'enquire',
   'map/presenters/analysis/AnalysisResultsNewPresenter',
   'text!map/templates/analysis/analysis-results.handlebars',
   'text!map/templates/analysis/analysis-results-error.handlebars'
-], function(_, Handlebars, Presenter, tpl, errorTpl) {
+], function(_, Handlebars, enquire, Presenter, tpl, errorTpl) {
 
   'use strict';
 
