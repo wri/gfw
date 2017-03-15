@@ -5,13 +5,14 @@
  */
 define([
   'underscore', 'handlebars', 'amplify', 'chosen', 'turf', 'mps',
+  'enquire',
   'map/presenters/tabs/AnalysisPresenter',
   'map/services/ShapefileService',
   'helpers/geojsonUtilsHelper',
   'map/views/tabs/SpinnerView',
   'text!map/templates/tabs/analysis.handlebars',
   'text!map/templates/tabs/analysis-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, turf, mps, Presenter, ShapefileService, geojsonUtilsHelper, SpinnerView, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, turf, mps, enquire, Presenter, ShapefileService, geojsonUtilsHelper, SpinnerView, tpl, tplMobile) {
 
   'use strict';
 
@@ -347,12 +348,12 @@ define([
       this.$countryAnalysis.removeClass('disabled');
       this.$countrySubscribe.removeClass('disabled');
       this.area = null;
-      
+
       if(this.iso) {
         this.getSubCountries()
         this.$countryButtonContainer.show();
       } else {
-        this.$countryButtonContainer.show();        
+        this.$countryButtonContainer.show();
         this.presenter.deleteAnalysis();
         this.presenter.setDontAnalyze(true);
         this.$countryAnalysis.addClass('disabled');
@@ -393,7 +394,7 @@ define([
           this.$countryButtonContainer.hide();
         } else {
           this.$countryAnalysis.removeClass('disabled');
-          this.$countrySubscribe.removeClass('disabled');          
+          this.$countrySubscribe.removeClass('disabled');
         }
       } else {
         if (dont_analyze) {
@@ -452,7 +453,7 @@ define([
     },
 
     /**
-     * Triggered when the user complete a polygon 
+     * Triggered when the user complete a polygon
      * or change it with the drawing manager.
      */
     _updateAnalysis: function() {
@@ -557,7 +558,7 @@ define([
     setEditableEvents: function(overlay) {
       google.maps.event.addListener(overlay.getPath(), 'set_at', function () {
         this._updateAnalysis();
-      }.bind(this));      
+      }.bind(this));
 
       google.maps.event.addListener(overlay.getPath(), 'insert_at', function () {
         this._updateAnalysis();

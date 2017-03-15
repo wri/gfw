@@ -9,10 +9,11 @@ define([
   'map/presenters/tabs/CountriesPresenter',
   'map/collections/CountryCollection',
   'handlebars',
+  'enquire',
   'text!map/templates/tabs/countries.handlebars',
   'text!map/templates/tabs/countriesMore.handlebars',
   'text!map/templates/tabs/countriesMobile.handlebars',
-], function(Backbone, _, chosen, Presenter, CountryCollection, Handlebars, tpl, tplMore, tplMobile) {
+], function(Backbone, _, chosen, Presenter, CountryCollection, Handlebars, enquire, tpl, tplMore, tplMobile) {
 
   'use strict';
 

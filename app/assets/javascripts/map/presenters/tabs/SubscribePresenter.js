@@ -24,14 +24,14 @@ define([
       this._super();
 
       this.user = new User();
-      this.user.fetch()
-        .done(function(){
+      this.user.fetch({
+        success: function () {
           this.view.render();
-        }.bind(this))
-
-        .error(function(){
+        }.bind(this),
+        error: function () {
           this.view.render();
-        }.bind(this))
+        }.bind(this)
+      });
 
       this.listeners();
 

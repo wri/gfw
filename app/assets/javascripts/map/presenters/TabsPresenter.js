@@ -7,15 +7,16 @@ define([
   'underscore',
   'backbone',
   'mps',
+  'enquire',
   'map/presenters/PresenterClass'
-], function(_, Backbone, mps, PresenterClass) {
+], function(_, Backbone, mps, enquire, PresenterClass) {
 
   'use strict';
 
   var StatusModel = Backbone.Model.extend({
     defaults: {
       tab: 'analysis-tab',
-      iso: null,      
+      iso: null,
     }
   });
 

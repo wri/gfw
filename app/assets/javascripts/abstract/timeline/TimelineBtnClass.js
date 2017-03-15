@@ -11,9 +11,10 @@ define([
   'moment',
   'handlebars',
   'd3',
+  'enquire',
   'text!templates/timelineBtn-mobile.handlebars'
 
-], function(_, Backbone, moment, Handlebars, d3, tplMobile) {
+], function(_, Backbone, moment, Handlebars, d3, enquire, tplMobile) {
 
   'use strict';
 

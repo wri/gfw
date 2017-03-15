@@ -8,6 +8,7 @@ define([
   'handlebars',
   'd3',
   'mps',
+  'enquire',
   'map/presenters/TabsPresenter',
   'map/views/tabs/AnalysisNewView',
   'map/views/tabs/CountriesView',
@@ -17,7 +18,7 @@ define([
   'views/ShareView',
   'text!map/templates/tabs.handlebars',
   'text!map/templates/tabs-mobile.handlebars'
-], function(_, Handlebars, d3, mps, Presenter, AnalysisNewView, CountriesView, BasemapsView, HighresolutionView, SubscribeView, ShareView, tpl, tplMobile) {
+], function(_, Handlebars, d3, mps, enquire, Presenter, AnalysisNewView, CountriesView, BasemapsView, HighresolutionView, SubscribeView, ShareView, tpl, tplMobile) {
 
   'use strict';
 
@@ -97,13 +98,13 @@ define([
           active = active,
           $tabButton = this.$tabList.find('[data-tab="'+id+'"]'),
           is_active = $tabButton.hasClass('active');
-      
+
       // If it's already closed or opened we don't need to do anything
       if (active != is_active) {
         if (active) {
           // container
           this.$container.toggleClass('active', active);
-          
+
           // tabs
           this.$tabs.removeClass('active').addClass('inactive');
           $tabButton.toggleClass('inactive', !active).toggleClass('active', active);
@@ -111,14 +112,14 @@ define([
           // tabs content
           this.$tabsContent.removeClass('selected');
           this.$el.find('#'+ id).toggleClass('selected', active);
-          
+
         } else {
           this.$container.removeClass('active')
           this.$tabs.removeClass('inactive active');
           this.$tabsContent.removeClass('selected');
         }
       }
-      
+
 
     },
 
@@ -181,9 +182,9 @@ define([
 
     resetCountry: function() {
       this.presenter.publishIso({
-        country: null, 
+        country: null,
         region: null
-      });      
+      });
     },
 
     toggleMobileLayers: function(){
