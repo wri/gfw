@@ -20,7 +20,7 @@ define([
       dataMaxZoom: 12,
       // urlTemplate: 'http://earthengine.google.org/static/hansen_2014/gfw_loss_tree_year_{threshold}_2014/{/z}{/x}{/y}.png',
       // urlTemplate: 'https://storage.googleapis.com/earthenginepartners-hansen/tiles/gfw2015/loss_tree_year_{threshold}{/z}{/x}{/y}.png',
-      urlTemplate: 'https://storage.googleapis.com/forma-public/Hansen14_15/tiles/1/{threshold}{/z}{/x}{/y}',
+      urlTemplate: 'https://storage.googleapis.com/forma-public/Hansen14_15/tiles/hansen_world/v4/tc{threshold}{/z}{/x}{/y}'
     },
 
     init: function(layer, options, map) {
@@ -54,7 +54,7 @@ define([
           .exponent(exp)
           .domain([0,256])
           .range([0,256]);
-  
+
       for(var i = 0; i < w; ++i) {
         for(var j = 0; j < h; ++j) {
           var pixelPos = (j * w + i) * components;
