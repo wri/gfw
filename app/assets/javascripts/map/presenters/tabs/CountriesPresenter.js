@@ -9,10 +9,10 @@ define([
   'topojson',
   'map/presenters/PresenterClass',
   'map/services/LayerSpecService',
-  'map/services/CountryService',
+  'services/CountryService',
   'helpers/geojsonUtilsHelper',
 
-], function(_, mps, topojson, PresenterClass, layerSpecService, countryService, geojsonUtilsHelper) {
+], function(_, mps, topojson, PresenterClass, layerSpecService, CountryService, geojsonUtilsHelper) {
 
   'use strict';
 
@@ -44,7 +44,7 @@ define([
       'Place/go': function(place) {
         var params = place.params;
         var layerSpec = place.layerSpec;
-        
+
         if(!!params.iso.country && params.iso.country !== 'ALL'){
           this.status.set('iso', params.iso);
           this.view.setCountry(params.iso);
@@ -93,7 +93,7 @@ define([
       var iso = this.status.get('iso');
 
       if(!!iso && !!iso.country && iso.country !== 'ALL'){
-        countryService.show(iso.country, _.bind(function(results) {
+        CountryService.showCountry({ iso: iso.country }, _.bind(function(results) {
           var objects = _.findWhere(results.topojson.objects, {
             type: 'MultiPolygon'
           });
@@ -116,16 +116,16 @@ define([
       var iso = this.status.get('iso');
 
       if(!!iso && !!iso.country && iso.country !== 'ALL'){
-        countryService.show(iso.country, _.bind(function(results) {
+        CountryService.showCountry({ iso: iso.country }, _.bind(function(results) {
           var is_more = (!!results.indepth);
           var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
-          
+
           if (is_more) {
             this.view.more({
               name: results.name,
-              url: results.indepth, 
+              url: results.indepth,
               is_idn: is_idn
-            });            
+            });
           }
 
         },this));

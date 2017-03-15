@@ -190,18 +190,19 @@ define([
 
     showCountry: function() {
       var iso = this.status.get('iso');
-
       CountryService.showCountry({ iso: iso.country })
         .then(function(results) {
-          var resTopojson = JSON.parse(results.topojson);
-          var objects = _.findWhere(resTopojson.objects, {
-            type: 'MultiPolygon'
-          });
-          var geojson = topojson.feature(resTopojson, objects),
-              geometry = geojson.geometry
+          try {
+            var resTopojson = JSON.parse(results.topojson);
+            var objects = _.findWhere(resTopojson.objects, {
+              type: 'MultiPolygon'
+            });
+            var geojson = topojson.feature(resTopojson, objects),
+                geometry = geojson.geometry
 
-          // Draw geojson of country if isoDisabled is equal to true
-          this.view.drawGeojson(geometry);
+            // Draw geojson of country if isoDisabled is equal to true
+            this.view.drawGeojson(geometry);
+          } catch (error) {}
 
         }.bind(this));
     },
@@ -222,10 +223,10 @@ define([
 
       CountryService.showRegion({ iso: iso.country, region: iso.region })
         .then(function(results) {
-          // var geometry = results.features[0].geometry
-          //
-          // // Draw geojson of country if isoDisabled is equal to true
-          // this.view.drawGeojson(geometry);
+          var geometry = JSON.parse(results.geojson);
+
+          // Draw geojson of country if isoDisabled is equal to true
+          this.view.drawGeojson(geometry);
         }.bind(this));
     },
 
