@@ -5,7 +5,7 @@ define([
   'jquery',
   'backbone',
   'underscore',
-  'enquire'
+  'enquire',
   'landing/views/SliderView'
 ], function($, Backbone, _, enquire, SliderView) {
 
