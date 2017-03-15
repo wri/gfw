@@ -9,6 +9,7 @@ define([
   'amplify',
   'chosen',
   'turf',
+  'enquire',
   'views/ShareView',
   'helpers/gaEventsHelper',
   'map/views/analysis/AnalysisDrawView',
@@ -19,7 +20,7 @@ define([
   'map/presenters/tabs/AnalysisNewPresenter',
   'text!map/templates/tabs/analysis-new.handlebars',
   'text!map/templates/tabs/analysis-mobile-new.handlebars'
-], function(_, Handlebars, amplify, chosen, turf, ShareView, GaEventsHelper, AnalysisDrawView, AnalysisCountryView, AnalysisShapeView, AnalysisResultsNewView, AnalysisDownloadView, Presenter, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, turf, enquire, ShareView, GaEventsHelper, AnalysisDrawView, AnalysisCountryView, AnalysisShapeView, AnalysisResultsNewView, AnalysisDownloadView, Presenter, tpl, tplMobile) {
 
   'use strict';
 
