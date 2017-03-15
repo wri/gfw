@@ -5,8 +5,9 @@ define([
   'jquery',
   'backbone',
   'underscore',
+  'enquire'
   'landing/views/SliderView'
-], function($, Backbone, _, SliderView) {
+], function($, Backbone, _, enquire, SliderView) {
 
   'use strict';
 
