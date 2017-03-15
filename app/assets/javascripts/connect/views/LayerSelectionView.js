@@ -9,7 +9,7 @@ define([
   'mps',
   'core/View',
   'map/services/LayerSpecService',
-  'map/services/CountryService',
+  'services/CountryService',
   'text!connect/templates/countrySelection.handlebars',
   'text!connect/templates/layerSelection.handlebars',
 ], function(_, Handlebars, mps, View, LayerSpecService, CountryService, countryTpl, layerTpl) {
@@ -66,9 +66,9 @@ define([
       );
 
       // Load countries
-      CountryService.get()
+      CountryService.getCountries()
         .then(function(results) {
-          this.countries = results.countries;
+          this.countries = results;
           this.renderCountries();
           this.renderCountryLayers();
 
