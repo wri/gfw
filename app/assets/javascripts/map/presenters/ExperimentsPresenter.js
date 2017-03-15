@@ -6,8 +6,9 @@
 define([
   'underscore',
   'mps',
+  'enquire',
   'map/presenters/PresenterClass'
-], function(_, mps, PresenterClass) {
+], function(_, mps, enquire, PresenterClass) {
 
   'use strict';
 
