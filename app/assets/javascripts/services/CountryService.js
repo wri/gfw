@@ -7,15 +7,16 @@ define([
 
   'use strict';
 
-  var DATASET_COUNTRIES_CONFIG = '134caa0a-21f7-451d-a7fe-30db31a424aa',
-      DATASET_COUNTRIES = '134caa0a-21f7-451d-a7fe-30db31a424aa',
-      DATASET_REGIONS = '098b33df-6871-4e53-a5ff-b56a7d989f9a',
-      DATASET_SUB_REGIONS = 'b3d076cc-b150-4ccb-a93e-eca05d9ac2bf';
-
-  var TABLE_COUNTRIES_CONIG = 'gfw_countries_config',
-      TABLE_COUNTRIES = 'gadm28_countries',
-      TABLE_REGIONS = 'gadm28_adm1',
-      TABLE_SUB_REGIONS = 'gadm28_adm2';
+  var CONFIG = {
+    countriesConfigDataset: '134caa0a-21f7-451d-a7fe-30db31a424aa',
+    countriesConfigTable: 'gfw_countries_config',
+    countriesDataset: '134caa0a-21f7-451d-a7fe-30db31a424aa',
+    countriesTable: 'gadm28_countries',
+    regionsDataset: '098b33df-6871-4e53-a5ff-b56a7d989f9a',
+    regionsTable: 'gadm28_adm1',
+    subRegionsDataset: 'b3d076cc-b150-4ccb-a93e-eca05d9ac2bf',
+    subRegionsTable: 'gadm28_adm2'
+  };
 
   var GET_REQUEST_COUNTRY_CONFIG_ID = 'CountryService:getCountries',
       GET_REQUEST_COUNTRIES_LIST_ID = 'CountryService:getCountries',
@@ -24,17 +25,6 @@ define([
       SHOW_REQUEST_REGION_ID = 'CountryService:showRegion';
 
   var APIURL = window.gfw.config.GFW_API_HOST_PROD;
-
-  var CONFIG = {
-    countriesConfigDataset: DATASET_COUNTRIES_CONFIG,
-    countriesConfigTable: TABLE_COUNTRIES_CONIG,
-    countriesDataset: DATASET_COUNTRIES,
-    countriesTable: TABLE_COUNTRIES,
-    regionsDataset: DATASET_REGIONS,
-    regionsTable: TABLE_REGIONS,
-    subRegionsDataset: DATASET_SUB_REGIONS,
-    subRegionsTable: TABLE_SUB_REGIONS
-  };
 
   var APIURLS = {
     'getCountryConfig'   : '/query/{countriesConfigDataset}?sql=SELECT iso, indepth FROM {countriesConfigTable} WHERE iso=\'{iso}\'',
