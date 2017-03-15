@@ -19,7 +19,8 @@ define([
       threshold: 30,
       dataMaxZoom: 12,
       // urlTemplate: 'http://earthengine.google.org/static/hansen_2014/gfw_loss_tree_year_{threshold}_2014/{/z}{/x}{/y}.png',
-      urlTemplate: 'https://storage.googleapis.com/earthenginepartners-hansen/tiles/gfw2015/loss_tree_year_{threshold}{/z}{/x}{/y}.png',
+      // urlTemplate: 'https://storage.googleapis.com/earthenginepartners-hansen/tiles/gfw2015/loss_tree_year_{threshold}{/z}{/x}{/y}.png',
+      urlTemplate: 'https://storage.googleapis.com/forma-public/Hansen14_15/tiles/hansen_world/v4/tc{threshold}{/z}{/x}{/y}'
     },
 
     init: function(layer, options, map) {
