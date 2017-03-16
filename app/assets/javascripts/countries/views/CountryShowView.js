@@ -9,6 +9,7 @@ define([
   'd3',
   'mps',
   'scrollit',
+  'services/CountryService',
   'views/SourceWindowView',
   'views/DownloadView',
   'countries/views/CountryHeaderView',
@@ -18,7 +19,7 @@ define([
   'views/NotificationsView',
   'countries/abstract/ForestTenureGraph',
   'text!countries/templates/burnedForestTooltip.handlebars',
-], function($, Backbone, _, Handlebars, d3, mps, scrollit, SourceWindowView, DownloadView, CountryHeaderView, ShareView, CountryShowModel, CountryHelper, NotificationsView, ForestTenureGraph, burnedForestTpl) {
+], function($, Backbone, _, Handlebars, d3, mps, scrollit, CountryService, SourceWindowView, DownloadView, CountryHeaderView, ShareView, CountryShowModel, CountryHelper, NotificationsView, ForestTenureGraph, burnedForestTpl) {
 
   'use strict';
 
@@ -47,21 +48,25 @@ define([
       this.$indepth = this.$('.country-indepth');
 
       // Models
-      this.country = new CountryShowModel({ iso: this.$el.data('iso') });
+      CountryService.getRegionsList({ iso: this.$el.data('iso') })
+        .then(function(results) {
+          this.country = new CountryShowModel(results, {
+            iso: this.$el.data('iso'),
+            parse: true
+          });
 
-      // Initialize modules
-      this.headerView = new CountryHeaderView({country: this.country});
-      new NotificationsView();
+          // Initialize modules
+          this.headerView = new CountryHeaderView({ country: this.country });
+          new NotificationsView();
 
-      // if (!this.embed) {
-        this._stickynav();
-        this._drawTenure();
-        this._drawForestsType();
-        this._drawForestCertification();
-        this._drawFormaAlerts();
-        this._drawBurnedForests();
-        this._initFormaDropdown();
-      // }
+          this._stickynav();
+          this._drawTenure();
+          this._drawForestsType();
+          this._drawForestCertification();
+          this._drawFormaAlerts();
+          this._drawBurnedForests();
+          this._initFormaDropdown();
+        }.bind(this))
     },
 
     _openShareModal: function(event) {
