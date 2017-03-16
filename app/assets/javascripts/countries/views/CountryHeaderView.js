@@ -8,10 +8,8 @@ define([
   'd3',
   'mps',
   'countries/views/CountryUmdOptionsView',
-  'countries/helpers/CountryHelper',
-  'countries/models/CountryShowModel',
-
-], function($, Backbone, _, d3, mps, CountryUmdOptionsView, CountryHelper, CountryShowModel) {
+  'countries/helpers/CountryHelper'
+], function($, Backbone, _, d3, mps, CountryUmdOptionsView, CountryHelper) {
 
   'use strict';
 
@@ -248,13 +246,9 @@ define([
         }
 
       });
-      if (this.country){
-        this.country.fetch({
-          success: function() {
-            Backbone.history.start({pushState: true});
-          }
-        });
+      if (this.country) {
         self.router = new Router();
+        Backbone.history.start({pushState: true});
       }
     },
     setListeners: function(){
@@ -488,6 +482,7 @@ define([
     _displayArea: function(area) {
       var self = this;
       this.$el.find('#url_analysis').attr('href', '/map/6/'+ area.attributes.bounds._northEast.lat + '/'+ area.attributes.bounds._northEast.lng + '/'+ area.attributes.iso + '-' + String(area.get('id_1')) +'/grayscale/loss,forestgain?begin=2001-01-01&end=2014-12-30&fit_to_geom=true&threshold='+(this.helper.config.canopy_choice || 30));
+
       this.map.fitBounds(area.get('bounds'), {reset: true});
       this._removeCartodblayer();
 
@@ -514,9 +509,9 @@ define([
               line-opacity: 1;\
             }"
         }, {
-          sql: "SELECT * FROM gadm_1_all",
+          sql: "SELECT * FROM gadm28_adm1",
           cartocss: "\
-            #gadm_1_all {\
+            #gadm28_adm1 {\
               polygon-fill: #333;\
               polygon-opacity: 1;\
               line-color: #333;\
@@ -658,4 +653,3 @@ define([
   return CountryHeader;
 
 });
-
