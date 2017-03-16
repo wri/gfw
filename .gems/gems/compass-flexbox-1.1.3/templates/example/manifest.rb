@@ -1,0 +1,1 @@
+discover :all

@@ -1,0 +1,39 @@
+language: ruby
+
+gemfile:
+  - Gemfile
+
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - 2.2.0
+  - jruby9k
+  - jruby-head
+
+sudo: false
+
+script: bundle exec rake travis
+
+matrix:
+  include:
+    - rvm: 1.8.7
+      gemfile: Gemfile18
+    - rvm: 2.1.0
+      gemfile: Gemfile
+      env: COVERAGE=true
+  allow_failures:
+    - rvm: jruby-head
+    - rvm: jruby9k
+
+notifications:
+  email: false
+  irc:
+    channels:
+      - "irc.freenode.org#ruby-fog"
+    template:
+    - "[#%{build_number}] %{message} %{build_url}"
+    - "[#%{build_number}] %{commit} on %{branch} by %{author}"
+    - "[#%{build_number}] %{compare_url}"
+    on_success: always
+    on_failure: always
+    use_notice: false

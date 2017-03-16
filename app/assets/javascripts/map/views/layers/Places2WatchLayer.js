@@ -13,9 +13,9 @@ define([
   var Places2WatchLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'with r as (SELECT cartodb_id, the_geom_webmercator,  grid_id  FROM ptw_grid_score_gt_0 order by cartodb_id asc ), f as (select r.*, emissions_sum, glad_count, iso, score, \'{tableName}\'::text as tablename, \'{tableName}\'::text AS layer, {analysis} AS analysis from r inner join {tableName} s on r.grid_id=s.grid_id) (select cartodb_id, st_centroid(the_geom_webmercator) as the_geom_webmercator,  grid_id, emissions_sum,glad_count, iso, score, \'{tableName}\'::text as ptw_top_10, \'{tableName}\'::text AS layer, {analysis} AS analysis, false as dtype from f Union all select f.*, true as dtype from f order by grid_id asc)',
+      sql: 'WITH r AS ( SELECT cartodb_id, the_geom_webmercator, grid_id FROM ptw_grid_score_gt_0 ORDER  BY cartodb_id ASC ), fc AS ( SELECT pt.cartodb_id, pt.the_geom_webmercator, pt.grid_id, pc.name, pc.link, pc.image, pc.description FROM ptw_top_10 pt INNER JOIN ptw_config_table pc on pt.grid_id = pc.grid_id ), f AS ( SELECT r.*, fc.name, fc.link, fc.image, fc.description, \'ptw_top_10\' :: text AS tablename, \'ptw_top_10\' :: text AS LAYER, FALSE AS analysis FROM r inner join fc ON r.grid_id = fc.grid_id ) (SELECT cartodb_id, St_centroid(the_geom_webmercator) AS the_geom_webmercator, grid_id, name, link, image, description, \'ptw_top_10\' :: text AS ptw_top_10, \'ptw_top_10\' :: text AS LAYER, FALSE  AS analysis, FALSE AS dtype FROM f UNION ALL SELECT f.*, TRUE AS dtype FROM   f ORDER  BY grid_id ASC)',
       infowindow: true,
-      interactivity: 'cartodb_id, emissions_sum, score, glad_count, analysis',
+      interactivity: 'cartodb_id, name, link, image, analysis',
       analysis: false,
       cartocss: Places2WatchCartocss
     }

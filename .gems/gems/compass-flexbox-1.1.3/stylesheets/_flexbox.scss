@@ -1,0 +1,305 @@
+@import "compass/css3/shared";
+
+$flexbox-legacy-support: -moz, -webkit, not -o, not -ms, not -khtml, not official;
+$flexbox-ie-support: not -moz, not -webkit, not -o, -ms, not -khtml, not official;
+$flexbox-standard-support: not -moz, -webkit, not -o, not -ms, not -khtml, official;
+$flexbox-display-warnings: true !default;
+
+// Enabling flexbox: setting an element to be a flex container
+@mixin display-flex() {
+    @include experimental-value(display, box, $flexbox-legacy-support...);
+    @include experimental-value(display, flexbox, $flexbox-ie-support...);
+    @include experimental-value(display, flex, $flexbox-standard-support...);
+}
+
+@mixin display-inline-flex() {
+    @include experimental-value(display, inline-box, $flexbox-legacy-support...);
+    @include experimental-value(display, inline-flexbox, $flexbox-ie-support...);
+    @include experimental-value(display, inline-flex, $flexbox-standard-support...);
+}
+
+// Axis alignment: specifying alignment of items along the main flexbox axis
+
+$default-justify-content: flex-start !default;
+
+@mixin justify-content(
+    $justification: $default-justify-content
+) {
+    @include _flex-property(justify-content, $justification, flex-pack, box-pack);
+}
+
+// Cross-axis alignment: specifying alignment of items along the cross-axis
+
+$default-align-items: stretch !default;
+
+@mixin align-items(
+    $alignment: $default-align-items
+) {
+    @include _flex-property(align-items, $alignment, flex-align, box-align);
+}
+
+// Individual cross-axis alignment: override to align individual items along the cross-axis
+
+$default-align-self: stretch !default;
+
+@mixin align-self(
+    $alignment: $default-align-self
+) {
+    @include _flex-property(align-self, $alignment, flex-item-align, null);
+}
+
+// Flex line alignment: specifying alignment of flex lines along the cross-axis
+
+$default-align-content: stretch !default;
+
+@mixin align-content(
+    $alignment: $default-align-content
+) {
+    @include _flex-property(align-content, $alignment, flex-line-pack, null);
+}
+
+// Display order: specifying the order of flex items
+
+$default-order: 1 !default;
+
+@mixin order(
+    $order: $default-order
+) {
+    @include _flex-property(order, $order, flex-order, box-ordinal-group);
+}
+
+// Flexibility: specifying how the size of items flex
+
+$default-flex: 1 !default;
+
+@mixin flex(
+    $amount: $default-flex
+) {
+    @include _flex-property(flex, $amount, flex, box-flex);
+}
+
+$default-flex-grow: $default-flex !default;
+
+@mixin flex-grow(
+    $amount: $default-flex-grow
+) {
+    @include _flex-property(flex-grow, $amount);
+}
+
+$default-flex-shrink: $default-flex !default;
+
+@mixin flex-shrink(
+    $amount: $default-flex-shrink
+) {
+    @include _flex-property(flex-shrink, $amount);
+}
+
+$default-flex-basis: $default-flex !default;
+
+@mixin flex-basis(
+    $amount: $default-flex-basis
+) {
+    @include _flex-property(flex-basis, $amount);
+}
+
+// Direction: specifying the direction of the main flexbox axis
+
+$default-flex-direction: row !default;
+
+@mixin flex-direction(
+    $direction: $default-flex-direction
+) {
+    @include _flex-property(flex-direction, $direction, flex-direction, box-orient);
+}
+
+// Wrapping: specifying if and how flex items wrap along the cross-axis
+
+$default-flex-wrap: nowrap !default;
+
+@mixin flex-wrap(
+    $wrap: $default-flex-wrap
+) {
+    @include _flex-property(flex-wrap, $wrap, flex-wrap, box-lines);
+}
+
+// Shorthand for flex-direction & flex-wrap
+
+$default-flex-flow: $default-flex-direction $default-flex-wrap !default;
+
+@mixin flex-flow(
+    $flow: $default-flex-flow
+) {
+    @include _flex-property(flex-flow, $flow, flex-flow, null);
+}
+
+// Internal functions; not intended to be called directly
+
+@mixin _flex-property($standard-property, $value, $ie-property: null, $legacy-property: null)  {
+    $standard-property: unquote($standard-property);
+    $ie-property: unquote($ie-property);
+    $legacy-property: unquote($legacy-property);
+    $value: unquote($value);
+    $standard-value: $value;
+    $ie-value: _flex-value($standard-property, $value, ie);
+    $legacy-value: _flex-value($standard-property, $value, legacy);
+
+    // Safari, Firefox (buggy), iOS, Android browser, older WebKit browsers
+    @if $legacy-property {
+        @if $legacy-value {
+            @if $standard-property == flex-direction and ($value == row-reverse or $value == column-reverse) {
+                @include experimental(box-direction, reverse, $flexbox-legacy-support...);
+            }
+            @include experimental($legacy-property, $legacy-value, $flexbox-legacy-support...);
+        }
+    } @else if($flexbox-display-warnings) {
+        @warn _support-warning($standard-property, "legacy");
+    }
+
+    // IE 10
+    @if $ie-property and $ie-value {
+        @include experimental($ie-property, $ie-value, $flexbox-ie-support...);
+    }
+
+    // Chrome 21+, Opera 12.1, Firefox 22+
+    @include experimental($standard-property, $standard-value, $flexbox-standard-support...);
+}
+
+@function _flex-value($property, $value, $syntax) {
+    $flexbox-new-value: $value;
+    $flexbox-warning: false;
+
+    @if $property == justify-content {
+        @if $value == flex-start {
+            @if $syntax == legacy or $syntax == ie {
+                $flexbox-new-value: start;
+            }
+        }
+        @else if $value == flex-end {
+            @if $syntax == legacy or $syntax == ie {
+                $flexbox-new-value: end;
+            }
+        }
+        @else if $value == space-between {
+            @if $syntax == legacy {
+                $flexbox-warning: "\"#{$property}: #{$value}\" does not work in the legacy Firefox implementation";
+            }
+            @if $syntax == legacy or $syntax == ie {
+                $flexbox-new-value: justify;
+            }
+        }
+        @else if $value == space-around {
+            @if $syntax == legacy {
+                $flexbox-new-value: null;
+            } @else if $syntax == ie {
+                $flexbox-new-value: distribute;
+            }
+        }
+    }
+
+    @if $property == align-items {
+        @if $value == flex-start {
+            @if $syntax == legacy or $syntax == ie {
+                $flexbox-new-value: start;
+            }
+        }
+        @else if $value == flex-end {
+            @if $syntax == legacy or $syntax == ie {
+                $flexbox-new-value: end;
+            }
+        }
+    }
+
+    @if $property == align-self {
+        @if $value == flex-start {
+            @if $syntax == ie {
+                $flexbox-new-value: start;
+            }
+        }
+        @else if $value == flex-end {
+            @if $syntax == ie {
+                $flexbox-new-value: end;
+            }
+        }
+    }
+
+    @if $property == align-content {
+        @if $value == flex-start {
+            @if $syntax == ie {
+                $flexbox-new-value: start;
+            }
+        }
+        @else if $value == flex-end {
+            @if $syntax == ie {
+                $flexbox-new-value: end;
+            }
+        }
+        @else if $value == space-between {
+            @if $syntax == ie {
+                $flexbox-new-value: justify;
+            }
+        }
+        @else if $value == space-around {
+            @if $syntax == ie {
+                $flexbox-new-value: distribute;
+            }
+        }
+    }
+
+    @if $property == order {
+        @if $syntax == legacy and $value < 1 {
+            $flexbox-warning: "\"#{$property}\" must be a positive integer in the \"#{$syntax}\" syntax";
+            $flexbox-new-value: null;
+        }
+    }
+
+    @if $property == flex {
+        @if $syntax == legacy and type_of($value) != number {
+            $flexbox-warning: "\"#{$property}\" only accepts an integer in the \"#{$syntax}\" syntax";
+            $flexbox-new-value: null;
+        }
+    }
+
+    @if $property == flex-direction {
+        @if $value == row or $value == row-reverse {
+            @if $syntax == legacy {
+                $flexbox-new-value: horizontal;
+            }
+        }
+        @else if $value == column or $value == column-reverse {
+            @if $syntax == legacy {
+                $flexbox-new-value: vertical;
+            }
+        }
+    }
+
+    @if $property == flex-wrap {
+        @if $value == nowrap {
+            @if $syntax == legacy {
+                $flexbox-new-value: single;
+            }
+        }
+        @else if $value == wrap {
+            @if $syntax == legacy {
+                @if($flexbox-display-warnings) {
+                    @warn "\"#{$property}: #{$value}\" is not supported consistently in the \"#{$syntax}\" syntax";
+                }
+                $flexbox-new-value: multiple;
+            }
+        }
+        @else if $value == wrap-reverse {
+            @if $syntax == legacy {
+                $flexbox-new-value: null;
+            }
+        }
+    }
+
+    @if ($flexbox-new-value == null or $flexbox-warning) and $flexbox-display-warnings {
+        @warn if($flexbox-warning, $flexbox-warning, _support-warning("#{$property}: #{$value}", $syntax));
+    }
+
+    @return $flexbox-new-value;
+}
+
+@function _support-warning($value, $syntax) {
+    @return "\"#{$value}\" not supported in the #{$syntax} syntax"
+}

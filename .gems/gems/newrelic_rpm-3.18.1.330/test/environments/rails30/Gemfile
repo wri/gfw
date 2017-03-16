@@ -1,0 +1,24 @@
+source 'https://rubygems.org'
+
+gem 'rails', '~>3.0.20'
+
+gem 'rake', '~>10.1.1'
+gem 'minitest', '~>4.7.5'
+gem 'mocha', :require => false
+gem 'rack', '< 2.0.0'
+gem 'rack-test'
+gem 'json', '< 1.8.5' if RUBY_VERSION == "1.8.7"
+
+gem 'newrelic_rpm', :path => '../../..'
+
+if (RUBY_PLATFORM == 'java')
+  gem "activerecord-jdbcmysql-adapter"
+  gem "activerecord-jdbcsqlite3-adapter"
+  gem "jruby-openssl"
+else
+  gem "mysql", "~>2.9.1"
+  gem "sqlite3-ruby"
+end
+
+gem 'pry', '~> 0.9.12'
+gem 'hometown', '~> 0.2.5'

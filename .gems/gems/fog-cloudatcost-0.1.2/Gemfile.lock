@@ -1,0 +1,69 @@
+PATH
+  remote: .
+  specs:
+    fog-cloudatcost (0.1.2)
+      fog-core (~> 1.36)
+      fog-json (~> 1.0)
+      fog-xml (~> 0.1)
+      ipaddress (~> 0.8)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    builder (3.2.2)
+    codeclimate-test-reporter (0.4.8)
+      simplecov (>= 0.7.1, < 1.0.0)
+    diff-lcs (1.2.5)
+    docile (1.1.5)
+    excon (0.45.4)
+    fog-core (1.36.0)
+      builder
+      excon (~> 0.45)
+      formatador (~> 0.2)
+    fog-json (1.0.2)
+      fog-core (~> 1.0)
+      multi_json (~> 1.10)
+    fog-xml (0.1.2)
+      fog-core
+      nokogiri (~> 1.5, >= 1.5.11)
+    formatador (0.2.5)
+    ipaddress (0.8.3)
+    json (1.8.3)
+    mini_portile2 (2.0.0)
+    multi_json (1.11.2)
+    nokogiri (1.6.7.2)
+      mini_portile2 (~> 2.0.0.rc2)
+    rake (10.5.0)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+    rspec-core (3.4.3)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
+    rubyzip (1.1.7)
+    simplecov (0.11.2)
+      docile (~> 1.1.0)
+      json (~> 1.8)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.6)
+  codeclimate-test-reporter
+  fog-cloudatcost!
+  rake (~> 10.0)
+  rspec (~> 3.4.0)
+  rubyzip (~> 1.1.0)
+
+BUNDLED WITH
+   1.11.2

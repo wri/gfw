@@ -1,0 +1,17 @@
+current directory: /Users/joseangel/vizzuality/gfw/.gems/gems/unf_ext-0.0.7.2/ext/unf_ext
+/usr/local/var/rbenv/versions/2.1.5/bin/ruby -r ./siteconf20170316-42837-wq49z8.rb extconf.rb
+checking for main() in -lstdc++... yes
+creating Makefile
+
+current directory: /Users/joseangel/vizzuality/gfw/.gems/gems/unf_ext-0.0.7.2/ext/unf_ext
+make "DESTDIR=" clean
+
+current directory: /Users/joseangel/vizzuality/gfw/.gems/gems/unf_ext-0.0.7.2/ext/unf_ext
+make "DESTDIR="
+compiling unf.cc
+linking shared-object unf_ext.bundle
+
+current directory: /Users/joseangel/vizzuality/gfw/.gems/gems/unf_ext-0.0.7.2/ext/unf_ext
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 unf_ext.bundle ./.gem.20170316-42837-1ub77cd
+installing default unf_ext libraries

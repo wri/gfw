@@ -1,0 +1,17 @@
+{
+   "keys" : [
+      {
+         "access_key" : "UPET5548S0CU9112ID33",
+         "secret_key" : "aaw1AZ7+OlEEy6FrXkGy0oP2p4BvE/Eeg0L9ucmj",
+         "user" : "Fog User"
+      }
+   ],
+   "suspended" : 0,
+   "swift_keys" : [],
+   "subusers" : [],
+   "user_id" : "Fog User",
+   "caps" : [],
+   "display_name" : "Fog User",
+   "email" : "",
+   "max_buckets" : 1000
+}

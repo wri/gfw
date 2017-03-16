@@ -1,0 +1,53 @@
+suite_condition("SideKiq requires MRI 1.9.3 or JRuby 1.6 in 1.9 mode") do
+  RUBY_VERSION >= '1.9.3' || (RUBY_PLATFORM == 'java' && RUBY_VERSION >= '1.9')
+end
+
+# Sidekiq 3.x does not support MRI 1.9.x
+if (RUBY_VERSION >= '2.0.0' && RUBY_VERSION < '2.4.0') || (RUBY_PLATFORM == 'java')
+  gemfile <<-RB
+    gem 'json'
+    gem 'sidekiq', '~> 3.4.2'
+    gem 'rack'
+
+    gem 'newrelic_rpm', :require => false, :path => File.expand_path('../../../../')
+  RB
+end
+
+if RUBY_VERSION >= '2.0.0' || (RUBY_PLATFORM == 'java')
+  gemfile <<-RB
+    gem 'json'
+    gem 'sidekiq', '~> 4.0.0'
+    gem 'rack'
+    gem 'newrelic_rpm', :require => false, :path => File.expand_path('../../../../')
+  RB
+end
+
+if RUBY_VERSION >= '2.0.0' && RUBY_VERSION < '2.4.0' && RUBY_PLATFORM != 'java'
+  # We skip testing Sidekiq 3.5.3 on JRuby due to an error in Sidekiq's shutdown:
+  # https://github.com/mperham/sidekiq/issues/2703
+  gemfile <<-RB
+    gem 'json'
+    gem 'sidekiq', '~> 3.5.3'
+    gem 'rack'
+    gem 'newrelic_rpm', :require => false, :path => File.expand_path('../../../../')
+  RB
+end
+
+gemfile <<-RB
+  gem 'json'
+  gem 'sidekiq', '~> 2.17.8'
+  gem 'rack'
+  gem 'newrelic_rpm', :require => false, :path => File.expand_path('../../../../')
+RB
+
+gemfile <<-RB
+  # Almost oldest supported version
+  # Having rbx issues on 2.8.0, 2.9.0 seems fine.
+  gem 'json'
+  gem 'sidekiq', '~> 2.9.0'
+  gem 'timers', '~> 1.1.0'
+  gem 'rack'
+  gem 'newrelic_rpm', :require => false, :path => File.expand_path('../../../../')
+RB
+
+# vim: ft=ruby

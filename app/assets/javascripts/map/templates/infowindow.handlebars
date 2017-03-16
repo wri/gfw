@@ -18,6 +18,16 @@
         <a style="cursor:pointer;" class="subscribe-shape btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">subscribe</a>
     </div>
     {{/if}}
+    {{#if content.data.actions}}
+    <div id="cartodb-popup-fixed" class="cartodb-popup-fixed">
+      {{#if content.data.actions.analysis}}
+        <a style="cursor:pointer;" class="analyze-shape btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">analyze</a>
+      {{/if}}
+      {{#if content.data.actions.readmore}}
+        <a style="cursor:pointer;" class="analyze-shape btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">read more</a>
+      {{/if}}
+    </div>
+    {{/if}}
     <div class="cartodb-popup-content scroll-thin-dark">
       <div class="cartodb-popup-content-inside">
         {{#if content.data.project_name}}
@@ -25,7 +35,7 @@
             <h2><a href="{{content.data.project_ur}}" target="_blank">{{content.data.project_name}}</a></h2>
           {{else}}
             <h2>{{content.data.project_name}}</h2>
-          {{/if}} 
+          {{/if}}
         {{/if}}
         {{#if content.data.project_na}}
           {{#if content.data.project_ur}}

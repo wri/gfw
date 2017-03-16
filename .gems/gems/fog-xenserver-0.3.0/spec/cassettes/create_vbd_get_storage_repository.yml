@@ -1,0 +1,89 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://192.168.10.2/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" ?><methodCall><methodName>SR.get_by_name_label</methodName><params><param><value><string>OpaqueRef:8fe47623-5f6d-4b52-bbd8-868fa7929361</string></value></param><param><value><string>Local storage</string></value></param></params></methodCall>
+    headers:
+      User-Agent:
+      - XMLRPC::Client (Ruby 2.1.2)
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '263'
+      Connection:
+      - keep-alive
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '294'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - text/xml
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+    body:
+      encoding: UTF-8
+      string: "<methodResponse><params><param><value><struct><member><name>Status</name><value>Success</value></member><member><name>Value</name><value><array><data><value>OpaqueRef:131d30ee-74ab-efcf-ee38-ec96222a36ba</value></data></array></value></member></struct></value></param></params></methodResponse>"
+    http_version: 
+  recorded_at: Sat, 22 Nov 2014 14:35:17 GMT
+- request:
+    method: post
+    uri: http://192.168.10.2/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" ?><methodCall><methodName>SR.get_record</methodName><params><param><value><string>OpaqueRef:8fe47623-5f6d-4b52-bbd8-868fa7929361</string></value></param><param><value><string>OpaqueRef:131d30ee-74ab-efcf-ee38-ec96222a36ba</string></value></param></params></methodCall>
+    headers:
+      User-Agent:
+      - XMLRPC::Client (Ruby 2.1.2)
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '289'
+      Connection:
+      - keep-alive
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '2239'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - text/xml
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+    body:
+      encoding: UTF-8
+      string: "<methodResponse><params><param><value><struct><member><name>Status</name><value>Success</value></member><member><name>Value</name><value><struct><member><name>uuid</name><value>4971da95-df5e-3f2d-28a7-cbb79db6d1bf</value></member><member><name>name_label</name><value>Local
+        storage</value></member><member><name>name_description</name><value/></member><member><name>allowed_operations</name><value><array><data><value>vdi_create</value><value>vdi_snapshot</value><value>pbd_create</value><value>pbd_destroy</value><value>plug</value><value>update</value><value>vdi_destroy</value><value>scan</value><value>vdi_clone</value><value>vdi_resize</value><value>unplug</value></data></array></value></member><member><name>current_operations</name><value><struct/></value></member><member><name>VDIs</name><value><array><data/></array></value></member><member><name>PBDs</name><value><array><data><value>OpaqueRef:9c139a2b-14f2-2486-1b1e-c46d7de625ec</value></data></array></value></member><member><name>virtual_allocation</name><value>0</value></member><member><name>physical_utilisation</name><value>4194304</value></member><member><name>physical_size</name><value>311469015040</value></member><member><name>type</name><value>lvm</value></member><member><name>content_type</name><value>user</value></member><member><name>shared</name><value><boolean>0</boolean></value></member><member><name>other_config</name><value><struct><member><name>i18n-original-value-name_label</name><value>Local
+        storage</value></member><member><name>i18n-key</name><value>local-storage</value></member></struct></value></member><member><name>tags</name><value><array><data/></array></value></member><member><name>sm_config</name><value><struct><member><name>allocation</name><value>thick</value></member><member><name>use_vhd</name><value>true</value></member><member><name>devserial</name><value>scsi-SATA_TOSHIBA_MK3265G_70KBP17MT</value></member></struct></value></member><member><name>blobs</name><value><struct/></value></member><member><name>local_cache_enabled</name><value><boolean>0</boolean></value></member><member><name>introduced_by</name><value>OpaqueRef:NULL</value></member></struct></value></member></struct></value></param></params></methodResponse>"
+    http_version: 
+  recorded_at: Sat, 22 Nov 2014 14:35:17 GMT
+recorded_with: VCR 2.9.3

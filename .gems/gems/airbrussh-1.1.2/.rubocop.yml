@@ -1,0 +1,42 @@
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  TargetRubyVersion: 1.9
+  Exclude:
+    - "*.gemspec"
+
+Metrics/AbcSize:
+  Exclude:
+    - "test/**/*"
+
+Metrics/MethodLength:
+  Exclude:
+    - "test/**/*"
+
+Metrics/ClassLength:
+  Exclude:
+    - "test/**/*"
+
+Style/BarePercentLiterals:
+  EnforcedStyle: percent_q
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/HashSyntax:
+  EnforcedStyle: hash_rockets
+
+Style/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/TrivialAccessors:
+  AllowPredicates: true
