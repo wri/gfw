@@ -1,0 +1,28 @@
+language: ruby
+sudo: false
+before_install: gem install bundler
+matrix:
+  allow_failures:
+    - rvm: jruby-head
+  fast_finish: true
+  include:
+    - rvm: 1.9.3
+      gemfile: gemfiles/Gemfile.1.9.2+
+    - rvm: 2.0.0
+      gemfile: Gemfile
+    - rvm: 2.1.0
+      gemfile: Gemfile
+    - rvm: 2.1.1
+      gemfile: Gemfile
+    - rvm: 2.2.0
+      gemfile: Gemfile
+    - rvm: jruby-19mode
+      gemfile: gemfiles/Gemfile.1.9.2+
+    - rvm: jruby-head
+      gemfile: Gemfile
+notifications:
+  email: false
+addons:
+  code_climate:
+    repo_token: 44bcd04b60228fc94f2be3a5e0346441b5ea156e94e89a17fc24c5d3de483721
+

@@ -1,0 +1,9 @@
+source 'https://rubygems.org'
+
+gem 'codeclimate-test-reporter', '~> 1.0',  group: :test, require: nil
+gem 'json',    '~> 1.8.0'
+gem 'net-ssh', '~> 2.9'
+gem 'rubocop', '~> 0.41.0'
+gem 'simplecov', '~> 0.12.0'
+
+gemspec :path => '..'

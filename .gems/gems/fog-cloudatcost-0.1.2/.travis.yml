@@ -1,0 +1,38 @@
+language: ruby
+sudo: false
+script: bundle exec rake test
+cache: bundler
+branches:
+  except:
+    - "/\\Av\\d+\\Z/"
+matrix:
+  fast_finish: true
+  include:
+  - rvm: 1.9.3
+    gemfile: Gemfile
+  - rvm: 2.0.0
+    gemfile: Gemfile
+  - rvm: 2.1.0
+    gemfile: Gemfile
+  - rvm: 2.1.1
+    gemfile: Gemfile
+  - rvm: 2.1.1
+    gemfile: gemfiles/Gemfile-edge
+  - rvm: 2.2.0
+    gemfile: Gemfile
+  - rvm: 2.2.0
+    gemfile: gemfiles/Gemfile-edge
+  - rvm: 2.3.0
+    gemfile: Gemfile
+  - rvm: 2.3.0
+    gemfile: gemfiles/Gemfile-edge
+  - rvm: jruby-19mode
+    gemfile: Gemfile
+  - rvm: jruby-head
+    gemfile: Gemfile
+  allow_failures:
+  - rvm: jruby-head
+
+addons:
+  code_climate:
+    repo_token: 412dc14b81fbd1f8d7356deb5feac31a8d69583d00ec1ba18040caf99343ee25

@@ -1,0 +1,130 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://192.168.10.2/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" ?><methodCall><methodName>VM.clone</methodName><params><param><value><string>OpaqueRef:3364a807-6433-eb77-84fd-f3452db26947</string></value></param><param><value><string>OpaqueRef:29c85ac6-5dc0-6511-52fa-93f7b54ec44b</string></value></param><param><value><string>Awesome Server</string></value></param></params></methodCall>
+    headers:
+      User-Agent:
+      - XMLRPC::Client (Ruby 2.1.2)
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '345'
+      Connection:
+      - keep-alive
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '251'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - text/xml
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+    body:
+      encoding: UTF-8
+      string: "<methodResponse><params><param><value><struct><member><name>Status</name><value>Success</value></member><member><name>Value</name><value>OpaqueRef:1588163d-8475-dbb9-df25-eccf7f38d2dd</value></member></struct></value></param></params></methodResponse>"
+    http_version: 
+  recorded_at: Fri, 19 Sep 2014 15:48:03 GMT
+- request:
+    method: post
+    uri: http://192.168.10.2/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" ?><methodCall><methodName>VM.get_record</methodName><params><param><value><string>OpaqueRef:3364a807-6433-eb77-84fd-f3452db26947</string></value></param><param><value><string>OpaqueRef:1588163d-8475-dbb9-df25-eccf7f38d2dd</string></value></param></params></methodCall>
+    headers:
+      User-Agent:
+      - XMLRPC::Client (Ruby 2.1.2)
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '289'
+      Connection:
+      - keep-alive
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '10719'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - text/xml
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+    body:
+      encoding: UTF-8
+      string: "<methodResponse><params><param><value><struct><member><name>Status</name><value>Success</value></member><member><name>Value</name><value><struct><member><name>uuid</name><value>5ec470b2-8e20-ac1e-77e4-c9af697d3694</value></member><member><name>allowed_operations</name><value><array><data><value>changing_dynamic_range</value><value>changing_shadow_memory</value><value>changing_static_range</value><value>make_into_template</value><value>destroy</value><value>export</value><value>start_on</value><value>start</value><value>clone</value><value>copy</value><value>snapshot</value></data></array></value></member><member><name>current_operations</name><value><struct/></value></member><member><name>power_state</name><value>Halted</value></member><member><name>name_label</name><value>Awesome
+        Server</value></member><member><name>name_description</name><value/></member><member><name>user_version</name><value>0</value></member><member><name>is_a_template</name><value><boolean>0</boolean></value></member><member><name>suspend_VDI</name><value>OpaqueRef:NULL</value></member><member><name>resident_on</name><value>OpaqueRef:NULL</value></member><member><name>affinity</name><value>OpaqueRef:1500e92a-ff9c-119f-de60-541ed4ba565e</value></member><member><name>memory_overhead</name><value>6291456</value></member><member><name>memory_target</name><value>0</value></member><member><name>memory_static_max</name><value>536870912</value></member><member><name>memory_dynamic_max</name><value>536870912</value></member><member><name>memory_dynamic_min</name><value>536870912</value></member><member><name>memory_static_min</name><value>536870912</value></member><member><name>VCPUs_params</name><value><struct/></value></member><member><name>VCPUs_max</name><value>1</value></member><member><name>VCPUs_at_startup</name><value>1</value></member><member><name>actions_after_shutdown</name><value>destroy</value></member><member><name>actions_after_reboot</name><value>restart</value></member><member><name>actions_after_crash</name><value>restart</value></member><member><name>consoles</name><value><array><data/></array></value></member><member><name>VIFs</name><value><array><data><value>OpaqueRef:572311b5-359c-28ec-60af-23ec5d9d52bb</value></data></array></value></member><member><name>VBDs</name><value><array><data><value>OpaqueRef:99f4fcf0-a662-4138-a1a5-fbfa0d17933c</value><value>OpaqueRef:9ac5d533-89ff-b827-a83c-cceb94c7865a</value></data></array></value></member><member><name>crash_dumps</name><value><array><data/></array></value></member><member><name>VTPMs</name><value><array><data/></array></value></member><member><name>PV_bootloader</name><value>pygrub</value></member><member><name>PV_kernel</name><value/></member><member><name>PV_ramdisk</name><value/></member><member><name>PV_args</name><value>auto-install/enable=true
+        priority=critical hostname=vm-teste domain=zerticolabs.com netcfg/domainname=vm-teste.zerticolabs.com
+        netcfg/choose_interface=eth0 netcfg/get_ipaddress=192.168.1.59 netcfg/get_netmask=255.255.0.0
+        netcfg/get_gateway=192.168.0.1 netcfg/get_nameservers=8.8.8.8 netcfg/disable_dhcp=true
+        preseed/url=http://192.168.0.1/vm/seed-ubuntu.cfg -- quiet console=hvc0</value></member><member><name>PV_bootloader_args</name><value/></member><member><name>PV_legacy_args</name><value/></member><member><name>HVM_boot_policy</name><value/></member><member><name>HVM_boot_params</name><value><struct/></value></member><member><name>HVM_shadow_multiplier</name><value><double>1</double></value></member><member><name>platform</name><value><struct><member><name>nx</name><value>true</value></member><member><name>acpi</name><value>true</value></member><member><name>apic</name><value>true</value></member><member><name>pae</name><value>true</value></member><member><name>viridian</name><value>true</value></member></struct></value></member><member><name>PCI_bus</name><value/></member><member><name>other_config</name><value><struct><member><name>vgpu_pci</name><value/></member><member><name>mac_seed</name><value>a2b88f5e-fef6-624d-6598-2caf7d33d1c4</value></member><member><name>install-methods</name><value>cdrom</value></member><member><name>install-archs</name><value>amd64</value></member><member><name>install-repository</name><value>cdrom</value></member></struct></value></member><member><name>domid</name><value>-1</value></member><member><name>domarch</name><value/></member><member><name>last_boot_CPU_flags</name><value><struct><member><name>vendor</name><value>GenuineIntel</value></member><member><name>features</name><value>77bae3ff-bfebfbff-00000001-28100800</value></member></struct></value></member><member><name>is_control_domain</name><value><boolean>0</boolean></value></member><member><name>metrics</name><value>OpaqueRef:61a7670e-a65c-4170-2b6d-45c6012a6dce</value></member><member><name>guest_metrics</name><value>OpaqueRef:NULL</value></member><member><name>last_booted_record</name><value>('struct'
+        ('uuid' '271e4bbe-147d-afe0-2eb1-7eacfaa7d419') ('allowed_operations' ('array'))
+        ('current_operations' ('struct' ('OpaqueRef:7ec59de3-9889-c209-7f44-52adf292c95f'
+        'start'))) ('power_state' 'Halted') ('name_label' 'zertico-vm') ('name_description'
+        '') ('user_version' '0') ('is_a_template' ('boolean' '0')) ('suspend_VDI'
+        'OpaqueRef:NULL') ('resident_on' 'OpaqueRef:NULL') ('affinity' 'OpaqueRef:1500e92a-ff9c-119f-de60-541ed4ba565e')
+        ('memory_overhead' '6291456') ('memory_target' '0') ('memory_static_max' '536870912')
+        ('memory_dynamic_max' '536870912') ('memory_dynamic_min' '536870912') ('memory_static_min'
+        '536870912') ('VCPUs_params' ('struct')) ('VCPUs_max' '1') ('VCPUs_at_startup'
+        '1') ('actions_after_shutdown' 'destroy') ('actions_after_reboot' 'restart')
+        ('actions_after_crash' 'restart') ('consoles' ('array')) ('VIFs' ('array'
+        'OpaqueRef:f11fe955-1695-218f-9bab-b4ad9ade2eee')) ('VBDs' ('array' 'OpaqueRef:3a643252-9827-c250-a71c-57ce284f8627'
+        'OpaqueRef:18cd28b0-9044-40de-3021-eb8821a5d7fd')) ('crash_dumps' ('array'))
+        ('VTPMs' ('array')) ('PV_bootloader' 'pygrub') ('PV_kernel' '') ('PV_ramdisk'
+        '') ('PV_args' 'auto-install/enable=true priority=critical hostname=vm-teste
+        domain=zerticolabs.com netcfg/domainname=vm-teste.zerticolabs.com netcfg/choose_interface=eth0
+        netcfg/get_ipaddress=192.168.1.59 netcfg/get_netmask=255.255.0.0 netcfg/get_gateway=192.168.0.1
+        netcfg/get_nameservers=8.8.8.8 netcfg/disable_dhcp=true preseed/url=http://192.168.0.1/vm/seed-ubuntu.cfg
+        -- quiet console=hvc0') ('PV_bootloader_args' '') ('PV_legacy_args' '') ('HVM_boot_policy'
+        '') ('HVM_boot_params' ('struct')) ('HVM_shadow_multiplier' ('double' '1'))
+        ('platform' ('struct' ('nx' 'true') ('acpi' 'true') ('apic' 'true') ('pae'
+        'true') ('viridian' 'true'))) ('PCI_bus' '') ('other_config' ('struct' ('vgpu_pci'
+        '') ('mac_seed' '9588bc0f-6aa5-7358-9951-0c9f3955cb3b') ('install-methods'
+        'cdrom') ('install-archs' 'amd64') ('install-repository' 'cdrom'))) ('domid'
+        '-1') ('domarch' '') ('last_boot_CPU_flags' ('struct' ('vendor' 'GenuineIntel')
+        ('features' '77bae3ff-bfebfbff-00000001-28100800'))) ('is_control_domain'
+        ('boolean' '0')) ('metrics' 'OpaqueRef:aee6cb63-2ec0-9dd9-44c5-151ee9d70bef')
+        ('guest_metrics' 'OpaqueRef:NULL') ('last_booted_record' '') ('recommendations'
+        '') ('xenstore_data' ('struct' ('vm-data' ''))) ('ha_always_run' ('boolean'
+        '0')) ('ha_restart_priority' '') ('is_a_snapshot' ('boolean' '0')) ('snapshot_of'
+        'OpaqueRef:NULL') ('snapshots' ('array')) ('snapshot_time' ('dateTime.iso8601'
+        '19700101T00:00:00Z')) ('transportable_snapshot_id' '') ('blobs' ('struct'))
+        ('tags' ('array')) ('blocked_operations' ('struct')) ('snapshot_info' ('struct'))
+        ('snapshot_metadata' '') ('parent' 'OpaqueRef:NULL') ('children' ('array'))
+        ('bios_strings' ('struct')) ('protection_policy' 'OpaqueRef:NULL') ('is_snapshot_from_vmpp'
+        ('boolean' '0')) ('appliance' 'OpaqueRef:NULL') ('start_delay' '0') ('shutdown_delay'
+        '0') ('order' '0') ('VGPUs' ('array')) ('attached_PCIs' ('array')) ('suspend_SR'
+        'OpaqueRef:NULL') ('version' '0') ('generation_id' '6989750934453043339:9045386158888521779'))</value></member><member><name>recommendations</name><value/></member><member><name>xenstore_data</name><value><struct><member><name>vm-data</name><value/></member></struct></value></member><member><name>ha_always_run</name><value><boolean>0</boolean></value></member><member><name>ha_restart_priority</name><value/></member><member><name>is_a_snapshot</name><value><boolean>0</boolean></value></member><member><name>snapshot_of</name><value>OpaqueRef:NULL</value></member><member><name>snapshots</name><value><array><data/></array></value></member><member><name>snapshot_time</name><value><dateTime.iso8601>19700101T00:00:00Z</dateTime.iso8601></value></member><member><name>transportable_snapshot_id</name><value/></member><member><name>blobs</name><value><struct/></value></member><member><name>tags</name><value><array><data/></array></value></member><member><name>blocked_operations</name><value><struct/></value></member><member><name>snapshot_info</name><value><struct/></value></member><member><name>snapshot_metadata</name><value/></member><member><name>parent</name><value>OpaqueRef:NULL</value></member><member><name>children</name><value><array><data/></array></value></member><member><name>bios_strings</name><value><struct><member><name>bios-vendor</name><value>Xen</value></member><member><name>bios-version</name><value/></member><member><name>system-manufacturer</name><value>Xen</value></member><member><name>system-product-name</name><value>HVM
+        domU</value></member><member><name>system-version</name><value/></member><member><name>system-serial-number</name><value/></member><member><name>hp-rombios</name><value/></member><member><name>oem-1</name><value>Xen</value></member><member><name>oem-2</name><value>MS_VM_CERT/SHA1/bdbeb6e0a816d43fa6d3fe8aaef04c2bad9d3e3d</value></member></struct></value></member><member><name>protection_policy</name><value>OpaqueRef:NULL</value></member><member><name>is_snapshot_from_vmpp</name><value><boolean>0</boolean></value></member><member><name>appliance</name><value>OpaqueRef:NULL</value></member><member><name>start_delay</name><value>0</value></member><member><name>shutdown_delay</name><value>0</value></member><member><name>order</name><value>0</value></member><member><name>VGPUs</name><value><array><data/></array></value></member><member><name>attached_PCIs</name><value><array><data/></array></value></member><member><name>suspend_SR</name><value>OpaqueRef:NULL</value></member><member><name>version</name><value>0</value></member><member><name>generation_id</name><value>408395306954056867:6157847793116958179</value></member></struct></value></member></struct></value></param></params></methodResponse>"
+    http_version: 
+  recorded_at: Fri, 19 Sep 2014 15:48:03 GMT
+recorded_with: VCR 2.9.3

@@ -1,0 +1,76 @@
+if RUBY_VERSION >= '1.9.3'
+  gemfile <<-RB
+    gem 'mongo', '~>2.2.0'
+  RB
+  gemfile <<-RB
+    gem 'mongo', '~>2.1.0'
+  RB
+  gemfile <<-RB
+    gem 'mongo', '~>2.0.1'
+  RB
+end
+
+gemfile <<-RB
+  gem 'mongo', '1.10.0'
+  gem 'bson_ext', :platforms => :ruby
+RB
+
+gemfile <<-RB
+  gem 'mongo', '1.9.2'
+  gem 'bson_ext', :platforms => :ruby
+RB
+
+gemfile <<-RB
+  gem 'mongo', '~>1.8.6'
+  gem 'bson_ext', :platforms => :ruby
+RB
+
+# Versions <= 1.7.1 are not supported and never will be.
+gemfile <<-RB
+  gem 'mongo', '~>1.7.1'
+  gem 'bson_ext', :platforms => :ruby
+RB
+
+require 'timeout'
+require 'socket'
+
+class PreExistingMongo
+  attr_reader :host, :port
+
+  def initialize(host, port)
+    @host = host
+    @port = port
+  end
+
+  def stop(*_)
+  end
+end
+
+$mongo = PreExistingMongo.new("127.0.0.1", 27017)
+
+def mongo_running?
+  Timeout::timeout(1) do
+    begin
+      TCPSocket.new($mongo.host, $mongo.port).close
+      true
+    rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+      false
+    end
+  end
+rescue Timeout::Error
+  false
+end
+
+before_suite do
+  if !mongo_running?
+    require File.join(File.dirname(__FILE__), 'helpers', 'mongo_server')
+    $mongo = MongoServer.new
+    $mongo.start(false)
+  end
+end
+
+after_suite do
+  $mongo.stop
+end
+
+# vim: ft=ruby

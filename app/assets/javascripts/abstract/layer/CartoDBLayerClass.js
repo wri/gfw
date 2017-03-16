@@ -25,7 +25,8 @@ define([
       infowindow: false,
       cartodb_logo: false,
       raster: false,
-      analysis: false
+      analysis: false,
+      actions: {}
     },
 
     queryTemplate: 'SELECT cartodb_id||\':\' ||\'{tableName}\' as cartodb_id, the_geom_webmercator,' +
@@ -33,7 +34,7 @@ define([
 
     _getLayer: function() {
       var deferred = new $.Deferred();
-
+      console.log(this.getQuery());
       var cartodbOptions = {
         name: this.name,
         type: this.options.type,

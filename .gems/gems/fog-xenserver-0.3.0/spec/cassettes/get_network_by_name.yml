@@ -1,0 +1,88 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://192.168.10.2/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" ?><methodCall><methodName>network.get_by_name_label</methodName><params><param><value><string>OpaqueRef:3364a807-6433-eb77-84fd-f3452db26947</string></value></param><param><value><string>Pool-wide network associated with eth0</string></value></param></params></methodCall>
+    headers:
+      User-Agent:
+      - XMLRPC::Client (Ruby 2.1.2)
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '293'
+      Connection:
+      - keep-alive
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '294'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - text/xml
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+    body:
+      encoding: UTF-8
+      string: "<methodResponse><params><param><value><struct><member><name>Status</name><value>Success</value></member><member><name>Value</name><value><array><data><value>OpaqueRef:56960307-dce2-c65b-1964-bcef45fd75aa</value></data></array></value></member></struct></value></param></params></methodResponse>"
+    http_version: 
+  recorded_at: Fri, 19 Sep 2014 15:48:05 GMT
+- request:
+    method: post
+    uri: http://192.168.10.2/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" ?><methodCall><methodName>network.get_record</methodName><params><param><value><string>OpaqueRef:3364a807-6433-eb77-84fd-f3452db26947</string></value></param><param><value><string>OpaqueRef:56960307-dce2-c65b-1964-bcef45fd75aa</string></value></param></params></methodCall>
+    headers:
+      User-Agent:
+      - XMLRPC::Client (Ruby 2.1.2)
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '294'
+      Connection:
+      - keep-alive
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1875'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - text/xml
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+    body:
+      encoding: UTF-8
+      string: "<methodResponse><params><param><value><struct><member><name>Status</name><value>Success</value></member><member><name>Value</name><value><struct><member><name>uuid</name><value>bb06bd0c-90c9-f122-b112-c8414b2fa7c0</value></member><member><name>name_label</name><value>Pool-wide
+        network associated with eth0</value></member><member><name>name_description</name><value/></member><member><name>allowed_operations</name><value><array><data/></array></value></member><member><name>current_operations</name><value><struct/></value></member><member><name>VIFs</name><value><array><data><value>OpaqueRef:572311b5-359c-28ec-60af-23ec5d9d52bb</value><value>OpaqueRef:f094ba12-a099-1696-9774-ff2803164895</value><value>OpaqueRef:f11fe955-1695-218f-9bab-b4ad9ade2eee</value><value>OpaqueRef:aab55dfe-0dca-58d2-7bfc-9a8da9dc1145</value><value>OpaqueRef:a379f2a0-8489-97a8-79a1-d7b11c25d35f</value><value>OpaqueRef:94088edb-d42a-cc7a-963c-04d1802a3e1c</value><value>OpaqueRef:93baee12-d60c-26fc-c7ee-c97a163f9d66</value><value>OpaqueRef:5f28f7de-7349-2f11-ec08-cee09e61de38</value><value>OpaqueRef:3a65efd0-891b-3233-ded8-aee998dea608</value><value>OpaqueRef:1918f637-8870-0b7a-c5e2-84edc2888262</value></data></array></value></member><member><name>PIFs</name><value><array><data><value>OpaqueRef:ce748f4a-7bbe-e274-af12-f38e1ec6283e</value><value>OpaqueRef:caba7691-ff60-034c-3aa6-c113d6225272</value></data></array></value></member><member><name>MTU</name><value>1500</value></member><member><name>other_config</name><value><struct/></value></member><member><name>bridge</name><value>xenbr0</value></member><member><name>blobs</name><value><struct/></value></member><member><name>tags</name><value><array><data/></array></value></member><member><name>default_locking_mode</name><value>unlocked</value></member></struct></value></member></struct></value></param></params></methodResponse>"
+    http_version: 
+  recorded_at: Fri, 19 Sep 2014 15:48:05 GMT
+recorded_with: VCR 2.9.3

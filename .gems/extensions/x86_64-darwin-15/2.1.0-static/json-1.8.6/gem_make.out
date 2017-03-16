@@ -1,0 +1,14 @@
+current directory: /Users/joseangel/vizzuality/gfw/.gems/gems/json-1.8.6/ext/json
+/usr/local/var/rbenv/versions/2.1.5/bin/ruby -r ./siteconf20170316-42837-xyl8cg.rb extconf.rb
+creating Makefile
+
+current directory: /Users/joseangel/vizzuality/gfw/.gems/gems/json-1.8.6/ext/json
+make "DESTDIR=" clean
+
+current directory: /Users/joseangel/vizzuality/gfw/.gems/gems/json-1.8.6/ext/json
+make "DESTDIR="
+make: Nothing to be done for `all'.
+
+current directory: /Users/joseangel/vizzuality/gfw/.gems/gems/json-1.8.6/ext/json
+make "DESTDIR=" install
+installing default libraries

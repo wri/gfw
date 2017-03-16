@@ -1,0 +1,16 @@
+current directory: /Users/joseangel/vizzuality/gfw/.gems/gems/debug_inspector-0.0.2/ext/debug_inspector
+/usr/local/var/rbenv/versions/2.1.5/bin/ruby -r ./siteconf20170316-42837-10wvgg3.rb extconf.rb
+creating Makefile
+
+current directory: /Users/joseangel/vizzuality/gfw/.gems/gems/debug_inspector-0.0.2/ext/debug_inspector
+make "DESTDIR=" clean
+
+current directory: /Users/joseangel/vizzuality/gfw/.gems/gems/debug_inspector-0.0.2/ext/debug_inspector
+make "DESTDIR="
+compiling debug_inspector.c
+linking shared-object debug_inspector.bundle
+
+current directory: /Users/joseangel/vizzuality/gfw/.gems/gems/debug_inspector-0.0.2/ext/debug_inspector
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 debug_inspector.bundle ./.gem.20170316-42837-59g4x2
+installing default debug_inspector libraries

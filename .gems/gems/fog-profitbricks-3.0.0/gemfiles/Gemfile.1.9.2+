@@ -1,0 +1,7 @@
+source 'https://rubygems.org'
+
+gem 'json', '~> 1.8'
+gem 'activesupport', '>= 3.0', '< 4'
+gem 'mime-types', '< 2.0'
+
+gemspec :path => '../'

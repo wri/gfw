@@ -1,0 +1,129 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://192.168.10.2/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" ?><methodCall><methodName>session.login_with_password</methodName><params><param><value><string>root</string></value></param><param><value><string>123456</string></value></param></params></methodCall>
+    headers:
+      User-Agent:
+      - XMLRPC::Client (Ruby 2.1.2)
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '221'
+      Connection:
+      - keep-alive
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '251'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - text/xml
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+    body:
+      encoding: UTF-8
+      string: "<methodResponse><params><param><value><struct><member><name>Status</name><value>Success</value></member><member><name>Value</name><value>OpaqueRef:cc5148e7-14a1-f637-fcdb-440fc6dedc0d</value></member></struct></value></param></params></methodResponse>"
+    http_version: 
+  recorded_at: Sat, 22 Nov 2014 13:59:41 GMT
+- request:
+    method: post
+    uri: http://192.168.10.2/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" ?><methodCall><methodName>pool.get_all_records</methodName><params><param><value><string>OpaqueRef:cc5148e7-14a1-f637-fcdb-440fc6dedc0d</string></value></param></params></methodCall>
+    headers:
+      User-Agent:
+      - XMLRPC::Client (Ruby 2.1.2)
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '203'
+      Connection:
+      - keep-alive
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '4694'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - text/xml
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+    body:
+      encoding: UTF-8
+      string: "<methodResponse><params><param><value><struct><member><name>Status</name><value>Success</value></member><member><name>Value</name><value><struct><member><name>OpaqueRef:caf17d60-ed75-0deb-399f-4a3974620cbe</name><value><struct><member><name>uuid</name><value>51766268-0930-4d17-6aa0-fb7695242de8</value></member><member><name>name_label</name><value/></member><member><name>name_description</name><value/></member><member><name>master</name><value>OpaqueRef:78c23dd4-4470-ed14-47e1-9a0e21a32814</value></member><member><name>default_SR</name><value>OpaqueRef:131d30ee-74ab-efcf-ee38-ec96222a36ba</value></member><member><name>suspend_image_SR</name><value>OpaqueRef:NULL</value></member><member><name>crash_dump_SR</name><value>OpaqueRef:NULL</value></member><member><name>other_config</name><value><struct><member><name>cpuid_feature_mask</name><value>ffffff7f-ffffffff-ffffffff-ffffffff</value></member><member><name>memory-ratio-hvm</name><value>0.25</value></member><member><name>memory-ratio-pv</name><value>0.25</value></member></struct></value></member><member><name>ha_enabled</name><value><boolean>0</boolean></value></member><member><name>ha_configuration</name><value><struct/></value></member><member><name>ha_statefiles</name><value><array><data/></array></value></member><member><name>ha_host_failures_to_tolerate</name><value>0</value></member><member><name>ha_plan_exists_for</name><value>0</value></member><member><name>ha_allow_overcommit</name><value><boolean>0</boolean></value></member><member><name>ha_overcommitted</name><value><boolean>0</boolean></value></member><member><name>blobs</name><value><struct/></value></member><member><name>tags</name><value><array><data/></array></value></member><member><name>gui_config</name><value><struct/></value></member><member><name>wlb_url</name><value/></member><member><name>wlb_username</name><value/></member><member><name>wlb_enabled</name><value><boolean>0</boolean></value></member><member><name>wlb_verify_cert</name><value><boolean>0</boolean></value></member><member><name>redo_log_enabled</name><value><boolean>0</boolean></value></member><member><name>redo_log_vdi</name><value>OpaqueRef:NULL</value></member><member><name>vswitch_controller</name><value/></member><member><name>restrictions</name><value><struct><member><name>restrict_vswitch_controller</name><value>false</value></member><member><name>restrict_lab</name><value>false</value></member><member><name>restrict_stage</name><value>false</value></member><member><name>restrict_storagelink</name><value>false</value></member><member><name>restrict_storagelink_site_recovery</name><value>false</value></member><member><name>restrict_web_selfservice</name><value>true</value></member><member><name>restrict_web_selfservice_manager</name><value>true</value></member><member><name>restrict_hotfix_apply</name><value>true</value></member><member><name>restrict_vlan</name><value>false</value></member><member><name>restrict_qos</name><value>false</value></member><member><name>restrict_pool_attached_storage</name><value>false</value></member><member><name>restrict_netapp</name><value>false</value></member><member><name>restrict_equalogic</name><value>false</value></member><member><name>restrict_pooling</name><value>false</value></member><member><name>enable_xha</name><value>true</value></member><member><name>restrict_marathon</name><value>false</value></member><member><name>restrict_email_alerting</name><value>false</value></member><member><name>restrict_historical_performance</name><value>false</value></member><member><name>restrict_wlb</name><value>true</value></member><member><name>restrict_rbac</name><value>false</value></member><member><name>restrict_dmc</name><value>false</value></member><member><name>restrict_checkpoint</name><value>false</value></member><member><name>restrict_cpu_masking</name><value>false</value></member><member><name>restrict_connection</name><value>false</value></member><member><name>platform_filter</name><value>false</value></member><member><name>regular_nag_dialog</name><value>false</value></member><member><name>restrict_vmpr</name><value>false</value></member><member><name>restrict_intellicache</name><value>false</value></member><member><name>restrict_gpu</name><value>false</value></member><member><name>restrict_dr</name><value>false</value></member><member><name>restrict_vif_locking</name><value>false</value></member><member><name>restrict_storage_xen_motion</name><value>false</value></member></struct></value></member><member><name>metadata_VDIs</name><value><array><data/></array></value></member></struct></value></member></struct></value></member></struct></value></param></params></methodResponse>"
+    http_version: 
+  recorded_at: Sat, 22 Nov 2014 13:59:41 GMT
+- request:
+    method: post
+    uri: http://192.168.10.2/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" ?><methodCall><methodName>pool.sync_database</methodName><params><param><value><string>OpaqueRef:cc5148e7-14a1-f637-fcdb-440fc6dedc0d</string></value></param></params></methodCall>
+    headers:
+      User-Agent:
+      - XMLRPC::Client (Ruby 2.1.2)
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '201'
+      Connection:
+      - keep-alive
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '198'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - text/xml
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+    body:
+      encoding: UTF-8
+      string: "<methodResponse><params><param><value><struct><member><name>Status</name><value>Success</value></member><member><name>Value</name><value/></member></struct></value></param></params></methodResponse>"
+    http_version: 
+  recorded_at: Sat, 22 Nov 2014 13:59:41 GMT
+recorded_with: VCR 2.9.3

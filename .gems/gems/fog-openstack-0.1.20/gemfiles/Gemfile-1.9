@@ -1,0 +1,22 @@
+source "https://rubygems.org"
+
+group :development, :test do
+  gem "fog-core",        ">= 1.35"
+  gem "fog-json",        ">= 1.0"
+  gem "fog-xml",         ">= 0.1"
+  gem "ipaddress",       ">= 0.8"
+  gem "bundler",         "~> 1.6"
+  gem "mime-types",      "2.6.2"
+  gem "nokogiri",        "< 1.7.0"
+  gem "rake",            "~> 10.0"
+  gem "rubocop",         "< 0.42"
+  gem "rubyzip",         "~> 0.9.9"
+  gem "shindo",          "~> 0.3"
+  gem "minitest"
+  gem "vcr"
+  gem "webmock",         "~> 1.24.6"
+  gem "json",            "< 2.0"
+# TODO: remove when https://github.com/fog/fog-openstack/issues/202 is fixed
+#  gem "coveralls",       "< 0.8.15"
+  gem "public_suffix",    "~> 1.4.6"
+end

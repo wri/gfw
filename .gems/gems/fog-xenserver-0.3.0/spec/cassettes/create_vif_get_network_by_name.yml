@@ -1,0 +1,88 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://192.168.10.2/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" ?><methodCall><methodName>network.get_by_name_label</methodName><params><param><value><string>OpaqueRef:edd1d122-a82b-14cd-defc-c14c675e06c4</string></value></param><param><value><string>Pool-wide network associated with eth0</string></value></param></params></methodCall>
+    headers:
+      User-Agent:
+      - XMLRPC::Client (Ruby 2.1.2)
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '293'
+      Connection:
+      - keep-alive
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '294'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - text/xml
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+    body:
+      encoding: UTF-8
+      string: "<methodResponse><params><param><value><struct><member><name>Status</name><value>Success</value></member><member><name>Value</name><value><array><data><value>OpaqueRef:5c4e6f0b-8492-0029-5257-54a682771033</value></data></array></value></member></struct></value></param></params></methodResponse>"
+    http_version: 
+  recorded_at: Sat, 22 Nov 2014 14:54:54 GMT
+- request:
+    method: post
+    uri: http://192.168.10.2/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" ?><methodCall><methodName>network.get_record</methodName><params><param><value><string>OpaqueRef:edd1d122-a82b-14cd-defc-c14c675e06c4</string></value></param><param><value><string>OpaqueRef:5c4e6f0b-8492-0029-5257-54a682771033</string></value></param></params></methodCall>
+    headers:
+      User-Agent:
+      - XMLRPC::Client (Ruby 2.1.2)
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '294'
+      Connection:
+      - keep-alive
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1198'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - text/xml
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+    body:
+      encoding: UTF-8
+      string: "<methodResponse><params><param><value><struct><member><name>Status</name><value>Success</value></member><member><name>Value</name><value><struct><member><name>uuid</name><value>e2e7502f-9a60-ebdd-9508-4976397ddfc0</value></member><member><name>name_label</name><value>Pool-wide
+        network associated with eth0</value></member><member><name>name_description</name><value/></member><member><name>allowed_operations</name><value><array><data/></array></value></member><member><name>current_operations</name><value><struct/></value></member><member><name>VIFs</name><value><array><data/></array></value></member><member><name>PIFs</name><value><array><data><value>OpaqueRef:bad36a7a-7a0b-a548-6f02-7fcf8d5809c7</value></data></array></value></member><member><name>MTU</name><value>1500</value></member><member><name>other_config</name><value><struct/></value></member><member><name>bridge</name><value>xenbr0</value></member><member><name>blobs</name><value><struct/></value></member><member><name>tags</name><value><array><data/></array></value></member><member><name>default_locking_mode</name><value>unlocked</value></member></struct></value></member></struct></value></param></params></methodResponse>"
+    http_version: 
+  recorded_at: Sat, 22 Nov 2014 14:54:54 GMT
+recorded_with: VCR 2.9.3

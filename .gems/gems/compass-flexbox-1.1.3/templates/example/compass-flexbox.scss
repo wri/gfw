@@ -1,0 +1,180 @@
+@import "flexbox";
+@import "compass/css3/box-sizing";
+@import "compass/css3/transition";
+
+@import "libs/prism";
+
+body {
+  font-family: Helvetica;
+}
+
+%flex-container {
+  background-color: rgba(skyblue, 0.2);
+  @include display-flex();
+  min-height: 250px;
+  width: 100%;
+}
+
+$flex-item-dimension: 220px;
+
+.flex-item {
+  @include display-flex();
+  @include justify-content(center);
+  @include align-items(center);
+  background-color: hotpink;
+  color: white;
+  height: $flex-item-dimension;
+  text-align: center;
+  width: $flex-item-dimension;
+}
+
+.code-comparison {
+  @include display-flex();
+  margin: 1.5em 0;
+  width: 100%;
+}
+
+  .code-comparison--child {
+    @include flex(1);
+    min-height: 100px;
+
+    &:nth-child(1) {
+      margin-right: 5px;
+    }
+
+    &:nth-child(2) {
+      margin-left: 5px;
+    }
+  }
+
+// Centered Box
+
+.centered-box-container {
+  @extend %flex-container;
+  @include justify-content(center);
+  @include align-items(center);
+  height: 500px;
+}
+
+  .centered-box {
+    @extend .flex-item;
+    @include single-transition();
+
+    &:hover {
+      height: 400px;
+      width: 500px;
+    }
+  }
+
+// Holy Grail
+
+$holy-grail-margin: 5px;
+
+%holy-grail-item {
+  padding: 10px;
+
+  .is-mobile & {
+    @include flex(1);
+    @include order(1);
+  }
+}
+
+.holy-grail {
+  @include display-flex();
+  @include flex-direction(column);
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+
+  &.is-mobile {
+    max-width: 320px;
+  }
+
+  > header, > footer {
+    @extend %holy-grail-item;
+    background-color: Moccasin;
+  }
+}
+
+  .holy-grail-body {
+    @include display-flex();
+    @include flex-direction(row);
+    margin: $holy-grail-margin 0;
+    width: 100%;
+
+    .is-mobile & {
+      @include flex-direction(column);
+      margin: 0;
+    }
+
+    article {
+      @extend %holy-grail-item;
+      @include flex(3);
+      @include order(2);
+      background-color: PaleTurquoise;
+      margin: 0 $holy-grail-margin;
+      min-height: 100px;
+
+      .is-mobile & {
+        margin: 0;
+      }
+    }
+
+    nav {
+      @extend %holy-grail-item;
+      @include flex(1);
+      @include order(1);
+      background-color: hotpink;
+    }
+
+    aside {
+      @extend %holy-grail-item;
+      @include flex(1);
+      @include order(3);
+      background-color: Thistle;
+    }
+  }
+
+// Nav
+
+.flex-nav {
+  @include display-flex();
+  width: 100%;
+}
+
+  %flex-nav-item {
+    @include align-items(center);
+    @include display-flex();
+    @include justify-content(center);
+    background-color: #ccc;
+    border: {
+      left: 1px solid #999;
+    };
+    padding: 5px 10px;
+  }
+
+  .flex-nav-item {
+    @extend %flex-nav-item;
+
+    &:hover {
+      background-color: #aaa;
+    }
+  }
+
+  .flex-nav-item--search {
+    @extend %flex-nav-item;
+    @include flex(1);
+
+    label {
+      display: block;
+      margin: 0 auto;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    input {
+      @include box-sizing(border-box);
+      display: block;
+      width: 100%;
+    }
+  }

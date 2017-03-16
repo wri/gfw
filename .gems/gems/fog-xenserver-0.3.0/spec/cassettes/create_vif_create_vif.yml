@@ -1,0 +1,173 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://192.168.10.2/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" ?><methodCall><methodName>VM.get_record</methodName><params><param><value><string>OpaqueRef:edd1d122-a82b-14cd-defc-c14c675e06c4</string></value></param><param><value><string>OpaqueRef:64e52d9a-ad6e-504c-4fb4-0b52c7ddc11e</string></value></param></params></methodCall>
+    headers:
+      User-Agent:
+      - XMLRPC::Client (Ruby 2.1.2)
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '289'
+      Connection:
+      - keep-alive
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '5906'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - text/xml
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+    body:
+      encoding: UTF-8
+      string: "<methodResponse><params><param><value><struct><member><name>Status</name><value>Success</value></member><member><name>Value</name><value><struct><member><name>uuid</name><value>7977bfa8-f8b3-d59d-03fa-91b38ae97fe9</value></member><member><name>allowed_operations</name><value><array><data><value>changing_dynamic_range</value><value>changing_shadow_memory</value><value>changing_static_range</value><value>provision</value><value>destroy</value><value>export</value><value>clone</value><value>copy</value></data></array></value></member><member><name>current_operations</name><value><struct/></value></member><member><name>power_state</name><value>Halted</value></member><member><name>name_label</name><value>CrazyName</value></member><member><name>name_description</name><value/></member><member><name>user_version</name><value>0</value></member><member><name>is_a_template</name><value><boolean>1</boolean></value></member><member><name>suspend_VDI</name><value>OpaqueRef:NULL</value></member><member><name>resident_on</name><value>OpaqueRef:NULL</value></member><member><name>affinity</name><value>OpaqueRef:78c23dd4-4470-ed14-47e1-9a0e21a32814</value></member><member><name>memory_overhead</name><value>6291456</value></member><member><name>memory_target</name><value>0</value></member><member><name>memory_static_max</name><value>536870912</value></member><member><name>memory_dynamic_max</name><value>536870912</value></member><member><name>memory_dynamic_min</name><value>536870912</value></member><member><name>memory_static_min</name><value>536870912</value></member><member><name>VCPUs_params</name><value><struct/></value></member><member><name>VCPUs_max</name><value>1</value></member><member><name>VCPUs_at_startup</name><value>1</value></member><member><name>actions_after_shutdown</name><value>destroy</value></member><member><name>actions_after_reboot</name><value>restart</value></member><member><name>actions_after_crash</name><value>restart</value></member><member><name>consoles</name><value><array><data/></array></value></member><member><name>VIFs</name><value><array><data/></array></value></member><member><name>VBDs</name><value><array><data/></array></value></member><member><name>crash_dumps</name><value><array><data/></array></value></member><member><name>VTPMs</name><value><array><data/></array></value></member><member><name>PV_bootloader</name><value>pygrub</value></member><member><name>PV_kernel</name><value/></member><member><name>PV_ramdisk</name><value/></member><member><name>PV_args</name><value>--
+        quiet console=hvc0</value></member><member><name>PV_bootloader_args</name><value/></member><member><name>PV_legacy_args</name><value/></member><member><name>HVM_boot_policy</name><value/></member><member><name>HVM_boot_params</name><value><struct/></value></member><member><name>HVM_shadow_multiplier</name><value><double>1</double></value></member><member><name>platform</name><value><struct><member><name>nx</name><value>true</value></member><member><name>acpi</name><value>true</value></member><member><name>apic</name><value>true</value></member><member><name>pae</name><value>true</value></member><member><name>viridian</name><value>true</value></member></struct></value></member><member><name>PCI_bus</name><value/></member><member><name>other_config</name><value><struct><member><name>mac_seed</name><value>317084f4-30e1-4e8d-93f4-3827fbeba21b</value></member></struct></value></member><member><name>domid</name><value>-1</value></member><member><name>domarch</name><value/></member><member><name>last_boot_CPU_flags</name><value><struct/></value></member><member><name>is_control_domain</name><value><boolean>0</boolean></value></member><member><name>metrics</name><value>OpaqueRef:e428aabb-80fb-b90e-170a-4624a741927e</value></member><member><name>guest_metrics</name><value>OpaqueRef:NULL</value></member><member><name>last_booted_record</name><value/></member><member><name>recommendations</name><value/></member><member><name>xenstore_data</name><value><struct/></value></member><member><name>ha_always_run</name><value><boolean>0</boolean></value></member><member><name>ha_restart_priority</name><value/></member><member><name>is_a_snapshot</name><value><boolean>0</boolean></value></member><member><name>snapshot_of</name><value>OpaqueRef:NULL</value></member><member><name>snapshots</name><value><array><data/></array></value></member><member><name>snapshot_time</name><value><dateTime.iso8601>19700101T00:00:00Z</dateTime.iso8601></value></member><member><name>transportable_snapshot_id</name><value/></member><member><name>blobs</name><value><struct/></value></member><member><name>tags</name><value><array><data/></array></value></member><member><name>blocked_operations</name><value><struct/></value></member><member><name>snapshot_info</name><value><struct/></value></member><member><name>snapshot_metadata</name><value/></member><member><name>parent</name><value>OpaqueRef:NULL</value></member><member><name>children</name><value><array><data/></array></value></member><member><name>bios_strings</name><value><struct/></value></member><member><name>protection_policy</name><value>OpaqueRef:NULL</value></member><member><name>is_snapshot_from_vmpp</name><value><boolean>0</boolean></value></member><member><name>appliance</name><value>OpaqueRef:NULL</value></member><member><name>start_delay</name><value>0</value></member><member><name>shutdown_delay</name><value>0</value></member><member><name>order</name><value>0</value></member><member><name>VGPUs</name><value><array><data/></array></value></member><member><name>attached_PCIs</name><value><array><data/></array></value></member><member><name>suspend_SR</name><value>OpaqueRef:NULL</value></member><member><name>version</name><value>0</value></member><member><name>generation_id</name><value>0:0</value></member></struct></value></member></struct></value></param></params></methodResponse>"
+    http_version: 
+  recorded_at: Sat, 22 Nov 2014 14:54:54 GMT
+- request:
+    method: post
+    uri: http://192.168.10.2/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" ?><methodCall><methodName>network.get_record</methodName><params><param><value><string>OpaqueRef:edd1d122-a82b-14cd-defc-c14c675e06c4</string></value></param><param><value><string>OpaqueRef:5c4e6f0b-8492-0029-5257-54a682771033</string></value></param></params></methodCall>
+    headers:
+      User-Agent:
+      - XMLRPC::Client (Ruby 2.1.2)
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '294'
+      Connection:
+      - keep-alive
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1198'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - text/xml
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+    body:
+      encoding: UTF-8
+      string: "<methodResponse><params><param><value><struct><member><name>Status</name><value>Success</value></member><member><name>Value</name><value><struct><member><name>uuid</name><value>e2e7502f-9a60-ebdd-9508-4976397ddfc0</value></member><member><name>name_label</name><value>Pool-wide
+        network associated with eth0</value></member><member><name>name_description</name><value/></member><member><name>allowed_operations</name><value><array><data/></array></value></member><member><name>current_operations</name><value><struct/></value></member><member><name>VIFs</name><value><array><data/></array></value></member><member><name>PIFs</name><value><array><data><value>OpaqueRef:bad36a7a-7a0b-a548-6f02-7fcf8d5809c7</value></data></array></value></member><member><name>MTU</name><value>1500</value></member><member><name>other_config</name><value><struct/></value></member><member><name>bridge</name><value>xenbr0</value></member><member><name>blobs</name><value><struct/></value></member><member><name>tags</name><value><array><data/></array></value></member><member><name>default_locking_mode</name><value>unlocked</value></member></struct></value></member></struct></value></param></params></methodResponse>"
+    http_version: 
+  recorded_at: Sat, 22 Nov 2014 14:54:54 GMT
+- request:
+    method: post
+    uri: http://192.168.10.2/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" ?><methodCall><methodName>VIF.create</methodName><params><param><value><string>OpaqueRef:edd1d122-a82b-14cd-defc-c14c675e06c4</string></value></param><param><value><struct><member><name>device</name><value><string>0</string></value></member><member><name>MAC</name><value><string></string></value></member><member><name>MAC_autogenerated</name><value><string>True</string></value></member><member><name>MTU</name><value><string>0</string></value></member><member><name>other_config</name><value><struct/></value></member><member><name>qos_algorithm_params</name><value><struct/></value></member><member><name>qos_algorithm_type</name><value><string>ratelimit</string></value></member><member><name>network</name><value><string>OpaqueRef:5c4e6f0b-8492-0029-5257-54a682771033</string></value></member><member><name>VM</name><value><string>OpaqueRef:64e52d9a-ad6e-504c-4fb4-0b52c7ddc11e</string></value></member></struct></value></param></params></methodCall>
+    headers:
+      User-Agent:
+      - XMLRPC::Client (Ruby 2.1.2)
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '977'
+      Connection:
+      - keep-alive
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '251'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - text/xml
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+    body:
+      encoding: UTF-8
+      string: "<methodResponse><params><param><value><struct><member><name>Status</name><value>Success</value></member><member><name>Value</name><value>OpaqueRef:0182a5fa-ed26-b766-09e5-bf50f33cb1b5</value></member></struct></value></param></params></methodResponse>"
+    http_version: 
+  recorded_at: Sat, 22 Nov 2014 14:54:54 GMT
+- request:
+    method: post
+    uri: http://192.168.10.2/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" ?><methodCall><methodName>VIF.get_record</methodName><params><param><value><string>OpaqueRef:edd1d122-a82b-14cd-defc-c14c675e06c4</string></value></param><param><value><string>OpaqueRef:0182a5fa-ed26-b766-09e5-bf50f33cb1b5</string></value></param></params></methodCall>
+    headers:
+      User-Agent:
+      - XMLRPC::Client (Ruby 2.1.2)
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '290'
+      Connection:
+      - keep-alive
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1824'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - text/xml
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+    body:
+      encoding: UTF-8
+      string: "<methodResponse><params><param><value><struct><member><name>Status</name><value>Success</value></member><member><name>Value</name><value><struct><member><name>uuid</name><value>16677ac3-8a4c-65b6-c7f4-9c3a0e5413dc</value></member><member><name>allowed_operations</name><value><array><data><value>attach</value></data></array></value></member><member><name>current_operations</name><value><struct/></value></member><member><name>device</name><value>0</value></member><member><name>network</name><value>OpaqueRef:5c4e6f0b-8492-0029-5257-54a682771033</value></member><member><name>VM</name><value>OpaqueRef:64e52d9a-ad6e-504c-4fb4-0b52c7ddc11e</value></member><member><name>MAC</name><value>1e:21:7d:21:be:e1</value></member><member><name>MTU</name><value>0</value></member><member><name>other_config</name><value><struct/></value></member><member><name>currently_attached</name><value><boolean>0</boolean></value></member><member><name>status_code</name><value>0</value></member><member><name>status_detail</name><value/></member><member><name>runtime_properties</name><value><struct/></value></member><member><name>qos_algorithm_type</name><value>ratelimit</value></member><member><name>qos_algorithm_params</name><value><struct/></value></member><member><name>qos_supported_algorithms</name><value><array><data/></array></value></member><member><name>metrics</name><value>OpaqueRef:66af91cf-0286-fb83-4225-c3875b2a3038</value></member><member><name>MAC_autogenerated</name><value><boolean>1</boolean></value></member><member><name>locking_mode</name><value>network_default</value></member><member><name>ipv4_allowed</name><value><array><data/></array></value></member><member><name>ipv6_allowed</name><value><array><data/></array></value></member></struct></value></member></struct></value></param></params></methodResponse>"
+    http_version: 
+  recorded_at: Sat, 22 Nov 2014 14:54:54 GMT
+recorded_with: VCR 2.9.3
