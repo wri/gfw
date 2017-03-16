@@ -562,7 +562,7 @@ define([
           $date           = $graph.find('.graph-date'),
           $gain           = $graph.find('.graph-gain-total'),
           $tnumbers       = $('.tree-numbers'),
-          gain_value      = (~~years_data[1].total_gain).toLocaleString();
+          gain_value      = (~~years_data[1].total_gain / 12).toLocaleString();
 
       var width     = 120,
           height    = 90,
@@ -590,6 +590,7 @@ define([
         }
         total_loss += val.loss;
       });
+
       $date.html(' Ha');
       $amount.html('<span>' + (~~data_[data_.length - 1].value).toLocaleString() + '</span>').append($date);
       $gain.html(' Ha');
