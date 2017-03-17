@@ -37,7 +37,7 @@
     @media (max-width: $br-mobile) {
       width: 200px;
     }
-    
+
     .jspPane {
       padding: 0 !important;
     }
@@ -78,6 +78,10 @@
           @media (max-width: $br-mobile) {
             font-size: 18px;
           }
+        }
+
+        .thumb-mask > img {
+          max-width: 100%;
         }
       }
 
