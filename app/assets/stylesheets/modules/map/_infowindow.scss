@@ -96,6 +96,10 @@
           color: #AAA;
           word-wrap: break-word;
         }
+
+        .thumb-mask > img {
+          max-width: 100%;
+        }
       }
 
       .cartodb-popup-fixed {

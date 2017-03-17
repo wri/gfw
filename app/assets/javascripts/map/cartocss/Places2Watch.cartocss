@@ -50,11 +50,4 @@
   polygon-fill: transparent;
   line-width:2;
   polygon-opacity: 0.75;
-
-  [ emissions_sum <= 0.5] {
-   line-color: #FFA300;
-	}
-  [ emissions_sum > 0.5] {
-   line-color: #F03B20;
-	}
 }
