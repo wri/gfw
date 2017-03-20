@@ -263,7 +263,7 @@ define([
           ? '2015 data coverage'
           : 'Geographic coverage';
         layer.geographicNote = layer.slug === 'loss'
-          ? 'NOTE: 2015 tree cover loss is only for the tropics. View 2015 geographic coverage.'
+          ? 'NOTE: 2015 tree cover loss is only for the tropics.'
           : '';
       }, this);
 
