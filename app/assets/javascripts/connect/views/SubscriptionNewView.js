@@ -279,7 +279,7 @@ define([
       this.$el.html(this.templates.default({
         aoi: this.subscription.get('aoi'),
         loggedIn: this.router.alreadyLoggedIn,
-        apiHost: window.gfw.config.GFW_API_HOST_NEW_API
+        apiHost: window.gfw.config.GFW_API_AUTH
       }));
       this.cache();
       this.renderChosen();

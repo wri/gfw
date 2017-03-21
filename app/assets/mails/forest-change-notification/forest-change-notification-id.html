@@ -272,6 +272,87 @@
 
 										<!-- END Section 2 -->
 
+
+										<!-- Table Secondary -->
+										<div class="h4" style="color:#555555; font-family:Arial,sans-serif; font-size:20px; line-height:26px; text-align:left">
+											<strong>10 Peringatan Paling Baru</strong>
+										</div>
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" bgcolor="#9bbf19" width="10"></td>
+												<td width="152" bgcolor="#9bbf19">
+													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+													<div class="text-th" style="color:#fff; font-family:Arial,sans-serif; font-size:13px; line-height:18px; text-align:center; text-transform:uppercase">
+														LINTANG
+													</div>
+													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+												</td>
+												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" bgcolor="#9bbf19" width="10"></td>
+												<td bgcolor="#9bbf19" width="152">
+													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+													<div class="text-th" style="color:#fff; font-family:Arial,sans-serif; font-size:13px; line-height:18px; text-align:center; text-transform:uppercase">
+														BUJUR
+													</div>
+													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+												</td>
+												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" bgcolor="#9bbf19" width="10"></td>
+												<td class="wauto" bgcolor="#9bbf19">
+													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+													<div class="text-th" style="color:#fff; font-family:Arial,sans-serif; font-size:13px; line-height:18px; text-align:center; text-transform:uppercase">
+														TANGGAL
+													</div>
+													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+												</td>
+												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" bgcolor="#9bbf19" width="10"></td>
+											</tr>
+
+											{{each alerts}}
+											<tr>
+												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="10"></td>
+												<td width="152">
+													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+													<div class="text-td" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:center; text-transform:uppercase">
+														{{loop_vars.alerts.lat}}
+													</div>
+													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+												</td>
+												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="10"></td>
+												<td width="152">
+													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+													<div class="text-td" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:center; text-transform:uppercase">
+														{{loop_vars.alerts.long}}
+													</div>
+													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+												</td>
+												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="10"></td>
+												<td class="wauto">
+													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+													<div class="text-td" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:center; text-transform:uppercase">
+														{{loop_vars.alerts.date}}
+													</div>
+													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+												</td>
+												<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="10"></td>
+											</tr>
+											{{end}}
+										</table>
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
 										<!-- Button -->
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">
 											<tr>
@@ -282,8 +363,8 @@
 															<td>
 																<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="8" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
-																<div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif; font-size:14px; line-height:18px; text-align:center; text-transform:uppercase; font-weight:bold">
-																	<a href="{{{alert_link}}}" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">LIHAT DAN UNDUH SEMUA</span></a>
+                                <div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif; font-size:14px; line-height:18px; text-align:center; text-transform:uppercase; font-weight:bold">
+																	<a href="{{{alert_link}}}" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">LIHAT</span></a>
 																</div>
 																<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="8" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
@@ -291,12 +372,49 @@
 															<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="13"></td>
 														</tr>
 													</table>
+
+                          {{ if layerSlug == "glad-alerts"}}
+                            {{ if downloadUrls }}
+                              <table width="224" border="0" cellspacing="0" cellpadding="0" bgcolor="#9bbf19" style="border-radius: 16px;margin-top:20px;">
+    														<tr>
+    															<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="13"></td>
+    															<td>
+    																<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="8" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+                                    <div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif; font-size:14px; line-height:18px; text-align:center; text-transform:uppercase; font-weight:bold">
+    																	<a href="{{{downloadUrls.csv}}}" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">UNDUH CSV</span></a>
+    																</div>
+    																<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="8" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+    															</td>
+    															<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="13"></td>
+    														</tr>
+    													</table>
+
+                              <table width="224" border="0" cellspacing="0" cellpadding="0" bgcolor="#9bbf19" style="border-radius: 16px;margin-top:20px;">
+                                <tr>
+                                  <td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="13"></td>
+                                  <td>
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="8" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+                                    <div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif; font-size:14px; line-height:18px; text-align:center; text-transform:uppercase; font-weight:bold">
+                                      <a href="{{{downloadUrls.json}}}" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">UNDUH JSON</span></a>
+                                    </div>
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="8" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+                                  </td>
+                                  <td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="13"></td>
+                                </tr>
+                              </table>
+                            {{ end }}
+                          {{ end }}
 												</td>
 											</tr>
 										</table>
 										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="30" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
 										<!-- END Button -->
+
 
 										<!-- Separator -->
 										<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#e7e7e7" class="border" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td bgcolor="#e7e7e7" height="1" class="border" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
