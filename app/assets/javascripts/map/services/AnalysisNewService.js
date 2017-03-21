@@ -62,12 +62,7 @@ define([
     },
 
     getUrl: function() {
-      var url = new UriTemplate(APIURLS[this.analysis.type]).fillFromObject(this.analysis);
-      // Temp for API change
-      if (this.analysis.dataset === 'umd-loss-gain') {
-        url = '/v1' + url
-      }
-      return url;
+      return new UriTemplate(APIURLS[this.analysis.type]).fillFromObject(this.analysis);
     },
 
     buildAnalysisFromStatus: function(status) {
