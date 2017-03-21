@@ -106,10 +106,12 @@
               {{{this.detailsTpl}}}
             {{/if}}
             {{#if this.sublayer}}
+              {{#if this.geographicNote}}
+                <span class="geographic-subtitle">{{this.geographicNote}}</span>
+              {{/if}}
               <div class="layer-sublayer js-toggle-sublayer" data-sublayer="{{this.sublayer}}">
                 <span class="onoffswitch {{this.geographic}}" {{#if this.geographic}}style="background-color:#f69;"{{/if}}><span></span></span>
-                <div class="sublayer-title">Geographic coverage<a href='#' data-source='{{this.source}}_source' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></div>
-
+                <div class="sublayer-title">{{this.geographicTitle}}<a href='#' data-source='{{this.source}}_source' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></div>
               </div>
             {{/if}}
           </li> {{!-- /layer --}}

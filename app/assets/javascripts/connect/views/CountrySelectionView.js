@@ -8,11 +8,10 @@ define([
   'handlebars',
   'mps',
   'core/View',
-  'map/services/CountryService',
-  'map/services/RegionService',
+  'services/CountryService',
   'text!connect/templates/countrySelection.handlebars',
   'text!connect/templates/regionSelection.handlebars',
-], function(_, Handlebars, mps, View, CountryService, RegionService, countryTpl, regionTpl) {
+], function(_, Handlebars, mps, View, CountryService, countryTpl, regionTpl) {
 
   'use strict';
 
@@ -46,9 +45,9 @@ define([
       this._setParams();
 
       // Load countries
-      CountryService.get()
+      CountryService.getCountries()
         .then(function(results) {
-          this.countries = results.countries;
+          this.countries = results;
           this.renderCountries();
           this.renderRegions();
         }.bind(this))
@@ -103,9 +102,9 @@ define([
       mps.publish('Datasets/refresh', []);
 
       // Get the regions for this country
-      RegionService.get(country)
+      CountryService.getRegionsList({ iso: country })
         .then(function(results) {
-          this.regions = results.rows;
+          this.regions = results;
           this.renderRegions();
         }.bind(this))
     },

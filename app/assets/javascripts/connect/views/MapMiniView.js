@@ -14,11 +14,10 @@ define([
   'map/views/maptypes/grayscaleMaptype',
   'map/services/GeostoreService',
   'map/services/ShapeService',
-  'map/services/CountryService',
-  'map/services/RegionService',
+  'services/CountryService',
   'map/helpers/layersHelper',
   'helpers/geojsonUtilsHelper',
-], function(Backbone, _, mps, Cookies, topojson, View, grayscaleMaptype, GeostoreService, ShapeService, CountryService, RegionService, layersHelper, geojsonUtilsHelper) {
+], function(Backbone, _, mps, Cookies, topojson, View, grayscaleMaptype, GeostoreService, ShapeService, CountryService, layersHelper, geojsonUtilsHelper) {
 
   'use strict';
 
@@ -357,9 +356,9 @@ define([
         mps.publish('Map/loading', [true]);
 
         if (!!iso.region) {
-          RegionService.show(iso.country, iso.region)
-            .then(function(results,status) {
-              var geojson = results.features[0].geometry,
+          CountryService.showRegion({ iso: iso.country, region: iso.region })
+            .then(function(results) {
+              var geojson = JSON.parse(results.geojson),
                   bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
 
               // Get bounds and fit to them
@@ -375,25 +374,30 @@ define([
             }.bind(this));
 
         } else {
-          CountryService.show(iso.country)
-            .then(function(results,status) {
-              var objects = _.findWhere(results.topojson.objects, {
-                type: 'MultiPolygon'
-              });
-              var topoJson = topojson.feature(results.topojson,objects),
-                  geojson = topoJson.geometry,
-                  bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+          CountryService.showCountry({ iso: iso.country })
+            .then(function(results) {
+              try {
+                var resTopojson = JSON.parse(results.topojson);
+                var objects = _.findWhere(resTopojson.objects, {
+                  type: 'MultiPolygon'
+                });
+                var topoJson = topojson.feature(resTopojson,objects),
+                    geojson = topoJson.geometry,
+                    bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
 
-              // Get bounds and fit to them
-              if (!!bounds) {
-                mps.publish('Map/fit-bounds', [bounds]);
+                // Get bounds and fit to them
+                if (!!bounds) {
+                  mps.publish('Map/fit-bounds', [bounds]);
+                }
+
+                // Draw geojson of country
+                this.deleteGeojson();
+                this.drawGeojson(geojson);
+                mps.publish('Map/loading', [false]);
+              } catch (error) {
+                this.deleteGeojson();
+                mps.publish('Map/loading', [false]);
               }
-
-              // Draw geojson of country
-              this.deleteGeojson();
-              this.drawGeojson(geojson);
-
-              mps.publish('Map/loading', [false]);
             }.bind(this));
         }
       }

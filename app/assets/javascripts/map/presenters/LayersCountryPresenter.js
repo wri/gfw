@@ -10,9 +10,9 @@ define([
   'map/presenters/PresenterClass',
   'map/services/LayerSpecService',
   'helpers/geojsonUtilsHelper',
-  'map/services/CountryService',
+  'services/CountryService',
 
-], function(_, mps, topojson, PresenterClass, layerSpecService, geojsonUtilsHelper, countryService) {
+], function(_, mps, topojson, PresenterClass, layerSpecService, geojsonUtilsHelper, CountryService) {
 
   'use strict';
 
@@ -148,7 +148,7 @@ define([
       var iso = this.status.get('iso');
 
       if(!!iso.country && iso.country !== 'ALL'){
-        countryService.show(iso.country)
+        CountryService.showCountry({ iso: iso.country })
           .then(function(results,status) {
             var objects = _.findWhere(results.topojson.objects, {
               type: 'MultiPolygon'
@@ -174,7 +174,7 @@ define([
       var iso = this.status.get('iso');
 
       if(!!iso && !!iso.country && iso.country !== 'ALL'){
-        countryService.show(iso.country, _.bind(function(results) {
+        CountryService.showCountry({ iso: iso.country }, _.bind(function(results) {
           var is_more = (!!results.indepth);
           var is_idn = (!!iso && !!iso.country && iso.country == 'IDN');
 
