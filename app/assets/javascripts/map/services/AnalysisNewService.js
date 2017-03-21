@@ -73,9 +73,10 @@ define([
         layerOptions[val] = true;
       });
 
+      // TEMP
       var period = status.begin + ',' + status.end;
       if (status.dataset === "umd-loss-gain") {
-        period = status.begin + ',' + moment(status.end).subtract(1, 'days').format('YYYY-MM-DD');
+        period = status.begin + ',' + moment.utc(status.end).subtract(1, 'days').format('YYYY-MM-DD');
       }
 
       return _.extend({}, status, layerOptions, {
