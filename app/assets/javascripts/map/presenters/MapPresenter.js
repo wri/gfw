@@ -106,6 +106,7 @@ define([
       if (!!place.params.referral) this._publishReferral(place.params.referral);
       this._updateStatusModel(place.params);
       this._setLayers(place.layerSpec, place.params);
+      mps.publish('Notification/open', ['notification-maintenance']);
 
       if (!!place.params.fit_to_geom && !!this.status.get('geostore') && !!this.status.get('geostore').geojson) {
         this._fitToGeostore(this.status.get('geostore'));

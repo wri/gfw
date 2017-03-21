@@ -50,7 +50,7 @@ define([
         clearTimeout(this.timeout);
         this.timeout = setTimeout(_.bind( function(){
           this.hide();
-        } , this ), 5000);
+        } , this ), 10000);
       }
     },
 
