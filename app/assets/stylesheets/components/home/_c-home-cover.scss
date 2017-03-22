@@ -1,7 +1,7 @@
 .c-home-cover {
   position: relative;
   height: rem(448px);
-  padding-top: rem(84px);
+  padding-top: rem(88px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,7 +32,7 @@
 
   @media screen and (min-width: $screen-m) {
     height: rem(640px);
-    padding-top: rem(46px);
+    padding-top: rem(93px);
 
     h1 {
       width: 55%;
@@ -46,5 +46,9 @@
     .c-home-cover__arrow-button {
       display: block;
     }
+  }
+
+  @media screen and (min-width: $screen-m) and (max-width: 849px) {
+    padding-top: rem(58px);
   }
 }
