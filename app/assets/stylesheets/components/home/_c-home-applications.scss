@@ -36,10 +36,10 @@
 
   .c-home-applications__app-button {
     position: absolute;
-    top: rem(72px);
+    bottom: rem(130px);
     margin: auto;
-    width: rem(64px);
-    height: rem(64px);
+    width: rem(47px);
+    height: rem(47px);
     background-color: rgba($white, 0.5);
     border-radius: 100%;
     font-size: 0;
@@ -53,25 +53,26 @@
 
     .icon {
       position: relative;
-      width: rem(16px);
-      height: rem(10px);
+      width: rem(12px);
+      height: rem(7px);
       fill: $white;
     }
 
     &.-left {
-      left: rem(-27px);
+      left: rem(-24px);
 
       .icon {
         transform: rotateZ(90deg);
-        left: -2px;
+        left: rem(9px);
       }
     }
 
     &.-right {
-      right: rem(-27px);
+      right: rem(-24px);
 
       .icon {
         transform: rotateZ(-90deg);
+        right: 9px;
       }
     }
   }
@@ -176,8 +177,11 @@
     .c-home-applications__app-button {
       top: 0;
       bottom: 0;
-      width: rem(47px);
-      height: rem(47px);
+
+      .icon {
+        width: rem(16px);
+        height: rem(10px);
+      }
 
       &.-left {
         left: rem(42px);
