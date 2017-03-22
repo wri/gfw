@@ -7,11 +7,23 @@ $item-user-padding-screen-m: rem(39px);
   background-color: $grey-light;
   overflow: hidden;
 
+  > .row {
+    height: 100%;
+  }
+
   .c-home-use-examples__content {
-    padding-top: rem(23px);
+    position: relative;
+    height: 100%;
+    padding: rem(40px) 0 rem(120px) 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .c-home-use-examples__title {
+    position: absolute;
+    top: rem(23px);
+    left: 0;
     opacity: 0.5;
 
     span:before {
@@ -20,7 +32,9 @@ $item-user-padding-screen-m: rem(39px);
   }
 
   .c-home-use-examples__users {
-    margin-top: rem(17px);
+    position: absolute;
+    bottom: rem(71px);
+    width: 100%;
 
     .slider {
       position: relative;
@@ -91,7 +105,7 @@ $item-user-padding-screen-m: rem(39px);
 
   .c-home-use-examples__testimonials {
     position: relative;
-    margin-top: rem(65px);
+    width: 100%;
     display: none;
 
     &.-selected {
@@ -123,10 +137,20 @@ $item-user-padding-screen-m: rem(39px);
   .c-home-use-examples__testimonials-quote {
     padding: 0 rem(8px);
 
-    span:first-of-type {
-      position: absolute;
-      top: 0;
-      left: rem(-8px);
+    span {
+      font-size: 24px;
+      line-height: 0;
+
+      &:first-of-type {
+        position: absolute;
+        top: 0;
+        left: rem(-8px);
+      }
+
+      &:last-of-type {
+        position: relative;
+
+      }
     }
   }
 
@@ -154,15 +178,19 @@ $item-user-padding-screen-m: rem(39px);
     border-top: rem(1px) solid $grey-dark;
 
     .c-home-use-examples__content {
-      padding-top: rem(50px);
+      padding: rem(74px) 0 rem(135px) 0;
     }
 
-    .c-home-use-examples__title span:before {
-      content: attr(data-gfw-text-screen-m);
+    .c-home-use-examples__title {
+      top: rem(49px);
+
+      span:before {
+        content: attr(data-gfw-text-screen-m);
+      }
     }
 
     .c-home-use-examples__users {
-      margin-top: rem(18px);
+      bottom: rem(86px);
 
       .slide {
         width: calc(25% + #{$item-user-padding-screen-m / 2});
@@ -176,11 +204,10 @@ $item-user-padding-screen-m: rem(39px);
     }
 
     .c-home-use-examples__avatar-title {
-      top: rem(54px);
+      top: rem(56px);
     }
 
     .c-home-use-examples__testimonials {
-      margin-top: rem(114px);
 
       .slide {
         opacity: 0;
@@ -195,13 +222,23 @@ $item-user-padding-screen-m: rem(39px);
     .c-home-use-examples__testimonials-quote {
       padding: 0;
 
-      span:first-of-type {
-        left: rem(-15px);
+      span {
+        font-size: 36px;
+
+        &:first-of-type {
+          left: -25px;
+          top: 15px;
+        }
+
+        &:last-of-type {
+          left: 3px;
+          top: 4px;
+        }
       }
     }
 
     .c-home-use-examples__slider-dots {
-      margin-top: rem(16px);
+      margin-top: rem(13px);
       text-align: left;
     }
   }

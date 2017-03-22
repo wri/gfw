@@ -52,7 +52,7 @@ class LandingController < ApplicationController
         ]
       },
       {
-        "profile" => "Policymakers",
+        "profile" => "Policy Maker",
         "examples" => [
           "Stay informed about deforestation trends in your country.",
           "Identify and prosecute illegal deforestation activity.",
@@ -62,21 +62,21 @@ class LandingController < ApplicationController
         ]
       },
       {
-        "profile" => "Companies",
-        "examples" => [
-          "Identify deforestation in your supply chains.",
-          "Get the information you need to engage with sustainable suppliers.",
-          "Reduce environmental risk in your investments.",
-          "Stay informed about deforestation hot spots to reduce your footprint."
-        ]
-      },
-      {
-        "profile" => "Journalists",
+        "profile" => "Journalist",
         "examples" => [
           "Find your next big environmental story by tracking deforestation hot spots.",
           "Follow today's biggest challenges to land use and conservation.",
           "Track how companies and investments are impacting forests.",
           "Talk to our experts to gain insights about deforestation."
+        ]
+      },
+      {
+        "profile" => "Company",
+        "examples" => [
+          "Identify deforestation in your supply chains.",
+          "Get the information you need to engage with sustainable suppliers.",
+          "Reduce environmental risk in your investments.",
+          "Stay informed about deforestation hot spots to reduce your footprint."
         ]
       }
     ]
