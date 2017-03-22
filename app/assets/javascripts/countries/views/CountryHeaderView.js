@@ -7,9 +7,10 @@ define([
   'underscore',
   'd3',
   'mps',
+  'helpers/numbersHelper',
   'countries/views/CountryUmdOptionsView',
   'countries/helpers/CountryHelper'
-], function($, Backbone, _, d3, mps, CountryUmdOptionsView, CountryHelper) {
+], function($, Backbone, _, d3, mps, NumbersHelper, CountryUmdOptionsView, CountryHelper) {
 
   'use strict';
 
@@ -587,7 +588,7 @@ define([
       });
 
       $date.html(' Ha');
-      $amount.html('<span>' + (~~data_[data_.length - 1].value).toLocaleString() + '</span>').append($date);
+      $amount.html('<span>' + NumbersHelper.addNumberDecimals(Math.round(data_[data_.length - 1].value)) + '</span>').append($date);
       $gain.html(' Ha');
       $amount_g.html('<span>' + gain_value + '</span>').append($gain);
       $tnumbers.find('.total-loss-ha').html(' Ha');
@@ -637,7 +638,7 @@ define([
           var text = d3.select(this.parentNode)
           text.select('.axis_country').style('fill', '#9D9AA5')
           $date.html(' Ha');
-          $amount.html('<span>' + (~~d.value).toLocaleString() + '</span>').append($date);
+          $amount.html('<span>' +  NumbersHelper.addNumberDecimals(Math.round(d.value)) + '</span>').append($date);
           $gain.html(' Ha');
           $amount_g.html('<span>' + gain_value + '</span>').append($gain);
         });
