@@ -47,25 +47,32 @@
     overflow: hidden;
     display: flex;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
     z-index: 2;
 
+    .icon {
+      position: relative;
+      width: rem(16px);
+      height: rem(10px);
+      fill: $white;
+    }
+
     &.-left {
       left: rem(-27px);
+
+      .icon {
+        transform: rotateZ(90deg);
+        left: -2px;
+      }
     }
 
     &.-right {
       right: rem(-27px);
-    }
 
-    li {
-      margin-left: rem(14px);
-    }
-
-    .icon {
-      width: rem(36px);
-      height: rem(36px);
-      fill: $white;
+      .icon {
+        transform: rotateZ(-90deg);
+      }
     }
   }
 
@@ -165,8 +172,8 @@
     .c-home-applications__app-button {
       top: 0;
       bottom: 0;
-      width: rem(73px);
-      height: rem(73px);
+      width: rem(47px);
+      height: rem(47px);
 
       &.-left {
         left: rem(42px);
@@ -174,10 +181,6 @@
 
       &.-right {
         right: rem(42px);
-      }
-
-      li {
-        margin-left: rem(18px);
       }
     }
 
