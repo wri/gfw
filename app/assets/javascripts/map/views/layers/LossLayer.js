@@ -46,7 +46,7 @@ define([
         this.currentDate[1] = moment(this.currentDate[1]);
       }
       var yearStart = this.currentDate[0].year();
-      var yearEnd = this.currentDate[1].year() -1;
+      var yearEnd = this.currentDate[1].year();
 
       var myscale = d3.scale.pow()
           .exponent(exp)
