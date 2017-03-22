@@ -88,16 +88,22 @@ class LandingController < ApplicationController
         "background" => "/assets/home/app_mockup.png"
       },
       {
-        "key" => "commodities",
-        "title" => "Commodities",
-        "description" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum posuere odio lacinia, congue orci eu, rutrum neque",
-        "background" => "/assets/home/app_mockup.png"
+        "key" => "climate",
+        "title" => "Climate",
+        "description" => "Track carbon emissions and removals in forest landscapes",
+        "background" => "/assets/home/climate@2x.png"
       },
       {
-        "key" => "map",
-        "title" => "Map",
-        "description" => "Nulla in ex maximus felis porttitor venenatis quis non neque. Praesent consectetur odio urna, nec tempor tellus ultricies id",
-        "background" => "/assets/home/app_mockup.png"
+        "key" => "commodities",
+        "title" => "Commodities",
+        "description" => "Identify deforestation risk in commodity supply chains",
+        "background" => "/assets/home/commodities@2x.png"
+      },
+      {
+        "key" => "water",
+        "title" => "Water",
+        "description" => "View critical watershed information, understand type and severity of threats such as forest changes to watershed health, and screen for cost-effective, sustainable solutions",
+        "background" => "/assets/home/water@2x.png"
       }
     ]
   end
