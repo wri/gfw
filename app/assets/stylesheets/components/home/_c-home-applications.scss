@@ -112,15 +112,19 @@
       vertical-align: top;
 
       &[data-section="fires"] .c-home-applications__background-color {
-        background-color: #f22542;
+        background-color: #F71949;
+      }
+
+      &[data-section="climate"] .c-home-applications__background-color {
+        background-color: #5B80A0;
       }
 
       &[data-section="commodities"] .c-home-applications__background-color {
-        background-color: #e98300;
+        background-color: #F49315;
       }
 
-      &[data-section="map"] .c-home-applications__background-color {
-        background-color: #97bd3d;
+      &[data-section="water"] .c-home-applications__background-color {
+        background-color: #0AA1DF;
       }
     }
 

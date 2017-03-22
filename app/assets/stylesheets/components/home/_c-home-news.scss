@@ -51,9 +51,14 @@ $item-padding-screen-m: rem(40px);
       width: 20px;
       height: 20px;
       fill: $white;
+    }
 
-      &.-right {
-      }
+    &.prev .icon {
+      transform: rotateZ(90deg);
+    }
+
+    &.next .icon {
+      transform: rotateZ(-90deg);
     }
   }
 
@@ -126,7 +131,7 @@ $item-padding-screen-m: rem(40px);
 
   @media screen and (min-width: $screen-m) {
     min-height: $item-height-screen-m;
-    padding: rem(122px) rem(38px) rem(30px) rem(38px);
+    padding: rem(41px) rem(31px);
 
     .icon {
       top: rem(60px);
