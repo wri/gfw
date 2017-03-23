@@ -74,7 +74,7 @@ class LandingController < ApplicationController
         "key" => "fires",
         "title" => "Fires",
         "description" => "Track fires and haze in the ASEAN region. View the latest data on fire locations and air quality and do you own analysis",
-        "background" => "/assets/home/app_mockup.png"
+        "background" => "/assets/home/fires@2x.png"
       },
       {
         "key" => "climate",
