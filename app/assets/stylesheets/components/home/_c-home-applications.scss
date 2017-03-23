@@ -185,10 +185,18 @@
 
       &.-left {
         left: rem(42px);
+
+        .icon {
+          left: rem(-2px);
+        }
       }
 
       &.-right {
         right: rem(42px);
+
+        .icon {
+          right: rem(-2px);
+        }
       }
     }
 
