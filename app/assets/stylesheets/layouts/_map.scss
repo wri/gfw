@@ -206,7 +206,7 @@ body,html{
     }
   }
 
-  &:hover .tooltip {
+  &:hover .tooltip.-enabled {
     opacity: 0.6;
     transition: opacity 0.5s ease-in-out;
   }

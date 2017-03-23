@@ -167,11 +167,17 @@ define([
       if (this.clickState === 0) {
         newText = 'Click to start drawing shape';
       } else if (this.clickState === 1) {
-        newText = 'Click to continue drawing shape';
-      } else {
+        newText = 'Continue clicking to draw shape';
+      } else if (this.clickState >= 3) {
         newText = 'Click the first point to close shape';
       }
       this.$tooltip.html(newText);
+
+      if (newText !== '') {
+        this.$tooltip.addClass('-enabled');
+      } else {
+        this.$tooltip.removeClass('-enabled');
+      }
     },
 
     removeTooltip: function() {
