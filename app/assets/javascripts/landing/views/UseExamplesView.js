@@ -25,8 +25,13 @@ define([
 
     loadedFilters: [0],
 
-    initialize: function() {
+    initialize: function () {
+      this._cache();
       this._initVisibleSliders();
+    },
+
+    _cache: function () {
+      this.$cover = this.$el.find('.js_use_examples_cover');
     },
 
     _initVisibleSliders: function () {
@@ -39,13 +44,15 @@ define([
       });
 
       new SliderView({
-        el: this.$el.find('.c-home-use-examples__testimonials.js_slider.' + this.options.selectedClass)
+        el: this.$el.find('.c-home-use-examples__testimonials.js_slider.' + this.options.selectedClass),
+        afterSlideCallback: this._loadCover.bind(this)
       });
     },
 
     _initSlider: function (index) {
       new SliderView({
-        el: this.$el.find('.c-home-use-examples__testimonials.js_slider[data-index="' + index + '"]')
+        el: this.$el.find('.c-home-use-examples__testimonials.js_slider[data-index="' + index + '"]'),
+        afterSlideCallback: this._loadCover.bind(this)
       });
     },
 
@@ -57,6 +64,7 @@ define([
         this._initSlider(index);
         this.loadedFilters.push(index);
       }
+      this._loadCover();
     },
 
     _switchTestimonials: function (index) {
@@ -65,6 +73,11 @@ define([
 
       $('.c-home-use-examples__users [data-index="' + index + '"] .c-home-use-examples__avatar').addClass(this.options.selectedClass);
       $('.c-home-use-examples__testimonials[data-index="' + index + '"]').addClass(this.options.selectedClass);
+    },
+
+    _loadCover: function () {
+      var pictureKey = $('.js_slider.-selected .js_slide.active .c-home-use-examples__testimonials-quote').data('picture-reference');
+      this.$cover.attr('data-index', pictureKey);
     }
 
   });

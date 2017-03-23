@@ -45,38 +45,27 @@ class LandingController < ApplicationController
       {
         "profile" => "Conservation Orgs",
         "examples" => [
-          "Track deforestation in the habitats you protect.",
-          "Tell your organization's conservation story on our interactive map.",
-          "Analyze the local impacts of deforestation to design smarter projects.",
-          "Hold companies and governments accountable by monitoring land use changes."
+          "The Amazon Conservation Association (ACA) works to protect biodiversity where the Andes Mountains meet the Amazon rainforest. With GLAD deforestation alerts on Global Forest Watch, we can detect illegal gold mining and logging in protected areas within days of when it happens.",
+          "By getting timely and precise information into the hands of policymakers, we've actually seen government authorities on the ground taking action within 24-48 hours of receiving a deforestation alert."
         ]
       },
       {
-        "profile" => "Policy Maker",
+        "profile" => "Policymaker",
         "examples" => [
-          "Stay informed about deforestation trends in your country.",
-          "Identify and prosecute illegal deforestation activity.",
-          "Support your case for conservation policy with data-driven evidence.",
-          "Help your forest rangers effectively patrol and manage forests."
+          "At the Forest Development Authority in Liberia, we saw a need to improve science-based decision making in forest resource management. We developed a Forest Atlas with Global Forest Watch that allows us to manage and share information about forest cover and land use. The Forest Atlas revolutionized how we communicate about the forest sector in Liberia."
 
         ]
       },
       {
         "profile" => "Journalist",
         "examples" => [
-          "Find your next big environmental story by tracking deforestation hot spots.",
-          "Follow today's biggest challenges to land use and conservation.",
-          "Track how companies and investments are impacting forests.",
-          "Talk to our experts to gain insights about deforestation."
+          "Mongabay is a science-based environmental news platform aiming to inspire, educate, and inform the public. The deforestation and fire alerts on GFW allow us to identify stories as they're happening on the ground. In Peru, we were able to track fires as they invaded protected areas and mobilize our Latin America team to get coverage. It added a really timely dimension to our reporting and led Peruvian officials to go out immediately and address the situation."
         ]
       },
       {
         "profile" => "Company",
         "examples" => [
-          "Identify deforestation in your supply chains.",
-          "Get the information you need to engage with sustainable suppliers.",
-          "Reduce environmental risk in your investments.",
-          "Stay informed about deforestation hot spots to reduce your footprint."
+          ""
         ]
       }
     ]
