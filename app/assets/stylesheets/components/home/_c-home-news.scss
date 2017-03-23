@@ -42,23 +42,37 @@ $item-padding-screen-m: rem(40px);
     white-space: normal;
     vertical-align: top;
     padding-right: $item-padding;
+
+    a {
+      text-decoration: none;
+    }
   }
 
   .c-home-news__arrow-button {
     position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: rem(25px);
+    height: rem(25px);
+    display: none;
 
     .icon {
-      width: 20px;
-      height: 20px;
+      width: rem(25px);
+      height: rem(25px);
       fill: $white;
     }
 
-    &.prev .icon {
-      transform: rotateZ(90deg);
+    &.prev {
+      left: rem(-62px);
+
+      .icon {
+        transform: rotateZ(180deg);
+      }
     }
 
-    &.next .icon {
-      transform: rotateZ(-90deg);
+    &.next {
+      right: rem(-62px);
     }
   }
 
@@ -98,6 +112,10 @@ $item-padding-screen-m: rem(40px);
         width: calc(33.33333% + #{$item-padding-screen-m / 3} - #{$item-padding-screen-m});
         padding-right: 0;
       }
+    }
+
+    .c-home-news__arrow-button {
+      display: block;
     }
 
     .c-home-news__slider-dots {
