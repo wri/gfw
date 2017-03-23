@@ -19,16 +19,6 @@
         <a style="cursor:pointer;" class="subscribe-shape btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">subscribe</a>
     </div>
     {{/if}}
-    {{#if content.data.actions}}
-    <div id="cartodb-popup-fixed" class="cartodb-popup-fixed">
-      {{#if content.data.actions.analysis}}
-        <a style="cursor:pointer;" class="analyze-shape btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">analyze</a>
-      {{/if}}
-      {{#if content.data.actions.readmore}}
-        <a style="cursor:pointer;" class="analyze-shape btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">read more</a>
-      {{/if}}
-    </div>
-    {{/if}}
     <div class="cartodb-popup-content scroll-thin-dark">
       <div class="cartodb-popup-content-inside">
         {{#if content.data.project_name}}
@@ -571,7 +561,17 @@
           <h4>Class:</h4>
           <p>{{content.data.class}}</p>
         {{/if}}
-      </div>
     </div>
+    </div>
+    {{#if content.data.actions}}
+      <div id="cartodb-popup-fixed" class="cartodb-popup-actions">
+      {{#if content.data.analize}}
+        <a style="cursor:pointer;" class="analyze-shape btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">analyze</a>
+      {{/if}}
+      {{#if content.data.readmore}}
+        <a style="cursor:pointer;" class="btn green uppercase" href="{{content.data.link}}" target="_blank" rel="noopener">read more</a>
+      {{/if}}
+      </div>
+    {{/if}}
   </div>
 </div>

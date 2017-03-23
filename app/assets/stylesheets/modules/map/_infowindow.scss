@@ -27,6 +27,8 @@
     opacity: 0;
   }
 
+
+
   .cartodb-popup {
     position: relative;
     width: 250px;
@@ -106,6 +108,32 @@
         position: absolute;
         bottom: 0;
         left: 0;
+        width: 100%;
+        padding: 0 20px;
+        z-index: 5;
+        background: $white;
+        border-top: 1px solid $border;
+        display: flex;
+        justify-content: space-between;
+        @media (max-width: $br-mobile - 1) {
+          padding: 0 10px;
+        }
+
+        .btn {
+          width: 100%;
+          margin: 15px 1px;
+          @media (max-width: $br-mobileMap - 1){
+            font-size: 12px;
+          }
+
+          &.dont-analyze {
+            // display: none !important;
+            opacity: 0.5;
+          }
+        }
+      }
+
+      .cartodb-popup-actions {
         width: 100%;
         padding: 0 20px;
         z-index: 5;

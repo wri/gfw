@@ -91,7 +91,8 @@ define([
      * @return {object}
      */
     setInfowindow: function() {
-      this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.cdbLayer.getSubLayer(0), this.options.interactivity, {
+      var interactivity = this.options.actions ? this.options.interactivity : this.options.interactivity + ', ' + this.options.actions;
+      this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.cdbLayer.getSubLayer(0), interactivity, {
         infowindowTemplate: TPL,
         templateType: 'handlebars',
       });
@@ -198,7 +199,6 @@ define([
 
     infowindowsUIState: function() {
       var model = this.infowindow.model;
-
       $('#map').find('.cartodb-popup .analyze-shape').toggleClass('disabled', !model.get('enabled'))
 
       $('#map').find('.cartodb-infowindow').toggleClass('-hidden', !!model.get('hidden'));
