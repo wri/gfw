@@ -34,7 +34,7 @@ define([
 
     _getLayer: function() {
       var deferred = new $.Deferred();
-      console.log(this.getQuery());
+
       var cartodbOptions = {
         name: this.name,
         type: this.options.type,

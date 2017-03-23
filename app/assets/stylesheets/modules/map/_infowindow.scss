@@ -81,8 +81,11 @@
           }
         }
 
-        .thumb-mask > img {
-          max-width: 100%;
+        .thumb-mask {
+          min-height: 140px;
+          > img {
+            max-width: 100%;
+          }
         }
       }
 

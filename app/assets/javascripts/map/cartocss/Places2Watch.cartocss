@@ -1,6 +1,7 @@
 #ptw_grid_score_gt_0[dtype=false]{
   marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/wri-01/assets/20170302154721ptw-rectangle-marker.svg);
   marker-fill-opacity: 0;
+  marker-fill: transparent;
   marker-line-color: #FFEE00;
   marker-line-width: 2;
   marker-line-opacity: 1;
@@ -19,7 +20,7 @@
   [zoom<4]{marker-width: 24;}
 }
 
-#ptw_grid_score_gt_0[zoom>=9][dtype=false]{
+#ptw_grid_score_gt_0[zoom>=6][dtype=false]{
   marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/wri-01/assets/20170302110128ptw-icon-outline.svg);
   [zoom>8]{marker-width: 124;marker-opacity:0;}
 }
@@ -50,4 +51,5 @@
   polygon-fill: transparent;
   line-width:2;
   polygon-opacity: 0.75;
+  line-color: #ffa300;
 }
