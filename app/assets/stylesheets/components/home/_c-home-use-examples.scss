@@ -168,9 +168,28 @@ $item-user-padding-screen-m: rem(39px);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url('/assets/home/man-ipad.jpg');
     background-color: $grey-light;
     display: none;
+
+    &[data-index="0.0"] {
+      background-image: url('/assets/home/example-0.0@2x.jpg');
+    }
+
+    &[data-index="0.1"] {
+      background-image: url('/assets/home/example-0.1@2x.jpg');
+    }
+
+    &[data-index="1.0"] {
+      background-image: url('/assets/home/example-1.0@2x.jpg');
+    }
+
+    &[data-index="2.0"] {
+      background-image: url('/assets/home/example-2.0@2x.jpg');
+    }
+
+    &[data-index="3.0"] {
+      background-image: url('/assets/home/example-3.0@2x.jpg');
+    }
   }
 
   @media screen and (min-width: $screen-m) {

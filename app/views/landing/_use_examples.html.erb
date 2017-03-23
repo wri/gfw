@@ -23,22 +23,24 @@
           <div class="c-home-use-examples__testimonials slider js_slider <% if i == 0 %>-selected<% end %>" data-index="<%= i %>">
             <div class="frame js_frame">
               <ul class="slides js_slides">
-                <% item['examples'].each do |example| %>
+                <% item['examples'].each_with_index do |example, j| %>
                   <li class="slide js_slide">
-                    <div class="c-home-use-examples__testimonials-quote text -paragraph-3 -light -italic -color-2">
+                    <div class="c-home-use-examples__testimonials-quote text -paragraph-3 -light -italic -color-2" data-picture-reference="<%= "#{i}.#{j}" %>">
                       <span class="text -bold -color-4">“</span><%= example %><span class="text -bold -color-4">”</span>
                     </div>
                   </li>
                 <% end %>
               </ul>
             </div>
-            <div class="c-home-use-examples__slider-dots js_slider_dots">
-              <%= render 'shared/slider_dots', count: item['examples'].size, color: 'green' %>
-            </div>
+            <% if item['examples'].size > 1 %>
+              <div class="c-home-use-examples__slider-dots js_slider_dots">
+                <%= render 'shared/slider_dots', count: item['examples'].size, color: 'green' %>
+              </div>
+            <% end %>
           </div>
         <% end %>
       </div>
     </div>
   </div>
-  <div class="c-home-use-examples__cover"></div>
+  <div class="c-home-use-examples__cover js_use_examples_cover" data-index="0.0"></div>
 </div>
