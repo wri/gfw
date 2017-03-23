@@ -85,10 +85,10 @@
         }
 
         .thumb-mask {
-          min-height: 130px;
-          max-height: 130px;
-          background-size: cover;
-          background-repeat: no-repeat;
+          min-height: 140px;
+          > img {
+            max-width: 100%;
+          }
         }
 
         .image-legend {
