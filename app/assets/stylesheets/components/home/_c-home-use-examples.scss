@@ -3,7 +3,7 @@ $item-user-padding-screen-m: rem(39px);
 
 .c-home-use-examples {
   position: relative;
-  height: rem(448px);
+  min-height: rem(448px);
   background-color: $grey-light;
   overflow: hidden;
 
@@ -13,8 +13,8 @@ $item-user-padding-screen-m: rem(39px);
 
   .c-home-use-examples__content {
     position: relative;
-    height: 100%;
-    padding: rem(40px) 0 rem(120px) 0;
+    min-height: rem(448px);
+    padding: rem(60px) 0 rem(140px) 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -193,11 +193,12 @@ $item-user-padding-screen-m: rem(39px);
   }
 
   @media screen and (min-width: $screen-m) {
-    height: rem(640px);
+    min-height: rem(640px);
     border-top: rem(1px) solid $grey-dark;
 
     .c-home-use-examples__content {
-      padding: rem(74px) 0 rem(135px) 0;
+      min-height: rem(640px);
+      padding: rem(94px) 0 rem(155px) 0;
     }
 
     .c-home-use-examples__title {
@@ -245,13 +246,13 @@ $item-user-padding-screen-m: rem(39px);
         font-size: 36px;
 
         &:first-of-type {
-          left: -25px;
-          top: 15px;
+          left: rem(-25px);
+          top: rem(15px);
         }
 
         &:last-of-type {
-          left: 3px;
-          top: 4px;
+          left: rem(3px);
+          top: rem(4px);
         }
       }
     }
