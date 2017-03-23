@@ -8,30 +8,19 @@
     <div class="small-12 columns">
       <div class="slider js_slider">
         <div class="frame js_frame">
-          <ul class="slides js_slides">
-            <% (0..4).each do |i| %>
-              <li class="slide js_slide">
-                <div class="c-home-news-item">
-                  <div class="text -title-s -color-3">CUSTOMIZE REPORTS</div>
-                  <div class="c-home-news-item__description text -paragraph -color-3">To show the data you want to see, the way you want to see it. Combine your indicators then save, print or share your report with the world.</div>
-                </div>
-              </li>
-            <% end %>
-          </ul>
+          <ul class="slides js_slides"></ul>
         </div>
         <div class="c-home-news__arrow-button js_prev prev">
           <svg class="icon">
-            <use xlink:href="#icon-arrow"></use>
+            <use xlink:href="#icon-arrow-big"></use>
           </svg>
         </div>
         <div class="c-home-news__arrow-button js_next next">
           <svg class="icon">
-            <use xlink:href="#icon-arrow"></use>
+            <use xlink:href="#icon-arrow-big"></use>
           </svg>
         </div>
-        <div class="c-home-news__slider-dots js_slider_dots">
-          <%= render 'shared/slider_dots', count: 5, color: 'white' %>
-        </div>
+        <div class="c-home-news__slider-dots js_slider_dots"></div>
       </div>
     </div>
   </div>
