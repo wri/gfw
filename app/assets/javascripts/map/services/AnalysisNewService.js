@@ -73,11 +73,17 @@ define([
         layerOptions[val] = true;
       });
 
+      // TEMP
+      var period = status.begin + ',' + status.end;
+      if (status.dataset === "umd-loss-gain") {
+        period = status.begin + ',' + moment.utc(status.end).subtract(1, 'days').format('YYYY-MM-DD');
+      }
+
       return _.extend({}, status, layerOptions, {
         country: status.iso.country,
         region: status.iso.region,
         thresh: status.threshold,
-        period: status.begin + ',' + status.end,
+        period: period,
 
         // If a userGeostore exists we need to set geostore and type manually
         geostore: (status.useGeostore) ? status.useGeostore : status.geostore,
