@@ -1,6 +1,6 @@
 define([
- 'backbone', 'underscore'
-], function(Backbone, _) {
+ 'backbone', 'underscore', 'bluebird'
+], function(Backbone, _, Promise) {
 
   'use strict';
 
@@ -58,7 +58,25 @@ define([
       }
 
       return userLanguage;
-    }
+    },
+
+    checkLogged: function () {
+      return new Promise(function(resolve, reject) {
+        $.ajax({
+          url: window.gfw.config.GFW_API_AUTH + '/auth/check-logged',
+          dataType: 'json',
+          xhrFields: {
+            withCredentials: true
+          },
+          success: function (response) {
+            resolve(response);
+          },
+          error: function (error) {
+            reject(error);
+          }
+        });
+      });
+    },
 
   });
 
