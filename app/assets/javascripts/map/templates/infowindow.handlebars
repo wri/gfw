@@ -25,7 +25,7 @@
             <h2><a href="{{content.data.project_ur}}" target="_blank">{{content.data.project_name}}</a></h2>
           {{else}}
             <h2>{{content.data.project_name}}</h2>
-          {{/if}} 
+          {{/if}}
         {{/if}}
         {{#if content.data.project_na}}
           {{#if content.data.project_ur}}
@@ -529,8 +529,18 @@
           <h4>Class:</h4>
           <p>{{content.data.class}}</p>
         {{/if}}
-      </div>
     </div>
+    </div>
+    {{#if content.data.actions}}
+      <div id="cartodb-popup-fixed" class="cartodb-popup-actions">
+      {{#if content.data.analize}}
+        <a style="cursor:pointer;" class="analyze-shape btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">analyze</a>
+      {{/if}}
+      {{#if content.data.readmore}}
+        <a style="cursor:pointer;" class="btn green uppercase" href="{{content.data.link}}" target="_blank" rel="noopener">read more</a>
+      {{/if}}
+      </div>
+    {{/if}}
   </div>
 </div>
 
