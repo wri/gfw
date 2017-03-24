@@ -108,7 +108,7 @@ define([
 
     addTooltip: function() {
       this.clickState = 0;
-      this.$map.append('<div class="tooltip">Click to start drawing shape</div>');
+      this.$map.append('<div class="tooltip -enabled">Click to start drawing shape</div>');
       this.$map.mousemove(this.showTooltip.bind(this));
       this.$tooltip = $('.tooltip');
       this.$map.click(this.updateTooltip.bind(this));
