@@ -40,6 +40,7 @@ define([
 
     initialize: function(options) {
       this.subscription = options.subscription;
+      this.user = options.user;
       this.render();
     },
 
@@ -97,44 +98,55 @@ define([
      */
     // Name
     onClickEditName: function(e) {
-      var $el = $(e.currentTarget);
-      if (!$el.hasClass('-editing')) {
-        var value = this.subscription.get('name');
+      this.user.checkLogged()
+        .then(function(response) {
+          var $el = $(e.currentTarget);
+          if (!$el.hasClass('-editing')) {
+            var value = this.subscription.get('name');
 
-        $el.addClass('-editing').
-          html('<input />').
-          find('input').val(value).
-          focus();
+            $el.addClass('-editing').
+            html('<input />').
+            find('input').val(value).
+            focus();
 
-        $el.on('keyup.'+this.subscription.get('id'), this.onKeyUpEditName.bind(this));
-      }
+            $el.on('keyup.'+this.subscription.get('id'), this.onKeyUpEditName.bind(this));
+          }
+        }.bind(this))
+        .catch(function(e) {
+          mps.publish('Notification/open', ['notification-my-gfw-not-logged']);
+        }.bind(this));
     },
 
     onBlurEditName: function(e) {
-      var $el = $(e.currentTarget);
-      if ($el.hasClass('-editing')) {
-        var old_value = this.subscription.get('name'),
-            new_value = $el.find('input').val();
+      this.user.checkLogged()
+        .then(function(response) {
+          var $el = $(e.currentTarget);
+          if ($el.hasClass('-editing')) {
+            var old_value = this.subscription.get('name'),
+              new_value = $el.find('input').val();
 
-        $el.off('keyup.'+this.subscription.get('id'));
+            $el.off('keyup.'+this.subscription.get('id'));
 
-        // Check if the value has changed before save it
-        if (old_value != new_value) {
-          this.subscription.save('name', new_value, {
-            patch: true,
-            wait: true,
-            silent: true,
-            success: this.resetName.bind(this),
-            error: function() {
-              $el.find('input').
-                addClass('error').
-                val(old_value).
-                focus();
+            // Check if the value has changed before save it
+            if (old_value != new_value) {
+              this.subscription.save('name', new_value, {
+                patch: true,
+                wait: true,
+                silent: true,
+                success: this.resetName.bind(this),
+                error: function() {
+                  $el.find('input').
+                  addClass('error').
+                  val(old_value).
+                  focus();
+                }
+              });
             }
-          });
-        }
-
-      }
+          }
+        }.bind(this))
+        .catch(function(e) {
+          mps.publish('Notification/open', ['notification-my-gfw-not-logged']);
+        }.bind(this));
     },
 
     onKeyUpEditName: function(e) {
@@ -149,45 +161,57 @@ define([
 
     // Language
     onChangeLanguage: function(e) {
-      var $el = $(e.currentTarget),
-          old_value = this.subscription.get('language'),
-          new_value = $el.val();
+      this.user.checkLogged()
+        .then(function(response) {
+          var $el = $(e.currentTarget),
+            old_value = this.subscription.get('language'),
+            new_value = $el.val();
 
-      this.subscription.save('language', new_value, {
-        wait: true,
-        silent: true,
-        patch: true,
-        success: function() {
-          $el.val(new_value);
-          mps.publish('Notification/open', ['notification-my-gfw-subscription-correct']);
-        },
-        error: function() {
-          $el.val(old_value);
-          mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
-        }
-      });
+          this.subscription.save('language', new_value, {
+            wait: true,
+            silent: true,
+            patch: true,
+            success: function() {
+              $el.val(new_value);
+              mps.publish('Notification/open', ['notification-my-gfw-subscription-correct']);
+            },
+            error: function() {
+              $el.val(old_value);
+              mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
+            }
+          });
+        }.bind(this))
+        .catch(function(e) {
+          mps.publish('Notification/open', ['notification-my-gfw-not-logged']);
+        }.bind(this));
     },
 
     // Destroy
     onClickDestroy: function(e) {
       e.preventDefault();
 
-      this.subscription.set('from', 'your profile');
+      this.user.checkLogged()
+        .then(function(response) {
+          this.subscription.set('from', 'your profile');
 
-      // Create and append confirm view
-      var confirmView = new ListItemDeleteConfirmView({
-        model: this.subscription
-      });
-      this.$el.append(confirmView.render().el);
+          // Create and append confirm view
+          var confirmView = new ListItemDeleteConfirmView({
+            model: this.subscription
+          });
+          this.$el.append(confirmView.render().el);
 
-      // Listen to confirmed param of confirmView
-      this.listenTo(confirmView, 'confirmed', function() {
-        this.subscription.destroy({
-          success: this.remove.bind(this)
-        });
-        mps.publish('Notification/open', ['notification-my-gfw-subscription-deleted']);
-        window.ga('send', 'event', 'User Profile', 'Delete Subscription');
-      }.bind(this));
+          // Listen to confirmed param of confirmView
+          this.listenTo(confirmView, 'confirmed', function() {
+            this.subscription.destroy({
+              success: this.remove.bind(this)
+            });
+            mps.publish('Notification/open', ['notification-my-gfw-subscription-deleted']);
+            window.ga('send', 'event', 'User Profile', 'Delete Subscription');
+          }.bind(this));
+        }.bind(this))
+        .catch(function(e) {
+          mps.publish('Notification/open', ['notification-my-gfw-not-logged']);
+        }.bind(this));
     },
 
     // View on map
@@ -197,22 +221,34 @@ define([
 
     // Datasets
     onClickDataset: function() {
-      var confirmView = new ListItemDatasetsConfirmView({
-        model: this.subscription
-      });
+      this.user.checkLogged()
+        .then(function(response) {
+          var confirmView = new ListItemDatasetsConfirmView({
+            model: this.subscription
+          });
 
-      this.$el.append(confirmView.render().el);
+          this.$el.append(confirmView.render().el);
 
-      // Listen to confirmed param of confirmView
-      this.listenTo(confirmView, 'confirmed', function(datasets) {
-        this.saveDatasets(datasets);
-      }.bind(this));
+          // Listen to confirmed param of confirmView
+          this.listenTo(confirmView, 'confirmed', function(datasets) {
+            this.saveDatasets(datasets);
+          }.bind(this));
+        }.bind(this))
+        .catch(function(e) {
+          mps.publish('Notification/open', ['notification-my-gfw-not-logged']);
+        }.bind(this));
     },
 
     onClickDatasetRemove: function(e) {
-      e && e.preventDefault();
-      var datasets = _.without(this.subscription.get('datasets'),$(e.currentTarget).data('dataset'));
-      this.saveDatasets(datasets);
+      this.user.checkLogged()
+        .then(function(response) {
+          e && e.preventDefault();
+          var datasets = _.without(this.subscription.get('datasets'),$(e.currentTarget).data('dataset'));
+          this.saveDatasets(datasets);
+        }.bind(this))
+        .catch(function(e) {
+          mps.publish('Notification/open', ['notification-my-gfw-not-logged']);
+        }.bind(this));
     },
 
     /**
@@ -220,17 +256,23 @@ define([
      * - resetName
      */
     saveDatasets: function(datasets) {
-      this.subscription.save('datasets', datasets, {
-        wait: true,
-        silent: true,
-        patch: true,
-        success: function() {
-          mps.publish('Notification/open', ['notification-my-gfw-subscription-correct']);
-        },
-        error: function() {
-          mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
-        }
-      });
+      this.user.checkLogged()
+        .then(function(response) {
+          this.subscription.save('datasets', datasets, {
+            wait: true,
+            silent: true,
+            patch: true,
+            success: function() {
+              mps.publish('Notification/open', ['notification-my-gfw-subscription-correct']);
+            },
+            error: function() {
+              mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
+            }
+          });
+        }.bind(this))
+        .catch(function(e) {
+          mps.publish('Notification/open', ['notification-my-gfw-not-logged']);
+        }.bind(this));
     },
 
     resetName: function() {

@@ -37,9 +37,10 @@ define([
   var SubscriptionListView = View.extend({
     template: Handlebars.compile(tpl),
 
-    initialize: function() {
+    initialize: function(router, user) {
       View.prototype.initialize.apply(this);
 
+      this.user = user;
       this.model = new SubscriptionListModel();
       this.subscriptions = new Subscriptions();
       this.listenTo(this.subscriptions, 'sync remove', this.render);
@@ -73,10 +74,11 @@ define([
       if (!!paginatedSubscriptions.length) {
         _.each(paginatedSubscriptions, function(subscription) {
           var view = new SubscriptionListItemView({
-            subscription: subscription
+            subscription: subscription,
+            user: this.user
           });
           $tableBody.append(view.el);
-        });
+        }.bind(this));
         if (this.subscriptions.length/this.model.get('perpage') > 1) {
           this.initPaginate();
         }
