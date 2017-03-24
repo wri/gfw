@@ -1,11 +1,6 @@
 $letterW: 20px;
 .tab-highresolution {
 
-  .description {
-    font-size: 11px;
-    line-height: 14px;
-  }
-
   @media screen and ( max-height: 679px ) and ( min-width: $br-mobile){
     max-height: calc(100vh - 234px);
     overflow: auto;
