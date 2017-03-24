@@ -1,1 +1,0 @@
-require 'aws-sdk-resources'

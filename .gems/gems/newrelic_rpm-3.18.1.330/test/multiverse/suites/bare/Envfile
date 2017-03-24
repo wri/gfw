@@ -1,3 +1,0 @@
-gemfile <<-RB
-  gem 'newrelic_rpm', :require => false, :path => File.expand_path('../../../../')
-RB

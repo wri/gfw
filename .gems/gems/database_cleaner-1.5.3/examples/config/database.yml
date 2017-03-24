@@ -1,7 +1,0 @@
----
-one:
-  adapter: sqlite3
-  database: "/Users/etagwerker/Projects/database_cleaner/examples/features/support/../../db/activerecord_one.db"
-two:
-  adapter: sqlite3
-  database: "/Users/etagwerker/Projects/database_cleaner/examples/features/support/../../db/activerecord_two.db"

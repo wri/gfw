@@ -1,3 +1,0 @@
-gemfile <<-RUBY
-  gem "haml"
-RUBY

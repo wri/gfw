@@ -1,2 +1,0 @@
-gemfile "#noop"
-execute_mode 'fork'

@@ -1,9 +1,0 @@
-source 'https://rubygems.org'
-
-# Shared components
-gem 'fog-core', :github => 'fog/fog-core'
-gem 'fog-json', :github => 'fog/fog-json'
-
-gem 'codeclimate-test-reporter', group: :test, require: nil
-
-gemspec :path => '../'
