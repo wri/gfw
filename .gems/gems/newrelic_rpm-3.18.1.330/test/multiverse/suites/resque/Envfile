@@ -1,9 +1,0 @@
-gemfile <<-RB
-  gem 'resque', '1.23.0'
-  gem 'json'
-RB
-
-gemfile <<-RB
-  gem 'resque', '~>1.25.1'
-  gem 'json'
-RB

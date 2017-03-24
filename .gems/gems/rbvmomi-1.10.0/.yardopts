@@ -1,6 +1,0 @@
---title "RbVmomi - a Ruby interface to the vSphere API"
---no-private
---readme README.rdoc
-lib/rbvmomi/vim.rb
-lib/rbvmomi/vim/*.rb
-lib/rbvmomi/trollop.rb
