@@ -4,7 +4,7 @@ define([], function() {
     default: {
       intro:            '<p>Welcome to the Global Forest Watch Interactive Map. This quick guide will introduce you to the map’s main features and tools.</p>' +
                         '<p>Already familiar with GFW? <a href="/map" class="js-skip-tour">Skip the walk through</a>.</p>',
-      layersmenu_1:     '<p>By default, the map displays tree cover gain and loss data. <strong>Use the menus at the top of the map to turn on other global data layers.</strong></p>' + 
+      layersmenu_1:     '<p>By default, the map displays tree cover gain and loss data. <strong>Use the menus at the top of the map to turn on other global data layers.</strong></p>' +
                         '<p>Click on the <strong>green information icon</strong> to learn more about any data set or to download data.</p>',
       legend:           '<p>This legend shows <strong>which data layers are currently activated.</strong> Click the “x” to turn off a data layer.</p>',
       mapcontrols:      '<p>Use this panel to <strong>navigate around the map using the zoom</strong> or <strong>search icons</strong>, <strong>share a link</strong> of your map view, <strong>hide panels</strong>, or <strong>refresh</strong> the page.</p>',
@@ -12,10 +12,10 @@ define([], function() {
                         '<ul>' +
                           '<li><strong>Perform an analysis or subscribe to alerts</strong> for a specific area of interest</li>' +
                           '<li><strong>Change the base map</strong> to see terrain, satellite imagery, roads, and more</li>' +
-                          '<li>View <strong>high resolution satellite imagery</strong> from UrtheCast</li>' +
+                          '<li>View <strong>high resolution satellite imagery</strong> from Sentinel-hub</li>' +
                         '</ul>',
       timeline:         '<p><strong>Press play</strong> on the timeline to <strong>view forest change data sets over time</strong>, or <strong>select a specific time interval</strong> by dragging the ends of the timeline.</p>',
-      howto:            '<p>For more information about how to use the GFW Interactive Map, <strong>visit our <a href="/howto">How To page</a></strong>.</p>'     
+      howto:            '<p>For more information about how to use the GFW Interactive Map, <strong>visit our <a href="/howto">How To page</a></strong>.</p>'
     },
 
     glad: {
@@ -27,7 +27,7 @@ define([], function() {
       analysistab_3:    '<p>You can also analyze or subscribe to a <strong>country or subnational region</strong></p>',
       analysistab_4:    '<p>Or to <strong>a shape</strong> from another data layer using the tabs at the top of the map (ex. Land Use, Conservation, People)</p>',
       highresolutiontab:'<p>View the latest <strong>high resolution satellite imagery</strong> to verify alerts here.</p>'+
-                        '<p>To learn more about how you can use Global Forest Watch to monitor forests, visit our <a href="/howto">How to Portal.</a></p>',              
+                        '<p>To learn more about how you can use Global Forest Watch to monitor forests, visit our <a href="/howto">How to Portal.</a></p>',
     }
   }
   return guideTexts;

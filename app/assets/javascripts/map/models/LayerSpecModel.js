@@ -17,7 +17,7 @@ define([
     //the order will be Grump, forest cover,Conservation, Forest Use, and People layers and finally  Forest Change layers
     layerOrder: [
       //high resolution maps
-      "urthe",
+      "highres",
       //-
       "grump2000",
       "mex_forest_zoning_cat",
