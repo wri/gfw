@@ -49,7 +49,7 @@ define([
   'text!map/templates/legend/raisg_mining.handlebars',
   'text!map/templates/legend/per_mining.handlebars',
   'text!map/templates/legend/glad.handlebars',
-  'text!map/templates/legend/urthecast.handlebars',
+  'text!map/templates/legend/sentinel.handlebars',
   'text!map/templates/legend/mex_forest_cat.handlebars',
   'text!map/templates/legend/mex_forest_subcat.handlebars',
   'text!map/templates/legend/pa.handlebars',
@@ -70,7 +70,7 @@ define([
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
     global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
     gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl,
-    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl,
+    rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, highresTpl,mex_forest_catTpl,mex_forest_subcatTpl,
     paTpl, places2watchTPL, mex_landrightsTpl, mexPATpl, perPATpl,mex_land_coverTpl,mex_forest_conservTPL,mex_forest_prodTPL,mex_forest_restTPL, bra_landcoverTPL, lbr_miningTPL,
     lbr_forestTpl,lbr_communityTpl, bol_user_fire_frequencyTpl) {
 
@@ -156,7 +156,7 @@ define([
       mex_forest_zoning_conserv:Handlebars.compile(mex_forest_conservTPL),
       mex_forest_zoning_prod:Handlebars.compile(mex_forest_prodTPL),
       mex_forest_zoning_rest:Handlebars.compile(mex_forest_restTPL),
-      urthe: Handlebars.compile(urtheTpl),
+      highres: Handlebars.compile(highresTpl),
       protected_areasCDB:Handlebars.compile(paTpl),
       places_to_watch:Handlebars.compile(places2watchTPL),
       mex_land_rights:Handlebars.compile(mex_landrightsTpl),

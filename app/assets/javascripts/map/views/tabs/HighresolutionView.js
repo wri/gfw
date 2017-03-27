@@ -47,11 +47,8 @@ define([
     },
 
     sensors : {
-      'landsat-8,theia,deimos-1,sentinel-2a': 'All sensors',
-      'landsat-8': 'Landsat 8 (15 m)',
-      'theia': 'Theia (5 m)',
-      'deimos-1': 'Deimos 1 (22 m)',
-      'sentinel-2a': 'Sentinel 2 (10 m)',
+      'landsat-8': 'Landsat 8',
+      'sentinel-2': 'Sentinel 2'
     },
 
     initialize: function(map) {
@@ -66,7 +63,7 @@ define([
     },
 
     cacheVars: function() {
-      this.$urtheForm          = $('#urthe-form');
+      this.$highresForm          = $('#highres-form');
       this.$selects            = this.$el.find('.chosen-select');
       this.$hresSelectFilter   = this.$el.find('#hres-filter-select');
       this.$hresSensorFilter   = this.$el.find('#hres-filter-sensor');
@@ -124,14 +121,14 @@ define([
     },
 
     _getParams: function(e) {
-      var renderer = this.$urtheForm.find('#hres-filter-select').val() || 'rgb',
-          sensor = this.$urtheForm.find('#hres-filter-sensor').val() || null,
+      var renderer = this.$highresForm.find('#hres-filter-select').val() || 'rgb',
+          sensor = this.$highresForm.find('#hres-filter-sensor').val() || 'landsat-8',
           mindate = (!!this.$mindate.val()) ? this.$mindate.val() : '2000-09-01',
           maxdate = (!!this.$maxdate.val()) ? this.$maxdate.val() : '2000-09-01';
 
       return {
         'zoom' : this.zoom,
-        'satellite' : this.$urtheForm.data('slug'),
+        'satellite' : this.$highresForm.data('slug'),
         'color_filter': renderer,
         'renderer': this.renderers[renderer],
         'sensor_platform': sensor,
@@ -145,7 +142,7 @@ define([
     _setParams: function(e) {
       if (!!this.presenter.status.get('hresolution')) {
         this.presenter.setHres(this._getParams());
-        this.presenter.updateLayer('urthe');
+        this.presenter.updateLayer('highres');
       } else {
         this.toggleLayer();
       }
@@ -165,16 +162,16 @@ define([
     },
 
     toggleLayer: function(e) {
-      if (this.zoom >= 5) {
-        this.presenter.toggleLayer('urthe');
+      if (this.zoom >= 9) {
+        this.presenter.toggleLayer('highres');
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
-          this.presenter.toggleLayer('urthe');
+          this.presenter.toggleLayer('highres');
         } else {
           this.presenter.notificate('notification-zoom-not-reached');
         }
       }
-      ga('send', 'event', 'Map', 'Toggle', 'Urthecast');
+      ga('send', 'event', 'Map', 'Toggle', 'Sentinel');
     },
 
     toggleLayerName: function(e) {
@@ -226,7 +223,7 @@ define([
     setClouds: function(){
       var width = this.$range.val();
       this.$progress.width(width + '%');
-      ga('send', 'event', 'Map', 'Settings', 'Urthecast advanced cloud');
+      ga('send', 'event', 'Map', 'Settings', 'Sentinel advanced cloud');
     },
 
     renderPickers: function(minABSdate, maxABSdate) {
@@ -257,7 +254,7 @@ define([
         onSet: function(event) {
           if ( event.select ) {
             endHRdate_picker.set('min', startHRdate_picker.get('select'));
-            ga('send', 'event', 'Map', 'Settings', 'Urthecast dates');
+            ga('send', 'event', 'Map', 'Settings', 'Sentinel dates');
           }
         }
       }),
@@ -279,7 +276,7 @@ define([
         onSet: function(event) {
           if ( event.select ) {
             startHRdate_picker.set('max', endHRdate_picker.get('select'));
-            ga('send', 'event', 'Map', 'Settings', 'Urthecast dates');
+            ga('send', 'event', 'Map', 'Settings', 'Sentinel dates');
           }
         }
       });

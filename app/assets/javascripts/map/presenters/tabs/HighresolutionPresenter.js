@@ -32,23 +32,23 @@ define([
       'Place/go': function(place) {
         this.status.set('layerSpec', place.layerSpec);
         this.status.set('hresolution', place.params.hresolution);
-        var is_urthe = !!this.status.get('layerSpec').getLayer({ slug: 'urthe' })
-        if (is_urthe || !!this.status.get('hresolution')) {
+        var is_highres = !!this.status.get('layerSpec').getLayer({ slug: 'highres' })
+        if (is_highres || !!this.status.get('hresolution')) {
           var params = JSON.parse(atob(place.params.hresolution));
-          this.view.switchToggle(is_urthe);
+          this.view.switchToggle(is_highres);
           this.view._fillParams(params);
-          
+
           if (params.zoom < 5) {
             this.notificate('notification-zoom-not-reached');
           }
-        }         
+        }
       }
     },{
       'LayerNav/change': function(layerSpec) {
         this.status.set('layerSpec', layerSpec);
-        var is_urthe = !!this.status.get('layerSpec').getLayer({ slug: 'urthe' })
-        this.setHres((is_urthe) ? this.view._getParams() : null);
-        this.view.switchToggle(is_urthe);
+        var is_highres = !!this.status.get('layerSpec').getLayer({ slug: 'highres' })
+        this.setHres((is_highres) ? this.view._getParams() : null);
+        this.view.switchToggle(is_highres);
       }
     }],
 

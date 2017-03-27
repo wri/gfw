@@ -1,20 +1,21 @@
 <div class="tab-highresolution">
-  <div id="highresolutionModal" class="highresolution-modal">
-    <p>Click on the map to view info about each UrtheCast image</p>
-  </div>
+  {{!--TODO: GET MODAL INFO--}}
+  {{!--<div id="highresolutionModal" class="highresolution-modal">
+    <p>Click on the map to view info about each Sentinel image</p>
+  </div>--}}
   <div class="highresolution-content scroll-thin-dark">
     <h2>Imagery</h2>
-    <div id="urthe-form" data-slug="urthe">
+    <div id="highres-form" data-slug="highres">
       <section>
-        <h3 class="-title">UrtheCast
-          <a href='#' data-source="hr-urthecast" class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
-          <span class="onoffswitch toggleUrtheCast"><span></span></span>
+        <h3 class="-title">HighRes imagery
+          <a href='#' data-source="highres" class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+          <span class="onoffswitch toggleSentinel"><span></span></span>
         </h3>
 
       </section>
 
       <section>
-        <p id="disclaimer-zoom">Please move to <strong>zoom level 5</strong> to activate this imagery. Current zoom level is <strong><span id="currentZoom"></span></strong>.</p>
+        <p id="disclaimer-zoom">Please move to <strong>zoom level 9</strong> to activate this imagery. Current zoom level is <strong><span id="currentZoom"></span></strong>.</p>
       </section>
 
       <section>
@@ -35,15 +36,15 @@
       <div class="advanced-options">
         <section>
           <h3>Renderer <a href='#' data-source="hr-renderer" class='source'><svg><use xlink:href="#shape-info"></use></svg></a></h3>
-          <select data-placeholder="RGB (Red Green Blue)" class="chosen-select default notranslate" id="hres-filter-select" >
+          <select data-placeholder="Cooming soon" class="chosen-select default notranslate" id="hres-filter-select" >
             {{#each this.renderers}}
-              <option value="{{@key}}">{{this}}</option>
+              <option disabled value="{{@key}}">{{this}}</option>
             {{/each}}
           </select>
         </section>
         <section>
           <h3>Sensor <a href='#' data-source="hr-sensor" class='source'><svg><use xlink:href="#shape-info"></use></svg></a></h3>
-          <select data-placeholder="All sensors" class="chosen-select default notranslate" id="hres-filter-sensor">
+          <select data-placeholder="Landsat 8" class="chosen-select default notranslate" id="hres-filter-sensor">
             {{#each this.sensors}}
               <option value="{{@key}}">{{this}}</option>
             {{/each}}
