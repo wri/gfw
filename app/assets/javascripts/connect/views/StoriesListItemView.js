@@ -2,12 +2,14 @@ define([
   'backbone',
   'handlebars',
   'moment',
+  'mps',
   'connect/views/ListItemDeleteConfirmView',
   'text!connect/templates/storiesListItem.handlebars'
 ], function(
   Backbone,
   Handlebars,
   moment,
+  mps,
   ListItemDeleteConfirmView,
   tpl
 ) {
@@ -25,6 +27,7 @@ define([
 
     initialize: function(options) {
       this.story = options.story;
+      this.user = options.user;
 
       this.render();
     },
@@ -45,13 +48,19 @@ define([
     confirmDestroy: function(event) {
       event.preventDefault();
 
-      this.story.set('from', 'Global Forest Watch');
-      
-      var confirmView = new ListItemDeleteConfirmView({
-        model: this.story
-      });
-      this.$el.append(confirmView.render().el);
-      this.listenTo(confirmView, 'confirmed', this.destroy.bind(this));
+      this.user.checkLogged()
+        .then(function(response) {
+          this.story.set('from', 'Global Forest Watch');
+
+          var confirmView = new ListItemDeleteConfirmView({
+            model: this.story
+          });
+          this.$el.append(confirmView.render().el);
+          this.listenTo(confirmView, 'confirmed', this.destroy.bind(this));
+        }.bind(this))
+        .catch(function(e) {
+          mps.publish('Notification/open', ['notification-my-gfw-not-logged']);
+        }.bind(this));
     },
 
     destroy: function() {
