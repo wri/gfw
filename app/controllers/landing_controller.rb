@@ -45,8 +45,7 @@ class LandingController < ApplicationController
       {
         "profile" => "Conservation Orgs",
         "examples" => [
-          "The Amazon Conservation Association (ACA) works to protect biodiversity where the Andes Mountains meet the Amazon rainforest. With GLAD deforestation alerts on Global Forest Watch, we can detect illegal gold mining and logging in protected areas within days of when it happens.",
-          "By getting timely and precise information into the hands of policymakers, we've actually seen government authorities on the ground taking action within 24-48 hours of receiving a deforestation alert."
+          "The Amazon Conservation Association (ACA) works to protect biodiversity in the Amazon. With GLAD deforestation alerts on Global Forest Watch, we can detect illegal gold mining and logging in protected areas within days. By getting timely and precise information into the hands of policymakers, we've seen government authorities on the ground taking action within 24-48 hours of receiving an alert."
         ]
       },
       {
@@ -74,25 +73,29 @@ class LandingController < ApplicationController
         "key" => "fires",
         "title" => "Fires",
         "description" => "Track fires and haze in the ASEAN region. View the latest data on fire locations and air quality and do you own analysis",
-        "background" => "/assets/home/fires@2x.png"
+        "background" => "/assets/home/fires@2x.png",
+        "link" => "http://fires.globalforestwatch.org"
       },
       {
         "key" => "climate",
         "title" => "Climate",
         "description" => "Track carbon emissions and removals in forest landscapes",
-        "background" => "/assets/home/climate@2x.png"
+        "background" => "/assets/home/climate@2x.png",
+        "link" => "http://climate.globalforestwatch.org"
       },
       {
         "key" => "commodities",
         "title" => "Commodities",
         "description" => "Identify deforestation risk in commodity supply chains",
-        "background" => "/assets/home/commodities@2x.png"
+        "background" => "/assets/home/commodities@2x.png",
+        "link" => "http://commodities.globalforestwatch.org"
       },
       {
         "key" => "water",
         "title" => "Water",
         "description" => "View critical watershed information, understand type and severity of threats such as forest changes to watershed health, and screen for cost-effective, sustainable solutions",
-        "background" => "/assets/home/water@2x.png"
+        "background" => "/assets/home/water@2x.png",
+        "link" => "http://water.globalforestwatch.org/"
       }
     ]
   end
