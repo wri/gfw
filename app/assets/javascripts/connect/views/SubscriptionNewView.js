@@ -471,40 +471,46 @@ define([
     onSubmitSubscription: function(e) {
       e && e.preventDefault();
 
-      var currentParams = this.subscription.toJSON();
-      currentParams.aoi = null;
-      currentParams.resource = null;
-      currentParams.datasets = [];
+      this.user.checkLogged()
+        .then(function(response) {
+          var currentParams = this.subscription.toJSON();
+          currentParams.aoi = null;
+          currentParams.resource = null;
+          currentParams.datasets = [];
 
-      var formData = validate.collectFormValues(this.$form, {
-        trim: true,
-        nullify: true
-      });
-      var resource = this.getResource(formData);
-      var attributesFromForm = _.extend(resource, _.omit(formData, 'datasets'),
-        this.subscription.toJSON());
+          var formData = validate.collectFormValues(this.$form, {
+            trim: true,
+            nullify: true
+          });
+          var resource = this.getResource(formData);
+          var attributesFromForm = _.extend(resource, _.omit(formData, 'datasets'),
+            this.subscription.toJSON());
 
-      if (this.validate(attributesFromForm) && this.router.alreadyLoggedIn) {
-        this.subscription.set(attributesFromForm, { silent: true });
-        this.subscription.set(attributesFromForm, { silent: true }).save()
-          .then(function() {
-            // Scroll to top
-            this.router.navigateTo('my_gfw/subscriptions', {
-              trigger: true
-            });
-            mps.publish('Subscriptions/new', [this.subscription.toJSON()]);
+          if (this.validate(attributesFromForm) && this.router.alreadyLoggedIn) {
+            this.subscription.set(attributesFromForm, { silent: true });
+            this.subscription.set(attributesFromForm, { silent: true }).save()
+              .then(function() {
+                // Scroll to top
+                this.router.navigateTo('my_gfw/subscriptions', {
+                  trigger: true
+                });
+                mps.publish('Subscriptions/new', [this.subscription.toJSON()]);
 
-            this.subscription.clear({ silent: true })
-              .set(currentParams);
-          }.bind(this))
+                this.subscription.clear({ silent: true })
+                  .set(currentParams);
+              }.bind(this))
 
-          .fail(function(){
+              .fail(function(){
+                mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
+              }.bind(this));
+          } else {
+            this.updateForm();
             mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
-          }.bind(this));
-      } else {
-        this.updateForm();
-        mps.publish('Notification/open', ['notification-my-gfw-subscription-incorrect']);
-      }
+          }
+        }.bind(this))
+        .catch(function(e) {
+          mps.publish('Notification/open', ['notification-my-gfw-not-logged']);
+        }.bind(this));
     },
 
 
