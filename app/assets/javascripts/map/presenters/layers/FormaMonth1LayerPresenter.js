@@ -11,7 +11,7 @@ define([
 
   'use strict';
 
-  var Forma2016LayerPresenter = PresenterClass.extend({
+  var FormaMonth1LayerPresenter = PresenterClass.extend({
 
     init: function(view) {
       this.view = view;
@@ -53,5 +53,5 @@ define([
 
   });
 
-  return Forma2016LayerPresenter;
+  return FormaMonth1LayerPresenter;
 });

@@ -6,7 +6,7 @@
 define([
   'bluebird', 'uri', 'd3', 'mps', 'moment',
   'abstract/layer/AnimatedCanvasLayerClass',
-  'map/presenters/layers/Forma2016LayerPresenter'
+  'map/presenters/layers/FormaMonth1LayerPresenter'
 ], function(
   Promise, UriTemplate, d3, mps, moment,
   AnimatedCanvasLayerClass,
@@ -25,7 +25,7 @@ define([
     return s.substr(s.length - 3);
   };
 
-  var Forma2016Layer = AnimatedCanvasLayerClass.extend({
+  var FormaMonth1Layer = AnimatedCanvasLayerClass.extend({
 
     init: function(layer, options, map) {
       this.presenter = new Presenter(this);
@@ -121,6 +121,6 @@ define([
     }
   });
 
-  return Forma2016Layer;
+  return FormaMonth1Layer;
 
 });
