@@ -14,16 +14,12 @@ define([
   'use strict';
 
   var API_URL = window.gfw.config.GFW_API_HOST_NEW_API;
-
-  //todo: move this to the api
-  var SENTINEL_KEY = window.gfw.config.SENTINEL_KEY;
-  var LANDSTAD_KEY = window.gfw.config.LANDSTAD_KEY;
   var sentinelHubParams = '?SERVICE=WMS&REQUEST=GetMap&LAYERS=TRUE_COLOR&BBOX={bbox}&MAXCC={cloud}&CLOUDCORRECTION=none&WIDTH=512&HEIGHT=512&FORMAT=image/jpeg&TIME={mindate}/{maxdate}&CRS=CRS:84';
 
   var SentinelLayer = ImageLayerClass.extend({
     options: {
-      urlTemplateSentinel2: 'http://services.sentinel-hub.com/v1/wms/' + SENTINEL_KEY + sentinelHubParams,
-      urlTemplateLandsat8: 'http://services-uswest2.sentinel-hub.com/v1/wms/' + LANDSTAD_KEY + sentinelHubParams,
+      urlTemplateSentinel2: '/high-res/sentinel' + sentinelHubParams,
+      urlTemplateLandsat8: '/high-res/landsat' + sentinelHubParams,
       dataMaxZoom: {
         'rgb': 14,
         'ndvi': 13,
@@ -89,7 +85,7 @@ define([
         maxdate: params.maxdate,
         bbox: this.calcBboxFromXY(x, y, z)
       }
-      return new UriTemplate(this.options[urlTemplate]).fillFromObject(urlParams);
+      return API_URL + new UriTemplate(this.options[urlTemplate]).fillFromObject(urlParams);
     },
 
     _getInfoWindowUrl: function(params) {
