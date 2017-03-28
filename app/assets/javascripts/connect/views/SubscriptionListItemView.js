@@ -240,9 +240,10 @@ define([
     },
 
     onClickDatasetRemove: function(e) {
+      e && e.preventDefault();
+
       this.user.checkLogged()
         .then(function(response) {
-          e && e.preventDefault();
           var datasets = _.without(this.subscription.get('datasets'),$(e.currentTarget).data('dataset'));
           this.saveDatasets(datasets);
         }.bind(this))
