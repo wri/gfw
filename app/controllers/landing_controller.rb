@@ -14,31 +14,36 @@ class LandingController < ApplicationController
         "title" => "Be the first to see new deforestation",
         "paragraph" => "Subscribe and get email notifications straight to your inbox as forest clearing happens.",
         "button" => "SUBSCRIBE TO ALERTS",
-        "url" => "/my_gfw/subscriptions/new"
+        "url" => "/my_gfw/subscriptions/new",
+        "background_orientation" => "left"
       },
       {
         "title" => "Discover the world’s forests through data",
         "paragraph" => "Explore over 100 global and local data sets to learn about conservation, land use, forest communities, and much more.",
         "button" => "EXPLORE OUT DATA",
-        "url" => "/map"
+        "url" => "/map",
+        "background_orientation" => "left"
       },
       {
         "title" => "Research made easy",
         "paragraph" => "Analyze forest change and investigate trends anywhere in the world with just a few clicks.",
         "button" => "START YOUR RESEARCH",
-        "url" => "/map/3/15.00/27.00/ALL/grayscale/loss,forestgain?tab=analysis-tab&begin=2001-01-01&end=2015-01-01&threshold=30&dont_analyze=true"
+        "url" => "/map/3/15.00/27.00/ALL/grayscale/loss,forestgain?tab=analysis-tab&begin=2001-01-01&end=2015-01-01&threshold=30&dont_analyze=true",
+        "background_orientation" => "right"
       },
       {
         "title" => "A suite of tools",
         "paragraph" => "Find out about the connections between deforestation and climate change, fires and haze, water security, and commodity supply chains with our specialized web applications.",
         "button" => "BROWSE OUR APPS",
-        "url" => "/gallery"
+        "url" => "/gallery",
+        "background_orientation" => "right"
       },
       {
         "title" => "Expert insights",
         "paragraph" => "Read the latest stories and findings about forests from our team of researchers.",
         "button" => "START LEARNING",
-        "url" => "http://blog.globalforestwatch.org/"
+        "url" => "http://blog.globalforestwatch.org/",
+        "background_orientation" => "right"
       }
     ]
     @uses = [

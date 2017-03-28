@@ -134,14 +134,22 @@ $item-padding-screen-m: rem(40px);
   .c-home-summary-item__background {
     position: absolute;
     bottom: 0;
-    left: 0;
-    width: 100%;
+    width: auto;
+    max-height: rem(235px);
     z-index: 1;
+
+    &.-left {
+      left: 0;
+    }
+
+    &.-right {
+      right: 0;
+    }
   }
 
   @media screen and (min-width: $screen-m) {
     height: rem(520px);
-    padding: rem(39px) rem(48px) rem(40px) rem(48px);
+    padding: rem(19px) rem(28px) rem(20px) rem(28px);
 
     .c-home-summary-item__title {
       width: 85%;
@@ -151,6 +159,19 @@ $item-padding-screen-m: rem(40px);
     .c-home-summary-item__paragraph {
       width: 95%;
     }
+
+    .c-home-summary-item__button {
+      left: rem(28px);
+      bottom: rem(20px);
+    }
+
+    .c-home-summary-item__background {
+      max-height: rem(300px);
+    }
+  }
+
+  @media screen and (min-width: $screen-l) {
+    padding: rem(39px) rem(48px) rem(40px) rem(48px);
 
     .c-home-summary-item__button {
       left: rem(48px);

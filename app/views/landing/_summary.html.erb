@@ -12,7 +12,7 @@
                   <div class="c-home-summary-item__button">
                     <%= render 'shared/buttons/regular', text: card['button'], color: 'green', url: card['url'] %>
                   </div>
-                  <img class="c-home-summary-item__background" src="/assets/home/card-<%= index %>@2x.png" width="482" />
+                  <img class="c-home-summary-item__background -<%= card['background_orientation'] %>" src="/assets/home/card-<%= index %>@2x.png" width="482" />
                 </div>
               </li>
             <% end %>
