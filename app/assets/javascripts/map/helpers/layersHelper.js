@@ -170,7 +170,7 @@ define([
   'map/views/layers/EcuUserProtectedAreasLayer',
   'map/views/layers/BolUserFireFrequencyLayer',
   // high resolution maps
-  'map/views/layers/UrthecastLayer',
+  'map/views/layers/SentinelLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -353,7 +353,7 @@ define([
   EcuUserProtectedAreasLayer,
   BolUserFireFrequencyLayer,
   //highres layers
-  UrthecastLayer,
+  SentinelLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -770,8 +770,8 @@ define([
     usa_forest_ownership: {
       view: UsaForestOwnershipLayer
     },
-    urthe: {
-      view: UrthecastLayer
+    highres: {
+      view: SentinelLayer
     },
     guyra: {
       view: GuyraLayer,

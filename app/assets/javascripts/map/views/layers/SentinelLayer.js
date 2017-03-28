@@ -1,7 +1,7 @@
 /**
- * The Urthecast layer module for use on canvas.
+ * The Sentinel layer module for use on canvas.
  *
- * @return UrthecastLayer class (extends CartoDBLayerClass)
+ * @return SentinelLayer class (extends CartoDBLayerClass)
  */
 define([
   'abstract/layer/ImageLayerClass',
@@ -14,12 +14,12 @@ define([
   'use strict';
 
   var API_URL = window.gfw.config.GFW_API_HOST_NEW_API;
+  var sentinelHubParams = '?SERVICE=WMS&REQUEST=GetMap&LAYERS=TRUE_COLOR&BBOX={bbox}&MAXCC={cloud}&CLOUDCORRECTION=none&WIDTH=512&HEIGHT=512&FORMAT=image/jpeg&TIME={mindate}/{maxdate}&CRS=CRS:84';
 
-  var UrthecastLayer = ImageLayerClass.extend({
+  var SentinelLayer = ImageLayerClass.extend({
     options: {
-      urlTemplate: API_URL + '/urthecast/map-tiles{/sat}{/z}{/x}{/y}?cloud_coverage_lte={cloud}&acquired_gte={mindate}&acquired_lte={maxdate}T23:59:59Z&sensor_platform={sensor_platform}',
-      urlInfoWindow: API_URL + '/urthecast/archive/scenes/?geometry_intersects=POINT({lng}+{lat})&cloud_coverage_lte={cloud}&tiled_lte={tileddate}&acquired_gte={mindate}&acquired_lte={maxdate}&sort=-acquired&sensor_platform={sensor_platform}',
-      urlBounds: API_URL + '/urthecast/archive/scenes/?cloud_coverage_lte={cloud}&tiled_lte={tileddate}&acquired_gte={mindate}&acquired_lte={maxdate}&geometry_intersects={geo}&sort=-acquired&sensor_platform={sensor_platform}',
+      urlTemplateSentinel2: '/high-res/sentinel' + sentinelHubParams,
+      urlTemplateLandsat8: '/high-res/landsat' + sentinelHubParams,
       dataMaxZoom: {
         'rgb': 14,
         'ndvi': 13,
@@ -50,31 +50,47 @@ define([
       else if (!!sessionStorage.getItem('high-resolution')) {
         params = JSON.parse(atob(sessionStorage.getItem('high-resolution')));
       }
-      params = {
-         'color_filter': params.color_filter || 'rgb',
-         'cloud':        params.cloud        || '100',
-         'mindate':      params.mindate      || '2000-09-01',
-         'maxdate':      params.maxdate      || '2015-09-01',
-         'sensor_platform' : params.sensor_platform || 'theia,landsat-8,deimos-1,sentinel-2a'
-        }
-      return params;
+
+      return {
+        'color_filter': params.color_filter || 'rgb',
+        'cloud':        params.cloud        || '100',
+        'mindate':      params.mindate      || '2000-09-01',
+        'maxdate':      params.maxdate      || '2015-09-01',
+        'sensor_platform' : params.sensor_platform || 'landsat-8'
+      }
+    },
+
+    calcBboxFromXY: function(x, y, z) {
+      var proj = this.map.getProjection();
+      var tileSize = 256 / Math.pow(2,z);
+      var tileBounds = new google.maps.LatLngBounds(
+        proj.fromPointToLatLng(new google.maps.Point(x*tileSize, (y+1)*tileSize)),
+        proj.fromPointToLatLng(new google.maps.Point((x+1)*tileSize, y*tileSize))
+      );
+      var parsedB = tileBounds.toJSON();
+      return [parsedB.west, parsedB.north, parsedB.east, parsedB.south].join(',');
+    },
+
+
+    _getUrlTemplateBySensor: function(sensor) {
+      return sensor === 'sentinel-2' ? 'urlTemplateSentinel2' : 'urlTemplateLandsat8';
     },
 
     _getUrl: function(x, y, z, params) {
-      return new UriTemplate(this.options.urlTemplate).fillFromObject({
-        x: x,
-        y: y,
-        z: z,
+      var urlTemplate = this._getUrlTemplateBySensor(params.sensor_platform);
+      var urlParams = {
         sat: params.color_filter,
         cloud: params.cloud,
         mindate: params.mindate,
         maxdate: params.maxdate,
-        sensor_platform: params.sensor_platform
-      });
+        bbox: this.calcBboxFromXY(x, y, z)
+      }
+      return API_URL + new UriTemplate(this.options[urlTemplate]).fillFromObject(urlParams);
     },
 
     _getInfoWindowUrl: function(params) {
-      return new UriTemplate(this.options.urlInfoWindow).fillFromObject({
+      var urlTemplate = this._getUrlTemplateBySensor(params.sensor_platform);
+      return new UriTemplate(this.options[urlTemplate]).fillFromObject({
         lng: params.lng,
         lat: params.lat,
         cloud: params.cloud,
@@ -86,7 +102,8 @@ define([
     },
 
     _getBoundsUrl: function(params) {
-      return new UriTemplate(this.options.urlBounds).fillFromObject({
+      var urlTemplate = this._getUrlTemplateBySensor(params.sensor_platform);
+      return new UriTemplate(this.options[urlTemplate]).fillFromObject({
         geo: params.geo,
         cloud: params.cloud,
         mindate: moment(params.mindate).format("YYYY-MM-DD"),
@@ -214,24 +231,27 @@ define([
 
     checkForImagesInBounds: function() {
       // // Set Date
-      var today = moment();
-      var tomorrow = today.add('days', 1);
-      var geo = this.getBoundsPolygon();
+      // var today = moment();
+      // var tomorrow = today.add('days', 1);
+      // var geo = this.getBoundsPolygon();
 
-      if (!!geo) {
-        // Set options to get the url of the api
-        var options = _.extend({}, this._getParams(), {
-          geo: geo,
-          tileddate: moment(tomorrow).format("YYYY-MM-DD"),
-        });
-        var url = this._getBoundsUrl(options);
-        $.get(url).done(_.bind(function(response) {
-          this.hidenotification();
-          if (!!response && !!response.data && !response.data.length) {
-            this.notificate('notification-no-images-urthecast');
-          }
-        }, this ));
+      if (this.map.getZoom() < 9) {
+        this.notificate('notification-no-images-highres');
       }
+      // if (!!geo) {
+      //   // Set options to get the url of the api
+      //   var options = _.extend({}, this._getParams(), {
+      //     geo: geo,
+      //     tileddate: moment(tomorrow).format("YYYY-MM-DD"),
+      //   });
+      //   var url = this._getBoundsUrl(options);
+      //   $.get(url).done(_.bind(function(response) {
+      //     this.hidenotification();
+      //     if (!!response && !!response.data && !response.data.length) {
+      //       this.notificate('notification-no-images-highres');
+      //     }
+      //   }, this ));
+      // }
     },
 
     onClickEvent: function(event) {
@@ -240,19 +260,19 @@ define([
       var tomorrow = today.add('days', 1);
 
       // Set options to get the url of the api
-      var options = _.extend({}, this._getParams(), {
-        lng: event.latLng.lng(),
-        lat: event.latLng.lat(),
-        tileddate: moment(tomorrow).format("YYYY-MM-DD"),
-      });
-      var url = this._getInfoWindowUrl(options);
+      // var options = _.extend({}, this._getParams(), {
+      //   lng: event.latLng.lng(),
+      //   lat: event.latLng.lat(),
+      //   tileddate: moment(tomorrow).format("YYYY-MM-DD"),
+      // });
+      // var url = this._getInfoWindowUrl(options);
 
-      $.get(url).done(_.bind(function(response) {
-        this.removeInfoWindow();
-        if (!!response && !!response.data && !!response.data.length) {
-          this.setInfoWindow(response.data[0].attributes, event);
-        }
-      }, this ));
+      // $.get(url).done(_.bind(function(response) {
+      //   this.removeInfoWindow();
+      //   if (!!response && !!response.data && !!response.data.length) {
+      //     this.setInfoWindow(response.data[0].attributes, event);
+      //   }
+      // }, this ));
     },
 
 
@@ -318,6 +338,6 @@ define([
 
   });
 
-  return UrthecastLayer;
+  return SentinelLayer;
 
 });
