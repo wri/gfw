@@ -14,22 +14,26 @@
       <use xlink:href="#icon-arrow"></use>
     </svg>
   </div>
-  <ul class="c-home-applications__background">
+  <ul class="c-home-applications__list">
     <div class="slider js_slider">
       <div class="frame js_frame">
         <ul class="slides js_slides">
           <% apps.each_with_index do |app, i| %>
             <li class="slide js_slide" data-section="<%= app['key'] %>" data-position="<%= i %>">
               <div class="c-home-applications__section">
-                <svg class="icon">
-                  <use xlink:href="#icon-app-<%= app['key'] %>"></use>
-                </svg>
-                <div class="c-home-applications__section-title text -title-big -light -color-1"><%= app['title'] %></div>
+                <div>
+                  <svg class="icon">
+                    <use xlink:href="#icon-app-<%= app['key'] %>"></use>
+                  </svg>
+                  <div class="c-home-applications__section-title text -title-big -light -color-1"><%= app['title'] %></div>
+                </div>
                 <div class="c-home-applications__section-description text -paragraph -color-1"><%= app['description'] %></div>
+                <div class="c-home-applications__background">
+                  <img src="<%= app['background'] %>" />
+                </div>
+                <a href="<%= app['link'] %>" target="_blank" class="c-home-applications__linker"></a>
               </div>
-              <img src="<%= app['background'] %>" />
               <div class="c-home-applications__background-color"></div>
-              <a href="<%= app['link'] %>" target="_blank" class="c-home-applications__linker"></a>
             </li>
           <% end %>
         </ul>
