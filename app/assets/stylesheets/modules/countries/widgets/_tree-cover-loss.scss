@@ -1,0 +1,31 @@
+.m-widget-tree-cover-loss {
+  padding-top: 30px;
+
+  .total {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
+    flex-direction: column;
+    margin-top: 10px;
+
+    .number {
+      font-size: 36px;
+      color: $pink;
+      font-weight: 500;
+
+      .unit {
+        font-size: 16px;
+        font-weight: 400;
+      }
+    }
+
+    .label {
+      font-size: 12px;
+      font-weight: 500;
+      color: $pink;
+      margin-top: 5px;
+    }
+  }
+}

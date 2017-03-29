@@ -14,5 +14,9 @@
 @import "layouts/header";
 
 // Modules
+@import "modules/buttons";
+@import "modules/common/charts/lineChart";
+@import "modules/countries/widgets/tree-cover-loss";
+@import "modules/countries/widgets/near_real_time_alerts";
 @import "modules/countries/show";
 @import "modules/countries/country";

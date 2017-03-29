@@ -1,8 +1,9 @@
 define([
   'jquery',
   'backbone',
-  'underscore'
-], function($, Backbone, _) {
+  'underscore',
+  'countries/views/CountryShowView'
+], function($, Backbone, _, CountryShowView) {
 
   'use strict';
 
@@ -12,7 +13,9 @@ define([
     },
 
     showCountry: function(iso) {
-      console.log(iso);
+      new CountryShowView({
+        iso: iso
+      });
     },
 
     startHistory: function() {
