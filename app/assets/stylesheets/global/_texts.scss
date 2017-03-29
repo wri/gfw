@@ -112,13 +112,8 @@
   }
 
   &.-paragraph-3 {
-    font-size: 24px;
-    letter-spacing: -0.5px;
-    line-height: 32px;
-
-    @media screen and (min-width: $screen-m) {
-      font-size: 22px;
-      line-height: 34px;
-    }
+    font-size: 18px;
+    line-height: 1.67;
+    letter-spacing: -0.4px;
   }
 }
