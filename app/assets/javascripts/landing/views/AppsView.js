@@ -43,7 +43,8 @@ define([
       this.slider = new SliderView({
         el: this.$el.find('.js_slider'),
         sliderOptions: {
-          infinite: 1
+          infinite: 1,
+          slideSpeed: 1000
         }
       });
     },

@@ -47,7 +47,10 @@ define([
 
     _initSlider: function () {
       new SliderView({
-        el: this.$slider
+        el: this.$slider,
+        sliderOptions: {
+          slideSpeed: 500
+        }
       });
     },
 

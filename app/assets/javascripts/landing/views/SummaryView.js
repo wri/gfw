@@ -24,7 +24,10 @@ define([
 
     _initSlider: function(){
       new SliderView({
-        el: this.$el.find('.js_slider')
+        el: this.$el.find('.js_slider'),
+        sliderOptions: {
+          slideSpeed: 500
+        }
       });
     },
 

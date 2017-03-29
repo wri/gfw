@@ -25,6 +25,7 @@ define([
 
     sliderDefaultOptions: {
       enableMouseEvents: true,
+      slideSpeed: 500
     },
 
     initialize: function(settings) {
