@@ -56,6 +56,7 @@ define([
 
     _loadNews: function () {
       newsService.getNews().then(function(results) {
+        this.$slides.html('');
         _.each(results, function(item) {
           this.$slides.append(this.newsItemTpl({
             name: item.name,
