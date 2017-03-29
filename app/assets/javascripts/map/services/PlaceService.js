@@ -60,12 +60,13 @@ define([
     lat: 15,
     lng: 27,
     maptype: 'grayscale',
-    iso: 'ALL'
+    iso: 'ALL',
+    lang: null
   };
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?tab,fit_to_geom,geojson,geostore,wdpaid,begin,end,threshold,dont_analyze,hresolution,tour,subscribe,use,useid,layer_options}',
+    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?tab,fit_to_geom,geojson,geostore,wdpaid,begin,end,threshold,dont_analyze,hresolution,tour,subscribe,use,useid,layer_options,lang}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -197,7 +198,7 @@ define([
      * @return {Object} Params ready for URL
      */
     _destandardizeParams: function(params) {
-      var p = _.extendNonNull({}, urlDefaultsParams, params);
+      var p = _.extendNonNull({}, urlDefaultsParams, _.parseUrl(), params);
       var baselayers = _.pluck(p.baselayers, 'slug');
       p.name = this._name;
       p.baselayers = (baselayers.length > 0) ? baselayers : 'none';
