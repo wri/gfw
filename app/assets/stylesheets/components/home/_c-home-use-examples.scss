@@ -138,18 +138,19 @@ $item-user-padding-screen-m: rem(39px);
     padding: 0 rem(8px);
 
     span {
-      font-size: 24px;
+      font-size: 36px;
       line-height: 0;
 
       &:first-of-type {
         position: absolute;
-        top: 0;
-        left: rem(-8px);
+        left: rem(-10px);
+        top: rem(16px);
       }
 
       &:last-of-type {
         position: relative;
-
+        left: 0;
+        top: rem(7px);
       }
     }
   }
@@ -243,16 +244,13 @@ $item-user-padding-screen-m: rem(39px);
       padding: 0;
 
       span {
-        font-size: 36px;
 
         &:first-of-type {
-          left: rem(-25px);
-          top: rem(15px);
+          left: rem(-18px);
         }
 
         &:last-of-type {
           left: rem(3px);
-          top: rem(4px);
         }
       }
     }
