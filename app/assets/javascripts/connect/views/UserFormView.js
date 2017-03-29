@@ -142,37 +142,43 @@ define([
     },
 
     _submit: function() {
-      var $submitButton = this.$('#submit');
+      this.user.checkLogged()
+        .then(function(response) {
+          var $submitButton = this.$('#submit');
 
-      if ($submitButton.hasClass('disabled')) { return; }
+          if ($submitButton.hasClass('disabled')) { return; }
 
-      $submitButton.hide();
-      this.$('.spinner3').show();
+          $submitButton.hide();
+          this.$('.spinner3').show();
 
-      var formValues = this.$('form').
-        serializeArray().
-        reduce(function(prev, curr) {
-          if (prev[curr.name] !== undefined) {
-            prev[curr.name] = [].concat(prev[curr.name]);
-            prev[curr.name].push(curr.value);
+          var formValues = this.$('form').
+          serializeArray().
+          reduce(function(prev, curr) {
+            if (prev[curr.name] !== undefined) {
+              prev[curr.name] = [].concat(prev[curr.name]);
+              prev[curr.name].push(curr.value);
+            } else {
+              prev[curr.name] = curr.value;
+            }
+            return prev;
+          }, {});
+
+          this.user.set(formValues);
+          if (this.validator.isValid(this.user)) {
+            formValues.profileComplete = true;
+            this.user.set({
+              profileComplete: true
+            });
+            this.user.save(formValues, {patch: true}).then(this._redirect.bind(this));
           } else {
-            prev[curr.name] = curr.value;
+            this.render();
+            mps.publish('Notification/open', ['notification-my-gfw-profile-errors']);
+            window.location.hash = 'user-profile';
           }
-          return prev;
-        }, {});
-
-      this.user.set(formValues);
-      if (this.validator.isValid(this.user)) {
-        formValues.profileComplete = true;
-        this.user.set({
-          profileComplete: true
-        });
-        this.user.save(formValues, {patch: true}).then(this._redirect.bind(this));
-      } else {
-        this.render();
-        mps.publish('Notification/open', ['notification-my-gfw-profile-errors']);
-        window.location.hash = 'user-profile';
-      }
+        }.bind(this))
+        .catch(function(e) {
+          mps.publish('Notification/open', ['notification-my-gfw-not-logged']);
+        }.bind(this));
     },
 
     _redirect: function() {
