@@ -90,6 +90,7 @@ $item-padding-screen-m: rem(40px);
   }
 
   @media screen and (min-width: $screen-m) {
+    min-height: rem(640px);
     padding: rem(57px) 0 rem(40px) 0;
 
     .c-home-news__title span:before {
@@ -132,7 +133,7 @@ $item-padding-screen-m: rem(40px);
   position: relative;
   width: 100%;
   min-height: $item-height;
-  padding: rem(53px) rem(16px) rem(20px) rem(16px);
+  padding: rem(20px) rem(16px);
   background-color: $white;
 
   .icon {
