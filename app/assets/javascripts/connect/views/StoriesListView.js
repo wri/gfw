@@ -34,7 +34,8 @@ define([
   var StoriesListView = Backbone.View.extend({
     template: Handlebars.compile(tpl),
 
-    initialize: function() {
+    initialize: function(router, user) {
+      this.user = user;
       this.model = new StoriesListModel();
       this.stories = new Stories();
       this.listenTo(this.stories, 'sync remove', this.render);
@@ -55,10 +56,11 @@ define([
       if (!!paginatedStories.length) {
         _.each(paginatedStories, function(story) {
           var view = new StoriesListItemView({
-            story: story
+            story: story,
+            user: this.user
           });
           $tableBody.append(view.el);
-        });
+        }.bind(this));
         if (this.stories.length/this.model.get('perpage') > 1) {
           this.initPaginate();
         }
