@@ -29,6 +29,7 @@ define([
   'text!map/templates/legend/us_land_cover.handlebars',
   'text!map/templates/legend/global_land_cover.handlebars',
   'text!map/templates/legend/forma.handlebars',
+  'text!map/templates/legend/forma_month.handlebars',
   'text!map/templates/legend/bra_biomes.handlebars',
   'text!map/templates/legend/plantations_by_type.handlebars',
   'text!map/templates/legend/plantations_by_species.handlebars',
@@ -69,7 +70,7 @@ define([
 ], function(_, Handlebars, enquire, Presenter, datasetsHelper, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
-    global_land_coverTPL, formaTPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
+    global_land_coverTPL, formaTPL, forma_month_TPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
     gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl,
     rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, urtheTpl,mex_forest_catTpl,mex_forest_subcatTpl,
     paTpl, places2watchTPL, mex_landrightsTpl, mexPATpl, perPATpl,mex_land_coverTpl,mex_forest_conservTPL,mex_forest_prodTPL,mex_forest_restTPL, bra_landcoverTPL, lbr_miningTPL,
@@ -114,6 +115,8 @@ define([
       global_land_cover : Handlebars.compile(global_land_coverTPL),
       us_land_cover_change : Handlebars.compile(us_land_coverTPL),
       forma : Handlebars.compile(formaTPL),
+      forma_month_1: Handlebars.compile(forma_month_TPL),
+      forma_month_3: Handlebars.compile(forma_month_TPL),
       bra_biomes : Handlebars.compile(bra_biomesTPL),
       plantations_by_type: Handlebars.compile(gfwPlantationByTypeTpl),
       bra_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
@@ -179,6 +182,7 @@ define([
       'click .js-toggle-threshold' : 'toggleThreshold',
       'click .js-toggle-legend' : 'toogleLegend',
       'click .js-toggle-embed-legend' : 'toogleEmbedLegend',
+      'click .js-select-layer': 'selectLayer',
     },
 
     initialize: function(map,countries) {
@@ -245,7 +249,8 @@ define([
             threshold: options.threshold || 30,
             hresolution: options.hresolution,
             startYear: options.startYear,
-            layerTitle: layer.title
+            layerTitle: layer.title,
+            layerSlug: layer.slug,
           });
         }
 
@@ -439,6 +444,18 @@ define([
       }
     },
 
+    selectLayer: function (e) {
+      var target = $(e.currentTarget);
+      var radios = this.$el.find('.radioswitch');
+
+      if (!target.hasClass('selected')) {
+        var layerSlug = target.data('layer');
+
+        radios.removeClass('selected');
+        target.addClass('selected');
+        this.presenter.toggleLayer(layerSlug);
+      }
+    }
 
 
   });
