@@ -56,6 +56,10 @@
         font-weight: 400;
         align-items: center;
 
+        &:last-child {
+          margin-bottom: 0;
+        }
+
         .number {
           width: 10%;
         }
