@@ -4,7 +4,7 @@ define([
   'underscore',
   'handlebars',
   'text!countries/templates/widgets/nearRealTimeAlerts.handlebars'
-], function($, Backbone, _, Handlebar, tpl) {
+], function($, Backbone, _, Handlebars, tpl) {
 
   'use strict';
 

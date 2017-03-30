@@ -1,12 +1,14 @@
 define([
   'backbone',
   'underscore',
+  'handlebars',
   'd3',
   'moment',
   'text!common/templates/lineGraph.handlebars'
 ], function(
   Backbone,
   _,
+  Handlebars,
   d3,
   moment,
   tpl
