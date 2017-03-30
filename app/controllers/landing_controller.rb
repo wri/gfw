@@ -20,7 +20,7 @@ class LandingController < ApplicationController
       {
         "title" => "Discover the world’s forests through data",
         "paragraph" => "Explore over 100 global and local data sets to learn about conservation, land use, forest communities, and much more.",
-        "button" => "EXPLORE OUT DATA",
+        "button" => "EXPLORE OUR DATA",
         "url" => "/map",
         "background_orientation" => "left"
       },
@@ -69,7 +69,7 @@ class LandingController < ApplicationController
       {
         "profile" => "Company",
         "examples" => [
-          ""
+          "At Mars, deforestation poses a risk to our business – we don’t want our supply chains to be associated with serious environmental issues. We used the PALM risk tool on GFW Commodities to evaluate our palm oil suppliers and help us make decisions about where to source from. With GFW, we were able to turn concerns about deforestation into an actionable method for engaging our suppliers."
         ]
       }
     ]
