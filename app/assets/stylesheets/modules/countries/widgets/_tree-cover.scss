@@ -1,11 +1,40 @@
 .m-widget-tree-cover {
   display: flex;
   flex-wrap: wrap;
+  padding-top: 15px;
 
   .graph {
     width: 100%;
-    min-height: 200px;
     display: flex;
+    flex-wrap: wrap;
+    margin-top: 25px;
+    margin-bottom: 30px;
+
+    .legend {
+      .summary {
+        .heading {
+          font-size: 12px;
+          font-weight: 400;
+          color: $dark;
+          margin-bottom: 10px;
+        }
+        .value {
+          font-size: 70px;
+          font-weight: 500;
+          color: $font-color-4;
+
+          .unit {
+            font-size: 13px;
+            font-weight: 400;
+          }
+        }
+        .label {
+          font-size: 12px;
+          font-weight: 500;
+          color: $font-color-4;
+        }
+      }
+    }
   }
 
   .ranking {
