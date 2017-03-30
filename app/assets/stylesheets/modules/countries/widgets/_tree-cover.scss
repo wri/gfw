@@ -33,6 +33,31 @@
           color: $font-color-4;
         }
       }
+
+      .list {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 26px;
+
+        .item {
+          width: 100%;
+          display: flex;
+          margin-bottom: 10px;
+
+          .icon {
+            width: 12px;
+            height: 12px;
+            border-radius: 12px;
+          }
+
+          .name {
+            font-size: 12px;
+            font-weight: 400;
+            color: $dark;
+            margin-left: 8px;
+          }
+        }
+      }
     }
   }
 

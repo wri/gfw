@@ -21,13 +21,14 @@ define([
     defaults: {
       chartEl: 'pie-graph-svg',
       animationTime: 400,
-      outerRadius: 40,
+      outerRadius: 5,
+      radiusInner: 35,
       removeTimeout: 300,
       margin: {
         top: 0,
-        right: 40,
+        right: 0,
         bottom: 0,
-        left: 40
+        left: 0
       }
     },
 
@@ -70,10 +71,8 @@ define([
 
     render: function() {
       this._setUpGraph();
-      // this._setAxisScale();
-      // this._setDomain();
-      // this._drawAxis();
-      // this._drawGraph();
+      this._drawGraph();
+      this._drawValues();
      },
 
     /**
@@ -119,158 +118,82 @@ define([
     },
 
     /**
-     *  Sets the axis
-     */
-    _setAxisScale: function() {
-      var _this = this;
-      var xTickFormat = d3.time.format(_this.defaults.dateFormat);
-      var yTickFormat = function(d) {
-        return d > 999 ? (d / 1000) + 'k' : d;
-      };
-      var yNumTicks = 4;
-
-      this.x = d3.time.scale()
-        .range([0, this.cWidth]).nice();
-
-      this.y = d3.scale.linear()
-        .range([this.cHeight, 0]).nice();
-
-      this.xAxis = d3.svg.axis()
-        .scale(this.x)
-        .orient('bottom')
-        .innerTickSize(-this.cHeight)
-        .tickValues(this._getTicksValues())
-        .outerTickSize(0)
-        .tickPadding(5)
-        .tickFormat(xTickFormat);
-    },
-
-    /**
-     *  Get the custom ticks
-     */
-    _getTicksValues: function() {
-      var values = [];
-
-      values.push(this.dates[0]);
-      values.push(this.dates[Math.round(((this.dates.length - 1) / 2))]);
-      values.push(this.dates[this.dates.length - 1]);
-
-      return values;
-    },
-
-    /**
-     * Sets the domain
-     */
-    _setDomain: function() {
-      this.x.domain(this.domain.x);
-      this.y.domain(this.domain.y);
-    },
-
-    /**
-     * Draws the axis
-     */
-    _drawAxis: function() {
-      if (this.defaults.xAxisLabels) {
-        // X Axis
-        var xAxis = this.svg.append('g')
-          .attr('class', 'x axis')
-          .attr('transform', 'translate(0,' + (this.cHeight) + ')')
-          .call(this.xAxis);
-
-          xAxis.selectAll('text')
-            .attr('x', this.defaults.paddingXAxisLabels)
-            .style('text-anchor', 'middle')
-            .attr('y', this.defaults.paddingYAxisLabels);
-
-          xAxis.selectAll('line')
-            .attr('x1', this.defaults.paddingXAxisLabels)
-            .attr('x2', this.defaults.paddingXAxisLabels);
-      }
-
-      // Custom domain
-      this.svg.append('g')
-        .attr('class', 'custom-domain-group')
-        .attr('transform', 'translate('+ this.defaults.paddingXAxisLabels +', ' + this.cHeight +')')
-        .append('line')
-          .attr('class', 'curstom-domain')
-          .attr('x1', -this.defaults.paddingAxisLabels)
-          .attr('x2', (this.cWidth  + this.defaults.paddingAxisLabels))
-          .attr('y1', 0)
-          .attr('y2', 0);
-    },
-
-    /**
      * Draws the entire graph
      */
     _drawGraph: function() {
-      this._addDefs();
-      this._drawSolidLine();
-      this._drawDots();
-    },
+      this.arc = d3.svg.arc()
+        .outerRadius(this.radius)
+        .innerRadius(this.defaults.radiusInner);
 
-    /**
-     * Add defs for styling
-     */
-    _addDefs: function() {
-      var gradient = this.svg.append('defs')
-        .append('linearGradient')
-          .attr('id', 'gradient')
-          .attr('x1', '57%')
-          .attr('y1', '50%')
-          .attr('x2', '100%')
-          .attr('y2', '50%');
+      var pie = d3.layout.pie()
+        .value(function(d) { return d.value });
 
-      gradient.append('stop')
-        .attr('offset', '0%')
-        .attr('stop-color', '#DBDBDE')
-        .attr('stop-opacity', 1);
+      var container = this.svg.append('g')
+        .attr('class', 'container')
+        .attr('transform', 'translate(' + (this.cWidth / 2) + ', ' +
+          ((this.cHeight / 2)  - (this.defaults.margin.top / 2)) + ')');
 
-      gradient.append('stop')
-        .attr('offset', '100%')
-        .attr('stop-color', '#FF6699')
-        .attr('stop-opacity', 1);
-    },
-
-    /**
-     * Draws the solid line
-     */
-    _drawSolidLine: function() {
-      var _this = this;
-      var solidLineGroup = this.svg.append('g')
-        .attr('class', 'line-group')
-        .attr('transform', 'translate('+ _this.defaults.paddingXAxisLabels +' ,'+ -this.defaults.paddingAxisLabels + ')');
-
-      this.linePath = d3.svg.line()
-        .x(function(d) { return _this.x(d.date); })
-        .y(function(d) { return _this.y(d.value); })
-        .interpolate(this.defaults.interpolate);
-
-      this.graphLine = solidLineGroup.append('path')
-        .attr('d', this.linePath(this.chartData))
-        .attr('stroke', 'url(#gradient)')
-        .attr('fill', 'none')
-        .attr('stroke-width', 2);
-    },
-
-    /**
-     * Draws the dots
-     */
-    _drawDots: function() {
-      var _this = this;
-      var dotsGroup = this.svg.append('g')
-        .attr('class', 'dots-group')
-        .attr('transform', 'translate('+ _this.defaults.paddingXAxisLabels +', '+ -this.defaults.paddingAxisLabels + ')');
-      var dot = this.chartData[this.chartData.length - 1];
-
-      dotsGroup.append('circle')
-          .attr('class', 'dot')
-          .attr('r', _this.defaults.circleRadius)
-          .attr('cx', function(d) {
-            return _this.x(dot.date)
+      this.pie = container.selectAll('.arc')
+        .data(pie(this.chartData))
+        .enter().append('g')
+          .attr('data-category', function(d) {
+            return d.data.category;
           })
-          .attr('cy', function(d) {
-            return _this.y(dot.value)
-          });
+          .attr('class', 'arc');
+
+      this.pie.append('path')
+        .attr('d', this.arc)
+        .style('fill', function(d) { return d.data.color })
+        .style('stoke', function(d) { return d.data.color })
+        .transition()
+        .duration(this.defaults.animationTime)
+        .attrTween('d', this._tweenPie.bind(this));
+    },
+
+    _drawValues: function() {
+      var path = this.svg.selectAll('.arc');
+
+      path.append('text')
+        .attr('transform', function(d) {
+          var c = this.arc.centroid(d);
+          return 'translate(' + (c[0]-12) + ',' + (c[1]+8) + ')'
+        }.bind(this))
+        .text(function(d) {
+          if (d.value > 0) return d.value + '%'
+        })
+        .attr('class', 'label');
+    },
+
+    /**
+     * Animation event
+     */
+    _tweenPie: function(finish) {
+      var start = {
+        startAngle: 0,
+        endAngle: 0
+      };
+      var i = d3.interpolate(start, finish);
+
+      return function(d) { return this.arc(i(d)); }.bind(this);
+    },
+
+    /**
+     * Animation event
+     */
+    _tweenPieOut: function(b) {
+      var start = {
+        startAngle: b.startAngle,
+        endAngle: b.endAngle
+      };
+
+      b.startAngle = 0;
+      b.endAngle = 0;
+      b.value = 0;
+
+      var i = d3.interpolate(start, b);
+      return function(t) {
+        return this.arc(i(t));
+      }.bidn(this);
     },
 
     /**

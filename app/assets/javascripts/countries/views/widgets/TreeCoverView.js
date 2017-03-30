@@ -27,16 +27,21 @@ define([
 
       this.pieGraph = new PieGraphView({
         el: '#tree-cover-graph',
-        // data: this.data,
         data: [
           {
-            value: 100
+            category: 1,
+            value: 10,
+            color: '#dddde0'
           },
           {
-            value: 500
+            category: 2,
+            value: 50,
+            color: '#168500'
           },
           {
-            value: 200
+            category: 3,
+            value: 20,
+            color: '#97be32'
           }
         ]
       });
