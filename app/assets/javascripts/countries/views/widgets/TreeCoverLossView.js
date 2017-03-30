@@ -23,8 +23,7 @@ define([
     initialize: function(params) {
       this.iso = params.iso;
 
-      $.when(this._getData())
-        .done(this._initWidget.bind(this));
+      this._getData().done(this._initWidget.bind(this));
     },
 
     render: function() {

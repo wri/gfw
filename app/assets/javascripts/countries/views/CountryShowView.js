@@ -4,6 +4,7 @@ define([
   'underscore',
   'handlebars',
   'mps',
+  'countries/views/widgets/TreeCoverView',
   'countries/views/widgets/TreeCoverLossView',
   'countries/views/widgets/NearRealTimeAlertsView'
 ], function($,
@@ -11,6 +12,7 @@ define([
   _,
   Handlebars,
   mps,
+  TreeCoverView,
   TreeCoverLossView,
   NearRealTimeAlertsView) {
 
@@ -21,14 +23,23 @@ define([
 
     initialize: function(params) {
       this.iso = params.iso;
+      this.modules = [];
 
-      new TreeCoverLossView({
-        iso: this.iso
-      });
+      this.initSnapshot();
+    },
 
-      new NearRealTimeAlertsView({
+    initSnapshot: function() {
+      this.modules.push(new TreeCoverView({
         iso: this.iso
-      });
+      }));
+
+      this.modules.push(new TreeCoverLossView({
+        iso: this.iso
+      }));
+
+      this.modules.push(new NearRealTimeAlertsView({
+        iso: this.iso
+      }));
     }
 
   });
