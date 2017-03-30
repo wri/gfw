@@ -25,6 +25,7 @@ define([
     defaults: {
       chartEl: 'line-graph-svg',
       chartClass: 'js-line-graph',
+      xAxisLabels: true,
       interpolate: 'linear',
       dateFormat: '%Y',
       paddingAxisLabels: 10,
@@ -213,31 +214,31 @@ define([
      * Draws the axis
      */
     _drawAxis: function() {
-      var _this = this;
+      if (this.defaults.xAxisLabels) {
+        // X Axis
+        var xAxis = this.svg.append('g')
+          .attr('class', 'x axis')
+          .attr('transform', 'translate(0,' + (this.cHeight) + ')')
+          .call(this.xAxis);
 
-      // X Axis
-      var xAxis = this.svg.append('g')
-        .attr('class', 'x axis')
-        .attr('transform', 'translate(0,' + (this.cHeight) + ')')
-        .call(this.xAxis);
+          xAxis.selectAll('text')
+            .attr('x', this.defaults.paddingXAxisLabels)
+            .style('text-anchor', 'middle')
+            .attr('y', this.defaults.paddingYAxisLabels);
 
-        xAxis.selectAll('text')
-          .attr('x', _this.defaults.paddingXAxisLabels)
-          .style('text-anchor', 'middle')
-          .attr('y', _this.defaults.paddingYAxisLabels);
-
-        xAxis.selectAll('line')
-          .attr('x1', _this.defaults.paddingXAxisLabels)
-          .attr('x2', _this.defaults.paddingXAxisLabels);
+          xAxis.selectAll('line')
+            .attr('x1', this.defaults.paddingXAxisLabels)
+            .attr('x2', this.defaults.paddingXAxisLabels);
+      }
 
       // Custom domain
       this.svg.append('g')
         .attr('class', 'custom-domain-group')
-        .attr('transform', 'translate('+ _this.defaults.paddingXAxisLabels +', ' + this.cHeight +')')
+        .attr('transform', 'translate('+ this.defaults.paddingXAxisLabels +', ' + this.cHeight +')')
         .append('line')
           .attr('class', 'curstom-domain')
-          .attr('x1', -_this.defaults.paddingAxisLabels)
-          .attr('x2', (this.cWidth  + _this.defaults.paddingAxisLabels))
+          .attr('x1', -this.defaults.paddingAxisLabels)
+          .attr('x2', (this.cWidth  + this.defaults.paddingAxisLabels))
           .attr('y1', 0)
           .attr('y2', 0);
     },
