@@ -81,6 +81,14 @@
     padding: 10px;
   }
 
+  &.small {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1;
+    height: 20px;
+    padding: 3px 12px;
+  }
+
 
   // Colors
   &.dark {
