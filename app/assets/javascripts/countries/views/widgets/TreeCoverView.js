@@ -3,8 +3,15 @@ define([
   'backbone',
   'underscore',
   'handlebars',
+  'common/views/PieGraphView',
   'text!countries/templates/widgets/treeCover.handlebars'
-], function($, Backbone, _, Handlebars, tpl) {
+], function(
+  $,
+  Backbone,
+  _,
+  Handlebars,
+  PieGraphView,
+  tpl) {
 
   'use strict';
 
@@ -17,6 +24,22 @@ define([
       this.iso = params.iso;
 
       this.render();
+
+      this.pieGraph = new PieGraphView({
+        el: '#tree-cover-graph',
+        // data: this.data,
+        data: [
+          {
+            value: 100
+          },
+          {
+            value: 500
+          },
+          {
+            value: 200
+          }
+        ]
+      });
     },
 
     render: function() {

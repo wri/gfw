@@ -3,38 +3,31 @@ define([
   'underscore',
   'handlebars',
   'd3',
-  'moment',
-  'text!common/templates/lineGraph.handlebars'
+  'text!common/templates/pieGraph.handlebars'
 ], function(
   Backbone,
   _,
   Handlebars,
   d3,
-  moment,
   tpl
 ) {
 
   'use strict';
 
-  var LineGraphView = Backbone.View.extend({
+  var PieGraphView = Backbone.View.extend({
 
     template: Handlebars.compile(tpl),
 
     defaults: {
-      chartEl: 'line-graph-svg',
-      chartClass: 'js-line-graph',
-      xAxisLabels: true,
-      interpolate: 'linear',
-      dateFormat: '%Y',
-      paddingAxisLabels: 10,
-      paddingXAxisLabels: 20,
-      paddingYAxisLabels: 10,
-      circleRadius: 4.5,
+      chartEl: 'pie-graph-svg',
+      animationTime: 400,
+      outerRadius: 40,
+      removeTimeout: 300,
       margin: {
-        top: 20,
-        right: 35,
-        bottom: 35,
-        left: 0
+        top: 0,
+        right: 40,
+        bottom: 0,
+        left: 40
       }
     },
 
@@ -77,10 +70,10 @@ define([
 
     render: function() {
       this._setUpGraph();
-      this._setAxisScale();
-      this._setDomain();
-      this._drawAxis();
-      this._drawGraph();
+      // this._setAxisScale();
+      // this._setDomain();
+      // this._drawAxis();
+      // this._drawGraph();
      },
 
     /**
@@ -101,19 +94,7 @@ define([
      *  Parses the data for the chart
      */
     _parseData: function() {
-      var tzOffset = new Date().getTimezoneOffset();
-      var dates = [];
-      this.chartData = [];
-
-      for (var indicator in this.data) {
-        var current = this.data[indicator];
-        current.date = moment.utc(current.year.toString())
-          .endOf('year').add(tzOffset, 'minutes').toDate();
-        dates.push(current.date);
-        this.chartData.push(current);
-      }
-
-      this.dates = dates;
+      this.chartData = this.data;
     },
 
     /**
@@ -121,25 +102,20 @@ define([
      */
     _setUpGraph: function() {
       this.chartEl = this.el.querySelector('.' + this.defaults.chartEl);
-      var el = this.chartEl
+      var el = this.chartEl;
       var margin = this.defaults.margin;
-
-      el.innerHTML = '';
-      el.classList.add(this.defaults.chartClass);
-
       this.cWidth = el.clientWidth;
       this.cHeight = el.clientHeight;
-      this.domain = this._getDomain();
 
       this.cWidth = this.cWidth - margin.left - margin.right;
       this.cHeight = this.cHeight - margin.top - margin.bottom;
+      this.radius = Math.min(this.cWidth - this.defaults.outerRadius, this.cHeight - this.defaults.outerRadius) / 2;
 
-      var svg = d3.select(el).append('svg')
-        .attr('width', this.cWidth + margin.left + margin.right + 'px')
-        .attr('height', this.cHeight + margin.top + margin.bottom + 'px');
-
-      this.svg = svg.append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+      this.svg = d3.select(el).append('svg')
+        .attr('width', this.cWidth + margin.left + margin.right)
+        .attr('height', this.cHeight + margin.top + margin.bottom)
+        .append('g')
+          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
     },
 
     /**
@@ -188,24 +164,6 @@ define([
     _setDomain: function() {
       this.x.domain(this.domain.x);
       this.y.domain(this.domain.y);
-    },
-
-    /**
-     *  Get the domain values
-     */
-    _getDomain: function() {
-      var xValues = [];
-      var yValues = [];
-
-      this.chartData.forEach(function(data) {
-        xValues.push(data.date);
-        yValues.push(data.value);
-      });
-
-      return {
-        x: d3.extent(xValues, function(d) { return d; }),
-        y: d3.extent(yValues, function(d) { return d; })
-      };
     },
 
     /**
@@ -344,6 +302,6 @@ define([
 
   });
 
-  return LineGraphView;
+  return PieGraphView;
 
 });

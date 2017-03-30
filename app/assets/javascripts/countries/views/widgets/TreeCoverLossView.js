@@ -36,6 +36,7 @@ define([
       this.data = res.data;
       this.render();
       this.lineGraph = new LineGraphView({
+        el: '#tree-cover-loss-graph',
         data: this.data,
         interpolate: 'basis'
       });
