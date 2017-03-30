@@ -4,6 +4,7 @@ define([
   'underscore',
   'handlebars',
   'mps',
+  'countries/views/CountryHeaderView',
   'countries/views/widgets/TreeCoverView',
   'countries/views/widgets/TreeCoverLossView',
   'countries/views/widgets/TreeCoverLossAlertsView',
@@ -13,6 +14,7 @@ define([
   _,
   Handlebars,
   mps,
+  CountryHeaderView,
   TreeCoverView,
   TreeCoverLossView,
   TreeCoverLossAlertsView,
@@ -30,8 +32,15 @@ define([
         treeCoverLossAlerts: []
       };
 
+      this.initHeader();
       this.initSnapshot();
       this.initCoverLossAlerts();
+    },
+
+    initHeader: function() {
+      this.header = new CountryHeaderView({
+        iso: this.iso
+      });
     },
 
     initSnapshot: function() {

@@ -61,10 +61,11 @@
       var gfw = window.gfw = {
         config: {
           GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>",
-          GFW_MOBILE: 1000
+          GFW_MOBILE: 1000,
+          GFW_API_HOST_PROD: "<%= ENV['GFW_API_HOST_PROD'] %>"
         },
         cacheVersion: "<%= ENV['CACHE_VERSION'] %>",
-        layer_spec: "<%= ENV['LAYER_SPEC'] %>"
+        layer_spec: "<%= ENV['LAYER_SPEC'] %>",
       };
     }
   </script>
