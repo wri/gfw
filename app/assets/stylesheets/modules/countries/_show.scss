@@ -50,11 +50,36 @@
   min-height: 150px;
   padding-right: 30px;
 
+  &.-short {
+    min-height: 0;
+  }
+
   .title {
     font-size: 13px;
     font-weight: 500;
     color: $dark;
     text-transform: uppercase;
+  }
+
+  .text {
+    font-size: 32px;
+    line-height: 1.31;
+    color: #555555;
+    font-weight: 300;
+
+    > .value {
+      color: #6a6ae8;
+      font-weight: 500;
+    }
+  }
+
+  .highlight {
+    color: #6a6ae8;
+    font-size: 36px;
+    line-height: 1.31;
+    > .unit {
+      font-size: 16px;
+    }
   }
 }
 
