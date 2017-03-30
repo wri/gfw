@@ -6,7 +6,7 @@
 define([
   'bluebird', 'uri', 'd3', 'mps', 'moment',
   'abstract/layer/AnimatedCanvasLayerClass',
-  'map/presenters/layers/FormaMonth1LayerPresenter'
+  'map/presenters/layers/FormaMonth3LayerPresenter'
 ], function(
   Promise, UriTemplate, d3, mps, moment,
   AnimatedCanvasLayerClass,
@@ -15,7 +15,9 @@ define([
 
   'use strict';
 
-  var TILE_URL = 'https://storage.googleapis.com/forma-public/Forma250/tiles/global_data/ntd/biweekly/forma_ntd_biweekly_2017_1/v3{/z}{/x}{/y}.png';
+  var TILE_URL = 'https://storage.googleapis.com/forma-public/Forma250/tiles/global_data/biweekly/forma_biweekly_2017_1/v3{/z}{/x}{/y}.png';
+
+
   var START_DATE = '2012-01-01';
   var END_DATE = '2016-12-31';
   var START_YEAR = 2012;
@@ -25,7 +27,7 @@ define([
     return s.substr(s.length - 3);
   };
 
-  var FormaMonth1Layer = AnimatedCanvasLayerClass.extend({
+  var FormaMonth3Layer = AnimatedCanvasLayerClass.extend({
 
     init: function(layer, options, map) {
       this.presenter = new Presenter(this);
@@ -121,6 +123,6 @@ define([
     }
   });
 
-  return FormaMonth1Layer;
+  return FormaMonth3Layer;
 
 });
