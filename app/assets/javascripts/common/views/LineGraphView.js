@@ -18,8 +18,6 @@ define([
 
   var SummaryChart = Backbone.View.extend({
 
-    el: '#line-graph',
-
     template: Handlebars.compile(tpl),
 
     defaults: {

@@ -32,10 +32,6 @@ $switch-font-size: 12px;
       border-radius: 36px;
       cursor: pointer;
 
-      &:not(:last-child) {
-        margin-right: 5px;
-      }
-
       &.active {
         color: $switch-font-color-active;
         background-color: $switch-color;
