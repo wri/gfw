@@ -1,0 +1,55 @@
+$reforestation-legend-color: #555555;
+$reforestation-color: #6a6ae8;
+$reforestation-empty-color: #d8d8d8;
+.m-widget-tree-cover-reforestation {
+
+  .measure-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .measure-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: flex-end;
+    width: 15px;
+    height: 27px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    background-color: $reforestation-empty-color;
+    > span {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background-color: $reforestation-color;
+      transform: scaleY(1);
+      transform-origin: bottom;
+      animation: intro 0.3s ease-in-out;
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url(countries/tree-mask@2x.png);
+      background-size: cover;
+    }
+  }
+
+  .measure-value {
+    font-size: 12px;
+	  line-height: 1.08;
+    color: $reforestation-legend-color;
+  }
+}
+
+@keyframes intro {
+  from {
+    transform: scaleY(0);
+  }
+}

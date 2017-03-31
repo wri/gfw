@@ -32,9 +32,18 @@ define([
     },
 
     render: function() {
+      var value = 519;
+      var unitMeasure = 20;
+      var iconsNumber = value / unitMeasure;
+
       this.$el.html(this.template({
-        value: 519,
-        unit: 'thousand'
+        value: value,
+        unit: 'thousand',
+        unitMeasure: unitMeasure,
+        icons: {
+          number: _.range(Math.floor(iconsNumber)),
+          percentage: iconsNumber % 1
+        }
       }));
     },
 
