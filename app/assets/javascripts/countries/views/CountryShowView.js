@@ -10,6 +10,7 @@ define([
   'countries/views/widgets/TreeCoverReforestationView',
   'countries/views/widgets/TreeCoverLossView',
   'countries/views/widgets/TreeCoverLossAlertsView',
+  'countries/views/widgets/FiresAlertsView',
   'countries/views/widgets/NearRealTimeAlertsView'
 ], function($,
   Backbone,
@@ -22,6 +23,7 @@ define([
   TreeCoverReforestationView,
   TreeCoverLossView,
   TreeCoverLossAlertsView,
+  FiresAlertsView,
   NearRealTimeAlertsView) {
 
   'use strict';
@@ -34,13 +36,15 @@ define([
       this.modules = {
         snapshot: [],
         treeCoverGain: [],
-        treeCoverLossAlerts: []
+        treeCoverLossAlerts: [],
+        firesAlerts: [],
       };
 
       this.initHeader();
       this.initSnapshot();
       this.initCoverGain();
       this.initCoverLossAlerts();
+      this.initFiresAlerts();
     },
 
     initHeader: function() {
@@ -76,7 +80,13 @@ define([
       this.modules.treeCoverLossAlerts.push(new TreeCoverLossAlertsView({
         iso: this.iso
       }));
-    }
+    },
+
+    initFiresAlerts: function() {
+      this.modules.firesAlerts.push(new FiresAlertsView({
+        iso: this.iso
+      }));
+    },
 
   });
   return CountryShowView;
