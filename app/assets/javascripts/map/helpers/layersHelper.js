@@ -6,7 +6,8 @@ define([
   'map/views/layers/LossLayer',
   'map/views/layers/ForestGainLayer',
   'map/views/layers/FormaLayer',
-  'map/views/layers/Forma2016Layer',
+  'map/views/layers/FormaMonth1Layer',
+  'map/views/layers/FormaMonth3Layer',
   'map/views/layers/PeruForma250Layer',
   'map/views/layers/IndonesiaForma250Layer',
   'map/views/layers/BrazilForma250Layer',
@@ -189,7 +190,8 @@ define([
   LossLayer,
   ForestGainLayer,
   FormaLayer,
-  Forma2016Layer,
+  FormaMonth1Layer,
+  FormaMonth3Layer,
   PeruForma250Layer,
   IndonesiaForma250Layer,
   BrazilForma250Layer,
@@ -383,8 +385,12 @@ define([
       view: FormaLayer,
       timelineView: FormaTimeline
     },
-    forma_250_2016: {
-      view: Forma2016Layer,
+    forma_month_1: {
+      view: FormaMonth1Layer,
+      timelineView: FormaTimeline
+    },
+    forma_month_3: {
+      view: FormaMonth3Layer,
       timelineView: FormaTimeline
     },
     peru_forma_250: {
