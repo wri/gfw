@@ -266,3 +266,46 @@
     text-decoration: none;
   }
 }
+
+.widget-placeholder {
+  min-height: 160px;
+  > svg {
+    display: none;
+  }
+
+  &.-no-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > p {
+      font-size: 14px;
+      color: #555555;
+    }
+  }
+
+  &.-loading {
+    position: relative;
+    &:before {
+      content: '';
+      box-sizing: border-box;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 30px;
+      height: 30px;
+      margin-top: -15px;
+      margin-left: -15px;
+      border-radius: 15px;
+      border: 3px solid #E7E7E9;
+      border-top-color: $cGreen;
+      animation: spinner .6s linear infinite;
+    }
+  }
+}
+
+@keyframes spinner{
+  to {
+    transform:rotate(360deg)
+  }
+}

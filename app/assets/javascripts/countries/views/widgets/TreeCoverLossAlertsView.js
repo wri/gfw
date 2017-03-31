@@ -58,21 +58,26 @@ define([
     },
 
     _initWidgets: function() {
-      this.widgetViews = [];
-      this.$widgets.removeClass('loading-placeholder');
-      var keys = Object.keys(this.data);
-      keys.forEach(function(key, index) {
-        this.$widgets.append(this.cardTemplate({
-          ranking: index + 1,
-          alerts: this.data[key].alerts,
-          name: this.data[key].name
-        }));
-        this.widgetViews.push(new LineGraphView({
-          el: '#cover-loss-alert-card-' + (index + 1),
-          data: this.data[key].data,
-          xAxisLabels: false
-        }));
-      }.bind(this));
+      this.$widgets.removeClass('-loading');
+      if (this.data) {
+        this.widgetViews = [];
+        var keys = Object.keys(this.data);
+        keys.forEach(function(key, index) {
+          this.$widgets.append(this.cardTemplate({
+            ranking: index + 1,
+            alerts: this.data[key].alerts,
+            name: this.data[key].name
+          }));
+          this.widgetViews.push(new LineGraphView({
+            el: '#cover-loss-alert-card-' + (index + 1),
+            data: this.data[key].data,
+            xAxisLabels: false
+          }));
+        }.bind(this));
+      } else {
+        this.$widgets.addClass('.-no-data');
+        this.$widgets.html('<p>There are no alerts</p>');
+      }
     },
 
     _getData: function() {
@@ -87,42 +92,46 @@ define([
       });
 
       $.ajax({ url: url, type: 'GET' })
-        .done(function(topResponse){
-          CountryService.getRegionsList({ iso: this.iso })
-            .then(function(results) {
+        .done(function(topResponse) {
+          if (topResponse.data.length > 0) {
+            CountryService.getRegionsList({ iso: this.iso })
+              .then(function(results) {
 
-              topResponse.data.forEach(function(item) {
-                var region = _.findWhere(results, {
-                  id_1: parseInt(item.state_iso.substr(3), 10)
-                });
-                var name =  region ? region.name_1 : 'N/A';
-
-                data[item.state_iso] = {
-                  alerts: NumbersHelper.addNumberDecimals(item.alerts),
-                  data: [],
-                  name: name
-                }
-              });
-
-              var url = API + new UriTemplate(QUERY_DATA).fillFromObject({
-                dataset: DATASET,
-                iso: iso,
-                year: 2017,
-                statesIso: '\'' + topResponse.data.map(function(item) {return item.state_iso}).join('\',\'') + '\'',
-              });
-              $.ajax({ url: url, type: 'GET' })
-                .done(function(dataResponse) {
-                  dataResponse.data.forEach(function(item) {
-                    if (data[item.state_iso] && item.alerts) {
-                      data[item.state_iso].data.push({
-                        date: moment.utc().year(item.year).week(item.week).toString(),
-                        value: item.alerts
-                      })
-                    }
+                topResponse.data.forEach(function(item) {
+                  var region = _.findWhere(results, {
+                    id_1: parseInt(item.state_iso.substr(3), 10)
                   });
-                  promise.resolve(data)
+                  var name =  region ? region.name_1 : 'N/A';
+
+                  data[item.state_iso] = {
+                    alerts: NumbersHelper.addNumberDecimals(item.alerts),
+                    data: [],
+                    name: name
+                  }
                 });
-          }.bind(this))
+
+                var url = API + new UriTemplate(QUERY_DATA).fillFromObject({
+                  dataset: DATASET,
+                  iso: iso,
+                  year: 2017,
+                  statesIso: '\'' + topResponse.data.map(function(item) {return item.state_iso}).join('\',\'') + '\'',
+                });
+                $.ajax({ url: url, type: 'GET' })
+                  .done(function(dataResponse) {
+                    dataResponse.data.forEach(function(item) {
+                      if (data[item.state_iso] && item.alerts) {
+                        data[item.state_iso].data.push({
+                          date: moment.utc().year(item.year).week(item.week).toString(),
+                          value: item.alerts
+                        })
+                      }
+                    });
+                    promise.resolve(data)
+                  });
+            }.bind(this))
+          } else {
+            promise.resolve(false);
+          }
         }.bind(this))
         .fail(function(err){
           promise.reject(err);
