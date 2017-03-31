@@ -1,5 +1,7 @@
 $card-text-color: #555555;
 $card-highlight-color: #ff6699;
+$card-ranking-color: #b6b6ba;
+
 .m-widget-tree-cover-loss-alerts-card {
   min-height: 120px;
 
@@ -20,7 +22,7 @@ $card-highlight-color: #ff6699;
 
       > span {
         font-size: 24px;
-        font-weight: normal;
+        color: $card-ranking-color;
       }
     }
 
@@ -61,6 +63,10 @@ $card-highlight-color: #ff6699;
       }
     }
 
+  }
+  > .card-chart {
+    width: 100%;
+    height: 80px;
   }
   > .card-actions {
     display: flex;

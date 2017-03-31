@@ -6,18 +6,30 @@ define([
   'handlebars',
   'uri',
   'helpers/numbersHelper',
+  'services/CountryService',
   'common/views/LineGraphView',
   'text!countries/templates/widgets/treeCoverLossAlerts.handlebars',
   'text!countries/templates/widgets/treeCoverLossAlertsCard.handlebars'
-], function($, Backbone, _, moment, Handlebars, UriTemplate, NumbersHelper, LineGraphView, tpl, cardTpl) {
+], function(
+  $,
+  Backbone,
+  _,
+  moment,
+  Handlebars,
+  UriTemplate,
+  NumbersHelper,
+  CountryService,
+  LineGraphView,
+  tpl,
+  cardTpl) {
 
   'use strict';
 
   var WIDGETS_NUM = 5;
   var API = window.gfw.config.GFW_API_HOST_PROD;
   var DATASET = 'a98197d2-cd8e-4b17-ab5c-fabf54b25ea0'; // CLIMATE PRODUCTION DATASET
-  var QUERY_TOP = '/query/?sql=select sum(alerts) as alerts, state_iso from {dataset} WHERE country_iso=\'{iso}\' AND year={year} group by state_iso ORDER BY alerts DESC LIMIT {widgetsNum}';
-  var QUERY_DATA = '/query/?sql=select sum(alerts) as alerts, year, week, state_iso from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND state_iso IN({statesIso}) AND week <= 53 group by state_iso, week, year ORDER BY week ASC';
+  var QUERY_TOP = '/query/?sql=select sum(alerts) as alerts, state_iso, state_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} group by state_iso ORDER BY alerts DESC LIMIT {widgetsNum}';
+  var QUERY_DATA = '/query/?sql=select sum(alerts) as alerts, year, week, state_iso from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND state_iso IN({statesIso}) AND week <= 53 AND group by state_iso, week, year ORDER BY week ASC';
 
   var TreeCoverLossView = Backbone.View.extend({
     el: '#widget-tree-cover-loss-alerts',
@@ -52,11 +64,13 @@ define([
       keys.forEach(function(key, index) {
         this.$widgets.append(this.cardTemplate({
           ranking: index + 1,
-          alerts: this.data[key].alerts
+          alerts: this.data[key].alerts,
+          name: this.data[key].name
         }));
         this.widgetViews.push(new LineGraphView({
           el: '#cover-loss-alert-card-' + (index + 1),
-          data: this.data[key].data
+          data: this.data[key].data,
+          xAxisLabels: false
         }));
       }.bind(this));
     },
@@ -74,32 +88,42 @@ define([
 
       $.ajax({ url: url, type: 'GET' })
         .done(function(topResponse){
-          topResponse.data.forEach(function(item) {
-            data[item.state_iso] = {
-              alerts: item.alerts,
-              data: []
-            }
-          });
+          CountryService.getRegionsList({ iso: this.iso })
+            .then(function(results) {
 
-          var url = API + new UriTemplate(QUERY_DATA).fillFromObject({
-            dataset: DATASET,
-            iso: iso,
-            year: 2017,
-            statesIso: '\'' + topResponse.data.map(function(item) {return item.state_iso}).join('\',\'') + '\'',
-          });
-          $.ajax({ url: url, type: 'GET' })
-            .done(function(dataResponse) {
-              dataResponse.data.forEach(function(item) {
-                if (data[item.state_iso]) {
-                  data[item.state_iso].data.push({
-                    date: moment.utc().year(item.year).week(item.week).toString(),
-                    value: item.alerts
-                  })
+              topResponse.data.forEach(function(item) {
+                var region = _.findWhere(results, {
+                  id_1: parseInt(item.state_iso.substr(3), 10)
+                });
+                var name =  region ? region.name_1 : 'N/A';
+
+                data[item.state_iso] = {
+                  alerts: NumbersHelper.addNumberDecimals(item.alerts),
+                  data: [],
+                  name: name
                 }
               });
-              promise.resolve(data)
-            })
-        })
+
+              var url = API + new UriTemplate(QUERY_DATA).fillFromObject({
+                dataset: DATASET,
+                iso: iso,
+                year: 2017,
+                statesIso: '\'' + topResponse.data.map(function(item) {return item.state_iso}).join('\',\'') + '\'',
+              });
+              $.ajax({ url: url, type: 'GET' })
+                .done(function(dataResponse) {
+                  dataResponse.data.forEach(function(item) {
+                    if (data[item.state_iso] && item.alerts) {
+                      data[item.state_iso].data.push({
+                        date: moment.utc().year(item.year).week(item.week).toString(),
+                        value: item.alerts
+                      })
+                    }
+                  });
+                  promise.resolve(data)
+                });
+          }.bind(this))
+        }.bind(this))
         .fail(function(err){
           promise.reject(err);
         });
