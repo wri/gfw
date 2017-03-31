@@ -2,20 +2,22 @@ define([
   'jquery',
   'backbone',
   'underscore',
+  'moment',
   'handlebars',
   'uri',
   'helpers/numbersHelper',
   'common/views/LineGraphView',
   'text!countries/templates/widgets/treeCoverLossAlerts.handlebars',
   'text!countries/templates/widgets/treeCoverLossAlertsCard.handlebars'
-], function($, Backbone, _, Handlebars, UriTemplate, NumbersHelper, LineGraphView, tpl, cardTpl) {
+], function($, Backbone, _, moment, Handlebars, UriTemplate, NumbersHelper, LineGraphView, tpl, cardTpl) {
 
   'use strict';
 
   var WIDGETS_NUM = 5;
-  var API = window.gfw.config.GFW_API_HOST_NEW_API;
-  var DATASET = 'b6489365-58e2-446a-917e-f898cda4dac5';
-  var QUERY = '/query/?sql=select sum(alerts) as alerts from {dataset} WHERE country_iso=\'{iso}\' AND year={year} group by state_iso ORDER BY alerts DESC LIMIT {widgetsNum}';
+  var API = window.gfw.config.GFW_API_HOST_PROD;
+  var DATASET = 'a98197d2-cd8e-4b17-ab5c-fabf54b25ea0'; // CLIMATE PRODUCTION DATASET
+  var QUERY_TOP = '/query/?sql=select sum(alerts) as alerts, state_iso from {dataset} WHERE country_iso=\'{iso}\' AND year={year} group by state_iso ORDER BY alerts DESC LIMIT {widgetsNum}';
+  var QUERY_DATA = '/query/?sql=select sum(alerts) as alerts, year, week, state_iso from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND state_iso IN({statesIso}) AND week <= 53 group by state_iso, week, year ORDER BY week ASC';
 
   var TreeCoverLossView = Backbone.View.extend({
     el: '#widget-tree-cover-loss-alerts',
@@ -31,8 +33,8 @@ define([
     start: function() {
       this.render();
       this.$widgets = this.$('#cla-graphs-container');
-      this._getData().done(function(res) {
-        this.data = res.data;
+      this._getData().done(function(data) {
+        this.data = data;
         this._initWidgets();
       }.bind(this));
     },
@@ -46,34 +48,62 @@ define([
     _initWidgets: function() {
       this.widgetViews = [];
       this.$widgets.removeClass('loading-placeholder');
-      this.data.forEach(function(data, index) {
+      var keys = Object.keys(this.data);
+      keys.forEach(function(key, index) {
         this.$widgets.append(this.cardTemplate({
           ranking: index + 1,
-          alerts: data.alerts
+          alerts: this.data[key].alerts
         }));
-
-        var graphEl = this.$widgets.find('#cover-loss-alert-card-' + index + 1);
-        // if (graphEl) {
-        //   this.widgetViews.push(new LineGraphView({
-        //     el: graphEl,
-        //     data: this.data
-        //   }));
-        // }
-      }.bind(this))
+        this.widgetViews.push(new LineGraphView({
+          el: '#cover-loss-alert-card-' + (index + 1),
+          data: this.data[key].data
+        }));
+      }.bind(this));
     },
 
     _getData: function() {
-      var url = API + new UriTemplate(QUERY).fillFromObject({
+      var promise = $.Deferred();
+      var iso = this.iso;
+      var data = {};
+      var url = API + new UriTemplate(QUERY_TOP).fillFromObject({
         widgetsNum: WIDGETS_NUM,
         dataset: DATASET,
-        iso: this.iso,
+        iso: iso,
         year: 2017, //TODO: change this for months
       });
 
-      return $.ajax({
-        url: url,
-        type: 'GET'
-      });
+      $.ajax({ url: url, type: 'GET' })
+        .done(function(topResponse){
+          topResponse.data.forEach(function(item) {
+            data[item.state_iso] = {
+              alerts: item.alerts,
+              data: []
+            }
+          });
+
+          var url = API + new UriTemplate(QUERY_DATA).fillFromObject({
+            dataset: DATASET,
+            iso: iso,
+            year: 2017,
+            statesIso: '\'' + topResponse.data.map(function(item) {return item.state_iso}).join('\',\'') + '\'',
+          });
+          $.ajax({ url: url, type: 'GET' })
+            .done(function(dataResponse) {
+              dataResponse.data.forEach(function(item) {
+                if (data[item.state_iso]) {
+                  data[item.state_iso].data.push({
+                    date: moment.utc().year(item.year).week(item.week).toString(),
+                    value: item.alerts
+                  })
+                }
+              });
+              promise.resolve(data)
+            })
+        })
+        .fail(function(err){
+          promise.reject(err);
+        });
+      return promise;
     }
   });
   return TreeCoverLossView;

@@ -107,8 +107,8 @@ define([
 
       for (var indicator in this.data) {
         var current = this.data[indicator];
-        current.date = moment.utc(current.year.toString())
-          .endOf('year').add(tzOffset, 'minutes').toDate();
+        current.date = moment.utc(current.date.toString())
+          .add(tzOffset, 'minutes').toDate();
         dates.push(current.date);
         this.chartData.push(current);
       }
