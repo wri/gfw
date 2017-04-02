@@ -6,6 +6,7 @@ define([
   'mps',
   'countries/views/CountryHeaderView',
   'countries/views/widgets/TreeCoverView',
+  'countries/views/widgets/AnnualTreeCoverLossView',
   'countries/views/widgets/TreeCoverGainView',
   'countries/views/widgets/TreeCoverReforestationView',
   'countries/views/widgets/TreeCoverLossView',
@@ -19,6 +20,7 @@ define([
   mps,
   CountryHeaderView,
   TreeCoverView,
+  AnnualTreeCoverLossView,
   TreeCoverGainView,
   TreeCoverReforestationView,
   TreeCoverLossView,
@@ -35,6 +37,7 @@ define([
       this.iso = params.iso;
       this.modules = {
         snapshot: [],
+        treeCoverLoss: [],
         treeCoverGain: [],
         treeCoverLossAlerts: [],
         firesAlerts: [],
@@ -42,6 +45,7 @@ define([
 
       this.initHeader();
       this.initSnapshot();
+      this.initTreeCoverLoss();
       this.initCoverGain();
       this.initCoverLossAlerts();
       this.initFiresAlerts();
@@ -63,6 +67,12 @@ define([
       }));
 
       this.modules.snapshot.push(new NearRealTimeAlertsView({
+        iso: this.iso
+      }));
+    },
+
+    initTreeCoverLoss: function() {
+      this.modules.treeCoverLoss.push(new AnnualTreeCoverLossView({
         iso: this.iso
       }));
     },
