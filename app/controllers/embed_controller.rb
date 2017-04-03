@@ -2,7 +2,7 @@ class EmbedController < ApplicationController
   before_action :check_country_iso, :only => [:countries_show, :countries_show_info]
   layout 'embed'
 
-  # GET /embed/country/:id
+  # GET /embed/countries/:id
   def countries_show
   end
 
@@ -58,3 +58,4 @@ class EmbedController < ApplicationController
         @country
     end
 end
+

@@ -1,0 +1,122 @@
+$cover-text-color: #f14600;
+$card-text-color: #555555;
+$card-ranking-color: #b6b6ba;
+$card-highlight-color-green: #b2d369;
+$card-highlight-color-gold: #ffcd52;
+$card-highlight-color-grey-pink: #bf8893;
+
+.m-widget-fires-alerts-cover {
+  padding: 20px 0 5px 0;
+  margin-bottom: 35px;
+  font-size: 12px;
+  line-height: 1.08;
+  color: $card-text-color;
+  border-bottom: solid 1px #e7e7e9;
+
+  > span {
+    font-size: 70px;
+    font-weight: 500;
+    line-height: 1.23;
+    color: $cover-text-color;
+  }
+}
+
+.m-widget-fires-alerts-card {
+  min-height: 120px;
+  padding-bottom: 48px;
+
+  > .card-content {
+    display: flex;
+    min-height: 100px;
+
+    > .ranking {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      margin-right: 20px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 30px;
+      border: 1px solid rgba($card-text-color, 0.3);
+
+      > span {
+        font-size: 24px;
+        color: $card-ranking-color;
+      }
+    }
+
+    > .card-data {
+
+      .name {
+        display: block;
+        font-size: 12px;
+        line-height: 1.0;
+        letter-spacing: 0.1px;
+        color: $card-text-color;
+        margin-bottom: 10px;
+      }
+
+      .alerts {
+        position: relative;
+        padding-right: 20px;
+
+        > .value {
+          position: relative;
+          font-size: 36px;
+          font-weight: 500;
+          line-height: 1.0;
+
+          &:before {
+            content: '';
+            position: absolute;
+            top: 16px;
+            right: -18px;
+            height: 0;
+            border-style: solid;
+            border-width: 0 4px 8px 4px;
+          }
+
+          &.-worst:before {
+            border-width: 8px 4px 0 4px;
+            top: 32px;
+          }
+
+          &.-green {
+            color: $card-highlight-color-green;
+
+            &:before {
+              border-color: $card-highlight-color-green transparent;
+            }
+          }
+
+          &.-gold {
+            color: $card-highlight-color-gold;
+
+            &:before {
+              border-color: $card-highlight-color-gold transparent;
+            }
+          }
+
+          &.-grey-pink {
+            color: $card-highlight-color-grey-pink;
+
+            &:before {
+              border-color: $card-highlight-color-grey-pink transparent;
+            }
+          }
+        }
+      }
+    }
+
+    .card-actions {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.83;
+      margin-top: 11px;
+
+      a {
+        display: block;
+      }
+    }
+  }
+}

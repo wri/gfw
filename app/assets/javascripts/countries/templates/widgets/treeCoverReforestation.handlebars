@@ -1,0 +1,28 @@
+<div class="widget -short">
+  <div class="row collapse">
+    <div class="column small-12">
+      <h4 class="title">Annual reforestation rate</h4>
+    </div>
+    <div class="column small-12 medium-6">
+      <p class="text">In 2010, the rate of reforestation was <span class="value">{{value}} {{unit}} Ha/year</span></p>
+    </div>
+    <div class="column small-12 medium-6">
+      <div class="m-widget-tree-cover-reforestation">
+        {{#if icons}}
+          <ul class="measure-list">
+          {{#each icons.number}}
+            <li class="measure-icon"><span></span></li>
+          {{/each}}
+          {{#if icons.percentage}}
+            <li class="measure-icon"> <span style="transform: scaleY({{icons.percentage}});"</span> </li>
+          {{/if}}
+          </ul>
+        {{/if}}
+        <div class="legend">
+          <span class="measure-icon"><span></span></span>
+          <span class="measure-value">= {{unitMeasure}} Ha/year</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

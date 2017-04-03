@@ -5,7 +5,7 @@ define([
   'Class',
   'uri',
   'bluebird',
-  'map/services/DataService'
+  'services/DataService'
 ], function (Class, UriTemplate, Promise, ds) {
 
   'use strict';

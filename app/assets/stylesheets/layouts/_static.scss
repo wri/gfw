@@ -1132,7 +1132,7 @@
     }
 
     &.disabled {
-      @include opacity(.5);
+      opacity: 0.5;
     }
 
     &.disabled:hover .source_header {
@@ -1362,7 +1362,7 @@
       background: $cGreen;
       border-radius: 16px;
       &.disabled {
-        @include opacity(.5);
+        opacity: 0.5;
         cursor: default;
       }
       &:hover{

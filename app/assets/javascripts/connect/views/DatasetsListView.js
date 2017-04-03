@@ -9,7 +9,7 @@ define([
   'mps',
   'core/View',
   'helpers/datasetsHelper',
-  'map/services/CoverageService',
+  'services/CoverageService',
   'text!connect/templates/subscriptionDatasetsList.handlebars',
 ], function(_, Handlebars, mps, View, datasetsHelper, CoverageService, datasetTpl) {
 

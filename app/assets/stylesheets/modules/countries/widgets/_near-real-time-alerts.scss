@@ -1,0 +1,55 @@
+.m-widget-near-real-time-alerts {
+  margin-top: 25px;
+
+  .list {
+    display: flex;
+    margin-bottom: 5px;
+
+    .item {
+      // display: flex;
+      // flex-direction: column;
+      max-width: 110px;
+      margin-right: 40px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      .number {
+        font-size: 36px;
+        font-weight: 500;
+        color: $pink;
+        position: relative;
+        display: inline-block;
+
+        &:after {
+          content: '';
+          position: absolute;
+          right: -14px;
+          top: 3px;
+          width: 0;
+          height: 0;
+          border-left: 4px solid transparent;
+          border-right: 4px solid transparent;
+          border-top: 7px solid $pink;
+          clear: both;
+          transform: rotate(-180deg);
+        }
+
+        &.-red {
+          color: $red;
+
+          &:after {
+            border-top-color: $red;
+          }
+        }
+      }
+
+      .text {
+        font-size: 12px;
+        font-weight: 400;
+        color: $dark;
+      }
+    }
+  }
+}

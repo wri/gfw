@@ -1,0 +1,26 @@
+.call-actions-wrapper {
+  width: 100%;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f2f2f3;
+
+  .call-action {
+    padding: 0 20px;
+
+    > span {
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 17px;
+      font-size: 14px;
+      line-height: 1.14;
+      color: #555555;
+      text-transform: uppercase;
+    }
+
+    > .btn {
+      width: 100%;
+    }
+  }
+}

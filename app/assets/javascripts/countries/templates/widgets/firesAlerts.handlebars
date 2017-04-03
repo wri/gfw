@@ -1,0 +1,33 @@
+<div class="widget">
+    <div class="row">
+        <div class="small-12">
+            <h4 class="title">TOTAL FIRE COUNT</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-5">
+            <div class="c-switch">
+                <span class="label">Period</span>
+                <ul class="options">
+                    <li class="active">Past week</li>
+                    <li class="disabled">Past 72 h</li>
+                    <li class="disabled">Past 48 h</li>
+                    <li class="disabled">Past 24 h</li>
+                </ul>
+            </div>
+        </div>
+        <div class="small-4">
+            <div class="c-select">
+                <span class="label">Data shown</span>
+                <div class="wrapper">
+                    <select id="cla-data-shown-select">
+                        <option value="monthly">Fires burning in concessions</option>
+                    </select>
+                    <div class="select-clear" style="display: none;">✕</div>
+                    <div class="select-arrow"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row loading-placeholder" id="fa-graphs-container"></div>
+</div>

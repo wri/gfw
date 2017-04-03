@@ -1,6 +1,6 @@
 define([
   'Class', 'uri', 'moment',
-  'map/services/DataService'
+  'services/DataService'
 ], function (Class, UriTemplate, moment, ds) {
 
   'use strict';

@@ -1,3 +1,13 @@
+@import 'foundation';
+
+// Grid
+$max-container-width: 1600px;
+$min-container-width: 960px;
+$grid-row-width: 1200px;
+
+@include foundation-flex-classes;
+@include foundation-flex-grid;
+
 .wrap {
   max-width: $max-container-width;
   width: 100%;

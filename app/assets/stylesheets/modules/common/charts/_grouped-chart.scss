@@ -1,0 +1,53 @@
+.m-grouped-chart {
+  rect {
+    stroke-width: 2;
+  }
+
+  text {
+    font: 10px sans-serif;
+  }
+
+  .axis text {
+    font: 10px sans-serif;
+  }
+
+  .axis path{
+    fill: none;
+    stroke: #000;
+  }
+
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .axis .tick line {
+    stroke-width: 1;
+    stroke: rgba(0, 0, 0, 0.2);
+  }
+
+  .axisHorizontal path{
+    fill: none;
+  }
+
+  .axisHorizontal line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .axisHorizontal .tick line {
+    stroke-width: 1;
+    stroke: rgba(0, 0, 0, 0.2);
+  }
+
+  .bar {
+    fill: steelblue;
+    fill-opacity: .9;
+  }
+
+  .x.axis path {
+    display: none;
+  }
+}

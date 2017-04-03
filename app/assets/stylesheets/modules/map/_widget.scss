@@ -18,8 +18,8 @@
   position: absolute;
 
   border-radius: 3px;
-  @include box-shadow(0px 0px 3px #666);
-  @include box-sizing(border-box);
+  box-shadow: 0px 0px 3px #666;
+  box-sizing: border-box;
 
   width: 25px;
   height: 25px;

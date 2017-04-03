@@ -1,0 +1,21 @@
+<div class="column small-12 medium-4">
+  <div class="m-widget-tree-cover-loss-alerts-card">
+    <div class="card-content">
+      <div class="ranking">
+        <span>{{ranking}}</span>
+      </div>
+      <div class="card-data">
+        <span class="name">{{name}}</span>
+        <div class="alerts">
+          <span class="value">{{alerts}}</span>
+          <span class="status {{#if isWorst}} -worst{{/if}}"></span>
+        </div>
+      </div>
+    </div>
+    <div class="m-line-chart card-chart" id="cover-loss-alert-card-{{ranking}}"></div>
+    <div class="card-actions">
+      <a class="link" href="#">Hi-Res imagery</a>
+      <a class="link" href="#">Subscribe</a>
+    </div>
+  </div>
+</div>

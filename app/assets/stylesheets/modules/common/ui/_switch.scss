@@ -1,0 +1,46 @@
+$switch-height: 20px;
+$switch-color: #97be32;
+$switch-font-color: #555555;
+$switch-font-color-active: #ffffff;
+$switch-font-size: 12px;
+
+.c-switch {
+  display: inline-block;
+
+  > .label {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.42;
+    color: $switch-font-color;
+    margin-bottom: 4px;
+  }
+
+  > .options {
+    height: $switch-height;
+    display: flex;
+    border: 1px solid $switch-color;
+    background-color: transparent;
+    border-radius: 36px;
+
+    > li {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: $switch-height;
+      color: $switch-font-color;
+      padding: 0 12px;
+      border-radius: 36px;
+      cursor: pointer;
+
+      &.active {
+        color: $switch-font-color-active;
+        background-color: $switch-color;
+      }
+
+      &.disabled {
+        color: rgba($switch-font-color, 0.6);
+        cursor: not-allowed;
+      }
+    }
+  }
+}

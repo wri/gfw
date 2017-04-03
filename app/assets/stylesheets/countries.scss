@@ -1,35 +1,32 @@
-// Compass
 @import "compass/reset";
-@import "compass/css3";
 
-// Images
-@import "logos/*.png";
-@import "country-icons/*.png";
-@import "home-icons/*.png";
-
-// Global
-// This will load all common settings, mixins and styles needed 
-@import "global/global";
+// Settings
+@import "settings/settings";
+@import "global/mixins";
+@import "global/base";
+@import "global/utils";
+@import "global/states";
+@import "global/texts";
 
 // Layouts
-// This will load all common layouts styles
-@import "layouts/layouts";
-
+@import "layouts/foundation-grid";
+@import "layouts/grid";
+@import "layouts/header";
 
 // Modules
-@import "modules/modal";
-@import "modules/modal_new";
-@import "modules/form";
-@import "modules/shared";
 @import "modules/buttons";
-@import "modules/icons";
-@import "modules/slick";
-@import "modules/countries/country";
-@import "modules/countries/overview";
+@import "modules/common/ui/switch";
+@import "modules/common/ui/select";
+@import "modules/common/charts/pie-chart";
+@import "modules/common/charts/line-chart";
+@import "modules/common/charts/grouped-chart";
+@import "modules/countries/widgets/tree-cover";
+@import "modules/countries/widgets/tree-cover-reforestation";
+@import "modules/countries/widgets/tree-cover-loss";
+@import "modules/countries/widgets/tree-cover-loss-alerts";
+@import "modules/countries/widgets/fires-alerts";
+@import "modules/countries/widgets/near-real-time-alerts";
+@import "modules/countries/widgets/annual-tree-cover-loss";
 @import "modules/countries/show";
-@import "modules/dropdowns";
-@import "modules/map/control-threshold";
-@import "modules/notifications";
-
-// Layouts
-@import "layouts/countries";
+@import "modules/countries/country";
+@import "modules/countries/call-to-actions";
