@@ -28,7 +28,7 @@ define([
 
     render: function() {
       this.$el.html(this.template({
-        currentLoss: NumbersHelper.addNumberDecimals(this.data[this.data.length-1].value) || '',
+        currentLoss: NumbersHelper.addNumberDecimals(Math.round(this.data[this.data.length-1].value)) || '',
         country: this.countryData
       }));
       this.$el.removeClass('-loading');

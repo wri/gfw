@@ -16,6 +16,7 @@
   }
 
   &.-loading {
+    min-height: 160px;
     position: relative;
     &:before {
       content: '';

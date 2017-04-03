@@ -68,13 +68,14 @@ define([
 
     render: function() {
       this.$dashboard.html(this.template({}));
+      this.$el.removeClass('-loading');
       this.$dashboard.removeClass('-loading');
     },
 
     start: function() {
       this.initHeader();
       this.initSnapshot();
-      this.initTreeCoverLoss();
+      // this.initTreeCoverLoss();
       this.initCoverGain();
       this.initCoverLossAlerts();
       this.initFiresAlerts();
