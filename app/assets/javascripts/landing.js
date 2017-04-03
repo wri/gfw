@@ -6,33 +6,21 @@ require([
   'underscore',
   'Class',
   'backbone',
-  'amplify',
-  'mps',
-  'views/HeaderView',
-  'views/FooterView',
-  'views/SourceWindowView',
-  'views/SourceMobileFriendlyView',
-  'landing/views/SpinnerView',
-  'landing/views/SlideView',
-  'landing/views/StoriesView',
-  'landing/views/FeedView',
-  'landing/views/TwitterStyleView'
+  'landing/views/CoverView',
+  'landing/views/SummaryView',
+  'landing/views/UseExamplesView',
+  'landing/views/AppsView',
+  'landing/views/NewsView',
 ], function(
   $,
   _,
   Class,
   Backbone,
-  amplify,
-  mps,
-  HeaderView,
-  FooterView,
-  SourceWindowView,
-  SourceMobileFriendlyView,
-  SpinnerView,
-  SlideView,
-  StoriesView,
-  FeedView,
-  TwitterStyleView
+  CoverView,
+  SummaryView,
+  UseExamplesView,
+  AppsView,
+  NewsView
 ) {
 
   'use strict';
@@ -42,36 +30,12 @@ require([
     $el: $('body'),
 
     init: function() {
-      this._initViews();
+      new CoverView();
+      new SummaryView();
+      new UseExamplesView();
+      new AppsView();
+      new NewsView();
     },
-
-    /**
-     * Initialize Landing Views.
-     */
-    _initViews: function() {
-      //shared
-      new HeaderView();
-      new FooterView();
-      new SourceWindowView();
-      new SourceMobileFriendlyView();
-
-
-      //landing
-      new SpinnerView();
-      new SlideView();
-      new StoriesView();
-      new FeedView();
-      new TwitterStyleView();
-
-      // this.initSurvey();
-    },
-
-    initSurvey: function() {
-      if (! !!amplify.store('survey_improve')) {
-        amplify.store('survey_improve', true, { expires: 2628000000 });
-        mps.publish('Source/open',['help_improve_GFW']);
-      }
-    }
 
   });
 
