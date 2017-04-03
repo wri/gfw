@@ -32,6 +32,7 @@ define([
         value: '7,366,733',
         unit: 'Ha'
       }));
+      this.$el.removeClass('-loading');
     },
 
     _getData: function() {

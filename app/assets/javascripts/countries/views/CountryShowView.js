@@ -4,6 +4,7 @@ define([
   'underscore',
   'handlebars',
   'mps',
+  'services/CountryService',
   'countries/views/CountryHeaderView',
   'countries/views/widgets/TreeCoverView',
   'countries/views/widgets/AnnualTreeCoverLossView',
@@ -12,12 +13,14 @@ define([
   'countries/views/widgets/TreeCoverLossView',
   'countries/views/widgets/TreeCoverLossAlertsView',
   'countries/views/widgets/FiresAlertsView',
-  'countries/views/widgets/NearRealTimeAlertsView'
+  'countries/views/widgets/NearRealTimeAlertsView',
+  'text!countries/templates/countryDashboard.handlebars'
 ], function($,
   Backbone,
   _,
   Handlebars,
   mps,
+  CountryService,
   CountryHeaderView,
   TreeCoverView,
   AnnualTreeCoverLossView,
@@ -26,12 +29,15 @@ define([
   TreeCoverLossView,
   TreeCoverLossAlertsView,
   FiresAlertsView,
-  NearRealTimeAlertsView) {
+  NearRealTimeAlertsView,
+  tpl) {
 
   'use strict';
 
   var CountryShowView = Backbone.View.extend({
     el: '#countryShowView',
+
+    template: Handlebars.compile(tpl),
 
     initialize: function(params) {
       this.iso = params.iso;
@@ -43,17 +49,43 @@ define([
         firesAlerts: [],
       };
 
+      this.cache();
+      this.render();
+
+      this.getData().then(function(results) {
+        this.data = results;
+        this.start();
+      }.bind(this));
+    },
+
+    cache: function() {
+      this.$dashboard = this.$el.find('#countryDashboard');
+    },
+
+    getData: function() {
+      return CountryService.showCountry({ iso: this.iso });
+    },
+
+    render: function() {
+      this.$dashboard.html(this.template({}));
+      this.$dashboard.removeClass('-loading');
+    },
+
+    start: function() {
       this.initHeader();
       this.initSnapshot();
       this.initTreeCoverLoss();
       this.initCoverGain();
       this.initCoverLossAlerts();
       this.initFiresAlerts();
+
+      this.$el.find('.widgets > .content').removeClass('-loading');
     },
 
     initHeader: function() {
       this.header = new CountryHeaderView({
-        iso: this.iso
+        iso: this.iso,
+        countryData: this.data
       });
     },
 
@@ -63,7 +95,8 @@ define([
       }));
 
       this.modules.snapshot.push(new TreeCoverLossView({
-        iso: this.iso
+        iso: this.iso,
+        countryData: this.data
       }));
 
       this.modules.snapshot.push(new NearRealTimeAlertsView({

@@ -3,14 +3,12 @@ define([
   'backbone',
   'underscore',
   'handlebars',
-  'services/CountryService',
   'text!countries/templates/countryHeader.handlebars'
 ], function(
   $,
   Backbone,
   _,
   Handlebars,
-  CountryService,
   tpl) {
 
   'use strict';
@@ -22,20 +20,13 @@ define([
 
     initialize: function(params) {
       this.iso = params.iso;
+      this.countryData = params.countryData;
 
-      this.getData();
-    },
-
-    getData: function() {
-      CountryService.showCountry({ iso: this.iso })
-        .then(function(results) {
-          this.data = results;
-          this.render();
-        }.bind(this));
+      this.render();
     },
 
     render: function() {
-      this.$el.html(this.template(this.data));
+      this.$el.html(this.template(this.countryData));
     }
   });
   return CountryHeaderView;

@@ -24,6 +24,7 @@ define([
 
     render: function() {
       this.$el.html(this.template({}));
+      this.$el.removeClass('-loading');
     },
 
     _initWidget: function(res) {

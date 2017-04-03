@@ -65,12 +65,12 @@
     width: 100%;
     border: solid 1px #e7e7e9;
     padding: 30px 40px;
+    color: $dark;
 
     .list {
       .heading {
         font-size: 12px;
         font-weight: 500;
-        color: $dark;
         margin-bottom: 15px;
       }
       .item {

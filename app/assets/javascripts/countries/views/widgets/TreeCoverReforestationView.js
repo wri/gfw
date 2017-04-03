@@ -45,6 +45,7 @@ define([
           percentage: iconsNumber % 1
         }
       }));
+      this.$el.removeClass('-loading');
     },
 
     _getData: function() {

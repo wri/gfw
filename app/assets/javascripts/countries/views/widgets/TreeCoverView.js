@@ -90,6 +90,7 @@ define([
       this.$el.html(this.template({
         totalCover: this.data.totalCover
       }));
+      this.$el.removeClass('-loading');
     }
   });
   return TreeCoverView;

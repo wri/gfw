@@ -21,14 +21,17 @@ define([
 
     initialize: function(params) {
       this.iso = params.iso;
+      this.countryData = params.countryData;
 
       this._getData().done(this._initWidget.bind(this));
     },
 
     render: function() {
       this.$el.html(this.template({
-        currentLoss: NumbersHelper.addNumberDecimals(this.data[this.data.length-1].value) || ''
+        currentLoss: NumbersHelper.addNumberDecimals(this.data[this.data.length-1].value) || '',
+        country: this.countryData
       }));
+      this.$el.removeClass('-loading');
     },
 
     _initWidget: function(res) {

@@ -55,6 +55,7 @@ define([
       this.$el.html(this.template({
         widgetsNum: 5
       }));
+      this.$el.removeClass('-loading');
     },
 
     _initWidgets: function() {
