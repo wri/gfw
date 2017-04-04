@@ -11,12 +11,19 @@
   background-image: url('/assets/home/header-bg.jpg');
 
   h1 {
+    position: relative;
     width: 95%;
     margin-bottom: rem(6px);
+    z-index: 2;
   }
 
-  .c-home-cover__description span {
-    opacity: 0.7;
+  .c-home-cover__description {
+    position: relative;
+    z-index: 2;
+
+    span {
+      opacity: 0.7;
+    }
   }
 
   .c-home-cover__arrow-button {
@@ -28,6 +35,24 @@
     width: rem(60px);
     height: rem(60px);
     display: none;
+    z-index: 2;
+  }
+
+  .c-home-cover__video {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: rem(35px);
+    width: 100%;
+    height: calc(100% - #{rem(35px)});
+    opacity: 0;
+    transition: opacity 1s;
+    overflow: hidden;
+    z-index: 1;
+
+    &.active {
+      opacity: 1;
+    }
   }
 
   @media screen and (min-width: $screen-m) {
@@ -44,6 +69,10 @@
     }
 
     .c-home-cover__arrow-button {
+      display: block;
+    }
+
+    .c-home-cover__video {
       display: block;
     }
   }
