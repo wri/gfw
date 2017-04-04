@@ -95,10 +95,17 @@ define([
     },
 
     _onVideoBackgroundStateChange: function (e) {
-      if (e.data === 1) {
-        this.$videoBackground.addClass('active');
-      } else {
-        this.$videoBackground.removeClass('active');
+      switch (e.data) {
+        case 0:
+          this.$videoBackground.removeClass('active');
+          break;
+        case 1:
+          this.$videoBackground.addClass('active');
+          break;
+        case 2:
+          this.$videoBackground.removeClass('active');
+          this.ytVideoBackground.seekTo(0);
+          break;
       }
     },
 
