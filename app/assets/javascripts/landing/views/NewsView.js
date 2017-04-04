@@ -31,6 +31,11 @@ define([
 
     el: '.c-home-news',
 
+    events: {
+      'click .js-home-news-item-linker': '_onClickItem',
+      'click .js-home-news-mygfw-button': '_onClickMygfwButton'
+    },
+
     newsItemTpl: Handlebars.compile(newsItemTpl),
     newsSliderDotsTpl: Handlebars.compile(newsSliderDotsTpl),
 
@@ -70,7 +75,16 @@ define([
 
         this._initSlider();
       }.bind(this));
-    }
+    },
+
+    _onClickItem: function (e) {
+      var trackLabel = $(e.currentTarget).attr('href');
+      ga('send', 'event', 'Home', 'New on gfw', trackLabel);
+    },
+
+    _onClickMygfwButton: function () {
+      ga('send', 'event', 'Home', 'Go to my_gfw', 'click');
+    },
 
   });
 
