@@ -43,7 +43,7 @@ define([
       this._cache();
       this._setEvents();
 
-      enquire.register("screen and (min-width: 768px)", {
+      enquire.register("screen and (min-width: 415px)", {
         match: function() {
           this._loadVideoBackground();
         }.bind(this)

@@ -39,7 +39,6 @@
   }
 
   .c-home-cover__video {
-    display: none;
     position: absolute;
     left: 0;
     top: rem(35px);
@@ -64,6 +63,13 @@
     z-index: 2;
   }
 
+  @media screen and (max-width: 414px) {
+
+    .c-home-cover__video {
+      display: none;
+    }
+  }
+
   @media screen and (min-width: $screen-m) {
     height: rem(640px);
     padding-top: rem(93px);
@@ -78,10 +84,6 @@
     }
 
     .c-home-cover__arrow-button {
-      display: block;
-    }
-
-    .c-home-cover__video {
       display: block;
     }
   }
