@@ -21,14 +21,14 @@ class LandingController < ApplicationController
         "title" => "Discover the world’s forests through data",
         "paragraph" => "Explore over 100 global and local data sets to learn about conservation, land use, forest communities, and much more.",
         "button" => "EXPLORE OUR DATA",
-        "url" => "/map",
+        "url" => "/map/3/16.52/0.98/ALL/grayscale/loss/607,556,580,592?tab=analysis-tab&begin=2001-01-01&end=2016-01-01&threshold=30&dont_analyze=true",
         "background_orientation" => "left"
       },
       {
         "title" => "Research made easy",
         "paragraph" => "Analyze forest change and investigate trends anywhere in the world with just a few clicks.",
         "button" => "START YOUR RESEARCH",
-        "url" => "/map/3/15.00/27.00/ALL/grayscale/loss,forestgain?tab=analysis-tab&begin=2001-01-01&end=2015-01-01&threshold=30&dont_analyze=true",
+        "url" => "/map/5/-9.74/-65.37/PER/grayscale/loss?tab=analysis-tab&begin=2001-01-01&end=2016-01-01&threshold=30",
         "background_orientation" => "right"
       },
       {
