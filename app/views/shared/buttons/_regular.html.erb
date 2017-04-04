@@ -1,8 +1,8 @@
 <%
   url ||= nil
+  buttonClass ||= ''
 %>
-<div class="c-regular-button -<%= color %>">
-  <%= text %>
+<div class="c-regular-button -<%= color %> <%= buttonClass %>" data-text="<%= text %>">
   <% if url.present? %>
     <%= link_to '', url, class: 'c-regular-button__linker' %>
   <% end %>

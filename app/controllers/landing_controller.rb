@@ -21,21 +21,21 @@ class LandingController < ApplicationController
         "title" => "Discover the world’s forests through data",
         "paragraph" => "Explore over 100 global and local data sets to learn about conservation, land use, forest communities, and much more.",
         "button" => "EXPLORE OUR DATA",
-        "url" => "/map",
+        "url" => "/map/3/16.52/0.98/ALL/grayscale/loss/607,556,580,592?tab=analysis-tab&begin=2001-01-01&end=2016-01-01&threshold=30&dont_analyze=true",
         "background_orientation" => "left"
       },
       {
         "title" => "Research made easy",
         "paragraph" => "Analyze forest change and investigate trends anywhere in the world with just a few clicks.",
         "button" => "START YOUR RESEARCH",
-        "url" => "/map/3/15.00/27.00/ALL/grayscale/loss,forestgain?tab=analysis-tab&begin=2001-01-01&end=2015-01-01&threshold=30&dont_analyze=true",
+        "url" => "/map/5/-9.74/-65.37/PER/grayscale/loss?tab=analysis-tab&begin=2001-01-01&end=2016-01-01&threshold=30",
         "background_orientation" => "right"
       },
       {
         "title" => "A suite of tools",
         "paragraph" => "Find out about the connections between deforestation and climate change, fires and haze, water security, and commodity supply chains with our specialized web applications.",
         "button" => "BROWSE OUR APPS",
-        "url" => "/gallery",
+        "url" => "http://developers.globalforestwatch.org/gallery/",
         "background_orientation" => "right"
       },
       {
@@ -78,28 +78,28 @@ class LandingController < ApplicationController
         "key" => "fires",
         "title" => "Fires",
         "description" => "Track fires and haze in the ASEAN region. View the latest data on fire locations and air quality and do you own analysis",
-        "background" => "/assets/home/fires@2x.png",
+        "background" => "/assets/home/fires@2x.jpg",
         "link" => "http://fires.globalforestwatch.org"
       },
       {
         "key" => "climate",
         "title" => "Climate",
         "description" => "Track carbon emissions and removals in forest landscapes",
-        "background" => "/assets/home/climate@2x.png",
+        "background" => "/assets/home/climate@2x.jpg",
         "link" => "http://climate.globalforestwatch.org"
       },
       {
         "key" => "commodities",
         "title" => "Commodities",
         "description" => "Identify deforestation risk in commodity supply chains",
-        "background" => "/assets/home/commodities@2x.png",
+        "background" => "/assets/home/commodities@2x.jpg",
         "link" => "http://commodities.globalforestwatch.org"
       },
       {
         "key" => "water",
         "title" => "Water",
         "description" => "View critical watershed information, understand type and severity of threats such as forest changes to watershed health, and screen for cost-effective, sustainable solutions",
-        "background" => "/assets/home/water@2x.png",
+        "background" => "/assets/home/water@2x.jpg",
         "link" => "http://water.globalforestwatch.org/"
       }
     ]

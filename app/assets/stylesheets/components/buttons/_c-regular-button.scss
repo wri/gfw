@@ -11,6 +11,10 @@
   align-items: center;
   cursor: pointer;
 
+  &:before {
+    content: attr(data-text);
+  }
+
   &.-green {
     background-color: $green-gfw;
     color: $white;

@@ -40,6 +40,7 @@ body > header {
 .c-default-header-navigation {
   display: none;
   align-items: center;
+  justify-content: flex-end;
   height: 100%;
   width: calc(100% - #{$logo-size});
   margin-left: $logo-size;
@@ -57,6 +58,10 @@ body > header {
 
     &:first-of-type {
       margin-left: rem(20px);
+    }
+
+    &:last-of-type {
+      padding-right: 0;
     }
 
     a {
