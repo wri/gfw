@@ -78,28 +78,28 @@ class LandingController < ApplicationController
         "key" => "fires",
         "title" => "Fires",
         "description" => "Track fires and haze in the ASEAN region. View the latest data on fire locations and air quality and do you own analysis",
-        "background" => "/assets/home/fires@2x.png",
+        "background" => "/assets/home/fires@2x.jpg",
         "link" => "http://fires.globalforestwatch.org"
       },
       {
         "key" => "climate",
         "title" => "Climate",
         "description" => "Track carbon emissions and removals in forest landscapes",
-        "background" => "/assets/home/climate@2x.png",
+        "background" => "/assets/home/climate@2x.jpg",
         "link" => "http://climate.globalforestwatch.org"
       },
       {
         "key" => "commodities",
         "title" => "Commodities",
         "description" => "Identify deforestation risk in commodity supply chains",
-        "background" => "/assets/home/commodities@2x.png",
+        "background" => "/assets/home/commodities@2x.jpg",
         "link" => "http://commodities.globalforestwatch.org"
       },
       {
         "key" => "water",
         "title" => "Water",
         "description" => "View critical watershed information, understand type and severity of threats such as forest changes to watershed health, and screen for cost-effective, sustainable solutions",
-        "background" => "/assets/home/water@2x.png",
+        "background" => "/assets/home/water@2x.jpg",
         "link" => "http://water.globalforestwatch.org/"
       }
     ]
