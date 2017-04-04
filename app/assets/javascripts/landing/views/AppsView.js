@@ -16,8 +16,9 @@ define([
     el: '.c-home-applications',
 
     events: {
-      'click .js_slide_prev' : '_onClickPrevSlide',
-      'click .js_slide_next' : '_onClickNextSlide',
+      'click .js_slide_prev': '_onClickPrevSlide',
+      'click .js_slide_next': '_onClickNextSlide',
+      'click .js-home-applications-linker': '_onClickApp'
     },
 
     options: {
@@ -55,6 +56,11 @@ define([
 
     _onClickNextSlide: function() {
       this.slider.$slider.next();
+    },
+
+    _onClickApp: function (e) {
+      var trackLabel = $(e.currentTarget).closest('li').data('section');
+      ga('send', 'event', 'Home', 'Click app', trackLabel);
     },
 
   });
