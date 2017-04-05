@@ -25,13 +25,6 @@ class LandingController < ApplicationController
         "background_orientation" => "left"
       },
       {
-        "title" => "Research made easy",
-        "paragraph" => "Analyze forest change and investigate trends anywhere in the world with just a few clicks.",
-        "button" => "START YOUR RESEARCH",
-        "url" => "/map/5/-9.74/-65.37/PER/grayscale/loss?tab=analysis-tab&begin=2001-01-01&end=2016-01-01&threshold=30",
-        "background_orientation" => "right"
-      },
-      {
         "title" => "A suite of tools",
         "paragraph" => "Find out about the connections between deforestation and climate change, fires and haze, water security, and commodity supply chains with our specialized web applications.",
         "button" => "BROWSE OUR APPS",
@@ -43,6 +36,13 @@ class LandingController < ApplicationController
         "paragraph" => "Read the latest stories and findings about forests from our team of researchers.",
         "button" => "START LEARNING",
         "url" => "http://blog.globalforestwatch.org/",
+        "background_orientation" => "right"
+      },
+      {
+        "title" => "Research made easy",
+        "paragraph" => "Analyze forest change and investigate trends anywhere in the world with just a few clicks.",
+        "button" => "START YOUR RESEARCH",
+        "url" => "/map/5/-9.74/-65.37/PER/grayscale/loss?tab=analysis-tab&begin=2001-01-01&end=2016-01-01&threshold=30",
         "background_orientation" => "right"
       }
     ]
