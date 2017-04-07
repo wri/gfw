@@ -6,7 +6,7 @@ define([
   'backbone',
   'mps',
   'handlebars',
-  'text!landing/templates/paginationSlider.handlebars',
+  'text!stories/templates/paginationSlider.handlebars',
   'text!stories/templates/storyModal.handlebars',
 ], function($, Backbone, mps, Handlebars, tpl, tplModal) {
 

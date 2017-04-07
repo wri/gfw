@@ -1,0 +1,48 @@
+.c-regular-button {
+  position: relative;
+  width: rem(200px);
+  height: rem(48px);
+  border-radius: rem(27px);
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: 0.1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:before {
+    content: attr(data-text);
+  }
+
+  &.-green {
+    background-color: $green-gfw;
+    color: $white;
+
+    &:hover {
+      background-color: darken($green-gfw, 10%);
+    }
+  }
+
+  &.-white {
+    background-color: $white;
+    color: $green-gfw;
+
+    &:hover {
+      background-color: darken($white, 10%);
+    }
+  }
+
+  .c-regular-button__linker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media screen and (min-width: $screen-m) {
+    height: rem(39px);
+    font-size: 14px;
+  }
+}
