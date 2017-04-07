@@ -6,13 +6,7 @@ define([
   'map/views/layers/LossLayer',
   'map/views/layers/ForestGainLayer',
   'map/views/layers/FormaLayer',
-  'map/views/layers/FormaMonth1Layer',
   'map/views/layers/FormaMonth3Layer',
-  'map/views/layers/PeruForma250Layer',
-  'map/views/layers/IndonesiaForma250Layer',
-  'map/views/layers/BrazilForma250Layer',
-  'map/views/layers/LaosForma250Layer',
-  'map/views/layers/DrcForma250Layer',
   'map/views/layers/FormaCoverLayer',
   'map/views/layers/Forma250CoverLayer',
   'map/views/layers/ImazonLayer',
@@ -188,13 +182,7 @@ define([
   LossLayer,
   ForestGainLayer,
   FormaLayer,
-  FormaMonth1Layer,
   FormaMonth3Layer,
-  PeruForma250Layer,
-  IndonesiaForma250Layer,
-  BrazilForma250Layer,
-  LaosForma250Layer,
-  DrcForma250Layer,
   FormaCoverLayer,
   Forma250CoverLayer,
   ImazonLayer,
@@ -381,33 +369,9 @@ define([
       view: FormaLayer,
       timelineView: FormaTimeline
     },
-    forma_month_1: {
-      view: FormaMonth1Layer,
-      timelineView: FormaTimeline
-    },
     forma_month_3: {
       view: FormaMonth3Layer,
       timelineView: FormaTimeline
-    },
-    peru_forma_250: {
-      view: PeruForma250Layer,
-      timelineView: Forma250Timeline
-    },
-    brazil_forma_250: {
-      view: BrazilForma250Layer,
-      timelineView: Forma250Timeline
-    },
-    indonesia_forma_250: {
-      view: IndonesiaForma250Layer,
-      timelineView: Forma250Timeline
-    },
-    laos_forma_250: {
-      view: LaosForma250Layer,
-      timelineView: Forma250Timeline
-    },
-    drc_forma_250: {
-      view: DrcForma250Layer,
-      timelineView: Forma250Timeline
     },
     forma_cover: {
       view: FormaCoverLayer
