@@ -1,0 +1,16 @@
+test:
+  build: .
+  command: test
+  volumes:
+    - .:/rw_dataset
+  links:
+    - postgres
+    - redis
+  env_file: test.env
+
+postgres:
+  image: postgres
+
+redis:
+  image: redis
+  container_name: redis_rw_dataset

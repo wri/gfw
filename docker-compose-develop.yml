@@ -1,0 +1,19 @@
+web:
+  build: .
+  command: develop
+  volumes:
+    - .:/rw_dataset
+  ports:
+    - '3000:3000'
+  links:
+    - postgres
+    - redis
+  env_file: dev.env
+
+postgres:
+  image: postgres
+  container_name: postgres_rw_dataset
+
+redis:
+  image: redis
+  container_name: redis_rw_dataset
