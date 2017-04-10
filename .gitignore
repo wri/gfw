@@ -46,4 +46,4 @@ todo.todo
 .byebug_history
 
 # Ignore environment files
-dev.env
+.dev.env
