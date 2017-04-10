@@ -6,17 +6,15 @@
 define([
   'bluebird', 'uri', 'd3', 'mps', 'moment',
   'abstract/layer/AnimatedCanvasLayerClass',
+  'map/services/FormaService',
   'map/presenters/layers/FormaMonth3LayerPresenter'
 ], function(
   Promise, UriTemplate, d3, mps, moment,
   AnimatedCanvasLayerClass,
-  Presenter
+  FormaService, Presenter
 ) {
 
   'use strict';
-
-  var TILE_URL = 'https://storage.googleapis.com/forma-public/Forma250/tiles/global_data/biweekly/forma_biweekly_2017_1/v3{/z}{/x}{/y}.png';
-
 
   var START_DATE = '2012-01-01';
   var END_DATE = '2016-12-31';
@@ -43,7 +41,19 @@ define([
         moment.utc(options.currentDate[1]) : moment.utc(),
       ];
 
+      this.tileUrl = 'https://storage.googleapis.com/forma-public/Forma250/tiles/global_data/biweekly/forma_biweekly_2017_5/v1{/z}{/x}{/y}.png';
       this.maxDate = this.currentDate[1];
+      // setTimeout(function() {
+      //   this.tileUrl = 'https://storage.googleapis.com/forma-public/Forma250/tiles/global_data/biweekly/forma_biweekly_2017_5/v1' + '{/z}{/x}{/y}.png';
+      //   this._checkMaxDate('2017-03-06');
+      //   this.updateTiles();
+      // }.bind(this), 1000)
+      // FormaService.getTileUrl()
+      //   .then(function(data) {
+      //     this.tileUrl = data.url + '{/z}{/x}{/y}.png';
+      //     this._checkMaxDate(data.date);
+      //     this.updateTiles();
+      //   }.bind(this))
     },
 
     _getLayer: function() {
@@ -58,7 +68,8 @@ define([
     },
 
     _getUrl: function(x, y, z) {
-      return new UriTemplate(TILE_URL).fillFromObject({
+      debugger;
+      return new UriTemplate(this.tileUrl).fillFromObject({
         x: x,
         y: y,
         z: z
