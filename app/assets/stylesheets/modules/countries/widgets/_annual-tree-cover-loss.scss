@@ -1,3 +1,25 @@
+.filter-list {
+  width: 100%;
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 40px;
+
+  .filter {
+    margin-right: 35px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    .label {
+      font-size: 12px;
+      font-weight: 400;
+      color: $dark;
+      margin-bottom: 8px;
+    }
+  }
+}
+
 .m-widget-annual-tree-cover-loss {
   padding-top: 30px;
 

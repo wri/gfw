@@ -75,7 +75,7 @@ define([
     start: function() {
       this.initHeader();
       this.initSnapshot();
-      // this.initTreeCoverLoss();
+      this.initTreeCoverLoss();
       this.initCoverGain();
       this.initCoverLossAlerts();
       this.initFiresAlerts();
