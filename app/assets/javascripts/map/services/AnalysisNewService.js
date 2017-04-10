@@ -11,6 +11,7 @@ define([
 
   var APIURL = window.gfw.config.GFW_API_HOST_NEW_API;
 
+  var FORMA_URL = 'http://api.forma-250.appspot.com/activity/gfw?g={geojson}';
   var APIURLS = {
     'draw'         : '/{dataset}{?geostore,period,thresh,gladConfirmOnly}',
     'country'      : '/{dataset}/admin{/country}{/region}{?period,thresh,gladConfirmOnly}',
@@ -62,7 +63,9 @@ define([
     },
 
     getUrl: function() {
-      return new UriTemplate(APIURLS[this.analysis.type]).fillFromObject(this.analysis);
+      return this.analysis.type !== 'draw' && this.analysis.dataset === 'forma_month_3'
+        new UriTemplate(FORMA_URL).fillFromObject({}) // TODO: get drawed geojson
+        new UriTemplate(APIURLS[this.analysis.type]).fillFromObject(this.analysis)
     },
 
     buildAnalysisFromStatus: function(status) {
