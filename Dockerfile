@@ -1,13 +1,12 @@
-FROM ruby:2.3.1-alpine
+FROM damireh/ruby-2.3.1-node-6.9.4
 MAINTAINER Sebastian Schkudlara "sebastian.schkudlara@vizzuality.com"
 
-ENV BUILD_PACKAGES bash curl-dev build-base libxml2-dev libxslt-dev postgresql-dev
+ENV BUILD_PACKAGES bash curl build-essential libxml2 imagemagick libmagickcore-dev libmagickwand-dev
 
 # Update and install all of the required packages.
 # At the end, remove the apk cache
-RUN apk update && \
-    apk upgrade && \
-    apk add $BUILD_PACKAGES && \
+RUN apt-get update && \
+    apt-get install -y $BUILD_PACKAGES && \
     rm -rf /var/cache/apk/*
 
 RUN gem install bundler --no-ri --no-rdoc
@@ -15,15 +14,19 @@ RUN gem install bundler --no-ri --no-rdoc
 # Use libxml2, libxslt a packages from alpine for building nokogiri
 RUN bundle config build.nokogiri
 
-RUN mkdir /rw_dataset
+RUN mkdir /gfw
 
-WORKDIR /rw_dataset
+ADD bower.json /gfw/bower.json
+RUN npm install -g grunt-cli bower
+
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 RUN bundle install --jobs 20 --retry 5
 
-ADD . /rw_dataset
+ADD . /gfw
 
-EXPOSE 3000
+
+WORKDIR /gfw
+EXPOSE 5000
 
 ENTRYPOINT ["./entrypoint.sh"]
