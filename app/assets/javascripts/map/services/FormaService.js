@@ -39,16 +39,10 @@ define([
         contentType: 'application/json; charset=utf-8',
         decoder: function ( data, status, xhr, success, error ) {
           if ( status === "success" ) {
-            console.log('success');
             success( data, xhr );
           } else if ( status === "fail" || status === "error" ) {
-            console.log('faoils');
             error(xhr.statusText);
-          } else if ( status === "abort") {
-            console.log('abort');
-
-          } else {
-            console.log('meradaoyat');
+          } else if ( status !== "abort") {
             error(xhr.statusText);
           }
         }

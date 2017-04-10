@@ -22,15 +22,26 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Timeline/date-change': function(layerSlug, date) {
-        if (this.view.getName() !== layerSlug) {
-          return;
+      'TorqueTimeline/date-change': function(layerName, date) {
+        if (this.view.getName() === layerName) {
+          this.view.setCurrentDate(date);
+          this.view.stop();
         }
-        this.view.setCurrentDate(date);
-      }
-    }, {
-      'Threshold/update': function(threshold) {
-        this.view.setThreshold(threshold);
+      },
+      'Timeline/date-range-change': function(layerName, dates) {
+        if (this.view.getName() === layerName) {
+          this.view.setCurrentDate(dates);
+          this.view.stop();
+        }
+      },
+      'Timeline/toggle-playing': function() {
+        this.view.toggle();
+      },
+      'Timeline/start-playing': function() {
+        this.view.start();
+      },
+      'Timeline/stop-playing': function() {
+        this.view.stop();
       }
     }],
 
