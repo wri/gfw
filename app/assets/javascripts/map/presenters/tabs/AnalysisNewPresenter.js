@@ -162,7 +162,11 @@ define([
         name: 'umd_as_it_happens_idn',
         slug: 'glad-alerts',
         subscription: true
-      },
+      }, {
+        name: 'forma_month_3',
+        slug: 'forma_month_3',
+        subscription: false
+      }
     ],
 
     usenames: ['mining', 'oilpalm', 'fiber', 'logging'],

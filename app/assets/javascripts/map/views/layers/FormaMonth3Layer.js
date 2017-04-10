@@ -54,6 +54,9 @@ define([
       //     this._checkMaxDate(data.date);
       //     this.updateTiles();
       //   }.bind(this))
+      // $.getJSON( "http://api.forma-250.appspot.com/tiles/delta", function(data) {
+      //   console.log(data)
+      // })
     },
 
     _getLayer: function() {
@@ -68,7 +71,6 @@ define([
     },
 
     _getUrl: function(x, y, z) {
-      debugger;
       return new UriTemplate(this.tileUrl).fillFromObject({
         x: x,
         y: y,
