@@ -17,7 +17,6 @@ define([
   'use strict';
 
   var START_DATE = '2012-01-01';
-  var END_DATE = '2016-12-31';
   var START_YEAR = 2012;
 
   var padNumber = function(number) {
@@ -40,33 +39,21 @@ define([
         (!!options.currentDate && !!options.currentDate[1]) ?
         moment.utc(options.currentDate[1]) : moment.utc(),
       ];
-
-      this.tileUrl = 'https://storage.googleapis.com/forma-public/Forma250/tiles/global_data/biweekly/forma_biweekly_2017_5/v1{/z}{/x}{/y}.png';
       this.maxDate = this.currentDate[1];
-      // setTimeout(function() {
-      //   this.tileUrl = 'https://storage.googleapis.com/forma-public/Forma250/tiles/global_data/biweekly/forma_biweekly_2017_5/v1' + '{/z}{/x}{/y}.png';
-      //   this._checkMaxDate('2017-03-06');
-      //   this.updateTiles();
-      // }.bind(this), 1000)
-      // FormaService.getTileUrl()
-      //   .then(function(data) {
-      //     this.tileUrl = data.url + '{/z}{/x}{/y}.png';
-      //     this._checkMaxDate(data.date);
-      //     this.updateTiles();
-      //   }.bind(this))
-      // $.getJSON( "http://api.forma-250.appspot.com/tiles/delta", function(data) {
-      //   console.log(data)
-      // })
     },
 
     _getLayer: function() {
       return new Promise(function(resolve) {
-        this._checkMaxDate();
-        mps.publish('Place/update', [{
-          go: false
-        }]);
-
-        resolve(this);
+        FormaService.getTileUrl()
+          .then(function(data) {
+            this.tileUrl = data.url + '{/z}{/x}{/y}.png';
+            this._checkMaxDate(data.date);
+            mps.publish('Torque/date-range-change', [this.currentDate]);
+            mps.publish('Place/update', [{
+              go: false
+            }]);
+            resolve(this);
+          }.bind(this));
       }.bind(this));
     },
 
@@ -78,9 +65,9 @@ define([
       });
     },
 
-    _checkMaxDate: function() {
-      var maxDataDate = moment.utc(END_DATE);
-      if (this.maxDate.isAfter(maxDataDate)) {
+    _checkMaxDate: function(date) {
+      var maxDataDate = moment.utc(date);
+      if (this.maxDate.isBefore(maxDataDate)) {
         this.maxDate = maxDataDate;
         this.currentDate[1] = this.maxDate;
       }

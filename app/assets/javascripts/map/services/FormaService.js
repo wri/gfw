@@ -18,7 +18,6 @@ define([
         var requestConfig = {
           resourceId: GET_TILE_URL_ID,
           success: function(res, status) {
-            debugger;
             resolve(res, status);
           },
           error: function(errors) {
@@ -32,11 +31,10 @@ define([
 
     defineRequest: function (id, url, cache) {
       ds.define(id, {
-        cache: cache,
+        cache: false,
         url: url,
         type: 'GET',
         dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
         decoder: function ( data, status, xhr, success, error ) {
           if ( status === "success" ) {
             success( data, xhr );
