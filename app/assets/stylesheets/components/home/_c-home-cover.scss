@@ -2,27 +2,35 @@
   position: relative;
   height: rem(448px);
   padding-top: rem(88px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   background-image: url('/assets/home/header-bg.jpg');
 
-  h1 {
-    position: relative;
-    width: 95%;
-    margin-bottom: rem(6px);
-    z-index: 3;
+  .row {
+    height: 100%;
   }
 
-  .c-home-cover__description {
-    position: relative;
-    z-index: 3;
+  .c-home-cover-texts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
 
-    span {
-      opacity: 0.7;
+    h1 {
+      position: relative;
+      width: 95%;
+      margin-bottom: rem(6px);
+      z-index: 3;
+    }
+
+    .c-home-cover__description {
+      position: relative;
+      z-index: 3;
+
+      span {
+        opacity: 0.7;
+      }
     }
   }
 
@@ -74,13 +82,16 @@
     height: rem(640px);
     padding-top: rem(93px);
 
-    h1 {
-      width: rem(550px);
-      margin-bottom: rem(9px);
-    }
+    .c-home-cover-texts {
 
-    .c-home-cover__description {
-      width: 65%;
+      h1 {
+        width: rem(550px);
+        margin-bottom: rem(9px);
+      }
+
+      .c-home-cover__description {
+        width: 65%;
+      }
     }
 
     .c-home-cover__arrow-button {
