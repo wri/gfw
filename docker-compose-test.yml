@@ -4,4 +4,4 @@ test:
   volumes:
     - .:/gfw
 
-  env_file: test.env
+  env_file: .env
