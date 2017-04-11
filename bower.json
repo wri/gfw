@@ -54,7 +54,8 @@
     "urijs": "URIjs#^1.18.2"
   },
   "resolutions": {
-    "jquery": "1.11.1"
+    "jquery": "1.11.1",
+    "underscore": "1.8.3"
   },
   "devDependencies": {}
 }
