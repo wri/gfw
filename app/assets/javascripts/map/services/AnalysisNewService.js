@@ -2,8 +2,10 @@ define([
   'Class',
   'uri',
   'bluebird',
+  'helpers/geojsonUtilsHelper',
+  'map/services/GeostoreService',
   'map/services/DataService'
-], function(Class, UriTemplate, Promise, ds) {
+], function(Class, UriTemplate, Promise, geojsonUtilsHelper, GeostoreService, ds) {
 
   'use strict';
 
@@ -25,47 +27,83 @@ define([
     get: function(status) {
       return new Promise(function(resolve, reject) {
         this.analysis = this.buildAnalysisFromStatus(status);
-        var url = this.getUrl();
+        this.getUrl().then(function(url) {
+          var url = this.isForma ? url : APIURL + url;
+          var requestID = this.isForma ? GET_REQUEST_ID + '_FORMA' : GET_REQUEST_ID;
 
-        ds.define(GET_REQUEST_ID, {
-          cache: {type: 'persist', duration: 1, unit: 'days'},
-          url: APIURL + url,
-          type: 'GET',
-          dataType: 'json',
-          contentType: 'application/json; charset=utf-8',
-          decoder: function ( data, status, xhr, success, error ) {
-            if ( status === "success" ) {
-              success( data, xhr );
-            } else if ( status === "fail" || status === "error" ) {
-              error( JSON.parse(xhr.responseText) );
-            } else if ( status === "abort") {
-
-            } else {
-              error( JSON.parse(xhr.responseText) );
+          ds.define(requestID, {
+            cache: {type: 'persist', duration: 1, unit: 'days'},
+            url: url,
+            type: 'GET',
+            dataType: 'json',
+            decoder: function ( data, status, xhr, success, error ) {
+              if ( status === "success" ) {
+                success( data, xhr );
+              } else if ( status === "fail" || status === "error" ) {
+                error(xhr.responseText);
+              } else if ( status !== "abort") {
+                error(xhr.responseText);
+              }
             }
-          }
-        });
+          });
 
-        var requestConfig = {
-          resourceId: GET_REQUEST_ID,
-          success: function(data, status) {
-            resolve(data,status);
-          },
-          error: function(errors) {
-            reject(errors);
-          }
-        };
+          var requestConfig = {
+            resourceId: requestID,
+            success: function(response, status) {
+              if (this.isForma) {
+                var areaHa = this.formaGeometry
+                  ? geojsonUtilsHelper.getHectares(this.formaGeometry)
+                  : 0;
+                var parsedResponse = {
+                  data: {
+                    type: 'forma_month_3',
+                    id: '',
+                    attributes: {
+                      areaHa: parseInt(areaHa.replace(/(,)/g,'')),
+                      value: response.forma.clearing
+                    }
+                  }
+                }
+                resolve(parsedResponse, status);
+              } else {
+                resolve(response, status);
+              }
+            }.bind(this),
+            error: function(errors) {
+              reject(errors);
+            }.bind(this)
+          };
 
-        this.abortRequest();
-        this.currentRequest = ds.request(requestConfig);
+          this.abortRequest();
+          this.currentRequest = ds.request(requestConfig);
+        }.bind(this));
 
       }.bind(this));
     },
 
     getUrl: function() {
-      return this.analysis.type !== 'draw' && this.analysis.dataset === 'forma_month_3'
-        new UriTemplate(FORMA_URL).fillFromObject({}) // TODO: get drawed geojson
-        new UriTemplate(APIURLS[this.analysis.type]).fillFromObject(this.analysis)
+      return new Promise(function(resolve) {
+        // TESTING, move to microservice when stable
+        if (this.analysis.dataset === 'forma_month_3') {
+          this.isForma = true;
+          GeostoreService.get(this.analysis.geostore)
+            .then(function(response) {
+              if (response && response.data.attributes.geojson) {
+                var params ={}
+                try {
+                  this.formaGeometry = response.data.attributes.geojson.features[0].geometry;
+                  params.geojson = JSON.stringify([_.flatten(response.data.attributes.geojson.features[0].geometry.coordinates, true)] || [])
+                } catch(e) {
+                  params.geojson= [];
+                }
+                resolve(UriTemplate(FORMA_URL).fillFromObject(params));
+              }
+            }.bind(this));
+        } else {
+          this.isForma = false;
+          resolve(UriTemplate(APIURLS[this.analysis.type]).fillFromObject(this.analysis));
+        }
+      }.bind(this));
     },
 
     buildAnalysisFromStatus: function(status) {
