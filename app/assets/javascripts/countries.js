@@ -21,14 +21,14 @@ require([
 
     _configPromise: function() {
       Promise.config({
-          // Enable warnings
-          warnings: false,
-          // Enable long stack traces
-          longStackTraces: true,
-          // Enable cancellation
-          cancellation: true,
-          // Enable monitoring
-          monitoring: true
+        // Enable warnings
+        warnings: false,
+        // Enable long stack traces
+        longStackTraces: true,
+        // Enable cancellation
+        cancellation: true,
+        // Enable monitoring
+        monitoring: true
       });
     }
   });

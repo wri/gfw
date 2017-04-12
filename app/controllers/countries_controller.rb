@@ -4,8 +4,7 @@ class CountriesController < ApplicationController
   layout 'countries'
 
   def index
-    # @countries = find_countries
-    @countries = []
+    @countries = find_countries
     @title = 'Country Profiles'
     @desc = 'Explore country-specific statistics and graphs to see the how forests change and contribute to various sectors.'
     @keywords = 'GFW, list, forest data, visualization, data, national, country, analysis, statistic, tree cover loss, tree cover gain, climate domain, boreal, tropical, subtropical, temperate, deforestation, overview'
@@ -22,4 +21,16 @@ class CountriesController < ApplicationController
     @keywords = 'GFW, list, forest data, visualization, data, national, country, analysis, statistic, tree cover loss, tree cover gain, climate domain, boreal, tropical, subtropical, temperate, deforestation, deforesters, overview, global'
     @currentNavigation = '.shape-countries'
   end
+
+  private
+    def find_countries
+      response = Typhoeus.get("#{ENV['GFW_API_HOST']}/countries", headers: {"Accept" => "application/json"})
+      if response.success?
+        Rails.cache.fetch 'countries', expires_in: 1.day do
+          JSON.parse(response.body)['countries']
+        end
+      else
+        nil
+      end
+    end
 end

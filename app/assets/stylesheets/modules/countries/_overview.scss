@@ -648,7 +648,7 @@
       display: block;
       height: 38px;
       width: 10px;
-      @include country-icons-sprite(overview_footer);
+      // @include country-icons-sprite(overview_footer);
     }
 
     &:hover {
@@ -707,72 +707,74 @@
 //   }
 // }
 
-.chart {
-  display: none;
-  position: absolute;
-  width: 960px;
-  height: 371px;
-  color: #fff;
-
-  &.total_loss {
-    display: block;
-  }
-
-  &.percent_loss,
-  &.total_extent {
-    .disclaimer {
-      bottom: 40px;
-    }
-  }
-
-  &.total_extent {
-    height: 0;
-    overflow: hidden;
-    .legend {
-      top: 40px;
-      li:last-child i {
-        background: #97bd3d;
-      }
-    }
-  }
-
-  .legend {
+.overview_graph {
+  .chart {
+    display: none;
     position: absolute;
-    z-index: 400;
-    top: 10px; left: 20px;
-
-    li {
-      font-size: 19px;
-      line-height: 1.5;
-      text-shadow: 0 0 5px rgba(#000, .8);
-
-      &:first-child i {
-        background: #FF6699;
-      }
-
-      &:last-child i {
-        background: #6D6DE5;
-      }
-
-      i {
-        display: inline-block;
-        position: relative;
-        top: -2px;
-        height: 6px;
-        width: 6px;
-        vertical-align: middle;
-        border-radius: 4px;
-      }
-    }
-  }
-
-  .disclaimer {
-    position: absolute;
-    z-index: 400;
-    left: 20px; bottom: 20px;
-    margin: 0;
-    font: normal 11px/1 500;
+    width: 960px;
+    height: 371px;
     color: #fff;
+
+    &.total_loss {
+      display: block;
+    }
+
+    &.percent_loss,
+    &.total_extent {
+      .disclaimer {
+        bottom: 40px;
+      }
+    }
+
+    &.total_extent {
+      height: 0;
+      overflow: hidden;
+      .legend {
+        top: 40px;
+        li:last-child i {
+          background: #97bd3d;
+        }
+      }
+    }
+
+    .legend {
+      position: absolute;
+      z-index: 400;
+      top: 10px; left: 20px;
+
+      li {
+        font-size: 19px;
+        line-height: 1.5;
+        text-shadow: 0 0 5px rgba(#000, .8);
+
+        &:first-child i {
+          background: #FF6699;
+        }
+
+        &:last-child i {
+          background: #6D6DE5;
+        }
+
+        i {
+          display: inline-block;
+          position: relative;
+          top: -2px;
+          height: 6px;
+          width: 6px;
+          vertical-align: middle;
+          border-radius: 4px;
+        }
+      }
+    }
+
+    .disclaimer {
+      position: absolute;
+      z-index: 400;
+      left: 20px; bottom: 20px;
+      margin: 0;
+      font: normal 11px/1 500;
+      color: #fff;
+    }
   }
 }
 
@@ -873,7 +875,7 @@
       margin-left: 5px;
       position: relative;
       top: -4px;
-      @include country-icons-sprite(share);
+      // @include country-icons-sprite(share);
     }
 
     &:hover {

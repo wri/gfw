@@ -2,14 +2,26 @@ define([
   'jquery',
   'backbone',
   'underscore',
+  'countries/views/CountryListView',
+  'countries/views/CountryOverviewView',
   'countries/views/CountryShowView'
-], function($, Backbone, _, CountryShowView) {
+], function($, Backbone, _, CountryListView, CountryOverviewView, CountryShowView) {
 
   'use strict';
 
   var Router = Backbone.Router.extend({
     routes: {
+      'countries': 'showList',
+      'countries/overview': 'showOverview',
       'countries/:iso': 'showCountry'
+    },
+
+    showList: function() {
+      new CountryListView();
+    },
+
+    showOverview: function() {
+      new CountryOverviewView();
     },
 
     showCountry: function(iso) {

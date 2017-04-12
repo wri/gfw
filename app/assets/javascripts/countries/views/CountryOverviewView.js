@@ -44,7 +44,7 @@ define([
 
       this.helper = CountryHelper;
       this.model = new CountryOverviewModel();
-      this.headerView = new CountryHeaderView();
+      // this.headerView = new CountryHeaderView();
 
       this.setListeners();
 
