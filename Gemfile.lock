@@ -395,7 +395,7 @@ DEPENDENCIES
   useragent
 
 RUBY VERSION
-   ruby 2.1.5p273
+   ruby 2.3.1p112
 
 BUNDLED WITH
    1.14.6
