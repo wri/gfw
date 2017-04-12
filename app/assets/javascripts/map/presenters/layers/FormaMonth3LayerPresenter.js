@@ -24,13 +24,13 @@ define([
     _subscriptions: [{
       'TorqueTimeline/date-change': function(layerName, date) {
         if (this.view.getName() === layerName) {
-          this.view.setCurrentDate(date);
+          this.view.setDate(date);
           this.view.stop();
         }
       },
       'Timeline/date-range-change': function(layerName, dates) {
         if (this.view.getName() === layerName) {
-          this.view.setCurrentDate(dates);
+          this.view.setDateRange(dates);
           this.view.stop();
         }
       },

@@ -5,7 +5,7 @@ define([
 
   'use strict';
 
-  var REQUEST_ID = 'FormaDateService:fetchDates';
+  var MIN_DATE = '2012-01-01';
 
   var FormaDateService = Class.extend({
 
@@ -16,10 +16,9 @@ define([
     fetchDates: function() {
       var deferred = new $.Deferred();
 
-
       FormaService.getTileUrl()
         .then(function(data) {
-          var startDate = moment.utc('2012-01-01', 'YYYY-MM-DD');
+          var startDate = moment.utc(MIN_DATE, 'YYYY-MM-DD');
           var endDate = moment.utc(data.date, 'YYYY-MM-DD');
           var years = _.range(startDate.year(), endDate.year() + 1);
           var counts = {};
@@ -40,7 +39,7 @@ define([
             }
           })
           deferred.resolve({
-            minDate: '2012-01-01',
+            minDate: MIN_DATE,
             maxDate: data.date,
             counts: counts
           });
