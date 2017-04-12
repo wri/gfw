@@ -7,6 +7,7 @@ define([
   'services/CountryService',
   'countries/views/CountryHeaderView',
   'countries/views/widgets/TreeCoverView',
+  'countries/views/widgets/TreeCoverLossRankingView',
   'countries/views/widgets/AnnualTreeCoverLossView',
   'countries/views/widgets/TreeCoverGainView',
   'countries/views/widgets/TreeCoverReforestationView',
@@ -23,6 +24,7 @@ define([
   CountryService,
   CountryHeaderView,
   TreeCoverView,
+  TreeCoverLossRankingView,
   AnnualTreeCoverLossView,
   TreeCoverGainView,
   TreeCoverReforestationView,
@@ -92,6 +94,10 @@ define([
 
     initSnapshot: function() {
       this.modules.snapshot.push(new TreeCoverView({
+        iso: this.iso
+      }));
+
+      this.modules.snapshot.push(new TreeCoverLossRankingView({
         iso: this.iso
       }));
 

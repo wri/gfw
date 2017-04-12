@@ -35,11 +35,14 @@ define([
     },
 
     _initWidget: function(res) {
-      this.data = res.data;
+      this.data = []
 
-      this.data.map(function(data) {
-        data.date = moment.utc(data.date, 'YYYY').endOf('year');
-      });
+      res.data.forEach(function(data) {
+        if (data.value) {
+          data.date = moment.utc(data.date, 'YYYY').endOf('year');
+          this.data.push(data);
+        }
+      }.bind(this));
 
       this.render();
       this.lineGraph = new LineGraphView({

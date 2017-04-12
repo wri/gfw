@@ -152,6 +152,10 @@ define([
 
     _drawValues: function() {
       var path = this.svg.selectAll('.arc');
+      var totalValues = _.reduce(this.chartData, function(memo, num) {
+        memo.value += num.value;
+        return memo;
+      });
 
       path.append('text')
         .attr('transform', function(d) {
@@ -159,7 +163,8 @@ define([
           return 'translate(' + (c[0]-12) + ',' + (c[1]+8) + ')'
         }.bind(this))
         .text(function(d) {
-          if (d.value > 0) return d.value + '%'
+          var value = Math.round((d.value * 100) / totalValues.value);
+          if (value > 0) return value + '%'
         })
         .attr('class', 'label');
     },

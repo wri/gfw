@@ -108,6 +108,10 @@
     min-height: 0;
   }
 
+  &.-no-b-margin {
+    margin-bottom: 0;
+  }
+
   .title {
     font-size: 13px;
     font-weight: 500;

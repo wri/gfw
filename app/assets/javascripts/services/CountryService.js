@@ -21,6 +21,7 @@ define([
   var GET_REQUEST_COUNTRY_CONFIG_ID = 'CountryService:getCountries',
       GET_REQUEST_COUNTRIES_LIST_ID = 'CountryService:getCountries',
       SHOW_REQUEST_COUNTRY_ID = 'CountryService:showCountry',
+      GET_REQUEST_COUNTRY_INFO_ID = 'CountryService:getCountryInfo',
       GET_REQUEST_REGIONS_LIST_ID = 'CountryService:getRegionsList',
       SHOW_REQUEST_REGION_ID = 'CountryService:showRegion';
 
@@ -30,6 +31,7 @@ define([
     'getCountryConfig'   : '/query/{countriesConfigDataset}?sql=SELECT iso, indepth FROM {countriesConfigTable} WHERE iso=\'{iso}\'',
     'getCountriesList'   : '/query/{countriesDataset}?sql=SELECT name_engli as name, iso FROM {countriesTable}',
     'showCountry'        : '/query/{countriesDataset}?sql=SELECT name_engli as name, iso, topojson FROM {countriesTable} WHERE iso=\'{iso}\'',
+    'getCountryInfo'     : '/query/{countriesDataset}?sql=SELECT {columns} FROM {countriesTable} {filter}',
     'getRegionsList'     : '/query/{regionsDataset}?sql=SELECT cartodb_id, iso, bbox as bounds, id_1, name_1 FROM {regionsTable} WHERE iso=\'{iso}\' ORDER BY name_1',
     'showRegion'         : '/query/{regionsDataset}?sql=SELECT id_1, name_1, geojson FROM {regionsTable} WHERE iso=\'{iso}\' AND id_1={region} ORDER BY name_1',
     'getSubRegionsList'  : '/query/{subRegionsDataset}?sql=SELECT id_1, name_1 FROM {subRegionsTable} WHERE iso=\'{iso}\' ORDER BY name_1'
@@ -153,6 +155,29 @@ define([
           resourceId: datasetId,
           success: function(res, status) {
             var data = res.data.length >= 0 ? res.data[0] : [];
+            resolve(data, status);
+          },
+          error: function(errors) {
+            reject(errors);
+          }
+        };
+
+        ds.request(requestConfig);
+      }.bind(this));
+    },
+
+    getCountriesInfo: function(params) {
+      var datasetId = GET_REQUEST_COUNTRY_INFO_ID;
+      return new Promise(function(resolve, reject) {
+        var status = _.extend({}, CONFIG, params);
+        var url = new UriTemplate(APIURLS.getCountryInfo).fillFromObject(status);
+
+        this.defineRequest(datasetId, url, false);
+
+        var requestConfig = {
+          resourceId: datasetId,
+          success: function(res, status) {
+            var data = res.data.length >= 0 ? res.data : [];
             resolve(data, status);
           },
           error: function(errors) {
