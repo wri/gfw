@@ -4,7 +4,7 @@ define([
   'bluebird',
   'helpers/geojsonUtilsHelper',
   'map/services/GeostoreService',
-  'map/services/DataService'
+  'services/DataService'
 ], function(Class, UriTemplate, Promise, geojsonUtilsHelper, GeostoreService, ds) {
 
   'use strict';
