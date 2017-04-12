@@ -22,8 +22,8 @@ Gfw::Application.routes.draw do
   get '/common(/:section)(/:section)' => redirect("sources")
   get '/common(/:section)(/:section)(/:section)' => redirect("sources")
   get '/assets(/:content)' => redirect('/')
-  get '/country/:id(/:area_id)' => redirect('/countries/:id(/:area_id)')
-  get '/embed/country/:id(/:area_id)' => redirect('/embed/countries/:id(/:area_id)')
+  get '/country/:id(/:area_id)' => redirect {|params, request| "/countries/#{params[:id]}/#{params[:area_id]}" }
+  get '/embed/country/:id(/:area_id)' => redirect {|params, request| "/embed/countries/#{params[:id]}/#{params[:area_id]}" }
 
   # howto
   get '/howto/video' => redirect("/howto")

@@ -13,7 +13,7 @@ define([
     routes: {
       'countries': 'showList',
       'countries/overview': 'showOverview',
-      'countries/:iso': 'showCountry'
+      'countries/:iso(/)': 'showCountry'
     },
 
     showList: function() {
