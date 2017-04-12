@@ -38,7 +38,8 @@ define([
     cardTemplate: Handlebars.compile(cardTpl),
 
     initialize: function(params) {
-      this.iso = params.iso;
+      // this.iso = params.iso;
+      this.iso = 'BRA';
       this.start();
     },
 

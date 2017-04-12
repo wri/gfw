@@ -85,13 +85,13 @@ define([
 
         $.ajax({ url: urlTotalCover, type: 'GET'})
           .done(function(totalCover) {
-            var totalCoverValue = Math.round(totalCover.data[0].value);
-            data['total'] = Math.round(totalCover.data[0].value / 1000000);
+            var totalCoverValue = totalCover.data[0] ? Math.round(totalCover.data[0].value) : 0;
+            data['total'] = totalCover.data[0] ? totalCover.data[0].value : 0;
             data['totalCover'] = totalCoverValue;
 
             $.ajax({ url: urlTotalIfl, type: 'GET'})
               .done(function(totalIfl) {
-                var totalIflValue = Math.round(totalIfl.data[0].value);
+                var totalIflValue = totalIfl.data[0] ? Math.round(totalIfl.data[0].value) : 0;
                 data['totalIfl'] = totalIflValue;
                 data['rest'] = this.totalArea - (data['totalCover'] + data['totalIfl']);
 
@@ -113,9 +113,27 @@ define([
       return $promise;
     },
 
+    _formatTotalValue: function(value) {
+      var amount = Math.round(value);
+      var unit = '';
+
+      if (amount.toString().length >= 7) {
+        amount = Math.round((amount / 1000) / 1000)
+        unit = 'MHa';
+      } else if (amount.toString().length >= 4) {
+        unit = 'KHa';
+        amount = Math.round(amount / 1000);
+      }
+
+      return {
+        value: amount,
+        unit: unit
+      }
+    },
+
     render: function() {
       this.$el.html(this.template({
-        totalCover: this.data.total
+        totalCover: this._formatTotalValue(this.data.total)
       }));
       this.$el.removeClass('-loading');
     }

@@ -44,11 +44,11 @@ define([
         { label:"2013", "0": 20, "1": 40}
       ];
 
-      this.render();
-      this.lineGraph = new GroupedGraphView({
-        el: '#annual-tree-cover-loss-graph',
-        data: this.data
-      });
+      // this.render();
+      // this.lineGraph = new GroupedGraphView({
+      //   el: '#annual-tree-cover-loss-graph',
+      //   data: this.data
+      // });
     }
   });
   return AnnualTreeCoverLossView;
