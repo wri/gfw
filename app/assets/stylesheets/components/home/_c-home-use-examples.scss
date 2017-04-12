@@ -191,6 +191,25 @@ $item-user-padding-screen-m: rem(39px);
     &[data-index="3.0"] {
       background-image: url('/assets/home/example-3.0@2x.jpg');
     }
+
+    > .credits {
+      background-color: rgba(#000000, 0.2);
+      padding: rem(2px) rem(7px);
+
+      > .name {
+        font-size: 12px;
+        display: none;
+
+        &.-visible {
+          display: block;
+        }
+
+        > a {
+          color: rgba($font-color-1, 0.8);
+          text-decoration: none;
+        }
+      }
+    }
   }
 
   @media screen and (min-width: $screen-m) {
@@ -264,7 +283,9 @@ $item-user-padding-screen-m: rem(39px);
   @media screen and (min-width: $screen-l) {
 
     .c-home-use-examples__cover {
-      display: block;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
     }
   }
 }

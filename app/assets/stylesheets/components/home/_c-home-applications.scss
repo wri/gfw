@@ -27,17 +27,22 @@
     }
 
     .c-home-applications__section-title {
+      position: relative;
       margin-top: rem(7px);
+      z-index: 2;
     }
 
     .c-home-applications__section-description {
+      position: relative;
       width: 80%;
+      z-index: 2;
     }
   }
 
   .c-home-applications__app-button {
     position: absolute;
-    bottom: rem(130px);
+    top: 0;
+    bottom: 0;
     margin: auto;
     width: rem(47px);
     height: rem(47px);
@@ -170,6 +175,10 @@
   @media screen and (min-width: $screen-m) {
     height: rem(640px);
 
+    .columns {
+      position: relative;
+    }
+
     .c-home-applications__title {
       margin-top: rem(51px);
     }
@@ -192,8 +201,8 @@
     }
 
     .c-home-applications__app-button {
-      top: 0;
-      bottom: 0;
+      top: rem(207px);
+      bottom: auto;
 
       .icon {
         width: rem(16px);
@@ -201,7 +210,7 @@
       }
 
       &.-left {
-        left: rem(42px);
+        left: rem(18px);
 
         .icon {
           left: rem(-2px);
@@ -209,7 +218,7 @@
       }
 
       &.-right {
-        right: rem(42px);
+        right: rem(18px);
 
         .icon {
           right: rem(-2px);

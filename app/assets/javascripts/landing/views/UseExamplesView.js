@@ -78,6 +78,8 @@ define([
     _loadCover: function () {
       var pictureKey = $('.js_slider.-selected .js_slide.active .c-home-use-examples__testimonials-quote').data('picture-reference');
       this.$cover.attr('data-index', pictureKey);
+      this.$cover.find('.credits > .name').removeClass('-visible');
+      this.$cover.find('.name[data-index=\"' + pictureKey + '\"]').addClass('-visible');
     }
 
   });

@@ -17,6 +17,10 @@
     color: $font-color-4;
   }
 
+  &.-color-5 {
+    color: $font-color-5;
+  }
+
   &.-light {
     font-weight: 300;
   }
@@ -78,6 +82,11 @@
       font-size: 18px;
       line-height: 2.22;
     }
+  }
+
+  &.-title-xxs {
+    font-size: 14px;
+    letter-spacing: 0.1px;
   }
 
   &.-paragraph {

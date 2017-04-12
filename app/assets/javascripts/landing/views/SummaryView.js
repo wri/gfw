@@ -14,6 +14,10 @@ define([
 
     el: '.c-home-summary',
 
+    events: {
+      'click .js-home-summary-item-linker': '_onClickItem'
+    },
+
     initialize: function() {
       this._initSlider();
     },
@@ -25,6 +29,11 @@ define([
           slideSpeed: 500
         }
       });
+    },
+
+    _onClickItem: function (e) {
+      var trackLabel = $(e.currentTarget).data('text');
+      ga('send', 'event', 'Home', 'Calls to action', trackLabel);
     },
 
   });

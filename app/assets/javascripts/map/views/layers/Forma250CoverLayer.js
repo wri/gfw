@@ -14,7 +14,8 @@ define([
 
     options: {
       cartocss: CartoCSS,
-      sql: 'SELECT cartodb_id, the_geom, the_geom_webmercator, iso, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName}'
+      sql: 'SELECT cartodb_id, the_geom, the_geom_webmercator, iso, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName}',
+      analysis: true
     }
 
   });

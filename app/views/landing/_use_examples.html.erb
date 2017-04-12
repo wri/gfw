@@ -42,5 +42,11 @@
       </div>
     </div>
   </div>
-  <div class="c-home-use-examples__cover js_use_examples_cover" data-index="0.0"></div>
+  <div class="c-home-use-examples__cover js_use_examples_cover" data-index="0.0">
+    <div class="credits">
+      <% uses.each_with_index do |item, i| %>
+        <span class="name <% if i == 0 %>-visible<% end %>" data-index="<%= i %>.0"><%= item['credit'].html_safe %></span>
+      <% end %>
+    </div>
+  </div>
 </div>
