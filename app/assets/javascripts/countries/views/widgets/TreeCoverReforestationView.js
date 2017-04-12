@@ -9,9 +9,8 @@ define([
 
   'use strict';
 
-  var API = window.gfw.config.GFW_API_HOST_NEW_API;
-  var DATASET = '';
-  var QUERY = '';
+  var API = 'https://wri-01.cartodb.com/api/v2/sql?q='
+  var QUERY = 'SELECT reforestation_rate FROM gfw2_countries WHERE iso=\'{iso}\'';
 
   var TreeCoverLossView = Backbone.View.extend({
     el: '#widget-tree-cover-reforestation',
@@ -24,19 +23,19 @@ define([
     },
 
     start: function() {
-      this.render();
-      // this._getData().done(function(res) {
-      //   this.data = res.data;
-      //   this.render();
-      // }.bind(this));
+      this._getData().done(function(res) {
+        this.data = res.rows[0];
+        this.render();
+      }.bind(this));
     },
 
     render: function() {
-      var value = 519;
+      var value = Math.round(this.data.reforestation_rate);
       var unitMeasure = 20;
       var iconsNumber = value / unitMeasure;
 
       this.$el.html(this.template({
+        hasData: value || false,
         value: value,
         unit: 'thousand',
         unitMeasure: unitMeasure,
@@ -49,7 +48,9 @@ define([
     },
 
     _getData: function() {
-      var url = API + new UriTemplate(QUERY).fillFromObject({});
+      var url = API + new UriTemplate(QUERY).fillFromObject({
+        iso: this.iso
+      });
 
       return $.ajax({
         url: url,
