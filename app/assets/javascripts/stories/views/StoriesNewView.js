@@ -5,7 +5,7 @@ define([
   'mps',
   'handlebars',
   'jquery_fileupload',
-  'backbone.syphon',
+  'backbone.syphon/lib/backbone.syphon',
   'moment',
   'underscore',
   'validate',
