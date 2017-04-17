@@ -305,6 +305,14 @@
           <h4>Province:</h4>
           <p>{{content.data.province}}</p>
         {{/if}}
+        {{#if content.data.record_date}}
+          <h4>Record Date:</h4>
+          <p>{{content.data.record_date}}</p>
+        {{/if}}
+        {{#if content.data.expiry_date}}
+          <h4>Expiry Date:</h4>
+          <p>{{content.data.expiry_date}}</p>
+        {{/if}}
         {{#if content.data.department}}
           <h4>Department:</h4>
           <p>{{content.data.department}}</p>
@@ -543,4 +551,3 @@
     {{/if}}
   </div>
 </div>
-
