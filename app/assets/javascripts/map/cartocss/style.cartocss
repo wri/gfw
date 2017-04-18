@@ -197,7 +197,8 @@
     polygon-clip: false;
   }
 
-  [layer='can_mining'] {
+  [layer='can_mining'],
+  [layer='can_mining_1']  {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
     line-clip: false;
