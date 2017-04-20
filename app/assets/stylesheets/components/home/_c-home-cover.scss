@@ -62,6 +62,33 @@
     }
   }
 
+  .c-home-cover__video-button {
+    width: rem(47px);
+    height: rem(47px);
+    position: absolute;
+    right: rem(60px);
+    top: rem(130px);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 3;;
+    background-color: rgba(#555555, 0.7);
+    border-radius: rem(47px);
+    display: none;
+
+    &.-visible {
+      display: flex;
+    }
+
+    .icon {
+      width: rem(15px);
+      height: rem(15px);
+      fill: #FFFFFF;
+      opacity: 0.8;
+    }
+  }
+
   .c-home-cover__video-case {
     position: absolute;
     top: 0;
