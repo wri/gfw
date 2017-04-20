@@ -1,87 +1,98 @@
 <div class="widget">
   <h4 class="title">Annual Tree cover loss</h4>
-
-  <div class="filter-list">
-    <div class="filter">
-      <div class="label">Time range</div>
-      <div class="container">
-        <div class="c-select">
-          <div class="wrapper">
-            <select id="annual-tree-cover-loss-start-year">
-              <option value="monthly">2011</option>
-            </select>
-            <div class="select-clear" style="display: none;">✕</div>
-            <div class="select-arrow"></div>
+  <div class="m-widget-annual-tree-cover-loss">
+    <div class="filter-list">
+      <div class="filter">
+        <div class="label">Time range</div>
+        <div class="container">
+          <div class="c-select">
+            <div class="wrapper">
+              <select id="annual-tree-cover-loss-start-year">
+                <option value="monthly">2011</option>
+              </select>
+              <div class="select-clear" style="display: none;">✕</div>
+              <div class="select-arrow"></div>
+            </div>
           </div>
-        </div>
-        <span class="label">to</span>
-        <div class="c-select">
-          <div class="wrapper">
-            <select id="annual-tree-cover-loss-end-year">
-              <option value="monthly">2015</option>
-            </select>
-            <div class="select-clear" style="display: none;">✕</div>
-            <div class="select-arrow"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="filter">
-      <div class="label">Canopy density</div>
-      <div class="container">
-        <div class="c-select">
-          <div class="wrapper">
-            <select id="annual-tree-cover-loss-thresh">
-              <option value="monthly">> 30%</option>
-            </select>
-            <div class="select-clear" style="display: none;">✕</div>
-            <div class="select-arrow"></div>
+          <span class="label">to</span>
+          <div class="c-select">
+            <div class="wrapper">
+              <select id="annual-tree-cover-loss-end-year">
+                <option value="monthly">2015</option>
+              </select>
+              <div class="select-clear" style="display: none;">✕</div>
+              <div class="select-arrow"></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="filter">
-      <div class="label">Measurement</div>
-      <div class="container">
-        <div class="c-switch">
-          <ul class="options">
-            <li class="active">Ha</li>
-            <li class="disabled">%</li>
-          </ul>
+      <div class="filter">
+        <div class="label">Canopy density</div>
+        <div class="container">
+          <div class="c-select">
+            <div class="wrapper">
+              <select id="annual-tree-cover-loss-thresh">
+                <option value="monthly">> 30%</option>
+              </select>
+              <div class="select-clear" style="display: none;">✕</div>
+              <div class="select-arrow"></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="filter">
-      <div class="label">Data source</div>
-      <div class="container">
-        <div class="c-switch">
-          <ul class="options">
-            <li class="active">GFW</li>
-            <li class="disabled">FAO</li>
-            <li class="disabled">PRODES</li>
-          </ul>
+      <div class="filter">
+        <div class="label">Measurement</div>
+        <div class="container">
+          <div class="c-switch">
+            <ul class="options">
+              <li class="active">Ha</li>
+              <li class="disabled">%</li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
 
-  </div>
-
-  <div class="row">
-    <div class="column small-6">
-      <div class="row">
-        <div class="column small-12">
-          <div id="widget-anual-tree-cover-loss-total" class="widget-placeholder -loading"></div>
+      <div class="filter">
+        <div class="label">Data source</div>
+        <div class="container">
+          <div class="c-switch">
+            <ul class="options">
+              <li class="active">GFW</li>
+              <li class="disabled">FAO</li>
+              <li class="disabled">PRODES</li>
+            </ul>
+          </div>
         </div>
-        <div class="column small-12"></div>
       </div>
+
     </div>
-    <div class="column small-6">
-      <div class="m-widget-annual-tree-cover-loss chart">
-        <div class="m-grouped-chart">
-          <div id="annual-tree-cover-loss-graph"></div>
+
+    <div class="row">
+      <div class="column small-6">
+        <div class="row">
+          <div class="column small-12">
+            <div>
+              Total cover loss (2011 - 2016)
+              {{totalCoverLoss}} Ha
+            </div>
+            <div class="datasets">
+              <div class="radio-group js-datasets">
+                {{#each datasets}}
+                  <div class="custom-radio">
+                    <input id="dataset-{{slug}}" name="signup" type="radio" value="{{slug}}">
+                    <label for="dataset-{{slug}}"><span></span>{{name}} <span class="value">{{value}} <span class="unit">Ha</span>
+            </div>
+          </div>
+          <div class="column small-12"></div>
+        </div>
+      </div>
+      <div class="column small-6">
+        <div class="chart">
+          <div class="m-grouped-chart">
+            <div id="annual-tree-cover-loss-graph"></div>
+          </div>
         </div>
       </div>
     </div>
