@@ -16,6 +16,7 @@ define([
 
     events: {
       'click .js_summary_anchor' : '_onClickSummaryAnchor',
+      'click .js-yt-home-cover-video-button' : '_onClickVideoButton',
     },
 
     options: {
@@ -53,11 +54,17 @@ define([
     _cache: function () {
       this.$summaryAnchor = this.$el.find('.js_summary_anchor');
       this.$videoBackground = this.$el.find('.js-home-cover-video');
+      this.$videoButton = this.$el.find('.js-yt-home-cover-video-button');
+      this.startedLoading = null;
+      this.timerVideo = null;
     },
 
     _setEvents: function () {
       $(window).on('scroll', this._checkAnchorVisibility.bind(this));
-      $(window).on('resize', this._rescaleVideoBackground.bind(this));
+
+      if (this._isVideoActive()) {
+        $(window).on('resize', this._rescaleVideoBackground.bind(this));
+      }
     },
 
     _onClickSummaryAnchor: function () {
@@ -75,21 +82,30 @@ define([
     },
 
     _loadVideoBackground: function () {
-      $.getScript("https://www.youtube.com/player_api", function() {
-        window.onYouTubePlayerAPIReady = function() {
-          this.ytVideoBackground = new YT.Player('yt-home-cover-video', {
-            events: {
-              'onReady': this._onVideoBackgroundReady.bind(this),
-              'onStateChange': this._onVideoBackgroundStateChange.bind(this)
-            },
-            playerVars: this.options.videoDefaults
-          });
-          this._rescaleVideoBackground();
-        }.bind(this)
-      }.bind(this));
+      if (this._isVideoActive()) {
+        $.getScript("https://www.youtube.com/player_api", function() {
+          window.onYouTubePlayerAPIReady = function() {
+            this.ytVideoBackground = new YT.Player('yt-home-cover-video', {
+              events: {
+                'onReady': this._onVideoBackgroundReady.bind(this),
+                'onStateChange': this._onVideoBackgroundStateChange.bind(this)
+              },
+              playerVars: this.options.videoDefaults
+            });
+            this._rescaleVideoBackground();
+          }.bind(this)
+        }.bind(this));
+      }
     },
 
     _onVideoBackgroundReady: function () {
+      this.startedLoading = new Date();
+
+      this._clearVideoTimer();
+      this.timerVideo = setInterval(function() {
+        this._checkVideoPlayback();
+      }.bind(this), 5000);
+
       this.ytVideoBackground.loadVideoById(this.options.videoData);
       this.ytVideoBackground.mute();
     },
@@ -98,12 +114,15 @@ define([
       switch (e.data) {
         case 0:
           this.$videoBackground.removeClass('active');
+          this.$videoButton.removeClass('-visible');
           break;
         case 1:
           this.$videoBackground.addClass('active');
+          this.$videoButton.addClass('-visible');
           break;
         case 2:
           this.$videoBackground.removeClass('active');
+          this.$videoButton.removeClass('-visible');
           this.ytVideoBackground.seekTo(0);
           break;
       }
@@ -121,6 +140,39 @@ define([
         $('#yt-home-cover-video').css({'left': -(this.$videoBackground.outerWidth()-w)/2});
       }
     },
+
+    _checkVideoPlayback: function() {
+      var currentDate = new Date();
+      var datesDiff = (currentDate.getTime() - this.startedLoading.getTime()) / 1000;
+      var currentState = this.ytVideoBackground.getPlayerState();
+
+      // Higher than 35secs loading and 3 (video buffering)
+      if (datesDiff > 35 && currentState === 3) {
+        this._clearVideoTimer();
+        this.ytVideoBackground.stopVideo();
+      }
+    },
+
+    _clearVideoTimer: function() {
+      if (this.timerVideo) {
+        clearInterval(this.timerVideo);
+      }
+    },
+
+    _onClickVideoButton: function() {
+      localStorage.setItem('gfw-disable-home-video', 'true');
+
+      // Stop video
+      this.ytVideoBackground.stopVideo();
+      this._clearVideoTimer();
+
+      this.$videoBackground.removeClass('active');
+      this.$videoButton.removeClass('-visible');
+    },
+
+    _isVideoActive: function() {
+      return !localStorage.getItem('gfw-disable-home-video');
+    }
 
   });
   return CoverView;
