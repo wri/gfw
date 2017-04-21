@@ -29,6 +29,7 @@ define([
   'map/views/layers/CogLoggingLayer',
   'map/views/layers/MysLoggingLayer',
   'map/views/layers/MiningLayer',
+  'map/views/layers/CanOilLayer',
   'map/views/layers/CanMiningLayer',
   'map/views/layers/CmrMiningLayer',
   'map/views/layers/CodMiningLayer',
