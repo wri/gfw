@@ -127,6 +127,9 @@ define([
         name: 'forma',
         slug: 'forma-alerts'
       },{
+        name: 'forma_month_3',
+        slug: 'forma250GFW'
+      },{
         name: 'imazon',
         slug: 'imazon-alerts',
         subscription: true
