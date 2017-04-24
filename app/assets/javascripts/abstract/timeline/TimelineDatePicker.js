@@ -168,12 +168,12 @@ define([
     },
 
     setMinMaxDate: function(data) {
-      var tzOffset = new Date().getTimezoneOffset();
-      this.minDate = moment.utc(data.minDate).endOf('day');
+      this.minDate = moment.utc(data.minDate).startOf('day');
       this.maxDate = moment.utc(data.maxDate);
 
-      var minDate = this.minDate.clone().add(tzOffset, 'minutes').toDate();
-      var maxDate = this.maxDate.clone().add(tzOffset, 'minutes').toDate();
+      var minDate = this.minDate.clone().toDate();
+      var maxDate = this.maxDate.clone().toDate();
+
       this.$('#startDate').pickadate('picker').set('min', minDate);
       this.$('#endDate').pickadate('picker').set('max', maxDate);
     },
