@@ -13,7 +13,6 @@ define([
 
   var APIURL = window.gfw.config.GFW_API_HOST_NEW_API;
 
-  var FORMA_URL = 'http://api.forma-250.appspot.com/analysis/gfw?s={startDate}&e={endDate}&g={geojson}';
   var APIURLS = {
     'draw'         : '/{dataset}{?geostore,period,thresh,gladConfirmOnly}',
     'country'      : '/{dataset}/admin{/country}{/region}{?period,thresh,gladConfirmOnly}',
@@ -28,12 +27,10 @@ define([
       return new Promise(function(resolve, reject) {
         this.analysis = this.buildAnalysisFromStatus(status);
         this.getUrl().then(function(data) {
-          var url = data.isForma ? data.url : APIURL + data.url;
-          var requestID = data.isForma ? GET_REQUEST_ID + '_FORMA' : GET_REQUEST_ID;
 
-          ds.define(requestID, {
+          ds.define(GET_REQUEST_ID, {
             cache: false,
-            url: url,
+            url: APIURL + data.url,
             type: 'GET',
             dataType: 'json',
             decoder: function ( data, status, xhr, success, error ) {
@@ -48,26 +45,9 @@ define([
           });
 
           var requestConfig = {
-            resourceId: requestID,
+            resourceId: GET_REQUEST_ID,
             success: function(response, status) {
-              if (data.isForma) {
-                var areaHa = this.formaGeometry
-                  ? geojsonUtilsHelper.getHectares(this.formaGeometry)
-                  : 0;
-                var parsedResponse = {
-                  data: {
-                    type: 'forma_month_3',
-                    id: '',
-                    attributes: {
-                      areaHa: parseInt(areaHa.replace(/(,)/g,'')),
-                      value: response.forma.delta.count
-                    }
-                  }
-                }
-                resolve(parsedResponse, status);
-              } else {
-                resolve(response, status);
-              }
+              resolve(response, status);
             }.bind(this),
             error: function(errors) {
               reject(errors);
@@ -83,38 +63,9 @@ define([
 
     getUrl: function() {
       return new Promise(function(resolve, reject) {
-        // TESTING, move to microservice when stable
-        if (this.analysis.dataset === 'forma_month_3') {
-          GeostoreService.get(this.analysis.geostore)
-            .then(function(response) {
-              if (response && response.data.attributes.geojson) {
-                if (this.analysis.dataset === 'forma_month_3') {
-                  var period = this.analysis.period.split(',');
-                  var params ={
-                    startDate: period[0],
-                    endDate: period[1],
-                  }
-                  try {
-                    this.formaGeometry = response.data.attributes.geojson.features[0].geometry;
-                    params.geojson = JSON.stringify([_.flatten(response.data.attributes.geojson.features[0].geometry.coordinates, true)] || [])
-                  } catch(e) {
-                    params.geojson= [];
-                  }
-                  resolve({
-                    url: UriTemplate(FORMA_URL).fillFromObject(params),
-                    isForma: true
-                  });
-                } else {
-                  reject();
-                }
-              }
-            }.bind(this));
-        } else {
-          resolve({
-            url: UriTemplate(APIURLS[this.analysis.type]).fillFromObject(this.analysis),
-            isForma: false
-          });
-        }
+        resolve({
+          url: UriTemplate(APIURLS[this.analysis.type]).fillFromObject(this.analysis)
+        });
       }.bind(this));
     },
 
