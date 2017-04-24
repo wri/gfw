@@ -6,6 +6,7 @@ define([
   'use strict';
 
   var MIN_DATE = '2012-01-01';
+  var STEP = 16;
 
   var FormaDateService = Class.extend({
 
@@ -22,22 +23,22 @@ define([
           var endDate = moment.utc(data.date, 'YYYY-MM-DD');
           var years = _.range(startDate.year(), endDate.year() + 1);
           var counts = {};
+
           years.forEach(function(year) {
             var start = moment.utc(year, 'YYYY').startOf('year');
             var end = moment.utc(year, 'YYYY').endOf('year');
             var numDays = end.diff(start, 'days') + 1;
+
             counts[year] = [];
-            var count = 0;
             for (var index = 0; index < numDays; index++) {
-              if (count === 15) {
+              if ((index % STEP) === 0) {
                 counts[year].push(true);
-                count = 0;
               } else {
                 counts[year].push(false);
-                count ++;
               }
             }
-          })
+          });
+
           deferred.resolve({
             minDate: MIN_DATE,
             maxDate: data.date,

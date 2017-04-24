@@ -67,7 +67,7 @@ define([
 
     _checkMaxDate: function(date) {
       var maxDataDate = moment.utc(date);
-      if (this.maxDate.isBefore(maxDataDate)) {
+      if (this.maxDate.isAfter(maxDataDate)) {
         this.maxDate = maxDataDate;
         this.currentDate[1] = this.maxDate;
       }
