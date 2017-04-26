@@ -427,8 +427,10 @@ define([
         var layer = layers[$div.data('sublayer')];
 
         if (layer) {
+          var color = layer.parent_layer ? layer.title_color
+            : layer.category_color;
           $toggle.addClass('checked');
-          $toggle.css('background', layer.category_color);
+          $toggle.css('background', color);
         } else {
           $toggle.removeClass('checked').css('background', '');
         }
