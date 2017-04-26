@@ -24,6 +24,7 @@ define([
             ['loss', 'forest2000'],
             ['forestgain', 'forest2000'],
             ['forma', 'forest2000'],
+            ['forma_month_3', 'forma_activity'],
             ['imazon', 'forest2000'],
             ['terrailoss', 'forest2000'],
             ['prodes', 'forest2000'],

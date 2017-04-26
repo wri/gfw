@@ -1,0 +1,11 @@
+#forma_activity {
+  marker-fill-opacity: 0.9;
+  marker-line-color: transparent;
+  marker-line-width: 0;
+  marker-line-opacity: 1;
+  marker-placement: point;
+  marker-type: ellipse;
+  marker-width: 8;
+  marker-fill: #FFD966;
+  marker-allow-overlap: false;
+}

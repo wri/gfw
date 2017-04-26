@@ -277,12 +277,16 @@ define([
         countryVisibility: (!!more || !_.isEmpty(categoriesIso))
       }));
 
+      this.presenter.toggleSelected();
       this.presenter.toggleLayerOptions();
     },
 
     getLayersByCategory: function(layers) {
       var subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
-      return _.groupBy(layers, function(layer) {
+      var filteredLayers = _.filter(layers, function(layer) {
+        return !layer.parent_layer;
+      });
+      return _.groupBy(filteredLayers, function(layer) {
         layer.allowSubscription = layer && subscriptionsAllowed.indexOf(layer.slug) > -1;
 
         // Hack to keep the forest_clearing slug in layers which have to be analyzed but not grouped by the said slug in the legend
@@ -379,8 +383,27 @@ define([
 
     removeLayer: function(e){
       e && e.preventDefault();
+
       var layerSlug = $(e.currentTarget).data('slug');
       this.presenter.toggleLayer(layerSlug);
+      this.removeSublayers(layerSlug);
+    },
+
+    removeSublayers: function(layerSlug) {
+      var $subLayers = this.$el.find('[data-parent=\'' + layerSlug + '\']');
+
+      if ($subLayers.length > 0) {
+        var _this = this;
+        $subLayers.each(function() {
+          var $item = $(this);
+          var isChecked = $item.find('.checked').length > 0;
+
+          if (isChecked) {
+            var slug = $(this).data('sublayer');
+            _this.presenter.toggleLayer(slug);
+          }
+        });
+      }
     },
 
     // threshold
