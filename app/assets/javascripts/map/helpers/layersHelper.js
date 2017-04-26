@@ -213,6 +213,7 @@ define([
   CogLoggingLayer,
   MysLoggingLayer,
   MiningLayer,
+  CanOilLayer,
   CanMiningLayer,
   CmrMiningLayer,
   CodMiningLayer,
@@ -466,6 +467,9 @@ define([
     },
     mining: {
       view: MiningLayer
+    },
+    can_oil: {
+      view: CanOilLayer
     },
     can_mining: {
       view: CanMiningLayer
