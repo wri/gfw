@@ -125,12 +125,13 @@ define([
       event && event.preventDefault();
       // this prevents layer change when you click in source link
       if (!$(event.target).hasClass('source') && !$(event.target).parent().hasClass('source')) {
-        var layerSlug = $(event.currentTarget).data('layer');
+        var $elem = $(event.currentTarget);
+        var layerSlug = $elem.data('layer');
+        var isSubLayer = $elem.data('parent') || false;
 
         if ($(event.currentTarget).hasClass('wrapped')) {
           event && event.stopPropagation();
 
-          var $elem = $(event.currentTarget);
           if ($elem.prop('tagName') !== 'LI'){
             //as the toggle are switches, we should turn off the others (siblings) before turning on our layer
             for (var i=0;i < $elem.siblings().length; i++) {
@@ -141,6 +142,13 @@ define([
             }
           }
         }
+
+        if (!isSubLayer) {
+          this._toggleSubLayers($elem, layerSlug);
+        } else {
+          this._toggleParent($elem);
+        }
+
         this.presenter.toggleLayer(layerSlug);
         ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
       }
@@ -150,6 +158,34 @@ define([
       if (!$(e.currentTarget).parent().hasClass('disabled')) {
         $(e.currentTarget).toggleClass('show');
         $(e.currentTarget).parent().children('.layers-nav').toggleClass('show');
+      }
+    },
+
+    _toggleSubLayers: function($parent, layerSlug) {
+      var $subLayers = $parent.find('[data-parent=\'' + layerSlug + '\']');
+      if ($subLayers.length > 0) {
+        var _this = this;
+        $subLayers.each(function() {
+          var subLayerSlug = $(this).data('layer');
+          if (subLayerSlug) {
+            setTimeout(function() {
+              _this.presenter.toggleLayer(subLayerSlug);
+              ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + subLayerSlug);
+            }, 100);
+          }
+        });
+      }
+    },
+
+    _toggleParent: function($elem) {
+      var parentSlug = $elem.data('parent');
+      var $parentEl = $elem.closest('[data-layer=\'' + parentSlug + '\']');
+
+      if (!$elem.hasClass('selected')) {
+        if (!$parentEl.hasClass('selected')) {
+          this.presenter.toggleLayer(parentSlug);
+          ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + parentSlug);
+        }
       }
     },
 
