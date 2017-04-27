@@ -504,7 +504,7 @@
         {{#if content.data.certification_status}}
           <h4>Certification status:</h4>
           <p>{{content.data.certification_status}}</p>
-        {{/if}}        
+        {{/if}}
         {{#if content.data.license_no}}
           <h4>License No:</h4>
           <p>{{content.data.license_no}}</p>
@@ -560,6 +560,18 @@
         {{#if content.data.class}}
           <h4>Class:</h4>
           <p>{{content.data.class}}</p>
+        {{/if}}
+        {{#if content.data.overlap_pa}}
+          <div class="checkbox-wrapper">
+            <h4 class="inline">Protected area:</h4>
+            <span class="checkbox -checked"></span>
+          </div>
+        {{/if}}
+        {{#if content.data.overlap_ifl}}
+          <div class="checkbox-wrapper">
+            <h4 class="inline">IFL:</h4>
+            <span class="checkbox -checked"></span>
+          </div>
         {{/if}}
     </div>
     </div>
