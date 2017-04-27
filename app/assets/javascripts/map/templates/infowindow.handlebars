@@ -9,7 +9,9 @@
 
         {{!-- <div class="thumb-mask" style="background-image: url({{content.data.image}})"> --}}
           <div class="thumb-mask"><img src="{{content.data.image}}" onerror="this.style.display='none';"></div>
-
+          {{#if content.data.image_source}}
+            <span class="image-legend">{{ content.data.image_source }}</span>
+          {{/if}}
       {{/if}}
     </div>
     {{#if content.data.analysis}}
@@ -536,6 +538,18 @@
         {{#if content.data.class}}
           <h4>Class:</h4>
           <p>{{content.data.class}}</p>
+        {{/if}}
+        {{#if content.data.overlap_pa}}
+          <div class="checkbox-wrapper">
+            <h4 class="inline">Protected area:</h4>
+            <span class="checkbox -checked"></span>
+          </div>
+        {{/if}}
+        {{#if content.data.overlap_ifl}}
+          <div class="checkbox-wrapper">
+            <h4 class="inline">IFL:</h4>
+            <span class="checkbox -checked"></span>
+          </div>
         {{/if}}
     </div>
     </div>
