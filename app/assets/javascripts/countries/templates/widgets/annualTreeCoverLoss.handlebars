@@ -73,16 +73,21 @@
       <div class="column small-6">
         <div class="row">
           <div class="column small-12">
-            <div>
-              Total cover loss (2011 - 2016)
-              {{totalCoverLoss}} Ha
+            <div class="total-loss">
+              <div class="name">Total cover loss (2011 - 2016)</div>
+              <div class="value">{{totalCoverLoss}} <span class="unit">Ha</span></div>
             </div>
             <div class="datasets">
+              <div class="name">View tree cover loss within:</div>
               <div class="radio-group js-datasets">
                 {{#each datasets}}
                   <div class="custom-radio">
-                    <input id="dataset-{{slug}}" name="signup" type="radio" value="{{slug}}">
-                    <label for="dataset-{{slug}}"><span></span>{{name}} <span class="value">{{value}} <span class="unit">Ha</span>
+                    <input id="dataset-{{slug}}" name="signup" type="radio" value="{{slug}}" {{#if @first}}checked{{/if}}>
+                    <label for="dataset-{{slug}}"><span class="icon"></span>{{name}}</label>
+                    <div class="value">{{value}} <span class="unit">Ha</span></div>
+                  </div>
+                {{/each}}
+              </div>
             </div>
           </div>
           <div class="column small-12"></div>

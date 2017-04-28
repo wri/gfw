@@ -5,7 +5,7 @@
     width: 100%;
     display: flex;
     margin-top: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 
     .filter {
       margin-right: 35px;
@@ -23,7 +23,42 @@
     }
   }
 
+  .total-loss {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: solid 1px #e7e7e9;
+    margin-bottom: 10px;
+
+    .name {
+      font-size: 12px;
+      color: $dark;
+      margin-bottom: 10px;
+    }
+
+    .value {
+      font-size: 36px;
+      color: #ff6599;
+      font-weight: 500;
+      margin-bottom: 14px;
+
+      .unit {
+        font-size: 16px;
+        font-weight: 400;
+      }
+    }
+  }
+
   .datasets {
+    margin-top: 25px;
+
+    .name {
+      font-size: 12px;
+      color: $dark;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
     .radio-group {
       @include clearfix();
       padding: 6px 0;
@@ -32,6 +67,8 @@
       .custom-radio {
         display: flex;
         width: 100%;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
 
         &.-with-input {
           flex-wrap: wrap;
@@ -48,6 +85,7 @@
       }
 
       label {
+        width: 100%;
         padding: 8px 0;
         font-weight: 400;
         text-transform: none;
@@ -55,14 +93,13 @@
         padding-left: 25px;
         line-height: 1;
         cursor: pointer;
-        width: auto;
         top: 0;
         left: 0;
         transform: none;
         text-align: left;
         color: $dark;
 
-        span {
+        .icon {
           position: absolute;
           top: 50%;
           left: 0;
@@ -87,17 +124,35 @@
         }
       }
 
+      .value {
+        font-size: 36px;
+        color: #2681bf;
+        font-weight: 500;
+        padding-left: 25px;
+        margin-bottom: 5px;
+        display: none;
+
+        .unit {
+          font-size: 16px;
+          font-weight: 400;
+        }
+      }
+
       input[type=radio] {
         display: none;
       }
 
       input[type=radio]:checked + label {
-        span {
+        .icon {
           border: 0;
           &:after {
             display: block;
           }
         }
+      }
+
+      input[type=radio]:checked + label + .value {
+        display: block;
       }
     }
 
