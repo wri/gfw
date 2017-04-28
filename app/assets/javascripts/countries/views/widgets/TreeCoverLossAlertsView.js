@@ -27,9 +27,9 @@ define([
 
   var WIDGETS_NUM = 5;
   var API = window.gfw.config.GFW_API_HOST_PROD;
-  var DATASET = 'a98197d2-cd8e-4b17-ab5c-fabf54b25ea0'; // CLIMATE PRODUCTION DATASET
-  var QUERY_TOP = '/query/?sql=select sum(alerts) as alerts, state_iso, state_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} group by state_iso ORDER BY alerts DESC LIMIT {widgetsNum}';
-  var QUERY_DATA = '/query/?sql=select sum(alerts) as alerts, year, week, state_iso from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND state_iso IN({statesIso}) AND week <= 53 AND group by state_iso, week, year ORDER BY week ASC';
+  var DATASET = '7bcf0880-c00d-4726-aae2-d455a9decbce';
+  var QUERY_TOP = '/query?sql=SELECT SUM (alerts) as alerts, year, wdpa_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' GROUP BY wdpa_id ORDER BY alerts DESC limit {widgetsNum}';
+  var QUERY_DATA = '/query?sql=select sum(alerts) as alerts, year, month, wdpa_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND wdpa_id IN({wdpaId}) AND group by wdpa_id, month, year ORDER BY month ASC';
 
   var TreeCoverLossView = Backbone.View.extend({
     el: '#widget-tree-cover-loss-alerts',
@@ -38,8 +38,7 @@ define([
     cardTemplate: Handlebars.compile(cardTpl),
 
     initialize: function(params) {
-      // this.iso = params.iso;
-      this.iso = 'BRA';
+      this.iso = params.iso;
       this.start();
     },
 
@@ -101,11 +100,11 @@ define([
 
                 topResponse.data.forEach(function(item) {
                   var region = _.findWhere(results, {
-                    id_1: parseInt(item.state_iso.substr(3), 10)
+                    id_1: item.wdpa_id
                   });
                   var name =  region ? region.name_1 : 'N/A';
 
-                  data[item.state_iso] = {
+                  data[item.wdpa_id] = {
                     alerts: NumbersHelper.addNumberDecimals(item.alerts),
                     data: [],
                     name: name
@@ -116,14 +115,14 @@ define([
                   dataset: DATASET,
                   iso: iso,
                   year: 2017,
-                  statesIso: '\'' + topResponse.data.map(function(item) {return item.state_iso}).join('\',\'') + '\'',
+                  wdpaId: '\'' + topResponse.data.map(function(item) {return item.wdpa_id}).join('\',\'') + '\'',
                 });
                 $.ajax({ url: url, type: 'GET' })
                   .done(function(dataResponse) {
                     dataResponse.data.forEach(function(item) {
-                      if (data[item.state_iso] && item.alerts) {
-                        data[item.state_iso].data.push({
-                          date: moment.utc().year(item.year).week(item.week),
+                      if (data[item.wdpa_id] && item.alerts) {
+                        data[item.wdpa_id].data.push({
+                          date: moment.utc().year(item.year).month(item.month),
                           value: item.alerts
                         })
                       }

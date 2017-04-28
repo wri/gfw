@@ -14,7 +14,8 @@ $card-ranking-color: #b6b6ba;
       width: 60px;
       height: 60px;
       display: flex;
-      margin-right: 20px;
+      flex-shrink: 0;
+      margin-right: 10px;
       align-items: center;
       justify-content: center;
       border-radius: 30px;
@@ -37,9 +38,9 @@ $card-ranking-color: #b6b6ba;
       }
       .alerts {
         position: relative;
-        padding-right: 20px;
+        padding-right: 15px;
         > .value {
-          font-size: 36px;
+          font-size: 32px;
           font-weight: 500;
           line-height: 1.0;
           color: $card-highlight-color;
