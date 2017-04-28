@@ -130,7 +130,7 @@ define([
         var isSubLayer = $elem.data('parent') || false;
         var openWithSublayer = $elem.data('open-with-sublayer');
 
-        if ($(event.currentTarget).hasClass('wrapped')) {
+        if ($elem.hasClass('wrapped')) {
           event && event.stopPropagation();
 
           if ($elem.prop('tagName') !== 'LI' && !$elem.siblings().hasClass('sublayer')){
