@@ -25,6 +25,7 @@ define([
             ['forestgain', 'forest2000'],
             ['forma', 'forest2000'],
             ['forma_month_3', 'forma_activity'],
+            ['umd_as_it_happens', 'places_to_watch', 'uncurated_places_to_watch'],
             ['imazon', 'forest2000'],
             ['terrailoss', 'forest2000'],
             ['prodes', 'forest2000'],

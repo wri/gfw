@@ -129,10 +129,10 @@ define([
         var layerSlug = $elem.data('layer');
         var isSubLayer = $elem.data('parent') || false;
 
-        if ($(event.currentTarget).hasClass('wrapped')) {
+        if ($elem.hasClass('wrapped')) {
           event && event.stopPropagation();
 
-          if ($elem.prop('tagName') !== 'LI'){
+          if ($elem.prop('tagName') !== 'LI' && !$elem.siblings().hasClass('wrapped')){
             //as the toggle are switches, we should turn off the others (siblings) before turning on our layer
             for (var i=0;i < $elem.siblings().length; i++) {
               if ($($elem.siblings()[i]).hasClass('selected')) {
@@ -142,7 +142,6 @@ define([
             }
           }
         }
-
         if (!isSubLayer) {
           this._toggleSubLayers($elem, layerSlug);
         } else {
@@ -163,11 +162,14 @@ define([
 
     _toggleSubLayers: function($parent, layerSlug) {
       var $subLayers = $parent.find('[data-parent=\'' + layerSlug + '\']');
+      var layerChecked = $parent.find('.onoffswitch').hasClass('checked');
       if ($subLayers.length > 0) {
         var _this = this;
         $subLayers.each(function() {
           var subLayerSlug = $(this).data('layer');
-          if (subLayerSlug) {
+          var subLayerChecked = $(this).find('.onoffswitch').hasClass('checked');
+          var sublayerAuto = $(this).data('autotoggle');
+          if ((subLayerSlug && layerChecked === subLayerChecked) && (!layerChecked && sublayerAuto || layerChecked)) {
             setTimeout(function() {
               _this.presenter.toggleLayer(subLayerSlug);
               ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + subLayerSlug);

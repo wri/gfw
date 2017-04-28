@@ -9,7 +9,9 @@
 
         {{!-- <div class="thumb-mask" style="background-image: url({{content.data.image}})"> --}}
           <div class="thumb-mask"><img src="{{content.data.image}}" onerror="this.style.display='none';"></div>
-
+          {{#if content.data.image_source}}
+            <span class="image-legend">{{ content.data.image_source }}</span>
+          {{/if}}
       {{/if}}
     </div>
     {{#if content.data.analysis}}
@@ -493,9 +495,21 @@
           <h4>Score from model:</h4>
           <p>{{content.data.score}}</p>
         {{/if}}
+        {{#if content.data.grid_id}}
+          <h4>Grid id:</h4>
+          <p>{{content.data.grid_id}}</p>
+        {{/if}}
+        {{#if content.data.datestamp}}
+          <h4>Datestamp:</h4>
+          <p>{{content.data.datestamp}}</p>
+        {{/if}}
         {{#if content.data.glad_count}}
           <h4>Number of glad alerts from the last month:</h4>
           <p>{{content.data.glad_count}}</p>
+        {{/if}}
+        {{#if content.data.ptw_score}}
+          <h4>Score:</h4>
+          <p>{{content.data.ptw_score}}</p>
         {{/if}}
         {{#if content.data.emissions_sum}}
           <h4>Emissions:</h4>
@@ -536,6 +550,18 @@
         {{#if content.data.class}}
           <h4>Class:</h4>
           <p>{{content.data.class}}</p>
+        {{/if}}
+        {{#if content.data.overlap_pa}}
+          <div class="checkbox-wrapper">
+            <h4 class="inline">Protected area:</h4>
+            <span class="checkbox -checked"></span>
+          </div>
+        {{/if}}
+        {{#if content.data.overlap_ifl}}
+          <div class="checkbox-wrapper">
+            <h4 class="inline">IFL:</h4>
+            <span class="checkbox -checked"></span>
+          </div>
         {{/if}}
     </div>
     </div>

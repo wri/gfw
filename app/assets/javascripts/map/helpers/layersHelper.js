@@ -144,6 +144,7 @@ define([
   'map/views/layers/MexForestCatLayer',
   'map/views/layers/MexForestSubCatLayer',
   'map/views/layers/Places2WatchLayer',
+  'map/views/layers/UncuratedPlaces2WatchLayer',
   'map/views/layers/MexicoPaymentsLayer',
   'map/views/layers/MexLandRightsLayer',
   'map/views/layers/BraLoggingLayer',
@@ -323,6 +324,7 @@ define([
   MexForestCatLayer,
   MexForestSubCatLayer,
   Places2WatchLayer,
+  UncuratedPlaces2WatchLayer,
   MexicoPaymentsLayer,
   MexLandRightsLayer,
   BraLoggingLayer,
@@ -806,9 +808,11 @@ define([
     mex_forest_zoning_rest: {
       view:  MexForestRestLayer
     },
-
     places_to_watch: {
       view:  Places2WatchLayer
+    },
+    uncurated_places_to_watch: {
+      view:  UncuratedPlaces2WatchLayer
     },
     mexican_psa: {
       view:  MexicoPaymentsLayer
