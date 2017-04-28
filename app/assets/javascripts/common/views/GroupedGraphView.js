@@ -231,6 +231,14 @@ define([
       this.render();
     },
 
+    updateChart: function(params) {
+      this.data = params.data;
+      this.remove({
+        keepEvents: true
+      });
+      this._initChart();
+    },
+
     /**
      * Removes the SVG
      */

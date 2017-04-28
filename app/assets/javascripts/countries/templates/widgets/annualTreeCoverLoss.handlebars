@@ -82,7 +82,7 @@
               <div class="radio-group js-datasets">
                 {{#each datasets}}
                   <div class="custom-radio">
-                    <input id="dataset-{{slug}}" name="signup" type="radio" value="{{slug}}" {{#if @first}}checked{{/if}}>
+                    <input id="dataset-{{slug}}" class="js-dataset" data-slug="{{slug}}" name="signup" type="radio" value="{{slug}}" {{#if @first}}checked{{/if}}>
                     <label for="dataset-{{slug}}"><span class="icon"></span>{{name}}</label>
                     <div class="value">{{value}} <span class="unit">Ha</span></div>
                   </div>

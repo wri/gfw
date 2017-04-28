@@ -76,14 +76,19 @@ define([
   var AnnualTreeCoverLossView = Backbone.View.extend({
     el: '#widget-annual-tree-cover-loss',
 
+    events: {
+      'click .js-dataset': '_updateChart'
+    },
+
     defaults: {
-      mainDatasets: ['loss', 'wdpa']
+      currentDatasets: ['loss', 'wdpa']
     },
 
     template: Handlebars.compile(tpl),
 
     initialize: function(params) {
       this.iso = params.iso;
+      this.currentDatasets = this.defaults.currentDatasets;
       this.datasets = [];
 
       this._getList().done(this._initWidget.bind(this));
@@ -170,28 +175,86 @@ define([
       return datasets;
     },
 
-    _initWidget: function(res) {
-      this.data = [
-        { label:"2001", "0": 20, "1": 40},
-        { label:"2002", "0": 20, "1": 40},
-        { label:"2003", "0": 20, "1": 40},
-        { label:"2004", "0": 20, "1": 40},
-        { label:"2005", "0": 20, "1": 40},
-        { label:"2006", "0": 20, "1": 40},
-        { label:"2007", "0": 20, "1": 40},
-        { label:"2008", "0": 20, "1": 40},
-        { label:"2009", "0": 20, "1": 40},
-        { label:"2010", "0": 20, "1": 40},
-        { label:"2011", "0": 20, "1": 40},
-        { label:"2012", "0": 20, "1": 40},
-        { label:"2013", "0": 20, "1": 40}
-      ];
+    _getGraphData: function() {
+      var $deferred = $.Deferred();
+      var $promises = [];
+      var data = [];
 
+      _.each(this.currentDatasets, function(item) {
+        var current = _.findWhere(DATASETS, { slug: item });
+
+        if (current.dataset) {
+          var url = API + new UriTemplate(QUERY_YEARLY).fillFromObject({
+            dataset: current.dataset, iso: this.iso
+          });
+
+          $promises.push(
+            $.ajax({
+              url: url,
+              type: 'GET'
+            })
+            .done(function(res) {
+              data.push({
+                data: res.data,
+                slug: item
+              });
+            })
+          );
+        }
+      }.bind(this));
+
+      $.when.apply($, $promises).then(function(schemas) {
+        return $deferred.resolve(data);
+      }.bind(this));
+
+      return $deferred;
+    },
+
+    _initWidget: function() {
+      this._getGraphData().done(function(data) {
+        this._setData(data);
+        this._renderGraph();
+      }.bind(this));
+    },
+
+    _setData: function(data) {
+      this.data = [];
+      _.each(data, function(item) {
+        _.each(item.data, function(elem) {
+          var year = elem.date.toString();
+          var current = _.findWhere(this.data, { label: year });
+          if (!current) {
+            var indicator = {
+              label: year
+            };
+            indicator[item.slug] = elem.value;
+            this.data.push(indicator);
+          } else {
+            current[item.slug] = elem.value;
+          }
+        }.bind(this));
+      }.bind(this));
+    },
+
+    _renderGraph: function() {
       this.render();
       this.lineGraph = new GroupedGraphView({
         el: '#annual-tree-cover-loss-graph',
         data: this.data
       });
+    },
+
+    _updateChart: function(ev) {
+      var slug = $(ev.currentTarget).data('slug');
+      this.currentDatasets.pop();
+      this.currentDatasets.push(slug);
+
+      this._getGraphData().done(function(data) {
+        this._setData(data);
+        this.lineGraph.updateChart({
+          data: this.data
+        });
+      }.bind(this));
     }
   });
   return AnnualTreeCoverLossView;

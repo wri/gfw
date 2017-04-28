@@ -1,6 +1,4 @@
 .m-widget-annual-tree-cover-loss {
-  padding-top: 30px;
-
   .filter-list {
     width: 100%;
     display: flex;
@@ -26,7 +24,7 @@
   .total-loss {
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     border-bottom: solid 1px #e7e7e9;
     margin-bottom: 10px;
 
@@ -160,6 +158,6 @@
   }
 
   .chart {
-    height: 130px;
+    height: 280px;
   }
 }
