@@ -20,7 +20,9 @@
         <span class="label">Data shown</span>
         <div class="wrapper">
           <select id="cla-data-shown-select">
-            <option value="monthly">By year</option>
+            {{#each origins}}
+              <option value="monthly">{{ this }}</option>
+            {{/each}}
           </select>
           <div class="select-clear" style="display: none;">✕</div>
           <div class="select-arrow"></div>

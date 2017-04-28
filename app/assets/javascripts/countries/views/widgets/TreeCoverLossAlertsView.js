@@ -37,6 +37,12 @@ define([
     template: Handlebars.compile(tpl),
     cardTemplate: Handlebars.compile(cardTpl),
 
+    defaultOrigins: ['Within protected areas'],
+    originsByCountry: {
+      IDN: ['within moratorium areas', 'on peat'],
+      MYS: ['within moratorium areas']
+    },
+
     initialize: function(params) {
       this.iso = params.iso;
       this.start();
@@ -52,8 +58,13 @@ define([
     },
 
     render: function() {
+      var origins = this.defaultOrigins;
+      if (this.originsByCountry[this.iso]) {
+        origins = origins.concat(this.originsByCountry[this.iso]);
+      }
       this.$el.html(this.template({
-        widgetsNum: 5
+        widgetsNum: 5,
+        origins: origins
       }));
       this.$el.removeClass('-loading');
     },
