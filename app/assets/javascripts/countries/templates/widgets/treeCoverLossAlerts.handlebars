@@ -21,7 +21,7 @@
         <div class="wrapper">
           <select id="cla-data-shown-select">
             {{#each origins}}
-              <option value="monthly">{{ this }}</option>
+              <option value="{{ this.value }}">{{ this.label }}</option>
             {{/each}}
           </select>
           <div class="select-clear" style="display: none;">✕</div>
