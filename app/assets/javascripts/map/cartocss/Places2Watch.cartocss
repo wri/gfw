@@ -28,13 +28,14 @@
  marker-line-opacity: 0;
 }
 
-#ptw_grid_score_gt_0[zoom<5][dtype=true]{
+#ptw_grid_score_gt_0[zoom<6][dtype=true]{
   polygon-fill: transparent;
   line-width:0;
   polygon-opacity: 0;
   line-color: transparent;
   marker-fill-opacity: 0;
   marker-line-color: transparent;
+  marker-allow-overlap: true;
   marker-width: 0;
 }
 
