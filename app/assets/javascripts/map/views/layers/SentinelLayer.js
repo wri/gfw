@@ -13,13 +13,17 @@ define([
 
   'use strict';
 
-  var API_URL = window.gfw.config.GFW_API_HOST_NEW_API;
-  var sentinelHubParams = '?SERVICE=WMS&REQUEST=GetMap&LAYERS=TRUE_COLOR&BBOX={bbox}&MAXCC={cloud}&CLOUDCORRECTION=none&WIDTH=512&HEIGHT=512&FORMAT=image/jpeg&TIME={mindate}/{maxdate}&CRS=CRS:84';
+  var SENTINEL_URL = 'http://services.sentinel-hub.com/v1/{provider}/9f85dfae-bf90-4638-81d3-dc9925dd5b26/';
+  var LANDSAT_URL = 'http://services-uswest2.sentinel-hub.com/v1/{provider}/0e8c6cde-ff77-4e38-aba8-33b171896972/';
+  var TILE_SIZE = 256;
+  var MAX_ZOOM = 9;
+
+  var TILES_PARAMS = '?SERVICE=WMS&REQUEST=GetMap&LAYERS=TRUE_COLOR&BBOX={bbox}&MAXCC={cloud}&CLOUDCORRECTION=none&WIDTH=512&HEIGHT=512&FORMAT=image/jpeg&TIME={mindate}/{maxdate}&CRS=CRS:84';
+
+  var METADATA_PARAMS = '?service=WFS&version=2.0.0&request=GetFeature&time={mindate}/{maxdate}&typenames=TILE&maxfeatures=1&srsname=CRS:84&bbox={bbox}&outputformat=application/json';
 
   var SentinelLayer = ImageLayerClass.extend({
     options: {
-      urlTemplateSentinel2: '/high-res/sentinel' + sentinelHubParams,
-      urlTemplateLandsat8: '/high-res/landsat' + sentinelHubParams,
       dataMaxZoom: {
         'rgb': 14,
         'ndvi': 13,
@@ -62,7 +66,7 @@ define([
 
     calcBboxFromXY: function(x, y, z) {
       var proj = this.map.getProjection();
-      var tileSize = 256 / Math.pow(2,z);
+      var tileSize = TILE_SIZE / Math.pow(2,z);
       var tileBounds = new google.maps.LatLngBounds(
         proj.fromPointToLatLng(new google.maps.Point(x*tileSize, (y+1)*tileSize)),
         proj.fromPointToLatLng(new google.maps.Point((x+1)*tileSize, y*tileSize))
@@ -73,35 +77,38 @@ define([
 
 
     _getUrlTemplateBySensor: function(sensor) {
-      return sensor === 'sentinel-2' ? 'urlTemplateSentinel2' : 'urlTemplateLandsat8';
+      this.sensor = sensor;
+      return sensor === 'sentinel-2' ? SENTINEL_URL
+        : LANDSAT_URL;
     },
 
     _getUrl: function(x, y, z, params) {
-      var urlTemplate = this._getUrlTemplateBySensor(params.sensor_platform);
+      var urlTemplate = this._getUrlTemplateBySensor(params.sensor_platform) + TILES_PARAMS;
       var urlParams = {
         sat: params.color_filter,
         cloud: params.cloud,
         mindate: params.mindate,
         maxdate: params.maxdate,
-        bbox: this.calcBboxFromXY(x, y, z)
+        bbox: this.calcBboxFromXY(x, y, z),
+        provider: 'wms'
       }
-      return API_URL + new UriTemplate(this.options[urlTemplate]).fillFromObject(urlParams);
+      return new UriTemplate(urlTemplate).fillFromObject(urlParams);
     },
 
     _getInfoWindowUrl: function(params) {
-      var urlTemplate = this._getUrlTemplateBySensor(params.sensor_platform);
-      return new UriTemplate(this.options[urlTemplate]).fillFromObject({
-        lng: params.lng,
-        lat: params.lat,
-        cloud: params.cloud,
-        mindate: moment(params.mindate).format("YYYY-MM-DD"),
-        maxdate: moment(params.maxdate).format("YYYY-MM-DD"),
-        tileddate: params.tileddate,
-        sensor_platform: params.sensor_platform
+      var urlTemplate = this._getUrlTemplateBySensor(params.sensor_platform) + METADATA_PARAMS;
+      console.log(params, urlTemplate);
+      return new UriTemplate(urlTemplate).fillFromObject({
+        mindate: params.mindate,
+        maxdate: params.maxdate,
+        bbox: params.bbox,
+        provider: 'wfs'
       });
     },
 
     _getBoundsUrl: function(params) {
+      this.clear();
+
       var urlTemplate = this._getUrlTemplateBySensor(params.sensor_platform);
       return new UriTemplate(this.options[urlTemplate]).fillFromObject({
         geo: params.geo,
@@ -109,21 +116,22 @@ define([
         mindate: moment(params.mindate).format("YYYY-MM-DD"),
         maxdate: moment(params.maxdate).format("YYYY-MM-DD"),
         tileddate: params.tileddate,
-        sensor_platform: params.sensor_platform
+        sensor_platform: params.sensor_platform,
+        provider: 'wms'
       });
     },
 
 
     // TILES
     getTile: function(coord, zoom, ownerDocument) {
-
-      if(zoom < 5) {
-        return;
+      if(zoom < MAX_ZOOM) {
+        return ownerDocument.createElement('div');
       }
+
       var zsteps = this._getZoomSteps(zoom);
-      var srcX = 256 * (coord.x % Math.pow(2, zsteps));
-      var srcY = 256 * (coord.y % Math.pow(2, zsteps));
-      var widthandheight = (zsteps > 0) ? 256 * Math.pow(2, zsteps) + 'px' : this.tileSize.width + 'px';
+      var srcX = TILE_SIZE * (coord.x % Math.pow(2, zsteps));
+      var srcY = TILE_SIZE * (coord.y % Math.pow(2, zsteps));
+      var widthandheight = (zsteps > 0) ? TILE_SIZE * Math.pow(2, zsteps) + 'px' : this.tileSize.width + 'px';
 
       var url = this._getUrl.apply(this,
         this._getTileCoords(coord.x, coord.y, zoom,this._getParams()));
@@ -196,15 +204,12 @@ define([
         var infoWindowOptions = {
           offset: [0, 100],
           infowindowData: {
-            acquired: moment(data['acquired']).format("MMMM Do, YYYY"),
-            platform: data['platform'].toUpperCase(),
-            sensor_platform: data['sensorPlatform'].toUpperCase(),
-            cloud_coverage: (data['cloudCoverage']) ? Math.ceil( data['cloudCoverage'] * 10) / 10 : '0'
+            acquired: moment.utc(data['date'], 'YYYY-MM-DD').format("MMMM Do, YYYY"),
+            sensor_platform: this.sensor,
+            cloud_coverage: (data['cloudCoverPercentage']) ? Math.ceil( data['cloudCoverPercentage'] * 10) / 10 : '0'
           }
         }
         this.infowindow = new CustomInfowindow(event.latLng, this.map, infoWindowOptions);
-        this.removeMultipolygon();
-        this.drawMultipolygon(data.geometry);
       }
     },
 
@@ -224,7 +229,7 @@ define([
     },
 
     clearEvents: function() {
-      google.maps.event.clearListeners(this.map, this.clickevent);
+      // google.maps.event.clearListeners(this.map, this.clickevent);
       google.maps.event.clearListeners(this.map, this.dragendevent);
       google.maps.event.clearListeners(this.map, this.zoomChangedEvent);
     },
@@ -235,9 +240,9 @@ define([
       // var tomorrow = today.add('days', 1);
       // var geo = this.getBoundsPolygon();
 
-      if (this.map.getZoom() < 9) {
-        this.notificate('notification-no-images-highres');
-      }
+      // if (this.map.getZoom() < 9) {
+      //   this.notificate('notification-no-images-highres');
+      // }
       // if (!!geo) {
       //   // Set options to get the url of the api
       //   var options = _.extend({}, this._getParams(), {
@@ -255,24 +260,46 @@ define([
     },
 
     onClickEvent: function(event) {
-      // Set Date
-      var today = moment();
-      var tomorrow = today.add('days', 1);
+      if(this.map.getZoom() >= MAX_ZOOM) {
+        // Set options to get the url of the api
+        var bounds = this.getBoundsFromLatLng(event.latLng);
+        var options = _.extend({}, this._getParams(), {
+          lng: event.latLng.lng(),
+          lat: event.latLng.lat(),
+          bbox: bounds
+        });
+        var url = this._getInfoWindowUrl(options);
 
-      // Set options to get the url of the api
-      // var options = _.extend({}, this._getParams(), {
-      //   lng: event.latLng.lng(),
-      //   lat: event.latLng.lat(),
-      //   tileddate: moment(tomorrow).format("YYYY-MM-DD"),
-      // });
-      // var url = this._getInfoWindowUrl(options);
+        $.get(url)
+          .done(function(data) {
+            this.clear();
 
-      // $.get(url).done(_.bind(function(response) {
-      //   this.removeInfoWindow();
-      //   if (!!response && !!response.data && !!response.data.length) {
-      //     this.setInfoWindow(response.data[0].attributes, event);
-      //   }
-      // }, this ));
+            var feature = data.features[0];
+
+            if (feature) {
+              this.drawMultipolygon(feature.geometry);
+              this.setInfoWindow(feature.properties, event);
+            }
+          }.bind(this));
+      }
+    },
+
+    getBoundsFromLatLng: function(latLng) {
+      var offsetX = TILE_SIZE;
+      var offsetY = TILE_SIZE;
+
+      var tileSize = TILE_SIZE / Math.pow(2, this.map.getZoom());
+
+      var point1 = this.map.getProjection().fromLatLngToPoint(latLng);
+      var point2 = new google.maps.Point(offsetX / Math.pow(2, this.map.getZoom()),
+        offsetY / Math.pow(2, this.map.getZoom())
+      );
+      var newLat = this.map.getProjection().fromPointToLatLng(new google.maps.Point(
+        point1.x + (tileSize / 2),
+        point1.y + (tileSize / 2)
+      ));
+
+      return latLng.lng() + ',' + latLng.lat() + ',' + newLat.lng() + ',' + newLat.lat();
     },
 
 
@@ -334,6 +361,11 @@ define([
       var params = this._getParams();
       return z - this.options.dataMaxZoom[params['color_filter']];
     },
+
+    clear: function() {
+      this.removeMultipolygon();
+      this.removeInfoWindow();
+    }
 
 
   });
