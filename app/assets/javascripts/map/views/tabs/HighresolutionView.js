@@ -47,8 +47,8 @@ define([
     },
 
     sensors : {
-      'landsat-8': 'Landsat 8',
-      'sentinel-2': 'Sentinel 2'
+      'sentinel-2': 'Sentinel 2',
+      'landsat-8': 'Landsat 8'
     },
 
     initialize: function(map) {
@@ -122,7 +122,7 @@ define([
 
     _getParams: function(e) {
       var renderer = this.$highresForm.find('#hres-filter-select').val() || 'rgb',
-          sensor = this.$highresForm.find('#hres-filter-sensor').val() || 'landsat-8',
+          sensor = this.$highresForm.find('#hres-filter-sensor').val() || 'sentinel-2',
           mindate = (!!this.$mindate.val()) ? this.$mindate.val() : '2000-09-01',
           maxdate = (!!this.$maxdate.val()) ? this.$maxdate.val() : '2000-09-01';
 
