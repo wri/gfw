@@ -132,7 +132,7 @@ define([
         if ($elem.hasClass('wrapped')) {
           event && event.stopPropagation();
 
-          if ($elem.prop('tagName') !== 'LI' && !$elem.siblings().hasClass('wrapped')){
+          if ($elem.prop('tagName') !== 'LI' && !$elem.siblings().hasClass('sublayer')){
             //as the toggle are switches, we should turn off the others (siblings) before turning on our layer
             for (var i=0;i < $elem.siblings().length; i++) {
               if ($($elem.siblings()[i]).hasClass('selected')) {
