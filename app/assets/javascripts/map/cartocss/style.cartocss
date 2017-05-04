@@ -579,7 +579,8 @@
     line-opacity: 1;
   }
 
-  [layer='idn_leuser']{
+  [layer='idn_leuser'],
+  [layer='leuser_ecosystem_province_boundary']{
     polygon-fill: #5CA2AA;
     polygon-opacity: 0.7;
     line-color: #5CA0AA;
