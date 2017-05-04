@@ -155,9 +155,6 @@ define([
       "gfw_landsat_alerts_coverage",
       "glad_coverage",
       "terraicanvas_cover",
-      "forma_cover",
-      "forma_250_2016",
-      "forma_250_cover",
       "imazon_cover",
       "gran_chaco_extent",
       // FOREST CHANGE
@@ -166,7 +163,6 @@ define([
       "terrailoss",
       "viirs_fires_alerts",
       "imazon",
-      "forma",
       "peru_forma_250",
       "brazil_forma_250",
       "laos_forma_250",

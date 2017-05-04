@@ -5,11 +5,8 @@ define([
   // Layer views
   'map/views/layers/LossLayer',
   'map/views/layers/ForestGainLayer',
-  'map/views/layers/FormaLayer',
   'map/views/layers/FormaMonth3Layer',
   'map/views/layers/FormaActivityLayer',
-  'map/views/layers/FormaCoverLayer',
-  'map/views/layers/Forma250CoverLayer',
   'map/views/layers/ImazonLayer',
   'map/views/layers/ImazonCoverLayer',
   'map/views/layers/Forest2000Layer',
@@ -182,11 +179,8 @@ define([
   // Layer Views
   LossLayer,
   ForestGainLayer,
-  FormaLayer,
   FormaMonth3Layer,
   FormaActivityLayer,
-  FormaCoverLayer,
-  Forma250CoverLayer,
   ImazonLayer,
   ImazonCoverLayer,
   Forest2000Layer,
@@ -367,22 +361,12 @@ define([
     forestgain: {
       view: ForestGainLayer
     },
-    forma: {
-      view: FormaLayer,
-      timelineView: FormaTimeline
-    },
     forma_month_3: {
       view: FormaMonth3Layer,
       timelineView: FormaTimeline
     },
     forma_activity: {
       view: FormaActivityLayer
-    },
-    forma_cover: {
-      view: FormaCoverLayer
-    },
-    forma_250_cover: {
-      view: Forma250CoverLayer
     },
     imazon: {
       view: ImazonLayer,
