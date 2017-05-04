@@ -30,6 +30,7 @@ define([
   'map/views/layers/CogLoggingLayer',
   'map/views/layers/MysLoggingLayer',
   'map/views/layers/MiningLayer',
+  'map/views/layers/CanOilLayer',
   'map/views/layers/CanMiningLayer',
   'map/views/layers/CmrMiningLayer',
   'map/views/layers/CodMiningLayer',
@@ -210,6 +211,7 @@ define([
   CogLoggingLayer,
   MysLoggingLayer,
   MiningLayer,
+  CanOilLayer,
   CanMiningLayer,
   CmrMiningLayer,
   CodMiningLayer,
@@ -454,6 +456,9 @@ define([
     },
     mining: {
       view: MiningLayer
+    },
+    can_oil: {
+      view: CanOilLayer
     },
     can_mining: {
       view: CanMiningLayer
