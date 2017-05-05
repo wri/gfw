@@ -9,6 +9,8 @@ define([
 
   var GET_TILE_URL_ID = 'FormaService:getTilesUrl';
   var GET_TILE_URL = 'http://api.forma-250.appspot.com/tiles/delta';
+  var GET_DATES_ID = 'FormaService:getDates';
+  var GET_DATES_URL = 'http://api.forma-250.appspot.com/dates';
 
   var FormaService = Class.extend({
     getTileUrl: function() {
@@ -17,6 +19,24 @@ define([
 
         var requestConfig = {
           resourceId: GET_TILE_URL_ID,
+          success: function(res, status) {
+            resolve(res, status);
+          },
+          error: function(errors) {
+            reject(errors);
+          }
+        };
+
+        ds.request(requestConfig);
+      }.bind(this));
+    },
+
+    getDates: function() {
+      return new Promise(function(resolve, reject) {
+        this.defineRequest(GET_DATES_ID, GET_DATES_URL, { type: 'persist', duration: 1, unit: 'days' });
+
+        var requestConfig = {
+          resourceId: GET_DATES_ID,
           success: function(res, status) {
             resolve(res, status);
           },
