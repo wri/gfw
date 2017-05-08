@@ -82,7 +82,7 @@ define([], function() {
     faqs: {
       title: 'FAQs',
       description: 'Read through answers to the most frequently asked questions about GFW.',
-      link: '/howto/faqs',
+      link: '/howto/categories/faqs/?page=0',
     },
     provide_feedback: {
       title: 'Provide feedback',
@@ -113,4 +113,3 @@ define([], function() {
   return interestingHelper;
 
 });
-
