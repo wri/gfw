@@ -62,7 +62,7 @@ def gfw_analysis(test_values, tolerance=0.1, target='DEFAULT'):
     assert gain == pytest.approx(test_values['gain'], rel=0.10), gain_error
     #log.debug("Sucsess. Extracted values within expected range.")
     driver.close()
-    driver.quit()
+    #driver.quit()
     return
 
 
