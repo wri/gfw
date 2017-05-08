@@ -198,7 +198,7 @@ define([
      * @return {Object} Params ready for URL
      */
     _destandardizeParams: function(params) {
-      var p = _.extendNonNull({}, urlDefaultsParams, _.parseUrl(), params);
+      var p = _.extendNonNull({}, urlDefaultsParams, params);
       var baselayers = _.pluck(p.baselayers, 'slug');
       p.name = this._name;
       p.baselayers = (baselayers.length > 0) ? baselayers : 'none';
