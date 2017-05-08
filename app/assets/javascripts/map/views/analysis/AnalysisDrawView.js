@@ -437,7 +437,7 @@ define([
       var paths = geojsonUtilsHelper.geojsonToPath(geojson);
       var overlay = new google.maps.Polygon({
         paths: paths,
-        editable: (geojson.type == 'Polygon'),
+        editable: false,
         strokeWeight: this.presenter.status.get('overlay_stroke_weight'),
         fillOpacity: 0,
         fillColor: '#FFF',
@@ -448,8 +448,6 @@ define([
 
       this.presenter.status.set('overlay', overlay, { silent: true });
       this.presenter.status.set('geojson', this.getGeojson(overlay), { silent: true });
-
-      this.eventsDrawing();
 
       if (this.presenter.status.get('fit_to_geom')) {
         this.map.fitBounds(overlay.getBounds());
