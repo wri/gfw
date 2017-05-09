@@ -121,6 +121,7 @@ define([
       "bra_mining",
       "mex_mining",
       "per_mining",
+      "can_oil",
       "can_mining",
       "col_mining",
       "khm_mining",

@@ -108,7 +108,7 @@ body,html{
 
         a {
           position: relative;
-          
+
           &.google-logo, &.gee-logo, &.cartodb-logo {
             top: 2px;
           }
@@ -193,6 +193,7 @@ body,html{
   &.is-loaded {
     opacity: 1;
   }
+
   &.urthecast-incorrect-zoom {
     &:after {
       content: "";
@@ -202,6 +203,22 @@ body,html{
       height: 100%;
       width: 100%;
     }
+  }
+
+  &:hover .tooltip.-enabled {
+    opacity: 0.6;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .tooltip {
+    opacity: 0;
+    background: #000000;
+    color: $white;
+    margin-left: 15px;
+    padding: 15px;
+    position: absolute;
+    z-index: 1000;
+    font-size: 12px;
   }
 }
 
@@ -322,4 +339,3 @@ body,html{
     font-size: 8px !important;
   }
 }
-

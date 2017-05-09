@@ -31,7 +31,7 @@ run multiple Ruby versions for different applications:
 ```bash
 $ brew update
 $ brew upgrade rbenv ruby-build
-$ brew install imagemagick
+$ brew install imagemagick@6
 ```
 
 Next clone the gfw repo:
