@@ -85,7 +85,7 @@ define([
     render: function() {
       this.$el.html(this.template({
         today: moment().format('DD-MM-YYYY'),
-        mindate: moment().subtract(3,'month').format('YYYY-MM-DD'),
+        mindate: moment().subtract(4,'month').format('YYYY-MM-DD'),
         zoom: this.map.getZoom(),
         sensors: this.sensors,
         renderers: this.renderers
