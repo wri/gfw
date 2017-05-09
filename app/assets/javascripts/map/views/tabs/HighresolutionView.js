@@ -18,6 +18,8 @@ define([
 
   'use strict';
 
+  var MAX_ZOOM = 9;
+
   var SelectedDates = Backbone.Model.extend({
     // left blank on puropose, max min dates
   });
@@ -106,12 +108,12 @@ define([
       this.zoom = zoom;
       if (isNaN(this.previousZoom)) this.previousZoom = zoom;
       this.$currentZoom.text(zoom);
-      if(this.zoom >= 5) {
+      if(this.zoom >= MAX_ZOOM) {
         this.presenter.notificateClose();
         this.$disclaimer.hide(0);
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
-          if (this.previousZoom >= 5) {
+          if (this.previousZoom >= MAX_ZOOM) {
             this.presenter.notificate('notification-zoom-not-reached');
           }
         }
@@ -162,7 +164,7 @@ define([
     },
 
     toggleLayer: function(e) {
-      if (this.zoom >= 9) {
+      if (this.zoom >= MAX_ZOOM) {
         this.presenter.toggleLayer('highres');
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
