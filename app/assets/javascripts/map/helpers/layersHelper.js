@@ -171,7 +171,7 @@ define([
   // Layers timelines
   'map/views/timeline/LossTimeline',
   'map/views/timeline/FormaTimeline',
-  'map/views/timeline/Forma250Timeline',
+  'map/views/timeline/FormaActivityTimeline',
   'map/views/timeline/ImazonTimeline',
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
@@ -349,7 +349,7 @@ define([
   // Layer timelines
   LossTimeline,
   FormaTimeline,
-  Forma250Timeline,
+  FormaActivityTimeline,
   ImazonTimeline,
   FiresTimeline,
   TerraiTimeline,
@@ -374,7 +374,8 @@ define([
       timelineView: FormaTimeline
     },
     forma_activity: {
-      view: FormaActivityLayer
+      view: FormaActivityLayer,
+      timelineView: FormaActivityTimeline
     },
     imazon: {
       view: ImazonLayer,
