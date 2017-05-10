@@ -8,7 +8,7 @@ define([
   'use strict';
 
   var GET_TILE_URL_ID = 'FormaService:getTilesUrl';
-  var GET_TILE_URL = 'http://api.forma-250.appspot.com/tiles/delta';
+  var GET_TILE_URL = 'http://api-dot-forma-250.appspot.com/tiles/latest';
   var GET_DATES_ID = 'FormaService:getDates';
   var GET_DATES_URL = 'http://api.forma-250.appspot.com/dates';
 
