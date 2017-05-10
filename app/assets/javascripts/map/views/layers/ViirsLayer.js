@@ -10,7 +10,7 @@ define([
   'abstract/layer/CartoDBLayerClass',
   'text!map/cartocss/viirs.cartocss',
   'map/presenters/layers/FiresLayerPresenter',
-  'map/helpers/FiresDatesHelper'
+  'map/helpers/timelineDatesHelper'
 ], function(_, moment, UriTemplate, CartoDBLayerClass, ViirsCarto, Presenter, DatesHelper) {
 
   'use strict';

@@ -116,6 +116,7 @@ define([
       us_land_cover_change : Handlebars.compile(us_land_coverTPL),
       forma : Handlebars.compile(formaTPL),
       forma_month_3: Handlebars.compile(forma_month_TPL),
+      forma_activity: Handlebars.compile(forma_month_TPL),
       bra_biomes : Handlebars.compile(bra_biomesTPL),
       plantations_by_type: Handlebars.compile(gfwPlantationByTypeTpl),
       bra_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),

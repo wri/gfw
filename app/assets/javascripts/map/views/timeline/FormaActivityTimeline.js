@@ -1,7 +1,7 @@
 /**
- * The FiresTimeline.
+ * The FormaActivityTimeline.
  *
- * @return FiresTimeline class (extends TimelineBtnClass)
+ * @return FormaActivityTimeline class (extends TimelineBtnClass)
  */
 define([
   'underscore', 'moment',
@@ -12,7 +12,7 @@ define([
 
   'use strict';
 
-  var FiresTimeline = TimelineBtnClass.extend({
+  var FormaActivityTimeline = TimelineBtnClass.extend({
 
     initialize: function(layer, currentDate) {
       this.presenter = new Presenter(this);
@@ -30,7 +30,7 @@ define([
       currentDate = DatesHelper.getRangeForDates(currentDate);
 
 
-      FiresTimeline.__super__.initialize.apply(this, [layer, currentDate]);
+      FormaActivityTimeline.__super__.initialize.apply(this, [layer, currentDate]);
     },
 
     /**
@@ -43,5 +43,5 @@ define([
     }
   });
 
-  return FiresTimeline;
+  return FormaActivityTimeline;
 });
