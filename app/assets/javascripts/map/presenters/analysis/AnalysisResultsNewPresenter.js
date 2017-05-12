@@ -154,6 +154,10 @@ define([
         p.alerts.totalAlerts = this.roundNumber(results.alertCounts || 0);
       }
 
+      if (p.slug === 'forma-alerts') {
+        p.alerts.totalAlerts = this.roundNumber(results.alerts || 0);
+      }
+
       return p;
     },
 
