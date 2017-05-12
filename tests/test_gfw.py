@@ -89,6 +89,11 @@ def analyze_areas_data():
     return dictionary_list
 
 
+def non_increasing(L):
+    """Test that a given list does not increase at all as it progresses."""
+    return all(x>=y for x, y in zip(L, L[1:]))
+
+
 @pytest.fixture(params=analyze_areas_data())
 def analyse_area(request, tolerance=0.1):
     """Test GFW front-end. Tolerance = amount by which the values can be wrong (from 0 to 1)
@@ -110,36 +115,32 @@ def analyse_area(request, tolerance=0.1):
     return
 
 
+@pytest.fixture(params=analyze_areas_data())
+def analysis_loss_over_time(request):
+    """By its nature, loss should be larger the more time you consider. This test
+    checks that behaviour is correct for a dataset."""
+    d = request.param
+    if 'loss' in d:
+        losses={}
+        first_year = int(str(d['start_date']).split('-')[0]) - 2000
+        last_year = int(str(d['end_date']).split('-')[0]) - 2000
+        start_dates = [f'{year + 2000}-01-01' for year in range(first_year, last_year + 1, 4)]
+        for start in start_dates:
+            d['start_date'] = start
+            url = url_target(d)
+            stats = return_analysis_content(url)
+            losses[start] = extract_element_info(stats, "LOSS")
+        loss_in_progressivley_shorter_time = list(losses.values())
+        assert non_increasing(loss_in_progressivley_shorter_time), "The amount of loss changed in an impossible way; It cannot increase."
+
+
 def test_analyze_areas(analyse_area):
+    """Test each analysis field shows the total, loss, and gain (where available)
+    that it is supposed to have."""
     return
 
-#
-# def non_increasing(L):
-#     """Test that a given list does not increase at all as it progresses."""
-#     return all(x>=y for x, y in zip(L, L[1:]))
-#
-#
-# def test_analysis_loss_over_time():
-#     """By its nature, loss should be larger the more time you consider. This test
-#     checks that behaviour is correct for a dataset."""
-#     d={'staging':  "http://staging.globalforestwatch.org/map/",
-#        'production': "http://globalforestwatch.org/map/",
-#        'local': "localhost:5000/map/",
-#        'url_analysis': "11/42.94/-4.56/ALL/grayscale/loss,forestgain/{data_id}?tab=analysis-tab&wdpaid=555549019&begin={start_date}&end={end_date}&threshold={threshold}&dont_analyze=true&tour=default",
-#        'staging_local_data_id': '612',
-#        'production_data_id': '612',
-#        'start_date':'2001-01-01',
-#        'end_date':'2016-01-01',
-#        'threshold': '30',
-#        }
-#     losses={}
-#     first_year = int(d['start_date'].split('-')[0]) - 2000
-#     last_year = int(d['end_date'].split('-')[0]) - 2000
-#     start_dates = [f'{year + 2000}-01-01' for year in range(first_year, last_year + 1, 4)]
-#     for start in start_dates:
-#         d['start_date'] = start
-#         url = url_target(d)
-#         stats = return_analysis_content(url)
-#         losses[start] = extract_element_info(stats, "LOSS")
-#     loss_in_progressivley_shorter_time = list(losses.values())
-#     assert non_increasing(loss_in_progressivley_shorter_time), "The amount of loss changed in an impossible way; It cannot increase."
+
+def test_loss_over_time(analysis_loss_over_time):
+    """Test for each instance in the YAML file that loss reduces as less time is
+    considered in the users analysis."""
+    return
