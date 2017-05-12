@@ -39,7 +39,7 @@ define([
      * @return {array} Array of quarterly.
      */
     _getData: function() {
-      return DatesHelper.dateRanges;
+      return DatesHelper.dateRanges();
     }
   });
 
