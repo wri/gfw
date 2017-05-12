@@ -2,7 +2,7 @@ define([
   'bluebird', 'uri', 'd3', 'mps', 'moment',
   'abstract/layer/AnimatedCanvasLayerClass',
   'map/services/TerraiDateService',
-  'map/presenters/TerraiCanvasLayerPresenter'
+  'map/presenters/TerraILayerPresenter'
 ], function(
   Promise, UriTemplate, d3, mps, moment,
   AnimatedCanvasLayerClass,
