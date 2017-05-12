@@ -72,10 +72,10 @@
     justify-content: center;
     text-align: center;
     z-index: 3;
-    background-color: rgba(#555555, 0.7);
+    background-color: rgba($slate, 0.7);
     border-radius: rem(47px);
     display: none;
-    color: #FFF;
+    color: $white;
     text-transform: uppercase;
 
     &.-visible {
