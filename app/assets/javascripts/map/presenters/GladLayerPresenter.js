@@ -10,6 +10,8 @@ define([
   var GladLayerPresenter = PresenterClass.extend({
 
     init: function(view) {
+      this.publishNotification('notification-glad-data-alert');
+      console.log('heeello');
       this.view = view;
       this._super();
 
@@ -55,6 +57,10 @@ define([
 
     animationStopped: function() {
       mps.publish('Torque/stopped', []);
+    },
+
+    publishNotification: function(id){
+      mps.publish('Notification/open', [id]);
     },
 
     updateTimelineDate: function(change) {
