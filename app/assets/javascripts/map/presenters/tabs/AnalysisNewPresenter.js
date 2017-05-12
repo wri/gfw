@@ -124,11 +124,13 @@ define([
         name: 'forest2000',
         slug: 'umd-loss-gain'
       },{
-        name: 'forma',
-        slug: 'forma-alerts'
-      },{
         name: 'forma_month_3',
-        slug: 'forma250GFW'
+        slug: 'forma250GFW',
+        subscription: true
+      },{
+        name: 'forma_activity',
+        slug: 'forma-alerts',
+        subscription: true
       },{
         name: 'imazon',
         slug: 'imazon-alerts',
@@ -165,10 +167,6 @@ define([
         name: 'umd_as_it_happens_idn',
         slug: 'glad-alerts',
         subscription: true
-      }, {
-        name: 'forma_month_3',
-        slug: 'forma_month_3',
-        subscription: false
       }
     ],
 

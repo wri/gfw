@@ -12,6 +12,23 @@ define([
 
   'use strict';
 
+  var AVAILABLE_DATE_RANGES = [{
+    start: moment().subtract(1, 'months').utc(),
+    end: moment().utc(),
+    label: 'past month',
+    duration: 0
+  }, {
+    start: moment().subtract(2, 'days').utc(),
+    end: moment().utc(),
+    label: 'past week',
+    duration: 48
+  }, {
+    start: moment().subtract(1, 'days').utc(),
+    end: moment().utc(),
+    label: 'past 24 hours',
+    duration: 24
+  }];
+
   var FormaActivityTimeline = TimelineBtnClass.extend({
 
     initialize: function(layer, currentDate) {
@@ -27,7 +44,7 @@ define([
       if (!(currentDate && currentDate[0] && currentDate[1])) {
         currentDate = [moment().subtract(24, 'hours'), moment()];
       }
-      currentDate = DatesHelper.getRangeForDates(currentDate);
+      currentDate = DatesHelper.getRangeForDates(currentDate, AVAILABLE_DATE_RANGES);
 
 
       FormaActivityTimeline.__super__.initialize.apply(this, [layer, currentDate]);
@@ -39,7 +56,7 @@ define([
      * @return {array} Array of quarterly.
      */
     _getData: function() {
-      return DatesHelper.dateRanges;
+      return DatesHelper.dateRanges(AVAILABLE_DATE_RANGES);
     }
   });
 

@@ -79,6 +79,26 @@ define([
       layer_id: null,
       order: 70
     },
+    'forma250GFW': {
+      title: 'FORMA alerts data',
+      long_title: 'FORMA alerts data',
+      sub_title: 'daily, 250m, tropics, WRI/Google',
+      layerSlug: ['forma_month_3'],
+      slug: 'forma_month_3',
+      slug_source: 'forma',
+      layer_id: null,
+      order: 80
+    },
+    'forma-alerts': {
+      title: 'FORMA active clearing alerts data',
+      long_title: 'FORMA active clearing alerts data',
+      sub_title: 'daily, 250m, tropics, WRI/Google',
+      layerSlug: ['forma_activity'],
+      slug: 'forma_activity',
+      slug_source: 'forma',
+      layer_id: null,
+      order: 80
+    },
     'story': {
       title: 'User stories',
       long_title: '',
@@ -87,7 +107,7 @@ define([
       slug: 'story',
       slug_source: 'user_stories',
       layer_id: 580,
-      order: 80
+      order: 90
     }
   };
 
@@ -105,7 +125,9 @@ define([
     'umd_as_it_happens_per',
     'umd_as_it_happens_cog',
     'umd_as_it_happens_idn',
-    'viirs_fires_alerts'
+    'viirs_fires_alerts',
+    'forma_activity',
+    'forma_month_3'
   ];
 
   var datasetHelper = {
