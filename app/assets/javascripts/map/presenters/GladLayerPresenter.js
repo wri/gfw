@@ -11,7 +11,6 @@ define([
 
     init: function(view) {
       this.publishNotification('notification-glad-data-alert');
-      console.log('heeello');
       this.view = view;
       this._super();
 
