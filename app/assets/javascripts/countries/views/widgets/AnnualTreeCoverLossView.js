@@ -21,55 +21,64 @@ define([
       slug: 'loss',
       name: 'Tree cover loss',
       show: false,
-      dataset: 'a9a32dd2-f7e1-402a-ba6f-48020fbf50ea'
+      dataset: 'a9a32dd2-f7e1-402a-ba6f-48020fbf50ea',
+      color: '#ff6599'
     },
     {
       slug: 'wdpa',
       name: 'Protected areas',
       show: true,
-      dataset: 'ce4f3eb6-8636-4292-a75f-9ce9ef5e8334'
+      dataset: 'ce4f3eb6-8636-4292-a75f-9ce9ef5e8334',
+      color: '#2681bf'
     },
     {
       slug: 'ifl',
       name: 'Intact Forest Landscapes',
       show: true,
-      dataset: 'e9748561-4361-4267-bb9c-ef678cda0795'
+      dataset: 'e9748561-4361-4267-bb9c-ef678cda0795',
+      color: '#2681bf'
     },
     {
       slug: 'biodiversity',
       name: 'Biodiversity hotspots',
       show: true,
-      dataset: 'd386d1aa-e710-4b50-92a2-6bbc4f4be19a'
+      dataset: 'd386d1aa-e710-4b50-92a2-6bbc4f4be19a',
+      color: '#2681bf'
     },
     {
       slug: 'high-carbon',
       name: 'High carbon stocks',
       show: false,
-      dataset: ''
+      dataset: '',
+      color: '#2681bf'
     },
     {
       slug: 'peat',
       name: 'Peat',
       show: true,
-      dataset: '949aa256-14cc-4d32-b71f-725c060fdd01'
+      dataset: '949aa256-14cc-4d32-b71f-725c060fdd01',
+      color: '#2681bf'
     },
     {
       slug: 'moratorium-areas',
       name: 'Moratorium areas',
       show: true,
-      dataset: '7f8b8d9e-7f38-4089-9f58-5c38351e6ff2'
+      dataset: '7f8b8d9e-7f38-4089-9f58-5c38351e6ff2',
+      color: '#2681bf'
     },
     {
       slug: 'primary-forests',
       name: 'Primary forests',
       show: true,
-      dataset: 'ac5a509a-e9a9-4880-8107-7699dae9fdfe'
+      dataset: 'ac5a509a-e9a9-4880-8107-7699dae9fdfe',
+      color: '#2681bf'
     },
     {
       slug: 'indigenous-community-forests',
       name: 'Indigenous and community forests',
       show: true,
-      dataset: '7f8b8d9e-7f38-4089-9f58-5c38351e6ff2'
+      dataset: '7f8b8d9e-7f38-4089-9f58-5c38351e6ff2',
+      color: '#2681bf'
     }
   ];
 
@@ -236,11 +245,25 @@ define([
       }.bind(this));
     },
 
+    _getBucket: function() {
+      var buckets = [];
+      var selectedDatsets = _.reject(DATASETS, function(item){
+        return this.currentDatasets.indexOf(item.slug) === -1;
+      }.bind(this));
+
+      selectedDatsets.forEach(function(dataset) {
+        buckets[dataset.slug] = dataset.color;
+      });
+
+      return buckets;
+    },
+
     _renderGraph: function() {
       this.render();
       this.lineGraph = new GroupedGraphView({
         el: '#annual-tree-cover-loss-graph',
-        data: this.data
+        data: this.data,
+        bucket: this._getBucket()
       });
     },
 
@@ -252,7 +275,8 @@ define([
       this._getGraphData().done(function(data) {
         this._setData(data);
         this.lineGraph.updateChart({
-          data: this.data
+          data: this.data,
+          bucket: this._getBucket()
         });
       }.bind(this));
     }

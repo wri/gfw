@@ -37,6 +37,7 @@ define([
     initialize: function(settings) {
       this.defaults = _.extend({}, this.defaults, settings);
       this.data = this.defaults.data;
+      this.bucket = this.defaults.bucket;
 
       this._initChart();
 
@@ -101,7 +102,7 @@ define([
         return key !== 'label';
       });
 
-      this.chartData.forEach(function(d) {
+      this.chartData.forEach(function(d, i) {
         d.values = this.options.map(function(name) {
           return { name: name, value: +d[name] };
         }.bind(this));
@@ -218,7 +219,7 @@ define([
         .attr('y', function(d) { return this.y(d.value); }.bind(this))
         .attr('value', function(d) {return d.name;})
         .attr('height', function(d) { return this.cHeight - this.y(d.value); }.bind(this))
-        .style('fill', function(d) { return '#000' });
+        .style('fill', function(d) { return this.bucket[d.name] || '#000'; }.bind(this));
     },
 
     /**
@@ -233,6 +234,7 @@ define([
 
     updateChart: function(params) {
       this.data = params.data;
+      this.bucket = params.bucket;
       this.remove({
         keepEvents: true
       });
