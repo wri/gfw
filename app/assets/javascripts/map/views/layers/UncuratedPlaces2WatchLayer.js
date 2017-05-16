@@ -5,8 +5,8 @@
  */
 define([
   'abstract/layer/CartoDBLayerClass',
-  'text!map/cartocss/Places2Watch.cartocss'
-], function(CartoDBLayerClass, Places2WatchCartocss) {
+  'text!map/cartocss/UncuratedPlaces2Watch.cartocss'
+], function(CartoDBLayerClass, Uncurated2WatchCartocss) {
 
   'use strict';
 
@@ -17,7 +17,7 @@ define([
       infowindow: true,
       interactivity: 'cartodb_id, tablename, glad_count, analysis, actions, analize, readmore, grid_id, datestamp, ptw_score',
       analysis: false,
-      cartocss: Places2WatchCartocss,
+      cartocss: Uncurated2WatchCartocss,
       actions: 'analize, readmore'
     }
   });
