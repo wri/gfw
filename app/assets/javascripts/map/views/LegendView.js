@@ -161,9 +161,7 @@ define([
       mex_forest_zoning_rest:Handlebars.compile(mex_forest_restTPL),
       highres: Handlebars.compile(highresTpl),
       protected_areasCDB:Handlebars.compile(paTpl),
-
-      places_to_watch:Handlebars.compile(places2watchTPL), //here!
-
+      places_to_watch:Handlebars.compile(places2watchTPL),
       mex_land_rights:Handlebars.compile(mex_landrightsTpl),
       mexican_pa:Handlebars.compile(mexPATpl),
       per_protected_areas:Handlebars.compile(perPATpl),

@@ -295,6 +295,11 @@
           width: 8px;
           height: 8px;
           border-radius: 50%;
+
+          .alert-recent-icon {
+            width: 8px;
+            height: 8px;
+          }
         }
         .subtitle {
           font-size: 11px;
@@ -538,7 +543,15 @@
           font-size: 11px;
 
           a {
+            margin-top: 4px;
             color: #F69;
+            display: flex;
+
+            svg {
+              margin-left: 5px;
+              width: 10px;
+              height: 10px;
+            }
           }
         }
       }

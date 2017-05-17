@@ -87,7 +87,13 @@
         {{#each this}}
           <li class="layer">
             <span class="layer-name {{#if this.allowSubscription}}-alerts{{/if}}">
-              <i class="circle" style="background:{{this.title_color}};"></i>
+              {{#if this.custom_legend_icon}}
+                <i class="circle">
+                  <svg class="icon icon-place-to-watch alert-recent-icon"><use xlink:href="#{{this.custom_legend_icon}}"></use></svg>
+                </i>
+              {{else}}
+                <i class="circle" style="background:{{this.title_color}};"></i>
+              {{/if}}
                 {{this.title}}
                 {{#if this.subtitle}}<span class="subtitle">{{this.subtitle}}</span>{{/if}}
               <a href='#' class='layer-close js-layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
