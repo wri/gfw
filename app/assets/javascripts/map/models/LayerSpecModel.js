@@ -65,6 +65,7 @@ define([
       "idn_peat_lands",
       "pak_user_mangroves",
       "sen_user_protected_areas",
+      "hti_user_watersheds",
       "ecu_user_protected_areas",
       "bol_user_fire_frequency",
       // PEOPLE

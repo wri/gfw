@@ -702,12 +702,14 @@
   line-width: 0.5;
   line-opacity: 1;
 }
-  [layer='sen_user_protected_areas'] {
+
+  [layer='sen_user_protected_areas'],[layer='hti_user_watersheds'] {
     polygon-fill: #fecc5c;
     line-color: #b15928;
     line-clip: false;
     polygon-clip: false;
   }
+  
   [layer='ecu_user_protected_areas'] {
     polygon-fill: #fecc5c;
     line-color: #b15928;
