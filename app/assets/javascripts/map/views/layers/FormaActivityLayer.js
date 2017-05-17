@@ -14,15 +14,13 @@ define([
 ], function(_, moment, UriTemplate, CartoDBLayerClass, Presenter, DatesHelper, FormaDailyCartocss) {
 
   'use strict';
-
   var FormaActivityLayer = CartoDBLayerClass.extend({
-
     options: {
-      sql: 'SELECT cartodb_id, the_geom_webmercator, \'{tableName}\' as tablename,\'{tableName}\' AS layer, COALESCE(to_char(acq_date, \'DD Mon, YYYY\')) as acq_date FROM {tableName} WHERE acq_date >= \'{year}-{month}-{day}\'',
-      infowindow: false,
+      sql: 'SELECT cartodb_id, longitude, latitude, activity, the_geom_webmercator, \'{tableName}\' as tablename,\'{tableName}\' AS layer, COALESCE(to_char(acq_date, \'DD Mon, YYYY\')) as acq_date FROM {tableName} WHERE acq_date >= \'{year}-{month}-{day}\'',
+      infowindow: true,
       analysis: false,
       cartocss: FormaDailyCartocss,
-      interactivity: 'cartodb_id'
+      interactivity: 'cartodb_id, acq_date, longitude, latitude'
     },
 
     init: function(layer, options, map) {

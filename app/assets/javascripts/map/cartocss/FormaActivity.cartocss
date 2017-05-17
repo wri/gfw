@@ -1,34 +1,44 @@
 #forma_activity {
-  marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/wri-01/assets/20170426155803gfw-canvas.svg);
-  marker-fill-opacity: 1;
-  marker-line-width: 0;
-  marker-line-opacity: 0;
-  marker-placement: point;
+  marker-fill: #FFCC00;
+  marker-width: 1.5;
+  marker-line-color: #FFF;
+  marker-line-width: 1;
+  marker-line-opacity: 1;
+  marker-opacity: 0.9;
+  marker-comp-op: multiply;
   marker-type: ellipse;
-  marker-width: 6;
-  marker-fill: #ffc000;
+  marker-placement: point;
   marker-allow-overlap: true;
+  marker-clip: false;
+  marker-multi-policy: largest;
 
   [zoom > 6] {
-    marker-width: 8;
+    marker-width: 3;
   }
 
+  [zoom > 8] {
+    marker-width: 6;
+  }
+
+  [zoom > 11] {
+    marker-width: 13;
+  }
   [zoom > 12] {
-    marker-width: 16;
+    marker-width: 25;
   }
   [zoom > 13] {
-    marker-width: 32;
+    marker-width: 50;
   }
   [zoom > 14] {
-    marker-width: 64;
+    marker-width: 100;
   }
   [zoom > 15] {
-    marker-width: 128;
+    marker-width: 200;
   }
   [zoom > 16] {
-    marker-width: 256;
+    marker-width: 400;
   }
   [zoom > 17] {
-    marker-fill-opacity: 0;
+    marker-width: 800;
   }
 }
