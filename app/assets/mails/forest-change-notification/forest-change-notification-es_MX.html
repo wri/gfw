@@ -214,8 +214,14 @@
                                         Alertas semanales de deforestación GLAD
                                         {{ end }}
                                         {{ if layerSlug == "terrai-alerts"}}
-                                        Alertas mensuales de deforestación Terra-i 
+                                        Alertas mensuales de deforestación Terra-i
                                         {{ end }}
+																				{{ if layerSlug == "forma250GFW"}}
+																					Alertas diarias FORMA de deforestación
+																				{{ end }}
+																				{{ if layerSlug == "forma-alerts"}}
+																					Alertas diarias FORMA de deforestación activa
+																				{{ end }}
 																			</div>
 																		</td>
 																	</tr>
@@ -255,6 +261,12 @@
                                         {{ if layerSlug == "terrai-alerts"}}
                                             Identifica áreas de posible pérdida de cobertura arbórea en una 250 x 250 metros (MODIS) resolución. Cobertura: Trópicos. La fuente es CIAT. Datos disponibles de enero de 2004-presente, actualizados mensualmente.
                                         {{ end }}
+																				{{ if layerSlug == "forma250GFW"}}
+																					Identifica áreas de posible pérdida de cobertura arbórea a una resolución (MODIS) de 250 x 250 metros. Cobertura: Trópicos. La fuente es WRI/Google. Datos disponibles de enero de 2012-presente, actualizados diariamente.
+																				{{ end }}
+																				{{ if layerSlug == "forma-alerts"}}
+																					Identifica áreas de probable deforestación activa (en el último mes) a una resolución (MODIS) de 250 x 250 metros. Cobertura: Trópicos. La fuente es WRI/Google. Datos disponibles de enero de 2012-presente, actualizados diariamente.
+																				{{ end }}
 								  										</div>
 																		</td>
 																	</tr>

@@ -216,6 +216,12 @@
 																				{{ if layerSlug == "terrai-alerts"}}
                                             Alertas mensais de desmatamento Terra-i
                                         {{ end }}
+																				{{ if layerSlug == "forma250GFW"}}
+																					Alertas diárias FORMA de desmatamento
+																				{{ end }}
+																				{{ if layerSlug == "forma-alerts"}}
+																					Alertas diários FORMA de derrubada ativa
+																				{{ end }}
 																			</div>
 																		</td>
 																	</tr>
@@ -255,6 +261,12 @@
                                         {{ if layerSlug == "terrai-alerts"}}
                                             Identifica áreas de provável perda de cobertura arbórea em uma 250 x 250 metros (MODIS) resolução. Cobertura: Trópicos. A fonte é CIAT. Dados disponíveis de Janeiro de 2004-presente, atualizado Mensal.
                                         {{ end }}
+																				{{ if layerSlug == "forma250GFW"}}
+																					Identifica áreas com provável perda de cobertura arbórea em uma resolução de 250 x 250 metros (MODIS). Cobertura: Trópicos. Fonte: WRI/Google. Dados disponíveis a partir de janeiro de 2012 ao presente, atualizados diariamente.
+																				{{ end }}
+																				{{ if layerSlug == "forma-alerts"}}
+																					Identifica áreas com provável derrubada ativa de cobertura arbórea (no período do mês anterior) em uma resolução de 250 x 250 metros (MODIS). Cobertura: Trópicos. Fonte: WRI/Google. Dados disponíveis a partir de janeiro de 2012 ao presente, atualizados diariamente.
+																				{{ end }}
 								  										</div>
 																		</td>
 																	</tr>
