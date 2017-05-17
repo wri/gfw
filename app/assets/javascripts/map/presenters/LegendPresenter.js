@@ -164,6 +164,7 @@ define([
           categories = this.status.get('layerSpec').getLayersByCategory();
           geographic = !! this.status.get('layerSpec').attributes.geographic_coverage;
         }
+        console.log(categories);
         this.view.update(categories, options, geographic, iso, more);
       }.bind(this));
     },

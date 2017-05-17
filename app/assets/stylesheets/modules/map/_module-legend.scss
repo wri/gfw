@@ -519,6 +519,30 @@
         }
       }
     }
+
+    &.layer-details-places_to_watch {
+      margin-top: 0;
+
+      .subtitle {
+        font-size: 11px;
+        padding: 5px 8px 0 0px;
+        display: block;
+        color: #AAA;
+        word-wrap: break-word;
+      }
+
+      .info-newsletter {
+        margin-top: 10px;
+
+        p {
+          font-size: 11px;
+
+          a {
+            color: #F69;
+          }
+        }
+      }
+    }
   }
 
   .geographic-subtitle {

@@ -161,7 +161,9 @@ define([
       mex_forest_zoning_rest:Handlebars.compile(mex_forest_restTPL),
       highres: Handlebars.compile(highresTpl),
       protected_areasCDB:Handlebars.compile(paTpl),
-      places_to_watch:Handlebars.compile(places2watchTPL),
+
+      places_to_watch:Handlebars.compile(places2watchTPL), //here!
+
       mex_land_rights:Handlebars.compile(mex_landrightsTpl),
       mexican_pa:Handlebars.compile(mexPATpl),
       per_protected_areas:Handlebars.compile(perPATpl),
@@ -292,8 +294,8 @@ define([
 
     getLayersByCategory: function(layers) {
       var subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
-      var filteredLayers = _.filter(layers, function(layer) {
-        return !layer.parent_layer;
+      var filteredLayers = _.sortBy(layers, function(layer) {
+        return layer.position;
       });
       return _.groupBy(filteredLayers, function(layer) {
         layer.allowSubscription = layer && subscriptionsAllowed.indexOf(layer.slug) > -1;
