@@ -1,53 +1,42 @@
 .m-grouped-chart {
   rect {
     stroke-width: 2;
+    shape-rendering: crispEdges;
   }
 
   text {
-    font: 10px sans-serif;
+    font-size: 10px;
+    text-align: center;
+    fill: #555555;
   }
 
-  .axis text {
-    font: 10px sans-serif;
-  }
+  .axis {
+    text {
+      font: 10px sans-serif;
+    }
 
-  .axis path{
-    fill: none;
-    stroke: #000;
-  }
+    path{
+      fill: none;
+      stroke: #000;
+    }
 
-  .axis line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
-  }
+    line {
+      stroke-width: 2;
+      stroke: #e6e6e6;
+      stroke-dasharray: 4, 4;
+      shape-rendering: crispEdges;
+    }
 
-  .axis .tick line {
-    stroke-width: 1;
-    stroke: rgba(0, 0, 0, 0.2);
-  }
+    &.x {
+      .domain {
+        display: none;
+      }
+    }
 
-  .axisHorizontal path{
-    fill: none;
-  }
-
-  .axisHorizontal line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
-  }
-
-  .axisHorizontal .tick line {
-    stroke-width: 1;
-    stroke: rgba(0, 0, 0, 0.2);
-  }
-
-  .bar {
-    fill: steelblue;
-    fill-opacity: .9;
-  }
-
-  .x.axis path {
-    display: none;
+    &.y {
+      .domain {
+        display: none;
+      }
+    }
   }
 }

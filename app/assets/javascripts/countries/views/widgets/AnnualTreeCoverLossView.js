@@ -263,7 +263,8 @@ define([
       this.lineGraph = new GroupedGraphView({
         el: '#annual-tree-cover-loss-graph',
         data: this.data,
-        bucket: this._getBucket()
+        bucket: this._getBucket(),
+        defaultIndicator: this.currentDatasets[0]
       });
     },
 

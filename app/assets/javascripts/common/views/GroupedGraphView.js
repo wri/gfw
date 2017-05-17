@@ -28,9 +28,9 @@ define([
       paddingYAxisLabels: 10,
       margin: {
         top: 20,
-        right: 35,
+        right: 5,
         bottom: 35,
-        left: 0
+        left: 40
       }
     },
 
@@ -38,6 +38,7 @@ define([
       this.defaults = _.extend({}, this.defaults, settings);
       this.data = this.defaults.data;
       this.bucket = this.defaults.bucket;
+      this.defaultIndicator = this.defaults.defaultIndicator;
 
       this._initChart();
 
@@ -75,6 +76,7 @@ define([
       this._setUpGraph();
       this._setAxisScale();
       this._setDomain();
+      this._setupAxis();
       this._drawAxis();
       this._drawGraph();
      },
@@ -101,6 +103,10 @@ define([
       this.options = d3.keys(this.chartData[0]).filter(function(key) {
         return key !== 'label';
       });
+
+      this.options = _.sortBy(this.options, function(option) {
+        return option !== this.defaultIndicator;
+      }.bind(this));
 
       this.chartData.forEach(function(d, i) {
         d.values = this.options.map(function(name) {
@@ -139,21 +145,12 @@ define([
      */
     _setAxisScale: function() {
       this.x0 = d3.scale.ordinal()
-        .rangeRoundBands([0, this.cWidth], .1);
+        .rangeRoundBands([0, this.cWidth], .3);
 
       this.x1 = d3.scale.ordinal();
 
       this.y = d3.scale.linear()
-        .range([this.cHeight, 0]);
-
-      this.xAxis = d3.svg.axis()
-        .scale(this.x0)
-        .orient('bottom');
-
-      this.yAxis = d3.svg.axis()
-        .scale(this.y)
-        .orient('left')
-        .tickFormat(d3.format('.2s'));
+        .range([this.cHeight, 0]).nice();
     },
 
     _setDomain: function() {
@@ -168,6 +165,22 @@ define([
       })]);
     },
 
+    _setupAxis: function() {
+      this.xAxis = d3.svg.axis()
+        .scale(this.x0)
+        .tickPadding(5)
+        .tickValues(this.x0.domain().filter(function(d, i) { return !(i % 2); }))
+        .outerTickSize(0)
+        .orient('bottom');
+
+      this.yAxis = d3.svg.axis()
+        .scale(this.y)
+        .orient('left')
+        .tickPadding(8)
+        .innerTickSize(-this.cWidth)
+        .tickFormat(d3.format('.2s'));
+    },
+
     /**
      * Draws the axis
      */
@@ -179,24 +192,7 @@ define([
 
       this.svg.append('g')
         .attr('class', 'y axis')
-        .call(this.yAxis)
-        .append('text')
-        .attr('transform', 'rotate(-90)')
-        .attr('y', 6)
-        .attr('dy', '.71em')
-        .style('text-anchor', 'end')
-        .text('Axis %');
-
-      // Custom domain
-      this.svg.append('g')
-        .attr('class', 'custom-domain-group')
-        .attr('transform', 'translate('+ this.defaults.paddingXAxisLabels +', ' + this.cHeight +')')
-        .append('line')
-          .attr('class', 'curstom-domain')
-          .attr('x1', -this.defaults.paddingAxisLabels)
-          .attr('x2', (this.cWidth  + this.defaults.paddingAxisLabels))
-          .attr('y1', 0)
-          .attr('y2', 0);
+        .call(this.yAxis);
     },
 
     /**
@@ -214,7 +210,7 @@ define([
       bar.selectAll('rect')
         .data(function(d) { return d.values; })
         .enter().append('rect')
-        .attr('width', this.x1.rangeBand() - 1)
+        .attr('width', this.x1.rangeBand())
         .attr('x', function(d) { return this.x1(d.name); }.bind(this))
         .attr('y', function(d) { return this.y(d.value); }.bind(this))
         .attr('value', function(d) {return d.name;})
