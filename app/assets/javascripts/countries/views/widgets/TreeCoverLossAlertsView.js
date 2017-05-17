@@ -26,26 +26,61 @@ define([
   'use strict';
 
   var WIDGETS_NUM = 5;
-  var API = window.gfw.config.GFW_API_HOST_PROD;
-  var DATASET = 'a98197d2-cd8e-4b17-ab5c-fabf54b25ea0'; // CLIMATE PRODUCTION DATASET
-  var QUERY_TOP = '/query/?sql=select sum(alerts) as alerts, state_iso, state_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} group by state_iso ORDER BY alerts DESC LIMIT {widgetsNum}';
-  var QUERY_DATA = '/query/?sql=select sum(alerts) as alerts, year, week, state_iso from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND state_iso IN({statesIso}) AND week <= 53 AND group by state_iso, week, year ORDER BY week ASC';
+  var API_HOST = window.gfw.config.GFW_API_HOST_PROD;
+  var CARTO_API_HOST = window.gfw.config.CARTO_API_HOST;
+
+  var ORIGIN_LABELS = {
+    wdpa: 'Within protected areas',
+    wdma: 'Within moratorium areas',
+    onpeat: 'On peat'
+  }
+
+  var DATASETS = {
+    wdpa: '7bcf0880-c00d-4726-aae2-d455a9decbce',
+    wdma: '439fc0f1-ba89-448d-9fc5-d4e61b60f5e7',
+    onpeat: '439fc0f1-ba89-448d-9fc5-d4e61b60f5e7',
+  }
+
+  var QUERIES = {
+    wdpa: {
+      top: '/query?sql=SELECT SUM (alerts) as alerts, year, wdpa_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' GROUP BY wdpa_id ORDER BY alerts DESC limit {widgetsNum}',
+      data: '/query?sql=select sum(alerts) as alerts, year, month, wdpa_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND wdpa_id IN({ids}) AND group by wdpa_id, month, year ORDER BY month ASC',
+      names: 'SELECT name WHERE wdpa_pid IN({wdpaIds})'
+    },
+    wdma: {
+      top: '/query?sql=SELECT SUM (alerts) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
+      data: '/query?sql=select sum(alerts) as alerts, year, month, state_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND state_id IN({ids}) AND group by state_id, month, year ORDER BY month ASC'
+    },
+    onpeat: {
+      top: '/query?sql=SELECT SUM (alerts) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
+      data: '/query?sql=select sum(alerts) as alerts, year, month, state_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND state_id IN({ids}) AND group by state_id, month, year ORDER BY month ASC'
+    }
+  }
 
   var TreeCoverLossView = Backbone.View.extend({
     el: '#widget-tree-cover-loss-alerts',
 
+    events: {
+      'change #cla-data-shown-select': 'onOriginSelectChange'
+    },
+
     template: Handlebars.compile(tpl),
     cardTemplate: Handlebars.compile(cardTpl),
 
+    defaultOrigins: ['wdpa'],
+    originsByCountry: {
+      IDN: ['wdma', 'onpeat'],
+      MYS: ['onpeat']
+    },
+
     initialize: function(params) {
-      // this.iso = params.iso;
-      this.iso = 'BRA';
+      this.iso = params.iso;
       this.start();
     },
 
     start: function() {
       this.render();
-      this.$widgets = this.$('#cla-graphs-container');
+      this.cache();
       this._getData().done(function(data) {
         this.data = data;
         this._initWidgets();
@@ -54,15 +89,46 @@ define([
 
     render: function() {
       this.$el.html(this.template({
-        widgetsNum: 5
+        widgetsNum: 5,
+        origins: this.getOriginOptions(this.iso)
       }));
       this.$el.removeClass('-loading');
+    },
+
+    cache: function(iso) {
+      this.$widgets = this.$('#cla-graphs-container');
+    },
+
+    getOriginOptions: function(iso) {
+      var origins = this.defaultOrigins;
+      if (this.originsByCountry[iso]) {
+        origins = origins.concat(this.originsByCountry[iso]);
+      }
+      return origins.map(function(origin) {
+        return {
+          label: ORIGIN_LABELS[origin],
+          value: origin
+        }
+      });
+    },
+
+    onOriginSelectChange: function(e) {
+      var value = e.currentTarget.value;
+      this.updateData(value);
+    },
+
+    updateData: function(origin) {
+      this._getData(origin).done(function(data) {
+        this.data = data;
+        this._initWidgets();
+      }.bind(this));
     },
 
     _initWidgets: function() {
       this.$widgets.removeClass('-loading');
       if (this.data) {
         this.widgetViews = [];
+        this.$widgets.html('');
         var keys = Object.keys(this.data);
         keys.forEach(function(key, index) {
           this.$widgets.append(this.cardTemplate({
@@ -82,16 +148,19 @@ define([
       }
     },
 
-    _getData: function() {
-      var promise = $.Deferred();
+    _getData: function(origin) {
+      origin = origin || 'wdpa';
       var iso = this.iso;
       var data = {};
-      var url = API + new UriTemplate(QUERY_TOP).fillFromObject({
+      var year = parseInt(moment().format('YYYY'), 10);
+      var queryTemplate = API_HOST + QUERIES[origin].top;
+      var url = new UriTemplate(queryTemplate).fillFromObject({
         widgetsNum: WIDGETS_NUM,
-        dataset: DATASET,
+        dataset: DATASETS[origin],
         iso: iso,
-        year: 2017, //TODO: change this for months
+        year: year
       });
+      var promise = $.Deferred();
 
       $.ajax({ url: url, type: 'GET' })
         .done(function(topResponse) {
@@ -101,29 +170,33 @@ define([
 
                 topResponse.data.forEach(function(item) {
                   var region = _.findWhere(results, {
-                    id_1: parseInt(item.state_iso.substr(3), 10)
+                    id_1: item.wdpa_id
                   });
                   var name =  region ? region.name_1 : 'N/A';
 
-                  data[item.state_iso] = {
+                  data[item.wdpa_id] = {
                     alerts: NumbersHelper.addNumberDecimals(item.alerts),
                     data: [],
                     name: name
                   }
                 });
 
-                var url = API + new UriTemplate(QUERY_DATA).fillFromObject({
-                  dataset: DATASET,
+                var ids = topResponse.data.map(function(item) {
+                  return origin === 'wdpa' ? item.wdpa_id : item.state_id
+                }).join('\',\'');
+
+                var url = API_HOST + new UriTemplate(QUERIES[origin].data).fillFromObject({
+                  dataset: DATASETS[origin],
                   iso: iso,
-                  year: 2017,
-                  statesIso: '\'' + topResponse.data.map(function(item) {return item.state_iso}).join('\',\'') + '\'',
+                  year: year,
+                  ids: '\'' + ids + '\'',
                 });
                 $.ajax({ url: url, type: 'GET' })
                   .done(function(dataResponse) {
                     dataResponse.data.forEach(function(item) {
-                      if (data[item.state_iso] && item.alerts) {
-                        data[item.state_iso].data.push({
-                          date: moment.utc().year(item.year).week(item.week),
+                      if (data[item.wdpa_id] && item.alerts) {
+                        data[item.wdpa_id].data.push({
+                          date: moment.utc().year(item.year).month(item.month),
                           value: item.alerts
                         })
                       }

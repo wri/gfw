@@ -20,7 +20,9 @@
         <span class="label">Data shown</span>
         <div class="wrapper">
           <select id="cla-data-shown-select">
-            <option value="monthly">By year</option>
+            {{#each origins}}
+              <option value="{{ this.value }}">{{ this.label }}</option>
+            {{/each}}
           </select>
           <div class="select-clear" style="display: none;">✕</div>
           <div class="select-arrow"></div>
@@ -28,6 +30,6 @@
       </div>
     </div>
   </div>
-  <div class="row widget-placeholder -loading" id="cla-graphs-container">
+  <div class="row collapse widget-placeholder -loading" id="cla-graphs-container">
   </div>
 </div>
