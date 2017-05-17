@@ -216,6 +216,12 @@
                                         {{ if layerSlug == "terrai-alerts"}}
                                           Alertes Terra-i mensuelles sur les pertes de la couverture arborée
                                         {{ end }}
+																				{{ if layerSlug == "forma250GFW"}}
+																					Alertes FORMA quotidiennes de déforestation
+																				{{ end }}
+																				{{ if layerSlug == "forma-alerts"}}
+																					Alertes FORMA quotidiennes de défrichage actif
+																				{{ end }}
 																			</div>
 																		</td>
 																	</tr>
@@ -255,6 +261,12 @@
                                         {{ if layerSlug == "terrai-alerts"}}
                                           Identifie les zones de pertes probables de la couverture arborée à une résolution de 250 x 250 mètres (MODIS). Couverture : Tropiques. La source est CIAT. Données disponibles depuis janvier 2004 jusqu’à aujourd'hui, mises à jour mensuelles.
                                         {{ end }}
+																				{{ if layerSlug == "forma250GFW"}}
+																					Identifie les zones de pertes probables de la couverture arborée à une résolution 250 x 250 mètres (MODIS). Couverture : Les tropiques. Les sources sont : WRI et Google. Données disponibles depuis Janvier 2012 jusqu’à aujourd'hui ; mises à jour quotidienne.
+																				{{ end }}
+																				{{ if layerSlug == "forma-alerts"}}
+																					Identifie les zones de possible défrichage actif de la couverture arborée (au cours du mois passé) à une résolution 250 x 250 mètres (MODIS). Couverture : Les tropiques. Les sources sont : WRI et Google. Données disponibles depuis Janvier 2012 jusqu’à aujourd'hui ; mises à jour quotidienne.
+																				{{ end }}
 								  										</div>
 																		</td>
 																	</tr>
