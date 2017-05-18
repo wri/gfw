@@ -14,6 +14,11 @@ $switch-font-size: 12px;
     line-height: 1.42;
     color: $switch-font-color;
     margin-bottom: 4px;
+
+    &.-no-text-transform  {
+      font-weight: 400;
+      text-transform: none;
+    }
   }
 
   > .options {
