@@ -1,0 +1,52 @@
+.m-widget-tree-cover-loss-ranking {
+  .ranking {
+    width: 100%;
+    border: solid 1px #e7e7e9;
+    padding: 30px 40px;
+    color: $dark;
+
+    .list {
+      .heading {
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 15px;
+      }
+      .item {
+        display: flex;
+        margin: 12px 0;
+        font-size: 12px;
+        font-weight: 400;
+        align-items: center;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .number {
+          width: 10%;
+        }
+
+        .name {
+          width: 35%;
+        }
+
+        .value {
+          font-weight: 500;
+          color: $font-color-4;
+
+          .unit {
+            font-weight: 400;
+          }
+
+          &.-selected {
+            font-size: 36px;
+
+            .unit {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

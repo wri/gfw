@@ -6,8 +6,18 @@ define([
   'uri',
   'helpers/numbersHelper',
   'common/views/GroupedGraphView',
+  'countries/views/widgets/AnnualTreeCoverLossRankingView',
   'text!countries/templates/widgets/annualTreeCoverLoss.handlebars'
-], function($, Backbone, _, Handlebars, UriTemplate, NumbersHelper, GroupedGraphView, tpl) {
+], function(
+  $,
+  Backbone,
+  _,
+  Handlebars,
+  UriTemplate,
+  NumbersHelper,
+  GroupedGraphView,
+  AnnualTreeCoverLossRankingView,
+  tpl) {
 
   'use strict';
 
@@ -223,6 +233,9 @@ define([
       this._getGraphData().done(function(data) {
         this._setData(data);
         this._renderGraph();
+        this.annualRanking = new AnnualTreeCoverLossRankingView({
+          iso: this.iso
+        });
       }.bind(this));
     },
 
