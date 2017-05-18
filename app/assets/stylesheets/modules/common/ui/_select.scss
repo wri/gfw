@@ -65,6 +65,7 @@ $select-font-size: 12px;
     margin-top: -4px;
     position: absolute;
     pointer-events: none;
+    stroke: $select-color;
   }
 
   .select-remove {
