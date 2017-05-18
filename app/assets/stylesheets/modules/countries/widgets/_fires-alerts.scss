@@ -30,7 +30,7 @@ $card-highlight-color-grey-pink: #bf8893;
     min-height: 100px;
 
     > .ranking {
-      width: 60px;
+      min-width: 60px;
       height: 60px;
       display: flex;
       margin-right: 20px;

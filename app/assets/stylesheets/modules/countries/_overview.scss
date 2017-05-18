@@ -847,9 +847,14 @@
       position: absolute;
       top: 2px;
       right: 0px;
-      height: 18px;
-      width: 18px;
+      height: 14px;
+      width: 14px;
       fill: $dark;
+
+      &.icon-info-green {
+        width: 16px;
+        height: 16px;
+      }
     }
 
     .tos {

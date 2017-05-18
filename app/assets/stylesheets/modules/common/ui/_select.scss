@@ -13,6 +13,11 @@ $select-font-size: 12px;
     line-height: 1.42;
     color: $switch-font-color;
     margin-bottom: 4px;
+
+    &.-no-text-transform {
+      font-weight: 400;
+      text-transform: none;
+    }
   }
 
   > .wrapper {
@@ -37,6 +42,10 @@ $select-font-size: 12px;
       -webkit-appearance: none;
       -moz-appearance: none;
 
+      &.-no-text-transform {
+        text-transform: none;
+      }
+
       &::-ms-expand {
         display: none;
       }
@@ -49,16 +58,14 @@ $select-font-size: 12px;
 
 
   .select-arrow {
-    border-color: $select-color transparent;
-    border-style: solid;
-    border-width: 6px 5px 0 5px;
-    width: 0;
-    height: 0;
+    width: 10px;
+    height: 10px;
     top: 50%;
-    right: 12px;
-    margin-top: -3px;
+    right: 8px;
+    margin-top: -4px;
     position: absolute;
     pointer-events: none;
+    stroke: $select-color;
   }
 
   .select-remove {

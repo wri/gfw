@@ -17,6 +17,27 @@
         font-weight: 400;
         color: $dark;
         margin-bottom: 8px;
+        text-transform: none;
+
+        &.-separation-bottom {
+          position: relative;
+          bottom: 8px;
+        }
+      }
+
+      &.-time-range-container {
+        display: flex;
+        align-items: flex-end;
+
+        .select-container {
+          min-width: 70px;
+        }
+
+        .text-container {
+          margin-left: 10px;
+          margin-right: 10px;
+          padding-bottom: 4px;
+        }
       }
     }
   }

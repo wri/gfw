@@ -1,27 +1,37 @@
-<div class="widget">
-  <h4 class="title">Annual Tree cover loss</h4>
+<div class="widget -big-separation">
+  <h4 class="title -icons">
+    Annual Tree cover loss
+    <div>
+      <svg class="icon icon-info-green"><use xlink:href="#icon-info-green"></use></svg>
+      <svg class="icon icon-gray-share"><use xlink:href="#icon-gray-share"></use></svg>
+    </div>
+  </h4>
   <div class="m-widget-annual-tree-cover-loss">
     <div class="filter-list">
-      <div class="filter">
-        <div class="label">Time range</div>
-        <div class="container">
+      <div class="filter -time-range-container">
+        <div class="select-container">
+          <span class="label -separation-bottom">Time range</span>
           <div class="c-select">
             <div class="wrapper">
               <select id="annual-tree-cover-loss-start-year">
                 <option value="monthly">2011</option>
               </select>
               <div class="select-clear" style="display: none;">✕</div>
-              <div class="select-arrow"></div>
+              <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
             </div>
           </div>
+        </div>
+        <div class="text-container">
           <span class="label">to</span>
+        </div>
+        <div class="select-container">
           <div class="c-select">
             <div class="wrapper">
               <select id="annual-tree-cover-loss-end-year">
                 <option value="monthly">2015</option>
               </select>
               <div class="select-clear" style="display: none;">✕</div>
-              <div class="select-arrow"></div>
+              <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
             </div>
           </div>
         </div>
@@ -36,7 +46,7 @@
                 <option value="monthly">> 30%</option>
               </select>
               <div class="select-clear" style="display: none;">✕</div>
-              <div class="select-arrow"></div>
+              <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
             </div>
           </div>
         </div>

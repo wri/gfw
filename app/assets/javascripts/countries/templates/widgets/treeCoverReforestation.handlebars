@@ -1,7 +1,13 @@
 <div class="widget -short">
   <div class="row collapse">
-    <div class="column small-12">
-      <h4 class="title">Annual reforestation rate</h4>
+    <div class="column small-12 big-bottom-separation">
+      <h4 class="title -icons">
+        Annual reforestation rate
+      <div>
+        <svg class="icon icon-info-green"><use xlink:href="#icon-info-green"></use></svg>
+        <svg class="icon icon-gray-share"><use xlink:href="#icon-gray-share"></use></svg>
+      </div>
+      </h4>
     </div>
 
     {{#if hasData}}
@@ -27,7 +33,7 @@
         </div>
       </div>
     {{else}}
-      No data available  
+      No data available
     {{/if}}
   </div>
 </div>

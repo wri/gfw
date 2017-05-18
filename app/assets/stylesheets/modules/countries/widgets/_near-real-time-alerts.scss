@@ -52,4 +52,11 @@
       }
     }
   }
+
+  .btn {
+    &.-transparent-background {
+      margin-top: 15px;
+      background-color: transparent;
+    }
+  }
 }

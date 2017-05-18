@@ -11,7 +11,7 @@ $card-ranking-color: #b6b6ba;
     min-height: 100px;
 
     > .ranking {
-      width: 60px;
+      min-width: 60px;
       height: 60px;
       display: flex;
       flex-shrink: 0;
@@ -72,6 +72,7 @@ $card-ranking-color: #b6b6ba;
   > .card-actions {
     display: flex;
     justify-content: space-between;
+    padding: 0 14px;
 
     > .link {
       font-size: 12px;

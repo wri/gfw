@@ -1,13 +1,19 @@
 <div class="widget">
     <div class="row">
         <div class="small-12">
-            <h4 class="title">TOTAL FIRE COUNT</h4>
+            <h4 class="title -icons">
+              TOTAL FIRE COUNT
+              <div>
+                <svg class="icon icon-info-green"><use xlink:href="#icon-info-green"></use></svg>
+                <svg class="icon icon-gray-share"><use xlink:href="#icon-gray-share"></use></svg>
+              </div>
+            </h4>
         </div>
     </div>
     <div class="row">
         <div class="small-5">
             <div class="c-switch">
-                <span class="label">Period</span>
+                <span class="label -no-text-transform">Period</span>
                 <ul class="options">
                     <li class="active">Past week</li>
                     <li class="disabled">Past 72 h</li>
@@ -20,11 +26,11 @@
             <div class="c-select">
                 <span class="label">Data shown</span>
                 <div class="wrapper">
-                    <select id="cla-data-shown-select">
+                    <select class="-no-text-transform" id="cla-data-shown-select">
                         <option value="monthly">Fires burning in concessions</option>
                     </select>
                     <div class="select-clear" style="display: none;">✕</div>
-                    <div class="select-arrow"></div>
+                    <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
                 </div>
             </div>
         </div>
