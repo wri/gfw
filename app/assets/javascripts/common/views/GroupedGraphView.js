@@ -215,7 +215,7 @@ define([
         .attr('y', function(d) { return this.y(d.value); }.bind(this))
         .attr('value', function(d) {return d.name;})
         .attr('height', function(d) { return this.cHeight - this.y(d.value); }.bind(this))
-        .style('fill', function(d) { return this.bucket[d.name] || '#000'; }.bind(this));
+        .style('fill', function(d) { return this.bucket[d.name] || '#2681bf'; }.bind(this));
     },
 
     /**
