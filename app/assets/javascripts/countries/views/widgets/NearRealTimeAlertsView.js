@@ -37,8 +37,8 @@ define([
     },
 
     render: function() {
-      var gladValue = this.data.glad[0] ? this.data.glad[0].value : 0;
-      var viirsValue = this.data.viirs[0] ? this.data.viirs[0].value : 0;
+      var gladValue = this.data.glad && this.data.glad[0] ? this.data.glad[0].value : 0;
+      var viirsValue = this.data.viirs && this.data.viirs[0] ? this.data.viirs[0].value : 0;
 
       this.$el.html(this.template({
         glad: NumbersHelper.addNumberDecimals(gladValue),
@@ -54,8 +54,6 @@ define([
         iso: this.iso,
         date: moment.utc().subtract(1, 'days').format('YYYY/MM/DD')
       });
-
-      console.log(url);
 
       $.ajax({
         url: url,
