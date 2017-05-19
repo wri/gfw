@@ -18,6 +18,8 @@ define([
 
   'use strict';
 
+  var MAX_ZOOM = 9;
+
   var SelectedDates = Backbone.Model.extend({
     // left blank on puropose, max min dates
   });
@@ -47,8 +49,8 @@ define([
     },
 
     sensors : {
-      'landsat-8': 'Landsat 8',
-      'sentinel-2': 'Sentinel 2'
+      'sentinel-2': 'Sentinel 2',
+      'landsat-8': 'Landsat 8'
     },
 
     initialize: function(map) {
@@ -83,7 +85,7 @@ define([
     render: function() {
       this.$el.html(this.template({
         today: moment().format('DD-MM-YYYY'),
-        mindate: moment().subtract(3,'month').format('YYYY-MM-DD'),
+        mindate: moment().subtract(4,'month').format('YYYY-MM-DD'),
         zoom: this.map.getZoom(),
         sensors: this.sensors,
         renderers: this.renderers
@@ -106,12 +108,12 @@ define([
       this.zoom = zoom;
       if (isNaN(this.previousZoom)) this.previousZoom = zoom;
       this.$currentZoom.text(zoom);
-      if(this.zoom >= 5) {
+      if(this.zoom >= MAX_ZOOM) {
         this.presenter.notificateClose();
         this.$disclaimer.hide(0);
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
-          if (this.previousZoom >= 5) {
+          if (this.previousZoom >= MAX_ZOOM) {
             this.presenter.notificate('notification-zoom-not-reached');
           }
         }
@@ -122,7 +124,7 @@ define([
 
     _getParams: function(e) {
       var renderer = this.$highresForm.find('#hres-filter-select').val() || 'rgb',
-          sensor = this.$highresForm.find('#hres-filter-sensor').val() || 'landsat-8',
+          sensor = this.$highresForm.find('#hres-filter-sensor').val() || 'sentinel-2',
           mindate = (!!this.$mindate.val()) ? this.$mindate.val() : '2000-09-01',
           maxdate = (!!this.$maxdate.val()) ? this.$maxdate.val() : '2000-09-01';
 
@@ -162,7 +164,7 @@ define([
     },
 
     toggleLayer: function(e) {
-      if (this.zoom >= 9) {
+      if (this.zoom >= MAX_ZOOM) {
         this.presenter.toggleLayer('highres');
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {

@@ -116,6 +116,7 @@ define([
       us_land_cover_change : Handlebars.compile(us_land_coverTPL),
       forma : Handlebars.compile(formaTPL),
       forma_month_3: Handlebars.compile(forma_month_TPL),
+      forma_activity: Handlebars.compile(forma_month_TPL),
       bra_biomes : Handlebars.compile(bra_biomesTPL),
       plantations_by_type: Handlebars.compile(gfwPlantationByTypeTpl),
       bra_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
@@ -285,12 +286,16 @@ define([
         countryVisibility: (!!more || !_.isEmpty(categoriesIso))
       }));
 
+      this.presenter.toggleSelected();
       this.presenter.toggleLayerOptions();
     },
 
     getLayersByCategory: function(layers) {
       var subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
-      return _.groupBy(layers, function(layer) {
+      var filteredLayers = _.filter(layers, function(layer) {
+        return !layer.parent_layer;
+      });
+      return _.groupBy(filteredLayers, function(layer) {
         layer.allowSubscription = layer && subscriptionsAllowed.indexOf(layer.slug) > -1;
 
         // Hack to keep the forest_clearing slug in layers which have to be analyzed but not grouped by the said slug in the legend
@@ -388,8 +393,27 @@ define([
 
     removeLayer: function(e){
       e && e.preventDefault();
+
       var layerSlug = $(e.currentTarget).data('slug');
       this.presenter.toggleLayer(layerSlug);
+      this.removeSublayers(layerSlug);
+    },
+
+    removeSublayers: function(layerSlug) {
+      var $subLayers = this.$el.find('[data-parent=\'' + layerSlug + '\']');
+
+      if ($subLayers.length > 0) {
+        var _this = this;
+        $subLayers.each(function() {
+          var $item = $(this);
+          var isChecked = $item.find('.checked').length > 0;
+
+          if (isChecked) {
+            var slug = $(this).data('sublayer');
+            _this.presenter.toggleLayer(slug);
+          }
+        });
+      }
     },
 
     // threshold
@@ -413,8 +437,10 @@ define([
         var layer = layers[$div.data('sublayer')];
 
         if (layer) {
+          var color = layer.parent_layer ? layer.title_color
+            : layer.category_color;
           $toggle.addClass('checked');
-          $toggle.css('background', layer.category_color);
+          $toggle.css('background', color);
         } else {
           $toggle.removeClass('checked').css('background', '');
         }

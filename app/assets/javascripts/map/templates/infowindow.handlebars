@@ -9,7 +9,9 @@
 
         {{!-- <div class="thumb-mask" style="background-image: url({{content.data.image}})"> --}}
           <div class="thumb-mask"><img src="{{content.data.image}}" onerror="this.style.display='none';"></div>
-
+          {{#if content.data.image_source}}
+            <span class="image-legend">{{ content.data.image_source }}</span>
+          {{/if}}
       {{/if}}
     </div>
     {{#if content.data.analysis}}
@@ -72,6 +74,14 @@
         {{#if content.data.dates}}
           <h4>Loss alert date:</h4>
           <p>{{content.data.dates}}</p>
+        {{/if}}
+        {{#if content.data.date_issued}}
+          <h4>Date issued:</h4>
+          <p>{{content.data.date_issued}}</p>
+        {{/if}}
+        {{#if content.data.expiry_date}}
+          <h4>Expiry date:</h4>
+          <p>{{content.data.expiry_date}}</p>
         {{/if}}
         {{#if content.data.mineral}}
           <h4>Mineral:</h4>
@@ -305,6 +315,14 @@
           <h4>Province:</h4>
           <p>{{content.data.province}}</p>
         {{/if}}
+        {{#if content.data.record_date}}
+          <h4>Record Date:</h4>
+          <p>{{content.data.record_date}}</p>
+        {{/if}}
+        {{#if content.data.expiry_date}}
+          <h4>Expiry Date:</h4>
+          <p>{{content.data.expiry_date}}</p>
+        {{/if}}
         {{#if content.data.department}}
           <h4>Department:</h4>
           <p>{{content.data.department}}</p>
@@ -485,9 +503,21 @@
           <h4>Score from model:</h4>
           <p>{{content.data.score}}</p>
         {{/if}}
+        {{#if content.data.grid_id}}
+          <h4>Grid id:</h4>
+          <p>{{content.data.grid_id}}</p>
+        {{/if}}
+        {{#if content.data.datestamp}}
+          <h4>Datestamp:</h4>
+          <p>{{content.data.datestamp}}</p>
+        {{/if}}
         {{#if content.data.glad_count}}
           <h4>Number of glad alerts from the last month:</h4>
           <p>{{content.data.glad_count}}</p>
+        {{/if}}
+        {{#if content.data.ptw_score}}
+          <h4>Score:</h4>
+          <p>{{content.data.ptw_score}}</p>
         {{/if}}
         {{#if content.data.emissions_sum}}
           <h4>Emissions:</h4>
@@ -529,6 +559,18 @@
           <h4>Class:</h4>
           <p>{{content.data.class}}</p>
         {{/if}}
+        {{#if content.data.overlap_pa}}
+          <div class="checkbox-wrapper">
+            <h4 class="inline">Protected area:</h4>
+            <span class="checkbox -checked"></span>
+          </div>
+        {{/if}}
+        {{#if content.data.overlap_ifl}}
+          <div class="checkbox-wrapper">
+            <h4 class="inline">IFL:</h4>
+            <span class="checkbox -checked"></span>
+          </div>
+        {{/if}}
     </div>
     </div>
     {{#if content.data.actions}}
@@ -543,4 +585,3 @@
     {{/if}}
   </div>
 </div>
-

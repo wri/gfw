@@ -124,15 +124,20 @@ define([
         name: 'forest2000',
         slug: 'umd-loss-gain'
       },{
-        name: 'forma',
-        slug: 'forma-alerts'
+        name: 'forma_month_3',
+        slug: 'forma250GFW',
+        subscription: true
+      },{
+        name: 'forma_activity',
+        slug: 'forma-alerts',
+        subscription: true
       },{
         name: 'imazon',
         slug: 'imazon-alerts',
         subscription: true
       },{
-        name: 'terrailoss',
-        slug: 'terrai-alerts',
+        name: 'terrailoss', // change
+        slug: 'terraianalysis',
         subscription: true
       },{
         name: 'prodes',
@@ -147,25 +152,21 @@ define([
         slug: 'viirs-active-fires',
         subscription: true
       },{
-        name: 'umd_as_it_happens',
-        slug: 'glad-alerts',
+        name: 'umd_as_it_happens', //change
+        slug: 'gladanalysis',
         subscription: true
       },{
-        name: 'umd_as_it_happens_per',
-        slug: 'glad-alerts',
+        name: 'umd_as_it_happens_per', //change
+        slug: 'gladanalysis',
         subscription: true
       },{
         name: 'umd_as_it_happens_cog',
-        slug: 'glad-alerts',
+        slug: 'gladanalysis',
         subscription: true
       },{
         name: 'umd_as_it_happens_idn',
-        slug: 'glad-alerts',
+        slug: 'gladanalysis',
         subscription: true
-      }, {
-        name: 'forma_month_3',
-        slug: 'forma_month_3',
-        subscription: false
       }
     ],
 

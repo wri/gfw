@@ -1,6 +1,9 @@
 // Compass
 @import "compass/reset";
 
+// Settings
+@import "settings/settings";
+
 // Images
 @import
   "icons/*.png",
@@ -13,7 +16,9 @@
 
 // Global
 // This will load all common settings, mixins and styles needed
-@import "global/global";
+@import
+  "global/global",
+  "global/texts";
 
 // Layouts
 // This will load all common layouts styles

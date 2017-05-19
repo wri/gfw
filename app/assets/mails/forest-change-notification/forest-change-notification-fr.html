@@ -131,7 +131,7 @@
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
 
-													<div class="h4" style="color:#555555; font-family:Arial,sans-serif; font-size:20px; line-height:26px; text-align:left">Global Forest Watch a détecté <span style="color:#9abe16;">{{alert_count}}</span> nouveaux incendies dans votre région :</div>
+													<div class="h4" style="color:#555555; font-family:Arial,sans-serif; font-size:20px; line-height:26px; text-align:left">Global Forest Watch a détecté <span style="color:#9abe16;">{{alert_count}} nouvelles alertes sur l’évolution des forêts</span> dans votre région :</div>
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="30" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
 												</td>
@@ -211,11 +211,17 @@
 																		<td valign="top">
 																			<div class="text2-tb1" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:left">
                                         {{ if layerSlug == "glad-alerts"}}
-                                          Alertes GLAD hebdomadaires sur les pertes de la couverture arborée
+                                          Alertes de déforestation GLAD hebdomadaires
                                         {{ end }}
                                         {{ if layerSlug == "terrai-alerts"}}
-                                          Alertes Terra-i mensuelles sur les pertes de la couverture arborée
+                                          Alertes de déforestation Terra-i mensuelles
                                         {{ end }}
+																				{{ if layerSlug == "forma250GFW"}}
+																					Alertes FORMA quotidiennes de déforestation
+																				{{ end }}
+																				{{ if layerSlug == "forma-alerts"}}
+																					Alertes FORMA quotidiennes de défrichage actif
+																				{{ end }}
 																			</div>
 																		</td>
 																	</tr>
@@ -250,11 +256,17 @@
 																		<td valign="top">
 																			<div class="text2-tb1" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:left">
                                         {{ if layerSlug == "glad-alerts"}}
-                                          Identifie les zones de perte de la couverture arborée probable en temps quasi réel à une résolution de 30 x 30 mètres (Landsat). Couverture de Pérou, République du Congo et Kalimantan (Indonésie), pour couvrir finalement les zones tropicales humides. La source est UMD/GLAD. Données disponibles depuis 1er janvier 2015 jusqu’à aujourd'hui, mises à jour hebdomadaires.
+                                          Identifie les zones de perte de la couverture arborée probable en temps quasi réel à une résolution de 30 x 30 mètres (Landsat). Couverture : Divers pays, pour couvrir finalement les zones tropicales humides. La source est UMD/GLAD. Données disponibles depuis 1er janvier 2015 jusqu’à aujourd'hui, mises à jour hebdomadaires.
                                         {{ end }}
                                         {{ if layerSlug == "terrai-alerts"}}
-                                          Identifie les zones de pertes probables de la couverture arborée à une résolution de 250 x 250 mètres (MODIS). Couverture de Amérique latine. La source est CIAT. Données disponibles depuis janvier 2004 jusqu’à aujourd'hui, mises à jour mensuelles.
+                                          Identifie les zones de pertes probables de la couverture arborée à une résolution de 250 x 250 mètres (MODIS). Couverture : Tropiques. La source est CIAT. Données disponibles depuis janvier 2004 jusqu’à aujourd'hui, mises à jour mensuelles.
                                         {{ end }}
+																				{{ if layerSlug == "forma250GFW"}}
+																					Identifie les zones de pertes probables de la couverture arborée à une résolution 250 x 250 mètres (MODIS). Couverture : Les tropiques. Les sources sont : WRI et Google. Données disponibles depuis Janvier 2012 jusqu’à aujourd'hui ; mises à jour quotidienne.
+																				{{ end }}
+																				{{ if layerSlug == "forma-alerts"}}
+																					Identifie les zones de possible défrichage actif de la couverture arborée (au cours du mois passé) à une résolution 250 x 250 mètres (MODIS). Couverture : Les tropiques. Les sources sont : WRI et Google. Données disponibles depuis Janvier 2012 jusqu’à aujourd'hui ; mises à jour quotidienne.
+																				{{ end }}
 								  										</div>
 																		</td>
 																	</tr>

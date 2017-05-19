@@ -7,10 +7,9 @@ define([
 
   var StatusModel = Backbone.Model.extend({});
 
-  var GladLayerPresenter = PresenterClass.extend({
+  var TerraILayerPresenter = PresenterClass.extend({
 
     init: function(view) {
-      this.publishNotification('notification-glad-data-alert');
       this.view = view;
       this._super();
 
@@ -68,6 +67,6 @@ define([
 
   });
 
-  return GladLayerPresenter;
+  return TerraILayerPresenter;
 
 });

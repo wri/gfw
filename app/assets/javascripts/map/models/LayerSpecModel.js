@@ -65,6 +65,7 @@ define([
       "idn_peat_lands",
       "pak_user_mangroves",
       "sen_user_protected_areas",
+      "hti_user_watersheds",
       "ecu_user_protected_areas",
       "bol_user_fire_frequency",
       // PEOPLE
@@ -121,6 +122,7 @@ define([
       "bra_mining",
       "mex_mining",
       "per_mining",
+      "can_oil",
       "can_mining",
       "col_mining",
       "khm_mining",
@@ -154,9 +156,6 @@ define([
       "gfw_landsat_alerts_coverage",
       "glad_coverage",
       "terraicanvas_cover",
-      "forma_cover",
-      "forma_250_2016",
-      "forma_250_cover",
       "imazon_cover",
       "gran_chaco_extent",
       // FOREST CHANGE
@@ -166,7 +165,6 @@ define([
       "terrailoss",
       "viirs_fires_alerts",
       "imazon",
-      "forma",
       "peru_forma_250",
       "brazil_forma_250",
       "laos_forma_250",
@@ -180,7 +178,9 @@ define([
       "umd_as_it_happens_per",
       "umd_as_it_happens_idn",
       "umd_as_it_happens_cog",
-      "places_to_watch"
+      "places_to_watch",
+      'forma_month_3',
+      'forma_activity'
     ],
 
     categoryOrder: [

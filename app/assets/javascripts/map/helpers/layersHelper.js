@@ -5,10 +5,8 @@ define([
   // Layer views
   'map/views/layers/LossLayer',
   'map/views/layers/ForestGainLayer',
-  'map/views/layers/FormaLayer',
   'map/views/layers/FormaMonth3Layer',
-  'map/views/layers/FormaCoverLayer',
-  'map/views/layers/Forma250CoverLayer',
+  'map/views/layers/FormaActivityLayer',
   'map/views/layers/ImazonLayer',
   'map/views/layers/ImazonCoverLayer',
   'map/views/layers/Forest2000Layer',
@@ -29,6 +27,7 @@ define([
   'map/views/layers/CogLoggingLayer',
   'map/views/layers/MysLoggingLayer',
   'map/views/layers/MiningLayer',
+  'map/views/layers/CanOilLayer',
   'map/views/layers/CanMiningLayer',
   'map/views/layers/CmrMiningLayer',
   'map/views/layers/CodMiningLayer',
@@ -143,6 +142,7 @@ define([
   'map/views/layers/MexForestCatLayer',
   'map/views/layers/MexForestSubCatLayer',
   'map/views/layers/Places2WatchLayer',
+  'map/views/layers/UncuratedPlaces2WatchLayer',
   'map/views/layers/MexicoPaymentsLayer',
   'map/views/layers/MexLandRightsLayer',
   'map/views/layers/BraLoggingLayer',
@@ -162,6 +162,7 @@ define([
   'map/views/layers/LbrDevExL',
   'map/views/layers/PakUserMangrovesLayer',
   'map/views/layers/SenUserProtectedAreasLayer',
+  'map/views/layers/HaitiWatershedLayer',
   'map/views/layers/EcuUserProtectedAreasLayer',
   'map/views/layers/BolUserFireFrequencyLayer',
   // high resolution maps
@@ -171,7 +172,7 @@ define([
   // Layers timelines
   'map/views/timeline/LossTimeline',
   'map/views/timeline/FormaTimeline',
-  'map/views/timeline/Forma250Timeline',
+  'map/views/timeline/FormaActivityTimeline',
   'map/views/timeline/ImazonTimeline',
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
@@ -183,10 +184,8 @@ define([
   // Layer Views
   LossLayer,
   ForestGainLayer,
-  FormaLayer,
   FormaMonth3Layer,
-  FormaCoverLayer,
-  Forma250CoverLayer,
+  FormaActivityLayer,
   ImazonLayer,
   ImazonCoverLayer,
   Forest2000Layer,
@@ -207,6 +206,7 @@ define([
   CogLoggingLayer,
   MysLoggingLayer,
   MiningLayer,
+  CanOilLayer,
   CanMiningLayer,
   CmrMiningLayer,
   CodMiningLayer,
@@ -321,6 +321,7 @@ define([
   MexForestCatLayer,
   MexForestSubCatLayer,
   Places2WatchLayer,
+  UncuratedPlaces2WatchLayer,
   MexicoPaymentsLayer,
   MexLandRightsLayer,
   BraLoggingLayer,
@@ -340,6 +341,7 @@ define([
   LbrDevExL,
   PakUserMangrovesLayer,
   SenUserProtectedAreasLayer,
+  HaitiWatershedLayer,
   EcuUserProtectedAreasLayer,
   BolUserFireFrequencyLayer,
   //highres layers
@@ -349,7 +351,7 @@ define([
   // Layer timelines
   LossTimeline,
   FormaTimeline,
-  Forma250Timeline,
+  FormaActivityTimeline,
   ImazonTimeline,
   FiresTimeline,
   TerraiTimeline,
@@ -369,19 +371,13 @@ define([
     forestgain: {
       view: ForestGainLayer
     },
-    forma: {
-      view: FormaLayer,
-      timelineView: FormaTimeline
-    },
     forma_month_3: {
       view: FormaMonth3Layer,
       timelineView: FormaTimeline
     },
-    forma_cover: {
-      view: FormaCoverLayer
-    },
-    forma_250_cover: {
-      view: Forma250CoverLayer
+    forma_activity: {
+      view: FormaActivityLayer,
+      timelineView: FormaActivityTimeline
     },
     imazon: {
       view: ImazonLayer,
@@ -447,6 +443,9 @@ define([
     },
     mining: {
       view: MiningLayer
+    },
+    can_oil: {
+      view: CanOilLayer
     },
     can_mining: {
       view: CanMiningLayer
@@ -801,9 +800,11 @@ define([
     mex_forest_zoning_rest: {
       view:  MexForestRestLayer
     },
-
     places_to_watch: {
       view:  Places2WatchLayer
+    },
+    uncurated_places_to_watch: {
+      view:  UncuratedPlaces2WatchLayer
     },
     mexican_psa: {
       view:  MexicoPaymentsLayer
@@ -852,6 +853,9 @@ define([
     },
     sen_user_protected_areas: {
       view: SenUserProtectedAreasLayer
+    },
+    hti_user_watersheds: {
+      view: HaitiWatershedLayer
     },
     ecu_user_protected_areas: {
       view: EcuUserProtectedAreasLayer
