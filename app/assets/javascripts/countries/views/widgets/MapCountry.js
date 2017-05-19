@@ -3,13 +3,17 @@ define([
   'backbone',
   'underscore',
   'handlebars',
-  'topojson'
+  'topojson',
+  'helpers/geojsonUtilsHelper',
+  'mps'
 ], function(
   $,
   Backbone,
   _,
   Handlebars,
-  topojson) {
+  topojson,
+  geojsonUtilsHelper,
+  mps) {
 
   'use strict';
 
@@ -53,16 +57,20 @@ define([
 
     initialize: function(params, options) {
       this.paramsMap = _.extend({}, this.default, params);
-      var resTopojson = JSON.parse(params.countryData['topojson']);
+      var resTopojson = JSON.parse(params.countryData.topojson);
       var objects = _.findWhere(resTopojson.objects, {
         type: 'MultiPolygon'
       });
-      console.log(objects);
-      this.render();
+      var topoJson = topojson.feature(resTopojson,objects),
+          geojson = topoJson.geometry,
+          bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+          
+      this.render(bounds);
     },
 
-    render: function() {
+    render: function(bounds) {
       this.map = new google.maps.Map(this.el, this.paramsMap);
+      this.map.fitBounds(bounds)
     }
 
   });
