@@ -5,6 +5,7 @@ define([
   'handlebars',
   'topojson',
   'helpers/geojsonUtilsHelper',
+  'map/views/maptypes/grayscaleMaptype',
   'mps'
 ], function(
   $,
@@ -13,6 +14,7 @@ define([
   Handlebars,
   topojson,
   geojsonUtilsHelper,
+  grayscaleMaptype,
   mps) {
 
   'use strict';
@@ -37,40 +39,47 @@ define([
       tilt: 0,
       center: {lat: -34.397, lng: 150.644},
       scrollwheel: false,
-      zoom: 4
+      zoom: 4,
+      mapTypeId: 'grayscale'
     },
-
-    attributions: [
-      {
-        id: 'dark',
-        attribution: 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.',
-      },
-      {
-        id: 'positron',
-        attribution: 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.',
-      },
-      {
-        id: 'openstreet',
-        attribution: 'Map tiles by <a href="http://www.openstreetmap.org/">Open street map</a>',
-      },
-    ],
 
     initialize: function(params, options) {
       this.paramsMap = _.extend({}, this.default, params);
-      var resTopojson = JSON.parse(params.countryData.topojson);
+      this.render();
+    },
+
+    render: function() {
+      this.map = new google.maps.Map(this.el, this.paramsMap);
+      this.map.mapTypes.set('grayscale', grayscaleMaptype());
+      this.setGeom();
+    },
+
+    setGeom: function() {
+      var resTopojson = JSON.parse(this.paramsMap.countryData.topojson);
       var objects = _.findWhere(resTopojson.objects, {
         type: 'MultiPolygon'
       });
       var topoJson = topojson.feature(resTopojson,objects),
           geojson = topoJson.geometry,
           bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
-          
-      this.render(bounds);
+
+      this.drawGeojson(geojson);
+      this.map.fitBounds(bounds)
     },
 
-    render: function(bounds) {
-      this.map = new google.maps.Map(this.el, this.paramsMap);
-      this.map.fitBounds(bounds)
+    drawGeojson: function(geojson) {
+      var geojson = geojson;
+      var paths = geojsonUtilsHelper.geojsonToPath(geojson);
+      var overlay = new google.maps.Polygon({
+        paths: paths,
+        editable: false,
+        strokeWeight: 2,
+        fillOpacity: 0,
+        fillColor: '#FFF',
+        strokeColor: '#A2BC28'
+      });
+
+      overlay.setMap(this.map);
     }
 
   });
