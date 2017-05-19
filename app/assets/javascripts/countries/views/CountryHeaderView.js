@@ -21,13 +21,12 @@ define([
     initialize: function(params) {
       this.iso = params.iso;
       this.countryData = params.countryData;
-
       this.render();
     },
 
     render: function() {
       this.$el.html(this.template(this.countryData));
-    }
+    },
   });
   return CountryHeaderView;
 

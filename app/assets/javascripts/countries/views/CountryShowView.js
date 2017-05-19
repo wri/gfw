@@ -15,6 +15,8 @@ define([
   'countries/views/widgets/TreeCoverLossAlertsView',
   'countries/views/widgets/FiresAlertsView',
   'countries/views/widgets/NearRealTimeAlertsView',
+  'countries/views/widgets/MapCountry',
+  'countries/helpers/StickyMap',
   'text!countries/templates/countryDashboard.handlebars'
 ], function($,
   Backbone,
@@ -32,6 +34,8 @@ define([
   TreeCoverLossAlertsView,
   FiresAlertsView,
   NearRealTimeAlertsView,
+  MapCountry,
+  StickyMap,
   tpl) {
 
   'use strict';
@@ -81,12 +85,25 @@ define([
       this.initCoverGain();
       this.initCoverLossAlerts();
       this.initFiresAlerts();
+      this.initMapCountry();
+      this.initStickyMap();
 
       this.$el.find('.widgets > .content').removeClass('-loading');
     },
 
     initHeader: function() {
       this.header = new CountryHeaderView({
+        iso: this.iso,
+        countryData: this.data
+      });
+    },
+
+    initStickyMap: function() {
+      this.stickyMap = new StickyMap();
+    },
+
+    initMapCountry: function() {
+      this.mapCountry = new MapCountry({
         iso: this.iso,
         countryData: this.data
       });
