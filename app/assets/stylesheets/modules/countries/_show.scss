@@ -67,17 +67,37 @@
   min-height: 600px;
   display: flex;
 
+  &.relative {
+    position: relative;
+  }
+
   &.-loading {
     min-height: 60vh;
   }
 
   .map {
+    height: 100vh;
     width: 35%;
     background-color: #a3dcff;
+
+    &.stick {
+      position: fixed !important;
+      top: 0;
+    }
+
+    &.absolute {
+      position: absolute !important;
+      bottom: 0;
+    }
   }
 
   .widgets {
     width: 65%;
+
+    &.stick {
+      z-index: 1;
+      margin-left: 35%;
+    }
   }
 }
 
