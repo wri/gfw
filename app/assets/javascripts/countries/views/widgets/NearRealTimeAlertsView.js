@@ -5,8 +5,9 @@ define([
   'handlebars',
   'moment',
   'uri',
+  'helpers/numbersHelper',
   'text!countries/templates/widgets/nearRealTimeAlerts.handlebars'
-], function($, Backbone, _, Handlebars, moment, UriTemplate, tpl) {
+], function($, Backbone, _, Handlebars, moment, UriTemplate, NumbersHelper, tpl) {
 
   'use strict';
 
@@ -36,8 +37,12 @@ define([
     },
 
     render: function() {
+      var gladValue = this.data.glad[0] ? this.data.glad[0].value : 0;
+      var viirsValue = this.data.viirs[0] ? this.data.viirs[0].value : 0;
+
       this.$el.html(this.template({
-        data: this.data
+        glad: NumbersHelper.addNumberDecimals(gladValue),
+        viirs: NumbersHelper.addNumberDecimals(viirsValue)
       }));
       this.$el.removeClass('-loading');
     },
