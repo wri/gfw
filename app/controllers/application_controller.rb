@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
 
-  before_action :check_browser
+  # before_action :check_browser
 
   def not_found
     raise ActionController::RoutingError.new('Not Found')
@@ -15,11 +15,11 @@ class ApplicationController < ActionController::Base
 
   private
 
-    def check_browser
-      unless UserAgentValidator.user_agent_supported? request.user_agent
-        redirect_to "/notsupportedbrowser"
-      end
-    end
+    # def check_browser
+    #   unless UserAgentValidator.user_agent_supported? request.user_agent
+    #     redirect_to "/notsupportedbrowser"
+    #   end
+    # end
 
     def is_embed_request?
       request.original_url.include?('embed') ? true : false
