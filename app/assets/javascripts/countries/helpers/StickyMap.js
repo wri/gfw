@@ -15,64 +15,42 @@ define([
   var StickyMap = Backbone.View.extend({
 
     initialize: function() {
-      var body = document.getElementsByTagName('body')[0];
-      var map = document.getElementById('map');
-      var widgets = document.getElementById('widgets');
-      var top = document.getElementById('map').offsetTop;
-      var dashboard = $('.dashboard');
-      var footerHeight = ($('.call-actions-wrapper').height()) + ($('#footerGfw').height());
-      var bottomDistance = (body.offsetHeight) - (widgets.offsetTop + widgets.offsetHeight);
-      var windowProperties = $(window);
-      var limitFooter = $(body).height() - (bottomDistance + $(window).height())
+      this.body = document.getElementsByTagName('body')[0];
+      this.map = document.getElementById('map');
+      this.widgets = document.getElementById('widgets');
+      this.top = document.getElementById('map').offsetTop;
+      this.$dashboard = $('.dashboard');
+      this.bottomDistance = (this.body.offsetHeight) - (this.widgets.offsetTop + this.widgets.offsetHeight);
+
+      $(window).scroll(function() {
+        this.setScroll();
+      }.bind(this));
+
+      this.setScroll();
+    },
+
+    setScroll: function() {
+      var limitFooter = $(this.body).height() - (this.bottomDistance + $(window).height())
       var y = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-      
+
       if(window.scrollY > limitFooter) {
-        $(dashboard).addClass('relative');
-        $(map).removeClass('stick');
-        $(map).addClass('absolute');
-        $(widgets).addClass('stick');
+        this.$dashboard.addClass('relative');
+        $(this.map).removeClass('stick');
+        $(this.map).addClass('absolute');
+        $(this.widgets).addClass('stick');
       } else {
-        if (y >= top) {
-            $(map).removeClass('absolute');
-            $(map).addClass('stick');
-            $(dashboard).removeClass('relative');
-            $(widgets).addClass('stick');
+        if (y >= this.top) {
+          $(this.map).removeClass('absolute');
+          $(this.map).addClass('stick');
+          this.$dashboard.removeClass('relative');
+          $(this.widgets).addClass('stick');
         }
         else {
-            $(map).removeClass('stick');
-            $(widgets).removeClass('stick');
+          $(this.map).removeClass('stick');
+          $(this.widgets).removeClass('stick');
         }
       }
-
-      $(window).bind('scroll', function () {
-        var limitFooter = $(body).height() - (bottomDistance + $(window).height())
-        var y = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-
-        if(window.scrollY > limitFooter) {
-          $(dashboard).addClass('relative');
-          $(map).removeClass('stick');
-          $(map).addClass('absolute');
-          $(widgets).addClass('stick');
-        } else {
-          if (y >= top) {
-              $(map).removeClass('absolute');
-              $(map).addClass('stick');
-              $(dashboard).removeClass('relative');
-              $(widgets).addClass('stick');
-          }
-          else {
-              $(map).removeClass('stick');
-              $(widgets).removeClass('stick');
-          }
-        }
-      });
-
-      this.render();
-    },
-
-    render: function() {
-
-    },
+    }
   });
   return StickyMap;
 
