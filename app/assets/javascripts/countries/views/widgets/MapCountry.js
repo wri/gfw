@@ -9,7 +9,6 @@ define([
   Backbone,
   _,
   Handlebars,
-  tpl,
   topojson) {
 
   'use strict';
@@ -54,6 +53,11 @@ define([
 
     initialize: function(params, options) {
       this.paramsMap = _.extend({}, this.default, params);
+      var resTopojson = JSON.parse(params.countryData['topojson']);
+      var objects = _.findWhere(resTopojson.objects, {
+        type: 'MultiPolygon'
+      });
+      console.log(objects);
       this.render();
     },
 
