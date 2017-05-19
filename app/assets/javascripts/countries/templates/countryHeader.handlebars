@@ -6,7 +6,10 @@
     <div class="small-3 columns">
       <div class="country-selector">
         <select id="areaSelector">
-          <option class="dark" value="default">Select jurisdiction</option>
+          <option class="dark" value="default">{{placeholder}}</option>
+          {{#each regions}}
+            <option value="{{this.id_1}}" {{#if selected}}selected{{/if}}>{{this.name_1}}</option>
+          {{/each}}
         </select>
         <div class="selector-remove" style="display: none;">✕</div>
         <svg class="icon arrow-select selector-arrow"><use xlink:href="#arrow-select"></use></svg>
