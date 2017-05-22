@@ -165,6 +165,7 @@ define([
   'map/views/layers/LbrDevExL',
   'map/views/layers/PakUserMangrovesLayer',
   'map/views/layers/SenUserProtectedAreasLayer',
+  'map/views/layers/HaitiWatershedLayer',
   'map/views/layers/EcuUserProtectedAreasLayer',
   'map/views/layers/BolUserFireFrequencyLayer',
   // high resolution maps
@@ -345,6 +346,7 @@ define([
   LbrDevExL,
   PakUserMangrovesLayer,
   SenUserProtectedAreasLayer,
+  HaitiWatershedLayer,
   EcuUserProtectedAreasLayer,
   BolUserFireFrequencyLayer,
   //highres layers
@@ -867,6 +869,9 @@ define([
     },
     sen_user_protected_areas: {
       view: SenUserProtectedAreasLayer
+    },
+    hti_user_watersheds: {
+      view: HaitiWatershedLayer
     },
     ecu_user_protected_areas: {
       view: EcuUserProtectedAreasLayer
