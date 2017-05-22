@@ -1,0 +1,24 @@
+.m-widget-tree-cover-loss-legend {
+  .legend-container {
+    ul {
+      list-style: none;
+
+      li {
+        display: flex;
+        font-size: 12px;
+        line-height: 1.67;
+        font-weight: 200;
+        color: #555555;
+
+        .circle {
+          margin-right: 8px;
+          width: 12px;
+          height: 12px;
+          display: inline-block;
+          background-color: red;
+          border-radius: 12px;
+        }
+      }
+    }
+  }
+}
