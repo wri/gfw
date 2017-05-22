@@ -1,30 +1,79 @@
 #ptw_grid_score_gt_0[dtype=false]{
   marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/wri-01/assets/20170516142641ptw_main.svg);
-  marker-width: 24;
+  marker-width: 16;
 }
+
+#ptw_grid_score_gt_0[dtype=false][zoom>3]{
+  marker-width: 16;
+}
+
 #ptw_grid_score_gt_0[dtype=false][zoom>4]{
-  marker-width: 34;
+  marker-width: 16;
 }
+
 #ptw_grid_score_gt_0[dtype=false][zoom>5]{
-  marker-width: 44;
+  marker-width: 16;
 }
-#ptw_grid_score_gt_0[dtype=false][zoom>5]{
-  marker-width: 54;
-}
+
 #ptw_grid_score_gt_0[dtype=false][zoom>6]{
+  marker-width: 16;
+}
+
+#ptw_grid_score_gt_0[dtype=false][zoom>7]{
+  marker-width: 16;
+}
+
+#ptw_grid_score_gt_0[dtype=false][zoom>8]{
+  marker-width: 32;
+}
+
+#ptw_grid_score_gt_0[dtype=false][zoom>9]{
   marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/wri-01/assets/20170516142700ptw_secondary.svg);
-  marker-width: 104;
+  marker-width: 64;
   marker-type: ellipse;
   marker-fill-opacity: 1;
   marker-fill: #D53369;
   marker-line-width: 1;
+}
 
+#ptw_grid_score_gt_0[dtype=false][zoom>10]{
+  marker-width: 128;
 }
-#ptw_grid_score_gt_0[dtype=false][zoom>7]{
-  marker-width: 114;
+
+#ptw_grid_score_gt_0[dtype=false][zoom>11]{
+  marker-width: 256;
 }
-#ptw_grid_score_gt_0[dtype=false][zoom>8]{
-  marker-width: 124;
+
+#ptw_grid_score_gt_0[dtype=false][zoom>12]{
+  marker-width: 512;
+}
+
+#ptw_grid_score_gt_0[dtype=false][zoom>13]{
+  marker-width: 1024;
+}
+
+#ptw_grid_score_gt_0[dtype=false][zoom>14]{
+  marker-width: 2048;
+}
+
+#ptw_grid_score_gt_0[dtype=false][zoom>15]{
+  marker-width: 4096;
+}
+
+#ptw_grid_score_gt_0[dtype=false][zoom>16]{
+  marker-width: 8192;
+}
+
+#ptw_grid_score_gt_0[dtype=false][zoom>17]{
+  marker-width: 16384;
+}
+
+#ptw_grid_score_gt_0[dtype=false][zoom>18]{
+  marker-width: 32768;
+}
+
+#ptw_grid_score_gt_0[dtype=false][zoom>19]{
+  marker-width: 65536;
 }
 
 #ptw_grid_score_gt_0[zoom<6][dtype=true]{
