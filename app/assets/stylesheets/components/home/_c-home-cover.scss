@@ -63,19 +63,21 @@
   }
 
   .c-home-cover__video-button {
-    width: rem(47px);
-    height: rem(47px);
+    padding: rem(10px) rem(20px);
     position: absolute;
     right: rem(60px);
-    top: rem(130px);
+    bottom: rem(20px);
     cursor: pointer;
     align-items: center;
     justify-content: center;
     text-align: center;
-    z-index: 3;;
-    background-color: rgba(#555555, 0.7);
+    z-index: 3;
+    background-color: rgba($slate, 0.7);
     border-radius: rem(47px);
     display: none;
+    color: $white;
+    text-transform: uppercase;
+    font-size: 14px;
 
     &.-visible {
       display: flex;
