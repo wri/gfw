@@ -28,16 +28,16 @@
 }
 
 #ptw_grid_score_gt_0[dtype=false][zoom>9]{
-  marker-width: 64;
-}
-
-#ptw_grid_score_gt_0[dtype=false][zoom>10]{
   marker-file: url(https://s3.amazonaws.com/com.cartodb.users-assets.production/production/wri-01/assets/20170516142700ptw_secondary.svg);
-  marker-width: 128;
+  marker-width: 64;
   marker-type: ellipse;
   marker-fill-opacity: 1;
   marker-fill: #D53369;
   marker-line-width: 1;
+}
+
+#ptw_grid_score_gt_0[dtype=false][zoom>10]{
+  marker-width: 128;
 }
 
 #ptw_grid_score_gt_0[dtype=false][zoom>11]{
