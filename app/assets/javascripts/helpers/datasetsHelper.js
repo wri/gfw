@@ -83,8 +83,8 @@ define([
       title: 'FORMA alerts data',
       long_title: 'FORMA alerts data',
       sub_title: 'daily, 250m, tropics, WRI/Google',
-      layerSlug: ['forma_month_3'],
-      slug: 'forma_month_3',
+      layerSlug: ['forma'],
+      slug: 'forma',
       slug_source: 'forma',
       layer_id: null,
       order: 80
