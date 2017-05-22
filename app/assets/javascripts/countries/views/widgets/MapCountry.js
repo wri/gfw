@@ -26,6 +26,10 @@ define([
     el: '#map',
     template: Handlebars.compile(tpl),
 
+    events: {
+      'click .js-toggle-layer' : 'toogleLayer',
+    },
+
     /**
      * Google Map Options.
      */
@@ -69,6 +73,17 @@ define([
 
       this.drawGeojson(geojson);
       this.map.fitBounds(bounds)
+    },
+
+    toogleLayer: function(e){
+      _.each(this.$el.find('.onoffswitch'), function(toggle) {
+        var $toggle = $(toggle);
+        var optionSelected = $toggle.hasClass('checked');
+        if (optionSelected) {
+          $toggle.removeClass('checked');
+        }
+      });
+      $(e.target).addClass('checked');
     },
 
     drawGeojson: function(geojson) {
