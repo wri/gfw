@@ -18,15 +18,15 @@ define([
     label: 'past month',
     duration: 0
   }, {
-    start: moment().subtract(2, 'days').utc(),
+    start: moment().subtract(7, 'days').utc(),
     end: moment().utc(),
     label: 'past week',
-    duration: 48
+    duration: 168
   }, {
-    start: moment().subtract(1, 'days').utc(),
+    start: moment().subtract(2, 'days').utc(),
     end: moment().utc(),
-    label: 'past 24 hours',
-    duration: 24
+    label: 'past 48 hours',
+    duration: 48
   }];
 
   var FormaActivityTimeline = TimelineBtnClass.extend({
@@ -42,10 +42,9 @@ define([
       };
 
       if (!(currentDate && currentDate[0] && currentDate[1])) {
-        currentDate = [moment().subtract(24, 'hours'), moment()];
+        currentDate = [moment().subtract(2, 'days').utc(), moment.utc()];
       }
       currentDate = DatesHelper.getRangeForDates(currentDate, AVAILABLE_DATE_RANGES);
-
 
       FormaActivityTimeline.__super__.initialize.apply(this, [layer, currentDate]);
     },
