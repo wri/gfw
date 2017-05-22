@@ -1,0 +1,48 @@
+.country-page-legend {
+  min-width: 280px;
+  top: 20px;
+  left: 20px;
+  background-color: #FFF;
+  position: absolute;
+  padding: 16px 18px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+
+  ul {
+    list-style: none;
+
+    li {
+      display: block;
+      margin-bottom: 8px;
+
+      .onoffswitch {
+        margin-right: 8px;
+        position: relative;
+        top: 3px;
+        cursor: pointer;
+      }
+
+      .layer-name {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        line-height: 1.42;
+        color: #555;
+
+        .icon-info-green {
+          width: 12px;
+          height: 12px;
+          cursor: pointer;
+
+          &.-hidden {
+            display:none;
+          }
+        }
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

@@ -6,7 +6,8 @@ define([
   'topojson',
   'helpers/geojsonUtilsHelper',
   'map/views/maptypes/grayscaleMaptype',
-  'mps'
+  'mps',
+  'text!countries/templates/widgets/legendMap.handlebars'
 ], function(
   $,
   Backbone,
@@ -15,13 +16,15 @@ define([
   topojson,
   geojsonUtilsHelper,
   grayscaleMaptype,
-  mps) {
+  mps,
+  tpl) {
 
   'use strict';
 
   var MapCountry = Backbone.View.extend({
 
     el: '#map',
+    template: Handlebars.compile(tpl),
 
     /**
      * Google Map Options.
@@ -52,6 +55,7 @@ define([
       this.map = new google.maps.Map(this.el, this.paramsMap);
       this.map.mapTypes.set('grayscale', grayscaleMaptype());
       this.setGeom();
+      this.$el.append(this.template());
     },
 
     setGeom: function() {

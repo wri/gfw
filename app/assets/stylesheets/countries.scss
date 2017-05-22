@@ -18,6 +18,8 @@
 
 // Modules
 @import "modules/buttons";
+@import "modules/map/onoffswitch";
+@import "modules/map/onoffradio";
 @import "modules/common/ui/switch";
 @import "modules/common/ui/select";
 @import "modules/common/charts/pie-chart";
@@ -36,5 +38,6 @@
 @import "modules/countries/show";
 @import "modules/countries/country";
 @import "modules/countries/call-to-actions";
+@import "modules/countries/country-page-legend";
 // TEMP
 @import "modules/countries/overview";
