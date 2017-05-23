@@ -235,10 +235,6 @@
         margin: 0 0 0 10px;
 
         &:first-child {
-          margin-right: 40px;
-        }
-
-        &:last-child {
           margin-right: 0;
         }
 
@@ -267,13 +263,13 @@
         }
 
 				> .submenu-header, > a {
-					display: inline-block;
+					display: block;
 					text-transform: uppercase;
 					color: $dark;
 					position: relative;
 					z-index: 2;
           text-align: center;
-          padding: 21px 0;
+          padding: 21px 40px;
 
           &:after {
             content: "";
