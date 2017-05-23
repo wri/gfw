@@ -93,8 +93,8 @@ define([
       title: 'FORMA active clearing alerts data',
       long_title: 'FORMA active clearing alerts data',
       sub_title: 'daily, 250m, tropics, WRI/Google',
-      layerSlug: ['forma_activity'],
-      slug: 'forma_activity',
+      layerSlug: ['forma-alerts'],
+      slug: 'forma-alerts',
       slug_source: 'forma',
       layer_id: null,
       order: 80
