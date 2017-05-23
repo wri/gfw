@@ -1,0 +1,43 @@
+.m-widget-tree-cover-loss-legend {
+  .legend-container {
+    ul {
+      list-style: none;
+
+      li {
+        display: flex;
+        font-size: 12px;
+        line-height: 1.67;
+        font-weight: 200;
+        color: #555555;
+        margin-bottom: 8px;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        .circle {
+          margin-right: 8px;
+          width: 10px;
+          min-width: 10px;
+          height: 10px;
+          display: inline-block;
+          border-radius: 10px;
+          position: relative;
+          top: 3px;
+
+          &.-outside {
+            background-color: #ff6599;
+          }
+
+          &.-within {
+            background-color: rgba(#ff6599, .5);
+          }
+
+          &.-trend-line {
+            background-color: #dddde0;
+          }
+        }
+      }
+    }
+  }
+}

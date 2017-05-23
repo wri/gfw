@@ -6,7 +6,8 @@ define([
   'topojson',
   'helpers/geojsonUtilsHelper',
   'map/views/maptypes/grayscaleMaptype',
-  'mps'
+  'mps',
+  'text!countries/templates/widgets/legendMap.handlebars'
 ], function(
   $,
   Backbone,
@@ -15,13 +16,19 @@ define([
   topojson,
   geojsonUtilsHelper,
   grayscaleMaptype,
-  mps) {
+  mps,
+  tpl) {
 
   'use strict';
 
   var MapCountry = Backbone.View.extend({
 
     el: '#map',
+    template: Handlebars.compile(tpl),
+
+    events: {
+      'click .js-toggle-layer' : 'toogleLayer',
+    },
 
     /**
      * Google Map Options.
@@ -52,6 +59,7 @@ define([
       this.map = new google.maps.Map(this.el, this.paramsMap);
       this.map.mapTypes.set('grayscale', grayscaleMaptype());
       this.setGeom();
+      this.$el.append(this.template());
     },
 
     setGeom: function() {
@@ -65,6 +73,17 @@ define([
 
       this.drawGeojson(geojson);
       this.map.fitBounds(bounds)
+    },
+
+    toogleLayer: function(e){
+      _.each(this.$el.find('.onoffswitch'), function(toggle) {
+        var $toggle = $(toggle);
+        var optionSelected = $toggle.hasClass('checked');
+        if (optionSelected) {
+          $toggle.removeClass('checked');
+        }
+      });
+      $(e.target).addClass('checked');
     },
 
     drawGeojson: function(geojson) {
