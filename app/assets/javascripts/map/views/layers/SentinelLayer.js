@@ -18,9 +18,9 @@ define([
   var TILE_SIZE = 256;
   var MAX_ZOOM = 9;
 
-  var TILES_PARAMS = '?SERVICE=WMS&REQUEST=GetMap&LAYERS=TRUE_COLOR&BBOX={bbox}&MAXCC={cloud}&CLOUDCORRECTION=none&WIDTH=512&HEIGHT=512&FORMAT=image/jpeg&TIME={mindate}/{maxdate}&CRS=CRS:84';
+  var TILES_PARAMS = '?SERVICE=WMS&REQUEST=GetMap&LAYERS=TRUE_COLOR&BBOX={bbox}&MAXCC={cloud}&CLOUDCORRECTION=none&WIDTH=512&HEIGHT=512&FORMAT=image/png&TIME={mindate}/{maxdate}&CRS=CRS:84&TRANSPARENT=TRUE';
 
-  var METADATA_PARAMS = '?service=WFS&version=2.0.0&request=GetFeature&time={mindate}/{maxdate}&typenames=TILE&maxfeatures=1&srsname=CRS:84&bbox={bbox}&outputformat=application/json';
+  var METADATA_PARAMS = '?service=WFS&version=2.0.0&request=GetFeature&time={mindate}/{maxdate}&typenames=TILE&maxfeatures=1&srsname=CRS:84&LAYERS=TRUE_COLOR&MAXCC={cloud}&CLOUDCORRECTION=none&&bbox={bbox}&outputformat=application/json';
 
   var SentinelLayer = ImageLayerClass.extend({
     options: {
@@ -97,11 +97,11 @@ define([
 
     _getInfoWindowUrl: function(params) {
       var urlTemplate = this._getUrlTemplateBySensor(params.sensor_platform) + METADATA_PARAMS;
-      console.log(params, urlTemplate);
       return new UriTemplate(urlTemplate).fillFromObject({
         mindate: params.mindate,
         maxdate: params.maxdate,
         bbox: params.bbox,
+        cloud: params.cloud,
         provider: 'wfs'
       });
     },
@@ -224,39 +224,10 @@ define([
     // MAP EVENTS
     addEvents: function() {
       this.clickevent = google.maps.event.addListener(this.map, "click", this.onClickEvent.bind(this));
-      this.dragendevent = google.maps.event.addListener(this.map, "dragend", this.checkForImagesInBounds.bind(this));
-      this.zoomChangedEvent = google.maps.event.addListener(this.map, "zoom_changed",  this.checkForImagesInBounds.bind(this));
     },
 
     clearEvents: function() {
-      // google.maps.event.clearListeners(this.map, this.clickevent);
-      google.maps.event.clearListeners(this.map, this.dragendevent);
-      google.maps.event.clearListeners(this.map, this.zoomChangedEvent);
-    },
-
-    checkForImagesInBounds: function() {
-      // // Set Date
-      // var today = moment();
-      // var tomorrow = today.add('days', 1);
-      // var geo = this.getBoundsPolygon();
-
-      // if (this.map.getZoom() < 9) {
-      //   this.notificate('notification-no-images-highres');
-      // }
-      // if (!!geo) {
-      //   // Set options to get the url of the api
-      //   var options = _.extend({}, this._getParams(), {
-      //     geo: geo,
-      //     tileddate: moment(tomorrow).format("YYYY-MM-DD"),
-      //   });
-      //   var url = this._getBoundsUrl(options);
-      //   $.get(url).done(_.bind(function(response) {
-      //     this.hidenotification();
-      //     if (!!response && !!response.data && !response.data.length) {
-      //       this.notificate('notification-no-images-highres');
-      //     }
-      //   }, this ));
-      // }
+      google.maps.event.removeListener(this.clickevent);
     },
 
     onClickEvent: function(event) {
@@ -365,9 +336,12 @@ define([
     clear: function() {
       this.removeMultipolygon();
       this.removeInfoWindow();
+    },
+
+    removeLayer: function() {
+      this.clear();
+      this.clearEvents();
     }
-
-
   });
 
   return SentinelLayer;
