@@ -16,6 +16,7 @@ define([
       layerSlug: ['umd_as_it_happens'],
       slug: 'glad-alerts',
       slug_source: 'umd_landsat_alerts',
+      analysisSlug: 'umd_as_it_happens',
       layer_id: null,
       order: 10
     },
@@ -26,6 +27,7 @@ define([
       layerSlug: ['terrailoss'],
       slug: 'terrai-alerts',
       slug_source: 'terra_i_alerts',
+      analysisSlug: 'terrailoss',
       layer_id: null,
       order: 20
     },
@@ -36,6 +38,7 @@ define([
       layerSlug: ['imazon'],
       slug: 'imazon-alerts',
       slug_source: 'imazon_sad',
+      analysisSlug: 'imazon',
       layer_id: null,
       order: 30
     },
@@ -46,6 +49,7 @@ define([
       layerSlug: ['viirs_fires_alerts'],
       slug: 'viirs-active-fires',
       slug_source: 'viirs_fires',
+      analysisSlug: 'viirs_fires_alerts',
       layer_id: null,
       order: 40
     },
@@ -56,6 +60,7 @@ define([
       layerSlug: ['guyra'],
       slug: 'guira-loss',
       slug_source: 'gran_chaco_deforestation',
+      analysisSlug: 'guyra',
       layer_id: null,
       order: 50
     },
@@ -66,6 +71,7 @@ define([
       layerSlug: ['loss','gain'],
       slug: 'umd-loss-gain',
       slug_source: 'tree_cover_loss',
+      analysisSlug: 'umd-loss-gain',
       layer_id: null,
       order: 60
     },
@@ -76,26 +82,29 @@ define([
       layerSlug: ['prodes'],
       slug: 'prodes-loss',
       slug_source: 'prodes',
+      analysisSlug: 'prodes',
       layer_id: null,
       order: 70
     },
-    'forma250GFW': {
+    'forma_month_3': {
       title: 'FORMA alerts data',
       long_title: 'FORMA alerts data',
       sub_title: 'daily, 250m, tropics, WRI/Google',
-      layerSlug: ['forma'],
-      slug: 'forma',
+      layerSlug: ['forma_month_3'],
+      slug: 'forma_month_3',
       slug_source: 'forma',
+      analysisSlug: 'forma250GFW',
       layer_id: null,
       order: 80
     },
-    'forma-alerts': {
+    'forma_activity': {
       title: 'FORMA active clearing alerts data',
       long_title: 'FORMA active clearing alerts data',
       sub_title: 'daily, 250m, tropics, WRI/Google',
-      layerSlug: ['forma-alerts'],
-      slug: 'forma-alerts',
+      layerSlug: ['forma_activity'],
+      slug: 'forma_activity',
       slug_source: 'forma',
+      analysisSlug: 'forma-alerts',
       layer_id: null,
       order: 80
     },
@@ -106,6 +115,7 @@ define([
       layerSlug: ['story'],
       slug: 'story',
       slug_source: 'user_stories',
+      analysisSlug: 'story',
       layer_id: 580,
       order: 90
     }
@@ -158,7 +168,7 @@ define([
         for (var dataset in datasetList) {
           var currentDataset = _.extend({}, datasetList[dataset]);
 
-          if (datasets.indexOf(currentDataset.layerSlug[0]) !== -1) {
+          if (datasets.indexOf(currentDataset.analysisSlug) !== -1) {
             filteredDatasets.push(currentDataset);
           }
         }
@@ -166,7 +176,8 @@ define([
 
       filteredDatasets = _.map(filteredDatasets, function(dataset) {
         if (layersSelected.indexOf(dataset.slug) !== -1 ||
-          layersSelected.indexOf(dataset.layerSlug[0]) !== -1) {
+          layersSelected.indexOf(dataset.layerSlug[0]) !== -1 ||
+          layersSelected.indexOf(dataset.analysisSlug) !== -1) {
           dataset.checked = true;
         }
         return dataset;
