@@ -18,9 +18,9 @@ define([
   var TILE_SIZE = 256;
   var MAX_ZOOM = 9;
 
-  var TILES_PARAMS = '?SERVICE=WMS&REQUEST=GetMap&LAYERS=TRUE_COLOR&BBOX={bbox}&MAXCC={cloud}&CLOUDCORRECTION=none&WIDTH=512&HEIGHT=512&FORMAT=image/png&TIME={mindate}/{maxdate}&CRS=CRS:84&TRANSPARENT=TRUE';
+  var TILES_PARAMS = '?SERVICE=WMS&REQUEST=GetMap&LAYERS=TRUE_COLOR&BBOX={bbox}&MAXCC={cloud}&CLOUDCORRECTION=none&WIDTH=512&HEIGHT=512&FORMAT=image/png&TIME={mindate}/{maxdate}&CRS=CRS:84&TRANSPARENT=TRUE&PRIORITY=mostRecent';
 
-  var METADATA_PARAMS = '?service=WFS&version=2.0.0&request=GetFeature&time={mindate}/{maxdate}&typenames=TILE&maxfeatures=1&srsname=CRS:84&LAYERS=TRUE_COLOR&MAXCC={cloud}&CLOUDCORRECTION=none&&bbox={bbox}&outputformat=application/json';
+  var METADATA_PARAMS = '?service=WFS&version=2.0.0&request=GetFeature&time={mindate}/{maxdate}&typenames=TILE&maxfeatures=1&srsname=CRS:84&LAYERS=TRUE_COLOR&MAXCC={cloud}&CLOUDCORRECTION=none&&bbox={bbox}&PRIORITY=mostRecent&outputformat=application/json';
 
   var SentinelLayer = ImageLayerClass.extend({
     options: {
@@ -91,7 +91,8 @@ define([
         maxdate: params.maxdate,
         bbox: this.calcBboxFromXY(x, y, z),
         provider: 'wms'
-      }
+      };
+
       return new UriTemplate(urlTemplate).fillFromObject(urlParams);
     },
 
