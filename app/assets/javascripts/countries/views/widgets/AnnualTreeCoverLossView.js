@@ -25,6 +25,7 @@ define([
   var QUERY_YEARLY = '/query?sql=select sum(area) as value, year as date from {dataset} where thresh=30 and iso=\'{iso}\' group by year';
   var QUERY_TOTAL = '/query/?sql=SELECT sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' AND thresh=\'30\' GROUP BY iso';
   var DATES_TOTAL = '/query/?sql=SELECT year FROM a9a32dd2-f7e1-402a-ba6f-48020fbf50ea WHERE iso=\'{iso}\' group by year';
+  var THRESH_TOTAL = '/query/?sql=SELECT thresh FROM a9a32dd2-f7e1-402a-ba6f-48020fbf50ea WHERE iso=\'{iso}\' GROUP BY thresh';
 
   // Datasets
   var DATASETS = [
@@ -104,7 +105,8 @@ define([
       defaults: {
         dates: null,
         start_date: null,
-        end_date: null
+        end_date: null,
+        thresh: null
       }
     })),
 
@@ -120,7 +122,8 @@ define([
       this.datasets = [];
       this._getDates()
         .done(this._getList()
-        .done(this._initWidget.bind(this)));
+        .done(this._getThresh()
+        .done(this._initWidget.bind(this))));
     },
 
     render: function() {
@@ -130,14 +133,13 @@ define([
         dates: this.status.get('dates'),
         start_date: this.status.get('start_date'),
         end_date: this.status.get('end_date'),
+        thresh: this.status.get('thresh'),
       }));
       this.$el.removeClass('-loading');
     },
 
     _getDates: function() {
       var $deferred = $.Deferred();
-      var $promises = [];
-      var data = [];
 
       var url = API + new UriTemplate(DATES_TOTAL).fillFromObject({
         iso: this.iso
@@ -151,6 +153,27 @@ define([
         this.status.set('dates', res);
         this.status.set('start_date', res.data[0]);
         this.status.set('end_date', res.data[res.data.length - 1]);
+        return $deferred.resolve();
+      }.bind(this))
+        .fail(function(error) {
+          return $deferred.reject();
+        });
+      return $deferred;
+    },
+
+    _getThresh: function() {
+      var $deferred = $.Deferred();
+
+      var url = API + new UriTemplate(THRESH_TOTAL).fillFromObject({
+        iso: this.iso
+      });
+
+      $.ajax({
+        url: url,
+        type: 'GET'
+      })
+      .done(function(res) {
+        this.status.set('thresh', res);
         return $deferred.resolve();
       }.bind(this))
         .fail(function(error) {
