@@ -24,6 +24,7 @@ define([
   var API = window.gfw.config.GFW_API_HOST_PROD;
   var QUERY_YEARLY = '/query?sql=select sum(area) as value, year as date from {dataset} where thresh=30 and iso=\'{iso}\' group by year';
   var QUERY_TOTAL = '/query/?sql=SELECT sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' AND thresh=\'30\' GROUP BY iso';
+  var DATES_TOTAL = '/query/?sql=SELECT year FROM a9a32dd2-f7e1-402a-ba6f-48020fbf50ea WHERE iso=\'{iso}\' group by year';
 
   // Datasets
   var DATASETS = [
@@ -99,6 +100,14 @@ define([
       'click .js-dataset': '_updateChart'
     },
 
+    status: new (Backbone.Model.extend({
+      defaults: {
+        dates: null,
+        start_date: null,
+        end_date: null
+      }
+    })),
+
     defaults: {
       currentDatasets: ['loss', 'wdpa']
     },
@@ -109,16 +118,45 @@ define([
       this.iso = params.iso;
       this.currentDatasets = this.defaults.currentDatasets;
       this.datasets = [];
-
-      this._getList().done(this._initWidget.bind(this));
+      this._getDates()
+        .done(this._getList()
+        .done(this._initWidget.bind(this)));
     },
 
     render: function() {
       this.$el.html(this.template({
         totalCoverLoss: this._getTotalCoverLoss(),
-        datasets: this._getAvailableDatasets()
+        datasets: this._getAvailableDatasets(),
+        dates: this.status.get('dates'),
+        start_date: this.status.get('start_date'),
+        end_date: this.status.get('end_date'),
       }));
       this.$el.removeClass('-loading');
+    },
+
+    _getDates: function() {
+      var $deferred = $.Deferred();
+      var $promises = [];
+      var data = [];
+
+      var url = API + new UriTemplate(DATES_TOTAL).fillFromObject({
+        iso: this.iso
+      });
+
+      $.ajax({
+        url: url,
+        type: 'GET'
+      })
+      .done(function(res) {
+        this.status.set('dates', res);
+        this.status.set('start_date', res.data[0]);
+        this.status.set('end_date', res.data[res.data.length - 1]);
+        return $deferred.resolve();
+      }.bind(this))
+        .fail(function(error) {
+          return $deferred.reject();
+        });
+      return $deferred;
     },
 
     _getList: function() {
@@ -232,6 +270,7 @@ define([
     _initWidget: function() {
       this._getGraphData().done(function(data) {
         this._setData(data);
+        this.render();
         this._renderGraph();
         this.annualRanking = new AnnualTreeCoverLossRankingView({
           iso: this.iso
@@ -272,7 +311,6 @@ define([
     },
 
     _renderGraph: function() {
-      this.render();
       this.lineGraph = new GroupedGraphView({
         el: '#annual-tree-cover-loss-graph',
         data: this.data,

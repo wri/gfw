@@ -14,7 +14,9 @@
           <div class="c-select">
             <div class="wrapper">
               <select id="annual-tree-cover-loss-start-year">
-                <option value="monthly">2011</option>
+                {{#each dates.data}}
+                  <option value="{{this.year}}" {{#if selected}}selected{{/if}}>{{this.year}}</option>
+                {{/each}}
               </select>
               <div class="select-clear" style="display: none;">✕</div>
               <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
@@ -28,7 +30,9 @@
           <div class="c-select">
             <div class="wrapper">
               <select id="annual-tree-cover-loss-end-year">
-                <option value="monthly">2015</option>
+                {{#each dates.data}}
+                  <option value="{{this.year}}" {{#if selected}}selected{{/if}}>{{this.year}}</option>
+                {{/each}}
               </select>
               <div class="select-clear" style="display: none;">✕</div>
               <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
@@ -84,7 +88,7 @@
         <div class="row">
           <div class="column small-12">
             <div class="total-loss">
-              <div class="name">Total cover loss (2011 - 2016)</div>
+              <div class="name">Total cover loss ({{start_date.year}} - {{end_date.year}})</div>
               <div class="value">{{totalCoverLoss}} <span class="unit">Ha</span></div>
             </div>
             <div class="datasets">
