@@ -9,7 +9,7 @@ define([
 
   var API = window.gfw.config.GFW_API_HOST_PROD;
   var DATASET = 'e663eb09-04de-4f39-b871-35c6c2ed10b5';
-  var QUERY = '/query?sql=SELECT count(*) as alerts FROM {dataset} GROUP BY julian_day, year ORDER BY year, julian_day LIMIT 99999';
+  var QUERY = '/query?sql=SELECT count(*) as alerts FROM {dataset} GROUP BY julian_day, year ORDER BY year, julian_day';
 
   var GladDateService = Class.extend({
 
