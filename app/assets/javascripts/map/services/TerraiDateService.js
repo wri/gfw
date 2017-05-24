@@ -9,7 +9,7 @@ define([
 
   var API = window.gfw.config.GFW_API_HOST_PROD;
   var DATASET = 'bb80312e-b514-48ad-9252-336408603591';
-  var QUERY = '/query?sql=SELECT count(*) as alerts FROM {dataset} GROUP BY day, year ORDER BY year, day LIMIT 99999';
+  var QUERY = '/query?sql=SELECT count(*) as alerts FROM {dataset} GROUP BY day, year ORDER BY year, day';
 
   var TerraiDateService = Class.extend({
 
