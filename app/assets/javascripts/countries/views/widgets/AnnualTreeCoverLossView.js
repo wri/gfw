@@ -110,7 +110,7 @@ define([
         minYear: null,
         maxYear: null,
         thresh: null,
-        threshValue: 0
+        threshValue: 30
       }
     })),
 
@@ -274,7 +274,7 @@ define([
     _getAvailableDatasets: function() {
       var allDatasets = _.where(DATASETS, { show: true });
       var datasets = [];
-
+      var totalValue = parseFloat(this._getTotalCoverLoss().replace(',',''));
       if(allDatasets) {
         _.each(allDatasets, function(dataset) {
           var datasetData = _.extend({}, dataset);
@@ -283,6 +283,7 @@ define([
 
           if (value) {
             datasetData.value = value;
+            datasetData.percentage = ((parseFloat(value) / totalValue) * 100).toFixed(2);
             datasets.push(datasetData);
           }
         }.bind(this));
@@ -439,7 +440,7 @@ define([
       for (var i = 0; i < this.status.get('thresh').length; i++) {
         threshList[i] = {
           value: this.status.get('thresh')[i].value,
-          selected: parseInt(this.status.get('threshValue')) === parseInt(this.status.get('thresh')[i].value)
+          selected: this.status.get('threshValue') === this.status.get('thresh')[i].value
         }
       }
       this.status.set('thresh', threshList);
