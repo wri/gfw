@@ -462,7 +462,8 @@ define([
       var value = e.currentTarget.value;
       this.status.set('threshValue', value);
       for (var i = 0; i < this.status.get('thresh').length; i++) {
-        if(parseInt(this.status.get('threshValue')) === parseInt(value)) {
+        if(parseInt(this.status.get('threshValue')) === parseInt(this.status.get('thresh')[i].value)) {
+          console.log('hello');
           threshList[i] = {
             value: this.status.get('thresh')[i].value,
             selected: true
@@ -474,6 +475,7 @@ define([
           }
         }
       }
+      this.status.set('thresh', threshList);
       this._getList()
       .done(this._initWidget.bind(this));
     }
