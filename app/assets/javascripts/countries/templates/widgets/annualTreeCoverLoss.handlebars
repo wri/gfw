@@ -1,4 +1,5 @@
 <div class="widget -big-separation">
+  <div class="back-loading -show"></div>
   <h4 class="title -icons">
     Annual Tree cover loss
     <div>
@@ -14,7 +15,9 @@
           <div class="c-select">
             <div class="wrapper">
               <select id="annual-tree-cover-loss-start-year">
-                <option value="monthly">2011</option>
+                {{#each years}}
+                  <option value="{{this.year}}" {{#if this.selectedMin}}selected{{/if}}>{{this.year}}</option>
+                {{/each}}
               </select>
               <div class="select-clear" style="display: none;">✕</div>
               <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
@@ -28,7 +31,9 @@
           <div class="c-select">
             <div class="wrapper">
               <select id="annual-tree-cover-loss-end-year">
-                <option value="monthly">2015</option>
+                {{#each years}}
+                  <option value="{{this.year}}" {{#if this.selectedMax}}selected{{/if}}{{#if this.enable}}{{else}}disabled{{/if}}>{{this.year}}</option>
+                {{/each}}
               </select>
               <div class="select-clear" style="display: none;">✕</div>
               <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
@@ -43,7 +48,9 @@
           <div class="c-select">
             <div class="wrapper">
               <select id="annual-tree-cover-loss-thresh">
-                <option value="monthly">> 30%</option>
+                {{#each thresh}}
+                  <option value="{{this.value}}" {{#if this.selected}}selected{{/if}}>>{{this.value}}</option>
+                {{/each}}
               </select>
               <div class="select-clear" style="display: none;">✕</div>
               <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
@@ -84,7 +91,7 @@
         <div class="row">
           <div class="column small-12">
             <div class="total-loss">
-              <div class="name">Total cover loss (2011 - 2016)</div>
+              <div class="name">Total cover loss ({{minYear}} - {{maxYear}})</div>
               <div class="value">{{totalCoverLoss}} <span class="unit">Ha</span></div>
             </div>
             <div class="datasets">
@@ -94,7 +101,7 @@
                   <div class="custom-radio">
                     <input id="dataset-{{slug}}" class="js-dataset" data-slug="{{slug}}" name="signup" type="radio" value="{{slug}}" {{#if @first}}checked{{/if}}>
                     <label for="dataset-{{slug}}"><span class="icon"></span>{{name}}</label>
-                    <div class="value">{{value}} <span class="unit">Ha</span></div>
+                    <div class="value">{{value}} <span class="unit">Ha</span><span class="percentage"> ({{percentage}}%)</span></div>
                   </div>
                 {{/each}}
               </div>

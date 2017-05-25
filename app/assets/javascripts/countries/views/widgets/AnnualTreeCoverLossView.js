@@ -22,8 +22,10 @@ define([
   'use strict';
 
   var API = window.gfw.config.GFW_API_HOST_PROD;
-  var QUERY_YEARLY = '/query?sql=select sum(area) as value, year as date from {dataset} where thresh=30 and iso=\'{iso}\' group by year';
-  var QUERY_TOTAL = '/query/?sql=SELECT sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' AND thresh=\'30\' GROUP BY iso';
+  var QUERY_YEARLY = '/query?sql=select sum(area) as value, year as date from {dataset} and iso=\'{iso}\' WHERE year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue} group by year';
+  var QUERY_TOTAL = '/query/?sql=SELECT sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' AND thresh=\'30\' AND year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue} GROUP BY iso';
+  var YEARS_TOTAL = '/query/?sql=SELECT year FROM a9a32dd2-f7e1-402a-ba6f-48020fbf50ea WHERE iso=\'{iso}\' group by year';
+  var THRESH_TOTAL = '/query/?sql=SELECT thresh FROM a9a32dd2-f7e1-402a-ba6f-48020fbf50ea WHERE iso=\'{iso}\' GROUP BY thresh';
 
   // Datasets
   var DATASETS = [
@@ -96,8 +98,21 @@ define([
     el: '#widget-annual-tree-cover-loss',
 
     events: {
-      'click .js-dataset': '_updateChart'
+      'click .js-dataset': '_updateChart',
+      'change #annual-tree-cover-loss-start-year': '_checkDates',
+      'change #annual-tree-cover-loss-end-year': '_checkDates',
+      'change #annual-tree-cover-loss-thresh': '_checkThresh',
     },
+
+    status: new (Backbone.Model.extend({
+      defaults: {
+        years: null,
+        minYear: null,
+        maxYear: null,
+        thresh: null,
+        threshValue: 30
+      }
+    })),
 
     defaults: {
       currentDatasets: ['loss', 'wdpa']
@@ -109,16 +124,94 @@ define([
       this.iso = params.iso;
       this.currentDatasets = this.defaults.currentDatasets;
       this.datasets = [];
-
-      this._getList().done(this._initWidget.bind(this));
+      this._getDates()
+        .done(function() {
+          this._getList();
+        }.bind(this))
+        .done(function() {
+          this._getThresh();
+        }.bind(this))
+        .done(function() {
+          this._initWidget();
+        }.bind(this));
     },
 
     render: function() {
       this.$el.html(this.template({
         totalCoverLoss: this._getTotalCoverLoss(),
-        datasets: this._getAvailableDatasets()
+        datasets: this._getAvailableDatasets(),
+        years: this.status.get('years'),
+        minYear: this.status.get('minYear'),
+        maxYear: this.status.get('maxYear'),
+        thresh: this.status.get('thresh'),
       }));
+      $('.back-loading').removeClass('-show');
       this.$el.removeClass('-loading');
+    },
+
+    _getDates: function() {
+      var $deferred = $.Deferred();
+      var datesList = [];
+
+      var url = API + new UriTemplate(YEARS_TOTAL).fillFromObject({
+        iso: this.iso
+      });
+
+      $.ajax({
+        url: url,
+        type: 'GET'
+      })
+      .done(function(res) {
+        for (var i = 0; i < res.data.length; i++) {
+          datesList[i] = {
+            year: res.data[i].year,
+            enable: true,
+          }
+
+          if (i === 0) {
+            datesList[i].selectedMin = true;
+          } else if (i === res.data.length - 1) {
+            datesList[i].selectedMax = true;
+          }
+        }
+        this.status.set('years', datesList);
+        this.status.set('minYear', res.data[0].year);
+        this.status.set('maxYear', res.data[res.data.length - 1].year);
+
+        return $deferred.resolve();
+      }.bind(this))
+      .fail(function(error) {
+        return $deferred.reject();
+      });
+      return $deferred;
+    },
+
+    _getThresh: function() {
+      var $deferred = $.Deferred();
+      var threshList = [];
+
+      var url = API + new UriTemplate(THRESH_TOTAL).fillFromObject({
+        iso: this.iso
+      });
+
+      $.ajax({
+        url: url,
+        type: 'GET'
+      })
+      .done(function(res) {
+        for (var i = 0; i < res.data.length; i++) {
+          threshList[i] = {
+            value: res.data[i].thresh,
+            selected: (res.data[i].thresh === 30)
+          }
+        }
+        this.status.set('thresh', threshList);
+        return $deferred.resolve();
+      }.bind(this))
+        .fail(function(error) {
+          return $deferred.reject();
+        });
+      return $deferred;
     },
 
     _getList: function() {
@@ -128,7 +221,11 @@ define([
       _.each(DATASETS, function(item) {
         if (item.dataset) {
           var url = API + new UriTemplate(QUERY_TOTAL).fillFromObject({
-            dataset: item.dataset, iso: this.iso
+            dataset: item.dataset,
+            iso: this.iso,
+            minYear: this.status.get('minYear'),
+            maxYear: this.status.get('maxYear'),
+            threshValue: this.status.get('threshValue')
           });
           $promises.push(this._getTotalData(url, item.slug));
         }
@@ -178,7 +275,7 @@ define([
     _getAvailableDatasets: function() {
       var allDatasets = _.where(DATASETS, { show: true });
       var datasets = [];
-
+      var totalValue = parseFloat(this._getTotalCoverLoss().replace(',',''));
       if(allDatasets) {
         _.each(allDatasets, function(dataset) {
           var datasetData = _.extend({}, dataset);
@@ -187,6 +284,7 @@ define([
 
           if (value) {
             datasetData.value = value;
+            datasetData.percentage = ((parseFloat(value) / totalValue) * 100).toFixed(2);
             datasets.push(datasetData);
           }
         }.bind(this));
@@ -204,7 +302,11 @@ define([
 
         if (current.dataset) {
           var url = API + new UriTemplate(QUERY_YEARLY).fillFromObject({
-            dataset: current.dataset, iso: this.iso
+            dataset: current.dataset,
+            iso: this.iso,
+            minYear: this.status.get('minYear'),
+            maxYear: this.status.get('maxYear'),
+            threshValue: this.status.get('threshValue'),
           });
 
           $promises.push(
@@ -232,6 +334,7 @@ define([
     _initWidget: function() {
       this._getGraphData().done(function(data) {
         this._setData(data);
+        this.render();
         this._renderGraph();
         this.annualRanking = new AnnualTreeCoverLossRankingView({
           iso: this.iso
@@ -272,7 +375,6 @@ define([
     },
 
     _renderGraph: function() {
-      this.render();
       this.lineGraph = new GroupedGraphView({
         el: '#annual-tree-cover-loss-graph',
         data: this.data,
@@ -293,6 +395,62 @@ define([
           bucket: this._getBucket()
         });
       }.bind(this));
+    },
+
+    _changeDates: function(value) {
+      var datesList = [];
+
+      for (var i = 0; i < this.status.get('years').length; i++) {
+        datesList[i] = {
+          year: this.status.get('years')[i].year,
+          enable: this.status.get('years')[i].year >= this.status.get('minYear'),
+        }
+
+        if (this.status.get('years')[i].year === this.status.get('minYear')) {
+          datesList[i].selectedMin = true;
+        } else if (this.status.get('years')[i].year === this.status.get('maxYear')) {
+          datesList[i].selectedMax = true;
+        }
+      }
+
+      this.status.set('years', datesList);
+    },
+
+    _checkDates: function(e) {
+      $('.back-loading').addClass('-show');
+      this.$el.addClass('-loading');
+      var idTarget = e.currentTarget.id;
+      var value = parseInt(e.currentTarget.value);
+
+      if (idTarget === 'annual-tree-cover-loss-start-year') {
+        this.status.set('minYear', value);
+        this._changeDates(value);
+      }
+
+      if (idTarget === 'annual-tree-cover-loss-end-year') {
+        this.status.set('maxYear', value);
+        this._changeDates(value);
+      }
+
+      this._getList()
+      .done(this._initWidget.bind(this));
+    },
+
+    _checkThresh: function(e) {
+      $('.back-loading').addClass('-show');
+      this.$el.addClass('-loading');
+      var threshList = [];
+      var value = parseInt(e.currentTarget.value);
+      this.status.set('threshValue', value);
+      for (var i = 0; i < this.status.get('thresh').length; i++) {
+        threshList[i] = {
+          value: this.status.get('thresh')[i].value,
+          selected: this.status.get('threshValue') === this.status.get('thresh')[i].value
+        }
+      }
+      this.status.set('thresh', threshList);
+      this._getList()
+      .done(this._initWidget.bind(this));
     }
   });
   return AnnualTreeCoverLossView;

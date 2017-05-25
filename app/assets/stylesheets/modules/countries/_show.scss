@@ -119,10 +119,26 @@
 }
 
 .widget {
+  position: relative;
   margin-top: 15px;
   margin-bottom: 55px;
   min-height: 150px;
   padding-right: 30px;
+
+  .back-loading {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
+    background-color: rgba(#555, 0.1);
+    z-index: 4;
+    display: none;
+
+    &.-show {
+      display: block;
+    }
+  }
 
   .big-bottom-separation {
     margin-bottom: 15px;

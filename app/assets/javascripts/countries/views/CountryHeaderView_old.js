@@ -658,4 +658,3 @@ define([
   return CountryHeader;
 
 });
-
