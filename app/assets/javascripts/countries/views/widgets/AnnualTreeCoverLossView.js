@@ -162,25 +162,15 @@ define([
       })
       .done(function(res) {
         for (var i = 0; i < res.data.length; i++) {
+          datesList[i] = {
+            year: res.data[i].year,
+            enable: true,
+          }
+
           if (i === 0) {
-            datesList[i] = {
-              year: res.data[i].year,
-              enable: true,
-              selectedMin: true
-            }
-          } else {
-            if (i === res.data.length - 1) {
-              datesList[i] = {
-                year: res.data[i].year,
-                enable: true,
-                selectedMax: true
-              }
-            } else {
-              datesList[i] = {
-                year: res.data[i].year,
-                enable: true,
-              }
-            }
+            datesList[i].selectedMin = true;
+          } else if (i === res.data.length - 1) {
+            datesList[i].selectedMax = true;
           }
         }
         this.status.set('years', datesList);
@@ -405,43 +395,28 @@ define([
       }.bind(this));
     },
 
-    _changeDates: function(value, id) {
+    _changeDates: function(value) {
       var datesList = [];
+
       for (var i = 0; i < this.status.get('years').length; i++) {
-        if (parseInt(this.status.get('years')[i].year) >= parseInt(this.status.get('minYear'))) {
-          if (parseInt(this.status.get('years')[i].year) === parseInt(this.status.get('minYear'))) {
-            datesList[i] = {
-              year: this.status.get('years')[i].year,
-              enable: true,
-              selectedMin: true
-            }
-          } else {
-            if (parseInt(this.status.get('years')[i].year) === parseInt(this.status.get('maxYear'))) {
-              datesList[i] = {
-                year: this.status.get('years')[i].year,
-                enable: true,
-                selectedMax: true
-              }
-            } else {
-              datesList[i] = {
-                year: this.status.get('years')[i].year,
-                enable: true
-              }
-            }
-          }
-        } else {
-          datesList[i] = {
-            year: this.status.get('years')[i].year,
-            enable: false
-          }
+        datesList[i] = {
+          year: this.status.get('years')[i].year,
+          enable: this.status.get('years')[i].year >= this.status.get('minYear'),
+        }
+
+        if (this.status.get('years')[i].year === this.status.get('minYear')) {
+          datesList[i].selectedMin = true;
+        } else if (this.status.get('years')[i].year === this.status.get('maxYear')) {
+          datesList[i].selectedMax = true;
         }
       }
+
       this.status.set('years', datesList);
     },
 
     _checkDates: function(e) {
       var idTarget = e.currentTarget.id;
-      var value = e.currentTarget.value;
+      var value = parseInt(e.currentTarget.value);
 
       if (idTarget === 'annual-tree-cover-loss-start-year') {
         this.status.set('minYear', value);
@@ -459,20 +434,12 @@ define([
 
     _checkThresh: function(e) {
       var threshList = [];
-      var value = e.currentTarget.value;
+      var value = parseInt(e.currentTarget.value);
       this.status.set('threshValue', value);
       for (var i = 0; i < this.status.get('thresh').length; i++) {
-        if(parseInt(this.status.get('threshValue')) === parseInt(this.status.get('thresh')[i].value)) {
-          console.log('hello');
-          threshList[i] = {
-            value: this.status.get('thresh')[i].value,
-            selected: true
-          }
-        } else {
-          threshList[i] = {
-            value: this.status.get('thresh')[i].value,
-            selected: false
-          }
+        threshList[i] = {
+          value: this.status.get('thresh')[i].value,
+          selected: parseInt(this.status.get('threshValue')) === parseInt(this.status.get('thresh')[i].value)
         }
       }
       this.status.set('thresh', threshList);
