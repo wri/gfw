@@ -61,7 +61,8 @@ define([
     el: '#widget-tree-cover-loss-alerts',
 
     events: {
-      'change #cla-data-shown-select': 'onOriginSelectChange'
+      'change #cla-data-shown-select': 'onOriginSelectChange',
+      'click .data-source-filter': 'changeDataSourceFilter'
     },
 
     template: Handlebars.compile(tpl),
@@ -115,6 +116,15 @@ define([
     onOriginSelectChange: function(e) {
       var value = e.currentTarget.value;
       this.updateData(value);
+    },
+
+    changeDataSourceFilter: function(e) {
+      $('.data-source-filter').each(function(i, obj) {
+        if ($(obj).hasClass('active')) {
+          $(this).removeClass('active');
+        }
+      });
+      $(e.target).addClass('active');
     },
 
     updateData: function(origin) {
