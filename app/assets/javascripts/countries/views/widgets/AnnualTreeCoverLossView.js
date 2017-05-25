@@ -202,7 +202,7 @@ define([
         for (var i = 0; i < res.data.length; i++) {
           threshList[i] = {
             value: res.data[i].thresh,
-            selected: false
+            selected: (res.data[i].thresh === 30)
           }
         }
         this.status.set('thresh', threshList);
