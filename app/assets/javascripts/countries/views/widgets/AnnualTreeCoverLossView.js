@@ -145,6 +145,7 @@ define([
         maxYear: this.status.get('maxYear'),
         thresh: this.status.get('thresh'),
       }));
+      $('.back-loading').removeClass('-show');
       this.$el.removeClass('-loading');
     },
 
@@ -416,6 +417,8 @@ define([
     },
 
     _checkDates: function(e) {
+      $('.back-loading').addClass('-show');
+      this.$el.addClass('-loading');
       var idTarget = e.currentTarget.id;
       var value = parseInt(e.currentTarget.value);
 
@@ -434,6 +437,8 @@ define([
     },
 
     _checkThresh: function(e) {
+      $('.back-loading').addClass('-show');
+      this.$el.addClass('-loading');
       var threshList = [];
       var value = parseInt(e.currentTarget.value);
       this.status.set('threshValue', value);
