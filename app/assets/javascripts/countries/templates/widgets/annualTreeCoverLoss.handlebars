@@ -14,8 +14,8 @@
           <div class="c-select">
             <div class="wrapper">
               <select id="annual-tree-cover-loss-start-year">
-                {{#each dates.data}}
-                  <option value="{{this.year}}" {{#if selected}}selected{{/if}}>{{this.year}}</option>
+                {{#each years}}
+                  <option value="{{this.year}}" {{#if this.selectedMin}}selected{{/if}}>{{this.year}}</option>
                 {{/each}}
               </select>
               <div class="select-clear" style="display: none;">✕</div>
@@ -30,8 +30,8 @@
           <div class="c-select">
             <div class="wrapper">
               <select id="annual-tree-cover-loss-end-year">
-                {{#each dates.data}}
-                  <option value="{{this.year}}" {{#if selected}}selected{{/if}}>{{this.year}}</option>
+                {{#each years}}
+                  <option value="{{this.year}}" {{#if this.selectedMax}}selected{{/if}}{{#if this.enable}}{{else}}disabled{{/if}}>{{this.year}}</option>
                 {{/each}}
               </select>
               <div class="select-clear" style="display: none;">✕</div>
@@ -47,8 +47,8 @@
           <div class="c-select">
             <div class="wrapper">
               <select id="annual-tree-cover-loss-thresh">
-                {{#each thresh.data}}
-                  <option value="{{this.thresh}}" {{#if selected}}selected{{/if}}>>{{this.thresh}}</option>
+                {{#each thresh}}
+                  <option value="{{this.value}}" {{#if this.selected}}selected{{/if}}>>{{this.value}}</option>
                 {{/each}}
               </select>
               <div class="select-clear" style="display: none;">✕</div>
@@ -90,7 +90,7 @@
         <div class="row">
           <div class="column small-12">
             <div class="total-loss">
-              <div class="name">Total cover loss ({{start_date.year}} - {{end_date.year}})</div>
+              <div class="name">Total cover loss ({{minYear}} - {{maxYear}})</div>
               <div class="value">{{totalCoverLoss}} <span class="unit">Ha</span></div>
             </div>
             <div class="datasets">
