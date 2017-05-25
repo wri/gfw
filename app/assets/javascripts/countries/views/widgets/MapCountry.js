@@ -92,7 +92,8 @@ define([
           bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
 
       this.drawGeojson(geojson);
-      this.map.fitBounds(bounds)
+      this.map.fitBounds(bounds);
+      this.map.setZoom(this.map.getZoom() + 1);
     },
 
     toogleLayer: function(e){
@@ -165,7 +166,7 @@ define([
       var overlay = new google.maps.Polygon({
         paths: paths,
         editable: false,
-        strokeWeight: 2,
+        strokeWeight: 1.5,
         fillOpacity: 0,
         fillColor: '#FFF',
         strokeColor: '#A2BC28'
