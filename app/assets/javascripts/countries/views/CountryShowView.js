@@ -46,6 +46,7 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function(params) {
+      $('html,body').scrollTop(0);
       this.iso = params.iso;
       this.modules = {
         snapshot: [],
