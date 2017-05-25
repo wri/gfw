@@ -7,7 +7,9 @@ define([
 
   var REQUEST_ID = 'GladDateService:fetchDates';
 
-  var URL = window.gfw.config.GFW_API_HOST_NEW_API + "/glad-alerts/latest";
+  var API = window.gfw.config.GFW_API_HOST_PROD;
+  var DATASET = 'e663eb09-04de-4f39-b871-35c6c2ed10b5';
+  var QUERY = '/query?sql=SELECT count(*) as alerts FROM {dataset} GROUP BY julian_day, year ORDER BY year, julian_day';
 
   var GladDateService = Class.extend({
 
@@ -17,9 +19,13 @@ define([
     },
 
     _defineRequests: function() {
+      var url = API + new UriTemplate(QUERY).fillFromObject({
+        dataset: DATASET
+      });
+
       var config = {
-        cache: false,
-        url: URL,
+        cache: {type: 'persist', duration: 1, unit: 'days'},
+        url: url,
         type: 'GET'
       };
 
@@ -30,10 +36,38 @@ define([
       var deferred = new $.Deferred();
 
       var onSuccess = function(result) {
-        var data = result.data && result.data.attributes ?
-          result.data.attributes : [];
+        var data = result && result.data ? result.data : [];
+        var dates = {
+          counts: null,
+          minDate: null,
+          maxDate: null
+        };
 
-        deferred.resolve(_.pick(data, 'minDate', 'maxDate', 'counts'));
+        if (data.length > 0) {
+          var groupedDates = _.groupBy(data, 'year');
+          var years = _.keys(groupedDates);
+          var dataByYear = [];
+
+          var startDay = groupedDates[years[0]];
+          var startDate = moment.utc()
+            .year(years[0])
+            .dayOfYear(startDay[0].julian_day);
+
+          var endDay = groupedDates[years[years.length - 1]];
+          var endDate = moment.utc()
+            .year(years[years.length - 1])
+            .dayOfYear(endDay[endDay.length - 1].julian_day);
+
+          _.each(groupedDates, function(data, year) {
+            dataByYear[year] = _.pluck(data, 'julian_day');
+          });
+
+          dates.counts = dataByYear;
+          dates.minDate = startDate.format('YYYY-MM-DD');
+          dates.maxDate = endDate.format('YYYY-MM-DD');
+        }
+
+        deferred.resolve(dates);
       };
 
       var config = {
