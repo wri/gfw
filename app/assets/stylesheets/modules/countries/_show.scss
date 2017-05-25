@@ -123,6 +123,21 @@
   margin-bottom: 55px;
   min-height: 150px;
   padding-right: 30px;
+  position: relative;
+
+  .back-loading-loss-alerts {
+    display: none;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
+    background-color: rgba(#555, .1);
+
+    &.-show {
+      display: block;
+    }
+  }
 
   .big-bottom-separation {
     margin-bottom: 15px;
