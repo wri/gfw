@@ -337,11 +337,6 @@ define([
     clear: function() {
       this.removeMultipolygon();
       this.removeInfoWindow();
-    },
-
-    removeLayer: function() {
-      this.clear();
-      this.clearEvents();
     }
   });
 
