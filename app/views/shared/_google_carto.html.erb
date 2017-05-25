@@ -1,2 +1,6 @@
+<% disable_carto ||= false %>
+
 <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&key=#{ENV['GOOGLE_MAPS_API_KEY']}&v=3.27" %>
-<%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/3.15.8/cartodb.js" %>
+<% if !disable_carto %>
+  <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/3.15.8/cartodb.js" %>
+<% end %>

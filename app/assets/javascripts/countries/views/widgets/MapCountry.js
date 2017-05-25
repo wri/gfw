@@ -4,8 +4,12 @@ define([
   'underscore',
   'handlebars',
   'topojson',
+  'core/View',
+  'map/utils',
   'helpers/geojsonUtilsHelper',
+  'map/services/LayerSpecService',
   'map/views/maptypes/grayscaleMaptype',
+  'countries/helpers/layersHelper',
   'mps',
   'text!countries/templates/widgets/legendMap.handlebars'
 ], function(
@@ -14,14 +18,18 @@ define([
   _,
   Handlebars,
   topojson,
+  View,
+  utils,
   geojsonUtilsHelper,
+  LayerSpecService,
   grayscaleMaptype,
+  layersHelper,
   mps,
   tpl) {
 
   'use strict';
 
-  var MapCountry = Backbone.View.extend({
+  var MapCountry = View.extend({
 
     el: '#map',
     template: Handlebars.compile(tpl),
@@ -52,6 +60,7 @@ define([
 
     initialize: function(params, options) {
       this.paramsMap = _.extend({}, this.default, params);
+      this.layerInst = {};
       this.render();
     },
 
@@ -60,6 +69,17 @@ define([
       this.map.mapTypes.set('grayscale', grayscaleMaptype());
       this.setGeom();
       this.$el.append(this.template());
+
+      // TEMP
+      var where = [{ slug: 'terrailoss' }];
+
+      LayerSpecService.toggle(where,
+        function(layerSpec) {
+          this.setLayers(layerSpec.getLayers(), {
+            currentDate: [moment.utc().subtract(10, 'year'), moment.utc()],
+            threshold: 30
+          });
+        }.bind(this));
     },
 
     setGeom: function() {
@@ -86,6 +106,59 @@ define([
       $(e.target).addClass('checked');
     },
 
+    /**
+     * Add passed layers to the map and remove the rest.
+     *
+     * @param {object} layers  Layers object
+     * @param {object} options Layers options from url
+     */
+    setLayers: function(layers, options) {
+      _.each(this.layerInst, function(inst, layerSlug) {
+        !layers[layerSlug] && this._removeLayer(layerSlug);
+      }, this);
+
+      layers = _.sortBy(_.values(layers), 'position');
+      this._addLayers(layers, options);
+    },
+
+    /**
+     * Add layers to the map one by one, waiting until the layer before
+     * is already rendered. This way we can get the layer order right.
+     *
+     * @param {array}   layers  layers array
+     * @param {object}  options layers options eg: threshold, currentDate
+     * @param {integer} i       current layer index
+     */
+    _addLayers: function(layers, options, i) {
+      i = i || 0;
+      var layer = layers[i];
+
+      var _addNext = _.bind(function() {
+        i++;
+        layers[i] && this._addLayers(layers, options, i);
+      }, this);
+
+      if (layer && !!layersHelper[layer.slug]) {
+        if ((!layersHelper[layer.slug].view || this.layerInst[layer.slug])) {
+          _addNext();
+          return;
+        }
+
+        var layerView = this.layerInst[layer.slug] =
+          new layersHelper[layer.slug].view(layer, options, this.map);
+
+        layerView.addLayer(layer.position, _addNext);
+      }
+
+    },
+
+    /**
+     * DRAW & DELETE & UPDATE GEOJSONS
+     * - drawGeojson
+     * - deleteGeojson
+     * - updateGeojson
+    */
+
     drawGeojson: function(geojson) {
       var geojson = geojson;
       var paths = geojsonUtilsHelper.geojsonToPath(geojson);
@@ -99,7 +172,19 @@ define([
       });
 
       overlay.setMap(this.map);
-    }
+    },
+
+    deleteGeojson: function() {
+    },
+
+    /**
+    * updateGeojson
+    * @param  {[object]} overlay
+    * @return {void}
+    */
+    updateGeojson: function(overlay) {
+
+    },
 
   });
   return MapCountry;

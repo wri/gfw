@@ -41,7 +41,7 @@
     </div>
 
     <!-- Javascript -->
-    <%= render 'shared/google_carto' %>
+    <%= render 'shared/google_carto', :disable_carto => true %>
     <%= requirejs_include_tag "countries" %>
   </body>
 </html>
