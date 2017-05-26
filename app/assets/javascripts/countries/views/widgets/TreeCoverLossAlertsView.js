@@ -111,7 +111,9 @@ define([
     status: new (Backbone.Model.extend({
       defaults: {
         origin: 'month',
-        source: 'glad'
+        source: 'glad',
+        layerLink: 'umd_as_it_happens',
+        sourceLink: 'glad-alerts'
       }
     })),
 
@@ -182,6 +184,9 @@ define([
         }
       });
       this.status.set('source', $(e.target).attr('data-source'));
+      this.status.set('layerLink', $(e.target).attr('data-layerLink'));
+      this.status.set('sourceLink', $(e.target).attr('data-sourceLink'));
+
       $(e.target).addClass('active');
       this.updateData();
     },
@@ -195,22 +200,10 @@ define([
 
     _initWidgets: function() {
       if (this.data) {
-        var sourceLink = '';
+        var sourceLink = this.status.get('sourceLink');
         var countryLink = this.iso;
         var regionLink = $('#areaSelector').val() === 'default' ? 0 : $('#areaSelector').val();
-        var layerLink = '';
-        switch (this.status.get('source')) {
-          case 'glad':
-            sourceLink = 'glad-alerts';
-            layerLink = 'umd_as_it_happens';
-            break;
-          case 'terrai':
-            sourceLink = 'terrai-alertshoy ';
-            layerLink = 'terrailoss';
-            break;
-          default:
-            sourceLink = 'glad-alerts';
-        }
+        var layerLink = this.status.get('layerLink');
         this.widgetViews = [];
         this.$widgets.html('');
         var keys = Object.keys(this.data);
