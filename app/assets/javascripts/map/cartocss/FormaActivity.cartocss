@@ -1,10 +1,10 @@
 #forma_activity {
-  marker-fill: #FFCC00;
-  marker-width: 1.5;
+  marker-fill: #FFFB00;
+  marker-width: 3;
   marker-line-color: #FFF;
   marker-line-width: 1;
   marker-line-opacity: 1;
-  marker-opacity: 0.9;
+  marker-opacity: 0.8;
   marker-comp-op: multiply;
   marker-type: ellipse;
   marker-placement: point;
@@ -12,33 +12,51 @@
   marker-clip: false;
   marker-multi-policy: largest;
 
-  [zoom > 6] {
-    marker-width: 3;
-  }
-
-  [zoom > 8] {
+  [zoom > 5] {
     marker-width: 6;
   }
 
+  [zoom > 6] {
+    marker-width: 6;
+  }
+
+  [zoom > 7] {
+    marker-width: 10;
+  }
+
+  [zoom > 8] {
+    marker-width: 20;
+      marker-opacity: 0.9;
+  }
+
+  [zoom > 9] {
+    marker-width: 40;
+  }
+
+  [zoom > 10] {
+    marker-width: 90;
+  }
+
   [zoom > 11] {
-    marker-width: 13;
+    marker-width: 180;
   }
   [zoom > 12] {
-    marker-width: 25;
+    marker-width: 370;
+    marker-opacity: 1;
   }
   [zoom > 13] {
-    marker-width: 50;
+    marker-width: 750;
   }
   [zoom > 14] {
-    marker-width: 100;
+    marker-width: 1520;
   }
   [zoom > 15] {
-    marker-width: 200;
+    marker-width: 3050;
   }
   [zoom > 16] {
-    marker-width: 400;
+    marker-width: 6120;
   }
   [zoom > 17] {
-    marker-width: 800;
+    marker-width: 12260;
   }
 }
