@@ -6474,213 +6474,165 @@
   </div>
 </article>
 
-<article id='high-resolution-source' class='high-resolution-source'>
+<article id='highres' class='high-resolution-source'>
   <h2 class='source_category_title'>High Resolution</h2>
+    <div class='source_header'>
+      <strong class='source_title'>Sentinel Hub imagery</strong>
+      <i class='expand_arrow'></i>
+    </div>
 
-  <ul class='sources'>
-    <li id='hr-urthecast' class='source-item first'>
-      <div class='source_header'>
-        <strong class='source_title'>UrtheCast</strong>
-        <i class='expand_arrow'></i>
+    <div class='source_body'>
+      <div class='source_table'>
+        <dl class='sources_row'>
+          <dt>Function</dt>
+          <dd>Shows the latest satellite imagery from Landsat 8 and Sentinel-2</dd>
+        </dl>
+        <dl class='sources_row'>
+          <dt>Source</dt>
+          <dd><a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>, Sinergise Ltd.</dd>
+        </dl>
+        <dl class='sources_row'>
+          <dt>Frequency of updates</dt>
+          <dd>Daily as imagery becomes available</dd>
+        </dl>
       </div>
 
-      <div class='source_body'>
+      <div class='source_summary'>
+        <h3 class='overview_title'>Overview</h3>
+        <p>This layer shows recent satellite imagery from Landsat 8 and Sentinel-2, as provided by Sentinel Hub.</p>
+        <table class="modal-table">
+          <thead>
+            <tr>
+              <th width="90px">Sensor</th>
+              <th>Owner</th>
+              <th>Resolution</th>
+              <th>Revisit Time</th>
+              <th>Minimum Date</th>
+              <th>Geographic Coverage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-header">Landsat 8</td>
+              <td>USGS</td>
+              <td>30 m</td>
+              <td>every 16 days</td>
+              <td>March 2013</td>
+              <td>Global</td>
+            </tr>
+            <tr>
+              <td class="td-header">Sentinel-2A</td>
+              <td>ESA</td>
+              <td>10 m</td>
+              <td>every 10 days</td>
+              <td>June 2015</td>
+              <td>Global</td>
+            </tr>
+          </tbody>
+        </table>
 
-        <div class='source_table'>
-          <dl class='sources_row'>
-            <dt>Function</dt>
-            <dd>Shows up-to-date, high-resolution satellite imagery</dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>Frequency of updates</dt>
-            <dd>Daily as cloud-free imagery becomes available</dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>License</dt>
-            <dd><a href="https://developers.urthecast.com/eula" target="_blank">End User License Agreement</a></dd>
-          </dl>
-        </div>
-
-        <div class='source_summary'>
-          <h3 class='overview_title'>Overview</h3>
-          <p>This layer shows recent satellite imagery, provided via an API from <a href="https://www.urthecast.com/" target="_blank">UrtheCast</a>. The images displayed come from a variety of sensors, listed below.</p>
-          <table class="modal-table">
-            <thead>
-              <tr>
-                <th width="90px">Sensor</th>
-                <th>Owner</th>
-                <th>Platform</th>
-                <th>Resolution</th>
-                <th>Revisit Time</th>
-                <th>Minimum Date</th>
-                <th>Geographic Coverage</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="td-header">Theia</td>
-                <td>UrtheCast</td>
-                <td>ISS</td>
-                <td>5 m</td>
-                <td>1-2x / month</td>
-                <td>March 2014</td>
-                <td>Global</td>
-              </tr>
-              <tr>
-                <td class="td-header">Landsat 8</td>
-                <td>USGS</td>
-                <td>Landsat 8</td>
-                <td>15 m (pansharpened) for RGB, 30 m for other renderers</td>
-                <td>every 16 days</td>
-                <td>January 2013</td>
-                <td>Global</td>
-              </tr>
-              <tr>
-                <td class="td-header">Deimos-1</td>
-                <td>UrtheCast</td>
-                <td>Deimos-1</td>
-                <td>22 m</td>
-                <td>every 3 days</td>
-                <td>January 2013</td>
-                <td>Contiguous United States</td>
-              </tr>
-
-              <tr>
-                <td class="td-header">Sentinel-2A</td>
-                <td>ESA</td>
-                <td>MSI</td>
-                <td>10 m</td>
-                <td>every 10 days</td>
-                <td>October 2016</td>
-                <td>Global</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <p>Click on an image to see the capture date and sensor name. The most recent image for an area is shown, though the date range can be modified in the menu. Users can also change the renderer and maximum cloud cover percentage by toggling advanced tools in the menu. The maximum cloud percentage sets the threshold for excluding cloudy images. Images are presented in RGB color (true color) by default, but can also be rendered as other color composites or indices, including NDVI, EVI, NDWI, and false color NIR.</p>
+        <p>Click on an image to see the capture date and sensor name. The most recent image for an area is shown, though the date range can be modified in the menu. Users can also change the renderer and maximum cloud cover percentage by toggling advanced tools in the menu. The maximum cloud percentage sets the threshold for excluding cloudy images.</p>
 
 
-          <p class='credits'>UrtheCast Products © Copyright UrtheCast – All Rights Reserved</p>
+        <p class='credits'>Sentinal hub Products © Copyright sentinal hub – All Rights Reserved</p>
 
-          <p class='read_more hidden'><em><a href="https://www.urthecast.com/" target="_blank">Learn more</a></em></p>
-        </div>
+        <p class='read_more hidden'><em><a href="http://www.sentinel-hub.com/" target="_blank">Learn more</a></em></p>
       </div>
-    </li>
-    <li id='hr-renderer' class='source-item'>
-      <div class='source_header'>
-        <strong class='source_title'>Renderer</strong>
-        <i class='expand_arrow'></i>
-      </div>
+    </div>
+</article>
 
-      <div class='source_body'>
-        <div class='source_summary'>
-          <p>Satellites can “see” wavelengths of light that the human eye cannot detect, but that can give more information about the Earth’s surface. UrtheCast provides the following renderings of the images:
-          <ul class='bullets'><li><strong>RGB (Red Green Blue):</strong> uses information on red, green, and blue light to show the Earth as humans see it.</li>
-          <li><strong>Normalized Difference Vegetation Index (NDVI):</strong> uses information on red and infrared light to estimate the health of vegetation. This index is mapped from a white to green hue, where green pixels indicate good crop health and white pixels indicate poor crop health or an absence of vegetation.</li>
-          <li><strong>Enhanced Vegetation Index (EVI):</strong> another vegetation index using red and infrared information. It is more sensitive to variations in canopy structure than NDVI, and is better at controlling background noise. EVI is not available for Deimos-1 imagery.</li>
-          <li><strong>Normalized Difference Water Index (NDWI):</strong> uses information on green and infrared light to help detect the presence of water in vegetation. The calculated pixel values range from blue to brown - where blue indicates the presence of water, and brown indicates dryer land. It is another tool to determine crop health and condition.</li>
-          <li><strong>False color NIR (Near infrared):</strong> shows near infrared light as red, and visible light as green and blue. Vegetation reflects infrared light, so it generally shows up as bright red.</li>
-          </ul></p>
-        </div>
-      </div>
-    </li>
+<article id='hr-renderer' class='source-item'>
+  <div class='source_header'>
+    <strong class='source_title'>Renderer</strong>
+    <i class='expand_arrow'></i>
+  </div>
 
-    <li id='hr-sensor' class='source-item first'>
-      <div class='source_header'>
-        <strong class='source_title'>Sensor</strong>
-        <i class='expand_arrow'></i>
-      </div>
+  <div class='source_body'>
+    <div class='source_summary'>
+      <p>Satellites can “see” wavelengths of light that the human eye cannot detect, but that can give more information about the Earth’s surface. Sentinel hub provides the following renderings of the images:
+      <ul class='bullets'><li><strong>RGB (Red Green Blue):</strong> uses information on red, green, and blue light to show the Earth as humans see it.</li>
+      <li><strong>Normalized Difference Vegetation Index (NDVI):</strong> uses information on red and infrared light to estimate the health of vegetation. This index is mapped from a white to green hue, where green pixels indicate good crop health and white pixels indicate poor crop health or an absence of vegetation.</li>
+      <li><strong>Enhanced Vegetation Index (EVI):</strong> another vegetation index using red and infrared information. It is more sensitive to variations in canopy structure than NDVI, and is better at controlling background noise. EVI is not available for Deimos-1 imagery.</li>
+      <li><strong>Normalized Difference Water Index (NDWI):</strong> uses information on green and infrared light to help detect the presence of water in vegetation. The calculated pixel values range from blue to brown - where blue indicates the presence of water, and brown indicates dryer land. It is another tool to determine crop health and condition.</li>
+      <li><strong>False color NIR (Near infrared):</strong> shows near infrared light as red, and visible light as green and blue. Vegetation reflects infrared light, so it generally shows up as bright red.</li>
+      </ul></p>
+    </div>
+  </div>
+</article>
 
-      <div class='source_body'>
+<article id='hr-sensor' class='source-item first'>
+  <div class='source_header'>
+    <strong class='source_title'>Sensor</strong>
+    <i class='expand_arrow'></i>
+  </div>
 
-        <div class='source_summary'>
-          <p>Select which sensor you would like to view imagery from. Each sensor has a different resolution, revisit time, minimum date, and geographic coverage. See the table below for details.</p>
-          <table class="modal-table">
-            <thead>
-              <tr>
-                <th width="90px">Sensor</th>
-                <th>Owner</th>
-                <th>Platform</th>
-                <th>Resolution</th>
-                <th>Revisit Time</th>
-                <th>Minimum Date</th>
-                <th>Geographic Coverage</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="td-header">Theia</td>
-                <td>UrtheCast</td>
-                <td>ISS</td>
-                <td>5 m</td>
-                <td>1-2x / month</td>
-                <td>March 2014</td>
-                <td>Global</td>
-              </tr>
-              <tr>
-                <td class="td-header">Landsat 8</td>
-                <td>USGS</td>
-                <td>Landsat 8</td>
-                <td>15 m (pansharpened) for RGB, 30 m for other renderers</td>
-                <td>every 16 days</td>
-                <td>January 2013</td>
-                <td>Global</td>
-              </tr>
-              <tr>
-                <td class="td-header">Deimos-1</td>
-                <td>UrtheCast</td>
-                <td>Deimos-1</td>
-                <td>22 m</td>
-                <td>every 3 days</td>
-                <td>January 2013</td>
-                <td>Contiguous United States</td>
-              </tr>
+  <div class='source_body'>
 
-              <tr>
-                <td class="td-header">Sentinel-2A</td>
-                <td>ESA</td>
-                <td>MSI</td>
-                <td>10 m</td>
-                <td>every 10 days</td>
-                <td>October 2016</td>
-                <td>Global</td>
-              </tr>
-            </tbody>
-          </table>
+    <div class='source_summary'>
+      <p>Select which sensor you would like to view imagery from. Each sensor has a different resolution, revisit time, minimum date, and geographic coverage. See the table below for details.</p>
+      <table class="modal-table">
+        <thead>
+          <tr>
+            <th width="90px">Sensor</th>
+            <th>Owner</th>
+            <th>Resolution</th>
+            <th>Revisit Time</th>
+            <th>Minimum Date</th>
+            <th>Geographic Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-header">Landsat 8</td>
+            <td>USGS</td>
+            <td>30 m</td>
+            <td>every 16 days</td>
+            <td>March 2013</td>
+            <td>Global</td>
+          </tr>
+          <tr>
+            <td class="td-header">Sentinel-2</td>
+            <td>ESA</td>
+            <td>10 m</td>
+            <td>every 10 days</td>
+            <td>June 2015</td>
+            <td>Global</td>
+          </tr>
+        </tbody>
+      </table>
 
-          <p>The default selection, "all sensors," will show the most recent image that meets other specified criteria, such as maximum cloud coverage percentage, for any given area.</p>
+      <p>The default selection, "all sensors," will show the most recent image that meets other specified criteria, such as maximum cloud coverage percentage, for any given area.</p>
 
-        </div>
-      </div>
-    </li>
+    </div>
+  </div>
+</article>
 
 
-    <li id='hr-cloud' class='source-item'>
-      <div class='source_header'>
-        <strong class='source_title'>MAXIMUM CLOUD COVER PERCENTAGE</strong>
-        <i class='expand_arrow'></i>
-      </div>
+<article id='hr-cloud' class='source-item'>
+  <div class='source_header'>
+    <strong class='source_title'>MAXIMUM CLOUD COVER PERCENTAGE</strong>
+    <i class='expand_arrow'></i>
+  </div>
 
-      <div class='source_body'>
-        <div class='source_summary'>
-          <p>Move the slider to adjust the maximum percentage of cloud cover for available imagery.  For example, if you select 25%, only images with less than 25% cloud cover will be displayed.</p>
-        </div>
-      </div>
-    </li>
-    <li id='hr-dates' class='source-item'>
-      <div class='source_header'>
-        <strong class='source_title'>AQUIRED DATE MINIMUM / MAXIMUM</strong>
-        <i class='expand_arrow'></i>
-      </div>
+  <div class='source_body'>
+    <div class='source_summary'>
+      <p>Move the slider to adjust the maximum percentage of cloud cover for available imagery.  For example, if you select 25%, only images with less than 25% cloud cover will be displayed.</p>
+    </div>
+  </div>
+</article>
 
-      <div class='source_body'>
-        <div class='source_summary'>
-          <p><strong>Minimum:</strong> Images displayed will have been acquired after this date</p>
-          <p><strong>Maximum:</strong> Images displayed will have been acquired before this date.</p>
-        </div>
-      </div>
-    </li>
-  </ul>
+<article id='hr-dates' class='source-item'>
+  <div class='source_header'>
+    <strong class='source_title'>AQUIRED DATE MINIMUM / MAXIMUM</strong>
+    <i class='expand_arrow'></i>
+  </div>
+
+  <div class='source_body'>
+    <div class='source_summary'>
+      <p><strong>Minimum:</strong> Images displayed will have been acquired after this date</p>
+      <p><strong>Maximum:</strong> Images displayed will have been acquired before this date.</p>
+    </div>
+  </div>
 </article>
 
 <article id="loss-compare-gain">
