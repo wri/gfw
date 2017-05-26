@@ -18,6 +18,9 @@ define([], function () {
         if (year[0] === 2015) {
           url = 'https://storage.googleapis.com/landsat-cache/2015/{0}/{1}/{2}.png'.format(z, x, ll.y);
         }
+        if (year[0] === 2016) {
+          url = 'https://storage.googleapis.com/landsat-cache/2016/{0}/{1}/{2}.png'.format(z, x, ll.y);
+        }
         return url;
       },
     };
