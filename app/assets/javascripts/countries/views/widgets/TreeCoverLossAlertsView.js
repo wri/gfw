@@ -193,6 +193,19 @@ define([
 
     _initWidgets: function() {
       if (this.data) {
+        var sourceLink = '';
+        var countryLink = this.iso;
+        var regionLink = $('#areaSelector').val() === 'default' ? 0 : $('#areaSelector').val();
+        switch (this.status.get('source')) {
+          case 'glad':
+            sourceLink = 'glad-alerts';
+            break;
+          case 'terrai':
+            sourceLink = 'terrai-alerts';
+            break;
+          default:
+            sourceLink = 'glad-alerts';
+        }
         this.widgetViews = [];
         this.$widgets.html('');
         var keys = Object.keys(this.data);
@@ -200,7 +213,9 @@ define([
           this.$widgets.append(this.cardTemplate({
             ranking: index + 1,
             alerts: this.data[key].alerts,
-            name: this.data[key].name
+            name: this.data[key].name,
+            linkImagery: '#',
+            linkSubscribe: '/my_gfw/subscriptions/new?aoi=country&datasets='+sourceLink+'&country='+countryLink+'&region='+regionLink+'',
           }));
           this.widgetViews.push(new LineGraphView({
             el: '#cover-loss-alert-card-' + (index + 1),
