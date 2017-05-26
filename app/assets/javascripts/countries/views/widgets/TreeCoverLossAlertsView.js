@@ -126,6 +126,8 @@ define([
 
     initialize: function(params) {
       this.iso = params.iso;
+      this.latitude = params.latitude;
+      this.longitude = params.longitude;
       this.start();
     },
 
@@ -196,12 +198,15 @@ define([
         var sourceLink = '';
         var countryLink = this.iso;
         var regionLink = $('#areaSelector').val() === 'default' ? 0 : $('#areaSelector').val();
+        var layerLink = '';
         switch (this.status.get('source')) {
           case 'glad':
             sourceLink = 'glad-alerts';
+            layerLink = 'umd_as_it_happens';
             break;
           case 'terrai':
-            sourceLink = 'terrai-alerts';
+            sourceLink = 'terrai-alertshoy ';
+            layerLink = 'terrailoss';
             break;
           default:
             sourceLink = 'glad-alerts';
@@ -214,7 +219,7 @@ define([
             ranking: index + 1,
             alerts: this.data[key].alerts,
             name: this.data[key].name,
-            linkImagery: '#',
+            linkImagery: '/map/9/'+this.longitude+'/'+this.latitude+'/'+countryLink+'-'+regionLink+'/grayscale/'+layerLink+'/685?tab=hd-tab&hresolution=eyJ6b29tIjo5LCJzYXRlbGxpdGUiOiJoaWdocmVzIiwiY29sb3JfZmlsdGVyIjoicmdiIiwicmVuZGVyZXIiOiJSR0IgKFJlZCBHcmVlbiBCbHVlKSIsInNlbnNvcl9wbGF0Zm9ybSI6InNlbnRpbmVsLTIiLCJzZW5zb3JfbmFtZSI6IlNlbnRpbmVsIDIiLCJjbG91ZCI6IjMwIiwibWluZGF0ZSI6IjIwMTctMDEtMjUiLCJtYXhkYXRlIjoiMjAxNy0wNS0yNSJ9',
             linkSubscribe: '/my_gfw/subscriptions/new?aoi=country&datasets='+sourceLink+'&country='+countryLink+'&region='+regionLink+'',
           }));
           this.widgetViews.push(new LineGraphView({

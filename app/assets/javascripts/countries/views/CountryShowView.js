@@ -146,7 +146,9 @@ define([
 
     initCoverLossAlerts: function() {
       this.modules.treeCoverLossAlerts.push(new TreeCoverLossAlertsView({
-        iso: this.iso
+        iso: this.iso,
+        latitude: JSON.parse(this.data.centroid).coordinates[0],
+        longitude: JSON.parse(this.data.centroid).coordinates[1]
       }));
     },
 
