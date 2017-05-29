@@ -1,0 +1,63 @@
+.m-modal-country {
+  position: fixed;
+  background-color: #FFF;
+  top: 50%;
+  width: calc(100% - 20px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 38px 20px 20px;
+  z-index: 3;
+
+  .content-modal {
+    position: relative;
+  }
+
+  .title {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.62;
+    letter-spacing: 0.1px;
+    color: #555;
+    text-transform: uppercase;
+  }
+
+  .form-filters {
+    .label {
+      text-transform: none;
+      margin-top: 8px;
+      margin-bottom: 5px;
+      display: block;
+      font-size: 12px;
+      line-height: 1.42;
+      color: #555;
+      font-weight: 200;
+    }
+  }
+
+  .js-done-btn {
+    display: block;
+    width: 100%;
+    height: 40px;
+    line-height: 42px;
+    margin-top: 45px;
+  }
+
+  .icon-cross {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: -30px;
+    right: -10px;
+    cursor: pointer;
+  }
+}
+
+.background-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(#000, .3);
+  z-index: 2;
+}

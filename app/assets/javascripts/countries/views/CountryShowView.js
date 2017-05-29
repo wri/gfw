@@ -16,6 +16,7 @@ define([
   'countries/views/widgets/FiresAlertsView',
   'countries/views/widgets/NearRealTimeAlertsView',
   'countries/views/widgets/MapCountry',
+  'countries/views/widgets/modals/SnapshotTreeCoverModal',
   'countries/helpers/StickyMap',
   'text!countries/templates/countryDashboard.handlebars'
 ], function($,
@@ -35,6 +36,7 @@ define([
   FiresAlertsView,
   NearRealTimeAlertsView,
   MapCountry,
+  SnapshotTreeCoverModal,
   StickyMap,
   tpl) {
 
@@ -91,6 +93,7 @@ define([
       this.initFiresAlerts();
       this.initMapCountry();
       this.initStickyMap();
+      this.initSnapshotTreeCoverModal();
 
       this.$el.find('.widgets > .content').removeClass('-loading');
     },
@@ -104,6 +107,10 @@ define([
 
     initStickyMap: function() {
       this.stickyMap = new StickyMap();
+    },
+
+    initSnapshotTreeCoverModal: function() {
+      this.snapshotTreeCoverModal = new SnapshotTreeCoverModal();
     },
 
     initMapCountry: function() {

@@ -1,8 +1,10 @@
 $switch-height: 20px;
+$switch-height-modal: 30px;
 $switch-color: #97be32;
 $switch-font-color: #555555;
 $switch-font-color-active: #ffffff;
 $switch-font-size: 12px;
+$switch-font-size-modal: 16px;
 
 .c-switch {
   display: inline-block;
@@ -87,6 +89,20 @@ $switch-font-size: 12px;
 
       @media (min-width: $br-mobile) {
         display: block;
+      }
+    }
+  }
+
+  &.-modal {
+    display: inline-block;
+
+    .options {
+      height: $switch-height-modal;
+
+      li {
+        line-height: 26px;
+        height: calc($switch-height-modal - 2px);
+        font-size: $switch-font-size-modal;
       }
     }
   }
