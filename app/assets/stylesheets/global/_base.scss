@@ -65,3 +65,19 @@ h1,h2 {
 .noselect {
   user-select: none;
 }
+
+.m-footer {
+  .m-footer-info {
+    @media (min-width: $br-mobile){
+      display: block;
+    }
+    display: none;
+  }
+
+  .m-footer-terms {
+    @media (min-width: $br-mobile){
+      display: block;
+    }
+    display: none;
+  }
+}

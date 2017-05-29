@@ -17,6 +17,8 @@ define([
   'countries/views/widgets/NearRealTimeAlertsView',
   'countries/views/widgets/MapCountry',
   'countries/views/widgets/modals/SnapshotTreeCoverModal',
+  'countries/views/widgets/modals/TreeCoverLossModal',
+  'countries/views/widgets/modals/TreeCoverLossAlertsModal',
   'countries/helpers/StickyMap',
   'text!countries/templates/countryDashboard.handlebars'
 ], function($,
@@ -37,6 +39,8 @@ define([
   NearRealTimeAlertsView,
   MapCountry,
   SnapshotTreeCoverModal,
+  TreeCoverLossModal,
+  TreeCoverLossAlertsModal,
   StickyMap,
   tpl) {
 
@@ -94,6 +98,8 @@ define([
       this.initMapCountry();
       this.initStickyMap();
       this.initSnapshotTreeCoverModal();
+      this.initTreeCoveLossModal();
+      this.initTreeCoveLossAlertsModal();
 
       this.$el.find('.widgets > .content').removeClass('-loading');
     },
@@ -111,6 +117,14 @@ define([
 
     initSnapshotTreeCoverModal: function() {
       this.snapshotTreeCoverModal = new SnapshotTreeCoverModal();
+    },
+
+    initTreeCoveLossModal: function() {
+      this.initTreeCoveLossModal = new TreeCoverLossModal();
+    },
+
+    initTreeCoveLossAlertsModal: function() {
+      this.initTreeCoveLossAlertsModal = new TreeCoverLossAlertsModal();
     },
 
     initMapCountry: function() {

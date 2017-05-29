@@ -50,6 +50,38 @@
     right: -10px;
     cursor: pointer;
   }
+
+  .select-container {
+    display: flex;
+
+    .c-select {
+      display: block;
+      min-width: 70px;
+
+      &:first-of-type {
+        margin-right: 15px;
+      }
+
+      .wrapper {
+        height: 30px;
+
+        select {
+          font-size: 16px;
+          line-height: 26px;
+        }
+      }
+
+      &.-big {
+        width: 200px;
+
+        .wrapper {
+          select {
+            width: 180px;
+          }
+        }
+      }
+    }
+  }
 }
 
 .background-modal {

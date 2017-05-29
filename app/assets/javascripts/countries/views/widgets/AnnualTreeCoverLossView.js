@@ -145,6 +145,10 @@ define([
         maxYear: this.status.get('maxYear'),
         thresh: this.status.get('thresh'),
       }));
+      $('.data-time-range').html(this.status.get('minYear')+' to '+this.status.get('maxYear'));
+      $('.data-thresh').html('>30');
+      $('.data-measure').html('HA');
+      $('.data-source').html('GFW');
       $('.back-loading').removeClass('-show');
       this.$el.removeClass('-loading');
     },

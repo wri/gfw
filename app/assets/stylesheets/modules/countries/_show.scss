@@ -326,6 +326,36 @@
       font-size: 16px;
     }
   }
+
+  .tree-cover-loss-alerts-filter {
+    .desktop {
+      display: none;
+
+      @media (min-width: $br-mobile){
+        display: flex;
+      }
+    }
+
+    .mobile {
+      display: block;
+
+      @media (min-width: $br-mobile){
+        display: none;
+      }
+    }
+
+    .list-mobile {
+      li {
+        font-size: 12px;
+        line-height: 1.42;
+        color: #555555;
+
+        .data {
+          color: #97Bd3d;
+        }
+      }
+    }
+  }
 }
 
 .country-selector {
