@@ -21,6 +21,7 @@ define([
     events: {
       'click .js-open-snapshot-tree-cover-modal' : 'showModal',
       'click .background-modal' : 'closeModal',
+      'click .js-icon-cross-close' : 'closeModal',
     },
 
     template: Handlebars.compile(tpl),
