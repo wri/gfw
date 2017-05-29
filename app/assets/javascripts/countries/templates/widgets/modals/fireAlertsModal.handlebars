@@ -1,0 +1,31 @@
+<div class="background-modal"></div>
+<div class="m-modal-country -tree-cover-loss">
+  <div class="content-modal">
+    <svg class="icon icon-cross"><use xlink:href="#icon-cross"></use></svg>
+    <span class="title">Fire alerts settings</span>
+    <div class="form-filters">
+      <label class="label">Data shown</label>
+      <div class="c-switch -modal">
+        <ul class="options">
+            <li class="active -small">Past week</li>
+            <li class="disabled -small">Past 72 h</li>
+            <li class="disabled -small">Past 48 h</li>
+            <li class="disabled -small">Past 24 h</li>
+        </ul>
+      </div>
+      <label class="label">Period</label>
+      <div class="select-container">
+        <div class="c-select -big">
+          <div class="wrapper">
+            <select id="thresh">
+              <option value="within" selected="">Past week</option>
+            </select>
+            <div class="select-clear" style="display: none;">✕</div>
+            <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="btn green uppercase -big-width js-done-btn" href="">Done</span>
+  </div>
+</div>
