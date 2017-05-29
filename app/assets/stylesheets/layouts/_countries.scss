@@ -7,8 +7,13 @@
     &.-big-width {
       font-size: 13px;
       font-weight: 500;
-      max-width: 150px;
-      min-width: 150px;
+      width: 100%;
+
+      @media (min-width: $br-mobile){
+        width: auto;
+        max-width: 150px;
+        min-width: 150px;
+      }
     }
   }
 }

@@ -30,8 +30,8 @@ $card-highlight-color-grey-pink: #bf8893;
     min-height: 100px;
 
     > .ranking {
-      min-width: 60px;
-      height: 60px;
+      min-width: 40px;
+      height: 40px;
       display: flex;
       margin-right: 20px;
       align-items: center;
@@ -39,9 +39,18 @@ $card-highlight-color-grey-pink: #bf8893;
       border-radius: 30px;
       border: 1px solid rgba($card-text-color, 0.3);
 
+      @media (min-width: $br-mobile){
+        min-width: 60px;
+        height: 60px;
+      }
+
       > span {
-        font-size: 24px;
+        font-size: 20px;
         color: $card-ranking-color;
+
+        @media (min-width: $br-mobile){
+          font-size: 24px;
+        }
       }
     }
 

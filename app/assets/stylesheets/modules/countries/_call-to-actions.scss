@@ -3,6 +3,7 @@
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: #f2f2f3;
+  display: none;
 
   .call-action {
     padding: 0 20px;
@@ -23,5 +24,9 @@
     > .btn {
       width: 100%;
     }
+  }
+
+  @media (min-width: $br-mobile){
+    display: block;
   }
 }

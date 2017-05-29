@@ -43,6 +43,10 @@ define([
   var CountryShowView = Backbone.View.extend({
     el: '#countryShowView',
 
+    events: {
+      'click .summary-option' : 'changeSection',
+    },
+
     template: Handlebars.compile(tpl),
 
     initialize: function(params) {
@@ -153,6 +157,13 @@ define([
       this.modules.firesAlerts.push(new FiresAlertsView({
         iso: this.iso
       }));
+    },
+
+    changeSection: function(e) {
+      var data = $(e.target).data('value');
+      $('html, body').animate({
+        scrollTop: $('#'+data).offset().top
+      }, 1000);
     },
 
   });

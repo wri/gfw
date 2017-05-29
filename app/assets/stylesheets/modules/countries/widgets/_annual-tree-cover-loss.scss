@@ -1,4 +1,21 @@
 .m-widget-annual-tree-cover-loss {
+
+  .annual-tree-cover-loss-row {
+    flex-direction: column-reverse;
+
+    @media (min-width: $br-mobile){
+      flex-direction: row;
+    }
+
+    .annual-tree-cover-loss-container {
+      max-width: none;
+
+      @media (min-width: $br-mobile){
+        max-width: 50%;
+      }
+    }
+  }
+
   .filter-list {
     width: 100%;
     display: flex;
@@ -48,6 +65,11 @@
     flex-direction: column;
     border-bottom: solid 1px #e7e7e9;
     margin-bottom: 10px;
+    margin-top: 20px;
+
+    @media (min-width: $br-mobile){
+      margin-top: auto;
+    }
 
     .name {
       font-size: 12px;

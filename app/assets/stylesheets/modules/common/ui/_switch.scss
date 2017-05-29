@@ -48,4 +48,46 @@ $switch-font-size: 12px;
       }
     }
   }
+
+  &.-switch-tree-cover {
+    .options {
+      display: inline-block;
+      border: 0;
+
+      @media (min-width: $br-mobile) {
+        display: flex;
+        border: 1px solid #97be32;
+      }
+
+      .active {
+        background-color: transparent;
+        color: #97be32;
+        font-weight: 500;
+        padding-left: 5px;
+
+        @media (min-width: $br-mobile) {
+          background-color:  #97be32;
+          display: inline-block;
+          padding-left: 12px;
+          color: #FFF;
+        }
+      }
+
+      .disabled {
+        display: none;
+
+        @media (min-width: $br-mobile) {
+          display: inline-block;
+        }
+      }
+    }
+
+    .label {
+      display: inline-block;
+
+      @media (min-width: $br-mobile) {
+        display: block;
+      }
+    }
+  }
 }
