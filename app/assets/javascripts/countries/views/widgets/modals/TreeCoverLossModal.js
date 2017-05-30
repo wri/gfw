@@ -22,7 +22,6 @@ define([
       'click .js-open-tree-cover-loss-modal' : 'showModal',
       'click .background-modal' : 'closeModal',
       'click .js-icon-cross-close' : 'closeModal',
-      'click .js-switch-option' : 'switchOption',
     },
 
     template: Handlebars.compile(tpl),
@@ -41,21 +40,6 @@ define([
       $('.background-modal').addClass('-hidden')
       $('.-tree-cover-loss-modal').addClass('-hidden');
       $(this.el).removeClass('-relative');
-    },
-
-    switchOption: function(e) {
-      var $parent = $(e.target).parent();
-      var disabledOption = $(e.target).hasClass('disabled');
-      if (!disabledOption) {
-        _.each($parent.find('.js-switch-option'), function(option) {
-          var $option = $(option);
-          var optionSelected = $option.hasClass('active');
-          if (optionSelected) {
-            $option.removeClass('active');
-          }
-        });
-        $(e.target).addClass('active');
-      }
     }
   });
   return TreeCoverLossModal;
