@@ -152,7 +152,13 @@ define([
         this._getAvailableDatasets(),
         this.status.get('years'),
         this.status.get('thresh')
-      );
+      ).done(function(){
+        this.listenTo(
+          this.initTreeCoverLossModal,
+          'updateDataModal',
+          this.updateDataModal
+        );
+      });
 
       $('.data-time-range').html(this.status.get('minYear')+' to '+this.status.get('maxYear'));
       $('.data-thresh').html('>30');
@@ -475,7 +481,7 @@ define([
     },
 
     updateDataModal: function() {
-
+      console.log('test');
     }
   });
   return AnnualTreeCoverLossView;

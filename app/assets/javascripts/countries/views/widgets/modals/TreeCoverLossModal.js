@@ -49,7 +49,7 @@ define([
 
     doneModal: function() {
       console.log('hello');
-      // this.trigger('updateDataModal');
+      this.trigger('updateDataModal');
       this.closeModal();
     }
   });

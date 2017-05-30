@@ -83,7 +83,11 @@ define([
 
     start: function() {
       this.render();
-      this.listenTo(this.initTreeCoverLossAlertsModal, 'updateDataModal', this.updateDataModal);
+      this.listenTo(
+        this.initTreeCoverLossAlertsModal,
+        'updateDataModal',
+        this.updateDataModal
+      );
       this.cache();
       this._getData().done(function(data) {
         this.data = data;
