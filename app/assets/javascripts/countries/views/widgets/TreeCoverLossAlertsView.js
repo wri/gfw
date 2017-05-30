@@ -8,6 +8,7 @@ define([
   'helpers/numbersHelper',
   'services/CountryService',
   'common/views/LineGraphView',
+  'countries/views/widgets/modals/TreeCoverLossAlertsModal',
   'text!countries/templates/widgets/treeCoverLossAlerts.handlebars',
   'text!countries/templates/widgets/treeCoverLossAlertsCard.handlebars'
 ], function(
@@ -20,6 +21,7 @@ define([
   NumbersHelper,
   CountryService,
   LineGraphView,
+  TreeCoverLossAlertsModal,
   tpl,
   cardTpl) {
 
@@ -75,6 +77,7 @@ define([
 
     initialize: function(params) {
       this.iso = params.iso;
+      this.initTreeCoveLossAlertsModal();
       this.start();
     },
 
@@ -97,6 +100,10 @@ define([
 
     cache: function(iso) {
       this.$widgets = this.$('#cla-graphs-container');
+    },
+
+    initTreeCoveLossAlertsModal: function() {
+      this.initTreeCoveLossAlertsModal = new TreeCoverLossAlertsModal();
     },
 
     getOriginOptions: function(iso) {

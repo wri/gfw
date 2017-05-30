@@ -16,10 +16,6 @@ define([
   'countries/views/widgets/FiresAlertsView',
   'countries/views/widgets/NearRealTimeAlertsView',
   'countries/views/widgets/MapCountry',
-  'countries/views/widgets/modals/SnapshotTreeCoverModal',
-  'countries/views/widgets/modals/TreeCoverLossModal',
-  'countries/views/widgets/modals/TreeCoverLossAlertsModal',
-  'countries/views/widgets/modals/FireAlertsModal',
   'countries/helpers/StickyMap',
   'text!countries/templates/countryDashboard.handlebars'
 ], function($,
@@ -39,10 +35,6 @@ define([
   FiresAlertsView,
   NearRealTimeAlertsView,
   MapCountry,
-  SnapshotTreeCoverModal,
-  TreeCoverLossModal,
-  TreeCoverLossAlertsModal,
-  FireAlertsModal,
   StickyMap,
   tpl) {
 
@@ -91,6 +83,7 @@ define([
     },
 
     start: function() {
+      this.initAppendBackgroundModal();
       this.initHeader();
       this.initSnapshot();
       this.initTreeCoverLoss();
@@ -99,12 +92,12 @@ define([
       this.initFiresAlerts();
       this.initMapCountry();
       this.initStickyMap();
-      this.initSnapshotTreeCoverModal();
-      this.initTreeCoveLossModal();
-      this.initTreeCoveLossAlertsModal();
-      this.initFireAlertsModal();
 
       this.$el.find('.widgets > .content').removeClass('-loading');
+    },
+
+    initAppendBackgroundModal: function() {
+      $('body').append('<div class="background-modal -hidden"></div>');
     },
 
     initHeader: function() {
@@ -116,22 +109,6 @@ define([
 
     initStickyMap: function() {
       this.stickyMap = new StickyMap();
-    },
-
-    initSnapshotTreeCoverModal: function() {
-      this.snapshotTreeCoverModal = new SnapshotTreeCoverModal();
-    },
-
-    initTreeCoveLossModal: function() {
-      this.initTreeCoveLossModal = new TreeCoverLossModal();
-    },
-
-    initTreeCoveLossAlertsModal: function() {
-      this.initTreeCoveLossAlertsModal = new TreeCoverLossAlertsModal();
-    },
-
-    initFireAlertsModal: function() {
-      this.initFireAlertsModal = new FireAlertsModal();
     },
 
     initMapCountry: function() {

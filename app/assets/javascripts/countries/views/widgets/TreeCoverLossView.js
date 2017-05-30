@@ -6,8 +6,9 @@ define([
   'uri',
   'helpers/numbersHelper',
   'common/views/LineGraphView',
+  'countries/views/widgets/modals/TreeCoverLossModal',
   'text!countries/templates/widgets/treeCoverLoss.handlebars'
-], function($, Backbone, _, Handlebars, UriTemplate, NumbersHelper, LineGraphView, tpl) {
+], function($, Backbone, _, Handlebars, UriTemplate, NumbersHelper, LineGraphView, TreeCoverLossModal, tpl) {
 
   'use strict';
 
@@ -22,7 +23,7 @@ define([
     initialize: function(params) {
       this.iso = params.iso;
       this.countryData = params.countryData;
-
+      this.initTreeCoveLossModal();
       this._getData().done(this._initWidget.bind(this));
     },
 
@@ -32,6 +33,10 @@ define([
         country: this.countryData
       }));
       this.$el.removeClass('-loading');
+    },
+
+    initTreeCoveLossModal: function() {
+      this.initTreeCoveLossModal = new TreeCoverLossModal();
     },
 
     _initWidget: function(res) {

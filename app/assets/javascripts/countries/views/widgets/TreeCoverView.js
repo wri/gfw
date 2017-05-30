@@ -6,6 +6,7 @@ define([
   'uri',
   'services/CountryService',
   'common/views/PieGraphView',
+  'countries/views/widgets/modals/SnapshotTreeCoverModal',
   'text!countries/templates/widgets/treeCover.handlebars'
 ], function(
   $,
@@ -15,6 +16,7 @@ define([
   UriTemplate,
   CountryService,
   PieGraphView,
+  SnapshotTreeCoverModal,
   tpl) {
 
   'use strict';
@@ -32,11 +34,15 @@ define([
 
     initialize: function(params) {
       this.iso = params.iso;
-
+      this.initSnapshotTreeCoverModal();
       this._getData().done(function(data) {
         this.data = data;
         this._initWidget();
       }.bind(this));
+    },
+
+    initSnapshotTreeCoverModal: function() {
+      this.snapshotTreeCoverModal = new SnapshotTreeCoverModal();
     },
 
     _initWidget: function() {

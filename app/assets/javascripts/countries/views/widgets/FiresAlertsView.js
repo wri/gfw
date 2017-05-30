@@ -4,6 +4,7 @@ define([
   'underscore',
   'handlebars',
   'uri',
+  'countries/views/widgets/modals/FireAlertsModal',
   'text!countries/templates/widgets/firesAlerts.handlebars',
   'text!countries/templates/widgets/firesAlertsCover.handlebars',
   'text!countries/templates/widgets/firesAlertsCard.handlebars'
@@ -13,6 +14,7 @@ define([
   _,
   Handlebars,
   UriTemplate,
+  FireAlertsModal,
   tpl,
   coverTpl,
   cardTpl) {
@@ -37,6 +39,7 @@ define([
 
     initialize: function(params) {
       this.iso = params.iso;
+      this.initFireAlertsModal();
       this.start();
     },
 
@@ -52,6 +55,10 @@ define([
         this.data = res.data;
         this._initWidgets();
       }.bind(this));
+    },
+
+    initFireAlertsModal: function() {
+      this.initFireAlertsModal = new FireAlertsModal();
     },
 
     _initWidgets: function() {

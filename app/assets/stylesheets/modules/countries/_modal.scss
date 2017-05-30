@@ -90,6 +90,10 @@
       }
     }
   }
+
+  &.-hidden {
+    display: none;
+  }
 }
 
 .background-modal {
@@ -100,4 +104,8 @@
   height: 100%;
   background-color: rgba(#000, .3);
   z-index: 2;
+
+  &.-hidden {
+    display: none;
+  }
 }

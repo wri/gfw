@@ -26,14 +26,20 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    showModal: function() {
-      $(this.el).addClass('-relative');
+    initialize: function() {
       this.$el.append(this.template());
     },
 
+    showModal: function() {
+      $(this.el).addClass('-relative');
+      $('.background-modal').removeClass('-hidden');
+      $('.-tree-cover-loss-alerts-modal').removeClass('-hidden');
+    },
+
     closeModal: function() {
-      $('.background-modal').remove();
-      $('.m-modal-country').remove();
+      $('.background-modal').addClass('-hidden')
+      $('.-tree-cover-loss-alerts-modal').addClass('-hidden');
+      $(this.el).removeClass('-relative');
     }
   });
   return TreeCoverLossAlertsModal;
