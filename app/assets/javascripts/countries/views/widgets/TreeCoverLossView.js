@@ -6,14 +6,13 @@ define([
   'uri',
   'helpers/numbersHelper',
   'common/views/LineGraphView',
-  'countries/views/widgets/modals/TreeCoverLossModal',
   'text!countries/templates/widgets/treeCoverLoss.handlebars'
-], function($, Backbone, _, Handlebars, UriTemplate, NumbersHelper, LineGraphView, TreeCoverLossModal, tpl) {
+], function($, Backbone, _, Handlebars, UriTemplate, NumbersHelper, LineGraphView, tpl) {
 
   'use strict';
 
-  var API = window.gfw.config.GFW_API_HOST_NEW_API;
-  var DATASET = '36dfec5c-61c5-4112-b332-1ab041663459';
+  var API = window.gfw.config.GFW_API_HOST_PROD;
+  var DATASET = 'a9a32dd2-f7e1-402a-ba6f-48020fbf50ea';
   var QUERY = '/query?sql=select sum(area) as value, year as date from {dataset} where thresh=30 and iso=\'{iso}\' group by year';
   var TreeCoverLossView = Backbone.View.extend({
     el: '#widget-tree-cover-loss',
@@ -23,7 +22,6 @@ define([
     initialize: function(params) {
       this.iso = params.iso;
       this.countryData = params.countryData;
-      this.initTreeCoveLossModal();
       this._getData().done(this._initWidget.bind(this));
     },
 
@@ -35,20 +33,14 @@ define([
       this.$el.removeClass('-loading');
     },
 
-    initTreeCoveLossModal: function() {
-      this.initTreeCoveLossModal = new TreeCoverLossModal();
-    },
-
     _initWidget: function(res) {
       this.data = []
-
       res.data.forEach(function(data) {
         if (data.value) {
           data.date = moment.utc(data.date, 'YYYY').endOf('year');
           this.data.push(data);
         }
       }.bind(this));
-
       this.render();
       this.lineGraph = new LineGraphView({
         el: '#tree-cover-loss-graph',
@@ -61,7 +53,6 @@ define([
       var url = API + new UriTemplate(QUERY).fillFromObject({
         dataset: DATASET, iso: this.iso
       });
-
       return $.ajax({
         url: url,
         type: 'GET'

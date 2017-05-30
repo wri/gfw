@@ -33,6 +33,7 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function(params) {
+      $(this.el).removeClass('-loading');
       this.iso = params.iso;
       this.initSnapshotTreeCoverModal();
       this._getData().done(function(data) {
@@ -141,7 +142,6 @@ define([
       this.$el.html(this.template({
         totalCover: this._formatTotalValue(this.data.total)
       }));
-      this.$el.removeClass('-loading');
     }
   });
   return TreeCoverView;

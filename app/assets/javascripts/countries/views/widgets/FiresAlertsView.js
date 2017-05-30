@@ -21,7 +21,7 @@ define([
 
   'use strict';
 
-  var API = window.gfw.config.GFW_API_HOST_NEW_API;
+  var API = window.gfw.config.GFW_API_HOST_PROD;
   var DATASET = '';
   var QUERY = '';
 

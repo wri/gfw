@@ -22,7 +22,7 @@ define([
       'click .js-open-tree-cover-loss-alerts-modal' : 'showModal',
       'click .background-modal' : 'closeModal',
       'click .js-icon-cross-close' : 'closeModal',
-      'click .js-done-btn' : 'doneModal',
+      'click .js-done-btn-alerts' : 'doneModal',
     },
 
     template: Handlebars.compile(tpl),

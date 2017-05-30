@@ -7,6 +7,7 @@ define([
   'helpers/numbersHelper',
   'common/views/GroupedGraphView',
   'countries/views/widgets/AnnualTreeCoverLossRankingView',
+  'countries/views/widgets/modals/TreeCoverLossModal',
   'text!countries/templates/widgets/annualTreeCoverLoss.handlebars'
 ], function(
   $,
@@ -17,6 +18,7 @@ define([
   NumbersHelper,
   GroupedGraphView,
   AnnualTreeCoverLossRankingView,
+  TreeCoverLossModal,
   tpl) {
 
   'use strict';
@@ -145,12 +147,27 @@ define([
         maxYear: this.status.get('maxYear'),
         thresh: this.status.get('thresh'),
       }));
+
+      this.initTreeCoverLossModal(
+        this._getAvailableDatasets(),
+        this.status.get('years'),
+        this.status.get('thresh')
+      );
+
       $('.data-time-range').html(this.status.get('minYear')+' to '+this.status.get('maxYear'));
       $('.data-thresh').html('>30');
       $('.data-measure').html('HA');
       $('.data-source').html('GFW');
       $('.back-loading').removeClass('-show');
       this.$el.removeClass('-loading');
+    },
+
+    initTreeCoverLossModal: function(datasets, years, thresh) {
+      this.initTreeCoverLossModal = new TreeCoverLossModal({
+        datasets: datasets,
+        years: years,
+        thresh: thresh,
+      });
     },
 
     _getDates: function() {
@@ -455,6 +472,10 @@ define([
       this.status.set('thresh', threshList);
       this._getList()
       .done(this._initWidget.bind(this));
+    },
+
+    updateDataModal: function() {
+
     }
   });
   return AnnualTreeCoverLossView;

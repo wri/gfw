@@ -77,13 +77,13 @@ define([
 
     initialize: function(params) {
       this.iso = params.iso;
-      this.initTreeCoveLossAlertsModal();
+      this.initTreeCoverLossAlertsModal();
       this.start();
     },
 
     start: function() {
       this.render();
-      this.listenTo(this.initTreeCoveLossAlertsModal, 'updateDataModal', this.updateDataModal);
+      this.listenTo(this.initTreeCoverLossAlertsModal, 'updateDataModal', this.updateDataModal);
       this.cache();
       this._getData().done(function(data) {
         this.data = data;
@@ -103,8 +103,8 @@ define([
       this.$widgets = this.$('#cla-graphs-container');
     },
 
-    initTreeCoveLossAlertsModal: function() {
-      this.initTreeCoveLossAlertsModal = new TreeCoverLossAlertsModal({
+    initTreeCoverLossAlertsModal: function() {
+      this.initTreeCoverLossAlertsModal = new TreeCoverLossAlertsModal({
         origins: this.getOriginOptions(this.iso)
       });
     },
@@ -128,6 +128,7 @@ define([
     },
 
     updateDataModal: function() {
+      this.$widgets.addClass('-loading');
       var origin = $('.tree-cover-loss-alerts-modal-data-shown').val();
       this._getData(origin).done(function(data) {
         this.data = data;

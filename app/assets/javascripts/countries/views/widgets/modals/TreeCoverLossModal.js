@@ -22,12 +22,17 @@ define([
       'click .js-open-tree-cover-loss-modal' : 'showModal',
       'click .background-modal' : 'closeModal',
       'click .js-icon-cross-close' : 'closeModal',
+      'click .js-done-btn-annual' : 'doneModal',
     },
 
     template: Handlebars.compile(tpl),
 
-    initialize: function() {
-      this.$el.append(this.template());
+    initialize: function(params) {
+      this.$el.append(this.template({
+        years: params.years,
+        thresh: params.thresh,
+        datasets: params.datasets,
+      }));
     },
 
     showModal: function() {
@@ -40,6 +45,12 @@ define([
       $('.background-modal').addClass('-hidden')
       $('.-tree-cover-loss-modal').addClass('-hidden');
       $(this.el).removeClass('-relative');
+    },
+
+    doneModal: function() {
+      console.log('hello');
+      // this.trigger('updateDataModal');
+      this.closeModal();
     }
   });
   return TreeCoverLossModal;

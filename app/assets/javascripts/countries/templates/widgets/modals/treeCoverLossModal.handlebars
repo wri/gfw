@@ -1,7 +1,7 @@
 <div class="m-modal-country -tree-cover-loss-modal -hidden">
   <div class="content-modal">
     <svg class="icon icon-cross js-icon-cross-close"><use xlink:href="#icon-cross"></use></svg>
-    <span class="title">Annual tree cover loss settings</span>
+    <span class="title">Annual tree cover loss settings jejejeje</span>
     <div class="form-filters">
       <label class="label">Data source</label>
       <div class="c-switch -modal">
@@ -16,7 +16,9 @@
         <div class="c-select">
           <div class="wrapper">
             <select id="annual-tree-cover-loss-start-year">
-              <option value="2001" selected="">2001</option>
+              {{#each years}}
+                <option value="{{this.year}}" {{#if this.selectedMin}}selected{{/if}}>{{this.year}}</option>
+              {{/each}}
             </select>
             <div class="select-clear" style="display: none;">✕</div>
             <svg class="icon arrow-select select-arrow -green-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-select"></use></svg>
@@ -25,7 +27,9 @@
         <div class="c-select">
           <div class="wrapper">
             <select id="annual-tree-cover-loss-end-year">
-              <option value="2001" selected="">2001</option>
+              {{#each years}}
+                <option value="{{this.year}}" {{#if this.selectedMax}}selected{{/if}}{{#if this.enable}}{{else}}disabled{{/if}}>{{this.year}}</option>
+              {{/each}}
             </select>
             <div class="select-clear" style="display: none;">✕</div>
             <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
@@ -37,7 +41,9 @@
         <div class="c-select">
           <div class="wrapper">
             <select id="thresh">
-              <option value="30" selected="">30</option>
+              {{#each thresh}}
+                <option value="{{this.value}}" {{#if this.selected}}selected{{/if}}>>{{this.value}}</option>
+              {{/each}}
             </select>
             <div class="select-clear" style="display: none;">✕</div>
             <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
@@ -52,6 +58,6 @@
         </ul>
       </div>
     </div>
-    <span class="btn green uppercase -big-width js-done-btn" href="">Done</span>
+    <span class="btn green uppercase -big-width done-btn js-done-btn-annual" href="">Done</span>
   </div>
 </div>
