@@ -15,8 +15,10 @@
       <div class="select-container">
         <div class="c-select -big">
           <div class="wrapper">
-            <select id="thresh">
-              <option value="within" selected="">within protected areas</option>
+            <select class="tree-cover-loss-alerts-modal-data-shown" id="thresh">
+              {{#each origins}}
+                <option value="{{ this.value }}">{{ this.label }}</option>
+              {{/each}}
             </select>
             <div class="select-clear" style="display: none;">✕</div>
             <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
@@ -24,6 +26,6 @@
         </div>
       </div>
     </div>
-    <span class="btn green uppercase -big-width js-done-btn" href="">Done</span>
+    <span class="btn green uppercase -big-width js-done-btn">Done</span>
   </div>
 </div>

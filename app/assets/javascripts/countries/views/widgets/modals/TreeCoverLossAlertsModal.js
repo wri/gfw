@@ -22,12 +22,15 @@ define([
       'click .js-open-tree-cover-loss-alerts-modal' : 'showModal',
       'click .background-modal' : 'closeModal',
       'click .js-icon-cross-close' : 'closeModal',
+      'click .js-done-btn' : 'doneModal',
     },
 
     template: Handlebars.compile(tpl),
 
-    initialize: function() {
-      this.$el.append(this.template());
+    initialize: function(params) {
+      this.$el.append(this.template({
+        origins: params.origins
+      }));
     },
 
     showModal: function() {
@@ -40,6 +43,11 @@ define([
       $('.background-modal').addClass('-hidden')
       $('.-tree-cover-loss-alerts-modal').addClass('-hidden');
       $(this.el).removeClass('-relative');
+    },
+
+    doneModal: function() {
+      this.trigger('updateDataModal');
+      this.closeModal();
     }
   });
   return TreeCoverLossAlertsModal;
