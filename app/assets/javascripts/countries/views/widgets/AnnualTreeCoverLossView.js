@@ -112,7 +112,8 @@ define([
         minYear: null,
         maxYear: null,
         thresh: null,
-        threshValue: 30
+        threshValue: 30,
+        modalCreate: false
       }
     })),
 
@@ -135,13 +136,15 @@ define([
         }.bind(this))
         .done(function() {
           this._initWidget();
-        }.bind(this))
-        .done(function() {
-          this._initModal();
         }.bind(this));
     },
 
     render: function() {
+      if(!this.status.get('modalCreate')) {
+        this._initModal();
+        this.status.set('modalCreate', true);
+      }
+
       this.$el.html(this.template({
         totalCoverLoss: this._getTotalCoverLoss(),
         datasets: this._getAvailableDatasets(),
@@ -152,7 +155,7 @@ define([
       }));
 
       $('.data-time-range').html(this.status.get('minYear')+' to '+this.status.get('maxYear'));
-      $('.data-thresh').html('>30');
+      $('.data-thresh').html('>'+this.status.get('threshValue'));
       $('.data-measure').html('HA');
       $('.data-source').html('GFW');
       $('.back-loading').removeClass('-show');
@@ -479,7 +482,12 @@ define([
       $('.back-loading').addClass('-show');
       this.$el.addClass('-loading');
       var threshList = [];
-      var value = parseInt(e.currentTarget.value);
+      var value = '';
+      if (e === 'modal') {
+        value = parseInt($('#thresh-modal').val());
+      } else {
+        value = parseInt(e.currentTarget.value);
+      }
       this.status.set('threshValue', value);
       for (var i = 0; i < this.status.get('thresh').length; i++) {
         threshList[i] = {
@@ -496,6 +504,7 @@ define([
       $('.back-loading').addClass('-show');
       this.$el.addClass('-loading');
       this._checkDates('modal');
+      this._checkThresh('modal');
     }
   });
   return AnnualTreeCoverLossView;
