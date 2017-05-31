@@ -137,6 +137,7 @@ define([
 
     start: function() {
       this.render();
+      this.initTreeCoverLossAlertsModal();
       this.listenTo(
         this.initTreeCoverLossAlertsModal,
         'updateDataModal',
@@ -190,15 +191,15 @@ define([
 
     updateDataModal: function() {
       this.$widgets.addClass('-loading');
+      $('.back-loading-loss-alerts').addClass('-show');
       var origin = $('.tree-cover-loss-alerts-modal-data-shown').val();
-      this._getData(origin).done(function(data) {
-        this.data = data;
-        this._initWidgets();
-      }.bind(this));
+      this.status.set('source', $('.data-source-filter-modal-loss-alerts').attr('data-source'));
+      this.status.set('layerLink', $('.data-source-filter-modal-loss-alerts').attr('data-layerLink'));
+      this.status.set('sourceLink', $('.data-source-filter-modal-loss-alerts').attr('data-sourceLink'));
+      this.status.set('origin', origin);
+      this.updateData();
     },
 
-    updateData: function(origin) {
-      this._getData(origin).done(function(data) {
     changeDataSourceFilter: function(e) {
       this.$widgets.addClass('-loading');
       $('.back-loading-loss-alerts').addClass('-show');
@@ -210,11 +211,16 @@ define([
       this.status.set('source', $(e.target).attr('data-source'));
       this.status.set('layerLink', $(e.target).attr('data-layerLink'));
       this.status.set('sourceLink', $(e.target).attr('data-sourceLink'));
-
       $(e.target).addClass('active');
       this.updateData();
     },
 
+    updateData: function() {
+      this._getData().done(function(data) {
+        this.data = data;
+        this._initWidgets();
+      }.bind(this));
+    },
 
     _initWidgets: function() {
       if (this.data) {

@@ -30,9 +30,17 @@ define([
           var optionSelected = $option.hasClass('active');
           if (optionSelected) {
             $option.removeClass('active');
+            if ($parent.hasClass('options-modal-cover-loss-alerts')) {
+              if ($option.hasClass('data-source-filter-modal-loss-alerts')) {
+                $option.removeClass('data-source-filter-modal-loss-alerts');
+              }
+            }
           }
         });
         $(e.target).addClass('active');
+        if ($parent.hasClass('options-modal-cover-loss-alerts')) {
+          $(e.target).addClass('data-source-filter-modal-loss-alerts');
+        }
       }
     }
   });
