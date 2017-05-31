@@ -30,7 +30,7 @@ define([
   var APIURLS = {
     'getCountryConfig'   : '/query/{countriesConfigDataset}?sql=SELECT iso, indepth FROM {countriesConfigTable} WHERE iso=\'{iso}\'',
     'getCountriesList'   : '/query/{countriesDataset}?sql=SELECT name_engli as name, iso FROM {countriesTable}',
-    'showCountry'        : '/query/{countriesDataset}?sql=SELECT name_engli as name, iso, topojson FROM {countriesTable} WHERE iso=\'{iso}\'',
+    'showCountry'        : '/query/{countriesDataset}?sql=SELECT name_engli as name, iso, topojson, centroid FROM {countriesTable} WHERE iso=\'{iso}\'',
     'getCountryInfo'     : '/query/{countriesDataset}?sql=SELECT {columns} FROM {countriesTable} {filter}',
     'getRegionsList'     : '/query/{regionsDataset}?sql=SELECT cartodb_id, iso, bbox as bounds, id_1, name_1 FROM {regionsTable} WHERE iso=\'{iso}\' ORDER BY name_1',
     'showRegion'         : '/query/{regionsDataset}?sql=SELECT id_1, name_1, geojson FROM {regionsTable} WHERE iso=\'{iso}\' AND id_1={region} ORDER BY name_1',
