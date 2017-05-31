@@ -135,6 +135,9 @@ define([
         }.bind(this))
         .done(function() {
           this._initWidget();
+        }.bind(this))
+        .done(function() {
+          this._initModal();
         }.bind(this));
     },
 
@@ -147,18 +150,6 @@ define([
         maxYear: this.status.get('maxYear'),
         thresh: this.status.get('thresh'),
       }));
-
-      this.initTreeCoverLossModal(
-        this._getAvailableDatasets(),
-        this.status.get('years'),
-        this.status.get('thresh')
-      ).done(function(){
-        this.listenTo(
-          this.initTreeCoverLossModal,
-          'updateDataModal',
-          this.updateDataModal
-        );
-      });
 
       $('.data-time-range').html(this.status.get('minYear')+' to '+this.status.get('maxYear'));
       $('.data-thresh').html('>30');
@@ -174,6 +165,20 @@ define([
         years: years,
         thresh: thresh,
       });
+    },
+
+    _initModal: function() {
+      this.initTreeCoverLossModal(
+        this._getAvailableDatasets(),
+        this.status.get('years'),
+        this.status.get('thresh')
+      );
+
+      this.listenTo(
+        this.initTreeCoverLossModal,
+        'updateDataModal',
+        this.updateDataModal
+      );
     },
 
     _getDates: function() {
@@ -424,7 +429,7 @@ define([
       }.bind(this));
     },
 
-    _changeDates: function(value) {
+    _changeDates: function() {
       var datesList = [];
 
       for (var i = 0; i < this.status.get('years').length; i++) {
@@ -444,21 +449,28 @@ define([
     },
 
     _checkDates: function(e) {
-      $('.back-loading').addClass('-show');
-      this.$el.addClass('-loading');
-      var idTarget = e.currentTarget.id;
-      var value = parseInt(e.currentTarget.value);
+      if (e === 'modal') {
+        var minDate = $('#annual-tree-cover-loss-start-year-modal').val();
+        var maxDate = $('#annual-tree-cover-loss-end-year-modal').val();
+        this.status.set('minYear', minDate);
+        this.status.set('maxYear', maxDate);
+        this._changeDates();
+      } else {
+        $('.back-loading').addClass('-show');
+        this.$el.addClass('-loading');
+        var idTarget = e.currentTarget.id;
+        var value = parseInt(e.currentTarget.value);
 
-      if (idTarget === 'annual-tree-cover-loss-start-year') {
-        this.status.set('minYear', value);
-        this._changeDates(value);
+        if (idTarget === 'annual-tree-cover-loss-start-year') {
+          this.status.set('minYear', value);
+          this._changeDates(value);
+        }
+
+        if (idTarget === 'annual-tree-cover-loss-end-year') {
+          this.status.set('maxYear', value);
+          this._changeDates(value);
+        }
       }
-
-      if (idTarget === 'annual-tree-cover-loss-end-year') {
-        this.status.set('maxYear', value);
-        this._changeDates(value);
-      }
-
       this._getList()
       .done(this._initWidget.bind(this));
     },
@@ -481,7 +493,9 @@ define([
     },
 
     updateDataModal: function() {
-      console.log('test');
+      $('.back-loading').addClass('-show');
+      this.$el.addClass('-loading');
+      this._checkDates('modal');
     }
   });
   return AnnualTreeCoverLossView;

@@ -7,15 +7,15 @@
       <div class="c-switch -modal">
         <ul class="options">
           <li class="active js-switch-option">GFW</li>
-          <li class="disabled js-switch-option">FAO</li>
-          <li class="disabled js-switch-option">PRODES</li>
+          <li class="js-switch-option">FAO</li>
+          <li class="js-switch-option">PRODES</li>
         </ul>
       </div>
       <label class="label">Time range</label>
       <div class="select-container">
         <div class="c-select">
           <div class="wrapper">
-            <select id="annual-tree-cover-loss-start-year">
+            <select id="annual-tree-cover-loss-start-year-modal">
               {{#each years}}
                 <option value="{{this.year}}" {{#if this.selectedMin}}selected{{/if}}>{{this.year}}</option>
               {{/each}}
@@ -26,7 +26,7 @@
         </div>
         <div class="c-select">
           <div class="wrapper">
-            <select id="annual-tree-cover-loss-end-year">
+            <select id="annual-tree-cover-loss-end-year-modal">
               {{#each years}}
                 <option value="{{this.year}}" {{#if this.selectedMax}}selected{{/if}}{{#if this.enable}}{{else}}disabled{{/if}}>{{this.year}}</option>
               {{/each}}
@@ -54,7 +54,7 @@
       <div class="c-switch -modal">
         <ul class="options">
           <li class="active js-switch-option">Ha</li>
-          <li class="disabled js-switch-option">%</li>
+          <li class="js-switch-option">%</li>
         </ul>
       </div>
     </div>
