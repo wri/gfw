@@ -24,7 +24,7 @@ define([
       chartEl: 'grouped-graph-svg',
       chartClass: 'js-grouped-graph',
       paddingAxisLabels: 10,
-      paddingXAxisLabels: 20,
+      paddingXAxisLabels: 50,
       paddingYAxisLabels: 10,
       margin: {
         top: 20,
@@ -199,6 +199,10 @@ define([
      * Draws the entire graph
      */
     _drawGraph: function() {
+      var widthBar = 5;
+      if(this.chartData.length < 6) {
+        widthBar = 10;
+      }
       var bar = this.svg.selectAll('.bar')
         .data(this.chartData)
         .enter().append('g')
@@ -210,7 +214,7 @@ define([
       bar.selectAll('rect')
         .data(function(d) { return d.values; })
         .enter().append('rect')
-        .attr('width', this.x1.rangeBand())
+        .attr('width', widthBar)
         .attr('x', function(d) { return this.x1(d.name); }.bind(this))
         .attr('y', function(d) { return this.y(d.value); }.bind(this))
         .attr('value', function(d) {return d.name;})

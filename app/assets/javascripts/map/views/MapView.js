@@ -458,7 +458,7 @@ define([
       this.map.mapTypes.set('dark', darkMaptype());
       this.map.mapTypes.set('positron', positronMaptype());
       this.map.mapTypes.set('openstreet', openStreetMaptype());
-      for (var i = 1999; i <= 2015; i++) {
+      for (var i = 1999; i <= 2016; i++) {
         this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
       }
     },

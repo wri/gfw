@@ -11,8 +11,8 @@ define([
 
   'use strict';
 
-  var API = window.gfw.config.GFW_API_HOST_NEW_API;
-  var DATASET = '36dfec5c-61c5-4112-b332-1ab041663459';
+  var API = window.gfw.config.GFW_API_HOST_PROD;
+  var DATASET = 'a9a32dd2-f7e1-402a-ba6f-48020fbf50ea';
   var QUERY = '/query?sql=select sum(area) as value, year as date from {dataset} where thresh=30 and iso=\'{iso}\' group by year';
   var TreeCoverLossView = Backbone.View.extend({
     el: '#widget-tree-cover-loss',
