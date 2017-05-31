@@ -152,7 +152,6 @@ define([
       "mongabay",
       "user_stories",
       // FOREST CHANGE
-      "umd_coverage_2015",
       "gfw_landsat_alerts_coverage",
       "glad_coverage",
       "terraicanvas_cover",
