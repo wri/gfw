@@ -33,7 +33,7 @@ $card-highlight-color-grey-pink: #bf8893;
       min-width: 40px;
       height: 40px;
       display: flex;
-      margin-right: 20px;
+      margin-right: 10px;
       align-items: center;
       justify-content: center;
       border-radius: 30px;
@@ -42,6 +42,7 @@ $card-highlight-color-grey-pink: #bf8893;
       @media (min-width: $br-mobile){
         min-width: 60px;
         height: 60px;
+        margin-right: 20px;
       }
 
       > span {
@@ -71,9 +72,13 @@ $card-highlight-color-grey-pink: #bf8893;
 
         > .value {
           position: relative;
-          font-size: 36px;
+          font-size: 28px;
           font-weight: 500;
           line-height: 1.0;
+
+          @media (min-width: $br-mobile){
+            font-size: 36px;
+          }
 
           &:before {
             content: '';

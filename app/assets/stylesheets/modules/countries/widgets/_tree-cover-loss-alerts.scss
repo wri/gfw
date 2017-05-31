@@ -49,10 +49,14 @@ $card-ranking-color: #b6b6ba;
         position: relative;
         padding-right: 15px;
         > .value {
-          font-size: 32px;
+          font-size: 24px;
           font-weight: 500;
           line-height: 1.0;
           color: $card-highlight-color;
+
+          @media (min-width: $br-mobile){
+            font-size: 32px;
+          }
         }
         > .status {
           width: 0;
