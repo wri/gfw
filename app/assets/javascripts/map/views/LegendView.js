@@ -255,15 +255,9 @@ define([
         }
 
         layer.geographic = geographic ? 'checked' : '';
-        // Temp
-        layer.geographicTitle = layer.slug === 'loss'
-          ? '2015 data coverage'
-          : 'Geographic coverage';
-        layer.geographicNote = layer.slug === 'loss'
-          ? 'NOTE: 2015 tree cover loss is only for the tropics.'
-          : '';
+        layer.geographicTitle = 'Geographic coverage';
+        layer.geographicNote = '';
       }, this);
-
 
       categoriesGlobal = this.statusCategories(this.getLayersByCategory(layersGlobal));
       categoriesIso = this.statusCategories(this.getLayersByCategory(layersIso));

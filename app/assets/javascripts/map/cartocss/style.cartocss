@@ -61,6 +61,7 @@
   [layer='glad_coverage'],
   [layer='geographic_coverage_pantropical'],
   [layer='umd_coverage_2015'] {
+  [layer='geographic_coverage_pantropical'] {
     polygon-fill: #f69;
     polygon-opacity: 0.3;
     line-width: 1;
@@ -709,7 +710,7 @@
     line-clip: false;
     polygon-clip: false;
   }
-  
+
   [layer='ecu_user_protected_areas'] {
     polygon-fill: #fecc5c;
     line-color: #b15928;
