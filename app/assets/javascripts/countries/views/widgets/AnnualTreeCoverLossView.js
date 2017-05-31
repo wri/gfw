@@ -158,7 +158,7 @@ define([
       $('.data-thresh').html('>'+this.status.get('threshValue'));
       $('.data-measure').html('HA');
       $('.data-source').html('GFW');
-      $('.back-loading').removeClass('-show');
+      $('.back-loading-annual-cover-loss').removeClass('-show');
       this.$el.removeClass('-loading');
     },
 
@@ -459,7 +459,7 @@ define([
         this.status.set('maxYear', maxDate);
         this._changeDates();
       } else {
-        $('.back-loading').addClass('-show');
+        $('.back-loading-annual-cover-loss').addClass('-show');
         this.$el.addClass('-loading');
         var idTarget = e.currentTarget.id;
         var value = parseInt(e.currentTarget.value);
@@ -479,7 +479,7 @@ define([
     },
 
     _checkThresh: function(e) {
-      $('.back-loading').addClass('-show');
+      $('.back-loading-annual-cover-loss').addClass('-show');
       this.$el.addClass('-loading');
       var threshList = [];
       var value = '';
@@ -501,7 +501,7 @@ define([
     },
 
     updateDataModal: function() {
-      $('.back-loading').addClass('-show');
+      $('.back-loading-annual-cover-loss').addClass('-show');
       this.$el.addClass('-loading');
       this._checkDates('modal');
       this._checkThresh('modal');
