@@ -57,11 +57,20 @@ define([
       zoom: 4,
       mapTypeId: 'grayscale'
     },
+    currentSlug: null,
 
     initialize: function(params, options) {
       this.paramsMap = _.extend({}, this.default, params);
       this.layerInst = {};
+      this.cache();
       this.render();
+      //this._setListeners();
+      this.loadScrollEvent();
+    },
+
+    cache: function () {
+      this.widgets = $('.js-country-widget');
+      this.scrollVisualGap = 300;
     },
 
     render: function() {
@@ -69,17 +78,35 @@ define([
       this.map.mapTypes.set('grayscale', grayscaleMaptype());
       this.setGeom();
       this.$el.append(this.template());
+    },
 
-      // TEMP
-      var where = [{ slug: 'terrailoss' }];
+    _setListeners: function() {
+      mps.subscribe('slider:fullscreen', _.bind(function(image){
+        this.render(image);
+        this.show();
+      },this));
+    },
 
-      LayerSpecService.toggle(where,
-        function(layerSpec) {
-          this.setLayers(layerSpec.getLayers(), {
-            currentDate: [moment.utc().subtract(10, 'year'), moment.utc()],
-            threshold: 30
-          });
+    loadScrollEvent: function () {
+      $(window).scroll(function () {
+        var scrollTop = $(window).scrollTop() + this.scrollVisualGap;
+
+        _.each(this.widgets, function(item) {
+          var widget = $(item);
+          var slug = widget.data('slug');
+          var offset = widget.offset();
+          var scrollPositionTop = offset.top;
+          var scrollPositionBottom = scrollPositionTop + widget.height();
+
+          if (this.currentSlug !== slug &&
+            scrollTop >= scrollPositionTop &&
+            scrollTop <= scrollPositionBottom) {
+            this.currentSlug = slug;
+            console.log(slug);
+            this.toggleLayerSpec();
+          }
         }.bind(this));
+      }.bind(this));
     },
 
     setGeom: function() {
@@ -107,6 +134,19 @@ define([
       $(e.target).addClass('checked');
     },
 
+    toggleLayerSpec: function () {
+      var where = [{ slug: this.currentSlug }];
+
+      LayerSpecService.toggle(where,
+        function(layerSpec) {
+          this.setLayers(layerSpec.getLayers(), {
+            currentDate: [moment.utc().subtract(10, 'year'), moment.utc()],
+            threshold: 30
+          });
+        }.bind(this)
+      );
+    },
+
     /**
      * Add passed layers to the map and remove the rest.
      *
@@ -120,6 +160,14 @@ define([
 
       layers = _.sortBy(_.values(layers), 'position');
       this._addLayers(layers, options);
+    },
+
+    _removeLayer: function(layerSlug) {
+      var inst = this.layerInst[layerSlug];
+      if (!inst) {return;}
+      inst.removeLayer();
+      inst.presenter && inst.presenter.unsubscribe && inst.presenter.unsubscribe();
+      this.layerInst[layerSlug] = null;
     },
 
     /**
