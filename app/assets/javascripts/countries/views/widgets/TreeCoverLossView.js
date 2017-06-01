@@ -4,25 +4,36 @@ define([
   'underscore',
   'handlebars',
   'uri',
+  'core/View',
+  'mps',
   'helpers/numbersHelper',
   'common/views/LineGraphView',
   'text!countries/templates/widgets/treeCoverLoss.handlebars'
-], function($, Backbone, _, Handlebars, UriTemplate, NumbersHelper, LineGraphView, tpl) {
+], function($, Backbone, _, Handlebars, UriTemplate, View, mps, NumbersHelper, LineGraphView, tpl) {
 
   'use strict';
 
   var API = window.gfw.config.GFW_API_HOST_PROD;
   var DATASET = 'a9a32dd2-f7e1-402a-ba6f-48020fbf50ea';
   var QUERY = '/query?sql=select sum(area) as value, year as date from {dataset} where thresh=30 and iso=\'{iso}\' group by year';
-  var TreeCoverLossView = Backbone.View.extend({
+
+  var TreeCoverLossView = View.extend({
     el: '#widget-tree-cover-loss',
 
     template: Handlebars.compile(tpl),
 
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
+
+        }
+      },
+    ],
+
     initialize: function(params) {
+      View.prototype.initialize.apply(this);
       this.iso = params.iso;
       this.countryData = params.countryData;
-
       this._getData().done(this._initWidget.bind(this));
     },
 

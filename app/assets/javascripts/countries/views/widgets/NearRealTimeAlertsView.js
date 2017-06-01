@@ -5,9 +5,11 @@ define([
   'handlebars',
   'moment',
   'uri',
+  'core/View',
+  'mps',
   'helpers/numbersHelper',
   'text!countries/templates/widgets/nearRealTimeAlerts.handlebars'
-], function($, Backbone, _, Handlebars, moment, UriTemplate, NumbersHelper, tpl) {
+], function($, Backbone, _, Handlebars, moment, UriTemplate, View, mps, NumbersHelper, tpl) {
 
   'use strict';
 
@@ -17,15 +19,33 @@ define([
   var QUERY_VIIRS = '/query?sql=SELECT count(*) as value FROM {dataset} WHERE acq_date = \'{date}\'';
   var QUERY_GLAD = '/query?sql=SELECT sum(alerts) as value FROM {dataset} WHERE year={year} AND month={month} AND country_iso=\'{iso}\' GROUP BY country_iso';
 
-  var NearRealTimeAlertsView = Backbone.View.extend({
+  var NearRealTimeAlertsView = View.extend({
     el: '#widget-near-real-time-alerts',
 
     template: Handlebars.compile(tpl),
 
+    status: new (Backbone.Model.extend({
+      defaults: {
+        origin: 'month',
+        source: 'glad',
+        layerLink: 'umd_as_it_happens',
+        sourceLink: 'glad-alerts'
+      }
+    })),
+
+
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
+
+        }
+      },
+    ],
+
     initialize: function(params) {
+      View.prototype.initialize.apply(this);
       this.iso = params.iso;
       this.data = [];
-
       this._start();
     },
 

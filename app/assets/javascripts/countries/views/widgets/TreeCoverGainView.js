@@ -4,6 +4,8 @@ define([
   'underscore',
   'handlebars',
   'uri',
+  'core/View',
+  'mps',
   'helpers/numbersHelper',
   'text!countries/templates/widgets/treeCoverGain.handlebars'
 ], function(
@@ -12,6 +14,8 @@ define([
   _,
   Handlebars,
   UriTemplate,
+  View,
+  mps,
   NumbersHelper,
   tpl) {
 
@@ -21,14 +25,22 @@ define([
   var DATASET = '4baa763a-1e33-4c68-8c89-d23ee5033c58';
   var QUERY = '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' group by iso';
 
-  var TreeCoverGainView = Backbone.View.extend({
+  var TreeCoverGainView = View.extend({
     el: '#widget-tree-cover-gain',
 
     template: Handlebars.compile(tpl),
 
-    initialize: function(params) {
-      this.iso = params.iso;
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
 
+        }
+      },
+    ],
+
+    initialize: function(params) {
+      View.prototype.initialize.apply(this);
+      this.iso = params.iso;
       this._getData().done(function(res) {
         this.data = res.data[0];
         this.render();

@@ -3,6 +3,8 @@ define([
   'backbone',
   'underscore',
   'handlebars',
+  'core/View',
+  'mps',
   'services/CountryService',
   'text!countries/templates/countryHeader.handlebars'
 ], function(
@@ -10,14 +12,20 @@ define([
   Backbone,
   _,
   Handlebars,
+  View,
+  mps,
   CountryService,
   tpl) {
 
   'use strict';
 
-  var CountryHeaderView = Backbone.View.extend({
+  var CountryHeaderView = View.extend({
     el: '#country-header',
     template: Handlebars.compile(tpl),
+
+    events: {
+      'change #areaSelector': 'changeRegion',
+    },
 
     initialize: function(params) {
       this.iso = params.iso;
@@ -37,6 +45,11 @@ define([
           this.regions = results;
           this.renderRegions();
         }.bind(this))
+    },
+
+    changeRegion: function() {
+      var value = $('#areaSelector').val();
+      mps.publish('Regions/update', [value]);
     },
 
     renderRegions: function() {

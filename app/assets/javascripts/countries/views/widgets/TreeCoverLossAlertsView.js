@@ -5,6 +5,8 @@ define([
   'moment',
   'handlebars',
   'uri',
+  'core/View',
+  'mps',
   'helpers/numbersHelper',
   'services/CountryService',
   'common/views/LineGraphView',
@@ -17,6 +19,8 @@ define([
   moment,
   Handlebars,
   UriTemplate,
+  View,
+  mps,
   NumbersHelper,
   CountryService,
   LineGraphView,
@@ -100,7 +104,7 @@ define([
     }
   }
 
-  var TreeCoverLossView = Backbone.View.extend({
+  var TreeCoverLossView = View.extend({
     el: '#widget-tree-cover-loss-alerts',
 
     events: {
@@ -126,7 +130,16 @@ define([
       MYS: ['onpeat']
     },
 
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
+
+        }
+      },
+    ],
+
     initialize: function(params) {
+      View.prototype.initialize.apply(this);
       this.iso = params.iso;
       this.latitude = params.latitude;
       this.longitude = params.longitude;

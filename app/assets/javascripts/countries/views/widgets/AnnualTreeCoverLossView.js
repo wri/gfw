@@ -4,6 +4,8 @@ define([
   'underscore',
   'handlebars',
   'uri',
+  'core/View',
+  'mps',
   'helpers/numbersHelper',
   'common/views/GroupedGraphView',
   'countries/views/widgets/AnnualTreeCoverLossRankingView',
@@ -14,6 +16,8 @@ define([
   _,
   Handlebars,
   UriTemplate,
+  View,
+  mps,
   NumbersHelper,
   GroupedGraphView,
   AnnualTreeCoverLossRankingView,
@@ -94,7 +98,7 @@ define([
     }
   ];
 
-  var AnnualTreeCoverLossView = Backbone.View.extend({
+  var AnnualTreeCoverLossView = View.extend({
     el: '#widget-annual-tree-cover-loss',
 
     events: {
@@ -110,9 +114,20 @@ define([
         minYear: null,
         maxYear: null,
         thresh: null,
-        threshValue: 30
+        threshValue: 30,
+        region: 0
       }
     })),
+
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
+          this.status.set('region', parseInt(value));
+          this._getList()
+          .done(this._initWidget.bind(this));
+        }
+      },
+    ],
 
     defaults: {
       currentDatasets: ['loss', 'wdpa']
@@ -121,6 +136,7 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function(params) {
+      View.prototype.initialize.apply(this);
       this.iso = params.iso;
       this.currentDatasets = this.defaults.currentDatasets;
       this.datasets = [];
@@ -225,7 +241,8 @@ define([
             iso: this.iso,
             minYear: this.status.get('minYear'),
             maxYear: this.status.get('maxYear'),
-            threshValue: this.status.get('threshValue')
+            threshValue: this.status.get('threshValue'),
+            region: this.status.get('region'),
           });
           $promises.push(this._getTotalData(url, item.slug));
         }
@@ -307,6 +324,7 @@ define([
             minYear: this.status.get('minYear'),
             maxYear: this.status.get('maxYear'),
             threshValue: this.status.get('threshValue'),
+            region: this.status.get('region'),
           });
 
           $promises.push(

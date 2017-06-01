@@ -4,6 +4,8 @@ define([
   'underscore',
   'handlebars',
   'uri',
+  'core/View',
+  'mps',
   'text!countries/templates/widgets/firesAlerts.handlebars',
   'text!countries/templates/widgets/firesAlertsCover.handlebars',
   'text!countries/templates/widgets/firesAlertsCard.handlebars'
@@ -13,6 +15,8 @@ define([
   _,
   Handlebars,
   UriTemplate,
+  View,
+  mps,
   tpl,
   coverTpl,
   cardTpl) {
@@ -23,7 +27,7 @@ define([
   var DATASET = '';
   var QUERY = '';
 
-  var FiresAlertsView = Backbone.View.extend({
+  var FiresAlertsView = View.extend({
     el: '#widget-fire-alerts',
 
     template: Handlebars.compile(tpl),
@@ -35,7 +39,16 @@ define([
       'grey-pink'
     ],
 
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
+
+        }
+      },
+    ],
+
     initialize: function(params) {
+      View.prototype.initialize.apply(this);
       this.iso = params.iso;
       this.start();
     },

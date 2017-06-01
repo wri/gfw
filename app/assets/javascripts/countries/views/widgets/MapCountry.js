@@ -6,6 +6,7 @@ define([
   'topojson',
   'helpers/geojsonUtilsHelper',
   'map/views/maptypes/grayscaleMaptype',
+  'core/View',
   'mps',
   'text!countries/templates/widgets/legendMap.handlebars'
 ], function(
@@ -16,12 +17,13 @@ define([
   topojson,
   geojsonUtilsHelper,
   grayscaleMaptype,
+  View,
   mps,
   tpl) {
 
   'use strict';
 
-  var MapCountry = Backbone.View.extend({
+  var MapCountry = View.extend({
 
     el: '#map',
     template: Handlebars.compile(tpl),
@@ -50,7 +52,16 @@ define([
       mapTypeId: 'grayscale'
     },
 
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
+
+        }
+      },
+    ],
+
     initialize: function(params, options) {
+      View.prototype.initialize.apply(this);
       this.paramsMap = _.extend({}, this.default, params);
       this.render();
     },

@@ -4,6 +4,8 @@ define([
   'underscore',
   'handlebars',
   'uri',
+  'core/View',
+  'mps',
   'services/CountryService',
   'common/views/PieGraphView',
   'text!countries/templates/widgets/treeCover.handlebars'
@@ -13,6 +15,8 @@ define([
   _,
   Handlebars,
   UriTemplate,
+  View,
+  mps,
   CountryService,
   PieGraphView,
   tpl) {
@@ -25,14 +29,22 @@ define([
   var DATASET_IFL = 'de9ab235-452c-4832-97ab-1b55287beb4e';
   var QUERY_TOTAL_IFL = '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' and thresh=30 group by iso';
 
-  var TreeCoverView = Backbone.View.extend({
+  var TreeCoverView = View.extend({
     el: '#widget-tree-cover',
 
     template: Handlebars.compile(tpl),
 
-    initialize: function(params) {
-      this.iso = params.iso;
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
 
+        }
+      },
+    ],
+
+    initialize: function(params) {
+      View.prototype.initialize.apply(this);
+      this.iso = params.iso;
       this._getData().done(function(data) {
         this.data = data;
         this._initWidget();

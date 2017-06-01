@@ -4,6 +4,8 @@ define([
   'underscore',
   'handlebars',
   'uri',
+  'core/View',
+  'mps',
   'helpers/numbersHelper',
   'services/CountryService',
   'text!countries/templates/widgets/treeCoverLossRanking.handlebars'
@@ -13,6 +15,8 @@ define([
   _,
   Handlebars,
   UriTemplate,
+  View,
+  mps,
   NumbersHelper,
   CountryService,
   tpl) {
@@ -23,14 +27,22 @@ define([
   var DATASET_LOSS = 'a9a32dd2-f7e1-402a-ba6f-48020fbf50ea';
   var QUERY_TOTAL_LOSS = '/query?sql=select sum(area) as value FROM {dataset} WHERE thresh=30 group by iso ORDER BY value DESC';
 
-  var TreeCoverLossRankingView = Backbone.View.extend({
+  var TreeCoverLossRankingView = View.extend({
     el: '#widget-tree-cover-loss-ranking',
 
     template: Handlebars.compile(tpl),
 
-    initialize: function(params) {
-      this.iso = params.iso;
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
+          
+        }
+      },
+    ],
 
+    initialize: function(params) {
+      View.prototype.initialize.apply(this);
+      this.iso = params.iso;
       this._getData().done(function(data) {
         this.data = data;
         this._initWidget();

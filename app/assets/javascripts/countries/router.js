@@ -13,7 +13,7 @@ define([
     routes: {
       'countries': 'showList',
       'countries/overview': 'showOverview',
-      'countries/:iso(/)': 'showCountry'
+      'countries/:iso(/):region(/)': 'showCountry'
     },
 
     showList: function() {
@@ -24,9 +24,10 @@ define([
       new CountryOverviewView();
     },
 
-    showCountry: function(iso) {
+    showCountry: function(iso, region) {
       new CountryShowView({
-        iso: iso
+        iso: iso,
+        region: region
       });
     },
 
