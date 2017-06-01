@@ -25,9 +25,9 @@ define([
 
   var API = window.gfw.config.GFW_API_HOST_PROD;
   var DATASET_COVER = '0ef4a861-930f-4f56-865d-89f5c0c6aef0';
-  var QUERY_TOTAL_COVER = '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' and thresh=30 group by iso';
+  var QUERY_TOTAL_COVER = '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' and thresh=30 {region}';
   var DATASET_IFL = 'de9ab235-452c-4832-97ab-1b55287beb4e';
-  var QUERY_TOTAL_IFL = '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' and thresh=30 group by iso';
+  var QUERY_TOTAL_IFL = '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' and thresh=30 {region}';
 
   var TreeCoverView = View.extend({
     el: '#widget-tree-cover',
@@ -37,7 +37,11 @@ define([
     _subscriptions:[
       {
         'Regions/update': function(value) {
-
+          this.region = value;
+          this._getData().done(function(data) {
+            this.data = data;
+            this._initWidget();
+          }.bind(this));
         }
       },
     ],
@@ -45,6 +49,7 @@ define([
     initialize: function(params) {
       View.prototype.initialize.apply(this);
       this.iso = params.iso;
+      this.region = 0;
       this._getData().done(function(data) {
         this.data = data;
         this._initWidget();
@@ -81,11 +86,11 @@ define([
       var data = {};
 
       var urlTotalCover = API + new UriTemplate(QUERY_TOTAL_COVER).fillFromObject({
-        dataset: DATASET_COVER, iso: this.iso
+        dataset: DATASET_COVER, iso: this.iso, region: this.region === 0 ? 'GROUP BY iso' : 'AND adm1 = '+this.region+' GROUP BY iso, adm1',
       });
 
       var urlTotalIfl = API + new UriTemplate(QUERY_TOTAL_IFL).fillFromObject({
-        dataset: DATASET_IFL, iso: this.iso
+        dataset: DATASET_IFL, iso: this.iso, region: this.region === 0 ? 'GROUP BY iso' : 'AND adm1 = '+this.region+' GROUP BY iso, adm1',
       });
 
       CountryService.getCountriesInfo({

@@ -15,7 +15,7 @@ define([
 
   var API = window.gfw.config.GFW_API_HOST_PROD;
   var DATASET = 'a9a32dd2-f7e1-402a-ba6f-48020fbf50ea';
-  var QUERY = '/query?sql=select sum(area) as value, year as date from {dataset} where thresh=30 and iso=\'{iso}\' group by year';
+  var QUERY = '/query?sql=select sum(area) as value, year as date from {dataset} where thresh=30 and iso=\'{iso}\' {region}';
 
   var TreeCoverLossView = View.extend({
     el: '#widget-tree-cover-loss',
@@ -25,7 +25,8 @@ define([
     _subscriptions:[
       {
         'Regions/update': function(value) {
-
+          this.region = value;
+          this._getData().done(this._initWidget.bind(this));
         }
       },
     ],
@@ -33,6 +34,7 @@ define([
     initialize: function(params) {
       View.prototype.initialize.apply(this);
       this.iso = params.iso;
+      this.region = 0;
       this.countryData = params.countryData;
       this._getData().done(this._initWidget.bind(this));
     },
@@ -65,7 +67,7 @@ define([
 
     _getData: function() {
       var url = API + new UriTemplate(QUERY).fillFromObject({
-        dataset: DATASET, iso: this.iso
+        dataset: DATASET, iso: this.iso, region: this.region === 0 ? 'GROUP BY year' : 'AND adm1 = '+this.region+' GROUP BY year, adm1'
       });
 
       return $.ajax({
