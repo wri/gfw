@@ -38,6 +38,7 @@ define([
       {
         'Regions/update': function(value) {
           this.region = value;
+          this.$el.addClass('-loading');
           this._getData().done(function(data) {
             this.data = data;
             this._initWidget();

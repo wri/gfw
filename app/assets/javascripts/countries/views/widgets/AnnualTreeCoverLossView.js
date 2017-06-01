@@ -26,10 +26,10 @@ define([
   'use strict';
 
   var API = window.gfw.config.GFW_API_HOST_PROD;
-  var QUERY_YEARLY = '/query?sql=select sum(area) as value, year as date from {dataset} and iso=\'{iso}\' WHERE year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue} group by year';
-  var QUERY_TOTAL = '/query/?sql=SELECT sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' AND thresh=\'30\' AND year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue} GROUP BY iso';
-  var YEARS_TOTAL = '/query/?sql=SELECT year FROM a9a32dd2-f7e1-402a-ba6f-48020fbf50ea WHERE iso=\'{iso}\' group by year';
-  var THRESH_TOTAL = '/query/?sql=SELECT thresh FROM a9a32dd2-f7e1-402a-ba6f-48020fbf50ea WHERE iso=\'{iso}\' GROUP BY thresh';
+  var QUERY_YEARLY = '/query?sql=select sum(area) as value, year as date from {dataset} and iso=\'{iso}\' WHERE year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue} {region}';
+  var QUERY_TOTAL = '/query/?sql=SELECT sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' AND thresh=\'30\' AND year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue} {region}';
+  var YEARS_TOTAL = '/query/?sql=SELECT year FROM a9a32dd2-f7e1-402a-ba6f-48020fbf50ea WHERE iso=\'{iso}\' {region}';
+  var THRESH_TOTAL = '/query/?sql=SELECT thresh FROM a9a32dd2-f7e1-402a-ba6f-48020fbf50ea WHERE iso=\'{iso}\' region}';
 
   // Datasets
   var DATASETS = [
@@ -122,7 +122,9 @@ define([
     _subscriptions:[
       {
         'Regions/update': function(value) {
-          this.status.set('region', parseInt(value));
+          $('.back-loading').addClass('-show');
+          this.$el.addClass('-loading');
+          this.region = value;
           this._getList()
           .done(this._initWidget.bind(this));
         }
@@ -138,6 +140,7 @@ define([
     initialize: function(params) {
       View.prototype.initialize.apply(this);
       this.iso = params.iso;
+      this.region = 0;
       this.currentDatasets = this.defaults.currentDatasets;
       this.datasets = [];
       this._getDates()
@@ -170,7 +173,8 @@ define([
       var datesList = [];
 
       var url = API + new UriTemplate(YEARS_TOTAL).fillFromObject({
-        iso: this.iso
+        iso: this.iso,
+        region: this.region === 0 ? 'GROUP BY year' : 'AND adm1 = '+this.region+' GROUP BY year, adm1',
       });
 
       $.ajax({
@@ -207,7 +211,8 @@ define([
       var threshList = [];
 
       var url = API + new UriTemplate(THRESH_TOTAL).fillFromObject({
-        iso: this.iso
+        iso: this.iso,
+        region: this.region === 0 ? 'GROUP BY thresh' : 'AND adm1 = '+this.region+' GROUP BY thresh, adm1',
       });
 
       $.ajax({
@@ -242,7 +247,7 @@ define([
             minYear: this.status.get('minYear'),
             maxYear: this.status.get('maxYear'),
             threshValue: this.status.get('threshValue'),
-            region: this.status.get('region'),
+            region: this.region === 0 ? 'GROUP BY iso' : 'AND adm1 = '+this.region+' GROUP BY iso, adm1',
           });
           $promises.push(this._getTotalData(url, item.slug));
         }
@@ -324,8 +329,10 @@ define([
             minYear: this.status.get('minYear'),
             maxYear: this.status.get('maxYear'),
             threshValue: this.status.get('threshValue'),
-            region: this.status.get('region'),
+            region: this.region === 0 ? 'GROUP BY year' : 'AND adm1 = '+this.region+' GROUP BY year, adm1',
           });
+
+          console.log(url);
 
           $promises.push(
             $.ajax({
