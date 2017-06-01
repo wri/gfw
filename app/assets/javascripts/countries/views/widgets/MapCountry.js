@@ -57,14 +57,15 @@ define([
       zoom: 4,
       mapTypeId: 'grayscale'
     },
-    currentSlug: null,
+    currentSection: null,
 
     initialize: function(params, options) {
       this.paramsMap = _.extend({}, this.default, params);
+      this.modules = options.modules;
       this.layerInst = {};
       this.cache();
       this.render();
-      //this._setListeners();
+      this._setListeners();
       this.loadScrollEvent();
     },
 
@@ -81,10 +82,16 @@ define([
     },
 
     _setListeners: function() {
-      mps.subscribe('slider:fullscreen', _.bind(function(image){
-        this.render(image);
-        this.show();
-      },this));
+      mps.subscribe('TreeCoverLossAlerts/update', _.bind(function(){
+        if (this.currentSection === 'cover-loss-alerts') {
+          this._updateLayer();
+        }
+      }, this));
+      mps.subscribe('AnnualTreeCoverLoss/update', _.bind(function(){
+        if (this.currentSection === 'cover-loss') {
+          this._updateLayer();
+        }
+      }, this));
     },
 
     loadScrollEvent: function () {
@@ -93,17 +100,19 @@ define([
 
         _.each(this.widgets, function(item) {
           var widget = $(item);
-          var slug = widget.data('slug');
+          var section = widget.data('section');
           var offset = widget.offset();
           var scrollPositionTop = offset.top;
           var scrollPositionBottom = scrollPositionTop + widget.height();
 
-          if (this.currentSlug !== slug &&
+          if (this.currentSection !== section &&
             scrollTop >= scrollPositionTop &&
             scrollTop <= scrollPositionBottom) {
-            this.currentSlug = slug;
-            console.log(slug);
-            this.toggleLayerSpec();
+            this.currentSection = section;
+
+            setTimeout(function() {
+              this.toggleLayerSpec(section);
+            }.bind(this), 1000);
           }
         }.bind(this));
       }.bind(this));
@@ -134,17 +143,57 @@ define([
       $(e.target).addClass('checked');
     },
 
-    toggleLayerSpec: function () {
-      var where = [{ slug: this.currentSlug }];
+    toggleLayerSpec: function (section) {
+      if (section === this.currentSection) {
+        var layerData = this._getLayerDataSection(this.currentSection);
+        var where = [{ slug: layerData.slug }];
 
-      LayerSpecService.toggle(where,
-        function(layerSpec) {
-          this.setLayers(layerSpec.getLayers(), {
-            currentDate: [moment.utc().subtract(10, 'year'), moment.utc()],
-            threshold: 30
-          });
-        }.bind(this)
-      );
+        LayerSpecService.toggle(where,
+          function(layerSpec) {
+            this.setLayers(layerSpec.getLayers(), layerData.options);
+          }.bind(this)
+        );
+      }
+    },
+
+    _updateLayer: function () {
+      LayerSpecService._removeAllLayers();
+      this.toggleLayerSpec(this.currentSection);
+    },
+
+    _getLayerDataSection: function (section) {
+      var data;
+      switch (section) {
+        case 'cover-loss':
+          data = {
+            slug: 'terrailoss',
+            options: {
+              currentDate: [moment.utc().subtract(10, 'year'), moment.utc()],
+              threshold: 30
+            }
+          };
+          break;
+        case 'cover-gain':
+          data = {
+            slug: 'forestgain',
+            options: {}
+          };
+          break;
+        case 'cover-loss-alerts':
+          data = {
+            slug: this.modules.treeCoverLossAlerts[0].status.attributes.layerLink,
+            options: {}
+          };
+          break;
+        case 'fires':
+          data = {
+            slug: 'viirs_fires_alerts',
+            options: {}
+          };
+          break;
+      }
+
+      return data;
     },
 
     /**
