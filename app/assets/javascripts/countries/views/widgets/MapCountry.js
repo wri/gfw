@@ -57,12 +57,11 @@ define([
       zoom: 4,
       mapTypeId: 'grayscale'
     },
-    currentSection: null,
 
     initialize: function(params, options) {
       this.paramsMap = _.extend({}, this.default, params);
       this.modules = options.modules;
-      this.layerInst = {};
+
       this.cache();
       this.render();
       this._setListeners();
@@ -70,6 +69,9 @@ define([
     },
 
     cache: function () {
+      this.layerInst = {};
+      this.currentSection = null;
+      this.forceSection = false;
       this.widgets = $('.js-country-widget');
       this.scrollVisualGap = 300;
     },
@@ -98,25 +100,27 @@ define([
       $(window).scroll(function () {
         var scrollTop = $(window).scrollTop() + this.scrollVisualGap;
 
-        _.each(this.widgets, function(item) {
-          var widget = $(item);
-          var section = widget.data('section');
-          var offset = widget.offset();
-          var scrollPositionTop = offset.top;
-          var scrollPositionBottom = scrollPositionTop + widget.height();
+        if (!this.forceSection) {
+          _.each(this.widgets, function(item) {
+            var widget = $(item);
+            var section = widget.data('section');
+            var offset = widget.offset();
+            var scrollPositionTop = offset.top;
+            var scrollPositionBottom = scrollPositionTop + widget.height();
 
-          if (this.currentSection !== section &&
-            scrollTop >= scrollPositionTop &&
-            scrollTop <= scrollPositionBottom) {
-            this.currentSection = section;
+            if (this.currentSection !== section &&
+              scrollTop >= scrollPositionTop &&
+              scrollTop <= scrollPositionBottom) {
+              this.currentSection = section;
 
-            setTimeout(function(lastSection) {
-              if (lastSection === this.currentSection) {
-                this._updateLayer();
-              }
-            }.bind(this, section), 1000);
-          }
-        }.bind(this));
+              setTimeout(function(lastSection) {
+                if (lastSection === this.currentSection) {
+                  this._updateLayer();
+                }
+              }.bind(this, section), 1000);
+            }
+          }.bind(this));
+        }
       }.bind(this));
     },
 
@@ -135,6 +139,9 @@ define([
     },
 
     toogleLayer: function(e){
+      var target = $(e.target);
+      var section = target.data('section');
+
       _.each(this.$el.find('.onoffswitch'), function(toggle) {
         var $toggle = $(toggle);
         var optionSelected = $toggle.hasClass('checked');
@@ -142,7 +149,16 @@ define([
           $toggle.removeClass('checked');
         }
       });
-      $(e.target).addClass('checked');
+      target.addClass('checked');
+      if (section) {
+        this.currentSection = section;
+        this.forceSection = true;
+        this._updateLayer();
+      } else {
+        this.currentSection = null;
+        this.forceSection = false;
+        this._removeAllLayers();
+      }
     },
 
     toggleLayerSpec: function () {
@@ -158,7 +174,7 @@ define([
 
     _updateLayer: function () {
       this._removeAllLayers();
-      this.toggleLayerSpec(this.currentSection);
+      this.toggleLayerSpec();
     },
 
     _getLayerDataSection: function (section) {
