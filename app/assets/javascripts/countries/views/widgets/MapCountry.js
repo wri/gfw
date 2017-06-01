@@ -110,9 +110,11 @@ define([
             scrollTop <= scrollPositionBottom) {
             this.currentSection = section;
 
-            setTimeout(function() {
-              this.toggleLayerSpec(section);
-            }.bind(this), 1000);
+            setTimeout(function(lastSection) {
+              if (lastSection === this.currentSection) {
+                this._updateLayer();
+              }
+            }.bind(this, section), 1000);
           }
         }.bind(this));
       }.bind(this));
@@ -143,21 +145,19 @@ define([
       $(e.target).addClass('checked');
     },
 
-    toggleLayerSpec: function (section) {
-      if (section === this.currentSection) {
-        var layerData = this._getLayerDataSection(this.currentSection);
-        var where = [{ slug: layerData.slug }];
+    toggleLayerSpec: function () {
+      var layerData = this._getLayerDataSection(this.currentSection);
+      var where = [{ slug: layerData.slug }];
 
-        LayerSpecService.toggle(where,
-          function(layerSpec) {
-            this.setLayers(layerSpec.getLayers(), layerData.options);
-          }.bind(this)
-        );
-      }
+      LayerSpecService.toggle(where,
+        function(layerSpec) {
+          this.setLayers(layerSpec.getLayers(), layerData.options);
+        }.bind(this)
+      );
     },
 
     _updateLayer: function () {
-      LayerSpecService._removeAllLayers();
+      this._removeAllLayers();
       this.toggleLayerSpec(this.currentSection);
     },
 
@@ -168,8 +168,11 @@ define([
           data = {
             slug: 'terrailoss',
             options: {
-              currentDate: [moment.utc().subtract(10, 'year'), moment.utc()],
-              threshold: 30
+              currentDate: [
+                moment.utc(this.modules.treeCoverLoss[0].status.attributes.minYear, 'YYYY'),
+                moment.utc(this.modules.treeCoverLoss[0].status.attributes.maxYear, 'YYYY')
+              ],
+              threshold: this.modules.treeCoverLoss[0].status.attributes.threshValue
             }
           };
           break;
@@ -188,7 +191,9 @@ define([
         case 'fires':
           data = {
             slug: 'viirs_fires_alerts',
-            options: {}
+            options: {
+              currentDate: [moment().subtract(24, 'hours'), moment()]
+            }
           };
           break;
       }
@@ -217,6 +222,16 @@ define([
       inst.removeLayer();
       inst.presenter && inst.presenter.unsubscribe && inst.presenter.unsubscribe();
       this.layerInst[layerSlug] = null;
+    },
+
+    _removeAllLayers: function() {
+      _.each(this.layerInst, function(inst, layerSlug) {
+        if (!inst) {return;}
+        inst.removeLayer();
+        inst.presenter && inst.presenter.unsubscribe && inst.presenter.unsubscribe();
+        this.layerInst[layerSlug] = null;
+      }, this);
+      LayerSpecService._removeAllLayers();
     },
 
     /**
