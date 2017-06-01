@@ -25,14 +25,13 @@ define([
       var $parent = $(e.target).parent();
       var disabledOption = $(e.target).hasClass('disabled');
       if (!disabledOption) {
-        _.each($parent.find('.js-switch-option'), function(option) {
-          var $option = $(option);
-          var optionSelected = $option.hasClass('active');
+        $parent.find('.js-switch-option').each(function(index, option) {
+          var optionSelected = $(option).hasClass('active');
           if (optionSelected) {
-            $option.removeClass('active');
+            $(option).removeClass('active');
             if ($parent.hasClass('options-modal-cover-loss-alerts')) {
-              if ($option.hasClass('data-source-filter-modal-loss-alerts')) {
-                $option.removeClass('data-source-filter-modal-loss-alerts');
+              if ($(option).hasClass('data-source-filter-modal-loss-alerts')) {
+                $(option).removeClass('data-source-filter-modal-loss-alerts');
               }
             }
           }

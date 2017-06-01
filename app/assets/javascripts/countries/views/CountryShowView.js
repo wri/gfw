@@ -86,7 +86,6 @@ define([
     },
 
     start: function() {
-      this.initAppendBackgroundModal();
       this.initHeader();
       this.initSnapshot();
       this.initTreeCoverLoss();
@@ -98,10 +97,6 @@ define([
       this.initSwitchOptions();
 
       this.$el.find('.widgets > .content').removeClass('-loading');
-    },
-
-    initAppendBackgroundModal: function() {
-      $('body').append('<div class="background-modal -hidden"></div>');
     },
 
     initHeader: function() {
