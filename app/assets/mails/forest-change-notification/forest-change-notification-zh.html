@@ -130,7 +130,7 @@
 													<div class="h2" style="color:#555555; font-family:Arial,sans-serif; font-size:30px; line-height:34px; text-align:left; font-weight:bold">森林變化預警</div>
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
-													<div class="h4" style="color:#555555; font-family:Arial,sans-serif; font-size:20px; line-height:26px; text-align:left">Global Forest Watch 在您所在的地區偵測到 <span style="color:#9abe16;">{{alert_count}}</span> 宗森林變化新預警:</div>
+													<div class="h4" style="color:#555555; font-family:Arial,sans-serif; font-size:20px; line-height:26px; text-align:left">Global Forest Watch 在您所在的地區偵測到 <span style="color:#9abe16;">{{alert_count}} 宗森林變化新預警</span>:</div>
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="30" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 												</td>
 											</tr>
@@ -209,11 +209,17 @@
 																		<td valign="top">
 																			<div class="text2-tb1" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:left">
                                         {{ if layerSlug == "glad-alerts"}}
-                                          每週 GLAD 林木植被減少預警
+                                          每週 GLAD 森林砍伐警报
                                         {{ end }}
                                         {{ if layerSlug == "terrai-alerts"}}
-                                          每月 Terra-i 林木植被減少預警
+                                          每月 Terra-i 森林砍伐警报
                                         {{ end }}
+																				{{ if layerSlug == "forma250GFW"}}
+																					每日 FORMA 森林砍伐警报
+																				{{ end }}
+																				{{ if layerSlug == "forma-alerts"}}
+																					每日 FORMA 正在发生的损失预警
+																				{{ end }}
 																			</div>
 																		</td>
 																	</tr>
@@ -248,11 +254,17 @@
 																		<td valign="top">
 																			<div class="text2-tb1" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:left">
                                         {{ if layerSlug == "glad-alerts"}}
-                                          按 30 × 30 米 (Landsat) 的解析度近乎同步地確定林木植被可能減少的地區 。覆蓋面為 秘魯、剛果共和國及加裡曼丹（印尼），最終覆蓋濕熱帶。資料來源為 UMD/GLAD。可提供2015 年 1 月 1 日至今的資料，更新每週。
+                                          按 30 × 30 米 (Landsat) 的解析度近乎同步地確定林木植被可能減少的地區 。覆蓋面為 ：各国 ，最終覆蓋濕熱帶。資料來源為 UMD/GLAD。可提供2015 年 1 月 1 日至今的資料，更新每週。
                                         {{ end }}
                                         {{ if layerSlug == "terrai-alerts"}}
-                                          按 250 x 250 米 (MODIS)  的解析度確定林木植被可能減少的地區 。覆蓋面為 拉丁美洲。資料來源為 CIAT。可提供2004 年 1 月至今的資料，更新每月。
+                                          按 250 x 250 米 (MODIS)  的解析度確定林木植被可能減少的地區 。覆蓋面為 ：热带。資料來源為 CIAT。可提供2004 年 1 月至今的資料，更新每月。
                                         {{ end }}
+																				{{ if layerSlug == "forma250GFW"}}
+																					按250 x 250 米（MODIS）的分辨率确定林木植被可能减少的地区。覆盖地区：热带。数据来源 WRI/Google。可提供2012 年 1 月至今的数据，每日更新。
+																				{{ end }}
+																				{{ if layerSlug == "forma-alerts"}}
+																					以 250 x 250-米 (MODIS) 的分辨率识别可能正在发生森林覆盖损失的地区（过去的一个月内）。覆盖地区：热带。数据来源 WRI/Google。可提供2012 年 1 月至今的数据，每日更新。
+																				{{ end }}
 								  										</div>
 																		</td>
 																	</tr>

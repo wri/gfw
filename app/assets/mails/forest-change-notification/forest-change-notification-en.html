@@ -211,12 +211,17 @@
 																		<td valign="top">
 																			<div class="text2-tb1" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:left">
                                         {{ if layerSlug == "glad-alerts"}}
-                                            Weekly GLAD tree cover loss alerts
+                                            Weekly GLAD deforestation alerts
                                         {{ end }}
                                         {{ if layerSlug == "terrai-alerts"}}
-                                            Monthly Terra-i tree cover loss alerts
+                                            Monthly Terra-i deforestation alerts
                                         {{ end }}
-
+																				{{ if layerSlug == "forma250GFW"}}
+																					Daily FORMA deforestation alerts
+																				{{ end }}
+																				{{ if layerSlug == "forma-alerts"}}
+																					Daily FORMA active clearing alerts
+																				{{ end }}
 																			</div>
 																		</td>
 																	</tr>
@@ -251,11 +256,17 @@
 																		<td valign="top">
 																			<div class="text2-tb1" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:left">
                                         {{ if layerSlug == "glad-alerts"}}
-                                          Identifies areas of likely tree cover loss in near-real time at a 30 × 30 meters (Landsat) resolution. Coverage of Brazil, Peru, Republic of Congo, and Kalimantan (Indonesia), eventually to cover the humid tropics. Source is UMD/GLAD. Available data from January 1, 2015-present, updated weekly.
+                                          Identifies areas of likely tree cover loss in near-real time at a 30 × 30 meter (Landsat) resolution. Coverage: various countries, eventually to cover the humid tropics. Source is UMD/GLAD. Available data from January 1, 2015-present, updated weekly.
                                         {{ end }}
                                         {{ if layerSlug == "terrai-alerts"}}
-                                          Identifies areas of likely tree cover loss at a 250 x 250 meters (MODIS) resolution. Coverage of Latin America. Source is CIAT. Available data from January 2004-present, updated Monthly.
+                                          Identifies areas of likely tree cover loss at a 250 x 250 meter (MODIS) resolution. Coverage: Tropics. Source is CIAT. Available data from January 2004-present, updated Monthly.
                                         {{ end }}
+																				{{ if layerSlug == "forma250GFW"}}
+																					Identifies areas of likely tree cover loss at a 250 x 250-meter (MODIS) resolution. Coverage: Tropics. Source is WRI/Google. Available data from January 2012-present, updated daily.
+																				{{ end }}
+																				{{ if layerSlug == "forma-alerts"}}
+																					Identifies areas of likely active tree cover clearing (within the past month) at a 250 x 250-meter (MODIS) resolution. Coverage: Tropics. Source is WRI/Google. Available data from January 2012-present, updated daily.
+																				{{ end }}
 								  										</div>
 																		</td>
 																	</tr>
