@@ -331,9 +331,7 @@ define([
             threshValue: this.status.get('threshValue'),
             region: this.region === 0 ? 'GROUP BY year' : 'AND adm1 = '+this.region+' GROUP BY year, adm1',
           });
-
-          console.log(url);
-
+          
           $promises.push(
             $.ajax({
               url: url,
