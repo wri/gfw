@@ -5,11 +5,9 @@
       <option value="{{this.iso}}">{{this.name}}</option>
     {{/each}}
 	</select>
-  {{#if showRegions}}
-  	<select data-placeholder="Select jurisdiction (optional)" disabled="true" class="chosen-select default notranslate" id="analysis-region-select">
-  		<option></option>
-  	</select>
-  {{/if}}
+	<select data-placeholder="Select jurisdiction (optional)" disabled="true" class="chosen-select default notranslate" id="analysis-region-select">
+		<option></option>
+	</select>
 </div>
 <ul id="country-button-container" class="button-container one">
   <li><button id="analysis-country-button" class="btn green uppercase disabled">Analyze</button></li>

@@ -131,7 +131,7 @@ define([
         slug: 'imazon-alerts',
         subscription: true
       },{
-        name: 'terrailoss',
+        name: 'terrailoss', // change
         slug: 'terrai-alerts',
         subscription: true
       },{
@@ -147,11 +147,11 @@ define([
         slug: 'viirs-active-fires',
         subscription: true
       },{
-        name: 'umd_as_it_happens',
+        name: 'umd_as_it_happens', //change
         slug: 'glad-alerts',
         subscription: true
       },{
-        name: 'umd_as_it_happens_per',
+        name: 'umd_as_it_happens_per', //change
         slug: 'glad-alerts',
         subscription: true
       },{
