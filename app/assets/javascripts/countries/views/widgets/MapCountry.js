@@ -40,7 +40,7 @@ define([
       backgroundColor: '#99b3cc',
       disableDefaultUI: true,
       panControl: false,
-      zoomControl: false,
+      zoomControl: true,
       mapTypeControl: false,
       scaleControl: true,
       streetViewControl: false,
@@ -74,16 +74,24 @@ define([
     },
 
     setGeom: function() {
-      var resTopojson = JSON.parse(this.paramsMap.countryData.topojson);
-      var objects = _.findWhere(resTopojson.objects, {
-        type: 'MultiPolygon'
-      });
-      var topoJson = topojson.feature(resTopojson,objects),
-          geojson = topoJson.geometry,
-          bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+      if(this.paramsMap.region) {
+        var geometry = JSON.parse(this.paramsMap.countryData.geojson);
+        bounds = geojsonUtilsHelper.getBoundsFromGeojson(geometry);
+        this.drawGeojson(geometry);
+        this.map.fitBounds(bounds)
 
-      this.drawGeojson(geojson);
-      this.map.fitBounds(bounds)
+      } else {
+        var resTopojson = JSON.parse(this.paramsMap.countryData.topojson);
+        var objects = _.findWhere(resTopojson.objects, {
+          type: 'MultiPolygon'
+        });
+        var topoJson = topojson.feature(resTopojson,objects),
+            geojson = topoJson.geometry,
+            bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+
+        this.drawGeojson(geojson);
+        this.map.fitBounds(bounds)
+      }
     },
 
     toogleLayer: function(e){

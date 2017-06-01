@@ -3,6 +3,7 @@ define([
   'backbone',
   'underscore',
   'handlebars',
+  'core/View',
   'mps',
   'services/CountryService',
   'countries/views/CountryHeaderView',
@@ -22,6 +23,7 @@ define([
   Backbone,
   _,
   Handlebars,
+  View,
   mps,
   CountryService,
   CountryHeaderView,
@@ -40,13 +42,29 @@ define([
 
   'use strict';
 
-  var CountryShowView = Backbone.View.extend({
+  var CountryShowView = View.extend({
     el: '#countryShowView',
 
     template: Handlebars.compile(tpl),
 
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
+          this.getDataRegions(value).then(function(results) {
+            this.mapCountry = new MapCountry({
+              iso: this.iso,
+              countryData: results,
+              region: true,
+            });
+          }.bind(this));
+        }
+      },
+    ],
+
     initialize: function(params) {
       $('html,body').scrollTop(0);
+      View.prototype.initialize.apply(this);
+      this.region = 0;
       this.iso = params.iso;
       this.modules = {
         snapshot: [],
@@ -71,6 +89,10 @@ define([
 
     getData: function() {
       return CountryService.showCountry({ iso: this.iso });
+    },
+
+    getDataRegions: function(value) {
+      return CountryService.showRegion({ iso: this.iso, region: value });
     },
 
     render: function() {
@@ -106,7 +128,8 @@ define([
     initMapCountry: function() {
       this.mapCountry = new MapCountry({
         iso: this.iso,
-        countryData: this.data
+        countryData: this.data,
+        region: false,
       });
     },
 
