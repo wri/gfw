@@ -1,5 +1,5 @@
 #forma_activity {
-  marker-fill: #F0EC00;
+  marker-fill: #e9bd15;
   marker-width: 2;
   marker-line-color: #FFF;
   marker-line-width: 1;
@@ -34,29 +34,29 @@
   }
 
   [zoom > 10] {
-    marker-width: 60;
+    marker-width: 45;
   }
 
   [zoom > 11] {
-    marker-width: 120;
+    marker-width: 50;
   }
   [zoom > 12] {
-    marker-width: 230;
+    marker-width: 55;
     marker-opacity: 1;
   }
   [zoom > 13] {
-    marker-width: 450;
+    marker-width: 60;
   }
   [zoom > 14] {
-    marker-width: 900;
+    marker-width: 65;
   }
   [zoom > 15] {
-    marker-width: 1700;
+    marker-width: 70;
   }
   [zoom > 16] {
-    marker-width: 3400;
+    marker-width: 75;
   }
   [zoom > 17] {
-    marker-width: 6800;
+    marker-width: 80;
   }
 }
