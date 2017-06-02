@@ -2,10 +2,11 @@ define([
   'jquery',
   'backbone',
   'underscore',
+  'urijs/URI',
   'countries/views/CountryListView',
   'countries/views/CountryOverviewView',
   'countries/views/CountryShowView'
-], function($, Backbone, _, CountryListView, CountryOverviewView, CountryShowView) {
+], function($, Backbone, _, URI, CountryListView, CountryOverviewView, CountryShowView) {
 
   'use strict';
 
@@ -25,10 +26,16 @@ define([
     },
 
     showCountry: function(iso, region) {
-      new CountryShowView({
+      this.countryShow = new CountryShowView({
         iso: iso,
         region: region
       });
+
+      this.listenTo(
+         this.countryShow ,
+         'updateUrl',
+         this.updateUrl
+      );
     },
 
     startHistory: function() {
@@ -37,7 +44,13 @@ define([
           pushState: true
         });
       }
-    }
+    },
+
+    updateUrl: function() {
+      var region = $('#areaSelector').val();
+      var uri = new URI();
+      this.navigate(uri.path().slice(0, uri.path().lastIndexOf('/')) + '/'+region);
+    },
   });
 
   return Router;

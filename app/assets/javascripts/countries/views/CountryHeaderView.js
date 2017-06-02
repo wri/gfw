@@ -50,6 +50,7 @@ define([
     changeRegion: function() {
       var value = $('#areaSelector').val();
       mps.publish('Regions/update', [value]);
+      this.trigger('updateUrl');
     },
 
     renderRegions: function() {

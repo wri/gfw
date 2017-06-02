@@ -110,7 +110,11 @@ define([
       this.initFiresAlerts();
       this.initMapCountry();
       this.initStickyMap();
-
+      this.listenTo(
+         this.header,
+         'updateUrl',
+         this.updateUrl
+      );
       this.$el.find('.widgets > .content').removeClass('-loading');
     },
 
@@ -179,6 +183,10 @@ define([
       this.modules.firesAlerts.push(new FiresAlertsView({
         iso: this.iso
       }));
+    },
+
+    updateUrl: function() {
+      this.trigger('updateUrl');
     },
 
   });
