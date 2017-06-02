@@ -46,7 +46,7 @@ define([
     initialize: function(params) {
       View.prototype.initialize.apply(this);
       this.iso = params.iso;
-      this.region = 0;
+      this.region = params.region;
       this._getData().done(function(res) {
         this.data = res.data[0];
         this.render();

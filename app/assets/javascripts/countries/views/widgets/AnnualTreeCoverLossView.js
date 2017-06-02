@@ -140,7 +140,7 @@ define([
     initialize: function(params) {
       View.prototype.initialize.apply(this);
       this.iso = params.iso;
-      this.region = 0;
+      this.region = params.region;
       this.currentDatasets = this.defaults.currentDatasets;
       this.datasets = [];
       this._getDates()
@@ -331,7 +331,7 @@ define([
             threshValue: this.status.get('threshValue'),
             region: this.region === 0 ? 'GROUP BY year' : 'AND adm1 = '+this.region+' GROUP BY year, adm1',
           });
-          
+
           $promises.push(
             $.ajax({
               url: url,

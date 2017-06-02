@@ -29,6 +29,7 @@ define([
 
     initialize: function(params) {
       this.iso = params.iso;
+      this.region = params.region;
       this.countryData = params.countryData;
       this.render();
       this.cache();
@@ -40,9 +41,17 @@ define([
     },
 
     addRegions: function(country) {
+      var data = [];
       CountryService.getRegionsList({ iso: country })
         .then(function(results) {
-          this.regions = results;
+          for ( var i = 0; i < results.length; i++) {
+            data[i] = {
+              name: results[i].name_1,
+              id: results[i].id_1,
+              selected: results[i].id_1 === parseInt(this.region),
+            }
+          }
+          this.regions = data;
           this.renderRegions();
         }.bind(this))
     },

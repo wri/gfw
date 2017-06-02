@@ -35,7 +35,7 @@ define([
     initialize: function(params) {
       View.prototype.initialize.apply(this);
       this.iso = params.iso;
-      this.region = 0;
+      this.region = params.region;
       this.countryData = params.countryData;
       this._getData().done(this._initWidget.bind(this));
     },
