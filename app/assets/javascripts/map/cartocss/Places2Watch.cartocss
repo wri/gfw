@@ -38,6 +38,6 @@
   marker-opacity: 0;
 }
 
-#ptw_grid_score_gt_0[marker=false][zoom>9]{
+#ptw_grid_score_gt_0[marker=false][zoom>8]{
   polygon-opacity: 1;
 }
