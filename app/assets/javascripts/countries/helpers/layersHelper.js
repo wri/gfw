@@ -6,13 +6,15 @@ define([
   'map/views/layers/LossLayer',
   'map/views/layers/ForestGainLayer',
   'map/views/layers/GladLayer',
-  'map/views/layers/TerraiCanvasLayer'
+  'map/views/layers/TerraiCanvasLayer',
+  'map/views/layers/ViirsLayer'
 ], function(
   // Layer Views
   LossLayer,
   ForestGainLayer,
   GladLayer,
-  TerraiCanvasLayer
+  TerraiCanvasLayer,
+  ViirsLayer
 ) {
 
   'use strict';
@@ -29,6 +31,9 @@ define([
     },
     terrailoss :{
       view: TerraiCanvasLayer,
+    },
+    viirs_fires_alerts :{
+      view: ViirsLayer,
     }
   };
 

@@ -117,7 +117,7 @@ define([
                 if (lastSection === this.currentSection) {
                   this._updateLayer();
                 }
-              }.bind(this, section), 1000);
+              }.bind(this, section), 500);
             }
           }.bind(this));
         }
@@ -208,7 +208,7 @@ define([
           data = {
             slug: 'viirs_fires_alerts',
             options: {
-              currentDate: [moment().subtract(24, 'hours'), moment()]
+              currentDate: [moment().subtract(7, 'days').utc(), moment().utc()]
             }
           };
           break;
