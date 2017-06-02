@@ -187,7 +187,7 @@ define([
     roundNumber: function(value){
       if (_.isNumber(value)) {
         // Check if value has decimals
-        return (value < 10 && value % 1 != 0) ? value.toFixed(2).toLocaleString() : Math.round(value).toLocaleString();
+        return (value < 10 && value % 1 != 0) ? value.toFixed(2).toLocaleString() : (~~value).toLocaleString();
       }
       return 0;
     },
