@@ -50,6 +50,7 @@ define([
     _subscriptions:[
       {
         'Regions/update': function(value) {
+          this.region = value;
           if(this.region != 0){
             this.getDataRegions().then(function(results) {
               this.data = results;
