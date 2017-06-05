@@ -27,6 +27,8 @@ define([
       resizeDone: false,
       totalValues: null,
       textValue: [],
+      valuesFirstChart: [],
+      valuesSecondChart: [],
       margin: {
         top: 0,
         right: 0,
@@ -116,14 +118,26 @@ define([
      * Draws the entire graph
      */
     _drawGraph: function() {
+      var valuesFirstChart = [];
+      var i = 0;
+      var resizeDone = this.defaults.resizeDone;
+      if (this.defaults.resizeDone) {
+        valuesFirstChart = this.defaults.valuesFirstChart;
+      }
       this.arc = d3.svg.arc()
         .outerRadius(this.radius)
         .innerRadius(this.defaults.radiusInner);
 
       var pie = d3.layout.pie()
         .value(function(d) {
-          return d.value
+          if(!resizeDone) {
+            valuesFirstChart[i] = d.value;
+          }
+          i += 1;
+          return valuesFirstChart[i-1];
         });
+
+      this.defaults.valuesFirstChart = valuesFirstChart;
 
       var container = this.svg.append('g')
         .attr('class', 'container')
