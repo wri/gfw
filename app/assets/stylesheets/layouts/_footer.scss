@@ -737,5 +737,12 @@
         @include logos-sprite(conservationinternationalhover);
       }
     }
+
+    &.irishaid {
+      height: 53px; width: 150px; @include logos-sprite(irishaid);
+      &:hover{
+        @include logos-sprite(irishaidhover);
+      }
+    }
   }
 }
