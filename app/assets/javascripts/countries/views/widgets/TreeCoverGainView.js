@@ -58,7 +58,8 @@ define([
         value: NumbersHelper.addNumberDecimals(Math.round(this.data.value / 10000)),
         unit: 'Ha'
       }));
-      this.$el.removeClass('-loading');
+      $('#widget-tree-cover-gain').removeClass('-loading');
+      // this.$el.removeClass('-loading');
     },
 
     _getData: function() {

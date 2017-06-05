@@ -50,14 +50,12 @@ define([
 
     _initWidget: function(res) {
       this.data = []
-
       res.data.forEach(function(data) {
         if (data.value) {
           data.date = moment.utc(data.date, 'YYYY').endOf('year');
           this.data.push(data);
         }
       }.bind(this));
-
       this.render();
       this.lineGraph = new LineGraphView({
         el: '#tree-cover-loss-graph',
@@ -70,7 +68,6 @@ define([
       var url = API + new UriTemplate(QUERY).fillFromObject({
         dataset: DATASET, iso: this.iso, region: this.region === 0 ? 'GROUP BY year' : 'AND adm1 = '+this.region+' GROUP BY year, adm1'
       });
-
       return $.ajax({
         url: url,
         type: 'GET'

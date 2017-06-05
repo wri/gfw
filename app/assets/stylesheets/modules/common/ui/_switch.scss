@@ -1,8 +1,10 @@
 $switch-height: 20px;
+$switch-height-modal: 30px;
 $switch-color: #97be32;
 $switch-font-color: #555555;
 $switch-font-color-active: #ffffff;
 $switch-font-size: 12px;
+$switch-font-size-modal: 16px;
 
 .c-switch {
   display: inline-block;
@@ -45,6 +47,62 @@ $switch-font-size: 12px;
       &.disabled {
         color: rgba($switch-font-color, 0.6);
         cursor: not-allowed;
+      }
+    }
+  }
+
+  &.-switch-tree-cover {
+    .options {
+      display: inline-block;
+      border: 0;
+
+      @media (min-width: $br-mobile) {
+        display: flex;
+        border: 1px solid #97be32;
+      }
+
+      .active {
+        background-color: transparent;
+        color: #97be32;
+        font-weight: 500;
+        padding-left: 5px;
+
+        @media (min-width: $br-mobile) {
+          background-color:  #97be32;
+          display: inline-block;
+          padding-left: 12px;
+          color: #FFF;
+        }
+      }
+
+      .disabled {
+        display: none;
+
+        @media (min-width: $br-mobile) {
+          display: inline-block;
+        }
+      }
+    }
+
+    .label {
+      display: inline-block;
+
+      @media (min-width: $br-mobile) {
+        display: block;
+      }
+    }
+  }
+
+  &.-modal {
+    display: inline-block;
+
+    .options {
+      height: $switch-height-modal;
+
+      li {
+        line-height: 26px;
+        height: calc($switch-height-modal - 2px);
+        font-size: $switch-font-size-modal;
       }
     }
   }

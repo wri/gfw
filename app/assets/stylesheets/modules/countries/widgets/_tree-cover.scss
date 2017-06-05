@@ -31,6 +31,11 @@
           font-size: 12px;
           font-weight: 500;
           color: $font-color-4;
+          text-transform: none;
+
+          @media (min-width: $br-mobile){
+            text-transform: uppercase;
+          }
         }
       }
 

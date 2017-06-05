@@ -90,7 +90,7 @@
 
 
     {{!-- GLAD --}}
-    {{#ifCond resource.slug "===" 'gladanalysis'}}
+    {{#ifCond resource.slug "===" 'glad-alerts'}}
       <li>
         <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
         <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong></span>
@@ -141,7 +141,7 @@
 
 
     {{!-- TERRAi --}}
-    {{#ifCond resource.slug "===" 'terraianalysis'}}
+    {{#ifCond resource.slug "===" 'terrai-alerts'}}
       <li>
         <span class="stats-title">Total alerts ({{resource.dates.dateRange}})</span>
         <span class="stats-count" style="color: {{resource.baselayers.terrailoss.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> Terra-i tree cover loss alerts</span>

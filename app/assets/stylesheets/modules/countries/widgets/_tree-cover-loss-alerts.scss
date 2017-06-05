@@ -11,8 +11,8 @@ $card-ranking-color: #b6b6ba;
     min-height: 100px;
 
     > .ranking {
-      min-width: 60px;
-      height: 60px;
+      min-width: 40px;
+      height: 40px;
       display: flex;
       flex-shrink: 0;
       margin-right: 10px;
@@ -22,8 +22,17 @@ $card-ranking-color: #b6b6ba;
       border: 1px solid rgba($card-text-color, 0.3);
 
       > span {
-        font-size: 24px;
+        font-size: 20px;
         color: $card-ranking-color;
+
+        @media (min-width: $br-mobile){
+          font-size: 24px;
+        }
+      }
+
+      @media (min-width: $br-mobile){
+        min-width: 60px;
+        height: 60px;
       }
     }
 
@@ -40,10 +49,14 @@ $card-ranking-color: #b6b6ba;
         position: relative;
         padding-right: 15px;
         > .value {
-          font-size: 32px;
+          font-size: 24px;
           font-weight: 500;
           line-height: 1.0;
           color: $card-highlight-color;
+
+          @media (min-width: $br-mobile){
+            font-size: 32px;
+          }
         }
         > .status {
           width: 0;

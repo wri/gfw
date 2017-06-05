@@ -10,6 +10,7 @@ define([
   'helpers/numbersHelper',
   'services/CountryService',
   'common/views/LineGraphView',
+  'countries/views/widgets/modals/TreeCoverLossAlertsModal',
   'text!countries/templates/widgets/treeCoverLossAlerts.handlebars',
   'text!countries/templates/widgets/treeCoverLossAlertsCard.handlebars'
 ], function(
@@ -24,6 +25,7 @@ define([
   NumbersHelper,
   CountryService,
   LineGraphView,
+  TreeCoverLossAlertsModal,
   tpl,
   cardTpl) {
 
@@ -148,6 +150,12 @@ define([
 
     start: function() {
       this.render();
+      this.initTreeCoverLossAlertsModal();
+      this.listenTo(
+        this.initTreeCoverLossAlertsModal,
+        'updateDataModal',
+        this.updateDataModal
+      );
       this.cache();
       this._getData().done(function(data) {
         this.data = data;
@@ -165,6 +173,12 @@ define([
 
     cache: function(iso) {
       this.$widgets = this.$('#cla-graphs-container');
+    },
+
+    initTreeCoverLossAlertsModal: function() {
+      this.initTreeCoverLossAlertsModal = new TreeCoverLossAlertsModal({
+        origins: this.getOriginOptions(this.iso)
+      });
     },
 
     getOriginOptions: function(iso) {
@@ -188,6 +202,17 @@ define([
       this.updateData();
     },
 
+    updateDataModal: function() {
+      this.$widgets.addClass('-loading');
+      $('.back-loading-loss-alerts').addClass('-show');
+      var origin = $('.tree-cover-loss-alerts-modal-data-shown').val();
+      this.status.set('source', $('.data-source-filter-modal-loss-alerts').attr('data-source'));
+      this.status.set('layerLink', $('.data-source-filter-modal-loss-alerts').attr('data-layerLink'));
+      this.status.set('sourceLink', $('.data-source-filter-modal-loss-alerts').attr('data-sourceLink'));
+      this.status.set('origin', origin);
+      this.updateData();
+    },
+
     changeDataSourceFilter: function(e) {
       this.$widgets.addClass('-loading');
       $('.back-loading-loss-alerts').addClass('-show');
@@ -199,7 +224,6 @@ define([
       this.status.set('source', $(e.target).attr('data-source'));
       this.status.set('layerLink', $(e.target).attr('data-layerLink'));
       this.status.set('sourceLink', $(e.target).attr('data-sourceLink'));
-
       $(e.target).addClass('active');
       this.updateData();
     },
@@ -208,6 +232,7 @@ define([
       this._getData().done(function(data) {
         this.data = data;
         this._initWidgets();
+        mps.publish('TreeCoverLossAlerts/update');
       }.bind(this));
     },
 

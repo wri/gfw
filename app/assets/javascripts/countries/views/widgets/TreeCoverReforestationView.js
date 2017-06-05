@@ -55,7 +55,9 @@ define([
           percentage: iconsNumber % 1
         }
       }));
-      this.$el.removeClass('-loading');
+      // $('#widget-tree-cover-reforestation').removeClass('-loading')
+      // this.$el.removeClass('-loading');
+      document.getElementById('widget-tree-cover-reforestation').classList.remove('-loading');
     },
 
     _getData: function() {
