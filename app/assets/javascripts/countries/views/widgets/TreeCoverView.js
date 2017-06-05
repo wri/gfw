@@ -40,8 +40,7 @@ define([
           this.region = value;
           this.$el.addClass('-loading');
           this._getData().done(function(data) {
-            this.data = data;
-            this._initWidget();
+            this._initWidget(data);
           }.bind(this));
         }
       },
@@ -52,33 +51,31 @@ define([
       this.iso = params.iso;
       this.region = params.region;
       this._getData().done(function(data) {
-        this.data = data;
-        this._initWidget();
+        this._initWidget(data);
       }.bind(this));
     },
 
-    _initWidget: function() {
-      this.render();
-
+    _initWidget: function(data) {
+      this.render(data);
+      var dataparsed = [];
+      dataparsed.push({
+        category: 1,
+        value: data.totalCover,
+        color: '#97be32'
+      });
+      dataparsed.push({
+        category: 2,
+        value: data.totalIfl,
+        color: '#168500'
+      });
+      dataparsed.push({
+        category: 3,
+        value: data.rest,
+        color: '#dddde0'
+      });
       this.pieGraph = new PieGraphView({
         el: '#tree-cover-graph',
-        data: [
-          {
-            category: 1,
-            value: this.data.totalCover,
-            color: '#97be32'
-          },
-          {
-            category: 2,
-            value: this.data.totalIfl,
-            color: '#168500'
-          },
-          {
-            category: 3,
-            value: this.data.rest,
-            color: '#dddde0'
-          }
-        ]
+        data: dataparsed,
       });
     },
 
@@ -149,9 +146,9 @@ define([
       }
     },
 
-    render: function() {
+    render: function(data) {
       this.$el.html(this.template({
-        totalCover: this._formatTotalValue(this.data.total)
+        totalCover: this._formatTotalValue(data.total)
       }));
       this.$el.removeClass('-loading');
     }

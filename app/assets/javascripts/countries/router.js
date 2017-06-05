@@ -11,10 +11,12 @@ define([
   'use strict';
 
   var Router = Backbone.Router.extend({
+
     routes: {
       'countries': 'showList',
       'countries/overview': 'showOverview',
-      'countries/:iso(/):region(/)': 'showCountry'
+      'countries/:iso(/)': 'showCountry',
+      'countries/:iso(/):region(/)': 'showCountryRegion',
     },
 
     showList: function() {
@@ -26,6 +28,23 @@ define([
     },
 
     showCountry: function(iso, region) {
+      this.iso = iso;
+      this.region = region;
+
+      this.countryShow = new CountryShowView({
+        iso: iso,
+        region: 0
+      });
+
+      this.listenTo(
+         this.countryShow ,
+         'updateUrl',
+         this.updateUrl
+      );
+    },
+
+    showCountryRegion: function(iso, region) {
+      this.routerChange = false;
       this.countryShow = new CountryShowView({
         iso: iso,
         region: region
@@ -49,7 +68,17 @@ define([
     updateUrl: function() {
       var region = $('#areaSelector').val();
       var uri = new URI();
-      this.navigate(uri.path().slice(0, uri.path().lastIndexOf('/')) + '/'+region);
+      if(region != 0 ){
+        if(this.region) {
+          this.navigate(uri.path().slice(0, uri.path().lastIndexOf('/')) +'/'+region);
+        } else {
+          this.region = true;
+          this.navigate(uri.path().slice(0, uri.path().lastIndexOf('/')) +'/'+this.iso+'/'+region);
+        }
+      } else {
+        this.region = false;
+        this.navigate(uri.path().slice(0, uri.path().lastIndexOf('/')));
+      }
     },
   });
 
