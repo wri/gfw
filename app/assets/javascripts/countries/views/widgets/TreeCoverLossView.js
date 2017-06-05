@@ -25,7 +25,7 @@ define([
     _subscriptions:[
       {
         'Regions/update': function(value) {
-          this.region = value;
+          this.region = this.region ? value : 0;
           this.$el.addClass('-loading');
           this._getData().done(this._initWidget.bind(this));
         }
@@ -67,6 +67,7 @@ define([
     },
 
     _getData: function() {
+      console.log(this.region === 0 ? 'GROUP BY year' : 'AND adm1 = '+this.region+' GROUP BY year, adm1');
       var url = API + new UriTemplate(QUERY).fillFromObject({
         dataset: DATASET, iso: this.iso, region: this.region === 0 ? 'GROUP BY year' : 'AND adm1 = '+this.region+' GROUP BY year, adm1'
       });

@@ -44,7 +44,9 @@ define([
     },
 
     showCountryRegion: function(iso, region) {
-      this.routerChange = false;
+      this.iso = iso;
+      this.region = region;
+      this.routerChange = region != 0 ? true : false;
       this.countryShow = new CountryShowView({
         iso: iso,
         region: region
@@ -69,14 +71,14 @@ define([
       var region = $('#areaSelector').val();
       var uri = new URI();
       if(region != 0 ){
-        if(this.region) {
+        if(this.routerChange) {
           this.navigate(uri.path().slice(0, uri.path().lastIndexOf('/')) +'/'+region);
         } else {
-          this.region = true;
           this.navigate(uri.path().slice(0, uri.path().lastIndexOf('/')) +'/'+this.iso+'/'+region);
+          this.routerChange = true;
         }
       } else {
-        this.region = false;
+        this.routerChange = false;
         this.navigate(uri.path().slice(0, uri.path().lastIndexOf('/')));
       }
     },
