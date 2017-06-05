@@ -1,5 +1,5 @@
 <div class="widget">
-  <div class="back-loading-loss-alerts"></div>
+  <div class="back-loading back-loading-loss-alerts"></div>
   <div class="row">
     <div class="small-12">
       <h4 class="title -icons">
@@ -11,31 +11,39 @@
       </h4>
     </div>
   </div>
-  <div class="row">
-    <div class="small-4">
-      <div class="c-switch">
-        <span class="label -no-text-transform">Data source</span>
-        <ul class="options">
-          <li class="active data-source-filter" data-source="glad" data-layerLink="umd_as_it_happens" data-sourceLink="glad-alerts">GLAD</li>
-          <li class="data-source-filter" data-source="terrai" data-layerLink="terrailoss" data-sourceLink="terrai-alerts">Terra-i</li>
-          <li class="data-source-filter">SAD</li>
-        </ul>
-      </div>
+  <div class="row tree-cover-loss-alerts-filter">
+    <div class="filter-list mobile">
+      <ul class="list-mobile">
+        <li>Data shown <span class="data data-shown js-open-tree-cover-loss-alerts-modal">Protected areas with most tree cover loss alerts</span></li>
+        <li>Data source <span class="data data-soruce js-open-tree-cover-loss-alerts-modal">GLAD</span></li>
+      </ul>
     </div>
-    <div class="small-4">
-      <div class="c-select">
-        <span class="label -no-text-transform">Data shown</span>
-        <div class="wrapper">
-          <select class="-no-text-transform" id="cla-data-shown-select">
-            {{#each origins}}
-              <option value="{{ this.value }}">{{ this.label }}</option>
-            {{/each}}
-          </select>
-          <div class="select-clear" style="display: none;">✕</div>
-          <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
+    <div class="desktop">
+      <div class="small-4">
+        <div class="c-switch">
+          <span class="label -no-text-transform">Data source</span>
+          <ul class="options">
+            <li class="active data-source-filter" data-source="glad" data-layerLink="umd_as_it_happens" data-sourceLink="glad-alerts">GLAD</li>
+            <li class="data-source-filter" data-source="terrai" data-layerLink="terrailoss" data-sourceLink="terrai-alerts">Terra-i</li>
+            <li class="data-source-filter">SAD</li>
+          </ul>
         </div>
       </div>
-    </div>
+      <div class="small-4">
+        <div class="c-select">
+          <span class="label -no-text-transform">Data shown</span>
+          <div class="wrapper">
+            <select class="-no-text-transform" id="cla-data-shown-select">
+              {{#each origins}}
+                <option value="{{ this.value }}">{{ this.label }}</option>
+              {{/each}}
+            </select>
+            <div class="select-clear" style="display: none;">✕</div>
+            <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
+          </div>
+        </div>
+      </div>
+  </div>
   </div>
   <div class="row collapse widget-placeholder -loading" id="cla-graphs-container">
   </div>

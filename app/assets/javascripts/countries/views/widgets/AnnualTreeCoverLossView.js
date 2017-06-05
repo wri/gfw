@@ -8,6 +8,7 @@ define([
   'helpers/numbersHelper',
   'common/views/GroupedGraphView',
   'countries/views/widgets/AnnualTreeCoverLossRankingView',
+  'countries/views/widgets/modals/TreeCoverLossModal',
   'text!countries/templates/widgets/annualTreeCoverLoss.handlebars'
 ], function(
   $,
@@ -19,6 +20,7 @@ define([
   NumbersHelper,
   GroupedGraphView,
   AnnualTreeCoverLossRankingView,
+  TreeCoverLossModal,
   tpl) {
 
   'use strict';
@@ -112,7 +114,8 @@ define([
         minYear: null,
         maxYear: null,
         thresh: null,
-        threshValue: 30
+        threshValue: 30,
+        modalCreate: false
       }
     })),
 
@@ -139,6 +142,11 @@ define([
     },
 
     render: function() {
+      if(!this.status.get('modalCreate')) {
+        this._initModal();
+        this.status.set('modalCreate', true);
+      }
+
       this.$el.html(this.template({
         totalCoverLoss: this._getTotalCoverLoss(),
         datasets: this._getAvailableDatasets(),
@@ -147,8 +155,35 @@ define([
         maxYear: this.status.get('maxYear'),
         thresh: this.status.get('thresh'),
       }));
-      $('.back-loading').removeClass('-show');
+
+      $('.data-time-range').html(this.status.get('minYear')+' to '+this.status.get('maxYear'));
+      $('.data-thresh').html('>'+this.status.get('threshValue'));
+      $('.data-measure').html('HA');
+      $('.data-source').html('GFW');
+      $('.back-loading-annual-cover-loss').removeClass('-show');
       this.$el.removeClass('-loading');
+    },
+
+    initTreeCoverLossModal: function(datasets, years, thresh) {
+      this.initTreeCoverLossModal = new TreeCoverLossModal({
+        datasets: datasets,
+        years: years,
+        thresh: thresh,
+      });
+    },
+
+    _initModal: function() {
+      this.initTreeCoverLossModal(
+        this._getAvailableDatasets(),
+        this.status.get('years'),
+        this.status.get('thresh')
+      );
+
+      this.listenTo(
+        this.initTreeCoverLossModal,
+        'updateDataModal',
+        this.updateDataModal
+      );
     },
 
     _getDates: function() {
@@ -399,7 +434,7 @@ define([
       }.bind(this));
     },
 
-    _changeDates: function(value) {
+    _changeDates: function() {
       var datesList = [];
 
       for (var i = 0; i < this.status.get('years').length; i++) {
@@ -419,30 +454,42 @@ define([
     },
 
     _checkDates: function(e) {
-      $('.back-loading').addClass('-show');
-      this.$el.addClass('-loading');
-      var idTarget = e.currentTarget.id;
-      var value = parseInt(e.currentTarget.value);
+      if (e === 'modal') {
+        var minDate = $('#annual-tree-cover-loss-start-year-modal').val();
+        var maxDate = $('#annual-tree-cover-loss-end-year-modal').val();
+        this.status.set('minYear', minDate);
+        this.status.set('maxYear', maxDate);
+        this._changeDates();
+      } else {
+        $('.back-loading-annual-cover-loss').addClass('-show');
+        this.$el.addClass('-loading');
+        var idTarget = e.currentTarget.id;
+        var value = parseInt(e.currentTarget.value);
 
-      if (idTarget === 'annual-tree-cover-loss-start-year') {
-        this.status.set('minYear', value);
-        this._changeDates(value);
+        if (idTarget === 'annual-tree-cover-loss-start-year') {
+          this.status.set('minYear', value);
+          this._changeDates(value);
+        }
+
+        if (idTarget === 'annual-tree-cover-loss-end-year') {
+          this.status.set('maxYear', value);
+          this._changeDates(value);
+        }
       }
-
-      if (idTarget === 'annual-tree-cover-loss-end-year') {
-        this.status.set('maxYear', value);
-        this._changeDates(value);
-      }
-
       this._getList()
       .done(this._updateData.bind(this));
     },
 
     _checkThresh: function(e) {
-      $('.back-loading').addClass('-show');
+      $('.back-loading-annual-cover-loss').addClass('-show');
       this.$el.addClass('-loading');
       var threshList = [];
-      var value = parseInt(e.currentTarget.value);
+      var value = '';
+      if (e === 'modal') {
+        value = parseInt($('#thresh-modal').val());
+      } else {
+        value = parseInt(e.currentTarget.value);
+      }
       this.status.set('threshValue', value);
       for (var i = 0; i < this.status.get('thresh').length; i++) {
         threshList[i] = {
@@ -452,7 +499,7 @@ define([
       }
       this.status.set('thresh', threshList);
       this._getList()
-      .done(this._updateData.bind(this));
+      .done(this._initWidget.bind(this));
     },
 
     _updateData: function () {

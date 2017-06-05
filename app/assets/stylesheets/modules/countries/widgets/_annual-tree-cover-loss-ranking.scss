@@ -49,4 +49,12 @@
       }
     }
   }
+
+  &.-mobile {
+    display: none;
+
+    @media (min-width: $br-mobile){
+      display: block;
+    }
+  }
 }

@@ -3,36 +3,46 @@
 
   <div class="content -dark widget-placeholder -loading">
     <h3 class="title">Snapshot</h3>
-    <div class="row">
-      <div class="small-6">
+    <div class="row snapshot-row">
+      <div class="small-6 snapshot-container">
         <div id="widget-tree-cover" class="widget-placeholder -loading"></div>
         <div id="widget-tree-cover-loss-ranking" class="widget-placeholder -loading"></div>
       </div>
-      <div class="small-6">
+      <div class="small-6 snapshot-container">
         <div id="widget-tree-cover-loss" class="widget-placeholder -loading"></div>
         <div id="widget-near-real-time-alerts" class="widget-placeholder -loading"></div>
       </div>
     </div>
   </div>
 
-  <div class="content widget-placeholder -loading js-country-widget" data-section="cover-loss">
+  <div class="content widget-placeholder -summary">
+    <h3 class="title">Summary</h3>
+    <ul class="summary-list">
+      <li class="summary-option" data-value="loss">Tree cover loss</li>
+      <li class="summary-option" data-value="gain">Tree cover gain</li>
+      <li class="summary-option" data-value="alerts">Tree cover loss alerts</li>
+      <li class="summary-option" data-value="fire">Fire alerts</li>
+    </ul>
+  </div>
+
+  <div class="content widget-placeholder -loading js-country-widget" data-section="cover-loss" id="loss">
     <h3 class="title">Tree cover loss</h3>
     <div id="widget-annual-tree-cover-loss" class="widget-placeholder -loading"></div>
   </div>
 
-  <div class="content widget-placeholder -loading js-country-widget" data-section="cover-gain">
+  <div class="content widget-placeholder -loading js-country-widget" data-section="cover-gain" id="gain">
     <h3 class="title">Tree cover gain</h3>
     <div id="widget-tree-cover-gain" class="widget-placeholder -loading"></div>
     <div id="widget-tree-cover-reforestation" class="widget-placeholder -loading"></div>
   </div>
 
-  <div class="content widget-placeholder -loading js-country-widget" data-section="cover-loss-alerts">
+  <div class="content widget-placeholder -loading js-country-widget" data-section="cover-loss-alerts" id="alerts">
     <h3 class="title">Tree cover loss alerts</h3>
-    <div id="widget-tree-cover-loss-alerts" class="widget-placeholder -loading"></div>
+    <div id="widget-tree-cover-loss-alerts" class="widget-placeholder tree-cover-loss-alerts-row -loading"></div>
   </div>
 
-  <div class="content widget-placeholder -loading js-country-widget" data-section="fires">
+  <div class="content widget-placeholder -loading js-country-widget" data-section="fires" id="fire">
     <h3 class="title">Fire alerts</h3>
-    <div id="widget-fire-alerts" class="widget-placeholder -loading"></div>
+    <div id="widget-fire-alerts" class="widget-placeholder -loading widget-fire-alerts-row"></div>
   </div>
 </div>

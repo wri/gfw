@@ -17,6 +17,7 @@ define([
   'countries/views/widgets/NearRealTimeAlertsView',
   'countries/views/widgets/MapCountry',
   'countries/helpers/StickyMap',
+  'countries/helpers/SwitchOptions',
   'text!countries/templates/countryDashboard.handlebars'
 ], function($,
   Backbone,
@@ -35,6 +36,7 @@ define([
   FiresAlertsView,
   NearRealTimeAlertsView,
   MapCountry,
+  SwitchOptions,
   StickyMap,
   tpl) {
 
@@ -42,6 +44,10 @@ define([
 
   var CountryShowView = Backbone.View.extend({
     el: '#countryShowView',
+
+    events: {
+      'click .summary-option' : 'changeSection',
+    },
 
     template: Handlebars.compile(tpl),
 
@@ -88,6 +94,7 @@ define([
       this.initFiresAlerts();
       this.initMapCountry();
       this.initStickyMap();
+      this.initSwitchOptions();
 
       this.$el.find('.widgets > .content').removeClass('-loading');
     },
@@ -101,6 +108,10 @@ define([
 
     initStickyMap: function() {
       this.stickyMap = new StickyMap();
+    },
+
+    initSwitchOptions: function() {
+      this.switchOptions = new SwitchOptions();
     },
 
     initMapCountry: function() {
@@ -161,6 +172,13 @@ define([
       this.modules.firesAlerts.push(new FiresAlertsView({
         iso: this.iso
       }));
+    },
+
+    changeSection: function(e) {
+      var data = $(e.target).data('value');
+      $('html, body').animate({
+        scrollTop: $('#'+data).offset().top
+      }, 1000);
     },
 
   });

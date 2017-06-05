@@ -30,18 +30,28 @@ $card-highlight-color-grey-pink: #bf8893;
     min-height: 100px;
 
     > .ranking {
-      min-width: 60px;
-      height: 60px;
+      min-width: 40px;
+      height: 40px;
       display: flex;
-      margin-right: 20px;
+      margin-right: 10px;
       align-items: center;
       justify-content: center;
       border-radius: 30px;
       border: 1px solid rgba($card-text-color, 0.3);
 
+      @media (min-width: $br-mobile){
+        min-width: 60px;
+        height: 60px;
+        margin-right: 20px;
+      }
+
       > span {
-        font-size: 24px;
+        font-size: 20px;
         color: $card-ranking-color;
+
+        @media (min-width: $br-mobile){
+          font-size: 24px;
+        }
       }
     }
 
@@ -62,9 +72,13 @@ $card-highlight-color-grey-pink: #bf8893;
 
         > .value {
           position: relative;
-          font-size: 36px;
+          font-size: 28px;
           font-weight: 500;
           line-height: 1.0;
+
+          @media (min-width: $br-mobile){
+            font-size: 36px;
+          }
 
           &:before {
             content: '';

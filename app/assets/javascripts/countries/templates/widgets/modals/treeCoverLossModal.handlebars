@@ -1,0 +1,63 @@
+<div class="m-modal-country -tree-cover-loss-modal -hidden">
+  <div class="content-modal">
+    <svg class="icon icon-cross js-icon-cross-close"><use xlink:href="#icon-cross"></use></svg>
+    <span class="title">Annual tree cover loss settings jejejeje</span>
+    <div class="form-filters">
+      <label class="label">Data source</label>
+      <div class="c-switch -modal">
+        <ul class="options">
+          <li class="active js-switch-option">GFW</li>
+          <li class="js-switch-option">FAO</li>
+          <li class="js-switch-option">PRODES</li>
+        </ul>
+      </div>
+      <label class="label">Time range</label>
+      <div class="select-container">
+        <div class="c-select">
+          <div class="wrapper">
+            <select id="annual-tree-cover-loss-start-year-modal">
+              {{#each years}}
+                <option value="{{this.year}}" {{#if this.selectedMin}}selected{{/if}}>{{this.year}}</option>
+              {{/each}}
+            </select>
+            <div class="select-clear" style="display: none;">✕</div>
+            <svg class="icon arrow-select select-arrow -green-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-select"></use></svg>
+          </div>
+        </div>
+        <div class="c-select">
+          <div class="wrapper">
+            <select id="annual-tree-cover-loss-end-year-modal">
+              {{#each years}}
+                <option value="{{this.year}}" {{#if this.selectedMax}}selected{{/if}}{{#if this.enable}}{{else}}disabled{{/if}}>{{this.year}}</option>
+              {{/each}}
+            </select>
+            <div class="select-clear" style="display: none;">✕</div>
+            <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
+          </div>
+        </div>
+      </div>
+      <label class="label">Canopy density</label>
+      <div class="select-container">
+        <div class="c-select">
+          <div class="wrapper">
+            <select id="thresh-modal">
+              {{#each thresh}}
+                <option value="{{this.value}}" {{#if this.selected}}selected{{/if}}>>{{this.value}}</option>
+              {{/each}}
+            </select>
+            <div class="select-clear" style="display: none;">✕</div>
+            <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
+          </div>
+        </div>
+      </div>
+      <label class="label">Measurement</label>
+      <div class="c-switch -modal">
+        <ul class="options">
+          <li class="active js-switch-option">Ha</li>
+          <li class="js-switch-option">%</li>
+        </ul>
+      </div>
+    </div>
+    <span class="btn green uppercase -big-width done-btn js-done-btn-annual" href="">Done</span>
+  </div>
+</div>

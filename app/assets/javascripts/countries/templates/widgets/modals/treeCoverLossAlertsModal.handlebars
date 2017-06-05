@@ -1,0 +1,31 @@
+<div class="m-modal-country -tree-cover-loss-alerts-modal -hidden">
+  <div class="content-modal">
+    <svg class="icon icon-cross js-icon-cross-close"><use xlink:href="#icon-cross"></use></svg>
+    <span class="title">Tree cover loss alerts settings</span>
+    <div class="form-filters">
+      <label class="label">Data source</label>
+      <div class="c-switch -modal">
+        <ul class="options options-modal-cover-loss-alerts">
+          <li class="active js-switch-option data-source-filter-modal-loss-alerts" data-source="glad" data-layerLink="umd_as_it_happens" data-sourceLink="glad-alerts">GLAD</li>
+          <li class="js-switch-option" data-source="terrai" data-layerLink="terrailoss" data-sourceLink="terrai-alerts">Terra-i</li>
+          <li class="disabled js-switch-option">SAD</li>
+        </ul>
+      </div>
+      <label class="label">Data shown</label>
+      <div class="select-container">
+        <div class="c-select -big">
+          <div class="wrapper">
+            <select class="tree-cover-loss-alerts-modal-data-shown" id="thresh">
+              {{#each origins}}
+                <option value="{{ this.value }}">{{ this.label }}</option>
+              {{/each}}
+            </select>
+            <div class="select-clear" style="display: none;">✕</div>
+            <svg class="icon arrow-select select-arrow -green-icon"><use xlink:href="#arrow-select"></use></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="btn green uppercase -big-width done-btn js-done-btn-alerts">Done</span>
+  </div>
+</div>

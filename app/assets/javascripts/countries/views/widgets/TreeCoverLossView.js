@@ -22,7 +22,6 @@ define([
     initialize: function(params) {
       this.iso = params.iso;
       this.countryData = params.countryData;
-
       this._getData().done(this._initWidget.bind(this));
     },
 
@@ -36,14 +35,12 @@ define([
 
     _initWidget: function(res) {
       this.data = []
-
       res.data.forEach(function(data) {
         if (data.value) {
           data.date = moment.utc(data.date, 'YYYY').endOf('year');
           this.data.push(data);
         }
       }.bind(this));
-
       this.render();
       this.lineGraph = new LineGraphView({
         el: '#tree-cover-loss-graph',
@@ -56,7 +53,6 @@ define([
       var url = API + new UriTemplate(QUERY).fillFromObject({
         dataset: DATASET, iso: this.iso
       });
-
       return $.ajax({
         url: url,
         type: 'GET'
