@@ -208,7 +208,8 @@ define([
           data = {
             slug: 'viirs_fires_alerts',
             options: {
-              currentDate: [moment().subtract(7, 'days').utc(), moment().utc()]
+              currentDate: [moment().subtract(7, 'days').utc(), moment().utc()],
+              infowindow: false
             }
           };
           break;

@@ -31,6 +31,9 @@ define([
       var currentDate = options.currentDate ||
         [moment().subtract(24, 'hours'), moment()];
       this.setCurrentDate(DatesHelper.getRangeForDates(currentDate));
+      if (typeof options.infowindow !== "undefined") {
+        this.options.infowindow = options.infowindow;
+      }
 
       this._super(layer, options, map);
     },
