@@ -67,7 +67,6 @@ define([
     },
 
     _getData: function() {
-      console.log(this.region === 0 ? 'GROUP BY year' : 'AND adm1 = '+this.region+' GROUP BY year, adm1');
       var url = API + new UriTemplate(QUERY).fillFromObject({
         dataset: DATASET, iso: this.iso, region: this.region === 0 ? 'GROUP BY year' : 'AND adm1 = '+this.region+' GROUP BY year, adm1'
       });

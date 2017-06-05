@@ -34,7 +34,6 @@ define([
       {
         'Regions/update': function(value) {
           this.$el.addClass('-loading');
-          console.log(value);
           this.region = value;
           this._getData().done(function(res) {
             this.data = res.data[0];
