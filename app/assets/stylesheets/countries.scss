@@ -3,6 +3,7 @@
 
 // Settings
 @import "settings/settings";
+@import "global/settings";
 @import "global/mixins";
 @import "global/base";
 @import "global/utils";
@@ -17,6 +18,7 @@
 @import "layouts/countries";
 
 // Modules
+@import "modules/shared";
 @import "modules/buttons";
 @import "modules/map/onoffswitch";
 @import "modules/map/onoffradio";

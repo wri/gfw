@@ -5,6 +5,8 @@ define([
   'moment',
   'handlebars',
   'uri',
+  'core/View',
+  'mps',
   'helpers/numbersHelper',
   'services/CountryService',
   'common/views/LineGraphView',
@@ -18,6 +20,8 @@ define([
   moment,
   Handlebars,
   UriTemplate,
+  View,
+  mps,
   NumbersHelper,
   CountryService,
   LineGraphView,
@@ -102,7 +106,7 @@ define([
     }
   }
 
-  var TreeCoverLossView = Backbone.View.extend({
+  var TreeCoverLossView = View.extend({
     el: '#widget-tree-cover-loss-alerts',
 
     events: {
@@ -219,6 +223,7 @@ define([
       this._getData().done(function(data) {
         this.data = data;
         this._initWidgets();
+        mps.publish('TreeCoverLossAlerts/update');
       }.bind(this));
     },
 

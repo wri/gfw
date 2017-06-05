@@ -137,7 +137,7 @@ define([
         subscription: true
       },{
         name: 'terrailoss', // change
-        slug: 'terraianalysis',
+        slug: 'terrai-alerts',
         subscription: true
       },{
         name: 'prodes',
@@ -153,19 +153,19 @@ define([
         subscription: true
       },{
         name: 'umd_as_it_happens', //change
-        slug: 'gladanalysis',
+        slug: 'glad-alerts',
         subscription: true
       },{
         name: 'umd_as_it_happens_per', //change
-        slug: 'gladanalysis',
+        slug: 'glad-alerts',
         subscription: true
       },{
         name: 'umd_as_it_happens_cog',
-        slug: 'gladanalysis',
+        slug: 'glad-alerts',
         subscription: true
       },{
         name: 'umd_as_it_happens_idn',
-        slug: 'gladanalysis',
+        slug: 'glad-alerts',
         subscription: true
       }
     ],

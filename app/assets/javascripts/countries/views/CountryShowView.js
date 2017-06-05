@@ -115,10 +115,15 @@ define([
     },
 
     initMapCountry: function() {
-      this.mapCountry = new MapCountry({
-        iso: this.iso,
-        countryData: this.data
-      });
+      this.mapCountry = new MapCountry(
+        {
+          iso: this.iso,
+          countryData: this.data
+        },
+        {
+          modules: this.modules
+        }
+      );
     },
 
     initSnapshot: function() {

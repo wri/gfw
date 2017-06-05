@@ -117,7 +117,6 @@ define([
   'map/views/layers/GtmForestCoverLayer',
   'map/views/layers/GtmForestDensityLayer',
   'map/views/layers/GladLayer',
-  'map/views/layers/UMDCoverLayer',
   'map/views/layers/LandsatAlertsCoverLayer',
   'map/views/layers/GladCoverageLayer',
   'map/views/layers/KhmProtectedAreasLayer',
@@ -296,7 +295,6 @@ define([
   GtmForestCoverLayer,
   GtmForestDensityLayer,
   GladLayer,
-  UMDCoverLayer,
   LandsatAlertsCoverLayer,
   GladCoverageLayer,
   KhmProtectedAreasLayer,
@@ -720,9 +718,6 @@ define([
     umd_as_it_happens: {
       view: GladLayer,
       timelineView: GladTimeline
-    },
-    umd_coverage_2015: {
-      view: UMDCoverLayer
     },
     gfw_landsat_alerts_coverage: {
       view: LandsatAlertsCoverLayer
