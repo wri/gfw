@@ -24,6 +24,9 @@ define([
       outerRadius: 5,
       radiusInner: 35,
       removeTimeout: 300,
+      resizeDone: false,
+      totalValues: null,
+      textValue: [],
       margin: {
         top: 0,
         right: 0,
@@ -44,8 +47,7 @@ define([
 
     _initChart: function() {
       // Data parsing and initialization
-      this._parseData();
-      this.hasData = this.chartData && this.chartData.length;
+      this.hasData = this.data && this.data.length;
 
       if (this.hasData) {
         this._start();
@@ -57,7 +59,7 @@ define([
 
     _start: function() {
       this.$el.html(this.template({
-        hasData: this.chartData.length
+        hasData: this.data.length
       }));
 
       this.render();
@@ -90,13 +92,6 @@ define([
     },
 
     /**
-     *  Parses the data for the chart
-     */
-    _parseData: function() {
-      this.chartData = this.data;
-    },
-
-    /**
      *  Sets up the SVG for the graph
      */
     _setUpGraph: function() {
@@ -126,7 +121,9 @@ define([
         .innerRadius(this.defaults.radiusInner);
 
       var pie = d3.layout.pie()
-        .value(function(d) { return d.value });
+        .value(function(d) {
+          return d.value
+        });
 
       var container = this.svg.append('g')
         .attr('class', 'container')
@@ -134,7 +131,7 @@ define([
           ((this.cHeight / 2)  - (this.defaults.margin.top / 2)) + ')');
 
       this.pie = container.selectAll('.arc')
-        .data(pie(this.chartData))
+        .data(pie(this.data))
         .enter().append('g')
           .attr('data-category', function(d) {
             return d.data.category;
@@ -151,22 +148,40 @@ define([
     },
 
     _drawValues: function() {
-      // var path = this.svg.selectAll('.arc');
-      // var totalValues = _.reduce(this.chartData, function(memo, num) {
-      //   memo.value += num.value;
-      //   return memo;
-      // });
-      //
-      // path.append('text')
-      //   .attr('transform', function(d) {
-      //     var c = this.arc.centroid(d);
-      //     return 'translate(' + (c[0]-12) + ',' + (c[1]+8) + ')'
-      //   }.bind(this))
-      //   .text(function(d) {
-      //     var value = Math.round((d.value * 100) / totalValues.value);
-      //     if (value > 0) return value + '%'
-      //   })
-      //   .attr('class', 'label');
+      var path = this.svg.selectAll('.arc');
+      var i = 0;
+      var resizeDone = this.defaults.resizeDone;
+      var textValue = null;
+      if (!this.defaults.resizeDone) {
+        var textValue = [];
+      } else {
+        textValue = this.defaults.textValue;
+      }
+
+      if (!this.defaults.resizeDone) {
+        this.defaults.totalValues = _.reduce(this.data, function(memo, num) {
+          memo.value += num.value;
+          return memo;
+        });
+      }
+      var totalValues = this.defaults.totalValues;
+
+      path.append('text')
+        .attr('transform', function(d) {
+          var c = this.arc.centroid(d);
+          return 'translate(' + (c[0]-12) + ',' + (c[1]+8) + ')'
+        }.bind(this))
+        .text(function(d) {
+          if (!resizeDone) {
+            textValue[i] = d.value;
+          }
+          var value = Math.round((textValue[i] * 100) / totalValues.value);
+          i += 1;
+          if (value > 0) return value + '%'
+        })
+        .attr('class', 'label');
+        this.defaults.textValue = textValue;
+        this.defaults.resizeDone = true;
     },
 
     /**

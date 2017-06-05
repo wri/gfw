@@ -34,7 +34,7 @@ define([
       {
         'Regions/update': function(value) {
           this.$el.addClass('-loading');
-          this.region = value;
+          this.region = parseInt(value);
           this._getData().done(function(res) {
             this.data = res.data[0];
             this.render();
@@ -67,7 +67,6 @@ define([
         iso: this.iso,
         region: this.region === 0 ? 'GROUP BY iso' : 'AND adm1 = '+this.region+' GROUP BY iso, adm1',
       });
-
       return $.ajax({
         url: url,
         type: 'GET'

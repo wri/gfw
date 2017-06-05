@@ -124,7 +124,7 @@ define([
         'Regions/update': function(value) {
           $('.back-loading').addClass('-show');
           this.$el.addClass('-loading');
-          this.region = value;
+          this.region = parseInt(value);
           this._getList()
           .done(this._initWidget.bind(this));
         }

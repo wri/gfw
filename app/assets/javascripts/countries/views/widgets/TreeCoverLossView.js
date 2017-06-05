@@ -25,7 +25,7 @@ define([
     _subscriptions:[
       {
         'Regions/update': function(value) {
-          this.region = this.region ? value : 0;
+          this.region = parseInt(value);
           this.$el.addClass('-loading');
           this._getData().done(this._initWidget.bind(this));
         }
