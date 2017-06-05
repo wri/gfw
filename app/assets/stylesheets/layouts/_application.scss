@@ -328,6 +328,7 @@
     &.cartodb { height: 45px; @include logos-sprite(cartodb); }
     &.vizzuality { height: 51px; margin-right: 32px; @include logos-sprite(vizzuality); }
     &.blueraster { height: 51px; width: 97px; @include logos-sprite(blueraster); }
+    &.irishaid { height: 53px; width: 150px; @include logos-sprite(irishaid); }
     &.last { margin-right: 0; }
   }
 }
