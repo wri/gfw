@@ -132,7 +132,16 @@ define([
       MYS: ['onpeat']
     },
 
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
+
+        }
+      },
+    ],
+
     initialize: function(params) {
+      View.prototype.initialize.apply(this);
       this.iso = params.iso;
       this.latitude = params.latitude;
       this.longitude = params.longitude;
@@ -187,7 +196,6 @@ define([
 
     onOriginSelectChange: function(e) {
       this.$widgets.addClass('-loading');
-      $('.back-loading-loss-alerts').addClass('-show');
       var value = e.currentTarget.value;
       this.status.set('origin', value);
       this.updateData();
@@ -195,7 +203,6 @@ define([
 
     updateDataModal: function() {
       this.$widgets.addClass('-loading');
-      $('.back-loading-loss-alerts').addClass('-show');
       var origin = $('.tree-cover-loss-alerts-modal-data-shown').val();
       this.status.set('source', $('.data-source-filter-modal-loss-alerts').attr('data-source'));
       this.status.set('layerLink', $('.data-source-filter-modal-loss-alerts').attr('data-layerLink'));
@@ -206,7 +213,6 @@ define([
 
     changeDataSourceFilter: function(e) {
       this.$widgets.addClass('-loading');
-      $('.back-loading-loss-alerts').addClass('-show');
       $('.data-source-filter').each(function(i, obj) {
         if ($(obj).hasClass('active')) {
           $(this).removeClass('active');
@@ -254,7 +260,6 @@ define([
         this.$widgets.addClass('.-no-data');
         this.$widgets.html('<p>There are no alerts</p>');
       }
-      $('.back-loading-loss-alerts').removeClass('-show');
       this.$widgets.removeClass('-loading');
     },
 

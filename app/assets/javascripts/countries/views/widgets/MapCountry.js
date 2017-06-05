@@ -4,11 +4,11 @@ define([
   'underscore',
   'handlebars',
   'topojson',
-  'core/View',
   'map/utils',
   'helpers/geojsonUtilsHelper',
   'map/services/LayerSpecService',
   'map/views/maptypes/grayscaleMaptype',
+  'core/View',
   'countries/helpers/layersHelper',
   'mps',
   'text!countries/templates/widgets/legendMap.handlebars'
@@ -18,11 +18,11 @@ define([
   _,
   Handlebars,
   topojson,
-  View,
   utils,
   geojsonUtilsHelper,
   LayerSpecService,
   grayscaleMaptype,
+  View,
   layersHelper,
   mps,
   tpl) {
@@ -46,7 +46,7 @@ define([
       backgroundColor: '#99b3cc',
       disableDefaultUI: true,
       panControl: false,
-      zoomControl: false,
+      zoomControl: true,
       mapTypeControl: false,
       scaleControl: true,
       streetViewControl: false,
@@ -58,7 +58,16 @@ define([
       mapTypeId: 'grayscale'
     },
 
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
+
+        }
+      },
+    ],
+
     initialize: function(params, options) {
+      View.prototype.initialize.apply(this);
       this.paramsMap = _.extend({}, this.default, params);
       this.modules = options.modules;
 
@@ -125,13 +134,21 @@ define([
     },
 
     setGeom: function() {
-      var resTopojson = JSON.parse(this.paramsMap.countryData.topojson);
-      var objects = _.findWhere(resTopojson.objects, {
-        type: 'MultiPolygon'
-      });
-      var topoJson = topojson.feature(resTopojson,objects),
-          geojson = topoJson.geometry,
-          bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+      if(this.paramsMap.region) {
+        var geometry = JSON.parse(this.paramsMap.countryData.geojson);
+        bounds = geojsonUtilsHelper.getBoundsFromGeojson(geometry);
+        this.drawGeojson(geometry);
+        this.map.fitBounds(bounds)
+
+      } else {
+        var resTopojson = JSON.parse(this.paramsMap.countryData.topojson);
+        var objects = _.findWhere(resTopojson.objects, {
+          type: 'MultiPolygon'
+        });
+        var topoJson = topojson.feature(resTopojson,objects),
+            geojson = topoJson.geometry,
+            bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+      }
 
       this.drawGeojson(geojson);
       this.map.fitBounds(bounds);

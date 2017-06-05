@@ -5,9 +5,11 @@ define([
   'handlebars',
   'moment',
   'uri',
+  'core/View',
+  'mps',
   'helpers/numbersHelper',
   'text!countries/templates/widgets/nearRealTimeAlerts.handlebars'
-], function($, Backbone, _, Handlebars, moment, UriTemplate, NumbersHelper, tpl) {
+], function($, Backbone, _, Handlebars, moment, UriTemplate, View, mps, NumbersHelper, tpl) {
 
   'use strict';
 
@@ -15,17 +17,37 @@ define([
   var DATASET_VIIRS = '20cc5eca-8c63-4c41-8e8e-134dcf1e6d76';
   var DATASET_GLAD = '5608af77-1038-4d5d-8084-d5f49e8323a4';
   var QUERY_VIIRS = '/query?sql=SELECT count(*) as value FROM {dataset} WHERE acq_date = \'{date}\'';
-  var QUERY_GLAD = '/query?sql=SELECT sum(alerts) as value FROM {dataset} WHERE year={year} AND month={month} AND country_iso=\'{iso}\' GROUP BY country_iso';
+  var QUERY_GLAD = '/query?sql=SELECT sum(alerts) as value FROM {dataset} WHERE year={year} AND month={month} AND country_iso=\'{iso}\' {region}';
 
-  var NearRealTimeAlertsView = Backbone.View.extend({
+  var NearRealTimeAlertsView = View.extend({
     el: '#widget-near-real-time-alerts',
 
     template: Handlebars.compile(tpl),
 
-    initialize: function(params) {
-      this.iso = params.iso;
-      this.data = [];
+    status: new (Backbone.Model.extend({
+      defaults: {
+        origin: 'month',
+        source: 'glad',
+        layerLink: 'umd_as_it_happens',
+        sourceLink: 'glad-alerts'
+      }
+    })),
 
+
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
+          this.region = parseInt(value);
+          this._start();
+        }
+      },
+    ],
+
+    initialize: function(params) {
+      View.prototype.initialize.apply(this);
+      this.iso = params.iso;
+      this.region = params.region;
+      this.data = [];
       this._start();
     },
 
@@ -78,9 +100,9 @@ define([
         dataset: DATASET_GLAD,
         iso: this.iso,
         year: currentDate.year(),
-        month: currentDate.month() - 1
+        month: currentDate.month() - 1,
+        region: this.region === 0 ? 'GROUP BY country_iso' : 'AND state_id = '+this.region+' GROUP BY iso, state_id'
       });
-
       $.ajax({
         url: url,
         type: 'GET'

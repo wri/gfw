@@ -4,20 +4,31 @@ define([
   'underscore',
   'handlebars',
   'uri',
+  'core/View',
+  'mps',
   'text!countries/templates/widgets/treeCoverReforestation.handlebars'
-], function($, Backbone, _, Handlebars, UriTemplate, tpl) {
+], function($, Backbone, _, Handlebars, UriTemplate, View, mps, tpl) {
 
   'use strict';
 
   var API = 'https://wri-01.cartodb.com/api/v2/sql?q='
   var QUERY = 'SELECT reforestation_rate FROM gfw2_countries WHERE iso=\'{iso}\'';
 
-  var TreeCoverLossView = Backbone.View.extend({
+  var TreeCoverLossView = View.extend({
     el: '#widget-tree-cover-reforestation',
 
     template: Handlebars.compile(tpl),
 
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
+
+        }
+      },
+    ],
+
     initialize: function(params) {
+      View.prototype.initialize.apply(this);
       this.iso = params.iso;
       this.start();
     },

@@ -4,6 +4,8 @@ define([
   'underscore',
   'handlebars',
   'uri',
+  'core/View',
+  'mps',
   'countries/views/widgets/modals/FireAlertsModal',
   'text!countries/templates/widgets/firesAlerts.handlebars',
   'text!countries/templates/widgets/firesAlertsCover.handlebars',
@@ -14,6 +16,8 @@ define([
   _,
   Handlebars,
   UriTemplate,
+  View,
+  mps,
   FireAlertsModal,
   tpl,
   coverTpl,
@@ -25,7 +29,7 @@ define([
   var DATASET = '';
   var QUERY = '';
 
-  var FiresAlertsView = Backbone.View.extend({
+  var FiresAlertsView = View.extend({
     el: '#widget-fire-alerts',
 
     template: Handlebars.compile(tpl),
@@ -37,7 +41,16 @@ define([
       'grey-pink'
     ],
 
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
+
+        }
+      },
+    ],
+
     initialize: function(params) {
+      View.prototype.initialize.apply(this);
       this.iso = params.iso;
       this.initFireAlertsModal();
       this.start();

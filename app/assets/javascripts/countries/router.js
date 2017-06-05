@@ -2,18 +2,21 @@ define([
   'jquery',
   'backbone',
   'underscore',
+  'urijs/URI',
   'countries/views/CountryListView',
   'countries/views/CountryOverviewView',
   'countries/views/CountryShowView'
-], function($, Backbone, _, CountryListView, CountryOverviewView, CountryShowView) {
+], function($, Backbone, _, URI, CountryListView, CountryOverviewView, CountryShowView) {
 
   'use strict';
 
   var Router = Backbone.Router.extend({
+
     routes: {
       'countries': 'showList',
       'countries/overview': 'showOverview',
-      'countries/:iso(/)': 'showCountry'
+      'countries/:iso(/)': 'showCountry',
+      'countries/:iso(/):region(/)': 'showCountryRegion',
     },
 
     showList: function() {
@@ -24,10 +27,36 @@ define([
       new CountryOverviewView();
     },
 
-    showCountry: function(iso) {
-      new CountryShowView({
-        iso: iso
+    showCountry: function(iso, region) {
+      this.iso = iso;
+      this.region = region;
+
+      this.countryShow = new CountryShowView({
+        iso: iso,
+        region: 0
       });
+
+      this.listenTo(
+         this.countryShow ,
+         'updateUrl',
+         this.updateUrl
+      );
+    },
+
+    showCountryRegion: function(iso, region) {
+      this.iso = iso;
+      this.region = region;
+      this.routerChange = region != 0 ? true : false;
+      this.countryShow = new CountryShowView({
+        iso: iso,
+        region: region
+      });
+
+      this.listenTo(
+         this.countryShow ,
+         'updateUrl',
+         this.updateUrl
+      );
     },
 
     startHistory: function() {
@@ -36,7 +65,23 @@ define([
           pushState: true
         });
       }
-    }
+    },
+
+    updateUrl: function() {
+      var region = $('#areaSelector').val();
+      var uri = new URI();
+      if(region != 0 ){
+        if(this.routerChange) {
+          this.navigate(uri.path().slice(0, uri.path().lastIndexOf('/')) +'/'+region);
+        } else {
+          this.navigate(uri.path().slice(0, uri.path().lastIndexOf('/')) +'/'+this.iso+'/'+region);
+          this.routerChange = true;
+        }
+      } else {
+        this.routerChange = false;
+        this.navigate(uri.path().slice(0, uri.path().lastIndexOf('/')));
+      }
+    },
   });
 
   return Router;

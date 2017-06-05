@@ -3,6 +3,7 @@ define([
   'backbone',
   'underscore',
   'handlebars',
+  'core/View',
   'mps',
   'services/CountryService',
   'countries/views/CountryHeaderView',
@@ -23,6 +24,7 @@ define([
   Backbone,
   _,
   Handlebars,
+  View,
   mps,
   CountryService,
   CountryHeaderView,
@@ -42,7 +44,7 @@ define([
 
   'use strict';
 
-  var CountryShowView = Backbone.View.extend({
+  var CountryShowView = View.extend({
     el: '#countryShowView',
 
     events: {
@@ -51,8 +53,29 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    _subscriptions:[
+      {
+        'Regions/update': function(value) {
+          this.region = value;
+          if(this.region != 0){
+            this.getDataRegions().then(function(results) {
+              this.data = results;
+              this.initMapCountry();
+            }.bind(this));
+          } else {
+            this.getData().then(function(results) {
+              this.data = results;
+              this.initMapCountry();
+            }.bind(this));
+          }
+        }
+      },
+    ],
+
     initialize: function(params) {
       $('html,body').scrollTop(0);
+      View.prototype.initialize.apply(this);
+      this.region = params.region;
       this.iso = params.iso;
       this.modules = {
         snapshot: [],
@@ -65,10 +88,17 @@ define([
       this.cache();
       this.render();
 
-      this.getData().then(function(results) {
-        this.data = results;
-        this.start();
-      }.bind(this));
+      if(this.region != 0){
+        this.getDataRegions().then(function(results) {
+          this.data = results;
+          this.start();
+        }.bind(this));
+      } else {
+        this.getData().then(function(results) {
+          this.data = results;
+          this.start();
+        }.bind(this));
+      }
     },
 
     cache: function() {
@@ -77,6 +107,10 @@ define([
 
     getData: function() {
       return CountryService.showCountry({ iso: this.iso });
+    },
+
+    getDataRegions: function() {
+      return CountryService.showRegion({ iso: this.iso, region: this.region });
     },
 
     render: function() {
@@ -94,14 +128,19 @@ define([
       this.initFiresAlerts();
       this.initMapCountry();
       this.initStickyMap();
+      this.listenTo(
+         this.header,
+         'updateUrl',
+         this.updateUrl
+      );
       this.initSwitchOptions();
-
       this.$el.find('.widgets > .content').removeClass('-loading');
     },
 
     initHeader: function() {
       this.header = new CountryHeaderView({
         iso: this.iso,
+        region: this.region,
         countryData: this.data
       });
     },
@@ -118,7 +157,8 @@ define([
       this.mapCountry = new MapCountry(
         {
           iso: this.iso,
-          countryData: this.data
+          countryData: this.data,
+          region: this.region > 0,
         },
         {
           modules: this.modules
@@ -128,41 +168,49 @@ define([
 
     initSnapshot: function() {
       this.modules.snapshot.push(new TreeCoverView({
-        iso: this.iso
+        iso: this.iso,
+        region: this.region,
       }));
 
       this.modules.snapshot.push(new TreeCoverLossRankingView({
-        iso: this.iso
+        iso: this.iso,
+        region: this.region,
       }));
 
       this.modules.snapshot.push(new TreeCoverLossView({
         iso: this.iso,
+        region: this.region,
         countryData: this.data
       }));
 
       this.modules.snapshot.push(new NearRealTimeAlertsView({
-        iso: this.iso
+        iso: this.iso,
+        region: this.region,
       }));
     },
 
     initTreeCoverLoss: function() {
       this.modules.treeCoverLoss.push(new AnnualTreeCoverLossView({
-        iso: this.iso
+        iso: this.iso,
+        region: this.region,
       }));
     },
 
     initCoverGain: function() {
       this.modules.treeCoverGain.push(new TreeCoverGainView({
-        iso: this.iso
+        iso: this.iso,
+        region: this.region,
       }));
       this.modules.treeCoverGain.push(new TreeCoverReforestationView({
-        iso: this.iso
+        iso: this.iso,
+        region: this.region,
       }));
     },
 
     initCoverLossAlerts: function() {
       this.modules.treeCoverLossAlerts.push(new TreeCoverLossAlertsView({
         iso: this.iso,
+        region: this.region,
         latitude: JSON.parse(this.data.centroid).coordinates[0],
         longitude: JSON.parse(this.data.centroid).coordinates[1]
       }));
@@ -170,8 +218,14 @@ define([
 
     initFiresAlerts: function() {
       this.modules.firesAlerts.push(new FiresAlertsView({
-        iso: this.iso
+        iso: this.iso,
+        region: this.region,
       }));
+    },
+
+
+    updateUrl: function() {
+      this.trigger('updateUrl');
     },
 
     changeSection: function(e) {
