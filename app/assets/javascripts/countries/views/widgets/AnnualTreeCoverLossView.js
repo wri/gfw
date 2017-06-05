@@ -4,6 +4,7 @@ define([
   'underscore',
   'handlebars',
   'uri',
+  'mps',
   'helpers/numbersHelper',
   'common/views/GroupedGraphView',
   'countries/views/widgets/AnnualTreeCoverLossRankingView',
@@ -14,6 +15,7 @@ define([
   _,
   Handlebars,
   UriTemplate,
+  mps,
   NumbersHelper,
   GroupedGraphView,
   AnnualTreeCoverLossRankingView,
@@ -433,7 +435,7 @@ define([
       }
 
       this._getList()
-      .done(this._initWidget.bind(this));
+      .done(this._updateData.bind(this));
     },
 
     _checkThresh: function(e) {
@@ -450,7 +452,12 @@ define([
       }
       this.status.set('thresh', threshList);
       this._getList()
-      .done(this._initWidget.bind(this));
+      .done(this._updateData.bind(this));
+    },
+
+    _updateData: function () {
+      this._initWidget();
+      mps.publish('AnnualTreeCoverLoss/update');
     }
   });
   return AnnualTreeCoverLossView;
