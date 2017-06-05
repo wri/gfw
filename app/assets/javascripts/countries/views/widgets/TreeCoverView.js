@@ -38,7 +38,6 @@ define([
       {
         'Regions/update': function(value) {
           this.region = parseInt(value);
-          this.$el.addClass('-loading');
           this._getData().done(function(data) {
             this._initWidget(data);
           }.bind(this));
