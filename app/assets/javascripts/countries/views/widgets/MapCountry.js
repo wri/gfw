@@ -156,7 +156,7 @@ define([
       this.map.setZoom(this.map.getZoom() + 1);
     },
 
-    toogleLayer: function(e){
+    toogleLayer: function(e) {
       var target = $(e.target);
       var section = target.data('section');
 
@@ -169,6 +169,11 @@ define([
       });
       target.addClass('checked');
       if (section) {
+        $('html,body').animate(
+          {
+            scrollTop: $("#"+section).offset().top
+          },'slow'
+        );
         this.currentSection = section;
         this.forceSection = true;
         this._updateLayer();
@@ -196,7 +201,6 @@ define([
     },
 
     _updateLegend: function (section) {
-      console.log(section);
       $('.js-toggle-layer').each(function(i, obj) {
         if ($(obj).hasClass('checked')) {
           $(this).removeClass('checked');
