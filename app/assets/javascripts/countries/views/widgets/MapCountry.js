@@ -125,6 +125,7 @@ define([
               setTimeout(function(lastSection) {
                 if (lastSection === this.currentSection) {
                   this._updateLayer();
+                  this._updateLegend(section);
                 }
               }.bind(this, section), 500);
             }
@@ -192,6 +193,18 @@ define([
     _updateLayer: function () {
       this._removeAllLayers();
       this.toggleLayerSpec();
+    },
+
+    _updateLegend: function (section) {
+      console.log(section);
+      $('.js-toggle-layer').each(function(i, obj) {
+        if ($(obj).hasClass('checked')) {
+          $(this).removeClass('checked');
+        }
+        if ($(obj).data('section') === section) {
+          $(this).addClass('checked');
+        }
+      });
     },
 
     _getLayerDataSection: function (section) {
