@@ -175,7 +175,7 @@ define([
           },'slow'
         );
         this.currentSection = section;
-        this.forceSection = true;
+        this.forceSection = false;
         this._updateLayer();
       } else {
         this.currentSection = null;
