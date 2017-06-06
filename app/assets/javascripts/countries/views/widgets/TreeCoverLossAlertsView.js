@@ -31,7 +31,7 @@ define([
 
   'use strict';
 
-  var WIDGETS_NUM = 5;
+  var WIDGETS_NUM = 6;
   var API_HOST = window.gfw.config.GFW_API_HOST_PROD;
   var CARTO_API_HOST = window.gfw.config.CARTO_API_HOST;
 
@@ -271,11 +271,14 @@ define([
       var year = parseInt(moment().format('YYYY'), 10);
       var queryTemplate = API_HOST + QUERIES[origin][source].top;
       var url = new UriTemplate(queryTemplate).fillFromObject({
-        widgetsNum: WIDGETS_NUM,
+        widgetsNum: origin === 'wdpa' ? 3 : WIDGETS_NUM,
         dataset: DATASETS[origin][source],
         iso: iso,
         year: year
       });
+
+      console.log(url);
+
       var promise = $.Deferred();
 
       $.ajax({ url: url, type: 'GET' })
