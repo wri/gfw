@@ -8,7 +8,7 @@
         {{/if}}
 
         {{!-- <div class="thumb-mask" style="background-image: url({{content.data.image}})"> --}}
-          <div class="thumb-mask"><img src="{{content.data.image}}" onerror="this.style.display='none';"></div>
+          <div class="thumb-mask" style="background-image: url({{content.data.image}})"></div>
           {{#if content.data.image_source}}
             <span class="image-legend">{{ content.data.image_source }}</span>
           {{/if}}
@@ -64,8 +64,7 @@
           <p>{{content.data.id}}</p>
         {{/if}}
         {{#if content.data.description}}
-          <h4 class="no-float">Description:</h4>
-          <p class="no-float">{{content.data.description}}</p>
+          <p class="no-float">{{{substring content.data.description 0 120}}}</p>
         {{/if}}
         {{#if content.data.type}}
           <h4>Type:</h4>
