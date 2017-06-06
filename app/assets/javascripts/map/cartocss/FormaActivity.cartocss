@@ -1,6 +1,6 @@
 #forma_activity {
   marker-fill: #e9bd15;
-  marker-width: 2;
+  marker-width: 1.5;
   marker-line-color: #FFF;
   marker-line-width: 1;
   marker-line-opacity: 1;
@@ -11,52 +11,14 @@
   marker-allow-overlap: true;
   marker-clip: false;
   marker-multi-policy: largest;
-
-  [zoom > 5] {
-    marker-width: 3;
-  }
-
-  [zoom > 6] {
-    marker-width: 6;
-  }
-
-  [zoom > 7] {
-    marker-width: 10;
-  }
-
-  [zoom > 8] {
-    marker-width: 20;
-      marker-opacity: 0.9;
-  }
-
-  [zoom > 9] {
-    marker-width: 30;
-  }
-
-  [zoom > 10] {
-    marker-width: 45;
-  }
-
-  [zoom > 11] {
-    marker-width: 50;
-  }
-  [zoom > 12] {
-    marker-width: 55;
-    marker-opacity: 1;
-  }
-  [zoom > 13] {
-    marker-width: 60;
-  }
-  [zoom > 14] {
-    marker-width: 65;
-  }
-  [zoom > 15] {
-    marker-width: 70;
-  }
-  [zoom > 16] {
-    marker-width: 75;
-  }
-  [zoom > 17] {
-    marker-width: 80;
-  }
 }
+
+#forma_activity[zoom>6]{ marker-width: 3; }
+#forma_activity[zoom>8]{ marker-width: 6; }
+#forma_activity[zoom>11]{ marker-width: 13; }
+#forma_activity[zoom>12]{ marker-width: 25; }
+#forma_activity[zoom>13]{ marker-width: 50; }
+#forma_activity[zoom>14]{ marker-width: 100; }
+#forma_activity[zoom>15]{ marker-width: 200; }
+#forma_activity[zoom>16]{ marker-width: 400; }
+#forma_activity[zoom>17]{ marker-width: 800; }
