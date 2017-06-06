@@ -88,7 +88,7 @@ define([
     render: function() {
       this.map = new google.maps.Map(this.el, this.paramsMap);
       this.map.mapTypes.set('grayscale', grayscaleMaptype());
-      this.setGeom();
+      this.setGeom(); //here the error
       this.$el.append(this.template());
     },
 
@@ -140,7 +140,6 @@ define([
         bounds = geojsonUtilsHelper.getBoundsFromGeojson(geometry);
         this.drawGeojson(geometry);
         this.map.fitBounds(bounds)
-
       } else {
         var resTopojson = JSON.parse(this.paramsMap.countryData.topojson);
         var objects = _.findWhere(resTopojson.objects, {
@@ -149,11 +148,10 @@ define([
         var topoJson = topojson.feature(resTopojson,objects),
             geojson = topoJson.geometry,
             bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+        this.drawGeojson(geojson);
+        this.map.fitBounds(bounds);
+        this.map.setZoom(this.map.getZoom() + 1);
       }
-
-      this.drawGeojson(geojson);
-      this.map.fitBounds(bounds);
-      this.map.setZoom(this.map.getZoom() + 1);
     },
 
     toogleLayer: function(e) {
@@ -334,7 +332,6 @@ define([
         fillColor: '#FFF',
         strokeColor: '#A2BC28'
       });
-
       overlay.setMap(this.map);
     },
 
