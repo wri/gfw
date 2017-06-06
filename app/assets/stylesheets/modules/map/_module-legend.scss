@@ -295,6 +295,11 @@
           width: 8px;
           height: 8px;
           border-radius: 50%;
+
+          .alert-recent-icon {
+            width: 8px;
+            height: 8px;
+          }
         }
         .subtitle {
           font-size: 11px;
@@ -516,6 +521,38 @@
 
         @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
           background-image: none;
+        }
+      }
+    }
+
+    &.layer-details-places_to_watch {
+      margin-top: 0;
+
+      .subtitle {
+        font-size: 11px;
+        padding: 5px 8px 0 0px;
+        display: block;
+        color: #AAA;
+        word-wrap: break-word;
+      }
+
+      .info-newsletter {
+        margin-top: 10px;
+
+        p {
+          font-size: 11px;
+
+          a {
+            margin-top: 4px;
+            color: #F69;
+            display: flex;
+
+            svg {
+              margin-left: 5px;
+              width: 10px;
+              height: 10px;
+            }
+          }
         }
       }
     }

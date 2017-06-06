@@ -286,8 +286,8 @@ define([
 
     getLayersByCategory: function(layers) {
       var subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
-      var filteredLayers = _.filter(layers, function(layer) {
-        return !layer.parent_layer;
+      var filteredLayers = _.sortBy(layers, function(layer) {
+        return layer.position;
       });
       return _.groupBy(filteredLayers, function(layer) {
         layer.allowSubscription = layer && subscriptionsAllowed.indexOf(layer.slug) > -1;

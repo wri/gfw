@@ -142,6 +142,7 @@ define([
                 does_wrapper, \
                 user_data, \
                 parent_layer, \
+                custom_legend_icon,\
                 true AS visible \
               FROM \
                 '+window.gfw.layer_spec+' \
