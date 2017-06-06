@@ -4,6 +4,7 @@
   box-shadow: $shadow1;
   transform: translate(-97px, -12px);
   cursor: default;
+  z-index: 1001 !important;
 
 
   &:after {
