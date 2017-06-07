@@ -72,9 +72,12 @@ define([
             }.bind(this));
           } else {
             this.wholeCountry = true;
-            this.getDataCountry(iso, region).then(function(results) {
+            this.getDataCountry(iso, region, false).then(function(results) {
               this.selectData = results;
               this.setGeom();
+            }.bind(this));
+            this.getDataCountry(iso, region, true).then(function(results2) {
+              console.log(results2);
             }.bind(this));
           }
         }
@@ -376,10 +379,11 @@ define([
      );
     },
 
-    getDataCountry: function(iso, region) {
+    getDataCountry: function(iso, region, area) {
       return CountryService.showCountry(
         {
          iso: iso,
+         showArea: area,
        }
      );
     },
