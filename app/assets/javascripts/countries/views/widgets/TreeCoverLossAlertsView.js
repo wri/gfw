@@ -135,6 +135,7 @@ define([
     _subscriptions:[
       {
         'Regions/update': function(value) {
+          this.$widgets.addClass('-loading');
           this.region = parseInt(value);
           this._getData().done(function(data) {
             this.data = data;
