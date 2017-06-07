@@ -328,6 +328,11 @@
     &.cartodb { height: 45px; @include logos-sprite(cartodb); }
     &.vizzuality { height: 51px; margin-right: 32px; @include logos-sprite(vizzuality); }
     &.blueraster { height: 51px; width: 97px; @include logos-sprite(blueraster); }
+    &.irishaid { height: 53px; width: 150px; @include logos-sprite(irishaid); }
+    &.haka { height: 63px; width: 69px; @include logos-sprite(haka); }
+    &.idb { height: 58px; width: 120px; @include logos-sprite(idb); }
+    &.macarthur { height: 42px; width: 120px; @include logos-sprite(macarthur); }
+    &.wilburforce { height: 31px; width: 120px; @include logos-sprite(wilburforce); }
     &.last { margin-right: 0; }
   }
 }
