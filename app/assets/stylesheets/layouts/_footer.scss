@@ -744,5 +744,33 @@
         @include logos-sprite(irishaidhover);
       }
     }
+
+    &.haka {
+      height: 63px; width: 69px; @include logos-sprite(haka);
+      &:hover{
+        @include logos-sprite(hakahover);
+      }
+    }
+
+    &.idb {
+      height: 58px; width: 120px; @include logos-sprite(idb);
+      &:hover{
+        @include logos-sprite(idbhover);
+      }
+    }
+
+    &.macarthur {
+      height: 42px; width: 120px; @include logos-sprite(macarthur);
+      &:hover{
+        @include logos-sprite(macarthurhover);
+      }
+    }
+
+    &.wilburforce {
+      height: 31px; width: 120px; @include logos-sprite(wilburforce);
+      &:hover{
+        @include logos-sprite(wilburforcehover);
+      }
+    }
   }
 }
