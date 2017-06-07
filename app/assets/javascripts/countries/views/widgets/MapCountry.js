@@ -4,6 +4,7 @@ define([
   'underscore',
   'handlebars',
   'topojson',
+  'services/CountryService',
   'map/utils',
   'helpers/geojsonUtilsHelper',
   'map/services/LayerSpecService',
@@ -18,6 +19,7 @@ define([
   _,
   Handlebars,
   topojson,
+  CountryService,
   utils,
   geojsonUtilsHelper,
   LayerSpecService,
@@ -60,8 +62,21 @@ define([
 
     _subscriptions:[
       {
-        'Regions/update': function(value) {
-
+        'Regions/update': function(region, iso) {
+          this.deleteGeojson();
+          if (parseInt(region) != 0) {
+            this.wholeCountry = false;
+            this.getDataRegions(iso, region).then(function(results) {
+              this.selectData = results;
+              this.setGeom();
+            }.bind(this));
+          } else {
+            this.wholeCountry = true;
+            this.getDataCountry(iso, region).then(function(results) {
+              this.selectData = results;
+              this.setGeom();
+            }.bind(this));
+          }
         }
       },
     ],
@@ -70,7 +85,6 @@ define([
       View.prototype.initialize.apply(this);
       this.paramsMap = _.extend({}, this.default, params);
       this.modules = options.modules;
-
       this.cache();
       this.render();
       this._setListeners();
@@ -135,23 +149,39 @@ define([
     },
 
     setGeom: function() {
-      if(this.paramsMap.region) {
-        var geometry = JSON.parse(this.paramsMap.countryData.geojson);
-        bounds = geojsonUtilsHelper.getBoundsFromGeojson(geometry);
-        this.drawGeojson(geometry);
-        this.map.fitBounds(bounds)
+      if (this.selectData) {
+        if(!this.wholeCountry) {
+          this.setGeomRegion(this.selectData);
+        } else {
+          this.setGeomCountry(this.selectData);
+        }
       } else {
-        var resTopojson = JSON.parse(this.paramsMap.countryData.topojson);
-        var objects = _.findWhere(resTopojson.objects, {
-          type: 'MultiPolygon'
-        });
-        var topoJson = topojson.feature(resTopojson,objects),
-            geojson = topoJson.geometry,
-            bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
-        this.drawGeojson(geojson);
-        this.map.fitBounds(bounds);
-        this.map.setZoom(this.map.getZoom() + 1);
+        if(this.paramsMap.region) {
+          this.setGeomRegion(this.paramsMap.countryData);
+        } else {
+          this.setGeomCountry(this.paramsMap.countryData);
+        }
       }
+    },
+
+    setGeomCountry: function(countryData) {
+      var resTopojson = JSON.parse(countryData.topojson);
+      var objects = _.findWhere(resTopojson.objects, {
+        type: 'MultiPolygon'
+      });
+      var topoJson = topojson.feature(resTopojson,objects),
+          geojson = topoJson.geometry,
+          bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+      this.drawGeojson(geojson);
+      this.map.fitBounds(bounds);
+      this.map.setZoom(this.map.getZoom() + 1);
+    },
+
+    setGeomRegion: function(regionData) {
+      var geometry = JSON.parse(regionData.geojson);
+      var bounds = geojsonUtilsHelper.getBoundsFromGeojson(geometry);
+      this.drawGeojson(geometry);
+      this.map.fitBounds(bounds)
     },
 
     toogleLayer: function(e) {
@@ -185,7 +215,6 @@ define([
     toggleLayerSpec: function () {
       var layerData = this._getLayerDataSection(this.currentSection);
       var where = [{ slug: layerData.slug }];
-
       LayerSpecService.toggle(where,
         function(layerSpec) {
           this.setLayers(layerSpec.getLayers(), layerData.options);
@@ -308,7 +337,6 @@ define([
 
         var layerView = this.layerInst[layer.slug] =
           new layersHelper[layer.slug].view(layer, options, this.map);
-
         layerView.addLayer(layer.position, _addNext);
       }
 
@@ -324,7 +352,7 @@ define([
     drawGeojson: function(geojson) {
       var geojson = geojson;
       var paths = geojsonUtilsHelper.geojsonToPath(geojson);
-      var overlay = new google.maps.Polygon({
+      this.overlay = new google.maps.Polygon({
         paths: paths,
         editable: false,
         strokeWeight: 1.5,
@@ -332,10 +360,28 @@ define([
         fillColor: '#FFF',
         strokeColor: '#A2BC28'
       });
-      overlay.setMap(this.map);
+      this.overlay.setMap(this.map);
     },
 
     deleteGeojson: function() {
+      this.overlay.setMap(null);
+    },
+
+    getDataRegions: function(iso, region) {
+      return CountryService.showRegion(
+        {
+         iso: iso,
+         region: region
+       }
+     );
+    },
+
+    getDataCountry: function(iso, region) {
+      return CountryService.showCountry(
+        {
+         iso: iso,
+       }
+     );
     },
 
     /**

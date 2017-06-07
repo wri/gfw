@@ -58,14 +58,14 @@ define([
         'Regions/update': function(value) {
           this.region = value;
           if(this.region != 0){
+            $('#first-option-region-select').html('The whole country');
             this.getDataRegions().then(function(results) {
               this.data = results;
-              this.initMapCountry();
             }.bind(this));
           } else {
+            $('#first-option-region-select').html('Select a jurisdiction');
             this.getData().then(function(results) {
               this.data = results;
-              this.initMapCountry();
             }.bind(this));
           }
         }
