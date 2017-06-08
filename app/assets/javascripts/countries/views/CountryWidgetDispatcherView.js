@@ -51,7 +51,6 @@ define([
     _loadWidget: function () {
       switch (this.widget) {
         case 'tree_cover':
-        case 'alerts':
           this._setWidgetId('widget-tree-cover');
           new TreeCoverView({
             iso: this.iso,
@@ -59,6 +58,7 @@ define([
           });
           break;
         case 'tree_cover_loss':
+        case 'alerts':
           this._setWidgetId('widget-tree-cover-loss');
           new TreeCoverLossView({
             iso: this.iso,
