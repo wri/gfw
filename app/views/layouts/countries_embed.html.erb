@@ -32,7 +32,10 @@
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
     <div class="wrap">
       <%= render 'shared/js_config' %>
-      <div class="layout-content">
+      <div class="layout-content countries-embed">
+        <header class="embed-header">
+          <h1><a href="http://www.globalforestwatch.org/" target="_blank">Global Forest Watch</a></h1>
+        </header>
         <%= yield %>
       </div>
     </div>
