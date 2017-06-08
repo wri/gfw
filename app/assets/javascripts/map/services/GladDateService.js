@@ -48,9 +48,9 @@ define([
           var years = _.keys(groupedDates);
           var dataByYear = [];
 
-          var startDay = groupedDates[years[0]];
+          var startDay = groupedDates[years[1]];
           var startDate = moment.utc()
-            .year(years[0])
+            .year(years[1])
             .dayOfYear(startDay[0].julian_day);
 
           var endDay = groupedDates[years[years.length - 1]];

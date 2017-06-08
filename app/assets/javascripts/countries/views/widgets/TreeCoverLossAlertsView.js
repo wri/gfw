@@ -31,7 +31,7 @@ define([
 
   'use strict';
 
-  var WIDGETS_NUM = 5;
+  var WIDGETS_NUM = 6;
   var API_HOST = window.gfw.config.GFW_API_HOST_PROD;
   var CARTO_API_HOST = window.gfw.config.CARTO_API_HOST;
 
@@ -64,43 +64,43 @@ define([
   var QUERIES = {
     month: {
       glad: {
-        top: '/query?sql=SELECT SUM (alerts) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
+        top: '/query?sql=SELECT SUM (alerts) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' {region} GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
         data: '/query?sql=select sum(alerts) as alerts, year, month, state_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND state_id IN({ids}) AND group by state_id, month, year ORDER BY month ASC'
       },
       terrai: {
-        top: '/query/{dataset}?sql=SELECT SUM (count) as alerts, year, state_id FROM data WHERE year={year} AND country_id=\'{iso}\' GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
+        top: '/query/{dataset}?sql=SELECT SUM (count) as alerts, year, state_id FROM data WHERE year={year} AND country_id=\'{iso}\' {region} GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
         data: '/query/{dataset}?sql=select sum(count) as alerts, year, month, state_id from data WHERE country_id=\'{iso}\' AND year={year} AND state_id IN({ids}) AND group by state_id, month, year ORDER BY month ASC'
       }
     },
     wdpa: {
       glad: {
-        top: '/query?sql=SELECT SUM (alerts) as alerts, year, wdpa_id, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' GROUP BY wdpa_id, state_id ORDER BY alerts DESC limit {widgetsNum}',
+        top: '/query?sql=SELECT SUM (alerts) as alerts, year, wdpa_id, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' {region} GROUP BY wdpa_id, state_id ORDER BY alerts DESC limit {widgetsNum}',
         data: '/query?sql=select sum(alerts) as alerts, year, month, wdpa_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND wdpa_id IN({ids}) AND group by wdpa_id, month, year ORDER BY month ASC',
         names: 'SELECT name WHERE wdpa_pid IN({wdpaIds})'
       },
       terrai: {
-        top: '/query?sql=SELECT SUM (count) as alerts, year, wdpa_id FROM {dataset} WHERE year={year} AND country_id=\'{iso}\' GROUP BY wdpa_id ORDER BY alerts DESC limit {widgetsNum}',
+        top: '/query?sql=SELECT SUM (count) as alerts, year, wdpa_id FROM {dataset} WHERE year={year} AND country_id=\'{iso}\' {region} GROUP BY wdpa_id ORDER BY alerts DESC limit {widgetsNum}',
         data: '/query?sql=select sum(count) as alerts, year, month, wdpa_id from {dataset} WHERE country_id=\'{iso}\' AND year={year} AND wdpa_id IN({ids}) AND group by wdpa_id, month, year ORDER BY month ASC',
         names: 'SELECT name WHERE wdpa_pid IN({wdpaIds})'
       }
     },
     wdma: {
       glad: {
-        top: '/query?sql=SELECT SUM (alerts) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
+        top: '/query?sql=SELECT SUM (alerts) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' {region} GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
         data: '/query?sql=select sum(alerts) as alerts, year, month, state_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND state_id IN({ids}) AND group by state_id, month, year ORDER BY month ASC'
       },
       terrai: {
-        top: '/query?sql=SELECT SUM (count) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_id=\'{iso}\' GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
+        top: '/query?sql=SELECT SUM (count) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_id=\'{iso}\' {region} GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
         data: '/query?sql=select sum(count) as alerts, year, month, state_id from {dataset} WHERE country_id=\'{iso}\' AND year={year} AND state_id IN({ids}) AND group by state_id, month, year ORDER BY month ASC'
       }
     },
     onpeat: {
       glad: {
-        top: '/query?sql=SELECT SUM (alerts) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
+        top: '/query?sql=SELECT SUM (alerts) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' {region} GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
         data: '/query?sql=select sum(alerts) as alerts, year, month, state_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND state_id IN({ids}) AND group by state_id, month, year ORDER BY month ASC'
       },
       terrai: {
-        top: '/query?sql=SELECT SUM (alerts) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
+        top: '/query?sql=SELECT SUM (alerts) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' {region} GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
         data: '/query?sql=select sum(alerts) as alerts, year, month, state_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND state_id IN({ids}) AND group by state_id, month, year ORDER BY month ASC'
       }
     }
@@ -135,7 +135,11 @@ define([
     _subscriptions:[
       {
         'Regions/update': function(value) {
-
+          this.region = parseInt(value);
+          this._getData().done(function(data) {
+            this.data = data;
+            this._initWidgets();
+          }.bind(this));
         }
       },
     ],
@@ -143,6 +147,7 @@ define([
     initialize: function(params) {
       View.prototype.initialize.apply(this);
       this.iso = params.iso;
+      this.region = parseInt(params.region);
       this.latitude = params.latitude;
       this.longitude = params.longitude;
       this.start();
@@ -271,11 +276,13 @@ define([
       var year = parseInt(moment().format('YYYY'), 10);
       var queryTemplate = API_HOST + QUERIES[origin][source].top;
       var url = new UriTemplate(queryTemplate).fillFromObject({
-        widgetsNum: WIDGETS_NUM,
+        widgetsNum: origin === 'wdpa' ? 3 : WIDGETS_NUM,
         dataset: DATASETS[origin][source],
         iso: iso,
-        year: year
+        year: year,
+        region: this.region != 0 ? 'AND state_id = '+this.region+'' : '',
       });
+
       var promise = $.Deferred();
 
       $.ajax({ url: url, type: 'GET' })
