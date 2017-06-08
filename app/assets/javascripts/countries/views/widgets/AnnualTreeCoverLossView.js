@@ -184,7 +184,7 @@ define([
       $('.data-measure').html('HA');
       $('.data-source').html('GFW');
       $('.back-loading-annual-cover-loss').removeClass('-show');
-      this._getAreas().done(function(){
+      this._getAreas(this._getTotalCoverLoss()).done(function(){
         $('#widget-annual-tree-cover-loss').removeClass('-loading');
       });
     },
@@ -211,11 +211,11 @@ define([
       );
     },
 
-    _getAreas: function() {
+    _getAreas: function(totalNumber) {
       var $deferred = $.Deferred();
       var areas = null;
-      var total = 600;
-      var closestNumber = null;
+      var total = totalNumber.toString();
+      total = parseInt(total.replace(/,/g , ''));
       var countryName = '';
       this.getCountriesAreas(true)
         .done(function(results) {
