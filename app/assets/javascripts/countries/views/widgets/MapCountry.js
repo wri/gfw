@@ -88,7 +88,7 @@ define([
     render: function() {
       this.map = new google.maps.Map(this.el, this.paramsMap);
       this.map.mapTypes.set('grayscale', grayscaleMaptype());
-      this.setGeom();
+      this.setGeom(); //here the error
       this.$el.append(this.template());
     },
 
@@ -125,6 +125,7 @@ define([
               setTimeout(function(lastSection) {
                 if (lastSection === this.currentSection) {
                   this._updateLayer();
+                  this._updateLegend(section);
                 }
               }.bind(this, section), 500);
             }
@@ -139,7 +140,6 @@ define([
         bounds = geojsonUtilsHelper.getBoundsFromGeojson(geometry);
         this.drawGeojson(geometry);
         this.map.fitBounds(bounds)
-
       } else {
         var resTopojson = JSON.parse(this.paramsMap.countryData.topojson);
         var objects = _.findWhere(resTopojson.objects, {
@@ -148,14 +148,13 @@ define([
         var topoJson = topojson.feature(resTopojson,objects),
             geojson = topoJson.geometry,
             bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+        this.drawGeojson(geojson);
+        this.map.fitBounds(bounds);
+        this.map.setZoom(this.map.getZoom() + 1);
       }
-
-      this.drawGeojson(geojson);
-      this.map.fitBounds(bounds);
-      this.map.setZoom(this.map.getZoom() + 1);
     },
 
-    toogleLayer: function(e){
+    toogleLayer: function(e) {
       var target = $(e.target);
       var section = target.data('section');
 
@@ -168,8 +167,13 @@ define([
       });
       target.addClass('checked');
       if (section) {
+        $('html,body').animate(
+          {
+            scrollTop: $("#"+section).offset().top
+          },'slow'
+        );
         this.currentSection = section;
-        this.forceSection = true;
+        this.forceSection = false;
         this._updateLayer();
       } else {
         this.currentSection = null;
@@ -192,6 +196,17 @@ define([
     _updateLayer: function () {
       this._removeAllLayers();
       this.toggleLayerSpec();
+    },
+
+    _updateLegend: function (section) {
+      $('.js-toggle-layer').each(function(i, obj) {
+        if ($(obj).hasClass('checked')) {
+          $(this).removeClass('checked');
+        }
+        if ($(obj).data('section') === section) {
+          $(this).addClass('checked');
+        }
+      });
     },
 
     _getLayerDataSection: function (section) {
@@ -317,7 +332,6 @@ define([
         fillColor: '#FFF',
         strokeColor: '#A2BC28'
       });
-
       overlay.setMap(this.map);
     },
 
