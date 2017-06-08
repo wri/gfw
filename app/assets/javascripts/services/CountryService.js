@@ -108,7 +108,11 @@ define([
               success: function(res, status) {
                 var dataCountryConfig = countryConfig.length >= 0 ? countryConfig[0] : [];
                 var dataCountry = res.data.length >= 0 ? res.data[0] : [];
-                var data = _.extend({}, dataCountry, dataCountryConfig);
+                if(!params.showArea) {
+                  var data = _.extend({}, dataCountry, dataCountryConfig);
+                } else {
+                  var data = params.showArea ? res : _.extend({}, dataCountry, dataCountryConfig);
+                }
                 resolve(data, status);
               },
               error: function(errors) {

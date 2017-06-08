@@ -64,7 +64,7 @@ define([
             }.bind(this));
           } else {
             $('#first-option-region-select').html('Select a jurisdiction');
-            this.getData().then(function(results) {
+            this.getData(false).then(function(results) {
               this.data = results;
             }.bind(this));
           }
@@ -94,7 +94,7 @@ define([
           this.start();
         }.bind(this));
       } else {
-        this.getData().then(function(results) {
+        this.getData(false).then(function(results) {
           this.data = results;
           this.start();
         }.bind(this));
@@ -105,8 +105,13 @@ define([
       this.$dashboard = this.$el.find('#countryDashboard');
     },
 
-    getData: function() {
-      return CountryService.showCountry({ iso: this.iso });
+    getData: function(showArea) {
+      return CountryService.showCountry(
+        {
+           iso: this.iso,
+           showArea: showArea
+         }
+       );
     },
 
     getDataRegions: function() {

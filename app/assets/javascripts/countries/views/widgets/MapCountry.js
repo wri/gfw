@@ -76,9 +76,9 @@ define([
               this.selectData = results;
               this.setGeom();
             }.bind(this));
-            this.getDataCountry(iso, region, true).then(function(results2) {
-              console.log(results2);
-            }.bind(this));
+            // this.getDataCountry(iso, region, true).then(function(results2) {
+            //   console.log(results2);
+            // }.bind(this));
           }
         }
       },
