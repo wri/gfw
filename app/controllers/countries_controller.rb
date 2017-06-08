@@ -23,6 +23,7 @@ class CountriesController < ApplicationController
   end
 
   def embed_widget
+    @country = find_by_iso(params[:id])
     render layout: 'countries_embed'
   end
 
@@ -35,6 +36,21 @@ class CountriesController < ApplicationController
         end
       else
         nil
+      end
+    end
+
+    def find_by_iso(iso)
+      unless iso.blank?
+        iso = iso.downcase
+        response = Typhoeus.get(
+          "#{ENV['GFW_API_HOST']}/countries/#{iso}?thresh=30",
+          headers: {"Accept" => "application/json"}
+        )
+        if response.success?
+          JSON.parse(response.body)
+        else
+          nil
+        end
       end
     end
 end
