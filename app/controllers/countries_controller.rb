@@ -22,6 +22,10 @@ class CountriesController < ApplicationController
     @currentNavigation = '.shape-countries'
   end
 
+  def embed_widget
+    render layout: 'countries_embed'
+  end
+
   private
     def find_countries
       response = Typhoeus.get("#{ENV['GFW_API_HOST']}/countries", headers: {"Accept" => "application/json"})

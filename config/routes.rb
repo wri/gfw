@@ -24,6 +24,7 @@ Gfw::Application.routes.draw do
   get '/assets(/:content)' => redirect('/')
   get '/country/:id(/:area_id)' => redirect {|params, request| "/countries/#{params[:id]}/#{params[:area_id]}" }
   get '/embed/country/:id(/:area_id)' => redirect {|params, request| "/embed/countries/#{params[:id]}/#{params[:area_id]}" }
+  get '/embed/country_info/:id/:box' => redirect {|params, request| "/embed/country_widget/#{params[:box]}/#{params[:id]}" }
 
   # howto
   get '/howto/video' => redirect("/howto")
@@ -153,7 +154,8 @@ Gfw::Application.routes.draw do
   get '/embed/countries/overview' => 'embed#countries_overview'
   get '/embed/countries/:id' => 'embed#countries_show'
   get '/embed/countries/:id/:area_id' => 'embed#countries_show'
-  get '/embed/country_info/:id/:box' => 'embed#countries_show_info', :as => 'embed_country_box'
+  get '/embed/country_widget/:box/:id' => 'countries#embed_widget', :as => 'embed_country_box'
+  get '/embed/country_widget/:box/:id/:area_id' => 'countries#embed_widget', :as => 'embed_country_region_box'
 
   get '/landing' => 'landing#index'
 
