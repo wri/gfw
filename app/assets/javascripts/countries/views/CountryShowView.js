@@ -6,6 +6,7 @@ define([
   'core/View',
   'mps',
   'services/CountryService',
+  'views/ShareView',
   'countries/views/CountryHeaderView',
   'countries/views/widgets/TreeCoverView',
   'countries/views/widgets/TreeCoverLossRankingView',
@@ -27,6 +28,7 @@ define([
   View,
   mps,
   CountryService,
+  ShareView,
   CountryHeaderView,
   TreeCoverView,
   TreeCoverLossRankingView,
@@ -49,6 +51,7 @@ define([
 
     events: {
       'click .summary-option' : 'changeSection',
+      'click .share-link' : 'shareOpen',
     },
 
     template: Handlebars.compile(tpl),
@@ -233,6 +236,11 @@ define([
       $('html, body').animate({
         scrollTop: $('#'+data).offset().top
       }, 1000);
+    },
+
+    shareOpen: function(event){
+      var shareView = new ShareView().share(event);
+      this.$el.append(shareView.el);
     },
 
   });

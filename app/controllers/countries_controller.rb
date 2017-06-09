@@ -13,6 +13,7 @@ class CountriesController < ApplicationController
 
   def show
     @currentNavigation = '.shape-countries'
+    @country_iso = params[:id]
   end
 
   def overview
