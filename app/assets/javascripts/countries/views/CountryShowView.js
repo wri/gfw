@@ -240,7 +240,7 @@ define([
 
     shareOpen: function(event){
       var shareView = new ShareView().share(event);
-      this.$el.append(shareView.el);
+      $('body').append(shareView.el);
     },
 
   });
