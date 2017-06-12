@@ -43,7 +43,9 @@ define([
     render: function() {
       this.$el.html(this.template({
         currentLoss: NumbersHelper.addNumberDecimals(Math.round(this.data[this.data.length-1].value)) || '',
-        country: this.countryData
+        country: this.countryData,
+        iso: this.iso,
+        region: this.region
       }));
       this.$el.removeClass('-loading');
     },

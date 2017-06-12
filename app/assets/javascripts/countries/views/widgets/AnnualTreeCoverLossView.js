@@ -171,6 +171,8 @@ define([
         minYear: this.status.get('minYear'),
         maxYear: this.status.get('maxYear'),
         thresh: this.status.get('thresh'),
+        iso: this.iso,
+        region: this.region
       }));
 
       $('.data-time-range').html(this.status.get('minYear')+' to '+this.status.get('maxYear'));

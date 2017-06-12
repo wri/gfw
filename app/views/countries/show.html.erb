@@ -1,5 +1,5 @@
 <%
-  embed_url = "#{request.protocol}#{request.host_with_port}/embed/country_widget/summary/#{@country_iso}"
+  embed_url = "/embed/country_widget/summary/#{@country_iso}"
 %>
 
 <% content_for :header do %>
@@ -9,7 +9,7 @@
 <section id="countryShowView" class="-loading">
   <div class="overview_button_group">
     <div class="inner">
-      <div class="share mobile-hide share-link item" data-share-embed-url="<%= embed_url %>" data-share-embed-width="600" data-share-embed-height="420">
+      <div class="share mobile-hide js-share-link item" data-share-embed-url="<%= embed_url %>" data-share-embed-width="600" data-share-embed-height="420">
         <svg class="icon icon-share-icon"><use xlink:href="#icon-share-icon"></use></svg>
         Share
       </div>

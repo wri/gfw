@@ -51,7 +51,7 @@ define([
 
     events: {
       'click .summary-option' : 'changeSection',
-      'click .share-link' : 'shareOpen',
+      'click .js-share-link' : 'shareOpen',
     },
 
     template: Handlebars.compile(tpl),
