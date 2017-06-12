@@ -310,6 +310,10 @@
         &.icon-gray-share {
           cursor: pointer;
         }
+
+        &.icon-info-green:not([data-source]) {
+          cursor: no-drop;
+        }
       }
     }
   }

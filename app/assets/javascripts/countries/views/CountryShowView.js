@@ -30,7 +30,7 @@ define([
   mps,
   CountryService,
   ShareView,
-  SourceWindowView
+  SourceWindowView,
   CountryHeaderView,
   TreeCoverView,
   TreeCoverLossRankingView,
