@@ -6,7 +6,7 @@
     <div class="small-3 columns">
       <div class="country-selector">
         <select id="areaSelector">
-          <option class="dark" value="0">{{placeholder}}</option>
+          <option class="dark" id="first-option-region-select" value="0">{{placeholder}}</option>
           {{#each regions}}
             <option value="{{this.id}}" {{#if selected}}selected{{/if}}>{{this.name}}</option>
           {{/each}}

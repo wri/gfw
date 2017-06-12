@@ -58,7 +58,7 @@ define([
 
     changeRegion: function() {
       var value = $('#areaSelector').val();
-      mps.publish('Regions/update', [value]);
+      mps.publish('Regions/update', [value, this.iso]);
       this.trigger('updateUrl');
     },
 

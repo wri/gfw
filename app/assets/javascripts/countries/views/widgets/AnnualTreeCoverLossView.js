@@ -7,6 +7,7 @@ define([
   'core/View',
   'mps',
   'helpers/numbersHelper',
+  'services/CountryService',
   'common/views/GroupedGraphView',
   'countries/views/widgets/AnnualTreeCoverLossRankingView',
   'countries/views/widgets/modals/TreeCoverLossModal',
@@ -20,6 +21,7 @@ define([
   View,
   mps,
   NumbersHelper,
+  CountryService,
   GroupedGraphView,
   AnnualTreeCoverLossRankingView,
   TreeCoverLossModal,
@@ -164,6 +166,8 @@ define([
         this.status.set('modalCreate', true);
       }
 
+
+
       this.$el.html(this.template({
         totalCoverLoss: this._getTotalCoverLoss(),
         datasets: this._getAvailableDatasets(),
@@ -173,12 +177,16 @@ define([
         thresh: this.status.get('thresh'),
       }));
 
+
+
       $('.data-time-range').html(this.status.get('minYear')+' to '+this.status.get('maxYear'));
       $('.data-thresh').html('>'+this.status.get('threshValue'));
       $('.data-measure').html('HA');
       $('.data-source').html('GFW');
       $('.back-loading-annual-cover-loss').removeClass('-show');
-      this.$el.removeClass('-loading');
+      this._getAreas(this._getTotalCoverLoss()).done(function(){
+        $('#widget-annual-tree-cover-loss').removeClass('-loading');
+      });
     },
 
     initTreeCoverLossModal: function(datasets, years, thresh) {
@@ -201,6 +209,41 @@ define([
         'updateDataModal',
         this.updateDataModal
       );
+    },
+
+    _getAreas: function(totalNumber) {
+      var $deferred = $.Deferred();
+      var areas = null;
+      var total = totalNumber.toString();
+      total = parseInt(total.replace(/,/g , ''));
+      var countryName = '';
+      this.getCountriesAreas(true)
+        .done(function(results) {
+          areas = results.data;
+          var listAreas = [];
+          for (var i = 0; i < areas.length; i++) {
+            listAreas[i] = parseInt(areas[i].area_ha);
+          }
+          var closest = Math.max.apply(null, listAreas);
+          for (var i = 0; i < areas.length; i++) {
+            if (parseInt(areas[i].area_ha) >= total && parseInt(areas[i].area_ha) < closest) {
+              closest = parseInt(areas[i].area_ha);
+              countryName = areas[i].name;
+            }
+          }
+          $('#area-aprox-total-value').html('(Aprox.: Extension of '+countryName+')');
+          return $deferred.resolve();
+        }.bind(this))
+        return $deferred;
+    },
+
+    getCountriesAreas: function(showArea) {
+      return CountryService.showCountry(
+        {
+           iso: '',
+           showArea: showArea
+         }
+       );
     },
 
     _getDates: function() {

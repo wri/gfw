@@ -31,6 +31,7 @@ define([
     'getCountryConfig'   : '/query/{countriesConfigDataset}?sql=SELECT iso, indepth FROM {countriesConfigTable} WHERE iso=\'{iso}\'',
     'getCountriesList'   : '/query/{countriesDataset}?sql=SELECT name_engli as name, iso FROM {countriesTable}',
     'showCountry'        : '/query/{countriesDataset}?sql=SELECT name_engli as name, iso, topojson, centroid FROM {countriesTable} WHERE iso=\'{iso}\'',
+    'showCountryArea'    : '/query/{countriesDataset}?sql=SELECT name_engli as name, iso, area_ha FROM {countriesTable}',
     'getCountryInfo'     : '/query/{countriesDataset}?sql=SELECT {columns} FROM {countriesTable} {filter}',
     'getRegionsList'     : '/query/{regionsDataset}?sql=SELECT cartodb_id, iso, bbox as bounds, id_1, name_1 FROM {regionsTable} WHERE iso=\'{iso}\' ORDER BY name_1',
     'showRegion'         : '/query/{regionsDataset}?sql=SELECT id_1, name_1, geojson, centroid FROM {regionsTable} WHERE iso=\'{iso}\' AND id_1={region} ORDER BY name_1',
@@ -88,13 +89,17 @@ define([
     },
 
     showCountry: function(params) {
+      var url = '';
       var datasetId = SHOW_REQUEST_COUNTRY_ID + '_' + params.iso;
       return new Promise(function(resolve, reject) {
         this.getCountryConfig(params)
           .then(function(countryConfig) {
             var status = _.extend({}, CONFIG, params);
-            var url = new UriTemplate(APIURLS.showCountry).fillFromObject(status);
-
+            if (!params.showArea) {
+              url = new UriTemplate(APIURLS.showCountry).fillFromObject(status);
+            } else {
+              url = new UriTemplate(params.showArea ? APIURLS.showCountryArea : APIURLS.showCountry).fillFromObject(status);
+            }
             this.defineRequest(datasetId,
               url, { type: 'persist', duration: 1, unit: 'days' });
 
@@ -103,7 +108,11 @@ define([
               success: function(res, status) {
                 var dataCountryConfig = countryConfig.length >= 0 ? countryConfig[0] : [];
                 var dataCountry = res.data.length >= 0 ? res.data[0] : [];
-                var data = _.extend({}, dataCountry, dataCountryConfig);
+                if(!params.showArea) {
+                  var data = _.extend({}, dataCountry, dataCountryConfig);
+                } else {
+                  var data = params.showArea ? res : _.extend({}, dataCountry, dataCountryConfig);
+                }
                 resolve(data, status);
               },
               error: function(errors) {
