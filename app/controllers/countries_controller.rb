@@ -13,6 +13,7 @@ class CountriesController < ApplicationController
 
   def show
     @currentNavigation = '.shape-countries'
+    @country_iso = params[:id]
   end
 
   def overview
@@ -20,6 +21,11 @@ class CountriesController < ApplicationController
     @desc = 'Compare tree cover change across countries and climate domains and view global rankings.'
     @keywords = 'GFW, list, forest data, visualization, data, national, country, analysis, statistic, tree cover loss, tree cover gain, climate domain, boreal, tropical, subtropical, temperate, deforestation, deforesters, overview, global'
     @currentNavigation = '.shape-countries'
+  end
+
+  def embed_widget
+    @country = find_by_iso(params[:id])
+    render layout: 'countries_embed'
   end
 
   private
@@ -31,6 +37,21 @@ class CountriesController < ApplicationController
         end
       else
         nil
+      end
+    end
+
+    def find_by_iso(iso)
+      unless iso.blank?
+        iso = iso.downcase
+        response = Typhoeus.get(
+          "#{ENV['GFW_API_HOST']}/countries/#{iso}?thresh=30",
+          headers: {"Accept" => "application/json"}
+        )
+        if response.success?
+          JSON.parse(response.body)
+        else
+          nil
+        end
       end
     end
 end

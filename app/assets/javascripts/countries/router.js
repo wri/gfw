@@ -5,8 +5,9 @@ define([
   'urijs/URI',
   'countries/views/CountryListView',
   'countries/views/CountryOverviewView',
-  'countries/views/CountryShowView'
-], function($, Backbone, _, URI, CountryListView, CountryOverviewView, CountryShowView) {
+  'countries/views/CountryShowView',
+  'countries/views/CountryWidgetDispatcherView'
+], function($, Backbone, _, URI, CountryListView, CountryOverviewView, CountryShowView, CountryWidgetDispatcherView) {
 
   'use strict';
 
@@ -17,6 +18,8 @@ define([
       'countries/overview': 'showOverview',
       'countries/:iso(/)': 'showCountry',
       'countries/:iso(/):region(/)': 'showCountryRegion',
+      'embed/country_widget/:widget/:iso(/)': 'showWidget',
+      'embed/country_widget/:widget/:iso(/):region(/)': 'showWidget'
     },
 
     showList: function() {
@@ -81,6 +84,14 @@ define([
         this.routerChange = false;
         this.navigate(uri.path().slice(0, uri.path().lastIndexOf('/')));
       }
+    },
+
+    showWidget: function (widget, iso, region) {
+      new CountryWidgetDispatcherView({
+        widget: widget,
+        iso: iso,
+        region: region
+      });
     },
   });
 

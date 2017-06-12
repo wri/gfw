@@ -306,6 +306,10 @@
         &:last-of-type {
           margin-right: 0;
         }
+
+        &.icon-gray-share {
+          cursor: pointer;
+        }
       }
     }
   }

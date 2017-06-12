@@ -53,7 +53,8 @@ define([
         icons: {
           number: _.range(Math.floor(iconsNumber)),
           percentage: iconsNumber % 1
-        }
+        },
+        iso: this.iso
       }));
       // $('#widget-tree-cover-reforestation').removeClass('-loading')
       // this.$el.removeClass('-loading');

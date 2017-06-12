@@ -56,22 +56,7 @@
 
   <%= javascript_include_tag 'modernizr-2.6.2.min' %>
   <%= csrf_meta_tags %>
-  <script>
-    if (! !!window.gfw) {
-      var gfw = window.gfw = {
-        config: {
-          GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>",
-          GFW_API_HOST_NEW_API: "<%= ENV['GFW_API_HOST_NEW_API'] %>",
-          GFW_API_AUTH: "<%= ENV['GFW_API_AUTH'] %>",
-          GFW_API_HOST_PROD: "<%= ENV['GFW_API_HOST_PROD'] %>",
-          GFW_MOBILE: 1000,
-          AWS_HOST: "<%= ENV['AWS_HOST'] %>",
-        },
-        cacheVersion: "<%= ENV['CACHE_VERSION'] %>",
-        layer_spec: "<%= ENV['LAYER_SPEC'] %>"
-      };
-    }
-  </script>
+  <%= render 'shared/js_config' %>
 </head>
 <body class='<%= "#{controller_name} #{action_name}" %>'>
   <%= yield :title %>

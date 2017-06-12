@@ -57,7 +57,9 @@ define([
     },
 
     render: function() {
-      this.$el.html(this.template());
+      this.$el.html(this.template({
+        iso: this.iso
+      }));
       this.$el.removeClass('-loading');
     },
 

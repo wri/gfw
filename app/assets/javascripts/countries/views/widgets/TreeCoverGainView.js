@@ -56,10 +56,11 @@ define([
     render: function() {
       this.$el.html(this.template({
         value: NumbersHelper.addNumberDecimals(Math.round(this.data.value / 10000)),
-        unit: 'Ha'
+        unit: 'Ha',
+        iso: this.iso,
+        region: this.region
       }));
       $('#widget-tree-cover-gain').removeClass('-loading');
-      // this.$el.removeClass('-loading');
     },
 
     _getData: function() {

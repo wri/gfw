@@ -92,17 +92,19 @@ $height: auto;
     width: 100%;
     top: 0;
     left: 0;
-    padding: 20px;
+    padding: 40px;
     @media (min-width: $br-mobile){
       max-height: 450px;
     }
     .content {
       height: auto;
       width: 100%;
+      padding: 0;
       outline: none;
       font-size: 15px;
       z-index: 1061;
       color: $dark;
+      border: 0;
       li{
         list-style: none;
       }

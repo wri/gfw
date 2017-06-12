@@ -148,6 +148,8 @@ define([
 
     render: function(data) {
       this.$el.html(this.template({
+        iso: this.iso,
+        region: this.region,
         totalCover: this._formatTotalValue(data.total)
       }));
       this.$el.removeClass('-loading');
