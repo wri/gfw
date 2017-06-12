@@ -238,7 +238,7 @@ define([
       var areas = this.status.get('arrayAreas');
       var listAreasValue = [];
       for (var i = 0; i < areas.length; i++) {
-        listAreasValue[i] = parseInt(areas[i].area_ha);
+        listAreasValue[i] = parseInt(areas[i].area);
       }
       var closest = Math.max.apply(null, listAreasValue);
       for (var i = 0; i < areas.length; i++) {
