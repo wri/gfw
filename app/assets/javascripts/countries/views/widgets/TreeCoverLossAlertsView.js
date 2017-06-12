@@ -172,7 +172,9 @@ define([
     render: function() {
       this.$el.html(this.template({
         widgetsNum: 5,
-        origins: this.getOriginOptions(this.iso)
+        origins: this.getOriginOptions(this.iso),
+        iso: this.iso,
+        region: this.region
       }));
       this.$el.removeClass('-loading');
     },

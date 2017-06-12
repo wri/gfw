@@ -27,22 +27,24 @@
     <%= yield :js %>
     <%= csrf_meta_tags %>
     <%= render 'shared/icons/svg_icons_countries' %>
-    <%= render 'shared/gfw_assets' %>
   </head>
 
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
     <div class="wrap">
-        <%= render "shared/header_landing" %>
-        <div class="layout-content">
-          <%= yield %>
-        </div>
-        <!-- Footer -->
-        <div id="footerGfw"></div>
+      <%= render 'shared/js_config' %>
+      <div class="layout-content countries-embed">
+        <header class="embed-header">
+          <% if @country %>
+            <h1><%= @country['name'] %></h1>
+          <% end %>
+          <div class="logo"><a href="http://www.globalforestwatch.org/" target="_blank">Global Forest Watch</a></div>
+        </header>
+        <%= yield %>
+      </div>
     </div>
 
     <!-- Javascript -->
     <%= render 'shared/google_carto' %>
     <%= requirejs_include_tag "countries" %>
-    <%= render "shared/track" %>
   </body>
 </html>

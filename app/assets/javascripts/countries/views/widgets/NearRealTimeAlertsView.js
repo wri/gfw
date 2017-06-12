@@ -64,7 +64,9 @@ define([
 
       this.$el.html(this.template({
         glad: NumbersHelper.addNumberDecimals(gladValue),
-        viirs: NumbersHelper.addNumberDecimals(viirsValue)
+        viirs: NumbersHelper.addNumberDecimals(viirsValue),
+        iso: this.iso,
+        region: this.region
       }));
       this.$el.removeClass('-loading');
     },

@@ -20,6 +20,7 @@
 // Modules
 @import "modules/shared";
 @import "modules/buttons";
+@import "modules/modal";
 @import "modules/map/onoffswitch";
 @import "modules/map/onoffradio";
 @import "modules/common/ui/switch";
@@ -42,5 +43,7 @@
 @import "modules/countries/call-to-actions";
 @import "modules/countries/country-page-legend";
 @import "modules/countries/modal";
+@import "modules/countries/embed";
+
 // TEMP
 @import "modules/countries/overview";
