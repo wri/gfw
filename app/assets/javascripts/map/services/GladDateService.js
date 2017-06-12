@@ -7,8 +7,8 @@ define([
 
   var REQUEST_ID = 'GladDateService:fetchDates';
 
-  var API = window.gfw.config.GFW_API_HOST_PROD;
-  var DATASET = 'e663eb09-04de-4f39-b871-35c6c2ed10b5';
+  var API = window.gfw.config.ENV_VERSION === 'production' ? window.gfw.config.GFW_API_HOST_PROD : window.gfw.config.GFW_API_HOST_NEW_API;
+  var DATASET = window.gfw.config.ENV_VERSION === 'production' ? 'e663eb09-04de-4f39-b871-35c6c2ed10b5' : '274b4818-be18-4890-9d10-eae56d2a82e5';
   var QUERY = '/query?sql=SELECT count(*) as alerts FROM {dataset} GROUP BY julian_day, year ORDER BY year, julian_day';
 
   var GladDateService = Class.extend({

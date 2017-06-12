@@ -61,14 +61,14 @@ define([
         'Regions/update': function(value) {
           this.region = value;
           if(this.region != 0){
+            $('#first-option-region-select').html('The whole country');
             this.getDataRegions().then(function(results) {
               this.data = results;
-              this.initMapCountry();
             }.bind(this));
           } else {
-            this.getData().then(function(results) {
+            $('#first-option-region-select').html('Select a jurisdiction');
+            this.getData(false).then(function(results) {
               this.data = results;
-              this.initMapCountry();
             }.bind(this));
           }
         }
@@ -97,7 +97,7 @@ define([
           this.start();
         }.bind(this));
       } else {
-        this.getData().then(function(results) {
+        this.getData(false).then(function(results) {
           this.data = results;
           this.start();
         }.bind(this));
@@ -108,8 +108,13 @@ define([
       this.$dashboard = this.$el.find('#countryDashboard');
     },
 
-    getData: function() {
-      return CountryService.showCountry({ iso: this.iso });
+    getData: function(showArea) {
+      return CountryService.showCountry(
+        {
+           iso: this.iso,
+           showArea: showArea
+         }
+       );
     },
 
     getDataRegions: function() {

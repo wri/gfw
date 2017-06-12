@@ -2,6 +2,7 @@
   if (! !!window.gfw) {
     var gfw = window.gfw = {
       config: {
+        ENV_VERSION: "<%= ENV['RAILS_ENV'] %>",
         GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>",
         GFW_API_HOST_NEW_API: "<%= ENV['GFW_API_HOST_NEW_API'] %>",
         SENTINEL_KEY: "<%= ENV['SENTINEL_KEY'] %>",
