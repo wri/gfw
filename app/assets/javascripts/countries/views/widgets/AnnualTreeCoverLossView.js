@@ -211,10 +211,11 @@ define([
       );
     },
 
-    _areasCountries: function(container, number) {
+    _areasCountries: function(container, number, random) {
       this.areasCountries = new AreasCountries({
         container: container,
         totalNumber: number,
+        random: random
       });
     },
 
@@ -355,6 +356,7 @@ define([
           var value = data && data.value ? data.value : null;
 
           if (value) {
+            this._areasCountries('#dataset-country-aprox-'+datasetData.slug, value, true);
             datasetData.value = value;
             datasetData.percentage = ((parseFloat(value) / totalValue) * 100).toFixed(2);
             datasets.push(datasetData);
