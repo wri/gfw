@@ -8,8 +8,9 @@ define([
   'mps',
   'helpers/numbersHelper',
   'common/views/LineGraphView',
+  'countries/helpers/AreasCountries',
   'text!countries/templates/widgets/treeCoverLoss.handlebars'
-], function($, Backbone, _, Handlebars, UriTemplate, View, mps, NumbersHelper, LineGraphView, tpl) {
+], function($, Backbone, _, Handlebars, UriTemplate, View, mps, NumbersHelper, LineGraphView, AreasCountries, tpl) {
 
   'use strict';
 
@@ -47,7 +48,15 @@ define([
         iso: this.iso,
         region: this.region
       }));
+      this._areasCountries('#country-aprox-tree-cover-loss', NumbersHelper.addNumberDecimals(Math.round(this.data[this.data.length-1].value)) || '');
       this.$el.removeClass('-loading');
+    },
+
+    _areasCountries: function(container, number) {
+      this.areasCountries = new AreasCountries({
+        container: container,
+        totalNumber: number,
+      });
     },
 
     _initWidget: function(res) {

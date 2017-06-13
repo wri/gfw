@@ -40,8 +40,8 @@ define([
   FiresAlertsView,
   NearRealTimeAlertsView,
   MapCountry,
-  SwitchOptions,
   StickyMap,
+  SwitchOptions,
   tpl) {
 
   'use strict';
