@@ -7,6 +7,7 @@ define([
   'mps',
   'services/CountryService',
   'views/ShareView',
+  'views/SourceWindowView',
   'countries/views/CountryHeaderView',
   'countries/views/widgets/TreeCoverView',
   'countries/views/widgets/TreeCoverLossRankingView',
@@ -29,6 +30,7 @@ define([
   mps,
   CountryService,
   ShareView,
+  SourceWindowView,
   CountryHeaderView,
   TreeCoverView,
   TreeCoverLossRankingView,
@@ -102,6 +104,7 @@ define([
           this.start();
         }.bind(this));
       }
+      new SourceWindowView();
     },
 
     cache: function() {
