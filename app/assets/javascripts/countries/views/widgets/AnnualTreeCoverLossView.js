@@ -120,7 +120,8 @@ define([
         thresh: null,
         threshValue: 30,
         region: 0,
-        modalCreate: false
+        modalCreate: false,
+        arrayAreas: null,
       }
     })),
 
@@ -130,6 +131,7 @@ define([
           $('.back-loading').addClass('-show');
           this.$el.addClass('-loading');
           this.region = parseInt(value);
+          this.datasets = [];
           this._getList()
           .done(this._initWidget.bind(this));
         }
@@ -156,6 +158,9 @@ define([
           this._getThresh();
         }.bind(this))
         .done(function() {
+          this._getAreas();
+        }.bind(this))
+        .done(function() {
           this._initWidget();
         }.bind(this));
     },
@@ -166,8 +171,6 @@ define([
         this.status.set('modalCreate', true);
       }
 
-
-
       this.$el.html(this.template({
         totalCoverLoss: this._getTotalCoverLoss(),
         datasets: this._getAvailableDatasets(),
@@ -175,20 +178,15 @@ define([
         minYear: this.status.get('minYear'),
         maxYear: this.status.get('maxYear'),
         thresh: this.status.get('thresh'),
-        iso: this.iso,
-        region: this.region
       }));
-
-
 
       $('.data-time-range').html(this.status.get('minYear')+' to '+this.status.get('maxYear'));
       $('.data-thresh').html('>'+this.status.get('threshValue'));
       $('.data-measure').html('HA');
       $('.data-source').html('GFW');
       $('.back-loading-annual-cover-loss').removeClass('-show');
-      this._getAreas(this._getTotalCoverLoss()).done(function(){
-        $('#widget-annual-tree-cover-loss').removeClass('-loading');
-      });
+      this.$el.removeClass('-loading');
+      this._getAreasTotal(this._getTotalCoverLoss());
     },
 
     initTreeCoverLossModal: function(datasets, years, thresh) {
@@ -216,27 +214,40 @@ define([
     _getAreas: function(totalNumber) {
       var $deferred = $.Deferred();
       var areas = null;
-      var total = totalNumber.toString();
-      total = parseInt(total.replace(/,/g , ''));
-      var countryName = '';
+
       this.getCountriesAreas(true)
         .done(function(results) {
           areas = results.data;
           var listAreas = [];
           for (var i = 0; i < areas.length; i++) {
-            listAreas[i] = parseInt(areas[i].area_ha);
-          }
-          var closest = Math.max.apply(null, listAreas);
-          for (var i = 0; i < areas.length; i++) {
-            if (parseInt(areas[i].area_ha) >= total && parseInt(areas[i].area_ha) < closest) {
-              closest = parseInt(areas[i].area_ha);
-              countryName = areas[i].name;
+            listAreas[i] = {
+              area: parseInt(areas[i].area_ha),
+              nameCountry: areas[i].name,
             }
           }
-          $('#area-aprox-total-value').html('(Aprox.: Extension of '+countryName+')');
+          this.status.set('arrayAreas', listAreas);
           return $deferred.resolve();
         }.bind(this))
         return $deferred;
+    },
+
+    _getAreasTotal: function(value) {
+      var total = value.toString();
+      total = parseInt(total.replace(/,/g , ''));
+      var countryName = '';
+      var areas = this.status.get('arrayAreas');
+      var listAreasValue = [];
+      for (var i = 0; i < areas.length; i++) {
+        listAreasValue[i] = parseInt(areas[i].area);
+      }
+      var closest = Math.max.apply(null, listAreasValue);
+      for (var i = 0; i < areas.length; i++) {
+        if (parseInt(areas[i].area) >= total && parseInt(areas[i].area) < parseInt(closest)) {
+          closest = parseInt(areas[i].area);
+          countryName = areas[i].nameCountry;
+        }
+      }
+      $('#area-aprox-total-value').html('(Aprox.: Extension of '+countryName+')');
     },
 
     getCountriesAreas: function(showArea) {
@@ -318,7 +329,6 @@ define([
     _getList: function() {
       var $deferred = $.Deferred();
       var $promises = [];
-
       _.each(DATASETS, function(item) {
         if (item.dataset) {
           var url = API + new UriTemplate(QUERY_TOTAL).fillFromObject({
@@ -336,13 +346,11 @@ define([
       $.when.apply($, $promises).then(function(schemas) {
         return $deferred.resolve();
       }.bind(this));
-
       return $deferred;
     },
 
     _getTotalData: function(url, slug) {
       var $deferred = $.Deferred();
-
       $.ajax({
         url: url,
         type: 'GET'
@@ -365,9 +373,9 @@ define([
     },
 
     _getTotalCoverLoss: function() {
+      console.log(this.datasets);
       var dataset = _.findWhere(this.datasets, { slug: 'loss'});
       var totalValue = 'N/A';
-
       if (dataset) {
         totalValue = dataset.value;
       }
@@ -520,6 +528,7 @@ define([
     },
 
     _checkDates: function(e) {
+      this.datasets = [];
       if (e === 'modal') {
         var minDate = $('#annual-tree-cover-loss-start-year-modal').val();
         var maxDate = $('#annual-tree-cover-loss-end-year-modal').val();
@@ -547,6 +556,7 @@ define([
     },
 
     _checkThresh: function(e) {
+      this.datasets = [];
       $('.back-loading-annual-cover-loss').addClass('-show');
       this.$el.addClass('-loading');
       var threshList = [];
