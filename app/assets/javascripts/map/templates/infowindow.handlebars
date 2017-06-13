@@ -138,6 +138,14 @@
           <h4>Company:</h4>
           <p>{{content.data.company}}</p>
         {{/if}}
+        {{#if content.data.group}}
+          <h4>Group/Affiliation:</h4>
+          <p>{{content.data.group}}</p>
+        {{/if}}
+        {{#if content.data.last_update}}
+          <h4>Last update:</h4>
+          <p>{{content.data.last_update}}</p>
+        {{/if}}
         {{#if content.data.permit_num}}
           <h4>Permit Num:</h4>
           <p>{{content.data.permit_num}}</p>
