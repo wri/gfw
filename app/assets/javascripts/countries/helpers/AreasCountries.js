@@ -45,7 +45,7 @@ define([
                   countryName = areas[i].name;
                 }
               }
-              $(container).html(countryName);
+                $(container).html(countryName);
             } else {
               var randomArray = [];
               var countryInfo = null;
