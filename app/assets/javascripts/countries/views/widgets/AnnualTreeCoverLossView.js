@@ -10,6 +10,7 @@ define([
   'services/CountryService',
   'common/views/GroupedGraphView',
   'countries/views/widgets/AnnualTreeCoverLossRankingView',
+  'countries/helpers/AreasCountries',
   'countries/views/widgets/modals/TreeCoverLossModal',
   'text!countries/templates/widgets/annualTreeCoverLoss.handlebars'
 ], function(
@@ -24,6 +25,7 @@ define([
   CountryService,
   GroupedGraphView,
   AnnualTreeCoverLossRankingView,
+  AreasCountries,
   TreeCoverLossModal,
   tpl) {
 
@@ -129,6 +131,7 @@ define([
       {
         'Regions/update': function(value) {
           $('.back-loading').addClass('-show');
+          this.datasets = [];
           this.$el.addClass('-loading');
           this.region = parseInt(value);
           this.datasets = [];
@@ -185,8 +188,8 @@ define([
       $('.data-measure').html('HA');
       $('.data-source').html('GFW');
       $('.back-loading-annual-cover-loss').removeClass('-show');
+      this._areasCountries('#country-aprox-annual-tree-cover-loss', this._getTotalCoverLoss());
       this.$el.removeClass('-loading');
-      this._getAreasTotal(this._getTotalCoverLoss());
     },
 
     initTreeCoverLossModal: function(datasets, years, thresh) {
@@ -211,52 +214,12 @@ define([
       );
     },
 
-    _getAreas: function(totalNumber) {
-      var $deferred = $.Deferred();
-      var areas = null;
-
-      this.getCountriesAreas(true)
-        .done(function(results) {
-          areas = results.data;
-          var listAreas = [];
-          for (var i = 0; i < areas.length; i++) {
-            listAreas[i] = {
-              area: parseInt(areas[i].area_ha),
-              nameCountry: areas[i].name,
-            }
-          }
-          this.status.set('arrayAreas', listAreas);
-          return $deferred.resolve();
-        }.bind(this))
-        return $deferred;
-    },
-
-    _getAreasTotal: function(value) {
-      var total = value.toString();
-      total = parseInt(total.replace(/,/g , ''));
-      var countryName = '';
-      var areas = this.status.get('arrayAreas');
-      var listAreasValue = [];
-      for (var i = 0; i < areas.length; i++) {
-        listAreasValue[i] = parseInt(areas[i].area);
-      }
-      var closest = Math.max.apply(null, listAreasValue);
-      for (var i = 0; i < areas.length; i++) {
-        if (parseInt(areas[i].area) >= total && parseInt(areas[i].area) < parseInt(closest)) {
-          closest = parseInt(areas[i].area);
-          countryName = areas[i].nameCountry;
-        }
-      }
-      $('#area-aprox-total-value').html('(Aprox.: Extension of '+countryName+')');
-    },
-
-    getCountriesAreas: function(showArea) {
-      return CountryService.showCountry(
-        {
-           iso: '',
-           showArea: showArea
-         }
-       );
+    _areasCountries: function(container, number, random) {
+      this.areasCountries = new AreasCountries({
+        container: container,
+        totalNumber: number,
+        random: random
+      });
     },
 
     _getDates: function() {
@@ -393,6 +356,7 @@ define([
           var value = data && data.value ? data.value : null;
 
           if (value) {
+            this._areasCountries('#dataset-country-aprox-'+datasetData.slug, value, true);
             datasetData.value = value;
             datasetData.percentage = ((parseFloat(value) / totalValue) * 100).toFixed(2);
             datasets.push(datasetData);
