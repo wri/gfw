@@ -58,7 +58,7 @@ define([
                 }
               }
               countryInfo = _.sample(randomArray, 1);
-              $(container).html('(Aprox.: '+Math.round((countryInfo[0].number / total))+' times the extension of '+countryInfo[0].country+' )');
+              $(container).html('(Aprox.: '+Math.round((countryInfo[0].number / total))+' times the extent of '+countryInfo[0].country+' )');
             }
             return $deferred.resolve();
 
