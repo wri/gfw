@@ -334,11 +334,16 @@ define([
 
     _getTotalCoverLoss: function() {
       var dataset = _.findWhere(this.datasets, { slug: 'loss'});
-      var totalValue = 'N/A';
-      if (dataset) {
-        totalValue = dataset.value;
+      var totalValue = 0;
+
+      for (var i = 0; i < this.data.length; i++) {
+        totalValue += parseInt(this.data[i].loss);
       }
-      return totalValue;
+
+      var text = totalValue.toString();
+      var commaText = text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+      return commaText;
     },
 
     _getAvailableDatasets: function() {
