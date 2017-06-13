@@ -122,7 +122,8 @@ define([
         thresh: null,
         threshValue: 30,
         region: 0,
-        modalCreate: false
+        modalCreate: false,
+        arrayAreas: null,
       }
     })),
 
@@ -133,6 +134,7 @@ define([
           this.datasets = [];
           this.$el.addClass('-loading');
           this.region = parseInt(value);
+          this.datasets = [];
           this._getList()
           .done(this._initWidget.bind(this));
         }
@@ -159,6 +161,9 @@ define([
           this._getThresh();
         }.bind(this))
         .done(function() {
+          this._getAreas();
+        }.bind(this))
+        .done(function() {
           this._initWidget();
         }.bind(this));
     },
@@ -176,8 +181,6 @@ define([
         minYear: this.status.get('minYear'),
         maxYear: this.status.get('maxYear'),
         thresh: this.status.get('thresh'),
-        iso: this.iso,
-        region: this.region
       }));
 
       $('.data-time-range').html(this.status.get('minYear')+' to '+this.status.get('maxYear'));
@@ -289,7 +292,6 @@ define([
     _getList: function() {
       var $deferred = $.Deferred();
       var $promises = [];
-
       _.each(DATASETS, function(item) {
         if (item.dataset) {
           var url = API + new UriTemplate(QUERY_TOTAL).fillFromObject({
@@ -307,13 +309,11 @@ define([
       $.when.apply($, $promises).then(function(schemas) {
         return $deferred.resolve();
       }.bind(this));
-
       return $deferred;
     },
 
     _getTotalData: function(url, slug) {
       var $deferred = $.Deferred();
-
       $.ajax({
         url: url,
         type: 'GET'
@@ -336,9 +336,9 @@ define([
     },
 
     _getTotalCoverLoss: function() {
+      console.log(this.datasets);
       var dataset = _.findWhere(this.datasets, { slug: 'loss'});
       var totalValue = 'N/A';
-
       if (dataset) {
         totalValue = dataset.value;
       }
@@ -492,6 +492,7 @@ define([
     },
 
     _checkDates: function(e) {
+      this.datasets = [];
       if (e === 'modal') {
         var minDate = $('#annual-tree-cover-loss-start-year-modal').val();
         var maxDate = $('#annual-tree-cover-loss-end-year-modal').val();
@@ -519,6 +520,7 @@ define([
     },
 
     _checkThresh: function(e) {
+      this.datasets = [];
       $('.back-loading-annual-cover-loss').addClass('-show');
       this.$el.addClass('-loading');
       var threshList = [];
