@@ -45,7 +45,12 @@ define([
                   countryName = areas[i].name;
                 }
               }
-              $(container).html(countryName);
+              console.log(total);
+              // if (total === 'N/A') {
+              //   $(container).html('');
+              // } else {
+                $(container).html(countryName);
+              // }
             } else {
               var randomArray = [];
               var countryInfo = null;
