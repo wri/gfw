@@ -51,10 +51,10 @@ define([
               var countryInfo = null;
               for (var i = 0; i < areas.length; i++) {
                 if (parseInt(areas[i].area_ha) > total) {
-                  randomArray[i] = {
+                  randomArray.push({
                     number: parseInt(areas[i].area_ha),
                     country: areas[i].name,
-                  };
+                  });
                 }
               }
               countryInfo = _.sample(randomArray, 1);
