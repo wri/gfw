@@ -250,9 +250,14 @@ define([
         this.widgetViews = [];
         this.$widgets.html('');
         this.data = _.sortBy(this.data, 'alerts');
-        for(var i = 0; i < this.data.length; i++) {
-          this.data[i].alerts = parseInt((this.data[i].alerts).replace(',',''));
+        for (var i = 0; i < this.data.length; i++) {
+          for (var j = 0; j < this.data[i].data.length; j++) {
+            if (j === this.data[i].data.length - 1) {
+              this.data[i].alerts = this.data[i].data[j].value;
+            }
+          }
         }
+        this.data = _.sortBy(this.data, 'alerts');
         this.data = _.sortBy(this.data, 'alerts');
         var keys = Object.keys(this.data);
         keys.forEach(function(key, index) {
