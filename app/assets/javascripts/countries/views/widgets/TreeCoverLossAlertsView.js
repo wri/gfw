@@ -74,13 +74,13 @@ define([
     },
     wdpa: {
       glad: {
-        top: '/query?sql=SELECT SUM (alerts) as alerts, year, wdpa_id, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' {region} GROUP BY wdpa_id, state_id ORDER BY alerts DESC limit {widgetsNum}',
-        data: '/query?sql=select sum(alerts) as alerts, year, month, wdpa_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND wdpa_id IN({ids}) AND group by wdpa_id, month, year ORDER BY month ASC',
+        top: '/query?sql=SELECT SUM (alerts) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' {region} GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
+        data: '/query?sql=select alerts, year, month, state_id from {dataset} WHERE country_iso=\'{iso}\' AND year IN({year},{pastYear}) AND state_id IN({ids}) ORDER BY state_id, year, month ASC',
         names: 'SELECT name WHERE wdpa_pid IN({wdpaIds})'
       },
       terrai: {
-        top: '/query?sql=SELECT SUM (count) as alerts, year, wdpa_id FROM {dataset} WHERE year={year} AND country_id=\'{iso}\' {region} GROUP BY wdpa_id ORDER BY alerts DESC limit {widgetsNum}',
-        data: '/query?sql=select sum(count) as alerts, year, month, wdpa_id from {dataset} WHERE country_id=\'{iso}\' AND year={year} AND wdpa_id IN({ids}) AND group by wdpa_id, month, year ORDER BY month ASC',
+        top: '/query?sql=SELECT SUM (count) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_id=\'{iso}\' {region} GROUP BY state_id ORDER BY count DESC limit {widgetsNum}',
+        data: '/query?sql=select count, year, month, state_id from {dataset} WHERE country_id=\'{iso}\' AND year IN({year},{pastYear}) AND state_id IN({ids}) ORDER BY state_id, year, month ASC',
         names: 'SELECT name WHERE wdpa_pid IN({wdpaIds})'
       }
     },
@@ -282,14 +282,14 @@ define([
       var pastYear = year - 1;
       var queryTemplate = API_HOST + QUERIES[origin][source].top;
       var url = new UriTemplate(queryTemplate).fillFromObject({
-        widgetsNum: origin === 'wdpa' ? 3 : WIDGETS_NUM,
+        widgetsNum: origin === 'wdpa' ? WIDGETS_NUM : WIDGETS_NUM,
         dataset: DATASETS[origin][source],
         iso: iso,
         year: year,
         region: this.region != 0 ? 'AND state_id = '+this.region+'' : '',
       });
+      console.log(url);
       var promise = $.Deferred();
-
       $.ajax({ url: url, type: 'GET' })
         .done(function(topResponse) {
           if (topResponse.data.length > 0) {
@@ -310,7 +310,7 @@ define([
                 });
 
                 var ids = topResponse.data.map(function(item) {
-                  return origin === 'wdpa' ? item.wdpa_id : item.state_id
+                  return origin === 'wdpa' ? item.state_id : item.state_id
                 }).join('\',\'');
 
                 var url = API_HOST + new UriTemplate(QUERIES[origin][source].data).fillFromObject({
