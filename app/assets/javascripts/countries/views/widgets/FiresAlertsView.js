@@ -26,11 +26,14 @@ define([
   'use strict';
 
   var API = window.gfw.config.GFW_API_HOST_PROD;
-  var DATASET = '';
-  var QUERY = '';
+  var ENDPOINT = '/viirs-active-fires/admin';
 
   var FiresAlertsView = View.extend({
     el: '#widget-fire-alerts',
+
+    events: {
+      'click .js-fires-period': 'changePeriod'
+    },
 
     template: Handlebars.compile(tpl),
     coverTemplate: Handlebars.compile(coverTpl),
@@ -43,15 +46,16 @@ define([
 
     _subscriptions:[
       {
-        'Regions/update': function(value) {
-
-        }
+        'Regions/update': function(value) {}
       },
     ],
 
     initialize: function(params) {
       View.prototype.initialize.apply(this);
       this.iso = params.iso;
+      this.region = params.region;
+      this.daysBackPeriod = 7;
+
       this.initFireAlertsModal();
       this.start();
     },
@@ -60,7 +64,6 @@ define([
       this.$el.html(this.template({
         iso: this.iso
       }));
-      this.$el.removeClass('-loading');
     },
 
     start: function() {
@@ -78,59 +81,44 @@ define([
 
     _initWidgets: function() {
       this.widgetViews = [];
+      this.$el.removeClass('-loading');
       this.$widgets.removeClass('loading-placeholder');
-
-      this.data = {
-        alertsCount: 87,
-        items: [
-          {
-            name: 'Mineração Aurizona S.A.',
-            alerts: 25,
-            isWorst: false
-          },
-          {
-            name: 'Pan Brazilian Mineração Ltda.',
-            alerts: 19,
-            isWorst: false
-          },
-          {
-            name: 'Bahmex Bahia Mineral Exploration Ltda',
-            alerts: 17,
-            isWorst: true
-          },
-          {
-            name: 'Votorantim Metais Zinco S.A.',
-            alerts: 11,
-            isWorst: true
-          },
-          {
-            name: 'União Pesquisas Minerais Ltda',
-            alerts: 6,
-            isWorst: true
-          }
-        ]
-      };
-      this.$widgets.append(this.coverTemplate({
-        alertsCount: this.data.alertsCount
+      this.$widgets.html(this.coverTemplate({
+        alertsCount: this.data.attributes.value
       }));
-      this.data.items.forEach(function(data, index) {
-        this.$widgets.append(this.cardTemplate({
-          ranking: index + 1,
-          name: data.name,
-          alerts: data.alerts,
-          color: this._getCardColor(data.alerts),
-          isWorst: data.isWorst,
-        }));
-      }.bind(this))
     },
 
     _getData: function() {
-      var url = API + new UriTemplate(QUERY).fillFromObject({});
+      var url = API + ENDPOINT + '/' + this.iso;
+      if (this.region !== 0) {
+        url += '/' + this.region;
+      }
+      url += '?period=' + this._getDatePeriod();
 
       return $.ajax({
         url: url,
         type: 'GET'
       });
+    },
+
+    changePeriod: function(e) {
+      var target = $(e.target);
+      this.$el.addClass('-loading');
+      $('.js-fires-period').each(function(i, obj) {
+        if ($(obj).hasClass('active')) {
+          $(this).removeClass('active');
+        }
+      });
+      this.daysBackPeriod = parseInt(target.attr('data-days-back-period'), 10);
+      target.addClass('active');
+      this.updateData();
+    },
+
+    updateData: function() {
+      this._getData().done(function(res) {
+        this.data = res.data;
+        this._initWidgets();
+      }.bind(this));
     },
 
     _getCardColor: function(value) {
@@ -146,6 +134,10 @@ define([
           break;
       }
     },
+
+    _getDatePeriod: function () {
+      return moment().subtract(this.daysBackPeriod, 'days').format('YYYY-MM-DD') + ',' + moment().format('YYYY-MM-DD');
+    }
   });
   return FiresAlertsView;
 
