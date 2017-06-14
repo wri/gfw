@@ -80,16 +80,6 @@ $card-highlight-color-grey-pink: #bf8893;
             font-size: 36px;
           }
 
-          &:before {
-            content: '';
-            position: absolute;
-            top: 16px;
-            right: -18px;
-            height: 0;
-            border-style: solid;
-            border-width: 0 4px 8px 4px;
-          }
-
           &.-worst:before {
             border-width: 8px 4px 0 4px;
             top: 32px;
@@ -97,26 +87,14 @@ $card-highlight-color-grey-pink: #bf8893;
 
           &.-green {
             color: $card-highlight-color-green;
-
-            &:before {
-              border-color: $card-highlight-color-green transparent;
-            }
           }
 
           &.-gold {
             color: $card-highlight-color-gold;
-
-            &:before {
-              border-color: $card-highlight-color-gold transparent;
-            }
           }
 
           &.-grey-pink {
             color: $card-highlight-color-grey-pink;
-
-            &:before {
-              border-color: $card-highlight-color-grey-pink transparent;
-            }
           }
         }
       }
