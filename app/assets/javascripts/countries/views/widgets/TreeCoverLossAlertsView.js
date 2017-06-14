@@ -250,11 +250,15 @@ define([
         this.widgetViews = [];
         this.$widgets.html('');
         this.data = _.sortBy(this.data, 'alerts');
+        for(var i = 0; i < this.data.length; i++) {
+          this.data[i].alerts = parseInt((this.data[i].alerts).replace(',',''));
+        }
+        this.data = _.sortBy(this.data, 'alerts');
         var keys = Object.keys(this.data);
         keys.forEach(function(key, index) {
           this.$widgets.append(this.cardTemplate({
             ranking: index + 1,
-            alerts: this.data[key].alerts,
+            alerts: this.data[key].alerts.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
             name: this.data[key].name,
             linkImagery: '/map/9/'+this.longitude+'/'+this.latitude+'/'+countryLink+'-'+regionLink+'/grayscale/'+layerLink+'/685?tab=hd-tab&hresolution=eyJ6b29tIjo5LCJzYXRlbGxpdGUiOiJoaWdocmVzIiwiY29sb3JfZmlsdGVyIjoicmdiIiwicmVuZGVyZXIiOiJSR0IgKFJlZCBHcmVlbiBCbHVlKSIsInNlbnNvcl9wbGF0Zm9ybSI6InNlbnRpbmVsLTIiLCJzZW5zb3JfbmFtZSI6IlNlbnRpbmVsIDIiLCJjbG91ZCI6IjMwIiwibWluZGF0ZSI6IjIwMTctMDEtMjUiLCJtYXhkYXRlIjoiMjAxNy0wNS0yNSJ9',
             linkSubscribe: '/my_gfw/subscriptions/new?aoi=country&datasets='+sourceLink+'&country='+countryLink+'&region='+regionLink+'',
@@ -288,7 +292,6 @@ define([
         year: year,
         region: this.region != 0 ? 'AND state_id = '+this.region+'' : '',
       });
-      console.log(url);
       var promise = $.Deferred();
       $.ajax({ url: url, type: 'GET' })
         .done(function(topResponse) {
