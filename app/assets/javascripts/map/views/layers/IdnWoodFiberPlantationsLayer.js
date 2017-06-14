@@ -1,5 +1,5 @@
 /**
- * The WoodFiberPlantations layer module.
+ * The WoodFiber Concessions layer module (formerly called WoodFiber Plantations)
  *
  * @return WoodFiberPlantationsLayer class (extends CartoDBLayerClass)
  */
@@ -12,9 +12,9 @@ define([
   var IdnWoodFiberPlantationsLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT \'idn_wood_fiber\' as tablename, cartodb_id, the_geom_webmercator, name, group_comp as company, area_ha, type, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}',
+      sql: 'SELECT \'idn_wood_fiber\' as tablename, cartodb_id, the_geom_webmercator, name, group_comp as group, country, source as provider, last_updat as last_update, area_ha, type, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}',
       infowindow: true,
-      interactivity: 'cartodb_id, tablename, name, company, type, area_ha, analysis',
+      interactivity: 'cartodb_id, tablename, name, group, country, provider, type, last_update, area_ha, analysis',
       analysis: true
     }
 
