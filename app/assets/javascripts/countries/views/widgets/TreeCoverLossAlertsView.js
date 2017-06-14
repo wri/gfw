@@ -249,6 +249,7 @@ define([
         var layerLink = this.status.get('layerLink');
         this.widgetViews = [];
         this.$widgets.html('');
+        this.data = _.sortBy(this.data, 'alerts');
         var keys = Object.keys(this.data);
         keys.forEach(function(key, index) {
           this.$widgets.append(this.cardTemplate({
@@ -341,7 +342,7 @@ define([
           promise.reject(err);
         });
       return promise;
-    }
+    },
   });
   return TreeCoverLossView;
 
