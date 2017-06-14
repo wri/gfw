@@ -8,7 +8,7 @@
 
 define([
   'abstract/layer/CartoDBLayerClass',
-  'text!map/cartocss/plantations_by_species.cartocss'
+  'text!map/cartocss/IdnForestArea.cartocss'
 ], function(CartoDBLayerClass, IdnForestAreaCartocss) {
 
   'use strict';
