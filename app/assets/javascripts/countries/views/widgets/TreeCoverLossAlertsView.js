@@ -36,14 +36,14 @@ define([
   var CARTO_API_HOST = window.gfw.config.CARTO_API_HOST;
 
   var ORIGIN_LABELS = {
-    month: 'By month',
+    subnational: 'Subnational',
     wdpa: 'Within protected areas',
     wdma: 'Within moratorium areas',
     onpeat: 'On peat'
   }
 
   var DATASETS = {
-    month: {
+    subnational: {
       glad: '5608af77-1038-4d5d-8084-d5f49e8323a4',
       terrai: '75832571-44e7-41a3-96cf-4368a7f07075'
     },
@@ -62,10 +62,10 @@ define([
   }
 
   var QUERIES = {
-    month: {
+    subnational: {
       glad: {
         top: '/query?sql=SELECT SUM (alerts) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' {region} GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
-        data: '/query?sql=select sum(alerts) as alerts, year, month, state_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND state_id IN({ids}) AND group by state_id, month, year ORDER BY month ASC'
+        data: '/query?sql=select alerts, year, month, state_id from {dataset} WHERE country_iso=\'{iso}\' AND year IN({year},{pastYear}) AND state_id IN({ids}) ORDER BY state_id, year, month ASC'
       },
       terrai: {
         top: '/query/{dataset}?sql=SELECT SUM (count) as alerts, year, state_id FROM data WHERE year={year} AND country_id=\'{iso}\' {region} GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
@@ -116,7 +116,7 @@ define([
 
     status: new (Backbone.Model.extend({
       defaults: {
-        origin: 'month',
+        origin: 'subnational',
         source: 'glad',
         layerLink: 'umd_as_it_happens',
         sourceLink: 'glad-alerts'
@@ -126,7 +126,7 @@ define([
     template: Handlebars.compile(tpl),
     cardTemplate: Handlebars.compile(cardTpl),
 
-    defaultOrigins: ['month', 'wdpa'],
+    defaultOrigins: ['subnational', 'wdpa'],
     originsByCountry: {
       IDN: ['wdma', 'onpeat'],
       MYS: ['onpeat']
@@ -261,7 +261,8 @@ define([
           this.widgetViews.push(new LineGraphView({
             el: '#cover-loss-alert-card-' + (index + 1),
             data: this.data[key].data,
-            xAxisLabels: false
+            xAxisLabels: false,
+            treeCoverLossAlerts: true,
           }));
         }.bind(this));
       } else {
@@ -277,6 +278,7 @@ define([
       var iso = this.iso;
       var data = {};
       var year = parseInt(moment().format('YYYY'), 10);
+      var pastYear = year - 1;
       var queryTemplate = API_HOST + QUERIES[origin][source].top;
       var url = new UriTemplate(queryTemplate).fillFromObject({
         widgetsNum: origin === 'wdpa' ? 3 : WIDGETS_NUM,
@@ -315,6 +317,7 @@ define([
                   dataset: DATASETS[origin][source],
                   iso: iso,
                   year: year,
+                  pastYear: pastYear,
                   ids: '\'' + ids + '\'',
                 });
                 $.ajax({ url: url, type: 'GET' })
