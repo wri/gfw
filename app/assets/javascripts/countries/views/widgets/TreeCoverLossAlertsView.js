@@ -69,7 +69,7 @@ define([
       },
       terrai: {
         top: '/query/{dataset}?sql=SELECT SUM (count) as alerts, year, state_id FROM data WHERE year={year} AND country_id=\'{iso}\' {region} GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
-        data: '/query/{dataset}?sql=select sum(count) as alerts, year, month, state_id from data WHERE country_id=\'{iso}\' AND year={year} AND state_id IN({ids}) AND group by state_id, month, year ORDER BY month ASC'
+        data: '/query/{dataset}?sql=select count, year, month, state_id from data WHERE country_id=\'{iso}\' AND year IN({year},{pastYear}) AND state_id IN({ids}) AND ORDER BY state_id, year, month ASC'
       }
     },
     wdpa: {
@@ -288,7 +288,6 @@ define([
         year: year,
         region: this.region != 0 ? 'AND state_id = '+this.region+'' : '',
       });
-
       var promise = $.Deferred();
 
       $.ajax({ url: url, type: 'GET' })
@@ -324,10 +323,10 @@ define([
                 $.ajax({ url: url, type: 'GET' })
                   .done(function(dataResponse) {
                     dataResponse.data.forEach(function(item) {
-                      if (data[item.state_id] && item.alerts) {
+                      if (data[item.state_id] && item.alerts || item.count) {
                         data[item.state_id].data.push({
                           date: moment.utc().year(item.year).month(item.month),
-                          value: item.alerts
+                          value: item.alerts ? item.alerts : item.count
                         })
                       }
                     });
