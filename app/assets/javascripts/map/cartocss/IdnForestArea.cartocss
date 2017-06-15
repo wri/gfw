@@ -60,7 +60,7 @@
 
 //Another Utilization Area
 #forest_area[fungsi_kws=1007],{
-  polygon-fill: #FFFFFF;
+  polygon-fill:  #D8D8D8;
   polygon-opacity: 0.9;
   line-color: #FFF;
   line-width: 0.5;
