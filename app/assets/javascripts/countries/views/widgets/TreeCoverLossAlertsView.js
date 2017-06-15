@@ -36,14 +36,14 @@ define([
   var CARTO_API_HOST = window.gfw.config.CARTO_API_HOST;
 
   var ORIGIN_LABELS = {
-    month: 'By month',
+    subnational: 'Subnational',
     wdpa: 'Within protected areas',
     wdma: 'Within moratorium areas',
     onpeat: 'On peat'
   }
 
   var DATASETS = {
-    month: {
+    subnational: {
       glad: '5608af77-1038-4d5d-8084-d5f49e8323a4',
       terrai: '75832571-44e7-41a3-96cf-4368a7f07075'
     },
@@ -62,25 +62,25 @@ define([
   }
 
   var QUERIES = {
-    month: {
+    subnational: {
       glad: {
         top: '/query?sql=SELECT SUM (alerts) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' {region} GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
-        data: '/query?sql=select sum(alerts) as alerts, year, month, state_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND state_id IN({ids}) AND group by state_id, month, year ORDER BY month ASC'
+        data: '/query?sql=select alerts, year, month, state_id from {dataset} WHERE country_iso=\'{iso}\' AND year IN({year},{pastYear}) AND state_id IN({ids}) ORDER BY state_id, year, month ASC'
       },
       terrai: {
         top: '/query/{dataset}?sql=SELECT SUM (count) as alerts, year, state_id FROM data WHERE year={year} AND country_id=\'{iso}\' {region} GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
-        data: '/query/{dataset}?sql=select sum(count) as alerts, year, month, state_id from data WHERE country_id=\'{iso}\' AND year={year} AND state_id IN({ids}) AND group by state_id, month, year ORDER BY month ASC'
+        data: '/query/{dataset}?sql=select count, year, month, state_id from data WHERE country_id=\'{iso}\' AND year IN({year},{pastYear}) AND state_id IN({ids}) AND ORDER BY state_id, year, month ASC'
       }
     },
     wdpa: {
       glad: {
-        top: '/query?sql=SELECT SUM (alerts) as alerts, year, wdpa_id, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' {region} GROUP BY wdpa_id, state_id ORDER BY alerts DESC limit {widgetsNum}',
-        data: '/query?sql=select sum(alerts) as alerts, year, month, wdpa_id from {dataset} WHERE country_iso=\'{iso}\' AND year={year} AND wdpa_id IN({ids}) AND group by wdpa_id, month, year ORDER BY month ASC',
+        top: '/query?sql=SELECT SUM (alerts) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_iso=\'{iso}\' {region} GROUP BY state_id ORDER BY alerts DESC limit {widgetsNum}',
+        data: '/query?sql=select alerts, year, month, state_id from {dataset} WHERE country_iso=\'{iso}\' AND year IN({year},{pastYear}) AND state_id IN({ids}) ORDER BY state_id, year, month ASC',
         names: 'SELECT name WHERE wdpa_pid IN({wdpaIds})'
       },
       terrai: {
-        top: '/query?sql=SELECT SUM (count) as alerts, year, wdpa_id FROM {dataset} WHERE year={year} AND country_id=\'{iso}\' {region} GROUP BY wdpa_id ORDER BY alerts DESC limit {widgetsNum}',
-        data: '/query?sql=select sum(count) as alerts, year, month, wdpa_id from {dataset} WHERE country_id=\'{iso}\' AND year={year} AND wdpa_id IN({ids}) AND group by wdpa_id, month, year ORDER BY month ASC',
+        top: '/query?sql=SELECT SUM (count) as alerts, year, state_id FROM {dataset} WHERE year={year} AND country_id=\'{iso}\' {region} GROUP BY state_id ORDER BY count DESC limit {widgetsNum}',
+        data: '/query?sql=select count, year, month, state_id from {dataset} WHERE country_id=\'{iso}\' AND year IN({year},{pastYear}) AND state_id IN({ids}) ORDER BY state_id, year, month ASC',
         names: 'SELECT name WHERE wdpa_pid IN({wdpaIds})'
       }
     },
@@ -116,7 +116,7 @@ define([
 
     status: new (Backbone.Model.extend({
       defaults: {
-        origin: 'month',
+        origin: 'subnational',
         source: 'glad',
         layerLink: 'umd_as_it_happens',
         sourceLink: 'glad-alerts'
@@ -126,7 +126,7 @@ define([
     template: Handlebars.compile(tpl),
     cardTemplate: Handlebars.compile(cardTpl),
 
-    defaultOrigins: ['month', 'wdpa'],
+    defaultOrigins: ['subnational', 'wdpa'],
     originsByCountry: {
       IDN: ['wdma', 'onpeat'],
       MYS: ['onpeat']
@@ -249,11 +249,21 @@ define([
         var layerLink = this.status.get('layerLink');
         this.widgetViews = [];
         this.$widgets.html('');
+        this.data = _.sortBy(this.data, 'alerts');
+        for (var i = 0; i < this.data.length; i++) {
+          for (var j = 0; j < this.data[i].data.length; j++) {
+            if (j === this.data[i].data.length - 1) {
+              this.data[i].alerts = this.data[i].data[j].value;
+            }
+          }
+        }
+        this.data = _.sortBy(this.data, 'alerts');
+        this.data = _.sortBy(this.data, 'alerts');
         var keys = Object.keys(this.data);
         keys.forEach(function(key, index) {
           this.$widgets.append(this.cardTemplate({
             ranking: index + 1,
-            alerts: this.data[key].alerts,
+            alerts: this.data[key].alerts.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
             name: this.data[key].name,
             linkImagery: '/map/9/'+this.longitude+'/'+this.latitude+'/'+countryLink+'-'+regionLink+'/grayscale/'+layerLink+'/685?tab=hd-tab&hresolution=eyJ6b29tIjo5LCJzYXRlbGxpdGUiOiJoaWdocmVzIiwiY29sb3JfZmlsdGVyIjoicmdiIiwicmVuZGVyZXIiOiJSR0IgKFJlZCBHcmVlbiBCbHVlKSIsInNlbnNvcl9wbGF0Zm9ybSI6InNlbnRpbmVsLTIiLCJzZW5zb3JfbmFtZSI6IlNlbnRpbmVsIDIiLCJjbG91ZCI6IjMwIiwibWluZGF0ZSI6IjIwMTctMDEtMjUiLCJtYXhkYXRlIjoiMjAxNy0wNS0yNSJ9',
             linkSubscribe: '/my_gfw/subscriptions/new?aoi=country&datasets='+sourceLink+'&country='+countryLink+'&region='+regionLink+'',
@@ -261,7 +271,8 @@ define([
           this.widgetViews.push(new LineGraphView({
             el: '#cover-loss-alert-card-' + (index + 1),
             data: this.data[key].data,
-            xAxisLabels: false
+            xAxisLabels: false,
+            treeCoverLossAlerts: true,
           }));
         }.bind(this));
       } else {
@@ -277,17 +288,16 @@ define([
       var iso = this.iso;
       var data = {};
       var year = parseInt(moment().format('YYYY'), 10);
+      var pastYear = year - 1;
       var queryTemplate = API_HOST + QUERIES[origin][source].top;
       var url = new UriTemplate(queryTemplate).fillFromObject({
-        widgetsNum: origin === 'wdpa' ? 3 : WIDGETS_NUM,
+        widgetsNum: origin === 'wdpa' ? WIDGETS_NUM : WIDGETS_NUM,
         dataset: DATASETS[origin][source],
         iso: iso,
         year: year,
         region: this.region != 0 ? 'AND state_id = '+this.region+'' : '',
       });
-
       var promise = $.Deferred();
-
       $.ajax({ url: url, type: 'GET' })
         .done(function(topResponse) {
           if (topResponse.data.length > 0) {
@@ -308,22 +318,23 @@ define([
                 });
 
                 var ids = topResponse.data.map(function(item) {
-                  return origin === 'wdpa' ? item.wdpa_id : item.state_id
+                  return origin === 'wdpa' ? item.state_id : item.state_id
                 }).join('\',\'');
 
                 var url = API_HOST + new UriTemplate(QUERIES[origin][source].data).fillFromObject({
                   dataset: DATASETS[origin][source],
                   iso: iso,
                   year: year,
+                  pastYear: pastYear,
                   ids: '\'' + ids + '\'',
                 });
                 $.ajax({ url: url, type: 'GET' })
                   .done(function(dataResponse) {
                     dataResponse.data.forEach(function(item) {
-                      if (data[item.state_id] && item.alerts) {
+                      if (data[item.state_id] && item.alerts || item.count) {
                         data[item.state_id].data.push({
                           date: moment.utc().year(item.year).month(item.month),
-                          value: item.alerts
+                          value: item.alerts ? item.alerts : item.count
                         })
                       }
                     });
@@ -338,7 +349,7 @@ define([
           promise.reject(err);
         });
       return promise;
-    }
+    },
   });
   return TreeCoverLossView;
 

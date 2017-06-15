@@ -41,7 +41,12 @@ define([
     initialize: function(settings) {
       this.defaults = _.extend({}, this.defaults, settings);
       this.data = this.defaults.data;
-
+      if (this.data.length > 12 && this.defaults.treeCoverLossAlerts) {
+        var pastMonths = this.data.length - 12;
+        for (var i = 0; i < pastMonths; i++) {
+          this.data.shift();
+        }
+      }
       this._initChart();
 
       // Sets listeners
