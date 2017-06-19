@@ -91,8 +91,6 @@ define([
         dataset: DATASET_IFL, iso: this.iso, region: this.region === 0 ? 'GROUP BY iso' : 'AND adm1 = '+this.region+' GROUP BY iso, adm1',
       });
 
-      console.log(urlTotalIfl);
-
       CountryService.getCountriesInfo({
         columns: 'area_ha',
         filter: 'WHERE iso=\''+ this.iso +'\''
