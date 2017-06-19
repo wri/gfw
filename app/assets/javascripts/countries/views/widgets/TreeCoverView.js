@@ -26,8 +26,8 @@ define([
   var API = window.gfw.config.GFW_API_HOST_PROD;
   var DATASET_COVER = '0ef4a861-930f-4f56-865d-89f5c0c6aef0';
   var QUERY_TOTAL_COVER = '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' and thresh=30 {region}';
-  var DATASET_IFL = 'de9ab235-452c-4832-97ab-1b55287beb4e';
-  var QUERY_TOTAL_IFL = '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' and thresh=30 {region}';
+  var DATASET_IFL = '1c4f89b1-4660-4246-894c-a88659cb4f71';
+  var QUERY_TOTAL_IFL = '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' {region}';
 
   var TreeCoverView = View.extend({
     el: '#widget-tree-cover',
