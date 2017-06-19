@@ -24,7 +24,7 @@ define([
   'use strict';
 
   var API = window.gfw.config.GFW_API_HOST_PROD;
-  var DATASET_LOSS = 'a9a32dd2-f7e1-402a-ba6f-48020fbf50ea';
+  var DATASET_LOSS = '0ef4a861-930f-4f56-865d-89f5c0c6aef0';
   var QUERY_TOTAL_LOSS = '/query?sql=select sum(area) as value FROM {dataset} WHERE thresh=30 {region} ORDER BY value DESC';
 
   var TreeCoverLossRankingView = View.extend({
