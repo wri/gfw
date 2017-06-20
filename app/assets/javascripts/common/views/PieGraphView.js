@@ -111,7 +111,25 @@ define([
         .attr('width', this.cWidth + margin.left + margin.right)
         .attr('height', this.cHeight + margin.top + margin.bottom)
         .append('g')
-          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+          .on('mousemove', this.appearTooltip)
+          .on('mouseout', this.deleteTooltip);
+    },
+
+    appearTooltip: function() {
+      var _this = $('.m-tooltip-country');
+      var height = _this.height();
+      var width = _this.width();
+      _this.removeClass('-hidden');
+      $(document).mousemove(function(e){
+        _this.css('left', e.pageX - 45);
+        _this.css('top', e.pageY - 100);
+      });
+    },
+
+    deleteTooltip: function() {
+      var _this = $('.m-tooltip-country');
+      _this.addClass('-hidden');
     },
 
     /**
@@ -150,7 +168,18 @@ define([
           .attr('data-category', function(d) {
             return d.data.category;
           })
-          .attr('class', 'arc');
+          .attr('class', 'arc')
+          .on('mousemove', function(d) {
+            var thisValue = d.value;
+            var totalValues = this.defaults.totalValues.value;
+            var percentage = Math.round((thisValue * 100) / totalValues);
+            var totalThisValue = parseInt(d.value / 1000000);
+
+            $('#title-tooltip').html(percentage+'%');
+            $('#sub-title-tooltip').html(totalThisValue+'Ha');
+
+          //  console.log(Math.round(d.value * 100) / this.defaults.totalValues);
+          }.bind(this));
 
       this.pie.append('path')
         .attr('d', this.arc)

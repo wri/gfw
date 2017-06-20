@@ -1,0 +1,34 @@
+.m-tooltip-country {
+  background-color: #FFF;
+  position: absolute;
+  width: 90px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  z-index: 9999;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.25);
+  top: 0;
+
+  &.-hidden {
+    display: none;
+  }
+
+
+  span {
+    display: block;
+  }
+
+  .title {
+    text-align: center;
+    font-size: 36px;
+    color: #97BE32;
+
+  }
+
+  .sub-title {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 12px;
+  }
+}
