@@ -33,6 +33,7 @@ define([
       xValues: null,
       xValuesInteger: null,
       yValues: null,
+      parentValue: null,
       margin: {
         top: 20,
         right: 35,
@@ -364,25 +365,27 @@ define([
       }
     },
 
-    moveCircle: function(e) { //line-graph-svg
+    moveCircle: function(e) {
       var svg = $('.svg-'+this.cid);
       var circleAll = $('#widget-tree-cover-loss-alerts').find('.dot');
       svg = svg[0];
       var circle = $(svg).find('.dot');
       var x = d3.mouse(svg)[0];
-      var parent = $(svg).parent()[0];
-      parent = $(parent).parent()[0];
-      parent = $(parent).parent()[0];
-      parent = $(parent).find('.card-data');
-      parent = $(parent).find('.value')[0];
+
+      if (!this.defaults.parentValue) {
+        var parent = $(svg).parent()[0];
+        parent = $(parent).parent()[0];
+        parent = $(parent).parent()[0];
+        parent = $(parent).find('.card-data');
+        parent = $(parent).find('.value')[0];
+        this.defaults.parentValue = parent;
+      }
+
       for (var i = 0; i < this.defaults.xValuesInteger.length; i++) {
         if (parseInt(x) === this.defaults.xValuesInteger[i]) {
-          // console.log(this.defaults.data[i].value);
-          $(parent).html(this.defaults.data[i].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+          $(this.defaults.parentValue).html(this.defaults.data[i].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
           $(circle).attr("cx", this.defaults.xValues[i]);
           $(circle).attr("cy", this.defaults.yValues[i]);
-
-
         }
       }
     },
