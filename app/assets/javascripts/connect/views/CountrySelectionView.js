@@ -72,18 +72,20 @@ define([
      * Sets params from the URL
      */
     _setParams: function() {
-      if (this.params.params.iso.country) {
-        this.model.set({
-          country: this.params.params.iso.country
-        }, { silent: true });
-        this.changeCountry();
-      }
+      var iso = this.params.params.iso;
 
-      if (this.params.params.iso.region) {
+      if (!!iso.country) {
+
         this.model.set({
-          region: this.params.params.iso.region
+          country: iso.country,
+          region: iso.region
         }, { silent: true });
-        this.changeRegion();
+
+        if (!!iso.region) {
+          this.changeRegion();
+        } else {
+          this.changeCountry();
+        }
       }
     },
 
