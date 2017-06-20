@@ -30,6 +30,9 @@ define([
       paddingXAxisLabels: 20,
       paddingYAxisLabels: 10,
       circleRadius: 4.5,
+      xValues: null,
+      xValuesInteger: null,
+      yValues: null,
       margin: {
         top: 20,
         right: 35,
@@ -39,6 +42,7 @@ define([
     },
 
     initialize: function(settings) {
+      _.bindAll(this, 'moveCircle');
       this.defaults = _.extend({}, this.defaults, settings);
       this.data = this.defaults.data;
       if (this.data.length > 12 && this.defaults.treeCoverLossAlerts) {
@@ -140,7 +144,9 @@ define([
 
       var svg = d3.select(el).append('svg')
         .attr('width', this.cWidth + margin.left + margin.right + 'px')
-        .attr('height', this.cHeight + margin.top + margin.bottom + 'px');
+        .attr('height', this.cHeight + margin.top + margin.bottom + 'px')
+        .attr('class', 'svg-'+this.cid)
+        .on('mousemove', this.moveCircle);
 
       this.svg = svg.append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
@@ -205,6 +211,7 @@ define([
         xValues.push(data.date);
         yValues.push(data.value);
       });
+
 
       return {
         x: d3.extent(xValues, function(d) { return d; }),
@@ -282,14 +289,25 @@ define([
      */
     _drawSolidLine: function() {
       var _this = this;
+      var xValues = [];
+      var xValuesInteger = [];
+      var yValues = [];
       var solidLineGroup = this.svg.append('g')
         .attr('class', 'line-group')
         .attr('transform', 'translate('+ _this.defaults.paddingXAxisLabels +' ,'+ -this.defaults.paddingAxisLabels + ')');
 
       this.linePath = d3.svg.line()
-        .x(function(d) { return _this.x(d.date); })
-        .y(function(d) { return _this.y(d.value); })
+        .x(function(d) {
+          xValues.push(_this.x(d.date));
+          xValuesInteger.push(parseInt(_this.x(d.date)));
+          return _this.x(d.date);
+        })
+        .y(function(d) { yValues.push(_this.y(d.value)); return _this.y(d.value); })
         .interpolate(this.defaults.interpolate);
+
+      this.defaults.yValues = yValues;
+      this.defaults.xValues = xValues;
+      this.defaults.xValuesInteger = xValuesInteger;
 
       this.graphLine = solidLineGroup.append('path')
         .attr('d', this.linePath(this.chartData))
@@ -344,7 +362,23 @@ define([
         this.svg = null;
         this.chartEl.removeChild(svgContainer);
       }
-    }
+    },
+
+    moveCircle: function(e) { //line-graph-svg
+      var svg = $('.svg-'+this.cid);
+      svg = svg[0];
+      var xValPosition = [];
+      var iPosition = 0;
+      var circle = $(svg).find('.dot');
+      var x = d3.mouse(svg)[0];
+
+      for (var i = 0; i < this.defaults.xValuesInteger.length; i++) {
+        if (parseInt(x) === this.defaults.xValuesInteger[i]) {
+          $(circle).attr("cx", this.defaults.xValues[i]);
+          $(circle).attr("cy", this.defaults.yValues[i]);
+        }
+      }
+    },
 
   });
 
