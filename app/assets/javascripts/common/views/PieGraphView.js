@@ -162,6 +162,7 @@ define([
     },
 
     _drawValues: function() {
+      var totalPercentage = 0;
       var path = this.svg.selectAll('.arc');
       var i = 0;
       var resizeDone = this.defaults.resizeDone;
@@ -189,7 +190,17 @@ define([
           if (!resizeDone) {
             textValue[i] = d.value;
           }
+          if (textValue.length === 3) {
+              totalPercentage = Math.round((textValue[0] * 100) / totalValues.value) + Math.round((textValue[1] * 100) / totalValues.value) + Math.round((textValue[2] * 100) / totalValues.value);
+              totalPercentage = 100 - totalPercentage;
+          }
           var value = Math.round((textValue[i] * 100) / totalValues.value);
+          if (totalPercentage > 0) {
+            value = value + totalPercentage;
+          }
+          if (totalPercentage < 0) {
+            value = value - totalPercentage;
+          }
           i += 1;
           if (value > 0) return value + '%'
         })
