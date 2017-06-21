@@ -259,6 +259,7 @@ define([
         }
         this.data = _.sortBy(this.data, 'alerts');
         this.data = _.sortBy(this.data, 'alerts');
+        this.data.reverse();
         var keys = Object.keys(this.data);
         keys.forEach(function(key, index) {
           this.$widgets.append(this.cardTemplate({
