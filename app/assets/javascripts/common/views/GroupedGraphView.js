@@ -134,10 +134,17 @@ define([
 
       var svg = d3.select(el).append('svg')
         .attr('width', this.cWidth + margin.left + margin.right + 'px')
-        .attr('height', this.cHeight + margin.top + margin.bottom + 'px');
+        .attr('height', this.cHeight + margin.top + margin.bottom + 'px')
+        .on('mouseout', this.deleteTooltip);
 
       this.svg = svg.append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+    },
+
+    deleteTooltip: function() {
+      var _this = $('.m-tooltip-country');
+      _this.addClass('-hidden');
+      _this.removeClass('-group');
     },
 
     /**
@@ -209,6 +216,17 @@ define([
         .attr('class', 'rect')
         .attr('transform', function(d) {
           return 'translate(' + this.x0(d.label) + ', 0)';
+        }.bind(this))
+        .on('mousemove', function(d) {
+          var _this = $('.m-tooltip-country');
+          _this.removeClass('-hidden');
+          _this.addClass('-group');
+          $(document).mousemove(function(e){
+            _this.css('left', e.pageX - ((_this.width() + 15) / 2));
+            _this.css('top', e.pageY - 110);
+          });
+          $('#title-tooltip').html(parseInt(d.loss));
+          $('#sub-title-tooltip').html(parseInt(d.wdpa));
         }.bind(this));
 
       bar.selectAll('rect')

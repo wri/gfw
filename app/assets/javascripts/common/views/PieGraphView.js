@@ -29,6 +29,7 @@ define([
       textValue: [],
       valuesFirstChart: [],
       valuesSecondChart: [],
+      valuesPercentage: [],
       margin: {
         top: 0,
         right: 0,
@@ -111,7 +112,25 @@ define([
         .attr('width', this.cWidth + margin.left + margin.right)
         .attr('height', this.cHeight + margin.top + margin.bottom)
         .append('g')
-          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+          .on('mousemove', this.appearTooltip)
+          .on('mouseout', this.deleteTooltip);
+    },
+
+    appearTooltip: function() {
+      var _this = $('.m-tooltip-country');
+      var height = _this.height();
+      var width = _this.width();
+      _this.removeClass('-hidden');
+      $(document).mousemove(function(e){
+        _this.css('left', e.pageX - 45);
+        _this.css('top', e.pageY - 110);
+      });
+    },
+
+    deleteTooltip: function() {
+      var _this = $('.m-tooltip-country');
+      _this.addClass('-hidden');
     },
 
     /**
@@ -150,7 +169,14 @@ define([
           .attr('data-category', function(d) {
             return d.data.category;
           })
-          .attr('class', 'arc');
+          .attr('class', 'arc')
+          .on('mousemove', function(d) {
+            var category = d.data.category;
+            var percentage = this.defaults.valuesPercentage[category - 1].value;
+            var totalThisValue = parseInt(d.value / 1000000);
+            $('#title-tooltip').html(percentage+'%');
+            $('#sub-title-tooltip').html(totalThisValue+'Ha');
+          }.bind(this));
 
       this.pie.append('path')
         .attr('d', this.arc)
@@ -167,6 +193,8 @@ define([
       var i = 0;
       var resizeDone = this.defaults.resizeDone;
       var textValue = null;
+      var value = 0;
+      var valuePercentage = [];
       if (!this.defaults.resizeDone) {
         var textValue = [];
       } else {
@@ -194,7 +222,7 @@ define([
               totalPercentage = Math.round((textValue[0] * 100) / totalValues.value) + Math.round((textValue[1] * 100) / totalValues.value) + Math.round((textValue[2] * 100) / totalValues.value);
               totalPercentage = 100 - totalPercentage;
           }
-          var value = Math.round((textValue[i] * 100) / totalValues.value);
+          value = Math.round((textValue[i] * 100) / totalValues.value);
           if (totalPercentage > 0) {
             value = value + totalPercentage;
           }
@@ -202,9 +230,11 @@ define([
             value = value - totalPercentage;
           }
           i += 1;
+          valuePercentage.push({value: value})
           if (value > 0) return value + '%'
         })
         .attr('class', 'label');
+        this.defaults.valuesPercentage = valuePercentage;
         this.defaults.textValue = textValue;
         this.defaults.resizeDone = true;
     },

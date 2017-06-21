@@ -21,7 +21,8 @@ define([
   'countries/views/widgets/MapCountry',
   'countries/helpers/StickyMap',
   'countries/helpers/SwitchOptions',
-  'text!countries/templates/countryDashboard.handlebars'
+  'text!countries/templates/countryDashboard.handlebars',
+  'text!countries/templates/countryTooltip.handlebars'
 ], function($,
   Backbone,
   _,
@@ -44,7 +45,8 @@ define([
   MapCountry,
   StickyMap,
   SwitchOptions,
-  tpl) {
+  tpl,
+  tplTooltip) {
 
   'use strict';
 
@@ -57,6 +59,7 @@ define([
     },
 
     template: Handlebars.compile(tpl),
+    templateTooltip: Handlebars.compile(tplTooltip),
 
     _subscriptions:[
       {
@@ -126,6 +129,7 @@ define([
 
     render: function() {
       this.$dashboard.html(this.template({}));
+      $('body').append(this.templateTooltip({}));
       this.$el.removeClass('-loading');
       this.$dashboard.removeClass('-loading');
     },

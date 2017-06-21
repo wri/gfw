@@ -1,0 +1,64 @@
+.m-tooltip-country {
+  background-color: #FFF;
+  position: absolute;
+  max-width: 90px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  z-index: 9999;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.25);
+  top: 0;
+
+  &.-hidden {
+    display: none;
+  }
+
+  &::after {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: '';
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(136, 183, 213, 0);
+    border-top-color: #fff;
+    border-width: 10px;
+    margin-left: -10px;
+  }
+
+  span {
+    display: block;
+  }
+
+  .title {
+    text-align: center;
+    font-size: 36px;
+    color: #97BE32;
+
+  }
+
+  .sub-title {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 12px;
+  }
+
+  &.-group {
+    max-width: none;
+
+    .title {
+      color: #FF6599;
+    }
+
+    .sub-title {
+      color: #2681BF;
+    }
+
+    &::after {
+      display: none;
+    }
+  }
+}
