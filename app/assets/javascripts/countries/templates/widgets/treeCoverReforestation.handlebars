@@ -9,20 +9,20 @@
       </div>
       </h4>
     </div>
-    <div class="reforestation-rate-container">
-      <div>
-        <div class="column small-12 medium-12 contain-country-information">
-          <p class="text">In 2010, the rate of reforestation was <span class="value">{{totalReforestation}} {{unitTotal}} Ha/year</span></p>
+    <div class="small-12 reforestation-rate-container">
+      <div class="small-6 medium-6">
+        <div class="column contain-country-information">
+          <p class="text">In 2010, the rate of reforestation was <span class="value">{{totalReforestation}} Ha/year</span></p>
           <!-- {{this.value}} {{this.unit}}  -->
         </div>
       </div>
-      <div>
+      <div class="small-6 medium-6">
         {{#each data}}
           {{#if this.hasData}}
             <div class="column small-12 medium-12 icons-name-container">
               <div class="name-country">
                 <span>
-                  <div>{{this.index}}</div>{{this.name}}
+                  <div>{{this.position}}</div>{{this.name}}
                 </span>
               </div>
               <div class="m-widget-tree-cover-reforestation">
