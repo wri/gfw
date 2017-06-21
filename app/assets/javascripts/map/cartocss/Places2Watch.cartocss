@@ -4,27 +4,27 @@
 }
 
 #ptw_grid_score_gt_0[marker=true][zoom>3]{
-  marker-width: 16;
+  marker-width: 20;
 }
 
 #ptw_grid_score_gt_0[marker=true][zoom>4]{
-  marker-width: 16;
+  marker-width: 22;
 }
 
 #ptw_grid_score_gt_0[marker=true][zoom>5]{
-  marker-width: 16;
+  marker-width: 24;
 }
 
 #ptw_grid_score_gt_0[marker=true][zoom>6]{
-  marker-width: 16;
+  marker-width: 26;
 }
 
 #ptw_grid_score_gt_0[marker=true][zoom>7]{
-  marker-width: 16;
+  marker-width: 28;
 }
 
 #ptw_grid_score_gt_0[marker=true][zoom>8]{
-  marker-width: 32;
+  marker-width: 30;
 }
 
 #ptw_grid_score_gt_0[marker=false]{
@@ -34,10 +34,10 @@
   line-opacity: 0;
 }
 
-#ptw_grid_score_gt_0[marker=true][zoom>8]{
+#ptw_grid_score_gt_0[marker=true][zoom>9]{
   marker-opacity: 0;
 }
 
-#ptw_grid_score_gt_0[marker=false][zoom>8]{
+#ptw_grid_score_gt_0[marker=false][zoom>9]{
   polygon-opacity: 1;
 }
