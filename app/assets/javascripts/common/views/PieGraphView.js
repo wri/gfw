@@ -29,6 +29,7 @@ define([
       textValue: [],
       valuesFirstChart: [],
       valuesSecondChart: [],
+      valuesPercentage: [],
       margin: {
         top: 0,
         right: 0,
@@ -123,7 +124,7 @@ define([
       _this.removeClass('-hidden');
       $(document).mousemove(function(e){
         _this.css('left', e.pageX - 45);
-        _this.css('top', e.pageY - 100);
+        _this.css('top', e.pageY - 110);
       });
     },
 
@@ -170,15 +171,11 @@ define([
           })
           .attr('class', 'arc')
           .on('mousemove', function(d) {
-            var thisValue = d.value;
-            var totalValues = this.defaults.totalValues.value;
-            var percentage = Math.round((thisValue * 100) / totalValues);
+            var category = d.data.category;
+            var percentage = this.defaults.valuesPercentage[category - 1].value;
             var totalThisValue = parseInt(d.value / 1000000);
-
             $('#title-tooltip').html(percentage+'%');
             $('#sub-title-tooltip').html(totalThisValue+'Ha');
-
-          //  console.log(Math.round(d.value * 100) / this.defaults.totalValues);
           }.bind(this));
 
       this.pie.append('path')
@@ -196,6 +193,8 @@ define([
       var i = 0;
       var resizeDone = this.defaults.resizeDone;
       var textValue = null;
+      var value = 0;
+      var valuePercentage = [];
       if (!this.defaults.resizeDone) {
         var textValue = [];
       } else {
@@ -223,7 +222,7 @@ define([
               totalPercentage = Math.round((textValue[0] * 100) / totalValues.value) + Math.round((textValue[1] * 100) / totalValues.value) + Math.round((textValue[2] * 100) / totalValues.value);
               totalPercentage = 100 - totalPercentage;
           }
-          var value = Math.round((textValue[i] * 100) / totalValues.value);
+          value = Math.round((textValue[i] * 100) / totalValues.value);
           if (totalPercentage > 0) {
             value = value + totalPercentage;
           }
@@ -231,9 +230,11 @@ define([
             value = value - totalPercentage;
           }
           i += 1;
+          valuePercentage.push({value: value})
           if (value > 0) return value + '%'
         })
         .attr('class', 'label');
+        this.defaults.valuesPercentage = valuePercentage;
         this.defaults.textValue = textValue;
         this.defaults.resizeDone = true;
     },
