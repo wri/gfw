@@ -71,6 +71,7 @@ define([
         data: dataTemplate,
         unitMeasure: unitMeasure,
         totalReforestation: this.totalCountry,
+        unitTotal: 'thousand'
       }));
 
       document.getElementById('widget-tree-cover-reforestation').classList.remove('-loading');
