@@ -22,7 +22,8 @@ define([
       "grump2000",
       "mex_forest_zoning_cat",
       "mex_forest_zoning_subcat",
-      //FOREST/LAND COVER
+      //FOREST/LAND COVER CONTEXTUAL LAYER
+      "forma_coverage",
       "forest2000",
       "per_minam_tree_cover",
       "cod_primary_forest_wgs",

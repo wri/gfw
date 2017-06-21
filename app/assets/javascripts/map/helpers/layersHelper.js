@@ -7,6 +7,7 @@ define([
   'map/views/layers/ForestGainLayer',
   'map/views/layers/FormaMonth3Layer',
   'map/views/layers/FormaActivityLayer',
+  'map/views/layers/FormaCoverageLayer',
   'map/views/layers/ImazonLayer',
   'map/views/layers/ImazonCoverLayer',
   'map/views/layers/Forest2000Layer',
@@ -181,6 +182,7 @@ define([
   ForestGainLayer,
   FormaMonth3Layer,
   FormaActivityLayer,
+  FormaCoverageLayer,
   ImazonLayer,
   ImazonCoverLayer,
   Forest2000Layer,
@@ -368,6 +370,9 @@ define([
     forma_activity: {
       view: FormaActivityLayer,
       timelineView: FormaActivityTimeline
+    },
+    forma_coverage: {
+      view: FormaCoverageLayer
     },
     imazon: {
       view: ImazonLayer,
