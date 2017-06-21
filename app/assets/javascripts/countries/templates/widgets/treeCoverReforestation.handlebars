@@ -9,31 +9,44 @@
       </div>
       </h4>
     </div>
-
-    {{#if hasData}}
-      <div class="column small-12 medium-6">
-        <p class="text">In 2010, the rate of reforestation was <span class="value">{{value}} {{unit}} Ha/year</span></p>
-      </div>
-      <div class="column small-12 medium-6">
-        <div class="m-widget-tree-cover-reforestation">
-          {{#if icons}}
-            <ul class="measure-list">
-            {{#each icons.number}}
-              <li class="measure-icon"><span></span></li>
-            {{/each}}
-            {{#if icons.percentage}}
-              <li class="measure-icon"> <span style="transform: scaleY({{icons.percentage}});"</span> </li>
-            {{/if}}
-            </ul>
-          {{/if}}
-          <div class="legend">
-            <span class="measure-icon"><span></span></span>
-            <span class="measure-value">= {{unitMeasure}} Ha/year</span>
-          </div>
+    <div class="reforestation-rate-container">
+      <div>
+        <div class="column small-12 medium-12 contain-country-information">
+          <p class="text">In 2010, the rate of reforestation was <span class="value">Ha/year</span></p>
+          <!-- {{this.value}} {{this.unit}}  -->
         </div>
       </div>
-    {{else}}
-      No data available
-    {{/if}}
+      <div>
+        {{#each data}}
+          {{#if this.hasData}}
+            <div class="column small-12 medium-12 icons-name-container">
+              <div class="name-country">
+                <span>
+                  <div>{{this.index}}</div>{{this.name}}
+                </span>
+              </div>
+              <div class="m-widget-tree-cover-reforestation">
+                {{#if this.icons}}
+                  <ul class="measure-list">
+                  {{#each this.icons.number}}
+                    <li class="measure-icon"><span></span></li>
+                  {{/each}}
+                  {{#if this.icons.percentage}}
+                    <li class="measure-icon"> <span style="transform: scaleY({{icons.percentage}});"</span> </li>
+                  {{/if}}
+                  </ul>
+                {{/if}}
+              </div>
+            </div>
+          {{else}}
+            No data available
+          {{/if}}
+        {{/each}}
+        <div class="legend column small-12 medium-12 legend-reforestation-container">
+          <span class="measure-icon"><span></span></span>
+          <span class="measure-value">= {{unitMeasure}} Ha/year</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
