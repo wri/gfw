@@ -13,6 +13,7 @@ define([
 
   var API = 'https://wri-01.cartodb.com/api/v2/sql?q='
   var QUERY = 'SELECT name, iso, reforestation_rate FROM gfw2_countries WHERE reforestation_rate IS NOT NULL ORDER BY reforestation_rate DESC LIMIT 3';
+  var QUERYCOUNTRY = 'SELECT reforestation_rate FROM gfw2_countries WHERE iso=\'{iso}\'';
 
   var TreeCoverLossView = View.extend({
     el: '#widget-tree-cover-reforestation',
@@ -35,8 +36,11 @@ define([
 
     start: function() {
       this._getData().done(function(res) {
-        this.data = res.rows;
-        this.render();
+        this._getDataCountry().done(function(resCountry) {
+          this.totalCountry = res.rows[0].reforestation_rate;
+          this.data = res.rows;
+          this.render();
+        }.bind(this))
       }.bind(this));
     },
 
@@ -66,6 +70,7 @@ define([
       this.$el.html(this.template({
         data: dataTemplate,
         unitMeasure: unitMeasure,
+        totalReforestation: this.totalCountry,
       }));
 
       document.getElementById('widget-tree-cover-reforestation').classList.remove('-loading');
@@ -76,6 +81,16 @@ define([
         iso: this.iso
       });
 
+      return $.ajax({
+        url: url,
+        type: 'GET'
+      });
+    },
+
+    _getDataCountry: function() {
+      var url = API + new UriTemplate(QUERYCOUNTRY).fillFromObject({
+        iso: this.iso
+      });
 
       return $.ajax({
         url: url,
