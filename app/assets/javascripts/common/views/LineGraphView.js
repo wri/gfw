@@ -24,6 +24,12 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    //m-line-chart
+
+    events: {
+      'mouseleave .line-graph-svg' : 'restartCircle',
+    },
+
     defaults: {
       chartEl: 'line-graph-svg',
       chartClass: 'js-line-graph',
@@ -161,8 +167,7 @@ define([
         .attr('width', this.cWidth + margin.left + margin.right + 'px')
         .attr('height', this.cHeight + margin.top + margin.bottom + 'px')
         .attr('class', 'svg-'+this.cid)
-        .on('mousemove', this.moveCircle)
-        .on('mouseout', this.restartCircle);
+        .on('mousemove', this.moveCircle);
 
       this.svg = svg.append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
