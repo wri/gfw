@@ -371,6 +371,7 @@ define([
       svg = svg[0];
       var circle = $(svg).find('.dot');
       var x = d3.mouse(svg)[0];
+      var position = 0;
 
       if (!this.defaults.parentValue) {
         var parent = $(svg).parent()[0];
@@ -381,12 +382,11 @@ define([
         this.defaults.parentValue = parent;
       }
 
-      for (var i = 0; i < this.defaults.xValuesInteger.length; i++) {
-        if (parseInt(x) === this.defaults.xValuesInteger[i]) {
-          $(this.defaults.parentValue).html(this.defaults.data[i].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-          $(circle).attr("cx", this.defaults.xValues[i]);
-          $(circle).attr("cy", this.defaults.yValues[i]);
-        }
+      position =  this.defaults.xValuesInteger.indexOf(parseInt(x));
+      if(position != -1) {
+        $(circle).attr("cx", this.defaults.xValues[position]);
+        $(circle).attr("cy", this.defaults.yValues[position]);
+        $(this.defaults.parentValue).html(this.defaults.data[position].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
       }
     },
 
