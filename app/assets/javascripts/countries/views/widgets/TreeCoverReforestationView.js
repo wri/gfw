@@ -55,16 +55,14 @@ define([
       var countryOriginal = _.findWhere(this.data, {iso: this.iso});
       if(countryOriginal) {
         var countryValue = countryOriginal.reforestation_rate;
-        if (countryValue <= 1000 && countryValue >= 0) { unitMeasure = 100; }
-        if (countryValue <= 2000 && countryValue >= 1000) { unitMeasure = 200; }
-        if (countryValue <= 3000 && countryValue >= 2000) { unitMeasure = 300; }
-        if (countryValue <= 4000 && countryValue >= 3000) { unitMeasure = 400; }
-        if (countryValue <= 5000 && countryValue >= 4000) { unitMeasure = 500; }
-        if (countryValue <= 6000 && countryValue >= 5000) { unitMeasure = 600; }
-        if (countryValue <= 7000 && countryValue >= 6000) { unitMeasure = 700; }
-        if (countryValue <= 8000 && countryValue >= 7000) { unitMeasure = 800; }
-        if (countryValue <= 9000 && countryValue >= 8000) { unitMeasure = 900; }
-        if (countryValue <= 10000 && countryValue >= 9000) { unitMeasure = 1000; }
+        var unitMeasure;
+        var unitReference = 1000;
+        for (var i = 1; i <= 10; i++) {
+          var limit = unitReference * i;
+          if (countryValue <= limit && countryValue >= limit - unitReference) {
+            unitMeasure = limit / 10;
+          }
+        }
 
         for (var i = 0; i < this.data.length; i++) {
           value = Math.round(this.data[i].reforestation_rate);
