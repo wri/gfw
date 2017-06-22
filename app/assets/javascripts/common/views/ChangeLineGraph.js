@@ -49,17 +49,14 @@ define([
 
       {
         'Line/restart': function(data) {
-          // var svgContainer = null;
-          // var circle = null;
-          // for (var i = 0; i < this.defaults.dataSvg.length; i++) {
-          //   svgContainer = $('.svg-'+this.defaults.dataSvg[i].data[0].cid);
-          //   circle = svgContainer.find('.dot');
-          //   $(circle).attr("cx", this.defaults.dataSvg[i].data[0].xValues[0]);
-          //   $(circle).attr("cy", this.defaults.dataSvg[i].data[0].yValues[0]);
-          //   $('#alert-value-'+i).html(data[i].data[0].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-          // }
         }
-      }
+      },
+
+      {
+        'Line/clean': function(restart) {
+          this.defaults.dataSvg = [];
+        }
+      },
     ],
 
     initialize: function() {

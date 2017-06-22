@@ -38,6 +38,7 @@ define([
       xValuesInteger: null,
       yValues: null,
       parentValue: null,
+      restart: false,
       margin: {
         top: 20,
         right: 35,
@@ -48,6 +49,12 @@ define([
 
     initialize: function(settings) {
       _.bindAll(this, 'moveCircle');
+      this.defaults.restart = settings.restart;
+
+      if (this.defaults.restart) {
+        mps.publish('Line/clean', [this.defaults.restart]);
+      }
+
       this.defaults = _.extend({}, this.defaults, settings);
       this.data = this.defaults.data;
       if (this.defaults.treeCoverLossAlerts) {
