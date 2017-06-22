@@ -48,8 +48,85 @@ $reforestation-empty-color: #d8d8d8;
   }
 }
 
+
+
 @keyframes intro {
   from {
     transform: scaleY(0);
+  }
+}
+
+.reforestation-rate-container {
+  display: flex;
+  flex-direction: row;
+
+  .icons-name-container {
+    padding-right: 0;
+    display: flex;
+    flex-direction: row;
+
+    .name-country {
+      margin-right: 30px;
+      min-width: 100px;
+
+      span {
+        color: #555;
+        font-size: 12px;
+        line-height: 14px;
+
+        div {
+          display: inline-block;
+          margin-right: 25px;
+        }
+      }
+    }
+  }
+
+  .legend-reforestation-container {
+    margin-left: 130px;
+    margin-top: 20px;
+
+    .measure-icon {
+      position: relative;
+      display: inline-flex;
+      align-items: flex-end;
+      width: 15px;
+      height: 27px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+      background-color: $reforestation-empty-color;
+      > span {
+        width: 100%;
+        height: 100%;
+        display: block;
+        background-color: $reforestation-color;
+        transform: scaleY(1);
+        transform-origin: bottom;
+        animation: intro 0.3s ease-in-out;
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url(countries/tree-mask@2x.png);
+        background-size: cover;
+      }
+    }
+
+    .measure-value {
+      color: #555;
+      font-size: 12px;
+      line-height: 13px;
+    }
+  }
+
+  .contain-country-information {
+    padding-left: 0;
+    margin-right: 55px;
   }
 }
