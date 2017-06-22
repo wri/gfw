@@ -590,7 +590,7 @@
     {{#if content.data.actions}}
       <div id="cartodb-popup-fixed" class="cartodb-popup-actions">
       {{#if content.data.analize}}
-        <a style="cursor:pointer;" class="analyze-shape btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">analyze</a>
+        <span style="cursor:pointer;" data-zoom="true" class="analyze-shape btn green uppercase zoom-analyze" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">zoom</span>
       {{/if}}
       {{#if content.data.readmore}}
         <a style="cursor:pointer;" class="btn green uppercase" href="{{content.data.link}}" target="_blank" rel="noopener">read more</a>
