@@ -325,8 +325,7 @@ define([
           xValuesInteger.push(parseInt(_this.x(d.date)));
           return _this.x(d.date);
         })
-        .y(function(d) { yValues.push(_this.y(d.value)); return _this.y(d.value); })
-        .interpolate(this.defaults.interpolate);
+        .y(function(d) { yValues.push(_this.y(d.value)); return _this.y(d.value); });
 
       this.defaults.yValues = yValues;
       this.defaults.xValues = xValues;
