@@ -28,6 +28,7 @@ define([
 
     events: {
       'mouseleave .line-graph-svg' : 'restartCircle',
+      'mouseleave #tree-cover-loss-graph' : 'restartCircleCoverLoss'
     },
 
     defaults: {
@@ -42,6 +43,7 @@ define([
       circleRadius: 4.5,
       xValues: null,
       xValuesInteger: null,
+      container: null,
       yValues: null,
       parentValue: null,
       restart: false,
@@ -311,6 +313,7 @@ define([
     _drawSolidLine: function() {
       var _this = this;
       var dataChangeLine = [];
+      var dataChangeLineCoverLoss = [];
       var xValues = [];
       var xValuesInteger = [];
       var yValues = [];
@@ -337,9 +340,20 @@ define([
           yValues: this.defaults.yValues,
           xValuesInteger: this.defaults.xValuesInteger,
           cid: this.cid,
-        })
-
+        });
+        this.defaults.container = 'treeCoverLossAlerts';
         mps.publish('Line/data', [dataChangeLine]);
+      }
+
+      if (this.defaults.treeCoverLoss) {
+        dataChangeLineCoverLoss.push({
+          xValues: this.defaults.xValues,
+          yValues: this.defaults.yValues,
+          xValuesInteger: this.defaults.xValuesInteger,
+          cid: this.cid,
+        });
+        this.defaults.container = 'treeCoverLoss';
+        mps.publish('Line/dataCoverLoss', [dataChangeLineCoverLoss]);
       }
 
       this.graphLine = solidLineGroup.append('path')
@@ -397,20 +411,25 @@ define([
       }
     },
 
-    moveCircle: function(e) {
+    moveCircle: function() {
+      var container = this.defaults.container;
       var svg = $('.svg-'+this.cid);
       svg = svg[0];
       var x = d3.mouse(svg)[0];
       var position = 0;
       position =  this.defaults.xValuesInteger.indexOf(parseInt(x));
       if(position != -1) {
-        mps.publish('Line/update', [position, this.dataTotal]);
+        mps.publish('Line/update', [position, this.dataTotal, container]);
       }
     },
 
     restartCircle: function(e) {
       mps.publish('Line/restart', [this.dataTotal]);
     },
+
+    restartCircleCoverLoss: function(e) {
+      mps.publish('Line/restartTreeCoverloss', [this.dataTotal]);
+    }
 
   });
 
