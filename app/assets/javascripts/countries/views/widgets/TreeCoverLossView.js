@@ -72,6 +72,7 @@ define([
         treeCoverLoss: true,
         el: '#tree-cover-loss-graph',
         data: this.data,
+        totalData: this.data,
         interpolate: 'basis'
       });
     },

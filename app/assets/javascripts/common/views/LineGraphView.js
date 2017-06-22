@@ -65,9 +65,7 @@ define([
 
       this.defaults = _.extend({}, this.defaults, settings);
       this.data = this.defaults.data;
-      if (this.defaults.treeCoverLossAlerts) {
-        this.dataTotal = this.defaults.totalData;
-      }
+      this.dataTotal = this.defaults.totalData;
       if (this.data.length > 12 && this.defaults.treeCoverLossAlerts) {
         var pastMonths = this.data.length - 12;
         for (var i = 0; i < pastMonths; i++) {
