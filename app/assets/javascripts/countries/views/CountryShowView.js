@@ -143,6 +143,7 @@ define([
       this.initFiresAlerts();
       this.initMapCountry();
       this.initStickyMap();
+
       this.listenTo(
          this.header,
          'updateUrl',

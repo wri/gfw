@@ -3,6 +3,8 @@ define([
   'underscore',
   'handlebars',
   'd3',
+  'core/View',
+  'mps',
   'moment',
   'text!common/templates/lineGraph.handlebars'
 ], function(
@@ -10,13 +12,15 @@ define([
   _,
   Handlebars,
   d3,
+  View,
+  mps,
   moment,
   tpl
 ) {
 
   'use strict';
 
-  var LineGraphView = Backbone.View.extend({
+  var LineGraphView = View.extend({
 
     template: Handlebars.compile(tpl),
 
@@ -46,6 +50,9 @@ define([
       _.bindAll(this, 'moveCircle');
       this.defaults = _.extend({}, this.defaults, settings);
       this.data = this.defaults.data;
+      if (this.defaults.treeCoverLossAlerts) {
+        this.dataTotal = this.defaults.totalData;
+      }
       if (this.data.length > 12 && this.defaults.treeCoverLossAlerts) {
         var pastMonths = this.data.length - 12;
         for (var i = 0; i < pastMonths; i++) {
@@ -147,7 +154,8 @@ define([
         .attr('width', this.cWidth + margin.left + margin.right + 'px')
         .attr('height', this.cHeight + margin.top + margin.bottom + 'px')
         .attr('class', 'svg-'+this.cid)
-        .on('mousemove', this.moveCircle);
+        .on('mousemove', this.moveCircle)
+        .on('mouseout', this.restartCircle);
 
       this.svg = svg.append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
@@ -290,6 +298,7 @@ define([
      */
     _drawSolidLine: function() {
       var _this = this;
+      var dataChangeLine = [];
       var xValues = [];
       var xValuesInteger = [];
       var yValues = [];
@@ -309,6 +318,17 @@ define([
       this.defaults.yValues = yValues;
       this.defaults.xValues = xValues;
       this.defaults.xValuesInteger = xValuesInteger;
+
+      if (this.defaults.treeCoverLossAlerts) {
+        dataChangeLine.push({
+          xValues: this.defaults.xValues,
+          yValues: this.defaults.yValues,
+          xValuesInteger: this.defaults.xValuesInteger,
+          cid: this.cid,
+        })
+
+        mps.publish('Line/data', [dataChangeLine]);
+      }
 
       this.graphLine = solidLineGroup.append('path')
         .attr('d', this.linePath(this.chartData))
@@ -367,27 +387,17 @@ define([
 
     moveCircle: function(e) {
       var svg = $('.svg-'+this.cid);
-      var circleAll = $('#widget-tree-cover-loss-alerts').find('.dot');
       svg = svg[0];
-      var circle = $(svg).find('.dot');
       var x = d3.mouse(svg)[0];
       var position = 0;
-
-      if (!this.defaults.parentValue) {
-        var parent = $(svg).parent()[0];
-        parent = $(parent).parent()[0];
-        parent = $(parent).parent()[0];
-        parent = $(parent).find('.card-data');
-        parent = $(parent).find('.value')[0];
-        this.defaults.parentValue = parent;
-      }
-
       position =  this.defaults.xValuesInteger.indexOf(parseInt(x));
       if(position != -1) {
-        $(circle).attr("cx", this.defaults.xValues[position]);
-        $(circle).attr("cy", this.defaults.yValues[position]);
-        $(this.defaults.parentValue).html(this.defaults.data[position].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+        mps.publish('Line/update', [position, this.dataTotal]);
       }
+    },
+
+    restartCircle: function(e) {
+      mps.publish('Line/restart', [this.dataTotal]);
     },
 
   });
