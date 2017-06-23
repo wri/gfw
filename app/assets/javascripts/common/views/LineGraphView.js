@@ -421,11 +421,7 @@ define([
     },
 
     restartCircle: function(e) {
-      mps.publish('Line/restart', [this.dataTotal]);
-    },
-
-    restartCircleCoverLoss: function(e) {
-      mps.publish('Line/restartTreeCoverloss', [this.dataTotal]);
+      mps.publish('Line/restart', [this.dataTotal, this.defaults.container]);
     }
 
   });

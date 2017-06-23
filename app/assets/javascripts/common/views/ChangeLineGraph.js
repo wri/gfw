@@ -71,7 +71,7 @@ define([
       },
 
       {
-        'Line/restart': function(data) {
+        'Line/restart': function(data, container) {
           var svgContainer = null;
           var circle = null;
           for (var i = 0; i < this.defaults.dataSvg.length; i++) {
@@ -79,7 +79,9 @@ define([
             circle = svgContainer.find('.dot');
             $(circle).attr("cx", this.defaults.dataSvg[i].data[0].xValues[this.defaults.dataSvg[i].data[0].xValues.length-1]);
             $(circle).attr("cy", this.defaults.dataSvg[i].data[0].yValues[this.defaults.dataSvg[i].data[0].yValues.length-1]);
-            $('#alert-value-'+i).html(data[i].data[this.defaults.dataSvg[i].data[0].yValues.length-1].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+            if (container === 'treeCoverLossAlerts') {
+              $('#alert-value-'+i).html(data[i].data[this.defaults.dataSvg[i].data[0].yValues.length-1].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+            }
           }
         }
       },
