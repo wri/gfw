@@ -121,7 +121,7 @@ define([
         this.$facebookLink.attr('href', 'https://www.facebook.com/sharer.php?u=' + url);
         this.$google_plusLink.attr('href', 'https://plus.google.com/share?url=' + url);
       }, this ));
-      ga('send', 'event', 'Map', 'Share', 'Share Link clicked');
+      ga('send', 'event', 'Map', 'Share', 'Share link');
     },
 
     _generateLinkUrl: function(url, callback) {
@@ -155,7 +155,7 @@ define([
         this.$shareinfo.append('<button id="preview" class="btn gray little uppercase">Preview</button></p>');
       }
 
-      ga('send', 'event', 'Map', 'Share', 'Share Embed clicked');
+      ga('send', 'event', 'Map', 'Share', 'Share embed');
     },
 
     _generateEmbedSrc: function() {
