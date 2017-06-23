@@ -155,6 +155,7 @@ define([
       $map.find('.cartodb-popup').on('click.infowindow', '.analyze-shape', function (e) {
         if ($(e.target).attr('data-zoom') === 'true') {
           console.log(self);
+          console.log($(this).data('useid'));
         } else {
           var isDisabled = $(e.currentTarget).hasClass('disabled');
 
