@@ -7,14 +7,14 @@
     </div>
   </h4>
 
-  <div class="m-widget-tree-cover-loss chart">
+  <div class="m-widget-tree-cover-loss chart" id="tree-cover-loss-line-graph">
     <div class="m-line-chart">
       <div id="tree-cover-loss-graph"></div>
     </div>
 
     <div class="total">
-      <div class="number">{{currentLoss}} <span class="unit">Ha</span></div>
-      <div class="label">(Aprox.: Extent of <span id="country-aprox-tree-cover-loss"></span>)</div>
+      <div class="number" id="value-tree-cover-loss">{{currentLoss}} <span class="unit">Ha</span></div>
+      <div class="label" id="label-tree-cover-loss">(Aprox.: Extent of <span id="country-aprox-tree-cover-loss"></span>)</div>
     </div>
   </div>
 </div>

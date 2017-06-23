@@ -3,6 +3,8 @@ define([
   'underscore',
   'handlebars',
   'd3',
+  'core/View',
+  'mps',
   'moment',
   'text!common/templates/lineGraph.handlebars'
 ], function(
@@ -10,15 +12,24 @@ define([
   _,
   Handlebars,
   d3,
+  View,
+  mps,
   moment,
   tpl
 ) {
 
   'use strict';
 
-  var LineGraphView = Backbone.View.extend({
+  var LineGraphView = View.extend({
 
     template: Handlebars.compile(tpl),
+
+    //m-line-chart
+
+    events: {
+      'mouseleave .line-graph-svg' : 'restartCircle',
+      'mouseleave #tree-cover-loss-graph' : 'restartCircleCoverLoss'
+    },
 
     defaults: {
       chartEl: 'line-graph-svg',
@@ -32,8 +43,10 @@ define([
       circleRadius: 4.5,
       xValues: null,
       xValuesInteger: null,
+      container: null,
       yValues: null,
       parentValue: null,
+      restart: false,
       margin: {
         top: 20,
         right: 35,
@@ -44,8 +57,15 @@ define([
 
     initialize: function(settings) {
       _.bindAll(this, 'moveCircle');
+      this.defaults.restart = settings.restart;
+
+      if (this.defaults.restart) {
+        mps.publish('Line/clean', [this.defaults.restart]);
+      }
+
       this.defaults = _.extend({}, this.defaults, settings);
       this.data = this.defaults.data;
+      this.dataTotal = this.defaults.totalData;
       if (this.data.length > 12 && this.defaults.treeCoverLossAlerts) {
         var pastMonths = this.data.length - 12;
         for (var i = 0; i < pastMonths; i++) {
@@ -290,6 +310,8 @@ define([
      */
     _drawSolidLine: function() {
       var _this = this;
+      var dataChangeLine = [];
+      var dataChangeLineCoverLoss = [];
       var xValues = [];
       var xValuesInteger = [];
       var yValues = [];
@@ -303,12 +325,33 @@ define([
           xValuesInteger.push(parseInt(_this.x(d.date)));
           return _this.x(d.date);
         })
-        .y(function(d) { yValues.push(_this.y(d.value)); return _this.y(d.value); })
-        .interpolate(this.defaults.interpolate);
+        .y(function(d) { yValues.push(_this.y(d.value)); return _this.y(d.value); });
 
       this.defaults.yValues = yValues;
       this.defaults.xValues = xValues;
       this.defaults.xValuesInteger = xValuesInteger;
+
+      if (this.defaults.treeCoverLossAlerts) {
+        dataChangeLine.push({
+          xValues: this.defaults.xValues,
+          yValues: this.defaults.yValues,
+          xValuesInteger: this.defaults.xValuesInteger,
+          cid: this.cid,
+        });
+        this.defaults.container = 'treeCoverLossAlerts';
+        mps.publish('Line/data', [dataChangeLine]);
+      }
+
+      if (this.defaults.treeCoverLoss) {
+        dataChangeLineCoverLoss.push({
+          xValues: this.defaults.xValues,
+          yValues: this.defaults.yValues,
+          xValuesInteger: this.defaults.xValuesInteger,
+          cid: this.cid,
+        });
+        this.defaults.container = 'treeCoverLoss';
+        mps.publish('Line/dataCoverLoss', [dataChangeLineCoverLoss]);
+      }
 
       this.graphLine = solidLineGroup.append('path')
         .attr('d', this.linePath(this.chartData))
@@ -365,30 +408,21 @@ define([
       }
     },
 
-    moveCircle: function(e) {
+    moveCircle: function() {
+      var container = this.defaults.container;
       var svg = $('.svg-'+this.cid);
-      var circleAll = $('#widget-tree-cover-loss-alerts').find('.dot');
       svg = svg[0];
-      var circle = $(svg).find('.dot');
       var x = d3.mouse(svg)[0];
-
-      if (!this.defaults.parentValue) {
-        var parent = $(svg).parent()[0];
-        parent = $(parent).parent()[0];
-        parent = $(parent).parent()[0];
-        parent = $(parent).find('.card-data');
-        parent = $(parent).find('.value')[0];
-        this.defaults.parentValue = parent;
-      }
-
-      for (var i = 0; i < this.defaults.xValuesInteger.length; i++) {
-        if (parseInt(x) === this.defaults.xValuesInteger[i]) {
-          $(this.defaults.parentValue).html(this.defaults.data[i].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-          $(circle).attr("cx", this.defaults.xValues[i]);
-          $(circle).attr("cy", this.defaults.yValues[i]);
-        }
+      var position = 0;
+      position =  this.defaults.xValuesInteger.indexOf(parseInt(x));
+      if(position != -1) {
+        mps.publish('Line/update', [position, this.dataTotal, container]);
       }
     },
+
+    restartCircle: function(e) {
+      mps.publish('Line/restart', [this.dataTotal, this.defaults.container]);
+    }
 
   });
 

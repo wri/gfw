@@ -10,6 +10,7 @@ define([
   'helpers/numbersHelper',
   'services/CountryService',
   'common/views/LineGraphView',
+  'common/views/ChangeLineGraph',
   'countries/views/widgets/modals/TreeCoverLossAlertsModal',
   'text!countries/templates/widgets/treeCoverLossAlerts.handlebars',
   'text!countries/templates/widgets/treeCoverLossAlertsCard.handlebars'
@@ -25,6 +26,7 @@ define([
   NumbersHelper,
   CountryService,
   LineGraphView,
+  ChangeLineGraph,
   TreeCoverLossAlertsModal,
   tpl,
   cardTpl) {
@@ -119,7 +121,8 @@ define([
         origin: 'subnational',
         source: 'glad',
         layerLink: 'umd_as_it_happens',
-        sourceLink: 'glad-alerts'
+        sourceLink: 'glad-alerts',
+        restart: false,
       }
     })),
 
@@ -136,6 +139,7 @@ define([
       {
         'Regions/update': function(value) {
           this.$widgets.addClass('-loading');
+          this.status.set('restart', true);
           this.region = parseInt(value);
           this._getData().done(function(data) {
             this.data = data;
@@ -152,6 +156,11 @@ define([
       this.latitude = params.latitude;
       this.longitude = params.longitude;
       this.start();
+      this.initChangeLine();
+    },
+
+    initChangeLine: function() {
+      this.changeLine = new ChangeLineGraph();
     },
 
     start: function() {
@@ -206,6 +215,7 @@ define([
       this.$widgets.addClass('-loading');
       var value = e.currentTarget.value;
       this.status.set('origin', value);
+      this.status.set('restart', true),
       this.updateData();
     },
 
@@ -220,6 +230,7 @@ define([
     },
 
     changeDataSourceFilter: function(e) {
+      this.status.set('restart', true),
       this.$widgets.addClass('-loading');
       $('.data-source-filter').each(function(i, obj) {
         if ($(obj).hasClass('active')) {
@@ -264,14 +275,22 @@ define([
         keys.forEach(function(key, index) {
           this.$widgets.append(this.cardTemplate({
             ranking: index + 1,
+            index: index,
             alerts: this.data[key].alerts.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
             name: this.data[key].name,
             linkImagery: '/map/9/'+this.longitude+'/'+this.latitude+'/'+countryLink+'-'+regionLink+'/grayscale/'+layerLink+'/685?tab=hd-tab&hresolution=eyJ6b29tIjo5LCJzYXRlbGxpdGUiOiJoaWdocmVzIiwiY29sb3JfZmlsdGVyIjoicmdiIiwicmVuZGVyZXIiOiJSR0IgKFJlZCBHcmVlbiBCbHVlKSIsInNlbnNvcl9wbGF0Zm9ybSI6InNlbnRpbmVsLTIiLCJzZW5zb3JfbmFtZSI6IlNlbnRpbmVsIDIiLCJjbG91ZCI6IjMwIiwibWluZGF0ZSI6IjIwMTctMDEtMjUiLCJtYXhkYXRlIjoiMjAxNy0wNS0yNSJ9',
             linkSubscribe: '/my_gfw/subscriptions/new?aoi=country&datasets='+sourceLink+'&country='+countryLink+'&region='+regionLink+'',
           }));
+          if (key === '1') {
+            this.status.set('restart', false);
+          }
           this.widgetViews.push(new LineGraphView({
             el: '#cover-loss-alert-card-' + (index + 1),
             data: this.data[key].data,
+            totalData: this.data,
+            restart: this.status.get('restart'),
+            index: key,
+            treeCoverLossAlerts: true,
             xAxisLabels: false,
             treeCoverLossAlerts: true,
           }));

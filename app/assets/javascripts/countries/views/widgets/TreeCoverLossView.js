@@ -69,8 +69,10 @@ define([
       }.bind(this));
       this.render();
       this.lineGraph = new LineGraphView({
+        treeCoverLoss: true,
         el: '#tree-cover-loss-graph',
         data: this.data,
+        totalData: this.data,
         interpolate: 'basis'
       });
     },
