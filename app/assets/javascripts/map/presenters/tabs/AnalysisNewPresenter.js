@@ -642,7 +642,7 @@ define([
           this.setAnalysis('country');
           var country = _.findWhere(this.view.countries, { iso: this.status.get('iso').country })
           if(country) {
-            ga('send', 'event', 'Map', 'Analyse', country.name);
+            ga('send', 'event', 'Map', 'Analysis', country.name);
           }
         }
       }
