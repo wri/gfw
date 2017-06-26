@@ -27,14 +27,26 @@ define([
   }];
 
   return {
-    getRangeForDates: function(dates) {
-      var duration = moment(dates[1]).diff(moment(dates[0]), 'hours'),
-          dateRange = _.findWhere(AVAILABLE_DATE_RANGES, {duration: duration});
+    getRangeForDates: function(dates, range) {
+      var filterDates = [dates[0], dates[1]];
+      var dateRange = range ? range : AVAILABLE_DATE_RANGES;
 
-      return [dateRange.start, dateRange.end];
+      var duration = moment(dates[1]).diff(moment(dates[0]), 'hours'),
+          dateRange = _.findWhere(dateRange, {duration: duration});
+
+      if (dateRange) {
+        filterDates = [dateRange.start, dateRange.end];
+      }
+
+      return filterDates;
     },
 
-    dateRanges: AVAILABLE_DATE_RANGES
+    dateRanges: function(range) {
+      if (range) {
+        return range;
+      }
+      return AVAILABLE_DATE_RANGES;
+    }
   };
 
 });
