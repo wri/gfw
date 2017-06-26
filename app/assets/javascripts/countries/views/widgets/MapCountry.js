@@ -244,6 +244,13 @@ define([
     _getLayerDataSection: function (section) {
       var data;
       switch (section) {
+        case 'tree-cover-snapshot':
+        console.log('hello');
+          data = {
+            slug: 'forest2000',
+            options: {}
+          };
+        break;
         case 'cover-loss':
           data = {
             slug: 'terrailoss',
