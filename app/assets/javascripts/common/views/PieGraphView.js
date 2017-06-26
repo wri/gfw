@@ -175,7 +175,7 @@ define([
             var percentage = this.defaults.valuesPercentage[category - 1].value;
             var totalThisValue = parseInt(d.value / 1000000);
             $('#title-tooltip').html(percentage+'%');
-            $('#sub-title-tooltip').html(totalThisValue+'Ha');
+            $('#sub-title-tooltip').html(totalThisValue+' ha');
           }.bind(this));
 
       this.pie.append('path')
