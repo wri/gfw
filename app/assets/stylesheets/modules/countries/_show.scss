@@ -114,9 +114,15 @@
       display: block;
     }
 
+
     &.stick {
       position: fixed !important;
       top: 0;
+      width: 35%;
+
+      @media (min-width: 1600px){
+        width: calc(35% - 112px);
+      }
     }
 
     &.absolute {
