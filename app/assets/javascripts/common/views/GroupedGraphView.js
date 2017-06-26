@@ -185,7 +185,7 @@ define([
         .orient('left')
         .tickPadding(8)
         .innerTickSize(-this.cWidth)
-        .tickFormat(d3.format('.2s'));
+        .tickFormat(d3.format('.1s'));
     },
 
     /**
@@ -225,8 +225,8 @@ define([
             _this.css('left', e.pageX - ((_this.width() + 15) / 2));
             _this.css('top', e.pageY - 110);
           });
-          $('#title-tooltip').html(parseInt(d.loss));
-          $('#sub-title-tooltip').html(parseInt(d.wdpa));
+          $('#title-tooltip').html(parseInt(d.loss)+ ' <span class="unit-text">Ha</span>');
+          $('#sub-title-tooltip').html(parseInt(d.wdpa)+ ' <span class="unit-text -small">Ha</span>');
         }.bind(this));
 
       bar.selectAll('rect')
