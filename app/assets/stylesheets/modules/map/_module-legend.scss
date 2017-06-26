@@ -449,65 +449,6 @@
       vertical-align: top;
       font-size: 0.8em;
     }
-
-    .radioswitch {
-      cursor: pointer;
-      position: relative;
-      float: none;
-      font-weight: normal;
-      color: #AAA;
-      font-size: 11px;
-      padding: 5px 5px 5px 0px;
-      padding-left: 13px;
-      text-transform: none;
-      display: block;
-
-      &:hover {
-        color: lighten($dark,5%);
-      }
-
-      &.selected {
-        color: $dark;
-
-        span:before{
-          display: block;
-        }
-      }
-
-      span {
-        display: block;
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        top: 5px;
-        left: 0;
-        border: 1px solid lighten($dark,10%);
-        border-radius: 50%;
-
-        &:before {
-          content: ' ';
-          display: none;
-          width: 4px;
-          height: 4px;
-          background-color: lighten($dark,10%);
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          margin: -2px 0 0 -2px;
-          border-radius: 50%;
-        }
-      }
-
-      input {
-        display: none;
-        cursor: pointer;
-        background-image: url('/assets/svg/dragger.svg');
-
-        @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-          background-image: none;
-        }
-      }
-    }
   }
 
   .geographic-subtitle {

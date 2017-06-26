@@ -39,7 +39,6 @@ define([
       'loss': 'umd-loss-gain',
       'forestgain': 'umd-loss-gain',
       'forma': 'forma-alerts',
-      'forma_month_3': 'forma250GFW',
       'imazon': 'imazon-alerts',
       'terrailoss': 'terrai-alerts',
       'prodes': 'prodes-loss',

@@ -24,7 +24,6 @@ define([
             ['loss', 'forest2000'],
             ['forestgain', 'forest2000'],
             ['forma', 'forest2000'],
-            ['umd_as_it_happens', 'places_to_watch', 'uncurated_places_to_watch'],
             ['imazon', 'forest2000'],
             ['terrailoss', 'forest2000'],
             ['prodes', 'forest2000'],

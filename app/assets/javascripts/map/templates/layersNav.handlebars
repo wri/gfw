@@ -27,6 +27,11 @@
               <span class="layer-title">Gran Chaco deforestation<a href='#' data-source='gran_chaco_deforestation' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
               <span class="layer-info">(monthly, 30m, Gran Chaco, Guyra)</span>
             </li>
+            {{!-- <li class="layer" data-layer="per_minam_loss">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title"> Peru MINAM tree cover loss <a href='#' data-source='per_minam_loss' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info"> ----- </span>
+            </li> --}}
             <li class="layer" data-layer="prodes">
               <span class="onoffradio"><span></span></span>
               <span class="layer-title">PRODES deforestation<a href='#' data-source='prodes' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
@@ -34,22 +39,44 @@
             </li>
           </div>
           <div class="layer-group">
-            <span class="group-name">Deforestation alerts <em>(near real-time)</em></span>
+            <span class="group-name">Tree cover loss alerts <em>(near real-time)</em></span>
             <li class="layer" data-layer="umd_as_it_happens">
               <span class="onoffradio"><span></span></span>
               <span class="layer-title">GLAD alerts<a href='#' data-source='umd_landsat_alerts' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
               <span class="layer-info">(weekly, 30m, select countries, UMD/GLAD)</span>
             </li>
-            <li class="layer" data-layer="forma_month_3">
+            <li class="layer" data-layer="forma">
               <span class="onoffradio"><span></span></span>
-              <span class="layer-title">FORMA alerts<a href='#' data-source='forma_250_alerts' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-              <span class="layer-info">(daily,  250m, tropics, WRI/Google)</span>
+              <span class="layer-title">FORMA alerts<a href='#' data-source='forma' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(monthly, January 2006-August 2015, 500m, humid tropics, WRI/CGD)</span>
             </li>
-            <li class="layer" data-layer="forma_activity">
+            {{!-- <li class="wrapped-layer">
               <span class="onoffradio"><span></span></span>
-              <span class="layer-title">FORMA active clearing alerts<a href='#' data-source='forma_250_active_clearing_alerts' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-              <span class="layer-info">(daily, 250m, tropics, WRI/Google)</span>
-            </li>
+              <span class="layer-title">FORMA 250 alerts<a href='#' data-source='forma' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(daily, 250m, humid tropics, WRI/CGD)</span>
+              <span class="layer-info">
+                <label data-layer="brazil_forma_250" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />Brazil
+                </label>
+                <label data-layer="drc_forma_250" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />Democratic Republic of Congo
+                </label>
+                <label data-layer="indonesia_forma_250" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />Indonesia
+                </label>
+                <label data-layer="laos_forma_250" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />Laos
+                </label>
+                <label data-layer="peru_forma_250" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />Peru
+                </label>
+              </span>
+            </li> --}}
             <li class="layer" data-layer="terrailoss">
               <span class="onoffradio"><span></span></span>
               <span class="layer-title">Terra-i alerts<a href='#' data-source='terra_i_alerts' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
@@ -163,7 +190,7 @@
               <span class="onoffswitch"><span></span></span>
               <span class="layer-title">Amazon basin mining concessions <a href='#' data-source='raisg_mining' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
               <span class="layer-info">(RAISG)</span>
-            </li>
+            </li>            
             <li class="layer" data-layer="oil_palm">
               <span class="onoffswitch"><span></span></span>
               <span class="layer-title">Oil palm<a href='#' data-source='gfw_oil_palm' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
