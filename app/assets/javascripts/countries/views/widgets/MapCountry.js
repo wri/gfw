@@ -38,6 +38,8 @@ define([
 
     events: {
       'click .js-toggle-layer' : 'toogleLayer',
+      'click .js-zoom-in': 'zoomIn',
+      'click .js-zoom-out': 'zoomOut',
     },
 
     /**
@@ -48,7 +50,7 @@ define([
       backgroundColor: '#99b3cc',
       disableDefaultUI: true,
       panControl: false,
-      zoomControl: true,
+      zoomControl: false,
       mapTypeControl: false,
       scaleControl: true,
       streetViewControl: false,
@@ -100,6 +102,14 @@ define([
       this.forceSection = false;
       this.widgets = $('.js-country-widget');
       this.scrollVisualGap = 300;
+    },
+
+    zoomIn: function () {
+      this.map.setZoom(this.map.getZoom() + 1);
+    },
+
+    zoomOut: function () {
+      this.map.setZoom(this.map.getZoom() - 1);
     },
 
     render: function() {
