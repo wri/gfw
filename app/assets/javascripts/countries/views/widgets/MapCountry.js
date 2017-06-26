@@ -62,6 +62,15 @@ define([
       mapTypeId: 'grayscale'
     },
 
+    legendColors: {
+      forestChange: '#F768A1',
+      landCover: '#97bd3d',
+      landUse: '#fecc5c',
+      conservation: '#3182BD',
+      people: '#707D92',
+      stories: '#f3830a'
+    },
+
     _subscriptions:[
       {
         'Regions/update': function(region, iso) {
@@ -253,8 +262,10 @@ define([
 
     _getLayerDataSection: function (section) {
       var data;
+      $('.onoffswitch').css('background-color', '#ddd');
       switch (section) {
         case 'tree-cover-snapshot':
+        $('.'+section+'-switch').css('background-color', this.legendColors.landCover);
           data = {
             slug: 'forest2000',
             options: {
@@ -263,6 +274,7 @@ define([
           };
         break;
         case 'cover-loss':
+        $('.'+section+'-switch').css('background-color', this.legendColors.forestChange);
           data = {
             slug: 'terrailoss',
             options: {
@@ -275,18 +287,21 @@ define([
           };
           break;
         case 'cover-gain':
+        $('.'+section+'-switch').css('background-color', this.legendColors.forestChange);
           data = {
             slug: 'forestgain',
             options: {}
           };
           break;
         case 'cover-loss-alerts':
+        $('.'+section+'-switch').css('background-color', this.legendColors.forestChange);
           data = {
             slug: this.modules.treeCoverLossAlerts[0].status.attributes.layerLink,
             options: {}
           };
           break;
         case 'fires':
+        $('.'+section+'-switch').css('background-color', this.legendColors.forestChange);
           data = {
             slug: 'viirs_fires_alerts',
             options: {
