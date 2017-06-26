@@ -263,7 +263,7 @@ define([
                     loss = (loss /1000);
                   if (loss % 1 != 0) loss = loss.toFixed(2)
                   } else {
-                    l_mha = 'Ha';
+                    l_mha = 'ha';
                   }
                 }
 
@@ -349,7 +349,7 @@ define([
                     data.years[1].gain = (data.years[1].gain /1000);
                   if (data.years[1].gain % 1 != 0) data.years[1].gain = data.years[1].gain.toFixed(2)
                   } else {
-                    l_mha = 'Ha';
+                    l_mha = 'ha';
                   }
                   $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ parseFloat(data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
                 }
@@ -432,7 +432,7 @@ define([
                     e_mha = 'KHa';
                     ex = (ex /1000);
                   } else {
-                    e_mha = 'Ha';
+                    e_mha = 'ha';
                   }
                   ex = parseFloat(ex);
                 } else {
@@ -967,7 +967,7 @@ define([
                     l_mha = 'KHa';
                     gain = (gain /1000);
                   } else {
-                    l_mha = 'Ha';
+                    l_mha = 'ha';
                   }
                   $target.find('.figure').removeClass('extent').html((~~gain).toLocaleString());
                   $target.find('.unit').html(l_mha);
@@ -999,7 +999,7 @@ define([
                     l_mha = 'KHa';
                     extent = (extent /1000);
                   } else {
-                    l_mha = 'Ha';
+                    l_mha = 'ha';
                   }
                   $target.find('.figure').addClass('extent').html(Math.round(extent).toLocaleString());
                   $target.find('.unit').html(l_mha);

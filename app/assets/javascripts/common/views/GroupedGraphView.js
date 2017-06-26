@@ -225,8 +225,8 @@ define([
             _this.css('left', e.pageX - ((_this.width() + 15) / 2));
             _this.css('top', e.pageY - 110);
           });
-          $('#title-tooltip').html(parseInt(d.loss)+ ' <span class="unit-text">Ha</span>');
-          $('#sub-title-tooltip').html(parseInt(d.wdpa)+ ' <span class="unit-text -small">Ha</span>');
+          $('#title-tooltip').html(parseInt(d.loss)+ ' <span class="unit-text">ha</span>');
+          $('#sub-title-tooltip').html(parseInt(d.wdpa)+ ' <span class="unit-text -small">ha</span>');
         }.bind(this));
 
       bar.selectAll('rect')
