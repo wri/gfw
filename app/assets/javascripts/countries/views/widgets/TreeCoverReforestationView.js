@@ -100,8 +100,6 @@ define([
             dataTemplateCountry[2] = dataTemplate[countryPosition + 1];
         }
 
-        console.log(this.totalCountry);
-
         this.$el.html(this.template({
           data: dataTemplateCountry,
           unitMeasure: unitMeasure,
