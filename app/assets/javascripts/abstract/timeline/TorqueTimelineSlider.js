@@ -35,7 +35,7 @@ define([
 
   TorqueTimelineSlider.prototype.setDate = function(date) {
     brush.extent([date, date]);
-    handle.style('transform', 'translate(' + (timeScale(date)-8) + 'px,0px)');
+    handle.attr('transform', 'translate(' + (timeScale(date)-8) + ',0)');
     svg.select('.played_domain').attr('x2', timeScale(date));
   };
 
@@ -60,7 +60,7 @@ define([
 
   TorqueTimelineSlider.prototype.brushed = function() {
     var value = brush.extent()[0];
-    handle.style('transform', 'translate(' + (timeScale(value)-8) + 'px,0px)');
+    handle.attr('transform', 'translate(' + (timeScale(value)-8) + ',0)');
 
     var notProgrammaticEvent = (d3.event && d3.event.sourceEvent);
     if (notProgrammaticEvent) {

@@ -5,9 +5,14 @@ define([
   // Layer views
   'map/views/layers/LossLayer',
   'map/views/layers/ForestGainLayer',
-  'map/views/layers/FormaMonth3Layer',
-  'map/views/layers/FormaActivityLayer',
-  'map/views/layers/FormaCoverageLayer',
+  'map/views/layers/FormaLayer',
+  'map/views/layers/PeruForma250Layer',
+  'map/views/layers/IndonesiaForma250Layer',
+  'map/views/layers/BrazilForma250Layer',
+  'map/views/layers/LaosForma250Layer',
+  'map/views/layers/DrcForma250Layer',
+  'map/views/layers/FormaCoverLayer',
+  'map/views/layers/Forma250CoverLayer',
   'map/views/layers/ImazonLayer',
   'map/views/layers/ImazonCoverLayer',
   'map/views/layers/Forest2000Layer',
@@ -169,7 +174,7 @@ define([
   // Layers timelines
   'map/views/timeline/LossTimeline',
   'map/views/timeline/FormaTimeline',
-  'map/views/timeline/FormaActivityTimeline',
+  'map/views/timeline/Forma250Timeline',
   'map/views/timeline/ImazonTimeline',
   'map/views/timeline/FiresTimeline',
   'map/views/timeline/TerraiTimeline',
@@ -180,9 +185,14 @@ define([
   // Layer Views
   LossLayer,
   ForestGainLayer,
-  FormaMonth3Layer,
-  FormaActivityLayer,
-  FormaCoverageLayer,
+  FormaLayer,
+  PeruForma250Layer,
+  IndonesiaForma250Layer,
+  BrazilForma250Layer,
+  LaosForma250Layer,
+  DrcForma250Layer,
+  FormaCoverLayer,
+  Forma250CoverLayer,
   ImazonLayer,
   ImazonCoverLayer,
   Forest2000Layer,
@@ -344,7 +354,7 @@ define([
   // Layer timelines
   LossTimeline,
   FormaTimeline,
-  FormaActivityTimeline,
+  Forma250Timeline,
   ImazonTimeline,
   FiresTimeline,
   TerraiTimeline,
@@ -363,16 +373,35 @@ define([
     forestgain: {
       view: ForestGainLayer
     },
-    forma_month_3: {
-      view: FormaMonth3Layer,
+    forma: {
+      view: FormaLayer,
       timelineView: FormaTimeline
     },
-    forma_activity: {
-      view: FormaActivityLayer,
-      timelineView: FormaActivityTimeline
+    peru_forma_250: {
+      view: PeruForma250Layer,
+      timelineView: Forma250Timeline
     },
-    forma_coverage: {
-      view: FormaCoverageLayer
+    brazil_forma_250: {
+      view: BrazilForma250Layer,
+      timelineView: Forma250Timeline
+    },
+    indonesia_forma_250: {
+      view: IndonesiaForma250Layer,
+      timelineView: Forma250Timeline
+    },
+    laos_forma_250: {
+      view: LaosForma250Layer,
+      timelineView: Forma250Timeline
+    },
+    drc_forma_250: {
+      view: DrcForma250Layer,
+      timelineView: Forma250Timeline
+    },
+    forma_cover: {
+      view: FormaCoverLayer
+    },
+    forma_250_cover: {
+      view: Forma250CoverLayer
     },
     imazon: {
       view: ImazonLayer,

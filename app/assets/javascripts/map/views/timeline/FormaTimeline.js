@@ -5,21 +5,26 @@
  */
 define([
   'moment',
-  'abstract/timeline/TorqueTimelineClass',
-  'abstract/timeline/TimelineDatePicker',
-  'map/services/FormaDateService'
-], function(moment, TorqueTimelineClass, DatePicker, FormaDateService) {
+  'abstract/timeline/TimelineMonthClass',
+  'map/presenters/TimelineClassPresenter'
+], function(moment, TimelineMonthClass, Presenter) {
 
   'use strict';
 
-  var FormaTimeline = TorqueTimelineClass.extend({
+  var FormaTimeline = TimelineMonthClass.extend({
 
-    DatePicker: DatePicker,
-    dataService: FormaDateService
+    initialize: function(layer, currentDate) {
+      this.options = {
+        dateRange: [layer.mindate, layer.maxdate],
+        playSpeed: 120
+      };
+
+      this.presenter = new Presenter(this);
+      FormaTimeline.__super__.initialize.apply(this, [layer, currentDate]);
+    }
 
   });
 
   return FormaTimeline;
 
 });
-

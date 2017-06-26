@@ -107,15 +107,6 @@ define([
           this.updateLegend();
         }
       }
-    },{
-      'Timeline/date-change': function(layerSlug, date) {
-        var startDate = date[0];
-        if (!moment.isMoment(startDate)) {
-          startDate = moment.utc(startDate);
-        }
-        this.status.set('startYear', startDate.year());
-        this.updateLegend();
-      }
     },
     // Mobile events... we should standardise them
     {

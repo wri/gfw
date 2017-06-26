@@ -141,7 +141,6 @@ define([
                 tileurl, \
                 does_wrapper, \
                 user_data, \
-                parent_layer, \
                 true AS visible \
               FROM \
                 '+window.gfw.layer_spec+' \

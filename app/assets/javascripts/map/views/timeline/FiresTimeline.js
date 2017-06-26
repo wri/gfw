@@ -7,7 +7,7 @@ define([
   'underscore', 'moment',
   'abstract/timeline/TimelineBtnClass',
   'map/presenters/TimelineClassPresenter',
-  'map/helpers/timelineDatesHelper'
+  'map/helpers/FiresDatesHelper'
 ], function(_, moment, TimelineBtnClass, Presenter, DatesHelper) {
 
   'use strict';
@@ -39,7 +39,7 @@ define([
      * @return {array} Array of quarterly.
      */
     _getData: function() {
-      return DatesHelper.dateRanges();
+      return DatesHelper.dateRanges;
     }
   });
 
