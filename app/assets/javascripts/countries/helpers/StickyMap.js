@@ -18,6 +18,7 @@ define([
       this.body = document.getElementsByTagName('body')[0];
       this.map = document.getElementById('map');
       this.legendBox = $('.country-page-legend');
+      this.zoomControl = $('.container-zoom-buttons');
       this.widgets = document.getElementById('widgets');
       this.top = document.getElementById('map').offsetTop;
       this.$dashboard = $('.dashboard');
@@ -43,10 +44,12 @@ define([
         if (y >= this.top) {
           $(this.map).removeClass('absolute');
           $(this.map).addClass('stick');
+          $(this.zoomControl).removeClass('-top');
           this.$dashboard.removeClass('relative');
           $(this.widgets).addClass('stick');
         }
         else {
+          $(this.zoomControl).addClass('-top');
           $(this.map).removeClass('stick');
           $(this.widgets).removeClass('stick');
         }

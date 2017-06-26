@@ -134,9 +134,9 @@ define([
 
       if (amount.toString().length >= 7) {
         amount = Math.round((amount / 1000) / 1000)
-        unit = 'MHa';
+        unit = 'Mha';
       } else if (amount.toString().length >= 4) {
-        unit = 'KHa';
+        unit = 'Kha';
         amount = Math.round(amount / 1000);
       }
 
