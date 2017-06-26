@@ -385,13 +385,13 @@ define([
 
           if (amount.toString().length >= 7) {
             amount = Math.round((amount /1000)/1000)
-            $target.find('.tree-cover .unit').html( 'MHa' );
+            $target.find('.tree-cover .unit').html( 'Mha' );
           } else if (amount.toString().length >= 4) {
             $target.find('.tree-cover .unit').html( 'KHa' );
             amount = Math.round(amount /1000);
           if (amount % 1 != 0) amount = Math.round(amount)
           } else {
-            $target.find('.tree-cover .unit').html( 'Ha' );
+            $target.find('.tree-cover .unit').html( 'ha' );
           }
           $target.find('.tree-cover .amount').html( amount.toLocaleString() );
           $target.find('.total-area .amount').html(Math.round(data.umd[0].extent_perc));
@@ -590,11 +590,11 @@ define([
         }
         total_loss += val.loss;
       });
-      $date.html(' Ha');
+      $date.html(' ha');
       $amount.html('<span>' + (~~data_[data_.length - 1].value).toLocaleString() + '</span>').append($date);
-      $gain.html(' Ha');
+      $gain.html(' ha');
       $amount_g.html('<span>' + gain_value + '</span>').append($gain);
-      $tnumbers.find('.total-loss-ha').html(' Ha');
+      $tnumbers.find('.total-loss-ha').html(' ha');
       $tnumbers.find('.total-loss').html((~~total_loss).toLocaleString()).append($tnumbers.find('.total-loss-ha'));
 
       var marginLeft = 5,
@@ -640,9 +640,9 @@ define([
           d3.select(this).style('fill', '#F69')
           var text = d3.select(this.parentNode)
           text.select('.axis_country').style('fill', '#9D9AA5')
-          $date.html(' Ha');
+          $date.html(' ha');
           $amount.html('<span>' + (~~d.value).toLocaleString() + '</span>').append($date);
-          $gain.html(' Ha');
+          $gain.html(' ha');
           $amount_g.html('<span>' + gain_value + '</span>').append($gain);
         });
     },

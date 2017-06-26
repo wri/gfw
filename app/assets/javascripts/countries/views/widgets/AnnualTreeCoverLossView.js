@@ -184,7 +184,7 @@ define([
 
       $('.data-time-range').html(this.status.get('minYear')+' to '+this.status.get('maxYear'));
       $('.data-thresh').html('>'+this.status.get('threshValue'));
-      $('.data-measure').html('HA');
+      $('.data-measure').html('ha');
       $('.data-source').html('GFW');
       $('.back-loading-annual-cover-loss').removeClass('-show');
       this._areasCountries('#country-aprox-annual-tree-cover-loss', this._getTotalCoverLoss());
