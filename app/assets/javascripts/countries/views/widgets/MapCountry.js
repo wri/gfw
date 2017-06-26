@@ -245,10 +245,11 @@ define([
       var data;
       switch (section) {
         case 'tree-cover-snapshot':
-        console.log('hello');
           data = {
             slug: 'forest2000',
-            options: {}
+            options: {
+              threshold: this.modules.treeCoverLoss[0].status.attributes.threshValue
+            }
           };
         break;
         case 'cover-loss':

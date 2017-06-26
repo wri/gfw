@@ -17,6 +17,7 @@ define([
     initialize: function() {
       this.body = document.getElementsByTagName('body')[0];
       this.map = document.getElementById('map');
+      this.legendBox = $('.country-page-legend');
       this.widgets = document.getElementById('widgets');
       this.top = document.getElementById('map').offsetTop;
       this.$dashboard = $('.dashboard');
