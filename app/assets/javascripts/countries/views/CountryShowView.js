@@ -96,13 +96,21 @@ define([
 
       if(this.region != 0){
         this.getDataRegions().then(function(results) {
-          this.data = results;
-          this.start();
+          if (Object.keys(results).length > 0) {
+            this.data = results;
+            this.start();
+          } else {
+            this.redirectTo404();
+          }
         }.bind(this));
       } else {
         this.getData(false).then(function(results) {
-          this.data = results;
-          this.start();
+          if (Object.keys(results).length > 0) {
+            this.data = results;
+            this.start();
+          } else {
+            this.redirectTo404();
+          }
         }.bind(this));
       }
       new SourceWindowView();
@@ -248,6 +256,10 @@ define([
     shareOpen: function(event){
       var shareView = new ShareView().share(event);
       $('body').append(shareView.el);
+    },
+
+    redirectTo404: function() {
+      window.location = '/404';
     },
 
   });
