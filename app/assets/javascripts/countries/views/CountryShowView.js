@@ -63,17 +63,20 @@ define([
       {
         'Regions/update': function(value) {
           this.region = value;
-          if(this.region != 0){
-            $('#first-option-region-select').html('The whole country');
-            this.getDataRegions().then(function(results) {
-              this.data = results;
-            }.bind(this));
+          var request;
+          var firstOptionSelect;
+          if (this.region !== 0) {
+            firstOptionSelect = 'The whole country';
+            request = this.getDataRegions();
           } else {
-            $('#first-option-region-select').html('Select a jurisdiction');
-            this.getData(false).then(function(results) {
-              this.data = results;
-            }.bind(this));
+            firstOptionSelect = 'Select a jurisdiction';
+            request = this.getData(false);
           }
+
+          $('#first-option-region-select').html(firstOptionSelect);
+          request.then(function(results) {
+            this.data = results;
+          }.bind(this));
         }
       },
     ],
@@ -94,17 +97,17 @@ define([
       this.cache();
       this.render();
 
-      if(this.region != 0){
-        this.getDataRegions().then(function(results) {
-          this.data = results;
-          this.start();
-        }.bind(this));
+      var request;
+      if (this.region != 0) {
+        request = this.getDataRegions();
       } else {
-        this.getData(false).then(function(results) {
-          this.data = results;
-          this.start();
-        }.bind(this));
+        request = this.getData(false);
       }
+      request.then(function(results) {
+        this.data = results;
+        this.start();
+      }.bind(this));
+
       new SourceWindowView();
     },
 

@@ -14,6 +14,11 @@ class CountriesController < ApplicationController
   def show
     @currentNavigation = '.shape-countries'
     @country_iso = params[:id]
+    @country = find_by_iso(params[:id])
+
+    if not(@country.present?)
+      redirect_to countries_url
+    end
   end
 
   def overview
