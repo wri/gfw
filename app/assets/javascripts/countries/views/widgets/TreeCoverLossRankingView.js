@@ -64,82 +64,50 @@ define([
     _setRank: function() {
       var isoIndex = 0;
       var item = null;
-      if(this.region === 0) {
-        for (var x = 0; x < this.data.length; x++) {
-          item = this.data[x];
 
-          if (item.iso === this.iso) {
-            isoIndex = x;
-            break;
-          }
-        }
-      } else {
-        for (var x = 0; x < this.data.length; x++) {
-          item = this.data[x];
-          if (item.adm1 === parseInt(this.region)) {
-            isoIndex = x;
-            break;
-          }
+      for (var x = 0; x < this.data.length; x++) {
+        item = this.data[x];
+
+        if ((this.region === 0 && item.iso === this.iso) ||
+          item.adm1 === parseInt(this.region)) {
+          isoIndex = x;
+          break;
         }
       }
 
       this.list = [];
 
-      if(this.region === 0) {
-        if (isoIndex > 0) {
-          this.list.push(this.data[isoIndex - 1]);
-          this.list.push(this.data[isoIndex]);
+      if (isoIndex > 0) {
+        this.list.push(this.data[isoIndex - 1]);
+        this.list.push(this.data[isoIndex]);
 
-          if (isoIndex < this.data.length) {
-            this.list.push(this.data[isoIndex + 1]);
-          }
-        } else {
-          this.list.push(this.data[isoIndex]);
+        if (isoIndex < this.data.length) {
           this.list.push(this.data[isoIndex + 1]);
-          this.list.push(this.data[isoIndex + 2]);
         }
       } else {
-        if (isoIndex > 0) {
-          this.list.push(this.data[isoIndex - 1]);
-          this.list.push(this.data[isoIndex]);
-
-          if (isoIndex < this.data.length) {
-            this.list.push(this.data[isoIndex + 1]);
-          }
-        } else {
-          this.list.push(this.data[isoIndex]);
-          this.list.push(this.data[isoIndex + 1]);
-          this.list.push(this.data[isoIndex + 2]);
-        }
+        this.list.push(this.data[isoIndex]);
+        this.list.push(this.data[isoIndex + 1]);
+        this.list.push(this.data[isoIndex + 2]);
       }
 
       this.list.map(function(item, index) {
+        var regionName =  null;
+        var region = null;
         if (this.region === 0 ) {
           var country = _.findWhere(this.countries, { iso: item.iso });
-        }
-        var regionName =  null;
-        if (this.region != 0) {
+          item.name = country.name || item.iso;
+          item.value = ((item.value / 1000) / 1000).toFixed(2).replace('.', ',');
+          item.selected = item.iso === this.iso;
+          this.titleText = 'Tree cover country ranking 2010';
+        } else {
           regionName = _.findWhere(this.dataRegions, { id: item.adm1 });
           regionName = regionName.name;
-        }
-        var region = null;
-        item.index = index + 1;
-        if (this.region === 0) {
-          item.name = country.name || item.iso;
-        } else {
           item.name = regionName;
-        }
-        item.value = ((item.value / 1000) / 1000).toFixed(2).replace('.', ',');
-        if (this.region === 0) {
-          item.selected = item.iso === this.iso;
-        } else {
+          item.value = ((item.value / 1000) / 1000).toFixed(2).replace('.', ',');
           item.selected = item.adm1 === parseInt(this.region);
-        }
-        if (this.region != 0) {
           this.titleText = 'Regions ranking';
-        } else {
-          this.titleText = 'Tree cover country ranking 2010';
         }
+        item.index = index + 1;
         return item;
       }.bind(this));
     },
