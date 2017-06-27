@@ -104,12 +104,8 @@ define([
         request = this.getData(false);
       }
       request.then(function(results) {
-        if (Object.keys(results).length > 0) {
-          this.data = results;
-          this.start();
-        } else {
-          this.redirectTo404();
-        }
+        this.data = results;
+        this.start();
       }.bind(this));
 
       new SourceWindowView();
@@ -255,10 +251,6 @@ define([
     shareOpen: function(event){
       var shareView = new ShareView().share(event);
       $('body').append(shareView.el);
-    },
-
-    redirectTo404: function() {
-      window.location = '/404';
     },
 
   });
