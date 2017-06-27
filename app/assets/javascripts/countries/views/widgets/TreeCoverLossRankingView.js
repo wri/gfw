@@ -49,6 +49,7 @@ define([
       View.prototype.initialize.apply(this);
       this.iso = params.iso;
       this.region = params.region;
+      this._addRegions();
       this._getData().done(function(data) {
         this.data = data;
         this._initWidget();
@@ -62,35 +63,83 @@ define([
 
     _setRank: function() {
       var isoIndex = 0;
-      for (var x = 0; x < this.data.length; x++) {
-        var item = this.data[x];
+      var item = null;
+      if(this.region === 0) {
+        for (var x = 0; x < this.data.length; x++) {
+          item = this.data[x];
 
-        if (item.iso === this.iso) {
-          isoIndex = x;
-          break;
+          if (item.iso === this.iso) {
+            isoIndex = x;
+            break;
+          }
+        }
+      } else {
+        for (var x = 0; x < this.data.length; x++) {
+          item = this.data[x];
+          if (item.adm1 === parseInt(this.region)) {
+            isoIndex = x;
+            break;
+          }
         }
       }
 
       this.list = [];
-      if (isoIndex > 0) {
-        this.list.push(this.data[isoIndex - 1]);
-        this.list.push(this.data[isoIndex]);
 
-        if (isoIndex < this.data.length) {
+      if(this.region === 0) {
+        if (isoIndex > 0) {
+          this.list.push(this.data[isoIndex - 1]);
+          this.list.push(this.data[isoIndex]);
+
+          if (isoIndex < this.data.length) {
+            this.list.push(this.data[isoIndex + 1]);
+          }
+        } else {
+          this.list.push(this.data[isoIndex]);
           this.list.push(this.data[isoIndex + 1]);
+          this.list.push(this.data[isoIndex + 2]);
         }
       } else {
-        this.list.push(this.data[isoIndex]);
-        this.list.push(this.data[isoIndex + 1]);
-        this.list.push(this.data[isoIndex + 2]);
+        if (isoIndex > 0) {
+          this.list.push(this.data[isoIndex - 1]);
+          this.list.push(this.data[isoIndex]);
+
+          if (isoIndex < this.data.length) {
+            this.list.push(this.data[isoIndex + 1]);
+          }
+        } else {
+          this.list.push(this.data[isoIndex]);
+          this.list.push(this.data[isoIndex + 1]);
+          this.list.push(this.data[isoIndex + 2]);
+        }
       }
 
       this.list.map(function(item, index) {
-        var country = _.findWhere(this.countries, { iso: item.iso });
+        if (this.region === 0 ) {
+          var country = _.findWhere(this.countries, { iso: item.iso });
+        }
+        var regionName =  null;
+        if (this.region != 0) {
+          regionName = _.findWhere(this.dataRegions, { id: item.adm1 });
+          regionName = regionName.name;
+        }
+        var region = null;
         item.index = index + 1;
-        item.name = country.name || item.iso;
+        if (this.region === 0) {
+          item.name = country.name || item.iso;
+        } else {
+          item.name = regionName;
+        }
         item.value = ((item.value / 1000) / 1000).toFixed(2).replace('.', ',');
-        item.selected = item.iso === this.iso;
+        if (this.region === 0) {
+          item.selected = item.iso === this.iso;
+        } else {
+          item.selected = item.adm1 === parseInt(this.region);
+        }
+        if (this.region === 0) {
+          if (item.selected) {
+            this.selectedName = country.name;
+          }
+        }
         return item;
       }.bind(this));
     },
@@ -100,7 +149,7 @@ define([
       var data = {};
 
       var url = API + new UriTemplate(QUERY_TOTAL_LOSS).fillFromObject({
-        dataset: DATASET_LOSS, region: this.region === 0 ? 'GROUP BY iso' : 'AND adm1 = '+this.region+' GROUP BY iso, adm1'
+        dataset: DATASET_LOSS, region: this.region === 0 ? 'GROUP BY iso' : 'AND iso = \''+ this.iso +'\' GROUP BY iso, adm1'
       });
 
       CountryService.getCountriesInfo({
@@ -117,14 +166,28 @@ define([
           });
       }.bind(this))
       .error(function(error) {
-        console.warn(error);
       }.bind(this))
       return $promise;
     },
 
+    _addRegions: function(country) {
+      this.dataRegions = [];
+      CountryService.getRegionsList({ iso: this.iso })
+        .then(function(results) {
+          for ( var i = 0; i < results.length; i++) {
+            this.dataRegions.push({
+              name: results[i].name_1,
+              id: results[i].id_1,
+              selected: results[i].id_1 === parseInt(this.region),
+            });
+          }
+        }.bind(this))
+    },
+
     render: function() {
       this.$el.html(this.template({
-        data: this.list
+        data: this.list,
+        selectedName: this.selectedName
       }));
       this.$el.removeClass('-loading');
     }
