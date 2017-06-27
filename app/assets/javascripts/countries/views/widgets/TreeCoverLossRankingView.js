@@ -116,11 +116,7 @@ define([
           item.data.name = country.name || item.data.iso;
           item.data.value = ((item.data.value / 1000) / 1000).toFixed(2).replace('.', ',');
           item.data.selected = item.data.iso === this.iso;
-
-          if(index > 0) {
-            item.index = item.index + 1;
-          }
-
+          if(index > 0) { item.index = item.index + 1; }
           this.titleText = 'Tree cover country ranking 2010';
         } else {
           regionName = _.findWhere(this.dataRegions, { id: item.data.adm1 });
@@ -128,14 +124,9 @@ define([
           item.data.name = regionName;
           item.data.value = ((item.data.value / 1000) / 1000).toFixed(2).replace('.', ',');
           item.data.selected = item.data.adm1 === parseInt(this.region);
-
-          if(index > 0) {
-            item.index = item.index + 1;
-          }
-
+          if(index > 0) { item.index = item.index + 1; }
           this.titleText = 'Regions ranking';
         }
-        item.data.index = index + 1;
         return item;
       }.bind(this));
     },
