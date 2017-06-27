@@ -78,36 +78,64 @@ define([
       this.list = [];
 
       if (isoIndex > 0) {
-        this.list.push(this.data[isoIndex - 1]);
-        this.list.push(this.data[isoIndex]);
+        this.list.push({
+          data:this.data[isoIndex - 1],
+          index: isoIndex,
+        });
+        this.list.push({
+          data: this.data[isoIndex],
+          index: isoIndex,
+        });
 
         if (isoIndex < this.data.length) {
-          this.list.push(this.data[isoIndex + 1]);
+          this.list.push({
+            data: this.data[isoIndex + 1],
+            index: isoIndex + 1
+          });
         }
       } else {
-        this.list.push(this.data[isoIndex]);
-        this.list.push(this.data[isoIndex + 1]);
-        this.list.push(this.data[isoIndex + 2]);
+        this.list.push({
+          data: this.data[isoIndex],
+          index: isoIndex
+        });
+        this.list.push({
+          data: this.data[isoIndex],
+          index: isoIndex + 1
+        });
+        this.list.push({
+          data: this.data[isoIndex],
+          index: isoIndex + 2
+        });
       }
 
       this.list.map(function(item, index) {
         var regionName =  null;
         var region = null;
         if (this.region === 0 ) {
-          var country = _.findWhere(this.countries, { iso: item.iso });
-          item.name = country.name || item.iso;
-          item.value = ((item.value / 1000) / 1000).toFixed(2).replace('.', ',');
-          item.selected = item.iso === this.iso;
+          var country = _.findWhere(this.countries, { iso: item.data.iso });
+          item.data.name = country.name || item.data.iso;
+          item.data.value = ((item.data.value / 1000) / 1000).toFixed(2).replace('.', ',');
+          item.data.selected = item.data.iso === this.iso;
+
+          if(index > 0) {
+            item.index = item.index + 1;
+          }
+
           this.titleText = 'Tree cover country ranking 2010';
         } else {
-          regionName = _.findWhere(this.dataRegions, { id: item.adm1 });
+          regionName = _.findWhere(this.dataRegions, { id: item.data.adm1 });
           regionName = regionName.name;
-          item.name = regionName;
-          item.value = ((item.value / 1000) / 1000).toFixed(2).replace('.', ',');
-          item.selected = item.adm1 === parseInt(this.region);
+          item.data.name = regionName;
+          item.data.value = ((item.data.value / 1000) / 1000).toFixed(2).replace('.', ',');
+          item.data.selected = item.data.adm1 === parseInt(this.region);
+
+          if(index > 0) {
+            item.index = item.index + 1;
+          }
+
           this.titleText = 'Regions ranking';
         }
-        item.index = index + 1;
+        item.data.index = index + 1;
         return item;
       }.bind(this));
     },

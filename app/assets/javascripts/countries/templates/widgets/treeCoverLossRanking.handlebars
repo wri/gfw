@@ -6,8 +6,8 @@
         {{#each data}}
           <div class="item">
             <div class="number">{{index}}</div>
-            <div class="name">{{name}}</div>
-            <div class="value{{#if selected }} -selected{{/if}}">{{value}}<span class="unit">Mha</span></div>
+            <div class="name">{{data.name}}</div>
+            <div class="value{{#if data.selected }} -selected{{/if}}">{{data.value}}<span class="unit">Mha</span></div>
           </div>
         {{/each}}
       </div>
