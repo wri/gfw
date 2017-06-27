@@ -40,6 +40,7 @@ define([
         $(this.map).removeClass('stick');
         $(this.map).addClass('absolute');
         $(this.widgets).addClass('stick');
+        $('.country-page-legend').addClass('-bottom');
       } else {
         if (y >= this.top) {
           $(this.map).removeClass('absolute');
@@ -47,6 +48,7 @@ define([
           $(this.zoomControl).removeClass('-top');
           this.$dashboard.removeClass('relative');
           $(this.widgets).addClass('stick');
+          $('.country-page-legend').removeClass('-bottom');
         }
         else {
           $(this.zoomControl).addClass('-top');
