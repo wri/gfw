@@ -150,6 +150,10 @@ define([
         p.dates.dateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
       }
 
+      if (p.slug === 'forma250GFW') {
+        p.alerts.totalAlerts = this.roundNumber(results.alertCounts || 0);
+      }
+
       return p;
     },
 

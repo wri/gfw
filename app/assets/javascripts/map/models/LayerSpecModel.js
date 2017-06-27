@@ -22,7 +22,8 @@ define([
       "grump2000",
       "mex_forest_zoning_cat",
       "mex_forest_zoning_subcat",
-      //FOREST/LAND COVER
+      //FOREST/LAND COVER CONTEXTUAL LAYER
+      "forma_coverage",
       "forest2000",
       "per_minam_tree_cover",
       "cod_primary_forest_wgs",
@@ -155,8 +156,6 @@ define([
       "gfw_landsat_alerts_coverage",
       "glad_coverage",
       "terraicanvas_cover",
-      "forma_cover",
-      "forma_250_cover",
       "imazon_cover",
       "gran_chaco_extent",
       // FOREST CHANGE
@@ -165,7 +164,6 @@ define([
       "terrailoss",
       "viirs_fires_alerts",
       "imazon",
-      "forma",
       "peru_forma_250",
       "brazil_forma_250",
       "laos_forma_250",
@@ -179,7 +177,9 @@ define([
       "umd_as_it_happens_per",
       "umd_as_it_happens_idn",
       "umd_as_it_happens_cog",
-      "places_to_watch"
+      "places_to_watch",
+      'forma_month_3',
+      'forma_activity'
     ],
 
     categoryOrder: [

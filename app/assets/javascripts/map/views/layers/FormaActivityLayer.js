@@ -1,35 +1,35 @@
 /**
- * The Fires layer module.
+ * Forma activity layer module.
  *
- * @return FiresLayer class (extends CartoDBLayerClass)
+ * @return FormaActivity class (extends CartoDBLayerClass)
  */
 define([
   'underscore',
   'moment',
   'uri',
   'abstract/layer/CartoDBLayerClass',
-  'text!map/cartocss/viirs.cartocss',
-  'map/presenters/layers/FiresLayerPresenter',
-  'map/helpers/timelineDatesHelper'
-], function(_, moment, UriTemplate, CartoDBLayerClass, ViirsCarto, Presenter, DatesHelper) {
+  'map/presenters/layers/FormaActivityLayerPresenter',
+  'map/helpers/timelineDatesHelper',
+  'text!map/cartocss/FormaActivity.cartocss'
+], function(_, moment, UriTemplate, CartoDBLayerClass, Presenter, DatesHelper, FormaDailyCartocss) {
 
   'use strict';
-
-  var ViirsLayer = CartoDBLayerClass.extend({
+  var FormaActivityLayer = CartoDBLayerClass.extend({
     options: {
-      sql: "SELECT the_geom_webmercator, \'{tableName}\' as tablename,\'{tableName}\' AS layer, (SUBSTR(acq_time, 1, 2) || \':\' || SUBSTR(acq_time, 3, 4)) as acq_time,  COALESCE(to_char(acq_date, \'DD Mon, YYYY\')) as acq_date, confidence, bright_ti4 brightness, longitude, latitude FROM {tableName} WHERE acq_date >= \'{year}-{month}-{day}\' AND confidence != 'low'",
-      interactivity: 'acq_time, acq_date, confidence, brightness, longitude, latitude',
-      cartocss: ViirsCarto,
-      infowindow: true
+      sql: 'SELECT cartodb_id, longitude, latitude, activity, the_geom_webmercator, \'{tableName}\' as tablename,\'{tableName}\' AS layer, COALESCE(to_char(acq_date, \'DD Mon, YYYY\')) as acq_date FROM {tableName} WHERE acq_date >= \'{year}-{month}-{day}\'',
+      infowindow: true,
+      analysis: false,
+      cartocss: FormaDailyCartocss,
+      interactivity: 'cartodb_id, acq_date, longitude, latitude'
     },
 
     init: function(layer, options, map) {
       _.bindAll(this, 'setCurrentDate');
       this.presenter = new Presenter(this);
 
-      // Default to 24 hours
+      // Default to 48 hours
       var currentDate = options.currentDate ||
-        [moment().subtract(24, 'hours'), moment()];
+        [moment().subtract(2, 'days').utc(), moment()];
       this.setCurrentDate(DatesHelper.getRangeForDates(currentDate));
 
       this._super(layer, options, map);
@@ -56,5 +56,6 @@ define([
     }
   });
 
-  return ViirsLayer;
+  return FormaActivityLayer;
+
 });
