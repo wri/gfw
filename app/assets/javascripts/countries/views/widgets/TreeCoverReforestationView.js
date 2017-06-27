@@ -45,77 +45,10 @@ define([
     },
 
     render: function() {
-      var value = 0;
-      var unitMeasure = 100;
-      var iconsNumber = 0;
-      var dataTemplate = [];
-      var dataTemplateCountry = [];
-
-
-      var countryOriginal = _.findWhere(this.data, {iso: this.iso});
-      if(countryOriginal) {
-        var countryValue = countryOriginal.reforestation_rate;
-        var unitMeasure;
-        var unitReference = 1000;
-        for (var i = 1; i <= 10; i++) {
-          var limit = unitReference * i;
-          if (countryValue <= limit && countryValue >= limit - unitReference) {
-            unitMeasure = limit / 10;
-          }
-        }
-
-        for (var i = 0; i < this.data.length; i++) {
-          value = Math.round(this.data[i].reforestation_rate);
-          iconsNumber = value / unitMeasure;
-          dataTemplate.push({
-            hasData: value || false,
-            value: value,
-            index: i,
-            position: i + 1,
-            unit: 'thousand',
-            name: this.data[i].name,
-            icons: {
-              number: _.range(Math.floor(iconsNumber)),
-              percentage: iconsNumber % 1
-            },
-            iso: this.data[i].iso
-          })
-        }
-        var country = _.findWhere(dataTemplate, {iso: this.iso});
-        var countryPosition = country.index;
-        switch (countryPosition) {
-          case 0:
-            dataTemplateCountry[0] = dataTemplate[countryPosition];
-            dataTemplateCountry[1] = dataTemplate[countryPosition + 1];
-            dataTemplateCountry[2] = dataTemplate[countryPosition + 2];
-            break;
-          case dataTemplate.length - 1:
-            dataTemplateCountry[0] = dataTemplate[countryPosition - 2];
-            dataTemplateCountry[1] = dataTemplate[countryPosition - 1];
-            dataTemplateCountry[2] = dataTemplate[countryPosition];
-            break;
-          default:
-            dataTemplateCountry[0] = dataTemplate[countryPosition - 1];
-            dataTemplateCountry[1] = dataTemplate[countryPosition];
-            dataTemplateCountry[2] = dataTemplate[countryPosition + 1];
-        }
-
-        this.$el.html(this.template({
-          data: dataTemplateCountry,
-          unitMeasure: unitMeasure,
-          totalReforestation: this.totalCountry,
-          unitTotal: 'thousand'
-        }));
-      } else {
-        this.$el.html(this.template({
-          data: null,
-          unitMeasure: null,
-          totalReforestation: null,
-          unitTotal: null
-        }));
-      }
-
-      document.getElementById('widget-tree-cover-reforestation').classList.remove('-loading');
+      this.$el.html(this.template({
+        totalReforestation: this.totalCountry,
+      }));
+      $('#widget-tree-cover-reforestation').removeClass('-loading');
     },
 
     _getData: function() {
