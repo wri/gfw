@@ -31,7 +31,6 @@ define([
       this.iso = params.iso;
       this.region = params.region;
       this.countryData = params.countryData;
-      this.render();
       this.cache();
       this.addRegions(params.iso);
     },
@@ -52,7 +51,7 @@ define([
             }
           }
           this.regions = data;
-          this.renderRegions();
+          this.render();
         }.bind(this))
     },
 
@@ -62,15 +61,24 @@ define([
       this.trigger('updateUrl');
     },
 
-    renderRegions: function() {
-      this.$regionField.html(this.template({
-        placeholder: 'Select a jurisdiction',
-        regions: this.regions
-      }));
+    getData: function(showArea) {
+      return CountryService.showCountry(
+        {
+           iso: this.iso,
+           showArea: showArea
+         }
+       );
     },
 
     render: function() {
-      this.$el.html(this.template(this.countryData));
+      this.getData(false).then(function(results) {
+        this.dataCountry = results;
+        this.$el.html(this.template({
+          name: this.dataCountry.name,
+          placeholder: 'Select a jurisdiction',
+          regions: this.regions
+        }));
+      }.bind(this));
     },
   });
   return CountryHeaderView;
