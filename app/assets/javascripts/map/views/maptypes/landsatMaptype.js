@@ -1,7 +1,13 @@
 /**
  * Landsat Maptype.
  */
-define([], function () {
+define([
+  'bluebird',
+  'map/services/FormaService',
+], function (
+  Promise,
+  LandsatService
+) {
 
   'use strict';
 
@@ -33,6 +39,16 @@ define([], function () {
         }
         return url;
       },
+    };
+
+    var _getLayer = function() {
+      return new Promise(function(resolve) {
+        LandsatService.getTileUrl()
+          .then(function(data) {
+            console.log(data);
+            resolve(true);
+          }.bind(this));
+      }.bind(this));
     };
 
     return new google.maps.ImageMapType(config);
