@@ -146,8 +146,9 @@ define([
           }
         };
 
-        this.abortRequest(GET_REQUEST_REGIONS_LIST_ID);
-        this.currentRequest[GET_REQUEST_REGIONS_LIST_ID] = ds.request(requestConfig);
+        if (!this.currentRequest[GET_REQUEST_REGIONS_LIST_ID]) {
+          this.currentRequest[GET_REQUEST_REGIONS_LIST_ID] = ds.request(requestConfig);
+        }
       }.bind(this));
     },
 
