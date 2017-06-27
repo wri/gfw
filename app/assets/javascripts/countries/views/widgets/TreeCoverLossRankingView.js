@@ -135,10 +135,10 @@ define([
         } else {
           item.selected = item.adm1 === parseInt(this.region);
         }
-        if (this.region === 0) {
-          if (item.selected) {
-            this.selectedName = country.name;
-          }
+        if (this.region != 0) {
+          this.titleText = 'Regions ranking';
+        } else {
+          this.titleText = 'Tree cover country ranking 2010';
         }
         return item;
       }.bind(this));
@@ -187,7 +187,7 @@ define([
     render: function() {
       this.$el.html(this.template({
         data: this.list,
-        selectedName: this.selectedName
+        titleText: this.titleText
       }));
       this.$el.removeClass('-loading');
     }
