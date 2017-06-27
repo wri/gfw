@@ -1,7 +1,6 @@
 /**
- * The Forma Coverage layer module for use on canvas.
  *
- * @return FormaCoverLayer class (extends CanvasLayerClass)
+ * @return FormaCoverageLayer class (extends ImageLayerClass)
  */
 define([
   'abstract/layer/CartoDBLayerClass',
@@ -9,7 +8,7 @@ define([
 
   'use strict';
 
-  var FormaCoverLayer = CartoDBLayerClass.extend({
+  var FormaCoverageLayer = CartoDBLayerClass.extend({
 
     options: {
       sql: 'SELECT *, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName}'
@@ -17,6 +16,6 @@ define([
 
   });
 
-  return FormaCoverLayer;
+  return FormaCoverageLayer;
 
 });

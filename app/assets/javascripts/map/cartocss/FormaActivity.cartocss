@@ -1,0 +1,24 @@
+#forma_activity {
+  marker-fill: #e9bd15;
+  marker-width: 1.5;
+  marker-line-color: #FFF;
+  marker-line-width: 1;
+  marker-line-opacity: 1;
+  marker-opacity: 0.8;
+  marker-comp-op: darken;
+  marker-type: ellipse;
+  marker-placement: point;
+  marker-allow-overlap: true;
+  marker-clip: false;
+  marker-multi-policy: largest;
+}
+
+#forma_activity[zoom>6]{ marker-width: 3; }
+#forma_activity[zoom>8]{ marker-width: 6; }
+#forma_activity[zoom>11]{ marker-width: 13; }
+#forma_activity[zoom>12]{ marker-width: 25; }
+#forma_activity[zoom>13]{ marker-width: 50; }
+#forma_activity[zoom>14]{ marker-width: 100; }
+#forma_activity[zoom>15]{ marker-width: 200; }
+#forma_activity[zoom>16]{ marker-width: 400; }
+#forma_activity[zoom>17]{ marker-width: 800; }

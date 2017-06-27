@@ -1,25 +1,25 @@
 /**
- * The FiresTimeline.
+ * The MangroveTimeline.
  *
- * @return FiresTimeline class (extends TimelineBtnClass)
+ * @return MangroveTimeline class (extends TimelineBtnClass)
  */
 define([
   'underscore', 'moment',
   'abstract/timeline/TimelineBtnClass',
   'map/presenters/TimelineClassPresenter',
-  'map/helpers/timelineDatesHelper'
+  'map/services/MangroveDateService'
 ], function(_, moment, TimelineBtnClass, Presenter, DatesHelper) {
 
   'use strict';
 
-  var FiresTimeline = TimelineBtnClass.extend({
+  var MangroveTimeline = TimelineBtnClass.extend({
 
     initialize: function(layer, currentDate) {
       this.presenter = new Presenter(this);
 
       this.options = {
         dateRange: [moment().subtract(7, 'days'), moment()],
-        width: 550,
+        width: 300,
         tickWidth: 110,
         tipsy: false
       };
@@ -30,7 +30,7 @@ define([
       currentDate = DatesHelper.getRangeForDates(currentDate);
 
 
-      FiresTimeline.__super__.initialize.apply(this, [layer, currentDate]);
+      MangroveTimeline.__super__.initialize.apply(this, [layer, currentDate]);
     },
 
     /**
@@ -43,5 +43,5 @@ define([
     }
   });
 
-  return FiresTimeline;
+  return MangroveTimeline;
 });

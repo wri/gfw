@@ -2,8 +2,10 @@ define([
   'Class',
   'uri',
   'bluebird',
+  'helpers/geojsonUtilsHelper',
+  'map/services/GeostoreService',
   'map/services/DataService'
-], function(Class, UriTemplate, Promise, ds) {
+], function(Class, UriTemplate, Promise, geojsonUtilsHelper, GeostoreService, ds) {
 
   'use strict';
 
@@ -24,45 +26,47 @@ define([
     get: function(status) {
       return new Promise(function(resolve, reject) {
         this.analysis = this.buildAnalysisFromStatus(status);
-        var url = this.getUrl();
+        this.getUrl().then(function(data) {
 
-        ds.define(GET_REQUEST_ID, {
-          cache: {type: 'persist', duration: 1, unit: 'days'},
-          url: APIURL + url,
-          type: 'GET',
-          dataType: 'json',
-          contentType: 'application/json; charset=utf-8',
-          decoder: function ( data, status, xhr, success, error ) {
-            if ( status === "success" ) {
-              success( data, xhr );
-            } else if ( status === "fail" || status === "error" ) {
-              error( JSON.parse(xhr.responseText) );
-            } else if ( status === "abort") {
-
-            } else {
-              error( JSON.parse(xhr.responseText) );
+          ds.define(GET_REQUEST_ID, {
+            cache: false,
+            url: APIURL + data.url,
+            type: 'GET',
+            dataType: 'json',
+            decoder: function ( data, status, xhr, success, error ) {
+              if ( status === "success" ) {
+                success( data, xhr );
+              } else if ( status === "fail" || status === "error" ) {
+                error(xhr.responseText);
+              } else if ( status !== "abort") {
+                error(xhr.responseText);
+              }
             }
-          }
-        });
+          });
 
-        var requestConfig = {
-          resourceId: GET_REQUEST_ID,
-          success: function(data, status) {
-            resolve(data,status);
-          },
-          error: function(errors) {
-            reject(errors);
-          }
-        };
+          var requestConfig = {
+            resourceId: GET_REQUEST_ID,
+            success: function(response, status) {
+              resolve(response, status);
+            }.bind(this),
+            error: function(errors) {
+              reject(errors);
+            }.bind(this)
+          };
 
-        this.abortRequest();
-        this.currentRequest = ds.request(requestConfig);
+          this.abortRequest();
+          this.currentRequest = ds.request(requestConfig);
+        }.bind(this));
 
       }.bind(this));
     },
 
     getUrl: function() {
-      return new UriTemplate(APIURLS[this.analysis.type]).fillFromObject(this.analysis);
+      return new Promise(function(resolve, reject) {
+        resolve({
+          url: UriTemplate(APIURLS[this.analysis.type]).fillFromObject(this.analysis)
+        });
+      }.bind(this));
     },
 
     buildAnalysisFromStatus: function(status) {
