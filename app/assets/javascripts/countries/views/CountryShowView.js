@@ -12,7 +12,6 @@ define([
   'countries/views/widgets/TreeCoverView',
   'countries/views/widgets/TreeCoverLossRankingView',
   'countries/views/widgets/AnnualTreeCoverLossView',
-  'countries/views/widgets/TreeCoverGainView',
   'countries/views/widgets/TreeCoverReforestationView',
   'countries/views/widgets/TreeCoverLossView',
   'countries/views/widgets/TreeCoverLossAlertsView',
@@ -36,7 +35,6 @@ define([
   TreeCoverView,
   TreeCoverLossRankingView,
   AnnualTreeCoverLossView,
-  TreeCoverGainView,
   TreeCoverReforestationView,
   TreeCoverLossView,
   TreeCoverLossAlertsView,
@@ -213,10 +211,6 @@ define([
     },
 
     initCoverGain: function() {
-      this.modules.treeCoverGain.push(new TreeCoverGainView({
-        iso: this.iso,
-        region: this.region,
-      }));
       this.modules.treeCoverGain.push(new TreeCoverReforestationView({
         iso: this.iso,
         region: this.region,
