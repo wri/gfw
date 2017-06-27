@@ -253,8 +253,21 @@ define([
 
     _getLayerDataSection: function (section) {
       var data;
+      $('.onoffswitch').css('background-color', '#ddd');
       switch (section) {
+        case 'tree-cover-snapshot':
+        var color = $('.'+section+'-switch').attr('data-color');
+        $('.'+section+'-switch').css('background-color', color);
+          data = {
+            slug: 'forest2000',
+            options: {
+              threshold: this.modules.treeCoverLoss[0].status.attributes.threshValue
+            }
+          };
+        break;
         case 'cover-loss':
+        var color = $('.'+section+'-switch').attr('data-color');
+        $('.'+section+'-switch').css('background-color', color);
           data = {
             slug: 'terrailoss',
             options: {
@@ -267,18 +280,24 @@ define([
           };
           break;
         case 'cover-gain':
+        var color = $('.'+section+'-switch').attr('data-color');
+        $('.'+section+'-switch').css('background-color', color);
           data = {
             slug: 'forestgain',
             options: {}
           };
           break;
         case 'cover-loss-alerts':
+        var color = $('.'+section+'-switch').attr('data-color');
+        $('.'+section+'-switch').css('background-color', color);
           data = {
             slug: this.modules.treeCoverLossAlerts[0].status.attributes.layerLink,
             options: {}
           };
           break;
         case 'fires':
+        var color = $('.'+section+'-switch').attr('data-color');
+        $('.'+section+'-switch').css('background-color', color);
           data = {
             slug: 'viirs_fires_alerts',
             options: {

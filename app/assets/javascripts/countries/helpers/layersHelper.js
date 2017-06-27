@@ -7,6 +7,7 @@ define([
   'map/views/layers/ForestGainLayer',
   'map/views/layers/GladLayer',
   'map/views/layers/TerraiCanvasLayer',
+  'map/views/layers/Forest2000Layer',
   'map/views/layers/ViirsLayer'
 ], function(
   // Layer Views
@@ -14,6 +15,7 @@ define([
   ForestGainLayer,
   GladLayer,
   TerraiCanvasLayer,
+  Forest2000,
   ViirsLayer
 ) {
 
@@ -31,6 +33,9 @@ define([
     },
     terrailoss :{
       view: TerraiCanvasLayer,
+    },
+    forest2000 :{
+      view: Forest2000,
     },
     viirs_fires_alerts :{
       view: ViirsLayer,
