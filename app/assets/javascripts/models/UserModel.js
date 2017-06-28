@@ -14,6 +14,12 @@ define([
       }
     },
 
+    setLanguageIfEmpty: function(language) {
+      if (_.isEmpty(this.get('language'))) {
+        this.set('language', language);
+      }
+    },
+
     isLoggedIn: function() {
       return !_.isEmpty(this.attributes);
     },
