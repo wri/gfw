@@ -61,8 +61,6 @@ define([
         .catch(function(e) {
           this.renderTemplate(false);
         }.bind(this));
-
-      return this;
     },
 
     renderTemplate: function (loggedIn) {
