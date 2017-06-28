@@ -52,15 +52,28 @@ define([
     },
 
     render: function(){
+      this.presenter.user.checkLogged()
+        .then(function() {
+          this.renderTemplate(true);
+        }.bind(this))
+
+        .catch(function(e) {
+          this.renderTemplate(false);
+        }.bind(this));
+
+      return this;
+    },
+
+    renderTemplate: function (loggedIn) {
       var userLang = this.presenter.user.getLanguage();
       var languagesList = languagesHelper.getListSelected(userLang);
       var dataset = this.presenter.subscription &&
-        this.presenter.subscription.formattedTopic() ?
+      this.presenter.subscription.formattedTopic() ?
         this.presenter.subscription.formattedTopic().long_title : '';
 
       this.$el.html(this.template({
         apiHost: window.gfw.config.GFW_API_AUTH,
-        loggedIn: this.presenter.user.isLoggedIn(),
+        loggedIn: loggedIn,
         email: this.presenter.user.get('email'),
         date: moment().format('MMM D, YYYY'),
         languages: languagesList,
@@ -69,7 +82,6 @@ define([
 
       this.cache();
       this.renderChosen();
-      return this;
     },
 
     renderDatasets: function(data) {
