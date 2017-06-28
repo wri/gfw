@@ -160,7 +160,12 @@ define([
 
       // Set email and save it in the user Model
       this.user.setEmailIfEmpty(this.subscription.get('resource').content);
-      this.user.save({ email: this.user.attributes.email }, { patch: true });
+      this.user.setLanguageIfEmpty(this.subscription.get('language'));
+
+      this.user.save({
+        email: this.user.attributes.email,
+        language: this.user.attributes.language
+      }, { patch: true });
 
       this.subscription.save()
           .then(this.onSubscriptionSave.bind(this))
