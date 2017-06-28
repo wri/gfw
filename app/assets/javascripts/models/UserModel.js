@@ -20,10 +20,6 @@ define([
       }
     },
 
-    isLoggedIn: function() {
-      return !_.isEmpty(this.attributes);
-    },
-
     parse: function(response) {
       var attributes = {};
 
