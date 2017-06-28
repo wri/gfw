@@ -66,7 +66,7 @@ define([
       var userLang = this.presenter.user.getLanguage();
       var languagesList = languagesHelper.getListSelected(userLang);
       var dataset = this.presenter.subscription &&
-      this.presenter.subscription.formattedTopic() ?
+        this.presenter.subscription.formattedTopic() ?
         this.presenter.subscription.formattedTopic().long_title : '';
 
       this.$el.html(this.template({
