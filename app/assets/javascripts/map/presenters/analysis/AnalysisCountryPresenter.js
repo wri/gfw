@@ -41,7 +41,10 @@ define([
       }
     })),
 
-    init: function(view) {
+    init: function(view, map, countries) {
+      this.repeat = 0;
+      this.map = map;
+      this.countries = countries;
       this.view = view;
       this._super();
       this.listeners();
@@ -144,7 +147,28 @@ define([
      */
 
      zoomBounds: function(params) {
-      console.log('what?');
+         var p = {"type":"MultiPolygon","coordinates":[[[]]]};
+         var paramsLength = params.coordinates[0].length;
+         var bounds = new google.maps.LatLngBounds();
+         var coords = p.coordinates;
+         var paths = [];
+         for (var i = 0; i < paramsLength; i++) {
+           p.coordinates[0][0].push([params.coordinates[0][i][0], params.coordinates[0][i][1]]);
+         }
+         for (var i = 0; i < coords.length; i++) {
+           for (var j = 0; j < coords[i].length; j++) {
+             var path = [];
+             for (var k = 0; k < coords[i][j].length; k++) {
+               var ll = new google.maps.LatLng(coords[i][j][k]
+                 [1], coords[i][j][k][0]);
+               path.push(ll);
+               bounds.extend(ll);
+             }
+             paths.push(path);
+           }
+         }
+        this.map.fitBounds(bounds);
+        $('.cartodb-infowindow').css('display', 'none');
      },
 
     changeIso: function() {

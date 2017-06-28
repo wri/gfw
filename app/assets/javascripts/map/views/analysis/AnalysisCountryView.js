@@ -10,15 +10,16 @@ define([
   'chosen',
   'turf',
   'mps',
+  'core/View',
   'helpers/geojsonUtilsHelper',
   'map/presenters/analysis/AnalysisCountryPresenter',
   'text!map/templates/analysis/analysis-country.handlebars',
-], function(_, Handlebars, amplify, chosen, turf, mps, geojsonUtilsHelper, Presenter, tpl) {
+], function(_, Handlebars, amplify, chosen, turf, mps, View, geojsonUtilsHelper, Presenter, tpl) {
 
   'use strict';
 
 
-  var AnalysisCountryView = Backbone.View.extend({
+  var AnalysisCountryView = View.extend({
 
     el: '#analysis-country-tab',
 
@@ -33,9 +34,10 @@ define([
     },
 
     initialize: function(map, countries) {
+      View.prototype.initialize.apply(this);
       this.map = map;
       this.countries = countries;
-      this.presenter = new Presenter(this);
+      this.presenter = new Presenter(this, this.map, this.countries);
 
       this.render();
     },
