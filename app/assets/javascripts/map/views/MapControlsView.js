@@ -26,8 +26,6 @@ define([
     }
   });
 
-
-
   var MapControlsView = Backbone.View.extend({
 
     el: '#module-map-controls',
