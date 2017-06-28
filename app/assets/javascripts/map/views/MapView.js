@@ -58,15 +58,6 @@ define([
       },
     ],
 
-    _subscriptions: [
-      // MPS
-      {
-        'Zoom/in': function(params) {
-          console.log('hello');
-        }
-      }
-    ],
-
     /**
      * Constructs a new MapView and its presenter.
      */
