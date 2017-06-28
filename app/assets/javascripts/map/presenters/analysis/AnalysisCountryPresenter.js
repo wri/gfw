@@ -132,12 +132,21 @@ define([
             });
           }
         }
-      }
+      },{
+        'Zoom/in': function(params) {
+          this.zoomBounds(params);
+        }
+      },
     ],
 
     /**
      * LISTENERS
      */
+
+     zoomBounds: function(params) {
+      console.log('what?');
+     },
+
     changeIso: function() {
       var iso = this.status.get('iso');
       var isoDisabled = this.status.get('isoDisabled');
