@@ -26,8 +26,10 @@
           {{#each this}}
             {{#if @first}}
               <span data-category_slug="{{this.category_status}}" class="category-name js-toggle-category" style="color: {{this.category_color}}; border-color: {{this.category_color}};">
-                {{this.category_name}}
-                <em>({{../../layers_length}})</em>
+                <div class="container-title">
+                  {{this.category_name}}
+                  <em>({{../../layers_length}})</em>
+                </div>
               </span>
             {{/if}}
           {{/each}}
@@ -35,9 +37,11 @@
             {{#each this}}
               <li class="layer">
                 <span class="layer-name {{#if this.allowSubscription}}-alerts{{/if}}">
-                  <i class="circle" style="background:{{this.title_color}};"></i>
+                  <svg class="icon-eye" style="fill:{{this.title_color}};"><use xlink:href="#icon-show-layer-map"></use></svg>
                   {{this.title}}
-                  <a href='#' class='layer-close js-layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
+                  {{#if this.allowSubscription}}
+                    <a href="/my_gfw/subscriptions/new?datasets={{this.slug}}" class="alerts" title="Receive forest loss alerts"><svg><use xlink:href="#icon-mail-legend"></use></svg></a>
+                  {{/if}}
                   {{#if this.source_json}}
                     <a href='#' data-source='{{this.source_json}}' class='source js-tooltip' data-description="{{this.subtitle}}"><svg><use xlink:href="#shape-info"></use></svg></a>
                   {{else}}
@@ -45,9 +49,7 @@
                       <a href='#' data-source='{{this.source}}' class='source js-tooltip' data-description="{{this.subtitle}}"><svg><use xlink:href="#shape-info"></use></svg></a>
                     {{/if}}
                   {{/if}}
-                  {{#if this.allowSubscription}}
-                    <a href="/my_gfw/subscriptions/new?datasets={{this.slug}}" class="alerts" title="Receive forest loss alerts"><svg><use xlink:href="#shape-alerts-subscriptions"></use></svg></a>
-                  {{/if}}
+                  <a href='#' class='layer-close js-layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
                 </span>
                 {{#if this.detailsTpl}}
                   {{{this.detailsTpl}}}
@@ -73,12 +75,14 @@
     <h2>Global data</h2>
   {{/if}}
   {{#each categories}}
-    <li class="category {{#if this.closed}}closed{{/if}}"> 
+    <li class="category {{#if this.closed}}closed{{/if}}">
       {{#each this}}
         {{#if @first}}
           <span data-category_slug="{{this.category_status}}" class="category-name js-toggle-category" style="color: {{this.category_color}}; border-color: {{this.category_color}};">
-            {{this.category_name}}
-            <em>({{../../layers_length}})</em>
+            <div class="container-title">
+              {{this.category_name}}
+              <em>({{../../layers_length}})</em>
+            </div>
           </span>
         {{/if}}
       {{/each}}
@@ -86,9 +90,11 @@
         {{#each this}}
           <li class="layer">
             <span class="layer-name {{#if this.allowSubscription}}-alerts{{/if}}">
-              <i class="circle" style="background:{{this.title_color}};"></i>
+                <svg class="icon-eye" style="fill:{{this.title_color}};"><use xlink:href="#icon-show-layer-map"></use></svg>
                 {{this.title}}
-              <a href='#' class='layer-close js-layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
+              {{#if this.allowSubscription}}
+                <a href="/my_gfw/subscriptions/new?datasets={{this.slug}}" class="alerts" title="Receive forest loss alerts"><svg><use xlink:href="#icon-mail-legend"></use></svg></a>
+              {{/if}}
               {{#if this.source_json}}
                 <a href='#' data-source='{{this.source_json}}' data-description="{{this.subtitle}}" class='source js-tooltip'><svg><use xlink:href="#shape-info"></use></svg></a>
               {{else}}
@@ -96,9 +102,7 @@
                   <a href='#' data-source='{{this.source}}' data-description="{{this.subtitle}}" class='source js-tooltip'><svg><use xlink:href="#shape-info"></use></svg></a>
                 {{/if}}
               {{/if}}
-              {{#if this.allowSubscription}}
-                <a href="/my_gfw/subscriptions/new?datasets={{this.slug}}" class="alerts" title="Receive forest loss alerts"><svg><use xlink:href="#shape-alerts-subscriptions"></use></svg></a>
-              {{/if}}
+              <a href='#' class='layer-close js-layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
             </span>
             {{#if this.detailsTpl}}
               {{{this.detailsTpl}}}
