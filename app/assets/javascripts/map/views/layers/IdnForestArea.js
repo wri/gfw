@@ -20,8 +20,8 @@ define([
       cartocss: IdnForestAreaCartocss,
       infowindow: true,
       interactivity: 'cartodb_id, tablename, layer, name, analysis',
-      analysis: true,
-            },
+      analysis: false
+    }
   });
 
   return IdnForestArea;
