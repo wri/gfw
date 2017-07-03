@@ -402,7 +402,7 @@ define([
     },
 
     showTooltip: function(e) {
-      var position = $(e.target).offset();
+      var position = $(e.target).offset(); 
       var top = position.top - 10;
       var left = position.left - 92;
       var text = $(e.target).attr('data-description');
