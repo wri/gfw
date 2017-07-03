@@ -181,6 +181,8 @@ define([
       'click .js-toggle-sublayer': 'toggleLayer',
       'click .js-toggle-layer-option': 'toggleLayerOption',
       'click .js-layer-close' : 'removeLayer',
+      'mouseover .js-tooltip' : 'showTooltip',
+      'mouseleave .js-tooltip' : 'hiddenTooltip',
       'click .js-toggle-threshold' : 'toggleThreshold',
       'click .js-toggle-legend' : 'toogleLegend',
       'click .js-toggle-embed-legend' : 'toogleEmbedLegend',
@@ -393,6 +395,23 @@ define([
       var layerSlug = $(e.currentTarget).data('slug');
       this.presenter.toggleLayer(layerSlug);
       this.removeSublayers(layerSlug);
+    },
+
+    showTooltip: function(e) {
+      var position = $(e.target).offset();
+      var top = position.top - 10;
+      var left = position.left - 92;
+      var text = $(e.target).attr('data-description');
+      if (text != '') {
+        $('body').append('<div class="tooltip-info-legend" id="tooltip-info-legend" style="top:'+top+'px; left:'+left+'px;"><div class="triangle"><span>'+text+'</span><p>Click to see more</p></div></div>');
+      }
+      $('.tooltip-info-legend').css('top', top - $('.tooltip-info-legend').height() - 20);
+    },
+
+    hiddenTooltip: function(e) {
+      if ($('#tooltip-info-legend').length ) {
+        document.getElementById('tooltip-info-legend').remove();
+      }
     },
 
     removeSublayers: function(layerSlug) {
