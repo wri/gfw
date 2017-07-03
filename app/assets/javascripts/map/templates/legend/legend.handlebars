@@ -37,13 +37,12 @@
                 <span class="layer-name {{#if this.allowSubscription}}-alerts{{/if}}">
                   <i class="circle" style="background:{{this.title_color}};"></i>
                   {{this.title}}
-                  {{#if this.subtitle}}<span class="subtitle">{{this.subtitle}}</span>{{/if}}
                   <a href='#' class='layer-close js-layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
                   {{#if this.source_json}}
-                    <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                    <a href='#' data-source='{{this.source_json}}' class='source js-tooltip' data-description="{{this.subtitle}}"><svg><use xlink:href="#shape-info"></use></svg></a>
                   {{else}}
                     {{#if this.source}}
-                      <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                      <a href='#' data-source='{{this.source}}' class='source js-tooltip' data-description="{{this.subtitle}}"><svg><use xlink:href="#shape-info"></use></svg></a>
                     {{/if}}
                   {{/if}}
                   {{#if this.allowSubscription}}
@@ -89,13 +88,12 @@
             <span class="layer-name {{#if this.allowSubscription}}-alerts{{/if}}">
               <i class="circle" style="background:{{this.title_color}};"></i>
                 {{this.title}}
-                {{#if this.subtitle}}<span class="subtitle">{{this.subtitle}}</span>{{/if}}
               <a href='#' class='layer-close js-layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
               {{#if this.source_json}}
-                <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                <a href='#' data-source='{{this.source_json}}' data-description="{{this.subtitle}}" class='source js-tooltip'><svg><use xlink:href="#shape-info"></use></svg></a>
               {{else}}
                 {{#if this.source}}
-                  <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                  <a href='#' data-source='{{this.source}}' data-description="{{this.subtitle}}" class='source js-tooltip'><svg><use xlink:href="#shape-info"></use></svg></a>
                 {{/if}}
               {{/if}}
               {{#if this.allowSubscription}}
