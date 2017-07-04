@@ -106,6 +106,7 @@ define([
       "per_protected_areas",
       // Land USE
       "dam_hotspots",
+      "oil_palm_mills",
       "per_prod_for",
       "concesiones_wrapper",
       "concesiones_forestalesNS",
