@@ -47,6 +47,10 @@ group :production do
   gem 'rails_12factor'
 end
 
+group :test do
+  gem 'rails-controller-testing'
+end
+
 gem 'newrelic_rpm'
 gem 'puma'
 
