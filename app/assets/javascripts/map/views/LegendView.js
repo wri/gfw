@@ -183,6 +183,8 @@ define([
       'click .js-layer-close' : 'removeLayer',
       'mouseover .js-tooltip' : 'showTooltip',
       'mouseleave .js-tooltip' : 'hiddenTooltip',
+      'click .-js-show-layer' : 'showLayer',
+      'click .-js-hidden-layer' : 'hiddenLayer',
       'click .js-toggle-threshold' : 'toggleThreshold',
       'click .js-toggle-legend' : 'toogleLegend',
       'click .js-toggle-embed-legend' : 'toogleEmbedLegend',
@@ -398,7 +400,7 @@ define([
     },
 
     showTooltip: function(e) {
-      var position = $(e.target).offset(); 
+      var position = $(e.target).offset();
       var top = position.top - 10;
       var left = position.left - 92;
       var text = $(e.target).attr('data-description');
@@ -490,14 +492,55 @@ define([
 
       if (!target.hasClass('selected')) {
         var layerSlug = target.data('layer');
-
         radios.removeClass('selected');
         target.addClass('selected');
         this.presenter.toggleLayer(layerSlug);
       }
-    }
+    },
 
+    showLayer: function(e) {
+      var layer = $(e.target).attr('data-slug-hidden');
 
+      _.each(this.$el.find('.layer-info-container'), function(li) {
+        if (layer === $(li).attr('data-slug')) {
+          $(li).removeClass('-desactivate');
+        }
+      });
+
+      _.each(this.$el.find('.-js-show-layer'), function(li) {
+        if (layer === $(li).attr('data-slug-hidden')) {
+          $(li).css('display', 'none');
+        }
+      });
+
+      _.each(this.$el.find('.-js-hidden-layer'), function(li) {
+        if (layer === $(li).attr('data-slug-show')) {
+          $(li).css('display', 'block');
+        }
+      });
+    },
+
+    hiddenLayer: function (e) {
+      var layer = $(e.target).attr('data-slug-show');
+
+      _.each(this.$el.find('.layer-info-container'), function(li) {
+        if (layer === $(li).attr('data-slug')) {
+          $(li).addClass('-desactivate');
+        }
+      });
+
+      _.each(this.$el.find('.-js-show-layer'), function(li) {
+        if (layer === $(li).attr('data-slug-hidden')) {
+          $(li).css('display', 'block');
+        }
+      });
+
+      _.each(this.$el.find('.-js-hidden-layer'), function(li) {
+        if (layer === $(li).attr('data-slug-show')) {
+          $(li).css('display', 'none');
+        }
+      });
+    },
   });
 
   return LegendView;
