@@ -57,7 +57,6 @@
 
   // @ul
   .categories{
-    cursor: pointer;
     > * {
       &:last-child {
         margin-bottom: 0;
@@ -250,12 +249,12 @@
         }
       }
       &:hover{
-        border: 1px solid red;
+        border: 1px solid darken(#AAA, 20%);
         span{
-          color: red;
+          color: darken(#AAA, 20%);
         }
         svg{
-          fill: red;
+          fill: darken(#AAA, 20%);
         }
       }
       svg{
@@ -343,7 +342,6 @@
           }
 
           .alerts,
-          .layer-close,
           .source,
           .canopy-button,
           .onoffswitch,
@@ -387,7 +385,7 @@
         .container-eye-icon {
           cursor: pointer;
           position: absolute;
-          top: -2px;
+          top: -1px;
           left: 0;
 
 
@@ -425,7 +423,7 @@
       }
 
       .layer-sublayer {
-        cursor: pointer;
+        cursor: auto;
         padding: 10px 5px 5px 14px;
         position: relative;
         .onoffswitch {
@@ -456,7 +454,7 @@
   /* Layer details */
   /*****************/
   .layer-details {
-    margin: 8px 0 0 13px;
+    margin: 8px 0 0 20px;
 
     .details-title {
       color: #999;
@@ -496,8 +494,7 @@
     }
 
     .canopy {
-      width: 190px;
-      font-size: 11px;
+      font-size: 12px;
       line-height: 14px;
       span {
         font-weight: 500;
@@ -583,7 +580,7 @@
       display: block;
 
       &:hover {
-        color: lighten($dark,5%);
+        color: darken(#AAA, 20%);;
       }
 
       &.selected {
@@ -601,7 +598,7 @@
         height: 10px;
         top: 5px;
         left: 0;
-        border: 1px solid lighten($dark,10%);
+        border: 1px solid darken(#AAA, 20%);;
         border-radius: 50%;
 
         &:before {
@@ -664,7 +661,7 @@
         border-radius: 50%;
         font-weight: 500;
         &:hover{
-          background: darken(#AAA, 10%);
+          background: darken(#AAA, 20%);
         }
       }
     }
