@@ -184,6 +184,7 @@ define([
       'click .js-layer-close' : 'removeLayer',
       'mouseover .js-tooltip' : 'showTooltip',
       'mouseleave .js-tooltip' : 'hiddenTooltip',
+      'click .js-tooltip' : 'hiddenTooltip',
       'click .-js-show-layer' : 'showLayer',
       'click .-js-hidden-layer' : 'hiddenLayer',
       'click .js-toggle-threshold' : 'toggleThreshold',
@@ -561,7 +562,7 @@ define([
           $(li).css('display', 'none');
         }
       });
-    },
+    }
   });
 
   return LegendView;
