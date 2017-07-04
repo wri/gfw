@@ -82,6 +82,7 @@ define([
   'map/views/layers/MexicanProtectedAreasLayer',
   'map/views/layers/CarbonLayer',
   'map/views/layers/DamHotspotsLayer',
+  'map/views/layers/PalmOilMillsLayer',
   'map/views/layers/ColombiaForestChangeLayer',
   'map/views/layers/UsaConservationEasementsLayer',
   'map/views/layers/UsaLandCoverLayer',
@@ -262,6 +263,7 @@ define([
   MexicanProtectedAreasLayer,
   CarbonLayer,
   DamHotspotsLayer,
+  PalmOilMillsLayer,
   ColombiaForestChangeLayer,
   UsaConservationEasementsLayer,
   UsaLandCoverLayer,
@@ -615,6 +617,9 @@ define([
     },
     dam_hotspots: {
       view: DamHotspotsLayer
+    },
+    oil_palm_mills:{
+      view: PalmOilMillsLayer
     },
     usa_conservation_easements: {
       view: UsaConservationEasementsLayer
