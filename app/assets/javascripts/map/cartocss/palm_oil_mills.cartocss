@@ -1,0 +1,19 @@
+#oil_palm_mills {
+   marker-fill-opacity: 0.9;
+   marker-line-color: #FFF;
+   marker-line-width: 0.5;
+   marker-line-opacity: 1;
+   marker-placement: point;
+   marker-type: ellipse;
+   marker-fill: #b76b07;
+   marker-width: 4;
+   marker-allow-overlap: true;
+
+  [zoom > 5 ][zoom < 9]{
+   marker-width: 10;
+  }
+  [zoom > 8 ]{
+   marker-width: 20;
+  }
+
+}
