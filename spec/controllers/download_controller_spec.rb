@@ -21,7 +21,7 @@ describe DownloadController, type: :controller do
 
       subject {
         post :create_download,
-          {id: iso, email: email, link: download_link, type: type}
+          params: {id: iso, email: email, link: download_link, type: type}
       }
 
       it "sends an email with the download link" do
