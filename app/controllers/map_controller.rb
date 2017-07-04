@@ -1,6 +1,6 @@
 class MapController < ApplicationController
 
-  before_filter :validate_url, :only => [:index, :embed]
+  before_action :validate_url, :only => [:index, :embed]
 
   def index
     @title = 'Interactive Map'
