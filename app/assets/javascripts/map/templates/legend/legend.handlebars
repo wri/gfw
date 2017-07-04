@@ -4,7 +4,7 @@
 
 {{#if this.countryVisibility}}
   <ul class="categories -divided -country">
-    <h2 class="-country">
+    <h2 class="-country js-toggle-country-category toggle-country">
       {{this.country.name}} data
     </h2>
 
@@ -87,7 +87,7 @@
 {{#if categories}}
 <ul class="categories {{#if this.countryVisibility}}-divided{{/if}}">
   {{#if this.countryVisibility}}
-    <h2>Global data</h2>
+    <h2 class="js-toggle-country-category toggle-country">Global data</h2>
   {{/if}}
   {{#each categories}}
     <li class="category {{#if this.closed}}closed{{/if}}">

@@ -57,6 +57,7 @@
 
   // @ul
   .categories{
+    cursor: pointer;
     > * {
       &:last-child {
         margin-bottom: 0;
@@ -73,6 +74,7 @@
     }
 
     h2{
+      cursor: pointer;
       padding: 15px 15px 12px;
       background: #F0F0F0;
       font-weight: 500;
@@ -90,6 +92,26 @@
 
       .country-btns {
         margin: 5px 0 0;
+      }
+
+      &.toggle-country {
+        position: relative;
+
+        &::after {
+          display: block;
+          content: "";
+          position: absolute;
+          top: 50%;
+          right: 15px;
+          width: 0;
+          height: 0;
+          -webkit-transform: translate(0, -100%);
+          transform: translate(0, -100%);
+          border-left: 4px solid transparent;
+          border-right: 4px solid transparent;
+          border-top: 5px solid;
+          transform: rotate(0deg);
+        }
       }
     }
 
@@ -121,6 +143,10 @@
         }
       }
 
+      &.-hidden-category {
+        display: none;
+      }
+
       &:first-child {
         margin-top: 0;
       }
@@ -140,7 +166,6 @@
         &:first-of-type {
           border-top: 0px;
         }
-
 
         .container-title {
           padding: 0 15px;
@@ -165,6 +190,16 @@
         em{
           display: none;
           font-size: 11px;
+        }
+      }
+    }
+
+    &.closed {
+      h2 {
+        &.toggle-country {
+          &::after {
+            transform: rotate(180deg);
+          }
         }
       }
     }

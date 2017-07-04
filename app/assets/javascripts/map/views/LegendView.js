@@ -183,6 +183,7 @@ define([
 
     events: {
       'click .js-toggle-category' : 'toogleCategory',
+      'click .js-toggle-country-category' : 'toogleCountryCategory',
       'click .js-toggle-sublayer': 'toggleLayer',
       'click .js-toggle-layer-option': 'toggleLayerOption',
       'click .js-layer-close' : 'removeLayer',
@@ -363,6 +364,26 @@ define([
 
         $(e.currentTarget).parent().toggleClass('closed');
         $(e.currentTarget).parent().children('.layers').toggleClass('closed');
+      }
+    },
+
+    toogleCountryCategory: function(e) {
+      if (!this.mobile) {
+        // Save category status in an array
+        var categories_status = this.model.get('categories_status');
+        var slug = $(e.currentTarget).data('category_slug');
+        var index = categories_status.indexOf(slug);
+
+        // Generate the status of the categories
+        (index != -1) ? categories_status.splice(index, 1) : categories_status.push(slug);
+        this.model.set('categories_status',categories_status);
+
+        var parent = $(e.currentTarget).parent();
+
+        if ($(parent).hasClass('-divided')) {
+          $(parent).children('.category').toggleClass('-hidden-category');
+          $(e.currentTarget).parent().toggleClass('closed');
+        }
       }
     },
 
