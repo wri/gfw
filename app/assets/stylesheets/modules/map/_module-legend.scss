@@ -277,10 +277,65 @@
         margin-bottom: 0;
       }
 
+      &.layer-info-container{
+        .source-shape-info {
+          background-color: transparent !important;
+
+          svg {
+            width: 14px;
+            height: 14px;
+          }
+
+          .icon-info-green,
+          .icon-info-grey {
+            width: 14px;
+            height: 14px;
+          }
+
+          .icon-info-green {
+            display: inline-block;
+          }
+          .icon-info-grey {
+            display: none;
+          }
+        }
+        &.-desactivate {
+          .icon-info-green {
+            display: none;
+          }
+          .icon-info-grey {
+            display: block;
+          }
+
+          .alerts,
+          .layer-close,
+          .source,
+          .canopy-button,
+          .onoffswitch,
+          .layer-sublayer {
+            pointer-events: none;
+            cursor: not-allowed;
+          }
+
+          * {
+            color: #ccc !important;
+          }
+
+          .onoffswitch {
+            pointer-events: none;
+          }
+
+          .sublayer-title {
+            color: #ccc !important;
+          }
+        }
+      }
+
       .layer-name {
         display: block;
         position: relative;
         font-size: 13px;
+        padding-right: 40px;
         padding-left: 20px;
 
         &.-no-padding {
@@ -294,12 +349,27 @@
           }
         }
 
-        .icon-eye{
+        .container-eye-icon {
+          cursor: pointer;
           position: absolute;
           top: -2px;
           left: 0;
+
+
+          &.-hidden-icon {
+            display: none;
+            fill: #aaa;
+          }
+        }
+
+        .icon-eye{
           width: 15px;
           height: 15px;
+
+
+          &.-show-icon {
+            display: block;
+          }
         }
         .subtitle {
           font-size: 11px;
@@ -370,6 +440,7 @@
       }
 
       .icon-eye{
+        cursor: pointer;
         position: absolute;
         top: 3px;
         left: 0;
@@ -397,18 +468,14 @@
         font-weight: 500;
       }
       .canopy-button{
-        background: $cGreen;
-        color: $white;
+        background: transparent;
+        color: #9e9e9e;
         display: inline-block;
         padding: 1px 5px 0;
         margin: 0 2px;
         border-radius: 10px;
         cursor: pointer;
-        box-shadow: 0 0 0 2px $cGreen;
-        &:hover{
-          background: darken($cGreen,5%);
-          box-shadow: 0 0 0 2px darken($cGreen,5%);
-        }
+        border: 1px solid #9e9e9e;
       }
     }
 
