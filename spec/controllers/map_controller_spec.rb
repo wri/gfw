@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe MapController do
+describe MapController, type: :controller do
 
 end
