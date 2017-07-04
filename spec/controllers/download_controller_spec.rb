@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DownloadController do
+describe DownloadController, type: :controller do
   before do
     ENV['TERMS_COOKIE'] = "terms_cookie"
   end
