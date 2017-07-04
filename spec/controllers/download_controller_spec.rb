@@ -31,7 +31,7 @@ describe DownloadController, type: :controller do
           and_return(mailer_double)
         )
 
-        expect(mailer_double).to receive(:deliver).and_return(true)
+        expect(mailer_double).to receive(:deliver_now).and_return(true)
 
         subject
       end
