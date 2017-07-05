@@ -8,8 +8,16 @@ require Rails.root.join(
 
 describe SearchController, type: :controller do
   describe 'GET index' do
-    subject { get :index }
+    subject {
+      VCR.use_cassette('search') {
+        get :index, params: {query: 'Białowieża'}
+      }
+    }
     it_behaves_like 'renders index'
     it_behaves_like 'assigns title', 'Search'
+    it 'returns results' do
+      subject
+      expect(assigns(:total)).to eq(10)
+    end
   end
 end
