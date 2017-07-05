@@ -8,10 +8,10 @@ require Rails.root.join(
 
 describe CountriesController, type: :controller do
   describe 'GET index' do
-    subject { get :index }
+    subject {
+      VCR.use_cassette('countries') { get :index }
+    }
     it_behaves_like 'renders index'
     it_behaves_like 'assigns title', 'Country Profiles'
-
-    # TODO mock response from API
   end
 end

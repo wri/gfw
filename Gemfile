@@ -50,6 +50,7 @@ end
 group :test do
   gem 'rails-controller-testing'
   gem 'simplecov'
+  gem 'vcr'
 end
 
 gem 'newrelic_rpm'
