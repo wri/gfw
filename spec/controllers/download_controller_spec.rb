@@ -37,8 +37,20 @@ describe DownloadController, type: :controller do
       end
 
       it "returns a success response code" do
-        expect(response.code).to eq("200")
         subject
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    context "without email address" do
+      subject {
+        post :create_download,
+          params: {id: iso, link: download_link, type: type}
+      }
+
+      it "returns an unprocessable entity code" do
+        subject
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
