@@ -6,10 +6,12 @@ require Rails.root.join(
   'spec', 'controllers', 'shared_examples', 'assigns_title.rb'
 )
 
-describe MapController, type: :controller do
+describe CountriesController, type: :controller do
   describe 'GET index' do
     subject { get :index }
     it_behaves_like 'renders index'
-    it_behaves_like 'assigns title', 'Interactive Map'
+    it_behaves_like 'assigns title', 'Country Profiles'
+
+    # TODO mock response from API
   end
 end

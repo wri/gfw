@@ -41,6 +41,7 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
 
   config.include ShowMeTheCookies, type: :feature
+  config.include BypassBrowserCheck, type: :controller
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
