@@ -17,6 +17,7 @@ class StaticController < ApplicationController
     @currentNavigation = '.shape-about'
   end
 
+  # TODO: no route?
   def data
     section = params[:section]
     source  = params[:t]
@@ -41,6 +42,7 @@ class StaticController < ApplicationController
     redirect_to url
   end
 
+  # TODO: no route?
   def keep
     @title = 'Stay informed'
     @desc = 'Read the latest news and GFW analysis, sign up to receive alerts, and subscribe to areas of interest.'
@@ -50,6 +52,7 @@ class StaticController < ApplicationController
     @page        = (params[:page] || 1).to_i
   end
 
+  # TODO: no route?
   def keepstories
     stories_per_page = 5
 
@@ -61,6 +64,7 @@ class StaticController < ApplicationController
     respond_with @visible
   end
 
+  # TODO: no route?
   def getinvolved
     @title = 'Get Involved'
     @desc = 'Contribute to the GFW community by providing data, helping improve GFW, developing your own project, or by joining the discussion about GFW.'
@@ -68,6 +72,7 @@ class StaticController < ApplicationController
     @currentNavigation = '.shape-getinvolved'
   end
 
+  # TODO: no route?
   def explore
     @title = 'Explore'
     @desc = 'Browse maps and tools available through GFW, create custom visualizations and analyses, access interactive forest statistics, or download data.'
@@ -75,6 +80,7 @@ class StaticController < ApplicationController
     @currentNavigation = '.shape-all-apps'
   end
 
+  # TODO: no route?
   def feedback
     @title = 'Feedback'
 
