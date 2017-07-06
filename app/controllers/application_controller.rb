@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError.new('Not Found')
   end
 
+  # TODO: no route?
   def accept_terms
     session[:return_to] = params[:return_to] unless params[:return_to].nil?
     @title = 'Terms of Service'
