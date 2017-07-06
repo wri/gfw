@@ -95,6 +95,7 @@ class StaticController < ApplicationController
     end
   end
 
+  # TODO: is this used?
   def feedback_jsonp
     signup   = params["signup"]
     email    = params["email"]
