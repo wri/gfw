@@ -120,6 +120,7 @@ define([
       "lbr_oil_palm",
       "cmr_oil_palm",
       "idn_oil_palm",
+      "idn_suitability",
       "mys_oil_palm",
       "oil_palm",
       "bra_mining",
