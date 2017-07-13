@@ -138,6 +138,7 @@ define([
   'map/views/layers/MexMiningLayer',
   'map/views/layers/BraMiningLayer',
   'map/views/layers/BraRTRSLayer',
+  'map/views/layers/PryRTRSLayer',
   'map/views/layers/ViirsLayer',
   'map/views/layers/PerMinamCoverLayer',
   'map/views/layers/CanIntactForestLayer',
@@ -317,6 +318,7 @@ define([
   MexMiningLayer,
   BraMiningLayer,
   BraRTRSLayer,
+  PryRTRSLayer,
   ViirsLayer,
   PerMinamCoverLayer,
   CanIntactForestLayer,
@@ -783,6 +785,9 @@ define([
     },
     bra_rtrs: {
       view: BraRTRSLayer
+    },
+    pry_rtrs:{
+      view: PryRTRSLayer
     },
     per_minam_tree_cover: {
       view:  PerMinamCoverLayer
