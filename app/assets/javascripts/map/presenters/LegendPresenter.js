@@ -204,7 +204,7 @@ define([
         }, this));
     },
 
-    hiddenLayer: function(layerSlug) { //second part hector
+    hiddenLayer: function(layerSlug) {
       var where = [{slug: layerSlug}];
       layerSpecService.toggle(where,
         _.bind(function(layerSpec) {

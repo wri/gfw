@@ -89,6 +89,7 @@ define([
       defaults:{
         hidden: true,
         categories_status: [],
+        layers_status: []
       }
     })),
 
@@ -566,15 +567,26 @@ define([
           $(li).css('display', 'none');
         }
       });
-
       e && e.preventDefault();
       var index = this._getOverlayIndex(layer);
-      ///console.log(this.map.overlayMapTypes);
+      var iCount = 0;
       var layerP = this.map.overlayMapTypes.getAt(index);
-      var hasOpacity = (layerP.opacity >= 0);
-
+      var hasOpacity = false;
+      if( typeof layerP != 'undefined' || layerP != null ){
+        hasOpacity = (layerP.opacity >= 0);
+      }
       if(hasOpacity) {
         layerP.setOpacity(1);
+      } else {
+        var layerArray = this.model.get('layers_status');
+        var mapLayer = this.map.overlayMapTypes.getAt(index);
+
+        _.map(layerArray, function(l, i){
+          if (l.name === layer) {
+            this.map.overlayMapTypes.setAt(l.index, l.layerInformation);
+          }
+          iCount += 1;
+        }.bind(this));
       }
 
     },
@@ -613,11 +625,15 @@ define([
         layerP.setOpacity(0);
       } else {
         if( typeof this.map.overlayMapTypes.getAt(index) != 'undefined' || this.map.overlayMapTypes.getAt(index) != null ){
+          var layerArray = this.model.get('layers_status');
           var mapLayer = this.map.overlayMapTypes.getAt(index);
-          // console.log(this.map.overlayMapTypes.getAt(index).toggle());
-          //this.map.overlayMapTypes.getAt(index).toggle();
-          console.log(mapLayer);
-          mapLayer.map.hidden();
+          layerArray.push({
+            index: index,
+            name: layer,
+            layerInformation: this.map.overlayMapTypes.getAt(index)
+          })
+          this.model.set('layers_status', layerArray);
+          this.map.overlayMapTypes.removeAt(index);
         }
       }
     },
