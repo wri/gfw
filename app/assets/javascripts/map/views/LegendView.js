@@ -182,6 +182,7 @@ define([
       'click .js-toggle-sublayer': 'toggleLayer',
       'click .js-toggle-layer-option': 'toggleLayerOption',
       'click .js-layer-close' : 'removeLayer',
+      'click .icon-eye' : 'hiddenLayer',
       'mouseover .js-tooltip' : 'showTooltip',
       'mouseleave .js-tooltip' : 'hiddenTooltip',
       'click .js-tooltip' : 'hiddenTooltip',
@@ -290,6 +291,14 @@ define([
 
       this.presenter.toggleSelected();
       this.presenter.toggleLayerOptions();
+    },
+
+    updateLegendHidden: function() {
+
+    },
+
+    toggleSelectedHidden: function() {
+
     },
 
     getLayersByCategory: function(layers) {
@@ -455,6 +464,23 @@ define([
       }
     },
 
+    hiddenSublayers: function(layerSlug) {
+      var $subLayers = this.$el.find('[data-parent=\'' + layerSlug + '\']');
+
+      if ($subLayers.length > 0) {
+        var _this = this;
+        $subLayers.each(function() {
+          var $item = $(this);
+          var isChecked = $item.find('.checked').length > 0;
+
+          if (isChecked) {
+            var slug = $(this).data('sublayer');
+            _this.presenter.toggleLayer(slug);
+          }
+        });
+      }
+    },
+
     // threshold
     toggleThreshold: function(e){
       e && e.preventDefault();
@@ -521,7 +547,7 @@ define([
     },
 
     showLayer: function(e) {
-      var layer = $(e.target).attr('data-slug-hidden');
+      var layer = $(e.target).attr('data-slug-show');
 
       _.each(this.$el.find('.layer-info-container'), function(li) {
         if (layer === $(li).attr('data-slug')) {
@@ -529,21 +555,32 @@ define([
         }
       });
 
-      _.each(this.$el.find('.-js-show-layer'), function(li) {
+      _.each(this.$el.find('.-js-hidden-layer'), function(li) {
         if (layer === $(li).attr('data-slug-hidden')) {
+          $(li).css('display', 'block');
+        }
+      });
+
+      _.each(this.$el.find('.-js-show-layer'), function(li) {
+        if (layer === $(li).attr('data-slug-show')) {
           $(li).css('display', 'none');
         }
       });
 
-      _.each(this.$el.find('.-js-hidden-layer'), function(li) {
-        if (layer === $(li).attr('data-slug-show')) {
-          $(li).css('display', 'block');
-        }
-      });
+      e && e.preventDefault();
+      var index = this._getOverlayIndex(layer);
+      ///console.log(this.map.overlayMapTypes);
+      var layerP = this.map.overlayMapTypes.getAt(index);
+      var hasOpacity = (layerP.opacity >= 0);
+
+      if(hasOpacity) {
+        layerP.setOpacity(1);
+      }
+
     },
 
     hiddenLayer: function (e) {
-      var layer = $(e.target).attr('data-slug-show');
+      var layer = $(e.target).attr('data-slug-hidden');
 
       _.each(this.$el.find('.layer-info-container'), function(li) {
         if (layer === $(li).attr('data-slug')) {
@@ -551,18 +588,54 @@ define([
         }
       });
 
-      _.each(this.$el.find('.-js-show-layer'), function(li) {
+      _.each(this.$el.find('.-js-hidden-layer'), function(li) {
         if (layer === $(li).attr('data-slug-hidden')) {
+          $(li).css('display', 'none');
+        }
+      });
+
+      _.each(this.$el.find('.-js-show-layer'), function(li) {
+        if (layer === $(li).attr('data-slug-show')) {
           $(li).css('display', 'block');
         }
       });
 
-      _.each(this.$el.find('.-js-hidden-layer'), function(li) {
-        if (layer === $(li).attr('data-slug-show')) {
-          $(li).css('display', 'none');
+      e && e.preventDefault();
+      var index = this._getOverlayIndex(layer);
+      var layerP = this.map.overlayMapTypes.getAt(index);
+      var hasOpacity = false;
+
+      if( typeof layerP != 'undefined' || layerP != null ){
+        hasOpacity = (layerP.opacity >= 0);
+      }
+
+      if(hasOpacity) {
+        layerP.setOpacity(0);
+      } else {
+        if( typeof this.map.overlayMapTypes.getAt(index) != 'undefined' || this.map.overlayMapTypes.getAt(index) != null ){
+          var mapLayer = this.map.overlayMapTypes.getAt(index);
+          // console.log(this.map.overlayMapTypes.getAt(index).toggle());
+          //this.map.overlayMapTypes.getAt(index).toggle();
+          console.log(mapLayer);
+          mapLayer.map.hidden();
         }
-      });
+      }
+    },
+
+    _getOverlayIndex: function(name) {
+      var index = -1;
+      var name = name;
+      _.each(this.map.overlayMapTypes.getArray(), function(layer, i) {
+        if (layer) {
+          var layerName = layer.name || layer.options.name;
+          if (layerName === name) {
+            index = i;
+          }
+        }
+      }, this);
+      return index;
     }
+
   });
 
   return LegendView;
