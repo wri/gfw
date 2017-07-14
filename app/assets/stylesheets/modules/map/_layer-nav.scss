@@ -677,4 +677,13 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       display: none;
     }
   }
+
+  .source-shape-info {
+    background-color: transparent !important;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
 }

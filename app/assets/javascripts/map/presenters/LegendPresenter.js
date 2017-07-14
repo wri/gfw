@@ -72,7 +72,7 @@ define([
         this.view.updateLinkToGFW();
       }
     }, {
-      'LayerNav/change': function(layerSpec) {
+      'LayerNav/change': function(layerSpec) { //third part
         this.status.set('layerSpec', layerSpec);
         this.updateLegend();
         // Toggle sublayers
@@ -201,6 +201,14 @@ define([
         _.bind(function(layerSpec) {
           mps.publish('LayerNav/change', [layerSpec]);
           mps.publish('Place/update', [{go: false}]);
+        }, this));
+    },
+
+    hiddenLayer: function(layerSlug) {
+      var where = [{slug: layerSlug}];
+      layerSpecService.toggle(where,
+        _.bind(function(layerSpec) {
+          mps.publish('LayerNav/change', [layerSpec]);
         }, this));
     },
 

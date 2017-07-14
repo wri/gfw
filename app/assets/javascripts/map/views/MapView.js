@@ -240,7 +240,7 @@ define([
      * @param  {string} layerSlug The layerSlug of the layer to remove
      */
     _removeLayer: function(layerSlug) {
-      var inst = this.layerInst[layerSlug];
+      var inst = this.layerInst[layerSlug]; 
       if (!inst) {return;}
       inst.removeLayer();
       inst.presenter && inst.presenter.unsubscribe && inst.presenter.unsubscribe();

@@ -4,7 +4,7 @@
 
 {{#if this.countryVisibility}}
   <ul class="categories -divided -country">
-    <h2 class="-country">
+    <h2 class="-country js-toggle-country-category toggle-country">
       {{this.country.name}} data
     </h2>
 
@@ -26,29 +26,45 @@
           {{#each this}}
             {{#if @first}}
               <span data-category_slug="{{this.category_status}}" class="category-name js-toggle-category" style="color: {{this.category_color}}; border-color: {{this.category_color}};">
-                {{this.category_name}}
-                <em>({{../../layers_length}})</em>
+                <div class="container-title">
+                  {{this.category_name}}
+                  <em>({{../../layers_length}})</em>
+                </div>
               </span>
             {{/if}}
           {{/each}}
           <ul class="layers {{#if this.closed}}closed{{/if}}">
             {{#each this}}
-              <li class="layer">
+              <li class="layer layer-info-container" data-slug="{{this.slug}}">
                 <span class="layer-name {{#if this.allowSubscription}}-alerts{{/if}}">
-                  <i class="circle" style="background:{{this.title_color}};"></i>
+                  <div class="-js-hidden-layer container-eye-icon icon-eye" data-slug-hidden="{{this.slug}}">
+                    <svg class="icon-eye -show-icon" style="fill:{{this.title_color}};" data-slug-hidden="{{this.slug}}">
+                      <use data-slug-hidden="{{this.slug}}" xlink:href="#icon-show-layer-map"></use>
+                    </svg>
+                  </div>
+                  <div class="-js-show-layer container-eye-icon -hidden-icon icon-eye" data-slug-show="{{this.slug}}">
+                    <svg class="icon-eye -show-icon" data-slug-show="{{this.slug}}">
+                      <use data-slug-show="{{this.slug}}" xlink:href="#icon-hide-layer-map"></use>
+                    </svg>
+                  </div>
                   {{this.title}}
-                  {{#if this.subtitle}}<span class="subtitle">{{this.subtitle}}</span>{{/if}}
-                  <a href='#' class='layer-close js-layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
+                  {{#if this.allowSubscription}}
+                    <a href="/my_gfw/subscriptions/new?datasets={{this.slug}}" class="alerts" title="Receive forest loss alerts"><svg><use xlink:href="#icon-mail-legend"></use></svg></a>
+                  {{/if}}
                   {{#if this.source_json}}
-                    <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                    <a href='#' data-source='{{this.source_json}}' class='source js-tooltip source-shape-info' data-description="{{this.subtitle}}">
+                      <svg class="icon-info-green"><use xlink:href="#shape-info"></use></svg>
+                      <svg class="icon-info-grey"><use xlink:href="#shape-info-grey"></use></svg>
+                    </a>
                   {{else}}
                     {{#if this.source}}
-                      <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                      <a href='#' data-source='{{this.source}}' class='source js-tooltip source-shape-info' data-description="{{this.subtitle}}">
+                        <svg class="icon-info-green"><use xlink:href="#shape-info"></use></svg>
+                        <svg class="icon-info-grey"><use xlink:href="#shape-info-grey"></use></svg>
+                      </a>
                     {{/if}}
                   {{/if}}
-                  {{#if this.allowSubscription}}
-                    <a href="/my_gfw/subscriptions/new?datasets={{this.slug}}" class="alerts" title="Receive forest loss alerts"><svg><use xlink:href="#shape-alerts-subscriptions"></use></svg></a>
-                  {{/if}}
+                  <a href='#' class='layer-close js-layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
                 </span>
                 {{#if this.detailsTpl}}
                   {{{this.detailsTpl}}}
@@ -71,36 +87,52 @@
 {{#if categories}}
 <ul class="categories {{#if this.countryVisibility}}-divided{{/if}}">
   {{#if this.countryVisibility}}
-    <h2>Global data</h2>
+    <h2 class="js-toggle-country-category toggle-country">Global data</h2>
   {{/if}}
   {{#each categories}}
     <li class="category {{#if this.closed}}closed{{/if}}">
       {{#each this}}
         {{#if @first}}
           <span data-category_slug="{{this.category_status}}" class="category-name js-toggle-category" style="color: {{this.category_color}}; border-color: {{this.category_color}};">
-            {{this.category_name}}
-            <em>({{../../layers_length}})</em>
+            <div class="container-title">
+              {{this.category_name}}
+              <em>({{../../layers_length}})</em>
+            </div>
           </span>
         {{/if}}
       {{/each}}
       <ul class="layers {{#if this.closed}}closed{{/if}}">
         {{#each this}}
-          <li class="layer">
+          <li class="layer layer-info-container" data-slug="{{this.slug}}">
             <span class="layer-name {{#if this.allowSubscription}}-alerts{{/if}}">
-              <i class="circle" style="background:{{this.title_color}};"></i>
-                {{this.title}}
-                {{#if this.subtitle}}<span class="subtitle">{{this.subtitle}}</span>{{/if}}
-              <a href='#' class='layer-close js-layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
+              <div class="-js-hidden-layer container-eye-icon icon-eye" data-slug-hidden="{{this.slug}}">
+                <svg class="icon-eye -show-icon" style="fill:{{this.title_color}};" data-slug-hidden="{{this.slug}}">
+                  <use data-slug-hidden="{{this.slug}}" xlink:href="#icon-show-layer-map"></use>
+                </svg>
+              </div>
+              <div class="-js-show-layer container-eye-icon -hidden-icon icon-eye" data-slug-show="{{this.slug}}">
+                <svg class="icon-eye -hidden-icon" data-slug-show="{{this.slug}}">
+                  <use data-slug-show="{{this.slug}}" xlink:href="#icon-hide-layer-map"></use>
+                </svg>
+              </div>
+              {{this.title}}
+              {{#if this.allowSubscription}}
+                <a href="/my_gfw/subscriptions/new?datasets={{this.slug}}" class="alerts" title="Receive forest loss alerts"><svg><use xlink:href="#icon-mail-legend"></use></svg></a>
+              {{/if}}
               {{#if this.source_json}}
-                <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                <a href='#' data-source='{{this.source_json}}' class='source js-tooltip source-shape-info' data-description="{{this.subtitle}}">
+                  <svg class="icon-info-green"><use xlink:href="#shape-info"></use></svg>
+                  <svg class="icon-info-grey"><use xlink:href="#shape-info-grey"></use></svg>
+                </a>
               {{else}}
                 {{#if this.source}}
-                  <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                  <a href='#' data-source='{{this.source}}' class='source js-tooltip source-shape-info' data-description="{{this.subtitle}}">
+                    <svg class="icon-info-green"><use xlink:href="#shape-info"></use></svg>
+                    <svg class="icon-info-grey"><use xlink:href="#shape-info-grey"></use></svg>
+                  </a>
                 {{/if}}
               {{/if}}
-              {{#if this.allowSubscription}}
-                <a href="/my_gfw/subscriptions/new?datasets={{this.slug}}" class="alerts" title="Receive forest loss alerts"><svg><use xlink:href="#shape-alerts-subscriptions"></use></svg></a>
-              {{/if}}
+              <a href='#' class='layer-close js-layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
             </span>
             {{#if this.detailsTpl}}
               {{{this.detailsTpl}}}
@@ -111,7 +143,12 @@
               {{/if}}
               <div class="layer-sublayer js-toggle-sublayer" data-sublayer="{{this.sublayer}}">
                 <span class="onoffswitch {{this.geographic}}" {{#if this.geographic}}style="background-color:#f69;"{{/if}}><span></span></span>
-                <div class="sublayer-title">{{this.geographicTitle}}<a href='#' data-source='{{this.source}}_source' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></div>
+                <div class="sublayer-title">{{this.geographicTitle}}
+                  <a href='#' data-source='{{this.source}}_source' class='source source-shape-info'>
+                    <svg class="icon-info-green"><use xlink:href="#shape-info"></use></svg>
+                    <svg class="icon-info-grey"><use xlink:href="#shape-info-grey"></use></svg>
+                  </a>
+                </div>
               </div>
             {{/if}}
           </li> {{!-- /layer --}}
