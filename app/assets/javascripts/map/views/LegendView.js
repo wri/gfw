@@ -294,14 +294,6 @@ define([
       this.presenter.toggleLayerOptions();
     },
 
-    updateLegendHidden: function() {
-
-    },
-
-    toggleSelectedHidden: function() {
-
-    },
-
     getLayersByCategory: function(layers) {
       var subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
       var filteredLayers = _.filter(layers, function(layer) {
