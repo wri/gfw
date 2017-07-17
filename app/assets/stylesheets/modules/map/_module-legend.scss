@@ -53,6 +53,8 @@
   .legend-link {
     font-size: 11px;
     line-height: 14px;
+    display: block;
+    padding: 15px 15px 12px;
   }
 
   // @ul
@@ -490,7 +492,8 @@
           text-shadow: 0px 0 1px #000;
         }
       }
-      i{
+
+      .circle{
         padding: 0;
         top: 2px;
         display: block;
