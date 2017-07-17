@@ -89,6 +89,7 @@ define([
     },
 
     sourceError: function(error) {
+      $(this.$current).removeClass('spinner-info start');
       this.$current.find('svg').attr('class','');
       console.info('The id '+this.sourceModel.get('slug')+' you are searching for does not exist in the API');
       this.sourceStatic();
