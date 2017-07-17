@@ -467,7 +467,7 @@
     }
 
     .layer-colors li {
-      margin-bottom: 4px;
+      margin-bottom: 8px;
       margin-left: 15px;
       position: relative;
       padding: 0;
@@ -491,6 +491,7 @@
       }
       i{
         padding: 0;
+        top: 2px;
         display: block;
         font-style: italic;
         font-size: 11px;
@@ -852,5 +853,27 @@
 
   strong {
     font-weight: 500;
+  }
+
+  .layer-details-gfw-plantations-by-type,
+  .layer-details-gfw-plantations-by-species
+   {
+    .container-select-option {
+      display: block;
+      margin-top: 5px;
+      margin-bottom: 5px;
+
+      .select-option {
+        outline: 0;
+        background: transparent;
+        color: #9e9e9e;
+        display: inline-block;
+        padding: 1px 5px 0;
+        margin: 0 2px;
+        border-radius: 10px;
+        cursor: pointer;
+        border: 1px solid #9e9e9e;
+      }
+    }
   }
 }
