@@ -299,6 +299,21 @@ define([
 
       this.presenter.toggleSelected();
       this.presenter.toggleLayerOptions();
+      var count = 0;
+
+      $('#module-legend > .categories').find('.category-name').each(function() {
+
+        var $el = $(this).children('.container-title');
+        $el = $($el).children().html().toLowerCase();
+        if ($el === 'land cover') {
+          count += 1;
+        }
+        if(count === 2) {
+          $(this).addClass('-duplicate');
+          $(this).parent().addClass('-duplicate');
+          count = 0;
+        }
+      });
     },
 
     getLayersByCategory: function(layers) {
