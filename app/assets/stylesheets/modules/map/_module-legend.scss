@@ -434,7 +434,6 @@
         .sublayer-title {
           font-size: 13px;
           margin-left: 5px;
-          color: #ccc;
           display: inline-block;
           .source {
             top: 9px;
@@ -455,7 +454,7 @@
   /* Layer details */
   /*****************/
   .layer-details {
-    margin: 8px 0 0 20px;
+    margin: 8px 0 5px 20px;
 
     .details-title {
       color: #999;
