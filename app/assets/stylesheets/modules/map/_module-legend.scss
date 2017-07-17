@@ -53,6 +53,8 @@
   .legend-link {
     font-size: 11px;
     line-height: 14px;
+    display: block;
+    padding: 15px 15px 12px;
   }
 
   // @ul
@@ -341,20 +343,11 @@
             display: block;
           }
 
-          .circle {
-            background-color: #ccc !important;
-          }
-
-          .select-container {
-            border-color: #ccc;
-          }
-
           .alerts,
           .source,
           .canopy-button,
           .onoffswitch,
           .layer-sublayer {
-            cursor: pointer;
             pointer-events: none;
             cursor: not-allowed;
           }
@@ -435,7 +428,6 @@
         cursor: auto;
         padding: 10px 5px 5px 14px;
         position: relative;
-
         .onoffswitch {
           margin-top: 1px;
         }
@@ -444,11 +436,6 @@
           font-size: 13px;
           margin-left: 5px;
           display: inline-block;
-
-          &.-hidden {
-            color: #ccc;
-          }
-
           .source {
             top: 9px;
           }
@@ -458,10 +445,6 @@
       .layer-sublayer.layer-option {
         .sublayer-title {
           color: #555;
-
-          &.-hidden {
-            color: #ccc;
-          }
         }
       }
     }
@@ -508,7 +491,8 @@
           text-shadow: 0px 0 1px #000;
         }
       }
-      i{
+
+      .circle{
         padding: 0;
         top: 2px;
         display: block;
