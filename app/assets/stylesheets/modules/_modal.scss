@@ -120,7 +120,7 @@ $height: auto;
 
   .layer-colors{
     li{
-      margin-bottom: 4px;
+      margin-bottom: 8px;
       font-size: 13px;
       &:last-child {
         margin-bottom: 0;
@@ -465,7 +465,7 @@ $height: auto;
       bottom: 0;
       right: 0;
       width: 20px;
-      height: 20px;      
+      height: 20px;
       margin: auto;
       fill: $dark;
     }
