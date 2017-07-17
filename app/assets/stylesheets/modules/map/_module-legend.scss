@@ -341,11 +341,20 @@
             display: block;
           }
 
+          .circle {
+            background-color: #ccc !important;
+          }
+
+          .select-container {
+            border-color: #ccc;
+          }
+
           .alerts,
           .source,
           .canopy-button,
           .onoffswitch,
           .layer-sublayer {
+            cursor: pointer;
             pointer-events: none;
             cursor: not-allowed;
           }
@@ -426,6 +435,7 @@
         cursor: auto;
         padding: 10px 5px 5px 14px;
         position: relative;
+
         .onoffswitch {
           margin-top: 1px;
         }
@@ -434,6 +444,11 @@
           font-size: 13px;
           margin-left: 5px;
           display: inline-block;
+
+          &.-hidden {
+            color: #ccc;
+          }
+
           .source {
             top: 9px;
           }
@@ -443,6 +458,10 @@
       .layer-sublayer.layer-option {
         .sublayer-title {
           color: #555;
+
+          &.-hidden {
+            color: #ccc;
+          }
         }
       }
     }

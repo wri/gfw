@@ -400,14 +400,17 @@ define([
 
     toggleLayerOptions: function(layerOptions) {
       _.each(this.$el.find('.layer-option'), function(div) {
+
         var $div = $(div);
         var $toggle = $div.find('.onoffswitch');
         var optionSelected = layerOptions.indexOf($div.data('option')) > -1;
 
         if (optionSelected) {
-          $toggle.addClass('checked').css('background', '#F69');
+          $toggle.addClass('checked').css('background', color);
+          $toggle.next().removeClass('-hidden');
         } else {
           $toggle.removeClass('checked').css('background', '');
+          $toggle.next().addClass('-hidden');
         }
       }, this);
     },
@@ -512,8 +515,10 @@ define([
             : layer.category_color;
           $toggle.addClass('checked');
           $toggle.css('background', color);
+          $toggle.next().removeClass('-hidden');
         } else {
           $toggle.removeClass('checked').css('background', '');
+          $toggle.next().addClass('-hidden');
         }
       }, this);
     },
