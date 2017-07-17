@@ -151,6 +151,11 @@
         margin-top: 0;
       }
 
+      &.-duplicate {
+        margin-top: -10px;
+        border-top: 1px solid rgba(158, 158, 158, .3);
+      }
+
       .category-name {
         padding-top: 15px;
         padding-bottom: 12px;
@@ -162,6 +167,10 @@
         position: relative;
         cursor: pointer;
         border-top: 1px solid rgba(#9e9e9e, .3) !important;
+
+        &.-duplicate {
+          display: none;
+        }
 
         &:first-of-type {
           border-top: 0px;
