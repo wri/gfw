@@ -5,11 +5,12 @@ define([
   'moment',
   'views/ModalView',
   'map/presenters/tabs/SubscribePresenter',
+  'services/SubscriptionsService',
   'helpers/languagesHelper',
   'text!map/templates/tabs/subscribeDatasets.handlebars',
   'text!map/templates/tabs/subscribe.handlebars'
 ], function(Backbone, _, Handlebars, moment, ModalView,
-  Presenter, languagesHelper, subscribeDatasetsTpl, tpl) {
+  Presenter, subscriptionsService, languagesHelper, subscribeDatasetsTpl, tpl) {
 
   'use strict';
 
@@ -31,6 +32,7 @@ define([
         'click #datasets': 'onClickCheckDatasets',
         'change .dataset-checkbox' : 'onChangeDataset',
         'click #subscribe': 'onClickSubscribe',
+        'click .js-test-webhook': 'onClickTestWebhook',
       });
     },
 
@@ -49,6 +51,7 @@ define([
       this.$subscriptionEmail = this.$el.find('#subscriptionEmail');
       this.$subscriptionDatasets = this.$el.find('#subscription-datasets');
       this.$steps = this.$el.find('.steps');
+      this.$testWebhookButton = this.$el.find('.js-test-webhook');
     },
 
     render: function(){
@@ -157,6 +160,34 @@ define([
         name: this.$subscriptionName.val(),
         language: this.$subscriptionLanguage.val()
       });
+    },
+
+    onClickTestWebhook: function (e) {
+      e && e.preventDefault();
+
+      var value = this.$subscriptionUrl.val();
+
+      if (value !== '' && !this.$testWebhookButton.hasClass('-loading')) {
+        subscriptionsService.testWebhook(this.$subscriptionUrl.val());
+
+        var loader = this.$testWebhookButton.find('.webhook-loader');
+        loader.html(this.$testWebhookButton.find('.webhook-text').html());
+        this.$testWebhookButton.addClass('-loading');
+        var intervalTimes = 0;
+        var pointsInterval = setInterval(function() {
+          if (intervalTimes === 3) {
+            loader.html('Test webhook - data sent');
+            setTimeout(function () {
+              this.$testWebhookButton.removeClass('-loading');
+            }.bind(this), 2000);
+
+            clearInterval(pointsInterval);
+          } else {
+            loader.html(loader.html() + '.');
+          }
+          intervalTimes++;
+        }.bind(this), 500);
+      }
     }
 
   });

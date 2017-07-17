@@ -53,6 +53,20 @@
 <div class="field -default -medium">
   <label for="email">Enter your email address</label>
   <input type="email" name="email" placeholder="Enter your email" value="{{email}}">
+
+  <div class="separator">
+    <span>or</span>
+  </div>
+
+  <label for="url">URL (Webhook) <a href="#" class="source" data-source="webhook_description"><svg><use xlink:href="#shape-info"></use></svg></a></label>
+  <input id="subscriptionUrl" type="text" name="url" placeholder="Enter your url" value="{{url}}">
+  <p class="-hint">
+      <a href="#" class="source" data-static="true" data-source="webhook">Preview of payload</a>
+      <a href="#" class="js-test-webhook test-webhook">
+          <span class="webhook-text">Test webhook</span>
+          <span class="webhook-loader"></span>
+      </a>
+  </p>
 </div>
 
 <div class="field -default -medium">
