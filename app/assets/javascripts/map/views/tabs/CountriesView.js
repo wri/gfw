@@ -313,7 +313,6 @@ define([
     // we need to differenciate between simple layers and wrapped layers
     _toggleSelected: function(layers) {
       var activeLayers = _.keys(layers);
-
       _.each(this.model.get('countryLayers'), function(layer){
         if (!layer.wrappers) {
           // Toggle simple layers

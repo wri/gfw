@@ -196,6 +196,7 @@ define([
       'click .-js-show-layer' : 'showLayer',
       'click .-js-hidden-layer' : 'hiddenLayer',
       'click .js-toggle-threshold' : 'toggleThreshold',
+      'change .js-tree-plantation' : 'togglePlantation',
       'click .js-toggle-legend' : 'toogleLegend',
       'click .js-toggle-embed-legend' : 'toogleEmbedLegend',
       'click .js-select-layer': 'selectLayer',
@@ -411,6 +412,14 @@ define([
           $toggle.removeClass('checked').css('background', '');
         }
       }, this);
+    },
+
+    togglePlantation: function(e) {
+      var layerSlug = $(e.currentTarget).val();
+      var layerSlugRemove = '';
+      this.presenter.toggleLayer('plantations_by_type');
+      this.presenter.toggleLayer('plantations_by_species');
+      // this.removeSublayers(layerSlugRemove);
     },
 
     // layers
