@@ -26,9 +26,7 @@
           {{#each this}}
             {{#if @first}}
               <span data-category_slug="{{this.category_status}}" class="category-name js-toggle-category" style="color: {{this.category_color}}; border-color: {{this.category_color}};">
-                <div class="container-title">
-                  {{this.category_name}}
-                  <em>({{../../layers_length}})</em>
+                <div class="container-title">{{this.category_name}}<em>({{../../layers_length}})</em>
                 </div>
               </span>
             {{/if}}
@@ -94,9 +92,7 @@
       {{#each this}}
         {{#if @first}}
           <span data-category_slug="{{this.category_status}}" class="category-name js-toggle-category" style="color: {{this.category_color}}; border-color: {{this.category_color}};">
-            <div class="container-title">
-              {{this.category_name}}
-              <em>({{../../layers_length}})</em>
+            <div class="container-title">{{this.category_name}}<em>({{../../layers_length}})</em>
             </div>
           </span>
         {{/if}}
