@@ -197,6 +197,7 @@ define([
       'click .-js-hidden-layer' : 'hiddenLayer',
       'click .js-toggle-threshold' : 'toggleThreshold',
       'change .js-tree-plantation' : 'togglePlantation',
+      'change .js-tree-plantation-country' : 'togglePlantationCountry',
       'click .js-toggle-legend' : 'toogleLegend',
       'click .js-toggle-embed-legend' : 'toogleEmbedLegend',
       'click .js-select-layer': 'selectLayer',
@@ -207,6 +208,7 @@ define([
 
       this.map = map;
       this.countries = countries;
+      this.iso = '';
 
       this.listeners();
 
@@ -272,6 +274,7 @@ define([
         }
 
         if (layer.iso) {
+          this.iso = layer.iso;
           layersIso.push(layer);
           layer.category_status = layer.category_slug+'-iso';
         } else {
@@ -296,6 +299,16 @@ define([
         more: more,
         countryVisibility: (!!more || !_.isEmpty(categoriesIso))
       }));
+
+      //Change selector countries action name.
+      if($('.categories').filter('.-country')) {
+        var accordionCountry = $('.categories').filter('.-country');
+        if ($(accordionCountry).find('.js-tree-plantation')) {
+          var selectOption = $(accordionCountry).find('.js-tree-plantation');
+          $(selectOption).removeClass('js-tree-plantation');
+          $(selectOption).addClass('js-tree-plantation-country');
+        }
+      }
 
       this.presenter.toggleSelected();
       this.presenter.toggleLayerOptions();
@@ -422,7 +435,14 @@ define([
       var layerSlugRemove = '';
       this.presenter.toggleLayer('plantations_by_type');
       this.presenter.toggleLayer('plantations_by_species');
-      // this.removeSublayers(layerSlugRemove);
+    },
+
+    togglePlantationCountry: function(e) {
+      var iso = this.iso.toLowerCase();
+      var types = iso+'_plantations_type';
+      var species = iso+'_plantations_species';
+      this.presenter.toggleLayer(types);
+      this.presenter.toggleLayer(species);
     },
 
     // layers
