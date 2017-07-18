@@ -298,6 +298,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           flex-wrap: wrap;
 
           .btn-icon {
+            cursor: pointer;
             display: block;
             width: 30px;
             height: 30px;
@@ -690,6 +691,19 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     svg {
       width: 14px;
       height: 14px;
+    }
+  }
+}
+
+
+//Country nav
+
+#country-layers-nav {
+  .tab-content {
+    .layers-list {
+      .does_wrapper {
+        display: none;
+      }
     }
   }
 }
