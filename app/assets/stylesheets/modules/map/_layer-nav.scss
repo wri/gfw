@@ -297,6 +297,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           flex-wrap: wrap;
 
           .btn-icon {
+            cursor: pointer;
             display: block;
             width: 30px;
             height: 30px;
