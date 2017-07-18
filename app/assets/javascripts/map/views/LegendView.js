@@ -309,7 +309,7 @@ define([
       return _.groupBy(filteredLayers, function(layer) {
         layer.allowSubscription = layer && subscriptionsAllowed.indexOf(layer.slug) > -1;
 
-        // Hack to keep the forest_clearing slug in layers which have to be analyzed but not grouped by the said slug in the legend
+        // Hack to keep the forest_clearing slug in layers which have to be analyzed but not grouped by the said slug in the legend 
         if (layer.category_slug === 'forest_clearing' && !layer.is_forest_clearing) return 'forest_cover';
         return layer.category_slug;
       })
