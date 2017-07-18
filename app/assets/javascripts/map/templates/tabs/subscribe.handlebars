@@ -42,7 +42,13 @@
                   <label for="tab2">URL (Webhook) <a href="#" class="source" data-source="webhook_description"><svg><use xlink:href="#shape-info"></use></svg></a></label>
                   <div id="tab-content2" class="tab-content">
                     <input class="field" type="text" id="subscriptionUrl" placeholder="Enter your url" value="{{url}}">
-                    <p><a href="#" class="source" data-static="true" data-source="webhook">Preview of payload</a></p>
+                    <p>
+                      <a href="#" class="source" data-static="true" data-source="webhook">Preview of payload</a>
+                      <a href="#" class="js-test-webhook test-webhook">
+                        <span class="webhook-text">Test webhook</span>
+                        <span class="webhook-loader"></span>
+                      </a>
+                    </p>
                   </div>
                 </div>
               </div>
