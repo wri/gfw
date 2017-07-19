@@ -17,8 +17,9 @@ define([
   'map/views/maptypes/positronMaptype',
   'map/views/maptypes/landsatMaptype',
   'map/views/maptypes/openStreetMaptype',
-  'map/helpers/layersHelper'
-], function(Backbone, _, mps, Cookies, enquire, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, openStreetMaptype, layersHelper) {
+  'map/helpers/layersHelper',
+  'services/LandsatService'
+], function(Backbone, _, mps, Cookies, enquire, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, openStreetMaptype, layersHelper, landsatService) {
 
   'use strict';
 
@@ -458,11 +459,25 @@ define([
       this.map.mapTypes.set('dark', darkMaptype());
       this.map.mapTypes.set('positron', positronMaptype());
       this.map.mapTypes.set('openstreet', openStreetMaptype());
-      for (var i = 1999; i < 2015; i++) {
-        this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
-      }
+      this._setLandsatTiles();
     },
 
+    _setLandsatTiles: function () {
+      for (var i = 1999; i <= 2016; i++) {
+        switch (i) {
+          case 2015:
+          case 2016:
+            landsatService.getTiles(i)
+              .then(function(year, results) {
+                this.map.mapTypes.set('landsat{0}'.format(year), landsatMaptype(year, results.attributes.url));
+              }.bind(this, i));
+            break;
+          default:
+            this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype(i, null));
+            break;
+        }
+      }
+    },
 
     /**
      * Crosshairs when analysis is activated
