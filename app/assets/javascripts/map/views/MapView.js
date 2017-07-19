@@ -18,7 +18,7 @@ define([
   'map/views/maptypes/landsatMaptype',
   'map/views/maptypes/openStreetMaptype',
   'map/helpers/layersHelper',
-  'services/LandsatService'
+  'map/services/LandsatService'
 ], function(Backbone, _, mps, Cookies, enquire, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, openStreetMaptype, layersHelper, landsatService) {
 
   'use strict';

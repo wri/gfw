@@ -1,50 +1,80 @@
 define([
   'Class',
+  'uri',
   'bluebird',
   'map/services/DataService'
-], function(Class, Promise, ds) {
+], function(Class, UriTemplate, Promise, ds) {
 
   'use strict';
 
-  var GET_TILE_URL_ID = 'LandsatService:getTilesUrl';
-  var GET_TILE_URL = 'https://staging-api.globalforestwatch.org/v1/landsat-tiles/';
+  var GET_REQUEST_LANDSAT_TILES_ID = 'LandsatService:getTiles';
+
+  var APIURL = window.gfw.config.GFW_API_HOST_PROD;
+
+  var APIURLS = {
+    'getTiles': '/landsat-tiles/{year}'
+  };
 
   var LandsatService = Class.extend({
-    getTileUrl: function(year) {
+    init: function() {
+      this.currentRequest = [];
+    },
+
+    getTiles: function(year) {
       return new Promise(function(resolve, reject) {
-        this.defineRequest(GET_TILE_URL_ID, GET_TILE_URL + year, { type: 'persist', duration: 2, unit: 'days' });
+        var url = new UriTemplate(APIURLS.getTiles).fillFromObject({
+          year: year
+        });
+
+        this.defineRequest(GET_REQUEST_LANDSAT_TILES_ID,
+          url, { type: 'persist', duration: 1, unit: 'days' });
 
         var requestConfig = {
-          resourceId: GET_TILE_URL_ID,
+          resourceId: GET_REQUEST_LANDSAT_TILES_ID,
           success: function(res, status) {
-            resolve(res, status);
+            resolve(res.data, status);
           },
           error: function(errors) {
             reject(errors);
           }
         };
 
-        ds.request(requestConfig);
+        this.abortRequest(GET_REQUEST_LANDSAT_TILES_ID);
+        this.currentRequest[GET_REQUEST_LANDSAT_TILES_ID] = ds.request(requestConfig);
       }.bind(this));
     },
 
     defineRequest: function (id, url, cache) {
       ds.define(id, {
         cache: cache,
-        url: url,
+        url: APIURL + url,
         type: 'GET',
         dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
         decoder: function ( data, status, xhr, success, error ) {
           if ( status === "success" ) {
             success( data, xhr );
           } else if ( status === "fail" || status === "error" ) {
-            error(xhr.statusText);
-          } else if ( status !== "abort") {
-            error(xhr.statusText);
+            error( JSON.parse(xhr.responseText) );
+          } else if ( status === "abort") {
+
+          } else {
+            error( JSON.parse(xhr.responseText) );
           }
         }
       });
+    },
+
+    /**
+     * Abort the current request if it exists.
+     */
+    abortRequest: function(request) {
+      if (this.currentRequest && this.currentRequest[request]) {
+        this.currentRequest[request].abort();
+        this.currentRequest[request] = null;
+      }
     }
+
   });
 
   return new LandsatService();
