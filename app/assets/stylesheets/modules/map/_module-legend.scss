@@ -493,17 +493,20 @@
         }
       }
 
-      .circle{
-        padding: 0;
-        top: 2px;
-        display: block;
-        font-style: italic;
-        font-size: 11px;
+      .circle {
         width: 10px;
         height: 10px;
         position: absolute;
         left: -15px;
         border-radius: 10px;
+      }
+
+      i {
+        padding: 0;
+        top: 2px;
+        display: block;
+        font-style: italic;
+        font-size: 11px;
       }
     }
 
