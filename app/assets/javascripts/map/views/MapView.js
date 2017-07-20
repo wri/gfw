@@ -17,8 +17,9 @@ define([
   'map/views/maptypes/positronMaptype',
   'map/views/maptypes/landsatMaptype',
   'map/views/maptypes/openStreetMaptype',
-  'map/helpers/layersHelper'
-], function(Backbone, _, mps, Cookies, enquire, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, openStreetMaptype, layersHelper) {
+  'map/helpers/layersHelper',
+  'map/services/LandsatService'
+], function(Backbone, _, mps, Cookies, enquire, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, openStreetMaptype, layersHelper, landsatService) {
 
   'use strict';
 
@@ -240,7 +241,7 @@ define([
      * @param  {string} layerSlug The layerSlug of the layer to remove
      */
     _removeLayer: function(layerSlug) {
-      var inst = this.layerInst[layerSlug]; 
+      var inst = this.layerInst[layerSlug];
       if (!inst) {return;}
       inst.removeLayer();
       inst.presenter && inst.presenter.unsubscribe && inst.presenter.unsubscribe();
@@ -458,11 +459,22 @@ define([
       this.map.mapTypes.set('dark', darkMaptype());
       this.map.mapTypes.set('positron', positronMaptype());
       this.map.mapTypes.set('openstreet', openStreetMaptype());
-      for (var i = 1999; i <= 2016; i++) {
-        this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
-      }
+      this._setLandsatTiles();
     },
 
+    _setLandsatTiles: function () {
+      for (var i = 1999; i <= 2016; i++) {
+        if (i === 2015 || i === 2016) {
+          landsatService.getTiles(i)
+            .then(function(year, results) {
+              landsatService.getRefreshTiles(year, results.attributes.url);
+              this.map.mapTypes.set('landsat{0}'.format(year), landsatMaptype(year, results.attributes.url));
+            }.bind(this, i));
+        } else {
+          this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype(i, null));
+        }
+      }
+    },
 
     /**
      * Crosshairs when analysis is activated
