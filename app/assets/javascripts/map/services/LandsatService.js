@@ -27,14 +27,15 @@ define([
           year: year
         });
 
+        var requestId = GET_REQUEST_LANDSAT_TILES_ID + '_' + year;
         this.defineRequest(
-          GET_REQUEST_LANDSAT_TILES_ID,
+          requestId,
           url,
           { type: 'persist', duration: 1, unit: 'days' }
         );
 
         var requestConfig = {
-          resourceId: GET_REQUEST_LANDSAT_TILES_ID,
+          resourceId: requestId,
           success: function(res, status) {
             resolve(res.data, status);
           },
@@ -43,22 +44,24 @@ define([
           }
         };
 
-        this.abortRequest(GET_REQUEST_LANDSAT_TILES_ID);
-        this.currentRequest[GET_REQUEST_LANDSAT_TILES_ID] = ds.request(requestConfig);
+        this.abortRequest(requestId);
+        this.currentRequest[requestId] = ds.request(requestConfig);
       }.bind(this));
     },
 
-    getRefreshTiles: function (url) {
+    getRefreshTiles: function (year, url) {
+      var requestId = GET_REQUEST_REFRESH_TILES_ID + '_' + year;
+
       this.defineRequest(
-        GET_REQUEST_REFRESH_TILES_ID,
+        requestId,
         url.replace('{z}/{x}/{y}', '12/1/1'),
         { type: 'persist', duration: 1, unit: 'days' }
       );
 
-      var requestConfig = {resourceId: GET_REQUEST_LANDSAT_TILES_ID};
+      var requestConfig = {resourceId: requestId};
 
-      this.abortRequest(GET_REQUEST_REFRESH_TILES_ID);
-      this.currentRequest[GET_REQUEST_REFRESH_TILES_ID] = ds.request(requestConfig);
+      this.abortRequest(requestId);
+      this.currentRequest[requestId] = ds.request(requestConfig);
     },
 
     defineRequest: function (id, url, cache) {
