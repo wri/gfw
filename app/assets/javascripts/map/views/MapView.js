@@ -467,9 +467,7 @@ define([
         if (i === 2015 || i === 2016) {
           landsatService.getTiles(i)
             .then(function(year, results) {
-              if (year === 2015) {
-                landsatService.getRefreshTiles(results.attributes.url);
-              }
+              landsatService.getRefreshTiles(year, results.attributes.url);
               this.map.mapTypes.set('landsat{0}'.format(year), landsatMaptype(year, results.attributes.url));
             }.bind(this, i));
         } else {
