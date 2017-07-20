@@ -464,17 +464,13 @@ define([
 
     _setLandsatTiles: function () {
       for (var i = 1999; i <= 2016; i++) {
-        switch (i) {
-          case 2015:
-          case 2016:
-            landsatService.getTiles(i)
-              .then(function(year, results) {
-                this.map.mapTypes.set('landsat{0}'.format(year), landsatMaptype(year, results.attributes.url));
-              }.bind(this, i));
-            break;
-          default:
-            this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype(i, null));
-            break;
+        if (i === 2015 || i === 2016) {
+          landsatService.getTiles(i)
+            .then(function(year, results) {
+              this.map.mapTypes.set('landsat{0}'.format(year), landsatMaptype(year, results.attributes.url));
+            }.bind(this, i));
+        } else {
+          this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype(i, null));
         }
       }
     },
