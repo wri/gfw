@@ -8,6 +8,7 @@ define([
   'use strict';
 
   var GET_REQUEST_LANDSAT_TILES_ID = 'LandsatService:getTiles';
+  var GET_REQUEST_REFRESH_TILES_ID = 'LandsatService:getRefreshTiles';
 
   var APIURL = window.gfw.config.GFW_API_HOST_PROD;
 
@@ -26,8 +27,11 @@ define([
           year: year
         });
 
-        this.defineRequest(GET_REQUEST_LANDSAT_TILES_ID,
-          url, { type: 'persist', duration: 1, unit: 'days' });
+        this.defineRequest(
+          GET_REQUEST_LANDSAT_TILES_ID,
+          url,
+          { type: 'persist', duration: 1, unit: 'days' }
+        );
 
         var requestConfig = {
           resourceId: GET_REQUEST_LANDSAT_TILES_ID,
@@ -39,8 +43,22 @@ define([
           }
         };
 
+        this.abortRequest(GET_REQUEST_LANDSAT_TILES_ID);
         this.currentRequest[GET_REQUEST_LANDSAT_TILES_ID] = ds.request(requestConfig);
       }.bind(this));
+    },
+
+    getRefreshTiles: function (url) {
+      this.defineRequest(
+        GET_REQUEST_REFRESH_TILES_ID,
+        url.replace('{z}/{x}/{y}', '12/1/1'),
+        { type: 'persist', duration: 1, unit: 'days' }
+      );
+
+      var requestConfig = {resourceId: GET_REQUEST_LANDSAT_TILES_ID};
+
+      this.abortRequest(GET_REQUEST_REFRESH_TILES_ID);
+      this.currentRequest[GET_REQUEST_REFRESH_TILES_ID] = ds.request(requestConfig);
     },
 
     defineRequest: function (id, url, cache) {
@@ -63,6 +81,16 @@ define([
         }
       });
     },
+
+    /**
+     * Abort the current request if it exists.
+     */
+    abortRequest: function(request) {
+      if (this.currentRequest && this.currentRequest[request]) {
+        this.currentRequest[request].abort();
+        this.currentRequest[request] = null;
+      }
+    }
 
   });
 

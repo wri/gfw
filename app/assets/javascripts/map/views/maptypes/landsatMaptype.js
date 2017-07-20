@@ -1,13 +1,11 @@
 /**
  * Landsat Maptype.
  */
-define([
-  'map/services/DataService'
-], function (ds) {
+define([], function () {
 
   'use strict';
 
-  var LandsatMaptype = function(year, refreshTokenUrl) {
+  var LandsatMaptype = function(year, tileUrl) {
     // We want to set the zoom level differently depending on the year of the
     // landsat data. As diffrent z-levels exist for diffrent tile-sets.
 
@@ -23,14 +21,9 @@ define([
         switch (year) {
           case 2015:
           case 2016:
-            ds.define('LandsatService:refreshToken', {
-              cache: {type: 'persist', duration: 1, unit: 'days'},
-              url: refreshTokenUrl.replace('{z}/{x}/{y}', z + '/' + x + '/' + ll.y),
-              type: 'GET'
-            });
-            ds.request({resourceId: 'LandsatService:refreshToken'});
-
-            return 'https://storage.googleapis.com/landsat-cache/{0}/{1}/{2}/{3}.png'.format(year, z, x, ll.y);
+            return z === 12 || z === 13
+              ? tileUrl.replace('{z}/{x}/{y}', z + '/' + x + '/' +ll.y)
+              : 'https://storage.googleapis.com/landsat-cache/{0}/{1}/{2}/{3}.png'.format(year, z, x, ll.y);
             break;
           default:
             return window.gfw.config.GFW_API_HOST + '/gee/landsat_composites/{0}/{1}/{2}.png?year={3}'.format(z, x, ll.y, year);
@@ -40,7 +33,7 @@ define([
     };
 
     if (year === 2015 || year === 2016) {
-      config['maxZoom'] = 10;
+      config['maxZoom'] = 13;
     }
 
     return new google.maps.ImageMapType(config);
