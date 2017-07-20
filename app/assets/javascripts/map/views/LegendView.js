@@ -264,6 +264,9 @@ define([
       _.each(layers, function(layer) {
         layer.source = (layer.slug === 'nothing') ? null : layer.source || layer.slug;
         if (this.detailsTemplates[layer.slug]) {
+          if (layer.title === 'Tree plantations by type' || layer.title === 'Tree plantations by species') {
+            layer.title = 'Tree plantations'
+          }
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
             hresolution: options.hresolution,
@@ -289,6 +292,11 @@ define([
 
       categoriesGlobal = this.statusCategories(this.getLayersByCategory(layersGlobal));
       categoriesIso = this.statusCategories(this.getLayersByCategory(layersIso));
+
+      // var title = layer.title;
+      // if (layer.title === 'Tree plantations by type' || layer.title === 'Tree plantations by species') {
+      //   title = 'Tree plantations'
+      // }
 
       // Render
       this.render(this.template({
@@ -322,7 +330,7 @@ define([
       return _.groupBy(filteredLayers, function(layer) {
         layer.allowSubscription = layer && subscriptionsAllowed.indexOf(layer.slug) > -1;
 
-        // Hack to keep the forest_clearing slug in layers which have to be analyzed but not grouped by the said slug in the legend 
+        // Hack to keep the forest_clearing slug in layers which have to be analyzed but not grouped by the said slug in the legend
         if (layer.category_slug === 'forest_clearing' && !layer.is_forest_clearing) return 'forest_cover';
         return layer.category_slug;
       })
@@ -466,6 +474,10 @@ define([
       var top = position.top - 10;
       var left = position.left - 92;
       var text = $(e.target).attr('data-description');
+      var dataSource = $(e.target).attr('data-source');
+      if (dataSource === 'gfw_plantations') {
+        left = left + 16;
+      }
       if (text != '') {
         $('body').append('<div class="tooltip-info-legend" id="tooltip-info-legend" style="top:'+top+'px; left:'+left+'px;"><div class="triangle"><span>'+text+'</span><p>Click to see more</p></div></div>');
       }
