@@ -284,6 +284,8 @@
   position: absolute;
   z-index: 1000;
   max-width: 200px;
+  min-width: 200px;
+  width: 200px;
   padding: 8px;
   background-color: #fffee2;
   box-shadow: 0 1px 3px 0 rgba(85, 85, 85, .25);
