@@ -39,7 +39,6 @@ define([
           }
         };
 
-        this.abortRequest(GET_REQUEST_LANDSAT_TILES_ID);
         this.currentRequest[GET_REQUEST_LANDSAT_TILES_ID] = ds.request(requestConfig);
       }.bind(this));
     },
@@ -64,16 +63,6 @@ define([
         }
       });
     },
-
-    /**
-     * Abort the current request if it exists.
-     */
-    abortRequest: function(request) {
-      if (this.currentRequest && this.currentRequest[request]) {
-        this.currentRequest[request].abort();
-        this.currentRequest[request] = null;
-      }
-    }
 
   });
 
