@@ -293,11 +293,6 @@ define([
       categoriesGlobal = this.statusCategories(this.getLayersByCategory(layersGlobal));
       categoriesIso = this.statusCategories(this.getLayersByCategory(layersIso));
 
-      // var title = layer.title;
-      // if (layer.title === 'Tree plantations by type' || layer.title === 'Tree plantations by species') {
-      //   title = 'Tree plantations'
-      // }
-
       // Render
       this.render(this.template({
         categories: (_.isEmpty(categoriesGlobal)) ? false : categoriesGlobal,
