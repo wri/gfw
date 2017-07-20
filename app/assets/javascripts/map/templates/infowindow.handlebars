@@ -8,7 +8,7 @@
         {{/if}}
 
         {{!-- <div class="thumb-mask" style="background-image: url({{content.data.image}})"> --}}
-          <div class="thumb-mask"><img src="{{content.data.image}}" onerror="this.style.display='none';"></div>
+          <div class="thumb-mask" style="background-image: url({{content.data.image}})"></div>
           {{#if content.data.image_source}}
             <span class="image-legend">{{ content.data.image_source }}</span>
           {{/if}}
@@ -64,8 +64,7 @@
           <p>{{content.data.id}}</p>
         {{/if}}
         {{#if content.data.description}}
-          <h4 class="no-float">Description:</h4>
-          <p class="no-float">{{content.data.description}}</p>
+          <p class="no-float">{{{substring content.data.description 0 120}}}</p>
         {{/if}}
         {{#if content.data.type}}
           <h4>Type:</h4>
@@ -138,6 +137,14 @@
         {{#if content.data.company}}
           <h4>Company:</h4>
           <p>{{content.data.company}}</p>
+        {{/if}}
+        {{#if content.data.group}}
+          <h4>Group/Affiliation:</h4>
+          <p>{{content.data.group}}</p>
+        {{/if}}
+        {{#if content.data.last_update}}
+          <h4>Last update:</h4>
+          <p>{{content.data.last_update}}</p>
         {{/if}}
         {{#if content.data.permit_num}}
           <h4>Permit Num:</h4>
@@ -491,6 +498,10 @@
           <h4>Certification:</h4>
           <p>{{content.data.certif}}</p>
         {{/if}}
+        {{#if content.data.certification_status}}
+          <h4>Certification status:</h4>
+          <p>{{content.data.certification_status}}</p>
+        {{/if}}        
         {{#if content.data.license_no}}
           <h4>License No:</h4>
           <p>{{content.data.license_no}}</p>
@@ -576,7 +587,7 @@
     {{#if content.data.actions}}
       <div id="cartodb-popup-fixed" class="cartodb-popup-actions">
       {{#if content.data.analize}}
-        <a style="cursor:pointer;" class="analyze-shape btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}">analyze</a>
+        <span style="cursor:pointer;" data-zoom="true" class="analyze-shape btn green uppercase zoom-analyze" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}" data-bbox="{{content.data.bbox}}">zoom</span>
       {{/if}}
       {{#if content.data.readmore}}
         <a style="cursor:pointer;" class="btn green uppercase" href="{{content.data.link}}" target="_blank" rel="noopener">read more</a>

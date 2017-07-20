@@ -153,24 +153,30 @@ define([
       var $map = $('#map');
       var self = this;
       $map.find('.cartodb-popup').on('click.infowindow', '.analyze-shape', function (e) {
-        var isDisabled = $(e.currentTarget).hasClass('disabled');
+        if ($(e.target).attr('data-zoom') === 'true') {
 
-        if (!isDisabled) {
-          $('#map').find('.cartodb-infowindow').hide(0);
+          mps.publish('Zoom/in', [$(this).data('bbox')]);
 
-          var shapeData = {
-            useid: $(this).data('useid'),
-            use: $(this).data('use'),
-            wdpaid: $(this).data('wdpaid')
-          };
-
-          mps.publish('Analysis/shape', [shapeData]);
-
-          // Analytics events
-          (shapeData.wdpaid) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area' + shapeData.wdpaid) : null;
-          (shapeData.useid) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze ' + shapeData.use.toUpperCase() + ' ' + shapeData.useid) : null;
         } else {
-          mps.publish('Notification/open', ['notification-select-forest-change-layer']);
+          var isDisabled = $(e.currentTarget).hasClass('disabled');
+
+          if (!isDisabled) {
+            $('#map').find('.cartodb-infowindow').hide(0);
+
+            var shapeData = {
+              useid: $(this).data('useid'),
+              use: $(this).data('use'),
+              wdpaid: $(this).data('wdpaid')
+            };
+
+            mps.publish('Analysis/shape', [shapeData]);
+
+            // Analytics events
+            (shapeData.wdpaid) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area' + shapeData.wdpaid) : null;
+            (shapeData.useid) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze ' + shapeData.use.toUpperCase() + ' ' + shapeData.useid) : null;
+          } else {
+            mps.publish('Notification/open', ['notification-select-forest-change-layer']);
+          }
         }
       });
 

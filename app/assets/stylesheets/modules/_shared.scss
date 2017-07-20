@@ -41,12 +41,12 @@
     background-color: darken($cGreen,5%);
   }
   &.default{
-    background-color: #AAA;
+    background-color: darken(#AAA, 20%);
     svg{
       fill: $white;
     }
     &:hover{
-      background-color: #777;
+      background-color: darken(#AAA, 20%);
     }
   }
   &.green{

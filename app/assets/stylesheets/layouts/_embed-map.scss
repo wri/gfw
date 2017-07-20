@@ -39,7 +39,7 @@
     height: 100%;
     top: 0;
   }
-  
+
   .timeline-mobile-call-to-action {
     display: none;
   }
@@ -276,10 +276,45 @@
   .guideTourButton {
     display: none !important;
   }
-
 }
 
+.tooltip-info-legend {
+  padding: 20px;
+  background-color: red;
+  position: absolute;
+  z-index: 1000;
+  max-width: 200px;
+  padding: 8px;
+  background-color: #fffee2;
+  box-shadow: 0 1px 3px 0 rgba(85, 85, 85, .25);
 
+  span,
+  p {
+    font-size: 12px;
+    line-height: 1.42;
+    letter-spacing: -.2px;
+    color: #555;
+  }
 
+  p {
+    opacity: .5;
+  }
+  .triangle {
+    position: relative;
 
-
+    &::after {
+    	top: 100%;
+    	left: 50%;
+    	border: solid transparent;
+    	content: '';
+    	height: 0;
+    	width: 0;
+    	position: absolute;
+    	pointer-events: none;
+      border-color: rgba(136, 183, 213, 0);
+      border-top-color: #fffee2;
+    	border-width: 15px;
+    	margin-left: -15px;
+    }
+  }
+}

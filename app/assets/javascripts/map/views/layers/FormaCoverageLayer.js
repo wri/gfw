@@ -1,10 +1,14 @@
+/**
+ *
+ * @return FormaCoverageLayer class (extends ImageLayerClass)
+ */
 define([
   'abstract/layer/CartoDBLayerClass',
 ], function(CartoDBLayerClass) {
 
   'use strict';
 
-  var UMDCoverLayer = CartoDBLayerClass.extend({
+  var FormaCoverageLayer = CartoDBLayerClass.extend({
 
     options: {
       sql: 'SELECT *, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName}'
@@ -12,6 +16,6 @@ define([
 
   });
 
-  return UMDCoverLayer;
+  return FormaCoverageLayer;
 
 });

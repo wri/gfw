@@ -182,7 +182,6 @@ define([
     _toggleParent: function($elem) {
       var parentSlug = $elem.data('parent');
       var $parentEl = $elem.closest('[data-layer=\'' + parentSlug + '\']');
-
       if (!$elem.hasClass('selected')) {
         if (!$parentEl.hasClass('selected')) {
           this.presenter.toggleLayer(parentSlug);
@@ -194,7 +193,6 @@ define([
     _toggleLayerWrap: function(e){
       if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source') && !$(e.target).hasClass('layer')) {
         var $layers = $(e.currentTarget).find('.layer');
-
         if ($(e.currentTarget).hasClass('selected')) {
           _.each($layers, _.bind(function(layer){
             if ($(layer).hasClass('selected')) {

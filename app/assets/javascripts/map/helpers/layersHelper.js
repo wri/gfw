@@ -7,6 +7,7 @@ define([
   'map/views/layers/ForestGainLayer',
   'map/views/layers/FormaMonth3Layer',
   'map/views/layers/FormaActivityLayer',
+  'map/views/layers/FormaCoverageLayer',
   'map/views/layers/ImazonLayer',
   'map/views/layers/ImazonCoverLayer',
   'map/views/layers/Forest2000Layer',
@@ -22,6 +23,7 @@ define([
   'map/views/layers/CodLoggingLayer',
   'map/views/layers/GabLoggingLayer',
   'map/views/layers/GnqLoggingLayer',
+  'map/views/layers/IdnForestArea',
   'map/views/layers/IdnLoggingLayer',
   'map/views/layers/LbrLoggingLayer',
   'map/views/layers/CogLoggingLayer',
@@ -36,6 +38,7 @@ define([
   'map/views/layers/ColMiningLayer',
   'map/views/layers/KhmMiningLayer',
   'map/views/layers/OilPalmLayer',
+  'map/views/layers/IdnSuitabilityLayer',
   'map/views/layers/CogOilPalmLayer',
   'map/views/layers/LbrOilPalmLayer',
   'map/views/layers/CmrOilPalmLayer',
@@ -80,6 +83,7 @@ define([
   'map/views/layers/MexicanProtectedAreasLayer',
   'map/views/layers/CarbonLayer',
   'map/views/layers/DamHotspotsLayer',
+  'map/views/layers/PalmOilMillsLayer',
   'map/views/layers/ColombiaForestChangeLayer',
   'map/views/layers/UsaConservationEasementsLayer',
   'map/views/layers/UsaLandCoverLayer',
@@ -117,7 +121,6 @@ define([
   'map/views/layers/GtmForestCoverLayer',
   'map/views/layers/GtmForestDensityLayer',
   'map/views/layers/GladLayer',
-  'map/views/layers/UMDCoverLayer',
   'map/views/layers/LandsatAlertsCoverLayer',
   'map/views/layers/GladCoverageLayer',
   'map/views/layers/KhmProtectedAreasLayer',
@@ -136,6 +139,8 @@ define([
   'map/views/layers/PerMiningLayer',
   'map/views/layers/MexMiningLayer',
   'map/views/layers/BraMiningLayer',
+  'map/views/layers/BraRTRSLayer',
+  'map/views/layers/PryRTRSLayer',
   'map/views/layers/ViirsLayer',
   'map/views/layers/PerMinamCoverLayer',
   'map/views/layers/CanIntactForestLayer',
@@ -186,6 +191,7 @@ define([
   ForestGainLayer,
   FormaMonth3Layer,
   FormaActivityLayer,
+  FormaCoverageLayer,
   ImazonLayer,
   ImazonCoverLayer,
   Forest2000Layer,
@@ -201,6 +207,7 @@ define([
   CodLoggingLayer,
   GabLoggingLayer,
   GnqLoggingLayer,
+  IdnForestArea,
   IdnLoggingLayer,
   LbrLoggingLayer,
   CogLoggingLayer,
@@ -215,6 +222,7 @@ define([
   ColMiningLayer,
   KhmMiningLayer,
   OilPalmLayer,
+  IdnSuitabilityLayer,
   CogOilPalmLayer,
   LbrOilPalmLayer,
   CmrOilPalmLayer,
@@ -259,6 +267,7 @@ define([
   MexicanProtectedAreasLayer,
   CarbonLayer,
   DamHotspotsLayer,
+  PalmOilMillsLayer,
   ColombiaForestChangeLayer,
   UsaConservationEasementsLayer,
   UsaLandCoverLayer,
@@ -296,7 +305,6 @@ define([
   GtmForestCoverLayer,
   GtmForestDensityLayer,
   GladLayer,
-  UMDCoverLayer,
   LandsatAlertsCoverLayer,
   GladCoverageLayer,
   KhmProtectedAreasLayer,
@@ -315,6 +323,8 @@ define([
   PerMiningLayer,
   MexMiningLayer,
   BraMiningLayer,
+  BraRTRSLayer,
+  PryRTRSLayer,
   ViirsLayer,
   PerMinamCoverLayer,
   CanIntactForestLayer,
@@ -379,6 +389,9 @@ define([
       view: FormaActivityLayer,
       timelineView: FormaActivityTimeline
     },
+    forma_coverage: {
+      view: FormaCoverageLayer
+    },
     imazon: {
       view: ImazonLayer,
       timelineView: ImazonTimeline
@@ -429,6 +442,9 @@ define([
     gnq_logging: {
       view: GnqLoggingLayer
     },
+    idn_forest_area: {
+      view: IdnForestArea
+    },
     idn_logging: {
       view: IdnLoggingLayer
     },
@@ -470,6 +486,9 @@ define([
     },
     oil_palm: {
       view: OilPalmLayer
+    },
+    idn_suitability: {
+      view: IdnSuitabilityLayer
     },
     cog_oil_palm: {
       view: CogOilPalmLayer
@@ -608,6 +627,9 @@ define([
     dam_hotspots: {
       view: DamHotspotsLayer
     },
+    oil_palm_mills:{
+      view: PalmOilMillsLayer
+    },
     usa_conservation_easements: {
       view: UsaConservationEasementsLayer
     },
@@ -721,9 +743,6 @@ define([
       view: GladLayer,
       timelineView: GladTimeline
     },
-    umd_coverage_2015: {
-      view: UMDCoverLayer
-    },
     gfw_landsat_alerts_coverage: {
       view: LandsatAlertsCoverLayer
     },
@@ -778,6 +797,12 @@ define([
     },
     bra_mining: {
       view:  BraMiningLayer
+    },
+    bra_rtrs: {
+      view: BraRTRSLayer
+    },
+    pry_rtrs:{
+      view: PryRTRSLayer
     },
     per_minam_tree_cover: {
       view:  PerMinamCoverLayer

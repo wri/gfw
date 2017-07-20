@@ -87,22 +87,22 @@ define([
       order: 70
     },
     'forma_month_3': {
-      title: 'FORMA alerts data',
-      long_title: 'FORMA alerts data',
+      title: 'FORMA alerts',
+      long_title: 'FORMA alerts',
       sub_title: 'daily, 250m, tropics, WRI/Google',
       layerSlug: ['forma_month_3'],
-      slug: 'forma_month_3',
+      slug: 'forma250GFW',
       slug_source: 'forma',
       analysisSlug: 'forma250GFW',
       layer_id: null,
       order: 80
     },
     'forma_activity': {
-      title: 'FORMA active clearing alerts data',
-      long_title: 'FORMA active clearing alerts data',
+      title: 'FORMA active clearing alerts',
+      long_title: 'FORMA active clearing alerts',
       sub_title: 'daily, 250m, tropics, WRI/Google',
       layerSlug: ['forma_activity'],
-      slug: 'forma_activity',
+      slug: 'forma-alerts',
       slug_source: 'forma',
       analysisSlug: 'forma-alerts',
       layer_id: null,

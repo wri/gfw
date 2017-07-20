@@ -22,7 +22,8 @@ define([
       "grump2000",
       "mex_forest_zoning_cat",
       "mex_forest_zoning_subcat",
-      //FOREST/LAND COVER
+      //FOREST/LAND COVER CONTEXTUAL LAYER
+      "forma_coverage",
       "forest2000",
       "per_minam_tree_cover",
       "cod_primary_forest_wgs",
@@ -33,6 +34,8 @@ define([
       "mex_land_cover",
       "gtm_forest_cover",
       "bra_land_cover",
+      "bra_rtrs",
+      "pry_rtrs",
       "gtm_forest_density",
       "gtm_forest_change2",
       "gtm_forest_change1",
@@ -56,6 +59,7 @@ define([
       "col_plantations_by_species",
       "khm_plantations_by_type",
       "khm_plantations_by_species",
+      "idn_forest_area",
       "idn_plantations_by_type",
       "idn_plantations_by_species",
       "mys_plantations_by_type",
@@ -104,6 +108,7 @@ define([
       "per_protected_areas",
       // Land USE
       "dam_hotspots",
+      "oil_palm_mills",
       "per_prod_for",
       "concesiones_wrapper",
       "concesiones_forestalesNS",
@@ -117,6 +122,7 @@ define([
       "lbr_oil_palm",
       "cmr_oil_palm",
       "idn_oil_palm",
+      "idn_suitability",
       "mys_oil_palm",
       "oil_palm",
       "bra_mining",
@@ -152,7 +158,6 @@ define([
       "mongabay",
       "user_stories",
       // FOREST CHANGE
-      "umd_coverage_2015",
       "gfw_landsat_alerts_coverage",
       "glad_coverage",
       "terraicanvas_cover",

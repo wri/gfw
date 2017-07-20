@@ -297,6 +297,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           flex-wrap: wrap;
 
           .btn-icon {
+            cursor: pointer;
             display: block;
             width: 30px;
             height: 30px;
@@ -520,6 +521,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         }
       }
       .onoffswitch{
+        cursor: pointer;
         margin: 1px 6px 0 0;
       }
     }
@@ -596,6 +598,10 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     display: block;
     color: #AAA;
     word-wrap: break-word;
+
+    &.-hidden {
+      display: none;
+    }
 
     label {
       cursor: pointer;
@@ -675,6 +681,28 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     }
     &.hidden {
       display: none;
+    }
+  }
+
+  .source-shape-info {
+    background-color: transparent !important;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
+
+
+//Country nav
+
+#country-layers-nav {
+  .tab-content {
+    .layers-list {
+      .does_wrapper {
+        display: none;
+      }
     }
   }
 }

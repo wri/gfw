@@ -1,7 +1,7 @@
 .m-tabs {
   width: 100%;
   display: flex;
-  margin-bottom: 90px;
+  margin-bottom: 123px;
 
   .tabs {
     width: 100%;
@@ -87,5 +87,32 @@
     top: 20px;
     left: 0;
     z-index: 2;
+
+    p {
+      text-align: right;
+
+      a:not(:last-child) {
+        margin-right: 20px;
+      }
+    }
+  }
+
+  .test-webhook {
+
+    .webhook-loader {
+      color: $slate;
+    }
+
+    &:not(.-loading) .webhook-loader {
+      display: none;
+    }
+
+    &.-loading {
+      cursor: default;
+
+      .webhook-text {
+        display: none;
+      }
+    }
   }
 }

@@ -8,6 +8,14 @@ define([
 
   'use strict';
 
+  Handlebars.registerHelper('substring', function( string, start, end ) {
+    var theString = string.substring( start ,end );
+    if( string.length > end ) {
+      theString += '...';
+    }
+    return new Handlebars.SafeString(theString);
+  });
+
   var CustomInfowindow = function(latlng, map, opts) {
     this.defauls = {
       template: tpl,
@@ -39,8 +47,11 @@ define([
       div.className = this.options.className;
       div.style.position = 'absolute';
       div.style.width = this.options.width + 'px';
-
-      div.innerHTML = this.options.infowindowContent || this.template({content: {data: this.options.infowindowData}});
+      div.innerHTML = this.options.infowindowContent || this.template({
+        content: {
+          data: this.options.infowindowData
+        }
+      });
 
       popup = $(div).find('.cartodb-popup')[0];
       closeButton = $(div).find('.close')[0];

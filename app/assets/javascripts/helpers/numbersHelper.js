@@ -41,7 +41,6 @@ define([
       if (number) {
         var toDecimals = decimals || 2;
         result = parseFloat((number * 1).toFixed(toDecimals));
-        console.log(result);
         if (result > 1) {
           result = Math.round(result);
         }
