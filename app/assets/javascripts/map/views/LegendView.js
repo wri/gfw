@@ -472,12 +472,9 @@ define([
     showTooltip: function(e) {
       var position = $(e.target).offset();
       var top = position.top - 10;
-      var left = position.left - 92;
+      var left = position.left - 76;
       var text = $(e.target).attr('data-description');
       var dataSource = $(e.target).attr('data-source');
-      if (dataSource === 'gfw_plantations') {
-        left = left + 16;
-      }
       if (text != '') {
         $('body').append('<div class="tooltip-info-legend" id="tooltip-info-legend" style="top:'+top+'px; left:'+left+'px;"><div class="triangle"><span>'+text+'</span><p>Click to see more</p></div></div>');
       }
