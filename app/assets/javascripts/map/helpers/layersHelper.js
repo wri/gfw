@@ -137,6 +137,7 @@ define([
   'map/views/layers/PerMiningLayer',
   'map/views/layers/MexMiningLayer',
   'map/views/layers/BraMiningLayer',
+  'map/views/layers/BraSoyCerradoLayer',
   'map/views/layers/BraRTRSLayer',
   'map/views/layers/PryRTRSLayer',
   'map/views/layers/ViirsLayer',
@@ -317,6 +318,7 @@ define([
   PerMiningLayer,
   MexMiningLayer,
   BraMiningLayer,
+  BraSoyCerradoLayer,
   BraRTRSLayer,
   PryRTRSLayer,
   ViirsLayer,
@@ -782,6 +784,9 @@ define([
     },
     bra_mining: {
       view:  BraMiningLayer
+    },
+    bra_soy: {
+      view: BraSoyCerradoLayer
     },
     bra_rtrs: {
       view: BraRTRSLayer
