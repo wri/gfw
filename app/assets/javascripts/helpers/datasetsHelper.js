@@ -86,7 +86,7 @@ define([
       layer_id: null,
       order: 70
     },
-    'forma_month_3': {
+    'forma250GFW': {
       title: 'FORMA alerts data',
       long_title: 'FORMA alerts data',
       sub_title: 'daily, 250m, tropics, WRI/Google',
@@ -97,7 +97,7 @@ define([
       layer_id: null,
       order: 80
     },
-    'forma_activity': {
+    'forma-alerts': {
       title: 'FORMA active clearing alerts data',
       long_title: 'FORMA active clearing alerts data',
       sub_title: 'daily, 250m, tropics, WRI/Google',
