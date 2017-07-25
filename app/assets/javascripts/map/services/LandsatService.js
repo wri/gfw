@@ -30,7 +30,7 @@ define([
         var requestId = GET_REQUEST_LANDSAT_TILES_ID + '_' + year;
         this.defineRequest(
           requestId,
-          url,
+          APIURL + url,
           { type: 'persist', duration: 1, unit: 'days' }
         );
 
@@ -67,7 +67,7 @@ define([
     defineRequest: function (id, url, cache) {
       ds.define(id, {
         cache: cache,
-        url: APIURL + url,
+        url: url,
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
