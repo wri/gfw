@@ -21,7 +21,7 @@ define([], function () {
         switch (year) {
           case 2015:
           case 2016:
-            return z === 12 || z === 13
+            return z > 11
               ? tileUrl.replace('{z}/{x}/{y}', z + '/' + x + '/' +ll.y)
               : 'https://storage.googleapis.com/landsat-cache/{0}/{1}/{2}/{3}.png'.format(year, z, x, ll.y);
             break;
@@ -31,10 +31,6 @@ define([], function () {
         }
       },
     };
-
-    if (year === 2015 || year === 2016) {
-      config['maxZoom'] = 13;
-    }
 
     return new google.maps.ImageMapType(config);
   };
