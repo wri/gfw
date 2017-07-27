@@ -581,18 +581,40 @@ define([
 
     _appearMenu: function() {
       $('body').mousemove(function( event ) {
-        if(event.pageY < 35) {
+        if(event.pageY < 100) {
           $('#headerGfw').addClass('-show');
           $('.logo-menu').addClass('-show');
           $('.nav-sections').addClass('-show');
           $('.layout-header-bottom').addClass('-show');
         }
 
-        if(event.pageY > 50){
+        if(event.pageY > 120){
           var hoverMenuLanguage = $('.txlive-langselector-list').is(':hover');
+          var languageMenuOpen = $('.txlive-langselector-list').hasClass('txlive-langselector-list-opened');
           var hoverMenuLogin = $('.m-header-sub-menu-login').is(':hover');
           var hoverMenuDashboard = $('.m-header-sub-menu-dashboard').is(':hover');
-          if(!hoverMenuLanguage && !hoverMenuLogin && !hoverMenuDashboard) {
+          var dashboardMenuOpen = $('.m-header-sub-menu-dashboard').hasClass('-active');
+          var loginMenuOpen = $('.m-header-sub-menu-login').hasClass('-active');
+          var hoverLayerNavForest = $('#layersnav-forest-change > .layers-nav-header').is(':hover');
+          var hoverLayerListForest = $('#layersnav-forest-change > .layers-list').is(':hover');
+          var hoverLayerNavCover = $('#layersnav-forest-cover > .layers-nav-header').is(':hover');
+          var hoverLayerListCover = $('#layersnav-forest-cover > .layers-list').is(':hover');
+          var hoverLayerNavUse = $('#layersnav-forest-use > .layers-nav-header').is(':hover');
+          var hoverLayerListUse = $('#layersnav-forest-use > .layers-list').is(':hover');
+          var hoverLayerNavConservation = $('#layersnav-conservation > .layers-nav-header').is(':hover');
+          var hoverLayerListConservation = $('#layersnav-conservation > .layers-list').is(':hover');
+          var hoverLayerNavPeople = $('#layersnav-people > .layers-nav-header').is(':hover');
+          var hoverLayerListPeople = $('#layersnav-people > .layers-list').is(':hover');
+          var hoverLayerNavStories = $('#layersnav-stories > .layers-nav-header').is(':hover');
+          var hoverLayerListStories = $('#layersnav-stories > .layers-list').is(':hover');
+
+          var hoverLayerNavCountry = $('#country-layers-nav > .layers-nav-header').is(':hover');
+
+          if(!hoverMenuLanguage && !hoverMenuLogin && !hoverMenuDashboard && !loginMenuOpen && !dashboardMenuOpen
+             && !languageMenuOpen && !hoverLayerListForest && !hoverLayerNavForest && !hoverLayerListCover
+             && !hoverLayerNavCover && !hoverLayerNavUse && !hoverLayerListUse && !hoverLayerNavConservation
+             && !hoverLayerListConservation && !hoverLayerNavPeople && !hoverLayerListPeople && !hoverLayerNavStories
+             && !hoverLayerListStories && !hoverLayerNavCountry && !hoverLayerListCountry) {
             $('#headerGfw').removeClass('-show');
             $('.logo-menu').removeClass('-show');
             $('.nav-sections').removeClass('-show');
