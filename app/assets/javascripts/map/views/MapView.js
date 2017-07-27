@@ -99,7 +99,7 @@ define([
         mapTypeId: 'grayscale',
         center: new google.maps.LatLng(15, 27),
       };
-
+      this._appearMenu();
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
       this.allowedBounds = new google.maps.LatLngBounds(
          new google.maps.LatLng(-85, -180),
@@ -577,6 +577,29 @@ define([
           }, this )
         );
       }
+    },
+
+    _appearMenu: function() {
+      $('body').mousemove(function( event ) {
+        if(event.pageY < 35) {
+          $('#headerGfw').addClass('-show');
+          $('.logo-menu').addClass('-show');
+          $('.nav-sections').addClass('-show');
+          $('.layout-header-bottom').addClass('-show');
+        }
+
+        if(event.pageY > 50){
+          var hoverMenuLanguage = $('.txlive-langselector-list').is(':hover');
+          var hoverMenuLogin = $('.m-header-sub-menu-login').is(':hover');
+          var hoverMenuDashboard = $('.m-header-sub-menu-dashboard').is(':hover');
+          if(!hoverMenuLanguage && !hoverMenuLogin && !hoverMenuDashboard) {
+            $('#headerGfw').removeClass('-show');
+            $('.logo-menu').removeClass('-show');
+            $('.nav-sections').removeClass('-show');
+            $('.layout-header-bottom').removeClass('-show');
+          }
+        }
+      });
     }
   });
 
