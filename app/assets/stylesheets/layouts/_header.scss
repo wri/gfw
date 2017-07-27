@@ -60,7 +60,7 @@
   @include clearfix();
   @media (min-width: $br-mobile){
     position: relative;
-    background: rgba(#FFF,0.8);
+    background: #fff;
     border-bottom: 1px solid $border;
   }
 
