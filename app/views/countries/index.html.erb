@@ -2,18 +2,18 @@
   <%= render "countries_templates" %>
 <% end %>
 <section id="countryListView" class="section country-profiles">
-  <!-- <div>
-    <ul>
-      <li>
-        <a <% if controller?("countries") && action?("index") %>class="current"<% end %> href="/countries">Country Profiles</a>
-      </li>
-      <li>
-        <a <% if controller?("countries") && action?("overview") %>class="current"<% end %> href="/countries/overview">Country Rankings</a>
-      </li>
-    </ul>
-  </div> -->
   <div class="cover-title">
     <h2 class="title-section">countries</h2>
+  </div>
+  <div class="tab-countries">
+    <ul>
+      <li class="-selected">
+        <a <% if controller?("countries") && action?("index") %>class="current"<% end %> href="/countries">Profiles</a>
+      </li>
+      <li>
+        <a <% if controller?("countries") && action?("overview") %>class="current"<% end %> href="/countries/overview">Rankings</a>
+      </li>
+    </ul>
   </div>
   <div class="inner">
     <div class="search-countries-box">
