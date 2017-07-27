@@ -22,9 +22,6 @@ body,html{
   }
 }
 
-
-
-
 .layout-content {
   margin-bottom: 0;
   position: absolute;
@@ -338,4 +335,66 @@ body,html{
   .gm-style .gm-style-cc span, .gm-style .gm-style-cc a, .gm-style .gm-style-mtc div {
     font-size: 8px !important;
   }
+}
+
+#headerGfw {
+  top: 0 !important;
+  transition: top .2s linear;
+
+  @media (min-width: $br-mobile){
+    top: -45px !important;
+  }
+
+  .m-header-sub-menu-dashboard {
+    position: relative !important;
+
+    @media (min-width: $br-mobile){
+      position: absolute !important;
+    }
+  }
+
+  .txlive-langselector-list {
+    top: 41px !important;
+  }
+
+  .m-header-sub-menu-login {
+    top: 46px !important;
+  }
+
+  .nav-sections {
+    margin-left: 128px !important;
+
+    &.-show {
+      margin-left: 40px !important;
+    }
+  }
+
+  &.-show {
+    top: 0 !important;
+  }
+
+  .m-header-nav-container {
+    height: 45px !important;
+  }
+
+  .logo-menu {
+    top: 0 !important;
+    position: relative !important;
+    transition: .2s linear;
+
+    @media (min-width: $br-mobile){
+      top: 45px !important;
+      position: fixed !important;
+      transition: .2s linear;
+    }
+
+    &.-show {
+      top: 0 !important;
+      position: relative !important;
+    }
+  }
+}
+
+.layout-header-bottom {
+  display: block !important;
 }
