@@ -538,8 +538,12 @@
   }
 }
 #headerGfw {
-  top: -45px !important;
+  top: 0 !important;
   transition: top .2s linear;
+
+  @media (min-width: $br-mobile){
+    top: -45px !important;
+  }
 
   .m-header-sub-menu-dashboard {
     position: relative !important;
@@ -574,9 +578,15 @@
   }
 
   .logo-menu {
-    top: 45px !important;
-    position: fixed !important;
+    top: 0 !important;
+    position: relative !important;
     transition: .2s linear;
+
+    @media (min-width: $br-mobile){
+      top: 45px !important;
+      position: fixed !important;
+      transition: .2s linear;
+    }
 
     &.-show {
       top: 0 !important;
