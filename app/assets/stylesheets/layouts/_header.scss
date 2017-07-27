@@ -541,6 +541,14 @@
   top: -45px !important;
   transition: top .2s linear;
 
+  .m-header-sub-menu-dashboard {
+    position: relative !important;
+
+    @media (min-width: $br-mobile){
+      position: absolute !important;
+    }
+  }
+
   .txlive-langselector-list {
     top: 41px !important;
   }
