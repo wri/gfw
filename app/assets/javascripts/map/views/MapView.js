@@ -595,26 +595,17 @@ define([
           var hoverMenuDashboard = $('.m-header-sub-menu-dashboard').is(':hover');
           var dashboardMenuOpen = $('.m-header-sub-menu-dashboard').hasClass('-active');
           var loginMenuOpen = $('.m-header-sub-menu-login').hasClass('-active');
-          var hoverLayerNavForest = $('#layersnav-forest-change > .layers-nav-header').is(':hover');
-          var hoverLayerListForest = $('#layersnav-forest-change > .layers-list').is(':hover');
-          var hoverLayerNavCover = $('#layersnav-forest-cover > .layers-nav-header').is(':hover');
-          var hoverLayerListCover = $('#layersnav-forest-cover > .layers-list').is(':hover');
-          var hoverLayerNavUse = $('#layersnav-forest-use > .layers-nav-header').is(':hover');
-          var hoverLayerListUse = $('#layersnav-forest-use > .layers-list').is(':hover');
-          var hoverLayerNavConservation = $('#layersnav-conservation > .layers-nav-header').is(':hover');
-          var hoverLayerListConservation = $('#layersnav-conservation > .layers-list').is(':hover');
-          var hoverLayerNavPeople = $('#layersnav-people > .layers-nav-header').is(':hover');
-          var hoverLayerListPeople = $('#layersnav-people > .layers-list').is(':hover');
-          var hoverLayerNavStories = $('#layersnav-stories > .layers-nav-header').is(':hover');
-          var hoverLayerListStories = $('#layersnav-stories > .layers-list').is(':hover');
-
-          var hoverLayerNavCountry = $('#country-layers-nav > .layers-nav-header').is(':hover');
+          var hoverLayerNavForest = $('#layersnav-forest-change').is(':hover');
+          var hoverLayerNavCover = $('#layersnav-forest-cover').is(':hover');
+          var hoverLayerNavUse = $('#layersnav-forest-use').is(':hover');
+          var hoverLayerNavConservation = $('#layersnav-conservation').is(':hover');
+          var hoverLayerNavPeople = $('#layersnav-people').is(':hover');
+          var hoverLayerNavStories = $('#layersnav-stories').is(':hover');
+          var hoverLayerNavCountry = $('#country-layers-nav').is(':hover');
 
           if(!hoverMenuLanguage && !hoverMenuLogin && !hoverMenuDashboard && !loginMenuOpen && !dashboardMenuOpen
-             && !languageMenuOpen && !hoverLayerListForest && !hoverLayerNavForest && !hoverLayerListCover
-             && !hoverLayerNavCover && !hoverLayerNavUse && !hoverLayerListUse && !hoverLayerNavConservation
-             && !hoverLayerListConservation && !hoverLayerNavPeople && !hoverLayerListPeople && !hoverLayerNavStories
-             && !hoverLayerListStories && !hoverLayerNavCountry && !hoverLayerListCountry) {
+             && !languageMenuOpen && !hoverLayerNavForest && !hoverLayerNavCover && !hoverLayerNavUse
+             && !hoverLayerNavConservation && !hoverLayerNavPeople && !hoverLayerNavStories && !hoverLayerNavCountry) {
             $('#headerGfw').removeClass('-show');
             $('.logo-menu').removeClass('-show');
             $('.nav-sections').removeClass('-show');
