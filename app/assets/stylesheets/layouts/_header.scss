@@ -52,6 +52,7 @@
   z-index: 10;
   width: 100%;
   transition: top .2s linear;
+  display: none;
 
   &.-show {
     top: 0;
@@ -535,62 +536,5 @@
   }
   @media (min-width: $br-mobile){
     display: none;
-  }
-}
-#headerGfw {
-  top: 0 !important;
-  transition: top .2s linear;
-
-  @media (min-width: $br-mobile){
-    top: -45px !important;
-  }
-
-  .m-header-sub-menu-dashboard {
-    position: relative !important;
-
-    @media (min-width: $br-mobile){
-      position: absolute !important;
-    }
-  }
-
-  .txlive-langselector-list {
-    top: 41px !important;
-  }
-
-  .m-header-sub-menu-login {
-    top: 46px !important;
-  }
-
-  .nav-sections {
-    margin-left: 128px !important;
-
-    &.-show {
-      margin-left: 40px !important;
-    }
-  }
-
-  &.-show {
-    top: 0 !important;
-  }
-
-  .m-header-nav-container {
-    height: 45px !important;
-  }
-
-  .logo-menu {
-    top: 0 !important;
-    position: relative !important;
-    transition: .2s linear;
-
-    @media (min-width: $br-mobile){
-      top: 45px !important;
-      position: fixed !important;
-      transition: .2s linear;
-    }
-
-    &.-show {
-      top: 0 !important;
-      position: relative !important;
-    }
   }
 }

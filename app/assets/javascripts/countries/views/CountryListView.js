@@ -65,7 +65,7 @@ define([
 
 
     scrollTo: function(){
-      $('html,body').animate({ scrollTop : this.$searchBox.offset().top - 20 });
+      // $('html,body').animate({ scrollTop : this.$searchBox.offset().top - 20 });
     },
 
 
