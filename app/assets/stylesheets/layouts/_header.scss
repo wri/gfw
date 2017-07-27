@@ -47,10 +47,16 @@
 // Bottom HEADER
 .layout-header-bottom {
   position: absolute;
-  top: 0;
+  top: -42px; //change
   left: 0;
   z-index: 10;
   width: 100%;
+  transition: top .2s linear;
+
+  &.-show {
+    top: 0;
+  }
+
   @include clearfix();
   @media (min-width: $br-mobile){
     position: relative;
@@ -76,6 +82,7 @@
 
 	// Logo
 	h1 {
+    display: none;
     width: 60px;
     height: 60px;
     position: absolute;
@@ -528,5 +535,44 @@
   }
   @media (min-width: $br-mobile){
     display: none;
+  }
+}
+#headerGfw {
+  top: -45px !important;
+  transition: top .2s linear;
+
+  .txlive-langselector-list {
+    top: 41px !important;
+  }
+
+  .m-header-sub-menu-login {
+    top: 46px !important;
+  }
+
+  .nav-sections {
+    margin-left: 128px !important;
+
+    &.-show {
+      margin-left: 40px !important;
+    }
+  }
+
+  &.-show {
+    top: 0 !important;
+  }
+
+  .m-header-nav-container {
+    height: 45px !important;
+  }
+
+  .logo-menu {
+    top: 45px !important;
+    position: fixed !important;
+    transition: .2s linear;
+
+    &.-show {
+      top: 0 !important;
+      position: relative !important;
+    }
   }
 }
