@@ -10,7 +10,7 @@
   position: relative;
   background: #333;
   margin-top: 36px;
-  top: -20px;
+  top: 50px;
   @media only screen and (max-width: 480px) {
     top: 0;
     margin-top: 0px;
@@ -854,13 +854,13 @@
       font-size: 10px;
       text-transform: none;
       max-width: 190px;
-      line-height: 1.1;  
+      line-height: 1.1;
       a {
         color: $cGreen;
         &:hover {
           color: lighten($cGreen, 5%)
         }
-      }    
+      }
     }
 
     @include box-sizing(border-box);
