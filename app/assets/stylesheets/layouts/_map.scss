@@ -364,6 +364,14 @@ body,html{
   .nav-sections {
     margin-left: 128px !important;
 
+    li {
+      &.-selected {
+        &::after {
+          bottom: -10px !important;
+        }
+      }
+    }
+
     &.-show {
       margin-left: 40px !important;
     }
