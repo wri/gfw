@@ -226,6 +226,8 @@
       min-width: 185px;
       display: inline-block;
       height: 60px;
+      font-size: 14px;
+      color: rgba(#333, .8);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -235,11 +237,6 @@
       &.-selected {
         background-color: #fff;
         border-right: 0;
-      }
-
-      a {
-        font-size: 14px;
-        color: rgba(#333, .8);
       }
     }
   }
