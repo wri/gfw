@@ -140,6 +140,7 @@
 
           em {
             display: inline-block;
+            margin-left: 6px;
           }
         }
       }
@@ -338,13 +339,15 @@
         &.-desactivate {
           .icon-info-green {
             display: none;
+            &.-source {
+              display: block;
+            }
           }
           .icon-info-grey {
             display: block;
           }
 
           .alerts,
-          .source,
           .canopy-button,
           .onoffswitch,
           .layer-sublayer {
@@ -356,12 +359,20 @@
             color: #ccc !important;
           }
 
+          svg {
+            fill: #ccc !important;
+          }
+
           .onoffswitch {
             pointer-events: none;
           }
 
           .sublayer-title {
             color: #ccc !important;
+          }
+
+          .circle {
+            background-color: #ccc !important;
           }
         }
       }
@@ -387,7 +398,7 @@
         .container-eye-icon {
           cursor: pointer;
           position: absolute;
-          top: -1px;
+          top: 2px;
           left: 0;
 
 
