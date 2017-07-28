@@ -47,7 +47,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     @media (min-width: $br-mobileMap){
       float: left;
       width: auto;
-      padding: 17px 20px 12px;
+      padding: 11px 20px 8px;
       border-bottom: 5px solid;
       &:not(.disabled):hover .layers-nav {
         opacity: 1;

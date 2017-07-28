@@ -47,14 +47,21 @@
 // Bottom HEADER
 .layout-header-bottom {
   position: absolute;
-  top: 0;
+  top: -42px; //change
   left: 0;
   z-index: 10;
   width: 100%;
+  transition: top .2s linear;
+  display: none;
+
+  &.-show {
+    top: 0;
+  }
+
   @include clearfix();
   @media (min-width: $br-mobile){
     position: relative;
-    background: rgba(#FFF,0.8);
+    background: #fff;
     border-bottom: 1px solid $border;
   }
 
@@ -76,6 +83,7 @@
 
 	// Logo
 	h1 {
+    display: none;
     width: 60px;
     height: 60px;
     position: absolute;
