@@ -3,20 +3,18 @@
   <%= render "countries_templates" %>
   <%= render "shared/js_templates" %>
 <% end %>
-
-
 <section id="countryOverviewView">
   <div class="cover-title">
     <h2 class="title-section">country rankings</h2>
   </div>
   <div class="tab-countries">
     <ul>
-      <li>
-        <a <% if controller?("countries") && action?("index") %>class="current"<% end %> href="/countries">Profiles</a>
-      </li>
-      <li class="-selected">
-        <a <% if controller?("countries") && action?("overview") %>class="current"<% end %> href="/countries/overview">Rankings</a>
-      </li>
+      <a <% if controller?("countries") && action?("index") %>class="current"<% end %> href="/countries">
+        <li>Profiles</li>
+      </a>
+      <a <% if controller?("countries") && action?("overview") %>class="current"<% end %> href="/countries/overview">
+        <li class="-selected">Rankings</li>
+      </a>
     </ul>
   </div>
   <div class='inner'>
