@@ -6,8 +6,10 @@ define([], function () {
   'use strict';
 
   var LandsatMaptype = function(year, tileUrl) {
-    // We want to set the zoom level differently depending on the year of the
-    // landsat data. As diffrent z-levels exist for diffrent tile-sets.
+    // We want to set the url differently depending on the z level and year of
+    // landsat data. For years before 2013 data is all pre-processed by google.
+    // from 2013 onwards, we have pre-processed the z-levels between 0 and 11
+    // in GCS. For higher z-levels the tiles come from a live EE-based service. 
 
     var config = {
       name: 'Landsat ' + year,
@@ -19,6 +21,8 @@ define([], function () {
         var x = Math.abs(ll.x % (1 << z)); // jshint ignore:line
 
         switch (year) {
+          case 2013:
+          case 2014:
           case 2015:
           case 2016:
             return z > 11
