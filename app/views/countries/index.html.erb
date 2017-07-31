@@ -7,12 +7,12 @@
   </div>
   <div class="tab-countries">
     <ul>
-      <li class="-selected">
-        <a <% if controller?("countries") && action?("index") %>class="current"<% end %> href="/countries">Profiles</a>
-      </li>
-      <li>
-        <a <% if controller?("countries") && action?("overview") %>class="current"<% end %> href="/countries/overview">Rankings</a>
-      </li>
+      <a <% if controller?("countries") && action?("index") %>class="current"<% end %> href="/countries">
+        <li class="-selected">Profiles</li>
+      </a>
+      <a <% if controller?("countries") && action?("overview") %>class="current"<% end %> href="/countries/overview">
+        <li>Rankings</li>
+      </a>
     </ul>
   </div>
   <div class="inner">
