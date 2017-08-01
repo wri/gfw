@@ -1,0 +1,88 @@
+$about-how-height-screen-l: rem(640px);
+
+.c-about-how {
+  position: relative;
+  background-color: $grey-light;
+  padding: rem(40px) 0;
+
+  .c-about-how__content {
+    position: relative;
+
+    .text {
+      letter-spacing: -0.4px;
+    }
+
+    .c-about-how__title {
+      opacity: 0.5;
+    }
+
+    .c-about-how__subtitle{
+      margin-top: rem(24px);
+
+      span {
+        display: inline-block;
+        width: rem(13px);
+        height: rem(13px);
+        margin-right: rem(7px);
+        border-radius: 100%;
+        background-color: $green-gfw;
+      }
+    }
+
+    .c-about-how__summary {
+      margin: rem(23px) 0;
+      opacity: 0.7;
+    }
+
+    .c-about-how__text-list{
+
+      &:not(:last-child) {
+        margin-bottom: rem(16px);
+      }
+
+      span {
+        display: inline-block;
+        width: rem(9px);
+        height: rem(9px);
+        border-radius: 100%;
+        background-color: #e0e0e4;
+        margin-right: rem(9px);
+        position: relative;
+        top: rem(-2px);
+      }
+    }
+  }
+
+  .c-about-how__cover {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: $grey-dark;
+    display: none;
+
+    .c-about-how__cover-credits {
+      display: flex;
+      align-items: center;
+      height: rem(20px);
+      background-color: rgba($black, 0.2);
+      padding: 0 rem(7px) 0 rem(10px);
+      color: rgba($white, 0.8);
+      font-size: 12px;
+    }
+  }
+
+  @media screen and (min-width: $screen-l) {
+    min-height: $about-how-height-screen-l;
+
+    .c-about-how__cover {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+  }
+}
