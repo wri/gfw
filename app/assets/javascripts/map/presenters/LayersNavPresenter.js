@@ -65,13 +65,17 @@ define([
      *
      * @param  {string} layerSlug
      */
-    toggleLayer: function(layerSlug) {
+    toggleLayer: function(layerSlug, checkedSublayer) {
       var where = [{slug: layerSlug}];
 
       layerSpecService.toggle(where,
         _.bind(function(layerSpec) {
           mps.publish('LayerNav/change', [layerSpec]);
           mps.publish('Place/update', [{go: false}]);
+
+          if (checkedSublayer !== null) {
+            this.toggleLayer(checkedSublayer, null);
+          }
         }, this));
     },
   });
