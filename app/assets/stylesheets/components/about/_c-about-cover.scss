@@ -1,0 +1,60 @@
+$about-cover-height: rem(390px);
+$about-cover-height-screen-m: rem(300px);
+$about-cover-padding-top: rem(35px);
+$about-cover-padding-top-screen-m: rem(24px);
+
+.c-about-cover {
+  position: relative;
+  height: $about-cover-height;
+  padding-top: $about-cover-padding-top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url('/assets/home/header-bg.jpg');
+
+  .c-about-cover-texts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: calc(#{$about-cover-height} - #{$about-cover-padding-top});
+
+    h1 {
+      margin-bottom: rem(6px);
+    }
+
+    .c-about-cover__play-button {
+      display: flex;
+      align-items: center;
+      margin-top: rem(4px);
+      cursor: pointer;
+
+      .c-play-button {
+        display: inline-block;
+        width: rem(46px);
+        height: rem(46px);
+      }
+
+      span {
+        margin-left: rem(10px);
+      }
+    }
+  }
+
+  @media screen and (min-width: $screen-m) {
+    height: $about-cover-height-screen-m;
+    padding-top: $about-cover-padding-top-screen-m;
+
+    .c-about-cover-texts {
+      height: calc(#{$about-cover-height-screen-m} - #{$about-cover-padding-top-screen-m});
+
+      h1 {
+        width: rem(550px);
+        margin-bottom: rem(9px);
+      }
+
+      .c-about-cover__description {
+        max-width: rem(768px);
+      }
+    }
+  }
+}
