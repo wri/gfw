@@ -197,6 +197,7 @@ define([
       'click .js-toggle-threshold' : 'toggleThreshold',
       'change .js-tree-plantation' : 'togglePlantation',
       'change .js-tree-plantation-country' : 'togglePlantationCountry',
+      'change .js-toggle-concessions' : 'toggleConcessions',
       'click .js-toggle-legend' : 'toogleLegend',
       'click .js-toggle-embed-legend' : 'toogleEmbedLegend',
       'click .js-select-layer': 'selectLayer',
@@ -444,6 +445,11 @@ define([
       var species = iso+'_plantations_species';
       this.presenter.toggleLayer(types);
       this.presenter.toggleLayer(species);
+    },
+
+    toggleConcessions: function(e) {
+      this.presenter.toggleLayer('concesiones_forestales');
+      this.presenter.toggleLayer('concesiones_forestalesNS');
     },
 
     // layers
