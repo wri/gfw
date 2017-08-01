@@ -33,16 +33,6 @@ Gfw::Application.routes.draw do
   get '/howto/analyze-forest-change' => redirect("/howto/analyze-and-subscribe-to-forest-change-data")
   get '/howto/subscribe-to-alerts-and-user-stories' => redirect("/howto/analyze-and-subscribe-to-forest-change-data")
 
-  # about
-  get '/about/video' => redirect("/about")
-  get '/about/gfw' => redirect("/about/about-gfw")
-  get '/about/partners' => redirect("/about/the-gfw-partnership")
-  get '/partners' => redirect("/about/the-gfw-partnership")
-  get '/about/users' => redirect("/about")
-  get '/about/small_grants_fund' => redirect("/getinvolved/apply-to-the-small-grants-fund")
-  get '/about/testers' => redirect("/about")
-  get '/getinvolved/provide-feedback' => redirect("/getinvolved")
-
   # sources
   get '/sources' => redirect("http://data.globalforestwatch.org/")
   get '/sources(/:section)' => redirect("http://data.globalforestwatch.org/")
@@ -94,8 +84,11 @@ Gfw::Application.routes.draw do
 
 
   # about
-  get '/about' => 'static#about'
-  get '/about(/:section)' => 'static#about'
+  get '/about' => 'about#index'
+  get '/about/small_grants_fund' => redirect('/getinvolved/apply-to-the-small-grants-fund')
+  get '/about(/:section)' => 'about#index'
+  get '/partners' => redirect('/about')
+  get '/getinvolved/provide-feedback' => redirect('/getinvolved')
 
 
   # terms

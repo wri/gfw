@@ -21,6 +21,10 @@
     color: $font-color-5;
   }
 
+  &.-color-6 {
+    color: rgba($font-color-1, 0.7);
+  }
+
   &.-light {
     font-weight: 300;
   }
@@ -128,5 +132,10 @@
     font-size: 18px;
     line-height: 1.67;
     letter-spacing: -0.4px;
+  }
+
+  &.-paragraph-4 {
+    font-size: 18px;
+    line-height: 1.67;
   }
 }
