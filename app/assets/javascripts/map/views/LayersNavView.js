@@ -128,6 +128,7 @@ define([
         var $elem = $(event.currentTarget);
         var layerSlug = $elem.data('layer');
         var isSubLayer = $elem.data('parent') || false;
+        var openWithSublayer = $elem.data('open-with-sublayer');
 
         if ($elem.hasClass('wrapped')) {
           event && event.stopPropagation();
@@ -136,7 +137,7 @@ define([
             //as the toggle are switches, we should turn off the others (siblings) before turning on our layer
             for (var i=0;i < $elem.siblings().length; i++) {
               if ($($elem.siblings()[i]).hasClass('selected')) {
-                this.presenter.toggleLayer($($elem.siblings()[i]).data('layer'));
+                this.presenter.toggleLayer($($elem.siblings()[i]).data('layer'), null);
               }
               $elem.parents('li').data('layer' , $elem.data('layer')).addClass('selected');
             }
@@ -148,7 +149,7 @@ define([
           this._toggleParent($elem);
         }
 
-        this.presenter.toggleLayer(layerSlug);
+        this.presenter.toggleLayer(layerSlug, openWithSublayer);
         ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
       }
     },
@@ -171,7 +172,7 @@ define([
           var sublayerAuto = $(this).data('autotoggle');
           if ((subLayerSlug && layerChecked === subLayerChecked) && (!layerChecked && sublayerAuto || layerChecked)) {
             setTimeout(function() {
-              _this.presenter.toggleLayer(subLayerSlug);
+              _this.presenter.toggleLayer(subLayerSlug, null);
               ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + subLayerSlug);
             }, 100);
           }
@@ -184,7 +185,7 @@ define([
       var $parentEl = $elem.closest('[data-layer=\'' + parentSlug + '\']');
       if (!$elem.hasClass('selected')) {
         if (!$parentEl.hasClass('selected')) {
-          this.presenter.toggleLayer(parentSlug);
+          this.presenter.toggleLayer(parentSlug, null);
           ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + parentSlug);
         }
       }
@@ -197,12 +198,12 @@ define([
           _.each($layers, _.bind(function(layer){
             if ($(layer).hasClass('selected')) {
               var layerSlug = $(layer).data('layer');
-              this.presenter.toggleLayer(layerSlug);
+              this.presenter.toggleLayer(layerSlug, null);
             }
           }, this ))
         }else{
           var layerSlug = $($layers[0]).data('layer');
-          this.presenter.toggleLayer(layerSlug)
+          this.presenter.toggleLayer(layerSlug, null)
         }
       }
     },
@@ -249,9 +250,9 @@ define([
           var selected = $(layer).hasClass('selected');
           var layerSlug = $(layer).data('layer');
           if (checked) {
-            (selected) ? this.presenter.toggleLayer(layerSlug) : null;
+            (selected) ? this.presenter.toggleLayer(layerSlug, null) : null;
           }else{
-            (!selected) ? this.presenter.toggleLayer(layerSlug) : null;
+            (!selected) ? this.presenter.toggleLayer(layerSlug, null) : null;
           }
         }, this));
       }
