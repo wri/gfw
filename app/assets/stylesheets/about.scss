@@ -13,6 +13,7 @@
 @import "layouts/landing";
 
 // Components
+@import "components/buttons/c-arrow-button";
 @import "components/buttons/c-play-button";
 @import "components/buttons/c-regular-button";
 @import "components/c-slider-dots";
@@ -22,3 +23,4 @@
 @import "components/about/c-about-anchors";
 @import "components/about/c-about-users";
 @import "components/about/c-about-how";
+@import "components/about/c-about-outcomes";
