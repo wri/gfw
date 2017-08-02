@@ -1,6 +1,8 @@
 /**
  * The RaisgLayer layer module.
- *
+ *     Note. this layer has been deactivated (as of 2nd Aug 2017)
+ *  but remains present to serve as an example layer
+ * for using an Arcgis WMS.
  *     wmsUrl += '&STYLES=polygonSymbolizer';
  * @return RaisgLayer class (extends WMSLayerClass)
  */
