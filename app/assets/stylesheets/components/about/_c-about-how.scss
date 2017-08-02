@@ -78,6 +78,7 @@ $about-how-height-screen-l: rem(640px);
 
   @media screen and (min-width: $screen-l) {
     min-height: $about-how-height-screen-l;
+    border-bottom: 1px solid $grey-dark;
 
     .c-about-how__cover {
       display: flex;
