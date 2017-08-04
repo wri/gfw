@@ -141,6 +141,7 @@
 
           em {
             display: inline-block;
+            margin-left: 6px;
           }
         }
       }
@@ -339,13 +340,15 @@
         &.-desactivate {
           .icon-info-green {
             display: none;
+            &.-source {
+              display: block;
+            }
           }
           .icon-info-grey {
             display: block;
           }
 
           .alerts,
-          .source,
           .canopy-button,
           .onoffswitch,
           .layer-sublayer {
@@ -357,12 +360,20 @@
             color: #ccc !important;
           }
 
+          svg {
+            fill: #ccc !important;
+          }
+
           .onoffswitch {
             pointer-events: none;
           }
 
           .sublayer-title {
             color: #ccc !important;
+          }
+
+          .circle {
+            background-color: #ccc !important;
           }
         }
       }
@@ -388,7 +399,7 @@
         .container-eye-icon {
           cursor: pointer;
           position: absolute;
-          top: -1px;
+          top: 2px;
           left: 0;
 
 
@@ -832,6 +843,18 @@
   }
 
   /****************************/
+  /* Places to Watch details */
+  /****************************/
+  .layer-details-places-to-watch {
+    a {
+      color: #F69;
+      &:hover{
+        color: lighten(#F69, 10%);
+      }
+    }
+  }
+
+  /****************************/
   /* OilPalmLayer details */
   /****************************/
   .layer-details-oil {
@@ -863,32 +886,28 @@
     font-weight: 500;
   }
 
-  .layer-details-gfw-plantations-by-type,
-  .layer-details-gfw-plantations-by-species
-   {
-    .container-select-option {
-      display: block;
-      margin-top: 10px;
-      margin-bottom: 10px;
+  .layer-details-select .container-select-option {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
 
-      .select-container {
-        display: inline-block;
-        border: 1px solid #9e9e9e;
-        border-radius: 10px;
-        padding: 1px 5px 2px;
-      }
+    .select-container {
+      display: inline-block;
+      border: 1px solid #9e9e9e;
+      border-radius: 10px;
+      padding: 1px 5px 2px;
+    }
 
-      .select-option {
-        outline: 0;
-        background: transparent;
-        color: #9e9e9e;
-        display: inline-block;
-        padding: 1px 5px 0;
-        margin: 0 2px;
-        cursor: pointer;
-        border: 0;
-        appearance: none;
-      }
+    .select-option {
+      outline: 0;
+      background: transparent;
+      color: #9e9e9e;
+      display: inline-block;
+      padding: 1px 5px 0;
+      margin: 0 2px;
+      cursor: pointer;
+      border: 0;
+      appearance: none;
     }
   }
 }
