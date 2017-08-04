@@ -13,6 +13,6 @@ Rails.application.config.assets.precompile += %w(stories.js countries.js static.
 
 # Require JS
 # config.requirejs.loader = :almond
-Rails.application.config.requirejs.logical_asset_filter += [/\.handlebars$/]
-Rails.application.config.requirejs.logical_asset_filter += [/\.hbs$/]
-Rails.application.config.requirejs.logical_asset_filter += [/\.cartocss$/]
+Rails.application.config.requirejs.logical_path_patterns += [/\.handlebars$/]
+Rails.application.config.requirejs.logical_path_patterns += [/\.hbs$/]
+Rails.application.config.requirejs.logical_path_patterns += [/\.cartocss$/]
