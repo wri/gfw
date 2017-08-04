@@ -17,7 +17,11 @@ gem 'fog'
 gem 'rmagick', :require => false
 gem 'mini_magick'
 gem 'unf'
-gem 'requirejs-rails', '0.9.5'
+
+# requirejs
+gem 'erubis'
+gem 'requirejs-rails', '1.0.0'
+
 gem 'rack-reverse-proxy', '~> 0.11.0', :require => 'rack/reverse_proxy'
 # Amazon Ruby sdk for file upload to S3
 gem 'aws-sdk', '~> 2'
