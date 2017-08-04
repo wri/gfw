@@ -24,11 +24,11 @@ describe CountriesController, type: :controller do
     it_behaves_like 'assigns title', 'Country Rankings'
   end
 
-  describe 'GET show' do
-    subject { get :show, params: {id: 'POL'} }
-    it 'renders show' do
-      subject
-      expect(response).to render_template('show')
-    end
-  end
+  #describe 'GET show' do
+  #  subject { get :show, params: {id: 'POL'} }
+  #  it 'renders show' do
+  #    subject
+  #    expect(response).to render_template('show')
+  #  end
+  #end
 end
