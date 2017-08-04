@@ -66,6 +66,10 @@ $item-padding-screen-m: rem(40px);
       }
     }
   }
+
+  @media screen and (min-width: $screen-l) {
+    border-bottom: 1px solid $grey-dark;
+  }
 }
 
 .c-about-awards-item {
