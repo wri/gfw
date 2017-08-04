@@ -11,6 +11,8 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile += %w(stories.js countries.js static.js landing.js map.js embed_countries.js stories.css countries.css static.css landing.css map.css)
 
+Rails.application.config.assets.precompile += %w( connect.js static-pages.js )
+
 # Require JS
 # config.requirejs.loader = :almond
 Rails.application.config.requirejs.logical_path_patterns += [/\.handlebars$/]
