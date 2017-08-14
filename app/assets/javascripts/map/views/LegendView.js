@@ -92,6 +92,7 @@ define([
       defaults:{
         hidden: true,
         categories_status: [],
+        layers_status: []
       }
     })),
 
@@ -183,10 +184,20 @@ define([
 
     events: {
       'click .js-toggle-category' : 'toogleCategory',
+      'click .js-toggle-country-category' : 'toogleCountryCategory',
       'click .js-toggle-sublayer': 'toggleLayer',
       'click .js-toggle-layer-option': 'toggleLayerOption',
       'click .js-layer-close' : 'removeLayer',
+      'click .icon-eye' : 'hiddenLayer',
+      'mouseover .js-tooltip' : 'showTooltip',
+      'mouseleave .js-tooltip' : 'hiddenTooltip',
+      'click .js-tooltip' : 'hiddenTooltip',
+      'click .-js-show-layer' : 'showLayer',
+      'click .-js-hidden-layer' : 'hiddenLayer',
       'click .js-toggle-threshold' : 'toggleThreshold',
+      'change .js-tree-plantation' : 'togglePlantation',
+      'change .js-tree-plantation-country' : 'togglePlantationCountry',
+      'change .js-toggle-concessions' : 'toggleConcessions',
       'click .js-toggle-legend' : 'toogleLegend',
       'click .js-toggle-embed-legend' : 'toogleEmbedLegend',
       'click .js-select-layer': 'selectLayer',
@@ -197,6 +208,7 @@ define([
 
       this.map = map;
       this.countries = countries;
+      this.iso = '';
 
       this.listeners();
 
@@ -252,6 +264,9 @@ define([
       _.each(layers, function(layer) {
         layer.source = (layer.slug === 'nothing') ? null : layer.source || layer.slug;
         if (this.detailsTemplates[layer.slug]) {
+          if (layer.title === 'Tree plantations by type' || layer.title === 'Tree plantations by species') {
+            layer.title = 'Tree plantations'
+          }
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
             hresolution: options.hresolution,
@@ -262,6 +277,7 @@ define([
         }
 
         if (layer.iso) {
+          this.iso = layer.iso;
           layersIso.push(layer);
           layer.category_status = layer.category_slug+'-iso';
         } else {
@@ -287,6 +303,16 @@ define([
         countryVisibility: (!!more || !_.isEmpty(categoriesIso))
       }));
 
+      //Change selector countries action name.
+      if($('.categories').filter('.-country')) {
+        var accordionCountry = $('.categories').filter('.-country');
+        if ($(accordionCountry).find('.js-tree-plantation')) {
+          var selectOption = $(accordionCountry).find('.js-tree-plantation');
+          $(selectOption).removeClass('js-tree-plantation');
+          $(selectOption).addClass('js-tree-plantation-country');
+        }
+      }
+
       this.presenter.toggleSelected();
       this.presenter.toggleLayerOptions();
     },
@@ -300,7 +326,7 @@ define([
         layer.allowSubscription = layer && subscriptionsAllowed.indexOf(layer.slug) > -1;
 
         // Hack to keep the forest_clearing slug in layers which have to be analyzed but not grouped by the said slug in the legend
-        if (layer.category_slug === 'forest_clearing' && !layer.is_forest_clearing) return 'forest_clearing_2';
+        if (layer.category_slug === 'forest_clearing' && !layer.is_forest_clearing) return 'forest_cover';
         return layer.category_slug;
       })
     },
@@ -362,6 +388,26 @@ define([
       }
     },
 
+    toogleCountryCategory: function(e) {
+      if (!this.mobile) {
+        // Save category status in an array
+        var categories_status = this.model.get('categories_status');
+        var slug = $(e.currentTarget).data('category_slug');
+        var index = categories_status.indexOf(slug);
+
+        // Generate the status of the categories
+        (index != -1) ? categories_status.splice(index, 1) : categories_status.push(slug);
+        this.model.set('categories_status',categories_status);
+
+        var parent = $(e.currentTarget).parent();
+
+        if ($(parent).hasClass('-divided')) {
+          $(parent).children('.category').toggleClass('-hidden-category');
+          $(e.currentTarget).parent().toggleClass('closed');
+        }
+      }
+    },
+
     toggleLayerOption: function(e) {
       if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source')) {
         var option = $(e.currentTarget).data('option');
@@ -371,16 +417,39 @@ define([
 
     toggleLayerOptions: function(layerOptions) {
       _.each(this.$el.find('.layer-option'), function(div) {
+
         var $div = $(div);
         var $toggle = $div.find('.onoffswitch');
         var optionSelected = layerOptions.indexOf($div.data('option')) > -1;
 
         if (optionSelected) {
-          $toggle.addClass('checked').css('background', '#F69');
+          $toggle.addClass('checked').css('background', color);
+          $toggle.next().removeClass('-hidden');
         } else {
           $toggle.removeClass('checked').css('background', '');
+          $toggle.next().addClass('-hidden');
         }
       }, this);
+    },
+
+    togglePlantation: function(e) {
+      var layerSlug = $(e.currentTarget).val();
+      var layerSlugRemove = '';
+      this.presenter.toggleLayer('plantations_by_type');
+      this.presenter.toggleLayer('plantations_by_species');
+    },
+
+    togglePlantationCountry: function(e) {
+      var iso = this.iso.toLowerCase();
+      var types = iso+'_plantations_type';
+      var species = iso+'_plantations_species';
+      this.presenter.toggleLayer(types);
+      this.presenter.toggleLayer(species);
+    },
+
+    toggleConcessions: function(e) {
+      this.presenter.toggleLayer('concesiones_forestales');
+      this.presenter.toggleLayer('concesiones_forestalesNS');
     },
 
     // layers
@@ -399,7 +468,44 @@ define([
       this.removeSublayers(layerSlug);
     },
 
+    showTooltip: function(e) {
+      var position = $(e.target).offset();
+      var top = position.top - 10;
+      var left = position.left - 92;
+      var text = $(e.target).attr('data-description');
+      text = text.replace('(', '');
+      text = text.replace(')', '');
+      var dataSource = $(e.target).attr('data-source');
+      if (text != '') {
+        $('body').append('<div class="tooltip-info-legend" id="tooltip-info-legend" style="top:'+top+'px; left:'+left+'px;"><div class="triangle"><span>'+text+'</span><p>Click to see more</p></div></div>');
+      }
+      $('.tooltip-info-legend').css('top', top - $('.tooltip-info-legend').height() - 20);
+    },
+
+    hiddenTooltip: function(e) {
+      if ($('#tooltip-info-legend').length ) {
+        document.getElementById('tooltip-info-legend').remove();
+      }
+    },
+
     removeSublayers: function(layerSlug) {
+      var $subLayers = this.$el.find('[data-parent=\'' + layerSlug + '\']');
+
+      if ($subLayers.length > 0) {
+        var _this = this;
+        $subLayers.each(function() {
+          var $item = $(this);
+          var isChecked = $item.find('.checked').length > 0;
+
+          if (isChecked) {
+            var slug = $(this).data('sublayer');
+            _this.presenter.toggleLayer(slug);
+          }
+        });
+      }
+    },
+
+    hiddenSublayers: function(layerSlug) {
       var $subLayers = this.$el.find('[data-parent=\'' + layerSlug + '\']');
 
       if ($subLayers.length > 0) {
@@ -441,8 +547,10 @@ define([
             : layer.category_color;
           $toggle.addClass('checked');
           $toggle.css('background', color);
+          $toggle.next().removeClass('-hidden');
         } else {
           $toggle.removeClass('checked').css('background', '');
+          $toggle.next().addClass('-hidden');
         }
       }, this);
     },
@@ -475,13 +583,116 @@ define([
 
       if (!target.hasClass('selected')) {
         var layerSlug = target.data('layer');
-
         radios.removeClass('selected');
         target.addClass('selected');
         this.presenter.toggleLayer(layerSlug);
       }
-    }
+    },
 
+    showLayer: function(e) {
+      var layer = $(e.target).attr('data-slug-show');
+
+      _.each(this.$el.find('.layer-info-container'), function(li) {
+        if (layer === $(li).attr('data-slug')) {
+          $(li).removeClass('-desactivate');
+        }
+      });
+
+      _.each(this.$el.find('.-js-hidden-layer'), function(li) {
+        if (layer === $(li).attr('data-slug-hidden')) {
+          $(li).css('display', 'block');
+        }
+      });
+
+      _.each(this.$el.find('.-js-show-layer'), function(li) {
+        if (layer === $(li).attr('data-slug-show')) {
+          $(li).css('display', 'none');
+        }
+      });
+      e && e.preventDefault();
+      var index = this._getOverlayIndex(layer);
+      var iCount = 0;
+      var layerP = this.map.overlayMapTypes.getAt(index);
+      var hasOpacity = false;
+      if( typeof layerP != 'undefined' || layerP != null ){
+        hasOpacity = (layerP.opacity >= 0);
+      }
+      if(hasOpacity) {
+        layerP.setOpacity(1);
+      } else {
+        var layerArray = this.model.get('layers_status');
+        var mapLayer = this.map.overlayMapTypes.getAt(index);
+
+        _.map(layerArray, function(l, i){
+          if (l.name === layer) {
+            this.map.overlayMapTypes.setAt(l.index, l.layerInformation);
+          }
+          iCount += 1;
+        }.bind(this));
+      }
+
+    },
+
+    hiddenLayer: function (e) {
+      var layer = $(e.target).attr('data-slug-hidden');
+
+      _.each(this.$el.find('.layer-info-container'), function(li) {
+        if (layer === $(li).attr('data-slug')) {
+          $(li).addClass('-desactivate');
+        }
+      });
+
+      _.each(this.$el.find('.-js-hidden-layer'), function(li) {
+        if (layer === $(li).attr('data-slug-hidden')) {
+          $(li).css('display', 'none');
+        }
+      });
+
+      _.each(this.$el.find('.-js-show-layer'), function(li) {
+        if (layer === $(li).attr('data-slug-show')) {
+          $(li).css('display', 'block');
+        }
+      });
+
+      e && e.preventDefault();
+      var index = this._getOverlayIndex(layer);
+      var layerP = this.map.overlayMapTypes.getAt(index);
+      var hasOpacity = false;
+
+      if( typeof layerP != 'undefined' || layerP != null ){
+        hasOpacity = (layerP.opacity >= 0);
+      }
+
+      if(hasOpacity) {
+        layerP.setOpacity(0);
+      } else {
+        if( typeof this.map.overlayMapTypes.getAt(index) != 'undefined' || this.map.overlayMapTypes.getAt(index) != null ){
+          var layerArray = this.model.get('layers_status');
+          var mapLayer = this.map.overlayMapTypes.getAt(index);
+          layerArray.push({
+            index: index,
+            name: layer,
+            layerInformation: this.map.overlayMapTypes.getAt(index)
+          })
+          this.model.set('layers_status', layerArray);
+          this.map.overlayMapTypes.removeAt(index);
+        }
+      }
+    },
+
+    _getOverlayIndex: function(name) {
+      var index = -1;
+      var name = name;
+      _.each(this.map.overlayMapTypes.getArray(), function(layer, i) {
+        if (layer) {
+          var layerName = layer.name || layer.options.name;
+          if (layerName === name) {
+            index = i;
+          }
+        }
+      }, this);
+      return index;
+    }
 
   });
 

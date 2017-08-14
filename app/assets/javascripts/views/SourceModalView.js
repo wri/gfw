@@ -62,7 +62,7 @@ define([
       e && e.preventDefault() && e.stopPropagation();
       // current
       this.$current = $(e.currentTarget);
-      this.$current.find('svg').attr('class','spinner-info start');
+      $(e.currentTarget).addClass('spinner-info start');
 
       this.sourceModel = new SourceModel({
         slug: this.$current.data('source'),
@@ -81,7 +81,7 @@ define([
     },
 
     sourceSuccess: function() {
-      this.$current.find('svg').attr('class','');
+      $(this.$current).removeClass('spinner-info start');
       this.$el.html(this.template(this.getData()));
       this.show();
       this.setTargetOfLinks();
@@ -89,7 +89,8 @@ define([
     },
 
     sourceError: function(error) {
-      this.$current.find('svg').attr('class','');
+      $(this.$current).removeClass('spinner-info start');
+      this.$current.find('svg').removeClass('spinner-info start');
       console.info('The id '+this.sourceModel.get('slug')+' you are searching for does not exist in the API');
       this.sourceStatic();
     },
