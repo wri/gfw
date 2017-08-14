@@ -386,6 +386,3 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   unf
   useragent
-
-BUNDLED WITH
-   1.13.7
