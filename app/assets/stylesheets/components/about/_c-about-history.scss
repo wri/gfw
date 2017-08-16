@@ -12,6 +12,15 @@ $item-height: rem(494px);
     opacity: 0.5;
   }
 
+  .c-about-history__list {
+    &:after {
+      display: block;
+      content: '';
+      height: 1px;
+      width: 100%;
+    }
+  }
+
   .slider {
     position: relative;
   }
