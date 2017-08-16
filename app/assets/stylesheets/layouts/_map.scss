@@ -402,6 +402,16 @@ body,html{
       position: relative !important;
     }
   }
+
+  .logo-sections-container {
+    .nav-sections {
+      li {
+        &:after {
+          top: 26px;
+        }
+      }
+    }
+  }
 }
 
 .layout-header-bottom {
