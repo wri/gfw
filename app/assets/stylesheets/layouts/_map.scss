@@ -416,4 +416,8 @@ body,html{
 
 .layout-header-bottom {
   display: block !important;
+
+  &.-hidden {
+    display: none !important;
+  }
 }

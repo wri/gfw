@@ -160,6 +160,14 @@ define([
         this.presenter.closeDialogsMobile();
       }, this ));
 
+      $('.open-menu-button-dashboard').click(function() {
+        if ($('.m-header-sub-menu-dashboard').hasClass('-active')) {
+          $('#layers-options').removeClass('-hidden');
+        } else {
+          $('#layers-options').addClass('-hidden');
+        }
+      });
+
     },
 
 
