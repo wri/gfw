@@ -82,6 +82,17 @@ $cGreen: #97bd3d;
         overflow-y: scroll;
         border-bottom: 1px solid #e5e5df;
 
+        .gradient {
+          display: block;
+          height: rem(20px);
+          background-image: linear-gradient(top,hsla(0,0%,100%,0),#fff);
+          position: absolute;
+          width: 100%;
+          left: 0;
+          bottom: rem(71px);
+          z-index: 99;
+        }
+
         .contain-width {
           max-width: 700px;
           margin: 0 auto;
