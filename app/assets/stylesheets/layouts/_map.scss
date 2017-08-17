@@ -32,7 +32,7 @@ body,html{
   width: 100%;
   @media (min-width:$br-mobile){
     height: calc(100% - 45px);
-    top: 45px;
+    top: 40px;
   }
 }
 
@@ -342,23 +342,24 @@ body,html{
   top: 0 !important;
   transition: top .2s linear;
 
+  .line-dashboard {
+    top: 45px !important;
+  }
+
   @media (min-width: $br-mobile){
     top: -45px !important;
   }
 
   .m-header-sub-menu-dashboard {
     position: relative !important;
-
-    @media (min-width: $br-mobile){
-      position: absolute !important;
-    }
   }
 
   .txlive-langselector-list {
     top: 41px !important;
   }
 
-  .m-header-sub-menu-login {
+  .m-header-sub-menu-login,
+  .m-header-submenu-logged {
     top: 46px !important;
   }
 
@@ -402,8 +403,22 @@ body,html{
       position: relative !important;
     }
   }
+
+  .logo-sections-container {
+    .nav-sections {
+      li {
+        &:after {
+          top: 26px;
+        }
+      }
+    }
+  }
 }
 
 .layout-header-bottom {
   display: block !important;
+
+  &.-hidden {
+    display: none !important;
+  }
 }
