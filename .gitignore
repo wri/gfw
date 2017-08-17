@@ -50,3 +50,5 @@ todo.todo
 
 # Ignore environment files
 .dev.env
+/public/packs
+/node_modules

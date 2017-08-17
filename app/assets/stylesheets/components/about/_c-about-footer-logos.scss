@@ -38,7 +38,8 @@
 
   .c-about-footer-logos__subscribe {
     position: relative;
-    margin-top: 40px;
+    margin-top: rem(40px);
+    margin-bottom: rem(40px);
     display: flex;
     flex-direction: column;
     align-items: center;

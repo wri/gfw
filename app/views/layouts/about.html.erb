@@ -29,13 +29,14 @@
     <%= controller_stylesheet_link_tag %>
     <%= yield :js %>
     <script src="https://cdn.optimizely.com/js/7988050790.js"></script>
+
+    <%= javascript_pack_tag 'about' %>
   </head>
   <body>
+    <div id="about-page"></div>
     <%= yield %>
-
     <%= requirejs_include_tag 'about' %>
     <%= render 'shared/track' %>
-
     <div id="footerGfw"></div>
   </body>
 </html>
