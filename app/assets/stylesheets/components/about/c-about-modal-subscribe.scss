@@ -1,7 +1,7 @@
 $dark: #555;
+$cGreen: #97bd3d;
 
 .c-about-modal-subscribe {
-  display: flex;
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -12,7 +12,8 @@ $dark: #555;
   z-index: 999;
   display: none;
 
-  .-show {
+
+  &.-active {
     display: flex;
   }
 
@@ -22,6 +23,7 @@ $dark: #555;
     background: #fff;
     width: rem(1024px);
     box-shadow: 0 0 4px hsla(0,0%,56%,.5);
+    position: relative;
 
     &:before {
       content: '';
@@ -39,7 +41,7 @@ $dark: #555;
     .steps {
       display: none;
 
-      &.current{
+      &.-active{
         display: block;
         z-index: 99;
       }
@@ -62,6 +64,15 @@ $dark: #555;
           font-weight: 300;
           line-height: 1.5;
           color: $dark;
+        }
+
+        .icon-close {
+          cursor: pointer;
+          position: absolute;
+          width: rem(15px);
+          height: rem(15px);
+          top: rem(15px);
+          right: rem(15px);
         }
       }
 
@@ -140,24 +151,84 @@ $dark: #555;
         }
 
         .radio-box {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
+          padding: 6px 0;
+          font-size: 12px;
 
           .custom-radio {
             display: flex;
-            flex-direction: row;
-            flex-basis: calc(50% - 20px);
-            align-items: center;
+            display: inline-block;
 
-            input {
-              flex-basis: 10%;
+            &:first-of-type {
+              margin-right: rem(50px);
             }
 
-            label {
-              flex-basis: 90%;
-              font-size: 13px;
-              font-weight: 300;
+            &.-with-input {
+              flex-wrap: wrap;
+
+              label {
+                width: 100%;
+              }
+
+              input[type=text] {
+                max-width: 250px;
+                margin: 0 0 0 25px;
+              }
+            }
+          }
+
+          label {
+            padding: 8px 0;
+            font-weight: 400;
+            text-transform: none;
+            position: relative;
+            padding-left: 25px;
+            line-height: 1;
+            cursor: pointer;
+            width: auto;
+            top: 0;
+            left: 0;
+            transform: none;
+            text-align: left;
+
+            &.-uppercase {
+              text-transform: uppercase;
+              font-weight: 500;
+            }
+
+            span {
+              position: absolute;
+              top: 50%;
+              left: 0;
+              width: 20px;
+              height: 20px;
+              border: 1px solid $dark;
+              border-radius: 50%;
+              transform: translate(0,-50%);
+
+              &:after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 50%;
+                height: 50%;
+                background: $cGreen;
+                border-radius: 50%;
+                display: none;
+                transform: translate(-50%,-50%);
+              }
+            }
+          }
+
+          input[type=radio] {
+            display: none;
+          }
+
+          input[type=radio]:checked + label {
+            span{
+              &:after {
+                display: block;
+              }
             }
           }
         }
@@ -165,7 +236,9 @@ $dark: #555;
 
       .m-btncontainer {
         height: rem(70px);
-        padding: rem(30px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         button {
           margin: 0 auto;
