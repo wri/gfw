@@ -67,6 +67,7 @@ define([
       this.$maplngLng = $('.map-container .map-latlng');
       this.$viewFinder = $('#viewfinder');
       this.$overlayMobile = $('#overlay-mobile');
+      this.openDashaboard = $('.open-menu-button-dashboard');
       this.embed = $('body').hasClass('is-embed-action');
       this.lastValidCenter = null;
       this.allowedBounds = null;
@@ -160,7 +161,7 @@ define([
         this.presenter.closeDialogsMobile();
       }, this ));
 
-      $('.open-menu-button-dashboard').click(function() {
+      this.openDashaboard.click(function() {
         if ($('.m-header-sub-menu-dashboard').hasClass('-active')) {
           $('#layers-options').removeClass('-hidden');
         } else {
