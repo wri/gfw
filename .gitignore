@@ -47,3 +47,8 @@ Vagrantfile
 todo.todo
 
 .byebug_history
+
+# Ignore environment files
+.dev.env
+/public/packs
+/node_modules

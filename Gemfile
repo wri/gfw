@@ -26,6 +26,9 @@ gem 'rack-reverse-proxy', '~> 0.11.0', :require => 'rack/reverse_proxy'
 # Amazon Ruby sdk for file upload to S3
 gem 'aws-sdk', '~> 2'
 
+#Webpacker
+gem 'webpacker', '~> 2.0'
+
 # http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#responders
 gem 'responders', '~> 2.0'
 
