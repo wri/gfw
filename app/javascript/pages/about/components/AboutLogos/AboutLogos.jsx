@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Proptypes from 'prop-types';
 import ButtonRegular from '../../../general/components/ButtonRegular';
 import ModalSubscribe from '../AboutModals/AboutModalSubscribe';
+import Scroll, {Element} from 'react-scroll';
 
 class AboutLogos extends Component {
   constructor(props) {
@@ -389,7 +390,7 @@ class AboutLogos extends Component {
       },
     ]
     return (
-      <div>
+      <Element name="partnership">
         <div className="c-about-footer-logos">
           <div id="about-page">
           </div>
@@ -427,7 +428,7 @@ class AboutLogos extends Component {
           </div>
         </div>
         <ModalSubscribe open={showModal} clickFunction={this.openModal}/>
-      </div>
+      </Element>
     );
   }
 }

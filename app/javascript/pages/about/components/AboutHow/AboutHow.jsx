@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Proptypes from 'prop-types';
+import Scroll, {Element} from 'react-scroll';
 
 class AboutHow extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class AboutHow extends Component {
     ]
 
     return (
-      <div className="c-about-how">
+      <Element name="howTo" className="c-about-how">
         <div className="row">
           <div className="small-12 large-6 columns">
             <div className="c-about-how__content">
@@ -58,7 +59,7 @@ class AboutHow extends Component {
             </div>
           )}
         </div>
-      </div>
+      </Element>
     );
   }
 }
