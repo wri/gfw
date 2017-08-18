@@ -18,6 +18,7 @@ $about-how-height-screen-l: rem(640px);
 
     .c-about-how__subtitle{
       margin-top: rem(24px);
+      margin-bottom: rem(23px);
       cursor: pointer;
 
       span {
@@ -40,9 +41,9 @@ $about-how-height-screen-l: rem(640px);
     }
 
     .c-about-how__summary {
-      margin: rem(23px) 0;
       opacity: 0.7;
       display: none;
+      overflow: hidden;
 
       &.-active {
         display: block;

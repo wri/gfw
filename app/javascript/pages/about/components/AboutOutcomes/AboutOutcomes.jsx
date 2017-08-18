@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ButtonRegular from '../../../general/components/ButtonRegular';
 import ButtonArrow from '../../../general/components/ButtonArrow';
+import Scroll, {Element} from 'react-scroll';
 
 const AboutOutcomes = (props) => {
   const outcomes = [
@@ -27,7 +28,7 @@ const AboutOutcomes = (props) => {
     }
   ]
   return (
-    <div className="c-about-outcomes">
+    <Element name="outcomes" className="c-about-outcomes">
       <div className="row">
         <div className="small-12 columns">
           <div className="c-about-outcomes__title text -title-xs -color-3">OUTCOMES AND TESTIMONIALS</div>
@@ -59,7 +60,7 @@ const AboutOutcomes = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </Element>
   );
 };
 

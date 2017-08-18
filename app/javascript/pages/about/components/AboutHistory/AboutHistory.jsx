@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ButtonArrow from '../../../general/components/ButtonArrow';
+import Scroll, {Element} from 'react-scroll';
 
 const AboutHistory = (props) => {
   const years = [
@@ -26,7 +27,7 @@ const AboutHistory = (props) => {
       }
     ]
   return (
-    <div className="c-about-history">
+    <Element name="history" className="c-about-history">
       <div className="row">
         <div className="small-12 columns">
           <div className="c-home-use-examples__content">
@@ -59,7 +60,7 @@ const AboutHistory = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </Element>
   );
 };
 
