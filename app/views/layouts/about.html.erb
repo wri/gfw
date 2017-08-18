@@ -33,10 +33,9 @@
     <%= javascript_pack_tag 'about' %>
   </head>
   <body>
-    <div id="about-page"></div>
-    <%= yield %>
     <%= requirejs_include_tag 'about' %>
     <%= render 'shared/track' %>
+    <%= yield %>
     <div id="footerGfw"></div>
   </body>
 </html>

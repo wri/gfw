@@ -1,32 +1,42 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import Proptypes from 'prop-types';
 import ButtonArrow from '../../../general/components/ButtonArrow';
 import Scroll, {Element} from 'react-scroll';
 
-const AboutHistory = (props) => {
-  const years = [
-      {
-        img : "",
-        title : "2001",
-        paragraph : "WRI continued working to improve forest information by merging the latest technology with on-the-ground partnerships. Forest Atlases are now available for Cameroon, Central African Republic, Republic of the Congo, Democratic Republic of the Congo, Equatorial Guinea, and Gabon."
-      },
-      {
-        img : "",
-        title : "2002",
-        paragraph : "WRI continued working to improve forest information by merging the latest technology with on-the-ground partnerships. Forest Atlases are now available for Cameroon, Central African Republic, Republic of the Congo, Democratic Republic of the Congo, Equatorial Guinea, and Gabon."
-      },
-      {
-        img : "",
-        title : "2003",
-        paragraph : "WRI continued working to improve forest information by merging the latest technology with on-the-ground partnerships. Forest Atlases are now available for Cameroon, Central African Republic, Republic of the Congo, Democratic Republic of the Congo, Equatorial Guinea, and Gabon."
-      },
-      {
-        img : "",
-        title : "2004",
-        paragraph : "WRI continued working to improve forest information by merging the latest technology with on-the-ground partnerships. Forest Atlases are now available for Cameroon, Central African Republic, Republic of the Congo, Democratic Republic of the Congo, Equatorial Guinea, and Gabon."
-      }
-    ]
-  return (
+class AboutHistory extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+
+  }
+
+  render() {
+    const years = [
+        {
+          img : "",
+          title : "2001",
+          paragraph : "WRI continued working to improve forest information by merging the latest technology with on-the-ground partnerships. Forest Atlases are now available for Cameroon, Central African Republic, Republic of the Congo, Democratic Republic of the Congo, Equatorial Guinea, and Gabon."
+        },
+        {
+          img : "",
+          title : "2002",
+          paragraph : "WRI continued working to improve forest information by merging the latest technology with on-the-ground partnerships. Forest Atlases are now available for Cameroon, Central African Republic, Republic of the Congo, Democratic Republic of the Congo, Equatorial Guinea, and Gabon."
+        },
+        {
+          img : "",
+          title : "2003",
+          paragraph : "WRI continued working to improve forest information by merging the latest technology with on-the-ground partnerships. Forest Atlases are now available for Cameroon, Central African Republic, Republic of the Congo, Democratic Republic of the Congo, Equatorial Guinea, and Gabon."
+        },
+        {
+          img : "",
+          title : "2004",
+          paragraph : "WRI continued working to improve forest information by merging the latest technology with on-the-ground partnerships. Forest Atlases are now available for Cameroon, Central African Republic, Republic of the Congo, Democratic Republic of the Congo, Equatorial Guinea, and Gabon."
+        }
+      ]
+
+    return (
     <Element name="history" className="c-about-history">
       <div className="row">
         <div className="small-12 columns">
@@ -61,7 +71,8 @@ const AboutHistory = (props) => {
         </div>
       </div>
     </Element>
-  );
-};
+    );
+  }
+}
 
 export default AboutHistory;
