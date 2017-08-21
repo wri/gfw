@@ -6,10 +6,31 @@ $item-height: rem(494px);
   padding: rem(40px) 0 rem(56px) 0;
   background-color: $grey-light;
   overflow: hidden;
+  position: relative;
+
+  &:before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #d6d6d9;
+    position: absolute;
+    top: calc(50% + 8px);
+    z-index: 99;
+  }
 
   .c-about-history__title {
     margin-bottom: rem(7px);
     opacity: 0.5;
+  }
+
+  .c-about-history__list {
+    &:after {
+      display: block;
+      content: '';
+      height: 1px;
+      width: 100%;
+    }
   }
 
   .slider {
@@ -44,8 +65,16 @@ $item-height: rem(494px);
     margin: auto;
     width: rem(60px);
     height: rem(60px);
-    z-index: 1;
+    z-index: 100;
     display: none;
+
+    .c-arrow-button {
+      border: 5px solid $grey-light;
+
+      &::before {
+        border: 5px solid $grey-light;
+      }
+    }
 
     &.-left {
       left: rem(-70px);
@@ -106,6 +135,9 @@ $item-height: rem(494px);
     width: 100%;
 
     img {
+      border: rem(10px) solid $grey-light;
+      position: relative;
+      z-index: 100;
       border-radius: 100%;
     }
   }
@@ -117,6 +149,14 @@ $item-height: rem(494px);
     .c-about-history-item__title,
     .c-about-history-item__paragraph {
       margin-top: rem(10px);
+    }
+
+    .c-about-history-item__title {
+      span {
+        position: relative;
+        z-index: 100;
+        background-color: $grey-light;
+      }
     }
   }
 
@@ -140,7 +180,7 @@ $item-height: rem(494px);
       justify-content: center;
       width: calc(100% - #{$item-height});
       height: $item-height;
-      padding-top: rem(188px);
+      padding-top: rem(170px);
       padding-left: rem(38px);
       vertical-align: top;
 

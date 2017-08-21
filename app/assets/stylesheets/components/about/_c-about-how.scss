@@ -18,20 +18,36 @@ $about-how-height-screen-l: rem(640px);
 
     .c-about-how__subtitle{
       margin-top: rem(24px);
+      margin-bottom: rem(23px);
+      cursor: pointer;
 
       span {
         display: inline-block;
-        width: rem(13px);
-        height: rem(13px);
-        margin-right: rem(7px);
+        width: rem(9px);
+        height: rem(9px);
+        margin-right: rem(10px);
         border-radius: 100%;
-        background-color: $green-gfw;
+        background-color: $grey-dark;
+        margin-bottom: rem(2px);
+
+        &.-active {
+          width: rem(13px);
+          height: rem(13px);
+          background-color: $green-gfw;
+          margin-bottom: 0;
+          margin-right: rem(7px);
+        }
       }
     }
 
     .c-about-how__summary {
-      margin: rem(23px) 0;
       opacity: 0.7;
+      display: none;
+      overflow: hidden;
+
+      &.-active {
+        display: block;
+      }
     }
 
     .c-about-how__text-list{
@@ -81,9 +97,15 @@ $about-how-height-screen-l: rem(640px);
     border-bottom: 1px solid $grey-dark;
 
     .c-about-how__cover {
-      display: flex;
+      display: none;
       align-items: flex-end;
       justify-content: flex-end;
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      &.-active {
+        display: flex;
+      }
     }
   }
 }
