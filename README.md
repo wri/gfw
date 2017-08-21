@@ -102,6 +102,12 @@ Last step. For real. Start the app server and access it at
 $ foreman start
 ```
 
+If you are working on pages with react support, the command to execute would be:
+
+```bash
+$ npm start
+```
+
 Oh, and you should probably launch the
 [gfw-api](https://github.com/wri/gfw-api)
 [dev_apperver.py](https://github.com/wri/gfw-api#developing) before you
