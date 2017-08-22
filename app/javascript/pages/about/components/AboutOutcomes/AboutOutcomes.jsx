@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import ButtonRegular from '../../../general/components/ButtonRegular';
-import ButtonArrow from '../../../general/components/ButtonArrow';
 import { Element } from 'react-scroll';
 import { lory } from 'lory.js';
+
+import ButtonRegular from '../../../general/components/ButtonRegular';
+import ButtonArrow from '../../../general/components/ButtonArrow';
+import SliderDots from '../../../general/components/SliderDots';
 
 class AboutOutcomes extends Component {
   constructor(props) {
@@ -11,7 +13,8 @@ class AboutOutcomes extends Component {
     this.state = {
       slider: null,
       sliderPrevIsVisible: false,
-      sliderNextIsVisible: true
+      sliderNextIsVisible: true,
+      sliderDotsSelected: 0
     };
 
     this.outcomes = [
@@ -49,9 +52,11 @@ class AboutOutcomes extends Component {
 
     slider.addEventListener('after.lory.slide', () => {
       this.checkButtonsVisibility();
+      this.checkDots();
     });
     slider.addEventListener('on.lory.resize', () => {
       this.checkButtonsVisibility();
+      this.checkDots();
     });
   }
 
@@ -59,6 +64,11 @@ class AboutOutcomes extends Component {
     const currentIndex = this.state.slider.returnIndex();
     this.setState({ sliderPrevIsVisible: currentIndex !== 0 });
     this.setState({ sliderNextIsVisible: currentIndex !== this.outcomes.length - 2 });
+  };
+
+  checkDots () {
+    const currentIndex = this.state.slider.returnIndex();
+    this.setState({ sliderDotsSelected: currentIndex });
   };
 
   onClickPrevSlide = () => {
@@ -80,7 +90,7 @@ class AboutOutcomes extends Component {
             <div className="c-about-outcomes__title text -title-xs -color-3">OUTCOMES AND TESTIMONIALS</div>
             <div className="slider js_slider">
               <div className="frame js_frame">
-                <ul className="slides js_slides" ref={(slider) => { this.slider = slider; }}>
+                <ul className="slides js_slides">
                   {this.outcomes.map((item, i) =>
                     <li key={i} className={`slide js_slide ${i === 0 ? 'active' : ''}`}>
                       <div className="c-about-outcomes-item">
@@ -97,11 +107,11 @@ class AboutOutcomes extends Component {
                   <ButtonArrow orientation="left" />
                 </div>
                 <div className={slideNextVisibilityClass} onClick={this.onClickNextSlide}>
-                  <ButtonArrow orientation="right"  />
+                  <ButtonArrow orientation="right" />
                 </div>
               </div>
               <div className="c-about-outcomes__slider-dots js_slider_dots">
-
+                <SliderDots count={this.outcomes.length} selected={this.state.sliderDotsSelected} color="green" />
               </div>
             </div>
           </div>
