@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import Proptypes from 'prop-types';
 import ButtonRegular from '../../../general/components/ButtonRegular';
 import ButtonArrow from '../../../general/components/ButtonArrow';
-import Scroll, {Element} from 'react-scroll';
-import {lory} from 'lory.js';
+import { Element } from 'react-scroll';
+import { lory } from 'lory.js';
 
 class AboutOutcomes extends Component {
   constructor(props) {
