@@ -42,7 +42,7 @@ class AboutOutcomes extends Component {
   }
 
   componentDidMount() {
-    const slider = document.querySelector('.js_slider');
+    const slider = document.querySelector('.c-about-outcomes .js_slider');
     this.setState({
       slider: lory(slider, {
         enableMouseEvents: true,

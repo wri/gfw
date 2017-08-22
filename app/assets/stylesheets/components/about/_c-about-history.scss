@@ -1,6 +1,6 @@
 $item-padding: rem(16px);
 $item-padding-screen-m: rem(40px);
-$item-height: rem(494px);
+$item-height: rem(524px);
 
 .c-about-history {
   padding: rem(40px) 0 rem(56px) 0;
@@ -10,27 +10,19 @@ $item-height: rem(494px);
 
   &:before {
     content: '';
-    display: block;
-    width: 100%;
-    height: 1px;
-    background-color: #d6d6d9;
     position: absolute;
-    top: calc(50% + 8px);
+    top: calc(0px + #{rem(30px)});
+    bottom: 0;
+    margin: auto;
+    width: 100%;
+    height: rem(1px);
+    background-color: $grey-dark;
     z-index: 99;
   }
 
   .c-about-history__title {
     margin-bottom: rem(7px);
     opacity: 0.5;
-  }
-
-  .c-about-history__list {
-    &:after {
-      display: block;
-      content: '';
-      height: 1px;
-      width: 100%;
-    }
   }
 
   .slider {
@@ -47,7 +39,6 @@ $item-height: rem(494px);
   .slides {
     display: inline-block;
     width: 100%;
-    overflow: hidden;
   }
 
   .slide {
@@ -60,7 +51,7 @@ $item-height: rem(494px);
 
   .c-about-history__arrow-button {
     position: absolute;
-    top: rem(-10px);
+    top: 0;
     bottom: 0;
     margin: auto;
     width: rem(60px);
@@ -69,11 +60,8 @@ $item-height: rem(494px);
     display: none;
 
     .c-arrow-button {
-      border: 5px solid $grey-light;
-
-      &::before {
-        border: 5px solid $grey-light;
-      }
+      width: rem(76px);
+      background-color: $grey-light;
     }
 
     &.-left {
@@ -93,25 +81,13 @@ $item-height: rem(494px);
     }
 
     .slide {
-      opacity: 0.5;
+      opacity: 0;
       transition: opacity 0.5s ease-out;
+      width: calc(100% + #{$item-padding-screen-m});
+      padding-right: $item-padding-screen-m;
 
       &.active {
         opacity: 1;
-
-        & + li {
-          opacity: 1;
-        }
-      }
-
-      &:not(:last-child) {
-        width: calc(100% + #{$item-padding-screen-m});
-        padding-right: $item-padding-screen-m;
-      }
-
-      &:last-child {
-        width: calc(100% - #{$item-padding-screen-m});
-        padding-right: 0;
       }
     }
 
@@ -135,7 +111,7 @@ $item-height: rem(494px);
     width: 100%;
 
     img {
-      border: rem(10px) solid $grey-light;
+      border: rem(15px) solid $grey-light;
       position: relative;
       z-index: 100;
       border-radius: 100%;
@@ -152,6 +128,7 @@ $item-height: rem(494px);
     }
 
     .c-about-history-item__title {
+
       span {
         position: relative;
         z-index: 100;
@@ -177,14 +154,17 @@ $item-height: rem(494px);
     .c-about-history-item__texts {
       display: inline-flex;
       flex-direction: column;
-      justify-content: center;
       width: calc(100% - #{$item-height});
       height: $item-height;
-      padding-top: rem(170px);
-      padding-left: rem(38px);
+      padding-top: rem(230px);
       vertical-align: top;
 
+      .c-about-history-item__title span {
+        padding: 0 rem(15px) 0 rem(23px);
+      }
+
       .c-about-history-item__paragraph {
+        padding-left: rem(23px);
         margin-top: rem(12px);
       }
     }
