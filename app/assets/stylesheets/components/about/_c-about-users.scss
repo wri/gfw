@@ -5,6 +5,13 @@ $about-users-height-screen-l: rem(640px);
   background-color: $white;
   padding: rem(49px) 0;
 
+  .c-about-users__globe-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
   .c-about-users__content {
     position: relative;
 
@@ -70,6 +77,10 @@ $about-users-height-screen-l: rem(640px);
     min-height: $about-users-height-screen-l;
     border-bottom: 1px solid $grey-dark;
     padding-bottom: 0;
+
+    .c-about-users__globe-container {
+      display: flex;
+    }
 
     .c-about-users__user-list {
       display: block;
