@@ -164,7 +164,7 @@ define([
       this.openDashaboard.click(function() {
         $('.m-header-sub-menu-dashboard').css('max-height', 'none');
         if($(window).height() < $('.m-header-sub-menu-dashboard').height()) {
-          $('.m-header-sub-menu-dashboard').css('max-height', `${$(window).height() - 100}px`);
+          $('.m-header-sub-menu-dashboard').css('max-height', ($(window).height() - 100)+'px');
         }
         if ($('.m-header-sub-menu-dashboard').hasClass('-active')) {
           $('#layers-options').removeClass('-hidden');
