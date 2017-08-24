@@ -8,18 +8,6 @@ $item-height: rem(524px);
   overflow: hidden;
   position: relative;
 
-  &:before {
-    content: '';
-    position: absolute;
-    top: calc(0px + #{rem(30px)});
-    bottom: 0;
-    margin: auto;
-    width: 100%;
-    height: rem(1px);
-    background-color: $grey-dark;
-    z-index: 99;
-  }
-
   .c-about-history__title {
     margin-bottom: rem(7px);
     opacity: 0.5;
@@ -27,6 +15,10 @@ $item-height: rem(524px);
 
   .slider {
     position: relative;
+
+    &.-on-movement .c-about-history__arrow-button .c-arrow-button {
+      background-color: transparent;
+    }
   }
 
   .frame {
@@ -39,6 +31,19 @@ $item-height: rem(524px);
   .slides {
     display: inline-block;
     width: 100%;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: rem(-6000px);
+      margin: auto;
+      width: rem(99999px);
+      height: rem(1px);
+      background-color: $grey-dark;
+      z-index: 99;
+    }
   }
 
   .slide {
@@ -81,13 +86,19 @@ $item-height: rem(524px);
     }
 
     .slide {
-      opacity: 0;
       transition: opacity 0.5s ease-out;
       width: calc(100% + #{$item-padding-screen-m});
       padding-right: $item-padding-screen-m;
 
       &.active {
-        opacity: 1;
+
+        .c-about-history-item__image:before {
+          opacity: 0;
+        }
+
+        .c-about-history-item__texts {
+          opacity: 1;
+        }
       }
     }
 
@@ -107,6 +118,7 @@ $item-height: rem(524px);
   background-color: $grey-light;
 
   .c-about-history-item__image {
+    position: relative;
     display: block;
     width: 100%;
 
@@ -116,11 +128,25 @@ $item-height: rem(524px);
       z-index: 100;
       border-radius: 100%;
     }
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: $grey-light;
+      border-radius: 100%;
+      transition: opacity 0.5s ease-out;
+      z-index: 101;
+    }
   }
 
   .c-about-history-item__texts {
     display: block;
     width: 100%;
+    opacity: 0;
 
     .c-about-history-item__title,
     .c-about-history-item__paragraph {
