@@ -1,6 +1,6 @@
 {
   "name": "globalforestwatch",
-  "version": "0.1.0",
+  "version": "7.10.0",
   "description": "Global Forest Watch",
   "main": "Gruntfile.js",
   "engines": {
