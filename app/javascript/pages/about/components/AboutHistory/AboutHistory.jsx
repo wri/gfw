@@ -11,8 +11,7 @@ class AboutHistory extends Component {
     this.state = {
       slider: null,
       sliderPrevIsVisible: false,
-      sliderNextIsVisible: true,
-      sliderOnMovement: false
+      sliderNextIsVisible: true
     };
 
     this.years = [
@@ -54,12 +53,6 @@ class AboutHistory extends Component {
     slider.addEventListener('on.lory.resize', () => {
       this.checkButtonsVisibility();
     });
-    slider.addEventListener('on.lory.touchstart', () => {
-      this.setState({ sliderOnMovement: true });
-    });
-    slider.addEventListener('on.lory.touchend', () => {
-      setTimeout(() => { this.setState({ sliderOnMovement: false }); }, 500);
-    });
   }
 
   checkButtonsVisibility () {
@@ -86,7 +79,7 @@ class AboutHistory extends Component {
           <div className="small-12 columns">
             <div className="c-home-use-examples__content">
               <div className="c-about-history__title text -title-xs -color-3">HISTORY</div>
-              <div className={`slider js_slider ${this.state.sliderOnMovement ? '-on-movement' : ''}`}>
+              <div className="slider js_slider">
                 <div className="frame js_frame">
                   <ul className="slides js_slides">
                     {this.years.map((item, i) =>
