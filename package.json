@@ -1,8 +1,11 @@
 {
   "name": "globalforestwatch",
-  "version": "7.10.0",
+  "version": "0.1.0",
   "description": "Global Forest Watch",
   "main": "Gruntfile.js",
+  "engines" : {
+    "node" : ">=7.10.0"
+  },
   "scripts": {
     "postinstall": "./node_modules/bower/bin/bower install",
     "webpack": "./bin/webpack-dev-server",
