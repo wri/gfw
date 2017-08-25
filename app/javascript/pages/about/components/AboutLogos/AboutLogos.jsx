@@ -399,7 +399,7 @@ class AboutLogos extends Component {
               <div className="c-about-footer-logos__title text -title-xs -color-3">Founding Partners</div>
                 <div className="list-logos row">
                   {foundingPartners.map((item, i) =>
-                  <a key={i} className="columns small-3" href={item.link} target="_blank">
+                  <a key={i} className="columns small-6 medium-4 large-3" href={item.link} target="_blank">
                     <img alt={item.title} src={item.img} />
                   </a>
                   )}
@@ -407,7 +407,7 @@ class AboutLogos extends Component {
               <div className="c-about-footer-logos__title text -title-xs -color-3">Partners & collaborators</div>
               <div className="list-logos row">
                 {partnersCollaborators.map((item, i) =>
-                <a key={i} className="columns small-3" href={item.link} target="_blank">
+                <a key={i} className="columns small-6 medium-4 large-3" href={item.link} target="_blank">
                   <img alt={item.title} src={item.img} />
                 </a>
                 )}
@@ -415,7 +415,7 @@ class AboutLogos extends Component {
               <div className="c-about-footer-logos__title text -title-xs -color-3">Funders</div>
               <div className="list-logos row">
                 {funders.map((item, i) =>
-                <a key={i} className="columns small-3" href={item.link} target="_blank">
+                <a key={i} className="columns small-6 medium-4 large-3" href={item.link} target="_blank">
                   <img alt={item.title} src={item.img} />
                 </a>
                 )}
