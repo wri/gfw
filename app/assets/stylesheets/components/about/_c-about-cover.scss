@@ -40,6 +40,25 @@ $about-cover-padding-top-screen-m: rem(24px);
     }
   }
 
+  .c-about-cover__video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    height: 100%;
+
+    .icon-close {
+      position: absolute;
+      top: rem(20px);
+      right: rem(20px);
+      width: rem(20px);
+      height: rem(20px);
+      fill: $white;
+      cursor: pointer;
+    }
+  }
+
   @media screen and (min-width: $screen-m) {
     height: $about-cover-height-screen-m;
     padding-top: $about-cover-padding-top-screen-m;
