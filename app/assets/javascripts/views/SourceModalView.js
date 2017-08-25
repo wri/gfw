@@ -13,7 +13,7 @@ define([
 
   var SourceModel = Backbone.Model.extend({
 
-    _uriTemplate: window.gfw.config.GFW_API_HOST + '/metadata/{slug}',
+    _uriTemplate: window.gfw.config.GFW_API_HOST_PROD + '/gfw-metadata/{slug}',
 
     initialize: function(options) {
       this.options = _.extend({}, options);
