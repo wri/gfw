@@ -79,6 +79,10 @@ class AboutOutcomes extends Component {
     this.state.slider.next();
   };
 
+  onClickDots = (e) => {
+    this.state.slider.slideTo(parseInt(e.currentTarget.dataset.index));
+  };
+
   render() {
     const slidePrevVisibilityClass = `c-about-outcomes__arrow-button -left ${!this.state.sliderPrevIsVisible ? '-hidden' : ''} js_slide_prev`;
     const slideNextVisibilityClass = `c-about-outcomes__arrow-button -right ${!this.state.sliderNextIsVisible ? '-hidden' : ''} js_slide_next`;
@@ -111,7 +115,11 @@ class AboutOutcomes extends Component {
                 </div>
               </div>
               <div className="c-about-outcomes__slider-dots js_slider_dots">
-                <SliderDots count={this.outcomes.length} selected={this.state.sliderDotsSelected} color="green" />
+                <SliderDots
+                  count={this.outcomes.length}
+                  selected={this.state.sliderDotsSelected}
+                  color="green"
+                  callback={this.onClickDots.bind(this)} />
               </div>
             </div>
           </div>
