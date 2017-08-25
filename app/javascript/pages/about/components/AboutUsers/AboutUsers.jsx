@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 
-import Globe from '../../../about/components/AboutWorld/Globe/index';
+import Globe from '../../../about/components/AboutUsers/Globe/index';
+import AboutModalWorld from '../../../about/components/AboutModals/AboutModalWorld';
 import ButtonRegular from '../../../general/components/ButtonRegular';
 
-class AboutWorld extends Component {
+class AboutUsers extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      globe: null
-    };
 
     this.users = [
       {title: 'Civil Society'},
@@ -19,27 +17,37 @@ class AboutWorld extends Component {
       {title: 'Private Sector'},
       {title: 'Research'},
     ];
+
+    this.state = {
+      globeWidth: 0
+    };
   }
 
   componentDidMount() {
     this.globeContainer = document.querySelector('.c-about-users__globe-container');
-    this.makeGlobe();
-  }
+    this.setState({ globeWidth: this.globeContainer.clientWidth });
+  };
 
-  makeGlobe = () => {
-    this.setState({ globe: <Globe
-      width={this.globeContainer.clientWidth}
-      height={this.globeContainer.clientWidth}
-      autorotate={false} /> });
+  selectUser = (title) => {
+    if (this.props.selectedUserGroup !== title) {
+      this.props.setUserGroup(title);
+    }
   };
 
   render() {
+    const globe = this.state.globeWidth > 0 ? <Globe
+      width={this.state.globeWidth}
+      height={this.state.globeWidth}
+      autorotate={false}
+      dataGroup={this.props.selectedUserGroup}
+      setUserData={this.props.setUserData} /> : null;
+
     return (
       <div className="c-about-users">
         <div className="row">
           <div className="large-6 columns">
             <div className="c-about-users__globe-container">
-              {this.state.globe}
+              {globe}
             </div>
           </div>
           <div className="small-12 large-6 columns">
@@ -52,7 +60,7 @@ class AboutWorld extends Component {
               </div>
               <ul className="c-about-users__user-list text -paragraph -color-2">
                 {this.users.map((item, i) =>
-                  <li key={i} className={`${i === 0 ? '-selected' : ''}`}>
+                  <li key={i} className={`${this.props.selectedUserGroup === item.title ? '-selected' : ''}`} onClick={() => this.selectUser(item.title)}>
                     <svg className="icon">
                       <use xlinkHref="#icon-little-arrow"></use>
                     </svg>
@@ -71,9 +79,19 @@ class AboutWorld extends Component {
           <p>Global Forest Watch has had over 1.3 million users</p>
           <p>from every single country in the world.</p>
         </div>
+        <AboutModalWorld isVisible={this.props.isModalVisible} userData={this.props.selectedUserData} hideModal={this.props.hideModal} />
       </div>
     );
   }
 }
 
-export default AboutWorld;
+AboutUsers.propTypes = {
+  setUserData: PropTypes.func.isRequired,
+  setUserGroup: PropTypes.func.isRequired,
+  selectedUserData: PropTypes.object,
+  selectedUserGroup: PropTypes.string.isRequired,
+  isModalVisible: PropTypes.bool.isRequired,
+  hideModal: PropTypes.func.isRequired
+};
+
+export default AboutUsers;
