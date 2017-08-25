@@ -15,10 +15,6 @@ $item-height: rem(524px);
 
   .slider {
     position: relative;
-
-    &.-on-movement .c-about-history__arrow-button .c-arrow-button {
-      background-color: transparent;
-    }
   }
 
   .frame {
@@ -31,19 +27,6 @@ $item-height: rem(524px);
   .slides {
     display: inline-block;
     width: 100%;
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: rem(-6000px);
-      margin: auto;
-      width: rem(99999px);
-      height: rem(1px);
-      background-color: $grey-dark;
-      z-index: 99;
-    }
   }
 
   .slide {
@@ -51,7 +34,15 @@ $item-height: rem(524px);
     display: inline-block;
     white-space: normal;
     vertical-align: top;
-    padding-right: $item-padding;
+    transition: opacity 0.5s ease-out;
+    width: 100%;
+
+    &.active {
+
+      .c-about-history-item {
+        opacity: 1;
+      }
+    }
   }
 
   .c-about-history__arrow-button {
@@ -62,12 +53,6 @@ $item-height: rem(524px);
     width: rem(60px);
     height: rem(60px);
     z-index: 100;
-    display: none;
-
-    .c-arrow-button {
-      width: rem(76px);
-      background-color: $grey-light;
-    }
 
     &.-left {
       left: rem(-70px);
@@ -84,27 +69,6 @@ $item-height: rem(524px);
     .c-about-history__title {
       margin-bottom: 0;
     }
-
-    .slide {
-      transition: opacity 0.5s ease-out;
-      width: calc(100% + #{$item-padding-screen-m});
-      padding-right: $item-padding-screen-m;
-
-      &.active {
-
-        .c-about-history-item__image:before {
-          opacity: 0;
-        }
-
-        .c-about-history-item__texts {
-          opacity: 1;
-        }
-      }
-    }
-
-    .c-about-history__arrow-button {
-      display: block;
-    }
   }
 
   @media screen and (min-width: $screen-l) {
@@ -116,6 +80,8 @@ $item-height: rem(524px);
   position: relative;
   width: 100%;
   background-color: $grey-light;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
 
   .c-about-history-item__image {
     position: relative;
@@ -128,25 +94,11 @@ $item-height: rem(524px);
       z-index: 100;
       border-radius: 100%;
     }
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: $grey-light;
-      border-radius: 100%;
-      transition: opacity 0.5s ease-out;
-      z-index: 101;
-    }
   }
 
   .c-about-history-item__texts {
     display: block;
     width: 100%;
-    opacity: 0;
 
     .c-about-history-item__title,
     .c-about-history-item__paragraph {
