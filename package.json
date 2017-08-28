@@ -9,7 +9,7 @@
   },
   "scripts": {
     "postinstall": "./node_modules/bower/bin/bower install",
-    "webpack": "./bin/webpack-dev-server",
+    "webpack": "./bin/webpack",
     "foreman": "foreman start",
     "start": "npm-run-all -p -r foreman webpack"
   },
