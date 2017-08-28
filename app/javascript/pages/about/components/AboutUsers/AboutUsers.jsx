@@ -42,6 +42,11 @@ class AboutUsers extends Component {
       dataGroup={this.props.selectedUserGroup}
       setUserData={this.props.setUserData} /> : null;
 
+    let growthDates = [];
+    for (let i = 2014; i <= new Date().getFullYear(); i++) {
+      growthDates.push(i);
+    }
+
     return (
       <div className="c-about-users">
         <div className="row">
@@ -78,6 +83,11 @@ class AboutUsers extends Component {
           <p>Since launching in 2014,</p>
           <p>Global Forest Watch has had over 1.3 million users</p>
           <p>from every single country in the world.</p>
+          <ul className="c-about-users__growth-years text -paragraph-6">
+            {growthDates.map((item, i) =>
+              <li>{item}</li>
+            )}
+          </ul>
         </div>
         <AboutModalWorld isVisible={this.props.isModalVisible} userData={this.props.selectedUserData} hideModal={this.props.hideModal} />
       </div>

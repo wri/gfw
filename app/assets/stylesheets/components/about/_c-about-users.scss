@@ -67,10 +67,26 @@ $about-users-height-screen-l: rem(640px);
   }
 
   .c-about-users__growth {
+    display: none;
     padding: rem(117px) 0 rem(93px) 0;
     text-align: center;
     letter-spacing: -0.4px;
-    display: none;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    background-image: url('/assets/about/growth-graphic.png');
+
+    .c-about-users__growth-years {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 rem(100px) 0 rem(5px);
+      color: $green-gfw;
+    }
   }
 
   @media screen and (min-width: $screen-l) {
