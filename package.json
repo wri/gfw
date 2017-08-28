@@ -9,7 +9,7 @@
   },
   "scripts": {
     "postinstall": "./node_modules/bower/bin/bower install",
-    "webpack": "if [[ ${NODE_ENV} == \"production\" ]]; then ./bin/webpack; else ./bin/webpack-dev-server; fi",
+    "webpack": "./bin/webpack",
     "foreman": "foreman start",
     "start": "npm-run-all -p -r foreman webpack"
   },
