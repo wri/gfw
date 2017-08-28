@@ -88,6 +88,11 @@ $arrow-button-size: rem(60px);
     .c-about-history__arrow-button {
       top: ($item-image-size-screen-m / 2) - ($arrow-button-size / 2);
 
+      .icon {
+        width: rem(16px);
+        height: rem(16px);
+      }
+
       &.-left {
         left: rem(-70px);
 
@@ -157,7 +162,7 @@ $arrow-button-size: rem(60px);
   }
 
   @media screen and (min-width: $screen-m) {
-    img {
+    .c-about-history-item__image img {
       width: $item-image-size-screen-m;
       height: $item-image-size-screen-m;
     }
