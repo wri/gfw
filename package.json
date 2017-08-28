@@ -12,7 +12,7 @@
     "webpack": "./bin/webpack-dev-server",
     "foreman": "foreman start",
     "start": "npm-run-all -p -r foreman webpack",
-    "webpack:deploy": "webpack --config=webpack/webpack.config.js -p",
+    "webpack:deploy": "webpack --config=webpack/production.js -p",
     "heroku-postbuild": "npm run webpack:deploy"
   },
   "repository": {
