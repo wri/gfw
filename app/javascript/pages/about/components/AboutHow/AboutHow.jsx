@@ -22,19 +22,19 @@ class AboutHow extends Component {
       {
         title: 'Radical Transparency',
         text: 'Global Forest Watch aims to safeguard forests by creating radical transparency around deforestation and forest degradation globally. By making the best available data on forests available to anyone, GFW empowers governments and companies to make sustainable and equitable decisions about forest management and land use, while also equipping members of civil society such as NGOs and journalists with the information they need to play an active role in protecting forests.',
-        img : "/assets/backgrounds/about-how-to/1.png",
+        img : "/assets/about/how-to-1.png",
         credits: 'Bangkukuk, Nicaragua'
       },
       {
         title: 'Feedback Loop',
         text: 'Global Forest Watch provides data and tools to civil society, the private sector, and governments to make better decisions about land use and forest management. The platform incorporates feedback through collaboration with users that improves the relevance and value of GFW to their work.',
-        img : "/assets/backgrounds/about-how-to/2.png",
+        img : "/assets/about/how-to-2.png",
         credits: 'Forest Watcher, WRI'
       },
       {
         title: 'Connecting people who care',
         text: 'Global Forest Watch provides data and tools to civil society, the private sector, and governments to make better decisions about land use and forest management. The platform incorporates feedback through collaboration with users that improves the relevance and value of GFW to their work.',
-        img : "/assets/backgrounds/about-how-to/3.png",
+        img : "/assets/about/how-to-3.png",
         credits: 'Arend de Hass, ACF'
       },
     ]
