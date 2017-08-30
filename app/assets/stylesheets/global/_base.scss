@@ -26,6 +26,14 @@ body {
 
   &.is-map-page {
     background-color: #fff;
+
+    .layout-content {
+      margin-top: 40px;
+
+      @media (min-width:$br-mobile){
+        top: 0;
+      }
+    }
   }
 }
 
