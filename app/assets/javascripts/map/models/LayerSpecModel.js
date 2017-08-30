@@ -126,6 +126,7 @@ define([
       "mys_oil_palm",
       "oil_palm",
       "bra_mining",
+      "bra_soy",
       "mex_mining",
       "per_mining",
       "can_oil",
