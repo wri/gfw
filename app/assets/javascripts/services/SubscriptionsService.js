@@ -20,18 +20,19 @@ define([
       this.currentRequest = [];
     },
 
-    testWebhook: function(webhookURL) {
+    testWebhook: function(webhookURL, dataset) {
       var url = new UriTemplate(APIURLS.testWebhook);
+      var requestId = POST_REQUEST_SUBSCRIPTIONS_ID + '_' + dataset;
 
-      this.defineRequest(POST_REQUEST_SUBSCRIPTIONS_ID,
-        url, { content: webhookURL });
+      this.defineRequest(requestId,
+        url, { content: webhookURL, slug: dataset });
 
       var requestConfig = {
-        resourceId: POST_REQUEST_SUBSCRIPTIONS_ID
+        resourceId: requestId
       };
 
-      this.abortRequest(POST_REQUEST_SUBSCRIPTIONS_ID);
-      this.currentRequest[POST_REQUEST_SUBSCRIPTIONS_ID] = ds.request(requestConfig);
+      this.abortRequest(requestId);
+      this.currentRequest[requestId] = ds.request(requestConfig);
     },
 
     defineRequest: function (id, url, data) {
