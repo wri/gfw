@@ -276,6 +276,10 @@
     }
   }
 
+  &.is-flex-end {
+    justify-content: flex-end;
+  }
+
   &.is-center {
     justify-content: center;
 

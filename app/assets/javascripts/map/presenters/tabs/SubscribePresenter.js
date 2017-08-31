@@ -94,12 +94,20 @@ define([
       this.view.updateCurrentStep(this.currentStep);
     },
 
-    // Email
-    checkEmail: function(email) {
-      this.subscription.set('resource', {
-        type: 'EMAIL',
-        content: email
-      });
+    previousStep: function() {
+      this.currentStep -= 1;
+
+      this.view.updateCurrentStep(this.currentStep);
+    },
+
+    // Email or URL (Webhook)
+    checkEmailOrURL: function(params) {
+      var type = 'EMAIL';
+      var content = params.email;
+
+      if (params.url && params.url.length > 0) {
+        type = 'URL';
+        content = params.url;
 
       if (this.subscription.hasValidEmail()) {
         this.getDatasets();
@@ -107,6 +115,10 @@ define([
       } else {
         this.publishNotification('notification-email-incorrect');
       }
+    },
+
+    goBack: function () {
+      this.previousStep();
     },
 
     getDatasets: function() {
