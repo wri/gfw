@@ -29,6 +29,7 @@ define([
         'click .subscription-sign-in': 'onClickTrackSignIn',
         'click #returnToMap': 'onClickClose',
         'click #showName': 'onClickCheckEmail',
+        'click .js-subscribe-back': 'onClickGoBack',
         'click #datasets': 'onClickCheckDatasets',
         'change .dataset-checkbox' : 'onChangeDataset',
         'click #subscribe': 'onClickSubscribe',
@@ -84,6 +85,7 @@ define([
 
       this.cache();
       this.renderChosen();
+      this.presenter.getDatasets();
     },
 
     renderDatasets: function(data) {
@@ -120,6 +122,7 @@ define([
      * - onClickClose
      * - onClickTrackSignIn
      * - onClickCheckEmail
+     * - onClickGoBack
      * - onClickCheckDatasets
      * - onChangeDataset
      * - onClickSubscribe
@@ -139,6 +142,10 @@ define([
         email: this.$subscriptionEmail.val(),
         url: this.$subscriptionUrl.val()
       });
+    },
+
+    onClickGoBack: function(e) {
+      this.presenter.goBack();
     },
 
     onClickCheckDatasets: function(e) {
@@ -172,7 +179,11 @@ define([
       var value = this.$subscriptionUrl.val();
 
       if (value !== '' && !this.$testWebhookButton.hasClass('-loading')) {
-        subscriptionsService.testWebhook(this.$subscriptionUrl.val());
+        _.each(this.presenter.subscription.attributes.datasets, function(dataset, i) {
+          setTimeout(function () {
+            subscriptionsService.testWebhook(this.$subscriptionUrl.val(), dataset)
+          }.bind(this), i * 100);
+        }.bind(this));
 
         var loader = this.$testWebhookButton.find('.webhook-loader');
         loader.html(this.$testWebhookButton.find('.webhook-text').html());
