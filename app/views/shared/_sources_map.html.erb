@@ -6696,8 +6696,6 @@
               <span class="json-key">unsubscribe_url</span>: <span class="json-string">"url"</span> ,
               <span class="json-key">subscriptions_url</span>: <span class="json-string">"url of the user subscriptions (../my_gfw/subscriptions)"</span>,
               <span class="json-key">alert_link</span>: <span class="json-string">"url of the map with the subscription"</span>,
-              <span class="json-key">alert_type</span>: <span class="json-string">"description of the layer"</span>,
-              <span class="json-key">alert_summary</span>: <span class="json-string">"description of the alert"</span>,
               <span class="json-key">alert_date_begin</span>: <span class="json-string">"beginDate"</span>,
               <span class="json-key">alert_date_end</span>: <span class="json-string">"endDate"</span>
             }
@@ -6721,8 +6719,7 @@
                   <span class="json-key">longitude</span>: <span class="json-string">"longitude in decimal degrees"</span>
                 },
                 {...}
-              ],
-              <span class="json-key">alert_download</span>: <span class="json-value">"url"</span>
+              ]
             }
           </code>
         </pre>
@@ -6735,18 +6732,21 @@
           <code>
             {
               <span class="json-key">alert_count</span>: <span class="json-value">"number of alerts"</span>,
-              <span class="json-key">map_image</span>: <span class="json-string">"url of the image"</span>,
               <span class="json-key">alerts</span>: [
                 {
                   <span class="json-key">acq_date</span>: <span class="json-string">"date of the alert"</span>,
                   <span class="json-key">acq_time</span>: <span class="json-string">"time of the alert"</span>,
-                  <span class="json-key">confirmed</span>: <span class="json-boolean">"true or false"</span>,
                   <span class="json-key">latitude</span>: <span class="json-string">"latitude in decimal degrees"</span>,
                   <span class="json-key">longitude</span>: <span class="json-string">"longitude in decimal degrees"</span>
                 },
                 {...}
               ],
-              <span class="json-key">alert_download</span>: <span class="json-value">"url"</span>
+              <span class="json-key">downloadUrls</span>: [
+                {
+                  <span class="json-key">csv</span>: <span class="json-string">"url"</span>,
+                  <span class="json-key">json</span>: <span class="json-string">"url"</span>
+                }
+              ]
             }
           </code>
         </pre>
@@ -6760,17 +6760,22 @@
             {
               <span class="json-key">alert_count_degradation</span>: <span class="json-value">"num degradation alerts"</span>,
               <span class="json-key">alert_count_deforestation</span>: <span class="json-value">"num deforestation alerts"</span>,
+              <span class="json-key">map_image</span>: <span class="json-string">"url of the image"</span>,
               <span class="json-key">alerts</span>: [
                 {
                   <span class="json-key">acq_date</span>: <span class="json-string">"date of the alert"</span>,
                   <span class="json-key">acq_time</span>: <span class="json-string">"time of the alert"</span>,
-                  <span class="json-key">type</span>: <span class="json-string">"deforestation or degradation"</span>,
                   <span class="json-key">latitude</span>: <span class="json-string">"latitude in decimal degrees"</span>,
                   <span class="json-key">longitude</span>: <span class="json-string">"longitude in decimal degrees"</span>
                 },
                 {...}
               ],
-              <span class="json-key">alert_download</span>: <span class="json-value">"url"</span>
+              <span class="json-key">downloadUrls</span>: [
+                {
+                  <span class="json-key">csv</span>: <span class="json-string">"url"</span>,
+                  <span class="json-key">json</span>: <span class="json-string">"url"</span>
+                }
+              ]
             }
           </code>
         </pre>
