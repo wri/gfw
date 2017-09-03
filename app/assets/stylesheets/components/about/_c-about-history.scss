@@ -1,0 +1,197 @@
+$item-padding: rem(16px);
+$item-padding-screen-m: rem(40px);
+$item-height-screen-m: rem(524px);
+$item-image-size-screen-m: rem(524px);
+$item-image-size-screen-s: rem(240px);
+$arrow-button-size: rem(60px);
+
+.c-about-history {
+  padding: rem(40px) 0 rem(56px) 0;
+  background-color: $grey-light;
+  overflow: hidden;
+  position: relative;
+
+  .c-about-history__title {
+    margin-bottom: rem(7px);
+    opacity: 0.5;
+  }
+
+  .slider {
+    position: relative;
+  }
+
+  .frame {
+    position: relative;
+    font-size: 0;
+    line-height: 0;
+    white-space: nowrap;
+  }
+
+  .slides {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .slide {
+    position: relative;
+    display: inline-block;
+    white-space: normal;
+    vertical-align: top;
+    transition: opacity 0.5s ease-out;
+    width: 100%;
+
+    &.active {
+
+      .c-about-history-item {
+        opacity: 1;
+      }
+    }
+  }
+
+  .c-about-history__arrow-button {
+    position: absolute;
+    top: ($item-image-size-screen-s / 2) - ($arrow-button-size / 2);
+    margin: auto;
+    width: $arrow-button-size;
+    height: $arrow-button-size;
+    z-index: 100;
+
+    .icon {
+      width: rem(12px);
+      height: rem(12px);
+    }
+
+    &.-left {
+      left: rem(-46px);
+
+      .icon {
+        left: rem(17px);
+      }
+    }
+
+    &.-right {
+      right: rem(-46px);
+
+      .icon {
+        left: rem(-17px);
+      }
+    }
+  }
+
+  @media screen and (min-width: $screen-m) {
+    padding: rem(50px) 0 rem(60px) 0;
+
+    .c-about-history__title {
+      margin-bottom: 0;
+    }
+
+    .c-about-history__arrow-button {
+      top: ($item-image-size-screen-m / 2) - ($arrow-button-size / 2);
+
+      .icon {
+        width: rem(16px);
+        height: rem(16px);
+      }
+
+      &.-left {
+        left: rem(-70px);
+
+        .icon {
+          left: rem(-4px);
+        }
+      }
+
+      &.-right {
+        right: rem(-70px);
+
+        .icon {
+          left: rem(2px);
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: $screen-l) {
+    border-bottom: 1px solid $grey-dark;
+
+    .c-about-history__arrow-button {
+      top: 0;
+      bottom: 0;
+    }
+  }
+}
+
+.c-about-history-item {
+  position: relative;
+  width: 100%;
+  background-color: $grey-light;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+
+  .c-about-history-item__image {
+    position: relative;
+    display: block;
+    width: 100%;
+
+    img {
+      position: relative;
+      width: $item-image-size-screen-s;
+      height: $item-image-size-screen-s;
+      z-index: 100;
+      border-radius: 100%;
+    }
+  }
+
+  .c-about-history-item__texts {
+    display: block;
+    width: 100%;
+
+    .c-about-history-item__title,
+    .c-about-history-item__paragraph {
+      margin-top: rem(10px);
+    }
+
+    .c-about-history-item__title {
+
+      span {
+        position: relative;
+        z-index: 100;
+        background-color: $grey-light;
+      }
+    }
+  }
+
+  @media screen and (min-width: $screen-m) {
+    .c-about-history-item__image img {
+      width: $item-image-size-screen-m;
+      height: $item-image-size-screen-m;
+    }
+  }
+
+  @media screen and (min-width: $screen-l) {
+
+    .c-about-history-item__image {
+      display: inline-block;
+      width: auto;
+      vertical-align: top;
+    }
+
+    .c-about-history-item__texts {
+      display: inline-flex;
+      flex-direction: column;
+      width: calc(100% - #{$item-height-screen-m});
+      height: $item-height-screen-m;
+      padding-top: rem(230px);
+      vertical-align: top;
+
+      .c-about-history-item__title span {
+        padding: 0 rem(15px) 0 rem(23px);
+      }
+
+      .c-about-history-item__paragraph {
+        padding-left: rem(23px);
+        margin-top: rem(12px);
+      }
+    }
+  }
+}

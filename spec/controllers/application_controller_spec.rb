@@ -1,9 +1,9 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe ApplicationController do
+describe ApplicationController, type: :controller do
   controller do
     def index
-      render text: ''
+      render plain: ''
     end
   end
 
@@ -17,7 +17,7 @@ describe ApplicationController do
 
     before :each do
       @request.user_agent = user_agent
-      ActionDispatch::Request.any_instance.stub(:remote_ip).and_return(ip)
+      allow_any_instance_of(ActionDispatch::Request).to receive(:remote_ip).and_return(ip)
     end
 
     context "with a supported browser" do
@@ -26,8 +26,8 @@ describe ApplicationController do
       }
 
       before :each do
-        controller.request.stub(:user_agent).and_return(user_agent)
-        controller.request.stub(:host).and_return("www.globalforestwatch.org")
+        allow(request).to receive(:user_agent).and_return(user_agent)
+        allow(controller.request).to receive(:host).and_return("www.globalforestwatch.org")
       end
 
       it "does not redirect to /notsupportedbrowser" do

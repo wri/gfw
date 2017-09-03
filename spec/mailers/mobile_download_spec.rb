@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe MobileDownload do
   let(:email) { "mobileuser@internet.com" }

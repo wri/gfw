@@ -1,0 +1,44 @@
+.c-about-anchors {
+  background-color: $grey-light;
+  border-bottom: 1px solid $grey-dark;
+  display: none;
+
+  .c-about-anchors__buttons {
+    font-size: 0;
+
+    li {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 25%;
+      max-width: rem(183px);
+      height: rem(56px);
+      cursor: pointer;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: rem(1px);
+        height: 100%;
+        background-color: rgba($slate, 0.2);
+      }
+
+      &:last-child:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: rem(1px);
+        height: 100%;
+        background-color: rgba($slate, 0.2);
+      }
+    }
+  }
+
+  @media screen and (min-width: $screen-m) {
+    display: block;
+  }
+}
