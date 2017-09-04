@@ -83,4 +83,6 @@ Gfw::Application.configure do
   # config.middleware.insert_after(::Rack::Runtime, "::Rack::Auth::Basic", "Production") do |u, p|
   #   [u, p] == ['admin', ENV['PASSWORD']]
   # end
+
+  config.enable_dependency_loading = true
 end
