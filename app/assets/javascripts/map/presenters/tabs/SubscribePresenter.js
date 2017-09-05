@@ -122,33 +122,36 @@ define([
     },
 
     getDatasets: function() {
-      var params = this.subscription.attributes.params;
-      params = _.extend({}, params, params.iso);
-      var paramsValues = _.pick(params, 'use', 'useid', 'wdpaid',
-      'geostore', 'country', 'region');
+      if (typeof this.subscription !== 'undefined') {
+        var params = this.subscription.attributes.params;
+        params = _.extend({}, params, params.iso);
+        var paramsValues = _.pick(params, 'use', 'useid', 'wdpaid',
+          'geostore', 'country', 'region');
 
-      var values = _.compact(_.values(paramsValues));
+        var values = _.compact(_.values(paramsValues));
 
-      if (values.length) {
-        this.view.renderDatasets({
-          datasets: []
-        });
+        if (values.length) {
+          this.view.renderDatasets({
+            datasets: []
+          });
 
-        CoverageService.get(params)
-          .then(function(layers) {
-            this.view.renderDatasets({
-              datasets: datasetsHelper.getFilteredList(layers, this.subscription.attributes.datasets)
-            });
-          }.bind(this))
+          CoverageService.get(params)
+            .then(function(layers) {
+              this.view.renderDatasets({
+                datasets: datasetsHelper.getFilteredList(layers, this.subscription.attributes.datasets)
+              });
+            }.bind(this))
 
-          .error(function(error) {
-            console.log(error);
-          }.bind(this));
-      } else {
-        this.view.renderDatasets({
-          datasets: datasetsHelper.getListSelected(this.subscription.attributes.datasets)
-        });
+            .error(function(error) {
+              console.log(error);
+            }.bind(this));
+        } else {
+          this.view.renderDatasets({
+            datasets: datasetsHelper.getListSelected(this.subscription.attributes.datasets)
+          });
+        }
       }
+
     },
 
     updateDatasets: function(datasets) {
