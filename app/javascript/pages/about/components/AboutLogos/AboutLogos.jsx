@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import Proptypes from 'prop-types';
 import ButtonRegular from '../../../general/components/ButtonRegular';
 import ModalSubscribe from '../AboutModals/AboutModalSubscribe';
-import Scroll, {Element} from 'react-scroll';
+import {Element} from 'react-scroll';
 
 class AboutLogos extends Component {
   constructor(props) {
@@ -404,7 +403,7 @@ class AboutLogos extends Component {
                   </a>
                   )}
                 </div>
-              <div className="c-about-footer-logos__title text -title-xs -color-3">Partners & collaborators</div>
+              <div className="c-about-footer-logos__title text -title-xs -color-3">Partners</div>
               <div className="list-logos row">
                 {partnersCollaborators.map((item, i) =>
                 <a key={i} className="columns small-6 medium-4 large-3" href={item.link} target="_blank">
