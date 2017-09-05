@@ -1,12 +1,12 @@
 $item-padding: rem(16px);
 $item-padding-screen-m: rem(40px);
 
-.c-about-outcomes {
+.c-about-impacts {
   padding: rem(40px) 0 rem(56px) 0;
   background-color: $white;
   overflow: hidden;
 
-  .c-about-outcomes__title {
+  .c-about-impacts__title {
     margin-bottom: rem(7px);
     opacity: 0.5;
   }
@@ -35,7 +35,7 @@ $item-padding-screen-m: rem(40px);
     padding-right: $item-padding;
   }
 
-  .c-about-outcomes__arrow-button {
+  .c-about-impacts__arrow-button {
     position: absolute;
     top: rem(-10px);
     bottom: 0;
@@ -54,7 +54,7 @@ $item-padding-screen-m: rem(40px);
     }
   }
 
-  .c-about-outcomes__slider-dots {
+  .c-about-impacts__slider-dots {
     position: absolute;
     width: 100%;
     text-align: center;
@@ -64,7 +64,7 @@ $item-padding-screen-m: rem(40px);
   @media screen and (min-width: $screen-m) {
     padding: rem(50px) 0 rem(60px) 0;
 
-    .c-about-outcomes__title {
+    .c-about-impacts__title {
       margin-bottom: 0;
     }
 
@@ -91,11 +91,11 @@ $item-padding-screen-m: rem(40px);
       }
     }
 
-    .c-about-outcomes__arrow-button {
+    .c-about-impacts__arrow-button {
       display: block;
     }
 
-    .c-about-outcomes__slider-dots {
+    .c-about-impacts__slider-dots {
       bottom: rem(-37px);
 
       .c-slider-dots__item:last-child {
@@ -105,7 +105,7 @@ $item-padding-screen-m: rem(40px);
   }
 }
 
-.c-about-outcomes-item {
+.c-about-impacts-item {
   position: relative;
   width: 100%;
   height: rem(460px);
@@ -122,7 +122,7 @@ $item-padding-screen-m: rem(40px);
     border: solid rem(1px) $grey-dark;
   }
 
-  .c-about-outcomes-item__image {
+  .c-about-impacts-item__image {
     position: absolute;
     top: 0;
     left: 0;
@@ -131,12 +131,12 @@ $item-padding-screen-m: rem(40px);
     background-color: red;
   }
 
-  .c-about-outcomes-item__paragraph {
+  .c-about-impacts-item__paragraph {
     position: relative;
     z-index: 2;
   }
 
-  .c-about-outcomes-item__button {
+  .c-about-impacts-item__button {
     position: absolute;
     left: 0;
     bottom: rem(24px);
@@ -153,7 +153,7 @@ $item-padding-screen-m: rem(40px);
     height: rem(491px);
     padding: rem(273px) rem(40px) rem(40px) rem(40px);
 
-    .c-about-outcomes-item__button {
+    .c-about-impacts-item__button {
       padding-left: rem(40px);
       bottom: rem(30px);
 

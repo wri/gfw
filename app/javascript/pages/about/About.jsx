@@ -8,7 +8,7 @@ import AboutCover from './components/AboutCover/AboutCover';
 import AboutAnchors from './components/AboutAnchors/AboutAnchors';
 import AboutUsers from './components/AboutUsers/AboutUsersContainer';
 import AboutHow from './components/AboutHow/AboutHow';
-import AboutOutcomes from './components/AboutOutcomes/AboutOutcomes';
+import AboutImpacts from './components/AboutImpacts/AboutImpacts';
 import AboutAwards from './components/AboutAwards/AboutAwards';
 import AboutHistory from './components/AboutHistory/AboutHistory';
 import AboutLogos from './components/AboutLogos/AboutLogos';
@@ -36,7 +36,7 @@ const About = () => {
         <AboutAnchors />
         <AboutUsers />
         <AboutHow />
-        <AboutOutcomes />
+        <AboutImpacts />
         <AboutAwards />
         <AboutHistory />
         <AboutLogos />

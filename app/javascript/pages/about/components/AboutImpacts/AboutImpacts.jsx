@@ -6,7 +6,7 @@ import ButtonRegular from '../../../general/components/ButtonRegular';
 import ButtonArrow from '../../../general/components/ButtonArrow';
 import SliderDots from '../../../general/components/SliderDots';
 
-class AboutOutcomes extends Component {
+class AboutImpacts extends Component {
   constructor(props) {
     super(props);
 
@@ -17,7 +17,7 @@ class AboutOutcomes extends Component {
       sliderDotsSelected: 0
     };
 
-    this.outcomes = [
+    this.impacts = [
       {
         img : '',
         paragraph : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id posuere diam, accumsan.',
@@ -42,7 +42,7 @@ class AboutOutcomes extends Component {
   }
 
   componentDidMount() {
-    const slider = document.querySelector('.c-about-outcomes .js_slider');
+    const slider = document.querySelector('.c-about-impacts .js_slider');
     this.setState({
       slider: lory(slider, {
         enableMouseEvents: true,
@@ -63,7 +63,7 @@ class AboutOutcomes extends Component {
   checkButtonsVisibility () {
     const currentIndex = this.state.slider.returnIndex();
     this.setState({ sliderPrevIsVisible: currentIndex !== 0 });
-    this.setState({ sliderNextIsVisible: currentIndex !== this.outcomes.length - 2 });
+    this.setState({ sliderNextIsVisible: currentIndex !== this.impacts.length - 2 });
   };
 
   checkDots () {
@@ -84,23 +84,23 @@ class AboutOutcomes extends Component {
   };
 
   render() {
-    const slidePrevVisibilityClass = `c-about-outcomes__arrow-button -left ${!this.state.sliderPrevIsVisible ? '-hidden' : ''} js_slide_prev`;
-    const slideNextVisibilityClass = `c-about-outcomes__arrow-button -right ${!this.state.sliderNextIsVisible ? '-hidden' : ''} js_slide_next`;
+    const slidePrevVisibilityClass = `c-about-impacts__arrow-button -left ${!this.state.sliderPrevIsVisible ? '-hidden' : ''} js_slide_prev`;
+    const slideNextVisibilityClass = `c-about-impacts__arrow-button -right ${!this.state.sliderNextIsVisible ? '-hidden' : ''} js_slide_next`;
 
     return (
-      <Element name="outcomes" className="c-about-outcomes">
+      <Element name="impacts" className="c-about-impacts">
         <div className="row">
           <div className="small-12 columns">
-            <div className="c-about-outcomes__title text -title-xs -color-3">OUTCOMES AND TESTIMONIALS</div>
+            <div className="c-about-impacts__title text -title-xs -color-3">IMPACTS</div>
             <div className="slider js_slider">
               <div className="frame js_frame">
                 <ul className="slides js_slides">
-                  {this.outcomes.map((item, i) =>
+                  {this.impacts.map((item, i) =>
                     <li key={i} className={`slide js_slide ${i === 0 ? 'active' : ''}`}>
-                      <div className="c-about-outcomes-item">
-                        <div className="c-about-outcomes-item__image"></div>
-                        <div className="c-about-outcomes-item__paragraph text -paragraph -color-2">{item.paragraph}</div>
-                        <div className="c-about-outcomes-item__button">
+                      <div className="c-about-impacts-item">
+                        <div className="c-about-impacts-item__image"></div>
+                        <div className="c-about-impacts-item__paragraph text -paragraph -color-2">{item.paragraph}</div>
+                        <div className="c-about-impacts-item__button">
                           <ButtonRegular text="READ MORE" color="green" url={item.url} />
                         </div>
                       </div>
@@ -114,9 +114,9 @@ class AboutOutcomes extends Component {
                   <ButtonArrow orientation="right" />
                 </div>
               </div>
-              <div className="c-about-outcomes__slider-dots js_slider_dots">
+              <div className="c-about-impacts__slider-dots js_slider_dots">
                 <SliderDots
-                  count={this.outcomes.length}
+                  count={this.impacts.length}
                   selected={this.state.sliderDotsSelected}
                   color="green"
                   callback={this.onClickDots.bind(this)} />
@@ -129,4 +129,4 @@ class AboutOutcomes extends Component {
   }
 }
 
-export default AboutOutcomes;
+export default AboutImpacts;
