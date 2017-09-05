@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Scroll, {Link, DirectLink, scroll, scrollSpy } from 'react-scroll';
+import {Link, DirectLink, scroll, scrollSpy } from 'react-scroll';
 
 const AboutAnchors = (props) => {
   return (
@@ -11,8 +10,8 @@ const AboutAnchors = (props) => {
             <Link to="howTo" spy={true} smooth={true} duration={500} >
               <li className="text -paragraph-5 -color-8">GFW in Action</li>
             </Link>
-            <Link to="outcomes" spy={true} smooth={true} duration={700} >
-              <li className="text -paragraph-5 -color-8">Outcomes</li>
+            <Link to="impacts" spy={true} smooth={true} duration={700} >
+              <li className="text -paragraph-5 -color-8">Impacts</li>
             </Link>
             <Link to="history" spy={true} smooth={true} duration={900} >
               <li className="text -paragraph-5 -color-8">History</li>
