@@ -67,6 +67,7 @@ define([
       this.$maplngLng = $('.map-container .map-latlng');
       this.$viewFinder = $('#viewfinder');
       this.$overlayMobile = $('#overlay-mobile');
+      this.openDashaboard = $('.open-menu-button-dashboard');
       this.embed = $('body').hasClass('is-embed-action');
       this.lastValidCenter = null;
       this.allowedBounds = null;
@@ -159,6 +160,18 @@ define([
       this.$overlayMobile.on('click', _.bind(function(){
         this.presenter.closeDialogsMobile();
       }, this ));
+
+      this.openDashaboard.click(function() {
+        $('.m-header-sub-menu-dashboard').css('max-height', 'none');
+        if($(window).height() < $('.m-header-sub-menu-dashboard').height()) {
+          $('.m-header-sub-menu-dashboard').css('max-height', ($(window).height() - 100)+'px');
+        }
+        if ($('.m-header-sub-menu-dashboard').hasClass('-active')) {
+          $('#layers-options').removeClass('-hidden');
+        } else {
+          $('#layers-options').addClass('-hidden');
+        }
+      });
 
     },
 
@@ -581,6 +594,7 @@ define([
 
     _appearMenu: function() {
       $('body').mousemove(function( event ) {
+        var hoverMenuLogin;
         if(event.pageY < 100) {
           $('#headerGfw').addClass('-show');
           $('.logo-menu').addClass('-show');
@@ -591,7 +605,12 @@ define([
         if(event.pageY > 120){
           var hoverMenuLanguage = $('.txlive-langselector-list').is(':hover');
           var languageMenuOpen = $('.txlive-langselector-list').hasClass('txlive-langselector-list-opened');
-          var hoverMenuLogin = $('.m-header-sub-menu-login').is(':hover');
+          if ($('.m-header-sub-menu-login').length === 1) {
+            hoverMenuLogin = $('.m-header-sub-menu-login').is(':hover');
+          }
+          if ($('.m-header-submenu-logged').length === 1) {
+            hoverMenuLogin = $('.m-header-submenu-logged').is(':hover');
+          }
           var hoverMenuDashboard = $('.m-header-sub-menu-dashboard').is(':hover');
           var dashboardMenuOpen = $('.m-header-sub-menu-dashboard').hasClass('-active');
           var loginMenuOpen = $('.m-header-sub-menu-login').hasClass('-active');

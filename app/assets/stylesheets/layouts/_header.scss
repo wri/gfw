@@ -19,7 +19,6 @@
     }
   }
   @media (min-width: $br-mobile){
-    position: relative;
     overflow: visible;
     height: auto;
     &.active{
@@ -36,12 +35,6 @@
     }
   }
 }
-
-
-
-
-
-
 
 
 // Bottom HEADER

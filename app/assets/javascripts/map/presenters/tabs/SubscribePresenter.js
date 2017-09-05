@@ -94,6 +94,12 @@ define([
       this.view.updateCurrentStep(this.currentStep);
     },
 
+    previousStep: function() {
+      this.currentStep -= 1;
+
+      this.view.updateCurrentStep(this.currentStep);
+    },
+
     // Email or URL (Webhook)
     checkEmailOrURL: function(params) {
       var type = 'EMAIL';
@@ -118,6 +124,10 @@ define([
         type: type,
         content: content
       });
+    },
+
+    goBack: function () {
+      this.previousStep();
     },
 
     getDatasets: function() {

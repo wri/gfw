@@ -198,6 +198,7 @@ define([
       'click .js-toggle-threshold' : 'toggleThreshold',
       'change .js-tree-plantation' : 'togglePlantation',
       'change .js-tree-plantation-country' : 'togglePlantationCountry',
+      'change .js-toggle-concessions' : 'toggleConcessions',
       'click .js-toggle-legend' : 'toogleLegend',
       'click .js-toggle-embed-legend' : 'toogleEmbedLegend',
       'click .js-select-layer': 'selectLayer',
@@ -448,6 +449,11 @@ define([
       this.presenter.toggleLayer(species);
     },
 
+    toggleConcessions: function(e) {
+      this.presenter.toggleLayer('concesiones_forestales');
+      this.presenter.toggleLayer('concesiones_forestalesNS');
+    },
+
     // layers
     toggleLayer: function(e) {
       if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source')) {
@@ -469,6 +475,8 @@ define([
       var top = position.top - 10;
       var left = position.left - 92;
       var text = $(e.target).attr('data-description');
+      text = text.replace('(', '');
+      text = text.replace(')', '');
       var dataSource = $(e.target).attr('data-source');
       if (text != '') {
         $('body').append('<div class="tooltip-info-legend" id="tooltip-info-legend" style="top:'+top+'px; left:'+left+'px;"><div class="triangle"><span>'+text+'</span><p>Click to see more</p></div></div>');

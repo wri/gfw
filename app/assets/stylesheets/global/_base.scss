@@ -23,6 +23,18 @@ body {
   background: #EEE;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  &.is-map-page {
+    background-color: #fff;
+
+    .layout-content {
+      margin-top: 40px;
+
+      @media (min-width:$br-mobile){
+        top: 0;
+      }
+    }
+  }
 }
 
 svg {
