@@ -48,18 +48,18 @@ Next clone the gfw repo:
 $ git clone https://github.com/Vizzuality/gfw.git
 ```
 
-Using rbenv, install and set Ruby 2.1.5 in the main app directory:
+Using rbenv, install and set Ruby 2.4.0 in the main app directory:
 
 ```bash
 $ cd gfw
-$ rbenv install 2.1.5
-$ rbenv local 2.1.5
+$ rbenv install 2.4.0
+$ rbenv local 2.4.0
 ```
 
 Now let's install Ruby on Rails:
 
 ```bash
-$ sudo gem install rails
+$ gem install rails
 ```
 
 Aaaaand now use [Bundler](http://bundler.io/), a rubygem manager, to
@@ -72,9 +72,7 @@ $ bundle install
 Installing front end dependencies:
 
 ```bash
-$ npm install -g grunt-cli bower phantomjs
-$ npm install -d
-$ bower install
+$ yarn install
 ```
 
 Almost there! Final steps are to update your `.env` file:
@@ -113,7 +111,7 @@ $ foreman start
 If you are working on pages with react support, the command to execute would be:
 
 ```bash
-$ npm start
+$ ./bin/server
 ```
 
 Oh, and you should probably launch the
