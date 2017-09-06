@@ -765,7 +765,7 @@ define([
     highres: {
       view: SentinelLayer
     },
-    sentinel_tiles {
+    sentinel_tiles: {
       view: SentinelTilesLayer
     },
     guyra: {
