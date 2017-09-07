@@ -4,8 +4,7 @@
   "description": "Global Forest Watch",
   "main": "Gruntfile.js",
   "engines": {
-    "node": "8.4.0",
-    "npm": "5.3.0"
+    "node": "0.10.21"
   },
   "scripts": {
     "test": "testem"
