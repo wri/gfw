@@ -702,12 +702,12 @@
     polygon-clip: false;
   }
   [layer='pak_user_mangroves'] {
-  polygon-fill: #fecc5c;
-  polygon-opacity: 0.7;
-  line-color: #FFF;
-  line-width: 0.5;
-  line-opacity: 1;
-}
+    polygon-fill: #fecc5c;
+    polygon-opacity: 0.7;
+    line-color: #FFF;
+    line-width: 0.5;
+    line-opacity: 1;
+  }
 
   [layer='sen_user_protected_areas'],[layer='hti_user_watersheds'] {
     polygon-fill: #fecc5c;
@@ -722,5 +722,27 @@
     line-clip: false;
     polygon-clip: false;
   }
+
+  #tiger_conservation_landscapes {
+    polygon-fill: #FFCC00;
+    polygon-opacity: 0.8;
+    line-color: #FF5C00;
+    line-width: 0.5;
+    line-opacity: 0.5;
+
+    [tx2_tcl=1] {
+      polygon-fill: #FF5C00;
+      line-color: #081B47;
+    }
+    [tx2_tcl=null] {
+      polygon-fill: #FFCC00;
+      line-color: #FF5C00;
+    }
+  }
+  #tal_corridor {
+    polygon-fill: #229A00;
+    polygon-opacity: 0.7;
+  }
+
 
 }
