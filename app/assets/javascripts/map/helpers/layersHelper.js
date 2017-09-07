@@ -766,7 +766,8 @@ define([
       view: SentinelLayer
     },
     sentinel_tiles: {
-      view: SentinelTilesLayer
+      view: SentinelTilesLayer,
+      timelineView: GladTimeline
     },
     guyra: {
       view: GuyraLayer,

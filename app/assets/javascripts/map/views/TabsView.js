@@ -13,12 +13,12 @@ define([
   'map/views/tabs/AnalysisNewView',
   'map/views/tabs/CountriesView',
   'map/views/tabs/BasemapsView',
-  'map/views/tabs/SentinelTestView',
+  'map/views/tabs/HighresolutionView',
   'map/views/tabs/SubscribeView',
   'views/ShareView',
   'text!map/templates/tabs.handlebars',
   'text!map/templates/tabs-mobile.handlebars'
-], function(_, Handlebars, d3, mps, enquire, Presenter, AnalysisNewView, CountriesView, BasemapsView, SentinelTestView, SubscribeView, ShareView, tpl, tplMobile) {
+], function(_, Handlebars, d3, mps, enquire, Presenter, AnalysisNewView, CountriesView, BasemapsView, HighresolutionView, SubscribeView, ShareView, tpl, tplMobile) {
 
   'use strict';
 
@@ -89,7 +89,7 @@ define([
       new AnalysisNewView(this.map, this.countries);
       new CountriesView(this.map, this.countries);
       new BasemapsView(this.map, this.countries);
-      new SentinelTestView(this.map, this.countries);
+      new HighresolutionView(this.map, this.countries);
       new SubscribeView(this.map, this.countries);
     },
 
