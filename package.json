@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "Global Forest Watch",
   "main": "Gruntfile.js",
+  "engines": {
+    "node": "8.4.0",
+    "npm": "5.3.0"
+  },
   "scripts": {
     "test": "testem"
   },
