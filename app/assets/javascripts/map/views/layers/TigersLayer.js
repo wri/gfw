@@ -4,9 +4,8 @@
  * @return TigersLayer class (extends CanvasLayerClass)
  */
 define([
-  'abstract/layer/CartoDBLayerClass',
-  'text!map/cartocss/tigerCartoCSS.cartocss'
-], function(CartoDBLayerClass, TigerCartoCSS) {
+  'abstract/layer/CartoDBLayerClass'
+], function(CartoDBLayerClass) {
 
   'use strict';
 
@@ -22,8 +21,7 @@ define([
         'FROM tal_corridor ',
       infowindow: true,
       interactivity: 'cartodb_id, tablename, layer, name, area_ha, analysis',
-      analysis: true,
-      cartocss: TigerCartoCSS
+      analysis: true
     }
   });
 
