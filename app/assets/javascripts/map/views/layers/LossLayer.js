@@ -18,7 +18,7 @@ define([
     options: {
       threshold: 30,
       dataMaxZoom: 12,
-      urlTemplate: 'https://storage.googleapis.com/wri-public/Hansen15/tiles/hansen_world/v1/tc{threshold}{/z}{/x}{/y}.png'
+      urlTemplate: 'https://storage.googleapis.com/wri-public/Hansen_16/tiles/hansen_world/v1/tc{threshold}{/z}{/x}{/y}.png'
     },
 
     init: function(layer, options, map) {
