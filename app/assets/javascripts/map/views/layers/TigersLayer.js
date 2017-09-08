@@ -6,7 +6,7 @@
 define([
   'abstract/layer/CartoDBLayerClass',
   'text!map/cartocss/tigerCartoCSS.cartocss'
-], function(CartoDBLayerClass) {
+], function(CartoDBLayerClass, TigerCartoCSS) {
 
   'use strict';
 
