@@ -18,8 +18,7 @@ define([
     options: {
       threshold: 30,
       dataMaxZoom: 12,
-      urlTemplate: 'https://storage.googleapis.com/wri-public/Hansen_16/tiles/hansen_world/v1/tc{threshold}{/z}{/x}{/y}.png',
-      currentDate: ['2001-01-01','2017-01-01']
+      urlTemplate: 'https://storage.googleapis.com/wri-public/Hansen_16/tiles/hansen_world/v1/tc{threshold}{/z}{/x}{/y}.png'
     },
 
     init: function(layer, options, map) {
