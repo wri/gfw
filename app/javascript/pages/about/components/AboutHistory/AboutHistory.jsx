@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Element } from 'react-scroll';
 import { lory } from 'lory.js';
 
-import ButtonArrow from '../../../general/components/ButtonArrow';
+import ButtonArrow from '../../../../common/components/ButtonArrow';
 
 class AboutHistory extends Component {
   constructor(props) {

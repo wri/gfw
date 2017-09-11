@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Element } from 'react-scroll';
 import { lory } from 'lory.js';
 
-import ButtonRegular from '../../../general/components/ButtonRegular';
-import ButtonArrow from '../../../general/components/ButtonArrow';
-import SliderDots from '../../../general/components/SliderDots';
+import ButtonRegular from '../../../../common/components/ButtonRegular';
+import ButtonArrow from '../../../../common/components/ButtonArrow';
+import SliderDots from '../../../../common/components/SliderDots';
 
 class AboutImpacts extends Component {
   constructor(props) {
