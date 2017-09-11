@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ButtonRegular from '../../../general/components/ButtonRegular';
+import ButtonRegular from '../../../../common/components/ButtonRegular';
 import ModalSubscribe from '../AboutModals/AboutModalSubscribe';
 import {Element} from 'react-scroll';
 
