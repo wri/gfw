@@ -32,7 +32,7 @@
     <%= javascript_pack_tag 'country' %>
   </head>
   <body>
-    <%= requirejs_include_tag 'country' %>
+    <%= render 'shared/google_carto' %>
     <%= render 'shared/track' %>
     <%= yield %>
     <div id="footerGfw"></div>
