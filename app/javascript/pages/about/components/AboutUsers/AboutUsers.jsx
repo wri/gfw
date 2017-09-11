@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Globe from '../../../about/components/AboutUsers/Globe/index';
 import AboutModalWorld from '../../../about/components/AboutModals/AboutModalWorld';
-import ButtonRegular from '../../../general/components/ButtonRegular';
+import ButtonRegular from '../../../../common/components/ButtonRegular';
 
 class AboutUsers extends Component {
   constructor(props) {
