@@ -1,16 +1,16 @@
 export const initialState = {
-  zoom: 1,
+  zoom: 4,
   center: {
     latitude: 0,
     longitude: 20
   }
 };
 
-const setMapZoom = (zoom, state) => ({
+const setMapZoom = (state, { payload }) => ({
   ...state,
-  zoom
+  zoom: payload
 });
 
 export default {
-  setMapZoom: (state, { payload }) => setMapZoom(payload, state)
+  setMapZoom
 };
