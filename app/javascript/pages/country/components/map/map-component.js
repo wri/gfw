@@ -2,19 +2,21 @@ import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
 
 class Map extends PureComponent {
-  componentDidMount() {
-    const mapDefaultOptions = {
-      streetViewControl: false,
-      mapTypeControl: false,
-      zoomControl: false,
-      zoom: this.props.zoom,
-      center: { lat: this.props.center.latitude, lng: this.props.center.longitude },
-      mapTypeId: google.maps.MapTypeId.HYBRID,
-      maxZoom: this.props.maxZoom,
-      minZoom: this.props.minZoom
-    };
+  constructor(props) {
+    super(props);
 
-    this.map = new google.maps.Map(document.getElementById('map'), mapDefaultOptions);
+    this.state = {
+      options: Object.assign({}, props.mapOptions, {
+        zoom: this.props.zoom,
+        center: { lat: this.props.center.latitude, lng: this.props.center.longitude },
+        maxZoom: this.props.maxZoom,
+        minZoom: this.props.minZoom
+      })
+    };
+  }
+
+  componentDidMount() {
+    this.map = new google.maps.Map(document.getElementById('map'), this.state.options);
     google.maps.event.addListenerOnce(this.map, 'idle', () => {
       this.onMapInit();
     });
@@ -28,26 +30,22 @@ class Map extends PureComponent {
     return (
       <div
         id="map"
+        className="c-map"
       />
     )
   }
 }
 
 Map.propTypes = {
-  zoom: Proptypes.number,
-  center: Proptypes.object,
-  maxZoom: Proptypes.number,
-  minZoom: Proptypes.number,
+  zoom: Proptypes.number.isRequired,
+  center: Proptypes.object.isRequired,
+  maxZoom: Proptypes.number.isRequired,
+  minZoom: Proptypes.number.isRequired,
+  mapOptions: Proptypes.object
 };
 
 Map.defaultProps = {
-  zoom: 1,
-  center: {
-    latitude: 0,
-    longitude: 20
-  },
-  maxZoom: 14,
-  minZoom: 1
+  mapOptions: {}
 };
 
 export default Map;

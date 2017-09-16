@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
+import createBrowserHistory from 'history/createBrowserHistory';
 
 import initialState from './initial-state';
 import reducers from './reducers';
 import store from '../../common/store';
-
-import Map from './components/map/map';
+import routes from './routes';
+const history = createBrowserHistory();
 
 const Country = () => {
   return (
     <Provider store={store(initialState, reducers)}>
-      <div className="row">
-        <div className="small-9 columns"></div>
-        <div className="small-4 columns">
-          <Map />
-        </div>
-      </div>
+      <Router history={history}>
+        {renderRoutes(routes)}
+      </Router>
     </Provider>
   );
 };
