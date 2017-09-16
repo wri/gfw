@@ -8,3 +8,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.c-map-container {
+  position: fixed;
+  top: 0;
+  left: 70%;
+  width: 30%;
+  height: 100%;
+  z-index: 100;
+}
