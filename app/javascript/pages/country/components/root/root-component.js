@@ -14,7 +14,6 @@ class Root extends PureComponent {
   componentWillUpdate(nextProps) {
     const { iso, refreshCountryData, checkLoadingStatus } = this.props;
     if (iso !== nextProps.iso) {
-      console.log('refreshCountryData');
       refreshCountryData(nextProps);
     } else {
       checkLoadingStatus(nextProps);
@@ -58,7 +57,7 @@ class Root extends PureComponent {
 Root.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   iso: PropTypes.string.isRequired,
-  region: PropTypes.number.isRequired,
+  countryRegion: PropTypes.number.isRequired,
   countryData: PropTypes.object.isRequired,
   countryRegions: PropTypes.array.isRequired,
   countriesList: PropTypes.array.isRequired,

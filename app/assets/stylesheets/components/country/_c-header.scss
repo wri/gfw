@@ -3,9 +3,15 @@
   height: 310px;
 
   .c-header__select {
+    font-size: 47px;
+    font-weight: 300;
+    color: #ffffff;
 
     select {
-
+      background-color: transparent;
+      border: 0;
+      -webkit-appearance: none;
+      outline: none;
     }
 
     .c-header__select-arrow {
