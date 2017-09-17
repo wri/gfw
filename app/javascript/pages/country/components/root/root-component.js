@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom'
 
 import Header from '../header/header';
 import Map from '../map/map';
+import WidgetTreeCover from '../widget-tree-cover/widget-tree-cover';
 
 class Root extends PureComponent {
   componentDidMount() {
@@ -48,6 +49,7 @@ class Root extends PureComponent {
                 scrollwheel: false
               }} />
           </div>
+          <WidgetTreeCover />
         </div>
       )
     }
