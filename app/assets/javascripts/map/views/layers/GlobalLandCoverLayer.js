@@ -12,7 +12,7 @@ define([
   var GlobalLandCoverLayer = ImageLayerClass.extend({
 
     options: {
-      urlTemplate: 'https://s3.amazonaws.com/wri-tiles/global-landcover/{z}/{x}/{y}.png',
+      urlTemplate: 'http://wri-tiles.s3.amazonaws.com/global-landcover-2015/{z}/{x}/{y}.png',
       dataMaxZoom: 9
     }
 
