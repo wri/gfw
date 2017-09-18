@@ -16,25 +16,46 @@ class AboutHistory extends Component {
 
     this.years = [
       {
-        img : "http://bomanite.com/wp-content/uploads/2015/02/512x512-PNG-Landscape-Texture-Sunrise-Lake.jpg",
-        title : "2001",
-        paragraph : "WRI continued working to improve forest information by merging the latest technology with on-the-ground partnerships. Forest Atlases are now available for Cameroon, Central African Republic, Republic of the Congo, Democratic Republic of the Congo, Equatorial Guinea, and Gabon."
+        img : "/assets/about/history/1997.jpg",
+        title : "1997",
+        paragraph : "The World Resources Institute (WRI) established Global Forest Watch in 1997 as part of the Forest Frontiers Initiative. It started as a network of NGOs producing up-to-date reports about the state of forests in four pilot countries: Cameroon, Canada, Gabon, and Indonesia."
       },
       {
-        img : "http://bomanite.com/wp-content/uploads/2015/02/512x512-PNG-Landscape-Texture-Sunrise-Lake.jpg",
+        img : "/assets/about/history/2002.jpg",
         title : "2002",
-        paragraph : "WRI continued working to improve forest information by merging the latest technology with on-the-ground partnerships. Forest Atlases are now available for Cameroon, Central African Republic, Republic of the Congo, Democratic Republic of the Congo, Equatorial Guinea, and Gabon."
+        paragraph : "By 2002, GFW had expanded its work to Chile, Russia, Venezuela, Indonesia, the Democratic Republic of Congo, and the United States, publishing reports about forest cover and conditions as well as activities affecting forests, like concessions and infrastructure. GFW planned to have its forest monitoring network up and running in 21 countries by 2005."
       },
       {
-        img : "http://bomanite.com/wp-content/uploads/2015/02/512x512-PNG-Landscape-Texture-Sunrise-Lake.jpg",
-        title : "2003",
-        paragraph : "WRI continued working to improve forest information by merging the latest technology with on-the-ground partnerships. Forest Atlases are now available for Cameroon, Central African Republic, Republic of the Congo, Democratic Republic of the Congo, Equatorial Guinea, and Gabon."
-      },
-      {
-        img : "http://bomanite.com/wp-content/uploads/2015/02/512x512-PNG-Landscape-Texture-Sunrise-Lake.jpg",
+        img : "/assets/about/history/2004.jpg",
         title : "2004",
-        paragraph : "WRI continued working to improve forest information by merging the latest technology with on-the-ground partnerships. Forest Atlases are now available for Cameroon, Central African Republic, Republic of the Congo, Democratic Republic of the Congo, Equatorial Guinea, and Gabon."
+        paragraph : "GFW began working with governments in Central Africa to create interactive, online maps of forests and land use called Forestry Atlases. The first map was created for Cameroon in collaboration with the Ministry of Environment and Forests of Cameroon (MINEF). The interactive maps, built on ESRI's ArcGIS Server, were soon expanded to all countries covered by GFW."
+      },
+      {
+        img : "/assets/about/history/2005.jpg",
+        title : "2005 - 2011",
+        paragraph : "For the next six years, GFW continued producing global and regional maps and analyses of forests, while also expanding national mapping projects with governments. In 2006, GFW together with Greenpeace produced the first ever global map of remaining intact forest landscapes."
+      },
+      {
+        img : "/assets/about/history/2014.jpg",
+        title : "2014",
+        paragraph : "In 2014, WRI launched GFW 2.0, building on nearly two decades of work to create a fully interactive online platform with forest monitoring data for the whole world. The new iteration of GFW was made possible by advances in forest monitoring technology and an expanded group of partners."
+      },
+      {
+        img : "/assets/about/history/2015.jpg",
+        title : "2015",
+        paragraph : "To address the many challenges related to deforestation, Global Forest Watch began expanding with several new web applications: GFW Commodities to evaluate sustainability in commodity supply chains, GFW Fires to monitor forest and land fires and haze in SE Asia, and GFW Climate to assess the climate impacts of deforestation."
+      },
+      {
+        img : "/assets/about/history/2016.jpg",
+        title : "2016",
+        paragraph : "With further developments in satellite technology, GFW grew beyond annual data on forests and began providing monthly and weekly deforestation alerts. Email subscriptions brought these alerts directly into the hands of users, increasing their ability to respond to new activity in near real-time."
+      },
+      {
+        img : "/assets/about/history/2017.jpg",
+        title : "2017",
+        paragraph : "In 2017, GFW launched Forest Watcher, a mobile application that lets users take GFW’s data and tools offline and into the field. The app represents a new step in connecting the people working in forests directly with the information they need to protect them."
       }
+
     ];
   }
 
@@ -85,9 +106,7 @@ class AboutHistory extends Component {
                     {this.years.map((item, i) =>
                       <li key={i} className={`slide js_slide ${i === 0 ? 'active' : ''}`}>
                         <div className="c-about-history-item">
-                          <div className="c-about-history-item__image">
-                            <img src={item.img} />
-                          </div>
+                          <div className="c-about-history-item__image" style={{backgroundImage: `url(${item.img})`}}></div>
                           <div className="c-about-history-item__texts">
                             <div className="c-about-history-item__title text -title -light -color-2"><span>{item.title}</span></div>
                             <div className="c-about-history-item__paragraph text -paragraph -color-2">{item.paragraph}</div>
