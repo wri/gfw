@@ -22,7 +22,7 @@ class Root extends PureComponent {
   }
 
   render() {
-    const { isLoading } = this.props;
+    const { isLoading, countryData } = this.props;
 
     if (isLoading) {
       return <div>loading!</div>
@@ -32,8 +32,6 @@ class Root extends PureComponent {
           <Header />
           <div className="c-map-container">
             <Map
-              zoom={4}
-              center={{latitude: 0, longitude: 20}}
               maxZoom={14}
               minZoom={1}
               mapOptions={{
