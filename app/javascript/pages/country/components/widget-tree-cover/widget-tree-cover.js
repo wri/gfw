@@ -19,6 +19,7 @@ const mapStateToProps = state => ({
   isLoading: state.widgetTreeCover.isLoading,
   iso: state.root.iso,
   countryRegion: state.root.countryRegion,
+  countryData: state.root.countryData,
   totalCover: state.widgetTreeCover.totalCover,
   totalIntactForest: state.widgetTreeCover.totalIntactForest,
   totalNonForest: state.widgetTreeCover.totalNonForest
@@ -27,16 +28,19 @@ const mapStateToProps = state => ({
 const WidgetTreeCoverContainer = (props) => {
   const setInitialData = (props) => {
     getTotalCover(props.iso, props.countryRegion)
-      .then((response) => {
-        console.log(response);
-
+      .then((totalCoverResponse) => {
         getTotalIntactForest(props.iso, props.countryRegion)
-          .then((response) => {
-            console.log(response);
-            //props.setCountriesList(response.data.data);
+          .then((totalIntactForestResponse) => {
+            const totalCover = Math.round(totalCoverResponse.data.data[0].value),
+              totalIntactForest = Math.round(totalIntactForestResponse.data.data[0].value),
+              values = {
+                totalCover: totalCover,
+                totalIntactForest: totalIntactForest,
+                totalNonForest: Math.round(props.countryData.area_ha) - (totalCover + totalIntactForest)
+              };
+              props.setValues(values);
           });
       });
-
   };
 
   return createElement(WidgetTreeCoverComponent, {

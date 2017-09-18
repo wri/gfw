@@ -10,7 +10,10 @@ export { default as actions } from './map-actions';
 
 const mapStateToProps = state => ({
   zoom: state.map.zoom,
-  center: state.map.center
+  center: {
+    latitude: state.root.countryData.lat,
+    longitude: state.root.countryData.lng
+  }
 });
 
 const MapContainer = (props) => {

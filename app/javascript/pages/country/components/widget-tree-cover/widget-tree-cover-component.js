@@ -8,14 +8,34 @@ class WidgetTreeCover extends PureComponent {
   }
 
   render() {
-    const { isLoading } = this.props;
+    const {
+      isLoading,
+      totalCover,
+      totalIntactForest,
+      totalNonForest
+    } = this.props;
 
     if (isLoading) {
       return <div>loading!</div>
     } else {
       return (
         <div className="c-widget c-widget-tree-cover">
-
+          <div>FOREST COVER IN BRAZIL</div>
+          <ul>
+            <li>
+              <div>Forest</div>
+              <div>{totalCover}</div>
+            </li>
+            <li>
+              <div>Intact Forest</div>
+              <div>{totalIntactForest}</div>
+            </li>
+            <li>
+              <div>Non Forest</div>
+              <div>{totalNonForest}</div>
+            </li>
+          </ul>
+          <div></div>
         </div>
       )
     }
@@ -24,9 +44,10 @@ class WidgetTreeCover extends PureComponent {
 
 WidgetTreeCover.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  iso: PropTypes.string.isRequired,
-  countryRegion: PropTypes.number.isRequired,
-  setInitialData: PropTypes.func.isRequired
+  setInitialData: PropTypes.func.isRequired,
+  totalCover: PropTypes.number.isRequired,
+  totalIntactForest: PropTypes.number.isRequired,
+  totalNonForest: PropTypes.number.isRequired
 };
 
 export default WidgetTreeCover;

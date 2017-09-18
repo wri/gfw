@@ -38,6 +38,7 @@ const RootContainer = (props) => {
 
     getCountry(props.match.params.iso)
       .then((response) => {
+        response.data['area_ha'] = response.data.umd[0].area_ha;
         props.setCountryData(response.data);
       });
 
