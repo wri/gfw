@@ -131,15 +131,11 @@ $arrow-button-size: rem(60px);
   .c-about-history-item__image {
     position: relative;
     display: block;
-    width: 100%;
-
-    img {
-      position: relative;
-      width: $item-image-size-screen-s;
-      height: $item-image-size-screen-s;
-      z-index: 100;
-      border-radius: 100%;
-    }
+    width: $item-image-size-screen-s;
+    height: $item-image-size-screen-s;
+    border-radius: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
   .c-about-history-item__texts {
@@ -162,7 +158,7 @@ $arrow-button-size: rem(60px);
   }
 
   @media screen and (min-width: $screen-m) {
-    .c-about-history-item__image img {
+    .c-about-history-item__image {
       width: $item-image-size-screen-m;
       height: $item-image-size-screen-m;
     }
@@ -172,7 +168,6 @@ $arrow-button-size: rem(60px);
 
     .c-about-history-item__image {
       display: inline-block;
-      width: auto;
       vertical-align: top;
     }
 
