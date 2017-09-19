@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom'
 import Header from '../header/header';
 import Map from '../map/map';
 import WidgetTreeCover from '../widget-tree-cover/widget-tree-cover';
+import WidgetTreeLocated from '../widget-tree-located/widget-tree-located';
 
 class Root extends PureComponent {
   componentDidMount() {
@@ -22,7 +23,7 @@ class Root extends PureComponent {
   }
 
   render() {
-    const { isLoading, countryData } = this.props;
+    const { isLoading } = this.props;
 
     if (isLoading) {
       return <div>loading!</div>
@@ -50,6 +51,9 @@ class Root extends PureComponent {
           <div className="l-country__widgets row">
             <div className="small-4 columns">
               <WidgetTreeCover />
+            </div>
+            <div className="small-4 columns">
+              <WidgetTreeLocated />
             </div>
           </div>
         </div>

@@ -5,7 +5,7 @@ export const initialState = {
   totalNonForest: 0
 };
 
-const setValues = (state, { payload }) => ({
+const setTreeCoverValues = (state, { payload }) => ({
   ...state,
   isLoading: false,
   totalCover: payload.totalCover,
@@ -14,5 +14,5 @@ const setValues = (state, { payload }) => ({
 });
 
 export default {
-  setValues
+  setTreeCoverValues
 };
