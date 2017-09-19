@@ -30,7 +30,7 @@ class Root extends PureComponent {
       return (
         <div>
           <Header />
-          <div className="c-map-container">
+          <div className="l-country__map">
             <Map
               maxZoom={14}
               minZoom={1}
@@ -47,7 +47,11 @@ class Root extends PureComponent {
                 scrollwheel: false
               }} />
           </div>
-          <WidgetTreeCover />
+          <div className="l-country__widgets row">
+            <div className="small-4 columns">
+              <WidgetTreeCover />
+            </div>
+          </div>
         </div>
       )
     }

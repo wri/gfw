@@ -1,5 +1,67 @@
 .c-widget {
   width: 100%;
+  padding: rem(25px) rem(20px);
   border-radius: 4px;
-  border: solid 1px rgba(103, 104, 103, 0.2);
+  border: solid 1px rgba(#676867, 0.2);
+
+  .c-widget-header {
+    position: relative;
+    height: rem(78px);
+
+    .c-widget-header__title {
+      width: 60%;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.54;
+      color: $slate;
+    }
+
+    .c-widget-header__options {
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      li {
+        display: inline-flex;
+        vertical-align: top;
+      }
+
+      .c-widget-header__option-circle {
+        width: rem(18px);
+        height: rem(18px);
+        border-radius: 100%;
+
+        &:not(:last-child) {
+          margin-right: rem(5px);
+        }
+
+        &.c-widget-header__option-circle--green {
+          background-color: $green-gfw;
+        }
+
+        &.c-widget-header__option-circle--white {
+          border: solid 1px #d6d6d6;
+          background-color: $white;
+        }
+      }
+
+      .c-widget-header__option-button {
+        justify-content: center;
+        align-items: center;
+        width: rem(100px);
+        height: rem(20px);
+        font-size: 12px;
+        text-align: left;
+        color: #ffffff;
+        background-color: $green-gfw;
+        border-radius: rem(100px);
+
+        .small-4 & {
+          position: absolute;
+          top: rem(38px);
+          right: 0;
+        }
+      }
+    }
+  }
 }
