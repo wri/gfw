@@ -1,6 +1,6 @@
 .c-header {
   background-color: $slate-light;
-  height: 310px;
+  height: rem(310px);
 
   .c-header__select {
     font-size: 47px;
@@ -12,6 +12,7 @@
       border: 0;
       -webkit-appearance: none;
       outline: none;
+      color: inherit;
     }
 
     .c-header__select-arrow {
