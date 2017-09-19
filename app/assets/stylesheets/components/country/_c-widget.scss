@@ -18,8 +18,8 @@
 
     .c-widget-header__options {
       position: absolute;
-      right: 0;
-      top: 0;
+      right: rem(-7px);
+      top: rem(-4px);
 
       li {
         display: inline-flex;
