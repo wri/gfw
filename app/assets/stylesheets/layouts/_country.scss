@@ -9,11 +9,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.c-map-container {
+.l-country__map {
   position: fixed;
   top: 0;
   right: 0;
   width: 30%;
   height: 100%;
   z-index: 100;
+}
+
+.l-country__widgets {
+  padding-top: rem(80px);
 }

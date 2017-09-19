@@ -1,5 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { PieChart, Pie, Cell } from 'recharts';
+import numeral from 'numeral';
+
+import WidgetHeader from '../widget-header/widget-header';
 
 class WidgetTreeCover extends PureComponent {
   componentDidMount() {
@@ -15,27 +19,42 @@ class WidgetTreeCover extends PureComponent {
       totalNonForest
     } = this.props;
 
+    const pieCharData = [
+      { name: 'Forest', value: totalCover, color: '#959a00' },
+      { name: 'Intact Forest', value: totalIntactForest, color: '#2d8700' },
+      { name: 'Non Forest', value: totalNonForest, color: '#d9d9dc' }
+    ];
+
     if (isLoading) {
       return <div>loading!</div>
     } else {
       return (
         <div className="c-widget c-widget-tree-cover">
-          <div>FOREST COVER IN BRAZIL</div>
-          <ul>
-            <li>
-              <div>Forest</div>
-              <div>{totalCover}</div>
-            </li>
-            <li>
-              <div>Intact Forest</div>
-              <div>{totalIntactForest}</div>
-            </li>
-            <li>
-              <div>Non Forest</div>
-              <div>{totalNonForest}</div>
-            </li>
+          <WidgetHeader title="FOREST COVER IN BRAZIL" />
+          <ul className="c-widget-tree-cover__legend">
+            {pieCharData.map((item, index) => {
+              return (
+                <li key={index}>
+                  <div className="c-widget-tree-cover__legend-title">
+                    <span style={{backgroundColor: item.color}}></span>
+                    {item.name}
+                  </div>
+                  <div className="c-widget-tree-cover__legend-value" style={{color: item.color}}>
+                    {numeral(Math.round(item.value / 1000)).format('0,0')}Ha
+                  </div>
+                </li>
+              );
+            })}
           </ul>
-          <div></div>
+          <div className="c-widget-tree-cover__chart">
+            <PieChart width={120} height={120}>
+              <Pie dataKey="value" data={pieCharData} cx={56} cy={56} innerRadius={28} outerRadius={60}>
+                {
+                  pieCharData.map((item, index) => <Cell key={index} fill={item.color}/>)
+                }
+              </Pie>
+            </PieChart>
+          </div>
         </div>
       )
     }
