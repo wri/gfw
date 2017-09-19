@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 
-const setValues = createAction('setValues');
+const setTreeCoverValues = createAction('setTreeCoverValues');
 
 export default {
-  setValues
+  setTreeCoverValues
 };

@@ -1,7 +1,5 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { Redirect } from 'react-router-dom';
 
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
 import actions from './widget-tree-cover-actions';
@@ -38,7 +36,7 @@ const WidgetTreeCoverContainer = (props) => {
                 totalIntactForest: totalIntactForest,
                 totalNonForest: Math.round(props.countryData.area_ha) - (totalCover + totalIntactForest)
               };
-              props.setValues(values);
+              props.setTreeCoverValues(values);
           });
       });
   };
@@ -49,4 +47,4 @@ const WidgetTreeCoverContainer = (props) => {
   });
 };
 
-export default withRouter(connect(mapStateToProps, actions)(WidgetTreeCoverContainer));
+export default connect(mapStateToProps, actions)(WidgetTreeCoverContainer);

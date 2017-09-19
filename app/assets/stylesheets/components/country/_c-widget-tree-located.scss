@@ -1,0 +1,74 @@
+.c-widget-tree-located {
+
+  .c-widget-tree-located__regions {
+    margin-top: rem(14px);
+    font-size: 12px;
+    text-align: left;
+    color: $slate;
+
+    li {
+      display: inline-flex;
+      width: 100%;
+      line-height: 2.37;
+
+      &:nth-child(1) .c-widget-tree-located__region-bubble {
+        background-color: #113002;
+      }
+      &:nth-child(2) .c-widget-tree-located__region-bubble {
+        background-color: #266307;
+      }
+      &:nth-child(3) .c-widget-tree-located__region-bubble {
+        background-color: #2d8700;
+      }
+      &:nth-child(4) .c-widget-tree-located__region-bubble {
+        background-color: #40ac0a;
+      }
+      &:nth-child(5) .c-widget-tree-located__region-bubble {
+        background-color: #55ce19;
+      }
+      &:nth-child(6) .c-widget-tree-located__region-bubble {
+        background-color: #73e23c;
+      }
+      &:nth-child(7) .c-widget-tree-located__region-bubble {
+        background-color: #a5ed81;
+      }
+      &:nth-child(8) .c-widget-tree-located__region-bubble {
+        background-color: #cfcb65;
+      }
+      &:nth-child(9) .c-widget-tree-located__region-bubble {
+        background-color: #dad781;
+      }
+      &:nth-child(10) .c-widget-tree-located__region-bubble {
+        background-color: #e7e5a4;
+      }
+    }
+
+    .c-widget-tree-located__region-bubble {
+      position: relative;
+      top: rem(6px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: rem(16px);
+      height: rem(16px);
+      color: $white;
+      border-radius: 100%;
+    }
+
+    .c-widget-tree-located__region-name {
+      width: rem(118px);
+      margin-left: rem(13px);
+    }
+
+    .c-widget-tree-located__region-percent {
+      display: flex;
+      justify-content: center;
+      width: rem(24px);
+    }
+
+    .c-widget-tree-located__region-value {
+      flex: auto;
+      text-align: right;
+    }
+  }
+}
