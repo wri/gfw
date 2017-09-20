@@ -14,6 +14,7 @@ class WidgetTreeCover extends PureComponent {
   render() {
     const {
       isLoading,
+      countryData,
       totalCover,
       totalIntactForest,
       totalNonForest
@@ -30,7 +31,7 @@ class WidgetTreeCover extends PureComponent {
     } else {
       return (
         <div className="c-widget c-widget-tree-cover">
-          <WidgetHeader title="FOREST COVER IN BRAZIL" />
+          <WidgetHeader title={`Forest cover in ${countryData.name}`} />
           <ul className="c-widget-tree-cover__legend">
             {pieCharData.map((item, index) => {
               return (
@@ -64,6 +65,7 @@ class WidgetTreeCover extends PureComponent {
 WidgetTreeCover.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
+  countryData: PropTypes.object.isRequired,
   totalCover: PropTypes.number.isRequired,
   totalIntactForest: PropTypes.number.isRequired,
   totalNonForest: PropTypes.number.isRequired
