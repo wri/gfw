@@ -68,6 +68,7 @@ define([
       this.$viewFinder = $('#viewfinder');
       this.$overlayMobile = $('#overlay-mobile');
       this.openDashaboard = $('.open-menu-button-dashboard');
+      this.backDashboard = $('.back-close-menu');
       this.embed = $('body').hasClass('is-embed-action');
       this.lastValidCenter = null;
       this.allowedBounds = null;
@@ -170,6 +171,12 @@ define([
           $('#layers-options').removeClass('-hidden');
         } else {
           $('#layers-options').addClass('-hidden');
+        }
+      });
+
+      this.backDashboard.click(function() {
+        if ($('.m-header-sub-menu-dashboard').hasClass('-active')) {
+            $('#layers-options').removeClass('-hidden');
         }
       });
 
