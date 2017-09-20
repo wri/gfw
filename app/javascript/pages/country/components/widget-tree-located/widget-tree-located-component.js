@@ -13,6 +13,7 @@ class WidgetTreeLocated extends PureComponent {
   render() {
     const {
       isLoading,
+      countryData,
       topRegions
     } = this.props;
 
@@ -21,7 +22,7 @@ class WidgetTreeLocated extends PureComponent {
     } else {
       return (
         <div className="c-widget c-widget-tree-located">
-          <WidgetHeader title="WHERE ARE THE FORESTS LOCATED IN BRAZIL" />
+          <WidgetHeader title={`Where are the forest located in ${countryData.name}`} />
           <ul className="c-widget-tree-located__regions">
             {topRegions.map((item, index) => {
               return (
@@ -43,6 +44,7 @@ class WidgetTreeLocated extends PureComponent {
 WidgetTreeLocated.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
+  countryData: PropTypes.object.isRequired,
   topRegions: PropTypes.array.isRequired
 };
 
