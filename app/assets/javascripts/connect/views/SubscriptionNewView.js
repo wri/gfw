@@ -508,7 +508,11 @@ define([
       var value = this.$subscriptionUrl.val();
 
       if (value !== '' && !this.$testWebhookButton.hasClass('-loading')) {
-        subscriptionsService.testWebhook(this.$subscriptionUrl.val());
+        _.each(this.subscription.attributes.datasets, function(dataset, i) {
+          setTimeout(function () {
+            subscriptionsService.testWebhook(this.$subscriptionUrl.val(), dataset)
+          }.bind(this), i * 100);
+        }.bind(this));
 
         var loader = this.$testWebhookButton.find('.webhook-loader');
         loader.html(this.$testWebhookButton.find('.webhook-text').html());
