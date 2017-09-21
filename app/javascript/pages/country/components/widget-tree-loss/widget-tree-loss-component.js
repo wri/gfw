@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import WidgetHeader from '../widget-header/widget-header';
 
-class WidgetTreeCover extends PureComponent {
+class WidgetTreeLoss extends PureComponent {
   componentDidMount() {
     const { setInitialData } = this.props;
     setInitialData(this.props);
@@ -18,9 +18,9 @@ class WidgetTreeCover extends PureComponent {
       return <div>loading!</div>
     } else {
       return (
-        <div className="c-widget c-widget-tree-cover-loss">
-          <WidgetHeader title={`Forest cover loss`} />
-          <div className="c-widget-tree-cover-loss__chart">
+        <div className="c-widget c-widget-tree-loss">
+          <WidgetHeader title={`Forest loss`} />
+          <div className="c-widget-tree-loss__chart">
 
           </div>
         </div>
@@ -29,9 +29,9 @@ class WidgetTreeCover extends PureComponent {
   }
 }
 
-WidgetTreeCover.propTypes = {
+WidgetTreeLoss.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired
 };
 
-export default WidgetTreeCover;
+export default WidgetTreeLoss;
