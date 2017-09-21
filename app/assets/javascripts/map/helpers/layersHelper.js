@@ -186,8 +186,7 @@ define([
   'map/views/timeline/ProdesTimeline',
   'map/views/timeline/GuyraTimeline',
   'map/views/timeline/GladTimeline',
-  'map/views/timeline/MangroveTimeline',
-  'map/views/timeline/SentinelTimeline'
+  'map/views/timeline/MangroveTimeline'
 ], function(
   // Layer Views
   LossLayer,
@@ -373,8 +372,7 @@ define([
   ProdesTimeline,
   GuyraTimeline,
   GladTimeline,
-  MangroveTimeline,
-  SentinelTimeline
+  MangroveTimeline
 ) {
 
   'use strict';
@@ -768,8 +766,7 @@ define([
       view: SentinelLayer
     },
     sentinel_tiles: {
-      view: SentinelTilesLayer,
-      timelineView: SentinelTimeline
+      view: SentinelTilesLayer
     },
     guyra: {
       view: GuyraLayer,

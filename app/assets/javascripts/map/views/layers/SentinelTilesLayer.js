@@ -42,23 +42,11 @@ define([
           '2017-09-01')
           .then(function(response) {
             this.options.urlTemplate = response.attributes.url_image;
-            this._checkMaxDate(response);
-            mps.publish('Torque/date-range-change', [this.currentDate]);
-            mps.publish('Place/update', [{go: false}]);
-
             resolve(this);
           }.bind(this));
 
       }.bind(this));
-    },
-
-    _checkMaxDate: function(response) {
-      var maxDataDate = moment.utc(response.maxDate);
-      if (this.maxDate.isAfter(maxDataDate)) {
-        this.maxDate = maxDataDate;
-        this.currentDate[1] = this.maxDate;
-      }
-    },
+    }
 
   });
 
