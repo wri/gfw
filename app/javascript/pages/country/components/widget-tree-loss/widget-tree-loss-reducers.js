@@ -7,7 +7,7 @@ export const initialState = {
   years: []
 };
 
-const setTreeCoverLossValues = (state, { payload }) => ({
+const setTreeLossValues = (state, { payload }) => ({
   ...state,
   isLoading: false,
   total: payload.total,
@@ -15,5 +15,5 @@ const setTreeCoverLossValues = (state, { payload }) => ({
 });
 
 export default {
-  setTreeCoverLossValues
+  setTreeLossValues
 };
