@@ -1,8 +1,10 @@
 define([
+  'mps',
   'abstract/layer/ImageLayerClass',
   'map/services/SentinelService',
   'moment'
 ], function(
+  mps,
   ImageLayerClass,
   SentinelService,
   moment
@@ -36,13 +38,13 @@ define([
         SentinelService.getTiles(
           this.map.getCenter().lng(),
           this.map.getCenter().lat(),
-          '2017-03-01',
-          '2017-03-10')
+          '2017-06-01',
+          '2017-09-01')
           .then(function(response) {
             this.options.urlTemplate = response.attributes.url_image;
-            //this._checkMaxDate(response);
-            //mps.publish('Torque/date-range-change', [this.currentDate]);
-            //mps.publish('Place/update', [{go: false}]);
+            this._checkMaxDate(response);
+            mps.publish('Torque/date-range-change', [this.currentDate]);
+            mps.publish('Place/update', [{go: false}]);
 
             resolve(this);
           }.bind(this));
