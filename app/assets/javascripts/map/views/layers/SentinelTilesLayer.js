@@ -1,18 +1,18 @@
 define([
   'mps',
+  'moment',
   'abstract/layer/ImageLayerClass',
   'map/services/SentinelService',
-  'moment'
+  'map/presenters/SentinelTilesLayerPresenter'
 ], function(
   mps,
+  moment,
   ImageLayerClass,
   SentinelService,
-  moment
+  Presenter
 ) {
 
   'use strict';
-
-  var START_DATE = '2015-01-01';
 
   var SentinelTilesLayer = ImageLayerClass.extend({
 
@@ -21,16 +21,14 @@ define([
     },
 
     init: function(layer, options, map) {
+      this.presenter = new Presenter(this);
       this._super(layer, options, map);
-
       this.currentDate = [
         (!!options.currentDate && !!options.currentDate[0]) ?
-          moment.utc(options.currentDate[0]) : moment.utc(START_DATE),
+          moment.utc(options.currentDate[0]) : moment.utc().subtract(4, 'month'),
         (!!options.currentDate && !!options.currentDate[1]) ?
           moment.utc(options.currentDate[1]) : moment.utc(),
       ];
-
-      this.maxDate = this.currentDate[1];
     },
 
     _getLayer: function() {
@@ -38,14 +36,18 @@ define([
         SentinelService.getTiles(
           this.map.getCenter().lng(),
           this.map.getCenter().lat(),
-          '2017-06-01',
-          '2017-09-01')
+          this.currentDate[0].format('YYYY-MM-DD'),
+          this.currentDate[1].format('YYYY-MM-DD'))
           .then(function(response) {
             this.options.urlTemplate = response.attributes.url_image;
             resolve(this);
           }.bind(this));
 
       }.bind(this));
+    },
+
+    setCurrentDate: function (date) {
+      this.currentDate = date;
     }
 
   });
