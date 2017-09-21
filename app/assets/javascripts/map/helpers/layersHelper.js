@@ -173,6 +173,7 @@ define([
   'map/views/layers/BolUserFireFrequencyLayer',
   // high resolution maps
   'map/views/layers/SentinelLayer',
+  'map/views/layers/SentinelTilesLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -358,6 +359,7 @@ define([
   BolUserFireFrequencyLayer,
   //highres layers
   SentinelLayer,
+  SentinelTilesLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -762,6 +764,9 @@ define([
     },
     highres: {
       view: SentinelLayer
+    },
+    sentinel_tiles: {
+      view: SentinelTilesLayer
     },
     guyra: {
       view: GuyraLayer,
