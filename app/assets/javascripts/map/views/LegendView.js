@@ -71,6 +71,7 @@ define([
   'text!map/templates/legend/lbr_community.handlebars',
   'text!map/templates/legend/mangrove_2.handlebars',
   'text!map/templates/legend/bol_user_fire_frequency.handlebars',
+  'text!map/templates/legend/sentinel_tiles.handlebars',
 ], function(_, Handlebars, enquire, Presenter, datasetsHelper, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
@@ -78,7 +79,7 @@ define([
     gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl,
     rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, IdnForestAreaTpl,idnSuitabilityTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, highresTpl,mex_forest_catTpl,mex_forest_subcatTpl,
     paTpl, places2watchTPL, mex_landrightsTpl, mexPATpl, perPATpl,mex_land_coverTpl,mex_forest_conservTPL,mex_forest_prodTPL,mex_forest_restTPL, bra_landcoverTPL, bra_rtrs, pry_rtrs, lbr_miningTPL,
-    lbr_forestTpl,lbr_communityTpl, mangrove2Tpl, bol_user_fire_frequencyTpl) {
+    lbr_forestTpl,lbr_communityTpl, mangrove2Tpl, bol_user_fire_frequencyTpl, sentinel_tilesTpl) {
 
   'use strict';
 
@@ -180,7 +181,8 @@ define([
       lbr_mineral_exploration_license:Handlebars.compile(lbr_miningTPL),
       lbr_resource_rights:Handlebars.compile(lbr_communityTpl),
       mangrove_2:Handlebars.compile(mangrove2Tpl),
-      bol_user_fire_frequency:Handlebars.compile(bol_user_fire_frequencyTpl)
+      bol_user_fire_frequency:Handlebars.compile(bol_user_fire_frequencyTpl),
+      sentinel_tiles:Handlebars.compile(sentinel_tilesTpl)
     },
 
     events: {
@@ -202,6 +204,7 @@ define([
       'click .js-toggle-legend' : 'toogleLegend',
       'click .js-toggle-embed-legend' : 'toogleEmbedLegend',
       'click .js-select-layer': 'selectLayer',
+      'click .js-refresh-tiles': 'refreshTiles'
     },
 
     initialize: function(map,countries) {
@@ -694,6 +697,13 @@ define([
         }
       }, this);
       return index;
+    },
+
+    refreshTiles: function (e) {
+      var layerSlug = $(e.currentTarget).data('sublayer');
+
+      this.presenter.toggleLayer(layerSlug);
+      this.presenter.toggleLayer(layerSlug);
     }
 
   });

@@ -702,12 +702,12 @@
     polygon-clip: false;
   }
   [layer='pak_user_mangroves'] {
-  polygon-fill: #fecc5c;
-  polygon-opacity: 0.7;
-  line-color: #FFF;
-  line-width: 0.5;
-  line-opacity: 1;
-}
+    polygon-fill: #fecc5c;
+    polygon-opacity: 0.7;
+    line-color: #FFF;
+    line-width: 0.5;
+    line-opacity: 1;
+  }
 
   [layer='sen_user_protected_areas'],[layer='hti_user_watersheds'] {
     polygon-fill: #fecc5c;

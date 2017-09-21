@@ -186,7 +186,8 @@ define([
       "umd_as_it_happens_cog",
       "places_to_watch",
       'forma_month_3',
-      'forma_activity'
+      'forma_activity',
+      'sentinel_tiles'
     ],
 
     categoryOrder: [
