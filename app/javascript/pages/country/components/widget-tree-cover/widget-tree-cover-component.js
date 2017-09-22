@@ -48,7 +48,7 @@ class WidgetTreeCover extends PureComponent {
             })}
           </ul>
           <div className="c-widget-tree-cover__chart">
-            <PieChart width={120} height={120}>
+            <PieChart width={121} height={121}>
               <Pie dataKey="value" data={pieCharData} cx={56} cy={56} innerRadius={28} outerRadius={60}>
                 {
                   pieCharData.map((item, index) => <Cell key={index} fill={item.color}/>)
