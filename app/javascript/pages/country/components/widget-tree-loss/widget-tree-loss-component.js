@@ -37,9 +37,9 @@ class WidgetTreeLoss extends PureComponent {
               margin={{top: 5, right: 30, left: 20, bottom: 5}}>
               <XAxis dataKey="date"/>
               <YAxis/>
-              <CartesianGrid strokeDasharray="3 3"/>
+              <CartesianGrid vertical={false} strokeDasharray="3 4"/>
               <Tooltip/>
-              <Bar dataKey="value" fill="#fe6598" />
+              <Bar dataKey="value" barSize={22} fill="#fe6598" />
             </BarChart>
           </div>
         </div>
