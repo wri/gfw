@@ -22,7 +22,9 @@ class WidgetTreeLocated extends PureComponent {
     } else {
       return (
         <div className="c-widget c-widget-tree-located">
-          <WidgetHeader title={`Where are the forest located in ${countryData.name}`} />
+          <WidgetHeader
+            title={`Where are the forest located in ${countryData.name}`}
+            noMap={true} />
           <ul className="c-widget-tree-located__regions">
             {topRegions.map((item, index) => {
               return (
