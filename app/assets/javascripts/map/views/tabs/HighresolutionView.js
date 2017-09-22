@@ -69,7 +69,8 @@ define([
       this.$selects            = this.$el.find('.chosen-select');
       this.$hresSelectFilter   = this.$el.find('#hres-filter-select');
       this.$hresSensorFilter   = this.$el.find('#hres-filter-sensor');
-      this.$onoffswitch        = this.$el.find('.onoffswitch');
+      this.$onoffswitch        = this.$el.find('.onoffswitch.toggleSentinel');
+      this.$onoffswitchSentinelTiles = this.$el.find('.onoffswitch.toggleSentinelTiles');
       this.$range              = this.$el.find('#range-clouds');
       this.$progress           = this.$el.find('#progress-clouds');
       this.$mindate            = this.$el.find("input[name='snd__mindate_submit']");
@@ -145,8 +146,11 @@ define([
       if (!!this.presenter.status.get('hresolution')) {
         this.presenter.setHres(this._getParams());
         this.presenter.updateLayer('highres');
+      } else if (!!this.presenter.status.get('layerSpec').getLayer({ slug: 'sentinel_tiles' })){
+        this.presenter.setSentinel(this._getParams());
+        this.presenter.updateLayer('sentinel_tiles');
       } else {
-        this.toggleLayer();
+        this.toggleLayer(null);
       }
     },
 
@@ -164,7 +168,11 @@ define([
     },
 
     toggleLayer: function(e) {
-      if (this.zoom >= MAX_ZOOM) {
+      var slug = e === null ? null : $(e.currentTarget).data('source');
+      if (slug === 'sentinel_tiles'){
+        this.presenter.toggleLayer(slug);
+        this.$onoffswitchSentinelTiles.toggleClass('checked');
+      } else if (this.zoom >= MAX_ZOOM) {
         this.presenter.toggleLayer('highres');
       } else {
         if (!!this.$onoffswitch.hasClass('checked')) {
@@ -188,8 +196,8 @@ define([
     },
 
     switchToggle: function(to) {
-      var was_active = this.$el.find('.onoffswitch').hasClass('checked');
-      this.$el.find('.onoffswitch').toggleClass('checked', to);
+      var was_active = this.$el.find('.onoffswitch.toggleSentinel').hasClass('checked');
+      this.$el.find('.onoffswitch.toggleSentinel').toggleClass('checked', to);
 
       if (to && !isMobile.any && !was_active) {
         var listenerMouseMove = google.maps.event.addListener(this.map, 'mousemove', function(e) {
@@ -210,6 +218,10 @@ define([
       }
 
       this.toggleIconUrthe(to);
+    },
+
+    switchSentinelToggle: function(to) {
+      this.$onoffswitchSentinelTiles.toggleClass('checked', to);
     },
 
     printSelects: function() {

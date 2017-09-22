@@ -4,6 +4,7 @@
  * @return singleton instance of the legend class (extends Widget).
  */
 define([
+  'mps',
   'underscore',
   'handlebars',
   'enquire',
@@ -72,7 +73,7 @@ define([
   'text!map/templates/legend/mangrove_2.handlebars',
   'text!map/templates/legend/bol_user_fire_frequency.handlebars',
   'text!map/templates/legend/sentinel_tiles.handlebars',
-], function(_, Handlebars, enquire, Presenter, datasetsHelper, tpl, lossTpl, imazonTpl, firesTpl,
+], function(mps, _, Handlebars, enquire, Presenter, datasetsHelper, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
     global_land_coverTPL, formaTPL, forma_month_TPL,bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
@@ -702,8 +703,7 @@ define([
     refreshTiles: function (e) {
       var layerSlug = $(e.currentTarget).data('sublayer');
 
-      this.presenter.toggleLayer(layerSlug);
-      this.presenter.toggleLayer(layerSlug);
+      mps.publish('Layer/update', [layerSlug]);
     }
 
   });
