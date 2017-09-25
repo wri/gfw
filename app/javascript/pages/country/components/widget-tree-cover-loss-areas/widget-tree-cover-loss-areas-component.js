@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { PieChart, Pie, Legend, Tooltip, Cell }from 'recharts';
 import numeral from 'numeral';
 
+import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
 
 class WidgetTreeLossAreas extends PureComponent {
@@ -47,7 +48,7 @@ class WidgetTreeLossAreas extends PureComponent {
                     pieCharDataDistricts.map((item, index) => <Cell key={index} fill={item.color}/>)
                   }
                 </Pie>
-                <Tooltip />
+                <Tooltip content={<TooltipChart/>} />
               </PieChart>
             </div>
             <ul className="c-widget-tree-cover-loss-areas__legend">
