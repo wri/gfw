@@ -5,11 +5,12 @@ define([
   'moment',
   'views/ModalView',
   'map/presenters/tabs/SubscribePresenter',
+  'services/SubscriptionsService',
   'helpers/languagesHelper',
   'text!map/templates/tabs/subscribeDatasets.handlebars',
   'text!map/templates/tabs/subscribe.handlebars'
 ], function(Backbone, _, Handlebars, moment, ModalView,
-  Presenter, languagesHelper, subscribeDatasetsTpl, tpl) {
+  Presenter, subscriptionsService, languagesHelper, subscribeDatasetsTpl, tpl) {
 
   'use strict';
 
@@ -28,9 +29,11 @@ define([
         'click .subscription-sign-in': 'onClickTrackSignIn',
         'click #returnToMap': 'onClickClose',
         'click #showName': 'onClickCheckEmail',
+        'click .js-subscribe-back': 'onClickGoBack',
         'click #datasets': 'onClickCheckDatasets',
         'change .dataset-checkbox' : 'onChangeDataset',
         'click #subscribe': 'onClickSubscribe',
+        'click .js-test-webhook': 'onClickTestWebhook',
       });
     },
 
@@ -49,9 +52,21 @@ define([
       this.$subscriptionEmail = this.$el.find('#subscriptionEmail');
       this.$subscriptionDatasets = this.$el.find('#subscription-datasets');
       this.$steps = this.$el.find('.steps');
+      this.$testWebhookButton = this.$el.find('.js-test-webhook');
     },
 
     render: function(){
+      this.presenter.user.checkLogged()
+        .then(function() {
+          this.renderTemplate(true);
+        }.bind(this))
+
+        .catch(function(e) {
+          this.renderTemplate(false);
+        }.bind(this));
+    },
+
+    renderTemplate: function (loggedIn) {
       var userLang = this.presenter.user.getLanguage();
       var languagesList = languagesHelper.getListSelected(userLang);
       var dataset = this.presenter.subscription &&
@@ -60,7 +75,7 @@ define([
 
       this.$el.html(this.template({
         apiHost: window.gfw.config.GFW_API_AUTH,
-        loggedIn: this.presenter.user.isLoggedIn(),
+        loggedIn: loggedIn,
         email: this.presenter.user.get('email'),
         date: moment().format('MMM D, YYYY'),
         languages: languagesList,
@@ -69,7 +84,7 @@ define([
 
       this.cache();
       this.renderChosen();
-      return this;
+      this.presenter.getDatasets();
     },
 
     renderDatasets: function(data) {
@@ -106,6 +121,7 @@ define([
      * - onClickClose
      * - onClickTrackSignIn
      * - onClickCheckEmail
+     * - onClickGoBack
      * - onClickCheckDatasets
      * - onChangeDataset
      * - onClickSubscribe
@@ -122,6 +138,10 @@ define([
 
     onClickCheckEmail: function(e) {
       this.presenter.checkEmail(this.$subscriptionEmail.val());
+    },
+
+    onClickGoBack: function(e) {
+      this.presenter.goBack();
     },
 
     onClickCheckDatasets: function(e) {
@@ -147,6 +167,38 @@ define([
         name: this.$subscriptionName.val(),
         language: this.$subscriptionLanguage.val()
       });
+    },
+
+    onClickTestWebhook: function (e) {
+      e && e.preventDefault();
+
+      var value = this.$subscriptionUrl.val();
+
+      if (value !== '' && !this.$testWebhookButton.hasClass('-loading')) {
+        _.each(this.presenter.subscription.attributes.datasets, function(dataset, i) {
+          setTimeout(function () {
+            subscriptionsService.testWebhook(this.$subscriptionUrl.val(), dataset)
+          }.bind(this), i * 100);
+        }.bind(this));
+
+        var loader = this.$testWebhookButton.find('.webhook-loader');
+        loader.html(this.$testWebhookButton.find('.webhook-text').html());
+        this.$testWebhookButton.addClass('-loading');
+        var intervalTimes = 0;
+        var pointsInterval = setInterval(function() {
+          if (intervalTimes === 3) {
+            loader.html('Test webhook - data sent');
+            setTimeout(function () {
+              this.$testWebhookButton.removeClass('-loading');
+            }.bind(this), 2000);
+
+            clearInterval(pointsInterval);
+          } else {
+            loader.html(loader.html() + '.');
+          }
+          intervalTimes++;
+        }.bind(this), 500);
+      }
     }
 
   });

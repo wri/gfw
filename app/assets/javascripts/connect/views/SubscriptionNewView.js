@@ -18,6 +18,7 @@ define([
   'connect/views/LayerSelectionView',
   'connect/views/DatasetsListView',
   'map/services/GeostoreService',
+  'services/SubscriptionsService',
   'text!connect/templates/subscriptionNew.handlebars',
   'text!connect/templates/subscriptionNewDraw.handlebars',
   'text!connect/templates/subscriptionNewData.handlebars',
@@ -42,6 +43,7 @@ define([
   LayerSelectionView,
   DatasetsListView,
   GeostoreService,
+  subscriptionsService,
   tpl,
   tplDraw,
   tplData,
@@ -92,6 +94,7 @@ define([
       'change #aoi': 'onChangeAOI',
       'submit #new-subscription': 'onSubmitSubscription',
       'change input,textarea,select' : 'onChangeInput',
+      'click .js-test-webhook': 'onClickTestWebhook',
     },
 
     initialize: function(router, user, params) {
@@ -333,6 +336,8 @@ define([
       this.$form = this.$el.find('#new-subscription');
       this.$formType = this.$el.find('#new-subscription-content');
       this.$selects = this.$el.find('select.chosen-select');
+      this.$subscriptionUrl = this.$el.find('#subscriptionUrl');
+      this.$testWebhookButton = this.$el.find('.js-test-webhook');
     },
 
     initSubViews: function() {
@@ -497,7 +502,37 @@ define([
         }.bind(this));
     },
 
+    onClickTestWebhook: function (e) {
+      e && e.preventDefault();
 
+      var value = this.$subscriptionUrl.val();
+
+      if (value !== '' && !this.$testWebhookButton.hasClass('-loading')) {
+        _.each(this.subscription.attributes.datasets, function(dataset, i) {
+          setTimeout(function () {
+            subscriptionsService.testWebhook(this.$subscriptionUrl.val(), dataset)
+          }.bind(this), i * 100);
+        }.bind(this));
+
+        var loader = this.$testWebhookButton.find('.webhook-loader');
+        loader.html(this.$testWebhookButton.find('.webhook-text').html());
+        this.$testWebhookButton.addClass('-loading');
+        var intervalTimes = 0;
+        var pointsInterval = setInterval(function() {
+          if (intervalTimes === 3) {
+            loader.html('Test webhook - data sent');
+            setTimeout(function () {
+              this.$testWebhookButton.removeClass('-loading');
+            }.bind(this), 2000);
+
+            clearInterval(pointsInterval);
+          } else {
+            loader.html(loader.html() + '.');
+          }
+          intervalTimes++;
+        }.bind(this), 500);
+      }
+    },
 
 
     /**
