@@ -3,6 +3,7 @@
   .c-widget-tree-loss__legend {
     display: flex;
     justify-content: space-between;
+    margin: 0 rem(12px);
 
     .c-widget-tree-loss__legend-title {
       font-size: 12px;
@@ -16,15 +17,15 @@
         display: inline-block;
         width: rem(12px);
         height: rem(12px);
-        margin-right: rem(7px);
+        margin-right: rem(12px);
         border-radius: 100%;
       }
     }
 
     .c-widget-tree-loss__legend-value {
-      padding: rem(7px) 0 0 0;
       font-size: 28px;
       font-weight: 500;
+      margin-top: rem(8px);
     }
 
     .c-widget-tree-loss__legend-years {
@@ -32,12 +33,14 @@
       line-height: 1.08;
       text-align: left;
       color: rgba($slate, 0.5);
+      margin-top: rem(9px);
     }
   }
 
   .c-widget-tree-loss__chart {
     display: flex;
     justify-content: center;
+    margin-top: rem(33px);
 
     .recharts-text {
       font-size: 10px;

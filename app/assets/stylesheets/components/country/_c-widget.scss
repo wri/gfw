@@ -82,5 +82,13 @@
         }
       }
     }
+
+    .small-4 & {
+      height: rem(78px);
+    }
+
+    .small-8 & {
+      height: rem(59px);
+    }
   }
 }
