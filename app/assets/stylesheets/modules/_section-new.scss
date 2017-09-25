@@ -39,6 +39,25 @@ $aside-width: 270px;
       text-transform: uppercase;
       color: $dark;
     }
+
+    .test-webhook {
+
+      .webhook-loader {
+        color: $dark;
+      }
+
+      &:not(.-loading) .webhook-loader {
+        display: none;
+      }
+
+      &.-loading {
+        cursor: default;
+
+        .webhook-text {
+          display: none;
+        }
+      }
+    }
   }
 }
 
