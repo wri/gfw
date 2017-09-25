@@ -7,6 +7,7 @@ import Map from '../map/map';
 import WidgetTreeCover from '../widget-tree-cover/widget-tree-cover';
 import WidgetTreeLocated from '../widget-tree-located/widget-tree-located';
 import WidgetTreeLoss from '../widget-tree-loss/widget-tree-loss';
+import WidgetTreeCoverLossAreas from '../widget-tree-cover-loss-areas/widget-tree-cover-loss-areas';
 
 class Root extends PureComponent {
   componentDidMount() {
@@ -58,6 +59,9 @@ class Root extends PureComponent {
             </div>
             <div className="small-8 columns">
               <WidgetTreeLoss />
+            </div>
+            <div className="small-8 columns">
+              <WidgetTreeCoverLossAreas />
             </div>
           </div>
         </div>
