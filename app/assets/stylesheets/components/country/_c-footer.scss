@@ -1,0 +1,15 @@
+$back-footer-color: #f7f7f7;
+
+.c-footer {
+  height: rem(122px);
+  background-color: $back-footer-color;
+  margin-top: rem(100px);
+  position: relative;
+  z-index: 100;
+
+  .row {
+    max-width: none;
+    width: 100%;
+    margin: 0;
+  }
+}
