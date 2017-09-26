@@ -17,21 +17,10 @@
         {{#if loggedIn}}
           <div class="steps current">
             <header>
-              <h2>Subscribe to alerts</h2>
-              <p>
-                {{#if dataset}}
-                  Enter your email below to receive an email notification when
-                  there are new <strong>{{dataset}}</strong> available for this area.
-                {{else}}
-                  Enter your email below to subscribe to this area.
-                {{/if}}
-              </p>
+              <h2>Forest change alerts</h2>
             </header>
-
-            <input class="field" type="email" id="subscriptionEmail" placeholder="Enter your email" value="{{email}}">
-            <div class="m-btncontainer is-center">
-              <button class="btn medium green uppercase" id="showName">Next</button>
-            </div>
+            <p>Select the forest change alerts you would like to receive</p>
+            <div id="subscription-datasets"></div>
           </div>
         {{else}}
           <div class="steps current">
@@ -71,13 +60,46 @@
 
         <div class="steps">
           <header>
-            <h2>Forest change alerts</h2>
+            <h2>Subscribe to alerts</h2>
+            <p>
+              {{#if dataset}}
+                Enter your email below to receive an email notification when
+                there are new <strong>{{dataset}}</strong> available for this area.
+              {{else}}
+                Enter your email below to subscribe to this area.
+              {{/if}}
+            </p>
           </header>
 
-          <p>Select the forest change alerts you would like to receive</p>
-
-          <div id="subscription-datasets"></div>
-
+            <ul class="m-tabs">
+              <div class="tabs">
+                <div class="tab">
+                  <input type="radio" name="tabs" id="tab1" checked />
+                  <label for="tab1" tabindex="0">E-mail</label>
+                  <div id="tab-content1" class="tab-content">
+                    <input class="field" type="email" id="subscriptionEmail" placeholder="Enter your email" value="{{email}}">
+                  </div>
+                </div>
+                <div class="tab">
+                  <input type="radio" name="tabs" id="tab2" />
+                  <label for="tab2">URL (Webhook) <a href="#" class="source" data-source="webhook_description"><svg><use xlink:href="#shape-info"></use></svg></a></label>
+                  <div id="tab-content2" class="tab-content">
+                    <input class="field" type="text" id="subscriptionUrl" placeholder="Enter your url" value="{{url}}">
+                    <p>
+                      <a href="#" class="source" data-static="true" data-source="webhook">Preview of payload</a>
+                      <a href="#" class="js-test-webhook test-webhook">
+                        <span class="webhook-text">Test webhook</span>
+                        <span class="webhook-loader"></span>
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </ul>
+            <div class="m-btncontainer is-space-between">
+              <button class="btn medium green uppercase js-subscribe-back">Back</button>
+              <button class="btn medium green uppercase" id="showName">Next</button>
+            </div>
         </div>
 
         <div class="steps">
@@ -101,7 +123,8 @@
             </div>
           </div>
 
-          <div class="m-btncontainer is-center">
+          <div class="m-btncontainer is-space-between">
+            <button class="btn medium green uppercase js-subscribe-back">Back</button>
             <button class="btn medium green uppercase" id="subscribe">Save</button>
           </div>
         </div>

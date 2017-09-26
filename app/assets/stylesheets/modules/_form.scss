@@ -114,6 +114,19 @@ textarea {
       top: auto;
       transform: none;
       margin: 0 0 3px;
+
+      .source {
+        svg {
+          width: 12px;
+          height: 12px;
+          padding: 2px;
+          position: relative;
+          top: 0px;
+          fill: white;
+          background: #97bd3d;
+          border-radius: 50%;
+        }
+      }
     }
   }
 
@@ -197,6 +210,10 @@ textarea {
       font-size: 12px;
       margin: 5px 0;
       font-style: italic;
+
+      a:not(:last-child) {
+        margin-right: 10px;
+      }
     }
 
     &.-terms {
@@ -232,6 +249,22 @@ textarea {
       font-size: 12px;
       color: $red;
       text-transform: uppercase;
+    }
+  }
+
+  .separator {
+    width: 100%;
+    height: 11px;
+    border-bottom: 1px solid $border;
+    text-align: center;
+    margin-bottom: 16px;
+    margin-top: 11px;
+
+    span {
+      font-size: 14px;
+      color: $dark;
+      background-color: #FFF;
+      padding: 0 10px;
     }
   }
 }

@@ -94,49 +94,73 @@ define([
       this.view.updateCurrentStep(this.currentStep);
     },
 
-    // Email
-    checkEmail: function(email) {
-      this.subscription.set('resource', {
-        type: 'EMAIL',
-        content: email
-      });
+    previousStep: function() {
+      this.currentStep -= 1;
 
-      if (this.subscription.hasValidEmail()) {
+      this.view.updateCurrentStep(this.currentStep);
+    },
+
+    // Email or URL (Webhook)
+    checkEmailOrURL: function(params) {
+      var type = 'EMAIL';
+      var content = params.email;
+
+      if (params.url && params.url.length > 0) {
+        type = 'URL';
+        content = params.url;
+
         this.getDatasets();
         this.nextStep();
       } else {
-        this.publishNotification('notification-email-incorrect');
+        if (params.email || this.subscription.hasValidEmail()) {
+          this.getDatasets();
+          this.nextStep();
+        } else {
+          this.publishNotification('notification-email-incorrect');
+        }
       }
+
+      this.subscription.set('resource', {
+        type: type,
+        content: content
+      });
+    },
+
+    goBack: function () {
+      this.previousStep();
     },
 
     getDatasets: function() {
-      var params = this.subscription.attributes.params;
-      params = _.extend({}, params, params.iso);
-      var paramsValues = _.pick(params, 'use', 'useid', 'wdpaid',
-      'geostore', 'country', 'region');
+      if (typeof this.subscription !== 'undefined') {
+        var params = this.subscription.attributes.params;
+        params = _.extend({}, params, params.iso);
+        var paramsValues = _.pick(params, 'use', 'useid', 'wdpaid',
+          'geostore', 'country', 'region');
 
-      var values = _.compact(_.values(paramsValues));
+        var values = _.compact(_.values(paramsValues));
 
-      if (values.length) {
-        this.view.renderDatasets({
-          datasets: []
-        });
+        if (values.length) {
+          this.view.renderDatasets({
+            datasets: []
+          });
 
-        CoverageService.get(params)
-          .then(function(layers) {
-            this.view.renderDatasets({
-              datasets: datasetsHelper.getFilteredList(layers, this.subscription.attributes.datasets)
-            });
-          }.bind(this))
+          CoverageService.get(params)
+            .then(function(layers) {
+              this.view.renderDatasets({
+                datasets: datasetsHelper.getFilteredList(layers, this.subscription.attributes.datasets)
+              });
+            }.bind(this))
 
-          .error(function(error) {
-            console.log(error);
-          }.bind(this));
-      } else {
-        this.view.renderDatasets({
-          datasets: datasetsHelper.getListSelected(this.subscription.attributes.datasets)
-        });
+            .error(function(error) {
+              console.log(error);
+            }.bind(this));
+        } else {
+          this.view.renderDatasets({
+            datasets: datasetsHelper.getListSelected(this.subscription.attributes.datasets)
+          });
+        }
       }
+
     },
 
     updateDatasets: function(datasets) {
@@ -160,7 +184,12 @@ define([
 
       // Set email and save it in the user Model
       this.user.setEmailIfEmpty(this.subscription.get('resource').content);
-      this.user.save({ email: this.user.attributes.email }, { patch: true });
+      this.user.setLanguageIfEmpty(this.subscription.get('language'));
+
+      this.user.save({
+        email: this.user.attributes.email,
+        language: this.user.attributes.language
+      }, { patch: true });
 
       this.subscription.save()
           .then(this.onSubscriptionSave.bind(this))
