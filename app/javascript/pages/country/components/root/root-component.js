@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom'
 
 import Header from '../header/header';
+import Footer from '../footer/footer';
 import Map from '../map/map';
 import WidgetTreeCover from '../widget-tree-cover/widget-tree-cover';
 import WidgetTreeLocated from '../widget-tree-located/widget-tree-located';
@@ -58,13 +59,22 @@ class Root extends PureComponent {
             <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
               <WidgetTreeLocated />
             </div>
-            <div className="large-12 mediunm-12 small-12 columns l-country__container-widgets">
-              <WidgetTreeLoss />
+            <div className="l-country__widgets row">
+              <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
+                <WidgetTreeCover />
+              </div>
+              <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
+                <WidgetTreeLocated />
+              </div>
+              <div className="large-12 mediunm-12 small-12 columns l-country__container-widgets">
+                <WidgetTreeLoss />
+              </div>
             </div>
             <div className="small-8 columns">
               <WidgetTreeCoverLossAreas />
             </div>
           </div>
+          <Footer />
         </div>
       )
     }
