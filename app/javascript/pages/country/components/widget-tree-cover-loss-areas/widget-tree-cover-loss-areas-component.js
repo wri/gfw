@@ -16,7 +16,9 @@ class WidgetTreeLossAreas extends PureComponent {
     const {
       isLoading,
       countryData,
-      regionData
+      regionData,
+      startYear,
+      endYear
     } = this.props;
 
     if (isLoading) {
@@ -28,7 +30,7 @@ class WidgetTreeLossAreas extends PureComponent {
           <div className="c-widget-tree-cover-loss-areas__container">
             <div className="c-widget-tree-cover-loss-areas__chart">
               <h3 className="title">Total Tree cover loss</h3>
-              <p className="date">(2011 - 2016)</p>
+              <p className="date">({startYear} - {endYear})</p>
               <PieChart width={216} height={216}>
                 <Pie dataKey="value" data={regionData} cx={108} cy={108} innerRadius={40} outerRadius={100}>
                   {
