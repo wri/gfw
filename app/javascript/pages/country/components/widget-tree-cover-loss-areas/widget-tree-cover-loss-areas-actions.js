@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 
-const setTreeCoverLossAreasValues = createAction('setTreeCoverLossAreasValues');
+const setPieCharDataDistricts = createAction('setPieCharDataDistricts');
 
 export default {
-  setTreeCoverLossAreasValues
+  setPieCharDataDistricts
 };

@@ -8,7 +8,6 @@ import WidgetTreeCover from '../widget-tree-cover/widget-tree-cover';
 import WidgetTreeLocated from '../widget-tree-located/widget-tree-located';
 import WidgetTreeLoss from '../widget-tree-loss/widget-tree-loss';
 import WidgetTreeCoverLossAreas from '../widget-tree-cover-loss-areas/widget-tree-cover-loss-areas';
-import Icons from '../icons/icons';
 
 class Root extends PureComponent {
   componentDidMount() {
@@ -33,7 +32,6 @@ class Root extends PureComponent {
     } else {
       return (
         <div>
-          <Icons />
           <Header />
           <div className="l-country__map">
             <Map

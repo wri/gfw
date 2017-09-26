@@ -1,5 +1,5 @@
 .c-widget-tree-cover-loss-areas {
-  margin-top: 40px;
+  margin-top: rem(40px);
 
   .title,
   .date {
@@ -9,7 +9,7 @@
   }
 
   .title {
-    margin-bottom: 10px;
+    margin-bottom: rem(10px);
     padding-left: rem(16px);
   }
 
@@ -55,7 +55,7 @@
             align-items: center;
             align-content: center;
             justify-content: center;
-            margin-right: 12px;
+            margin-right: rem(12px);
             color: $white;
             font-size: 12px;
           }
@@ -65,15 +65,15 @@
   }
 
   .c-widget-tree-cover-loss-areas__scroll-more {
-    margin-top: 10px;
+    margin-top: rem(10px);
     border-top: 1px rgba($slate, .1) solid;
-    padding-bottom: 10px;
+    padding-bottom: rem(10px);
 
     .circle-icon {
       width: rem(18px);
       height: rem(18px);
       border-radius: rem(18px);
-      border: 1px rgba($slate, .1) solid;
+      border: rem(1px) rgba($slate, .1) solid;
       margin: rem(10px) auto 0;
     }
   }
