@@ -9,11 +9,13 @@ export { default as reducers } from './widget-tree-cover-loss-areas-reducers';
 export { default as actions } from './widget-tree-cover-loss-areas-actions';
 
 const mapStateToProps = state => ({
-  isLoading: state.widgetTreeLocated.isLoading,
+  isLoading: state.widgetTreeCoverLossAreas.isLoading,
   iso: state.root.iso,
   countryRegion: state.root.countryRegion,
   countryData: state.root.countryData,
-  regionData: state.widgetTreeLocated.regionData,
+  regionData: state.widgetTreeCoverLossAreas.regionData,
+  startYear: 2011,
+  endYear: 2015
 });
 
 const WidgetTreeCoverLossAreasContainer = (props) => {
