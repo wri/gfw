@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
   iso: state.root.iso,
   countryRegion: state.root.countryRegion,
   countryData: state.root.countryData,
-  regionData: state.widgetTreeLocated.regionData
+  regionData: state.widgetTreeLocated.regionData,
 });
 
 const WidgetTreeCoverLossAreasContainer = (props) => {
@@ -32,7 +32,6 @@ const WidgetTreeCoverLossAreasContainer = (props) => {
       { name: 'Other Districts', value: 3000, color: '#e9e9ea' }
     ]);
   };
-  console.log(props);
   return createElement(WidgetTreeCoverLossAreasComponent, {
     ...props,
     setInitialData
