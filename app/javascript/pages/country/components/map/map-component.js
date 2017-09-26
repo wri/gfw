@@ -1,22 +1,37 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
 
-class Map extends PureComponent {
-  constructor(props) {
-    super(props);
+import Forest2000 from '../../../../layers/forest2000';
 
-    this.state = {
-      options: Object.assign({}, props.mapOptions, {
-        zoom: this.props.zoom,
-        center: { lat: this.props.center.latitude, lng: this.props.center.longitude },
-        maxZoom: this.props.maxZoom,
-        minZoom: this.props.minZoom
-      })
-    };
-  }
+class Map extends PureComponent {
 
   componentDidMount() {
-    this.map = new google.maps.Map(document.getElementById('map'), this.state.options);
+    const {
+      mapOptions,
+      zoom,
+      center,
+      maxZoom,
+      minZoom
+    } = this.props;
+
+    const options = {
+      options: Object.assign({}, mapOptions, {
+        zoom: zoom,
+        center: { lat: center.latitude, lng: center.longitude },
+        maxZoom: maxZoom,
+        minZoom: minZoom
+      })
+    };
+    this.map = new google.maps.Map(document.getElementById('map'), options);
+
+    this.setListeners();
+  }
+
+  componentWillUpdate(nextProps) {
+    console.log(nextProps);
+  }
+
+  setListeners() {
     google.maps.event.addListenerOnce(this.map, 'idle', () => {
       this.onMapInit();
     });
@@ -24,6 +39,7 @@ class Map extends PureComponent {
 
   onMapInit() {
     console.log('onMapInit');
+    this.map.overlayMapTypes.setAt(0, new Forest2000(this.map, {}));
   }
 
   render() {

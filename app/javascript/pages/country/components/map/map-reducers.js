@@ -3,7 +3,8 @@ export const initialState = {
   center: {
     latitude: 0,
     longitude: 20
-  }
+  },
+  layers: []
 };
 
 const setMapZoom = (state, { payload }) => ({
