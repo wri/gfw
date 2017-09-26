@@ -13,7 +13,8 @@ const mapStateToProps = state => ({
   center: {
     latitude: state.root.countryData.lat,
     longitude: state.root.countryData.lng
-  }
+  },
+  layers: state.map.layers
 });
 
 const MapContainer = (props) => {
