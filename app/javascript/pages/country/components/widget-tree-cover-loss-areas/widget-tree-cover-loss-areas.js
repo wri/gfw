@@ -8,39 +8,31 @@ export { initialState } from './widget-tree-cover-loss-areas-reducers';
 export { default as reducers } from './widget-tree-cover-loss-areas-reducers';
 export { default as actions } from './widget-tree-cover-loss-areas-actions';
 
-import {
-  getTotalCover,
-  getTotalIntactForest
-} from '../../../../services/tree-cover';
-
 const mapStateToProps = state => ({
-  isLoading: state.widgetTreeCover.isLoading,
+  isLoading: state.widgetTreeLocated.isLoading,
   iso: state.root.iso,
   countryRegion: state.root.countryRegion,
   countryData: state.root.countryData,
-  totalCover: state.widgetTreeCover.totalCover,
-  totalIntactForest: state.widgetTreeCover.totalIntactForest,
-  totalNonForest: state.widgetTreeCover.totalNonForest
+  regionData: state.widgetTreeLocated.regionData
 });
 
 const WidgetTreeCoverLossAreasContainer = (props) => {
   const setInitialData = (props) => {
-    getTotalCover(props.iso, props.countryRegion)
-      .then((totalCoverResponse) => {
-        getTotalIntactForest(props.iso, props.countryRegion)
-          .then((totalIntactForestResponse) => {
-            const totalCover = Math.round(totalCoverResponse.data.data[0].value),
-              totalIntactForest = Math.round(totalIntactForestResponse.data.data[0].value),
-              values = {
-                totalCover: totalCover,
-                totalIntactForest: totalIntactForest,
-                totalNonForest: Math.round(props.countryData.area_ha) - (totalCover + totalIntactForest)
-              };
-              props.setTreeCoverLossAreasValues(values);
-          });
-      });
+    props.setPieCharDataDistricts([
+      { name: 'Minas Gerais', value: 1200, color: '#510626' },
+      { name: 'Bahia', value: 1100, color: '#730735' },
+      { name: 'Amazonas', value: 900, color: '#af0f54' },
+      { name: 'Maranhao', value: 550, color: '#f5247e' },
+      { name: 'Distrito Federal', value: 464, color: '#f3599b' },
+      { name: 'Ceará', value: 460, color: '#fb9bc4' },
+      { name: 'Espírito Santo', value: 440, color: '#f1c5d8' },
+      { name: 'Goiás', value: 420, color: '#e9e7a6' },
+      { name: 'Maranhão', value: 300, color: '#dad781' },
+      { name: 'Mato Grosso', value: 203, color: '#cecb65' },
+      { name: 'Other Districts', value: 3000, color: '#e9e9ea' }
+    ]);
   };
-
+  console.log(props);
   return createElement(WidgetTreeCoverLossAreasComponent, {
     ...props,
     setInitialData

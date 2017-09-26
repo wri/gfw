@@ -1,12 +1,14 @@
 export const initialState = {
   isLoading: true,
+  regionData: []
 };
 
-const setTreeCoverLossAreasValues = (state, { payload }) => ({
+const setPieCharDataDistricts = (state, { payload }) => ({
   ...state,
   isLoading: false,
+  regionData: payload
 });
 
 export default {
-  setTreeCoverLossAreasValues
+  setPieCharDataDistricts
 };
