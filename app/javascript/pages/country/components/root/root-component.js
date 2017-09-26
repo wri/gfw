@@ -51,13 +51,13 @@ class Root extends PureComponent {
               }} />
           </div>
           <div className="l-country__widgets row">
-            <div className="small-4 columns">
+            <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
               <WidgetTreeCover />
             </div>
-            <div className="small-4 columns">
+            <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
               <WidgetTreeLocated />
             </div>
-            <div className="small-8 columns">
+            <div className="large-12 mediunm-12 small-12 columns l-country__container-widgets">
               <WidgetTreeLoss />
             </div>
             <div className="small-8 columns">
