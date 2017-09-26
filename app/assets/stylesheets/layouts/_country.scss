@@ -20,4 +20,19 @@ body {
 
 .l-country__widgets {
   padding-top: rem(80px);
+
+  &.row {
+    max-width: none;
+    width: calc(70% - 100px);
+    margin: 0;
+    margin-left: rem(50px);
+  }
+
+  .l-country__container-widgets {
+    margin-bottom: rem(40px);
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
 }
