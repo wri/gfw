@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
 
-import Forest2000 from '../../../../layers/forest2000';
+import Layers from '../../../../utils/layers';
 
 class Map extends PureComponent {
 
@@ -38,8 +38,17 @@ class Map extends PureComponent {
   }
 
   onMapInit() {
-    console.log('onMapInit');
-    this.map.overlayMapTypes.setAt(0, new Forest2000(this.map, {}));
+    const {
+      layers
+    } = this.props;
+
+    this.setLayers(layers);
+  }
+
+  setLayers(layers) {
+    layers.map((layer, index) => {
+      this.map.overlayMapTypes.setAt(index, new Layers[layer](this.map, {}));
+    });
   }
 
   render() {
