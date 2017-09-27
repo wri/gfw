@@ -32,7 +32,7 @@ class WidgetAreasMostCoverGain extends PureComponent {
             <ul className="c-widget-areas-most-cover-gain__legend">
               {areaData.map((item, index) => {
                 return (
-                  <li key={index} className={`${index === areaData.length -1 ? '-right' : ''}`}>
+                  <li key={index}>
                     <div className="c-widget-areas-most-cover-gain__legend-title">
                       <div style={{backgroundColor: item.color}}>{index + 1}</div>
                       {item.name}
@@ -51,6 +51,9 @@ class WidgetAreasMostCoverGain extends PureComponent {
                 <Tooltip content={<TooltipChart/>} />
               </PieChart>
             </div>
+          </div>
+          <div className="c-widget-areas-most-cover-gain__scroll-more">
+            <div className="circle-icon"><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>
           </div>
         </div>
       )
