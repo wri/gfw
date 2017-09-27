@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
 
-import Layers from '../../../../utils/layers';
+import Layers from '../../../../map/layers';
+import grayscale from '../../../../map/maptypes/grayscale';
 
 class Map extends PureComponent {
 
@@ -10,6 +11,7 @@ class Map extends PureComponent {
       mapOptions,
       zoom,
       center,
+      maptype,
       maxZoom,
       minZoom
     } = this.props;
@@ -23,7 +25,8 @@ class Map extends PureComponent {
       })
     };
     this.map = new google.maps.Map(document.getElementById('map'), options);
-
+    this.setMaptypes();
+    this.setMaptypeId(maptype);
     this.setListeners();
   }
 
@@ -48,8 +51,15 @@ class Map extends PureComponent {
     const {
       layers
     } = this.props;
-
     this.setLayers(layers);
+  }
+
+  setMaptypes() {
+    this.map.mapTypes.set('grayscale', grayscale());
+  }
+
+  setMaptypeId(maptype) {
+    this.map.setMapTypeId(maptype);
   }
 
   updateLayers(layers) {
@@ -86,6 +96,8 @@ class Map extends PureComponent {
 Map.propTypes = {
   zoom: Proptypes.number.isRequired,
   center: Proptypes.object.isRequired,
+  maptype: Proptypes.string.isRequired,
+  layers: Proptypes.array.isRequired,
   maxZoom: Proptypes.number.isRequired,
   minZoom: Proptypes.number.isRequired,
   mapOptions: Proptypes.object

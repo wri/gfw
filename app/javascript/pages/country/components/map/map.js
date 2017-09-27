@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
     latitude: state.root.countryData.lat,
     longitude: state.root.countryData.lng
   },
+  maptype: state.map.maptype,
   layers: state.map.layers
 });
 

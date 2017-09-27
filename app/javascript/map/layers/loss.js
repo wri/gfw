@@ -1,4 +1,4 @@
-import Canvas from './canvas';
+import Canvas from './abstract/canvas';
 import { scalePow as d3_scalePow } from 'd3';
 import moment from 'moment';
 
