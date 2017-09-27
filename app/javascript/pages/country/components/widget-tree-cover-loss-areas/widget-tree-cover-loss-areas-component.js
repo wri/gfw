@@ -55,7 +55,7 @@ class WidgetTreeLossAreas extends PureComponent {
                 );
               })}
               <div className="c-widget-tree-cover-loss-areas__scroll-more">
-                <div className="circle-icon"><svg className="icon-close" onClick={this.hideVideo}><use xlinkHref="#shape-close"></use></svg></div>
+                <div className="circle-icon"><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>
               </div>
             </ul>
           </div>
