@@ -36,8 +36,9 @@ class Root extends PureComponent {
           <div className="l-country__map">
             <Map
               maxZoom={14}
-              minZoom={1}
+              minZoom={3}
               mapOptions={{
+                mapTypeId: 'grayscale',
                 backgroundColor: '#99b3cc',
                 disableDefaultUI: true,
                 panControl: false,
