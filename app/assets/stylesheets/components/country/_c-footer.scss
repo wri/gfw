@@ -1,15 +1,38 @@
 $back-footer-color: #f7f7f7;
 
 .c-footer {
-  height: rem(122px);
+  min-height: rem(122px);
   background-color: $back-footer-color;
   margin-top: rem(100px);
   position: relative;
   z-index: 100;
+  align-items: center;
+  display: flex;
 
   .row {
     max-width: none;
-    width: 100%;
+    width: calc(100% - 100px);
+    height: 100%;
     margin: 0;
+    margin-left: rem(50px);
+    align-items: center;
+
+    .c-footer__alert {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      span {
+        font-size: 14px;
+        line-height: 1.14;
+        color: $slate;
+        display: block;
+        margin-bottom: rem(20px);
+      }
+
+      a {
+        max-width: rem(160px);
+      }
+    }
   }
 }
