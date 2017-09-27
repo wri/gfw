@@ -15,7 +15,7 @@ class Header extends PureComponent {
 
   render() {
     const countries = [];
-    const regions = [];
+    const regions = [{value: '', label: 'Jurisdiction'}];
     let countrySelected = '';
     let regionSelected = 'Jurisdiction';
     const { iso, countriesList, countryRegions, match } = this.props;
