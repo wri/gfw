@@ -7,8 +7,8 @@ const OPTIONS = {
 class Canvas extends Overlay {
 
   constructor(map, options) {
-    super(options, map);
-    this.options = Object.assign({}, this.options, OPTIONS);
+    super(map, OPTIONS);
+    this.options = Object.assign({}, this.options, options);
     this.tiles = {};
   }
 

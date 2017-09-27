@@ -10,9 +10,9 @@ const OPTIONS = {
 class Forest2000 extends Canvas {
 
   constructor(map, options) {
-    super(options, map);
-    this.options = Object.assign({}, this.options, OPTIONS);
-    this.threshold = options.threshold || this.options.threshold;
+    super(map, OPTIONS);
+    this.options = Object.assign({}, this.options, options);
+    this.threshold = this.options.threshold;
   }
 
   filterCanvasImgdata(imgdata, w, h) {
