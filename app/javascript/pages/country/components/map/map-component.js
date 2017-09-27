@@ -28,7 +28,14 @@ class Map extends PureComponent {
   }
 
   componentWillUpdate(nextProps) {
-    console.log(nextProps);
+    const oldLayers = this.props.layers;
+    const newLayers = nextProps.layers;
+    const sameLayers = (oldLayers.length === newLayers.length)
+      && oldLayers.every((element, index) => element === newLayers[index]);
+
+    if (!sameLayers) {
+      this.updateLayers(newLayers);
+    }
   }
 
   setListeners() {
@@ -43,6 +50,21 @@ class Map extends PureComponent {
     } = this.props;
 
     this.setLayers(layers);
+  }
+
+  updateLayers(layers) {
+    this.removeLayers();
+    this.setLayers(layers);
+  }
+
+  removeLayers() {
+    const {
+      layers
+    } = this.props;
+
+    layers.map((layer, index) => {
+      this.map.overlayMapTypes.setAt(index, null);
+    });
   }
 
   setLayers(layers) {
