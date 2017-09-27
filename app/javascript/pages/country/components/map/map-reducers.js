@@ -4,7 +4,7 @@ export const initialState = {
     latitude: 0,
     longitude: 20
   },
-  layers: []
+  layers: ['forest2000']
 };
 
 const setMapZoom = (state, { payload }) => ({
@@ -12,6 +12,18 @@ const setMapZoom = (state, { payload }) => ({
   zoom: payload
 });
 
+const setLayer = (state, { payload }) => ({
+  ...state,
+  layers: [payload]
+});
+
+const addLayer = (state, { payload }) => ({
+  ...state,
+  layers: [...state.layers, payload]
+});
+
 export default {
-  setMapZoom
+  setMapZoom,
+  setLayer,
+  addLayer
 };
