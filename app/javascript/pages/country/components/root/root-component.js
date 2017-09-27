@@ -9,6 +9,7 @@ import WidgetTreeCover from '../widget-tree-cover/widget-tree-cover';
 import WidgetTreeLocated from '../widget-tree-located/widget-tree-located';
 import WidgetTreeLoss from '../widget-tree-loss/widget-tree-loss';
 import WidgetTreeCoverLossAreas from '../widget-tree-cover-loss-areas/widget-tree-cover-loss-areas';
+import WidgetAreasMostCoverGain from '../widget-areas-most-cover-gain/widget-areas-most-cover-gain';
 
 class Root extends PureComponent {
   componentDidMount() {
@@ -62,9 +63,15 @@ class Root extends PureComponent {
               <div className="large-12 mediunm-12 small-12 columns l-country__container-widgets">
                 <WidgetTreeLoss />
               </div>
-            </div>
-            <div className="small-8 columns">
-              <WidgetTreeCoverLossAreas />
+              <div className="large-12 mediunm-12 small-12 columns l-country__container-widgets">
+                <WidgetTreeCoverLossAreas />
+              </div>
+              <div className="large-6 medium-12 small-12 columns l-country__container-widgets"></div>
+              <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
+                <WidgetAreasMostCoverGain />
+              </div>
+              <div className="large-6 medium-12 small-12 columns l-country__container-widgets"></div>
+              <div className="large-6 medium-12 small-12 columns l-country__container-widgets"></div>
             </div>
           </div>
           <Footer />
