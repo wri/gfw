@@ -1,0 +1,80 @@
+.c-widget-tree-cover-loss-areas {
+  margin-top: rem(40px);
+
+  .title,
+  .date {
+    font-size: 12px;
+    line-height: 1.08;
+    color: $slate;
+  }
+
+  .title {
+    margin-bottom: rem(10px);
+    padding-left: rem(16px);
+  }
+
+  .date {
+    color: rgba($slate, .5);
+    padding-left: rem(16px);
+  }
+  .c-widget-tree-cover-loss-areas__container {
+    display: flex;
+    flex-direction: row;
+
+    .c-widget-tree-cover-loss-areas__chart {
+      flex-basis: 50%;
+
+      .recharts-wrapper {
+        margin: rem(15px) auto 0;
+      }
+    }
+
+    .c-widget-tree-cover-loss-areas__legend {
+      flex-basis: 50%;
+
+      li {
+        display: flex;
+        font-size: 12px;
+        color: $slate;
+        margin-bottom: rem(16px);
+        justify-content: space-between;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        .c-widget-tree-cover-loss-areas__legend-title {
+          display: flex;
+          align-items: center;
+
+          div {
+            width: rem(16px);
+            height: rem(16px);
+            border-radius: rem(16px);
+            display: flex;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            margin-right: rem(12px);
+            color: $white;
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+
+  .c-widget-tree-cover-loss-areas__scroll-more {
+    margin-top: rem(10px);
+    border-top: 1px rgba($slate, .1) solid;
+    padding-bottom: rem(10px);
+
+    .circle-icon {
+      width: rem(18px);
+      height: rem(18px);
+      border-radius: rem(18px);
+      border: rem(1px) rgba($slate, .1) solid;
+      margin: rem(10px) auto 0;
+    }
+  }
+}

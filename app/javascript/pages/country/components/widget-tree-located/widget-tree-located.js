@@ -71,7 +71,6 @@ const WidgetTreeLocatedContainer = (props) => {
       }
     ]);
   };
-
   return createElement(WidgetTreeLocatedComponent, {
     ...props,
     setInitialData
