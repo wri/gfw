@@ -85,7 +85,7 @@ class AboutUsers extends Component {
           <p>from every single country in the world.</p>
           <ul className="c-about-users__growth-years text -paragraph-6">
             {growthDates.map((item, i) =>
-              <li>{item}</li>
+              <li key={i}>{item}</li>
             )}
           </ul>
         </div>
