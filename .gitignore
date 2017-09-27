@@ -36,6 +36,7 @@ public/assets
 vendor/assets/bower_components
 jstest/SpecRunner.html
 yarn.lock
+package-lock.json
 
 # Ignore Vagrant
 .vagrant
