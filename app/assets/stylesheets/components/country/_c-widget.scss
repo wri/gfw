@@ -31,6 +31,8 @@
         width: rem(18px);
         height: rem(18px);
         border-radius: 100%;
+        position: relative;
+        cursor: pointer;
 
         &:not(:last-child) {
           margin-right: rem(5px);
@@ -43,6 +45,20 @@
         &.c-widget-header__option-circle--white {
           border: solid 1px #d6d6d6;
           background-color: $white;
+        }
+
+        .icon {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: rem(10px);
+          height: rem(10px);
+          fill: $white;
+
+          &.-dark {
+            fill: $slate;
+          }
         }
       }
 
