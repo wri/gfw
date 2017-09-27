@@ -1,0 +1,70 @@
+.c-widget-total-area-plantations {
+  .c-widget-header {
+    margin-bottom: -20px;
+  }
+
+  .title-legend {
+    display: block;
+    margin-bottom: rem(10px);
+    font-size: 12px;
+    color: rgba($slate, .5);
+    width: 100%;
+
+    &.-dark {
+      color: $slate;
+    }
+  }
+
+  .c-widget-total-area-plantations__container {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+
+    .c-widget-total-area-plantations__legend {
+      max-width: 50%;
+      border-top: 1px solid rgba($slate, .2);
+      padding-top: rem(15px);
+
+      li {
+        display: flex;
+        font-size: 12px;
+        color: $slate;
+        margin-bottom: rem(16px);
+        justify-content: space-between;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        &.-right {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+        }
+
+        .c-widget-total-area-plantations__legend-title {
+          display: flex;
+          align-items: center;
+
+          div {
+            width: rem(16px);
+            height: rem(16px);
+            border-radius: rem(16px);
+            display: flex;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            margin-right: rem(12px);
+            color: $white;
+            font-size: 12px;
+          }
+        }
+      }
+    }
+
+    .c-widget-total-area-plantations__chart {
+      max-width: 50%;
+      margin: -60px auto 0;
+    }
+  }
+}
