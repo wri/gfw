@@ -13,27 +13,18 @@ $black-tabs: #404040;
   }
 
   .c-header__select {
-    font-size: 47px;
-    font-weight: 300;
-    color: $white;
     margin-bottom: rem(15px);
+    display: flex;
+    align-items: center;
 
     &:last-of-type {
       margin-bottom: 0;
     }
 
-    select {
-      background-color: transparent;
-      border: 0;
-      -webkit-appearance: none;
-      outline: none;
-      color: inherit;
-      font-weight: 300;
-      font-size: 47px;
-    }
-
     .c-header__select-arrow {
-
+      width: rem(12px);
+      height: rem(12px);
+      margin-right: rem(16px);
     }
   }
 
@@ -44,6 +35,7 @@ $black-tabs: #404040;
       letter-spacing: .1px;
       line-height: 1.67;
       font-size: 18px;
+      font-weight: 300;
 
       strong {
         color: $green-gfw;
