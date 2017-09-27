@@ -40,6 +40,10 @@
 
         &.c-widget-header__option-circle--green {
           background-color: $green-gfw;
+
+          &:hover {
+            background-color: darken($green-gfw, 10%);
+          }
         }
 
         &.c-widget-header__option-circle--white {
@@ -72,6 +76,7 @@
         color: #ffffff;
         background-color: $green-gfw;
         border-radius: rem(100px);
+        cursor: pointer;
 
         .small-4 & {
           position: absolute;
@@ -95,6 +100,10 @@
             height: rem(14px);
             background-color: rgba($medium-grey, 0.2);
           }
+        }
+
+        &:hover {
+          background-color: darken($green-gfw, 10%);
         }
       }
     }

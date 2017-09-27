@@ -21,6 +21,7 @@ class WidgetTreeLoss extends PureComponent {
   render() {
     const {
       isLoading,
+      viewOnMap,
       minYear,
       maxYear,
       total,
@@ -32,7 +33,9 @@ class WidgetTreeLoss extends PureComponent {
     } else {
       return (
         <div className="c-widget c-widget-tree-loss">
-          <WidgetHeader title={`Tree cover loss`} />
+          <WidgetHeader
+            title={`Tree cover loss`}
+            viewOnMapCallback={viewOnMap}/>
           <div className="c-widget-tree-loss__legend">
             <div>
               <div className="c-widget-tree-loss__legend-title">Total Tree Cover Loss</div>
@@ -83,6 +86,7 @@ class WidgetTreeLoss extends PureComponent {
 WidgetTreeLoss.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
+  viewOnMap: PropTypes.func.isRequired,
   years: PropTypes.array.isRequired
 };
 
