@@ -43,9 +43,14 @@ const WidgetTreeLossContainer = (props) => {
       });
   };
 
+  const viewOnMap = () => {
+    props.setLayer('loss');
+  };
+
   return createElement(WidgetTreeLossComponent, {
     ...props,
-    setInitialData
+    setInitialData,
+    viewOnMap
   });
 };
 

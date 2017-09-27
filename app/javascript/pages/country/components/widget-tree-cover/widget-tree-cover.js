@@ -41,9 +41,14 @@ const WidgetTreeCoverContainer = (props) => {
       });
   };
 
+  const viewOnMap = () => {
+    props.setLayer('forest2000');
+  };
+
   return createElement(WidgetTreeCoverComponent, {
     ...props,
-    setInitialData
+    setInitialData,
+    viewOnMap
   });
 };
 
