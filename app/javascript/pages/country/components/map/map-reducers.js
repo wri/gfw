@@ -4,6 +4,7 @@ export const initialState = {
     latitude: 0,
     longitude: 20
   },
+  maptype: 'grayscale',
   layers: ['forest2000']
 };
 
