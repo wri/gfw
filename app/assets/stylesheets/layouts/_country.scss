@@ -34,7 +34,7 @@ body {
   .l-country__container-widgets {
     margin-bottom: rem(40px);
 
-    &:last-of-type {
+    &.-last {
       margin-bottom: 0;
     }
   }
