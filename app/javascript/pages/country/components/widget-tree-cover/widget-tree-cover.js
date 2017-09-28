@@ -20,12 +20,15 @@ const mapStateToProps = state => ({
   countryData: state.root.countryData,
   totalCover: state.widgetTreeCover.totalCover,
   totalIntactForest: state.widgetTreeCover.totalIntactForest,
-  totalNonForest: state.widgetTreeCover.totalNonForest
+  totalNonForest: state.widgetTreeCover.totalNonForest,
+  regions: state.widgetTreeCover.regions,
+  units: state.widgetTreeCover.units,
+  settings: state.widgetTreeCover.settings
 });
 
 const WidgetTreeCoverContainer = (props) => {
   const setInitialData = (props) => {
-    getTotalCover(props.iso, props.countryRegion)
+    getTotalCover(props.iso, props.countryRegion, props.settings.canopy)
       .then((totalCoverResponse) => {
         getTotalIntactForest(props.iso, props.countryRegion)
           .then((totalIntactForestResponse) => {
@@ -34,7 +37,25 @@ const WidgetTreeCoverContainer = (props) => {
               values = {
                 totalCover: totalCover,
                 totalIntactForest: totalIntactForest,
-                totalNonForest: Math.round(props.countryData.area_ha) - (totalCover + totalIntactForest)
+                totalNonForest: Math.round(props.countryData.area_ha) - (totalCover + totalIntactForest),
+                regions: [
+                  {
+                    value: 'all',
+                    name: 'All Region'
+                  },
+                  {
+                    value: 'managed',
+                    name: 'Managed'
+                  },
+                  {
+                    value: 'protected_areas',
+                    name: 'Protected Areas'
+                  },
+                  {
+                    value: 'ifls',
+                    name: 'IFLs'
+                  }
+                ]
               };
               props.setTreeCoverValues(values);
           });
@@ -45,10 +66,15 @@ const WidgetTreeCoverContainer = (props) => {
     props.setLayer('forest2000');
   };
 
+  const toggleSettings = () => {
+    props.toggleTreeCoverSettings();
+  };
+
   return createElement(WidgetTreeCoverComponent, {
     ...props,
     setInitialData,
-    viewOnMap
+    viewOnMap,
+    toggleSettings
   });
 };
 
