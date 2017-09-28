@@ -75,10 +75,10 @@ class Root extends PureComponent {
               <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
                 <WidgetAreasMostCoverGain />
               </div>
-              <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
+              <div className="large-6 medium-12 small-12 columns l-country__container-widgets -last">
                 <WidgetTotalAreaPlantations />
               </div>
-              <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
+              <div className="large-6 medium-12 small-12 columns l-country__container-widgets -last">
                 <WidgetPlantationArea />
               </div>
             </div>
