@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 
 import Header from '../header/header';
 import Footer from '../footer/footer';
@@ -13,6 +13,7 @@ import WidgetAreasMostCoverGain from '../widget-areas-most-cover-gain/widget-are
 import WidgetTotalAreaPlantations from '../widget-total-area-plantations/widget-total-area-plantations';
 import WidgetTreeCoverGain from '../widget-tree-cover-gain/widget-tree-cover-gain';
 import WidgetPlantationArea from '../widget-plantation-area/widget-plantation-area';
+import WidgetStories from '../widget-stories/widget-stories';
 
 class Root extends PureComponent {
   componentDidMount() {
@@ -83,6 +84,7 @@ class Root extends PureComponent {
               </div>
             </div>
           </div>
+          <WidgetStories />
           <Footer />
         </div>
       )
