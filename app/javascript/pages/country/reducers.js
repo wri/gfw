@@ -11,6 +11,7 @@ import { reducers as widgetTreeLossReducers } from './components/widget-tree-los
 import { reducers as widgetTreeCoverLossAreasReducers } from './components/widget-tree-cover-loss-areas/widget-tree-cover-loss-areas';
 import { reducers as widgetAreasMostCoverGainReducers } from './components/widget-areas-most-cover-gain/widget-areas-most-cover-gain';
 import { reducers as widgetTotalAreaPlantationsReducers } from './components/widget-total-area-plantations/widget-total-area-plantations';
+import { reducers as widgetTreeCoverGainReducers } from './components/widget-tree-cover-gain/widget-tree-cover-gain';
 
 const reducers = combineReducers({
   root: handleActions('root', allActions, rootReducers, initialState),
@@ -21,6 +22,7 @@ const reducers = combineReducers({
   widgetTreeCoverLossAreas: handleActions('widgetTreeCoverLossAreas', allActions, widgetTreeCoverLossAreasReducers, initialState),
   widgetAreasMostCoverGain: handleActions('widgetAreasMostCoverGain', allActions, widgetAreasMostCoverGainReducers, initialState),
   widgetTotalAreaPlantations: handleActions('widgetTotalAreaPlantations', allActions, widgetTotalAreaPlantationsReducers, initialState),
+  widgetTreeCoverGain: handleActions('widgetTreeCoverGain', allActions, widgetTreeCoverGainReducers, initialState),
 });
 
 export default reducers

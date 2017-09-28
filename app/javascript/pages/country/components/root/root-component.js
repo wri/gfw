@@ -11,6 +11,7 @@ import WidgetTreeLoss from '../widget-tree-loss/widget-tree-loss';
 import WidgetTreeCoverLossAreas from '../widget-tree-cover-loss-areas/widget-tree-cover-loss-areas';
 import WidgetAreasMostCoverGain from '../widget-areas-most-cover-gain/widget-areas-most-cover-gain';
 import WidgetTotalAreaPlantations from '../widget-total-area-plantations/widget-total-area-plantations';
+import WidgetTreeCoverGain from '../widget-tree-cover-gain/widget-tree-cover-gain';
 
 class Root extends PureComponent {
   componentDidMount() {
@@ -74,7 +75,9 @@ class Root extends PureComponent {
               <div className="large-12 mediunm-12 small-12 columns l-country__container-widgets">
                 <WidgetTreeCoverLossAreas />
               </div>
-              <div className="large-6 medium-12 small-12 columns l-country__container-widgets"></div>
+              <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
+                <WidgetTreeCoverGain />
+              </div>
               <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
                 <WidgetAreasMostCoverGain />
               </div>
