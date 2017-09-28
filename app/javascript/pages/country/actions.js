@@ -8,6 +8,7 @@ import { actions as widgetAreasMostCoverGainActions } from './components/widget-
 import { actions as widgetTotalAreaPlantationsActions } from './components/widget-total-area-plantations/widget-total-area-plantations';
 import { actions as widgetTreeCoverGainActions } from './components/widget-tree-cover-gain/widget-tree-cover-gain';
 import { actions as widgetPlantationAreaActions } from './components/widget-plantation-area/widget-plantation-area';
+import { actions as widgetStoriesActions } from './components/widget-stories/widget-stories';
 
 export default {
   ...rootActions,
@@ -19,5 +20,6 @@ export default {
   ...widgetAreasMostCoverGainActions,
   ...widgetTotalAreaPlantationsActions,
   ...widgetTreeCoverGainActions,
-  ...widgetPlantationAreaActions
+  ...widgetPlantationAreaActions,
+  ...widgetStoriesActions
 };
