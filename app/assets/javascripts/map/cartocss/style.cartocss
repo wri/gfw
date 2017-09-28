@@ -723,4 +723,10 @@
     polygon-clip: false;
   }
 
+  #tal_corridor {
+    polygon-fill: #229A00;
+    polygon-opacity: 0.7;
+  }
+
+
 }
