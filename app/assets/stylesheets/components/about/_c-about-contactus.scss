@@ -1,0 +1,10 @@
+.c-about-contactus {
+
+  .c-about-contactus__title {
+    opacity: 0.5;
+  }
+
+  @media screen and (min-width: $screen-l) {
+    border-bottom: 1px solid $grey-dark;
+  }
+}

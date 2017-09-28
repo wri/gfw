@@ -11,6 +11,7 @@ import AboutHow from './components/AboutHow/AboutHow';
 import AboutImpacts from './components/AboutImpacts/AboutImpacts';
 import AboutAwards from './components/AboutAwards/AboutAwards';
 import AboutHistory from './components/AboutHistory/AboutHistory';
+import AboutContactUs from './components/AboutContactUs/AboutContactUs';
 import AboutLogos from './components/AboutLogos/AboutLogos';
 
 const preloadedState = {
@@ -39,6 +40,7 @@ const About = () => {
         <AboutImpacts />
         <AboutAwards />
         <AboutHistory />
+        <AboutContactUs />
         <AboutLogos />
       </div>
     </Provider>
