@@ -4,6 +4,7 @@ import { PieChart, Pie, Cell } from 'recharts';
 import numeral from 'numeral';
 
 import WidgetHeader from '../widget-header/widget-header';
+import WidgetTreeCoverSettings from './widget-tree-cover-settings-component';
 
 class WidgetTreeCover extends PureComponent {
   componentDidMount() {
@@ -15,26 +16,38 @@ class WidgetTreeCover extends PureComponent {
     const {
       isLoading,
       viewOnMap,
+      toggleSettings,
       countryData,
       totalCover,
       totalIntactForest,
-      totalNonForest
+      totalNonForest,
+      regions,
+      units,
+      settings
     } = this.props;
-
-    const pieCharData = [
-      { name: 'Forest', value: totalCover, color: '#959a00' },
-      { name: 'Intact Forest', value: totalIntactForest, color: '#2d8700' },
-      { name: 'Non Forest', value: totalNonForest, color: '#d9d9dc' }
-    ];
 
     if (isLoading) {
       return <div>loading!</div>
     } else {
+      const pieCharData = [
+        { name: 'Forest', value: totalCover, color: '#959a00' },
+        { name: 'Intact Forest', value: totalIntactForest, color: '#2d8700' },
+        { name: 'Non Forest', value: totalNonForest, color: '#d9d9dc' }
+      ];
+
       return (
         <div className="c-widget c-widget-tree-cover">
           <WidgetHeader
             title={`Forest cover in ${countryData.name}`}
-            viewOnMapCallback={viewOnMap}/>
+            viewOnMapCallback={viewOnMap}
+            clickSettingsCallback={toggleSettings}>
+            <WidgetTreeCoverSettings
+              key="tree-cover-settings"
+              type="settings"
+              regions={regions}
+              units={units}
+              settings={settings}/>
+          </WidgetHeader>
           <ul className="c-widget-tree-cover__legend">
             {pieCharData.map((item, index) => {
               return (
@@ -69,6 +82,7 @@ WidgetTreeCover.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
   viewOnMap: PropTypes.func.isRequired,
+  toggleSettings: PropTypes.func.isRequired,
   countryData: PropTypes.object.isRequired,
   totalCover: PropTypes.number.isRequired,
   totalIntactForest: PropTypes.number.isRequired,
