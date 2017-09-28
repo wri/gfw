@@ -16,7 +16,10 @@ const AboutAnchors = (props) => {
             <Link to="history" spy={true} smooth={true} duration={900} >
               <li className="text -paragraph-5 -color-8">History</li>
             </Link>
-            <Link to="partnership" spy={true} smooth={true} duration={1100} >
+            <Link to="contactUs" spy={true} smooth={true} duration={1100} >
+              <li className="text -paragraph-5 -color-8">Contact Us</li>
+            </Link>
+            <Link to="partnership" spy={true} smooth={true} duration={1300} >
               <li className="text -paragraph-5 -color-8">Partnership</li>
             </Link>
           </ul>
