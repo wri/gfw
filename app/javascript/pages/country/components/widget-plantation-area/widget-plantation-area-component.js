@@ -34,15 +34,18 @@ class WidgetPlantationArea extends PureComponent {
                     <div className="circle">{index + 1}</div>
                     <div className="title">{item.name}</div>
                   </div>
-                  <ResponsiveContainer height={25} width={'100%'}>
-                    <BarChart layout="vertical" data={plantationAreaData} stackOffset="expand" maxBarSize={45}>
-                     <XAxis hide type="number"/>
-                     <YAxis type="category" dataKey="name" stroke="#FFFFFF" fontSize="0" />
-                     <Bar dataKey={`one_${index}`} fill="#dd7876" stackId="a" />
-                     <Bar dataKey={`two_${index}`} fill="#82ba7f" stackId="a" />
-                     <Bar dataKey={`three_${index}`} fill="#76a8dd" stackId="a" />
-                    </BarChart>
-                  </ResponsiveContainer>
+                  <div className="container-percentage">
+                    <ResponsiveContainer height={10} width={'100%'}>
+                      <BarChart layout="vertical" data={plantationAreaData} stackOffset="expand" barSize={30}>
+                       <XAxis hide type="number"/>
+                       <YAxis type="category" dataKey="name" stroke="#FFFFFF" fontSize="0" />
+                       <Bar dataKey={`one_${index}`} fill="#fba79f" stackId="a" />
+                       <Bar dataKey={`two_${index}`} fill="#d29eea" stackId="a" />
+                       <Bar dataKey={`three_${index}`} fill="#99cf95" stackId="a" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                    <div className="text-percentage">Nan%</div>
+                  </div>
                 </div>)
               })}
             </div>
