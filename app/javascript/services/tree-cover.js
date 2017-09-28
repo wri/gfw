@@ -8,14 +8,15 @@ const CONFIG = {
 const APIURL = process.env.GFW_API_HOST_PROD;
 
 const APIURLS = {
-  'getTotalCover': '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' AND thresh=30 {region}',
+  'getTotalCover': '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' AND thresh={thresh} {region}',
   'getTotalIntactForest': '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' {region}'
 };
 
-export const getTotalCover = (iso, region) => {
+export const getTotalCover = (iso, region, canopy) => {
   const url = `${APIURL}${APIURLS.getTotalCover}`
     .replace('{dataset}', CONFIG.coverDataset)
     .replace('{iso}', iso)
+    .replace('{thresh}', canopy)
     .replace('{region}', region === 0 ? 'GROUP BY iso' : `AND adm1 = ${region} GROUP BY iso, adm1`);
   return axios.get(url);
 };
