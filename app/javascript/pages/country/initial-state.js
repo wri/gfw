@@ -7,6 +7,7 @@ import { initialState as widgetTreeCoverLossAreas } from './components/widget-tr
 import { initialState as widgetAreasMostCoverGain } from './components/widget-areas-most-cover-gain/widget-areas-most-cover-gain';
 import { initialState as widgetTotalAreaPlantations } from './components/widget-total-area-plantations/widget-total-area-plantations';
 import { initialState as widgetTreeCoverGain } from './components/widget-tree-cover-gain/widget-tree-cover-gain';
+import { initialState as widgetPlantationArea } from './components/widget-plantation-area/widget-plantation-area';
 
 export default {
   root,
@@ -17,5 +18,6 @@ export default {
   widgetTreeCoverLossAreas,
   widgetAreasMostCoverGain,
   widgetTotalAreaPlantations,
-  widgetTreeCoverGain
+  widgetTreeCoverGain,
+  widgetPlantationArea
 };
