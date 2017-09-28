@@ -6,6 +6,7 @@ import { initialState as widgetTreeLoss } from './components/widget-tree-loss/wi
 import { initialState as widgetTreeCoverLossAreas } from './components/widget-tree-cover-loss-areas/widget-tree-cover-loss-areas';
 import { initialState as widgetAreasMostCoverGain } from './components/widget-areas-most-cover-gain/widget-areas-most-cover-gain';
 import { initialState as widgetTotalAreaPlantations } from './components/widget-total-area-plantations/widget-total-area-plantations';
+import { initialState as widgetTreeCoverGain } from './components/widget-tree-cover-gain/widget-tree-cover-gain';
 
 export default {
   root,
@@ -15,5 +16,6 @@ export default {
   widgetTreeLoss,
   widgetTreeCoverLossAreas,
   widgetAreasMostCoverGain,
-  widgetTotalAreaPlantations
+  widgetTotalAreaPlantations,
+  widgetTreeCoverGain
 };
