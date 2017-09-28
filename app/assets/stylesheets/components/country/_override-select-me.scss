@@ -1,6 +1,18 @@
 .dd__wrapper {
   &.dd__opened {
     width: 100%;
+
+    .dd__list {
+      max-width: 100%;
+      
+      .dd__option {
+        font-size: 30px;
+        word-break: break-word;
+        max-width: 100%;
+        white-space: pre-line;
+        line-height: 40px;
+      }
+    }
   }
 
   .dd__selectControl {
