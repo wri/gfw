@@ -6,6 +6,7 @@ import { actions as widgetTreeLossActions } from './components/widget-tree-loss/
 import { actions as widgetTreeCoverLossAreasActions } from './components/widget-tree-cover-loss-areas/widget-tree-cover-loss-areas';
 import { actions as widgetAreasMostCoverGainActions } from './components/widget-areas-most-cover-gain/widget-areas-most-cover-gain';
 import { actions as widgetTotalAreaPlantationsActions } from './components/widget-total-area-plantations/widget-total-area-plantations';
+import { actions as widgetTreeCoverGainActions } from './components/widget-tree-cover-gain/widget-tree-cover-gain';
 
 export default {
   ...rootActions,
@@ -15,5 +16,6 @@ export default {
   ...widgetTreeLossActions,
   ...widgetTreeCoverLossAreasActions,
   ...widgetAreasMostCoverGainActions,
-  ...widgetTotalAreaPlantationsActions
+  ...widgetTotalAreaPlantationsActions,
+  ...widgetTreeCoverGainActions
 };
