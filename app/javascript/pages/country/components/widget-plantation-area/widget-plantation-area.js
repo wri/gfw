@@ -21,17 +21,11 @@ const mapStateToProps = state => ({
 const WidgetPlantationAreaContainer = (props) => {
   const setInitialData = (props) => {
     props.setPlantationAreaData([
-      { name: 'Minas Gerais', value: 1200, color: '#510626' },
-      { name: 'Bahia', value: 1100, color: '#730735' },
-      { name: 'Amazonas', value: 900, color: '#af0f54' },
-      { name: 'Maranhao', value: 550, color: '#f5247e' },
-      { name: 'Distrito Federal', value: 464, color: '#f3599b' },
-      { name: 'Ceará', value: 460, color: '#fb9bc4' },
-      { name: 'Espírito Santo', value: 440, color: '#f1c5d8' },
-      { name: 'Goiás', value: 420, color: '#e9e7a6' },
-      { name: 'Maranhão', value: 300, color: '#dad781' },
-      { name: 'Mato Grosso', value: 203, color: '#cecb65' },
-      { name: 'Other Districts', value: 3000, color: '#e9e9ea' }
+      {name: 'Minas Gerais', one_0: 230, two_0: 335, three_0: 453},
+      {name: 'Bahia', one_1: 300, two_1: 135, three_1: 953},
+      {name: 'Amazonas', one_2: 20, two_2: 535, three_2: 253},
+      {name: 'Maranhao', one_3: 189, two_3: 635, three_3: 153},
+      {name: 'Distrito Federal', one_4: 234, two_4: 335, three_4: 453},
     ]);
   };
   return createElement(WidgetPlantationAreaComponent, {
