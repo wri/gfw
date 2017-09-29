@@ -7,6 +7,11 @@ body {
   background: $white;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  #footerGfw {
+    position: relative;
+    z-index: 100;
+  }
 }
 
 .l-country__map {
@@ -19,5 +24,18 @@ body {
 }
 
 .l-country__widgets {
-  padding-top: rem(80px);
+  &.row {
+    max-width: none;
+    width: calc(70% - 100px);
+    margin: rem(80px) 0 0;
+    margin-left: rem(50px);
+  }
+
+  .l-country__container-widgets {
+    margin-bottom: rem(40px);
+
+    &.-last {
+      margin-bottom: 0;
+    }
+  }
 }

@@ -49,13 +49,13 @@ class WidgetTreeLossAreas extends PureComponent {
                       {item.name}
                     </div>
                     <div className="c-widget-tree-cover-loss-areas__legend-value">
-                      {item.value}Ha
+                      {numeral(Math.round(item.value / 1000)).format('0,0')}Ha
                     </div>
                   </li>
                 );
               })}
               <div className="c-widget-tree-cover-loss-areas__scroll-more">
-                <div className="circle-icon"><svg className="icon-close" onClick={this.hideVideo}><use xlinkHref="#shape-close"></use></svg></div>
+                <div className="circle-icon"><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>
               </div>
             </ul>
           </div>

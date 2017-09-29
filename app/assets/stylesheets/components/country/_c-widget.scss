@@ -1,6 +1,7 @@
 .c-widget {
   position: relative;
   width: 100%;
+  height: 100%;
   padding: rem(25px) rem(20px);
   border-radius: 4px;
   border: solid 1px rgba($medium-grey, 0.2);
@@ -10,7 +11,7 @@
     height: rem(78px);
 
     .c-widget-header__title {
-      width: 60%;
+      width: 50%;
       font-size: 13px;
       font-weight: 500;
       line-height: 1.54;
@@ -30,6 +31,10 @@
         &:not(:last-child) {
           margin-right: rem(5px);
         }
+      }
+
+      .c-widget-header__option-button {
+        margin-right: rem(5px);
       }
 
       .c-widget-header__option-circle {

@@ -1,38 +1,61 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Select from 'react-select-me';
 
 class Header extends PureComponent {
   countriesSelectOnChange = (event) => {
     const { selectCountry } = this.props;
-    selectCountry(event.target.value);
+    selectCountry(event.value);
   };
 
   regionsSelectOnChange = (event) => {
     const { selectRegion } = this.props;
-    selectRegion(event.target.value);
+    selectRegion(event.value);
   };
 
   render() {
-    const { iso, countriesList, countryRegions } = this.props;
-
+    const countries = [];
+    const regions = [{value: '', label: 'Jurisdiction'}];
+    let countrySelected = '';
+    let regionSelected = 'Jurisdiction';
+    const { iso, countriesList, countryRegions, match } = this.props;
+    countriesList.forEach(function(item){
+      if(iso === item.iso) {
+        countrySelected = item.name
+      }
+      countries.push({value: item.iso, label: item.name});
+    });
+    countryRegions.forEach(function(item){
+      if (match.params.region) {
+        if(match.params.region === item.id.toString()) {
+          regionSelected = item.name;
+        }
+      }
+      regions.push({value: item.id, label: item.name});
+    });
     return (
       <div className="c-header">
         <div className="row">
-          <div className="small-12 columns">
+          <div className="small-6 columns">
             <div className="c-header__select">
-              <select value={iso} onChange={this.countriesSelectOnChange}>
-                {countriesList.map((country, i) => {
-                  return <option key={i} value={country.iso}>{country.name}</option>;
-                })}
-              </select>
+              <svg className="icon icon-angle-arrow-down c-header__select-arrow"><use xlinkHref="#icon-angle-arrow-down"></use></svg>
+              <Select value={countrySelected} options={countries} onChange={this.countriesSelectOnChange} />
             </div>
             <div className="c-header__select">
-              <select value={iso} onChange={this.regionsSelectOnChange}>
-                {countryRegions.map((region, i) => {
-                  return <option key={i} value={region.id}>{region.name}</option>;
-                })}
-              </select>
+              <svg className="icon icon-angle-arrow-down c-header__select-arrow"><use xlinkHref="#icon-angle-arrow-down"></use></svg>
+              <Select value={regionSelected} options={regions} onChange={this.regionsSelectOnChange} />
             </div>
+          </div>
+          <div className="small-6 columns c-header__info">
+            <p>In 2010, this country had <strong>519 MHa</strong> tree cover, that represents <strong>61%</strong> of its <strong>851 Mha.</strong></p>
+            <p>Excluding plantations, <strong>40 MHa</strong> of tree cover loss occured in <strong>2016.</strong></p>
+          </div>
+        </div>
+        <div className="c-header__tabs">
+          <div className="row">
+            <ul>
+              <li className="-selected">Summary</li>
+            </ul>
           </div>
         </div>
       </div>
