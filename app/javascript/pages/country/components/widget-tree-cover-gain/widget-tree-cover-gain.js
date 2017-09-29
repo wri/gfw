@@ -11,17 +11,35 @@ export { default as reducers } from './widget-tree-cover-gain-reducers';
 export { default as actions } from './widget-tree-cover-gain-actions';
 
 const mapStateToProps = state => ({
+  isLoading: state.widgetTreeCoverGain.isLoading,
   iso: state.root.iso,
   countriesList: state.root.countriesList,
   countryData: state.root.countryData,
   countryRegions: state.root.countryRegions,
-  totalAmount: 'Nan',
-  percentage: 'Nan',
+  totalAmount: state.widgetTreeCoverGain.totalAmount,
+  percentage: state.widgetTreeCoverGain.percentage,
   startYear: 2011,
-  endYear: 2014
+  endYear: 2014,
+  thresh: 30
 });
 
+import {
+  getTreeCoverGain,
+  getTotalCountriesTreeCoverGain
+} from '../../../../services/tree-gain';
+
 const WidgetTreeCoverGainContainer = (props) => {
+  getTreeCoverGain(props.iso,{minYear: props.startYear, maxYear: props.endYear}, props.thresh)
+  .then((coverGain) => {
+    getTotalCountriesTreeCoverGain({minYear: props.startYear, maxYear: props.endYear}, props.thresh)
+    .then((totalCoverGain) => {
+      const values = {
+        totalAmount: coverGain.data.data[0].value,
+        percentage: (coverGain.data.data[0].value / totalCoverGain.data.data[0].value) * 100
+      };
+      props.setTreeCoverGainValues(values);
+    });
+  });
   return createElement(WidgetTreeCoverGainComponent, {
     ...props
   });
