@@ -10,6 +10,8 @@ import {
   ResponsiveContainer
 } from 'recharts';
 
+import TooltipChart from '../tooltip-chart/tooltip-chart';
+
 import WidgetHeader from '../widget-header/widget-header';
 
 class WidgetTreeLoss extends PureComponent {
@@ -39,7 +41,7 @@ class WidgetTreeLoss extends PureComponent {
                 <XAxis dataKey="date"/>
                 <YAxis/>
                 <CartesianGrid vertical={false} strokeDasharray="3 4"/>
-                <Tooltip/>
+                <Tooltip content={<TooltipChart/>} />
                 <Bar dataKey="value" barSize={22} fill="#fe6598" />
               </BarChart>
             </ResponsiveContainer>
