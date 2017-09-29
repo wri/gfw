@@ -37,6 +37,9 @@ class WidgetTreeLocated extends PureComponent {
               );
             })}
           </ul>
+          <div className="c-widget-tree-located__scroll-more">
+            <div className="circle-icon"><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>
+          </div>
         </div>
       )
     }
