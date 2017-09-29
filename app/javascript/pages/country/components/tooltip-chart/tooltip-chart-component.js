@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import numeral from 'numeral';
 
 const TooltipChart = (props) => {
   const { active } = props;
@@ -7,7 +8,7 @@ const TooltipChart = (props) => {
     const { payload, label } = props;
     return (
       <div className="c-tooltip-chart">
-        <p className="label">{`${payload[0].value} Ha`}</p>
+        <p className="label">{`${numeral(Math.round(payload[0].value / 1000)).format('0,0')} Ha`}</p>
       </div>
     );
   } else {
