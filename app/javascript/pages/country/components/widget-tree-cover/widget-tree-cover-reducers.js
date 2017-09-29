@@ -7,15 +7,14 @@ export const initialState = {
   units: [
     {
       value: 'Ha',
-      name: 'Hectare - Ha',
+      label: 'Hectare - Ha',
     },
     {
       value: '%',
-      name: 'Percent Area - %',
+      label: 'Percent Area - %',
     }
   ],
   settings: {
-    active: false,
     region: 'all',
     unit: 'Ha',
     canopy: 30
@@ -27,18 +26,37 @@ const setTreeCoverValues = (state, { payload }) => ({
   isLoading: false,
   totalCover: payload.totalCover,
   totalIntactForest: payload.totalIntactForest,
-  totalNonForest: payload.totalNonForest
+  totalNonForest: payload.totalNonForest,
+  regions: payload.regions
 });
 
-const toggleTreeCoverSettings = (state) => ({
+const setTreeCoverSettingsRegion = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    active: !state.settings.active
+    region: payload
+  }
+});
+
+const setTreeCoverSettingsUnit = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    unit: payload
+  }
+});
+
+const setTreeCoverSettingsCanopy = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    canopy: payload
   }
 });
 
 export default {
   setTreeCoverValues,
-  toggleTreeCoverSettings
+  setTreeCoverSettingsRegion,
+  setTreeCoverSettingsUnit,
+  setTreeCoverSettingsCanopy
 };
