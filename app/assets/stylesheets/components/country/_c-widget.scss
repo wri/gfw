@@ -1,4 +1,5 @@
 .c-widget {
+  position: relative;
   width: 100%;
   height: 100%;
   padding: rem(25px) rem(20px);
@@ -26,6 +27,10 @@
       li {
         display: inline-flex;
         vertical-align: top;
+
+        &:not(:last-child) {
+          margin-right: rem(5px);
+        }
       }
 
       .c-widget-header__option-button {
@@ -38,10 +43,6 @@
         border-radius: 100%;
         position: relative;
         cursor: pointer;
-
-        &:not(:last-child) {
-          margin-right: rem(5px);
-        }
 
         &.c-widget-header__option-circle--green {
           background-color: $green-gfw;
@@ -83,13 +84,7 @@
         border-radius: rem(100px);
         cursor: pointer;
 
-        .small-4 & {
-          position: absolute;
-          top: rem(38px);
-          right: 0;
-        }
-
-        .small-8 & {
+        .small-12 & {
           position: relative;
           top: rem(-1px);
           margin-right: rem(24px);
@@ -113,12 +108,121 @@
       }
     }
 
-    .small-4 & {
-      height: rem(78px);
+    .small-12 & {
+      height: rem(59px);
     }
 
-    .small-8 & {
-      height: rem(59px);
+    @media screen and (min-width: $screen-l) {
+      .c-widget-header__options {
+
+        .c-widget-header__option-button {
+
+          .large-6 & {
+            position: absolute;
+            top: rem(38px);
+            right: 0;
+            margin-right: 0;
+
+            &:before {
+              content: normal;
+            }
+          }
+        }
+      }
+
+      .large-6 & {
+        height: rem(78px);
+      }
+    }
+  }
+
+  .c-widget-updating {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($white, 0.5);
+  }
+}
+
+.c-widget-settings {
+  width: rem(244px);
+  padding-top: rem(26px);
+  background-color: $white;
+  text-align: left;
+
+  .c-widget-settings__title {
+    font-size: 14px;
+    color: $slate;
+  }
+
+  .c-widget-settings__select {
+    padding: 0 rem(24px) rem(22px) rem(24px);
+
+    .c-widget-settings__title {
+      margin-bottom: rem(16px);
+    }
+
+    .dd__selectControl {
+      border: solid 1px #e5e5df;
+      border-radius: 0;
+    }
+
+    .dd__openTobottom {
+      margin-top: rem(-1px);
+      border: solid 1px #e5e5df;
+      border-radius: 0;
+      border-top: 0;
+    }
+
+    .dd__selectControl,
+    .dd__option {
+      padding: rem(5px) rem(12px);
+    }
+
+    .dd__selectedItem,
+    .dd__option {
+      font-size: 13px;
+      letter-spacing: 0.1px;
+    }
+
+    .dd__option {
+      color: #9e9e9e;
+    }
+
+    .dd__selectedItem,
+    .dd__selectedOption {
+      color: $slate;
+    }
+  }
+
+  .c-widget-settings__button-select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: rem(8px) rem(24px);
+    border-top: 1px solid #e5e5df;
+
+    .dd__selectControl {
+      height: rem(27px);
+      padding: 0 rem(21px);
+      border: 0;
+      border-radius: 19px;
+      background-color: $green-gfw;
+    }
+
+    .dd__expandIcon {
+      display: none;
+    }
+
+    .dd__selectedItem {
+      font-size: 13px;
+      letter-spacing: 0.1px;
+      color: $white;
     }
   }
 }

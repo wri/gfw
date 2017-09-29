@@ -15,17 +15,31 @@ import {
 
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeCover.isLoading,
+  isUpdating: state.widgetTreeCover.isUpdating,
   iso: state.root.iso,
   countryRegion: state.root.countryRegion,
   countryData: state.root.countryData,
   totalCover: state.widgetTreeCover.totalCover,
   totalIntactForest: state.widgetTreeCover.totalIntactForest,
-  totalNonForest: state.widgetTreeCover.totalNonForest
+  totalNonForest: state.widgetTreeCover.totalNonForest,
+  regions: state.widgetTreeCover.regions,
+  units: state.widgetTreeCover.units,
+  canopies: state.widgetTreeCover.canopies,
+  settings: state.widgetTreeCover.settings
 });
 
 const WidgetTreeCoverContainer = (props) => {
   const setInitialData = (props) => {
-    getTotalCover(props.iso, props.countryRegion)
+    setWidgetData(props);
+  };
+
+  const updateData = (props) => {
+    props.setTreeCoverIsUpdating(true);
+    setWidgetData(props);
+  };
+
+  const setWidgetData = (props) => {
+    getTotalCover(props.iso, props.countryRegion, props.settings.canopy)
       .then((totalCoverResponse) => {
         getTotalIntactForest(props.iso, props.countryRegion)
           .then((totalIntactForestResponse) => {
@@ -34,9 +48,27 @@ const WidgetTreeCoverContainer = (props) => {
               values = {
                 totalCover: totalCover,
                 totalIntactForest: totalIntactForest,
-                totalNonForest: Math.round(props.countryData.area_ha) - (totalCover + totalIntactForest)
+                totalNonForest: Math.round(props.countryData.area_ha) - (totalCover + totalIntactForest),
+                regions: [
+                  {
+                    value: 'all',
+                    label: 'All Region'
+                  },
+                  {
+                    value: 'managed',
+                    label: 'Managed'
+                  },
+                  {
+                    value: 'protected_areas',
+                    label: 'Protected Areas'
+                  },
+                  {
+                    value: 'ifls',
+                    label: 'IFLs'
+                  }
+                ]
               };
-              props.setTreeCoverValues(values);
+            props.setTreeCoverValues(values);
           });
       });
   };
@@ -48,6 +80,7 @@ const WidgetTreeCoverContainer = (props) => {
   return createElement(WidgetTreeCoverComponent, {
     ...props,
     setInitialData,
+    updateData,
     viewOnMap
   });
 };
