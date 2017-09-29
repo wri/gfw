@@ -27,22 +27,22 @@ const regionsForest = [];
 
 const WidgetTreeLocatedContainer = (props) => {
   const setInitialData = (props) => {
-    getTotalCover(props.iso, props.countryRegion)
-    .then((totalCoverResponse) => {
-      getTotalCoverRegions(props.iso)
-      .then((totalCoverRegions) => {
-        const totalCover = Math.round(totalCoverResponse.data.data[0].value);
-        totalCoverRegions.data.data.forEach(function(item, index){
-          const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
-          regionsForest.push({
-            name: props.countryRegions[numberRegion].name,
-            value: item.value,
-            percent: (item.value / totalCover) * 100
-          })
-        });
-        props.setTreeLocatedValues(regionsForest);
+    getTotalCover(props.iso, props.countryRegion, 30)
+      .then((totalCoverResponse) => {
+        getTotalCoverRegions(props.iso, 30)
+          .then((totalCoverRegions) => {
+            const totalCover = Math.round(totalCoverResponse.data.data[0].value);
+            totalCoverRegions.data.data.forEach(function(item, index){
+              const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
+              regionsForest.push({
+                name: props.countryRegions[numberRegion].name,
+                value: item.value,
+                percent: (item.value / totalCover) * 100
+              })
+            });
+            props.setTreeLocatedValues(regionsForest);
+          });
       });
-    });
   };
   return createElement(WidgetTreeLocatedComponent, {
     ...props,
