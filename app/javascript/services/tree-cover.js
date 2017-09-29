@@ -30,9 +30,10 @@ export const getTotalIntactForest = (iso, region) => {
   return axios.get(url);
 };
 
-export const getTotalCoverRegions = (iso) => {
+export const getTotalCoverRegions = (iso, canopy) => {
   const url = `${APIURL}${APIURLS.getListRegionsForest}`
     .replace('{dataset}', CONFIG.coverDataset)
     .replace('{iso}', iso)
+    .replace('{thresh}', canopy);
   return axios.get(url);
 };
