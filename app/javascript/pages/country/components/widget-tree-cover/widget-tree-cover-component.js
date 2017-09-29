@@ -4,6 +4,7 @@ import { PieChart, Pie, Cell } from 'recharts';
 import numeral from 'numeral';
 
 import WidgetHeader from '../widget-header/widget-header';
+import WidgetUpdating from '../widget-updating/widget-updating';
 import WidgetTreeCoverSettings from './widget-tree-cover-settings-component';
 
 class WidgetTreeCover extends PureComponent {
@@ -15,17 +16,18 @@ class WidgetTreeCover extends PureComponent {
   componentWillUpdate(nextProps) {
     const {
       settings,
-      refreshData
+      updateData
     } = this.props;
 
     if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
-      refreshData(nextProps);
+      updateData(nextProps);
     }
   }
 
   render() {
     const {
       isLoading,
+      isUpdating,
       viewOnMap,
       countryData,
       totalCover,
@@ -88,6 +90,7 @@ class WidgetTreeCover extends PureComponent {
               </Pie>
             </PieChart>
           </div>
+          {isUpdating ? <WidgetUpdating /> : null}
         </div>
       )
     }
@@ -96,8 +99,9 @@ class WidgetTreeCover extends PureComponent {
 
 WidgetTreeCover.propTypes = {
   isLoading: PropTypes.bool.isRequired,
+  isUpdating: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
-  refreshData: PropTypes.func.isRequired,
+  updateData: PropTypes.func.isRequired,
   viewOnMap: PropTypes.func.isRequired,
   countryData: PropTypes.object.isRequired,
   totalCover: PropTypes.number.isRequired,

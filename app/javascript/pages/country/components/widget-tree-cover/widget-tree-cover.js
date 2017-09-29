@@ -15,6 +15,7 @@ import {
 
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeCover.isLoading,
+  isUpdating: state.widgetTreeCover.isUpdating,
   iso: state.root.iso,
   countryRegion: state.root.countryRegion,
   countryData: state.root.countryData,
@@ -32,8 +33,8 @@ const WidgetTreeCoverContainer = (props) => {
     setWidgetData(props);
   };
 
-  const refreshData = (props) => {
-    props.setTreeCoverIsLoading(true);
+  const updateData = (props) => {
+    props.setTreeCoverIsUpdating(true);
     setWidgetData(props);
   };
 
@@ -79,7 +80,7 @@ const WidgetTreeCoverContainer = (props) => {
   return createElement(WidgetTreeCoverComponent, {
     ...props,
     setInitialData,
-    refreshData,
+    updateData,
     viewOnMap
   });
 };
