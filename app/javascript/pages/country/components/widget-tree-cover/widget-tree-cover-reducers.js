@@ -55,6 +55,11 @@ export const initialState = {
   }
 };
 
+const setTreeCoverIsLoading = (state, { payload }) => ({
+  ...state,
+  isLoading: payload
+});
+
 const setTreeCoverValues = (state, { payload }) => ({
   ...state,
   isLoading: false,
@@ -89,6 +94,7 @@ const setTreeCoverSettingsCanopy = (state, { payload }) => ({
 });
 
 export default {
+  setTreeCoverIsLoading,
   setTreeCoverValues,
   setTreeCoverSettingsRegion,
   setTreeCoverSettingsUnit,

@@ -12,6 +12,17 @@ class WidgetTreeCover extends PureComponent {
     setInitialData(this.props);
   }
 
+  componentWillUpdate(nextProps) {
+    const {
+      settings,
+      refreshData
+    } = this.props;
+
+    if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
+      refreshData(nextProps);
+    }
+  }
+
   render() {
     const {
       isLoading,
@@ -86,6 +97,7 @@ class WidgetTreeCover extends PureComponent {
 WidgetTreeCover.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
+  refreshData: PropTypes.func.isRequired,
   viewOnMap: PropTypes.func.isRequired,
   countryData: PropTypes.object.isRequired,
   totalCover: PropTypes.number.isRequired,
