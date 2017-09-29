@@ -11,6 +11,8 @@ import {
 } from 'recharts';
 import numeral from 'numeral';
 
+import TooltipChart from '../tooltip-chart/tooltip-chart';
+
 import WidgetHeader from '../widget-header/widget-header';
 
 class WidgetTreeLoss extends PureComponent {
