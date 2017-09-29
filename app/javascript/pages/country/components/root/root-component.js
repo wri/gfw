@@ -58,28 +58,28 @@ class Root extends PureComponent {
               }} />
           </div>
           <div className="l-country__widgets row">
-            <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
+            <div className="large-6 small-12 columns l-country__container-widgets">
               <WidgetTreeCover />
             </div>
-            <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
+            <div className="large-6 small-12 columns l-country__container-widgets">
               <WidgetTreeLocated />
             </div>
-            <div className="large-12 mediunm-12 small-12 columns l-country__container-widgets">
+            <div className="small-12 columns l-country__container-widgets">
               <WidgetTreeLoss />
             </div>
-            <div className="large-12 mediunm-12 small-12 columns l-country__container-widgets">
+            <div className="small-12 columns l-country__container-widgets">
               <WidgetTreeCoverLossAreas />
             </div>
-            <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
+            <div className="small-12 columns l-country__container-widgets">
               <WidgetTreeCoverGain />
             </div>
-            <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
+            <div className="small-12 columns l-country__container-widgets">
               <WidgetAreasMostCoverGain />
             </div>
-            <div className="large-6 medium-12 small-12 columns l-country__container-widgets -last">
+            <div className="small-12 columns l-country__container-widgets -last">
               <WidgetTotalAreaPlantations />
             </div>
-            <div className="large-6 medium-12 small-12 columns l-country__container-widgets -last">
+            <div className="small-12 columns l-country__container-widgets -last">
               <WidgetPlantationArea />
             </div>
           </div>
