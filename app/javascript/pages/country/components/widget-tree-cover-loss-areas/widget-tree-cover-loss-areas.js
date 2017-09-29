@@ -11,7 +11,7 @@ export { default as actions } from './widget-tree-cover-loss-areas-actions';
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeCoverLossAreas.isLoading,
   iso: state.root.iso,
-  countryRegion: state.root.countryRegion,
+  countryRegions: state.root.countryRegion,
   countryData: state.root.countryData,
   regionData: state.widgetTreeCoverLossAreas.regionData,
   startYear: 2001,
@@ -22,10 +22,6 @@ const mapStateToProps = state => ({
 import {
   getTreeLossByRegion
 } from '../../../../services/tree-loss';
-
-import {
-  getCountryRegions
-} from '../../../../services/country';
 
 const regionsForestLoss = [];
 const colors = ['#510626', '#730735', '#af0f54', '#f5247e', '#f3599b', '#fb9bc4', '#f1c5d8', '#e9e7a6', '#dad781', '#cecb65'];
@@ -38,18 +34,15 @@ const WidgetTreeCoverLossAreasContainer = (props) => {
       props.thresh
     )
     .then((treeLossByRegion) => {
-      getCountryRegions(props.iso)
-      .then((countryRegions) => {
-        treeLossByRegion.data.data.forEach(function(item, index){
-          const numberRegion = (_.findIndex(countryRegions.data.data, function(x) { return x.id === item.adm1; }));
-          regionsForestLoss.push({
-            name: countryRegions.data.data[numberRegion].name,
-            value: item.value,
-            color: colors[index]
-          })
-        });
-          props.setPieCharDataDistricts(regionsForestLoss);
+      treeLossByRegion.data.data.forEach(function(item, index){
+        const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
+        regionsForestLoss.push({
+          name: props.countryRegions[numberRegion].name,
+          value: item.value,
+          color: colors[index]
+        })
       });
+        props.setPieCharDataDistricts(regionsForestLoss);
     });
   };
   return createElement(WidgetTreeCoverLossAreasComponent, {

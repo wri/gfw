@@ -14,13 +14,10 @@ import {
   getTotalCoverRegions
 } from '../../../../services/tree-cover';
 
-import {
-  getCountryRegions
-} from '../../../../services/country';
-
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeLocated.isLoading,
   iso: state.root.iso,
+  countryRegions: state.root.countryRegions,
   countryRegion: state.root.countryRegion,
   countryData: state.root.countryData,
   topRegions: state.widgetTreeLocated.topRegions
@@ -34,19 +31,16 @@ const WidgetTreeLocatedContainer = (props) => {
     .then((totalCoverResponse) => {
       getTotalCoverRegions(props.iso)
       .then((totalCoverRegions) => {
-        getCountryRegions(props.iso)
-        .then((countryRegions) => {
-          const totalCover = Math.round(totalCoverResponse.data.data[0].value);
-          totalCoverRegions.data.data.forEach(function(item, index){
-            const numberRegion = (_.findIndex(countryRegions.data.data, function(x) { return x.id === item.adm1; }));
-            regionsForest.push({
-              name: countryRegions.data.data[numberRegion].name,
-              value: item.value,
-              percent: (item.value / totalCover) * 100
-            })
-          });
-          props.setTreeLocatedValues(regionsForest);
+        const totalCover = Math.round(totalCoverResponse.data.data[0].value);
+        totalCoverRegions.data.data.forEach(function(item, index){
+          const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
+          regionsForest.push({
+            name: props.countryRegions[numberRegion].name,
+            value: item.value,
+            percent: (item.value / totalCover) * 100
+          })
         });
+        props.setTreeLocatedValues(regionsForest);
       });
     });
   };

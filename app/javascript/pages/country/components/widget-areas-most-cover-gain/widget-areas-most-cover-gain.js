@@ -11,7 +11,7 @@ export { default as actions } from './widget-areas-most-cover-gain-actions';
 const mapStateToProps = state => ({
   isLoading: state.widgetAreasMostCoverGain.isLoading,
   iso: state.root.iso,
-  countryRegion: state.root.countryRegion,
+  countryRegions: state.root.countryRegions,
   countryData: state.root.countryData,
   areaData: state.widgetAreasMostCoverGain.areaData,
   startYear: 2011,
@@ -22,10 +22,6 @@ const mapStateToProps = state => ({
 import {
   getTreeCoverGainRegion
 } from '../../../../services/tree-gain';
-
-import {
-  getCountryRegions
-} from '../../../../services/country';
 
 const regionsCoverGain = [];
 const colors = ['#110f74', '#2422a2', '#4c49d1', '#6f6de9', '#a3a1ff', '#cdcdfe', '#ddddfc', '#e7e5a4', '#dad781', '#cecb65'];
@@ -38,18 +34,15 @@ const WidgetAreasMostCoverGainContainer = (props) => {
       props.thresh
     )
     .then((treeCoverGainByRegion) => {
-      getCountryRegions(props.iso)
-      .then((countryRegions) => {
-        treeCoverGainByRegion.data.data.forEach(function(item, index){
-          const numberRegion = (_.findIndex(countryRegions.data.data, function(x) { return x.id === item.adm1; }));
-          regionsCoverGain.push({
-            name: countryRegions.data.data[numberRegion].name,
-            value: item.value,
-            color: colors[index]
-          })
-        });
-          props.setPieCharDataAreas(regionsCoverGain);
+      treeCoverGainByRegion.data.data.forEach(function(item, index){
+        const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
+        regionsCoverGain.push({
+          name: props.countryRegions[numberRegion].name,
+          value: item.value,
+          color: colors[index]
+        })
       });
+        props.setPieCharDataAreas(regionsCoverGain);
     });
   };
   return createElement(WidgetAreasMostCoverGainComponent, {

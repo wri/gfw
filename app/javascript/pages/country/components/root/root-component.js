@@ -64,12 +64,6 @@ class Root extends PureComponent {
             <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
               <WidgetTreeLocated />
             </div>
-            <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
-              <WidgetTreeCover />
-            </div>
-            <div className="large-6 medium-12 small-12 columns l-country__container-widgets">
-              <WidgetTreeLocated />
-            </div>
             <div className="large-12 mediunm-12 small-12 columns l-country__container-widgets">
               <WidgetTreeLoss />
             </div>
