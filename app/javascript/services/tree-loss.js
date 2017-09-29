@@ -22,7 +22,6 @@ export const getTreeLossByYear = (iso, region, years, thresh) => {
   return axios.get(url);
 };
 
-
 export const getTreeLossByRegion = (iso, years, thresh) => {
   const url = `${APIURL}${APIURLS.getTreeLossByRegion}`
     .replace('{dataset}', CONFIG.treeLossDataset)

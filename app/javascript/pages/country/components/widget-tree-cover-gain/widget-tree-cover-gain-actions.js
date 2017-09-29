@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 
-const setInitialState = createAction('setInitialState');
+const setTreeCoverGainValues = createAction('setTreeCoverGainValues');
 
 export default {
-  setInitialState,
+  setTreeCoverGainValues
 };
