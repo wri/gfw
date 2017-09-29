@@ -1,5 +1,6 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import WidgetTreeLocatedComponent from './widget-tree-located-component';
 import actions from './widget-tree-located-actions';
@@ -7,6 +8,15 @@ import actions from './widget-tree-located-actions';
 export { initialState } from './widget-tree-located-reducers';
 export { default as reducers } from './widget-tree-located-reducers';
 export { default as actions } from './widget-tree-located-actions';
+
+import {
+  getTotalCover,
+  getTotalCoverRegions
+} from '../../../../services/tree-cover';
+
+import {
+  getCountryRegions
+} from '../../../../services/country';
 
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeLocated.isLoading,
@@ -16,60 +26,29 @@ const mapStateToProps = state => ({
   topRegions: state.widgetTreeLocated.topRegions
 });
 
+const regionsForest = [];
+
 const WidgetTreeLocatedContainer = (props) => {
   const setInitialData = (props) => {
-    props.setTreeLocatedValues([
-      {
-        name: 'Minas Gerais',
-        value: 1200000,
-        percent: 10
-      },
-      {
-        name: 'Bahia',
-        value: 1100000,
-        percent: 8
-      },
-      {
-        name: 'Amazonas',
-        value: 900000,
-        percent: 8
-      },
-      {
-        name: 'Maranhao',
-        value: 550000,
-        percent: 5
-      },
-      {
-        name: 'Distrito Federal',
-        value: 464000,
-        percent: 5
-      },
-      {
-        name: 'Ceará',
-        value: 460000,
-        percent: 5
-      },
-      {
-        name: 'Espírito Santo',
-        value: 440000,
-        percent: 5
-      },
-      {
-        name: 'Goiás',
-        value: 420000,
-        percent: 5
-      },
-      {
-        name: 'Maranhao',
-        value: 300000,
-        percent: 5
-      },
-      {
-        name: 'Mato Grosso',
-        value: 203000,
-        percent: 5
-      }
-    ]);
+    getTotalCover(props.iso, props.countryRegion)
+    .then((totalCoverResponse) => {
+      getTotalCoverRegions(props.iso)
+      .then((totalCoverRegions) => {
+        getCountryRegions(props.iso)
+        .then((countryRegions) => {
+          const totalCover = Math.round(totalCoverResponse.data.data[0].value);
+          totalCoverRegions.data.data.forEach(function(item, index){
+            const numberRegion = (_.findIndex(countryRegions.data.data, function(x) { return x.id === item.adm1; }));
+            regionsForest.push({
+              name: countryRegions.data.data[numberRegion].name,
+              value: item.value,
+              percent: (item.value / totalCover) * 100
+            })
+          });
+          props.setTreeLocatedValues(regionsForest);
+        });
+      });
+    });
   };
   return createElement(WidgetTreeLocatedComponent, {
     ...props,
