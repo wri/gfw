@@ -79,8 +79,9 @@ class WidgetTreeLoss extends PureComponent {
                   dataKey="value"
                   barSize={22}
                   fill="#fe6598" />
+                <Tooltip content={<TooltipChart/>} />
               </BarChart>
-            </ResponsiveContainer}>
+            </ResponsiveContainer>
           </div>
         </div>
       )
