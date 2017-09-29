@@ -18,21 +18,38 @@ const mapStateToProps = state => ({
   endYear: 2015
 });
 
+import {
+  getTreeCoverGainRegion
+} from '../../../../services/tree-gain';
+
+import {
+  getCountryRegions
+} from '../../../../services/country';
+
+const regionsCoverGain = [];
+const colors = ['#110f74', '#2422a2', '#4c49d1', '#6f6de9', '#a3a1ff', '#cdcdfe', '#ddddfc', '#e7e5a4', '#dad781', '#cecb65'];
+
 const WidgetAreasMostCoverGainContainer = (props) => {
   const setInitialData = (props) => {
-    props.setPieCharDataAreas([
-      { name: 'Minas Gerais', value: 1200, color: '#110f74' },
-      { name: 'Bahia', value: 1100, color: '#2422a2' },
-      { name: 'Amazonas', value: 900, color: '#4c49d1' },
-      { name: 'Maranhao', value: 550, color: '#6f6de9' },
-      { name: 'Distrito Federal', value: 464, color: '#a3a1ff' },
-      { name: 'Ceará', value: 460, color: '#cdcdfe' },
-      { name: 'Espírito Santo', value: 440, color: '#ddddfc' },
-      { name: 'Goiás', value: 420, color: '#e7e5a4' },
-      { name: 'Maranhão', value: 300, color: '#dad781' },
-      { name: 'Mato Grosso', value: 203, color: '#cecb65' },
-      { name: 'Other Districts', value: 3000, color: '#e9e9ea' }
-    ]);
+    getTreeCoverGainRegion(
+      props.iso,
+      {minYear: props.startYear, maxYear: props.endYear},
+      props.thresh
+    )
+    .then((treeCoverGainByRegion) => {
+      getCountryRegions(props.iso)
+      .then((countryRegions) => {
+        treeCoverGainByRegion.data.data.forEach(function(item, index){
+          const numberRegion = (_.findIndex(countryRegions.data.data, function(x) { return x.id === item.adm1; }));
+          regionsCoverGain.push({
+            name: countryRegions.data.data[numberRegion].name,
+            value: item.value,
+            color: colors[index]
+          })
+        });
+          props.setPieCharDataAreas(regionsCoverGain);
+      });
+    });
   };
   return createElement(WidgetAreasMostCoverGainComponent, {
     ...props,
