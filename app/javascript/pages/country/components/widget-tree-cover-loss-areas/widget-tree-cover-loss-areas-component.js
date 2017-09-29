@@ -49,7 +49,7 @@ class WidgetTreeLossAreas extends PureComponent {
                       {item.name}
                     </div>
                     <div className="c-widget-tree-cover-loss-areas__legend-value">
-                      {item.value}Ha
+                      {numeral(Math.round(item.value / 1000)).format('0,0')}Ha
                     </div>
                   </li>
                 );
