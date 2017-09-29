@@ -130,15 +130,13 @@
   }
 
   .c-widget-settings__select {
-    padding: 0 rem(24px);
-    margin-bottom: rem(22px);
+    padding: 0 rem(24px) rem(22px) rem(24px);
 
     .c-widget-settings__title {
       margin-bottom: rem(16px);
     }
 
     .dd__selectControl {
-      padding: rem(5px);
       border: solid 1px #e5e5df;
       border-radius: 0;
     }
@@ -148,6 +146,11 @@
       border: solid 1px #e5e5df;
       border-radius: 0;
       border-top: 0;
+    }
+
+    .dd__selectControl,
+    .dd__option {
+      padding: rem(5px) rem(12px);
     }
 
     .dd__selectedItem,
@@ -163,6 +166,32 @@
     .dd__selectedItem,
     .dd__selectedOption {
       color: $slate;
+    }
+  }
+
+  .c-widget-settings__button-select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: rem(8px) rem(24px);
+    border-top: 1px solid #e5e5df;
+
+    .dd__selectControl {
+      height: rem(27px);
+      padding: 0 rem(21px);
+      border: 0;
+      border-radius: 19px;
+      background-color: $green-gfw;
+    }
+
+    .dd__expandIcon {
+      display: none;
+    }
+
+    .dd__selectedItem {
+      font-size: 13px;
+      letter-spacing: 0.1px;
+      color: $white;
     }
   }
 }
