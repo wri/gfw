@@ -29,6 +29,15 @@ const mapStateToProps = state => ({
 
 const WidgetTreeCoverContainer = (props) => {
   const setInitialData = (props) => {
+    setWidgetData(props);
+  };
+
+  const refreshData = (props) => {
+    props.setTreeCoverIsLoading(true);
+    setWidgetData(props);
+  };
+
+  const setWidgetData = (props) => {
     getTotalCover(props.iso, props.countryRegion, props.settings.canopy)
       .then((totalCoverResponse) => {
         getTotalIntactForest(props.iso, props.countryRegion)
@@ -58,7 +67,7 @@ const WidgetTreeCoverContainer = (props) => {
                   }
                 ]
               };
-              props.setTreeCoverValues(values);
+            props.setTreeCoverValues(values);
           });
       });
   };
@@ -70,6 +79,7 @@ const WidgetTreeCoverContainer = (props) => {
   return createElement(WidgetTreeCoverComponent, {
     ...props,
     setInitialData,
+    refreshData,
     viewOnMap
   });
 };
