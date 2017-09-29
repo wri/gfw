@@ -34,7 +34,7 @@ class Root extends PureComponent {
     const { isLoading } = this.props;
 
     if (isLoading) {
-      return <div>loading!</div>
+      return <div className="c-loading">loading!</div>
     } else {
       return (
         <div>

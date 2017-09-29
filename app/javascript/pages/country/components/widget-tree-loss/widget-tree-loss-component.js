@@ -6,7 +6,8 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip
+  Tooltip,
+  ResponsiveContainer
 } from 'recharts';
 import numeral from 'numeral';
 
@@ -52,30 +53,32 @@ class WidgetTreeLoss extends PureComponent {
             </div>
           </div>
           <div className="c-widget-tree-loss__chart">
-            <BarChart
-              width={627}
-              height={300}
-              data={years}
-              margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-              <XAxis
-                dataKey="date"
-                padding={{ top: 135}}
-                axisLine={false}
-                tickLine={false} />
-              <YAxis
-                axisLine={false}
-                tickLine={false}
-                tickCount={7}
-                tickFormatter={(d) => numeral(Math.round(d / 1000)).format('0,0')} />
-              <CartesianGrid
-                vertical={false}
-                strokeDasharray="3 4" />
-              <Tooltip/>
-              <Bar
-                dataKey="value"
-                barSize={22}
-                fill="#fe6598" />
-            </BarChart>
+            <ResponsiveContainer height={300} width={'100%'}>
+              <BarChart
+                width={627}
+                height={300}
+                data={years}
+                margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+                <XAxis
+                  dataKey="date"
+                  padding={{ top: 135}}
+                  axisLine={false}
+                  tickLine={false} />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tickCount={7}
+                  tickFormatter={(d) => numeral(Math.round(d / 1000)).format('0,0')} />
+                <CartesianGrid
+                  vertical={false}
+                  strokeDasharray="3 4" />
+                <Tooltip/>
+                <Bar
+                  dataKey="value"
+                  barSize={22}
+                  fill="#fe6598" />
+              </BarChart>
+            </ResponsiveContainer}>
           </div>
         </div>
       )

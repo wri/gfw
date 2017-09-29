@@ -49,6 +49,9 @@ class WidgetPlantationArea extends PureComponent {
                 </div>)
               })}
             </div>
+            <div className="c-widget-plantation-area__scroll-more">
+              <div className="circle-icon"><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>
+            </div>
           </div>
         </div>
       )
