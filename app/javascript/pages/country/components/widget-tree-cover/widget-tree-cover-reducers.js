@@ -1,5 +1,6 @@
 export const initialState = {
   isLoading: true,
+  isUpdating: false,
   totalCover: 0,
   totalIntactForest: 0,
   totalNonForest: 0,
@@ -55,14 +56,15 @@ export const initialState = {
   }
 };
 
-const setTreeCoverIsLoading = (state, { payload }) => ({
+const setTreeCoverIsUpdating = (state, { payload }) => ({
   ...state,
-  isLoading: payload
+  isUpdating: payload
 });
 
 const setTreeCoverValues = (state, { payload }) => ({
   ...state,
   isLoading: false,
+  isUpdating: false,
   totalCover: payload.totalCover,
   totalIntactForest: payload.totalIntactForest,
   totalNonForest: payload.totalNonForest,
@@ -94,7 +96,7 @@ const setTreeCoverSettingsCanopy = (state, { payload }) => ({
 });
 
 export default {
-  setTreeCoverIsLoading,
+  setTreeCoverIsUpdating,
   setTreeCoverValues,
   setTreeCoverSettingsRegion,
   setTreeCoverSettingsUnit,
