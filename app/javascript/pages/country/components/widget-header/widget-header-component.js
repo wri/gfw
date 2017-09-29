@@ -1,26 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import ReactTooltip from 'react-tooltip'
+import {
+  Tooltip,
+} from 'react-tippy';
 
 class WidgetHeader extends PureComponent {
-
-  componentDidMount() {
-    this.setListeners();
-  }
-
-  setListeners() {
-    const {
-      children
-    } = this.props;
-
-    if (children !== undefined) {
-      for (const tooltip of document.querySelectorAll(`.${children.key} [data-id='tooltip']`)) {
-        tooltip.addEventListener('click', (e) => {
-          e.stopPropagation();
-        });
-      }
-    }
-  }
 
   render() {
     const {
@@ -41,19 +25,22 @@ class WidgetHeader extends PureComponent {
               <use xlinkHref="#icon-info"></use>
             </svg>
           </li>
-          {children !== undefined && children.props.type === 'settings' ?
-            <li className={`c-widget-header__option-circle c-widget-header__option-circle--green ${children.key}`}>
-              <svg
-                className="icon icon-settings"
-                data-tip="custom show" data-event="click">
-                <use xlinkHref="#icon-settings"></use>
-              </svg>
-              <ReactTooltip
-                globalEventOff="click"
-                place="bottom"
-                effect="solid">{children}</ReactTooltip>
-            </li>
-            : null}
+          <li>
+            {children !== undefined && children.props.type === 'settings' ?
+              <Tooltip
+                theme="light"
+                position="bottom-right"
+                offset={-95}
+                trigger="click"
+                interactive={true}
+                arrow={true}
+                html={children}>
+                <div className={`c-widget-header__option-circle c-widget-header__option-circle--green`}>
+                  <svg className="icon icon-settings"><use xlinkHref="#icon-settings"></use></svg>
+                </div>
+              </Tooltip>
+              : null}
+          </li>
           <li className="c-widget-header__option-circle c-widget-header__option-circle--white">
             <svg className="icon icon-share -dark">
               <use xlinkHref="#icon-share"></use>

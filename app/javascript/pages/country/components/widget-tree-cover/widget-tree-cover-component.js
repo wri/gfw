@@ -16,14 +16,14 @@ class WidgetTreeCover extends PureComponent {
     const {
       isLoading,
       viewOnMap,
-      toggleSettings,
       countryData,
       totalCover,
       totalIntactForest,
       totalNonForest,
       regions,
       units,
-      settings
+      settings,
+      setTreeCoverSettingsRegion
     } = this.props;
 
     if (isLoading) {
@@ -39,14 +39,15 @@ class WidgetTreeCover extends PureComponent {
         <div className="c-widget c-widget-tree-cover">
           <WidgetHeader
             title={`Forest cover in ${countryData.name}`}
-            viewOnMapCallback={viewOnMap}
-            clickSettingsCallback={toggleSettings}>
+            viewOnMapCallback={viewOnMap}>
             <WidgetTreeCoverSettings
-              key="tree-cover-settings"
               type="settings"
               regions={regions}
               units={units}
-              settings={settings}/>
+              settings={settings}
+              onRegionChange={setTreeCoverSettingsRegion}
+              onUnitChange={setTreeCoverSettingsUnit}
+              onCanopyChange={setTreeCoverSettingsCanopy}/>
           </WidgetHeader>
           <ul className="c-widget-tree-cover__legend">
             {pieCharData.map((item, index) => {
@@ -82,11 +83,13 @@ WidgetTreeCover.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
   viewOnMap: PropTypes.func.isRequired,
-  toggleSettings: PropTypes.func.isRequired,
   countryData: PropTypes.object.isRequired,
   totalCover: PropTypes.number.isRequired,
   totalIntactForest: PropTypes.number.isRequired,
-  totalNonForest: PropTypes.number.isRequired
+  totalNonForest: PropTypes.number.isRequired,
+  setTreeCoverSettingsRegion: PropTypes.func.isRequired,
+  setTreeCoverSettingsUnit: PropTypes.func.isRequired,
+  setTreeCoverSettingsCanopy: PropTypes.func.isRequired
 };
 
 export default WidgetTreeCover;
