@@ -84,13 +84,13 @@
         border-radius: rem(100px);
         cursor: pointer;
 
-        .small-4 & {
+        .large-6 & {
           position: absolute;
           top: rem(38px);
           right: 0;
         }
 
-        .small-8 & {
+        .small-12 & {
           position: relative;
           top: rem(-1px);
           margin-right: rem(24px);
