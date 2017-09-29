@@ -84,12 +84,6 @@
         border-radius: rem(100px);
         cursor: pointer;
 
-        .large-6 & {
-          position: absolute;
-          top: rem(38px);
-          right: 0;
-        }
-
         .small-12 & {
           position: relative;
           top: rem(-1px);
@@ -114,12 +108,31 @@
       }
     }
 
-    .small-4 & {
-      height: rem(78px);
+    .small-12 & {
+      height: rem(59px);
     }
 
-    .small-8 & {
-      height: rem(59px);
+    @media screen and (min-width: $screen-l) {
+      .c-widget-header__options {
+
+        .c-widget-header__option-button {
+
+          .large-6 & {
+            position: absolute;
+            top: rem(38px);
+            right: 0;
+            margin-right: 0;
+
+            &:before {
+              content: normal;
+            }
+          }
+        }
+      }
+
+      .large-6 & {
+        height: rem(78px);
+      }
     }
   }
 
