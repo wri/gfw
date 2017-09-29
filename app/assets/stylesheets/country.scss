@@ -1,3 +1,5 @@
+@import url('components/country/ReactSelectMe.css');
+
 // Compass
 @import "compass/reset";
 @import "compass/css3";
@@ -12,12 +14,23 @@
 @import "layouts/foundation-grid";
 @import "layouts/country";
 
+//Buttons
+@import "components/buttons/c-regular-button";
+
 // Components
 @import "components/country/c-map";
 @import "components/country/c-header";
+@import "components/country/c-footer";
 @import "components/country/c-widget";
+@import "components/country/c-loading";
 @import "components/country/c-widget-tree-cover";
 @import "components/country/c-widget-tree-located";
 @import "components/country/c-widget-tree-loss";
 @import "components/country/c-widget-tree-cover-loss-areas";
+@import "components/country/c-widget-areas-most-cover-gain";
+@import "components/country/c-widget-total-area-plantations";
+@import "components/country/c-widget-tree-cover-gain";
+@import "components/country/c-widget-stories";
+@import "components/country/c-widget-plantation-area";
 @import "components/country/c-tooltip-chart";
+@import "components/country/override-select-me";

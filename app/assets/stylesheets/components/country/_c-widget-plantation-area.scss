@@ -1,0 +1,82 @@
+.c-widget-plantation-area {
+  .c-widget-plantation-area__container {
+    position: relative;
+    height: calc(100% - 100px);
+
+    .c-widget-plantation-area__chart {
+      width: 100%;
+      height: 100%;
+
+      .c-widget-plantation-area__legend {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .circle {
+          background-color: $slate;
+          width: rem(16px);
+          height: rem(16px);
+          border-radius: rem(16px);
+          margin-right: rem(12px);
+          font-size: 10px;
+          color: $white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          align-content: center;
+        }
+
+        .title {
+          font-size: 12px;
+          line-height: 2.37;
+          color: $slate;
+        }
+      }
+      .recharts-responsive-container {
+        margin-left: -35px !important;
+        margin-top: -10px;
+        margin-bottom: 30px;
+      }
+
+      .container-percentage {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        justify-content: space-between;
+
+        .text-percentage {
+          font-size: 12px;
+          color: $slate;
+          line-height: 1.67;
+          position: relative;
+          top: -8px;
+        }
+      }
+    }
+  }
+
+  .c-widget-plantation-area__scroll-more {
+    margin-top: rem(10px);
+    border-top: 1px rgba($slate, .1) solid;
+    padding-bottom: rem(10px);
+
+    .circle-icon {
+      width: rem(18px);
+      height: rem(18px);
+      border-radius: rem(18px);
+      border: rem(1px) rgba($slate, .1) solid;
+      margin: rem(10px) auto 0;
+      position: relative;
+
+      .icon {
+        fill: rgba($slate, .5);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: rem(8px);
+        height: rem(8px);
+      }
+    }
+  }
+}
