@@ -9,7 +9,8 @@ const APIURL = process.env.GFW_API_HOST_PROD;
 
 const APIURLS = {
   'getTotalCover': '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' AND thresh=30 {region}',
-  'getTotalIntactForest': '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' {region}'
+  'getTotalIntactForest': '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' {region}',
+  'getListRegionsForest': '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' AND thresh=30 GROUP BY adm1 ORDER BY value DESC LIMIT 10',
 };
 
 export const getTotalCover = (iso, region) => {
@@ -25,5 +26,12 @@ export const getTotalIntactForest = (iso, region) => {
     .replace('{dataset}', CONFIG.intactForestDataset)
     .replace('{iso}', iso)
     .replace('{region}', region === 0 ? 'GROUP BY iso' : `AND adm1 = ${region} GROUP BY iso, adm1`);
+  return axios.get(url);
+};
+
+export const getTotalCoverRegions = (iso) => {
+  const url = `${APIURL}${APIURLS.getListRegionsForest}`
+    .replace('{dataset}', CONFIG.coverDataset)
+    .replace('{iso}', iso)
   return axios.get(url);
 };
