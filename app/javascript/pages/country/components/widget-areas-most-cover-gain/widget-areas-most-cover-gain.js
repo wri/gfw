@@ -15,7 +15,8 @@ const mapStateToProps = state => ({
   countryData: state.root.countryData,
   areaData: state.widgetAreasMostCoverGain.areaData,
   startYear: 2011,
-  endYear: 2015
+  endYear: 2015,
+  thresh: 30
 });
 
 import {
