@@ -11,7 +11,7 @@ export { default as actions } from './widget-tree-cover-loss-areas-actions';
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeCoverLossAreas.isLoading,
   iso: state.root.iso,
-  countryRegions: state.root.countryRegion,
+  countryRegions: state.root.countryRegions,
   countryData: state.root.countryData,
   regionData: state.widgetTreeCoverLossAreas.regionData,
   startYear: 2001,
