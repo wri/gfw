@@ -23,6 +23,7 @@ const mapStateToProps = state => ({
   totalNonForest: state.widgetTreeCover.totalNonForest,
   regions: state.widgetTreeCover.regions,
   units: state.widgetTreeCover.units,
+  canopies: state.widgetTreeCover.canopies,
   settings: state.widgetTreeCover.settings
 });
 
