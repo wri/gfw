@@ -41,19 +41,19 @@ const WidgetTreeCoverContainer = (props) => {
                 regions: [
                   {
                     value: 'all',
-                    name: 'All Region'
+                    label: 'All Region'
                   },
                   {
                     value: 'managed',
-                    name: 'Managed'
+                    label: 'Managed'
                   },
                   {
                     value: 'protected_areas',
-                    name: 'Protected Areas'
+                    label: 'Protected Areas'
                   },
                   {
                     value: 'ifls',
-                    name: 'IFLs'
+                    label: 'IFLs'
                   }
                 ]
               };
@@ -66,15 +66,10 @@ const WidgetTreeCoverContainer = (props) => {
     props.setLayer('forest2000');
   };
 
-  const toggleSettings = () => {
-    props.toggleTreeCoverSettings();
-  };
-
   return createElement(WidgetTreeCoverComponent, {
     ...props,
     setInitialData,
-    viewOnMap,
-    toggleSettings
+    viewOnMap
   });
 };
 
