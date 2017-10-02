@@ -31,14 +31,6 @@ class Root extends PureComponent {
     }
   }
 
-  setPositionMap(position) {
-    if(position) {
-
-    } else {
-
-    }
-  }
-
   handleScrollCallback() {
    if (window.scrollY >= 59) {
      this.props.setPositionMap(true);
@@ -58,7 +50,10 @@ class Root extends PureComponent {
     const { isLoading } = this.props;
 
     if (isLoading) {
-      return <div className="c-loading">loading!</div>
+      return (
+        <div className="c-loading">
+          <div className="loader">Loading...</div>
+        </div>)
     } else {
       return (
         <div>

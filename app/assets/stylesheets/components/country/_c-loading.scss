@@ -1,8 +1,113 @@
 .c-loading {
-  height: 100vh;
+  height: calc(100vh - 59px);
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
+
+  .loader {
+    font-size: 10px;
+    margin: 50px auto;
+    text-indent: -9999em;
+    width: rem(40px);
+    height: rem(40px);
+    border-radius: 50%;
+    background: #ffffff;
+    background: linear-gradient(to right, $slate 10%, rgba($slate, 0) 50%);
+    position: relative;
+    animation: load3 1.4s infinite linear;
+    transform: translateZ(0);
+    &:before {
+      width: 50%;
+      height: 50%;
+      background: $white;
+      border-radius: 100% 0 0 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: '';
+    }
+    &:after {
+      background: $white;
+      width: 75%;
+      height: 75%;
+      border-radius: 50%;
+      content: '';
+      margin: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+  }
+
+  &.-widget {
+    width: 100%;
+    height: rem(300px);
+    min-height: rem(300px);
+
+    .loader {
+      font-size: 10px;
+      margin: 50px auto;
+      text-indent: -9999em;
+      width: rem(40px);
+      height: rem(40px);
+      border-radius: 50%;
+      background: #ffffff;
+      background: linear-gradient(to right, $slate 10%, rgba($slate, 0) 50%);
+      position: relative;
+      animation: load3 1.4s infinite linear;
+      transform: translateZ(0);
+      &:before {
+        width: 50%;
+        height: 50%;
+        background: $white;
+        border-radius: 100% 0 0 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+      }
+      &:after {
+        background: $white;
+        width: 75%;
+        height: 75%;
+        border-radius: 50%;
+        content: '';
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+    }
+  }
+}
+
+@-webkit-keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+
+@keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
