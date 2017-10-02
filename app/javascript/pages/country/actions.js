@@ -1,5 +1,6 @@
 import { actions as rootActions } from './components/root/root';
 import { actions as mapActions } from './components/map/map';
+import { actions as headerActions } from './components/header/header';
 import { actions as widgetTreeCoverActions } from './components/widget-tree-cover/widget-tree-cover';
 import { actions as widgetTreeLocatedActions } from './components/widget-tree-located/widget-tree-located';
 import { actions as widgetTreeLossActions } from './components/widget-tree-loss/widget-tree-loss';
@@ -13,6 +14,7 @@ import { actions as widgetStoriesActions } from './components/widget-stories/wid
 export default {
   ...rootActions,
   ...mapActions,
+  ...headerActions,
   ...widgetTreeCoverActions,
   ...widgetTreeLocatedActions,
   ...widgetTreeLossActions,
