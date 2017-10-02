@@ -24,7 +24,7 @@ class Header extends PureComponent {
     const regions = [{value: '', label: 'Jurisdiction'}];
     let countrySelected = '';
     let regionSelected = 'Jurisdiction';
-    const { iso, countriesList, countryRegions, match, totalCoverHeader, totalForestHeader, percentageForestHeader } = this.props;
+    const { iso, countriesList, countryRegions, match, totalCoverHeader, totalForestHeader, percentageForestHeader, totalCoverLoss } = this.props;
     countriesList.forEach(function(item){
       if(iso === item.iso) {
         countrySelected = item.name
@@ -53,9 +53,9 @@ class Header extends PureComponent {
             </div>
           </div>
           <div className="small-6 columns c-header__info">
-            <p>In 2010, this country had <strong>{numeral(Math.round(totalForestHeader / 1000)).format('0,0')} Ha</strong> tree cover, that represents <strong>{numeral(Math.round(percentageForestHeader)).format('0,0')}%</strong> of its
-            <strong> {numeral(Math.round(totalCoverHeader / 1000)).format('0,0')} Ha.</strong></p>
-            <p>Excluding plantations, <strong>40 Ha</strong> of tree cover loss occured in <strong>2016.</strong></p>
+            <p>In 2010, this country had <strong>{Math.round(totalForestHeader / 1000)} Ha</strong> tree cover, that represents <strong>{numeral(Math.round(percentageForestHeader)).format('0,0')}%</strong> of its
+            <strong> {Math.round(totalCoverHeader / 1000)} Ha.</strong></p>
+            <p>Excluding plantations, <strong>{Math.round(totalCoverLoss)} Ha</strong> of tree cover loss occured in <strong>2016.</strong></p>
           </div>
         </div>
         <div className="c-header__tabs">
