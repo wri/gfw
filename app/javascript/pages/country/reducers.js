@@ -5,6 +5,7 @@ import initialState from './initial-state';
 import allActions from './actions';
 import { reducers as rootReducers } from './components/root/root';
 import { reducers as mapReducers } from './components/map/map';
+import { reducers as headerReducers } from './components/header/header';
 import { reducers as widgetTreeCoverReducers } from './components/widget-tree-cover/widget-tree-cover';
 import { reducers as widgetTreeLocatedReducers } from './components/widget-tree-located/widget-tree-located';
 import { reducers as widgetTreeLossReducers } from './components/widget-tree-loss/widget-tree-loss';
@@ -18,6 +19,7 @@ import { reducers as widgetStoriesReducers } from './components/widget-stories/w
 const reducers = combineReducers({
   root: handleActions('root', allActions, rootReducers, initialState),
   map: handleActions('map', allActions, mapReducers, initialState),
+  header: handleActions('header', allActions, headerReducers , initialState),
   widgetTreeCover: handleActions('widgetTreeCover', allActions, widgetTreeCoverReducers, initialState),
   widgetTreeLocated: handleActions('widgetTreeLocated', allActions, widgetTreeLocatedReducers, initialState),
   widgetTreeLoss: handleActions('widgetTreeLoss', allActions, widgetTreeLossReducers, initialState),

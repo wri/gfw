@@ -1,8 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select-me';
+import numeral from 'numeral';
 
 class Header extends PureComponent {
+  componentDidMount() {
+    const { setInitialData } = this.props;
+    setInitialData(this.props);
+  }
+
   countriesSelectOnChange = (event) => {
     const { selectCountry } = this.props;
     selectCountry(event.value);
@@ -18,7 +24,7 @@ class Header extends PureComponent {
     const regions = [{value: '', label: 'Jurisdiction'}];
     let countrySelected = '';
     let regionSelected = 'Jurisdiction';
-    const { iso, countriesList, countryRegions, match } = this.props;
+    const { iso, countriesList, countryRegions, match, totalCoverHeader, totalForestHeader, percentageForestHeader } = this.props;
     countriesList.forEach(function(item){
       if(iso === item.iso) {
         countrySelected = item.name
@@ -47,8 +53,9 @@ class Header extends PureComponent {
             </div>
           </div>
           <div className="small-6 columns c-header__info">
-            <p>In 2010, this country had <strong>519 MHa</strong> tree cover, that represents <strong>61%</strong> of its <strong>851 Mha.</strong></p>
-            <p>Excluding plantations, <strong>40 MHa</strong> of tree cover loss occured in <strong>2016.</strong></p>
+            <p>In 2010, this country had <strong>{numeral(Math.round(totalForestHeader / 1000)).format('0,0')} Ha</strong> tree cover, that represents <strong>{numeral(Math.round(percentageForestHeader)).format('0,0')}%</strong> of its
+            <strong> {numeral(Math.round(totalCoverHeader / 1000)).format('0,0')} Ha.</strong></p>
+            <p>Excluding plantations, <strong>40 Ha</strong> of tree cover loss occured in <strong>2016.</strong></p>
           </div>
         </div>
         <div className="c-header__tabs">
