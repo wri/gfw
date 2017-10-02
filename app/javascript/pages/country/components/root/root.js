@@ -21,6 +21,8 @@ const mapStateToProps = state => ({
   countryData: state.root.countryData,
   countryRegions: state.root.countryRegions,
   countriesList: state.root.countriesList,
+  fixed: state.root.fixed,
+  topMap: state.root.topMap
 });
 
 const RootContainer = (props) => {

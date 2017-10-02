@@ -15,12 +15,17 @@ body {
 }
 
 .l-country__map {
-  position: fixed;
-  top: 0;
   right: 0;
   width: 30%;
   height: 100%;
   z-index: 100;
+  position: absolute;
+  top: 59px;
+
+  &.-fixed {
+    top: 0;
+    position: fixed;
+  }
 }
 
 .l-country__widgets {

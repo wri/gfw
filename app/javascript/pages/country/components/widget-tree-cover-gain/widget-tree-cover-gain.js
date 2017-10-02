@@ -18,8 +18,8 @@ const mapStateToProps = state => ({
   countryRegions: state.root.countryRegions,
   totalAmount: state.widgetTreeCoverGain.totalAmount,
   percentage: state.widgetTreeCoverGain.percentage,
-  startYear: 2011,
-  endYear: 2014,
+  startYear: 2000,
+  endYear: 2012,
   thresh: 30
 });
 

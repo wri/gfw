@@ -7,9 +7,9 @@ const CONFIG = {
 const APIURL = process.env.GFW_API_AUTH;
 
 const APIURLS = {
-  'treeCoverGain': '/v1/query?sql=select sum(area) as value from {dataset} WHERE iso=\'{iso}\' AND year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue} GROUP by iso',
-  'treeCoverGainAllCountries': '/v1/query?sql=select sum(area) as value from {dataset} AND year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue}',
-  'treeCoverGainRegion': '/v1/query?sql=select sum(area) as value from {dataset} WHERE iso=\'{iso}\' AND year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue} GROUP by adm1 ORDER BY value DESC LIMIT 10',
+  'treeCoverGain': '/query?sql=select sum(area) as value from {dataset} WHERE iso=\'{iso}\' AND year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue} GROUP by iso',
+  'treeCoverGainAllCountries': '/query?sql=select sum(area) as value from {dataset} AND year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue}',
+  'treeCoverGainRegion': '/query?sql=select sum(area) as value from {dataset} WHERE iso=\'{iso}\' AND year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue} GROUP by adm1 ORDER BY value DESC LIMIT 10',
 };
 
 export const getTotalCountriesTreeCoverGain= (years, thresh) => {
