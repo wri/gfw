@@ -73,6 +73,7 @@
   }
 
   .c-widget-tree-located__scroll-more {
+    cursor: pointer;
     margin-top: rem(10px);
     border-top: 1px rgba($slate, .1) solid;
     padding-bottom: rem(10px);
