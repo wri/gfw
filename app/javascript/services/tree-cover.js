@@ -10,7 +10,7 @@ const APIURL = process.env.GFW_API_HOST_PROD;
 const APIURLS = {
   'getTotalCover': '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' AND thresh={thresh} {region}',
   'getTotalIntactForest': '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' {region}',
-  'getListRegionsForest': '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' AND thresh=30 GROUP BY adm1 ORDER BY value DESC LIMIT 10',
+  'getListRegionsForest': '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' AND thresh={thresh} GROUP BY adm1 ORDER BY value DESC',
 };
 
 export const getTotalCover = (iso, region, canopy) => {

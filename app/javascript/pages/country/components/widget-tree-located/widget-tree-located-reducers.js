@@ -1,6 +1,8 @@
 export const initialState = {
   isLoading: true,
-  topRegions: []
+  topRegions: [],
+  startArray: 0,
+  endArray: 10
 };
 
 const setTreeLocatedValues = (state, { payload }) => ({
@@ -9,6 +11,13 @@ const setTreeLocatedValues = (state, { payload }) => ({
   topRegions: payload
 });
 
+const setArrayLocated = (state, { payload }) => ({
+  ...state,
+  startArray: payload.startArray,
+  endArray: payload.endArray
+});
+
 export default {
-  setTreeLocatedValues
+  setTreeLocatedValues,
+  setArrayLocated
 };

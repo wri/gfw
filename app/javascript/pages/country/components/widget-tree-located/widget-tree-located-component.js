@@ -10,11 +10,18 @@ class WidgetTreeLocated extends PureComponent {
     setInitialData(this.props);
   }
 
+  moreRegion = () => {
+    const { moreRegion } = this.props;
+    moreRegion();
+  };
+
   render() {
     const {
       isLoading,
       countryData,
-      topRegions
+      topRegions,
+      startArray,
+      endArray
     } = this.props;
 
     if (isLoading) {
@@ -26,7 +33,7 @@ class WidgetTreeLocated extends PureComponent {
             title={`Where are the forest located in ${countryData.name}`}
             noMap={true} />
           <ul className="c-widget-tree-located__regions">
-            {topRegions.map((item, index) => {
+            {topRegions.slice(startArray, endArray).map((item, index) => {
               return (
                 <li key={index}>
                   <div className="c-widget-tree-located__region-bubble">{index + 1}</div>
@@ -38,7 +45,7 @@ class WidgetTreeLocated extends PureComponent {
             })}
           </ul>
           <div className="c-widget-tree-located__scroll-more">
-            <div className="circle-icon"><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>
+            <div className="circle-icon" onClick={this.moreRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>
           </div>
         </div>
       )

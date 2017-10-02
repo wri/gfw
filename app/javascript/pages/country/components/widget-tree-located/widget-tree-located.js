@@ -20,12 +20,23 @@ const mapStateToProps = state => ({
   countryRegions: state.root.countryRegions,
   countryRegion: state.root.countryRegion,
   countryData: state.root.countryData,
-  topRegions: state.widgetTreeLocated.topRegions
+  topRegions: state.widgetTreeLocated.topRegions,
+  startArray: state.widgetTreeLocated.startArray,
+  endArray: state.widgetTreeLocated.endArray
 });
 
 const regionsForest = [];
 
 const WidgetTreeLocatedContainer = (props) => {
+
+  const moreRegion = () => {
+    const value = {
+      startArray: props.startArray + 11,
+      endArray: props.endArray + 11,
+    }
+    props.setArrayLocated(value);
+  };
+
   const setInitialData = (props) => {
     getTotalCover(props.iso, props.countryRegion, 30)
       .then((totalCoverResponse) => {
@@ -46,7 +57,8 @@ const WidgetTreeLocatedContainer = (props) => {
   };
   return createElement(WidgetTreeLocatedComponent, {
     ...props,
-    setInitialData
+    setInitialData,
+    moreRegion
   });
 };
 
