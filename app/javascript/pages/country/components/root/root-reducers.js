@@ -5,6 +5,8 @@ export const initialState = {
   countryData: {},
   countryRegions: [],
   countriesList: [],
+  fixed: false,
+  topMap: 0,
 };
 
 const setInitialState = (state) => ({
@@ -13,7 +15,8 @@ const setInitialState = (state) => ({
   iso: '',
   countryRegion: 0,
   countryData: {},
-  countryRegions: []
+  countryRegions: [],
+  fixed: false
 });
 
 const setIsLoading = (state, { payload }) => ({
@@ -46,6 +49,16 @@ const setCountriesList = (state, { payload }) => ({
   countriesList: payload
 });
 
+const setPositionMap = (state, {payload}) => ({
+  ...state,
+  fixed: payload
+});
+
+const setTopMap = (state, {payload}) => ({
+  ...state,
+  topMap: payload
+});
+
 export default {
   setInitialState,
   setIsLoading,
@@ -53,5 +66,7 @@ export default {
   setRegion,
   setCountryData,
   setCountryRegions,
-  setCountriesList
+  setCountriesList,
+  setPositionMap,
+  setTopMap
 };

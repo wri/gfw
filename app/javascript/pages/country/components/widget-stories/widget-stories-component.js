@@ -14,7 +14,7 @@ class WidgetStories extends PureComponent {
       endYear
     } = this.props;
     return (
-      <div className="c-widget-stories">
+      <div className="c-widget-stories" id="c-widget-stories">
         <div className="c-widget-stories__container">
           <div className="row">
             <div className="columns c-widget-stories__primary-info">

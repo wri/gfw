@@ -13,7 +13,7 @@ class Map extends PureComponent {
       center,
       maptype,
       maxZoom,
-      minZoom
+      minZoom,
     } = this.props;
 
     const options = {
@@ -85,10 +85,7 @@ class Map extends PureComponent {
 
   render() {
     return (
-      <div
-        id="map"
-        className="c-map"
-      />
+      <div id="map" className={`c-map ${this.props.fixed ? '-fixed' : ''}`}></div>
     )
   }
 }

@@ -5,7 +5,7 @@ export const initialState = {
     longitude: 20
   },
   maptype: 'grayscale',
-  layers: ['forest2000']
+  layers: ['forest2000'],
 };
 
 const setMapZoom = (state, { payload }) => ({
