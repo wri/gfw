@@ -15,6 +15,10 @@ import {
   getTotalIntactForest
 } from '../../../../services/tree-cover';
 
+import {
+  getTreeLossByYear
+} from '../../../../services/tree-loss';
+
 const mapStateToProps = state => ({
   iso: state.root.iso,
   countriesList: state.root.countriesList,
@@ -23,7 +27,8 @@ const mapStateToProps = state => ({
   countryRegion: state.root.countryRegion,
   totalCoverHeader: state.header.totalCoverHeader,
   totalForestHeader: state.header.totalForestHeader,
-  percentageForestHeader: state.header.percentageForestHeader
+  percentageForestHeader: state.header.percentageForestHeader,
+  totalCoverLoss: state.header.totalCoverLoss
 });
 
 const HeaderContainer = (props) => {
@@ -45,14 +50,23 @@ const HeaderContainer = (props) => {
       .then((totalCoverResponse) => {
         getTotalIntactForest(props.iso, props.countryRegion)
           .then((totalIntactForestResponse) => {
-          const totalCover = Math.round(totalCoverResponse.data.data[0].value);
-          const totalIntactForest = Math.round(totalIntactForestResponse.data.data[0].value);
-          const values = {
-            totalCoverHeader: props.countryData.area_ha,
-            totalForestHeader: totalCover + totalIntactForest,
-            percentageForestHeader: ((totalCover + totalIntactForest) / Math.round(props.countryData.area_ha)) * 100
-          };
-          props.setTreeCoverValuesHeader(values);
+            getTreeLossByYear(
+              props.iso,
+              props.countryRegion,
+              {minYear: 2015, maxYear: 2015},
+              30
+            )
+          .then((coverLoss) => {
+            const totalCover = Math.round(totalCoverResponse.data.data[0].value);
+            const totalIntactForest = Math.round(totalIntactForestResponse.data.data[0].value);
+            const values = {
+              totalCoverHeader: props.countryData.area_ha,
+              totalForestHeader: totalCover + totalIntactForest,
+              percentageForestHeader: ((totalCover + totalIntactForest) / Math.round(props.countryData.area_ha)) * 100,
+              totalCoverLoss: coverLoss.data.data[0].value
+            };
+            props.setTreeCoverValuesHeader(values);
+        });
       });
     });
   };
