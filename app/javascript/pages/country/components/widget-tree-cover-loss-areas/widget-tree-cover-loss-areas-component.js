@@ -22,7 +22,7 @@ class WidgetTreeLossAreas extends PureComponent {
     } = this.props;
 
     if (isLoading) {
-      return <div>loading!</div>
+      return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
     } else {
       return (
         <div className="c-widget c-widget-tree-cover-loss-areas">

@@ -55,7 +55,7 @@ class Header extends PureComponent {
           <div className="small-6 columns c-header__info">
             <p>In 2010, this country had <strong>{Math.round(totalForestHeader / 1000)} Ha</strong> tree cover, that represents <strong>{numeral(Math.round(percentageForestHeader)).format('0,0')}%</strong> of its
             <strong> {Math.round(totalCoverHeader / 1000)} Ha.</strong></p>
-            <p>Excluding plantations, <strong>{Math.round(totalCoverLoss)} Ha</strong> of tree cover loss occured in <strong>2016.</strong></p>
+            <p>Excluding plantations, <strong>{Math.round(totalCoverLoss)} Ha</strong> of tree cover loss occured in <strong>2015.</strong></p>
           </div>
         </div>
         <div className="c-header__tabs">
