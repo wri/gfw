@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import ScrollEvent from 'react-onscroll';
 
 import Header from '../header/header';
 import Footer from '../footer/footer';
@@ -30,6 +31,29 @@ class Root extends PureComponent {
     }
   }
 
+  setPositionMap(position) {
+    if(position) {
+
+    } else {
+
+    }
+  }
+
+  handleScrollCallback() {
+   if (window.scrollY >= 59) {
+     this.props.setPositionMap(true);
+     this.props.setTopMap(0);
+   }
+   if(window.scrollY >= (document.getElementById('c-widget-stories').offsetTop - window.innerHeight)) {
+     this.props.setPositionMap(false);
+     this.props.setTopMap(document.getElementById('c-widget-stories').offsetTop - window.innerHeight);
+   }
+   if (window.scrollY < 59) {
+     this.props.setPositionMap(false);
+     this.props.setTopMap(59);
+   }
+ }
+
   render() {
     const { isLoading } = this.props;
 
@@ -38,8 +62,9 @@ class Root extends PureComponent {
     } else {
       return (
         <div>
+          <ScrollEvent handleScrollCallback={() => this.handleScrollCallback()} />
           <Header />
-          <div className="l-country__map">
+          <div className={`l-country__map ${this.props.fixed ? '-fixed' : ''}`} style={{top: this.props.topMap}}>
             <Map
               maxZoom={14}
               minZoom={3}
@@ -70,16 +95,16 @@ class Root extends PureComponent {
             <div className="small-12 columns l-country__container-widgets">
               <WidgetTreeCoverLossAreas />
             </div>
-            <div className="small-12 columns l-country__container-widgets">
+            <div className="large-6 small-12 columns l-country__container-widgets">
               <WidgetTreeCoverGain />
             </div>
-            <div className="small-12 columns l-country__container-widgets">
+            <div className="large-6 small-12 columns l-country__container-widgets">
               <WidgetAreasMostCoverGain />
             </div>
-            <div className="small-12 columns l-country__container-widgets -last">
+            <div className="large-6 small-12 columns l-country__container-widgets -last">
               <WidgetTotalAreaPlantations />
             </div>
-            <div className="small-12 columns l-country__container-widgets -last">
+            <div className="large-6 small-12 columns l-country__container-widgets -last">
               <WidgetPlantationArea />
             </div>
           </div>
