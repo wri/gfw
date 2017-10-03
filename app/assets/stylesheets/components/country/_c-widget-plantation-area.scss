@@ -56,17 +56,25 @@
   }
 
   .c-widget-plantation-area__scroll-more {
+    display: flex;
+    justify-content: center;
     margin-top: rem(10px);
     border-top: 1px rgba($slate, .1) solid;
     padding-bottom: rem(10px);
 
     .circle-icon {
-      width: rem(18px);
-      height: rem(18px);
+      cursor: pointer;
+      width: rem(20px);
+      height: rem(20px);
+      margin-top: rem(10px);
       border-radius: rem(18px);
       border: rem(1px) rgba($slate, .1) solid;
-      margin: rem(10px) auto 0;
       position: relative;
+
+      &.-up {
+        margin-right: rem(10px);
+        transform: rotate(180deg);
+      }
 
       .icon {
         fill: rgba($slate, .5);
@@ -74,8 +82,8 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: rem(8px);
-        height: rem(8px);
+        width: rem(11px);
+        height: rem(11px);
       }
     }
   }
