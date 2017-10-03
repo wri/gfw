@@ -7,6 +7,7 @@ export const initialState = {
   countriesList: [],
   fixed: false,
   topMap: 0,
+  topPage: false
 };
 
 const setInitialState = (state) => ({
@@ -16,7 +17,8 @@ const setInitialState = (state) => ({
   countryRegion: 0,
   countryData: {},
   countryRegions: [],
-  fixed: false
+  fixed: false,
+  topPage: false
 });
 
 const setIsLoading = (state, { payload }) => ({
@@ -54,6 +56,11 @@ const setPositionMap = (state, {payload}) => ({
   fixed: payload
 });
 
+const setPositionPage = (state, {payload}) => ({
+  ...state,
+  topPage: payload
+});
+
 const setTopMap = (state, {payload}) => ({
   ...state,
   topMap: payload
@@ -68,5 +75,6 @@ export default {
   setCountryRegions,
   setCountriesList,
   setPositionMap,
-  setTopMap
+  setTopMap,
+  setPositionPage
 };
