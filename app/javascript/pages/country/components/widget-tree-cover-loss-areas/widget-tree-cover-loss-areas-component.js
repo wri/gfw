@@ -60,7 +60,7 @@ class WidgetTreeLossAreas extends PureComponent {
                 return (
                   <li key={index}>
                     <div className="c-widget-tree-cover-loss-areas__legend-title">
-                      <div style={{backgroundColor: item.color}}>{index + 1}</div>
+                      <div style={{backgroundColor: item.color}}>{item.pos}</div>
                       {item.name}
                     </div>
                     <div className="c-widget-tree-cover-loss-areas__legend-value">

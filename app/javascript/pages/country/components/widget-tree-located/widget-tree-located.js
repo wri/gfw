@@ -56,7 +56,8 @@ const WidgetTreeLocatedContainer = (props) => {
               regionsForest.push({
                 name: props.countryRegions[numberRegion].name,
                 value: item.value,
-                percent: (item.value / totalCover) * 100
+                percent: (item.value / totalCover) * 100,
+                position: index + 1
               })
             });
             props.setTreeLocatedValues(regionsForest);

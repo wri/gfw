@@ -26,7 +26,7 @@ import {
 } from '../../../../services/tree-loss';
 
 const regionsForestLoss = [];
-const colors = ['#510626', '#730735', '#af0f54', '#f5247e', '#f3599b', '#fb9bc4', '#f1c5d8', '#e9e7a6', '#dad781', '#cecb65'];
+const colors = ['#510626', '#730735', '#af0f54', '#f5247e', '#f3599b', '#fb9bc4', '#f1c5d8', '#e9e7a6', '#dad781', '#cecb65', '#929292'];
 let indexColors = 0;
 
 const WidgetTreeCoverLossAreasContainer = (props) => {
@@ -55,14 +55,16 @@ const WidgetTreeCoverLossAreasContainer = (props) => {
     )
     .then((treeLossByRegion) => {
       treeLossByRegion.data.data.forEach(function(item, index){
-        if (indexColors === 10) { indexColors = 0; }
         const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
         regionsForestLoss.push({
           name: props.countryRegions[numberRegion].name,
           value: item.value,
-          color: colors[indexColors]
+          color: colors[indexColors],
+          position: index + 1
         })
-        indexColors += 1;
+        if (indexColors < 10) {
+          indexColors += 1;
+        }
       });
         props.setPieCharDataDistricts(regionsForestLoss);
     });
