@@ -9,6 +9,7 @@ const setCountryRegions = createAction('setCountryRegions');
 const setCountriesList = createAction('setCountriesList');
 const setPositionMap = createAction('setPositionMap');
 const setTopMap = createAction('setTopMap');
+const setPositionPage = createAction('setPositionPage');
 
 export default {
   setInitialState,
@@ -19,5 +20,6 @@ export default {
   setCountryRegions,
   setCountriesList,
   setPositionMap,
-  setTopMap
+  setTopMap,
+  setPositionPage
 };

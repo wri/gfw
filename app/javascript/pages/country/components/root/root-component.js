@@ -21,7 +21,6 @@ class Root extends PureComponent {
     const { setInitialData } = this.props;
     setInitialData(this.props);
   }
-
   componentWillUpdate(nextProps) {
     const { iso, refreshCountryData, checkLoadingStatus } = this.props;
     if (iso !== nextProps.iso) {
@@ -32,6 +31,7 @@ class Root extends PureComponent {
   }
 
   handleScrollCallback() {
+    // setPositionPage
    if (window.scrollY >= 59) {
      this.props.setPositionMap(true);
      this.props.setTopMap(0);
@@ -47,14 +47,17 @@ class Root extends PureComponent {
  }
 
   render() {
-    const { isLoading } = this.props;
-
+    const { isLoading, topPage } = this.props;
     if (isLoading) {
       return (
         <div className="c-loading">
           <div className="loader">Loading...</div>
         </div>)
     } else {
+      if(!topPage) {
+        window.scrollTo(0, 0);
+        this.props.setPositionPage(true);
+      }
       return (
         <div>
           <ScrollEvent handleScrollCallback={() => this.handleScrollCallback()} />
