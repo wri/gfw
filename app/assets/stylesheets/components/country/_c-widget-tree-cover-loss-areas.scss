@@ -63,17 +63,25 @@
   }
 
   .c-widget-tree-cover-loss-areas__scroll-more {
+    display: flex;
+    justify-content: center;
     margin-top: rem(10px);
     border-top: 1px rgba($slate, .1) solid;
     padding-bottom: rem(10px);
 
     .circle-icon {
+      cursor: pointer;
       width: rem(18px);
       height: rem(18px);
+      margin-top: rem(10px);
       border-radius: rem(18px);
       border: rem(1px) rgba($slate, .1) solid;
-      margin: rem(10px) auto 0;
       position: relative;
+
+      &.-up {
+        margin-right: rem(10px);
+        transform: rotate(180deg);
+      }
 
       .icon {
         fill: rgba($slate, .5);

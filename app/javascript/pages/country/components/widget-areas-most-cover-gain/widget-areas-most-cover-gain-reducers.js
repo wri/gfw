@@ -1,6 +1,8 @@
 export const initialState = {
   isLoading: true,
-  areaData: []
+  areaData: [],
+  startArray: 0,
+  endArray: 10
 };
 
 const setPieCharDataAreas = (state, { payload }) => ({
@@ -9,6 +11,13 @@ const setPieCharDataAreas = (state, { payload }) => ({
   areaData: payload
 });
 
+const setArrayCoverAreasGain = (state, { payload }) => ({
+  ...state,
+  startArray: payload.startArray,
+  endArray: payload.endArray
+});
+
 export default {
-  setPieCharDataAreas
+  setPieCharDataAreas,
+  setArrayCoverAreasGain
 };

@@ -15,6 +15,11 @@ class WidgetTreeLocated extends PureComponent {
     moreRegion();
   };
 
+  lessRegion = () => {
+    const { lessRegion } = this.props;
+    lessRegion();
+  };
+
   render() {
     const {
       isLoading,
@@ -23,6 +28,9 @@ class WidgetTreeLocated extends PureComponent {
       startArray,
       endArray
     } = this.props;
+
+    const showUpIcon = startArray >= 10;
+    const showDownIcon = endArray >= topRegions.length;
 
     if (isLoading) {
       return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
@@ -45,7 +53,8 @@ class WidgetTreeLocated extends PureComponent {
             })}
           </ul>
           <div className="c-widget-tree-located__scroll-more">
-            <div className="circle-icon" onClick={this.moreRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>
+            {showUpIcon && <div className="circle-icon -up" onClick={this.lessRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
+            {!showDownIcon && <div className="circle-icon" onClick={this.moreRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
           </div>
         </div>
       )
