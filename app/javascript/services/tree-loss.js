@@ -8,7 +8,7 @@ const APIURL = process.env.GFW_API_HOST_PROD;
 
 const APIURLS = {
   'getTreeLossByYear': '/query?sql=select sum(area) as value, year as date from {dataset} WHERE iso=\'{iso}\' AND year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue} {region}',
-  'getTreeLossByRegion': '/query?sql=select sum(area) as value, year as date from {dataset} WHERE iso=\'{iso}\' AND year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue} GROUP BY adm1 ORDER BY value DESC LIMIT 10',
+  'getTreeLossByRegion': '/query?sql=select sum(area) as value, year as date from {dataset} WHERE iso=\'{iso}\' AND year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue} GROUP BY adm1 ORDER BY value DESC',
 };
 
 export const getTreeLossByYear = (iso, region, years, thresh) => {

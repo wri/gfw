@@ -16,7 +16,9 @@ const mapStateToProps = state => ({
   areaData: state.widgetAreasMostCoverGain.areaData,
   startYear: 2011,
   endYear: 2015,
-  thresh: 30
+  thresh: 30,
+  startArray: state.widgetAreasMostCoverGain.startArray,
+  endArray: state.widgetAreasMostCoverGain.endArray
 });
 
 import {
@@ -25,8 +27,26 @@ import {
 
 const regionsCoverGain = [];
 const colors = ['#110f74', '#2422a2', '#4c49d1', '#6f6de9', '#a3a1ff', '#cdcdfe', '#ddddfc', '#e7e5a4', '#dad781', '#cecb65'];
+let indexColors = 0;
 
 const WidgetAreasMostCoverGainContainer = (props) => {
+
+  const moreRegion = () => {
+    const value = {
+      startArray: props.startArray + 10,
+      endArray: props.endArray + 10,
+    }
+    props.setArrayCoverAreasGain(value);
+  };
+
+  const lessRegion = () => {
+    const value = {
+      startArray: props.startArray - 10,
+      endArray: props.endArray - 10,
+    }
+    props.setArrayCoverAreasGain(value);
+  };
+
   const setInitialData = (props) => {
     getTreeCoverGainRegion(
       props.iso,
@@ -35,19 +55,23 @@ const WidgetAreasMostCoverGainContainer = (props) => {
     )
     .then((treeCoverGainByRegion) => {
       treeCoverGainByRegion.data.data.forEach(function(item, index){
+        if (indexColors === 10) { indexColors = 0; }
         const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
         regionsCoverGain.push({
           name: props.countryRegions[numberRegion].name,
           value: item.value,
-          color: colors[index]
+          color: colors[indexColors]
         })
+        indexColors += 1;
       });
         props.setPieCharDataAreas(regionsCoverGain);
     });
   };
   return createElement(WidgetAreasMostCoverGainComponent, {
     ...props,
-    setInitialData
+    setInitialData,
+    moreRegion,
+    lessRegion
   });
 };
 
