@@ -12,14 +12,29 @@ class WidgetTreeLossAreas extends PureComponent {
     setInitialData(this.props);
   }
 
+  moreRegion = () => {
+    const { moreRegion } = this.props;
+    moreRegion();
+  };
+
+  lessRegion = () => {
+    const { lessRegion } = this.props;
+    lessRegion();
+  };
+
   render() {
     const {
       isLoading,
       countryData,
       regionData,
       startYear,
-      endYear
+      endYear,
+      startArray,
+      endArray
     } = this.props;
+
+    const showUpIcon = startArray >= 10;
+    const showDownIcon = endArray >= regionData.length;
 
     if (isLoading) {
       return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
@@ -32,16 +47,16 @@ class WidgetTreeLossAreas extends PureComponent {
               <h3 className="title">Total Tree cover loss</h3>
               <p className="date">({startYear} - {endYear})</p>
               <PieChart width={216} height={216}>
-                <Pie dataKey="value" data={regionData} cx={108} cy={108} innerRadius={40} outerRadius={100}>
+                <Pie dataKey="value" data={regionData.slice(startArray, endArray)} cx={108} cy={108} innerRadius={40} outerRadius={100}>
                   {
-                    regionData.map((item, index) => <Cell key={index} fill={item.color}/>)
+                    regionData.slice(startArray, endArray).map((item, index) => <Cell key={index} fill={item.color}/>)
                   }
                 </Pie>
                 <Tooltip content={<TooltipChart/>} />
               </PieChart>
             </div>
             <ul className="c-widget-tree-cover-loss-areas__legend">
-              {regionData.map((item, index) => {
+              {regionData.slice(startArray, endArray).map((item, index) => {
                 return (
                   <li key={index}>
                     <div className="c-widget-tree-cover-loss-areas__legend-title">
@@ -55,7 +70,8 @@ class WidgetTreeLossAreas extends PureComponent {
                 );
               })}
               <div className="c-widget-tree-cover-loss-areas__scroll-more">
-                <div className="circle-icon"><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>
+                {showUpIcon && <div className="circle-icon -up" onClick={this.lessRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
+                {!showDownIcon && <div className="circle-icon" onClick={this.moreRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
               </div>
             </ul>
           </div>

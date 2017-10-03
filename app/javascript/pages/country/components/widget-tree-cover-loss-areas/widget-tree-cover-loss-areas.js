@@ -16,7 +16,9 @@ const mapStateToProps = state => ({
   regionData: state.widgetTreeCoverLossAreas.regionData,
   startYear: 2001,
   endYear: 2015,
-  thresh: 30
+  thresh: 30,
+  startArray: state.widgetTreeCoverLossAreas.startArray,
+  endArray: state.widgetTreeCoverLossAreas.endArray
 });
 
 import {
@@ -25,8 +27,26 @@ import {
 
 const regionsForestLoss = [];
 const colors = ['#510626', '#730735', '#af0f54', '#f5247e', '#f3599b', '#fb9bc4', '#f1c5d8', '#e9e7a6', '#dad781', '#cecb65'];
+let indexColors = 0;
 
 const WidgetTreeCoverLossAreasContainer = (props) => {
+
+  const moreRegion = () => {
+    const value = {
+      startArray: props.startArray + 10,
+      endArray: props.endArray + 10,
+    }
+    props.setArrayCoverAreasLoss(value);
+  };
+
+  const lessRegion = () => {
+    const value = {
+      startArray: props.startArray - 10,
+      endArray: props.endArray - 10,
+    }
+    props.setArrayCoverAreasLoss(value);
+  };
+
   const setInitialData = (props) => {
     getTreeLossByRegion(
       props.iso,
@@ -35,19 +55,23 @@ const WidgetTreeCoverLossAreasContainer = (props) => {
     )
     .then((treeLossByRegion) => {
       treeLossByRegion.data.data.forEach(function(item, index){
+        if (indexColors === 10) { indexColors = 0; }
         const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
         regionsForestLoss.push({
           name: props.countryRegions[numberRegion].name,
           value: item.value,
-          color: colors[index]
+          color: colors[indexColors]
         })
+        indexColors += 1;
       });
         props.setPieCharDataDistricts(regionsForestLoss);
     });
   };
   return createElement(WidgetTreeCoverLossAreasComponent, {
     ...props,
-    setInitialData
+    setInitialData,
+    moreRegion,
+    lessRegion
   });
 };
 

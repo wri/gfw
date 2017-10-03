@@ -31,8 +31,16 @@ const WidgetTreeLocatedContainer = (props) => {
 
   const moreRegion = () => {
     const value = {
-      startArray: props.startArray + 11,
-      endArray: props.endArray + 11,
+      startArray: props.startArray + 10,
+      endArray: props.endArray + 10,
+    }
+    props.setArrayLocated(value);
+  };
+
+  const lessRegion = () => {
+    const value = {
+      startArray: props.startArray - 10,
+      endArray: props.endArray - 10,
     }
     props.setArrayLocated(value);
   };
@@ -58,7 +66,8 @@ const WidgetTreeLocatedContainer = (props) => {
   return createElement(WidgetTreeLocatedComponent, {
     ...props,
     setInitialData,
-    moreRegion
+    moreRegion,
+    lessRegion
   });
 };
 
