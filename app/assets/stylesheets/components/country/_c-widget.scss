@@ -166,10 +166,24 @@
     .c-widget-settings__title {
       margin-bottom: rem(16px);
     }
+    .dd__wrapper {
+      .dd__selectControl {
+        border: solid 1px #e5e5df;
+        border-radius: 0;
 
-    .dd__selectControl {
-      border: solid 1px #e5e5df;
-      border-radius: 0;
+        .icon-angle-arrow-down {
+          width: rem(11px);
+          height: rem(11px);
+        }
+      }
+
+      &.dd__opened {
+        .dd__selectControl {
+          .icon-angle-arrow-down {
+            transform: rotate(180deg);
+          }
+        }
+      }
     }
 
     .dd__openTobottom {
