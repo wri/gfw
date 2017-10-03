@@ -30,6 +30,13 @@ class Root extends PureComponent {
     }
   }
 
+  goToTop() {
+    if(!this.props.topPage) {
+      window.scrollTo(0, 0);
+      this.props.setPositionPage(true);
+    }
+  }
+
   handleScrollCallback() {
     // setPositionPage
    if (window.scrollY >= 59) {
@@ -54,10 +61,7 @@ class Root extends PureComponent {
           <div className="loader">Loading...</div>
         </div>)
     } else {
-      if(!topPage) {
-        window.scrollTo(0, 0);
-        this.props.setPositionPage(true);
-      }
+      this.goToTop();
       return (
         <div>
           <ScrollEvent handleScrollCallback={() => this.handleScrollCallback()} />
