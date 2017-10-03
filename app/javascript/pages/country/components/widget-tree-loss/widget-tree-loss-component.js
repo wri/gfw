@@ -12,7 +12,6 @@ import {
 import numeral from 'numeral';
 
 import TooltipChart from '../tooltip-chart/tooltip-chart';
-
 import WidgetHeader from '../widget-header/widget-header';
 
 class WidgetTreeLoss extends PureComponent {
@@ -74,7 +73,7 @@ class WidgetTreeLoss extends PureComponent {
                 <CartesianGrid
                   vertical={false}
                   strokeDasharray="3 4" />
-                <Tooltip/>
+                <Tooltip content={<TooltipChart/>} />
                 <Bar
                   dataKey="value"
                   barSize={22}
