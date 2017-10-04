@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
   countryRegions: state.root.countryRegions,
   countryData: state.root.countryData,
   areaData: state.widgetAreasMostCoverGain.areaData,
+  areaChartData: state.widgetAreasMostCoverGain.areaChartData,
   startYear: 2011,
   endYear: 2015,
   thresh: 30,
@@ -26,8 +27,10 @@ import {
 } from '../../../../services/tree-gain';
 
 const regionsCoverGain = [];
-const colors = ['#110f74', '#2422a2', '#4c49d1', '#6f6de9', '#a3a1ff', '#cdcdfe', '#ddddfc', '#e7e5a4', '#dad781', '#cecb65'];
+const regionCoverGainChart = [];
+const colors = ['#110f74', '#2422a2', '#4c49d1', '#6f6de9', '#a3a1ff', '#cdcdfe', '#ddddfc', '#e7e5a4', '#dad781', '#cecb65', '#929292'];
 let indexColors = 0;
+let othersValue = 0;
 
 const WidgetAreasMostCoverGainContainer = (props) => {
 
@@ -48,6 +51,8 @@ const WidgetAreasMostCoverGainContainer = (props) => {
   };
 
   const setInitialData = (props) => {
+    let nameChart = '';
+    let valueChart = 0;
     getTreeCoverGainRegion(
       props.iso,
       {minYear: props.startYear, maxYear: props.endYear},
@@ -55,16 +60,30 @@ const WidgetAreasMostCoverGainContainer = (props) => {
     )
     .then((treeCoverGainByRegion) => {
       treeCoverGainByRegion.data.data.forEach(function(item, index){
-        if (indexColors === 10) { indexColors = 0; }
         const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
         regionsCoverGain.push({
           name: props.countryRegions[numberRegion].name,
           value: item.value,
-          color: colors[indexColors]
+          color: colors[indexColors],
+          position: index + 1,
         })
-        indexColors += 1;
+        if(indexColors < 10 || index === treeCoverGainByRegion.data.data.length - 1) {
+          if(indexColors < 10) { nameChart = props.countryRegions[numberRegion].name; valueChart = item.value;}
+          if(index === treeCoverGainByRegion.data.data.length - 1) { nameChart = 'others'; valueChart = othersValue;}
+          regionCoverGainChart .push({
+            name: nameChart,
+            color: colors[indexColors],
+            value: valueChart,
+          })
+        } else {
+          othersValue += item.value;
+        }
+        if (indexColors < 10) {
+          indexColors += 1;
+        }
       });
-        props.setPieCharDataAreas(regionsCoverGain);
+      props.setPieCharDataAreas(regionsCoverGain);
+      props.setPieCharDataAreasTotal(regionCoverGainChart);
     });
   };
   return createElement(WidgetAreasMostCoverGainComponent, {

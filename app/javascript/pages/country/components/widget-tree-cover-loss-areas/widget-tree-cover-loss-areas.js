@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
   countryRegions: state.root.countryRegions,
   countryData: state.root.countryData,
   regionData: state.widgetTreeCoverLossAreas.regionData,
+  regionChartData: state.widgetTreeCoverLossAreas.regionChartData,
   startYear: 2001,
   endYear: 2015,
   thresh: 30,
@@ -50,6 +51,8 @@ const WidgetTreeCoverLossAreasContainer = (props) => {
   };
 
   const setInitialData = (props) => {
+    let nameChart = '';
+    let valueChart = 0;
     getTreeLossByRegion(
       props.iso,
       {minYear: props.startYear, maxYear: props.endYear},
@@ -65,19 +68,21 @@ const WidgetTreeCoverLossAreasContainer = (props) => {
           position: index + 1
         })
         if(indexColors < 10 || index === treeLossByRegion.data.data.length - 1) {
-
+          if(indexColors < 10) { nameChart = props.countryRegions[numberRegion].name; valueChart = item.value;}
+          if(index === treeLossByRegion.data.data.length - 1) { nameChart = 'others'; valueChart = othersValue;}
+          regionForestLossChart.push({
+            name: nameChart,
+            color: colors[indexColors],
+            value: valueChart,
+          })
         } else {
           othersValue += item.value;
         }
-        regionForestLossChart.push({
-          name: props.countryRegions[numberRegion].name,
-          color: colors[indexColors],
-          value: item.value,
-        })
         if (indexColors < 10) {
           indexColors += 1;
         }
       });
+        props.setPieChartDataTotal(regionForestLossChart);
         props.setPieCharDataDistricts(regionsForestLoss);
     });
   };

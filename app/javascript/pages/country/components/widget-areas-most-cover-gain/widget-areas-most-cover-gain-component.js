@@ -27,6 +27,7 @@ class WidgetAreasMostCoverGain extends PureComponent {
       isLoading,
       countryData,
       areaData,
+      areaChartData,
       startYear,
       endYear,
       startArray,
@@ -58,9 +59,9 @@ class WidgetAreasMostCoverGain extends PureComponent {
             </ul>
             <div className="c-widget-areas-most-cover-gain__chart">
               <PieChart width={150} height={150}>
-                <Pie dataKey="value" data={areaData.slice(startArray, endArray)} cx={70} cy={70} innerRadius={35} outerRadius={70}>
+                <Pie dataKey="value" data={areaChartData} cx={70} cy={70} innerRadius={35} outerRadius={70}>
                   {
-                    areaData.slice(startArray, endArray).map((item, index) => <Cell key={index} fill={item.color}/>)
+                    areaChartData.map((item, index) => <Cell key={index} fill={item.color}/>)
                   }
                 </Pie>
                 <Tooltip content={<TooltipChart/>} />

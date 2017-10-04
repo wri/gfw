@@ -30,7 +30,8 @@ class WidgetTreeLossAreas extends PureComponent {
       startYear,
       endYear,
       startArray,
-      endArray
+      endArray,
+      regionChartData
     } = this.props;
 
     const showUpIcon = startArray >= 10;
@@ -47,9 +48,9 @@ class WidgetTreeLossAreas extends PureComponent {
               <h3 className="title">Total Tree cover loss</h3>
               <p className="date">({startYear} - {endYear})</p>
               <PieChart width={216} height={216}>
-                <Pie dataKey="value" data={regionData.slice(startArray, endArray)} cx={108} cy={108} innerRadius={40} outerRadius={100}>
+                <Pie dataKey="value" data={regionChartData} cx={108} cy={108} innerRadius={40} outerRadius={100}>
                   {
-                    regionData.slice(startArray, endArray).map((item, index) => <Cell key={index} fill={item.color}/>)
+                    regionChartData.map((item, index) => <Cell key={index} fill={item.color}/>)
                   }
                 </Pie>
                 <Tooltip content={<TooltipChart/>} />
@@ -84,7 +85,8 @@ class WidgetTreeLossAreas extends PureComponent {
 WidgetTreeLossAreas.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
-  regionData: PropTypes.array.isRequired
+  regionData: PropTypes.array.isRequired,
+  regionChartData: PropTypes.array.isRequired
 };
 
 export default WidgetTreeLossAreas;
