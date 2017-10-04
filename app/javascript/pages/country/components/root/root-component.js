@@ -31,10 +31,10 @@ class Root extends PureComponent {
   }
 
   goToTop() {
-    if(!this.props.topPage) {
-      window.scrollTo(0, 0);
-      this.props.setPositionPage(true);
-    }
+    // if(!this.props.topPage) {
+    //   window.scrollTo(0, 0);
+    //   this.props.setPositionPage(true);
+    // }
   }
 
   handleScrollCallback() {

@@ -26,8 +26,10 @@ import {
 } from '../../../../services/tree-loss';
 
 const regionsForestLoss = [];
+const regionForestLossChart = [];
 const colors = ['#510626', '#730735', '#af0f54', '#f5247e', '#f3599b', '#fb9bc4', '#f1c5d8', '#e9e7a6', '#dad781', '#cecb65', '#929292'];
 let indexColors = 0;
+let othersValue = 0;
 
 const WidgetTreeCoverLossAreasContainer = (props) => {
 
@@ -61,6 +63,16 @@ const WidgetTreeCoverLossAreasContainer = (props) => {
           value: item.value,
           color: colors[indexColors],
           position: index + 1
+        })
+        if(indexColors < 10 || index === treeLossByRegion.data.data.length - 1) {
+
+        } else {
+          othersValue += item.value;
+        }
+        regionForestLossChart.push({
+          name: props.countryRegions[numberRegion].name,
+          color: colors[indexColors],
+          value: item.value,
         })
         if (indexColors < 10) {
           indexColors += 1;
