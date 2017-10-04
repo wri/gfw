@@ -30,6 +30,10 @@
     .c-widget-tree-cover-loss-areas__legend {
       flex-basis: 50%;
 
+      .container-list {
+        min-height: rem(324px);
+      }
+
       li {
         display: flex;
         font-size: 12px;

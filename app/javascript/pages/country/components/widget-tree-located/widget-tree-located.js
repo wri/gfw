@@ -26,7 +26,7 @@ const mapStateToProps = state => ({
 });
 
 const regionsForest = [];
-const colors = ['#113002', '#266307', '#2d8700', '#40ac0a', '#55ce19', '#73e23c', '#a5ed81', '#cfcb65', '#dad781', '#cecb65', '#929292'];
+const colors = ['#113002', '#266307', '#2d8700', '#40ac0a', '#55ce19', '#73e23c', '#a5ed81', '#cfcb65', '#dad781', '#cecb65', '#d1d1d1'];
 let indexColors = 0;
 
 const WidgetTreeLocatedContainer = (props) => {

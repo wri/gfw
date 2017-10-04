@@ -16,9 +16,10 @@
     display: flex;
     flex-direction: row;
     position: relative;
+    min-height: rem(324px);
 
     .c-widget-areas-most-cover-gain__legend {
-      max-width: 50%;
+      min-width: 50%;
 
       li {
         display: flex;
@@ -58,7 +59,7 @@
     }
 
     .c-widget-areas-most-cover-gain__chart {
-      max-width: 50%;
+      min-width: 50%;
       margin: rem(60px) auto 0;
     }
   }
