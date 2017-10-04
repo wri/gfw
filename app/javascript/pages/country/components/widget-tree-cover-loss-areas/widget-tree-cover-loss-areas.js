@@ -28,7 +28,7 @@ import {
 
 const regionsForestLoss = [];
 const regionForestLossChart = [];
-const colors = ['#510626', '#730735', '#af0f54', '#f5247e', '#f3599b', '#fb9bc4', '#f1c5d8', '#e9e7a6', '#dad781', '#cecb65', '#929292'];
+const colors = ['#510626', '#730735', '#af0f54', '#f5247e', '#f3599b', '#fb9bc4', '#f1c5d8', '#e9e7a6', '#dad781', '#cecb65', '#d1d1d1'];
 let indexColors = 0;
 let othersValue = 0;
 

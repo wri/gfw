@@ -48,7 +48,7 @@ class WidgetTreeCover extends PureComponent {
       const pieCharData = [
         { name: 'Forest', value: totalCover, color: '#959a00' },
         { name: 'Intact Forest', value: totalIntactForest, color: '#2d8700' },
-        { name: 'Non Forest', value: totalNonForest, color: '#d9d9dc' }
+        { name: 'Non Forest', value: totalNonForest, color: '#d1d1d1' }
       ];
 
       return (

@@ -28,7 +28,7 @@ import {
 
 const regionsCoverGain = [];
 const regionCoverGainChart = [];
-const colors = ['#110f74', '#2422a2', '#4c49d1', '#6f6de9', '#a3a1ff', '#cdcdfe', '#ddddfc', '#e7e5a4', '#dad781', '#cecb65', '#929292'];
+const colors = ['#110f74', '#2422a2', '#4c49d1', '#6f6de9', '#a3a1ff', '#cdcdfe', '#ddddfc', '#e7e5a4', '#dad781', '#cecb65', '#d1d1d1'];
 let indexColors = 0;
 let othersValue = 0;
 

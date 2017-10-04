@@ -57,19 +57,21 @@ class WidgetTreeLossAreas extends PureComponent {
               </PieChart>
             </div>
             <ul className="c-widget-tree-cover-loss-areas__legend">
-              {regionData.slice(startArray, endArray).map((item, index) => {
-                return (
-                  <li key={index}>
-                    <div className="c-widget-tree-cover-loss-areas__legend-title">
-                      <div style={{backgroundColor: item.color}}>{item.position}</div>
-                      {item.name}
-                    </div>
-                    <div className="c-widget-tree-cover-loss-areas__legend-value">
-                      {numeral(Math.round(item.value / 1000)).format('0,0')}Ha
-                    </div>
-                  </li>
-                );
-              })}
+              <div className="container-list">
+                {regionData.slice(startArray, endArray).map((item, index) => {
+                  return (
+                    <li key={index}>
+                      <div className="c-widget-tree-cover-loss-areas__legend-title">
+                        <div style={{backgroundColor: item.color}}>{item.position}</div>
+                        {item.name}
+                      </div>
+                      <div className="c-widget-tree-cover-loss-areas__legend-value">
+                        {numeral(Math.round(item.value / 1000)).format('0,0')}Ha
+                      </div>
+                    </li>
+                  );
+                })}
+              </div>
               <div className="c-widget-tree-cover-loss-areas__scroll-more">
                 {showUpIcon && <div className="circle-icon -up" onClick={this.lessRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
                 {!showDownIcon && <div className="circle-icon" onClick={this.moreRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
