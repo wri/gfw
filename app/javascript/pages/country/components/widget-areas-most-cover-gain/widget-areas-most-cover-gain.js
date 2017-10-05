@@ -26,8 +26,6 @@ import {
   getTreeCoverGainRegion
 } from '../../../../services/tree-gain';
 
-const regionsCoverGain = [];
-const regionCoverGainChart = [];
 const colors = ['#110f74', '#2422a2', '#4c49d1', '#6f6de9', '#a3a1ff', '#cdcdfe', '#ddddfc', '#e7e5a4', '#dad781', '#cecb65', '#d1d1d1'];
 let indexColors = 0;
 let othersValue = 0;
@@ -59,6 +57,8 @@ const WidgetAreasMostCoverGainContainer = (props) => {
       props.thresh
     )
     .then((treeCoverGainByRegion) => {
+      const regionsCoverGain = [];
+      const regionCoverGainChart = [];
       treeCoverGainByRegion.data.data.forEach(function(item, index){
         const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
         regionsCoverGain.push({
@@ -80,6 +80,10 @@ const WidgetAreasMostCoverGainContainer = (props) => {
         }
         if (indexColors < 10) {
           indexColors += 1;
+        }
+        if (index === treeCoverGainByRegion.data.data.length - 1) {
+          indexColors = 0;
+          othersValue = 0;
         }
       });
       props.setPieCharDataAreas(regionsCoverGain);
