@@ -78,6 +78,10 @@
         transform: rotate(180deg);
       }
 
+      &.-no-right {
+        margin-right: 0;
+      }
+
       .icon {
         fill: rgba($slate, .5);
         position: absolute;
