@@ -53,7 +53,7 @@ class WidgetTreeLocated extends PureComponent {
             })}
           </ul>
           <div className="c-widget-tree-located__scroll-more">
-            {showUpIcon && <div className="circle-icon -up" onClick={this.lessRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
+            {showUpIcon && <div className={`circle-icon -up ${showDownIcon ? '-no-right' : ''}`} onClick={this.lessRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
             {!showDownIcon && <div className="circle-icon" onClick={this.moreRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
           </div>
         </div>

@@ -25,12 +25,9 @@ const mapStateToProps = state => ({
   endArray: state.widgetTreeLocated.endArray
 });
 
-const regionsForest = [];
 const colors = ['#113002', '#266307', '#2d8700', '#40ac0a', '#55ce19', '#73e23c', '#a5ed81', '#cfcb65', '#dad781', '#cecb65', '#d1d1d1'];
 let indexColors = 0;
-
 const WidgetTreeLocatedContainer = (props) => {
-
   const moreRegion = () => {
     const value = {
       startArray: props.startArray + 10,
@@ -52,6 +49,7 @@ const WidgetTreeLocatedContainer = (props) => {
       .then((totalCoverResponse) => {
         getTotalCoverRegions(props.iso, 30)
           .then((totalCoverRegions) => {
+            const regionsForest = [];
             const totalCover = Math.round(totalCoverResponse.data.data[0].value);
             totalCoverRegions.data.data.forEach(function(item, index){
               const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
@@ -64,6 +62,9 @@ const WidgetTreeLocatedContainer = (props) => {
               })
               if (indexColors < 10) {
                 indexColors += 1;
+              }
+              if (index === totalCoverRegions.data.data.length - 1) {
+                indexColors = 0;
               }
             });
             props.setTreeLocatedValues(regionsForest);
