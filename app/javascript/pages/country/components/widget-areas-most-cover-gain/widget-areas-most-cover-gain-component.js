@@ -64,7 +64,7 @@ class WidgetAreasMostCoverGain extends PureComponent {
                     areaChartData.map((item, index) => <Cell key={index} fill={item.color}/>)
                   }
                 </Pie>
-                <Tooltip content={<TooltipChart/>} />
+                <Tooltip showCountry content={<TooltipChart/>} />
               </PieChart>
             </div>
           </div>
