@@ -111,8 +111,8 @@ define([], function() {
 
   config.GRAPHS = {
     total_loss: {
-      title: "Countries with greatest tree cover loss (2001-2014)",
-      subtitle: "Global tree cover loss, 2001-2014<a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>"
+      title: "Countries with greatest tree cover loss (2001-2016)",
+      subtitle: "Global tree cover loss, 2001-2016<a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>"
     },
     percent_loss: {
       title: "Countries with greatest tree cover gain (2001-2012)",
