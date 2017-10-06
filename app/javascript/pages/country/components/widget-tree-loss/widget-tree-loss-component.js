@@ -13,6 +13,7 @@ import numeral from 'numeral';
 
 import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
+import WidgetTreeLossSettings from './widget-tree-loss-settings-component';
 
 class WidgetTreeLoss extends PureComponent {
   componentDidMount() {
@@ -27,7 +28,11 @@ class WidgetTreeLoss extends PureComponent {
       minYear,
       maxYear,
       total,
-      years
+      years,
+      units,
+      settings,
+      canopies,
+      regions
     } = this.props;
 
     if (isLoading) {
@@ -37,7 +42,14 @@ class WidgetTreeLoss extends PureComponent {
         <div className="c-widget c-widget-tree-loss">
           <WidgetHeader
             title={`Tree cover loss`}
-            viewOnMapCallback={viewOnMap}/>
+            viewOnMapCallback={viewOnMap}>
+            <WidgetTreeLossSettings
+              type="settings"
+              regions={regions}
+              units={units}
+              canopies={canopies}
+              settings={settings}/>
+          </WidgetHeader>
           <div className="c-widget-tree-loss__legend">
             <div>
               <div className="c-widget-tree-loss__legend-title">Total Tree Cover Loss</div>
