@@ -5,6 +5,7 @@ import numeral from 'numeral';
 
 import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
+import WidgetTreeCoverLossAreasSettings from './widget-tree-cover-loss-areas-settings-component';
 
 class WidgetTreeLossAreas extends PureComponent {
   componentDidMount() {
@@ -31,7 +32,12 @@ class WidgetTreeLossAreas extends PureComponent {
       endYear,
       startArray,
       endArray,
-      regionChartData
+      regionChartData,
+      units,
+      settings,
+      canopies,
+      regions,
+      years
     } = this.props;
 
     const showUpIcon = startArray >= 10;
@@ -42,7 +48,15 @@ class WidgetTreeLossAreas extends PureComponent {
     } else {
       return (
         <div className="c-widget c-widget-tree-cover-loss-areas">
-          <WidgetHeader title={`AREAS WITH MOST TREE COVER LOSS IN ${countryData.name}`} />
+          <WidgetHeader title={`AREAS WITH MOST TREE COVER LOSS IN ${countryData.name}`} >
+          <WidgetTreeCoverLossAreasSettings
+            type="settings"
+            regions={regions}
+            units={units}
+            canopies={canopies}
+            settings={settings}
+            years={years}/>
+        </WidgetHeader>
           <div className="c-widget-tree-cover-loss-areas__container">
             <div className="c-widget-tree-cover-loss-areas__chart">
               <h3 className="title">Total Tree cover loss</h3>
