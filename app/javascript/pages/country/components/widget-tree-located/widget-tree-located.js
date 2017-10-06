@@ -22,7 +22,11 @@ const mapStateToProps = state => ({
   countryData: state.root.countryData,
   topRegions: state.widgetTreeLocated.topRegions,
   startArray: state.widgetTreeLocated.startArray,
-  endArray: state.widgetTreeLocated.endArray
+  endArray: state.widgetTreeLocated.endArray,
+  dataSource: state.widgetTreeLocated.dataSource,
+  units: state.widgetTreeLocated.units,
+  canopies: state.widgetTreeLocated.canopies,
+  settings: state.widgetTreeLocated.settings
 });
 
 const colors = ['#113002', '#266307', '#2d8700', '#40ac0a', '#55ce19', '#73e23c', '#a5ed81', '#cfcb65', '#dad781', '#cecb65', '#d1d1d1'];

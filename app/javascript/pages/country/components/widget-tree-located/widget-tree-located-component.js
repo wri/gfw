@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import numeral from 'numeral';
 
 import WidgetHeader from '../widget-header/widget-header';
+import WidgetTreeLocatedSettings from './widget-tree-located-settings-component';
 
 class WidgetTreeLocated extends PureComponent {
   componentDidMount() {
@@ -26,7 +27,11 @@ class WidgetTreeLocated extends PureComponent {
       countryData,
       topRegions,
       startArray,
-      endArray
+      endArray,
+      units,
+      dataSource,
+      canopies,
+      settings
     } = this.props;
 
     const showUpIcon = startArray >= 10;
@@ -39,7 +44,14 @@ class WidgetTreeLocated extends PureComponent {
         <div className="c-widget c-widget-tree-located">
           <WidgetHeader
             title={`Where are the forest located in ${countryData.name}`}
-            noMap={true} />
+            noMap={true}>
+            <WidgetTreeLocatedSettings
+                type="settings"
+                dataSource={dataSource}
+                units={units}
+                canopies={canopies}
+                settings={settings}/>
+          </WidgetHeader>
           <ul className="c-widget-tree-located__regions">
             {topRegions.slice(startArray, endArray).map((item, index) => {
               return (
