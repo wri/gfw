@@ -19,7 +19,12 @@ const mapStateToProps = state => ({
   endYear: 2015,
   thresh: 30,
   startArray: state.widgetTreeCoverLossAreas.startArray,
-  endArray: state.widgetTreeCoverLossAreas.endArray
+  endArray: state.widgetTreeCoverLossAreas.endArray,
+  regions: state.widgetTreeCoverLossAreas.regions,
+  units: state.widgetTreeCoverLossAreas.units,
+  canopies: state.widgetTreeCoverLossAreas.canopies,
+  settings: state.widgetTreeCoverLossAreas.settings,
+  years: state.widgetTreeCoverLossAreas.years
 });
 
 import {

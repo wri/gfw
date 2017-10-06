@@ -221,6 +221,31 @@
     padding: rem(8px) rem(24px);
     border-top: 1px solid #e5e5df;
 
+    &.-years {
+      padding-top: 0;
+      border-top: 0;
+      display: block;
+
+      .c-widget-settings__container-years {
+        margin-top: rem(13px);
+        padding-bottom: rem(30px);
+        display: flex;
+        justify-content: space-between;
+
+        .dd__selectControl {
+          color: $green-gfw;
+          border: 1px solid $green-gfw;
+          background-color: transparent;
+
+          .dd__selectedItem {
+            div {
+              color: $green-gfw;
+            }
+          }
+        }
+      }
+    }
+
     .dd__selectControl {
       height: rem(27px);
       padding: 0 rem(21px);

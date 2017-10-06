@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select-me';
 
-class WidgetTreeLossSettings extends PureComponent {
+class WidgetTreeCoverLossAreasSettings extends PureComponent {
 
   // regionChange = (value) => {
   //   this.props.onRegionChange(value.value);
@@ -25,9 +25,9 @@ class WidgetTreeLossSettings extends PureComponent {
       regions,
       units,
       canopies,
-      settings
+      settings,
+      years
     } = this.props;
-
     return (
       <div className="c-widget-settings">
         <div className="c-widget-settings__select">
@@ -44,6 +44,17 @@ class WidgetTreeLossSettings extends PureComponent {
             value={settings.unit}
             options={units}/>
         </div>
+        <div className="c-widget-settings__button-select -years">
+          <div className="c-widget-settings__title">YEARS</div>
+          <div className="c-widget-settings__container-years">
+            <Select
+              value={settings.startYear}
+              options={years}/>
+            <Select
+              value={settings.endYear}
+              options={years}/>
+          </div>
+        </div>
         <div className="c-widget-settings__button-select">
           <div className="c-widget-settings__title">CANOPY DENSITY</div>
           <Select
@@ -55,11 +66,11 @@ class WidgetTreeLossSettings extends PureComponent {
   }
 }
 
-WidgetTreeLossSettings.propTypes = {
+WidgetTreeCoverLossAreasSettings.propTypes = {
   regions: PropTypes.array.isRequired,
   units: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
 };
 
-export default WidgetTreeLossSettings;
+export default WidgetTreeCoverLossAreasSettings;
