@@ -58,7 +58,7 @@ define([
 
       this.x_scale = d3.scale.linear()
         .range([m, w-m])
-        .domain([2001, 2014]);
+        .domain([2001, 2016]);
 
       this.grid_scale = d3.scale.linear()
         .range([vertical_m, h-vertical_m])
@@ -221,10 +221,10 @@ define([
       e && e.preventDefault();
 
       if (this.model.get('graph') === 'total_loss') {
-        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 AND umd.year < 2015 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
+        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat_staging umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 AND umd.year < 2017 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
         var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
         if (!!mode && mode.mode == 'percent') {
-          sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) / umd.extent_2000 loss_perc FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss_perc = 0 AND umd.year > 2000 AND umd.year < 2015 AND extent_2000 > 10 GROUP BY umd.extent_2000, umd.iso, c.name, c.enabled ORDER BY loss_perc DESC '
+          sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) / umd.extent_2000 loss_perc FROM umd_nat_staging umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss_perc = 0 AND umd.year > 2000 AND umd.year < 2017 AND extent_2000 > 10 GROUP BY umd.extent_2000, umd.iso, c.name, c.enabled ORDER BY loss_perc DESC '
         }
 
         if (e) {
@@ -296,7 +296,7 @@ define([
 
             } else {
               $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS LOSS</strong> <span>PERCENT LOSS</span>').show();
-              $('.overview_graph__title').html('Countries with greatest tree cover loss (2001-2014)');
+              $('.overview_graph__title').html('Countries with greatest tree cover loss (2001-2016)');
             }
           }
 
@@ -315,9 +315,9 @@ define([
         $('.countries_list__header__minioverview').hide();
         var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
 
-        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_final_1 umd, gfw2_countries c WHERE umd.iso = c.iso AND NOT loss = 0 AND gain IS NOT NULL AND umd.year > 2000 AND umd.year < 2015 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
+        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_staging umd, gfw2_countries c WHERE umd.iso = c.iso AND NOT loss = 0 AND gain IS NOT NULL AND umd.year > 2000 AND umd.year < 2017 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
         if (!!mode && mode.mode == 'percent')
-            sql = 'SELECT (u.gain*12/u.extent_2000)*100 as ratio, country as name, c.iso as iso, c.enabled, u.iso as iso2 from umd_nat_final_1 u, gfw2_countries c  WHERE thresh = 50 AND u.gain IS NOT NULL AND c.iso = u.iso AND extent_2000 > 10  group by ratio, country, u.iso, c.iso, c.enabled order by ratio desc ';
+            sql = 'SELECT (u.gain*12/u.extent_2000)*100 as ratio, country as name, c.iso as iso, c.enabled, u.iso as iso2 from umd_nat_staging u, gfw2_countries c  WHERE thresh = 50 AND u.gain IS NOT NULL AND c.iso = u.iso AND extent_2000 > 10  group by ratio, country, u.iso, c.iso, c.enabled order by ratio desc ';
         if (e) {
           sql += 'OFFSET 10';
         } else {
@@ -401,10 +401,10 @@ define([
         });
       } else if (this.model.get('graph') === 'total_extent') {
         $('.countries_list__header__minioverview').hide();
-        var sql = 'SELECT umd.iso, country as name, extent_2000 as extent, c.enabled FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso GROUP BY umd.iso, umd.country, extent_2000 , name, c.enabled ORDER BY extent_2000 desc ';
+        var sql = 'SELECT umd.iso, country as name, extent_2000 as extent, c.enabled FROM umd_nat_staging umd, gfw2_countries c WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso GROUP BY umd.iso, umd.country, extent_2000 , name, c.enabled ORDER BY extent_2000 desc ';
         var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
         if (!!mode && mode.mode == 'percent') {
-          sql = 'SELECT umd.iso, country as name, extent_perc as extent, c.enabled FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND extent_perc > 0 GROUP BY umd.iso, umd.country, extent_perc , name, c.enabled ORDER BY extent_perc desc '
+          sql = 'SELECT umd.iso, country as name, extent_perc as extent, c.enabled FROM umd_nat_staging umd, gfw2_countries c WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND extent_perc > 0 GROUP BY umd.iso, umd.country, extent_perc , name, c.enabled ORDER BY extent_perc desc '
         }
         if (e) {
           sql += 'OFFSET 10';
@@ -578,8 +578,7 @@ define([
         .attr('height', height);
 
       if (this.model.get('graph') === ('total_loss')) {
-        var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain) gain FROM umd_nat_final_1 WHERE iso = \''+ iso +'\' AND thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 AND year < 2015 GROUP BY iso, year ORDER BY year';
-
+        var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain) gain FROM umd_nat_staging WHERE iso = \''+ iso +'\' AND thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 AND year < 2017 GROUP BY iso, year ORDER BY year';
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
           var data = json.rows;
 
@@ -628,7 +627,7 @@ define([
       } else if (this.model.get('graph') === ('percent_loss')) {
         var sql = 'SELECT year, \
                          loss_perc \
-                  FROM   umd_nat_final_1 \
+                  FROM   umd_nat_staging \
                   WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +' \
                          AND iso = \''+ iso +'\'';
 
@@ -659,7 +658,7 @@ define([
         var sql = 'SELECT year, \
                    loss,  \
                    extent_offset extent  \
-                  FROM   umd_nat_final_1  \
+                  FROM   umd_nat_staging  \
                   WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +'  \
                          AND iso = \''+ iso +'\' \
                          AND year > 2000 AND year < 2015';
@@ -735,10 +734,10 @@ define([
     _drawYears: function() {
       var markup_years = '';
 
-      for (var y = 2001; y<=2014; y += 1) {
+      for (var y = 2001; y<=2016; y += 1) {
         var y_ = this.x_scale(y);
 
-        if (y === 2001 || y === 2014) {
+        if (y === 2001 || y === 2016) {
           y_ -= 5;
         } else {
           y_ -= 0;
@@ -867,13 +866,13 @@ define([
         }
         var sql = 'SELECT year, \
              Sum(loss) loss \
-              FROM   umd_nat_final_1  \
+              FROM   umd_nat_staging  \
               WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +'  \
-                      AND year > 2000 AND year < 2015 \
+                      AND year > 2000 AND year < 2017 \
               GROUP  BY year  \
               ORDER  BY year ';
         if (!!mode && mode.mode == 'percent') {
-          sql = 'SELECT year, Sum(loss) / Sum(extent_2000) loss FROM umd_nat_final_1 WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 AND year < 2015 GROUP BY year ORDER BY year ';
+          sql = 'SELECT year, Sum(loss) / Sum(extent_2000) loss FROM umd_nat_staging WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 AND year < 2017 GROUP BY year ORDER BY year ';
         }
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), _.bind(function(error, json) {
           var data = json.rows;
@@ -944,10 +943,10 @@ define([
       } else if (this.model.get('graph') === 'percent_loss') {
         var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE')),
             $target = this.$big_figures,
-            query  = 'SELECT sum(gain) from umd_nat_final_1';
+            query  = 'SELECT sum(gain) from umd_nat_staging';
 
         if (!!mode && mode.mode == 'percent') {
-          query = 'SELECT sum(gain_perc) as sum from umd_nat_final_1  where thresh = 50 AND extent_2000 > 10';
+          query = 'SELECT sum(gain_perc) as sum from umd_nat_staging  where thresh = 50 AND extent_2000 > 10';
         }
         $.ajax({
               url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
@@ -977,9 +976,9 @@ define([
       } else if (this.model.get('graph') === 'total_extent') {
         var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE')),
           $target = this.$big_figures,
-             query  = 'SELECT sum(extent_2000) from umd_nat_final_1 WHERE thresh = ' + (this.helper.config.canopy_choice || 30) + 'and year = 2001';
+             query  = 'SELECT sum(extent_2000) from umd_nat_staging WHERE thresh = ' + (this.helper.config.canopy_choice || 30) + 'and year = 2001';
           if (!!mode && mode.mode == 'percent') {
-            query = 'SELECT sum(extent_perc)/count(extent_perc) as sum from umd_nat_final_1 WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +'';
+            query = 'SELECT sum(extent_perc)/count(extent_perc) as sum from umd_nat_staging WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +'';
           }
         $.ajax({
               url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
