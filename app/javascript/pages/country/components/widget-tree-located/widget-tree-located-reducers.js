@@ -5,11 +5,11 @@ export const initialState = {
   endArray: 10,
   dataSource: [
     {
-      value: '',
+      value: 'hansen',
       label: 'Hansen - 2010'
     },
     {
-      value: '',
+      value: 'fao',
       label: 'FAO'
     }
   ],

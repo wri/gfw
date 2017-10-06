@@ -21,7 +21,11 @@ const mapStateToProps = state => ({
   maxYear: state.widgetTreeLoss.maxYear,
   thresh: state.widgetTreeLoss.thresh,
   total: state.widgetTreeLoss.total,
-  years: state.widgetTreeLoss.years
+  years: state.widgetTreeLoss.years,
+  regions: state.widgetTreeLoss.regions,
+  units: state.widgetTreeLoss.units,
+  canopies: state.widgetTreeLoss.canopies,
+  settings: state.widgetTreeLoss.settings
 });
 
 const WidgetTreeLossContainer = (props) => {
