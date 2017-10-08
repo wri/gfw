@@ -79,6 +79,13 @@ class LandingController < ApplicationController
     ]
     @apps = [
       {
+        "key" => "forestwatcher",
+        "title" => "Forest Watcher",
+        "description" => "Access GFW's forest monitoring and alert system offline and collect data from the field, all from your mobile device",
+        "background" => "/assets/home/forestwatcher@2x.jpg",
+        "link" => "http://forestwatcher.globalforestwatch.org/"
+      },
+      {
         "key" => "fires",
         "title" => "Fires",
         "description" => "Track fires and haze, view the latest data on fire locations and air quality, and do your own analysis",
@@ -105,13 +112,6 @@ class LandingController < ApplicationController
         "description" => "View critical watershed information, understand type and severity of threats such as forest changes to watershed health, and screen for cost-effective, sustainable solutions",
         "background" => "/assets/home/water@2x.jpg",
         "link" => "http://water.globalforestwatch.org/"
-      },
-      {
-        "key" => "forestwatcher",
-        "title" => "Forest Watcher",
-        "description" => "Access GFW's forest monitoring and alert system offline and collect data from the field, all from your mobile device",
-        "background" => "/assets/home/forestwatcher@2x.jpg",
-        "link" => "http://forest-watcher.herokuapp.com/"
       }
     ]
   end
