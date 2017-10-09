@@ -19,7 +19,10 @@ const mapStateToProps = state => ({
   endYear: 2015,
   thresh: 30,
   startArray: state.widgetAreasMostCoverGain.startArray,
-  endArray: state.widgetAreasMostCoverGain.endArray
+  endArray: state.widgetAreasMostCoverGain.endArray,
+  regions: state.widgetAreasMostCoverGain.regions,
+  units: state.widgetAreasMostCoverGain.units,
+  settings: state.widgetAreasMostCoverGain.settings,
 });
 
 import {
