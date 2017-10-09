@@ -50,6 +50,7 @@ class WidgetTreeCoverLossAreasSettings extends PureComponent {
             <Select
               value={settings.startYear}
               options={years}/>
+            <span className="text-date">to</span>
             <Select
               value={settings.endYear}
               options={years}/>
