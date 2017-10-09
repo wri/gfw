@@ -4,6 +4,7 @@ export const initialState = {
   maxYear: 2015,
   thresh: 30,
   total: 0,
+  isUpdating: false,
   years: [],
   regions: [
     {
@@ -93,6 +94,30 @@ const setTreeLossValues = (state, { payload }) => ({
   years: payload.years
 });
 
+const setTreeLossSettingsUnit = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    unit: payload
+  }
+});
+
+const setTreeLossSettingsCanopy = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    canopy: payload
+  }
+});
+
+const setTreeLossdIsUpdating = (state, { payload }) => ({
+  ...state,
+  isUpdating: payload
+});
+
 export default {
-  setTreeLossValues
+  setTreeLossValues,
+  setTreeLossSettingsCanopy,
+  setTreeLossdIsUpdating,
+  setTreeLossSettingsUnit
 };

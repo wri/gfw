@@ -1,5 +1,6 @@
 export const initialState = {
   isLoading: true,
+  isUpdating: false,
   regionData: [],
   regionChartData: [],
   startArray: 0,
@@ -171,8 +172,50 @@ const setArrayCoverAreasLoss = (state, { payload }) => ({
   endArray: payload.endArray
 });
 
+const setTreeCoverLossAreasSettingsUnit = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    unit: payload
+  }
+});
+
+const setTreeCoverLossAreasSettingsCanopy = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    canopy: payload
+  }
+});
+
+const setTreeCoverLossAreasSettingsStartYear = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    startYear: payload
+  }
+});
+
+const setTreeCoverLossAreasSettingsEndYear = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    endYear: payload
+  }
+});
+
+const setTreeCoverLossAreasdIsUpdating = (state, { payload }) => ({
+  ...state,
+  isUpdating: payload
+});
+
 export default {
   setPieCharDataDistricts,
   setArrayCoverAreasLoss,
-  setPieChartDataTotal
+  setPieChartDataTotal,
+  setTreeCoverLossAreasSettingsUnit,
+  setTreeCoverLossAreasSettingsCanopy,
+  setTreeCoverLossAreasSettingsStartYear,
+  setTreeCoverLossAreasSettingsEndYear,
+  setTreeCoverLossAreasdIsUpdating
 };

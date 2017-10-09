@@ -21,6 +21,17 @@ class WidgetTreeLocated extends PureComponent {
     lessRegion();
   };
 
+  componentWillUpdate(nextProps) {
+    const {
+      updateData,
+      settings,
+    } = this.props;
+
+    if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
+      updateData(nextProps);
+    }
+  }
+
   render() {
     const {
       isLoading,
@@ -31,7 +42,9 @@ class WidgetTreeLocated extends PureComponent {
       units,
       dataSource,
       canopies,
-      settings
+      settings,
+      setTreeLocatedSettingsUnit,
+      setTreeLocatedSettingsCanopy
     } = this.props;
 
     const showUpIcon = startArray >= 10;
@@ -50,7 +63,9 @@ class WidgetTreeLocated extends PureComponent {
                 dataSource={dataSource}
                 units={units}
                 canopies={canopies}
-                settings={settings}/>
+                settings={settings}
+                onUnitChange={setTreeLocatedSettingsUnit}
+                onCanopyChange={setTreeLocatedSettingsCanopy}/>
           </WidgetHeader>
           <ul className="c-widget-tree-located__regions">
             {topRegions.slice(startArray, endArray).map((item, index) => {

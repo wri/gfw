@@ -16,6 +16,7 @@ import {
 
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeLocated.isLoading,
+  isUpdating: state.widgetTreeLocated.isUpdating,
   iso: state.root.iso,
   countryRegions: state.root.countryRegions,
   countryRegion: state.root.countryRegion,
@@ -48,10 +49,19 @@ const WidgetTreeLocatedContainer = (props) => {
     props.setArrayLocated(value);
   };
 
+  const updateData = (props) => {
+    props.setTreeLocatedIsUpdating(true);
+    setWidgetData(props);
+  };
+
   const setInitialData = (props) => {
-    getTotalCover(props.iso, props.countryRegion, 30)
+    setWidgetData(props);
+  };
+
+  const setWidgetData = (props) => {
+    getTotalCover(props.iso, props.countryRegion, props.settings.canopy)
       .then((totalCoverResponse) => {
-        getTotalCoverRegions(props.iso, 30)
+        getTotalCoverRegions(props.iso, props.settings.canopy)
           .then((totalCoverRegions) => {
             const regionsForest = [];
             const totalCover = Math.round(totalCoverResponse.data.data[0].value);
@@ -74,11 +84,13 @@ const WidgetTreeLocatedContainer = (props) => {
           });
       });
   };
+
   return createElement(WidgetTreeLocatedComponent, {
     ...props,
     setInitialData,
     moreRegion,
-    lessRegion
+    lessRegion,
+    updateData
   });
 };
 
