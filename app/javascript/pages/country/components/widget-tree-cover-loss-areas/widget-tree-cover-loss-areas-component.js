@@ -23,6 +23,17 @@ class WidgetTreeLossAreas extends PureComponent {
     lessRegion();
   };
 
+  componentWillUpdate(nextProps) {
+    const {
+      updateData,
+      settings,
+    } = this.props;
+
+    if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
+      updateData(nextProps);
+    }
+  }
+
   render() {
     const {
       isLoading,
@@ -37,7 +48,11 @@ class WidgetTreeLossAreas extends PureComponent {
       settings,
       canopies,
       regions,
-      years
+      years,
+      setTreeCoverLossAreasSettingsUnit,
+      setTreeCoverLossAreasSettingsCanopy,
+      setTreeCoverLossAreasSettingsStartYear,
+      setTreeCoverLossAreasSettingsEndYear
     } = this.props;
 
     const showUpIcon = startArray >= 10;
@@ -55,7 +70,11 @@ class WidgetTreeLossAreas extends PureComponent {
             units={units}
             canopies={canopies}
             settings={settings}
-            years={years}/>
+            years={years}
+            onUnitChange={setTreeCoverLossAreasSettingsUnit}
+            onCanopyChange={setTreeCoverLossAreasSettingsCanopy}
+            onStartYearChange={setTreeCoverLossAreasSettingsStartYear}
+            onEndYearChange={setTreeCoverLossAreasSettingsEndYear}/>
         </WidgetHeader>
           <div className="c-widget-tree-cover-loss-areas__container">
             <div className="c-widget-tree-cover-loss-areas__chart">
@@ -80,7 +99,7 @@ class WidgetTreeLossAreas extends PureComponent {
                         {item.name}
                       </div>
                       <div className="c-widget-tree-cover-loss-areas__legend-value">
-                        {numeral(Math.round(item.value / 1000)).format('0,0')}Ha
+                        {settings.unit === 'Ha' ? numeral(Math.round(item.value / 1000)).format('0,0') : Math.round(item.value)}{settings.unit === 'Ha' ? 'Ha' : '%'}
                       </div>
                     </li>
                   );

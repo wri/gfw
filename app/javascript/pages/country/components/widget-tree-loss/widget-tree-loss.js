@@ -14,6 +14,7 @@ import {
 
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeLoss.isLoading,
+  isUpdating: state.widgetTreeLocated.isUpdating,
   iso: state.root.iso,
   countryRegion: state.root.countryRegion,
   countryData: state.root.countryData,
@@ -29,18 +30,29 @@ const mapStateToProps = state => ({
 });
 
 const WidgetTreeLossContainer = (props) => {
+
+  const updateData = (props) => {
+    props.setTreeLossIsUpdating(true);
+    setWidgetData(props);
+  };
+
   const setInitialData = (props) => {
+    setWidgetData(props);
+  };
+
+  const setWidgetData = (props) => {
     getTreeLossByYear(
       props.iso,
       props.countryRegion,
       {minYear: props.minYear, maxYear: props.maxYear},
-      props.thresh
+      props.settings.canopy
     )
       .then((response) => {
+        const total = response.data.data.reduce(function(accumulator, item) {
+          return (typeof accumulator === 'object' ? accumulator.value : accumulator) + item.value;
+        });
         const values = {
-          total: response.data.data.reduce(function(accumulator, item) {
-            return (typeof accumulator === 'object' ? accumulator.value : accumulator) + item.value;
-          }),
+          total: props.settings.unit === 'Ha' ? total : (total /  Math.round(props.countryData.area_ha)) * 100,
           years: response.data.data
         };
         props.setTreeLossValues(values);
@@ -54,7 +66,8 @@ const WidgetTreeLossContainer = (props) => {
   return createElement(WidgetTreeLossComponent, {
     ...props,
     setInitialData,
-    viewOnMap
+    viewOnMap,
+    updateData
   });
 };
 

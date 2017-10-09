@@ -53,13 +53,22 @@ const WidgetTreeCoverLossAreasContainer = (props) => {
     props.setArrayCoverAreasLoss(value);
   };
 
+  const updateData = (props) => {
+    props.setTreeCoverLossAreasdIsUpdating(true);
+    setWidgetData(props);
+  };
+
   const setInitialData = (props) => {
+    setWidgetData(props);
+  };
+
+  const setWidgetData = (props) => {
     let nameChart = '';
     let valueChart = 0;
     getTreeLossByRegion(
       props.iso,
-      {minYear: props.startYear, maxYear: props.endYear},
-      props.thresh
+      {minYear: props.settings.startYear, maxYear: props.settings.endYear},
+      props.settings.canopy
     )
     .then((treeLossByRegion) => {
       const regionsForestLoss = [];
@@ -68,7 +77,7 @@ const WidgetTreeCoverLossAreasContainer = (props) => {
         const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
         regionsForestLoss.push({
           name: props.countryRegions[numberRegion].name,
-          value: item.value,
+          value: props.settings.unit === 'Ha' ? item.value : (item.value /  Math.round(props.countryData.area_ha)) * 100,
           color: colors[indexColors],
           position: index + 1
         })
@@ -78,7 +87,7 @@ const WidgetTreeCoverLossAreasContainer = (props) => {
           regionForestLossChart.push({
             name: nameChart,
             color: colors[indexColors],
-            value: valueChart,
+            value: props.settings.unit === 'Ha' ? valueChart : (valueChart /  Math.round(props.countryData.area_ha)) * 100 ,
           })
         } else {
           othersValue += item.value;
@@ -99,7 +108,8 @@ const WidgetTreeCoverLossAreasContainer = (props) => {
     ...props,
     setInitialData,
     moreRegion,
-    lessRegion
+    lessRegion,
+    updateData
   });
 };
 

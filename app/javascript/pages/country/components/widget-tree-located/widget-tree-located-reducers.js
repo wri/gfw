@@ -1,6 +1,7 @@
 export const initialState = {
   isLoading: true,
   topRegions: [],
+  isUpdating: false,
   startArray: 0,
   endArray: 10,
   dataSource: [
@@ -76,7 +77,31 @@ const setArrayLocated = (state, { payload }) => ({
   endArray: payload.endArray
 });
 
+const setTreeLocatedSettingsUnit = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    unit: payload
+  }
+});
+
+const setTreeLocatedSettingsCanopy = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    canopy: payload
+  }
+});
+
+const setTreeLocatedIsUpdating = (state, { payload }) => ({
+  ...state,
+  isUpdating: payload
+});
+
 export default {
   setTreeLocatedValues,
-  setArrayLocated
+  setArrayLocated,
+  setTreeLocatedSettingsUnit,
+  setTreeLocatedSettingsCanopy,
+  setTreeLocatedIsUpdating
 };

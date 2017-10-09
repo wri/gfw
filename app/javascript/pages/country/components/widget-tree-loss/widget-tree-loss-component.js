@@ -21,6 +21,17 @@ class WidgetTreeLoss extends PureComponent {
     setInitialData(this.props);
   }
 
+  componentWillUpdate(nextProps) {
+    const {
+      updateData,
+      settings,
+    } = this.props;
+
+    if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
+      updateData(nextProps);
+    }
+  }
+
   render() {
     const {
       isLoading,
@@ -32,12 +43,15 @@ class WidgetTreeLoss extends PureComponent {
       units,
       settings,
       canopies,
-      regions
+      regions,
+      setTreeLossSettingsUnit,
+      setTreeLossSettingsCanopy
     } = this.props;
 
     if (isLoading) {
       return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
     } else {
+      const unitMeasure = settings.unit === 'Ha' ? 'Ha' : '%';
       return (
         <div className="c-widget c-widget-tree-loss">
           <WidgetHeader
@@ -48,7 +62,9 @@ class WidgetTreeLoss extends PureComponent {
               regions={regions}
               units={units}
               canopies={canopies}
-              settings={settings}/>
+              settings={settings}
+              onUnitChange={setTreeLossSettingsUnit}
+              onCanopyChange={setTreeLossSettingsCanopy}/>
           </WidgetHeader>
           <div className="c-widget-tree-loss__legend">
             <div>
@@ -61,7 +77,7 @@ class WidgetTreeLoss extends PureComponent {
                 Country-wide
               </div>
               <div className="c-widget-tree-loss__legend-value" style={{color: '#f26798'}}>
-                {numeral(Math.round(total / 1000)).format('0,0')}Ha
+                {settings.unit === 'Ha' ? numeral(Math.round(total / 1000)).format('0,0') : Math.round(total)}{unitMeasure}
               </div>
             </div>
           </div>
