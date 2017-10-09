@@ -225,12 +225,20 @@
       padding-top: 0;
       border-top: 0;
       display: block;
+      padding-bottom: 0;
 
       .c-widget-settings__container-years {
         margin-top: rem(13px);
         padding-bottom: rem(30px);
         display: flex;
         justify-content: space-between;
+        align-items: center;
+
+        .text-date {
+          font-size: 13px;
+          letter-spacing: 0.1px;
+          text-transform: capitalize;
+        }
 
         .dd__selectControl {
           color: $green-gfw;
