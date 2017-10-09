@@ -45,7 +45,6 @@ class WidgetTreeCover extends PureComponent {
     if (isLoading) {
       return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
     } else {
-      console.log(totalCover);
       const pieCharData = [
         { name: 'Forest', value: totalCover, color: '#959a00' },
         { name: 'Intact Forest', value: totalIntactForest, color: '#2d8700' },

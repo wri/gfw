@@ -59,8 +59,7 @@ const WidgetTreeLocatedContainer = (props) => {
               const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
               regionsForest.push({
                 name: props.countryRegions[numberRegion].name,
-                value: item.value,
-                percent: (item.value / totalCover) * 100,
+                value: props.settings.unit === 'Ha' ? item.value : (item.value / totalCover) * 100,
                 position: index + 1,
                 color: colors[indexColors]
               })
