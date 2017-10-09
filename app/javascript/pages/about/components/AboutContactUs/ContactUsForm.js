@@ -16,20 +16,69 @@ const validate = values => {
   return errors
 };
 
-const renderField = ({ input, label, type, meta: { touched, error } }) => {
+const renderInput = ({ input, label, placeholder, type, meta: { touched, error } }) => {
+  const fieldClass = `c-about-contactus__field ${touched && error ? 'c-about-contactus__field--error' : ''}`;
+
   return (
-    <div>
+    <div className={fieldClass}>
       <label>{label}</label>
       <div>
-        <input {...input} placeholder={label} type={type} />
-        {touched &&
-        error &&
-        <span>{error}</span>}
+        <input
+          {...input}
+          placeholder={placeholder}
+          type={type} />
+      </div>
+    </div>
+  );
+};
+
+const renderSelect = ({ input, label, options, meta: { touched, error } }) => {
+  const fieldClass = `c-about-contactus__field ${touched && error ? 'c-about-contactus__field--error' : ''}`;
+
+  return (
+    <div className={fieldClass}>
+      <label>{label}</label>
+      <div>
+        <Field name={input.name} component="select">
+          <option />
+          {options.map((option,i) => {
+            return <option key={i} value={option.key}>{option.name}</option>;
+          })}
+        </Field>
+      </div>
+    </div>
+  );
+};
+
+const renderTextarea = ({ input, label, placeholder, meta: { touched, error } }) => {
+  const fieldClass = `c-about-contactus__field ${touched && error ? 'c-about-contactus__field--error' : ''}`;
+
+  return (
+    <div className={fieldClass}>
+      <label>{label}</label>
+      <div>
+        <Field
+          name={input.name}
+          component="textarea"
+          placeholder={placeholder}/>
       </div>
     </div>
   );
 }
 
+const renderRadio = ({ input, id, label, type }) => {
+  return (
+    <div className="c-about-contactus__radio">
+      <input
+        id={id}
+        {...input}
+        type={type} />
+      <label htmlFor={id}>
+        <span></span> {label}
+      </label>
+    </div>
+  );
+};
 
 const ContactUsForm = props => {
   const { handleSubmit, submitting } = props;
@@ -83,60 +132,40 @@ const ContactUsForm = props => {
   ];
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>EMAIL *</label>
-        <div>
-          <Field
-            name="email"
-            component={renderField}
-            type="email"
-          />
-        </div>
-      </div>
-      <div>
-        <label>TOPIC *</label>
-        <div>
-          <Field name="topic" component="select">
-            <option />
-            {topics.map((topic,i) => {
-              return <option key={i} value={topic.key}>{topic.name}</option>;
-            })}
-          </Field>
-        </div>
-      </div>
-      <div>
-        <label>MESSAGE *</label>
-        <div>
-          <Field
-            name="message"
-            component="textarea"
-            placeholder="How can we help you?"/>
-        </div>
-      </div>
-      <div>
-        <label>Interested in testing new features on GFW?</label>
-        <div>Sign up and become and official GFW tester!</div>
-        <div>
-          <label>
-            <Field
-              name="signup-true"
-              component="input"
-              type="radio"
-              value="true"
-            />
-            Yes, sign me up.
-          </label>
-          <label>
-            <Field
-              name="signup-false"
-              component="input"
-              type="radio"
-              value="true"
-            />
-            No thanks.
-          </label>
-        </div>
+    <form className="c-about-contactus__form" onSubmit={handleSubmit}>
+      <Field
+        name="email"
+        type="email"
+        label="EMAIL *"
+        placeholder=""
+        component={renderInput} />
+      <Field
+        name="topic"
+        label="TOPIC *"
+        options={topics}
+        component={renderSelect} />
+      <Field
+        name="message"
+        label="MESSAGE *"
+        placeholder="How can we help you?"
+        component={renderTextarea} />
+      <div className="c-about-contactus__field-radio">
+        <div className="c-about-contactus__field-radio-title">Interested in testing new features on GFW?</div>
+        <div className="c-about-contactus__field-radio-subtitle">Sign up and become and official GFW tester!</div>
+        <Field
+          id="c-about-contactus-signup-true"
+          name="signup"
+          type="radio"
+          value="true"
+          label="Yes, sign me up."
+          component={renderRadio} />
+        <Field
+          id="c-about-contactus-signup-false"
+          name="signup"
+          type="radio"
+          value="false"
+          label="No thanks."
+          component={renderRadio} />
       </div>
       <div>
         <button type="submit" disabled={submitting}>SUBMIT</button>
@@ -147,5 +176,8 @@ const ContactUsForm = props => {
 
 export default reduxForm({
   form: 'contactUs',
-  validate
+  validate,
+  initialValues: {
+    signup: 'false'
+  },
 })(ContactUsForm)
