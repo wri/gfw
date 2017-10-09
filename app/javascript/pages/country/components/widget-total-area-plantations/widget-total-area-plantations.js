@@ -15,7 +15,9 @@ const mapStateToProps = state => ({
   countryData: state.root.countryData,
   plantationData: state.widgetTotalAreaPlantations.plantationData,
   startYear: 2011,
-  endYear: 2015
+  endYear: 2015,
+  units: state.widgetTotalAreaPlantations.units,
+  settings: state.widgetTotalAreaPlantations.settings,
 });
 
 const WidgetTotalAreaPlantationsContainer = (props) => {

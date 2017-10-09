@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer }from 'recharts';
 import numeral from 'numeral';
 
+import WidgetPlantationAreaSettings from './widget-plantation-area-settings-component';
 import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
 
@@ -18,14 +19,21 @@ class WidgetPlantationArea extends PureComponent {
       countryData,
       plantationAreaData,
       startYear,
-      endYear
+      endYear,
+      settings,
+      units
     } = this.props;
     if (isLoading) {
       return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
     } else {
       return (
         <div className="c-widget c-widget-plantation-area">
-          <WidgetHeader noMap title={`PLANTAtION AREA WITHIN ${countryData.name}`} />
+          <WidgetHeader noMap title={`PLANTAtION AREA WITHIN ${countryData.name}`} >
+            <WidgetPlantationAreaSettings
+              type="settings"
+              units={units}
+              settings={settings} />
+          </WidgetHeader>
           <div className="c-widget-plantation-area__container">
             <div className="c-widget-plantation-area__chart">
               {plantationAreaData.map((item, index) => {
