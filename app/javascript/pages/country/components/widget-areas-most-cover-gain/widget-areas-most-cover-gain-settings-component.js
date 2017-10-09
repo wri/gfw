@@ -51,7 +51,6 @@ class WidgetAreasMostCoverGainSettings extends PureComponent {
 WidgetAreasMostCoverGainSettings.propTypes = {
   regions: PropTypes.array.isRequired,
   units: PropTypes.array.isRequired,
-  canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
 };
 
