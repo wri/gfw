@@ -58,7 +58,6 @@ class WidgetTreeLocated extends PureComponent {
                 <li key={index}>
                   <div className="c-widget-tree-located__region-bubble" style={{backgroundColor: item.color}}>{item.position}</div>
                   <div className="c-widget-tree-located__region-name">{item.name}</div>
-                  <div className="c-widget-tree-located__region-percent">{numeral(Math.round(item.percent)).format('0,0')}%</div>
                   <div className="c-widget-tree-located__region-value">{numeral(Math.round(item.value / 1000)).format('0,0')} Ha</div>
                 </li>
               );

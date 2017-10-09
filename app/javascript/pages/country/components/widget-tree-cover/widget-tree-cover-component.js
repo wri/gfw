@@ -45,12 +45,13 @@ class WidgetTreeCover extends PureComponent {
     if (isLoading) {
       return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
     } else {
+      console.log(totalCover);
       const pieCharData = [
         { name: 'Forest', value: totalCover, color: '#959a00' },
         { name: 'Intact Forest', value: totalIntactForest, color: '#2d8700' },
         { name: 'Non Forest', value: totalNonForest, color: '#d1d1d1' }
       ];
-
+      const unitMeasure = settings.unit === 'Ha' ? 'Ha' : '%';
       return (
         <div className="c-widget c-widget-tree-cover">
           <WidgetHeader
@@ -75,7 +76,7 @@ class WidgetTreeCover extends PureComponent {
                     {item.name}
                   </div>
                   <div className="c-widget-tree-cover__legend-value" style={{color: item.color}}>
-                    {numeral(Math.round(item.value / 1000)).format('0,0')}Ha
+                    {settings.unit === 'Ha' ? numeral(Math.round(item.value / 1000)).format('0,0') : Math.round(item.value) }{unitMeasure}
                   </div>
                 </li>
               );
