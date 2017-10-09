@@ -40,7 +40,6 @@ const renderSelect = ({ input, label, options, meta: { touched, error } }) => {
       <label>{label}</label>
       <div>
         <Field name={input.name} component="select">
-          <option />
           {options.map((option,i) => {
             return <option key={i} value={option.key}>{option.name}</option>;
           })}
@@ -178,6 +177,7 @@ export default reduxForm({
   form: 'contactUs',
   validate,
   initialValues: {
+    topic: 'provide-feedback',
     signup: 'false'
   },
 })(ContactUsForm)
