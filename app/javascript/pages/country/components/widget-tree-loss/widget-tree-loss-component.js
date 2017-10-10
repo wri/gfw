@@ -55,7 +55,6 @@ class WidgetTreeLoss extends PureComponent {
     if (isLoading) {
       return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
     } else {
-      console.log(isUpdating);
       const unitMeasure = settings.unit === 'Ha' ? 'Ha' : '%';
       return (
         <div className="c-widget c-widget-tree-loss">
