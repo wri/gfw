@@ -80,13 +80,13 @@ const WidgetAreasMostCoverGainContainer = (props) => {
           color: colors[indexColors],
           position: index + 1,
         })
-        if(indexColors < 10 || index === treeCoverGainByRegion.data.data.length - 1) {
+        if (indexColors < 10 || index === treeCoverGainByRegion.data.data.length - 1) {
           if(indexColors < 10) { nameChart = props.countryRegions[numberRegion].name; valueChart = item.value;}
-          if(index === treeCoverGainByRegion.data.data.length - 1) { nameChart = 'others'; valueChart = othersValue;}
+          if (index === treeCoverGainByRegion.data.data.length - 1) { nameChart = 'others'; valueChart = othersValue;}
           regionCoverGainChart .push({
             name: nameChart,
             color: colors[indexColors],
-            value: valueChart,
+            value: props.settings.unit === 'Ha' ? valueChart : (valueChart / props.countryData.area_ha) * 100,
           })
         } else {
           othersValue += item.value;
