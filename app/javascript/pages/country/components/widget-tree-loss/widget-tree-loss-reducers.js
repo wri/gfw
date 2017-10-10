@@ -159,6 +159,7 @@ export const initialState = {
 const setTreeLossValues = (state, { payload }) => ({
   ...state,
   isLoading: false,
+  isUpdating: false,
   total: payload.total,
   years: payload.years
 });
@@ -179,7 +180,7 @@ const setTreeLossSettingsCanopy = (state, { payload }) => ({
   }
 });
 
-const setTreeLossdIsUpdating = (state, { payload }) => ({
+const setTreeLossIsUpdating = (state, { payload }) => ({
   ...state,
   isUpdating: payload
 });
@@ -203,7 +204,7 @@ const setTreeLossSettingsEndYear = (state, { payload }) => ({
 export default {
   setTreeLossValues,
   setTreeLossSettingsCanopy,
-  setTreeLossdIsUpdating,
+  setTreeLossIsUpdating,
   setTreeLossSettingsUnit,
   setTreeLossSettingsStartYear,
   setTreeLossSettingsEndYear

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { PieChart, Pie, Legend, Tooltip, Cell }from 'recharts';
 import numeral from 'numeral';
 
+import WidgetUpdating from '../widget-updating/widget-updating';
 import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
 import WidgetTreeCoverLossAreasSettings from './widget-tree-cover-loss-areas-settings-component';
@@ -52,7 +53,8 @@ class WidgetTreeLossAreas extends PureComponent {
       setTreeCoverLossAreasSettingsUnit,
       setTreeCoverLossAreasSettingsCanopy,
       setTreeCoverLossAreasSettingsStartYear,
-      setTreeCoverLossAreasSettingsEndYear
+      setTreeCoverLossAreasSettingsEndYear,
+      isUpdating
     } = this.props;
 
     const showUpIcon = startArray >= 10;
@@ -111,6 +113,7 @@ class WidgetTreeLossAreas extends PureComponent {
               </div>
             </ul>
           </div>
+          {isUpdating ? <WidgetUpdating /> : null}
         </div>
       )
     }

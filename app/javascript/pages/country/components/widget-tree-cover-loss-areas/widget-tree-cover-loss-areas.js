@@ -18,6 +18,7 @@ const mapStateToProps = state => ({
   startYear: 2001,
   endYear: 2015,
   thresh: 30,
+  isUpdating: state.widgetTreeCoverLossAreas.isUpdating,
   startArray: state.widgetTreeCoverLossAreas.startArray,
   endArray: state.widgetTreeCoverLossAreas.endArray,
   regions: state.widgetTreeCoverLossAreas.regions,

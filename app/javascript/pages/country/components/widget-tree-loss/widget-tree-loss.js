@@ -14,7 +14,7 @@ import {
 
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeLoss.isLoading,
-  isUpdating: state.widgetTreeLocated.isUpdating,
+  isUpdating: state.widgetTreeLoss.isUpdating,
   iso: state.root.iso,
   countryRegion: state.root.countryRegion,
   countryData: state.root.countryData,
