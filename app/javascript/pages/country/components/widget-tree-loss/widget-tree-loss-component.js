@@ -39,15 +39,17 @@ class WidgetTreeLoss extends PureComponent {
       minYear,
       maxYear,
       total,
+      yearsLoss,
       years,
       units,
       settings,
       canopies,
       regions,
       setTreeLossSettingsUnit,
-      setTreeLossSettingsCanopy
+      setTreeLossSettingsCanopy,
+      setTreeLossSettingsStartYear,
+      setTreeLossSettingsEndYear
     } = this.props;
-
     if (isLoading) {
       return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
     } else {
@@ -63,13 +65,16 @@ class WidgetTreeLoss extends PureComponent {
               units={units}
               canopies={canopies}
               settings={settings}
+              yearsLoss={yearsLoss}
               onUnitChange={setTreeLossSettingsUnit}
-              onCanopyChange={setTreeLossSettingsCanopy}/>
+              onCanopyChange={setTreeLossSettingsCanopy}
+              onStartYearChange={setTreeLossSettingsStartYear}
+              onEndYearChange={setTreeLossSettingsEndYear}/>
           </WidgetHeader>
           <div className="c-widget-tree-loss__legend">
             <div>
               <div className="c-widget-tree-loss__legend-title">Total Tree Cover Loss</div>
-              <div className="c-widget-tree-loss__legend-years">({`${minYear} - ${maxYear}`})</div>
+              <div className="c-widget-tree-loss__legend-years">({`${settings.startYear} - ${settings.endYear}`})</div>
             </div>
             <div>
               <div className="c-widget-tree-loss__legend-title">
@@ -120,6 +125,7 @@ WidgetTreeLoss.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
   viewOnMap: PropTypes.func.isRequired,
+  yearsLoss: PropTypes.array.isRequired,
   years: PropTypes.array.isRequired
 };
 

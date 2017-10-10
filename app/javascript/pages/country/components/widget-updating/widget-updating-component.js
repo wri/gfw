@@ -5,9 +5,7 @@ class WidgetUpdating extends PureComponent {
   render() {
 
     return (
-      <div className="c-widget-updating">
-        loading!!
-      </div>
+      <div className="c-loading -widget -updating"><div className="loader">Loading...</div></div>
     );
   }
 }
