@@ -48,14 +48,15 @@ class WidgetTreeCover extends PureComponent {
       const pieCharData = [
         { name: 'Forest', value: totalCover, color: '#959a00' },
         { name: 'Intact Forest', value: totalIntactForest, color: '#2d8700' },
-        { name: 'Non Forest', value: totalNonForest, color: '#d9d9dc' }
+        { name: 'Non Forest', value: totalNonForest, color: '#d1d1d1' }
       ];
-
+      const unitMeasure = settings.unit === 'Ha' ? 'Ha' : '%';
       return (
         <div className="c-widget c-widget-tree-cover">
           <WidgetHeader
             title={`Forest cover in ${countryData.name}`}
-            viewOnMapCallback={viewOnMap}>
+            viewOnMapCallback={viewOnMap}
+          >
             <WidgetTreeCoverSettings
               type="settings"
               regions={regions}
@@ -64,18 +65,19 @@ class WidgetTreeCover extends PureComponent {
               settings={settings}
               onRegionChange={setTreeCoverSettingsRegion}
               onUnitChange={setTreeCoverSettingsUnit}
-              onCanopyChange={setTreeCoverSettingsCanopy}/>
+              onCanopyChange={setTreeCoverSettingsCanopy}
+            />
           </WidgetHeader>
           <ul className="c-widget-tree-cover__legend">
             {pieCharData.map((item, index) => {
               return (
-                <li key={index}>
+                <li key={index.toString()}>
                   <div className="c-widget-tree-cover__legend-title">
-                    <span style={{backgroundColor: item.color}}></span>
+                    <span style={{ backgroundColor: item.color }}>{}</span>
                     {item.name}
                   </div>
-                  <div className="c-widget-tree-cover__legend-value" style={{color: item.color}}>
-                    {numeral(Math.round(item.value / 1000)).format('0,0')}Ha
+                  <div className="c-widget-tree-cover__legend-value" style={{ color: item.color }}>
+                    {settings.unit === 'Ha' ? numeral(Math.round(item.value / 1000)).format('0,0') : Math.round(item.value) }<span className="unit-text">{unitMeasure}</span>
                   </div>
                 </li>
               );
@@ -85,7 +87,7 @@ class WidgetTreeCover extends PureComponent {
             <PieChart width={121} height={121}>
               <Pie dataKey="value" data={pieCharData} cx={56} cy={56} innerRadius={28} outerRadius={60}>
                 {
-                  pieCharData.map((item, index) => <Cell key={index} fill={item.color}/>)
+                  pieCharData.map((item, index) => <Cell key={index.toString()} fill={item.color} />)
                 }
               </Pie>
             </PieChart>

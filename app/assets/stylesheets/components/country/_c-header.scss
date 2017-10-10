@@ -1,24 +1,77 @@
 $black-tabs: #404040;
 .c-header {
   background-color: $slate-light;
-  height: rem(350px);
+  height: auto;
+
+  @media screen and (min-width: $screen-m) {
+    height: rem(350px);
+  }
+
+  .container-select {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @media screen and (min-width: $screen-m) {
+      flex-direction: row;
+    }
+
+    @media screen and (min-width: $screen-l) {
+      display: block;
+    }
+  }
 
   .row {
     max-width: none;
-    padding-top: rem(80px);
-    width: calc(70% - 100px);
+    padding-top: rem(100px);
+    width: calc(100% - 100px);
     min-height: rem(350px);;
     margin: 0;
     margin-left: rem(50px);
+    padding-bottom: rem(20px);
+
+    @media screen and (min-width: $screen-m) {
+      padding-top: rem(80px);
+      padding-bottom: 0;
+    }
+
+    @media screen and (min-width: $screen-m) {
+      width: calc(70% - 100px);
+    }
+
+    @media screen and (min-width: $screen-l) {
+      padding-top: rem(80px);
+    }
   }
 
   .c-header__select {
-    margin-bottom: rem(15px);
     display: flex;
     align-items: center;
+    flex-basis: calc(50% - 10px);
+    justify-content: flex-start;
 
-    &:last-of-type {
-      margin-bottom: 0;
+    &.-jurisdiction {
+      position: relative;
+      top: -20px;
+    }
+
+    @media screen and (min-width: $screen-m) {
+      justify-content: flex-end;
+      top: 0 !important;
+
+      &:first-of-type {
+        justify-content: flex-start;
+      }
+    }
+
+    @media screen and (min-width: $screen-l) {
+      margin-bottom: rem(15px);
+      flex-basis: 100%;
+      justify-content: flex-start;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
     }
 
     .c-header__select-arrow {
@@ -37,11 +90,15 @@ $black-tabs: #404040;
           max-width: 100%;
 
           .dd__option {
-            font-size: 30px;
+            font-size: 20px;
             word-break: break-word;
             max-width: 100%;
             white-space: pre-line;
             line-height: 40px;
+
+            @media screen and (min-width: $screen-l) {
+              font-size: 30px;
+            }
           }
         }
       }
@@ -54,12 +111,16 @@ $black-tabs: #404040;
           .dd__placeholder,
           .dd__selectedItem {
             height: rem(56px);
-            font-size: 47px;
+            font-size: 35px;
             font-weight: 300;
             color: $white;
             width: 100%;
             display: flex;
             align-items: center;
+
+            @media screen and (min-width: $screen-l) {
+              font-size: 47px;
+            }
           }
         }
       }

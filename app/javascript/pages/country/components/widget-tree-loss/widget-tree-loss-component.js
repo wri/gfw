@@ -11,13 +11,26 @@ import {
 } from 'recharts';
 import numeral from 'numeral';
 
+import WidgetUpdating from '../widget-updating/widget-updating';
 import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
+import WidgetTreeLossSettings from './widget-tree-loss-settings-component';
 
 class WidgetTreeLoss extends PureComponent {
   componentDidMount() {
     const { setInitialData } = this.props;
     setInitialData(this.props);
+  }
+
+  componentWillUpdate(nextProps) {
+    const {
+      updateData,
+      settings,
+    } = this.props;
+
+    if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
+      updateData(nextProps);
+    }
   }
 
   render() {
@@ -27,29 +40,52 @@ class WidgetTreeLoss extends PureComponent {
       minYear,
       maxYear,
       total,
-      years
+      yearsLoss,
+      years,
+      units,
+      settings,
+      canopies,
+      regions,
+      setTreeLossSettingsUnit,
+      setTreeLossSettingsCanopy,
+      setTreeLossSettingsStartYear,
+      setTreeLossSettingsEndYear,
+      isUpdating
     } = this.props;
-
     if (isLoading) {
       return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
     } else {
+      const unitMeasure = settings.unit === 'Ha' ? 'Ha' : '%';
       return (
         <div className="c-widget c-widget-tree-loss">
           <WidgetHeader
-            title={`Tree cover loss`}
-            viewOnMapCallback={viewOnMap}/>
+            title={'Tree cover loss'}
+            viewOnMapCallback={viewOnMap}>
+            <WidgetTreeLossSettings
+              type="settings"
+              regions={regions}
+              units={units}
+              canopies={canopies}
+              settings={settings}
+              yearsLoss={yearsLoss}
+              onUnitChange={setTreeLossSettingsUnit}
+              onCanopyChange={setTreeLossSettingsCanopy}
+              onStartYearChange={setTreeLossSettingsStartYear}
+              onEndYearChange={setTreeLossSettingsEndYear}
+            />
+          </WidgetHeader>
           <div className="c-widget-tree-loss__legend">
             <div>
               <div className="c-widget-tree-loss__legend-title">Total Tree Cover Loss</div>
-              <div className="c-widget-tree-loss__legend-years">({`${minYear} - ${maxYear}`})</div>
+              <div className="c-widget-tree-loss__legend-years">({`${settings.startYear} - ${settings.endYear}`})</div>
             </div>
             <div>
               <div className="c-widget-tree-loss__legend-title">
-                <span style={{backgroundColor: '#f26798'}}></span>
+                <span style={{ backgroundColor: '#f26798' }}>{}</span>
                 Country-wide
               </div>
-              <div className="c-widget-tree-loss__legend-value" style={{color: '#f26798'}}>
-                {numeral(Math.round(total / 1000)).format('0,0')}Ha
+              <div className="c-widget-tree-loss__legend-value" style={{ color: '#f26798' }}>
+                {settings.unit === 'Ha' ? numeral(Math.round(total / 1000)).format('0,0') : Math.round(total)}{unitMeasure}
               </div>
             </div>
           </div>
@@ -59,7 +95,7 @@ class WidgetTreeLoss extends PureComponent {
                 width={627}
                 height={300}
                 data={years}
-                margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                 <XAxis
                   dataKey="date"
                   padding={{ top: 135}}
@@ -73,15 +109,16 @@ class WidgetTreeLoss extends PureComponent {
                 <CartesianGrid
                   vertical={false}
                   strokeDasharray="3 4" />
-                <Tooltip content={<TooltipChart/>} />
+                <Tooltip content={<TooltipChart/> } />
                 <Bar
                   dataKey="value"
                   barSize={22}
                   fill="#fe6598" />
-                <Tooltip content={<TooltipChart/>} />
+                <Tooltip percentage={settings.unit !== 'Ha'} content={<TooltipChart/>} />
               </BarChart>
             </ResponsiveContainer>
           </div>
+          {isUpdating ? <WidgetUpdating /> : null}
         </div>
       )
     }
@@ -92,6 +129,7 @@ WidgetTreeLoss.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
   viewOnMap: PropTypes.func.isRequired,
+  yearsLoss: PropTypes.array.isRequired,
   years: PropTypes.array.isRequired
 };
 

@@ -6,6 +6,15 @@
   align-items: center;
   align-content: center;
 
+  &.-updating {
+    position: absolute;
+    top: 0;
+    width: 100% !important;
+    height: 100% !important;
+    left: 0;
+    background-color: $white;
+  }
+
   .loader {
     font-size: 10px;
     margin: 50px auto;

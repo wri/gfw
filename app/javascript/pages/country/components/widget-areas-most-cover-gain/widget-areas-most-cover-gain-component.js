@@ -5,6 +5,7 @@ import numeral from 'numeral';
 
 import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
+import WidgetAreasMostCoverGainSettings from './widget-areas-most-cover-gain-settings-component';
 
 class WidgetAreasMostCoverGain extends PureComponent {
   componentDidMount() {
@@ -27,10 +28,14 @@ class WidgetAreasMostCoverGain extends PureComponent {
       isLoading,
       countryData,
       areaData,
+      areaChartData,
       startYear,
       endYear,
       startArray,
-      endArray
+      endArray,
+      settings,
+      units,
+      regions
     } = this.props;
 
     const showUpIcon = startArray >= 10;
@@ -41,7 +46,13 @@ class WidgetAreasMostCoverGain extends PureComponent {
     } else {
       return (
         <div className="c-widget c-widget-areas-most-cover-gain">
-          <WidgetHeader title={`AREAS WITH MOST TREE COVER GAIN IN ${countryData.name}`} />
+          <WidgetHeader title={`AREAS WITH MOST TREE COVER GAIN IN ${countryData.name}`} >
+          <WidgetAreasMostCoverGainSettings
+            type="settings"
+            regions={regions}
+            units={units}
+            settings={settings} />
+        </WidgetHeader>
           <p className="title-legend">Hansen - UMD</p>
           <div className="c-widget-areas-most-cover-gain__container">
             <ul className="c-widget-areas-most-cover-gain__legend">
@@ -58,12 +69,12 @@ class WidgetAreasMostCoverGain extends PureComponent {
             </ul>
             <div className="c-widget-areas-most-cover-gain__chart">
               <PieChart width={150} height={150}>
-                <Pie dataKey="value" data={areaData.slice(startArray, endArray)} cx={70} cy={70} innerRadius={35} outerRadius={70}>
+                <Pie dataKey="value" data={areaChartData} cx={70} cy={70} innerRadius={35} outerRadius={70}>
                   {
-                    areaData.slice(startArray, endArray).map((item, index) => <Cell key={index} fill={item.color}/>)
+                    areaChartData.map((item, index) => <Cell key={index} fill={item.color}/>)
                   }
                 </Pie>
-                <Tooltip content={<TooltipChart/>} />
+                <Tooltip showCountry content={<TooltipChart/>} />
               </PieChart>
             </div>
           </div>

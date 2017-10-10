@@ -147,6 +147,10 @@
     height: 100%;
     background-color: rgba($white, 0.5);
   }
+
+  .unit-text {
+    font-size: 14px;
+  }
 }
 
 .c-widget-settings {
@@ -220,6 +224,39 @@
     align-items: center;
     padding: rem(8px) rem(24px);
     border-top: 1px solid #e5e5df;
+
+    &.-years {
+      padding-top: 0;
+      border-top: 0;
+      display: block;
+      padding-bottom: 0;
+
+      .c-widget-settings__container-years {
+        margin-top: rem(13px);
+        padding-bottom: rem(30px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .text-date {
+          font-size: 13px;
+          letter-spacing: 0.1px;
+          text-transform: capitalize;
+        }
+
+        .dd__selectControl {
+          color: $green-gfw;
+          border: 1px solid $green-gfw;
+          background-color: transparent;
+
+          .dd__selectedItem {
+            div {
+              color: $green-gfw;
+            }
+          }
+        }
+      }
+    }
 
     .dd__selectControl {
       height: rem(27px);

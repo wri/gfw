@@ -45,10 +45,11 @@ const WidgetTreeCoverContainer = (props) => {
           .then((totalIntactForestResponse) => {
             const totalCover = Math.round(totalCoverResponse.data.data[0].value),
               totalIntactForest = Math.round(totalIntactForestResponse.data.data[0].value),
+              totalNonForest = Math.round(props.countryData.area_ha) - (totalCover + totalIntactForest),
               values = {
-                totalCover: totalCover,
-                totalIntactForest: totalIntactForest,
-                totalNonForest: Math.round(props.countryData.area_ha) - (totalCover + totalIntactForest),
+                totalCover: props.settings.unit === 'Ha' ? totalCover : (totalCover / Math.round(props.countryData.area_ha)) * 100,
+                totalIntactForest: props.settings.unit === 'Ha' ? totalIntactForest : (totalIntactForest / Math.round(props.countryData.area_ha)) * 100,
+                totalNonForest: props.settings.unit === 'Ha' ? totalNonForest : (totalNonForest / Math.round(props.countryData.area_ha)) * 100,
                 regions: [
                   {
                     value: 'all',

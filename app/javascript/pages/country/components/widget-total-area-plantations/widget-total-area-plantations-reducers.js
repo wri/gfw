@@ -1,6 +1,19 @@
 export const initialState = {
   isLoading: true,
-  plantationData: []
+  plantationData: [],
+  units: [
+    {
+      value: 'Ha',
+      label: 'Hectare - Ha'
+    },
+    {
+      value: '%',
+      label: 'Percent Area - %'
+    }
+  ],
+  settings: {
+    unit: 'Ha',
+  }
 };
 
 const setPieCharDataPlantations = (state, { payload }) => ({

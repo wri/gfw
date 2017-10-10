@@ -5,6 +5,7 @@ import numeral from 'numeral';
 
 import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
+import WidgetTotalAreaPlantationsSettings from './widget-total-area-plantations-settings-component';
 
 class WidgetTotalAreaPlantations extends PureComponent {
   componentDidMount() {
@@ -18,7 +19,9 @@ class WidgetTotalAreaPlantations extends PureComponent {
       countryData,
       plantationData,
       startYear,
-      endYear
+      endYear,
+      settings,
+      units
     } = this.props;
 
     if (isLoading) {
@@ -26,7 +29,12 @@ class WidgetTotalAreaPlantations extends PureComponent {
     } else {
       return (
         <div className="c-widget c-widget-total-area-plantations">
-          <WidgetHeader title={`TOTAL AREA OF PLANTATIONS WITHIN ${countryData.name}`} />
+          <WidgetHeader title={`TOTAL AREA OF PLANTATIONS WITHIN ${countryData.name}`} >
+          <WidgetTotalAreaPlantationsSettings
+            type="settings"
+            units={units}
+            settings={settings} />
+        </WidgetHeader>
           <p className="title-legend -dark">By Type</p>
           <p className="title-legend">({startYear} - {endYear})</p>
           <div className="c-widget-total-area-plantations__container">

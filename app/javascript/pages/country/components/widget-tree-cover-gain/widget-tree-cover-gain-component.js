@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select-me';
+import WidgetTreeCoverGainSettings from './widget-tree-cover-gain-settings-component';
 import WidgetHeader from '../widget-header/widget-header';
 import numeral from 'numeral';
 
@@ -13,13 +14,20 @@ class WidgetTreeCoverGain extends PureComponent {
       totalAmount,
       percentage,
       startYear,
-      endYear
+      endYear,
+      regions,
+      settings
     } = this.props;
     return (
       <div className="c-widget c-widget-tree-cover-gain">
         <WidgetHeader
           title={`TREE COVER GAIN IN ${countryData.name}`}
-          noMap={false} />
+          noMap={false} >
+          <WidgetTreeCoverGainSettings
+            type="settings"
+            regions={regions}
+            settings={settings} />
+        </WidgetHeader>
         <div className="c-widget-tree-cover-gain__container">
           <div className="c-widget-tree-cover-gain__info">
             <p className="title">Hansen - UMD</p>
