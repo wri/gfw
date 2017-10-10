@@ -51,7 +51,17 @@ const WidgetAreasMostCoverGainContainer = (props) => {
     props.setArrayCoverAreasGain(value);
   };
 
+  const updateData = (props) => {
+    props.setTreeLossIsUpdating(true);
+    setWidgetData(props);
+  };
+
   const setInitialData = (props) => {
+    setWidgetData(props);
+  };
+
+
+  const setWidgetData = (props) => {
     let nameChart = '';
     let valueChart = 0;
     getTreeCoverGainRegion(
@@ -97,7 +107,8 @@ const WidgetAreasMostCoverGainContainer = (props) => {
     ...props,
     setInitialData,
     moreRegion,
-    lessRegion
+    lessRegion,
+    updateData
   });
 };
 

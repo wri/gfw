@@ -6,6 +6,73 @@ export const initialState = {
   total: 0,
   isUpdating: false,
   years: [],
+  yearsLoss: [
+    {
+      label: '2001',
+      value: 2001,
+    },
+    {
+      label: '2002',
+      value: 2002,
+    },
+    {
+      label: '2003',
+      value: 2003,
+    },
+    {
+      label: '2004',
+      value: 2004,
+    },
+    {
+      label: '2005',
+      value: 2005,
+    },
+    {
+      label: '2006',
+      value: 2006,
+    },
+    {
+      label: '2007',
+      value: 2007,
+    },
+    {
+      label: '2008',
+      value: 2008,
+    },
+    {
+      label: '2009',
+      value: 2009,
+    },
+    {
+      label: '2010',
+      value: 2010,
+    },
+    {
+      label: '2011',
+      value: 2011,
+    },
+    {
+      label: '2012',
+      value: 2012,
+    },
+    {
+      label: '2013',
+      value: 2013,
+    },
+    {
+      label: '2014',
+      value: 2014,
+    },
+    {
+      label: '2015',
+      value: 2015,
+    },
+    {
+      label: '2016',
+      value: 2016,
+    },
+
+  ],
   regions: [
     {
       label: 'Plantations',
@@ -81,6 +148,8 @@ export const initialState = {
     }
   ],
   settings: {
+    startYear: 2001,
+    endYear: 2016,
     region: 'All',
     unit: 'Ha',
     canopy: 30
@@ -115,9 +184,27 @@ const setTreeLossdIsUpdating = (state, { payload }) => ({
   isUpdating: payload
 });
 
+const setTreeLossSettingsStartYear = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    startYear: payload
+  }
+});
+
+const setTreeLossSettingsEndYear = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    endYear: payload
+  }
+});
+
 export default {
   setTreeLossValues,
   setTreeLossSettingsCanopy,
   setTreeLossdIsUpdating,
-  setTreeLossSettingsUnit
+  setTreeLossSettingsUnit,
+  setTreeLossSettingsStartYear,
+  setTreeLossSettingsEndYear
 };

@@ -23,6 +23,7 @@ const mapStateToProps = state => ({
   thresh: state.widgetTreeLoss.thresh,
   total: state.widgetTreeLoss.total,
   years: state.widgetTreeLoss.years,
+  yearsLoss: state.widgetTreeLoss.yearsLoss,
   regions: state.widgetTreeLoss.regions,
   units: state.widgetTreeLoss.units,
   canopies: state.widgetTreeLoss.canopies,
@@ -44,7 +45,7 @@ const WidgetTreeLossContainer = (props) => {
     getTreeLossByYear(
       props.iso,
       props.countryRegion,
-      {minYear: props.minYear, maxYear: props.maxYear},
+      {minYear: props.settings.startYear, maxYear: props.settings.endYear},
       props.settings.canopy
     )
       .then((response) => {
