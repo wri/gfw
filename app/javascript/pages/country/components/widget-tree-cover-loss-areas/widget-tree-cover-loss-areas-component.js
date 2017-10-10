@@ -88,7 +88,7 @@ class WidgetTreeLossAreas extends PureComponent {
                     regionChartData.map((item, index) => <Cell key={index} fill={item.color}/>)
                   }
                 </Pie>
-                <Tooltip showCountry content={<TooltipChart />} />
+                <Tooltip percentage={settings.unit !== 'Ha'} showCountry content={<TooltipChart />} />
               </PieChart>
             </div>
             <ul className="c-widget-tree-cover-loss-areas__legend">

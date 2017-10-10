@@ -59,7 +59,7 @@ class WidgetTreeLoss extends PureComponent {
       return (
         <div className="c-widget c-widget-tree-loss">
           <WidgetHeader
-            title={`Tree cover loss`}
+            title={'Tree cover loss'}
             viewOnMapCallback={viewOnMap}>
             <WidgetTreeLossSettings
               type="settings"
@@ -71,7 +71,8 @@ class WidgetTreeLoss extends PureComponent {
               onUnitChange={setTreeLossSettingsUnit}
               onCanopyChange={setTreeLossSettingsCanopy}
               onStartYearChange={setTreeLossSettingsStartYear}
-              onEndYearChange={setTreeLossSettingsEndYear}/>
+              onEndYearChange={setTreeLossSettingsEndYear}
+            />
           </WidgetHeader>
           <div className="c-widget-tree-loss__legend">
             <div>
@@ -80,10 +81,10 @@ class WidgetTreeLoss extends PureComponent {
             </div>
             <div>
               <div className="c-widget-tree-loss__legend-title">
-                <span style={{backgroundColor: '#f26798'}}></span>
+                <span style={{ backgroundColor: '#f26798' }}>{}</span>
                 Country-wide
               </div>
-              <div className="c-widget-tree-loss__legend-value" style={{color: '#f26798'}}>
+              <div className="c-widget-tree-loss__legend-value" style={{ color: '#f26798' }}>
                 {settings.unit === 'Ha' ? numeral(Math.round(total / 1000)).format('0,0') : Math.round(total)}{unitMeasure}
               </div>
             </div>
@@ -94,7 +95,7 @@ class WidgetTreeLoss extends PureComponent {
                 width={627}
                 height={300}
                 data={years}
-                margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                 <XAxis
                   dataKey="date"
                   padding={{ top: 135}}
@@ -108,12 +109,12 @@ class WidgetTreeLoss extends PureComponent {
                 <CartesianGrid
                   vertical={false}
                   strokeDasharray="3 4" />
-                <Tooltip content={<TooltipChart/>} />
+                <Tooltip content={<TooltipChart/> } />
                 <Bar
                   dataKey="value"
                   barSize={22}
                   fill="#fe6598" />
-                <Tooltip content={<TooltipChart/>} />
+                <Tooltip percentage={settings.unit !== 'Ha'} content={<TooltipChart/>} />
               </BarChart>
             </ResponsiveContainer>
           </div>
