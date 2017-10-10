@@ -42,17 +42,17 @@ class Header extends PureComponent {
     return (
       <div className="c-header">
         <div className="row">
-          <div className="small-6 columns">
+          <div className="large-6 medium-12 small-12 columns container-select">
             <div className="c-header__select">
               <svg className="icon icon-angle-arrow-down c-header__select-arrow"><use xlinkHref="#icon-angle-arrow-down"></use></svg>
               <Select value={countrySelected} options={countries} onChange={this.countriesSelectOnChange} />
             </div>
-            <div className="c-header__select">
+            <div className="c-header__select -jurisdiction">
               <svg className="icon icon-angle-arrow-down c-header__select-arrow"><use xlinkHref="#icon-angle-arrow-down"></use></svg>
               <Select value={regionSelected} options={regions} onChange={this.regionsSelectOnChange} />
             </div>
           </div>
-          <div className="small-6 columns c-header__info">
+          <div className="large-6 medium-12 small-12 columns c-header__info">
             <p>In 2010, this country had <strong>{Math.round(totalForestHeader / 1000)} Ha</strong> tree cover, that represents <strong>{numeral(Math.round(percentageForestHeader)).format('0,0')}%</strong> of its
             <strong> {Math.round(totalCoverHeader / 1000)} Ha.</strong></p>
             <p>Excluding plantations, <strong>{Math.round(totalCoverLoss)} Ha</strong> of tree cover loss occured in <strong>2015.</strong></p>
