@@ -68,6 +68,7 @@ export const initialState = {
 const setTreeLocatedValues = (state, { payload }) => ({
   ...state,
   isLoading: false,
+  isUpdating: false,
   topRegions: payload
 });
 

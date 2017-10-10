@@ -158,6 +158,7 @@ export const initialState = {
 const setPieCharDataDistricts = (state, { payload }) => ({
   ...state,
   isLoading: false,
+  isUpdating: false,
   regionData: payload
 });
 

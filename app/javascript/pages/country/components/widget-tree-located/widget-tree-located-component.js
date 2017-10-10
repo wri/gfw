@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
+import WidgetUpdating from '../widget-updating/widget-updating';
 
 import WidgetHeader from '../widget-header/widget-header';
 import WidgetTreeLocatedSettings from './widget-tree-located-settings-component';
@@ -44,12 +45,12 @@ class WidgetTreeLocated extends PureComponent {
       canopies,
       settings,
       setTreeLocatedSettingsUnit,
-      setTreeLocatedSettingsCanopy
+      setTreeLocatedSettingsCanopy,
+      isUpdating
     } = this.props;
 
     const showUpIcon = startArray >= 10;
     const showDownIcon = endArray >= topRegions.length;
-
     if (isLoading) {
       return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
     } else {
@@ -84,6 +85,7 @@ class WidgetTreeLocated extends PureComponent {
             {showUpIcon && <div className={`circle-icon -up ${showDownIcon ? '-no-right' : ''}`} onClick={this.lessRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
             {!showDownIcon && <div className="circle-icon" onClick={this.moreRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
           </div>
+          {isUpdating ? <WidgetUpdating /> : null}
         </div>
       )
     }
