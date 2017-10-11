@@ -24,7 +24,8 @@ const mapStateToProps = state => ({
   fixed: state.root.fixed,
   topMap: state.root.topMap,
   topPage: state.root.topPage,
-  nameRegion: state.root.nameRegion
+  nameRegion: state.root.nameRegion,
+  showMapMobile: state.root.showMapMobile
 });
 
 const RootContainer = (props) => {

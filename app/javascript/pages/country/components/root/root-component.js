@@ -37,6 +37,10 @@ class Root extends PureComponent {
     }
   }
 
+  showMapMobile() {
+    this.props.setShowMapMobile(!this.props.showMapMobile);
+  }
+
   handleScrollCallback() {
     // setPositionPage
    if (window.scrollY >= 59) {
@@ -54,7 +58,7 @@ class Root extends PureComponent {
  }
 
   render() {
-    const { isLoading, topPage, countryRegion } = this.props;
+    const { isLoading, topPage, countryRegion, showMapMobile } = this.props;
     const regionSelected = countryRegion === 0;
     if (isLoading) {
       return (
@@ -66,8 +70,9 @@ class Root extends PureComponent {
       return (
         <div>
           <ScrollEvent handleScrollCallback={() => this.handleScrollCallback()} />
+          <div className="open-map-mobile-tab" onClick={() => this.showMapMobile()}><span>{!showMapMobile ? 'show' : 'close'} map</span></div>
           <Header />
-          <div className={`l-country__map ${this.props.fixed ? '-fixed' : ''}`} style={{top: this.props.topMap}}>
+          <div className={`l-country__map ${this.props.fixed ? '-fixed' : ''} ${showMapMobile ? '-open-mobile' : ''}`} style={{top: this.props.topMap}}>
             <Map
               maxZoom={14}
               minZoom={3}
@@ -114,7 +119,7 @@ class Root extends PureComponent {
           <WidgetStories />
           <Footer />
         </div>
-      )
+      );
     }
   }
 }
@@ -122,10 +127,7 @@ class Root extends PureComponent {
 Root.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   iso: PropTypes.string.isRequired,
-  countryRegion: PropTypes.number.isRequired,
-  countryData: PropTypes.object.isRequired,
-  countryRegions: PropTypes.array.isRequired,
-  countriesList: PropTypes.array.isRequired,
+  countryRegion: PropTypes.string.isRequired,
   setInitialData: PropTypes.func.isRequired,
   refreshCountryData: PropTypes.func.isRequired,
   checkLoadingStatus: PropTypes.func.isRequired

@@ -5,6 +5,7 @@ export const initialState = {
   countryData: {},
   countryRegions: [],
   countriesList: [],
+  showMapMobile: false,
   fixed: false,
   topMap: 0,
   topPage: false
@@ -68,7 +69,12 @@ const setNameRegion = (state, {payload}) => ({
 
 const setTopMap = (state, {payload}) => ({
   ...state,
-  nameRegionp: payload
+  topMap: payload
+});
+
+const setShowMapMobile = (state, {payload}) => ({
+  ...state,
+  showMapMobile: payload
 });
 
 export default {
@@ -81,5 +87,6 @@ export default {
   setCountriesList,
   setPositionMap,
   setTopMap,
-  setPositionPage
+  setPositionPage,
+  setShowMapMobile
 };
