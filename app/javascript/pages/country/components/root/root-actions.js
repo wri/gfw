@@ -4,6 +4,7 @@ const setInitialState = createAction('setInitialState');
 const setIsLoading = createAction('setIsLoading');
 const setIso = createAction('setIso');
 const setRegion = createAction('setRegion');
+const setNameRegion = createAction('setNameRegion');
 const setCountryData = createAction('setCountryData');
 const setCountryRegions = createAction('setCountryRegions');
 const setCountriesList = createAction('setCountriesList');
@@ -16,6 +17,7 @@ export default {
   setIsLoading,
   setIso,
   setRegion,
+  setNameRegion,
   setCountryData,
   setCountryRegions,
   setCountriesList,

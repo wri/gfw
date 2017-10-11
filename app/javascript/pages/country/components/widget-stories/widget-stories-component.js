@@ -11,14 +11,16 @@ class WidgetStories extends PureComponent {
       totalAmount,
       percentage,
       startYear,
-      endYear
+      endYear,
+      countryRegions,
+      countryRegion
     } = this.props;
     return (
       <div className="c-widget-stories" id="c-widget-stories">
         <div className="c-widget-stories__container">
           <div className="row">
             <div className="columns c-widget-stories__primary-info">
-              <h2>{countryData.name} Stories</h2>
+              <h2>{countryRegion === 0 ? countryData.name : countryRegions[countryRegion - 1].name} Stories</h2>
               <div className="container-titles">
                 <p>When Tree Cover Loss is Really Forest Loss: New Plantation Mpas </p>
                 <p>New Plantation Mpas Improve Fores</p>

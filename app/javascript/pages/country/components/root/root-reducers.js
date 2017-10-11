@@ -61,9 +61,14 @@ const setPositionPage = (state, {payload}) => ({
   topPage: payload
 });
 
+const setNameRegion = (state, {payload}) => ({
+  ...state,
+  topPage: payload
+});
+
 const setTopMap = (state, {payload}) => ({
   ...state,
-  topMap: payload
+  nameRegionp: payload
 });
 
 export default {

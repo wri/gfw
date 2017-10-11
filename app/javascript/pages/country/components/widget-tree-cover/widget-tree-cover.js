@@ -18,14 +18,15 @@ const mapStateToProps = state => ({
   isUpdating: state.widgetTreeCover.isUpdating,
   iso: state.root.iso,
   countryRegion: state.root.countryRegion,
+  countryRegions: state.root.countryRegions,
   countryData: state.root.countryData,
   totalCover: state.widgetTreeCover.totalCover,
   totalIntactForest: state.widgetTreeCover.totalIntactForest,
   totalNonForest: state.widgetTreeCover.totalNonForest,
   regions: state.widgetTreeCover.regions,
-  units: state.widgetTreeCover.units,
   canopies: state.widgetTreeCover.canopies,
-  settings: state.widgetTreeCover.settings
+  settings: state.widgetTreeCover.settings,
+  nameRegion: state.root.nameRegion
 });
 
 const WidgetTreeCoverContainer = (props) => {
@@ -47,9 +48,9 @@ const WidgetTreeCoverContainer = (props) => {
               totalIntactForest = Math.round(totalIntactForestResponse.data.data[0].value),
               totalNonForest = Math.round(props.countryData.area_ha) - (totalCover + totalIntactForest),
               values = {
-                totalCover: props.settings.unit === 'Ha' ? totalCover : (totalCover / Math.round(props.countryData.area_ha)) * 100,
-                totalIntactForest: props.settings.unit === 'Ha' ? totalIntactForest : (totalIntactForest / Math.round(props.countryData.area_ha)) * 100,
-                totalNonForest: props.settings.unit === 'Ha' ? totalNonForest : (totalNonForest / Math.round(props.countryData.area_ha)) * 100,
+                totalCover: totalCover,
+                totalIntactForest:  totalIntactForest,
+                totalNonForest: totalNonForest,
                 regions: [
                   {
                     value: 'all',

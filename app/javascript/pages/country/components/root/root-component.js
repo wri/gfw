@@ -54,7 +54,8 @@ class Root extends PureComponent {
  }
 
   render() {
-    const { isLoading, topPage } = this.props;
+    const { isLoading, topPage, countryRegion } = this.props;
+    const regionSelected = countryRegion === 0;
     if (isLoading) {
       return (
         <div className="c-loading">
@@ -88,27 +89,27 @@ class Root extends PureComponent {
             <div className="large-6 small-12 columns l-country__container-widgets">
               <WidgetTreeCover />
             </div>
-            <div className="large-6 small-12 columns l-country__container-widgets">
+            { regionSelected && <div className="large-6 small-12 columns l-country__container-widgets">
               <WidgetTreeLocated />
-            </div>
-            <div className="small-12 columns l-country__container-widgets">
+            </div>}
+            <div className={`${!regionSelected ? 'large-6 small-12' : 'small-12'} columns l-country__container-widgets `}>
               <WidgetTreeLoss />
             </div>
-            <div className="small-12 columns l-country__container-widgets">
+            { regionSelected && <div className="small-12 columns l-country__container-widgets">
               <WidgetTreeCoverLossAreas />
-            </div>
+            </div>}
             <div className="large-6 small-12 columns l-country__container-widgets">
               <WidgetTreeCoverGain />
             </div>
-            <div className="large-6 small-12 columns l-country__container-widgets">
+            { regionSelected && <div className="large-6 small-12 columns l-country__container-widgets">
               <WidgetAreasMostCoverGain />
-            </div>
+            </div> }
             <div className="large-6 small-12 columns l-country__container-widgets -last">
               <WidgetTotalAreaPlantations />
             </div>
-            <div className="large-6 small-12 columns l-country__container-widgets -last">
+            { regionSelected && <div className="large-6 small-12 columns l-country__container-widgets -last">
               <WidgetPlantationArea />
-            </div>
+            </div>}
           </div>
           <WidgetStories />
           <Footer />

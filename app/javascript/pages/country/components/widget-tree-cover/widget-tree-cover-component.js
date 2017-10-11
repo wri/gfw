@@ -39,9 +39,10 @@ class WidgetTreeCover extends PureComponent {
       canopies,
       settings,
       setTreeCoverSettingsRegion,
-      setTreeCoverSettingsCanopy
+      setTreeCoverSettingsCanopy,
+      countryRegion,
+      countryRegions
     } = this.props;
-
     if (isLoading) {
       return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
     } else {
@@ -55,7 +56,7 @@ class WidgetTreeCover extends PureComponent {
       return (
         <div className="c-widget c-widget-tree-cover">
           <WidgetHeader
-            title={`Forest cover in ${countryData.name}`}
+            title={`Forest cover in ${countryRegion === 0 ? countryData.name : countryRegions[countryRegion - 1].name}`}
             viewOnMapCallback={viewOnMap}
           >
             <WidgetTreeCoverSettings
@@ -111,11 +112,9 @@ WidgetTreeCover.propTypes = {
   totalIntactForest: PropTypes.number.isRequired,
   totalNonForest: PropTypes.number.isRequired,
   regions: PropTypes.array.isRequired,
-  units: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   setTreeCoverSettingsRegion: PropTypes.func.isRequired,
-  setTreeCoverSettingsUnit: PropTypes.func.isRequired,
   setTreeCoverSettingsCanopy: PropTypes.func.isRequired
 };
 
