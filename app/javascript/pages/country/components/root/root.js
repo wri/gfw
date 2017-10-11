@@ -23,7 +23,8 @@ const mapStateToProps = state => ({
   countriesList: state.root.countriesList,
   fixed: state.root.fixed,
   topMap: state.root.topMap,
-  topPage: state.root.topPage
+  topPage: state.root.topPage,
+  nameRegion: state.root.nameRegion
 });
 
 const RootContainer = (props) => {

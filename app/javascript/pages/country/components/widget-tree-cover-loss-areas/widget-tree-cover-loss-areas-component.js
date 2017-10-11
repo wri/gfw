@@ -59,7 +59,6 @@ class WidgetTreeLossAreas extends PureComponent {
 
     const showUpIcon = startArray >= 10;
     const showDownIcon = endArray >= regionData.length;
-
     if (isLoading) {
       return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
     } else {

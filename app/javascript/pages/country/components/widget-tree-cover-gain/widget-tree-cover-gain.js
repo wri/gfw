@@ -16,6 +16,7 @@ const mapStateToProps = state => ({
   countriesList: state.root.countriesList,
   countryData: state.root.countryData,
   countryRegions: state.root.countryRegions,
+  countryRegion: state.root.countryRegion,
   totalAmount: state.widgetTreeCoverGain.totalAmount,
   percentage: state.widgetTreeCoverGain.percentage,
   settings: state.widgetTreeCoverGain.settings,
@@ -31,7 +32,7 @@ import {
 } from '../../../../services/tree-gain';
 
 const WidgetTreeCoverGainContainer = (props) => {
-  getTreeCoverGain(props.iso,{minYear: props.startYear, maxYear: props.endYear}, props.thresh)
+  getTreeCoverGain(props.iso,{ minYear: props.startYear, maxYear: props.endYear }, props.thresh, props.countryRegion)
   .then((coverGain) => {
     getTotalCountriesTreeCoverGain({minYear: props.startYear, maxYear: props.endYear}, props.thresh)
     .then((totalCoverGain) => {
