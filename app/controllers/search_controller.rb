@@ -15,14 +15,15 @@ class SearchController < ApplicationController
 
   private
     def search_by(_query,_page)
-      apiKey = "AIzaSyCMGfdDaSfjqv5zYoS0mTJnOT3e9MURWkU"
-      cx = "006990932653323112931:qxwxtwbu7vg"
       query = _query
       page = _page ? 1+((_page.to_i-1)*10) : 1
-      response = Typhoeus.get("https://www.googleapis.com/customsearch/v1?", params: { key: apiKey , cx: cx, q: query , start: page, filter: 0}, headers: {"Accept" => "application/json"})
-
+      response = Typhoeus.get("https://www.googleapis.com/customsearch/v1?",
+                              params: { key: ENV['GOOGLE_SEARCH_API_KEY'],
+                                        cx: ENV['GOOGLE_CUSTOM_SEARCH_CX'], q: query,
+                                        start: page, filter: 0},
+                                        headers: {"Accept" => "application/json"})
       if response.success?
-          JSON.parse(response.body)
+        JSON.parse(response.body)
       else
         nil
       end
