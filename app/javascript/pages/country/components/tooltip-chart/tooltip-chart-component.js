@@ -7,7 +7,6 @@ const TooltipChart = (props) => {
   if (active) {
     const { payload, label, showCountry, percentage, percentageAndArea } = props;
     let valueShow;
-    console.log(props);
     if (percentageAndArea) {
       valueShow = numeral(Math.round(payload[0].payload.percentage)).format('0,0') + '%'
     } else {

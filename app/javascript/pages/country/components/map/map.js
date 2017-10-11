@@ -14,6 +14,9 @@ const mapStateToProps = state => ({
     latitude: state.root.countryData.lat,
     longitude: state.root.countryData.lng
   },
+  bounds: state.root.countryData.bounds,
+  region: state.root.countryRegion,
+  regionBounds: state.root.countryRegions[state.root.countryRegion].bounds,
   maptype: state.map.maptype,
   layers: state.map.layers
 });
