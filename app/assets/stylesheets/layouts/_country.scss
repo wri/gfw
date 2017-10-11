@@ -21,7 +21,7 @@ body {
   z-index: 100;
   position: absolute;
   top: 59px;
-  transition: right .2s linear;
+  transition: right .5s linear;
 
   &.-open-mobile {
     right: calc(-5%);
@@ -39,6 +39,10 @@ body {
     z-index: 100;
     position: absolute;
     top: 59px;
+
+    &.-open-mobile {
+      right: 0;
+    }
   }
 }
 
