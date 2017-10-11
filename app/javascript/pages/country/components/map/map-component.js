@@ -32,8 +32,6 @@ class Map extends PureComponent {
       boundsMap.extend(new google.maps.LatLng(coordsMap.coordinates[0][i][1], coordsMap.coordinates[0][i][0]));
     }
     this.map.fitBounds(boundsMap);
-    this.map.panToBounds(boundsMap)
-
     this.setMaptypes();
     this.setMaptypeId(maptype);
     this.setListeners();
