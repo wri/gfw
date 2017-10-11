@@ -62,7 +62,6 @@ const WidgetTreeLossContainer = (props) => {
           total: props.settings.unit === 'Ha' ? total : (total /  Math.round(props.countryData.area_ha)) * 100,
           years: props.settings.unit === 'Ha' ? response.data.data : percentageValues
         };
-        console.log(values);
         props.setTreeLossValues(values);
       });
   };

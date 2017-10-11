@@ -17,7 +17,7 @@ const APIURL = process.env.GFW_API_HOST_PROD;
 const APIURLS = {
   'getCountriesList': '/query/{countriesDataset}?sql=SELECT name_engli as name, iso FROM {countriesTable}',
   'getCountry': '/countries/{iso}?thresh=30',
-  'getCountryRegions': '/query/{regionsDataset}?sql=SELECT cartodb_id, iso, bbox as bounds, id_1 as id, name_1 as name FROM {regionsTable} WHERE iso=\'{iso}\' ORDER BY name',
+  'getCountryRegions': '/query/{regionsDataset}?sql=SELECT cartodb_id, iso, area_ha, bbox as bounds, id_1 as id, name_1 as name FROM {regionsTable} WHERE iso=\'{iso}\' ORDER BY name',
 };
 
 export const getCountriesList = () => {
