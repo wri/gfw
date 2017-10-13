@@ -69,7 +69,7 @@ const setArrayCoverAreasGain = (state, { payload }) => ({
   endArray: payload.endArray
 });
 
-const setTreeLocatedSettingsUnit = (state, { payload }) => ({
+const setTreeAreasTreeGainSettingsUnit = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
@@ -86,6 +86,6 @@ export default {
   setPieCharDataAreas,
   setArrayCoverAreasGain,
   setPieCharDataAreasTotal,
-  setTreeLocatedSettingsUnit,
+  setTreeAreasTreeGainSettingsUnit,
   setAreaMostCoverIsUpdating
 };
