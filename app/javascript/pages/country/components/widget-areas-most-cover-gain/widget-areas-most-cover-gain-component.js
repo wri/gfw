@@ -48,7 +48,7 @@ class WidgetAreasMostCoverGain extends PureComponent {
       settings,
       units,
       regions,
-      setTreeLocatedSettingsUnit,
+      setTreeAreasTreeGainSettingsUnit,
       isUpdating
     } = this.props;
 
@@ -65,7 +65,7 @@ class WidgetAreasMostCoverGain extends PureComponent {
             type="settings"
             regions={regions}
             units={units}
-            onUnitChange={setTreeLocatedSettingsUnit}
+            onUnitChange={setTreeAreasTreeGainSettingsUnit}
             settings={settings} />
         </WidgetHeader>
           <p className="title-legend">Hansen - UMD</p>
