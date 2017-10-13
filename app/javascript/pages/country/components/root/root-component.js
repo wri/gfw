@@ -47,7 +47,8 @@ class Root extends PureComponent {
      this.props.setPositionMap(true);
      this.props.setTopMap(0);
    }
-   if(window.scrollY >= (document.getElementById('c-widget-stories').offsetTop - window.innerHeight)) {
+
+   if (window.scrollY >= (document.getElementById('c-widget-stories').offsetTop - window.innerHeight)) {
      this.props.setPositionMap(false);
      this.props.setTopMap(document.getElementById('c-widget-stories').offsetTop - window.innerHeight);
    }

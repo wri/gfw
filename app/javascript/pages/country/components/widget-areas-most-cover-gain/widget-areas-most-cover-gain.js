@@ -23,10 +23,13 @@ const mapStateToProps = state => ({
   regions: state.widgetAreasMostCoverGain.regions,
   units: state.widgetAreasMostCoverGain.units,
   settings: state.widgetAreasMostCoverGain.settings,
+  isUpdating: state.widgetAreasMostCoverGain.isUpdating,
 });
 
 import {
-  getTreeCoverGainRegion
+  getTreeCoverGain,
+  getTreeCoverGainRegion,
+  getTotalCountriesTreeCoverGain
 } from '../../../../services/tree-gain';
 
 const colors = ['#110f74', '#2422a2', '#4c49d1', '#6f6de9', '#a3a1ff', '#cdcdfe', '#ddddfc', '#e7e5a4', '#dad781', '#cecb65', '#d1d1d1'];
@@ -52,7 +55,7 @@ const WidgetAreasMostCoverGainContainer = (props) => {
   };
 
   const updateData = (props) => {
-    props.setTreeLossIsUpdating(true);
+    props.setAreaMostCoverIsUpdating(true);
     setWidgetData(props);
   };
 
@@ -60,47 +63,49 @@ const WidgetAreasMostCoverGainContainer = (props) => {
     setWidgetData(props);
   };
 
-
   const setWidgetData = (props) => {
     let nameChart = '';
     let valueChart = 0;
-    getTreeCoverGainRegion(
-      props.iso,
-      {minYear: props.startYear, maxYear: props.endYear},
-      props.thresh
-    )
-    .then((treeCoverGainByRegion) => {
-      const regionsCoverGain = [];
-      const regionCoverGainChart = [];
-      treeCoverGainByRegion.data.data.forEach(function(item, index){
-        const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
-        regionsCoverGain.push({
-          name: props.countryRegions[numberRegion].name,
-          value: item.value,
-          color: colors[indexColors],
-          position: index + 1,
-        })
-        if (indexColors < 10 || index === treeCoverGainByRegion.data.data.length - 1) {
-          if(indexColors < 10) { nameChart = props.countryRegions[numberRegion].name; valueChart = item.value;}
-          if (index === treeCoverGainByRegion.data.data.length - 1) { nameChart = 'others'; valueChart = othersValue;}
-          regionCoverGainChart .push({
-            name: nameChart,
+    getTotalCountriesTreeCoverGain({minYear: props.startYear, maxYear: props.endYear}, props.thresh)
+    .then((totalCoverGain) => {
+      getTreeCoverGainRegion(
+        props.iso,
+        {minYear: props.startYear, maxYear: props.endYear},
+        props.thresh
+      )
+      .then((treeCoverGainByRegion) => {
+        const regionsCoverGain = [];
+        const regionCoverGainChart = [];
+        treeCoverGainByRegion.data.data.forEach(function(item, index){
+          const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
+          regionsCoverGain.push({
+            name: props.countryRegions[numberRegion].name,
+            value: item.value,
             color: colors[indexColors],
-            value: props.settings.unit === 'Ha' ? valueChart : (valueChart / props.countryData.area_ha) * 100,
+            position: index + 1,
           })
-        } else {
-          othersValue += item.value;
-        }
-        if (indexColors < 10) {
-          indexColors += 1;
-        }
-        if (index === treeCoverGainByRegion.data.data.length - 1) {
-          indexColors = 0;
-          othersValue = 0;
-        }
+          if (indexColors < 10 || index === treeCoverGainByRegion.data.data.length - 1) {
+            if(indexColors < 10) { nameChart = props.countryRegions[numberRegion].name; valueChart = item.value;}
+            if (index === treeCoverGainByRegion.data.data.length - 1) { nameChart = 'others'; valueChart = othersValue;}
+            regionCoverGainChart .push({
+              name: nameChart,
+              color: colors[indexColors],
+              value: props.settings.unit === 'Ha' ? valueChart : (valueChart / totalCoverGain.data.data[0].value) * 100,
+            })
+          } else {
+            othersValue += item.value;
+          }
+          if (indexColors < 10) {
+            indexColors += 1;
+          }
+          if (index === treeCoverGainByRegion.data.data.length - 1) {
+            indexColors = 0;
+            othersValue = 0;
+          }
+        });
+        props.setPieCharDataAreas(regionsCoverGain);
+        props.setPieCharDataAreasTotal(regionCoverGainChart);
       });
-      props.setPieCharDataAreas(regionsCoverGain);
-      props.setPieCharDataAreasTotal(regionCoverGainChart);
     });
   };
   return createElement(WidgetAreasMostCoverGainComponent, {
