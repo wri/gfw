@@ -14,17 +14,27 @@ class Map extends PureComponent {
       maptype,
       maxZoom,
       minZoom,
+      bounds,
+      regionBounds,
+      region
     } = this.props;
 
+    const coordsMap = region === 0 ? bounds : JSON.parse(regionBounds);
+    const boundsMap = new google.maps.LatLngBounds();
+    for (let i = 0; i < coordsMap.coordinates[0].length; i += 1) {
+      boundsMap.extend(new google.maps.LatLng(
+        coordsMap.coordinates[0][i][1], coordsMap.coordinates[0][i][0]));
+    }
     const options = {
       options: Object.assign({}, mapOptions, {
         zoom: zoom,
-        center: { lat: center.latitude, lng: center.longitude },
+        center: { lat: boundsMap.getCenter().lat(), lng: boundsMap.getCenter().lng() },
         maxZoom: maxZoom,
         minZoom: minZoom
       })
     };
     this.map = new google.maps.Map(document.getElementById('map'), options);
+    this.map.fitBounds(boundsMap);
     this.setMaptypes();
     this.setMaptypeId(maptype);
     this.setListeners();

@@ -15,6 +15,7 @@ const mapStateToProps = state => ({
   countriesList: state.root.countriesList,
   countryData: state.root.countryData,
   countryRegions: state.root.countryRegions,
+  countryRegion: state.root.countryRegion,
   totalAmount: 'Nan',
   percentage: 'Nan',
   startYear: 2011,

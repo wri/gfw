@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { PieChart, Pie, Legend, Tooltip, Cell }from 'recharts';
 import numeral from 'numeral';
 
+import WidgetUpdating from '../widget-updating/widget-updating';
 import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
 import WidgetAreasMostCoverGainSettings from './widget-areas-most-cover-gain-settings-component';
@@ -23,6 +24,17 @@ class WidgetAreasMostCoverGain extends PureComponent {
     lessRegion();
   };
 
+  componentWillUpdate(nextProps) {
+    const {
+      settings,
+      updateData
+    } = this.props;
+
+    if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
+      updateData(nextProps);
+    }
+  }
+
   render() {
     const {
       isLoading,
@@ -35,7 +47,9 @@ class WidgetAreasMostCoverGain extends PureComponent {
       endArray,
       settings,
       units,
-      regions
+      regions,
+      setTreeAreasTreeGainSettingsUnit,
+      isUpdating
     } = this.props;
 
     const showUpIcon = startArray >= 10;
@@ -51,6 +65,7 @@ class WidgetAreasMostCoverGain extends PureComponent {
             type="settings"
             regions={regions}
             units={units}
+            onUnitChange={setTreeAreasTreeGainSettingsUnit}
             settings={settings} />
         </WidgetHeader>
           <p className="title-legend">Hansen - UMD</p>
@@ -74,7 +89,7 @@ class WidgetAreasMostCoverGain extends PureComponent {
                     areaChartData.map((item, index) => <Cell key={index} fill={item.color}/>)
                   }
                 </Pie>
-                <Tooltip showCountry content={<TooltipChart/>} />
+                <Tooltip percentage={settings.unit !== 'Ha'} percentageAndArea={false} showCountry content={<TooltipChart/>} />
               </PieChart>
             </div>
           </div>
@@ -82,6 +97,7 @@ class WidgetAreasMostCoverGain extends PureComponent {
             {showUpIcon && <div className="circle-icon -up" onClick={this.lessRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
             {!showDownIcon && <div className="circle-icon" onClick={this.moreRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
           </div>
+          {isUpdating ? <WidgetUpdating /> : null}
         </div>
       )
     }

@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { PieChart, Pie, Cell } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import numeral from 'numeral';
 
+import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
 import WidgetUpdating from '../widget-updating/widget-updating';
 import WidgetTreeCoverSettings from './widget-tree-cover-settings-component';
@@ -38,23 +39,24 @@ class WidgetTreeCover extends PureComponent {
       canopies,
       settings,
       setTreeCoverSettingsRegion,
-      setTreeCoverSettingsUnit,
-      setTreeCoverSettingsCanopy
+      setTreeCoverSettingsCanopy,
+      countryRegion,
+      countryRegions
     } = this.props;
-
     if (isLoading) {
       return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
     } else {
+      const totalValue = totalCover + totalIntactForest + totalNonForest;
       const pieCharData = [
-        { name: 'Forest', value: totalCover, color: '#959a00' },
-        { name: 'Intact Forest', value: totalIntactForest, color: '#2d8700' },
-        { name: 'Non Forest', value: totalNonForest, color: '#d1d1d1' }
+        { name: 'Forest', value: totalCover, color: '#959a00', percentage: (totalCover / totalValue) * 100 },
+        { name: 'Intact Forest', value: totalIntactForest, color: '#2d8700', percentage: (totalIntactForest / totalValue) * 100 },
+        { name: 'Non Forest', value: totalNonForest, color: '#d1d1d1', percentage: (totalNonForest / totalValue) * 100 }
       ];
       const unitMeasure = settings.unit === 'Ha' ? 'Ha' : '%';
       return (
         <div className="c-widget c-widget-tree-cover">
           <WidgetHeader
-            title={`Forest cover in ${countryData.name}`}
+            title={`Forest cover in ${countryRegion === 0 ? countryData.name : countryRegions[countryRegion - 1].name}`}
             viewOnMapCallback={viewOnMap}
           >
             <WidgetTreeCoverSettings
@@ -64,7 +66,6 @@ class WidgetTreeCover extends PureComponent {
               canopies={canopies}
               settings={settings}
               onRegionChange={setTreeCoverSettingsRegion}
-              onUnitChange={setTreeCoverSettingsUnit}
               onCanopyChange={setTreeCoverSettingsCanopy}
             />
           </WidgetHeader>
@@ -90,6 +91,7 @@ class WidgetTreeCover extends PureComponent {
                   pieCharData.map((item, index) => <Cell key={index.toString()} fill={item.color} />)
                 }
               </Pie>
+              <Tooltip percentageAndArea content={<TooltipChart/>} />
             </PieChart>
           </div>
           {isUpdating ? <WidgetUpdating /> : null}
@@ -110,11 +112,9 @@ WidgetTreeCover.propTypes = {
   totalIntactForest: PropTypes.number.isRequired,
   totalNonForest: PropTypes.number.isRequired,
   regions: PropTypes.array.isRequired,
-  units: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   setTreeCoverSettingsRegion: PropTypes.func.isRequired,
-  setTreeCoverSettingsUnit: PropTypes.func.isRequired,
   setTreeCoverSettingsCanopy: PropTypes.func.isRequired
 };
 

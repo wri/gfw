@@ -23,21 +23,16 @@ const mapStateToProps = state => ({
   countriesList: state.root.countriesList,
   fixed: state.root.fixed,
   topMap: state.root.topMap,
-  topPage: state.root.topPage
+  topPage: state.root.topPage,
+  nameRegion: state.root.nameRegion,
+  showMapMobile: state.root.showMapMobile
 });
 
 const RootContainer = (props) => {
-  const setInitialData = (props) => {
-    getCountriesList()
-      .then((response) => {
-        props.setCountriesList(response.data.data);
-      });
 
-    refreshCountryData(props);
-  };
-
-  const refreshCountryData = (props) => {
+  const refreshCountryData = () => {
     props.setIso(props.match.params.iso);
+    props.setRegion(props.match.params.region ? props.match.params.region : 0);
 
     getCountry(props.match.params.iso)
       .then((response) => {
@@ -49,6 +44,14 @@ const RootContainer = (props) => {
       .then((response) => {
         props.setCountryRegions(response.data.data);
       });
+  };
+
+  const setInitialData = (props) => {
+    getCountriesList()
+      .then((response) => {
+        props.setCountriesList(response.data.data);
+      });
+    refreshCountryData(props);
   };
 
   const checkLoadingStatus = (props) => {

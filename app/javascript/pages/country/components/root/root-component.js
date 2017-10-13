@@ -37,13 +37,18 @@ class Root extends PureComponent {
     }
   }
 
+  showMapMobile() {
+    this.props.setShowMapMobile(!this.props.showMapMobile);
+  }
+
   handleScrollCallback() {
     // setPositionPage
    if (window.scrollY >= 59) {
      this.props.setPositionMap(true);
      this.props.setTopMap(0);
    }
-   if(window.scrollY >= (document.getElementById('c-widget-stories').offsetTop - window.innerHeight)) {
+
+   if (window.scrollY >= (document.getElementById('c-widget-stories').offsetTop - window.innerHeight)) {
      this.props.setPositionMap(false);
      this.props.setTopMap(document.getElementById('c-widget-stories').offsetTop - window.innerHeight);
    }
@@ -54,7 +59,8 @@ class Root extends PureComponent {
  }
 
   render() {
-    const { isLoading, topPage } = this.props;
+    const { isLoading, topPage, countryRegion, showMapMobile } = this.props;
+    const regionSelected = countryRegion === 0;
     if (isLoading) {
       return (
         <div className="c-loading">
@@ -65,8 +71,9 @@ class Root extends PureComponent {
       return (
         <div>
           <ScrollEvent handleScrollCallback={() => this.handleScrollCallback()} />
+          {this.props.fixed && <div className="open-map-mobile-tab" onClick={() => this.showMapMobile()}><span>{!showMapMobile ? 'show' : 'close'} map</span></div>}
           <Header />
-          <div className={`l-country__map ${this.props.fixed ? '-fixed' : ''}`} style={{top: this.props.topMap}}>
+          <div className={`l-country__map ${this.props.fixed ? '-fixed' : ''} ${showMapMobile ? '-open-mobile' : ''}`} style={{top: this.props.topMap}}>
             <Map
               maxZoom={14}
               minZoom={3}
@@ -88,32 +95,32 @@ class Root extends PureComponent {
             <div className="large-6 small-12 columns l-country__container-widgets">
               <WidgetTreeCover />
             </div>
-            <div className="large-6 small-12 columns l-country__container-widgets">
+            { regionSelected && <div className="large-6 small-12 columns l-country__container-widgets">
               <WidgetTreeLocated />
-            </div>
-            <div className="small-12 columns l-country__container-widgets">
+            </div>}
+            <div className={`${!regionSelected ? 'large-6 small-12' : 'small-12'} columns l-country__container-widgets `}>
               <WidgetTreeLoss />
             </div>
-            <div className="small-12 columns l-country__container-widgets">
+            { regionSelected && <div className="small-12 columns l-country__container-widgets">
               <WidgetTreeCoverLossAreas />
-            </div>
+            </div>}
             <div className="large-6 small-12 columns l-country__container-widgets">
               <WidgetTreeCoverGain />
             </div>
-            <div className="large-6 small-12 columns l-country__container-widgets">
+            { regionSelected && <div className="large-6 small-12 columns l-country__container-widgets">
               <WidgetAreasMostCoverGain />
-            </div>
+            </div> }
             <div className="large-6 small-12 columns l-country__container-widgets -last">
               <WidgetTotalAreaPlantations />
             </div>
-            <div className="large-6 small-12 columns l-country__container-widgets -last">
+            { regionSelected && <div className="large-6 small-12 columns l-country__container-widgets -last">
               <WidgetPlantationArea />
-            </div>
+            </div>}
           </div>
           <WidgetStories />
           <Footer />
         </div>
-      )
+      );
     }
   }
 }
@@ -121,10 +128,7 @@ class Root extends PureComponent {
 Root.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   iso: PropTypes.string.isRequired,
-  countryRegion: PropTypes.number.isRequired,
-  countryData: PropTypes.object.isRequired,
-  countryRegions: PropTypes.array.isRequired,
-  countriesList: PropTypes.array.isRequired,
+  countryRegion: PropTypes.string.isRequired,
   setInitialData: PropTypes.func.isRequired,
   refreshCountryData: PropTypes.func.isRequired,
   checkLoadingStatus: PropTypes.func.isRequired

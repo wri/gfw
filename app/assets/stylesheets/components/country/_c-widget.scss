@@ -11,18 +11,29 @@
     height: rem(78px);
 
     .c-widget-header__title {
-      width: 50%;
+      width: 100%;
       font-size: 13px;
       font-weight: 500;
       line-height: 1.54;
       color: $slate;
       text-transform: uppercase;
+
+      @media screen and (min-width: $screen-s) {
+        width: 50%;
+      }
     }
 
     .c-widget-header__options {
-      position: absolute;
-      right: rem(-7px);
-      top: rem(-4px);
+      width: 100%;
+      position: relative;
+      top: rem(10px);
+
+      @media screen and (min-width: $screen-s) {
+        width: auto;
+        right: rem(-7px);
+        top: rem(-4px);
+        position: absolute;
+      }
 
       li {
         display: inline-flex;

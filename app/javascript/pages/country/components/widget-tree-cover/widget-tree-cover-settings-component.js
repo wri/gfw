@@ -8,10 +8,6 @@ class WidgetTreeCoverSettings extends PureComponent {
     this.props.onRegionChange(value.value);
   };
 
-  unitChange = (value) => {
-    this.props.onUnitChange(value.value);
-  };
-
   canopyChange = (value) => {
     this.props.onCanopyChange(value.value);
   };
@@ -38,14 +34,6 @@ class WidgetTreeCoverSettings extends PureComponent {
             options={regions}
             onChange={this.regionChange}/>
         </div>
-        <div className="c-widget-settings__select">
-          <div className="c-widget-settings__title">UNIT</div>
-          <Select
-            iconRenderer={this.iconRenderer}
-            value={settings.unit}
-            options={units}
-            onChange={this.unitChange}/>
-        </div>
         <div className="c-widget-settings__button-select">
           <div className="c-widget-settings__title">CANOPY DENSITY</div>
           <Select
@@ -60,11 +48,9 @@ class WidgetTreeCoverSettings extends PureComponent {
 
 WidgetTreeCoverSettings.propTypes = {
   regions: PropTypes.array.isRequired,
-  units: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   onRegionChange: PropTypes.func.isRequired,
-  onUnitChange: PropTypes.func.isRequired,
   onCanopyChange: PropTypes.func.isRequired
 };
 

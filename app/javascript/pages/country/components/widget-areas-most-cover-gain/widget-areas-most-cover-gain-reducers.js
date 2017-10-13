@@ -2,6 +2,7 @@ export const initialState = {
   isLoading: true,
   areaData: [],
   areaChartData: [],
+  isUpdating: false,
   startArray: 0,
   endArray: 10,
   regions: [
@@ -53,6 +54,7 @@ export const initialState = {
 const setPieCharDataAreas = (state, { payload }) => ({
   ...state,
   isLoading: false,
+  isUpdating: false,
   areaData: payload
 });
 
@@ -67,8 +69,23 @@ const setArrayCoverAreasGain = (state, { payload }) => ({
   endArray: payload.endArray
 });
 
+const setTreeAreasTreeGainSettingsUnit = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    unit: payload
+  }
+});
+
+const setAreaMostCoverIsUpdating = (state, { payload }) => ({
+  ...state,
+  isUpdating: payload
+});
+
 export default {
   setPieCharDataAreas,
   setArrayCoverAreasGain,
-  setPieCharDataAreasTotal
+  setPieCharDataAreasTotal,
+  setTreeAreasTreeGainSettingsUnit,
+  setAreaMostCoverIsUpdating
 };

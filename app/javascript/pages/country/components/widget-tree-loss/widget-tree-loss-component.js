@@ -50,7 +50,8 @@ class WidgetTreeLoss extends PureComponent {
       setTreeLossSettingsCanopy,
       setTreeLossSettingsStartYear,
       setTreeLossSettingsEndYear,
-      isUpdating
+      isUpdating,
+      countryRegion
     } = this.props;
     if (isLoading) {
       return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
@@ -75,14 +76,14 @@ class WidgetTreeLoss extends PureComponent {
             />
           </WidgetHeader>
           <div className="c-widget-tree-loss__legend">
-            <div>
+            <div className="contain-info-legend">
               <div className="c-widget-tree-loss__legend-title">Total Tree Cover Loss</div>
               <div className="c-widget-tree-loss__legend-years">({`${settings.startYear} - ${settings.endYear}`})</div>
             </div>
-            <div>
+            <div className="">
               <div className="c-widget-tree-loss__legend-title">
                 <span style={{ backgroundColor: '#f26798' }}>{}</span>
-                Country-wide
+                {countryRegion === 0 ? 'Country-wide' : 'Jurisdiction-wide'}
               </div>
               <div className="c-widget-tree-loss__legend-value" style={{ color: '#f26798' }}>
                 {settings.unit === 'Ha' ? numeral(Math.round(total / 1000)).format('0,0') : Math.round(total)}{unitMeasure}

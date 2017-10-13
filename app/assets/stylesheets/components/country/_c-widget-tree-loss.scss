@@ -4,12 +4,32 @@
     display: flex;
     justify-content: space-between;
     margin: 0 rem(12px);
+    flex-direction: column;
+
+    @media screen and (min-width: $screen-s) {
+      flex-direction: row;
+    }
+
+    .contain-info-legend {
+      display: flex;
+      flex-direction: column;
+
+      @media screen and (min-width: $screen-s) {
+        display: block;
+      }
+    }
 
     .c-widget-tree-loss__legend-title {
       font-size: 12px;
       line-height: 1.08;
       color: $slate;
-      text-align: right;
+      text-align: left;
+      margin-top: rem(10px);
+
+      @media screen and (min-width: $screen-s) {
+        text-align: right;
+        margin-top: 0;
+      }
 
       span {
         position: relative;

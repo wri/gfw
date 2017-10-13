@@ -85,6 +85,7 @@ const WidgetTreeCoverLossAreasContainer = (props) => {
         if(indexColors < 10 || index === treeLossByRegion.data.data.length - 1) {
           if(indexColors < 10) { nameChart = props.countryRegions[numberRegion].name; valueChart = item.value;}
           if(index === treeLossByRegion.data.data.length - 1) { nameChart = 'others'; valueChart = othersValue;}
+
           regionForestLossChart.push({
             name: nameChart,
             color: colors[indexColors],

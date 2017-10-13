@@ -16,12 +16,14 @@ class WidgetTreeCoverGain extends PureComponent {
       startYear,
       endYear,
       regions,
-      settings
+      settings,
+      countryRegion,
+      countryRegions
     } = this.props;
     return (
       <div className="c-widget c-widget-tree-cover-gain">
         <WidgetHeader
-          title={`TREE COVER GAIN IN ${countryData.name}`}
+          title={`TREE COVER GAIN IN ${countryRegion === 0 ? countryData.name : countryRegions[countryRegion - 1].name}`}
           noMap={false} >
           <WidgetTreeCoverGainSettings
             type="settings"
@@ -32,9 +34,9 @@ class WidgetTreeCoverGain extends PureComponent {
           <div className="c-widget-tree-cover-gain__info">
             <p className="title">Hansen - UMD</p>
             <p>
-              Over the period of {startYear}-{endYear} {countryData.name} gained
+              Over the period of {startYear}-{endYear} {countryRegion === 0 ? countryData.name : countryRegions[countryRegion - 1].name} gained
               <strong> {numeral(Math.round(totalAmount / 1000)).format('0,0')} </strong>
-              Ha of tree cover country-wide, equivalent to <strong>{numeral(Math.round(percentage)).format('0,0')}%</strong> of countries total value.
+              Ha of tree cover {countryRegion === 0 ? 'country-wide' : 'jurisdiction-wide'}, equivalent to <strong>{numeral(Math.round(percentage)).format('0,0')}%</strong> of countries total value.
             </p>
           </div>
         </div>
