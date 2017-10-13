@@ -18,13 +18,21 @@
 
   .c-widget-total-area-plantations__container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     position: relative;
 
+    @media screen and (min-width: $screen-s) {
+      flex-direction: row;
+    }
+
     .c-widget-total-area-plantations__legend {
-      max-width: 50%;
+      max-width: 100%;
       border-top: 1px solid rgba($slate, .2);
       padding-top: rem(15px);
+
+      @media screen and (min-width: $screen-s) {
+        max-width: 50%;
+      }
 
       li {
         display: flex;
@@ -48,8 +56,8 @@
           align-items: center;
 
           div {
-            width: rem(16px);
-            height: rem(16px);
+            min-width: rem(16px);
+            min-height: rem(16px);
             border-radius: rem(16px);
             display: flex;
             align-items: center;
@@ -64,8 +72,13 @@
     }
 
     .c-widget-total-area-plantations__chart {
-      max-width: 50%;
-      margin: -30px auto 0;
+      max-width: 100%;
+      margin: 20px 0 0;
+
+      @media screen and (min-width: $screen-s) {
+        max-width: 50%;
+        margin: -30px auto 0;
+      }
     }
   }
 }

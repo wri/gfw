@@ -2,8 +2,12 @@
 
   .c-widget-tree-cover__legend {
     display: inline-block;
-    width: 50%;
+    width: 100%;
     padding-top: rem(24px);
+
+    @media screen and (min-width: $screen-s) {
+      width: 50%;
+    }
 
     li:not(:last-child) {
       margin-bottom: rem(37px);

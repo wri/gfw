@@ -71,7 +71,7 @@ class Root extends PureComponent {
       return (
         <div>
           <ScrollEvent handleScrollCallback={() => this.handleScrollCallback()} />
-          <div className="open-map-mobile-tab" onClick={() => this.showMapMobile()}><span>{!showMapMobile ? 'show' : 'close'} map</span></div>
+          {this.props.fixed && <div className="open-map-mobile-tab" onClick={() => this.showMapMobile()}><span>{!showMapMobile ? 'show' : 'close'} map</span></div>}
           <Header />
           <div className={`l-country__map ${this.props.fixed ? '-fixed' : ''} ${showMapMobile ? '-open-mobile' : ''}`} style={{top: this.props.topMap}}>
             <Map
