@@ -9,6 +9,11 @@
   .title {
     margin-bottom: rem(10px);
     padding-left: rem(16px);
+
+    @media screen and (min-width: $screen-s) {
+      margin-bottom: rem(10px);
+      padding-left: rem(16px);
+    }
   }
 
   .date {
@@ -17,10 +22,22 @@
   }
   .c-widget-tree-cover-loss-areas__container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    margin-top: rem(30px);
+
+    @media screen and (min-width: $screen-s) {
+      flex-direction: row;
+      margin-top: 0;
+    }
 
     .c-widget-tree-cover-loss-areas__chart {
-      flex-basis: 50%;
+      flex-basis: 100%;
+      margin-bottom: rem(20px);
+
+      @media screen and (min-width: $screen-s) {
+        flex-basis: 50%;
+        margin-bottom: 0;
+      }
 
       .recharts-wrapper {
         margin: rem(15px) auto 0;
@@ -28,7 +45,13 @@
     }
 
     .c-widget-tree-cover-loss-areas__legend {
-      flex-basis: 50%;
+      flex-basis: 100%;
+      margin-top: rem(15px);
+
+      @media screen and (min-width: $screen-s) {
+        flex-basis: 50%;
+        margin-top: 0;
+      }
 
       .container-list {
         min-height: rem(324px);
