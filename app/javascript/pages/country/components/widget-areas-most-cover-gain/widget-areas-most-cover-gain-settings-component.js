@@ -4,17 +4,9 @@ import Select from 'react-select-me';
 
 class WidgetAreasMostCoverGainSettings extends PureComponent {
 
-  // regionChange = (value) => {
-  //   this.props.onRegionChange(value.value);
-  // };
-  //
-  // unitChange = (value) => {
-  //   this.props.onUnitChange(value.value);
-  // };
-  //
-  // canopyChange = (value) => {
-  //   this.props.onCanopyChange(value.value);
-  // };
+  unitChange = (value) => {
+    this.props.onUnitChange(value.value);
+  };
 
   iconRenderer = () => {
     return(<svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg>);
@@ -34,14 +26,15 @@ class WidgetAreasMostCoverGainSettings extends PureComponent {
           <Select
             iconRenderer={this.iconRenderer}
             value={settings.region}
-            options={regions}/>
+            options={regions} />
         </div>
         <div className="c-widget-settings__select">
           <div className="c-widget-settings__title">UNIT</div>
           <Select
             iconRenderer={this.iconRenderer}
             value={settings.unit}
-            options={units}/>
+            options={units}
+            onChange={this.unitChange}/>
         </div>
       </div>
     );
