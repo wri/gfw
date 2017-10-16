@@ -93,7 +93,9 @@ class AboutImpacts extends Component {
                   {impacts.map((item, i) =>
                     <li key={i} className={`slide js_slide ${i === 0 ? 'active' : ''}`}>
                       <div className="c-about-impacts-item">
-                        <div className="c-about-impacts-item__image" style={{backgroundImage: `url(${item.image})`}}></div>
+                        <div className="c-about-impacts-item__image" style={{backgroundImage: `url(${item.image})`}}>
+                          <span>{item.image_credit}</span>
+                        </div>
                         <div className="c-about-impacts-item__paragraph text -paragraph -color-2"><Dotdotdot clamp={3}>{item.outcome}</Dotdotdot></div>
                         <div className="c-about-impacts-item__button">
                           <ButtonRegular text="READ MORE" color="green" url={item.link} />
