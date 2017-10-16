@@ -86,7 +86,7 @@ class WidgetTreeCoverLossAreasSettings extends PureComponent {
         <div className="c-widget-settings__button-select">
           <div className="c-widget-settings__title">CANOPY DENSITY</div>
           <Select
-            value={settings.canopy}
+            value={settings.canopy === 0 ? '> 0%' : settings.canopy}
             options={canopies}
             onChange={this.canopyChange}/>
         </div>

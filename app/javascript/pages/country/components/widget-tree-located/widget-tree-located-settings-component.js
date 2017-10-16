@@ -34,7 +34,8 @@ class WidgetTreeLocatedSettings extends PureComponent {
           <Select
             iconRenderer={this.iconRenderer}
             value={settings.dataSources}
-            options={dataSource}/>
+            options={dataSource}
+          />
         </div>
         <div className="c-widget-settings__select">
           <div className="c-widget-settings__title">UNIT</div>
@@ -42,14 +43,16 @@ class WidgetTreeLocatedSettings extends PureComponent {
             iconRenderer={this.iconRenderer}
             value={settings.unit}
             options={units}
-            onChange={this.unitChange}/>
+            onChange={this.unitChange}
+          />
         </div>
         <div className="c-widget-settings__button-select">
           <div className="c-widget-settings__title">CANOPY DENSITY</div>
           <Select
-            value={settings.canopy}
+            value={settings.canopy === 0 ? '> 0%' : settings.canopy}
             options={canopies}
-            onChange={this.canopyChange}/>
+            onChange={this.canopyChange}
+          />
         </div>
       </div>
     );

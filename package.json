@@ -13,7 +13,7 @@
     "webpack": "./bin/webpack",
     "foreman": "foreman start",
     "start": "npm-run-all -p -r foreman webpack",
-    "run-countries" : "./bin/server"
+    "run-countries": "./bin/server"
   },
   "repository": {
     "type": "git",
@@ -64,7 +64,7 @@
     "coffee-script": "^1.12.7",
     "compression-webpack-plugin": "^1.0.0",
     "css-loader": "^0.28.5",
-    "d3": "^4.10.2",
+    "d3": "^4.11.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "glob": "^7.1.2",
