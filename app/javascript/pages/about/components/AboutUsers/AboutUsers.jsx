@@ -10,11 +10,13 @@ class AboutUsers extends Component {
     super(props);
 
     this.users = [
-      {title: 'Civil Society'},
-      {title: 'NGO/IGO'},
-      {title: 'Journalist'},
-      {title: 'Government'},
-      {title: 'Private Sector'},
+      {title: 'Advocacy'},
+      {title: 'Land use planning and zoning'},
+      {title: 'Journalism'},
+      {title: 'Project monitoring and evaluation'},
+      {title: 'Forest monitoring and enforcement'},
+      {title: 'Supply chain monitoring'},
+      {title: 'Responsible investing'},
       {title: 'Research'},
     ];
 

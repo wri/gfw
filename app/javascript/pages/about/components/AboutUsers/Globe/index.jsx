@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import * as THREE from 'three';
+import Script from 'react-load-script'
 import orbitControl from 'three-orbit-controls';
 import usersData from './assets/data.json';
 import earthImage from './images/earth-image.jpg';
@@ -18,12 +19,37 @@ class GlobeComponent extends React.Component {
       markers: false,
       modalImage: null,
       modalText: null,
-      modalTitle: null
+      modalTitle: null,
+      loadCarto: false,
+      usersData: [],
     };
+
+    this.handleScriptLoad = this.handleScriptLoad.bind(this);
   }
 
-  componentDidMount() {
-    this.buildGlobe();
+  handleScriptLoad() {
+    var sql = new cartodb.SQL({ user: 'wri-01' });
+    const this_globe = this;
+    const totalValues = [];
+    sql.execute("SELECT a.*, b.latitude_average, b.longitude_average FROM gfw_use_cases_for_about_page a, country_list_iso_3166_codes_latitude_longitude b WHERE a.country_iso_code = b.alpha_3_code")
+      .done(function(data) {
+        data.rows.forEach(function(value, key) {
+          totalValues.push({
+            "img": "http://bomanite.com/wp-content/uploads/2015/02/512x512-PNG-Landscape-Texture-Sunrise-Lake.jpg",
+            "title": value.organization,
+            "description": value.story,
+            "latitude": value.latitude_average,
+            "longitude": value.longitude_average,
+            "group": value.use_case_type_how_to_portal
+          })
+        });
+        this_globe.setState({ usersData: totalValues });
+        this_globe.buildGlobe()
+      })
+      .error(function(errors) {
+        // errors contains a list of errors
+        console.log("errors:" + errors);
+      })
   }
 
   componentWillUpdate(nextProps) {
@@ -129,11 +155,10 @@ class GlobeComponent extends React.Component {
     if (group === null) {
       group = this.props.dataGroup;
     }
-
-    for (let i = usersData.length - 1; i >= 0; i--) {
-      if (usersData[i].group === group) {
-        const lat = usersData[i].latitude;
-        const lng = usersData[i].longitude;
+    for (let i = this.state.usersData.length - 1; i >= 0; i--) {
+      if (this.state.usersData[i].group === group) {
+        const lat = this.state.usersData[i].latitude;
+        const lng = this.state.usersData[i].longitude;
         const radio = this.props.radius;
         const position = latLongToVector3(lat, lng, radio, 10);
 
@@ -142,7 +167,7 @@ class GlobeComponent extends React.Component {
 
         marker.position.set(position.x, position.y, position.z);
         marker.lookAt(this.camera.position);
-        marker.data = usersData[i];
+        marker.data = this.state.usersData[i];
 
         markers.push(marker);
         this.scene.add(marker);
@@ -172,7 +197,9 @@ class GlobeComponent extends React.Component {
 
   render() {
     return (
-      <div ref={(node) => this.el = node} className="vizz-component-globe z2" />
+      <div ref={(node) => this.el = node} className="vizz-component-globe z2">
+        <Script url="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js" onLoad={this.handleScriptLoad.bind(this)}/>
+      </div>
     );
   }
 

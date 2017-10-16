@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Element } from 'react-scroll';
 import { lory } from 'lory.js';
+import Script from 'react-load-script';
+import Dotdotdot from 'react-dotdotdot';
 
 import ButtonRegular from '../../../general/components/ButtonRegular';
 import ButtonArrow from '../../../general/components/ButtonArrow';
@@ -14,34 +16,26 @@ class AboutImpacts extends Component {
       slider: null,
       sliderPrevIsVisible: false,
       sliderNextIsVisible: true,
-      sliderDotsSelected: 0
+      sliderDotsSelected: 0,
+      impacts: [],
     };
-
-    this.impacts = [
-      {
-        img : '',
-        paragraph : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id posuere diam, accumsan.',
-        url : ''
-      },
-      {
-        img : '',
-        paragraph : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id posuere diam, accumsan.',
-        url : ''
-      },
-      {
-        img : '',
-        paragraph : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id posuere diam, accumsan.',
-        url : ''
-      },
-      {
-        img : '',
-        paragraph : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id posuere diam, accumsan.',
-        url : ''
-      }
-    ]
   }
 
-  componentDidMount() {
+  handleScriptLoad() {
+    var sql = new cartodb.SQL({ user: 'wri-01' });
+    const this_impact = this;
+    sql.execute("SELECT * FROM gfw_outcomes_for_about_page_images")
+      .done(function(data) {
+        this_impact.setState({ impacts: data.rows })
+        this_impact.setWidget();
+      })
+      .error(function(errors) {
+        // errors contains a list of errors
+        console.log("errors:" + errors);
+      })
+  }
+
+  setWidget() {
     const slider = document.querySelector('.c-about-impacts .js_slider');
     this.setState({
       slider: lory(slider, {
@@ -63,7 +57,7 @@ class AboutImpacts extends Component {
   checkButtonsVisibility () {
     const currentIndex = this.state.slider.returnIndex();
     this.setState({ sliderPrevIsVisible: currentIndex !== 0 });
-    this.setState({ sliderNextIsVisible: currentIndex !== this.impacts.length - 2 });
+    this.setState({ sliderNextIsVisible: currentIndex !== this.state.impacts.length - 2 });
   };
 
   checkDots () {
@@ -86,22 +80,23 @@ class AboutImpacts extends Component {
   render() {
     const slidePrevVisibilityClass = `c-about-impacts__arrow-button -left ${!this.state.sliderPrevIsVisible ? '-hidden' : ''} js_slide_prev`;
     const slideNextVisibilityClass = `c-about-impacts__arrow-button -right ${!this.state.sliderNextIsVisible ? '-hidden' : ''} js_slide_next`;
-
+    const { impacts } = this.state;
     return (
       <Element name="impacts" className="c-about-impacts">
+        <Script url="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js" onLoad={this.handleScriptLoad.bind(this)}/>
         <div className="row">
           <div className="small-12 columns">
             <div className="c-about-impacts__title text -title-xs -color-3">IMPACTS</div>
             <div className="slider js_slider">
               <div className="frame js_frame">
                 <ul className="slides js_slides">
-                  {this.impacts.map((item, i) =>
+                  {impacts.map((item, i) =>
                     <li key={i} className={`slide js_slide ${i === 0 ? 'active' : ''}`}>
                       <div className="c-about-impacts-item">
-                        <div className="c-about-impacts-item__image"></div>
-                        <div className="c-about-impacts-item__paragraph text -paragraph -color-2">{item.paragraph}</div>
+                        <div className="c-about-impacts-item__image" style={{backgroundImage: `url(${item.image})`}}></div>
+                        <div className="c-about-impacts-item__paragraph text -paragraph -color-2"><Dotdotdot clamp={3}>{item.outcome}</Dotdotdot></div>
                         <div className="c-about-impacts-item__button">
-                          <ButtonRegular text="READ MORE" color="green" url={item.url} />
+                          <ButtonRegular text="READ MORE" color="green" url={item.link} />
                         </div>
                       </div>
                     </li>
@@ -116,7 +111,7 @@ class AboutImpacts extends Component {
               </div>
               <div className="c-about-impacts__slider-dots js_slider_dots">
                 <SliderDots
-                  count={this.impacts.length}
+                  count={this.state.impacts.length}
                   selected={this.state.sliderDotsSelected}
                   color="green"
                   callback={this.onClickDots.bind(this)} />

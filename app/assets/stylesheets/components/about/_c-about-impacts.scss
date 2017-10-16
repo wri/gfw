@@ -128,7 +128,9 @@ $item-padding-screen-m: rem(40px);
     left: 0;
     width: 100%;
     height: rem(242px);
-    background-color: red;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   .c-about-impacts-item__paragraph {
