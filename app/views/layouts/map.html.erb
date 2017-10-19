@@ -29,13 +29,13 @@
     <%= csrf_meta_tags %>
 
     <% if !is_embed %>
-      <%= render 'shared/gfw_assets' %>
+      <%= render 'shared/gfw_assets', page: 'map' %>
     <% end %>
 
   </head>
 
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
-    
+
     <%= render 'shared/svg_icons_footer' %>
     <%= render 'shared/js_config' %>
 

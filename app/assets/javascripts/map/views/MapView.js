@@ -101,7 +101,6 @@ define([
         mapTypeId: 'grayscale',
         center: new google.maps.LatLng(15, 27),
       };
-      this._appearMenu();
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
       this.allowedBounds = new google.maps.LatLngBounds(
          new google.maps.LatLng(-85, -180),
@@ -598,48 +597,6 @@ define([
         );
       }
     },
-
-    _appearMenu: function() {
-      $('body').mousemove(function( event ) {
-        var hoverMenuLogin;
-        if(event.pageY < 100) {
-          $('#headerGfw').addClass('-show');
-          $('.logo-menu').addClass('-show');
-          $('.nav-sections').addClass('-show');
-          $('.layout-header-bottom').addClass('-show');
-        }
-
-        if(event.pageY > 120){
-          var hoverMenuLanguage = $('.txlive-langselector-list').is(':hover');
-          var languageMenuOpen = $('.txlive-langselector-list').hasClass('txlive-langselector-list-opened');
-          if ($('.m-header-sub-menu-login').length === 1) {
-            hoverMenuLogin = $('.m-header-sub-menu-login').is(':hover');
-          }
-          if ($('.m-header-submenu-logged').length === 1) {
-            hoverMenuLogin = $('.m-header-submenu-logged').is(':hover');
-          }
-          var hoverMenuDashboard = $('.m-header-sub-menu-dashboard').is(':hover');
-          var dashboardMenuOpen = $('.m-header-sub-menu-dashboard').hasClass('-active');
-          var loginMenuOpen = $('.m-header-sub-menu-login').hasClass('-active');
-          var hoverLayerNavForest = $('#layersnav-forest-change').is(':hover');
-          var hoverLayerNavCover = $('#layersnav-forest-cover').is(':hover');
-          var hoverLayerNavUse = $('#layersnav-forest-use').is(':hover');
-          var hoverLayerNavConservation = $('#layersnav-conservation').is(':hover');
-          var hoverLayerNavPeople = $('#layersnav-people').is(':hover');
-          var hoverLayerNavStories = $('#layersnav-stories').is(':hover');
-          var hoverLayerNavCountry = $('#country-layers-nav').is(':hover');
-
-          if(!hoverMenuLanguage && !hoverMenuLogin && !hoverMenuDashboard && !loginMenuOpen && !dashboardMenuOpen
-             && !languageMenuOpen && !hoverLayerNavForest && !hoverLayerNavCover && !hoverLayerNavUse
-             && !hoverLayerNavConservation && !hoverLayerNavPeople && !hoverLayerNavStories && !hoverLayerNavCountry) {
-            $('#headerGfw').removeClass('-show');
-            $('.logo-menu').removeClass('-show');
-            $('.nav-sections').removeClass('-show');
-            $('.layout-header-bottom').removeClass('-show');
-          }
-        }
-      });
-    }
   });
 
   return MapView;
