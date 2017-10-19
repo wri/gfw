@@ -164,6 +164,20 @@
       font-size: 14px;
       color: $white;
     }
+
+    .c-about-contactus__cancel-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: rem(200px);
+      height: rem(40px);
+      margin-top: rem(20px);
+      border-radius: rem(27px);
+      background-color: #ed1846;
+      font-size: 14px;
+      color: $white;
+      margin-left: rem(10px);
+    }
   }
 
   @media screen and (min-width: $screen-l) {
