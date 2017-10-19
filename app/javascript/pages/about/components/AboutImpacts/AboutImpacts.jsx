@@ -16,29 +16,6 @@ class AboutImpacts extends Component {
       sliderNextIsVisible: true,
       sliderDotsSelected: 0
     };
-
-    this.impacts = [
-      {
-        img : '',
-        paragraph : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id posuere diam, accumsan.',
-        url : ''
-      },
-      {
-        img : '',
-        paragraph : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id posuere diam, accumsan.',
-        url : ''
-      },
-      {
-        img : '',
-        paragraph : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id posuere diam, accumsan.',
-        url : ''
-      },
-      {
-        img : '',
-        paragraph : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id posuere diam, accumsan.',
-        url : ''
-      }
-    ]
   }
 
   componentDidMount() {
@@ -101,7 +78,7 @@ class AboutImpacts extends Component {
                         <div className="c-about-impacts-item__image"></div>
                         <div className="c-about-impacts-item__paragraph text -paragraph -color-2">{item.paragraph}</div>
                         <div className="c-about-impacts-item__button">
-                          <ButtonRegular text="READ MORE" color="green" url={item.url} />
+                          <ButtonRegular text="READ MORE" color="green" url={item.link} />
                         </div>
                       </div>
                     </li>
