@@ -1,36 +1,21 @@
 <%= render 'shared/svg_icons_countries' %>
-
-<% content_for :header do %>
-  <h1 class="header-title">
-    <a href="/">Global Forest Watch</a>
-  </h1>
-  <nav id="nav-mobile">
-    <form class="mobile-show" action="/search">
-      <svg class="icon"><use xlink:href="#shape-search"></use></svg>
-      <input type="text" name="query" id="search-input" placeholder="Search GFW website">
-    </form>
-    <div id="google_translate_element_box2"></div>
-    <div id="mobileMenu"></div>
-    <ul class="mobile-hide">
-      <li>
-        <a <% if controller?("countries") && action?("index") %>class="current"<% end %> href="/countries">Country Profiles</a>
-      </li>
-      <li>
-        <a <% if controller?("countries") && action?("overview") %>class="current"<% end %> href="/countries/overview">Country Rankings</a>
-      </li>
-    </ul>
-  </nav>
-<% end %>
-
 <% content_for :js do %>
   <%= render "countries_templates" %>
   <%= render "shared/js_templates" %>
 <% end %>
-
-
 <section id="countryOverviewView">
-  <div class="inner">
-    <h2 class="title-section">country rankings</h2>
+  <div class="cover-title">
+    <h2 class="title-section">countries</h2>
+  </div>
+  <div class="tab-countries">
+    <ul>
+      <a <% if controller?("countries") && action?("index") %>class="current"<% end %> href="/countries">
+        <li>Profiles</li>
+      </a>
+      <a <% if controller?("countries") && action?("overview") %>class="current"<% end %> href="/countries/overview">
+        <li class="-selected">Rankings</li>
+      </a>
+    </ul>
   </div>
   <div class='inner'>
     <div class="country-overview-wrapper-coolio">
@@ -41,7 +26,7 @@
             <svg><use xlink:href="#shape-settings"></use></svg>tree cover canopy settings
           </div>
           <div class="download-spatial">
-            <a class="download-mobile-link" data-type="country-stats" href='http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/tree_cover_stats_2015.xlsx' target='_blank'>
+            <a class="download-mobile-link" data-type="country-stats" href='http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/tree_cover_stats_2016.xlsx' target='_blank'>
               Download tree cover stats
               <svg>
                 <use xlink:href="#shape-download-18"></use>
@@ -81,7 +66,7 @@
 
         <div class='overview_graph__legend'>
           <p>
-            Global tree cover loss, 2001-2014</sup>
+            Global tree cover loss, 2001-2016</sup>
           </p>
           <span class="trigger-mode"></span>
           <a href='#' class='info source' data-source='total_loss'><svg><use xlink:href="#shape-info"></use></svg></a>
@@ -119,7 +104,7 @@
     <div class='overview_graph__years'></div>
     <div class='overview_graph__axis'>Tree cover 2000</div>
 
-    <h1 class='overview_graph__title'>Countries with greatest tree cover loss (2001-2014)</h1>
+    <h1 class='overview_graph__title'>Countries with greatest tree cover loss (2001-2016)</h1>
 
     <div class='countries_list'>
       <div class='countries_list__header'>

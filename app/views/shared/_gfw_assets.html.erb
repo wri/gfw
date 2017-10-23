@@ -1,8 +1,40 @@
+<%
+  site ||= 'gfw-global'
+  page ||= ''
+%>
+
 <script type="text/javascript">
   window.liveSettings = {
     picker: '#transifexTranslateElement',
     api_key: "9eda410a7db74687ba40771c56abd357",
-    detectlang: false
+    detectlang: false,
+    site: '<%= site %>',
+    page: '<%= page %>',
+    menuOptions:
+    {
+      options: [
+        {
+          title: 'logo',
+          url: '/'
+        },
+        {
+          title: 'map',
+          url: '/map',
+        },
+        {
+          title: 'countries',
+          url: '/countries',
+        },
+        {
+          title: 'blog',
+          url: 'http://blog.globalforestwatch.org/',
+        },
+        {
+          title: 'about',
+          url: '/about',
+        },
+      ],
+    },
 
     // LIVE SETTINGS OPTIONS
     // api_key: "<key>",

@@ -22,9 +22,6 @@ body,html{
   }
 }
 
-
-
-
 .layout-content {
   margin-bottom: 0;
   position: absolute;
@@ -34,8 +31,8 @@ body,html{
   left: 0;
   width: 100%;
   @media (min-width:$br-mobile){
-    height: calc(100% - 34px);
-    top: 34px;
+    height: calc(100% - 45px);
+    top: 40px;
   }
 }
 
@@ -337,5 +334,13 @@ body,html{
   }
   .gm-style .gm-style-cc span, .gm-style .gm-style-cc a, .gm-style .gm-style-mtc div {
     font-size: 8px !important;
+  }
+}
+
+.layout-header-bottom {
+  display: block !important;
+
+  &.-hidden {
+    display: none !important;
   }
 }

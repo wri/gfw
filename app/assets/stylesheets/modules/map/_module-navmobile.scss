@@ -1,5 +1,5 @@
 .module-navmobile {
-  bottom: 50px;
+  bottom: 0;
   left: 0;
   width: 100%;
   z-index: 21;
@@ -21,7 +21,7 @@
       border-left: 1px solid $border;
       transition: all 0.25s $easeInOutSine;
 
-      &:first-child{ 
+      &:first-child{
         border-left: none;
       }
 
@@ -38,7 +38,7 @@
 
       &.active {
         background: #F7F7F7;
-        &:after { 
+        &:after {
           height: 2px;
         }
       }
@@ -75,7 +75,7 @@
           float: left;
           left: 50%;
           transform: translate(-50%,0);
-          
+
           &:after {
             content: "1";
             color: $white;
@@ -120,7 +120,7 @@
       }
     }
   }
-  
+
   .timeline-mobile-call-to-action {
     display: none;
   }

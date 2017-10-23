@@ -1,0 +1,21 @@
+.cover-title {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: image-url('countries/countries.jpg');
+
+  h2 {
+    max-width: 83.33333%;
+    margin: 0 auto;
+    text-align: left;
+    color: #fff;
+    line-height: 1.02;
+    font-size: 60px;
+    font-weight: 400;
+    padding: 0;
+    display: block;
+    width: 100%;
+  }
+}

@@ -30,7 +30,7 @@
     <%= controller_stylesheet_link_tag %>
     <%= yield :js %>
     <%= csrf_meta_tags %>
-    <%= render 'shared/gfw_assets' %>
+    <%= render 'shared/gfw_assets', site: 'gfw-mygfw' %>
   </head>
 
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action"%>">
@@ -51,7 +51,7 @@
     <div style="display:none">
       <%= render 'shared/sources_map' %>
     </div>
-    
+
     <!-- Javascript -->
     <%= render 'shared/google_carto' %>
     <%= requirejs_include_tag 'connect' %>

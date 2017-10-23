@@ -10,19 +10,20 @@
   position: relative;
   background: #333;
   margin-top: 36px;
-  top: -20px;
+  padding-bottom: 50px;
+
   @media only screen and (max-width: 480px) {
-    top: 0;
+    padding-bottom: 0px;
     margin-top: 0px;
   }
   .embed & {
+    padding-bottom: 0px;
     margin-top: 0;
-    top: 0px;
   }
 }
 
 .overview_graph {
-  width: 960px;
+  width: 1015px;
   margin: 0 auto;
   position: relative;
 
@@ -319,6 +320,7 @@
 }
 .overview_graph__years{
   width: 960px;
+  top: -50px;
 }
 
 .overview_graph__axis {
@@ -710,7 +712,7 @@
 .chart {
   display: none;
   position: absolute;
-  width: 960px;
+  width: 1015px;
   height: 371px;
   color: #fff;
 
@@ -854,13 +856,13 @@
       font-size: 10px;
       text-transform: none;
       max-width: 190px;
-      line-height: 1.1;  
+      line-height: 1.1;
       a {
         color: $cGreen;
         &:hover {
           color: lighten($cGreen, 5%)
         }
-      }    
+      }
     }
 
     @include box-sizing(border-box);
@@ -1088,6 +1090,7 @@
 
   .overview_graph__years {
     border-bottom: 0;
+    top: 0px;
 
     .year { display: none; }
     .year:first-child,
