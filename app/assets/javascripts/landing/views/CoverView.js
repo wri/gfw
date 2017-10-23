@@ -112,18 +112,18 @@ define([
 
     _onVideoBackgroundStateChange: function (e) {
       switch (e.data) {
-        case 0:
+        case YT.PlayerState.ENDED:
           this.$videoBackground.removeClass('active');
           this.$videoButton.removeClass('-visible');
           break;
-        case 1:
+        case YT.PlayerState.PLAYING:
           this.$videoBackground.addClass('active');
           this.$videoButton.addClass('-visible');
-          break;
-        case 2:
+        break;
+        case YT.PlayerState.PAUSED:
           this.$videoBackground.removeClass('active');
           this.$videoButton.removeClass('-visible');
-          this.ytVideoBackground.seekTo(0);
+          // this.ytVideoBackground.seekTo(0);
           break;
       }
     },
