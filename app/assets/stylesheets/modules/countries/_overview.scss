@@ -10,14 +10,15 @@
   position: relative;
   background: #333;
   margin-top: 36px;
-  top: 50px;
+  padding-bottom: 50px;
+
   @media only screen and (max-width: 480px) {
-    top: 0;
+    padding-bottom: 0px;
     margin-top: 0px;
   }
   .embed & {
+    padding-bottom: 0px;
     margin-top: 0;
-    top: 0px;
   }
 }
 
@@ -319,6 +320,7 @@
 }
 .overview_graph__years{
   width: 960px;
+  top: -50px;
 }
 
 .overview_graph__axis {
@@ -1088,6 +1090,7 @@
 
   .overview_graph__years {
     border-bottom: 0;
+    top: 0px;
 
     .year { display: none; }
     .year:first-child,
