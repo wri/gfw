@@ -20,6 +20,10 @@ class AboutHow extends Component {
     this.setState({success: true});
   };
 
+  closeModal = () => {
+    this.setState({success: false});
+  };
+
   getLanguage = () => {
     return window.Transifex ? window.Transifex.live.getSelectedLanguageCode() : 'en';
   };
@@ -47,6 +51,7 @@ class AboutHow extends Component {
               <div className="c-about-contactus__success-title">Thank you for contacting Global Forest Watch! Check your inbox for a confirmation email.</div>
               <div className="c-about-contactus__success-subtitle">Interested in getting news and updates from us?</div>
               <a href="?show_newsletter=true" className="c-about-contactus__success-button">Sign up for our newsletter</a>
+              <button className="c-about-contactus__cancel-button" onClick={this.closeModal}>Cancel</button>
             </div>
           </div> }
       </Element>
