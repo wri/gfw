@@ -952,7 +952,9 @@ define([
               url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
               dataType: 'json',
               success: _.bind(function(data) {
-                var gain = data.rows[0].sum;
+                // gain needs to be divided by 12, as each year holds the same
+                // value.
+                var gain = data.rows[0].sum/12;
                 var g_mha, l_mha;
                 g_mha = l_mha = 'Mha';
 
