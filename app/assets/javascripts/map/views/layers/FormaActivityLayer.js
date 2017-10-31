@@ -29,7 +29,7 @@ define([
 
       // Default to 48 hours
       var currentDate = options.currentDate ||
-        [moment().subtract(2, 'days').utc(), moment()];
+        [moment().subtract(3, 'days').utc(), moment()];
       this.setCurrentDate(DatesHelper.getRangeForDates(currentDate));
 
       this._super(layer, options, map);
