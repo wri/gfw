@@ -37,7 +37,7 @@ class AboutCover extends Component {
                     <use xlinkHref="#icon-play"></use>
                   </svg>
                 </div>
-                <span className="text -paragraph-4 -italic -color-7">GFW in 2’</span>
+                <span className="text -paragraph-4 -italic -color-7">GFW in 2 minutes</span>
               </div>
             </div>
           </div>
