@@ -16,7 +16,7 @@ import AboutLogos from './components/AboutLogos/AboutLogos';
 
 const preloadedState = {
   globe: {
-    userGroup: 'Advocacy',
+    userGroup: 'all',
     isVisible: false
   }
 };

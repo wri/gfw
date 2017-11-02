@@ -14,8 +14,8 @@ class AboutModalWorld extends Component {
               <p className="text -title-xs -color-2">{this.props.userData.description}</p>
             </div>
             <div className="contain-buttons">
-              <a href="#" className="c-regular-button -green ">LEARN MORE</a>
-              <a href="#" className="text -color-2 button-round">$</a>
+              {this.props.userData.link ? <a href={this.props.userData.link} target="_blank" className="c-regular-button -green ">LEARN MORE</a> : null}
+              {this.props.userData.sgf ? <div className="text -color-2 button-round">$</div> : null}
             </div>
           </div>
         </div>

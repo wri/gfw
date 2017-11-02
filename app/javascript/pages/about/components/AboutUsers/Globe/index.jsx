@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import * as THREE from 'three';
 import Script from 'react-load-script'
 import orbitControl from 'three-orbit-controls';
-import usersData from './assets/data.json';
 import earthImage from './images/earth-image.jpg';
 import earthBumpImage from './images/earth-bump.jpg';
 import { latLongToVector3 } from './utils';
@@ -33,27 +32,28 @@ class GlobeComponent extends React.Component {
     const totalValues = [];
     sql.execute("SELECT a.*, b.latitude_average, b.longitude_average FROM gfw_use_cases_for_about_page a, country_list_iso_3166_codes_latitude_longitude b WHERE a.country_iso_code = b.alpha_3_code")
       .done(function(data) {
-        data.rows.forEach(function(value, key) {
+        data.rows.forEach(function(value) {
           totalValues.push({
-            "img": "http://bomanite.com/wp-content/uploads/2015/02/512x512-PNG-Landscape-Texture-Sunrise-Lake.jpg",
-            "title": value.organization,
-            "description": value.story,
-            "latitude": value.latitude_average,
-            "longitude": value.longitude_average,
-            "group": value.use_case_type_how_to_portal
+            img: "http://bomanite.com/wp-content/uploads/2015/02/512x512-PNG-Landscape-Texture-Sunrise-Lake.jpg",
+            title: value.organization,
+            description: value.story,
+            latitude: value.latitude_average,
+            longitude: value.longitude_average,
+            link: value.link,
+            group: value.use_case_type_how_to_portal,
+            sgf: value.sgf
           })
         });
         this_globe.setState({ usersData: totalValues });
         this_globe.buildGlobe()
       })
       .error(function(errors) {
-        // errors contains a list of errors
         console.log("errors:" + errors);
       })
   }
 
   componentWillUpdate(nextProps) {
-    if(this.props.dataGroup !== nextProps.dataGroup) {
+    if (this.props.dataGroup !== nextProps.dataGroup) {
       this.removeMarkers();
       this.addMarkers(nextProps.dataGroup);
     }
@@ -156,7 +156,7 @@ class GlobeComponent extends React.Component {
       group = this.props.dataGroup;
     }
     for (let i = this.state.usersData.length - 1; i >= 0; i--) {
-      if (this.state.usersData[i].group === group) {
+      if (group === 'all' || this.state.usersData[i].group === group) {
         const lat = this.state.usersData[i].latitude;
         const lng = this.state.usersData[i].longitude;
         const radio = this.props.radius;
