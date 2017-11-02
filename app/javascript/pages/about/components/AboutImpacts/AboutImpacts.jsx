@@ -4,7 +4,6 @@ import { lory } from 'lory.js';
 import Script from 'react-load-script';
 import Dotdotdot from 'react-dotdotdot';
 
-import ButtonRegular from '../../../general/components/ButtonRegular';
 import ButtonArrow from '../../../general/components/ButtonArrow';
 import SliderDots from '../../../general/components/SliderDots';
 
@@ -22,15 +21,14 @@ class AboutImpacts extends Component {
   }
 
   handleScriptLoad() {
-    var sql = new cartodb.SQL({ user: 'wri-01' });
+    const sql = new cartodb.SQL({ user: 'wri-01' });
     const this_impact = this;
     sql.execute("SELECT * FROM gfw_outcomes_for_about_page_images")
       .done(function(data) {
-        this_impact.setState({ impacts: data.rows })
+        this_impact.setState({ impacts: data.rows });
         this_impact.setWidget();
       })
       .error(function(errors) {
-        // errors contains a list of errors
         console.log("errors:" + errors);
       })
   }
@@ -96,10 +94,12 @@ class AboutImpacts extends Component {
                         <div className="c-about-impacts-item__image" style={{backgroundImage: `url(${item.image})`}}>
                           <span>{item.image_credit}</span>
                         </div>
-                        <div className="c-about-impacts-item__paragraph text -paragraph -color-2"><Dotdotdot clamp={3}>{item.outcome}</Dotdotdot></div>
-                        <div className="c-about-impacts-item__button">
-                          <ButtonRegular text="READ MORE" color="green" url={item.link} />
-                        </div>
+                        <div className="c-about-impacts-item__paragraph text -paragraph -color-2"><Dotdotdot clamp={4}>{item.outcome}</Dotdotdot></div>
+                        {item.link ?
+                          <div className="c-about-impacts-item__button">
+                            <a href={item.link} target="_blank" className={`c-regular-button -green`}>READ MORE</a>
+                          </div>
+                          : null}
                       </div>
                     </li>
                   )}
