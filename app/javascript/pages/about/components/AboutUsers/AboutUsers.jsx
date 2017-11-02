@@ -3,19 +3,21 @@ import PropTypes from 'prop-types'
 
 import Globe from '../../../about/components/AboutUsers/Globe/index';
 import AboutModalWorld from '../../../about/components/AboutModals/AboutModalWorld';
-import ButtonRegular from '../../../../common/components/ButtonRegular';
+import ButtonRegular from '../../../general/components/ButtonRegular';
 
 class AboutUsers extends Component {
   constructor(props) {
     super(props);
 
     this.users = [
-      {title: 'Civil Society'},
-      {title: 'NGO/IGO'},
-      {title: 'Journalist'},
-      {title: 'Government'},
-      {title: 'Private Sector'},
+      {title: 'Advocacy'},
+      {title: 'Forest monitoring and enforcement'},
+      {title: 'Journalism'},
+      {title: 'Land use planning and zoning'},
+      {title: 'Project monitoring and evaluation'},
       {title: 'Research'},
+      {title: 'Responsible investing'},
+      {title: 'Supply chain monitoring'},
     ];
 
     this.state = {
@@ -58,11 +60,7 @@ class AboutUsers extends Component {
           <div className="small-12 large-6 columns">
             <div className="c-about-users__content">
               <div className="c-about-users__title text -title-xs -color-3">WHO USES GLOBAL FOREST WATCH?</div>
-              <div className="c-about-users__summary text -paragraph -color-2">Thousands of people around the world use
-                GFW every day to monitor and manage forests, stop illegal deforestation and fires, call out
-                unsustainable activities, defend their land and resources, sustainably source commodities, and conduct
-                research at the forefront of conservation.
-              </div>
+              <div className="c-about-users__summary text -paragraph -color-2">Thousands of people around the world use GFW every day to monitor and manage forests, stop illegal deforestation and fires, call out unsustainable activities, defend their land and resources, sustainably source commodities, and conduct research at the forefront of conservation.</div>
               <ul className="c-about-users__user-list text -paragraph -color-2">
                 {this.users.map((item, i) =>
                   <li key={i} className={`${this.props.selectedUserGroup === item.title ? '-selected' : ''}`} onClick={() => this.selectUser(item.title)}>
@@ -81,7 +79,7 @@ class AboutUsers extends Component {
         </div>
         <div className="c-about-users__growth text -title -light -color-2">
           <p>Since launching in 2014,</p>
-          <p>Global Forest Watch has had over 1.3 million users</p>
+          <p>over 1.5 million people have visited Global Forest Watch</p>
           <p>from every single country in the world.</p>
           <ul className="c-about-users__growth-years text -paragraph-6">
             {growthDates.map((item, i) =>
