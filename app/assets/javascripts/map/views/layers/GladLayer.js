@@ -81,10 +81,10 @@ define([
       var startDay = this.timelineExtent[0].dayOfYear() + ((startYear - 2015) * 365),
           endDay = this.timelineExtent[1].dayOfYear() + ((endYear - 2015) * 365);
 
-      var recentRangeStart = this.maxDate.clone().subtract(7, 'days'),
-          recentRangeStartYear = recentRangeStart.year();
-      var recentRangeEnd = this.maxDate.clone(),
+      var recentRangeEnd = moment.utc(),
           recentRangeEndYear = recentRangeEnd.year();
+      var recentRangeStart = recentRangeEnd.subtract(7, 'days'),
+          recentRangeStartYear = recentRangeStart.year();
       var recentRangeStartDay = recentRangeStart.dayOfYear() + ((recentRangeStartYear - 2015) * 365),
           recentRangeEndDay = recentRangeEnd.dayOfYear() + ((recentRangeEndYear - 2015) * 365);
 
