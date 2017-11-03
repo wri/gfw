@@ -228,10 +228,10 @@ define([
         }
 
         if (e) {
-          sql += 'OFFSET 10';
+          sql += ' OFFSET 10 ';
           $('.show-more-countries').fadeOut();
         } else {
-          sql += 'LIMIT 10';
+          sql += ' LIMIT 10 ';
           $('.countries_list ul').html('');
           $('.show-more-countries').show();
         }
@@ -315,13 +315,13 @@ define([
         $('.countries_list__header__minioverview').hide();
         var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
 
-        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_staging umd, gfw2_countries c WHERE umd.iso = c.iso AND NOT loss = 0 AND gain IS NOT NULL AND umd.year > 2000 AND umd.year < 2017 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
+        var sql = 'SELECT umd.iso, c.name, c.enabled, ROUND(umd.gain, 0) as gain FROM umd_nat_staging umd, gfw2_countries c WHERE umd.iso = c.iso AND NOT loss = 0 AND gain IS NOT NULL AND umd.year = 2001 GROUP BY umd.iso, c.name, gain, c.enabled ORDER BY gain DESC ';
         if (!!mode && mode.mode == 'percent')
-            sql = 'SELECT (u.gain*12/u.extent_2000)*100 as ratio, country as name, c.iso as iso, c.enabled, u.iso as iso2 from umd_nat_staging u, gfw2_countries c  WHERE thresh = 50 AND u.gain IS NOT NULL AND c.iso = u.iso AND extent_2000 > 10  group by ratio, country, u.iso, c.iso, c.enabled order by ratio desc ';
+            sql = 'SELECT (u.gain/u.extent_2000)*100 as ratio, country as name, c.iso as iso, c.enabled, u.iso as iso2 from umd_nat_staging u, gfw2_countries c WHERE thresh = 50 AND u.gain IS NOT NULL AND c.iso = u.iso AND extent_2000 > 10 group by ratio, country, u.iso, c.iso, c.enabled order by ratio desc';
         if (e) {
-          sql += 'OFFSET 10';
+          sql += ' OFFSET 10 ';
         } else {
-          sql += 'LIMIT 10';
+          sql += ' LIMIT 10 ';
         }
 
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
@@ -339,19 +339,7 @@ define([
                 url: window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=30',
                 dataType: 'json',
                 success: _.bind(function(data) {
-                  var g_mha, l_mha;
-                  g_mha = l_mha = 'Mha';
-                  data.years[1].gain = Math.round(data.years[1].total_gain);
-                  if (data.years[1].gain.toString().length >= 7) {
-                    data.years[1].gain = ((data.years[1].gain /1000)/1000).toFixed(2)
-                  } else if (data.years[1].gain.toString().length >= 4) {
-                    l_mha = 'KHa';
-                    data.years[1].gain = (data.years[1].gain /1000);
-                  if (data.years[1].gain % 1 != 0) data.years[1].gain = data.years[1].gain.toFixed(2)
-                  } else {
-                    l_mha = 'Ha';
-                  }
-                  $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ parseFloat(data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
+                  $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ parseFloat(val.gain).toLocaleString() +' Ha </span></span>');
                 }
                 , this),
               });
@@ -407,9 +395,9 @@ define([
           sql = 'SELECT umd.iso, country as name, extent_perc as extent, c.enabled FROM umd_nat_staging umd, gfw2_countries c WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND extent_perc > 0 GROUP BY umd.iso, umd.country, extent_perc , name, c.enabled ORDER BY extent_perc desc '
         }
         if (e) {
-          sql += 'OFFSET 10';
+          sql += ' OFFSET 10 ';
         } else {
-          sql += 'LIMIT 10';
+          sql += ' LIMIT 10 ';
         }
 
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
@@ -472,13 +460,13 @@ define([
         });
       } else if (this.model.get('graph') === 'ratio') {
         $('.countries_list__header__minioverview').hide();
-        var sql = 'WITH loss as (SELECT iso, sum(loss) sum_loss FROM umd_nat WHERE thresh = ' + (this.helper.config.canopy_choice || 30) + ' GROUP BY iso),gain as (SELECT iso, sum(gain) sum_gain FROM umd_nat WHERE thresh = ' + (this.helper.config.canopy_choice || 30) + ' GROUP BY iso), ratio as (SELECT c.iso, c.name, c.enabled, loss.sum_loss/gain.sum_gain as ratio FROM loss, gain, gfw2_countries c WHERE sum_gain IS NOT null AND NOT sum_gain = 0 AND c.iso = gain.iso  AND c.iso = loss.iso ORDER BY loss.sum_loss DESC LIMIT 50) SELECT * FROM ratio WHERE ratio IS NOT null ORDER BY ratio DESC ';
+        var sql = 'WITH loss as (SELECT iso, sum(loss) sum_loss FROM umd_nat WHERE thresh = ' + (this.helper.config.canopy_choice || 30) + ' GROUP BY iso), gain as (SELECT iso, SUM(gain)/COUNT(gain) sum_gain FROM umd_nat WHERE thresh = ' + (this.helper.config.canopy_choice || 30) + ' GROUP BY iso), ratio as (SELECT c.iso, c.name, c.enabled, loss.sum_loss/gain.sum_gain as ratio FROM loss, gain, gfw2_countries c WHERE sum_gain IS NOT null AND NOT sum_gain = 0 AND c.iso = gain.iso  AND c.iso = loss.iso ORDER BY loss.sum_loss DESC LIMIT 50) SELECT * FROM ratio WHERE ratio IS NOT null ORDER BY ratio DESC ';
 
         if (e) {
-          sql += ['OFFSET 10',
-                  'LIMIT 40'].join('\n');
+          sql += [' OFFSET 10 ',
+                  ' LIMIT 40 '].join('\n');
         } else {
-          sql += 'LIMIT 10';
+          sql += ' LIMIT 10 ';
         }
 
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
@@ -520,7 +508,7 @@ define([
         }, this ));
       } else if (this.model.get('graph') === 'domains') {
         $('.countries_list__header__minioverview').show();
-        var sql = "SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco_2014 where thresh = "+ (this.helper.config.canopy_choice || 30) +" and ecozone !='Water' and ecozone != 'Polar' group by ecozone";
+        var sql = "SELECT ecozone as name, sum(loss) as total_loss, SUM(gain)/COUNT(gain) as total_gain FROM umd_eco_2014 where thresh = "+ (this.helper.config.canopy_choice || 30) +" and ecozone !='Water' and ecozone != 'Polar' group by ecozone";
         // "SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +’ and ecozone !='Water' and ecozone != 'Polar' group by ecozone"
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
@@ -578,7 +566,7 @@ define([
         .attr('height', height);
 
       if (this.model.get('graph') === ('total_loss')) {
-        var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain) gain FROM umd_nat_staging WHERE iso = \''+ iso +'\' AND thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 AND year < 2017 GROUP BY iso, year ORDER BY year';
+        var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain)/COUNT(gain) gain FROM umd_nat_staging WHERE iso = \''+ iso +'\' AND thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 AND year < 2017 GROUP BY iso, year ORDER BY year';
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
           var data = json.rows;
 
@@ -943,18 +931,19 @@ define([
       } else if (this.model.get('graph') === 'percent_loss') {
         var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE')),
             $target = this.$big_figures,
-            query  = 'SELECT sum(gain) from umd_nat_staging';
+            query  = 'SELECT ROUND(SUM(gain)/COUNT(gain),0) as sum from umd_nat_staging';
 
         if (!!mode && mode.mode == 'percent') {
-          query = 'SELECT sum(gain_perc) as sum from umd_nat_staging  where thresh = 50 AND extent_2000 > 10';
+          query = 'SELECT AVG(gain_perc) as sum from umd_nat_staging  where thresh = 50 AND extent_2000 > 10';
         }
         $.ajax({
               url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
               dataType: 'json',
               success: _.bind(function(data) {
                 // gain needs to be divided by 12, as each year holds the same
-                // value.
-                var gain = data.rows[0].sum/12;
+                // value. update
+                //var gain = data.rows[0].sum/12;
+                var gain = data.rows[0].sum;
                 var g_mha, l_mha;
                 g_mha = l_mha = 'Mha';
 
@@ -963,15 +952,15 @@ define([
                   $target.find('.unit').html('%');
                 } else {
                   if (gain.toString().length >= 7) {
-                    gain = ((gain /1000)/1000)
+                    //gain = ((gain /1000)/1000)
                   } else if (gain.toString().length >= 4) {
                     l_mha = 'KHa';
-                    gain = (gain /1000);
+                    //gain = (gain /1000);
                   } else {
                     l_mha = 'Ha';
                   }
-                  $target.find('.figure').removeClass('extent').html((~~gain).toLocaleString());
-                  $target.find('.unit').html(l_mha);
+                  $target.find('.figure').removeClass('extent').html((gain).toLocaleString());
+                  $target.find('.unit').html('Ha');
                 }
               }, this),
             });
@@ -1059,7 +1048,7 @@ define([
                     (  \
                              SELECT   iso,  \
                                       Sum(loss) sum_loss,  \
-                                      Sum(gain) sum_gain  \
+                                      Sum(gain)/COUNT(gain) sum_gain  \
                              FROM     umd_nat  \
                              WHERE    thresh = '+ (this.helper.config.canopy_choice || 30) +'  \
                              GROUP BY iso)  \
@@ -1077,7 +1066,7 @@ define([
                     AND      NOT u.sum_gain = 0  \
                     AND      c.iso = u.iso  \
                     AND      e.iso = u.iso  \
-                    ORDER BY u.sum_loss DESC limit 50';
+                    ORDER BY u.sum_loss DESC limit 50 ';
 
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
           var data = json.rows;
