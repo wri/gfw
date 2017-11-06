@@ -509,7 +509,6 @@ define([
       } else if (this.model.get('graph') === 'domains') {
         $('.countries_list__header__minioverview').show();
         var sql = "SELECT ecozone as name, sum(loss) as total_loss, SUM(gain)/COUNT(gain) as total_gain FROM umd_eco_2014 where thresh = "+ (this.helper.config.canopy_choice || 30) +" and ecozone !='Water' and ecozone != 'Polar' group by ecozone";
-        // "SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +’ and ecozone !='Water' and ecozone != 'Polar' group by ecozone"
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
               markup_list = '';
@@ -588,29 +587,6 @@ define([
             .attr('y', function(d) { return y_scale(d.loss); })
             .attr('height', function(d) { return height - y_scale(d.loss); })
             .attr('width', barWidth - 1);
-
-          // var data_gain_ = [
-          //   {
-          //     year: 2001,
-          //     value: gain
-          //   },
-          //   {
-          //     year: 2012,
-          //     value: gain
-          //   }
-          // ];
-
-          // graph.selectAll('line.minioverview_line')
-          //   .data(data_gain_)
-          //   .enter()
-          //   .append('line')
-          //   .attr({
-          //     'class': 'minioverview_line',
-          //     'x1': 0,
-          //     'x2': width,
-          //     'y1': function(d) { return y_scale(gain); },
-          //     'y2': function(d) { return y_scale(gain); }
-          //   });
         });
       } else if (this.model.get('graph') === ('percent_loss')) {
         var sql = 'SELECT year, \
@@ -663,22 +639,6 @@ define([
 
           var data_loss_ = data,
               data_extent_ = [];
-
-          // _.each(data, function(val, key) {
-          //   if (key.indexOf('loss_y') != -1) {
-          //     data_loss_.push({
-          //       'year': key.split('_y')[1],
-          //       'value': val
-          //     });
-          //   }
-
-          //   if (key.indexOf('extent_y') != -1) {
-          //     data_extent_.push({
-          //       'year': key.split('extent_y')[1],
-          //       'value': val
-          //     });
-          //   }
-          // });
 
           var y_scale_loss = d3.scale.linear()
             .domain([0, d3.max(data, function(d) { return d.loss; })])
@@ -940,25 +900,13 @@ define([
               url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
               dataType: 'json',
               success: _.bind(function(data) {
-                // gain needs to be divided by 12, as each year holds the same
-                // value. update
-                //var gain = data.rows[0].sum/12;
                 var gain = data.rows[0].sum;
                 var g_mha, l_mha;
-                g_mha = l_mha = 'Mha';
 
                 if (!!mode && mode.mode == 'percent') {
                   $target.find('.figure').removeClass('extent').html((gain).toLocaleString());
                   $target.find('.unit').html('%');
                 } else {
-                  if (gain.toString().length >= 7) {
-                    //gain = ((gain /1000)/1000)
-                  } else if (gain.toString().length >= 4) {
-                    l_mha = 'KHa';
-                    //gain = (gain /1000);
-                  } else {
-                    l_mha = 'Ha';
-                  }
                   $target.find('.figure').removeClass('extent').html((gain).toLocaleString());
                   $target.find('.unit').html('Ha');
                 }
@@ -1083,7 +1031,6 @@ define([
 
           var color_scale = d3.scale.linear()
             .domain([d3.min(data, function(d) { return d.ratio; }), 1, 10, d3.max(data, function(d) { return d.ratio; })])
-            //.range(["#9ABF00", "#9ABF00", "#CA46FF", "#CA46FF"]);
             .range(["#6D6DE5", "#6D6DE5", "#FF6699", "#FF6699"]);
 
           // line
