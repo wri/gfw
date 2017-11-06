@@ -10,6 +10,7 @@ class AboutUsers extends Component {
     super(props);
 
     this.users = [
+      {title: 'All'},
       {title: 'Advocacy'},
       {title: 'Forest monitoring and enforcement'},
       {title: 'Journalism'},
