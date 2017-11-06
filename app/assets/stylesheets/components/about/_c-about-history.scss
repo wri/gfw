@@ -136,6 +136,18 @@ $arrow-button-size: rem(60px);
     border-radius: 100%;
     background-size: cover;
     background-repeat: no-repeat;
+
+    &.c-about-history-item__image--center {
+      background-position: center center;
+    }
+
+    &.c-about-history-item__image--left {
+      background-position: center left;
+    }
+
+    &.c-about-history-item__image--right {
+      background-position: center right;
+    }
   }
 
   .c-about-history-item__texts {
