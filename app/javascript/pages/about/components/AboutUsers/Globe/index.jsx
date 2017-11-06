@@ -156,7 +156,7 @@ class GlobeComponent extends React.Component {
       group = this.props.dataGroup;
     }
     for (let i = this.state.usersData.length - 1; i >= 0; i--) {
-      if (group === 'all' || this.state.usersData[i].group === group) {
+      if (group === 'All' || this.state.usersData[i].group === group) {
         const lat = this.state.usersData[i].latitude;
         const lng = this.state.usersData[i].longitude;
         const radio = this.props.radius;
