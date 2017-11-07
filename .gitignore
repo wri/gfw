@@ -57,3 +57,4 @@ todo.todo
 /public/packs
 /public/packs-test
 /node_modules
+package-lock.json
