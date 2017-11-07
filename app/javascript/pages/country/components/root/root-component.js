@@ -42,7 +42,6 @@ class Root extends PureComponent {
   }
 
   handleScrollCallback() {
-    // setPositionPage
    if (window.scrollY >= 59) {
      this.props.setPositionMap(true);
      this.props.setTopMap(0);
@@ -128,7 +127,7 @@ class Root extends PureComponent {
 Root.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   iso: PropTypes.string.isRequired,
-  countryRegion: PropTypes.string.isRequired,
+  countryRegion: PropTypes.number.isRequired,
   setInitialData: PropTypes.func.isRequired,
   refreshCountryData: PropTypes.func.isRequired,
   checkLoadingStatus: PropTypes.func.isRequired
