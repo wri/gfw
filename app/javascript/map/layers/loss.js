@@ -1,5 +1,5 @@
 import Canvas from './abstract/canvas';
-import { scalePow as d3_scalePow } from 'd3';
+import { scalePow } from 'd3-scale';
 import moment from 'moment';
 
 const OPTIONS = {
@@ -29,7 +29,7 @@ class Loss extends Canvas {
     const yearStart = this.currentDate[0].year();
     const yearEnd = this.currentDate[1].year();
 
-    const myscale = d3_scalePow()
+    const myscale = scalePow()
       .exponent(exp)
       .domain([0,256])
       .range([0,256]);
