@@ -23,6 +23,7 @@ const mapStateToProps = state => ({
   totalCover: state.widgetTreeCover.totalCover,
   totalIntactForest: state.widgetTreeCover.totalIntactForest,
   totalNonForest: state.widgetTreeCover.totalNonForest,
+  title: state.widgetTreeCover.title,
   locations: state.widgetTreeCover.locations,
   canopies: state.widgetTreeCover.canopies,
   settings: state.widgetTreeCover.settings
@@ -50,6 +51,7 @@ const WidgetTreeCoverContainer = (props) => {
                 totalCover: totalCover,
                 totalIntactForest:  totalIntactForest,
                 totalNonForest: totalNonForest,
+                title: props.getTitle(props),
                 locations: [
                   {
                     value: 'all',
@@ -74,6 +76,12 @@ const WidgetTreeCoverContainer = (props) => {
       });
   };
 
+  const getTitle = (props) => {
+    const location = props.settings.location !== 'all' ? ` and ${props.settings.locationLabel}` : '';
+    const country = props.countryRegion === 0 ? props.countryData.name : props.countryRegions[props.countryRegion - 1].name;
+    return `Forest cover ${location} in ${country}`;
+  };
+
   const viewOnMap = () => {
     props.setLayer('forest2000');
   };
@@ -82,6 +90,7 @@ const WidgetTreeCoverContainer = (props) => {
     ...props,
     setInitialData,
     updateData,
+    getTitle,
     viewOnMap
   });
 };
