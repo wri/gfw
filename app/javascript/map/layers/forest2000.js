@@ -1,5 +1,5 @@
 import Canvas from './abstract/canvas';
-import { scalePow as d3_scalePow } from 'd3';
+import { scalePow } from 'd3-scale';
 
 const OPTIONS = {
   threshold: 30,
@@ -20,7 +20,7 @@ class Forest2000 extends Canvas {
     const zoom = this.map.getZoom();
     const exp = zoom < 11 ? 0.3 + ((zoom - 3) / 20) : 1;
 
-    const myscale = d3_scalePow()
+    const myscale = scalePow()
       .exponent(exp)
       .domain([0, 256])
       .range([0, 256]);
