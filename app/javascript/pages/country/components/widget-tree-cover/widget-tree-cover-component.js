@@ -38,7 +38,7 @@ class WidgetTreeCover extends PureComponent {
       units,
       canopies,
       settings,
-      setTreeCoverSettingsRegion,
+      setTreeCoverSettingsLocation,
       setTreeCoverSettingsCanopy,
       countryRegion,
       countryRegions
@@ -65,7 +65,7 @@ class WidgetTreeCover extends PureComponent {
               units={units}
               canopies={canopies}
               settings={settings}
-              onRegionChange={setTreeCoverSettingsRegion}
+              onRegionChange={setTreeCoverSettingsLocation}
               onCanopyChange={setTreeCoverSettingsCanopy}
             />
           </WidgetHeader>
@@ -114,7 +114,7 @@ WidgetTreeCover.propTypes = {
   regions: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
-  setTreeCoverSettingsRegion: PropTypes.func.isRequired,
+  setTreeCoverSettingsLocation: PropTypes.func.isRequired,
   setTreeCoverSettingsCanopy: PropTypes.func.isRequired
 };
 
