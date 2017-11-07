@@ -22,11 +22,6 @@ const setInitialState = (state) => ({
   topPage: false
 });
 
-const setIsLoading = (state, { payload }) => ({
-  ...state,
-  isLoading: payload
-});
-
 const setIso = (state, { payload }) => ({
   ...state,
   iso: payload
@@ -39,12 +34,9 @@ const setRegion = (state, { payload }) => ({
 
 const setCountryData = (state, { payload }) => ({
   ...state,
-  countryData: payload
-});
-
-const setCountryRegions = (state, { payload }) => ({
-  ...state,
-  countryRegions: payload
+  countryData: payload.data,
+  countryRegions: payload.regions,
+  isLoading: false
 });
 
 const setCountriesList = (state, { payload }) => ({
@@ -62,11 +54,6 @@ const setPositionPage = (state, {payload}) => ({
   topPage: payload
 });
 
-const setNameRegion = (state, {payload}) => ({
-  ...state,
-  topPage: payload
-});
-
 const setTopMap = (state, {payload}) => ({
   ...state,
   topMap: payload
@@ -79,11 +66,9 @@ const setShowMapMobile = (state, {payload}) => ({
 
 export default {
   setInitialState,
-  setIsLoading,
   setIso,
   setRegion,
   setCountryData,
-  setCountryRegions,
   setCountriesList,
   setPositionMap,
   setTopMap,
