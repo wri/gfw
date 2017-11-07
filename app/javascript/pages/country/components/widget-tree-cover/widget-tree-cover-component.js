@@ -34,7 +34,7 @@ class WidgetTreeCover extends PureComponent {
       totalCover,
       totalIntactForest,
       totalNonForest,
-      regions,
+      locations,
       units,
       canopies,
       settings,
@@ -61,11 +61,11 @@ class WidgetTreeCover extends PureComponent {
           >
             <WidgetTreeCoverSettings
               type="settings"
-              regions={regions}
+              locations={locations}
               units={units}
               canopies={canopies}
               settings={settings}
-              onRegionChange={setTreeCoverSettingsLocation}
+              onLocationChange={setTreeCoverSettingsLocation}
               onCanopyChange={setTreeCoverSettingsCanopy}
             />
           </WidgetHeader>
@@ -111,7 +111,7 @@ WidgetTreeCover.propTypes = {
   totalCover: PropTypes.number.isRequired,
   totalIntactForest: PropTypes.number.isRequired,
   totalNonForest: PropTypes.number.isRequired,
-  regions: PropTypes.array.isRequired,
+  locations: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   setTreeCoverSettingsLocation: PropTypes.func.isRequired,
