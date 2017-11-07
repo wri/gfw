@@ -70,15 +70,30 @@
 
         .icon {
           position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: rem(10px);
-          height: rem(10px);
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          margin: auto;
           fill: $white;
 
           &.-dark {
-            fill: $slate;
+            fill: #c5c5c6;
+          }
+
+          &.icon-info {
+            width: rem(10px);
+            height: rem(10px);
+          }
+
+          &.icon-settings {
+            width: rem(12px);
+            height: rem(12px);
+          }
+
+          &.icon-share {
+            width: rem(10px);
+            height: rem(10px);
           }
         }
       }
