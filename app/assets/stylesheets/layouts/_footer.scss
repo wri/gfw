@@ -573,7 +573,7 @@
       }
     }
     &.unepwcmc{
-      height: 60px; width: 110px; @include logos-sprite(unepwcmc);
+      height: 60px; width: 185px; @include logos-sprite(unepwcmc);
       &:hover{
         @include logos-sprite(unepwcmchover);
       }
