@@ -35,14 +35,16 @@ const RootContainer = (props) => {
     props.setRegion(props.match.params.region ? props.match.params.region : 0);
 
     getCountry(props.match.params.iso)
-      .then((response) => {
-        response.data['area_ha'] = response.data.umd[0].area_ha;
-        props.setCountryData(response.data);
-      });
+      .then((getCountryResponse) => {
+        getCountryResponse.data['area_ha'] = getCountryResponse.data.umd[0].area_ha;
 
-    getCountryRegions(props.match.params.iso)
-      .then((response) => {
-        props.setCountryRegions(response.data.data);
+        getCountryRegions(props.match.params.iso)
+          .then((getCountryRegionsResponse) => {
+            props.setCountryData({
+              data: getCountryResponse.data,
+              regions: getCountryRegionsResponse.data.data
+            });
+          });
       });
   };
 
@@ -54,19 +56,10 @@ const RootContainer = (props) => {
     refreshCountryData(props);
   };
 
-  const checkLoadingStatus = (props) => {
-    if (Object.keys(props.countryData).length !== 0
-      && props.countryRegions.length !== 0
-      && props.countriesList.length !== 0) {
-      props.setIsLoading(false);
-    }
-  };
-
   return createElement(RootComponent, {
     ...props,
     setInitialData,
-    refreshCountryData,
-    checkLoadingStatus
+    refreshCountryData
   });
 };
 

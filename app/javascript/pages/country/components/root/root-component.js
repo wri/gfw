@@ -21,12 +21,11 @@ class Root extends PureComponent {
     const { setInitialData } = this.props;
     setInitialData(this.props);
   }
+
   componentWillUpdate(nextProps) {
-    const { iso, refreshCountryData, checkLoadingStatus } = this.props;
+    const { iso, refreshCountryData } = this.props;
     if (iso !== nextProps.iso) {
       refreshCountryData(nextProps);
-    } else {
-      checkLoadingStatus(nextProps);
     }
   }
 
@@ -51,6 +50,7 @@ class Root extends PureComponent {
      this.props.setPositionMap(false);
      this.props.setTopMap(document.getElementById('c-widget-stories').offsetTop - window.innerHeight);
    }
+
    if (window.scrollY < 59) {
      this.props.setPositionMap(false);
      this.props.setTopMap(59);
@@ -66,7 +66,7 @@ class Root extends PureComponent {
           <div className="loader">Loading...</div>
         </div>)
     } else {
-      this.goToTop();
+      //this.goToTop();
       return (
         <div>
           <ScrollEvent handleScrollCallback={() => this.handleScrollCallback()} />
@@ -129,8 +129,7 @@ Root.propTypes = {
   iso: PropTypes.string.isRequired,
   countryRegion: PropTypes.number.isRequired,
   setInitialData: PropTypes.func.isRequired,
-  refreshCountryData: PropTypes.func.isRequired,
-  checkLoadingStatus: PropTypes.func.isRequired
+  refreshCountryData: PropTypes.func.isRequired
 };
 
 export default Root;
