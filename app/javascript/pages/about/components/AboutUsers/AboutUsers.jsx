@@ -56,6 +56,7 @@ class AboutUsers extends Component {
           <div className="large-6 columns">
             <div className="c-about-users__globe-container">
               {globe}
+              <AboutModalWorld isVisible={this.props.isModalVisible} userData={this.props.selectedUserData} hideModal={this.props.hideModal} />
             </div>
           </div>
           <div className="small-12 large-6 columns">
@@ -88,7 +89,6 @@ class AboutUsers extends Component {
             )}
           </ul>
         </div>
-        <AboutModalWorld isVisible={this.props.isModalVisible} userData={this.props.selectedUserData} hideModal={this.props.hideModal} />
       </div>
     );
   }
