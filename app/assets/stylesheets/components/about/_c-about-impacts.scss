@@ -128,10 +128,23 @@ $item-padding-screen-m: rem(40px);
     left: 0;
     width: 100%;
     height: rem(242px);
-    background-color: red;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    span {
+      display: block;
+      z-index: 999999;
+      font-size: 12px;
+      position: absolute;
+      bottom: 8px;
+      right: 5px;
+      color: rgba(255, 255, 255, 0.8);
+    }
   }
 
   .c-about-impacts-item__paragraph {
+    font-size: 16px;
     position: relative;
     z-index: 2;
   }

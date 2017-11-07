@@ -6,35 +6,20 @@
   .c-about-anchors__buttons {
     font-size: 0;
 
+    a:first-child li {
+      border-left: 1px solid rgba($slate, 0.2);
+    }
+
     li {
       position: relative;
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      width: 25%;
+      width: 20%;
       max-width: rem(183px);
       height: rem(56px);
       cursor: pointer;
-
-      &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: rem(1px);
-        height: 100%;
-        background-color: rgba($slate, 0.2);
-      }
-
-      &:last-child:after {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: rem(1px);
-        height: 100%;
-        background-color: rgba($slate, 0.2);
-      }
+      border-right: 1px solid rgba($slate, 0.2);
     }
   }
 
