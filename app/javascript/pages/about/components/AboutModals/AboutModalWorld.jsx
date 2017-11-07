@@ -6,7 +6,6 @@ class AboutModalWorld extends Component {
     if (this.props.isVisible) {
       return (
         <div className="c-about-modal-world">
-          <div className="c-about-modal-world__image" style={{backgroundImage: `url(${this.props.userData.img})`}}></div>
           <div className="c-about-modal-world__text">
             <svg className="icon-close" onClick={this.props.hideModal}><use xlinkHref="#icon-close"></use></svg>
             <div>
