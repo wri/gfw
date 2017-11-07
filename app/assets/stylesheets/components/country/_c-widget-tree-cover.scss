@@ -3,14 +3,14 @@
   .c-widget-tree-cover__legend {
     display: inline-block;
     width: 100%;
-    padding-top: rem(24px);
+    padding-top: rem(14px);
 
     @media screen and (min-width: $screen-s) {
       width: 50%;
     }
 
     li:not(:last-child) {
-      margin-bottom: rem(37px);
+      margin-bottom: rem(24px);
     }
 
     .c-widget-tree-cover__legend-title {
@@ -39,7 +39,7 @@
   .c-widget-tree-cover__chart {
     display: inline-block;
     vertical-align: top;
-    margin: rem(22px) auto 0;
+    margin: rem(20px) auto 0;
     width: 50%;
     text-align: right;
 
