@@ -91,10 +91,10 @@ class WidgetTreeLoss extends PureComponent {
             </div>
           </div>
           <div className="c-widget-tree-loss__chart">
-            <ResponsiveContainer height={300} width={'100%'}>
+            <ResponsiveContainer height={247} width={'100%'}>
               <BarChart
                 width={627}
-                height={300}
+                height={247}
                 data={years}
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                 <XAxis
