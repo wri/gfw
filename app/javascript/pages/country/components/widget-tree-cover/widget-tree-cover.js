@@ -23,10 +23,9 @@ const mapStateToProps = state => ({
   totalCover: state.widgetTreeCover.totalCover,
   totalIntactForest: state.widgetTreeCover.totalIntactForest,
   totalNonForest: state.widgetTreeCover.totalNonForest,
-  regions: state.widgetTreeCover.regions,
+  locations: state.widgetTreeCover.locations,
   canopies: state.widgetTreeCover.canopies,
-  settings: state.widgetTreeCover.settings,
-  nameRegion: state.root.nameRegion
+  settings: state.widgetTreeCover.settings
 });
 
 const WidgetTreeCoverContainer = (props) => {
@@ -51,7 +50,7 @@ const WidgetTreeCoverContainer = (props) => {
                 totalCover: totalCover,
                 totalIntactForest:  totalIntactForest,
                 totalNonForest: totalNonForest,
-                regions: [
+                locations: [
                   {
                     value: 'all',
                     label: 'All Region'
