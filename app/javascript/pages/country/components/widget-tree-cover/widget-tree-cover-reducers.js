@@ -40,7 +40,7 @@ export const initialState = {
     }
   ],
   settings: {
-    region: 'all',
+    location: 'all',
     unit: 'Ha',
     canopy: 30
   }
@@ -61,11 +61,11 @@ const setTreeCoverValues = (state, { payload }) => ({
   regions: payload.regions
 });
 
-const setTreeCoverSettingsRegion = (state, { payload }) => ({
+const setTreeCoverSettingsLocation = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    region: payload
+    location: payload
   }
 });
 
@@ -80,6 +80,6 @@ const setTreeCoverSettingsCanopy = (state, { payload }) => ({
 export default {
   setTreeCoverIsUpdating,
   setTreeCoverValues,
-  setTreeCoverSettingsRegion,
+  setTreeCoverSettingsLocation,
   setTreeCoverSettingsCanopy
 };

@@ -2,14 +2,14 @@ import { createAction } from 'redux-actions';
 
 const setTreeCoverIsUpdating = createAction('setTreeCoverIsUpdating');
 const setTreeCoverValues = createAction('setTreeCoverValues');
-const setTreeCoverSettingsRegion = createAction('setTreeCoverSettingsRegion');
+const setTreeCoverSettingsLocation = createAction('setTreeCoverSettingsLocation');
 const setTreeCoverSettingsCanopy = createAction('setTreeCoverSettingsCanopy');
 const setLayer = createAction('setLayer');
 
 export default {
   setTreeCoverIsUpdating,
   setTreeCoverValues,
-  setTreeCoverSettingsRegion,
+  setTreeCoverSettingsLocation,
   setTreeCoverSettingsCanopy,
   setLayer
 };
