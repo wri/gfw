@@ -4,6 +4,7 @@ export const initialState = {
   totalCover: 0,
   totalIntactForest: 0,
   totalNonForest: 0,
+  title: '',
   locations: [],
   canopies: [
     {
@@ -41,6 +42,7 @@ export const initialState = {
   ],
   settings: {
     location: 'all',
+    locationLabel: 'All Region',
     unit: 'Ha',
     canopy: 30
   }
@@ -58,6 +60,7 @@ const setTreeCoverValues = (state, { payload }) => ({
   totalCover: payload.totalCover,
   totalIntactForest: payload.totalIntactForest,
   totalNonForest: payload.totalNonForest,
+  title: payload.title,
   locations: payload.locations
 });
 
@@ -65,7 +68,8 @@ const setTreeCoverSettingsLocation = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    location: payload
+    location: payload.value,
+    locationLabel: payload.label
   }
 });
 

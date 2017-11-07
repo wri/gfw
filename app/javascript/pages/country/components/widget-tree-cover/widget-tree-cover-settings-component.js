@@ -5,7 +5,7 @@ import Select from 'react-select-me';
 class WidgetTreeCoverSettings extends PureComponent {
 
   locationChange = (value) => {
-    this.props.onLocationChange(value.value);
+    this.props.onLocationChange(value);
   };
 
   canopyChange = (value) => {
