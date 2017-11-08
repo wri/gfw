@@ -14,17 +14,13 @@ import {
 
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeLoss.isLoading,
-  isUpdating: state.widgetTreeLoss.isUpdating,
   iso: state.root.iso,
   countryRegion: state.root.countryRegion,
   countryData: state.root.countryData,
-  minYear: state.widgetTreeLoss.minYear,
-  maxYear: state.widgetTreeLoss.maxYear,
-  thresh: state.widgetTreeLoss.thresh,
   total: state.widgetTreeLoss.total,
   years: state.widgetTreeLoss.years,
   yearsLoss: state.widgetTreeLoss.yearsLoss,
-  regions: state.widgetTreeLoss.regions,
+  locations: state.widgetTreeLoss.locations,
   units: state.widgetTreeLoss.units,
   canopies: state.widgetTreeLoss.canopies,
   settings: state.widgetTreeLoss.settings
@@ -33,7 +29,7 @@ const mapStateToProps = state => ({
 const WidgetTreeLossContainer = (props) => {
 
   const updateData = (props) => {
-    props.setTreeLossIsUpdating(true);
+    props.setTreeLossIsLoading(true);
     setWidgetData(props);
   };
 

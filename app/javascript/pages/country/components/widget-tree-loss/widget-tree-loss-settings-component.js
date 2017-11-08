@@ -4,10 +4,10 @@ import Select from 'react-select-me';
 
 class WidgetTreeLossSettings extends PureComponent {
 
-  // regionChange = (value) => {
-  //   this.props.onRegionChange(value.value);
-  // };
-  //
+  locationChange = (value) => {
+    this.props.onLocationChange(value.value);
+  };
+
   unitChange = (value) => {
     this.props.onUnitChange(value.value);
   };
@@ -18,25 +18,24 @@ class WidgetTreeLossSettings extends PureComponent {
 
   startYearChange = (value) => {
     this.props.onStartYearChange(value.value);
-  }
+  };
 
   endYearChange = (value) => {
     this.props.onEndYearChange(value.value);
-  }
+  };
 
   iconRenderer = () => {
     return(<svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg>);
-  }
+  };
 
   render() {
     const startYears = [];
     const endYears = [];
     const {
-      regions,
+      locations,
       units,
       canopies,
       settings,
-      years,
       yearsLoss
     } = this.props;
     yearsLoss.forEach(function(item){
@@ -59,8 +58,9 @@ class WidgetTreeLossSettings extends PureComponent {
           <div className="c-widget-settings__title">LOCATION</div>
           <Select
             iconRenderer={this.iconRenderer}
-            value={settings.region}
-            options={regions}/>
+            value={settings.location}
+            options={locations}
+            onChange={this.locationChange}/>
         </div>
         <div className="c-widget-settings__select">
           <div className="c-widget-settings__title">UNIT</div>
@@ -87,7 +87,7 @@ class WidgetTreeLossSettings extends PureComponent {
         <div className="c-widget-settings__button-select">
           <div className="c-widget-settings__title">CANOPY DENSITY</div>
           <Select
-            value={settings.canopy === 0 ? '> 0%' : settings.canopy}
+            value={settings.canopy}
             options={canopies}
             onChange={this.canopyChange}/>
         </div>
@@ -97,10 +97,15 @@ class WidgetTreeLossSettings extends PureComponent {
 }
 
 WidgetTreeLossSettings.propTypes = {
-  regions: PropTypes.array.isRequired,
+  locations: PropTypes.array.isRequired,
   units: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
+  onLocationChange: PropTypes.func.isRequired,
+  onUnitChange: PropTypes.func.isRequired,
+  onCanopyChange: PropTypes.func.isRequired,
+  onStartYearChange: PropTypes.func.isRequired,
+  onEndYearChange: PropTypes.func.isRequired
 };
 
 export default WidgetTreeLossSettings;

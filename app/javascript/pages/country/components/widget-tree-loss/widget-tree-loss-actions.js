@@ -1,19 +1,21 @@
 import { createAction } from 'redux-actions';
 
 const setTreeLossValues = createAction('setTreeLossValues');
-const setLayer = createAction('setLayer');
-const setTreeLossSettingsCanopy = createAction('setTreeLossSettingsCanopy');
+const setTreeLossSettingsLocation = createAction('setTreeLossSettingsLocation');
 const setTreeLossSettingsUnit = createAction('setTreeLossSettingsUnit');
-const setTreeLossIsUpdating = createAction('setTreeLossIsUpdating');
+const setTreeLossSettingsCanopy = createAction('setTreeLossSettingsCanopy');
+const setTreeLossIsLoading = createAction('setTreeLossIsLoading');
 const setTreeLossSettingsStartYear = createAction('setTreeLossSettingsStartYear');
 const setTreeLossSettingsEndYear = createAction('setTreeLossSettingsEndYear');
+const setLayer = createAction('setLayer');
 
 export default {
   setTreeLossValues,
-  setLayer,
-  setTreeLossSettingsCanopy,
+  setTreeLossSettingsLocation,
   setTreeLossSettingsUnit,
-  setTreeLossIsUpdating,
+  setTreeLossSettingsCanopy,
+  setTreeLossIsLoading,
   setTreeLossSettingsStartYear,
-  setTreeLossSettingsEndYear
+  setTreeLossSettingsEndYear,
+  setLayer
 };
