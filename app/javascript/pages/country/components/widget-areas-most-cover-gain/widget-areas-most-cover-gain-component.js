@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { PieChart, Pie, Legend, Tooltip, Cell }from 'recharts';
-import numeral from 'numeral';
 
-import WidgetUpdating from '../widget-updating/widget-updating';
+import Loader from '../../../../common/components/loader/loader';
 import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
 import WidgetAreasMostCoverGainSettings from './widget-areas-most-cover-gain-settings-component';
@@ -41,8 +40,6 @@ class WidgetAreasMostCoverGain extends PureComponent {
       countryData,
       areaData,
       areaChartData,
-      startYear,
-      endYear,
       startArray,
       endArray,
       settings,
@@ -56,18 +53,18 @@ class WidgetAreasMostCoverGain extends PureComponent {
     const showDownIcon = endArray >= areaData.length;
 
     if (isLoading) {
-      return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
+      return <Loader parentClass="c-widget" />;
     } else {
       return (
         <div className="c-widget c-widget-areas-most-cover-gain">
           <WidgetHeader title={`AREAS WITH MOST TREE COVER GAIN IN ${countryData.name}`} >
-          <WidgetAreasMostCoverGainSettings
-            type="settings"
-            regions={regions}
-            units={units}
-            onUnitChange={setTreeAreasTreeGainSettingsUnit}
-            settings={settings} />
-        </WidgetHeader>
+            <WidgetAreasMostCoverGainSettings
+              type="settings"
+              regions={regions}
+              units={units}
+              onUnitChange={setTreeAreasTreeGainSettingsUnit}
+              settings={settings} />
+          </WidgetHeader>
           <p className="title-legend">Hansen - UMD</p>
           <div className="c-widget-areas-most-cover-gain__container">
             <ul className="c-widget-areas-most-cover-gain__legend">

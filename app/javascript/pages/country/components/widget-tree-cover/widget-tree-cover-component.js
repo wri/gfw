@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import numeral from 'numeral';
 
+import Loader from '../../../../common/components/loader/loader';
 import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
-import WidgetUpdating from '../widget-updating/widget-updating';
 import WidgetTreeCoverSettings from './widget-tree-cover-settings-component';
 
 class WidgetTreeCover extends PureComponent {
@@ -42,7 +42,7 @@ class WidgetTreeCover extends PureComponent {
       setTreeCoverSettingsCanopy
     } = this.props;
     if (isLoading) {
-      return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
+      return <Loader parentClass="c-widget" />;
     } else {
       const totalValue = totalCover + totalIntactForest + totalNonForest;
       const pieCharData = [
@@ -92,7 +92,7 @@ class WidgetTreeCover extends PureComponent {
           </div>
           {isUpdating ? <WidgetUpdating /> : null}
         </div>
-      )
+      );
     }
   }
 }

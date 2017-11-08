@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import ScrollEvent from 'react-onscroll';
 
+import Loader from '../../../../common/components/loader/loader';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import Map from '../map/map';
@@ -58,17 +59,15 @@ class Root extends PureComponent {
  }
 
   render() {
-    const { isLoading, topPage, countryRegion, showMapMobile } = this.props;
+    const { isLoading, countryRegion, showMapMobile } = this.props;
     const regionSelected = countryRegion === 0;
+
     if (isLoading) {
-      return (
-        <div className="c-loading">
-          <div className="loader">Loading...</div>
-        </div>)
+      return <Loader parentClass="l-country" />;
     } else {
       //this.goToTop();
       return (
-        <div>
+        <div className="l-country">
           <ScrollEvent handleScrollCallback={() => this.handleScrollCallback()} />
           {this.props.fixed && <div className="open-map-mobile-tab" onClick={() => this.showMapMobile()}><span>{!showMapMobile ? 'show' : 'close'} map</span></div>}
           <Header />

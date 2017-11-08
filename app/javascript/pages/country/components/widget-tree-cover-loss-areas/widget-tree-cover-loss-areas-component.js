@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { PieChart, Pie, Legend, Tooltip, Cell }from 'recharts';
 import numeral from 'numeral';
 
-import WidgetUpdating from '../widget-updating/widget-updating';
+import Loader from '../../../../common/components/loader/loader';
 import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
 import WidgetTreeCoverLossAreasSettings from './widget-tree-cover-loss-areas-settings-component';
@@ -60,7 +60,7 @@ class WidgetTreeLossAreas extends PureComponent {
     const showUpIcon = startArray >= 10;
     const showDownIcon = endArray >= regionData.length;
     if (isLoading) {
-      return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
+      return <Loader parentClass="c-widget" />;
     } else {
       return (
         <div className="c-widget c-widget-tree-cover-loss-areas">

@@ -47,17 +47,13 @@ const HeaderContainer = (props) => {
   const setInitialData = () => {
     getTotalCover(props.iso, props.countryRegion, 30)
       .then((totalCoverResponse) => {
-        getTotalIntactForest(props.iso, props.countryRegion)
-          .then((totalIntactForestResponse) => {
-            getTreeLossByYear(
-              props.iso,
-              props.countryRegion,
-              { minYear: 2015, maxYear: 2015 },
-              30
-            )
+        getTreeLossByYear(
+          props.iso,
+          props.countryRegion,
+          { minYear: 2015, maxYear: 2015 },
+          30)
           .then((coverLoss) => {
             const totalCover = Math.round(totalCoverResponse.data.data[0].value);
-            const totalIntactForest = Math.round(totalIntactForestResponse.data.data[0].value);
             const values = {
               totalCoverHeader: props.countryRegion === 0 ? props.countryData.area_ha : props.countryRegions[props.countryRegion - 1].area_ha,
               totalForestHeader: totalCover,
@@ -65,9 +61,8 @@ const HeaderContainer = (props) => {
               totalCoverLoss: coverLoss.data.data[0].value
             };
             props.setTreeCoverValuesHeader(values);
-        });
+          });
       });
-    });
   };
 
   return createElement(HeaderComponent, {
