@@ -59,12 +59,10 @@ class WidgetTreeLossAreas extends PureComponent {
 
     const showUpIcon = startArray >= 10;
     const showDownIcon = endArray >= regionData.length;
-    if (isLoading) {
-      return <Loader parentClass="c-widget" />;
-    } else {
-      return (
-        <div className="c-widget c-widget-tree-cover-loss-areas">
-          <WidgetHeader title={`AREAS WITH MOST TREE COVER LOSS IN ${countryData.name}`} >
+
+    return (
+      <div className="c-widget c-widget-tree-cover-loss-areas">
+        <WidgetHeader title={`AREAS WITH MOST TREE COVER LOSS IN ${countryData.name}`} >
           <WidgetTreeCoverLossAreasSettings
             type="settings"
             regions={regions}
@@ -77,7 +75,9 @@ class WidgetTreeLossAreas extends PureComponent {
             onStartYearChange={setTreeCoverLossAreasSettingsStartYear}
             onEndYearChange={setTreeCoverLossAreasSettingsEndYear}/>
         </WidgetHeader>
-          <div className="c-widget-tree-cover-loss-areas__container">
+        { isLoading
+          ? <Loader isAbsolute={true} />
+          : <div className="c-widget-tree-cover-loss-areas__container">
             <div className="c-widget-tree-cover-loss-areas__chart">
               <h3 className="title">Total Tree cover loss</h3>
               <p className="date">({startYear} - {endYear})</p>
@@ -112,10 +112,9 @@ class WidgetTreeLossAreas extends PureComponent {
               </div>
             </ul>
           </div>
-          {isUpdating ? <WidgetUpdating /> : null}
-        </div>
-      )
-    }
+        }
+      </div>
+    )
   }
 }
 
