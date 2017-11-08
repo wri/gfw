@@ -1,0 +1,124 @@
+.c-widget-settings {
+  width: rem(244px);
+  padding-top: rem(26px);
+  background-color: $white;
+  text-align: left;
+
+  .c-widget-settings__title {
+    font-size: 14px;
+    color: $slate;
+  }
+
+  .c-widget-settings__select {
+    padding: 0 rem(24px) rem(22px) rem(24px);
+
+    .c-widget-settings__title {
+      margin-bottom: rem(16px);
+    }
+    .dd__wrapper {
+      .dd__selectControl {
+        border: solid 1px #e5e5df;
+        border-radius: 0;
+
+        .icon-angle-arrow-down {
+          width: rem(11px);
+          height: rem(11px);
+        }
+      }
+
+      &.dd__opened {
+        .dd__selectControl {
+          .icon-angle-arrow-down {
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+
+    .dd__openTobottom {
+      margin-top: rem(-1px);
+      border: solid 1px #e5e5df;
+      border-radius: 0;
+      border-top: 0;
+    }
+
+    .dd__selectControl,
+    .dd__option {
+      padding: rem(5px) rem(12px);
+    }
+
+    .dd__selectedItem,
+    .dd__option {
+      font-size: 13px;
+      letter-spacing: 0.1px;
+    }
+
+    .dd__option {
+      color: #9e9e9e;
+    }
+
+    .dd__selectedItem,
+    .dd__selectedOption {
+      color: $slate;
+    }
+  }
+
+  .c-widget-settings__button-select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: rem(8px) rem(24px);
+    border-top: 1px solid #e5e5df;
+
+    &.-years {
+      padding-top: 0;
+      border-top: 0;
+      display: block;
+      padding-bottom: 0;
+
+      .c-widget-settings__container-years {
+        margin-top: rem(13px);
+        padding-bottom: rem(30px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .text-date {
+          font-size: 13px;
+          letter-spacing: 0.1px;
+          text-transform: capitalize;
+        }
+
+        .dd__selectControl {
+          color: $green-gfw;
+          border: 1px solid $green-gfw;
+          background-color: transparent;
+
+          .dd__selectedItem {
+            div {
+              color: $green-gfw;
+            }
+          }
+        }
+      }
+    }
+
+    .dd__selectControl {
+      height: rem(27px);
+      padding: 0 rem(21px);
+      border: 0;
+      border-radius: 19px;
+      background-color: $green-gfw;
+    }
+
+    .dd__expandIcon {
+      display: none;
+    }
+
+    .dd__selectedItem {
+      font-size: 13px;
+      letter-spacing: 0.1px;
+      color: $white;
+    }
+  }
+}
