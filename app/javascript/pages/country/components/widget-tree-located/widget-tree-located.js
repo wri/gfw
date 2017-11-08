@@ -21,35 +21,21 @@ const mapStateToProps = state => ({
   countryRegion: state.root.countryRegion,
   countryData: state.root.countryData,
   topRegions: state.widgetTreeLocated.topRegions,
-  startArray: state.widgetTreeLocated.startArray,
-  endArray: state.widgetTreeLocated.endArray,
-  dataSource: state.widgetTreeLocated.dataSource,
+  paginate: state.widgetTreeLocated.paginate,
+  dataSources: state.widgetTreeLocated.dataSources,
   units: state.widgetTreeLocated.units,
   canopies: state.widgetTreeLocated.canopies,
   settings: state.widgetTreeLocated.settings
 });
 
 const WidgetTreeLocatedContainer = (props) => {
-  const moreRegion = () => {
-    props.setArrayLocated({
-      startArray: props.startArray + 10,
-      endArray: props.endArray + 10,
-    });
-  };
 
-  const lessRegion = () => {
-    props.setArrayLocated({
-      startArray: props.startArray - 10,
-      endArray: props.endArray - 10,
-    });
+  const setInitialData = (props) => {
+    setWidgetData(props);
   };
 
   const updateData = (props) => {
     props.setTreeLocatedIsLoading(true);
-    setWidgetData(props);
-  };
-
-  const setInitialData = (props) => {
     setWidgetData(props);
   };
 
@@ -73,11 +59,19 @@ const WidgetTreeLocatedContainer = (props) => {
       });
   };
 
+  const nextPage = () => {
+    props.setTreeLocatedPage(props.paginate.page + 1);
+  };
+
+  const previousPage = () => {
+    props.setTreeLocatedPage(props.paginate.page - 1);
+  };
+
   return createElement(WidgetTreeLocatedComponent, {
     ...props,
     setInitialData,
-    moreRegion,
-    lessRegion,
+    nextPage,
+    previousPage,
     updateData
   });
 };

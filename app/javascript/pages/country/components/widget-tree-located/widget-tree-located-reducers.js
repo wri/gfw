@@ -1,9 +1,11 @@
 export const initialState = {
   isLoading: true,
   topRegions: [],
-  startArray: 0,
-  endArray: 10,
-  dataSource: [
+  paginate: {
+    limit: 10,
+    page: 1
+  },
+  dataSources: [
     {
       value: 'hansen',
       label: 'Hansen - 2010'
@@ -58,7 +60,7 @@ export const initialState = {
     }
   ],
   settings: {
-    dataSources: 'All',
+    dataSource: 'hansen',
     unit: 'Ha',
     canopy: 30
   }
@@ -70,10 +72,26 @@ const setTreeLocatedValues = (state, { payload }) => ({
   topRegions: payload
 });
 
-const setArrayLocated = (state, { payload }) => ({
+const setTreeLocatedArrayLocated = (state, { payload }) => ({
   ...state,
   startArray: payload.startArray,
   endArray: payload.endArray
+});
+
+const setTreeLocatedPage = (state, { payload }) => ({
+  ...state,
+  paginate: {
+    ...state.paginate,
+    page: payload
+  }
+});
+
+const setTreeLocatedSettingsDataSource = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    dataSource: payload
+  }
 });
 
 const setTreeLocatedSettingsUnit = (state, { payload }) => ({
@@ -99,7 +117,9 @@ const setTreeLocatedIsLoading = (state, { payload }) => ({
 
 export default {
   setTreeLocatedValues,
-  setArrayLocated,
+  setTreeLocatedArrayLocated,
+  setTreeLocatedPage,
+  setTreeLocatedSettingsDataSource,
   setTreeLocatedSettingsUnit,
   setTreeLocatedSettingsCanopy,
   setTreeLocatedIsLoading
