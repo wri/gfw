@@ -12,7 +12,12 @@
     "postinstall": "./node_modules/bower/bin/bower install",
     "webpack": "./bin/webpack",
     "foreman": "foreman start",
-    "start": "npm-run-all -p -r foreman webpack"
+    "start": "npm-run-all -p -r foreman webpack",
+    "server": "./bin/webpack-dev-server",
+    "lint": "eslint --ext js --ext jsx .",
+    "precommit": "lint-staged",
+    "generate": "plop --plopfile app/javascript/generators/plopfile.js component",
+    "generate:page": "plop --plopfile app/javascript/generators/plopfile.js page"
   },
   "repository": {
     "type": "git",
@@ -25,12 +30,23 @@
   },
   "homepage": "https://github.com/Vizzuality/gfw",
   "devDependencies": {
+    "eslint": "4.6.1",
+    "eslint-config-prettier": "2.4.0",
+    "eslint-config-vizzuality": "1.0.5",
+    "eslint-import-resolver-webpack": "0.8.3",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-prettier": "2.2.0",
+    "eslint-plugin-react": "^7.4.0",
     "grunt": "^0.4.5",
     "grunt-contrib-connect": "^0.11.2",
     "grunt-contrib-jasmine": "^1.0.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-template-jasmine-requirejs": "^0.2.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.3.0",
     "load-grunt-tasks": "^0.6.0",
+    "prettier": "^1.8.1",
     "time-grunt": "^0.3.2",
     "webpack-dev-server": "^2.7.1"
   },
