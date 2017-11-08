@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 import numeral from 'numeral';
 
-import WidgetUpdating from '../widget-updating/widget-updating';
+import Loader from '../../../../common/components/loader/loader';
 import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
 import WidgetTreeLossSettings from './widget-tree-loss-settings-component';
@@ -53,8 +53,9 @@ class WidgetTreeLoss extends PureComponent {
       isUpdating,
       countryRegion
     } = this.props;
+
     if (isLoading) {
-      return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
+      return <Loader parentClass="c-widget" />;
     } else {
       const unitMeasure = settings.unit === 'Ha' ? 'Ha' : '%';
       return (

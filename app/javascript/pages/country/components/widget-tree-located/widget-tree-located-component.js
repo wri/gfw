@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
-import WidgetUpdating from '../widget-updating/widget-updating';
 
+import Loader from '../../../../common/components/loader/loader';
 import WidgetHeader from '../widget-header/widget-header';
 import WidgetTreeLocatedSettings from './widget-tree-located-settings-component';
 
@@ -45,14 +45,13 @@ class WidgetTreeLocated extends PureComponent {
       canopies,
       settings,
       setTreeLocatedSettingsUnit,
-      setTreeLocatedSettingsCanopy,
-      isUpdating
+      setTreeLocatedSettingsCanopy
     } = this.props;
 
     const showUpIcon = startArray >= 10;
     const showDownIcon = endArray >= topRegions.length;
     if (isLoading) {
-      return <div className="c-loading -widget"><div className="loader">Loading...</div></div>
+      return <Loader parentClass="c-widget" />;
     } else {
       return (
         <div className="c-widget c-widget-tree-located">
@@ -85,9 +84,8 @@ class WidgetTreeLocated extends PureComponent {
             {showUpIcon && <div className={`circle-icon -up ${showDownIcon ? '-no-right' : ''}`} onClick={this.lessRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
             {!showDownIcon && <div className="circle-icon" onClick={this.moreRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
           </div>
-          {isUpdating ? <WidgetUpdating /> : null}
         </div>
-      )
+      );
     }
   }
 }

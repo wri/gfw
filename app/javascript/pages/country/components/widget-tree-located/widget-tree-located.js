@@ -16,7 +16,6 @@ import {
 
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeLocated.isLoading,
-  isUpdating: state.widgetTreeLocated.isUpdating,
   iso: state.root.iso,
   countryRegions: state.root.countryRegions,
   countryRegion: state.root.countryRegion,
@@ -46,7 +45,7 @@ const WidgetTreeLocatedContainer = (props) => {
   };
 
   const updateData = (props) => {
-    props.setTreeLocatedIsUpdating(true);
+    props.setTreeLocatedIsLoading(true);
     setWidgetData(props);
   };
 

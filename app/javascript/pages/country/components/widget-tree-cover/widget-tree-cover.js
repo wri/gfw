@@ -44,34 +44,36 @@ const WidgetTreeCoverContainer = (props) => {
       .then((totalCoverResponse) => {
         getTotalIntactForest(props.iso, props.countryRegion)
           .then((totalIntactForestResponse) => {
-            const totalCover = Math.round(totalCoverResponse.data.data[0].value),
-              totalIntactForest = Math.round(totalIntactForestResponse.data.data[0].value),
-              totalNonForest = Math.round(props.countryData.area_ha) - (totalCover + totalIntactForest),
-              values = {
-                totalCover: totalCover,
-                totalIntactForest:  totalIntactForest,
-                totalNonForest: totalNonForest,
-                title: props.getTitle(props),
-                locations: [
-                  {
-                    value: 'all',
-                    label: 'All Region'
-                  },
-                  {
-                    value: 'managed',
-                    label: 'Managed'
-                  },
-                  {
-                    value: 'protected_areas',
-                    label: 'Protected Areas'
-                  },
-                  {
-                    value: 'ifls',
-                    label: 'IFLs'
-                  }
-                ]
-              };
-            props.setTreeCoverValues(values);
+            if (totalIntactForestResponse.data.data.length > 0) {
+              const totalCover = Math.round(totalCoverResponse.data.data[0].value),
+                totalIntactForest = Math.round(totalIntactForestResponse.data.data[0].value),
+                totalNonForest = Math.round(props.countryData.area_ha) - (totalCover + totalIntactForest),
+                values = {
+                  totalCover: totalCover,
+                  totalIntactForest:  totalIntactForest,
+                  totalNonForest: totalNonForest,
+                  title: props.getTitle(props),
+                  locations: [
+                    {
+                      value: 'all',
+                      label: 'All Region'
+                    },
+                    {
+                      value: 'managed',
+                      label: 'Managed'
+                    },
+                    {
+                      value: 'protected_areas',
+                      label: 'Protected Areas'
+                    },
+                    {
+                      value: 'ifls',
+                      label: 'IFLs'
+                    }
+                  ]
+                };
+              props.setTreeCoverValues(values);
+            }
           });
       });
   };

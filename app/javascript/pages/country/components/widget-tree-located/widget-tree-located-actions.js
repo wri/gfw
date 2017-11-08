@@ -4,12 +4,12 @@ const setTreeLocatedValues = createAction('setTreeLocatedValues');
 const setArrayLocated = createAction('setArrayLocated');
 const setTreeLocatedSettingsUnit = createAction('setTreeLocatedSettingsUnit');
 const setTreeLocatedSettingsCanopy = createAction('setTreeLocatedSettingsCanopy');
-const setTreeLocatedIsUpdating = createAction('setTreeLocatedIsUpdating');
+const setTreeLocatedIsLoading = createAction('setTreeLocatedIsLoading');
 
 export default {
   setTreeLocatedValues,
   setArrayLocated,
   setTreeLocatedSettingsUnit,
   setTreeLocatedSettingsCanopy,
-  setTreeLocatedIsUpdating
+  setTreeLocatedIsLoading
 };
