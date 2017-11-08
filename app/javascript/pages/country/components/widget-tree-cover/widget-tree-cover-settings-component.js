@@ -8,6 +8,10 @@ class WidgetTreeCoverSettings extends PureComponent {
     this.props.onLocationChange(value);
   };
 
+  unitChange = (value) => {
+    this.props.onUnitChange(value.value);
+  };
+
   canopyChange = (value) => {
     this.props.onCanopyChange(value.value);
   };
@@ -19,6 +23,7 @@ class WidgetTreeCoverSettings extends PureComponent {
   render() {
     const {
       locations,
+      units,
       canopies,
       settings
     } = this.props;
@@ -34,10 +39,19 @@ class WidgetTreeCoverSettings extends PureComponent {
             onChange={this.locationChange}
           />
         </div>
+        <div className="c-widget-settings__select">
+          <div className="c-widget-settings__title">UNIT</div>
+          <Select
+            iconRenderer={this.iconRenderer}
+            value={settings.unit}
+            options={units}
+            onChange={this.unitChange}
+          />
+        </div>
         <div className="c-widget-settings__button-select">
           <div className="c-widget-settings__title">CANOPY DENSITY</div>
           <Select
-            value={settings.canopy === 0 ? '> 0%' : settings.canopy}
+            value={settings.canopy}
             options={canopies}
             onChange={this.canopyChange}
           />
@@ -49,9 +63,11 @@ class WidgetTreeCoverSettings extends PureComponent {
 
 WidgetTreeCoverSettings.propTypes = {
   locations: PropTypes.array.isRequired,
+  units: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   onLocationChange: PropTypes.func.isRequired,
+  onUnitChange: PropTypes.func.isRequired,
   onCanopyChange: PropTypes.func.isRequired
 };
 

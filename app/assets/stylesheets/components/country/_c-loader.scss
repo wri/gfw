@@ -41,6 +41,12 @@
       border-radius: 50%;
     }
   }
+
+  &.c-loader--absolute {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 
 @-webkit-keyframes load3 {
