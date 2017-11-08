@@ -68,32 +68,32 @@ class WidgetTreeCover extends PureComponent {
         { isLoading
           ? <Loader isAbsolute={true} />
           : <div>
-          <ul className="c-widget-tree-cover__legend">
-            {pieCharData.map((item, index) => {
-              return (
-                <li key={index.toString()}>
-                  <div className="c-widget-tree-cover__legend-title">
-                    <span style={{ backgroundColor: item.color }}>{}</span>
-                    {item.name}
-                  </div>
-                  <div className="c-widget-tree-cover__legend-value" style={{ color: item.color }}>
-                    {settings.unit === 'Ha' ? numeral(Math.round(item.value / 1000)).format('0,0') : Math.round(item.value) }<span className="unit-text">{unitMeasure}</span>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-          <div className="c-widget-tree-cover__chart">
-            <PieChart width={121} height={121}>
-              <Pie dataKey="value" data={pieCharData} cx={56} cy={56} innerRadius={28} outerRadius={60}>
-                {
-                  pieCharData.map((item, index) => <Cell key={index.toString()} fill={item.color} />)
-                }
-              </Pie>
-              <Tooltip percentageAndArea content={<TooltipChart/>} />
-            </PieChart>
+            <ul className="c-widget-tree-cover__legend">
+              {pieCharData.map((item, index) => {
+                return (
+                  <li key={index.toString()}>
+                    <div className="c-widget-tree-cover__legend-title">
+                      <span style={{ backgroundColor: item.color }}>{}</span>
+                      {item.name}
+                    </div>
+                    <div className="c-widget-tree-cover__legend-value" style={{ color: item.color }}>
+                      {settings.unit === 'Ha' ? numeral(Math.round(item.value / 1000)).format('0,0') : Math.round(item.value) }<span className="unit-text">{unitMeasure}</span>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="c-widget-tree-cover__chart">
+              <PieChart width={121} height={121}>
+                <Pie dataKey="value" data={pieCharData} cx={56} cy={56} innerRadius={28} outerRadius={60}>
+                  {
+                    pieCharData.map((item, index) => <Cell key={index.toString()} fill={item.color} />)
+                  }
+                </Pie>
+                <Tooltip percentageAndArea content={<TooltipChart/>} />
+              </PieChart>
+            </div>
           </div>
-        </div>
         }
       </div>
     );

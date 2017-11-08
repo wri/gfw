@@ -4,10 +4,10 @@ import Select from 'react-select-me';
 
 class WidgetTreeLocatedSettings extends PureComponent {
 
-  // regionChange = (value) => {
-  //   this.props.onRegionChange(value.value);
-  // };
-  //
+  dataSourceChange = (value) => {
+    this.props.onDataSourceChange(value.value);
+  };
+
   unitChange = (value) => {
     this.props.onUnitChange(value.value);
   };
@@ -18,14 +18,14 @@ class WidgetTreeLocatedSettings extends PureComponent {
 
   iconRenderer = () => {
     return(<svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg>);
-  }
+  };
 
   render() {
     const {
+      dataSources,
       units,
       canopies,
-      settings,
-      dataSource,
+      settings
     } = this.props;
     return (
       <div className="c-widget-settings">
@@ -33,8 +33,9 @@ class WidgetTreeLocatedSettings extends PureComponent {
           <div className="c-widget-settings__title">DATA SOURCE</div>
           <Select
             iconRenderer={this.iconRenderer}
-            value={settings.dataSources}
-            options={dataSource}
+            value={settings.dataSource}
+            options={dataSources}
+            onChange={this.dataSourceChange}
           />
         </div>
         <div className="c-widget-settings__select">
@@ -49,7 +50,7 @@ class WidgetTreeLocatedSettings extends PureComponent {
         <div className="c-widget-settings__button-select">
           <div className="c-widget-settings__title">CANOPY DENSITY</div>
           <Select
-            value={settings.canopy === 0 ? '> 0%' : settings.canopy}
+            value={settings.canopy}
             options={canopies}
             onChange={this.canopyChange}
           />
@@ -59,11 +60,14 @@ class WidgetTreeLocatedSettings extends PureComponent {
   }
 }
 
- WidgetTreeLocatedSettings.propTypes = {
-  dataSource: PropTypes.array.isRequired,
+WidgetTreeLocatedSettings.propTypes = {
+  dataSources: PropTypes.array.isRequired,
   units: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
+  onDataSourceChange: PropTypes.func.isRequired,
+  onUnitChange: PropTypes.func.isRequired,
+  onCanopyChange: PropTypes.func.isRequired
 };
 
 export default  WidgetTreeLocatedSettings;
