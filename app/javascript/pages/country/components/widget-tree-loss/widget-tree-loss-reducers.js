@@ -1,10 +1,6 @@
 export const initialState = {
   isLoading: true,
-  minYear: 2001,
-  maxYear: 2015,
-  thresh: 30,
   total: 0,
-  isUpdating: false,
   years: [],
   yearsLoss: [
     {
@@ -73,7 +69,7 @@ export const initialState = {
     },
 
   ],
-  regions: [
+  locations: [
     {
       label: 'Plantations',
       value: 'plantations'
@@ -111,6 +107,10 @@ export const initialState = {
     {
       value: '%',
       label: 'Percent Area - %'
+    },
+    {
+      value: 'mg',
+      label: 'CO2 Emissions - mg'
     }
   ],
   canopies: [
@@ -150,7 +150,7 @@ export const initialState = {
   settings: {
     startYear: 2001,
     endYear: 2016,
-    region: 'All',
+    location: 'plantations',
     unit: 'Ha',
     canopy: 30
   }
@@ -159,9 +159,16 @@ export const initialState = {
 const setTreeLossValues = (state, { payload }) => ({
   ...state,
   isLoading: false,
-  isUpdating: false,
   total: payload.total,
   years: payload.years
+});
+
+const setTreeLossSettingsLocation = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    location: payload
+  }
 });
 
 const setTreeLossSettingsUnit = (state, { payload }) => ({
@@ -180,9 +187,9 @@ const setTreeLossSettingsCanopy = (state, { payload }) => ({
   }
 });
 
-const setTreeLossIsUpdating = (state, { payload }) => ({
+const setTreeLossIsLoading = (state, { payload }) => ({
   ...state,
-  isUpdating: payload
+  isLoading: payload
 });
 
 const setTreeLossSettingsStartYear = (state, { payload }) => ({
@@ -203,9 +210,10 @@ const setTreeLossSettingsEndYear = (state, { payload }) => ({
 
 export default {
   setTreeLossValues,
-  setTreeLossSettingsCanopy,
-  setTreeLossIsUpdating,
+  setTreeLossSettingsLocation,
   setTreeLossSettingsUnit,
+  setTreeLossSettingsCanopy,
+  setTreeLossIsLoading,
   setTreeLossSettingsStartYear,
   setTreeLossSettingsEndYear
 };
