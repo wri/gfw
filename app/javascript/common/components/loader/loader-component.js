@@ -5,11 +5,12 @@ class Loader extends PureComponent {
 
   render() {
     const {
-      parentClass
+      parentClass,
+      isAbsolute
     } = this.props;
 
     const loader = (
-      <div className="c-loader">
+      <div className={`c-loader ${isAbsolute ? 'c-loader--absolute' : ''}`}>
         <div className="c-loader__spinner"></div>
       </div>
     );
@@ -19,7 +20,8 @@ class Loader extends PureComponent {
 }
 
 Loader.propTypes = {
-  parentClass: PropTypes.string
+  parentClass: PropTypes.string,
+  isAbsolute: PropTypes.bool
 };
 
 export default Loader;

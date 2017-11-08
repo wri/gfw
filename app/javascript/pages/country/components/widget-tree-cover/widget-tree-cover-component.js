@@ -28,7 +28,6 @@ class WidgetTreeCover extends PureComponent {
   render() {
     const {
       isLoading,
-      isUpdating,
       viewOnMap,
       totalCover,
       totalIntactForest,
@@ -39,32 +38,36 @@ class WidgetTreeCover extends PureComponent {
       canopies,
       settings,
       setTreeCoverSettingsLocation,
+      setTreeCoverSettingsUnit,
       setTreeCoverSettingsCanopy
     } = this.props;
-    if (isLoading) {
-      return <Loader parentClass="c-widget" />;
-    } else {
-      const totalValue = totalCover + totalIntactForest + totalNonForest;
-      const pieCharData = [
-        { name: 'Forest', value: totalCover, color: '#959a00', percentage: (totalCover / totalValue) * 100 },
-        { name: 'Intact Forest', value: totalIntactForest, color: '#2d8700', percentage: (totalIntactForest / totalValue) * 100 },
-        { name: 'Non Forest', value: totalNonForest, color: '#d1d1d1', percentage: (totalNonForest / totalValue) * 100 }
-      ];
-      const unitMeasure = settings.unit === 'Ha' ? 'Ha' : '%';
-      return (
-        <div className="c-widget c-widget-tree-cover">
-          <WidgetHeader
-            title={title}
-            viewOnMapCallback={viewOnMap} >
-            <WidgetTreeCoverSettings
-              type="settings"
-              locations={locations}
-              units={units}
-              canopies={canopies}
-              settings={settings}
-              onLocationChange={setTreeCoverSettingsLocation}
-              onCanopyChange={setTreeCoverSettingsCanopy} />
-          </WidgetHeader>
+
+    const totalValue = totalCover + totalIntactForest + totalNonForest;
+    const pieCharData = [
+      { name: 'Forest', value: totalCover, color: '#959a00', percentage: (totalCover / totalValue) * 100 },
+      { name: 'Intact Forest', value: totalIntactForest, color: '#2d8700', percentage: (totalIntactForest / totalValue) * 100 },
+      { name: 'Non Forest', value: totalNonForest, color: '#d1d1d1', percentage: (totalNonForest / totalValue) * 100 }
+    ];
+    const unitMeasure = settings.unit === 'Ha' ? 'Ha' : '%';
+
+    return (
+      <div className="c-widget c-widget-tree-cover">
+        <WidgetHeader
+          title={title}
+          viewOnMapCallback={viewOnMap} >
+          <WidgetTreeCoverSettings
+            type="settings"
+            locations={locations}
+            units={units}
+            canopies={canopies}
+            settings={settings}
+            onLocationChange={setTreeCoverSettingsLocation}
+            onUnitChange={setTreeCoverSettingsUnit}
+            onCanopyChange={setTreeCoverSettingsCanopy} />
+        </WidgetHeader>
+        { isLoading
+          ? <Loader isAbsolute={true} />
+          : <div>
           <ul className="c-widget-tree-cover__legend">
             {pieCharData.map((item, index) => {
               return (
@@ -90,16 +93,15 @@ class WidgetTreeCover extends PureComponent {
               <Tooltip percentageAndArea content={<TooltipChart/>} />
             </PieChart>
           </div>
-          {isUpdating ? <WidgetUpdating /> : null}
         </div>
-      );
-    }
+        }
+      </div>
+    );
   }
 }
 
 WidgetTreeCover.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  isUpdating: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
   updateData: PropTypes.func.isRequired,
   viewOnMap: PropTypes.func.isRequired,
@@ -109,9 +111,11 @@ WidgetTreeCover.propTypes = {
   totalNonForest: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   locations: PropTypes.array.isRequired,
+  units: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   setTreeCoverSettingsLocation: PropTypes.func.isRequired,
+  setTreeCoverSettingsUnit: PropTypes.func.isRequired,
   setTreeCoverSettingsCanopy: PropTypes.func.isRequired
 };
 

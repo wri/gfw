@@ -1,11 +1,20 @@
 export const initialState = {
   isLoading: true,
-  isUpdating: false,
   totalCover: 0,
   totalIntactForest: 0,
   totalNonForest: 0,
   title: '',
   locations: [],
+  units: [
+    {
+      value: 'Ha',
+      label: 'Hectare - Ha'
+    },
+    {
+      value: '%',
+      label: 'Percent Area - %'
+    }
+  ],
   canopies: [
     {
       value: 0,
@@ -48,15 +57,14 @@ export const initialState = {
   }
 };
 
-const setTreeCoverIsUpdating = (state, { payload }) => ({
+const setTreeCoverIsLoading = (state, { payload }) => ({
   ...state,
-  isUpdating: payload
+  isLoading: payload
 });
 
 const setTreeCoverValues = (state, { payload }) => ({
   ...state,
   isLoading: false,
-  isUpdating: false,
   totalCover: payload.totalCover,
   totalIntactForest: payload.totalIntactForest,
   totalNonForest: payload.totalNonForest,
@@ -73,6 +81,14 @@ const setTreeCoverSettingsLocation = (state, { payload }) => ({
   }
 });
 
+const setTreeCoverSettingsUnit = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    unit: payload
+  }
+});
+
 const setTreeCoverSettingsCanopy = (state, { payload }) => ({
   ...state,
   settings: {
@@ -82,8 +98,9 @@ const setTreeCoverSettingsCanopy = (state, { payload }) => ({
 });
 
 export default {
-  setTreeCoverIsUpdating,
+  setTreeCoverIsLoading,
   setTreeCoverValues,
   setTreeCoverSettingsLocation,
+  setTreeCoverSettingsUnit,
   setTreeCoverSettingsCanopy
 };

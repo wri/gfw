@@ -15,7 +15,6 @@ import {
 
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeCover.isLoading,
-  isUpdating: state.widgetTreeCover.isUpdating,
   iso: state.root.iso,
   countryRegion: state.root.countryRegion,
   countryRegions: state.root.countryRegions,
@@ -25,6 +24,7 @@ const mapStateToProps = state => ({
   totalNonForest: state.widgetTreeCover.totalNonForest,
   title: state.widgetTreeCover.title,
   locations: state.widgetTreeCover.locations,
+  units: state.widgetTreeCover.units,
   canopies: state.widgetTreeCover.canopies,
   settings: state.widgetTreeCover.settings
 });
@@ -35,7 +35,7 @@ const WidgetTreeCoverContainer = (props) => {
   };
 
   const updateData = (props) => {
-    props.setTreeCoverIsUpdating(true);
+    props.setTreeCoverIsLoading(true);
     setWidgetData(props);
   };
 
