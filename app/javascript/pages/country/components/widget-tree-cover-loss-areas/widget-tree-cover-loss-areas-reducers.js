@@ -1,10 +1,11 @@
 export const initialState = {
   isLoading: true,
-  isUpdating: false,
   regionData: [],
   regionChartData: [],
-  startArray: 0,
-  endArray: 10,
+  paginate: {
+    limit: 10,
+    page: 1
+  },
   years: [
     {
       label: '2001',
@@ -158,19 +159,12 @@ export const initialState = {
 const setPieCharDataDistricts = (state, { payload }) => ({
   ...state,
   isLoading: false,
-  isUpdating: false,
   regionData: payload
 });
 
 const setPieChartDataTotal = (state, { payload }) => ({
   ...state,
   regionChartData: payload
-});
-
-const setArrayCoverAreasLoss = (state, { payload }) => ({
-  ...state,
-  startArray: payload.startArray,
-  endArray: payload.endArray
 });
 
 const setTreeCoverLossAreasSettingsUnit = (state, { payload }) => ({
@@ -205,18 +199,26 @@ const setTreeCoverLossAreasSettingsEndYear = (state, { payload }) => ({
   }
 });
 
-const setTreeCoverLossAreasdIsUpdating = (state, { payload }) => ({
+const setTreeCoverLossAreasIsLoading = (state, { payload }) => ({
   ...state,
-  isUpdating: payload
+  isLoading: payload
+});
+
+const setTreeCoverLossAreasPage = (state, { payload }) => ({
+  ...state,
+  paginate: {
+    ...state.paginate,
+    page: payload
+  }
 });
 
 export default {
   setPieCharDataDistricts,
-  setArrayCoverAreasLoss,
   setPieChartDataTotal,
   setTreeCoverLossAreasSettingsUnit,
   setTreeCoverLossAreasSettingsCanopy,
   setTreeCoverLossAreasSettingsStartYear,
   setTreeCoverLossAreasSettingsEndYear,
-  setTreeCoverLossAreasdIsUpdating
+  setTreeCoverLossAreasIsLoading,
+  setTreeCoverLossAreasPage
 };
