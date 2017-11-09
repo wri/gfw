@@ -18,9 +18,7 @@ const mapStateToProps = state => ({
   startYear: 2001,
   endYear: 2015,
   thresh: 30,
-  isUpdating: state.widgetTreeCoverLossAreas.isUpdating,
-  startArray: state.widgetTreeCoverLossAreas.startArray,
-  endArray: state.widgetTreeCoverLossAreas.endArray,
+  paginate: state.widgetTreeCoverLossAreas.paginate,
   regions: state.widgetTreeCoverLossAreas.regions,
   units: state.widgetTreeCoverLossAreas.units,
   canopies: state.widgetTreeCoverLossAreas.canopies,
@@ -33,29 +31,11 @@ import {
 } from '../../../../services/tree-loss';
 
 const colors = ['#510626', '#730735', '#af0f54', '#f5247e', '#f3599b', '#fb9bc4', '#f1c5d8', '#e9e7a6', '#dad781', '#cecb65', '#d1d1d1'];
-let indexColors = 0;
-let othersValue = 0;
 
 const WidgetTreeCoverLossAreasContainer = (props) => {
 
-  const moreRegion = () => {
-    const value = {
-      startArray: props.startArray + 10,
-      endArray: props.endArray + 10,
-    }
-    props.setArrayCoverAreasLoss(value);
-  };
-
-  const lessRegion = () => {
-    const value = {
-      startArray: props.startArray - 10,
-      endArray: props.endArray - 10,
-    }
-    props.setArrayCoverAreasLoss(value);
-  };
-
   const updateData = (props) => {
-    props.setTreeCoverLossAreasdIsUpdating(true);
+    props.setTreeCoverLossAreasIsLoading(true);
     setWidgetData(props);
   };
 
@@ -64,8 +44,6 @@ const WidgetTreeCoverLossAreasContainer = (props) => {
   };
 
   const setWidgetData = (props) => {
-    let nameChart = '';
-    let valueChart = 0;
     getTreeLossByRegion(
       props.iso,
       {minYear: props.settings.startYear, maxYear: props.settings.endYear},
@@ -74,44 +52,58 @@ const WidgetTreeCoverLossAreasContainer = (props) => {
     .then((treeLossByRegion) => {
       const regionsForestLoss = [];
       const regionForestLossChart = [];
-      treeLossByRegion.data.data.forEach(function(item, index){
-        const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
+
+      let indexColors = 0;
+      let othersValue = 0;
+      treeLossByRegion.data.data.forEach(function(item, index) {
+        const numberRegion = _.findIndex(
+          props.countryRegions,
+          (x) => x.id === item.adm1
+        );
+
         regionsForestLoss.push({
           name: props.countryRegions[numberRegion].name,
           value: props.settings.unit === 'Ha' ? item.value : (item.value /  Math.round(props.countryData.area_ha)) * 100,
           color: colors[indexColors],
           position: index + 1
         });
-        if(indexColors < 10 || index === treeLossByRegion.data.data.length - 1) {
-          if(indexColors < 10) { nameChart = props.countryRegions[numberRegion].name; valueChart = item.value;}
-          if(index === treeLossByRegion.data.data.length - 1) { nameChart = 'others'; valueChart = othersValue;}
 
+        if (indexColors < props.paginate.limit) {
           regionForestLossChart.push({
-            name: nameChart,
+            name: props.countryRegions[numberRegion].name,
             color: colors[indexColors],
-            value: props.settings.unit === 'Ha' ? valueChart : (valueChart /  Math.round(props.countryData.area_ha)) * 100 ,
-          })
+            value: props.settings.unit === 'Ha' ? item.value : (item.value / Math.round(props.countryData.area_ha)) * 100
+          });
+          indexColors += 1;
+        } else if (index === treeLossByRegion.data.data.length - 1) {
+          regionForestLossChart.push({
+            name: 'others',
+            color: colors[indexColors],
+            value: props.settings.unit === 'Ha' ? othersValue : (othersValue / Math.round(props.countryData.area_ha)) * 100
+          });
         } else {
           othersValue += item.value;
-        }
-        if (indexColors < 10) {
-          indexColors += 1;
-        }
-        if (index === treeLossByRegion.data.data.length - 1) {
-          indexColors = 0;
-          othersValue = 0;
         }
       });
         props.setPieChartDataTotal(regionForestLossChart);
         props.setPieCharDataDistricts(regionsForestLoss);
     });
   };
+
+  const nextPage = () => {
+    props.setTreeCoverLossAreasPage(props.paginate.page + 1);
+  };
+
+  const previousPage = () => {
+    props.setTreeCoverLossAreasPage(props.paginate.page - 1);
+  };
+
   return createElement(WidgetTreeCoverLossAreasComponent, {
     ...props,
     setInitialData,
-    moreRegion,
-    lessRegion,
-    updateData
+    updateData,
+    nextPage,
+    previousPage
   });
 };
 

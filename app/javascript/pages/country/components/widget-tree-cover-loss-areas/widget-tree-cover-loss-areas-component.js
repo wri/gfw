@@ -7,22 +7,14 @@ import Loader from '../../../../common/components/loader/loader';
 import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
 import WidgetTreeCoverLossAreasSettings from './widget-tree-cover-loss-areas-settings-component';
+import WidgetPaginate from '../widget-paginate/widget-paginate';
 
 class WidgetTreeLossAreas extends PureComponent {
+
   componentDidMount() {
     const { setInitialData } = this.props;
     setInitialData(this.props);
   }
-
-  moreRegion = () => {
-    const { moreRegion } = this.props;
-    moreRegion();
-  };
-
-  lessRegion = () => {
-    const { lessRegion } = this.props;
-    lessRegion();
-  };
 
   componentWillUpdate(nextProps) {
     const {
@@ -42,8 +34,9 @@ class WidgetTreeLossAreas extends PureComponent {
       regionData,
       startYear,
       endYear,
-      startArray,
-      endArray,
+      paginate,
+      nextPage,
+      previousPage,
       regionChartData,
       units,
       settings,
@@ -53,12 +46,11 @@ class WidgetTreeLossAreas extends PureComponent {
       setTreeCoverLossAreasSettingsUnit,
       setTreeCoverLossAreasSettingsCanopy,
       setTreeCoverLossAreasSettingsStartYear,
-      setTreeCoverLossAreasSettingsEndYear,
-      isUpdating
+      setTreeCoverLossAreasSettingsEndYear
     } = this.props;
 
-    const showUpIcon = startArray >= 10;
-    const showDownIcon = endArray >= regionData.length;
+    const paginateFrom = (paginate.page * paginate.limit) - paginate.limit;
+    const paginateTo = paginateFrom + paginate.limit;
 
     return (
       <div className="c-widget c-widget-tree-cover-loss-areas">
@@ -79,10 +71,10 @@ class WidgetTreeLossAreas extends PureComponent {
           ? <Loader isAbsolute={true} />
           : <div className="c-widget-tree-cover-loss-areas__container">
             <div className="c-widget-tree-cover-loss-areas__chart">
-              <h3 className="title">Total Tree cover loss</h3>
-              <p className="date">({startYear} - {endYear})</p>
-              <PieChart width={216} height={216}>
-                <Pie dataKey="value" data={regionChartData} cx={108} cy={108} innerRadius={40} outerRadius={100}>
+              <div className="c-widget-tree-cover-loss-areas__legend-title">Total Tree Cover Loss</div>
+              <div className="c-widget-tree-cover-loss-areas__legend-years">({`${settings.startYear} - ${settings.endYear}`})</div>
+              <PieChart width={222} height={222}>
+                <Pie dataKey="value" data={regionChartData} cx={108} cy={108} innerRadius={52} outerRadius={108}>
                   {
                     regionChartData.map((item, index) => <Cell key={index} fill={item.color}/>)
                   }
@@ -92,7 +84,7 @@ class WidgetTreeLossAreas extends PureComponent {
             </div>
             <ul className="c-widget-tree-cover-loss-areas__legend">
               <div className="container-list">
-                {regionData.slice(startArray, endArray).map((item, index) => {
+                {regionData.slice(paginateFrom, paginateTo).map((item, index) => {
                   return (
                     <li key={index}>
                       <div className="c-widget-tree-cover-loss-areas__legend-title">
@@ -106,10 +98,11 @@ class WidgetTreeLossAreas extends PureComponent {
                   );
                 })}
               </div>
-              <div className="c-widget-tree-cover-loss-areas__scroll-more">
-                {showUpIcon && <div className="circle-icon -up" onClick={this.lessRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
-                {!showDownIcon && <div className="circle-icon" onClick={this.moreRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
-              </div>
+              <WidgetPaginate
+                paginate={paginate}
+                count={regionData.length}
+                onClickNextPage={nextPage}
+                onClickPreviousPage={previousPage} />
             </ul>
           </div>
         }
