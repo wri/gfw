@@ -20,6 +20,7 @@ define([
         forest_clearing: {
           except: [
             ['loss', 'forestgain', 'forest2000'],
+            ['umd_as_it_happens', 'forest2000'],
             ['forma', 'forest2000'],
             ['loss', 'forest2000'],
             ['forestgain', 'forest2000'],
