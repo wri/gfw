@@ -50,8 +50,11 @@ module.exports = {
     modules: [resolve(settings.source_path), 'node_modules'],
     plugins: [new DirectoryNamedWebpackPlugin(true)],
     alias: {
-      app: 'app',
-      components: 'app/components'
+      utils: 'utils',
+      sgf: 'pages/sgf',
+      about: 'pages/about',
+      pages: 'pages',
+      components: 'components'
     }
   },
 
