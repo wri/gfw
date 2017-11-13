@@ -1,17 +1,24 @@
-import React, { PureComponent } from 'react';
-import Header from 'components/header/header';
-import Content from './content';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 
-class SGF extends PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
-  render() {
-    return (
-      <div>
-        <Header key="header" />
-        <Content key="content" />
-      </div>
-    );
-  }
-}
+import reducers from './reducers';
+import router from './router';
+
+import Page from './page/page';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const middlewares = applyMiddleware(thunk, router.middleware);
+const store = createStore(
+  reducers,
+  composeEnhancers(router.enhancer, middlewares)
+);
+
+const SGF = () => (
+  <Provider store={store}>
+    <Page />
+  </Provider>
+);
 
 export default SGF;
