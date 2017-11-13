@@ -4,26 +4,18 @@ import Select from 'react-select-me';
 
 class WidgetTreeCoverGainSettings extends PureComponent {
 
-  // regionChange = (value) => {
-  //   this.props.onRegionChange(value.value);
-  // };
-  //
-  // unitChange = (value) => {
-  //   this.props.onUnitChange(value.value);
-  // };
-  //
-  // canopyChange = (value) => {
-  //   this.props.onCanopyChange(value.value);
-  // };
+  locationChange = (value) => {
+    this.props.onLocationChange(value);
+  };
 
   iconRenderer = () => {
     return(<svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg>);
-  }
+  };
 
   render() {
     const {
-      regions,
-      settings,
+      locations,
+      settings
     } = this.props;
     return (
       <div className="c-widget-settings">
@@ -31,8 +23,9 @@ class WidgetTreeCoverGainSettings extends PureComponent {
           <div className="c-widget-settings__title">LOCATION</div>
           <Select
             iconRenderer={this.iconRenderer}
-            value={settings.region}
-            options={regions}/>
+            value={settings.location}
+            options={locations}
+            onChange={this.locationChange}/>
         </div>
       </div>
     );
@@ -40,8 +33,8 @@ class WidgetTreeCoverGainSettings extends PureComponent {
 }
 
 WidgetTreeCoverGainSettings.propTypes = {
-  regions: PropTypes.array.isRequired,
-  settings: PropTypes.object.isRequired,
+  locations: PropTypes.array.isRequired,
+  settings: PropTypes.object.isRequired
 };
 
 export default WidgetTreeCoverGainSettings;
