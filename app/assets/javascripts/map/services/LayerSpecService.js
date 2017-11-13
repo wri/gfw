@@ -19,7 +19,8 @@ define([
       forbidCombined: {
         forest_clearing: {
           except: [
-            ['loss', 'forestgain', 'forest2000','forest2010'],
+            ['loss', 'forestgain', 'forest2000'],
+            ['loss', 'forestgain', 'forest2010'],
             ['umd_as_it_happens', 'forest2000'],
             ['umd_as_it_happens', 'forest2010'],
             ['forma', 'forest2000'],
