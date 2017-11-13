@@ -2,37 +2,22 @@ export const initialState = {
   isLoading: true,
   areaData: [],
   areaChartData: [],
-  isUpdating: false,
-  startArray: 0,
-  endArray: 10,
-  regions: [
+  paginate: {
+    limit: 10,
+    page: 1
+  },
+  locations: [
     {
-      label: 'Plantations',
-      value: 'plantations'
+      value: 'all',
+      label: 'All Region'
     },
     {
-      label: 'Managed',
-      value: 'managed'
+      value: 'managed',
+      label: 'Managed'
     },
     {
-      label: 'Protected Areas',
-      value: 'protected_areas'
-    },
-    {
-      label: 'Intact Forest Landscapes',
-      value: 'intact_forest_landscapes'
-    },
-    {
-      label: 'Primary Forest',
-      value: 'primary_forest'
-    },
-    {
-      label: 'Mangroves',
-      value: 'mangroves'
-    },
-    {
-      label: 'Moratorium Areas',
-      value: 'moratorium_areas'
+      value: 'protected_areas',
+      label: 'Protected Areas'
     }
   ],
   units: [
@@ -46,30 +31,38 @@ export const initialState = {
     }
   ],
   settings: {
-    region: 'All',
+    location: 'all',
+    locationLabel: 'All Region',
     unit: 'Ha',
+    canopy: 30,
+    startYear: 2011,
+    endYear: 2015
   }
 };
 
-const setPieCharDataAreas = (state, { payload }) => ({
+const setAreasMostCoverIsLoading = (state, { payload }) => ({
+  ...state,
+  isLoading: payload
+});
+
+const setAreasMostCoverGainValues = (state, { payload }) => ({
   ...state,
   isLoading: false,
-  isUpdating: false,
-  areaData: payload
+  areaData: payload.data,
+  areaChartData: payload.charData
 });
 
-const setPieCharDataAreasTotal = (state, { payload }) => ({
+
+const setAreasMostCoverGainSettingsLocation = (state, { payload }) => ({
   ...state,
-  areaChartData: payload
+  settings: {
+    ...state.settings,
+    location: payload.value,
+    locationLabel: payload.label
+  }
 });
 
-const setArrayCoverAreasGain = (state, { payload }) => ({
-  ...state,
-  startArray: payload.startArray,
-  endArray: payload.endArray
-});
-
-const setTreeAreasTreeGainSettingsUnit = (state, { payload }) => ({
+const setAreasMostCoverGainSettingsUnit = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
@@ -77,15 +70,18 @@ const setTreeAreasTreeGainSettingsUnit = (state, { payload }) => ({
   }
 });
 
-const setAreaMostCoverIsUpdating = (state, { payload }) => ({
+const setAreasMostCoverGainPage = (state, { payload }) => ({
   ...state,
-  isUpdating: payload
+  paginate: {
+    ...state.paginate,
+    page: payload
+  }
 });
 
 export default {
-  setPieCharDataAreas,
-  setArrayCoverAreasGain,
-  setPieCharDataAreasTotal,
-  setTreeAreasTreeGainSettingsUnit,
-  setAreaMostCoverIsUpdating
+  setAreasMostCoverIsLoading,
+  setAreasMostCoverGainValues,
+  setAreasMostCoverGainSettingsLocation,
+  setAreasMostCoverGainSettingsUnit,
+  setAreasMostCoverGainPage
 };

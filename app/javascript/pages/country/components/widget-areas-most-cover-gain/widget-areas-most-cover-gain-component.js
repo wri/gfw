@@ -6,22 +6,13 @@ import Loader from '../../../../common/components/loader/loader';
 import TooltipChart from '../tooltip-chart/tooltip-chart';
 import WidgetHeader from '../widget-header/widget-header';
 import WidgetAreasMostCoverGainSettings from './widget-areas-most-cover-gain-settings-component';
+import WidgetPaginate from '../widget-paginate/widget-paginate';
 
 class WidgetAreasMostCoverGain extends PureComponent {
   componentDidMount() {
     const { setInitialData } = this.props;
     setInitialData(this.props);
   }
-
-  moreRegion = () => {
-    const { moreRegion } = this.props;
-    moreRegion();
-  };
-
-  lessRegion = () => {
-    const { lessRegion } = this.props;
-    lessRegion();
-  };
 
   componentWillUpdate(nextProps) {
     const {
@@ -40,64 +31,67 @@ class WidgetAreasMostCoverGain extends PureComponent {
       countryData,
       areaData,
       areaChartData,
-      startArray,
-      endArray,
+      paginate,
       settings,
       units,
-      regions,
-      setTreeAreasTreeGainSettingsUnit,
-      isUpdating
+      locations,
+      nextPage,
+      previousPage,
+      setAreasMostCoverGainSettingsLocation,
+      setAreasMostCoverGainSettingsUnit
     } = this.props;
 
-    const showUpIcon = startArray >= 10;
-    const showDownIcon = endArray >= areaData.length;
+    const paginateFrom = (paginate.page * paginate.limit) - paginate.limit;
+    const paginateTo = paginateFrom + paginate.limit;
 
-    if (isLoading) {
-      return <Loader parentClass="c-widget" />;
-    } else {
-      return (
-        <div className="c-widget c-widget-areas-most-cover-gain">
-          <WidgetHeader title={`AREAS WITH MOST TREE COVER GAIN IN ${countryData.name}`} >
-            <WidgetAreasMostCoverGainSettings
-              type="settings"
-              regions={regions}
-              units={units}
-              onUnitChange={setTreeAreasTreeGainSettingsUnit}
-              settings={settings} />
-          </WidgetHeader>
-          <p className="title-legend">Hansen - UMD</p>
-          <div className="c-widget-areas-most-cover-gain__container">
-            <ul className="c-widget-areas-most-cover-gain__legend">
-              {areaData.slice(startArray, endArray).map((item, index) => {
-                return (
-                  <li key={index}>
-                    <div className="c-widget-areas-most-cover-gain__legend-title">
-                      <div style={{backgroundColor: item.color}}>{index + 1}</div>
-                      {item.name}
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-            <div className="c-widget-areas-most-cover-gain__chart">
-              <PieChart width={150} height={150}>
-                <Pie dataKey="value" data={areaChartData} cx={70} cy={70} innerRadius={35} outerRadius={70}>
-                  {
-                    areaChartData.map((item, index) => <Cell key={index} fill={item.color}/>)
-                  }
-                </Pie>
-                <Tooltip percentage={settings.unit !== 'Ha'} percentageAndArea={false} showCountry content={<TooltipChart/>} />
-              </PieChart>
+    return (
+      <div className="c-widget c-widget-areas-most-cover-gain">
+        <WidgetHeader title={`AREAS WITH MOST TREE COVER GAIN IN ${countryData.name}`} >
+          <WidgetAreasMostCoverGainSettings
+            type="settings"
+            locations={locations}
+            units={units}
+            settings={settings}
+            onLocationChange={setAreasMostCoverGainSettingsLocation}
+            onUnitChange={setAreasMostCoverGainSettingsUnit}/>
+        </WidgetHeader>
+        { isLoading
+          ? <Loader isAbsolute={true}/>
+          : <div>
+            <p className="title-legend">Hansen - UMD</p>
+            <div className="c-widget-areas-most-cover-gain__container">
+              <ul className="c-widget-areas-most-cover-gain__legend">
+                {areaData.slice(paginateFrom, paginateTo).map((item, index) => {
+                  return (
+                    <li key={index}>
+                      <div className="c-widget-areas-most-cover-gain__legend-title">
+                        <div style={{backgroundColor: item.color}}>{index + 1}</div>
+                        {item.name}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+              <div className="c-widget-areas-most-cover-gain__chart">
+                <PieChart width={150} height={150}>
+                  <Pie dataKey="value" data={areaChartData} cx={70} cy={70} innerRadius={35} outerRadius={70}>
+                    {
+                      areaChartData.map((item, index) => <Cell key={index} fill={item.color}/>)
+                    }
+                  </Pie>
+                  <Tooltip percentage={settings.unit !== 'Ha'} percentageAndArea={false} showCountry content={<TooltipChart/>} />
+                </PieChart>
+              </div>
             </div>
+            <WidgetPaginate
+              paginate={paginate}
+              count={areaData.length}
+              onClickNextPage={nextPage}
+              onClickPreviousPage={previousPage} />
           </div>
-          <div className="c-widget-areas-most-cover-gain__scroll-more">
-            {showUpIcon && <div className="circle-icon -up" onClick={this.lessRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
-            {!showDownIcon && <div className="circle-icon" onClick={this.moreRegion}><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>}
-          </div>
-          {isUpdating ? <WidgetUpdating /> : null}
-        </div>
-      )
-    }
+        }
+      </div>
+    )
   }
 }
 
