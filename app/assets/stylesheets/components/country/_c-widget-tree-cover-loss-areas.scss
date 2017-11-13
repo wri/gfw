@@ -5,21 +5,12 @@
     font-size: 12px;
     line-height: 1.08;
     color: $slate;
-  }
-
-  .c-widget-tree-cover-loss-areas__legend-title {
-    margin-bottom: rem(10px);
     padding-left: rem(16px);
-
-    @media screen and (min-width: $screen-s) {
-      margin-bottom: rem(10px);
-      padding-left: rem(16px);
-    }
   }
 
   .c-widget-tree-cover-loss-areas__legend-years {
+    margin-top: rem(9px);
     color: rgba($slate, .5);
-    padding-left: rem(16px);
   }
 
   .c-widget-tree-cover-loss-areas__container {
@@ -49,6 +40,7 @@
     .c-widget-tree-cover-loss-areas__legend {
       flex-basis: 100%;
       margin-top: rem(15px);
+      padding: 0 rem(5px) 0 rem(16px);
 
       @media screen and (min-width: $screen-s) {
         flex-basis: 50%;
@@ -60,6 +52,7 @@
         font-size: 12px;
         color: $slate;
         justify-content: space-between;
+        margin-bottom: rem(10px);
 
         &:last-of-type {
           margin-bottom: 0;
