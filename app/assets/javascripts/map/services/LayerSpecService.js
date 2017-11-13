@@ -19,18 +19,24 @@ define([
       forbidCombined: {
         forest_clearing: {
           except: [
-            ['loss', 'forestgain', 'forest2000'],
-            ['umd_as_it_happens', 'forest2000'],
+            ['loss', 'forestgain', 'forest2000','forest2010'],
             ['forma', 'forest2000'],
+            ['forma', 'forest2010'],
             ['loss', 'forest2000'],
+            ['loss', 'forest2010'],
             ['forestgain', 'forest2000'],
-            ['forma', 'forest2000'],
+            ['forestgain', 'forest2010'],
             ['umd_as_it_happens', 'places_to_watch', 'uncurated_places_to_watch'],
             ['imazon', 'forest2000'],
+            ['imazon', 'forest2010'],
             ['terrailoss', 'forest2000'],
+            ['terrailoss', 'forest2010'],
             ['prodes', 'forest2000'],
+            ['prodes', 'forest2010'],
             ['guyra', 'forest2000'],
+            ['guyra', 'forest2010'],
             ['viirs_fires_alerts', 'forest2000'],
+            ['viirs_fires_alerts', 'forest2010'],
             ['forest2000', 'forest2000'],
           ]
         },

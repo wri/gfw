@@ -11,6 +11,7 @@ define([
   'map/views/layers/ImazonLayer',
   'map/views/layers/ImazonCoverLayer',
   'map/views/layers/Forest2000Layer',
+  'map/views/layers/Forest2010Layer',
   'map/views/layers/IntactForestLayer',
   'map/views/layers/IntactForestLayer2000',
   'map/views/layers/IntactForestLayer2013',
@@ -197,6 +198,7 @@ define([
   ImazonLayer,
   ImazonCoverLayer,
   Forest2000Layer,
+  Forest2010Layer,
   IntactForestLayer,
   IntactForestLayer2000,
   IntactForestLayer2013,
@@ -409,6 +411,9 @@ define([
     },
     forest2000: {
       view: Forest2000Layer
+    },
+    forest2010: {
+      view: Forest2010Layer
     },
     intact_forest: {
       view: IntactForestLayer
