@@ -154,6 +154,7 @@ Gfw::Application.routes.draw do
 
   # Small Grunts Fund
   get '/small-grants-fund' => 'small_grants_fund#index'
+  get '/small-grants-fund/*all' => 'small_grants_fund#index'
 
   # robots
   get '/robots', to: redirect('/robots.txt'), format: false
