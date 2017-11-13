@@ -1,6 +1,6 @@
 .c-widget-areas-most-cover-gain {
   .c-widget-header {
-    margin-bottom: rem(10px);
+    margin-bottom: rem(7px);
 
     @media screen and (min-width: $screen-s) {
       border-bottom: 1px solid rgba($slate, .2);
@@ -9,7 +9,7 @@
 
   .title-legend {
     display: block;
-    margin-bottom: rem(10px);
+    margin-bottom: rem(11px);
     font-size: 12px;
     color: rgba($slate, .5);
     width: 100%;
@@ -41,7 +41,7 @@
         display: flex;
         font-size: 12px;
         color: $slate;
-        margin-bottom: rem(16px);
+        margin-bottom: rem(10px);
         justify-content: space-between;
 
         &:last-of-type {
