@@ -25,6 +25,7 @@ define([
       //FOREST/LAND COVER CONTEXTUAL LAYER
       "forma_coverage",
       "forest2000",
+      "forest2010",
       "per_minam_tree_cover",
       "cod_primary_forest_wgs",
       "can_ifl",

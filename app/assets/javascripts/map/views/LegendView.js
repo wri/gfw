@@ -15,6 +15,7 @@ define([
   'text!map/templates/legend/imazon.handlebars',
   'text!map/templates/legend/fires.handlebars',
   'text!map/templates/legend/forest2000.handlebars',
+  'text!map/templates/legend/forest2010.handlebars',
   'text!map/templates/legend/pantropical.handlebars',
   'text!map/templates/legend/idnPrimary.handlebars',
   'text!map/templates/legend/intact2013.handlebars',
@@ -71,7 +72,9 @@ define([
   'text!map/templates/legend/lbr_forest.handlebars',
   'text!map/templates/legend/lbr_community.handlebars',
   'text!map/templates/legend/bol_user_fire_frequency.handlebars',
-], function(_, Handlebars, enquire, Presenter, datasetsHelper, tpl, tplMore, lossTpl, imazonTpl, firesTpl, forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
+  'text!map/templates/legend/sentinel_tiles.handlebars',
+], function(_, Handlebars, enquire, Presenter, datasetsHelper, tpl, tplMore, lossTpl, imazonTpl, firesTpl,
+    forest2000Tpl, forest2010Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
     global_land_coverTPL, formaTPL, forma_month_TPL, bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
     gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl,
@@ -103,6 +106,7 @@ define([
       loss: Handlebars.compile(lossTpl),
       imazon: Handlebars.compile(imazonTpl),
       forest2000: Handlebars.compile(forest2000Tpl),
+      forest2010: Handlebars.compile(forest2010Tpl),
       pantropical: Handlebars.compile(pantropicalTpl),
       idn_primary: Handlebars.compile(idnPrimaryTpl),
       ifl_2013_deg: Handlebars.compile(intact2013Tpl),
@@ -195,6 +199,7 @@ define([
       'click .-js-show-layer' : 'showLayer',
       'click .-js-hidden-layer' : 'hiddenLayer',
       'click .js-toggle-threshold' : 'toggleThreshold',
+      'change .js-tree-cover-year' : 'toggleTreeCoverYear',
       'change .js-tree-plantation' : 'togglePlantation',
       'change .js-tree-plantation-country' : 'togglePlantationCountry',
       'change .js-toggle-concessions' : 'toggleConcessions',
@@ -526,6 +531,14 @@ define([
     toggleThreshold: function(e){
       e && e.preventDefault();
       this.presenter.toggleThreshold();
+    },
+
+    //tree cover year
+    toggleTreeCoverYear: function(e){
+      var layerSlug = $(e.currentTarget).val();
+      var layerSlugRemove = '';
+      this.presenter.toggleLayer('forest2000');
+      this.presenter.toggleLayer('forest2010');
     },
 
     // legend
