@@ -2,40 +2,29 @@ export const initialState = {
   isLoading: true,
   totalAmount: 0,
   percentage: 0,
-  regions: [
+  locations: [
     {
-      label: 'Plantations',
-      value: 'plantations'
-    },
-    {
-      label: 'Managed',
-      value: 'managed'
+      label: 'Area-wide',
+      value: 'area_wide'
     },
     {
       label: 'Protected Areas',
       value: 'protected_areas'
-    },
-    {
-      label: 'Intact Forest Landscapes',
-      value: 'intact_forest_landscapes'
-    },
-    {
-      label: 'Primary Forest',
-      value: 'primary_forest'
-    },
-    {
-      label: 'Mangroves',
-      value: 'mangroves'
-    },
-    {
-      label: 'Moratorium Areas',
-      value: 'moratorium_areas'
     }
   ],
   settings: {
-    region: 'All',
+    location: 'area_wide',
+    locationLabel: 'Area-wide',
+    canopy: 30,
+    startYear: 2000,
+    endYear: 2012
   }
 };
+
+const setTreeCoverGainIsLoading = (state, { payload }) => ({
+  ...state,
+  isLoading: payload
+});
 
 const setTreeCoverGainValues = (state, { payload }) => ({
   ...state,
@@ -44,6 +33,17 @@ const setTreeCoverGainValues = (state, { payload }) => ({
   percentage: payload.percentage,
 });
 
+const setTreeCoverGainSettingsLocation = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    location: payload.value,
+    locationLabel: payload.label
+  }
+});
+
 export default {
-  setTreeCoverGainValues
+  setTreeCoverGainIsLoading,
+  setTreeCoverGainValues,
+  setTreeCoverGainSettingsLocation
 };
