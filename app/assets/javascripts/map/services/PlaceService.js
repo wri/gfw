@@ -55,7 +55,7 @@ define([
   'use strict';
 
   var urlDefaultsParams = {
-    baselayers: 'loss,forestgain,forest2000',
+    baselayers: 'loss,forestgain,forest2000,forest2010',
     zoom: 3,
     lat: 15,
     lng: 27,
