@@ -1,15 +1,15 @@
 import { createAction } from 'redux-actions';
 
-const setPieCharDataAreas = createAction('setPieCharDataAreas');
-const setArrayCoverAreasGain = createAction('setArrayCoverAreasGain');
-const setPieCharDataAreasTotal = createAction('setPieCharDataAreasTotal');
-const setTreeAreasTreeGainSettingsUnit = createAction('setTreeAreasTreeGainSettingsUnit');
-const setAreaMostCoverIsUpdating = createAction('setAreaMostCoverIsUpdating');
+const setAreasMostCoverIsLoading = createAction('setAreasMostCoverIsLoading');
+const setAreasMostCoverGainValues = createAction('setAreasMostCoverGainValues');
+const setAreasMostCoverGainSettingsLocation = createAction('setAreasMostCoverGainSettingsLocation');
+const setAreasMostCoverGainSettingsUnit = createAction('setAreasMostCoverGainSettingsUnit');
+const setAreasMostCoverGainPage = createAction('setAreasMostCoverGainPage');
 
 export default {
-  setPieCharDataAreas,
-  setArrayCoverAreasGain,
-  setPieCharDataAreasTotal,
-  setTreeAreasTreeGainSettingsUnit,
-  setAreaMostCoverIsUpdating
+  setAreasMostCoverIsLoading,
+  setAreasMostCoverGainValues,
+  setAreasMostCoverGainSettingsLocation,
+  setAreasMostCoverGainSettingsUnit,
+  setAreasMostCoverGainPage
 };

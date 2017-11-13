@@ -15,47 +15,23 @@ const mapStateToProps = state => ({
   countryData: state.root.countryData,
   areaData: state.widgetAreasMostCoverGain.areaData,
   areaChartData: state.widgetAreasMostCoverGain.areaChartData,
-  startYear: 2011,
-  endYear: 2015,
-  thresh: 30,
-  startArray: state.widgetAreasMostCoverGain.startArray,
-  endArray: state.widgetAreasMostCoverGain.endArray,
-  regions: state.widgetAreasMostCoverGain.regions,
+  paginate: state.widgetAreasMostCoverGain.paginate,
+  locations: state.widgetAreasMostCoverGain.locations,
   units: state.widgetAreasMostCoverGain.units,
-  settings: state.widgetAreasMostCoverGain.settings,
-  isUpdating: state.widgetAreasMostCoverGain.isUpdating,
+  settings: state.widgetAreasMostCoverGain.settings
 });
 
 import {
-  getTreeCoverGain,
   getTreeCoverGainRegion,
   getTotalCountriesTreeCoverGain
 } from '../../../../services/tree-gain';
 
 const colors = ['#110f74', '#2422a2', '#4c49d1', '#6f6de9', '#a3a1ff', '#cdcdfe', '#ddddfc', '#e7e5a4', '#dad781', '#cecb65', '#d1d1d1'];
-let indexColors = 0;
-let othersValue = 0;
 
 const WidgetAreasMostCoverGainContainer = (props) => {
 
-  const moreRegion = () => {
-    const value = {
-      startArray: props.startArray + 10,
-      endArray: props.endArray + 10,
-    }
-    props.setArrayCoverAreasGain(value);
-  };
-
-  const lessRegion = () => {
-    const value = {
-      startArray: props.startArray - 10,
-      endArray: props.endArray - 10,
-    }
-    props.setArrayCoverAreasGain(value);
-  };
-
   const updateData = (props) => {
-    props.setAreaMostCoverIsUpdating(true);
+    props.setAreasMostCoverIsLoading(true);
     setWidgetData(props);
   };
 
@@ -64,56 +40,72 @@ const WidgetAreasMostCoverGainContainer = (props) => {
   };
 
   const setWidgetData = (props) => {
-    let nameChart = '';
-    let valueChart = 0;
-    getTotalCountriesTreeCoverGain({minYear: props.startYear, maxYear: props.endYear}, props.thresh)
-    .then((totalCoverGain) => {
-      getTreeCoverGainRegion(
-        props.iso,
-        {minYear: props.startYear, maxYear: props.endYear},
-        props.thresh
-      )
-      .then((treeCoverGainByRegion) => {
-        const regionsCoverGain = [];
-        const regionCoverGainChart = [];
-        treeCoverGainByRegion.data.data.forEach(function(item, index){
-          const numberRegion = (_.findIndex(props.countryRegions, function(x) { return x.id === item.adm1; }));
-          regionsCoverGain.push({
-            name: props.countryRegions[numberRegion].name,
-            value: item.value,
-            color: colors[indexColors],
-            position: index + 1,
-          })
-          if (indexColors < 10 || index === treeCoverGainByRegion.data.data.length - 1) {
-            if(indexColors < 10) { nameChart = props.countryRegions[numberRegion].name; valueChart = item.value;}
-            if (index === treeCoverGainByRegion.data.data.length - 1) { nameChart = 'others'; valueChart = othersValue;}
-            regionCoverGainChart .push({
-              name: nameChart,
-              color: colors[indexColors],
-              value: props.settings.unit === 'Ha' ? valueChart : (valueChart / totalCoverGain.data.data[0].value) * 100,
-            })
-          } else {
-            othersValue += item.value;
-          }
-          if (indexColors < 10) {
-            indexColors += 1;
-          }
-          if (index === treeCoverGainByRegion.data.data.length - 1) {
-            indexColors = 0;
-            othersValue = 0;
-          }
-        });
-        props.setPieCharDataAreas(regionsCoverGain);
-        props.setPieCharDataAreasTotal(regionCoverGainChart);
+    getTotalCountriesTreeCoverGain({minYear: props.settings.startYear, maxYear: props.settings.endYear}, props.settings.canopy)
+      .then((totalCoverGain) => {
+        getTreeCoverGainRegion(
+          props.iso,
+          {minYear: props.settings.startYear, maxYear: props.settings.endYear},
+          props.settings.canopy
+        )
+          .then((treeCoverGainByRegion) => {
+            const regionsCoverGain = [];
+            const regionCoverGainChart = [];
+
+            let indexColors = 0;
+            let othersValue = 0;
+            treeCoverGainByRegion.data.data.forEach(function(item, index){
+              const numberRegion = _.findIndex(
+                props.countryRegions,
+                (x) => x.id === item.adm1
+              );
+
+              regionsCoverGain.push({
+                name: props.countryRegions[numberRegion].name,
+                value: item.value,
+                color: colors[indexColors],
+                position: index + 1,
+              });
+
+              if (indexColors < props.paginate.limit) {
+                regionCoverGainChart.push({
+                  name: props.countryRegions[numberRegion].name,
+                  color: colors[indexColors],
+                  value: props.settings.unit === 'Ha' ? item.value : (item.value / totalCoverGain.data.data[0].value) * 100,
+                });
+                indexColors += 1;
+              } else if (index === treeCoverGainByRegion.data.data.length - 1) {
+                regionCoverGainChart.push({
+                  name: 'others',
+                  color: colors[indexColors],
+                  value: props.settings.unit === 'Ha' ? othersValue : (othersValue / totalCoverGain.data.data[0].value) * 100
+                });
+              } else {
+                othersValue += item.value;
+              }
+            });
+
+            props.setAreasMostCoverGainValues({
+              data: regionsCoverGain,
+              charData: regionCoverGainChart
+            });
+          });
       });
-    });
   };
+
+  const nextPage = () => {
+    props.setAreasMostCoverGainPage(props.paginate.page + 1);
+  };
+
+  const previousPage = () => {
+    props.setAreasMostCoverGainPage(props.paginate.page - 1);
+  };
+
   return createElement(WidgetAreasMostCoverGainComponent, {
     ...props,
     setInitialData,
-    moreRegion,
-    lessRegion,
-    updateData
+    updateData,
+    nextPage,
+    previousPage
   });
 };
 

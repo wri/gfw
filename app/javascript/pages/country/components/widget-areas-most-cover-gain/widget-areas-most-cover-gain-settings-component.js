@@ -4,20 +4,23 @@ import Select from 'react-select-me';
 
 class WidgetAreasMostCoverGainSettings extends PureComponent {
 
+  locationChange = (value) => {
+    this.props.onLocationChange(value);
+  };
+
   unitChange = (value) => {
     this.props.onUnitChange(value.value);
   };
 
   iconRenderer = () => {
     return(<svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg>);
-  }
+  };
 
   render() {
     const {
-      regions,
+      locations,
       units,
-      settings,
-      years
+      settings
     } = this.props;
     return (
       <div className="c-widget-settings">
@@ -25,8 +28,9 @@ class WidgetAreasMostCoverGainSettings extends PureComponent {
           <div className="c-widget-settings__title">LOCATION</div>
           <Select
             iconRenderer={this.iconRenderer}
-            value={settings.region}
-            options={regions} />
+            value={settings.location}
+            options={locations}
+            onChange={this.locationChange}/>
         </div>
         <div className="c-widget-settings__select">
           <div className="c-widget-settings__title">UNIT</div>
@@ -42,7 +46,7 @@ class WidgetAreasMostCoverGainSettings extends PureComponent {
 }
 
 WidgetAreasMostCoverGainSettings.propTypes = {
-  regions: PropTypes.array.isRequired,
+  locations: PropTypes.array.isRequired,
   units: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
 };
