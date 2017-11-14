@@ -12,7 +12,7 @@ const APIURLS = {
   'treeCoverGainRegion': '/query?sql=select sum(area) as value from {dataset} WHERE iso=\'{iso}\' AND year >= {minYear} AND year <= {maxYear} AND thresh >= {threshValue} GROUP by adm1 ORDER BY value DESC LIMIT 10',
 };
 
-export const getTotalCountriesTreeCoverGain= (years, thresh) => {
+export const getTotalCountriesTreeCoverGain = (years, thresh) => {
   const url = `${APIURL}${APIURLS.treeCoverGainAllCountries}`
     .replace('{dataset}', CONFIG.treeGain)
     .replace('{minYear}', years.minYear)
@@ -21,7 +21,7 @@ export const getTotalCountriesTreeCoverGain= (years, thresh) => {
   return axios.get(url);
 };
 
-export const getTreeCoverGain= (iso, years, thresh, region) => {
+export const getTreeCoverGain = (iso, years, thresh, region) => {
   const url = `${APIURL}${APIURLS.treeCoverGain}`
     .replace('{dataset}', CONFIG.treeGain)
     .replace('{iso}', iso)
@@ -32,7 +32,7 @@ export const getTreeCoverGain= (iso, years, thresh, region) => {
   return axios.get(url);
 };
 
-export const getTreeCoverGainRegion= (iso, years, thresh) => {
+export const getTreeCoverGainRegion = (iso, years, thresh) => {
   const url = `${APIURL}${APIURLS.treeCoverGainRegion}`
     .replace('{dataset}', CONFIG.treeGain)
     .replace('{iso}', iso)

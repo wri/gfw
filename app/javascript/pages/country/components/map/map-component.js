@@ -8,9 +8,9 @@ class Map extends PureComponent {
 
   componentDidMount() {
     const {
+      setLayerSpec,
       mapOptions,
       zoom,
-      center,
       maptype,
       maxZoom,
       minZoom,
@@ -18,6 +18,8 @@ class Map extends PureComponent {
       regionBounds,
       region
     } = this.props;
+
+    setLayerSpec(this.props);
 
     const coordsMap = region === 0 ? bounds : JSON.parse(regionBounds);
     const boundsMap = new google.maps.LatLngBounds();
@@ -82,14 +84,18 @@ class Map extends PureComponent {
       layers
     } = this.props;
 
-    layers.map((layer, index) => {
+    layers.map((slug, index) => {
       this.map.overlayMapTypes.setAt(index, null);
     });
   }
 
   setLayers(layers) {
-    layers.map((layer, index) => {
-      this.map.overlayMapTypes.setAt(index, new Layers[layer](this.map, {}));
+    layers.map((slug, index) => {
+      const layer = new Layers[slug](this.map, {});
+      layer.getLayer()
+        .then((res) => {
+          this.map.overlayMapTypes.setAt(index, res);
+        });
     });
   }
 
@@ -101,12 +107,15 @@ class Map extends PureComponent {
 }
 
 Map.propTypes = {
+  setLayerSpec: Proptypes.func.isRequired,
   zoom: Proptypes.number.isRequired,
-  center: Proptypes.object.isRequired,
   maptype: Proptypes.string.isRequired,
   layers: Proptypes.array.isRequired,
   maxZoom: Proptypes.number.isRequired,
   minZoom: Proptypes.number.isRequired,
+  bounds: Proptypes.object.isRequired,
+  regionBounds: Proptypes.string.isRequired,
+  region: Proptypes.number.isRequired,
   mapOptions: Proptypes.object
 };
 

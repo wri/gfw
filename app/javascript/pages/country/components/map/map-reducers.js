@@ -1,10 +1,7 @@
 export const initialState = {
   zoom: 4,
-  center: {
-    latitude: 0,
-    longitude: 20
-  },
   maptype: 'grayscale',
+  layerSpec: [],
   layers: ['forest2000'],
 };
 
@@ -23,8 +20,14 @@ const addLayer = (state, { payload }) => ({
   layers: [...state.layers, payload]
 });
 
+const setLayerSpec = (state, { payload }) => ({
+  ...state,
+  layerSpec: payload
+});
+
 export default {
   setMapZoom,
   setLayer,
-  addLayer
+  addLayer,
+  setLayerSpec
 };
