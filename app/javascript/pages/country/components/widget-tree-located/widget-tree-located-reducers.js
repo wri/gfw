@@ -72,12 +72,6 @@ const setTreeLocatedValues = (state, { payload }) => ({
   topRegions: payload
 });
 
-const setTreeLocatedArrayLocated = (state, { payload }) => ({
-  ...state,
-  startArray: payload.startArray,
-  endArray: payload.endArray
-});
-
 const setTreeLocatedPage = (state, { payload }) => ({
   ...state,
   paginate: {
@@ -117,7 +111,6 @@ const setTreeLocatedIsLoading = (state, { payload }) => ({
 
 export default {
   setTreeLocatedValues,
-  setTreeLocatedArrayLocated,
   setTreeLocatedPage,
   setTreeLocatedSettingsDataSource,
   setTreeLocatedSettingsUnit,

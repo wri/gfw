@@ -10,18 +10,25 @@ export { default as actions } from './widget-plantation-area-actions';
 
 const mapStateToProps = state => ({
   isLoading: state.widgetPlantationArea.isLoading,
-  iso: state.root.iso,
-  countryRegion: state.root.countryRegion,
   countryData: state.root.countryData,
   plantationAreaData: state.widgetPlantationArea.plantationAreaData,
-  startYear: 2011,
-  endYear: 2015,
+  paginate: state.widgetPlantationArea.paginate,
   units: state.widgetPlantationArea.units,
   settings: state.widgetPlantationArea.settings,
 });
 
 const WidgetPlantationAreaContainer = (props) => {
+
   const setInitialData = (props) => {
+    setWidgetData(props);
+  };
+
+  const updateData = (props) => {
+    props.setTreeLocatedIsLoading(true);
+    setWidgetData(props);
+  };
+
+  const setWidgetData = (props) => {
     props.setPlantationAreaData([
       {name: 'Minas Gerais', one_0: 230, two_0: 335, three_0: 453},
       {name: 'Bahia', one_1: 300, two_1: 135, three_1: 953},
@@ -30,9 +37,21 @@ const WidgetPlantationAreaContainer = (props) => {
       {name: 'Distrito Federal', one_4: 234, two_4: 335, three_4: 453},
     ]);
   };
+
+  const nextPage = () => {
+    props.setPlantationAreaPage(props.paginate.page + 1);
+  };
+
+  const previousPage = () => {
+    props.setPlantationAreaPage(props.paginate.page - 1);
+  };
+
   return createElement(WidgetPlantationAreaComponent, {
     ...props,
-    setInitialData
+    setInitialData,
+    updateData,
+    nextPage,
+    previousPage
   });
 };
 
