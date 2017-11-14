@@ -18,7 +18,7 @@ const ButtonRegular = props => {
 ButtonRegular.propTypes = {
   text: PropTypes.string,
   color: PropTypes.string,
-  clickFunction: PropTypes.string
+  clickFunction: PropTypes.func
 };
 
 export default ButtonRegular;
