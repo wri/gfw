@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer }from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 import Loader from '../../../../common/components/loader/loader';
 import WidgetPlantationAreaSettings from './widget-plantation-area-settings-component';
 import WidgetHeader from '../widget-header/widget-header';
+import WidgetPaginate from '../widget-paginate/widget-paginate';
 
 class WidgetPlantationArea extends PureComponent {
   componentDidMount() {
@@ -18,49 +19,60 @@ class WidgetPlantationArea extends PureComponent {
       countryData,
       plantationAreaData,
       settings,
-      units
+      units,
+      paginate,
+      nextPage,
+      previousPage,
+      setPlantationAreaSettingsUnit
     } = this.props;
-    if (isLoading) {
-      return <Loader parentClass="c-widget" />;
-    } else {
-      return (
-        <div className="c-widget c-widget-plantation-area">
-          <WidgetHeader noMap title={`PLANTAtION AREA WITHIN ${countryData.name}`} >
-            <WidgetPlantationAreaSettings
-              type="settings"
-              units={units}
-              settings={settings} />
-          </WidgetHeader>
-          <div className="c-widget-plantation-area__container">
-            <div className="c-widget-plantation-area__chart">
-              {plantationAreaData.map((item, index) => {
-                return(<div key={index}>
+
+    const paginateFrom = (paginate.page * paginate.limit) - paginate.limit;
+    const paginateTo = paginateFrom + paginate.limit;
+
+    return (
+      <div className="c-widget c-widget-plantation-area">
+        <WidgetHeader noMap title={`PLANTATION AREA WITHIN ${countryData.name}`} >
+          <WidgetPlantationAreaSettings
+            type="settings"
+            units={units}
+            settings={settings}
+            onUnitChange={setPlantationAreaSettingsUnit} />
+        </WidgetHeader>
+        { isLoading
+          ? <Loader isAbsolute={true}/>
+          : <div className="c-widget-plantation-area__container">
+            <ul className="c-widget-plantation-area__chart">
+              {plantationAreaData.slice(paginateFrom, paginateTo).map((item, index) => {
+                return (<li key={index}>
                   <div className="c-widget-plantation-area__legend">
                     <div className="circle">{index + 1}</div>
                     <div className="title">{item.name}</div>
                   </div>
-                  <div className="container-percentage">
+                  <div className="chart-container">
                     <ResponsiveContainer height={10} width={'100%'}>
-                      <BarChart layout="vertical" data={plantationAreaData} stackOffset="expand" barSize={30}>
-                       <XAxis hide type="number"/>
-                       <YAxis type="category" dataKey="name" stroke="#FFFFFF" fontSize="0" />
-                       <Bar dataKey={`one_${index}`} fill="#fba79f" stackId="a" />
-                       <Bar dataKey={`two_${index}`} fill="#d29eea" stackId="a" />
-                       <Bar dataKey={`three_${index}`} fill="#99cf95" stackId="a" />
+                      <BarChart layout="vertical" data={plantationAreaData} stackOffset="expand" barSize={10}>
+                        <XAxis hide type="number"/>
+                        <YAxis hide type="category" />
+                        <Bar dataKey={`one_${index}`} fill="#fba79f" stackId="a" />
+                        <Bar dataKey={`two_${index}`} fill="#d29eea" stackId="a" />
+                        <Bar dataKey={`three_${index}`} fill="#99cf95" stackId="a" />
                       </BarChart>
                     </ResponsiveContainer>
-                    <div className="text-percentage">Nan%</div>
+                    <div className="text-percentage">2%</div>
                   </div>
-                </div>)
+
+                </li>)
               })}
-            </div>
-            <div className="c-widget-plantation-area__scroll-more">
-              <div className="circle-icon"><svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg></div>
-            </div>
+            </ul>
+            <WidgetPaginate
+              paginate={paginate}
+              count={plantationAreaData.length}
+              onClickNextPage={nextPage}
+              onClickPreviousPage={previousPage} />
           </div>
-        </div>
-      )
-    }
+        }
+      </div>
+    )
   }
 }
 

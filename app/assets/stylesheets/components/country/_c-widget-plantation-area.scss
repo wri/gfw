@@ -8,88 +8,63 @@
     .c-widget-plantation-area__chart {
       width: 100%;
       height: 100%;
+      font-size: 0;
+      margin-top: rem(4px);
+
+      li {
+        margin-bottom: rem(24px);
+
+        &:nth-child(1) .c-widget-plantation-area__legend .circle {
+          background-color: #4a4a4a;
+        }
+        &:nth-child(2) .c-widget-plantation-area__legend .circle {
+          background-color: rgba(74, 74, 74, 0.8);
+        }
+        &:nth-child(3) .c-widget-plantation-area__legend .circle {
+          background-color: rgba(74, 74, 74, 0.6);
+        }
+        &:nth-child(4) .c-widget-plantation-area__legend .circle {
+          background-color: rgba(74, 74, 74, 0.4);
+        }
+      }
 
       .c-widget-plantation-area__legend {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
 
         .circle {
-          background-color: $slate;
-          width: rem(16px);
-          height: rem(16px);
-          border-radius: rem(16px);
-          margin-right: rem(12px);
-          font-size: 10px;
-          color: $white;
-          display: flex;
+          display: inline-flex;
           justify-content: center;
           align-items: center;
-          align-content: center;
+          width: rem(16px);
+          height: rem(16px);
+          margin-right: rem(12px);
+          border-radius: 100%;
+          font-size: 12px;
+          color: $white;
+          background-color: rgba(74, 74, 74, 0.2);
         }
 
         .title {
+          display: inline-block;
+          position: relative;
+          top: rem(-1px);
           font-size: 12px;
-          line-height: 2.37;
           color: $slate;
         }
       }
-      .recharts-responsive-container {
-        margin-left: -35px !important;
-        margin-top: -10px;
-        margin-bottom: 30px;
-      }
 
-      .container-percentage {
-        display: flex;
-        flex-direction: row;
-        align-content: center;
-        justify-content: space-between;
+      .chart-container {
+        position: relative;
+        padding: 0 rem(24px);
+        margin-top: rem(4px);
 
         .text-percentage {
+          position: absolute;
+          top: rem(-5px);
+          right: 0;
           font-size: 12px;
           color: $slate;
           line-height: 1.67;
-          position: relative;
-          top: -8px;
         }
-      }
-    }
-  }
-
-  .c-widget-plantation-area__scroll-more {
-    display: flex;
-    justify-content: center;
-    margin-top: rem(10px);
-    border-top: 1px rgba($slate, .1) solid;
-    padding-bottom: rem(10px);
-
-    .circle-icon {
-      cursor: pointer;
-      width: rem(20px);
-      height: rem(20px);
-      margin-top: rem(10px);
-      border-radius: rem(18px);
-      border: rem(1px) rgba($slate, .1) solid;
-      position: relative;
-
-      &.-up {
-        margin-right: rem(10px);
-        transform: rotate(180deg);
-      }
-
-      &.-no-right {
-        margin-right: 0;
-      }
-
-      .icon {
-        fill: rgba($slate, .5);
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: rem(11px);
-        height: rem(11px);
       }
     }
   }
