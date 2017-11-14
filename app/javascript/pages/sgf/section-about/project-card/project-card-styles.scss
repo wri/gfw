@@ -31,3 +31,19 @@
     color: $font-color-2;
   }
 }
+
+.tippy-tooltip {
+  max-width: 220px;
+  background-color: $yellow;
+  color: $font-color-2;
+  box-shadow: 0 2px 4px 0 rgba($black, 0.5);
+}
+
+.tippy-popper[x-placement^=top] [x-arrow] {
+  border-top-color: $yellow;
+  border-left-color: $yellow;
+  border-right: none;
+  transform-origin: 0 0;
+  transform: rotate(-45deg);
+  box-shadow: -2px 2px 2px 0 rgba($black, 0.5);
+}
