@@ -1,4 +1,4 @@
-import { connectRoutes, NOT_FOUND } from 'redux-first-router';
+import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
 import Projects from 'pages/sgf/section-projects/section-projects';
 import About from 'pages/sgf/section-about/section-about';
@@ -8,9 +8,9 @@ import { fetchProjects } from 'pages/sgf/section-projects/section-projects-actio
 
 const history = createHistory();
 
-const PROJECTS = 'location/PROJECTS';
-const ABOUT = 'location/ABOUT';
-const APPLY = 'location/APPLY';
+export const PROJECTS = 'location/PROJECTS';
+export const ABOUT = 'location/ABOUT';
+export const APPLY = 'location/APPLY';
 
 export const routes = {
   [PROJECTS]: {
@@ -32,8 +32,10 @@ export const routes = {
     label: 'Apply',
     submenu: true
   },
-  [NOT_FOUND]: '/'
+  [NOT_FOUND]: {
+    path: '/404',
+    thunk: dispatch => dispatch(redirect({ type: PROJECTS }))
+  }
 };
 
-export { PROJECTS, ABOUT, APPLY };
 export default connectRoutes(history, routes);
