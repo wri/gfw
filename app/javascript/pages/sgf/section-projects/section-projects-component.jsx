@@ -6,7 +6,11 @@ import React, { PureComponent } from 'react';
 class SectionProjects extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    return <div>I am your SectionProjects component</div>;
+    return (
+      <div className="row">
+        <div className="column small-12">I am your projects component</div>
+      </div>
+    );
   }
 }
 
