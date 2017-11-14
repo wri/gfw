@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import { routes } from 'pages/sgf/router';
 import PageComponent from './page-component';
 
-const links = Object.values(routes).filter(r => r.submenu);
+const links = Object.values(routes)
+  .filter(r => r.submenu)
+  .map(r => ({ label: r.label, path: r.path }));
 
 const mapStateToProps = ({ location }) => ({ section: location.type });
 

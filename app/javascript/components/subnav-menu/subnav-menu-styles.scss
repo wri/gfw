@@ -23,6 +23,10 @@
         padding: 18px 0;
         width: 100%;
         text-align: center;
+
+        &.active {
+          background-color: $white;
+        }
       }
 
       &:first-child {

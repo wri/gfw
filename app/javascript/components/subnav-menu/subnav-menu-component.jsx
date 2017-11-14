@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link as AnchorLink } from 'react-scroll';
-import RouterLink from 'redux-first-router-link';
+import { NavLink } from 'redux-first-router-link';
 
 import './subnav-menu-styles.scss';
 
@@ -26,12 +26,14 @@ class SubNavMenu extends PureComponent {
                     {link.label}
                   </AnchorLink>
                 ) : (
-                  <RouterLink
+                  <NavLink
+                    exact
                     to={link.path}
                     className="text -paragraph-5 -color-8"
+                    activeClassName="active"
                   >
                     {link.label}
-                  </RouterLink>
+                  </NavLink>
                 );
                 return <li key={link.label}>{LinkComponent}</li>;
               })}
