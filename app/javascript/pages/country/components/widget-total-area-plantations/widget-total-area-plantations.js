@@ -14,15 +14,23 @@ const mapStateToProps = state => ({
   countryRegion: state.root.countryRegion,
   countryData: state.root.countryData,
   plantationData: state.widgetTotalAreaPlantations.plantationData,
-  startYear: 2011,
-  endYear: 2015,
   units: state.widgetTotalAreaPlantations.units,
-  settings: state.widgetTotalAreaPlantations.settings,
+  settings: state.widgetTotalAreaPlantations.settings
 });
 
 const WidgetTotalAreaPlantationsContainer = (props) => {
+
   const setInitialData = (props) => {
-    props.setPieCharDataPlantations([
+    setWidgetData(props);
+  };
+
+  const updateData = (props) => {
+    props.setTotalAreaPlantationsIsLoading(true);
+    setWidgetData(props);
+  };
+
+  const setWidgetData = (props) => {
+    props.setTotalAreaPlantationsValues([
       { name: 'Outside Plantations', value: 1200, color: '#e9e9ea' },
       { name: 'Large industrial plantation', value: 1100, color: '#fba79f' },
       { name: 'Mosaic of medium-sized plantations', value: 900, color: '#d29eea' },
@@ -30,9 +38,11 @@ const WidgetTotalAreaPlantationsContainer = (props) => {
       { name: 'Clearing/ very young plantation', value: 464, color: '#d3b294' },
     ]);
   };
+
   return createElement(WidgetTotalAreaPlantationsComponent, {
     ...props,
-    setInitialData
+    setInitialData,
+    updateData
   });
 };
 
