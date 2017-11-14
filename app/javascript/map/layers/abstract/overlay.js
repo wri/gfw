@@ -1,8 +1,4 @@
 const OPTIONS = {
-  infowindow: false,
-  infowindowContent: null,
-  infowindowAPI: null,
-  analysis: false
 };
 
 class Overlay {
@@ -11,6 +7,12 @@ class Overlay {
     this.map = map;
     this.tileSize = new google.maps.Size(256, 256);
     this.options = Object.assign({}, OPTIONS, options);
+  }
+
+  getLayer() {
+    return new Promise((resolve, reject) => {
+      resolve(this);
+    });
   }
 
   getTile(coord, zoom, ownerDocument) {

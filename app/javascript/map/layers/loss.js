@@ -22,7 +22,7 @@ class Loss extends Canvas {
   filterCanvasImgdata(imgdata, w, h, z) {
     const components = 4;
     const exp = z < 11 ? 0.3 + ((z - 3) / 20) : 1;
-    if (! !!this.currentDate[0]._d) {
+    if (!this.currentDate[0]._d) {
       this.currentDate[0] = moment(this.currentDate[0]);
       this.currentDate[1] = moment(this.currentDate[1]);
     }

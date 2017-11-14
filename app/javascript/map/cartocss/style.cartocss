@@ -1,0 +1,730 @@
+#table_layer {
+  polygon-fill: #FF6600;
+  polygon-opacity: 0.7;
+  line-width: 0.2;
+  line-opacity: 0.6;
+
+  [zoom>3] {
+    line-width: 0.3;
+    line-opacity: 0.7;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [zoom>5] {
+    line-width: 0.4;
+    line-clip: false;
+  }
+
+  [zoom>6] {
+    line-width: 0.6;
+    line-opacity: 0.8;
+    line-clip: false;
+  }
+
+  [zoom>7] {
+    line-width: 0.8;
+    line-clip: false;
+  }
+
+  [zoom>8] {
+    line-width: 1;
+    line-opacity: 1;
+    line-clip: false;
+  }
+
+  //deprecated
+  [layer='logging_gcs_wgs84'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='gran_chaco_extent'] {
+    polygon-fill: #f69;
+    polygon-opacity: 0.3;
+    line-width: 1;
+    line-color: #FFF;
+    line-opacity: 0;
+  }
+
+  [layer='prodes_extent'] {
+    polygon-fill: #f69;
+    polygon-opacity: 0.3;
+    line-width: 1;
+    line-color: #FFF;
+    line-opacity: 0;
+  }
+
+  [layer='gfw_landsat_alerts_extent'],
+  [layer='glad_coverage'], [layer='glad_coverage_copy'],
+  [layer='geographic_coverage_pantropical'],[layer='forma_coverage'] {
+    polygon-fill: #f69;
+    polygon-opacity: 0.3;
+    line-width: 1;
+    line-color: #FFF;
+    line-opacity: 0;
+  }
+
+  //deprecated
+  [layer='logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='gfw_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='caf_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='cmr_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='cod_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='gab_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='gnq_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='idn_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='lbr_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='cog_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='mys_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='mys_logging_sabah'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='gfw2_drc_conc'] {
+    polygon-fill: #EC7014;
+    line-color: #EC7014;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  //deprecated
+  [layer='mining_permits_merge'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='oil_palm_permits_merge'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  //deprecated
+  [layer='mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='gfw_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='mex_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='can_mining'],
+  [layer='can_mining_1']  {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='can_oil'] {
+     polygon-fill: #d980ff;
+     line-color: #c233ff;
+     line-clip: false;
+     polygon-clip: false;
+  }
+
+  [layer='cmr_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='cod_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='cog_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='gab_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='col_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='khm_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    marker-fill: #fd8d3c;
+    marker-line-color: #fff;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  //deprecated
+  [layer='oilpalm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='gfw_oil_palm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='cog_oil_palm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='cmr_oil_palm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='idn_oil_palm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='lbr_oil_palm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='mys_oil_palm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='caf_lc_1'] {
+    polygon-fill: #fe9929;
+    line-color: #fe9929;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='idn_tc_1'] {
+    polygon-fill: #BDBDBD;
+    line-color: #BDBDBD;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='world_ifl'] {
+    polygon-fill: #BBD973;
+    line-color: #BBD973;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='fiber_all_merged'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  //deprecated
+  [layer='woodfiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='gfw_wood_fiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='cog_wood_fiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='idn_wood_fiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='gab_wood_fiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='mys_wood_fiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='mys_wood_fiber_sabah'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='forma_extent'] {
+    polygon-fill: #f69;
+    polygon-opacity: 0.3;
+    line-width: 1;
+    line-color: #FFF;
+    line-opacity: 0;
+  }
+
+  [layer='biodiversity_hotspots'] {
+    polygon-fill: #49A39A;
+    line-color: #49A39A;
+    polygon-clip: false;
+    polygon-opacity: 0.5;
+    line-clip: false;
+    polygon-clip: false;
+    line-width: 0.6;
+    line-opacity: 0.8;
+  }
+
+
+  [layer='imazon_sad_geografic_extent'] {
+    polygon-fill: #f69;
+    polygon-opacity: 0.3;
+    line-width: 0;
+    line-color: #FFF;
+    line-opacity: 1;
+  }
+
+  //deprecated
+  [layer='resource_rights'] {
+    polygon-fill: #707d92;
+    polygon-opacity: 0.9;
+    line-width: 0;
+    line-color: #FFF;
+    line-opacity: 1;
+  }
+
+  [layer='gfw_resource_rights'] {
+    polygon-fill: #707d92;
+    polygon-opacity: 0.9;
+    line-width: 0;
+    line-color: #FFF;
+    line-opacity: 1;
+  }
+  [layer='cmr_resource_rights'] {
+    polygon-fill: #707d92;
+    polygon-opacity: 0.9;
+    line-width: 0;
+    line-color: #FFF;
+    line-opacity: 1;
+  }
+  [layer='lbr_resource_rights'] {
+    polygon-fill: #707d92;
+    polygon-opacity: 0.9;
+    line-width: 0;
+    line-color: #FFF;
+    line-opacity: 1;
+  }
+  [layer='gnq_resource_rights'] {
+    polygon-fill: #707d92;
+    polygon-opacity: 0.9;
+    line-width: 0;
+    line-color: #FFF;
+    line-opacity: 1;
+  }
+  [layer='nam_resource_rights'] {
+    polygon-fill: #707d92;
+    polygon-opacity: 0.9;
+    line-width: 0;
+    line-color: #FFF;
+    line-opacity: 1;
+  }
+
+
+
+  [layer='aus_land_rights'] {
+    polygon-fill: #4d658f;
+    polygon-opacity: 0.7;
+    line-color: #4d658f;
+    line-width: 1;
+    line-opacity: 1;
+  }
+  [layer='pan_land_rights'] {
+    polygon-fill: #4d658f;
+    polygon-opacity: 0.7;
+    line-color: #4d658f;
+    line-width: 1;
+    line-opacity: 1;
+  }
+  [layer='bra_land_rights'] {
+    polygon-fill: #4d658f;
+    polygon-opacity: 0.7;
+    line-color: #4d658f;
+    line-width: 1;
+    line-opacity: 1;
+  }
+  [layer='bra_soy_vector']{
+  polygon-fill: #ca9024;
+  polygon-opacity: 0.9;
+  line-color: #FFF;
+  line-width: 0.0;
+  line-opacity: 0.0;
+}
+  [layer='can_land_rights'] {
+    polygon-fill: #4d658f;
+    polygon-opacity: 0.7;
+    line-color: #4d658f;
+    line-width: 1;
+    line-opacity: 1;
+  }
+  [layer='cri_land_rights'] {
+    polygon-fill: #4d658f;
+    polygon-opacity: 0.7;
+    line-color: #4d658f;
+    line-width: 1;
+    line-opacity: 1;
+  }
+  [layer='nzl_land_rights'] {
+    polygon-fill: #4d658f;
+    polygon-opacity: 0.7;
+    line-color: #4d658f;
+    line-width: 1;
+    line-opacity: 1;
+  }
+
+  [layer='gfw_land_rights_sync'] {
+    polygon-fill: #4d658f;
+    polygon-opacity: 0.7;
+    line-color: #4d658f;
+    line-width: 1;
+    line-opacity: 1;
+  }
+
+  [layer='ifl_2000'] {
+    polygon-opacity: 0.7;
+    polygon-fill: #136400;
+    line-width: 0;
+    line-opacity: 1;
+  }
+  //deprecated
+  [layer='wcmc_010_mangroveusgs2011'] {
+      polygon-fill: #05ffaa;
+      polygon-opacity: 0.7;
+      line-color: #05ffaa;
+      line-width: 1;
+      line-opacity: 1;
+  }
+
+  [layer='global_mangroves'] {
+      polygon-fill: #05ffaa;
+      polygon-opacity: 0.7;
+      line-color: #05ffaa;
+      line-width: 1;
+      line-opacity: 1;
+  }
+
+  [layer='wdpa_protected_areas'] {
+    polygon-fill: #2167AB;
+    polygon-opacity: 0.5;
+    line-color: #2167AB;
+    line-width: 1;
+    line-opacity: 1;
+  }
+
+  [layer='protected_areas'] {
+    polygon-fill: #2167AB;
+    polygon-opacity: 0.5;
+    line-color: #2167AB;
+    line-width: 1;
+    line-opacity: 1;
+  }
+
+  [layer='endemic_bird_areas'] {
+    polygon-fill: #055D00;
+    polygon-opacity: 1;
+    polygon-comp-op: lighten;
+    line-color: #FF9900;
+    line-width: 1.5;
+    line-opacity: 0.3;
+  }
+
+  [layer='alliance_for_zero_extinction_sites_species_joi'] {
+    polygon-fill: #b2d26e;
+    polygon-opacity: 0.9;
+    line-color: #b2d26e;
+    line-width: 1.5;
+    line-opacity: 1;
+  }
+
+  [layer='verifed_carbon_standard'] {
+    polygon-fill: #247490;
+    polygon-opacity: 0.7;
+    line-color: #247490;
+    line-width: 1;
+    line-opacity: 1;
+  }
+
+  [layer='usa_conservation_easements']{
+    polygon-fill: #1a4075;
+    polygon-opacity: 0.7;
+    line-color: #1a4075;
+    line-width: 0.1;
+    line-opacity: 1;
+  }
+
+  [layer='idn_leuser'],
+  [layer='leuser_ecosystem_province_boundary']{
+    polygon-fill: #5CA2AA;
+    polygon-opacity: 0.7;
+    line-color: #5CA0AA;
+    line-width: 0.5;
+    line-opacity: 1;
+  }
+
+  [layer='per_permanent_production_forests'] {
+    polygon-opacity: 0.7;
+    line-color: #FFF;
+    line-width: 0.5;
+    line-opacity: 1;
+    polygon-fill: #91b290;
+  }
+
+  [layer='per_regional_protected_areas'] {
+    polygon-fill: #2167AB;
+    polygon-opacity: 0.7;
+    line-color: #FFF;
+    line-width: 0.5;
+    line-opacity: 1;
+  }
+
+  [layer='per_private_protected_areas'] {
+    polygon-fill: #94cecb;
+    polygon-opacity: 0.7;
+    line-color: #FFF;
+    line-width: 0;
+    line-opacity: 1;
+  }
+
+  [layer='per_national_protected_areas'] {
+    polygon-fill: #4d94c4;
+    polygon-opacity: 0.7;
+    line-color: #FFF;
+    line-width: 0.5;
+    line-opacity: 1;
+  }
+
+  [layer='per_buffer_zones'] {
+    polygon-fill: #00ceff;
+    polygon-opacity: 0.7;
+    line-color: #5CA2D1;
+    line-width: 0.1;
+    line-opacity: 1;
+  }
+
+  [layer='idn_forest_moratorium'] {
+    polygon-fill: #aa7c5d;
+    polygon-opacity: 0.7;
+    line-color: #FFF;
+    line-width: 0;
+    line-opacity: 1;
+  }
+
+  [layer='khm_protected_areas'] {
+    polygon-fill: #3182BD;
+    polygon-opacity: 0.6;
+    line-color: #FFF;
+    line-width: 0.25;
+    line-opacity: 1;
+  }
+
+  [layer='gfw_land_rights'] {
+    polygon-fill: #4d658f;
+    polygon-opacity: 0.7;
+    line-color: #4d658f;
+    line-width: 1;
+    line-opacity: 1;
+  }
+
+  [layer='logging_roads_extent'] {
+    polygon-fill: #B2D26E;
+    polygon-opacity: 0.3;
+    line-width: 1;
+    line-color: #FFF;
+    line-opacity: 0;
+  }
+
+  [layer='mys_protected_areas_sabah'],[layer='uga_protected_areas'] {
+    polygon-fill: #1F78B4;
+    polygon-opacity: 0.7;
+    line-color: #FFF;
+    line-width: 0.5;
+    line-opacity: 1;
+  }
+
+  [layer='mex_psa'] {
+    polygon-fill: #3182BD;
+    polygon-opacity: 0.7;
+    line-color: #3182BD;
+    line-width: 0.5;
+    line-opacity: 1;
+  }
+
+  [layer='bra_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='lbr_mineral_development_agreements'] {
+    polygon-fill: #fdbf6f;
+    line-color: #fdbf6f;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='lbr_development_exploration_license'] {
+    polygon-fill: #b15928;
+    line-color: #b15928;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='pak_user_mangroves'] {
+    polygon-fill: #fecc5c;
+    polygon-opacity: 0.7;
+    line-color: #FFF;
+    line-width: 0.5;
+    line-opacity: 1;
+  }
+
+  [layer='sen_user_protected_areas'],[layer='hti_user_watersheds'] {
+    polygon-fill: #fecc5c;
+    line-color: #b15928;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='ecu_user_protected_areas'] {
+    polygon-fill: #fecc5c;
+    line-color: #b15928;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  #tal_corridor {
+    polygon-fill: #229A00;
+    polygon-opacity: 0.7;
+  }
+}
