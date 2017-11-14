@@ -4,27 +4,20 @@ import Select from 'react-select-me';
 
 class WidgetTotalAreaPlantationsSettings extends PureComponent {
 
-  // regionChange = (value) => {
-  //   this.props.onRegionChange(value.value);
-  // };
-  //
-  // unitChange = (value) => {
-  //   this.props.onUnitChange(value.value);
-  // };
-  //
-  // canopyChange = (value) => {
-  //   this.props.onCanopyChange(value.value);
-  // };
+  unitChange = (value) => {
+    this.props.onUnitChange(value.value);
+  };
 
   iconRenderer = () => {
     return(<svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg>);
-  }
+  };
 
   render() {
     const {
       units,
       settings,
     } = this.props;
+
     return (
       <div className="c-widget-settings">
         <div className="c-widget-settings__select">
@@ -32,7 +25,8 @@ class WidgetTotalAreaPlantationsSettings extends PureComponent {
           <Select
             iconRenderer={this.iconRenderer}
             value={settings.unit}
-            options={units}/>
+            options={units}
+            onChange={this.unitChange}/>
         </div>
       </div>
     );

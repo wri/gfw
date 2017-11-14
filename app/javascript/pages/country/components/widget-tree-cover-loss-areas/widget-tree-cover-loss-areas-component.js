@@ -32,8 +32,6 @@ class WidgetTreeLossAreas extends PureComponent {
       isLoading,
       countryData,
       regionData,
-      startYear,
-      endYear,
       paginate,
       nextPage,
       previousPage,

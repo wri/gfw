@@ -13,57 +13,67 @@ class WidgetTotalAreaPlantations extends PureComponent {
     setInitialData(this.props);
   }
 
+  componentWillUpdate(nextProps) {
+    const {
+      updateData,
+      settings,
+    } = this.props;
+
+    if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
+      updateData(nextProps);
+    }
+  }
+
   render() {
     const {
       isLoading,
       countryData,
       plantationData,
-      startYear,
-      endYear,
       settings,
-      units
+      units,
+      setTotalAreaPlantationsSettingsUnit
     } = this.props;
 
-    if (isLoading) {
-      return <Loader parentClass="c-widget" />;
-    } else {
-      return (
-        <div className="c-widget c-widget-total-area-plantations">
-          <WidgetHeader title={`TOTAL AREA OF PLANTATIONS WITHIN ${countryData.name}`} >
+    return (
+      <div className="c-widget c-widget-total-area-plantations">
+        <WidgetHeader title={`TOTAL AREA OF PLANTATIONS WITHIN ${countryData.name}`} >
           <WidgetTotalAreaPlantationsSettings
             type="settings"
             units={units}
-            settings={settings} />
+            settings={settings}
+            onUnitChange={setTotalAreaPlantationsSettingsUnit}/>
         </WidgetHeader>
-          <p className="title-legend -dark">By Type</p>
-          <p className="title-legend">({startYear} - {endYear})</p>
-          <div className="c-widget-total-area-plantations__container">
-            <ul className="c-widget-total-area-plantations__legend">
-              {plantationData.map((item, index) => {
-                return (
-                  <li key={index}>
-                    <div className="c-widget-total-area-plantations__legend-title">
-                      <div style={{backgroundColor: item.color}}>{index + 1}</div>
-                      {item.name}
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-            <div className="c-widget-total-area-plantations__chart">
-              <PieChart width={150} height={150}>
-                <Pie dataKey="value" data={plantationData} cx={70} cy={70} innerRadius={35} outerRadius={70}>
-                  {
-                    plantationData.map((item, index) => <Cell key={index} fill={item.color}/>)
-                  }
-                </Pie>
-                <Tooltip content={<TooltipChart/>} />
-              </PieChart>
+        { isLoading
+          ? <Loader isAbsolute={true}/>
+          : <div>
+            <p className="title-legend">By Type</p>
+            <p className="title-legend-years">({settings.startYear} - {settings.endYear})</p>
+            <div className="c-widget-total-area-plantations__container">
+              <ul className="c-widget-total-area-plantations__legend">
+                {plantationData.map((item, index) => {
+                  return (
+                    <li key={index}>
+                      <div className="c-widget-total-area-plantations__bubble" style={{backgroundColor: item.color}}></div>
+                      <div className="c-widget-total-area-plantations__name">{item.name}</div>
+                    </li>
+                  );
+                })}
+              </ul>
+              <div className="c-widget-total-area-plantations__chart">
+                <PieChart width={120} height={120}>
+                  <Pie dataKey="value" data={plantationData} cx={55} cy={55} innerRadius={28} outerRadius={60}>
+                    {
+                      plantationData.map((item, index) => <Cell key={index} fill={item.color}/>)
+                    }
+                  </Pie>
+                  <Tooltip content={<TooltipChart/>} />
+                </PieChart>
+              </div>
             </div>
           </div>
-        </div>
-      )
-    }
+        }
+      </div>
+    );
   }
 }
 
