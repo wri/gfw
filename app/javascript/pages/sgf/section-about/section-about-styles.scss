@@ -1,0 +1,18 @@
+@import '~styles/settings.scss';
+
+.l-section {
+  position: relative;
+  padding: 50px 0;
+
+  &.-large-p {
+    padding: 150px 0;
+  }
+}
+
+.copyright-section {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 11px;
+  color: $white;
+}

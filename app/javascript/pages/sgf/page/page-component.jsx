@@ -5,7 +5,7 @@ import Cover from 'components/cover/cover';
 import SubnavMenu from 'components/subnav-menu/subnav-menu';
 
 import bgImage from './header-bg';
-// import styles from './page-styles.scss';
+import './page-styles.scss';
 
 class Page extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
@@ -19,7 +19,9 @@ class Page extends PureComponent {
           bgImage={bgImage}
         />
         <SubnavMenu links={this.props.links} />
-        <SectionComponent />
+        <div className="l-main">
+          <SectionComponent />
+        </div>
       </div>
     );
   }

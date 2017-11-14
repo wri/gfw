@@ -1,4 +1,5 @@
 /* FONTS */
+@import '~styles/utils.scss';
 @import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i);
 $font-family-1: 'Fira Sans', sans-serif;
 
@@ -21,6 +22,8 @@ $slate-dark: #444;
 $slate-light: #333;
 $warm-grey: #999;
 
+$border: #e5e5df;
+
 /* FONT COLORS */
 $font-color-1: $white;
 $font-color-2: $slate;
@@ -28,5 +31,3 @@ $font-color-3: $slate-dark;
 $font-color-4: $green-gfw;
 $font-color-5: $warm-grey;
 $font-color-6: $slate-light;
-
-@import '~styles/utils.scss';
