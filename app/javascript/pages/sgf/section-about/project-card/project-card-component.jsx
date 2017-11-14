@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Tooltip } from 'react-tippy';
+import 'react-tippy/dist/tippy.css';
 
 import './project-card-styles.scss';
 
@@ -13,7 +15,25 @@ class ProjectCard extends PureComponent {
         {items &&
           !!items.length && (
             <ul className="card-description">
-              {items.map(i => <li key={i.label}>{i.label}</li>)}
+              {items.map(i => {
+                const tooltip = i.tooltip ? (
+                  <Tooltip
+                    title={i.tooltip}
+                    position="top"
+                    trigger="click"
+                    animation="scale"
+                    arrow
+                    size="small"
+                  >
+                    (i)
+                  </Tooltip>
+                ) : null;
+                return (
+                  <li key={i.label}>
+                    {i.label} {tooltip}
+                  </li>
+                );
+              })}
             </ul>
           )}
       </div>

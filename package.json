@@ -99,6 +99,7 @@
     "react-load-script": "0.0.6",
     "react-redux": "^5.0.6",
     "react-scroll": "^1.5.4",
+    "react-tippy": "1.2.2",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-first-router": "0.0.16-next",
