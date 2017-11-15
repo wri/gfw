@@ -2,7 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
+import Icon from 'components/icon/icon';
 
+import infoIcon from 'assets/icons/info.svg';
 import './project-card-styles.scss';
 
 class ProjectCard extends PureComponent {
@@ -25,7 +27,7 @@ class ProjectCard extends PureComponent {
                     arrow
                     size="small"
                   >
-                    (i)
+                    <Icon icon={infoIcon} />
                   </Tooltip>
                 ) : null;
                 return (

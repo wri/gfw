@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Cover from 'components/cover/cover';
-import SubnavMenu from 'components/subnav-menu/subnav-menu';
+import Cover from 'components/cover';
+import SubnavMenu from 'components/subnav-menu';
 
 import bgImage from './header-bg';
 import './page-styles.scss';

@@ -17,6 +17,7 @@
     letter-spacing: 0.1px;
     color: $font-color-2;
     text-transform: uppercase;
+    margin-bottom: 20px;
   }
 
   .card-title-subtitle {
@@ -29,6 +30,7 @@
     font-size: 14px;
     line-height: 1.9;
     color: $font-color-2;
+    list-style-type: disc;
   }
 }
 

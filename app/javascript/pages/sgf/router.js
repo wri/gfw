@@ -1,8 +1,8 @@
 import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
-import Projects from 'pages/sgf/section-projects/section-projects';
-import About from 'pages/sgf/section-about/section-about';
-import Apply from 'pages/sgf/section-apply/section-apply';
+import Projects from 'pages/sgf/section-projects';
+import About from 'pages/sgf/section-about';
+import Apply from 'pages/sgf/section-apply';
 
 import { fetchProjects } from 'pages/sgf/section-projects/section-projects-actions';
 

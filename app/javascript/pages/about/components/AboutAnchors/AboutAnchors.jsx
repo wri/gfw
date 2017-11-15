@@ -1,5 +1,5 @@
 import React from 'react';
-import SubMenuNav from 'components/subnav-menu/subnav-menu';
+import SubMenuNav from 'components/subnav-menu';
 
 const links = [
   { anchor: 'howTo', label: 'GFW in Action' },

@@ -19,6 +19,7 @@ const results = {
     { label: '# of people trained' }
   ]
 };
+
 const projectTypes = {
   title: 'PROJECT TYPES',
   items: [
