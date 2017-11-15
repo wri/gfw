@@ -1,22 +1,5 @@
 @import '~styles/settings.scss';
 
-.l-section {
-  position: relative;
-  padding: 50px 0;
-
-  &.-large-p {
-    padding: 150px 0;
-  }
-
-  .section-header {
-    padding-bottom: 10px;
-  }
-
-  .section-footer {
-    margin-top: 12px;
-  }
-}
-
 .copyright-section {
   position: absolute;
   bottom: 20px;

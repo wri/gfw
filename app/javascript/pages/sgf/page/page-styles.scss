@@ -1,4 +1,37 @@
+@import '~styles/settings.scss';
+
 .l-main {
   padding-top: 20px;
   padding-bottom: 20px;
+}
+
+.l-section {
+  position: relative;
+  padding: 50px 0;
+
+  &.-large-p {
+    padding: 150px 0;
+  }
+
+  .section-header {
+    padding-bottom: 10px;
+
+    > h2 {
+      padding-bottom: 35px;
+    }
+
+    > p {
+      padding-bottom: 40px;
+    }
+  }
+
+  .section-separator {
+    height: 1px;
+    border: 1px solid rgba($grey-dark, 0.6);
+    margin: 30px 0;
+  }
+
+  .section-footer {
+    margin-top: 12px;
+  }
 }
