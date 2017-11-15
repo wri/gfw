@@ -62,9 +62,9 @@ define([
     },
 
     _checkMaxDate: function(response) {
-      var maxDataDate = moment.utc(response.maxDate);
-      if (this.maxDate.isAfter(maxDataDate)) {
-        this.maxDate = maxDataDate;
+      this.maxDataDate = moment.utc(response.maxDate);
+      if (this.maxDate.isAfter(this.maxDataDate)) {
+        this.maxDate = this.maxDataDate;
         this.currentDate[1] = this.maxDate;
       }
     },
@@ -80,10 +80,10 @@ define([
       var startDay = this.timelineExtent[0].dayOfYear() + ((startYear - 2015) * 365),
           endDay = this.timelineExtent[1].dayOfYear() + ((endYear - 2015) * 365);
 
-      var recentRangeStart = this.maxDate.clone().subtract(7, 'days'),
-          recentRangeStartYear = recentRangeStart.year();
-      var recentRangeEnd = this.maxDate.clone(),
-          recentRangeEndYear = recentRangeEnd.year();
+      var recentRangeStart = this.maxDataDate.clone().subtract(7, 'days'),
+        recentRangeStartYear = recentRangeStart.year();
+      var recentRangeEnd = this.maxDataDate.clone(),
+        recentRangeEndYear = recentRangeEnd.year();
       var recentRangeStartDay = recentRangeStart.dayOfYear() + ((recentRangeStartYear - 2015) * 365),
           recentRangeEndDay = recentRangeEnd.dayOfYear() + ((recentRangeEndYear - 2015) * 365);
 

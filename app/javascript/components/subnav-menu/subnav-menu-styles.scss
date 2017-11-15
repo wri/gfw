@@ -1,0 +1,41 @@
+@import '~styles/settings.scss';
+
+.c-subnav-menu {
+  background-color: $grey-light;
+  border-bottom: 1px solid $grey-dark;
+  display: none;
+
+  .c-subnav-menu__buttons {
+    font-size: 0;
+
+    li {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 20%;
+      height: rem(56px);
+      max-width: rem(183px);
+      cursor: pointer;
+      border-right: 1px solid rgba($slate, 0.2);
+
+      > a {
+        padding: 18px 0;
+        width: 100%;
+        text-align: center;
+
+        &.active {
+          background-color: $white;
+        }
+      }
+
+      &:first-child {
+        border-left: 1px solid rgba($slate, 0.2);
+      }
+    }
+  }
+
+  @media screen and (min-width: $screen-m) {
+    display: block;
+  }
+}

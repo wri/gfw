@@ -1,39 +1,22 @@
 .c-about-modal-world {
-  display: none;
   position: absolute;
-  top: rem(50px);
   left: 0;
   right: 0;
   margin: auto;
-  flex-direction: row;
   width: 100%;
-  max-width: rem(1064px);
-  height: rem(540px);
-  padding: 0 rem(20px);
 
   &:before {
     content: '';
     position: absolute;
-    left: rem(19px);
+    left: rem(-1px);
     top: rem(-1px);
-    width: calc(100% - #{rem(38px)});
+    width: calc(100% + #{rem(2px)});
     height: calc(100% + #{rem(2px)});
     border: 1px solid $grey-dark;
   }
 
-  .c-about-modal-world__image,
   .c-about-modal-world__text {
-    flex-basis: 50%;
-  }
-
-  .c-about-modal-world__image {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-
-  .c-about-modal-world__text {
-    background-color: #f7f7f7;
+    background-color: $grey-light;
     padding: rem(60px) rem(40px) rem(35px);
     position: relative;
     display: flex;
@@ -50,33 +33,29 @@
     }
 
     p {
-       opacity: .7;
-       display: block;
-       margin-top: rem(10px);
-       line-height: 1.67;
-       letter-spacing: -0.4px;
-     }
+      opacity: .7;
+      display: block;
+      margin-top: rem(10px);
+      line-height: 1.67;
+      letter-spacing: -0.4px;
+    }
 
-     .contain-buttons {
-       display: flex;
-       justify-content: space-between;
-       flex-direction: row;
-       align-items: center;
+    .contain-buttons {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+      margin-top: rem(20px);
 
-       .button-round {
-         display: block;
-         width: rem(45px);
-         height: rem(45px);
-         border: 1px solid #97be32;
-         border-radius: 45px;
-         display: flex;
+      .button-round {
+        display: flex;
         justify-content: center;
         align-items: center;
-       }
-     }
-  }
-
-  @media screen and (min-width: $screen-l) {
-    display: flex;
+        width: rem(45px);
+        height: rem(45px);
+        border: 1px solid $green-gfw;
+        border-radius: 45px;
+      }
+    }
   }
 }

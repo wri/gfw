@@ -7,6 +7,7 @@ $about-users-height-screen-l: rem(640px);
 
   .c-about-users__globe-container {
     display: none;
+    position: relative;
     justify-content: center;
     align-items: center;
     height: 100%;
