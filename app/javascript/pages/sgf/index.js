@@ -7,7 +7,7 @@ import 'styles/styles.scss';
 import reducers from './reducers';
 import router from './router';
 
-import Page from './page/page';
+import Page from './page';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const middlewares = applyMiddleware(thunk, router.middleware);

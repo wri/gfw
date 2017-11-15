@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Cover from 'components/cover/cover';
+import Cover from 'components/cover';
 
 import bgImage from './header-bg';
 
@@ -23,7 +23,7 @@ class AboutCover extends Component {
 
   render() {
     const video = (
-      <div className="c-about-cover__video">
+      <div className="c-cover__video">
         <svg className="icon-close" onClick={this.hideVideo}>
           <use xlinkHref="#icon-close" />
         </svg>

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import './section-about-styles.scss';
-import Card from './project-card/project-card';
+import Card from './project-card';
 import sgfLogo from './img/GFW_SGF_logo.png';
 import sfgBg1 from './img/SGF_slider01.png';
 
@@ -50,6 +50,21 @@ class SectionAbout extends PureComponent {
           <p className="copyright-section">
             <strong>Photo credit:</strong> African Conservation Foundation
           </p>
+        </section>
+        <section className="l-section">
+          <div className="row">
+            <div className="column small-9">
+              <h2 className="text -color-2 -title-big -light">Support us</h2>
+              <p className="text -paragraph -color-2 -light -spaced">
+                We&apos;re fundraising to support the continuation of the SGF!
+                The fund provides grants between US$10,000 and US$40,000 and
+                technical support to civil society organizations for project
+                implementation. Additionally, grant recipients have the
+                opportunity to form part of a unique network of environmental
+                organizations, working around the globe towards objectives…
+              </p>
+            </div>
+          </div>
         </section>
       </div>
     );
