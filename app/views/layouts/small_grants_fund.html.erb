@@ -34,9 +34,9 @@
     <%= stylesheet_pack_tag 'sgf' %>
   </head>
   <body>
-    <%= requirejs_include_tag 'sgf' %>
-    <%= render 'shared/track' %>
+    <div id="headerGfw"></div>
     <%= yield %>
     <div id="footerGfw"></div>
+    <%= render 'shared/track' %>
   </body>
 </html>
