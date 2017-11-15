@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './button-arrow-styles.scss';
+
 const ButtonArrow = props => {
   const { orientation } = props;
   return (
