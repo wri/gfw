@@ -8,7 +8,7 @@ class Map extends PureComponent {
 
   componentDidMount() {
     const {
-      setLayerSpec,
+      setMapData,
       mapOptions,
       zoom,
       maptype,
@@ -19,7 +19,7 @@ class Map extends PureComponent {
       region
     } = this.props;
 
-    setLayerSpec(this.props);
+    setMapData(this.props);
 
     const coordsMap = region === 0 ? bounds : JSON.parse(regionBounds);
     const boundsMap = new google.maps.LatLngBounds();
@@ -90,8 +90,12 @@ class Map extends PureComponent {
   }
 
   setLayers(layers) {
+    const {
+      layerSpec
+    } = this.props;
+
     layers.map((slug, index) => {
-      const layer = new Layers[slug](this.map, {});
+      const layer = new Layers[slug](this.map, {layerSpec: layerSpec[slug]});
       layer.getLayer()
         .then((res) => {
           this.map.overlayMapTypes.setAt(index, res);
@@ -107,7 +111,7 @@ class Map extends PureComponent {
 }
 
 Map.propTypes = {
-  setLayerSpec: Proptypes.func.isRequired,
+  setMapData: Proptypes.func.isRequired,
   zoom: Proptypes.number.isRequired,
   maptype: Proptypes.string.isRequired,
   layers: Proptypes.array.isRequired,
@@ -116,6 +120,7 @@ Map.propTypes = {
   bounds: Proptypes.object.isRequired,
   regionBounds: Proptypes.string.isRequired,
   region: Proptypes.number.isRequired,
+  layerSpec: Proptypes.object.isRequired,
   mapOptions: Proptypes.object
 };
 

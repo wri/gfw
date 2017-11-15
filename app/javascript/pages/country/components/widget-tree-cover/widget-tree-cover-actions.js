@@ -5,7 +5,7 @@ const setTreeCoverValues = createAction('setTreeCoverValues');
 const setTreeCoverSettingsLocation = createAction('setTreeCoverSettingsLocation');
 const setTreeCoverSettingsUnit = createAction('setTreeCoverSettingsUnit');
 const setTreeCoverSettingsCanopy = createAction('setTreeCoverSettingsCanopy');
-const setLayer = createAction('setLayer');
+const setLayers = createAction('setLayers');
 
 export default {
   setTreeCoverIsLoading,
@@ -13,5 +13,5 @@ export default {
   setTreeCoverSettingsLocation,
   setTreeCoverSettingsUnit,
   setTreeCoverSettingsCanopy,
-  setLayer
+  setLayers
 };
