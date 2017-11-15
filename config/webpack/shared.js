@@ -51,10 +51,11 @@ module.exports = {
     plugins: [new DirectoryNamedWebpackPlugin(true)],
     alias: {
       utils: 'utils',
+      assets: 'assets',
       styles: 'styles',
+      pages: 'pages',
       sgf: 'pages/sgf',
       about: 'pages/about',
-      pages: 'pages',
       components: 'components'
     }
   },
