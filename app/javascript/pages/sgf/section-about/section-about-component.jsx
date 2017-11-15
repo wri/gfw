@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import Button from 'components/button-regular';
+
 import './section-about-styles.scss';
 import Card from './project-card';
 import sgfLogo from './img/GFW_SGF_logo.png';
@@ -42,7 +44,7 @@ class SectionAbout extends PureComponent {
         >
           <ul className="row">
             {this.props.cards.map(card => (
-              <li className="column small-4">
+              <li className="column small-4" key={card.title}>
                 <Card data={card} />
               </li>
             ))}
@@ -54,7 +56,9 @@ class SectionAbout extends PureComponent {
         <section className="l-section">
           <div className="row">
             <div className="column small-9">
-              <h2 className="text -color-2 -title-big -light">Support us</h2>
+              <div className="section-header">
+                <h2 className="text -color-2 -title-big -light">Support us</h2>
+              </div>
               <p className="text -paragraph -color-2 -light -spaced">
                 We&apos;re fundraising to support the continuation of the SGF!
                 The fund provides grants between US$10,000 and US$40,000 and
@@ -63,6 +67,9 @@ class SectionAbout extends PureComponent {
                 opportunity to form part of a unique network of environmental
                 organizations, working around the globe towards objectives…
               </p>
+              <div className="section-footer">
+                <Button color="green" text="LEARN MORE" className="btn-space" />
+              </div>
             </div>
           </div>
         </section>

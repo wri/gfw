@@ -26,8 +26,9 @@ class ProjectCard extends PureComponent {
                     animation="scale"
                     arrow
                     size="small"
+                    className="tooltip"
                   >
-                    <Icon icon={infoIcon} />
+                    <Icon icon={infoIcon} className="info-icon" />
                   </Tooltip>
                 ) : null;
                 return (

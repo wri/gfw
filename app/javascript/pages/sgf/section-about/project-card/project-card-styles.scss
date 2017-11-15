@@ -31,6 +31,16 @@
     line-height: 1.9;
     color: $font-color-2;
     list-style-type: disc;
+
+    > li {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .tooltip {
+    display: inline-flex !important;
+    margin-left: 4px;
   }
 }
 
