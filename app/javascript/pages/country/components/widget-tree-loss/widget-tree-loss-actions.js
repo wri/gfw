@@ -7,7 +7,7 @@ const setTreeLossSettingsCanopy = createAction('setTreeLossSettingsCanopy');
 const setTreeLossIsLoading = createAction('setTreeLossIsLoading');
 const setTreeLossSettingsStartYear = createAction('setTreeLossSettingsStartYear');
 const setTreeLossSettingsEndYear = createAction('setTreeLossSettingsEndYear');
-const setLayer = createAction('setLayer');
+const setLayers = createAction('setLayers');
 
 export default {
   setTreeLossValues,
@@ -17,5 +17,5 @@ export default {
   setTreeLossIsLoading,
   setTreeLossSettingsStartYear,
   setTreeLossSettingsEndYear,
-  setLayer
+  setLayers
 };

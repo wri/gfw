@@ -1,13 +1,13 @@
 import { createAction } from 'redux-actions';
 
 const setMapZoom = createAction('setMapZoom');
-const setLayer = createAction('setLayer');
+const setLayers = createAction('setLayers');
 const addLayer = createAction('addLayer');
 const setLayerSpec = createAction('setLayerSpec');
 
 export default {
   setMapZoom,
-  setLayer,
+  setLayers,
   addLayer,
   setLayerSpec
 };

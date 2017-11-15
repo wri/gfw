@@ -63,7 +63,7 @@ const WidgetTreeLossContainer = (props) => {
   };
 
   const viewOnMap = () => {
-    props.setLayer('loss');
+    props.setLayers(['loss']);
   };
 
   return createElement(WidgetTreeLossComponent, {

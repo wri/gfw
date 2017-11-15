@@ -23,16 +23,21 @@ const mapStateToProps = state => ({
 });
 
 const MapContainer = (props) => {
-  const setLayerSpec = (props) => {
+  const setMapData = (props) => {
     getLayerSpec()
       .then((response) => {
-        props.setLayerSpec(response);
+        let layerSpec = {};
+        response.data.rows.map((layer) => {
+          layerSpec[layer.slug] = layer;
+        });
+
+        props.setLayerSpec(layerSpec);
       });
   };
 
   return createElement(MapComponent, {
     ...props,
-    setLayerSpec
+    setMapData
   });
 };
 

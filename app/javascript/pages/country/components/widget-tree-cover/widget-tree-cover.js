@@ -85,7 +85,7 @@ const WidgetTreeCoverContainer = (props) => {
   };
 
   const viewOnMap = () => {
-    props.setLayer('forest2000');
+    props.setLayers(['forest2000', 'ifl_2013_deg']);
   };
 
   return createElement(WidgetTreeCoverComponent, {

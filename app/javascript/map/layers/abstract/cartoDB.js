@@ -1,5 +1,5 @@
 import Overlay from './overlay';
-import CartoCSS from '../../cartocss/style.cartocss';
+import CartoCSS from 'raw-loader!../../cartocss/style.cartocss';
 
 const OPTIONS = {
   user_name: 'wri-01',
@@ -47,8 +47,8 @@ class CartoDB extends Overlay {
   }
 
   _getQuery() {
-    const query = (this.options.sql || this.queryTemplate)
-      .replace(/{tableName}/g, this.layer.table_name)
+    const query = (this.options.sql || this.options.queryTemplate)
+      .replace(/{tableName}/g, this.options.layerSpec.table_name)
       .replace('{analysis}', this.options.analysis);
 
     return query;
