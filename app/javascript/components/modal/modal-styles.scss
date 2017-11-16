@@ -1,0 +1,14 @@
+@import '~styles/settings.scss';
+
+$close-position: 25px;
+
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+
+.c-modal-close {
+  position: absolute;
+  top: $close-position;
+  right: $close-position;
+  border: solid 1px rgba(202, 204, 208, 0.85);
+}

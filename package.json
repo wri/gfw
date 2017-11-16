@@ -88,6 +88,7 @@
     "history": "4.7.2",
     "install": "^0.10.1",
     "js-yaml": "^3.9.1",
+    "lodash": "4.17.4",
     "lory.js": "^2.3.3",
     "path-complete-extname": "^0.1.0",
     "postcss-loader": "^2.0.6",
@@ -98,6 +99,7 @@
     "react-dom": "^15.6.1",
     "react-dotdotdot": "^1.1.0",
     "react-load-script": "0.0.6",
+    "react-modal": "3.1.2",
     "react-redux": "^5.0.6",
     "react-scroll": "^1.5.4",
     "react-tippy": "1.2.2",
@@ -107,6 +109,7 @@
     "redux-first-router-link": "1.4.2",
     "redux-form": "^7.1.1",
     "redux-thunk": "^2.2.0",
+    "reselect": "3.0.1",
     "three": "^0.87.1",
     "three-orbit-controls": "^82.1.0"
   }
