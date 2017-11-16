@@ -5,6 +5,8 @@ export const fetchProjectsInit = createAction('fetchProjectsInit');
 export const fetchProjectsReady = createAction('fetchProjectsReady');
 export const fetchProjectsFail = createAction('fetchProjectsFail');
 
+export const setCategorySelected = createAction('setCategorySelected');
+
 export const fetchProjects = createThunkAction(
   'fetchProjects',
   () => (dispatch, getState) => {
@@ -26,7 +28,10 @@ export const fetchProjects = createThunkAction(
             image: d.image,
             image_credit: d.image_credit,
             link: d.link,
-            legend: d.year.toString()
+            latitude: d.latitude_average,
+            longitude: d.longitude_average,
+            legend: d.year.toString(),
+            category: d.use_case_type_how_to_portal
           }));
           dispatch(fetchProjectsReady(dataParsed));
         })

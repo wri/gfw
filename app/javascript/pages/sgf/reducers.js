@@ -5,22 +5,22 @@ import { handleActions } from 'utils/redux';
 // Routes
 import router from './router';
 
-// Pages
-import * as projects from 'pages/sgf/section-projects/section-projects';
+// Sections
+import * as projects from 'pages/sgf/section-projects';
 
-const pagesReducers = {
+const sectionsReducers = {
   projects: handleActions(projects)
 };
 
 // Components
-import * as globeComponent from 'components/globe/globe';
+import * as projectsModal from 'pages/sgf/section-projects/section-projects-modal';
 
 const componentsReducers = {
-  globe: handleActions(globeComponent)
+  projectsModal: handleActions(projectsModal)
 };
 
 export default combineReducers({
-  ...pagesReducers,
+  ...sectionsReducers,
   ...componentsReducers,
   location: router.reducer
 });
