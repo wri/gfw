@@ -9,12 +9,18 @@ class Card extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const { data, readMoreText } = this.props;
+    const onClick = this.props.onClick || false;
     return (
       <div className={`c-about-impacts-item ${data.image ? '' : '-no-image'}`}>
         {data.image && (
           <div
-            className="c-about-impacts-item__image"
+            className={`c-about-impacts-item__image ${
+              onClick ? '-action' : ''
+            }`}
             style={{ backgroundImage: `url(${data.image})` }}
+            onClick={() => onClick && onClick(data)}
+            role="button"
+            tabIndex={0}
           >
             <span>{data.image_credit}</span>
           </div>
@@ -49,6 +55,7 @@ Card.propTypes = {
     link: PropTypes.string,
     legend: PropTypes.string
   }),
+  onClick: PropTypes.func,
   readMoreText: PropTypes.string.isRequired
 };
 
