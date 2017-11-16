@@ -31,12 +31,12 @@ const projectTypes = {
     {
       label: '· Advocacy/policy change',
       tooltip:
-        'Use GFW data as evidence to advocate for increased protected status or community land rights'
+        'Use GFW data as evidence to advocate for increased protected status or community land rights.'
     },
     {
       label: '· Journalism/storytelling',
       tooltip:
-        'Use GFW data as evidence to advocate for increased protected status or community land rights'
+        'Raise public awareness about the threats to forest-dependent communities by publishing stories or training local journalist using GFW data.'
     }
   ]
 };
