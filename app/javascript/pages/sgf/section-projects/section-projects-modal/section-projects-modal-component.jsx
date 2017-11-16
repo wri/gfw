@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/modal';
 
-// import styles from './section-projects-modal-styles.scss';
+import './section-projects-modal-styles.scss';
 
 class SectionProjectsModal extends PureComponent {
   handleClose = () => {

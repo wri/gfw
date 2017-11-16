@@ -29,6 +29,10 @@
     background-repeat: no-repeat;
     background-position: center;
 
+    &.-action {
+      cursor: pointer;
+    }
+
     span {
       display: block;
       z-index: 999999;
