@@ -1,0 +1,91 @@
+@import '~styles/settings.scss';
+
+.c-about-impacts-item {
+  position: relative;
+  width: 100%;
+  padding: rem(261px) rem(16px) rem(17px) rem(16px);
+  background-color: $grey-light;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: rem(-1px);
+    top: rem(-1px);
+    width: calc(100% + #{rem(2px)});
+    height: calc(100% + #{rem(2px)});
+    border: solid rem(1px) $grey-dark;
+  }
+
+  &__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: rem(242px);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    span {
+      display: block;
+      z-index: 999999;
+      font-size: 12px;
+      position: absolute;
+      bottom: 8px;
+      right: 5px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  &__header {
+    margin-bottom: 10px;
+  }
+
+  &__paragraph {
+    font-size: 16px;
+    position: relative;
+    z-index: 2;
+  }
+
+  &__footer {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__button {
+    position: absolute;
+    left: 0;
+    bottom: rem(24px);
+    width: 100%;
+    padding-left: rem(24px);
+    z-index: 2;
+
+    .c-regular-button {
+      width: calc(100% - #{rem(24px)});
+    }
+  }
+
+  &.-no-image {
+    padding-top: rem(16px);
+    height: auto;
+    min-height: 230px;
+  }
+
+  @media screen and (min-width: $screen-m) {
+    padding: rem(273px) rem(40px) rem(30px) rem(40px);
+
+    &__button {
+      padding-left: rem(40px);
+      bottom: rem(30px);
+
+      .c-regular-button {
+        width: rem(200px);
+      }
+    }
+  }
+}

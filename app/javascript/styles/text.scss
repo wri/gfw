@@ -11,6 +11,10 @@
     color: $font-color-2;
   }
 
+  &.-color-2-o {
+    color: rgba($font-color-2, 0.5);
+  }
+
   &.-color-3 {
     color: $font-color-3;
   }

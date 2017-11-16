@@ -408,7 +408,7 @@ class AboutLogos extends Component {
               <div className="list-logos row">
                 {foundingPartners.map(item => (
                   <a
-                    key={item.link}
+                    key={item.title}
                     className="columns small-6 medium-4 large-3"
                     href={item.link}
                     target="_blank"
@@ -423,7 +423,7 @@ class AboutLogos extends Component {
               <div className="list-logos row">
                 {partnersCollaborators.map(item => (
                   <a
-                    key={item.link}
+                    key={item.title}
                     className="columns small-6 medium-4 large-3"
                     href={item.link}
                     target="_blank"
@@ -438,7 +438,7 @@ class AboutLogos extends Component {
               <div className="list-logos row">
                 {funders.map(item => (
                   <a
-                    key={item.link}
+                    key={item.title}
                     className="columns small-6 medium-4 large-3"
                     href={item.link}
                     target="_blank"
