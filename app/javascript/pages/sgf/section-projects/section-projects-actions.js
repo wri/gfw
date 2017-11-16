@@ -25,9 +25,11 @@ export const fetchProjects = createThunkAction(
             id: d.cartodb_id,
             title: d.organization,
             outcome: d.story,
+            city: d.city,
+            // TODO: remove this when having real images
             image:
               d.image ||
-              'https://image.ibb.co/hDJdDR/african_wildlife_foundation.jpg', // TODO: remove this when having real images
+              'https://image.ibb.co/hDJdDR/african_wildlife_foundation.jpg',
             image_credit: d.image_credit,
             link: d.link,
             latitude: d.latitude_average,

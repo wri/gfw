@@ -60,7 +60,7 @@ CustomModal.defaultProps = {
       right: 'auto',
       bottom: 'auto',
       width: '770px',
-      padding: '30px',
+      padding: '0',
       maxHeight: '640px',
       height: 'calc(100vh - 100px)',
       border: 'none',
