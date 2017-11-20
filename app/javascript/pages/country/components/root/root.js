@@ -4,17 +4,18 @@ import { connect } from 'react-redux';
 import RootComponent from './root-component';
 import actions from './root-actions';
 
-export { initialState } from './root-reducers';
-export { default as reducers } from './root-reducers';
-export { default as actions } from './root-actions';
-
 import {
   getCountriesList,
   getCountry,
   getCountryRegions
 } from '../../../../services/country';
 
+export { initialState } from './root-reducers';
+export { default as reducers } from './root-reducers';
+export { default as actions } from './root-actions';
+
 const mapStateToProps = state => ({
+  location: state.location.payload,
   isLoading: state.root.isLoading,
   iso: state.root.iso,
   countryRegion: state.root.countryRegion,
@@ -28,32 +29,29 @@ const mapStateToProps = state => ({
   showMapMobile: state.root.showMapMobile
 });
 
-const RootContainer = (props) => {
-
+const RootContainer = props => {
   const refreshCountryData = () => {
-    props.setIso(props.match.params.iso);
-    props.setRegion(props.match.params.region ? props.match.params.region : 0);
+    props.setIso(props.location.iso);
+    props.setRegion(props.location.region ? props.location.region : 0);
 
-    getCountry(props.match.params.iso)
-      .then((getCountryResponse) => {
-        getCountryResponse.data['area_ha'] = getCountryResponse.data.umd[0].area_ha;
+    getCountry(props.location.iso).then(getCountryResponse => {
+      const getCountryData = getCountryResponse.data;
+      getCountryData.area_ha = getCountryResponse.data.umd[0].area_ha;
 
-        getCountryRegions(props.match.params.iso)
-          .then((getCountryRegionsResponse) => {
-            props.setCountryData({
-              data: getCountryResponse.data,
-              regions: getCountryRegionsResponse.data.data
-            });
-          });
+      getCountryRegions(props.location.iso).then(getCountryRegionsResponse => {
+        props.setCountryData({
+          data: getCountryData,
+          regions: getCountryRegionsResponse.data.data
+        });
       });
+    });
   };
 
-  const setInitialData = (props) => {
-    getCountriesList()
-      .then((response) => {
-        props.setCountriesList(response.data.data);
-      });
-    refreshCountryData(props);
+  const setInitialData = newProps => {
+    getCountriesList().then(response => {
+      newProps.setCountriesList(response.data.data);
+    });
+    refreshCountryData(newProps);
   };
 
   return createElement(RootComponent, {
