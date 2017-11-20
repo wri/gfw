@@ -537,8 +537,14 @@ define([
     toggleTreeCoverYear: function(e){
       var layerSlug = $(e.currentTarget).val();
       var layerSlugRemove = '';
-      this.presenter.toggleLayer('forest2000');
-      this.presenter.toggleLayer('forest2010');
+      if(layerSlug === 'forest2010'){
+        this.presenter.toggleLayer('forest2000');
+        this.presenter.toggleLayer('forest2010');
+      }
+      else{
+        this.presenter.toggleLayer('forest2010');
+        this.presenter.toggleLayer('forest2000');
+      }
     },
 
     // legend
