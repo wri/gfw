@@ -1,8 +1,8 @@
 export const initialState = {
-  totalCoverHeader: 'Nan',
-  totalForestHeader: 'Nan',
-  percentageForestHeader: 'Nan',
-  totalCoverLoss: 'Nan'
+  totalCoverHeader: 0,
+  totalForestHeader: 0,
+  percentageForestHeader: 0,
+  totalCoverLoss: 0
 };
 
 const setTreeCoverValuesHeader = (state, { payload }) => ({
@@ -10,7 +10,7 @@ const setTreeCoverValuesHeader = (state, { payload }) => ({
   totalCoverHeader: payload.totalCoverHeader,
   totalForestHeader: payload.totalForestHeader,
   percentageForestHeader: payload.percentageForestHeader,
-  totalCoverLoss: payload.totalCoverLoss,
+  totalCoverLoss: payload.totalCoverLoss
 });
 
 export default {
