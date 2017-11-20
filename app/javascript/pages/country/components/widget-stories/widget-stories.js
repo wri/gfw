@@ -1,7 +1,5 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { Redirect } from 'react-router-dom';
 
 import WidgetStoriesComponent from './widget-stories-component';
 import actions from './widget-stories-actions';
@@ -22,10 +20,9 @@ const mapStateToProps = state => ({
   endYear: 2014
 });
 
-const WidgetStoriesContainer = (props) => {
-  return createElement(WidgetStoriesComponent, {
+const WidgetStoriesContainer = props =>
+  createElement(WidgetStoriesComponent, {
     ...props
   });
-};
 
-export default withRouter(connect(mapStateToProps, actions)(WidgetStoriesContainer));
+export default connect(mapStateToProps, actions)(WidgetStoriesContainer);

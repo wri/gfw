@@ -1,10 +1,13 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { Redirect } from 'react-router-dom';
 
 import WidgetTreeCoverGainComponent from './widget-tree-cover-gain-component';
 import actions from './widget-tree-cover-gain-actions';
+
+import {
+  getTreeCoverGain,
+  getTotalCountriesTreeCoverGain
+} from '../../../../services/tree-gain';
 
 export { initialState } from './widget-tree-cover-gain-reducers';
 export { default as reducers } from './widget-tree-cover-gain-reducers';
@@ -22,35 +25,43 @@ const mapStateToProps = state => ({
   locations: state.widgetTreeCoverGain.locations
 });
 
-import {
-  getTreeCoverGain,
-  getTotalCountriesTreeCoverGain
-} from '../../../../services/tree-gain';
-
-const WidgetTreeCoverGainContainer = (props) => {
-  const setInitialData = (props) => {
-    setWidgetData(props);
+const WidgetTreeCoverGainContainer = props => {
+  const setInitialData = newProps => {
+    setWidgetData(newProps);
   };
 
-  const updateData = (props) => {
-    props.setTreeCoverGainIsLoading(true);
-    setWidgetData(props);
+  const updateData = newProps => {
+    newProps.setTreeCoverGainIsLoading(true);
+    setWidgetData(newProps);
   };
 
-  const setWidgetData = (props) => {
-    getTreeCoverGain(props.iso,{ minYear: props.settings.startYear, maxYear: props.settings.endYear }, props.settings.canopy, props.countryRegion)
-      .then((coverGain) => {
-        getTotalCountriesTreeCoverGain({minYear: props.settings.startYear, maxYear: props.settings.endYear}, props.settings.canopy)
-          .then((totalCoverGain) => {
-            const values = {
-              totalAmount: coverGain.data.data[0].value,
-              percentage: (coverGain.data.data[0].value / totalCoverGain.data.data[0].value) * 100
-            };
-            props.setTreeCoverGainValues(values);
-          });
+  const setWidgetData = newProps => {
+    getTreeCoverGain(
+      newProps.iso,
+      {
+        minYear: newProps.settings.startYear,
+        maxYear: newProps.settings.endYear
+      },
+      newProps.settings.canopy,
+      newProps.countryRegion
+    ).then(coverGain => {
+      getTotalCountriesTreeCoverGain(
+        {
+          minYear: newProps.settings.startYear,
+          maxYear: newProps.settings.endYear
+        },
+        newProps.settings.canopy
+      ).then(totalCoverGain => {
+        const percentage =
+          coverGain.data.data[0].value / totalCoverGain.data.data[0].value;
+        const values = {
+          totalAmount: coverGain.data.data[0].value,
+          percentage: percentage * 100
+        };
+        props.setTreeCoverGainValues(values);
       });
+    });
   };
-
 
   return createElement(WidgetTreeCoverGainComponent, {
     ...props,
@@ -59,4 +70,4 @@ const WidgetTreeCoverGainContainer = (props) => {
   });
 };
 
-export default withRouter(connect(mapStateToProps, actions)(WidgetTreeCoverGainContainer));
+export default connect(mapStateToProps, actions)(WidgetTreeCoverGainContainer);
