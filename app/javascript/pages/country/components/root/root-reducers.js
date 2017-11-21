@@ -5,21 +5,21 @@ export const initialState = {
   countryData: {},
   countryRegions: [],
   countriesList: [],
+  gfwHeaderHeight: 59,
   showMapMobile: false,
-  fixed: false,
-  topMap: 0,
-  topPage: false
+  isMapFixed: true,
+  mapTop: 0
 };
 
-const setInitialState = (state) => ({
+const setInitialState = state => ({
   ...state,
   isLoading: true,
   iso: '',
   countryRegion: 0,
   countryData: {},
   countryRegions: [],
-  fixed: false,
-  topPage: false
+  isMapFixed: true,
+  mapTop: 0
 });
 
 const setIso = (state, { payload }) => ({
@@ -44,22 +44,17 @@ const setCountriesList = (state, { payload }) => ({
   countriesList: payload
 });
 
-const setPositionMap = (state, {payload}) => ({
+const setFixedMapStatus = (state, { payload }) => ({
   ...state,
-  fixed: payload
+  isMapFixed: payload
 });
 
-const setPositionPage = (state, {payload}) => ({
+const setMapTop = (state, { payload }) => ({
   ...state,
-  topPage: payload
+  mapTop: payload
 });
 
-const setTopMap = (state, {payload}) => ({
-  ...state,
-  topMap: payload
-});
-
-const setShowMapMobile = (state, {payload}) => ({
+const setShowMapMobile = (state, { payload }) => ({
   ...state,
   showMapMobile: payload
 });
@@ -70,8 +65,7 @@ export default {
   setRegion,
   setCountryData,
   setCountriesList,
-  setPositionMap,
-  setTopMap,
-  setPositionPage,
+  setFixedMapStatus,
+  setMapTop,
   setShowMapMobile
 };

@@ -8,9 +8,8 @@ const setNameRegion = createAction('setNameRegion');
 const setCountryData = createAction('setCountryData');
 const setCountryRegions = createAction('setCountryRegions');
 const setCountriesList = createAction('setCountriesList');
-const setPositionMap = createAction('setPositionMap');
-const setTopMap = createAction('setTopMap');
-const setPositionPage = createAction('setPositionPage');
+const setFixedMapStatus = createAction('setFixedMapStatus');
+const setMapTop = createAction('setMapTop');
 const setShowMapMobile = createAction('setShowMapMobile');
 
 export default {
@@ -22,8 +21,7 @@ export default {
   setCountryData,
   setCountryRegions,
   setCountriesList,
-  setPositionMap,
-  setTopMap,
-  setPositionPage,
+  setFixedMapStatus,
+  setMapTop,
   setShowMapMobile
 };

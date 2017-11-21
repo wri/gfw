@@ -34,30 +34,32 @@ class Root extends PureComponent {
   }
 
   handleScrollCallback() {
-    if (window.scrollY >= 59) {
-      this.props.setPositionMap(true);
-      this.props.setTopMap(0);
-    }
+    const {
+      gfwHeaderHeight,
+      isMapFixed,
+      setFixedMapStatus,
+      setMapTop
+    } = this.props;
+
+    const mapFixedLimit =
+      document.getElementById('c-widget-stories').offsetTop -
+      window.innerHeight;
 
     if (
-      window.scrollY >=
-      document.getElementById('c-widget-stories').offsetTop - window.innerHeight
+      !isMapFixed &&
+      window.scrollY >= gfwHeaderHeight &&
+      window.scrollY < mapFixedLimit
     ) {
-      this.props.setPositionMap(false);
-      this.props.setTopMap(
-        document.getElementById('c-widget-stories').offsetTop -
-          window.innerHeight
-      );
-    }
-
-    if (window.scrollY < 59) {
-      this.props.setPositionMap(false);
-      this.props.setTopMap(59);
+      setFixedMapStatus(true);
+      setMapTop(0);
+    } else if (isMapFixed && window.scrollY >= mapFixedLimit) {
+      setFixedMapStatus(false);
+      setMapTop(mapFixedLimit);
     }
   }
 
   render() {
-    const { isLoading, countryRegion, showMapMobile } = this.props;
+    const { isLoading, countryRegion, isMapFixed, showMapMobile } = this.props;
     const regionSelected = countryRegion === 0;
 
     if (isLoading) {
@@ -67,7 +69,7 @@ class Root extends PureComponent {
     return (
       <div className="l-country">
         <ScrollEvent handleScrollCallback={() => this.handleScrollCallback()} />
-        {this.props.fixed && (
+        {isMapFixed && (
           <button
             className="open-map-mobile-tab"
             onClick={() => this.showMapMobile()}
@@ -77,10 +79,10 @@ class Root extends PureComponent {
         )}
         <Header />
         <div
-          className={`l-country__map ${this.props.fixed ? '-fixed' : ''} ${
+          className={`l-country__map ${isMapFixed ? '-fixed' : ''} ${
             showMapMobile ? '-open-mobile' : ''
           }`}
-          style={{ top: this.props.topMap }}
+          style={{ top: this.props.mapTop }}
         >
           <Map
             maxZoom={14}
@@ -149,14 +151,15 @@ Root.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   iso: PropTypes.string.isRequired,
   countryRegion: PropTypes.number.isRequired,
+  gfwHeaderHeight: PropTypes.number.isRequired,
   setInitialData: PropTypes.func.isRequired,
   refreshCountryData: PropTypes.func.isRequired,
   setShowMapMobile: PropTypes.func.isRequired,
   showMapMobile: PropTypes.bool.isRequired,
-  setPositionMap: PropTypes.func.isRequired,
-  setTopMap: PropTypes.func.isRequired,
-  fixed: PropTypes.bool.isRequired,
-  topMap: PropTypes.number.isRequired
+  setFixedMapStatus: PropTypes.func.isRequired,
+  setMapTop: PropTypes.func.isRequired,
+  isMapFixed: PropTypes.bool.isRequired,
+  mapTop: PropTypes.number.isRequired
 };
 
 export default Root;
