@@ -420,8 +420,8 @@ button {
           flex-flow: row wrap; }
   .row .row {
     max-width: none;
-    margin-left: -2.5rem;
-    margin-right: -2.5rem; }
+    margin-left: -0.625rem;
+    margin-right: -0.625rem; }
   .row.expanded {
     max-width: none; }
   .row.collapse > .column, .row.collapse > .columns {
@@ -432,8 +432,8 @@ button {
   -webkit-flex: 1 1 0px;
       -ms-flex: 1 1 0px;
           flex: 1 1 0px;
-  padding-left: 5rem;
-  padding-right: 5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
   min-width: initial; }
 
 .column.row.row, .row.row.columns {

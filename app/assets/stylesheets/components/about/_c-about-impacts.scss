@@ -1,0 +1,178 @@
+$item-padding: rem(16px);
+$item-padding-screen-m: rem(40px);
+
+.c-about-impacts {
+  padding: rem(40px) 0 rem(56px) 0;
+  background-color: $white;
+  overflow: hidden;
+
+  .c-about-impacts__title {
+    margin-bottom: rem(7px);
+    opacity: 0.5;
+  }
+
+  .slider {
+    position: relative;
+  }
+
+  .frame {
+    position: relative;
+    font-size: 0;
+    line-height: 0;
+    white-space: nowrap;
+  }
+
+  .slides {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .slide {
+    position: relative;
+    display: inline-block;
+    white-space: normal;
+    vertical-align: top;
+    padding-right: $item-padding;
+  }
+
+  .c-about-impacts__arrow-button {
+    position: absolute;
+    top: rem(-10px);
+    bottom: 0;
+    margin: auto;
+    width: rem(60px);
+    height: rem(60px);
+    z-index: 1;
+    display: none;
+
+    &.-left {
+      left: rem(-70px);
+    }
+
+    &.-right {
+      right: rem(-70px);
+    }
+  }
+
+  .c-about-impacts__slider-dots {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: rem(-35px);
+  }
+
+  @media screen and (min-width: $screen-m) {
+    padding: rem(50px) 0 rem(60px) 0;
+
+    .c-about-impacts__title {
+      margin-bottom: 0;
+    }
+
+    .slide {
+      opacity: 0.5;
+      transition: opacity 0.5s ease-out;
+
+      &.active {
+        opacity: 1;
+
+        & + li {
+          opacity: 1;
+        }
+      }
+
+      &:not(:last-child) {
+        width: calc(50% + #{$item-padding-screen-m / 2});
+        padding-right: $item-padding-screen-m;
+      }
+
+      &:last-child {
+        width: calc(50% - #{$item-padding-screen-m / 2});
+        padding-right: 0;
+      }
+    }
+
+    .c-about-impacts__arrow-button {
+      display: block;
+    }
+
+    .c-about-impacts__slider-dots {
+      bottom: rem(-37px);
+
+      .c-slider-dots__item:last-child {
+        display: none;
+      }
+    }
+  }
+}
+
+.c-about-impacts-item {
+  position: relative;
+  width: 100%;
+  height: rem(460px);
+  padding: rem(261px) rem(16px) rem(17px) rem(16px);
+  background-color: $grey-light;
+
+  &:before {
+    content: "";
+    position: absolute;
+    left: rem(-1px);
+    top: rem(-1px);
+    width: calc(100% + #{rem(2px)});
+    height: calc(100% + #{rem(2px)});
+    border: solid rem(1px) $grey-dark;
+  }
+
+  .c-about-impacts-item__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: rem(242px);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    span {
+      display: block;
+      z-index: 999999;
+      font-size: 12px;
+      position: absolute;
+      bottom: 8px;
+      right: 5px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  .c-about-impacts-item__paragraph {
+    font-size: 16px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .c-about-impacts-item__button {
+    position: absolute;
+    left: 0;
+    bottom: rem(24px);
+    width: 100%;
+    padding-left: rem(24px);
+    z-index: 2;
+
+    .c-regular-button {
+      width: calc(100% - #{rem(24px)});
+    }
+  }
+
+  @media screen and (min-width: $screen-m) {
+    height: rem(491px);
+    padding: rem(273px) rem(40px) rem(40px) rem(40px);
+
+    .c-about-impacts-item__button {
+      padding-left: rem(40px);
+      bottom: rem(30px);
+
+      .c-regular-button {
+        width: rem(200px);
+      }
+    }
+  }
+}

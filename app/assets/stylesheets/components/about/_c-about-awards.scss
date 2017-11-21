@@ -1,0 +1,81 @@
+$item-padding: rem(16px);
+$item-padding-screen-m: rem(40px);
+
+.c-about-awards {
+  padding: rem(20px) 0;
+  background-color: $white;
+  overflow: hidden;
+
+  .c-about-awards__title {
+    margin-bottom: rem(7px);
+    opacity: 0.5;
+  }
+
+  .slider {
+    position: relative;
+  }
+
+  .frame {
+    position: relative;
+    font-size: 0;
+    line-height: 0;
+    white-space: nowrap;
+  }
+
+  .slides {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .slide {
+    position: relative;
+    display: inline-block;
+    white-space: normal;
+    vertical-align: top;
+    width: 100%;
+    padding-right: $item-padding;
+  }
+
+  @media screen and (min-width: $screen-m) {
+    padding: rem(50px) 0;
+
+    .c-about-awards__title {
+      margin-bottom: 0;
+    }
+
+    .slide {
+      opacity: 0.7;
+
+      &:not(:last-child) {
+        width: calc(25% + #{$item-padding-screen-m / 4});
+        padding-right: $item-padding-screen-m;
+      }
+
+      &:last-child {
+        width: calc(25% - #{$item-padding-screen-m - rem(10px)});
+        padding-right: 0;
+      }
+    }
+  }
+
+  @media screen and (min-width: $screen-l) {
+    border-bottom: 1px solid $grey-dark;
+  }
+}
+
+.c-about-awards-item {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: rem(96px);
+
+  img {
+    max-height: rem(96px);
+  }
+
+  @media screen and (min-width: $screen-m) {
+    justify-content: center;
+  }
+}

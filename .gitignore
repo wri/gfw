@@ -8,6 +8,9 @@
 /.bundle
 .gems
 
+# Ignore test coverage reports
+/coverage
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
@@ -44,3 +47,11 @@ Vagrantfile
 todo.todo
 
 .byebug_history
+
+# Ignore environment files
+.dev.env
+/public/packs
+/node_modules
+/public/packs
+/public/packs-test
+/node_modules

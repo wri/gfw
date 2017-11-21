@@ -59,16 +59,6 @@ Gfw::Application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = "http://assets.example.com"
 
-  # Precompile additional assets.
-  # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  config.assets.precompile += %w(stories.js countries.js static.js landing.js map.js embed_countries.js stories.css countries.css static.css landing.css map.css)
-
-  # Require JS
-  # config.requirejs.loader = :almond
-  config.requirejs.logical_asset_filter += [/\.handlebars$/]
-  config.requirejs.logical_asset_filter += [/\.hbs$/]
-  config.requirejs.logical_asset_filter += [/\.cartocss$/]
-
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
@@ -93,4 +83,6 @@ Gfw::Application.configure do
   # config.middleware.insert_after(::Rack::Runtime, "::Rack::Auth::Basic", "Production") do |u, p|
   #   [u, p] == ['admin', ENV['PASSWORD']]
   # end
+
+  config.enable_dependency_loading = true
 end

@@ -1,13 +1,14 @@
 source 'https://rubygems.org'
-ruby '2.1.5'
+ruby '2.4.0'
 
-gem 'rails', '4.0.4'
+gem 'rails', '5.1.3'
 gem 'jquery-rails'
-gem 'autoprefixer-rails', '~> 6.3.6.2'
-gem 'sass-rails', '~> 4.0.3'
-gem 'compass-rails', '1.1.2'
+gem 'autoprefixer-rails', '~> 7.1.2.3'
+gem 'sass-rails', '~> 5.0.6'
+gem 'compass-rails', '3.0.2'
 gem 'compass-flexbox'
-gem 'uglifier', '>= 1.3.0'
+gem 'sprockets-rails', '2.3.3'
+gem 'uglifier', '~> 3.1.5'
 gem 'httparty'
 gem 'typhoeus'
 gem 'useragent'
@@ -16,13 +17,25 @@ gem 'fog'
 gem 'rmagick', :require => false
 gem 'mini_magick'
 gem 'unf'
-gem 'requirejs-rails', '0.9.5'
+
+# requirejs
+gem 'erubis'
+gem 'requirejs-rails', '1.0.0'
+
 gem 'rack-reverse-proxy', '~> 0.11.0', :require => 'rack/reverse_proxy'
 # Amazon Ruby sdk for file upload to S3
 gem 'aws-sdk', '~> 2'
 
+#Webpacker
+gem 'webpacker', '~> 3.0'
+
+# http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#responders
+gem 'responders', '~> 2.0'
+
+gem 'nokogiri', '~> 1.7.0.1'
+
 group :development, :test do
-  gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-rails', '~> 3.5.2'
   gem 'show_me_the_cookies'
   gem 'factory_girl_rails'
   gem 'shoulda-matchers'
@@ -35,10 +48,18 @@ group :development do
   gem 'binding_of_caller'
   gem 'foreman'
   gem 'capistrano'
+  gem 'spring'
+  gem 'web-console', '~> 2.0'
 end
 
 group :production do
   gem 'rails_12factor'
+end
+
+group :test do
+  gem 'rails-controller-testing'
+  gem 'simplecov'
+  gem 'vcr'
 end
 
 gem 'newrelic_rpm'

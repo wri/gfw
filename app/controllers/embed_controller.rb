@@ -11,6 +11,8 @@ class EmbedController < ApplicationController
   end
 
   private
+
+    # TODO: potentially obsolete? does not seem to be used
     def find_countries
       response = Typhoeus.get("#{ENV['GFW_API_HOST']}/countries", headers: {"Accept" => "application/json"})
       if response.success?
