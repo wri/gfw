@@ -36,12 +36,8 @@ const setCountryData = (state, { payload }) => ({
   ...state,
   countryData: payload.data,
   countryRegions: payload.regions,
+  countriesList: payload.countries,
   isLoading: false
-});
-
-const setCountriesList = (state, { payload }) => ({
-  ...state,
-  countriesList: payload
 });
 
 const setFixedMapStatus = (state, { payload }) => ({
@@ -64,7 +60,6 @@ export default {
   setIso,
   setRegion,
   setCountryData,
-  setCountriesList,
   setFixedMapStatus,
   setMapTop,
   setShowMapMobile

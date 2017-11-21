@@ -37,23 +37,23 @@ const RootContainer = props => {
     setIso(location.iso);
     setRegion(location.region ? location.region : 0);
 
-    getCountry(location.iso).then(getCountryResponse => {
-      const getCountryData = getCountryResponse.data;
-      getCountryData.area_ha = getCountryResponse.data.umd[0].area_ha;
+    getCountriesList().then(getCountriesListResponse => {
+      getCountry(location.iso).then(getCountryResponse => {
+        const getCountryData = getCountryResponse.data;
+        getCountryData.area_ha = getCountryResponse.data.umd[0].area_ha;
 
-      getCountryRegions(location.iso).then(getCountryRegionsResponse => {
-        setCountryData({
-          data: getCountryData,
-          regions: getCountryRegionsResponse.data.data
+        getCountryRegions(location.iso).then(getCountryRegionsResponse => {
+          setCountryData({
+            data: getCountryData,
+            regions: getCountryRegionsResponse.data.data,
+            countries: getCountriesListResponse.data.data
+          });
         });
       });
     });
   };
 
   const setInitialData = () => {
-    getCountriesList().then(response => {
-      props.setCountriesList(response.data.data);
-    });
     refreshCountryData(props);
   };
 
