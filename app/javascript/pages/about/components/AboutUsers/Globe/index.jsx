@@ -101,9 +101,8 @@ class GlobeComponent extends React.Component {
 
       const intersects = raycaster.intersectObjects( this.scene.children );
 
-      if (intersects && intersects.length > 1) {
-        const userData = intersects[0].object.data;
-        this.showmodal(userData);
+      if (intersects && intersects[0].object.data) {
+        this.showmodal(intersects[0].object.data);
       }
     }.bind(this), false);
   }

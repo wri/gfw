@@ -74,7 +74,7 @@ class AboutUsers extends Component {
                 )}
               </ul>
               <div className="c-about-users__button">
-                <ButtonRegular text="LEARN HOW TO USE GFW" color="green"/>
+                <a href="/howto" className="c-regular-button -green">LEARN HOW TO USE GFW</a>
               </div>
             </div>
           </div>
