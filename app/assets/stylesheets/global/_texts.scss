@@ -21,6 +21,18 @@
     color: $font-color-5;
   }
 
+  &.-color-6 {
+    color: $font-color-6;
+  }
+
+  &.-color-7 {
+    color: rgba($font-color-1, 0.7);
+  }
+
+  &.-color-8 {
+    color: rgba($font-color-6, 0.8);
+  }
+
   &.-light {
     font-weight: 300;
   }
@@ -128,5 +140,19 @@
     font-size: 18px;
     line-height: 1.67;
     letter-spacing: -0.4px;
+  }
+
+  &.-paragraph-4 {
+    font-size: 18px;
+    line-height: 1.67;
+  }
+
+  &.-paragraph-5 {
+    font-size: 14px;
+  }
+
+  &.-paragraph-6 {
+    font-size: 12px;
+    letter-spacing: -0.3px;
   }
 }

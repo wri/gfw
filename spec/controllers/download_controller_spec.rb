@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe DownloadController do
+describe DownloadController, type: :controller do
   before do
     ENV['TERMS_COOKIE'] = "terms_cookie"
   end
@@ -21,7 +21,7 @@ describe DownloadController do
 
       subject {
         post :create_download,
-          {id: iso, email: email, link: download_link, type: type}
+          params: {id: iso, email: email, link: download_link, type: type}
       }
 
       it "sends an email with the download link" do
@@ -31,14 +31,26 @@ describe DownloadController do
           and_return(mailer_double)
         )
 
-        expect(mailer_double).to receive(:deliver).and_return(true)
+        expect(mailer_double).to receive(:deliver_now).and_return(true)
 
         subject
       end
 
       it "returns a success response code" do
-        expect(response.code).to eq("200")
         subject
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    context "without email address" do
+      subject {
+        post :create_download,
+          params: {id: iso, link: download_link, type: type}
+      }
+
+      it "returns an unprocessable entity code" do
+        subject
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
