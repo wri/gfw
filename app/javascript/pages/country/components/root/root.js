@@ -22,8 +22,9 @@ const mapStateToProps = state => ({
   countryData: state.root.countryData,
   countryRegions: state.root.countryRegions,
   countriesList: state.root.countriesList,
-  fixed: state.root.fixed,
-  topMap: state.root.topMap,
+  gfwHeaderHeight: state.root.gfwHeaderHeight,
+  isMapFixed: state.root.isMapFixed,
+  mapTop: state.root.mapTop,
   topPage: state.root.topPage,
   nameRegion: state.root.nameRegion,
   showMapMobile: state.root.showMapMobile
