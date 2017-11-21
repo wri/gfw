@@ -19,12 +19,13 @@ import WidgetStories from '../widget-stories/widget-stories';
 class Root extends PureComponent {
   componentDidMount() {
     const { setInitialData } = this.props;
-    setInitialData(this.props);
+    setInitialData();
   }
 
   componentWillUpdate(nextProps) {
     const { iso, refreshCountryData } = this.props;
-    if (iso !== nextProps.iso) {
+
+    if (iso !== nextProps.iso && iso !== '') {
       refreshCountryData(nextProps);
     }
   }
