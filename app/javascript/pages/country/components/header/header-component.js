@@ -10,48 +10,30 @@ class Header extends PureComponent {
   }
 
   countriesSelectOnChange = event => {
-    const { selectCountry } = this.props;
+    const { setInitialState, selectCountry } = this.props;
     selectCountry(event.value);
+    setInitialState();
   };
 
   regionsSelectOnChange = event => {
-    const { selectRegion } = this.props;
-    selectRegion(event.value);
+    const { iso, setInitialState, selectRegion } = this.props;
+    selectRegion(iso, event.value);
+    setInitialState();
   };
 
   render() {
-    const countries = [];
-    const regions = [{ value: '', label: 'Jurisdiction' }];
-    let countrySelected = '';
-    let regionSelected = 'Jurisdiction';
-    let jurisdictionSelected = false;
     const {
-      iso,
-      countriesList,
-      countryRegions,
       countryRegion,
+      selectedCountry,
+      selectedRegion,
+      countrySelectData,
+      regionSelectData,
       totalCoverHeader,
       totalForestHeader,
       percentageForestHeader,
       totalCoverLoss
     } = this.props;
-    countriesList.forEach(item => {
-      if (iso === item.iso) {
-        countrySelected = item.name;
-      }
-      countries.push({ value: item.iso, label: item.name });
-    });
-    countryRegions.forEach(item => {
-      if (countryRegion) {
-        jurisdictionSelected = true;
-        if (countryRegion === item.id.toString()) {
-          regionSelected = item.name;
-        }
-      } else {
-        jurisdictionSelected = false;
-      }
-      regions.push({ value: item.id, label: item.name });
-    });
+
     return (
       <div className="c-header">
         <div className="row">
@@ -61,8 +43,8 @@ class Header extends PureComponent {
                 <use xlinkHref="#icon-angle-arrow-down" />
               </svg>
               <Select
-                value={countrySelected}
-                options={countries}
+                value={selectedCountry}
+                options={countrySelectData}
                 onChange={this.countriesSelectOnChange}
               />
             </div>
@@ -71,16 +53,15 @@ class Header extends PureComponent {
                 <use xlinkHref="#icon-angle-arrow-down" />
               </svg>
               <Select
-                value={regionSelected}
-                options={regions}
+                value={selectedRegion}
+                options={regionSelectData}
                 onChange={this.regionsSelectOnChange}
               />
             </div>
           </div>
           <div className="large-6 medium-12 small-12 columns c-header__info">
             <p>
-              In 2010, this {!jurisdictionSelected ? 'country' : 'jurisdiction'}{' '}
-              had{' '}
+              In 2010, this {!countryRegion ? 'country' : 'jurisdiction'} had{' '}
               <strong>
                 {numeral(Math.round(totalForestHeader / 1000000)).format('0,0')}{' '}
                 MHa
@@ -122,11 +103,14 @@ class Header extends PureComponent {
 Header.propTypes = {
   iso: PropTypes.string.isRequired,
   countryRegion: PropTypes.number.isRequired,
-  countriesList: PropTypes.array.isRequired,
-  countryRegions: PropTypes.array.isRequired,
   setInitialData: PropTypes.func.isRequired,
+  setInitialState: PropTypes.func.isRequired,
   selectCountry: PropTypes.func.isRequired,
   selectRegion: PropTypes.func.isRequired,
+  selectedCountry: PropTypes.string.isRequired,
+  selectedRegion: PropTypes.string.isRequired,
+  countrySelectData: PropTypes.array.isRequired,
+  regionSelectData: PropTypes.array.isRequired,
   totalCoverHeader: PropTypes.number.isRequired,
   totalForestHeader: PropTypes.number.isRequired,
   percentageForestHeader: PropTypes.number.isRequired,
