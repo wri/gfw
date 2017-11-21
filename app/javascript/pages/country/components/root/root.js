@@ -31,16 +31,18 @@ const mapStateToProps = state => ({
 });
 
 const RootContainer = props => {
-  const refreshCountryData = () => {
-    props.setIso(props.location.iso);
-    props.setRegion(props.location.region ? props.location.region : 0);
+  const refreshCountryData = newProps => {
+    const { location, setIso, setRegion, setCountryData } = newProps;
 
-    getCountry(props.location.iso).then(getCountryResponse => {
+    setIso(location.iso);
+    setRegion(location.region ? location.region : 0);
+
+    getCountry(location.iso).then(getCountryResponse => {
       const getCountryData = getCountryResponse.data;
       getCountryData.area_ha = getCountryResponse.data.umd[0].area_ha;
 
-      getCountryRegions(props.location.iso).then(getCountryRegionsResponse => {
-        props.setCountryData({
+      getCountryRegions(location.iso).then(getCountryRegionsResponse => {
+        setCountryData({
           data: getCountryData,
           regions: getCountryRegionsResponse.data.data
         });
@@ -48,11 +50,11 @@ const RootContainer = props => {
     });
   };
 
-  const setInitialData = newProps => {
+  const setInitialData = () => {
     getCountriesList().then(response => {
-      newProps.setCountriesList(response.data.data);
+      props.setCountriesList(response.data.data);
     });
-    refreshCountryData(newProps);
+    refreshCountryData(props);
   };
 
   return createElement(RootComponent, {
