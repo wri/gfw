@@ -86,6 +86,7 @@
     "coffee-loader": "^0.7.3",
     "coffee-script": "^1.12.7",
     "d3": "^4.11.0",
+    "dotenv": "^4.0.0",
     "glob": "^7.1.2",
     "history": "4.7.2",
     "install": "^0.10.1",
