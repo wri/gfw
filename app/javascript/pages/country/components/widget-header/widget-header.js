@@ -1,3 +1,26 @@
-import Component from './widget-header-component';
+import { createElement } from 'react';
+import { connect } from 'react-redux';
 
-export default Component;
+import actions from './widget-header-actions';
+import reducers, { initialState } from './widget-header-reducers';
+
+import WidgetHeaderComponent from './widget-header-component';
+
+const mapStateToProps = () => ({});
+
+const WidgetHeaderContainer = props => {
+  const openShare = () => {
+    props.setShareModal({
+      isOpen: true
+    });
+  };
+
+  return createElement(WidgetHeaderComponent, {
+    ...props,
+    openShare
+  });
+};
+
+export { actions, reducers, initialState };
+
+export default connect(mapStateToProps, actions)(WidgetHeaderContainer);

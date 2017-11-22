@@ -2,9 +2,11 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 
+import './widget-header-styles.scss';
+
 class WidgetHeader extends PureComponent {
   render() {
-    const { children, title, noMap, viewOnMapCallback } = this.props;
+    const { children, title, noMap, viewOnMapCallback, openShare } = this.props;
 
     return (
       <div className="c-widget-header">
@@ -42,11 +44,14 @@ class WidgetHeader extends PureComponent {
               </Tooltip>
             ) : null}
           </li>
-          <li className="c-widget-header__option-circle c-widget-header__option-circle--white">
+          <button
+            className="c-widget-header__option-circle c-widget-header__option-circle--white"
+            onClick={openShare}
+          >
             <svg className="icon icon-share -dark">
               <use xlinkHref="#icon-share" />
             </svg>
-          </li>
+          </button>
         </ul>
       </div>
     );
@@ -55,6 +60,7 @@ class WidgetHeader extends PureComponent {
 
 WidgetHeader.propTypes = {
   title: PropTypes.string.isRequired,
+  openShare: PropTypes.func.isRequired,
   noMap: PropTypes.bool,
   viewOnMapCallback: PropTypes.func,
   children: PropTypes.object

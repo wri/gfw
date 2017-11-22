@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ScrollEvent from 'react-onscroll';
 
+import Share from 'components/share';
+
 import Loader from '../../../../common/components/loader/loader';
 import Header from '../header/header';
 import Footer from '../footer/footer';
@@ -143,6 +145,7 @@ class Root extends PureComponent {
         </div>
         <WidgetStories />
         <Footer />
+        <Share />
       </div>
     );
   }
