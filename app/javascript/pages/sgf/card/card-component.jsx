@@ -5,15 +5,17 @@ import 'react-tippy/dist/tippy.css';
 import Icon from 'components/icon/icon';
 
 import infoIcon from 'assets/icons/info.svg';
-import './project-card-styles.scss';
+import './card-styles.scss';
 
 class ProjectCard extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { title, items } = this.props.data;
+    const { className } = this.props;
+    const { title, link, items } = this.props.data;
+    const cardTitle = <h3 className="card-title">{title}</h3>;
     return (
-      <div className="m-card -big-padding">
-        <h3 className="card-title">{title}</h3>
+      <div className={`m-card ${className}`}>
+        {link ? <a href={link}>{cardTitle}</a> : cardTitle}
         {items &&
           !!items.length && (
             <ul className="card-description">
@@ -26,13 +28,15 @@ class ProjectCard extends PureComponent {
                     animation="scale"
                     arrow
                     size="small"
+                    className="tooltip"
                   >
-                    <Icon icon={infoIcon} />
+                    <Icon icon={infoIcon} className="info-icon" />
                   </Tooltip>
                 ) : null;
+                const item = i.link ? <a href={i.link}>{i.label}</a> : i.label;
                 return (
                   <li key={i.label}>
-                    {i.label} {tooltip}
+                    {item} {tooltip}
                   </li>
                 );
               })}
@@ -46,8 +50,14 @@ class ProjectCard extends PureComponent {
 ProjectCard.propTypes = {
   data: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    items: PropTypes.array.isRequired
-  }).isRequired
+    link: PropTypes.string,
+    items: PropTypes.array
+  }).isRequired,
+  className: PropTypes.string.isRequired
+};
+
+ProjectCard.defaultProps = {
+  className: ''
 };
 
 export default ProjectCard;

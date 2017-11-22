@@ -1,0 +1,35 @@
+@import '~styles/settings.scss';
+
+.c-items-list {
+  margin-top: rem(30px);
+  display: none;
+
+  li {
+    position: relative;
+    padding-left: rem(23px);
+    cursor: pointer;
+
+    .icon {
+      position: absolute;
+      left: rem(1px);
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      stroke: $slate;
+      width: rem(10px);
+      height: rem(10px);
+    }
+
+    &:not(.-selected) {
+      opacity: 0.5;
+
+      .icon {
+        display: none;
+      }
+    }
+  }
+
+  @media screen and (min-width: $screen-l) {
+    display: block;
+  }
+}

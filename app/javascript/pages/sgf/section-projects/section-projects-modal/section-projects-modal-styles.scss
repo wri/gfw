@@ -1,0 +1,46 @@
+@import '~styles/settings.scss';
+$max-content-width: 560px;
+
+%modalContent {
+  margin: 0 auto;
+  max-width: $max-content-width;
+}
+
+.c-projects-modal {
+  &__header {
+    @extend %modalContent;
+
+    padding: rem(50px) 0 rem(40px);
+
+    > h1 {
+      margin-bottom: 5px;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    position: relative;
+
+    > img {
+      width: 100%;
+    }
+
+    > span {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+    }
+  }
+
+  &__content {
+    @extend %modalContent;
+
+    padding: rem(20px) 0;
+  }
+
+  &__footer {
+    @extend %modalContent;
+
+    padding: rem(20px) 0 rem(40px);
+  }
+}

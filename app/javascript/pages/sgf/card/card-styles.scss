@@ -2,13 +2,23 @@
 
 .m-card {
   position: relative;
+  width: 100%;
   padding: 40px;
   background: $white;
   border: 1px solid $border;
-  min-height: 340px;
+  min-height: 150px;
 
   &.-big-padding {
     padding-bottom: 85px;
+  }
+
+  &.-min-h {
+    min-height: 340px;
+  }
+
+  &.-centered {
+    display: flex;
+    align-items: center;
   }
 
   .card-title {
@@ -17,7 +27,6 @@
     letter-spacing: 0.1px;
     color: $font-color-2;
     text-transform: uppercase;
-    margin-bottom: 20px;
   }
 
   .card-title-subtitle {
@@ -31,6 +40,18 @@
     line-height: 1.9;
     color: $font-color-2;
     list-style-type: disc;
+    margin-top: 20px;
+
+    > li {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .tooltip {
+    display: inline-flex !important;
+    margin-left: 4px;
+    cursor: pointer;
   }
 }
 

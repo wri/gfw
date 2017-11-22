@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Element } from 'react-scroll';
-import ButtonRegular from 'components/button-regular/button-regular';
+import ButtonRegular from 'components/button-regular';
 import ModalSubscribe from '../AboutModals/AboutModalSubscribe';
 
 class AboutLogos extends Component {
@@ -406,9 +406,9 @@ class AboutLogos extends Component {
                 Founding Partners
               </div>
               <div className="list-logos row">
-                {foundingPartners.map((item, i) => (
+                {foundingPartners.map(item => (
                   <a
-                    key={i}
+                    key={item.title}
                     className="columns small-6 medium-4 large-3"
                     href={item.link}
                     target="_blank"
@@ -421,9 +421,9 @@ class AboutLogos extends Component {
                 Partners
               </div>
               <div className="list-logos row">
-                {partnersCollaborators.map((item, i) => (
+                {partnersCollaborators.map(item => (
                   <a
-                    key={i}
+                    key={item.title}
                     className="columns small-6 medium-4 large-3"
                     href={item.link}
                     target="_blank"
@@ -436,9 +436,9 @@ class AboutLogos extends Component {
                 Funders
               </div>
               <div className="list-logos row">
-                {funders.map((item, i) => (
+                {funders.map(item => (
                   <a
-                    key={i}
+                    key={item.title}
                     className="columns small-6 medium-4 large-3"
                     href={item.link}
                     target="_blank"

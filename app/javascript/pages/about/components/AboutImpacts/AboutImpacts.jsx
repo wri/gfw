@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Element } from 'react-scroll';
 import { lory } from 'lory.js';
 import Script from 'react-load-script';
-import Dotdotdot from 'react-dotdotdot';
+import Card from 'components/card';
 
 import ButtonArrow from 'components/button-arrow/button-arrow';
 import SliderDots from 'components/slider-dots/slider-dots';
@@ -102,31 +102,10 @@ class AboutImpacts extends Component {
                 <ul className="slides js_slides">
                   {impacts.map((item, i) => (
                     <li
-                      key={i}
+                      key={item.cartodb_id}
                       className={`slide js_slide ${i === 0 ? 'active' : ''}`}
                     >
-                      <div className="c-about-impacts-item">
-                        <div
-                          className="c-about-impacts-item__image"
-                          style={{ backgroundImage: `url(${item.image})` }}
-                        >
-                          <span>{item.image_credit}</span>
-                        </div>
-                        <div className="c-about-impacts-item__paragraph text -paragraph -color-2">
-                          <Dotdotdot clamp={4}>{item.outcome}</Dotdotdot>
-                        </div>
-                        {item.link ? (
-                          <div className="c-about-impacts-item__button">
-                            <a
-                              href={item.link}
-                              target="_blank"
-                              className={'c-regular-button -green'}
-                            >
-                              READ MORE
-                            </a>
-                          </div>
-                        ) : null}
-                      </div>
+                      <Card data={item} />
                     </li>
                   ))}
                 </ul>

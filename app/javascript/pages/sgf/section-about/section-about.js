@@ -4,19 +4,18 @@ import Component from './section-about-component';
 const benefits = {
   title: 'BENEFITS',
   items: [
-    { label: 'Grant awards between $10K - $40K.' },
-    { label: 'Technical assistance in using GFW.' },
-    { label: 'Form part of the GFW partnership.' }
+    { label: '· Grant awards between $10K - $40K.' },
+    { label: '· Individualized training and support.' },
+    { label: '· Form part of the GFW partnership.' }
   ]
 };
 
 const results = {
   title: 'RESULTS',
   items: [
-    { label: '# of grantes' },
-    { label: '# of countries' },
-    { label: '# of hectares monitored' },
-    { label: '# of people trained' }
+    { label: '· 44 projects from 30 countries' },
+    { label: '· Over 1.8 billion hectares of forests monitored using GFW' },
+    { label: '· Over 1,800 people trained in using GFW' }
   ]
 };
 
@@ -24,20 +23,20 @@ const projectTypes = {
   title: 'PROJECT TYPES',
   items: [
     {
-      label: 'Forest management, monitoring and law enforcement'
+      label: '· Forest management, monitoring and law enforcement'
     },
     {
-      label: 'Community empowerment'
+      label: '· Community empowerment'
     },
     {
-      label: 'Advocacy/policy change',
+      label: '· Advocacy/policy change',
       tooltip:
-        'Use GFW data as evidence to advocate for increased protected status or community land rights'
+        'Use GFW data as evidence to advocate for increased protected status or community land rights.'
     },
     {
-      label: 'Journalism/storytelling',
+      label: '· Journalism/storytelling',
       tooltip:
-        'Use GFW data as evidence to advocate for increased protected status or community land rights'
+        'Raise public awareness about the threats to forest-dependent communities by publishing stories or training local journalist using GFW data.'
     }
   ]
 };

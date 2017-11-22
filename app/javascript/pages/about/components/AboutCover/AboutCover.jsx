@@ -44,7 +44,7 @@ class AboutCover extends Component {
         description={this.props.description}
         bgImage={bgImage}
       >
-        <div className="c-about-cover__play-button">
+        <div className="c-cover__play-button">
           <button className="c-play-button" onClick={this.showVideo}>
             <svg className="icon">
               <use xlinkHref="#icon-play" />
