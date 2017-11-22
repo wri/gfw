@@ -1,5 +1,5 @@
 import Overlay from './overlay';
-import CartoCSS from 'raw-loader!../../cartocss/style.cartocss';
+import CartoCSS from '../../cartocss/style.cartocss';
 
 const OPTIONS = {
   user_name: 'wri-01',
@@ -12,11 +12,11 @@ const OPTIONS = {
   raster: false,
   analysis: false,
   actions: {},
-  queryTemplate: `SELECT cartodb_id||':' ||'{tableName}' as cartodb_id, the_geom_webmercator,'{tableName}' AS layer, {analysis} AS analysis, name FROM {tableName}`
+  queryTemplate:
+    "SELECT cartodb_id||':' ||'{tableName}' as cartodb_id, the_geom_webmercator,'{tableName}' AS layer, {analysis} AS analysis, name FROM {tableName}" // eslint-disable-line
 };
 
 class CartoDB extends Overlay {
-
   constructor(map, options) {
     super(map, OPTIONS);
     this.options = Object.assign({}, this.options, options);
@@ -27,22 +27,23 @@ class CartoDB extends Overlay {
       type: this.options.type,
       cartodb_logo: this.options.cartodb_logo,
       user_name: this.options.user_name,
-      sublayers: [{
-        sql: this._getQuery(),
-        cartocss: this.options.cartocss,
-        interactivity: this.options.interactivity,
-        raster: this.options.raster,
-        raster_band: this.options.raster_band
-      }]
+      sublayers: [
+        {
+          sql: this._getQuery(),
+          cartocss: this.options.cartocss,
+          interactivity: this.options.interactivity,
+          raster: this.options.raster,
+          raster_band: this.options.raster_band
+        }
+      ]
     };
 
-    return new Promise((resolve, reject) => {
-      cartodb.createLayer(this.map, cartodbOptions)
-        .on('done',
-          (layer) => {
-            resolve(layer);
-          }
-        );
+    return new Promise(resolve => {
+      cartodb // eslint-disable-line
+        .createLayer(this.map, cartodbOptions)
+        .on('done', layer => {
+          resolve(layer);
+        });
     });
   }
 
