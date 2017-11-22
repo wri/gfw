@@ -5,7 +5,7 @@ $font-family-1: 'Fira Sans', sans-serif;
 /* SCREENS */
 $screen-xs: 320px;
 $screen-s: 540px;
-$screen-m: 768px;
+$screen-m: 850px;
 $screen-l: 1024px;
 $screen-xl: 1280px;
 $screen-xxl: 2000px;
@@ -18,6 +18,7 @@ $grey-light: #f7f7f7;
 $grey-dark: #d6d6d9;
 $slate: #555555;
 $slate-dark: #444444;
+$slate-light: #333333;
 $warm-grey: #999999;
 
 /* FONT COLORS */
@@ -26,3 +27,4 @@ $font-color-2: $slate;
 $font-color-3: $slate-dark;
 $font-color-4: $green-gfw;
 $font-color-5: $warm-grey;
+$font-color-6: $slate-light;

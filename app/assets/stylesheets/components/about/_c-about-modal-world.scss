@@ -1,0 +1,61 @@
+.c-about-modal-world {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 100%;
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: rem(-1px);
+    top: rem(-1px);
+    width: calc(100% + #{rem(2px)});
+    height: calc(100% + #{rem(2px)});
+    border: 1px solid $grey-dark;
+  }
+
+  .c-about-modal-world__text {
+    background-color: $grey-light;
+    padding: rem(60px) rem(40px) rem(35px);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .icon-close {
+      position: absolute;
+      top: rem(15px);
+      right: rem(15px);
+      width: rem(15px);
+      height: rem(15px);
+      cursor: pointer;
+    }
+
+    p {
+      opacity: .7;
+      display: block;
+      margin-top: rem(10px);
+      line-height: 1.67;
+      letter-spacing: -0.4px;
+    }
+
+    .contain-buttons {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+      margin-top: rem(20px);
+
+      .button-round {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: rem(45px);
+        height: rem(45px);
+        border: 1px solid $green-gfw;
+        border-radius: 45px;
+      }
+    }
+  }
+}
