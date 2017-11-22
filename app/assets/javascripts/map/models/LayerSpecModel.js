@@ -18,6 +18,7 @@ define([
     layerOrder: [
       //high resolution maps
       "highres",
+      "sentinel_tiles",
       //-
       "grump2000",
       "mex_forest_zoning_cat",
@@ -188,7 +189,6 @@ define([
       "places_to_watch",
       'forma_month_3',
       'forma_activity',
-      'sentinel_tiles'
     ],
 
     categoryOrder: [
