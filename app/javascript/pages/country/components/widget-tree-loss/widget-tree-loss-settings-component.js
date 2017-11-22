@@ -3,55 +3,52 @@ import PropTypes from 'prop-types';
 import Select from 'react-select-me';
 
 class WidgetTreeLossSettings extends PureComponent {
-
-  locationChange = (value) => {
+  locationChange = value => {
     this.props.onLocationChange(value.value);
   };
 
-  unitChange = (value) => {
+  unitChange = value => {
     this.props.onUnitChange(value.value);
   };
 
-  canopyChange = (value) => {
+  canopyChange = value => {
     this.props.onCanopyChange(value.value);
   };
 
-  startYearChange = (value) => {
+  startYearChange = value => {
     this.props.onStartYearChange(value.value);
   };
 
-  endYearChange = (value) => {
+  endYearChange = value => {
     this.props.onEndYearChange(value.value);
   };
 
-  iconRenderer = () => {
-    return(<svg className="icon icon-angle-arrow-down"><use xlinkHref="#icon-angle-arrow-down">{}</use></svg>);
-  };
+  iconRenderer = () => (
+    <svg className="icon icon-angle-arrow-down">
+      <use xlinkHref="#icon-angle-arrow-down">{}</use>
+    </svg>
+  );
 
   render() {
+    const { locations, units, canopies, settings, yearsLoss } = this.props;
+
     const startYears = [];
     const endYears = [];
-    const {
-      locations,
-      units,
-      canopies,
-      settings,
-      yearsLoss
-    } = this.props;
-    yearsLoss.forEach(function(item){
-      if(item.value < settings.endYear) {
+    yearsLoss.forEach(item => {
+      if (item.value < settings.endYear) {
         startYears.push({
           label: item.label,
-          value: item.value,
+          value: item.value
         });
       }
-      if(item.value > settings.startYear) {
+      if (item.value > settings.startYear) {
         endYears.push({
           label: item.label,
-          value: item.value,
+          value: item.value
         });
       }
     });
+
     return (
       <div className="c-widget-settings">
         <div className="c-widget-settings__select">
@@ -60,7 +57,8 @@ class WidgetTreeLossSettings extends PureComponent {
             iconRenderer={this.iconRenderer}
             value={settings.location}
             options={locations}
-            onChange={this.locationChange}/>
+            onChange={this.locationChange}
+          />
         </div>
         <div className="c-widget-settings__select">
           <div className="c-widget-settings__title">UNIT</div>
@@ -68,7 +66,8 @@ class WidgetTreeLossSettings extends PureComponent {
             iconRenderer={this.iconRenderer}
             value={settings.unit}
             options={units}
-            onChange={this.unitChange}/>
+            onChange={this.unitChange}
+          />
         </div>
         <div className="c-widget-settings__button-select -years">
           <div className="c-widget-settings__title">YEARS</div>
@@ -76,12 +75,14 @@ class WidgetTreeLossSettings extends PureComponent {
             <Select
               value={settings.startYear}
               options={startYears}
-              onChange={this.startYearChange}/>
+              onChange={this.startYearChange}
+            />
             <span className="text-date">to</span>
             <Select
               value={settings.endYear}
               options={endYears}
-              onChange={this.endYearChange}/>
+              onChange={this.endYearChange}
+            />
           </div>
         </div>
         <div className="c-widget-settings__button-select">
@@ -89,7 +90,8 @@ class WidgetTreeLossSettings extends PureComponent {
           <Select
             value={settings.canopy}
             options={canopies}
-            onChange={this.canopyChange}/>
+            onChange={this.canopyChange}
+          />
         </div>
       </div>
     );
@@ -101,6 +103,7 @@ WidgetTreeLossSettings.propTypes = {
   units: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
+  yearsLoss: PropTypes.array.isRequired,
   onLocationChange: PropTypes.func.isRequired,
   onUnitChange: PropTypes.func.isRequired,
   onCanopyChange: PropTypes.func.isRequired,
