@@ -152,7 +152,7 @@ define([
                 title ASC';
         this.url = new UriTemplate(template).fillFromObject({q: sql});
       }
-
+      
       return this.url;
     },
 
