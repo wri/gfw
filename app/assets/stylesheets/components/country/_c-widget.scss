@@ -35,9 +35,11 @@
         position: absolute;
       }
 
-      li {
+      li,
+      button {
         display: inline-flex;
         vertical-align: top;
+        outline: none;
 
         &:not(:last-child) {
           margin-right: rem(5px);
@@ -105,7 +107,7 @@
         height: rem(20px);
         font-size: 12px;
         text-align: left;
-        color: #ffffff;
+        color: $white;
         background-color: $green-gfw;
         border-radius: rem(100px);
         cursor: pointer;
@@ -115,7 +117,7 @@
           top: rem(-1px);
           margin-right: rem(24px);
 
-          &:before {
+          &::before {
             content: '';
             position: absolute;
             top: 0;
@@ -140,16 +142,14 @@
 
     @media screen and (min-width: $screen-l) {
       .c-widget-header__options {
-
         .c-widget-header__option-button {
-
           .large-6 & {
             position: absolute;
             top: rem(38px);
             right: 0;
             margin-right: 0;
 
-            &:before {
+            &::before {
               content: normal;
             }
           }
