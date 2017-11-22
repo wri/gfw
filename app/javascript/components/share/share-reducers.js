@@ -1,0 +1,14 @@
+export const initialState = {
+  isOpen: false,
+  data: {}
+};
+
+const setShareModal = (state, { payload }) => ({
+  ...state,
+  isOpen: payload.isOpen !== undefined ? payload.isOpen : state.isOpen,
+  data: payload.data !== undefined ? payload.data : state.data
+});
+
+export default {
+  setShareModal
+};

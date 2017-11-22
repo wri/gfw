@@ -1,7 +1,6 @@
 .c-widget-stories {
   margin-top: rem(20px);
   position: relative;
-  z-index: 101;
   width: 100vw;
 
   .row {
@@ -40,12 +39,11 @@
         p {
           font-size: 18px;
           line-height: 2.22;
-          color: rgba($slate, .5);
-
+          color: rgba($slate, 0.5);
         }
       }
 
-      .description{
+      .description {
         font-size: 18px;
         line-height: 1.67;
         letter-spacing: -0.4px;
@@ -61,7 +59,7 @@
         text-decoration: underline;
         display: inline-block;
         margin-top: rem(40px);
-        color: #97be32;;
+        color: #97be32;
       }
     }
 
@@ -85,7 +83,7 @@
         position: absolute;
         background-color: white;
         left: -52px;
-        border: 1px solid rgba($slate, .1);
+        border: 1px solid rgba($slate, 0.1);
         display: none;
 
         @media screen and (min-width: $screen-m) {
@@ -96,7 +94,7 @@
       h3 {
         font-size: 18px;
         line-height: 2.22;
-        color: rgba($slate, .5);
+        color: rgba($slate, 0.5);
       }
 
       .title-name {
@@ -114,7 +112,7 @@
           width: calc(100% + 50px);
           position: relative;
           bottom: 30px;
-          background-color: rgba($slate, .5);
+          background-color: rgba($slate, 0.5);
         }
       }
 
@@ -124,7 +122,7 @@
         font-size: 18px;
         line-height: 1.67;
         letter-spacing: -0.4px;
-        color: rgba($slate, .7);
+        color: rgba($slate, 0.7);
       }
 
       .link {

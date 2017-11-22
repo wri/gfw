@@ -13,8 +13,10 @@ const countryReducers = {
 };
 
 // Components
+import * as ShareComponent from 'components/share/share';
 import * as headerComponent from 'pages/country/components/header/header';
 import * as mapComponent from 'pages/country/components/map/map';
+import * as widgetHeaderComponent from 'pages/country/components/widget-header/widget-header';
 import * as widgetAreasMostCoverGainComponent from 'pages/country/components/widget-areas-most-cover-gain/widget-areas-most-cover-gain';
 import * as widgetPlantationAreaComponent from 'pages/country/components/widget-plantation-area/widget-plantation-area';
 import * as widgetStoriesComponent from 'pages/country/components/widget-stories/widget-stories';
@@ -26,8 +28,10 @@ import * as widgetTreeLocatedComponent from 'pages/country/components/widget-tre
 import * as widgetTreeLossComponent from 'pages/country/components/widget-tree-loss/widget-tree-loss';
 
 const componentsReducers = {
+  share: handleActions(ShareComponent),
   header: handleActions(headerComponent),
   map: handleActions(mapComponent),
+  widgetHeader: handleActions(widgetHeaderComponent),
   widgetAreasMostCoverGain: handleActions(widgetAreasMostCoverGainComponent),
   widgetPlantationArea: handleActions(widgetPlantationAreaComponent),
   widgetStories: handleActions(widgetStoriesComponent),

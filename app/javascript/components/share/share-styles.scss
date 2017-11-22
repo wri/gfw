@@ -1,0 +1,11 @@
+@import '~styles/settings.scss';
+
+.c-share {
+  background-color: red;
+
+  &__title {
+    font-size: 21px;
+    padding: 0 0 10px;
+    text-align: center;
+  }
+}
