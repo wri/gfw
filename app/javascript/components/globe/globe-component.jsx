@@ -74,16 +74,13 @@ class GlobeComponent extends React.Component {
       'click',
       event => {
         event.preventDefault();
-        mouse.x =
-          event.offsetX / this.renderer.domElement.clientWidth * (2 - 1);
+        mouse.x = event.offsetX / this.renderer.domElement.clientWidth * 2 - 1;
         mouse.y =
-          -(event.offsetY / this.renderer.domElement.clientHeight) * (2 + 1);
+          -(event.offsetY / this.renderer.domElement.clientHeight) * 2 + 1;
 
         this.camera.updateMatrixWorld();
         raycaster.setFromCamera(mouse, this.camera);
-
         const intersects = raycaster.intersectObjects(this.scene.children);
-
         if (intersects && intersects.length > 1) {
           const userData = intersects[0].object.data;
           this.handleClick(userData);
