@@ -24,13 +24,10 @@ define([
             ['loss', 'forestgain','prodes', 'forest2000', 'forest2010'],
             ['loss', 'forestgain','terrailoss', 'forest2000', 'forest2010'],
             ['loss', 'forestgain','viirs_fires_alerts', 'forest2000', 'forest2010'],
-
             ['loss', 'forestgain', "peru_forma_250", "brazil_forma_250", "laos_forma_250", "indonesia_forma_250", "drc_forma_250",
             'forma', 'forma_coverage', 'forma_activity', 'forest2000', 'forest2010'],
-
             ['loss', 'forestgain', "peru_forma_250", "brazil_forma_250", "laos_forma_250", "indonesia_forma_250", "drc_forma_250",
             'forma', 'forma_coverage', 'forma_month_3', 'forest2000', 'forest2010'],
-
             ['loss', 'forestgain','umd_as_it_happens', 'places_to_watch', 'uncurated_places_to_watch','forest2000','forest2010'],
             ['umd_as_it_happens', 'places_to_watch', 'uncurated_places_to_watch','forest2000','forest2010'],
             ["peru_forma_250", "brazil_forma_250", "laos_forma_250", "indonesia_forma_250", "drc_forma_250",
