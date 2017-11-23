@@ -6,7 +6,14 @@ import './widget-header-styles.scss';
 
 class WidgetHeader extends PureComponent {
   render() {
-    const { children, title, noMap, viewOnMapCallback, openShare } = this.props;
+    const {
+      children,
+      title,
+      noMap,
+      viewOnMapCallback,
+      openShare,
+      shareAnchor
+    } = this.props;
 
     return (
       <div className="c-widget-header">
@@ -46,7 +53,7 @@ class WidgetHeader extends PureComponent {
           </li>
           <button
             className="c-widget-header__option-circle c-widget-header__option-circle--white"
-            onClick={openShare}
+            onClick={() => openShare(shareAnchor)}
           >
             <svg className="icon icon-share -dark">
               <use xlinkHref="#icon-share" />
@@ -61,6 +68,7 @@ class WidgetHeader extends PureComponent {
 WidgetHeader.propTypes = {
   title: PropTypes.string.isRequired,
   openShare: PropTypes.func.isRequired,
+  shareAnchor: PropTypes.string,
   noMap: PropTypes.bool,
   viewOnMapCallback: PropTypes.func,
   children: PropTypes.object

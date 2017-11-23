@@ -1,11 +1,50 @@
 @import '~styles/settings.scss';
+$input-button-width: rem(78px);
 
 .c-share {
-  background-color: red;
+  padding: rem(13px) rem(20px);
 
   &__title {
+    padding: 0 0 rem(4px);
     font-size: 21px;
-    padding: 0 0 10px;
+    font-weight: 300;
     text-align: center;
   }
+
+  &__subtitle {
+    font-size: 13px;
+    text-align: center;
+  }
+
+  &__input-container {
+    height: rem(39px);
+    margin-top: rem(12px);
+
+    > * {
+      display: inline-block;
+      height: 100%;
+    }
+  }
+
+  &__input {
+    width: calc(100% - #{$input-button-width});
+    padding: 0 rem(10px);
+    border: 1px solid $border;
+    border-right: 0;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  &__input-button {
+    width: $input-button-width;
+    border: 1px solid $green-gfw;
+    border-radius: 0;
+    font-size: 14px;
+    color: $slate;
+  }
+}
+
+.c-share-close {
+  right: rem(13px);
+  top: rem(13px);
 }

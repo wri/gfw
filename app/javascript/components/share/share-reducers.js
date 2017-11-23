@@ -1,6 +1,7 @@
 export const initialState = {
   isOpen: false,
-  data: {}
+  data: {},
+  url: ''
 };
 
 const setShareModal = (state, { payload }) => ({
@@ -9,6 +10,12 @@ const setShareModal = (state, { payload }) => ({
   data: payload.data !== undefined ? payload.data : state.data
 });
 
+const setShareUrl = (state, { payload }) => ({
+  ...state,
+  url: payload
+});
+
 export default {
-  setShareModal
+  setShareModal,
+  setShareUrl
 };

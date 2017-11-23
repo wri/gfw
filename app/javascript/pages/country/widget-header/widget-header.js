@@ -9,9 +9,12 @@ import WidgetHeaderComponent from './widget-header-component';
 const mapStateToProps = () => ({});
 
 const WidgetHeaderContainer = props => {
-  const openShare = () => {
+  const openShare = shareAnchor => {
     props.setShareModal({
-      isOpen: true
+      isOpen: true,
+      data: {
+        url: `${window.location.href}#${shareAnchor}`
+      }
     });
   };
 
