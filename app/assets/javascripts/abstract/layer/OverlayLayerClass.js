@@ -23,7 +23,6 @@ define([
 
     init: function(layer, options, map) {
       this.map = map;
-      debugger;
       this.layer = layer;
       this.name = layer.slug;
       this.tileSize = new google.maps.Size(256, 256);
