@@ -52,7 +52,11 @@ class WidgetTreeLoss extends PureComponent {
     const unitMeasure = settings.unit === 'Ha' ? 'Ha' : '%';
     return (
       <div className="c-widget c-widget-tree-loss">
-        <WidgetHeader title={'Tree cover loss'} viewOnMapCallback={viewOnMap}>
+        <WidgetHeader
+          title={'Tree cover loss'}
+          viewOnMapCallback={viewOnMap}
+          shareAnchor={'tree-loss'}
+        >
           <WidgetTreeLossSettings
             type="settings"
             locations={locations}
@@ -138,9 +142,21 @@ class WidgetTreeLoss extends PureComponent {
 WidgetTreeLoss.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
-  viewOnMap: PropTypes.func.isRequired,
+  countryRegion: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
   yearsLoss: PropTypes.array.isRequired,
-  years: PropTypes.array.isRequired
+  years: PropTypes.array.isRequired,
+  units: PropTypes.array.isRequired,
+  settings: PropTypes.object.isRequired,
+  canopies: PropTypes.array.isRequired,
+  locations: PropTypes.array.isRequired,
+  viewOnMap: PropTypes.func.isRequired,
+  updateData: PropTypes.func.isRequired,
+  setTreeLossSettingsLocation: PropTypes.func.isRequired,
+  setTreeLossSettingsUnit: PropTypes.func.isRequired,
+  setTreeLossSettingsCanopy: PropTypes.func.isRequired,
+  setTreeLossSettingsStartYear: PropTypes.func.isRequired,
+  setTreeLossSettingsEndYear: PropTypes.func.isRequired
 };
 
 export default WidgetTreeLoss;
