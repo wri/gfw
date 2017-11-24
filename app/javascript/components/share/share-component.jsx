@@ -8,20 +8,22 @@ import './share-styles.scss';
 
 class Share extends PureComponent {
   componentWillUpdate(newProps) {
-    if (newProps.isOpen && newProps.url === '') {
-      const { data, setShareableUrl } = newProps;
-      setShareableUrl(data.url);
+    if (newProps.isOpen && this.props.data.url !== newProps.data.url) {
+      const { setShareableUrl } = newProps;
+      setShareableUrl(newProps);
     }
   }
 
   getContent() {
-    const { url } = this.props;
+    const { url, haveEmbed, data, selectedType } = this.props;
 
     return (
       <div className="c-share">
-        <div className="c-share__title">Share this widget</div>
+        <div className="c-share__title">{data.title}</div>
         <div className="c-share__subtitle">
-          Click and paste link in email or IM
+          {selectedType === 'embed'
+            ? 'Click and paste HTML to embed in website.'
+            : 'Click and paste link in email or IM'}
         </div>
         <div className="c-share__input-container">
           <input
@@ -33,12 +35,33 @@ class Share extends PureComponent {
           />
           <button className="c-share__input-button">COPY</button>
         </div>
-        <div className="c-share__buttons-container">
-          <ButtonRegular text="Embed" />
-          <ButtonRegular text="Link" />
-        </div>
+        {haveEmbed ? (
+          <div className="c-share__buttons-container">
+            <ButtonRegular
+              text="EMBED"
+              color="white-border"
+              className={`c-share__button ${
+                selectedType === 'embed' ? '-selected' : ''
+              }`}
+              clickFunction={() => this.changeType('embed')}
+            />
+            <ButtonRegular
+              text="LINK"
+              color="white-border"
+              className={`c-share__button ${
+                selectedType === 'link' ? '-selected' : ''
+              }`}
+              clickFunction={() => this.changeType('link')}
+            />
+          </div>
+        ) : null}
       </div>
     );
+  }
+
+  changeType(type) {
+    const { setShareType } = this.props;
+    setShareType(type);
   }
 
   handleFocus = event => {
@@ -86,8 +109,12 @@ class Share extends PureComponent {
 
 Share.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  haveEmbed: PropTypes.bool.isRequired,
+  selectedType: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
-  setShareModal: PropTypes.func.isRequired
+  data: PropTypes.object.isRequired,
+  setShareModal: PropTypes.func.isRequired,
+  setShareType: PropTypes.func.isRequired
 };
 
 export default Share;

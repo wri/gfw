@@ -12,7 +12,13 @@ const WidgetHeaderContainer = props => {
   const openShare = shareAnchor => {
     props.setShareModal({
       isOpen: true,
+      haveEmbed: true,
+      embedSettings: {
+        width: 315,
+        height: 460
+      },
       data: {
+        title: 'Share this widget',
         url: `${window.location.href}#${shareAnchor}`
       }
     });

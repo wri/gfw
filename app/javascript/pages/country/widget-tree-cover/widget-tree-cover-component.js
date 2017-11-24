@@ -64,7 +64,11 @@ class WidgetTreeCover extends PureComponent {
 
     return (
       <div className="c-widget c-widget-tree-cover">
-        <WidgetHeader title={title} viewOnMapCallback={viewOnMap}>
+        <WidgetHeader
+          title={title}
+          viewOnMapCallback={viewOnMap}
+          shareAnchor={'tree-cover'}
+        >
           <WidgetTreeCoverSettings
             type="settings"
             locations={locations}
@@ -128,7 +132,6 @@ WidgetTreeCover.propTypes = {
   setInitialData: PropTypes.func.isRequired,
   updateData: PropTypes.func.isRequired,
   viewOnMap: PropTypes.func.isRequired,
-  countryData: PropTypes.object.isRequired,
   totalCover: PropTypes.number.isRequired,
   totalIntactForest: PropTypes.number.isRequired,
   totalNonForest: PropTypes.number.isRequired,
