@@ -36,6 +36,15 @@
     }
   }
 
+  &.-white-border {
+    background-color: $white;
+    border: 1px solid $green-gfw;
+
+    &:hover {
+      background-color: darken($white, 10%);
+    }
+  }
+
   .c-regular-button__linker {
     position: absolute;
     top: 0;

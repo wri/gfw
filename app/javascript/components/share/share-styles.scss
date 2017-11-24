@@ -42,6 +42,30 @@ $input-button-width: rem(78px);
     font-size: 14px;
     color: $slate;
   }
+
+  &__buttons-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: rem(10px);
+  }
+
+  &__button {
+    width: rem(125px);
+    height: rem(36px);
+    font-size: 14px;
+    font-weight: 500;
+    color: $slate;
+
+    &.-selected {
+      background-color: $green-gfw;
+      border: 0;
+      color: $white;
+
+      &:hover {
+        background-color: darken($green-gfw, 10%);
+      }
+    }
+  }
 }
 
 .c-share-close {
