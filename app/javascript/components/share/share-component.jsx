@@ -8,7 +8,11 @@ import './share-styles.scss';
 
 class Share extends PureComponent {
   componentWillUpdate(newProps) {
-    if (newProps.isOpen && this.props.data.url !== newProps.data.url) {
+    if (
+      newProps.isOpen &&
+      (newProps.data.url !== this.props.data.url ||
+        newProps.selectedType !== this.props.selectedType)
+    ) {
       const { setShareableUrl } = newProps;
       setShareableUrl(newProps);
     }
@@ -27,13 +31,21 @@ class Share extends PureComponent {
         </div>
         <div className="c-share__input-container">
           <input
+            ref={input => {
+              this.textInput = input;
+            }}
             type="text"
             value={url}
             readOnly
             onClick={this.handleFocus}
             className="c-share__input"
           />
-          <button className="c-share__input-button">COPY</button>
+          <button
+            className="c-share__input-button"
+            onClick={this.copyToClipboard}
+          >
+            COPY
+          </button>
         </div>
         {haveEmbed ? (
           <div className="c-share__buttons-container">
@@ -63,6 +75,16 @@ class Share extends PureComponent {
     const { setShareType } = this.props;
     setShareType(type);
   }
+
+  copyToClipboard = () => {
+    this.textInput.select();
+
+    try {
+      document.execCommand('copy');
+    } catch (err) {
+      alert('This browser does not support clipboard access');
+    }
+  };
 
   handleFocus = event => {
     event.target.select();
