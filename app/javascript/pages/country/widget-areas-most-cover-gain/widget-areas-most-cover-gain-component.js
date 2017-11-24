@@ -45,6 +45,7 @@ class WidgetAreasMostCoverGain extends PureComponent {
       <div className="c-widget c-widget-areas-most-cover-gain">
         <WidgetHeader
           title={`AREAS WITH MOST TREE COVER GAIN IN ${countryData.name}`}
+          shareAnchor={'areas-most-cover-gain'}
         >
           <WidgetAreasMostCoverGainSettings
             type="settings"

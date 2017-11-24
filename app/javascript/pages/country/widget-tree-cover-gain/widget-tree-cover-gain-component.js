@@ -41,6 +41,7 @@ class WidgetTreeCoverGain extends PureComponent {
               : countryRegions[countryRegion - 1].name
           }`}
           noMap={false}
+          shareAnchor={'tree-cover-gain'}
         >
           <WidgetTreeCoverGainSettings
             type="settings"

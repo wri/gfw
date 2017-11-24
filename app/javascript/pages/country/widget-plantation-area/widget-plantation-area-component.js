@@ -43,6 +43,7 @@ class WidgetPlantationArea extends PureComponent {
         <WidgetHeader
           noMap
           title={`PLANTATION AREA WITHIN ${countryData.name}`}
+          shareAnchor={'plantation-area'}
         >
           <WidgetPlantationAreaSettings
             type="settings"
