@@ -41,6 +41,12 @@ $input-button-width: rem(78px);
     border-radius: 0;
     font-size: 14px;
     color: $slate;
+    background-color: $white;
+    outline: none;
+
+    &:hover {
+      background-color: darken($white, 10%);
+    }
   }
 
   &__buttons-container {
