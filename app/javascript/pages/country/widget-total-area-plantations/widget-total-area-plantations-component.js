@@ -35,6 +35,7 @@ class WidgetTotalAreaPlantations extends PureComponent {
       <div className="c-widget c-widget-total-area-plantations">
         <WidgetHeader
           title={`TOTAL AREA OF PLANTATIONS WITHIN ${countryData.name}`}
+          shareAnchor={'total-area-plantations'}
         >
           <WidgetTotalAreaPlantationsSettings
             type="settings"
