@@ -66,7 +66,7 @@ class WidgetTreeCoverGain extends PureComponent {
                   {' '}
                   {numeral(Math.round(totalAmount / 1000)).format('0,0')}{' '}
                 </strong>
-                Ha of tree cover{' '}
+                ha of tree cover{' '}
                 {countryRegion === 0 ? 'country-wide' : 'jurisdiction-wide'},
                 equivalent to{' '}
                 <strong>

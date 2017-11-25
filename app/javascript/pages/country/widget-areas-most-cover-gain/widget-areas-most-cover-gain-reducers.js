@@ -22,8 +22,8 @@ export const initialState = {
   ],
   units: [
     {
-      value: 'Ha',
-      label: 'Hectare - Ha'
+      value: 'ha',
+      label: 'Hectare - ha'
     },
     {
       value: '%',
@@ -33,7 +33,7 @@ export const initialState = {
   settings: {
     location: 'all',
     locationLabel: 'All Region',
-    unit: 'Ha',
+    unit: 'ha',
     canopy: 30,
     startYear: 2011,
     endYear: 2015

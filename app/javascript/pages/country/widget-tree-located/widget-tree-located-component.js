@@ -73,9 +73,9 @@ class WidgetTreeLocated extends PureComponent {
                     {item.name}
                   </div>
                   <div className="c-widget-tree-located__region-value">
-                    {settings.unit === 'Ha'
+                    {settings.unit === 'ha'
                       ? `${numeral(Math.round(item.value / 1000)).format('0,0')
-                      } Ha`
+                      } ha`
                       : `${Math.round(item.value)} %`}
                   </div>
                 </li>

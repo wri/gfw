@@ -46,7 +46,7 @@ const WidgetTreeLossContainer = props => {
         (typeof accumulator === 'object' ? accumulator.value : accumulator) +
           item.value
       ));
-      if (props.settings.unit !== 'Ha') {
+      if (props.settings.unit !== 'ha') {
         response.data.data.forEach((item) => {
           percentageValues.push({
             value: item.value / Math.round(props.countryData.area_ha) * 100,
@@ -56,11 +56,11 @@ const WidgetTreeLossContainer = props => {
       }
       const values = {
         total:
-          props.settings.unit === 'Ha'
+          props.settings.unit === 'ha'
             ? total
             : total / Math.round(props.countryData.area_ha) * 100,
         years:
-          props.settings.unit === 'Ha' ? response.data.data : percentageValues
+          props.settings.unit === 'ha' ? response.data.data : percentageValues
       };
       props.setTreeLossValues(values);
     });

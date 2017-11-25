@@ -60,7 +60,7 @@ class WidgetTreeCover extends PureComponent {
         percentage: totalNonForest / totalValue * 100
       }
     ];
-    const unitMeasure = settings.unit === 'Ha' ? 'Ha' : '%';
+    const unitMeasure = settings.unit === 'ha' ? 'ha' : '%';
 
     return (
       <div className="c-widget c-widget-tree-cover">
@@ -95,7 +95,7 @@ class WidgetTreeCover extends PureComponent {
                     className="c-widget-tree-cover__legend-value"
                     style={{ color: item.color }}
                   >
-                    {settings.unit === 'Ha'
+                    {settings.unit === 'ha'
                       ? numeral(Math.round(item.value / 1000)).format('0,0')
                       : Math.round(item.value)}
                     <span className="unit-text">{unitMeasure}</span>

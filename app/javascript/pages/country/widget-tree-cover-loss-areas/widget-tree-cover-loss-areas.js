@@ -72,7 +72,7 @@ const WidgetTreeCoverLossAreasContainer = props => {
         regionsForestLoss.push({
           name: props.countryRegions[numberRegion].name,
           value:
-            props.settings.unit === 'Ha'
+            props.settings.unit === 'ha'
               ? item.value
               : item.value / Math.round(props.countryData.area_ha) * 100,
           color: colors[indexColors],
@@ -84,7 +84,7 @@ const WidgetTreeCoverLossAreasContainer = props => {
             name: props.countryRegions[numberRegion].name,
             color: colors[indexColors],
             value:
-              props.settings.unit === 'Ha'
+              props.settings.unit === 'ha'
                 ? item.value
                 : item.value / Math.round(props.countryData.area_ha) * 100
           });
@@ -94,7 +94,7 @@ const WidgetTreeCoverLossAreasContainer = props => {
             name: 'others',
             color: colors[indexColors],
             value:
-              props.settings.unit === 'Ha'
+              props.settings.unit === 'ha'
                 ? othersValue
                 : othersValue / Math.round(props.countryData.area_ha) * 100
           });

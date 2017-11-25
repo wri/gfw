@@ -51,7 +51,7 @@ const WidgetTreeLocatedContainer = props => {
               regionsForest.push({
                 name: props.countryRegions[numberRegion].name,
                 value:
-                  props.settings.unit === 'Ha'
+                  props.settings.unit === 'ha'
                     ? item.value
                     : item.value / totalCover * 100,
                 position: index + 1

@@ -83,7 +83,7 @@ const WidgetAreasMostCoverGainContainer = props => {
               name: props.countryRegions[numberRegion].name,
               color: colors[indexColors],
               value:
-                props.settings.unit === 'Ha'
+                props.settings.unit === 'ha'
                   ? item.value
                   : item.value / totalCoverGain.data.data[0].value * 100
             });
@@ -93,7 +93,7 @@ const WidgetAreasMostCoverGainContainer = props => {
               name: 'others',
               color: colors[indexColors],
               value:
-                props.settings.unit === 'Ha'
+                props.settings.unit === 'ha'
                   ? othersValue
                   : othersValue / totalCoverGain.data.data[0].value * 100
             });

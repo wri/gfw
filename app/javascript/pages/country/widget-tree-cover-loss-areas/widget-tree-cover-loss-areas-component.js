@@ -90,7 +90,7 @@ class WidgetTreeLossAreas extends PureComponent {
                   ))}
                 </Pie>
                 <Tooltip
-                  percentage={settings.unit !== 'Ha'}
+                  percentage={settings.unit !== 'ha'}
                   showCountry
                   content={<TooltipChart />}
                 />
@@ -109,12 +109,12 @@ class WidgetTreeLossAreas extends PureComponent {
                         {item.name}
                       </div>
                       <div className="c-widget-tree-cover-loss-areas__legend-value">
-                        {settings.unit === 'Ha'
+                        {settings.unit === 'ha'
                           ? numeral(Math.round(item.value / 1000)).format(
                             '0,0'
                           )
                           : Math.round(item.value)}
-                        {settings.unit === 'Ha' ? 'Ha' : '%'}
+                        {settings.unit === 'ha' ? 'ha' : '%'}
                       </div>
                     </li>
                   ))}
