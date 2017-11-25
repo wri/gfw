@@ -3,8 +3,8 @@ export const initialState = {
   plantationData: [],
   units: [
     {
-      value: 'Ha',
-      label: 'Hectare - Ha'
+      value: 'ha',
+      label: 'Hectare - ha'
     },
     {
       value: '%',
@@ -12,7 +12,7 @@ export const initialState = {
     }
   ],
   settings: {
-    unit: 'Ha',
+    unit: 'ha',
     startYear: 2011,
     endYear: 2015
   }

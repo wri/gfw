@@ -70,7 +70,7 @@ export const initialState = {
   ],
   locations: [
     {
-      label: 'Plantations',
+      label: 'Tree Plantations',
       value: 'plantations'
     },
     {
@@ -100,8 +100,8 @@ export const initialState = {
   ],
   units: [
     {
-      value: 'Ha',
-      label: 'Hectare - Ha'
+      value: 'ha',
+      label: 'Hectare - ha'
     },
     {
       value: '%',
@@ -150,7 +150,7 @@ export const initialState = {
     startYear: 2001,
     endYear: 2016,
     location: 'plantations',
-    unit: 'Ha',
+    unit: 'ha',
     canopy: 30
   }
 };

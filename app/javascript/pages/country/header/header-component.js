@@ -80,9 +80,9 @@ class Header extends PureComponent {
               </strong>
             </p>
             <p>
-              Excluding plantations,{' '}
+              Excluding tree plantations,{' '}
               <strong>
-                {numeral(Math.round(totalCoverLoss / 1000)).format('0,0')} Ha
+                {numeral(Math.round(totalCoverLoss / 1000)).format('0,0')} ha
               </strong>{' '}
               of tree cover loss occured in <strong>2015.</strong>
             </p>

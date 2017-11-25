@@ -49,7 +49,7 @@ class WidgetTreeLoss extends PureComponent {
       countryRegion
     } = this.props;
 
-    const unitMeasure = settings.unit === 'Ha' ? 'Ha' : '%';
+    const unitMeasure = settings.unit === 'ha' ? 'ha' : '%';
     return (
       <div className="c-widget c-widget-tree-loss">
         <WidgetHeader
@@ -93,7 +93,7 @@ class WidgetTreeLoss extends PureComponent {
                   className="c-widget-tree-loss__legend-value"
                   style={{ color: '#f26798' }}
                 >
-                  {settings.unit === 'Ha'
+                  {settings.unit === 'ha'
                     ? numeral(Math.round(total / 1000)).format('0,0')
                     : Math.round(total)}
                   {unitMeasure}
@@ -126,7 +126,7 @@ class WidgetTreeLoss extends PureComponent {
                   <Tooltip content={<TooltipChart />} />
                   <Bar dataKey="value" barSize={22} fill="#fe6598" />
                   <Tooltip
-                    percentage={settings.unit !== 'Ha'}
+                    percentage={settings.unit !== 'ha'}
                     content={<TooltipChart />}
                   />
                 </BarChart>

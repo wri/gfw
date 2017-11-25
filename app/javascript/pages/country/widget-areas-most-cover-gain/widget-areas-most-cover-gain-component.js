@@ -89,7 +89,7 @@ class WidgetAreasMostCoverGain extends PureComponent {
                     ))}
                   </Pie>
                   <Tooltip
-                    percentage={settings.unit !== 'Ha'}
+                    percentage={settings.unit !== 'ha'}
                     percentageAndArea={false}
                     showCountry
                     content={<TooltipChart />}

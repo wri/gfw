@@ -74,7 +74,7 @@ export const initialState = {
   ],
   regions: [
     {
-      label: 'Plantations',
+      label: 'Tree Plantations',
       value: 'plantations'
     },
     {
@@ -104,8 +104,8 @@ export const initialState = {
   ],
   units: [
     {
-      value: 'Ha',
-      label: 'Hectare - Ha'
+      value: 'ha',
+      label: 'Hectare - ha'
     },
     {
       value: '%',
@@ -148,7 +148,7 @@ export const initialState = {
   ],
   settings: {
     region: 'All',
-    unit: 'Ha',
+    unit: 'ha',
     canopy: 30,
     startYear: 2001,
     endYear: 2016

@@ -7,8 +7,8 @@ export const initialState = {
   },
   units: [
     {
-      value: 'Ha',
-      label: 'Hectare - Ha'
+      value: 'ha',
+      label: 'Hectare - ha'
     },
     {
       value: '%',
@@ -16,7 +16,7 @@ export const initialState = {
     }
   ],
   settings: {
-    unit: 'Ha'
+    unit: 'ha'
   }
 };
 
