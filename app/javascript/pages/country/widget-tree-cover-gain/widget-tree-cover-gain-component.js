@@ -36,9 +36,7 @@ class WidgetTreeCoverGain extends PureComponent {
       <div className="c-widget c-widget-tree-cover-gain">
         <WidgetHeader
           title={`TREE COVER GAIN IN ${
-            admin1 === 0
-              ? countryData.name
-              : admin1List[admin1 - 1].name
+            admin1 === 0 ? countryData.name : admin1List[admin1 - 1].name
           }`}
           noMap={false}
           shareAnchor={'tree-cover-gain'}
@@ -58,9 +56,7 @@ class WidgetTreeCoverGain extends PureComponent {
               <p className="title">Hansen - UMD</p>
               <p>
                 Over the period of {settings.startYear}-{settings.endYear}{' '}
-                {admin1 === 0
-                  ? countryData.name
-                  : admin1List[admin1 - 1].name}{' '}
+                {admin1 === 0 ? countryData.name : admin1List[admin1 - 1].name}{' '}
                 gained
                 <strong>
                   {' '}

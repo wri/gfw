@@ -21,9 +21,7 @@ class WidgetStories extends PureComponent {
           <div className="row">
             <div className="columns c-widget-stories__primary-info">
               <h2>
-                {admin1 === 0
-                  ? countryData.name
-                  : admin1List[admin1 - 1].name}{' '}
+                {admin1 === 0 ? countryData.name : admin1List[admin1 - 1].name}{' '}
                 Stories
               </h2>
               <div className="container-titles">

@@ -65,33 +65,28 @@ const HeaderContainer = props => {
     });
 
     getTotalCover(iso, admin1, 30).then(totalCoverResponse => {
-      getTreeLossByYear(
-        iso,
-        admin1,
-        { minYear: 2015, maxYear: 2015 },
-        30
-      ).then(coverLoss => {
-        const totalCover = Math.round(totalCoverResponse.data.data[0].value);
-        const values = {
-          selectedCountry,
-          selectedRegion,
-          countrySelectData,
-          regionSelectData,
-          totalCoverHeader:
-          admin1 === 0
-            ? countryData.area_ha
-            : admin1List[admin1 - 1].area_ha,
-          totalForestHeader: totalCover,
-          percentageForestHeader:
-            admin1 === 0
-              ? totalCover / Math.round(countryData.area_ha) * 100
-              : totalCover /
-                Math.round(admin1List[admin1 - 1].area_ha) *
-                100,
-          totalCoverLoss: coverLoss.data.data[0].value
-        };
-        setHeaderValues(values);
-      });
+      getTreeLossByYear(iso, admin1, { minYear: 2015, maxYear: 2015 }, 30).then(
+        coverLoss => {
+          const totalCover = Math.round(totalCoverResponse.data.data[0].value);
+          const values = {
+            selectedCountry,
+            selectedRegion,
+            countrySelectData,
+            regionSelectData,
+            totalCoverHeader:
+              admin1 === 0
+                ? countryData.area_ha
+                : admin1List[admin1 - 1].area_ha,
+            totalForestHeader: totalCover,
+            percentageForestHeader:
+              admin1 === 0
+                ? totalCover / Math.round(countryData.area_ha) * 100
+                : totalCover / Math.round(admin1List[admin1 - 1].area_ha) * 100,
+            totalCoverLoss: coverLoss.data.data[0].value
+          };
+          setHeaderValues(values);
+        }
+      );
     });
   };
 

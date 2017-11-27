@@ -39,15 +39,19 @@ const WidgetTreeLossContainer = props => {
     getTreeLossByYear(
       newProps.iso,
       newProps.admin1,
-      { minYear: newProps.settings.startYear, maxYear: newProps.settings.endYear },
+      {
+        minYear: newProps.settings.startYear,
+        maxYear: newProps.settings.endYear
+      },
       newProps.settings.canopy
     ).then(response => {
-      const total = response.data.data.reduce((accumulator, item) => (
-        (typeof accumulator === 'object' ? accumulator.value : accumulator) +
+      const total = response.data.data.reduce(
+        (accumulator, item) =>
+          (typeof accumulator === 'object' ? accumulator.value : accumulator) +
           item.value
-      ));
+      );
       if (newProps.settings.unit !== 'ha') {
-        response.data.data.forEach((item) => {
+        response.data.data.forEach(item => {
           percentageValues.push({
             value: item.value / Math.round(newProps.countryData.area_ha) * 100,
             label: item.date
@@ -56,11 +60,13 @@ const WidgetTreeLossContainer = props => {
       }
       const values = {
         total:
-        newProps.settings.unit === 'ha'
-          ? total
-          : total / Math.round(newProps.countryData.area_ha) * 100,
+          newProps.settings.unit === 'ha'
+            ? total
+            : total / Math.round(newProps.countryData.area_ha) * 100,
         years:
-        newProps.settings.unit === 'ha' ? response.data.data : percentageValues
+          newProps.settings.unit === 'ha'
+            ? response.data.data
+            : percentageValues
       };
       newProps.setTreeLossValues(values);
     });

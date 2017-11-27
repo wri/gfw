@@ -37,52 +37,50 @@ const WidgetTreeCoverContainer = props => {
   };
 
   const setWidgetData = newProps => {
-    getTotalCover(
-      newProps.iso,
-      newProps.admin1,
-      newProps.settings.canopy
-    ).then(totalCoverResponse => {
-      getTotalIntactForest(newProps.iso, newProps.admin1).then(
-        totalIntactForestResponse => {
-          if (totalIntactForestResponse.data.data.length > 0) {
-            const totalCover = Math.round(
-              totalCoverResponse.data.data[0].value
-            );
-            const totalIntactForest = Math.round(
-              totalIntactForestResponse.data.data[0].value
-            );
-            const totalNonForest =
-              Math.round(newProps.countryData.area_ha) -
-              (totalCover + totalIntactForest);
-            const values = {
-              totalCover,
-              totalIntactForest,
-              totalNonForest,
-              title: newProps.getTitle(newProps),
-              locations: [
-                {
-                  value: 'all',
-                  label: 'All Region'
-                },
-                {
-                  value: 'managed',
-                  label: 'Managed'
-                },
-                {
-                  value: 'protected_areas',
-                  label: 'Protected Areas'
-                },
-                {
-                  value: 'ifls',
-                  label: 'IFLs'
-                }
-              ]
-            };
-            newProps.setTreeCoverValues(values);
+    getTotalCover(newProps.iso, newProps.admin1, newProps.settings.canopy).then(
+      totalCoverResponse => {
+        getTotalIntactForest(newProps.iso, newProps.admin1).then(
+          totalIntactForestResponse => {
+            if (totalIntactForestResponse.data.data.length > 0) {
+              const totalCover = Math.round(
+                totalCoverResponse.data.data[0].value
+              );
+              const totalIntactForest = Math.round(
+                totalIntactForestResponse.data.data[0].value
+              );
+              const totalNonForest =
+                Math.round(newProps.countryData.area_ha) -
+                (totalCover + totalIntactForest);
+              const values = {
+                totalCover,
+                totalIntactForest,
+                totalNonForest,
+                title: newProps.getTitle(newProps),
+                locations: [
+                  {
+                    value: 'all',
+                    label: 'All Region'
+                  },
+                  {
+                    value: 'managed',
+                    label: 'Managed'
+                  },
+                  {
+                    value: 'protected_areas',
+                    label: 'Protected Areas'
+                  },
+                  {
+                    value: 'ifls',
+                    label: 'IFLs'
+                  }
+                ]
+              };
+              newProps.setTreeCoverValues(values);
+            }
           }
-        }
-      );
-    });
+        );
+      }
+    );
   };
 
   const getTitle = newProps => {
