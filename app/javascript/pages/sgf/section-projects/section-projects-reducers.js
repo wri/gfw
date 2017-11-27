@@ -4,6 +4,7 @@ export const initialState = {
   loading: false,
   loaded: false,
   error: false,
+  search: '',
   data: [],
   categorySelected: allProjectsCategory
 };
@@ -20,5 +21,9 @@ export default {
   setCategorySelected: (state, { payload }) => ({
     ...state,
     categorySelected: payload
+  }),
+  setSearch: (state, { payload }) => ({
+    ...state,
+    search: payload
   })
 };

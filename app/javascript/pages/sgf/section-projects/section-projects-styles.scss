@@ -3,5 +3,9 @@
 .section-projects-list {
   display: flex;
   align-items: center;
-}
 
+  .search {
+    margin-bottom: 50px;
+    margin-left: 20px;
+  }
+}

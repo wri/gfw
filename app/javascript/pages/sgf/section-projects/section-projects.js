@@ -13,11 +13,18 @@ import {
 
 const actions = { ...sectionActions, ...modalActions };
 
-const mapStateToProps = ({ projects }) => ({
-  data: getProjectsSelected(projects),
-  categories: getCategoriesList(projects),
-  categorySelected: getCategorySelected(projects)
-});
+const mapStateToProps = ({ projects }) => {
+  const projectData = {
+    data: projects.data,
+    search: projects.search
+  };
+  return {
+    data: getProjectsSelected(projectData),
+    categories: getCategoriesList(projects),
+    categorySelected: getCategorySelected(projects),
+    search: projects.search
+  };
+};
 
 export { actions, reducers, initialState };
 
