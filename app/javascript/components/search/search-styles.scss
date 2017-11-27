@@ -8,14 +8,13 @@
     height: 45px;
     border-radius: 100px;
     background-color: rgba($slate, 0.08);
-    color: $black;
+    color: $slate;
     border: 0;
     padding: 0 40px 0 20px;
     font-size: 14px;
 
     &::placeholder {
-      color: rgba($warm-grey, 0.5);
-      font-style: italic;
+      color: rgba($slate, 0.5);
       text-transform: uppercase;
     }
 
@@ -30,6 +29,6 @@
     top: 5px;
     width: 40px;
     height: 40px;
-    fill: $black;
+    fill: $slate;
   }
 }

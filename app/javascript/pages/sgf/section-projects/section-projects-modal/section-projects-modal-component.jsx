@@ -15,7 +15,7 @@ class SectionProjectsModal extends PureComponent {
             <h1 className="text -title-big -color-2 -light">{data.title}</h1>
           )}
           <h2 className="text -title-xxs -color-2-o">
-            {data.legend} {data.city}
+            {data.legend} - {data.city}
           </h2>
         </div>
         {data.image && (
