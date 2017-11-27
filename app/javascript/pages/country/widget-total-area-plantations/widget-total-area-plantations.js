@@ -30,7 +30,11 @@ const WidgetTotalAreaPlantationsContainer = props => {
   const setWidgetData = props => {
     props.setTotalAreaPlantationsValues([
       { name: 'Outside tree plantations', value: 1200, color: '#e9e9ea' },
-      { name: 'Large industrial tree plantation', value: 1100, color: '#fba79f' },
+      {
+        name: 'Large industrial tree plantation',
+        value: 1100,
+        color: '#fba79f'
+      },
       {
         name: 'Mosaic of medium-sized tree plantations',
         value: 900,
@@ -41,7 +45,11 @@ const WidgetTotalAreaPlantationsContainer = props => {
         value: 550,
         color: '#99cf95'
       },
-      { name: 'Clearing/ very young tree plantation', value: 464, color: '#d3b294' }
+      {
+        name: 'Clearing/ very young tree plantation',
+        value: 464,
+        color: '#d3b294'
+      }
     ]);
   };
 

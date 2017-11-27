@@ -45,15 +45,16 @@ const WidgetTreeLocatedContainer = props => {
               totalCoverResponse.data.data[0].value
             );
             totalCoverRegions.data.data.forEach((item, index) => {
-              const numberRegion = _.findIndex(newProps.admin1List, (
-                x
-              ) => x.id === item.adm1);
+              const numberRegion = _.findIndex(
+                newProps.admin1List,
+                x => x.id === item.adm1
+              );
               regionsForest.push({
                 name: newProps.admin1List[numberRegion].name,
                 value:
-                newProps.settings.unit === 'ha'
-                  ? item.value
-                  : item.value / totalCover * 100,
+                  newProps.settings.unit === 'ha'
+                    ? item.value
+                    : item.value / totalCover * 100,
                 position: index + 1
               });
             });
