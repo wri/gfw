@@ -13,9 +13,9 @@ export { default as actions } from './widget-tree-cover-actions';
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeCover.isLoading,
   iso: state.root.iso,
-  countryRegion: state.root.countryRegion,
-  countryRegions: state.root.countryRegions,
+  admin1: state.root.admin1,
   countryData: state.root.countryData,
+  admin1List: state.root.admin1List,
   totalCover: state.widgetTreeCover.totalCover,
   totalIntactForest: state.widgetTreeCover.totalIntactForest,
   totalNonForest: state.widgetTreeCover.totalNonForest,
@@ -39,10 +39,10 @@ const WidgetTreeCoverContainer = props => {
   const setWidgetData = newProps => {
     getTotalCover(
       newProps.iso,
-      newProps.countryRegion,
+      newProps.admin1,
       newProps.settings.canopy
     ).then(totalCoverResponse => {
-      getTotalIntactForest(newProps.iso, newProps.countryRegion).then(
+      getTotalIntactForest(newProps.iso, newProps.admin1).then(
         totalIntactForestResponse => {
           if (totalIntactForestResponse.data.data.length > 0) {
             const totalCover = Math.round(
@@ -91,9 +91,9 @@ const WidgetTreeCoverContainer = props => {
         ? ` and ${newProps.settings.locationLabel}`
         : '';
     const country =
-      newProps.countryRegion === 0
+      newProps.admin1 === 0
         ? newProps.countryData.name
-        : newProps.countryRegions[newProps.countryRegion - 1].name;
+        : newProps.admin1List[newProps.admin1 - 1].name;
     return `Forest cover ${location} in ${country}`;
   };
 

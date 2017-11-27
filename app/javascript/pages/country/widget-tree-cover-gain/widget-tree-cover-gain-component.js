@@ -28,17 +28,17 @@ class WidgetTreeCoverGain extends PureComponent {
       percentage,
       locations,
       settings,
-      countryRegion,
-      countryRegions,
+      admin1,
+      admin1List,
       setTreeCoverGainSettingsLocation
     } = this.props;
     return (
       <div className="c-widget c-widget-tree-cover-gain">
         <WidgetHeader
           title={`TREE COVER GAIN IN ${
-            countryRegion === 0
+            admin1 === 0
               ? countryData.name
-              : countryRegions[countryRegion - 1].name
+              : admin1List[admin1 - 1].name
           }`}
           noMap={false}
           shareAnchor={'tree-cover-gain'}
@@ -58,16 +58,16 @@ class WidgetTreeCoverGain extends PureComponent {
               <p className="title">Hansen - UMD</p>
               <p>
                 Over the period of {settings.startYear}-{settings.endYear}{' '}
-                {countryRegion === 0
+                {admin1 === 0
                   ? countryData.name
-                  : countryRegions[countryRegion - 1].name}{' '}
+                  : admin1List[admin1 - 1].name}{' '}
                 gained
                 <strong>
                   {' '}
                   {numeral(Math.round(totalAmount / 1000)).format('0,0')}{' '}
                 </strong>
                 ha of tree cover{' '}
-                {countryRegion === 0 ? 'country-wide' : 'jurisdiction-wide'},
+                {admin1 === 0 ? 'country-wide' : 'jurisdiction-wide'},
                 equivalent to{' '}
                 <strong>
                   {numeral(Math.round(percentage)).format('0,0')}%
@@ -84,11 +84,16 @@ class WidgetTreeCoverGain extends PureComponent {
 
 WidgetTreeCoverGain.propTypes = {
   isLoading: PropTypes.bool.isRequired,
+  admin1: PropTypes.number.isRequired,
   countryData: PropTypes.object.isRequired,
+  admin1List: PropTypes.array.isRequired,
   totalAmount: PropTypes.number.isRequired,
   percentage: PropTypes.number.isRequired,
   locations: PropTypes.array.isRequired,
-  settings: PropTypes.object.isRequired
+  settings: PropTypes.object.isRequired,
+  setInitialData: PropTypes.func.isRequired,
+  updateData: PropTypes.func.isRequired,
+  setTreeCoverGainSettingsLocation: PropTypes.func.isRequired
 };
 
 export default WidgetTreeCoverGain;

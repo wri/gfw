@@ -13,8 +13,8 @@ export { default as actions } from './map-actions';
 const mapStateToProps = state => ({
   zoom: state.map.zoom,
   bounds: state.root.countryData.bounds,
-  region: state.root.countryRegion,
-  regionBounds: state.root.countryRegions[state.root.countryRegion].bounds,
+  admin1: state.root.admin1,
+  regionBounds: state.root.admin1List[state.root.admin1].bounds,
   maptype: state.map.maptype,
   layerSpec: state.map.layerSpec,
   layers: state.map.layers

@@ -1,42 +1,27 @@
 import axios from 'axios';
 
-const CONFIG = {
-  countriesConfigDataset: '134caa0a-21f7-451d-a7fe-30db31a424aa',
-  countriesConfigTable: 'gfw_countries_config',
-  countriesDataset: '134caa0a-21f7-451d-a7fe-30db31a424aa',
-  countriesTable: 'gadm28_countries',
-  regionsDataset: '098b33df-6871-4e53-a5ff-b56a7d989f9a',
-  regionsTable: 'gadm28_adm1',
-  subRegionsDataset: 'b3d076cc-b150-4ccb-a93e-eca05d9ac2bf',
-  subRegionsTable: 'gadm28_adm2'
-};
-
-const OLD_APIURL = process.env.GFW_API_HOST;
-const APIURL = process.env.GFW_API_HOST_PROD;
+const APIURL = 'https://wri-01.carto.com/api/v2';
 
 const APIURLS = {
-  'getCountriesList': '/query/{countriesDataset}?sql=SELECT name_engli as name, iso FROM {countriesTable} ORDER BY name_engli ASC',
-  'getCountry': '/countries/{iso}?thresh=30',
-  'getCountryRegions': '/query/{regionsDataset}?sql=SELECT cartodb_id, iso, area_ha, bbox as bounds, id_1 as id, name_1 as name FROM {regionsTable} WHERE iso=\'{iso}\' ORDER BY name',
+  getCountryAdmin0: '/sql?q=SELECT iso, country as name FROM umd_nat_staging GROUP BY iso, name ORDER BY name',
+  getCountryAdmin1: '/sql?q=SELECT id1 as id, region as name FROM umd_subnat_staging WHERE iso = \'{iso}\' and year = 2001 and thresh = 30 ORDER BY name ',
+  getCountryAdmin2: '/sql?q=SELECT id_2 as id, name_2 as name FROM gadm28_adm2 WHERE iso = \'{iso}\' AND id_1 = \'{admin1}\' ORDER BY name'
 };
 
-export const getCountriesList = () => {
-  const url = `${APIURL}${APIURLS.getCountriesList}`
-    .replace('{countriesDataset}', CONFIG.countriesDataset)
-    .replace('{countriesTable}', CONFIG.countriesTable);
+export const getCountryAdmin0 = () => {
+  const url = `${APIURL}${APIURLS.getCountryAdmin0}`;
   return axios.get(url);
 };
 
-export const getCountry = (iso) => {
-  const url = `${OLD_APIURL}${APIURLS.getCountry}`
-    .replace('{iso}', iso);
+export const getCountryAdmin1 = (admin0) => {
+  const url = `${APIURL}${APIURLS.getCountryAdmin1}`
+    .replace('{iso}', admin0);
   return axios.get(url);
 };
 
-export const getCountryRegions = (iso) => {
-  const url = `${APIURL}${APIURLS.getCountryRegions}`
-    .replace('{regionsDataset}', CONFIG.regionsDataset)
-    .replace('{regionsTable}', CONFIG.regionsTable)
-    .replace('{iso}', iso);
+export const getCountryAdmin2 = (admin0, admin1) => {
+  const url = `${APIURL}${APIURLS.getCountryAdmin2}`
+    .replace('{iso}', admin0)
+    .replace('{admin1}', admin1);
   return axios.get(url);
 };

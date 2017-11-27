@@ -2,9 +2,9 @@ import { createElement } from 'react';
 import { connect } from 'react-redux';
 
 import {
-  getCountriesList,
-  getCountry,
-  getCountryRegions
+  getCountryAdmin0,
+  getCountryAdmin1,
+  getCountryAdmin2
 } from 'services/country';
 
 import RootComponent from './root-component';
@@ -17,50 +17,109 @@ export { default as actions } from './root-actions';
 const mapStateToProps = state => ({
   location: state.location.payload,
   isLoading: state.root.isLoading,
-  iso: state.root.iso,
-  countryRegion: state.root.countryRegion,
-  countryData: state.root.countryData,
-  countryRegions: state.root.countryRegions,
-  countriesList: state.root.countriesList,
+  admin0: state.root.admin0,
+  admin1: state.root.admin1,
+  admin2: state.root.admin2,
   gfwHeaderHeight: state.root.gfwHeaderHeight,
   isMapFixed: state.root.isMapFixed,
   mapTop: state.root.mapTop,
   topPage: state.root.topPage,
-  nameRegion: state.root.nameRegion,
   showMapMobile: state.root.showMapMobile
 });
 
 const RootContainer = props => {
   const refreshCountryData = newProps => {
-    const { location, setIso, setRegion, setCountryData } = newProps;
+    const { location, setLocation, setAdmin0List, setAdmin1List, setAdmin2List, setCountryData } = newProps;
 
-    setIso(location.iso);
-    setRegion(location.region ? location.region : 0);
+    
 
     getCountriesList().then(getCountriesListResponse => {
       getCountry(location.iso).then(getCountryResponse => {
         const getCountryData = getCountryResponse.data;
         getCountryData.area_ha = getCountryResponse.data.umd[0].area_ha;
 
-        getCountryRegions(location.iso).then(getCountryRegionsResponse => {
-          setCountryData({
-            data: getCountryData,
-            regions: getCountryRegionsResponse.data.data,
-            countries: getCountriesListResponse.data.data
-          });
+        getCountryAdmin1(location.iso).then(getCountryAdmin1Response => {
+          if (location.admin1) {
+            getCountryAdmin2(location.iso, location.admin1).then(getCountryAdmin2Response => {
+              setCountryData({
+                data: getCountryData,
+                admin1Data: getCountryAdmin1Response.data.data,
+                admin2Data: getCountryAdmin2Response.data.data,
+                countries: getCountriesListResponse.data.data
+              });
+              setLocationName(
+                location,
+                getCountryData,
+                getCountryAdmin1Response.data.data,
+                getCountryAdmin2Response.data.data
+              );
+            });
+          } else {
+            setCountryData({
+              data: getCountryData,
+              admin1Data: getCountryAdmin1Response.data.data,
+              admin2Data: [],
+              countries: getCountriesListResponse.data.data
+            });
+            setLocationName(
+              location,
+              getCountryData,
+              getCountryAdmin1Response.data.data
+            );
+          }
         });
       });
     });
   };
 
+  const updateLocationName = (location, admin0Data, admin1Data, admin2Data) => {
+    const { setLocationName } = props;
+
+    if (location.admin2) {
+      setLocationName(admin2Data[location.admin2 - 1].name);
+    } else if (location.admin1) {
+      setLocationName(admin1Data[location.admin1 - 1].name);
+    } else {
+      setLocationName(admin0Data[location.admin1 - 1].name);
+    }
+  };
+
   const setInitialData = () => {
-    refreshCountryData(props);
+    const { location, setLocation, setAdmin0List, setAdmin1List, setAdmin2List } = props;
+
+    setLocation({
+      admin0: location.admin0,
+      admin1: location.admin1,
+      admin2: location.admin2
+    });
+
+    getCountryAdmin0().then(response => {
+      setAdmin0List(response.data.rows);
+    });
+
+    getCountryAdmin1(location.admin0).then(response => {
+      setAdmin1List(response.data.rows);
+    });
+
+    if (location.admin1) {
+      getCountryAdmin2(location.admin0, location.admin1).then(response => {
+        setAdmin2List(response.data.rows);
+      });
+    }
+  };
+
+  const checkLoadingStatus = (newProps) => {
+    if ()
+  };
+
+  const setStatusComplete = () => {
+    
   };
 
   return createElement(RootComponent, {
     ...props,
     setInitialData,
-    refreshCountryData
+    checkLoadingStatus
   });
 };
 

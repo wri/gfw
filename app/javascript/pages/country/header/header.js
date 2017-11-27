@@ -13,10 +13,12 @@ export { default as actions } from './header-actions';
 
 const mapStateToProps = state => ({
   iso: state.root.iso,
-  countryRegion: state.root.countryRegion,
-  countriesList: state.root.countriesList,
+  admin1: state.root.admin1,
+  admin2: state.root.admin2,
   countryData: state.root.countryData,
-  countryRegions: state.root.countryRegions,
+  admin0List: state.root.admin0List,
+  admin1List: state.root.admin1List,
+  admin2List: state.root.admin2List,
   selectedCountry: state.header.selectedCountry,
   selectedRegion: state.header.selectedRegion,
   countrySelectData: state.header.countrySelectData,
@@ -31,15 +33,15 @@ const HeaderContainer = props => {
   const setInitialData = () => {
     const {
       iso,
-      countryRegion,
-      countriesList,
-      countryRegions,
+      admin1,
       countryData,
+      admin0List,
+      admin1List,
       setHeaderValues
     } = props;
 
     let selectedCountry = '';
-    const countrySelectData = countriesList.map(item => {
+    const countrySelectData = admin0List.map(item => {
       if (iso === item.iso) {
         selectedCountry = item.name;
       }
@@ -50,9 +52,9 @@ const HeaderContainer = props => {
       };
     });
 
-    let selectedRegion = 'Jurisdiction';
-    const regionSelectData = countryRegions.map(item => {
-      if (countryRegion === item.id) {
+    let selectedRegion = 'Select Region';
+    const regionSelectData = admin1List.map(item => {
+      if (admin1 === item.id) {
         selectedRegion = item.name;
       }
 
@@ -62,10 +64,10 @@ const HeaderContainer = props => {
       };
     });
 
-    getTotalCover(iso, countryRegion, 30).then(totalCoverResponse => {
+    getTotalCover(iso, admin1, 30).then(totalCoverResponse => {
       getTreeLossByYear(
         iso,
-        countryRegion,
+        admin1,
         { minYear: 2015, maxYear: 2015 },
         30
       ).then(coverLoss => {
@@ -76,15 +78,15 @@ const HeaderContainer = props => {
           countrySelectData,
           regionSelectData,
           totalCoverHeader:
-            countryRegion === 0
-              ? countryData.area_ha
-              : countryRegions[countryRegion - 1].area_ha,
+          admin1 === 0
+            ? countryData.area_ha
+            : admin1List[admin1 - 1].area_ha,
           totalForestHeader: totalCover,
           percentageForestHeader:
-            countryRegion === 0
+            admin1 === 0
               ? totalCover / Math.round(countryData.area_ha) * 100
               : totalCover /
-                Math.round(countryRegions[countryRegion - 1].area_ha) *
+                Math.round(admin1List[admin1 - 1].area_ha) *
                 100,
           totalCoverLoss: coverLoss.data.data[0].value
         };

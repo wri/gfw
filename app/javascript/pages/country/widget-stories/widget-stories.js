@@ -10,10 +10,10 @@ export { default as actions } from './widget-stories-actions';
 
 const mapStateToProps = state => ({
   iso: state.root.iso,
-  countriesList: state.root.countriesList,
+  admin1: state.root.admin1,
+  admin0List: state.root.admin0List,
   countryData: state.root.countryData,
-  countryRegions: state.root.countryRegions,
-  countryRegion: state.root.countryRegion,
+  admin1List: state.root.admin1List,
   totalAmount: 'Nan',
   percentage: 'Nan',
   startYear: 2011,

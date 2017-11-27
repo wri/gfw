@@ -15,12 +15,12 @@ class Map extends PureComponent {
       minZoom,
       bounds,
       regionBounds,
-      region
+      admin1
     } = this.props;
 
     setMapData(this.props);
 
-    const coordsMap = region === 0 ? bounds : JSON.parse(regionBounds);
+    const coordsMap = admin1 === 0 ? bounds : JSON.parse(regionBounds);
     const boundsMap = new google.maps.LatLngBounds();
     for (let i = 0; i < coordsMap.coordinates[0].length; i += 1) {
       boundsMap.extend(
@@ -60,15 +60,15 @@ class Map extends PureComponent {
     }
   }
 
+  onMapInit() {
+    const { layers } = this.props;
+    this.setLayers(layers);
+  }
+
   setListeners() {
     google.maps.event.addListenerOnce(this.map, 'idle', () => {
       this.onMapInit();
     });
-  }
-
-  onMapInit() {
-    const { layers } = this.props;
-    this.setLayers(layers);
   }
 
   setMaptypes() {
@@ -79,28 +79,28 @@ class Map extends PureComponent {
     this.map.setMapTypeId(maptype);
   }
 
-  updateLayers(layers) {
-    this.removeLayers();
-    this.setLayers(layers);
-  }
-
-  removeLayers() {
-    const { layers } = this.props;
-
-    layers.map((slug, index) => {
-      this.map.overlayMapTypes.setAt(index, null);
-    });
-  }
-
   setLayers(layers) {
     const { layerSpec } = this.props;
 
-    layers.map((slug, index) => {
+    layers.forEach((slug, index) => {
       const layer = new Layers[slug](this.map, { layerSpec: layerSpec[slug] });
       layer.getLayer().then(res => {
         this.map.overlayMapTypes.setAt(index, res);
       });
     });
+  }
+
+  removeLayers() {
+    const { layers } = this.props;
+
+    layers.forEach((slug, index) => {
+      this.map.overlayMapTypes.setAt(index, null);
+    });
+  }
+
+  updateLayers(layers) {
+    this.removeLayers();
+    this.setLayers(layers);
   }
 
   render() {
@@ -119,7 +119,7 @@ Map.propTypes = {
   minZoom: Proptypes.number.isRequired,
   bounds: Proptypes.object.isRequired,
   regionBounds: Proptypes.string.isRequired,
-  region: Proptypes.number.isRequired,
+  admin1: Proptypes.number.isRequired,
   layerSpec: Proptypes.object.isRequired,
   mapOptions: Proptypes.object
 };

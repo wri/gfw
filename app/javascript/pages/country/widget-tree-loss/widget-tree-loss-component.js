@@ -46,7 +46,7 @@ class WidgetTreeLoss extends PureComponent {
       setTreeLossSettingsCanopy,
       setTreeLossSettingsStartYear,
       setTreeLossSettingsEndYear,
-      countryRegion
+      admin1
     } = this.props;
 
     const unitMeasure = settings.unit === 'ha' ? 'ha' : '%';
@@ -87,7 +87,7 @@ class WidgetTreeLoss extends PureComponent {
               <div className="">
                 <div className="c-widget-tree-loss__legend-title">
                   <span style={{ backgroundColor: '#f26798' }}>{}</span>
-                  {countryRegion === 0 ? 'Country-wide' : 'Jurisdiction-wide'}
+                  {admin1 === 0 ? 'Country-wide' : 'Jurisdiction-wide'}
                 </div>
                 <div
                   className="c-widget-tree-loss__legend-value"
@@ -142,7 +142,7 @@ class WidgetTreeLoss extends PureComponent {
 WidgetTreeLoss.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
-  countryRegion: PropTypes.number.isRequired,
+  admin1: PropTypes.number.isRequired,
   total: PropTypes.number.isRequired,
   yearsLoss: PropTypes.array.isRequired,
   years: PropTypes.array.isRequired,
