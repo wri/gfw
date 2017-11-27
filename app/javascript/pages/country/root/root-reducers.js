@@ -1,10 +1,12 @@
 export const initialState = {
   isLoading: true,
-  iso: '',
-  countryRegion: 0,
-  countryData: {},
-  countryRegions: [],
-  countriesList: [],
+  admin0: '',
+  admin1: 0,
+  admin2: 0,
+  locationName: '',
+  admin0List: [],
+  admin1List: [],
+  admin2List: [],
   gfwHeaderHeight: 59,
   showMapMobile: false,
   isMapFixed: true,
@@ -14,30 +16,41 @@ export const initialState = {
 const setInitialState = state => ({
   ...state,
   isLoading: true,
-  iso: '',
-  countryRegion: 0,
-  countryData: {},
-  countryRegions: [],
+  admin0: '',
+  admin1: 0,
+  admin2: 0,
+  admin0List: [],
+  admin1List: [],
+  admin2List: [],
   isMapFixed: true,
   mapTop: 0
 });
 
-const setIso = (state, { payload }) => ({
+const setLocation = (state, { payload }) => ({
   ...state,
-  iso: payload
+  admin0: payload.admin0,
+  admin1: payload.admin1,
+  admin2: payload.admin2
 });
 
-const setRegion = (state, { payload }) => ({
+const setAdmin0List = (state, { payload }) => ({
   ...state,
-  countryRegion: payload
+  admin0List: payload
 });
 
-const setCountryData = (state, { payload }) => ({
+const setAdmin1List = (state, { payload }) => ({
   ...state,
-  countryData: payload.data,
-  countryRegions: payload.regions,
-  countriesList: payload.countries,
-  isLoading: false
+  admin1List: payload
+});
+
+const setAdmin2List = (state, { payload }) => ({
+  ...state,
+  admin2List: payload
+});
+
+const setLocationName = (state, { payload }) => ({
+  ...state,
+  locationName: payload
 });
 
 const setFixedMapStatus = (state, { payload }) => ({
@@ -57,9 +70,11 @@ const setShowMapMobile = (state, { payload }) => ({
 
 export default {
   setInitialState,
-  setIso,
-  setRegion,
-  setCountryData,
+  setLocation,
+  setAdmin0List,
+  setAdmin1List,
+  setAdmin2List,
+  setLocationName,
   setFixedMapStatus,
   setMapTop,
   setShowMapMobile

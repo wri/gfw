@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import ScrollEvent from 'react-onscroll';
 
 import Share from 'components/share';
-
-import Loader from 'components/loader';
 import Header from 'pages/country/header';
 import Footer from 'pages/country/footer';
 import Map from 'pages/country/map';
@@ -25,10 +23,10 @@ class Root extends PureComponent {
   }
 
   componentWillUpdate(nextProps) {
-    const { iso, refreshCountryData } = this.props;
+    const { admin0 } = this.props;
 
-    if (iso !== nextProps.iso && iso !== '') {
-      refreshCountryData(nextProps);
+    if (admin0 !== nextProps.admin0 && admin0 !== '') {
+      //refreshCountryData(nextProps);
     }
   }
 
@@ -37,6 +35,7 @@ class Root extends PureComponent {
   }
 
   handleScrollCallback() {
+    console.log('hi');
     const {
       gfwHeaderHeight,
       isMapFixed,
@@ -62,12 +61,13 @@ class Root extends PureComponent {
   }
 
   render() {
-    const { isLoading, countryRegion, isMapFixed, showMapMobile } = this.props;
-    const regionSelected = countryRegion === 0;
+    const { isMapFixed, showMapMobile } = this.props;
 
-    if (isLoading) {
-      return <Loader parentClass="l-country" />;
-    }
+    return (
+      <div className="l-country">
+        <ScrollEvent handleScrollCallback={() => this.handleScrollCallback()} />
+      </div>
+    );
 
     return (
       <div className="l-country">
@@ -109,39 +109,27 @@ class Root extends PureComponent {
           <div className="large-6 small-12 columns l-country__container-widgets">
             <WidgetTreeCover />
           </div>
-          {regionSelected && (
-            <div className="large-6 small-12 columns l-country__container-widgets">
-              <WidgetTreeLocated />
-            </div>
-          )}
-          <div
-            className={`${
-              !regionSelected ? 'large-6 small-12' : 'small-12'
-            } columns l-country__container-widgets `}
-          >
+          <div className="large-6 small-12 columns l-country__container-widgets">
+            <WidgetTreeLocated />
+          </div>
+          <div className="small-12 columns l-country__container-widgets">
             <WidgetTreeLoss />
           </div>
-          {regionSelected && (
-            <div className="small-12 columns l-country__container-widgets">
-              <WidgetTreeCoverLossAreas />
-            </div>
-          )}
+          <div className="small-12 columns l-country__container-widgets">
+            <WidgetTreeCoverLossAreas />
+          </div>
           <div className="large-6 small-12 columns l-country__container-widgets">
             <WidgetTreeCoverGain />
           </div>
-          {regionSelected && (
-            <div className="large-6 small-12 columns l-country__container-widgets">
-              <WidgetAreasMostCoverGain />
-            </div>
-          )}
+          <div className="large-6 small-12 columns l-country__container-widgets">
+            <WidgetAreasMostCoverGain />
+          </div>
           <div className="large-6 small-12 columns l-country__container-widgets -last">
             <WidgetTotalAreaPlantations />
           </div>
-          {regionSelected && (
-            <div className="large-6 small-12 columns l-country__container-widgets -last">
-              <WidgetPlantationArea />
-            </div>
-          )}
+          <div className="large-6 small-12 columns l-country__container-widgets -last">
+            <WidgetPlantationArea />
+          </div>
         </div>
         <WidgetStories />
         <Footer />
@@ -152,12 +140,9 @@ class Root extends PureComponent {
 }
 
 Root.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  iso: PropTypes.string.isRequired,
-  countryRegion: PropTypes.number.isRequired,
+  admin0: PropTypes.string.isRequired,
   gfwHeaderHeight: PropTypes.number.isRequired,
   setInitialData: PropTypes.func.isRequired,
-  refreshCountryData: PropTypes.func.isRequired,
   setShowMapMobile: PropTypes.func.isRequired,
   showMapMobile: PropTypes.bool.isRequired,
   setFixedMapStatus: PropTypes.func.isRequired,

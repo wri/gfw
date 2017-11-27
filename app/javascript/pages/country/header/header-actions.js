@@ -8,13 +8,13 @@ const setHeaderValues = createAction('setHeaderValues');
 const selectCountry = createThunkAction(COUNTRY, iso => dispatch => {
   dispatch({ type: COUNTRY, payload: { iso } });
 });
-const selectRegion = createThunkAction(COUNTRY, (iso, region) => dispatch => {
-  dispatch({ type: COUNTRY, payload: { iso, region } });
+const setAdmin1 = createThunkAction(COUNTRY, (iso, admin1) => dispatch => {
+  dispatch({ type: COUNTRY, payload: { iso, admin1 } });
 });
 
 export default {
   setInitialState,
   setHeaderValues,
   selectCountry,
-  selectRegion
+  setAdmin1
 };

@@ -16,9 +16,9 @@ export { default as actions } from './widget-tree-cover-gain-actions';
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeCoverGain.isLoading,
   iso: state.root.iso,
+  admin1: state.root.admin1,
   countryData: state.root.countryData,
-  countryRegions: state.root.countryRegions,
-  countryRegion: state.root.countryRegion,
+  admin1List: state.root.admin1List,
   totalAmount: state.widgetTreeCoverGain.totalAmount,
   percentage: state.widgetTreeCoverGain.percentage,
   settings: state.widgetTreeCoverGain.settings,
@@ -43,7 +43,7 @@ const WidgetTreeCoverGainContainer = props => {
         maxYear: newProps.settings.endYear
       },
       newProps.settings.canopy,
-      newProps.countryRegion
+      newProps.admin1
     ).then(coverGain => {
       getTotalCountriesTreeCoverGain(
         {

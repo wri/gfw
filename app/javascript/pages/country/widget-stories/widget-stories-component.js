@@ -12,8 +12,8 @@ class WidgetStories extends PureComponent {
       percentage,
       startYear,
       endYear,
-      countryRegions,
-      countryRegion
+      admin1List,
+      admin1
     } = this.props;
     return (
       <div className="c-widget-stories" id="c-widget-stories">
@@ -21,9 +21,9 @@ class WidgetStories extends PureComponent {
           <div className="row">
             <div className="columns c-widget-stories__primary-info">
               <h2>
-                {countryRegion === 0
+                {admin1 === 0
                   ? countryData.name
-                  : countryRegions[countryRegion - 1].name}{' '}
+                  : admin1List[admin1 - 1].name}{' '}
                 Stories
               </h2>
               <div className="container-titles">

@@ -16,14 +16,15 @@ class Header extends PureComponent {
   };
 
   regionsSelectOnChange = event => {
-    const { iso, setInitialState, selectRegion } = this.props;
-    selectRegion(iso, event.value);
+    const { iso, setInitialState, setAdmin1 } = this.props;
+    setAdmin1(iso, event.value);
     setInitialState();
   };
 
   render() {
     const {
-      countryRegion,
+      admin1,
+      admin2,
       selectedCountry,
       selectedRegion,
       countrySelectData,
@@ -61,7 +62,7 @@ class Header extends PureComponent {
           </div>
           <div className="large-6 medium-12 small-12 columns c-header__info">
             <p>
-              In 2010, this {!countryRegion ? 'country' : 'jurisdiction'} had{' '}
+              In 2010, this {!admin1 ? 'country' : 'jurisdiction'} had{' '}
               <strong>
                 {numeral(Math.round(totalForestHeader / 1000000)).format('0,0')}{' '}
                 MHa
@@ -102,11 +103,12 @@ class Header extends PureComponent {
 
 Header.propTypes = {
   iso: PropTypes.string.isRequired,
-  countryRegion: PropTypes.number.isRequired,
+  admin1: PropTypes.number.isRequired,
+  admin2: PropTypes.number.isRequired,
   setInitialData: PropTypes.func.isRequired,
   setInitialState: PropTypes.func.isRequired,
   selectCountry: PropTypes.func.isRequired,
-  selectRegion: PropTypes.func.isRequired,
+  setAdmin1: PropTypes.func.isRequired,
   selectedCountry: PropTypes.string.isRequired,
   selectedRegion: PropTypes.string.isRequired,
   countrySelectData: PropTypes.array.isRequired,

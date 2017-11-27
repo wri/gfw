@@ -11,7 +11,6 @@ export { default as actions } from './widget-total-area-plantations-actions';
 const mapStateToProps = state => ({
   isLoading: state.widgetTotalAreaPlantations.isLoading,
   iso: state.root.iso,
-  countryRegion: state.root.countryRegion,
   countryData: state.root.countryData,
   plantationData: state.widgetTotalAreaPlantations.plantationData,
   units: state.widgetTotalAreaPlantations.units,

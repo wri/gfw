@@ -13,7 +13,7 @@ export { default as actions } from './widget-tree-loss-actions';
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeLoss.isLoading,
   iso: state.root.iso,
-  countryRegion: state.root.countryRegion,
+  admin1: state.root.admin1,
   countryData: state.root.countryData,
   total: state.widgetTreeLoss.total,
   years: state.widgetTreeLoss.years,
@@ -25,44 +25,44 @@ const mapStateToProps = state => ({
 });
 
 const WidgetTreeLossContainer = props => {
-  const updateData = props => {
-    props.setTreeLossIsLoading(true);
-    setWidgetData(props);
+  const updateData = newProps => {
+    newProps.setTreeLossIsLoading(true);
+    setWidgetData(newProps);
   };
 
-  const setInitialData = props => {
-    setWidgetData(props);
+  const setInitialData = newProps => {
+    setWidgetData(newProps);
   };
 
-  const setWidgetData = props => {
+  const setWidgetData = newProps => {
     const percentageValues = [];
     getTreeLossByYear(
-      props.iso,
-      props.countryRegion,
-      { minYear: props.settings.startYear, maxYear: props.settings.endYear },
-      props.settings.canopy
+      newProps.iso,
+      newProps.admin1,
+      { minYear: newProps.settings.startYear, maxYear: newProps.settings.endYear },
+      newProps.settings.canopy
     ).then(response => {
       const total = response.data.data.reduce((accumulator, item) => (
         (typeof accumulator === 'object' ? accumulator.value : accumulator) +
           item.value
       ));
-      if (props.settings.unit !== 'ha') {
+      if (newProps.settings.unit !== 'ha') {
         response.data.data.forEach((item) => {
           percentageValues.push({
-            value: item.value / Math.round(props.countryData.area_ha) * 100,
+            value: item.value / Math.round(newProps.countryData.area_ha) * 100,
             label: item.date
           });
         });
       }
       const values = {
         total:
-          props.settings.unit === 'ha'
-            ? total
-            : total / Math.round(props.countryData.area_ha) * 100,
+        newProps.settings.unit === 'ha'
+          ? total
+          : total / Math.round(newProps.countryData.area_ha) * 100,
         years:
-          props.settings.unit === 'ha' ? response.data.data : percentageValues
+        newProps.settings.unit === 'ha' ? response.data.data : percentageValues
       };
-      props.setTreeLossValues(values);
+      newProps.setTreeLossValues(values);
     });
   };
 

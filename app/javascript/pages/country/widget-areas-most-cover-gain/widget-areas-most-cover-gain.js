@@ -16,7 +16,7 @@ export { default as actions } from './widget-areas-most-cover-gain-actions';
 const mapStateToProps = state => ({
   isLoading: state.widgetAreasMostCoverGain.isLoading,
   iso: state.root.iso,
-  countryRegions: state.root.countryRegions,
+  admin1List: state.root.admin1List,
   countryData: state.root.countryData,
   areaData: state.widgetAreasMostCoverGain.areaData,
   areaChartData: state.widgetAreasMostCoverGain.areaChartData,
@@ -67,12 +67,12 @@ const WidgetAreasMostCoverGainContainer = props => {
         let othersValue = 0;
         treeCoverGainByRegion.data.data.forEach((item, index) => {
           const numberRegion = _.findIndex(
-            props.countryRegions,
+            props.admin1List,
             x => x.id === item.adm1
           );
 
           regionsCoverGain.push({
-            name: props.countryRegions[numberRegion].name,
+            name: props.admin1List[numberRegion].name,
             value: item.value,
             color: colors[indexColors],
             position: index + 1
@@ -80,7 +80,7 @@ const WidgetAreasMostCoverGainContainer = props => {
 
           if (indexColors < props.paginate.limit) {
             regionCoverGainChart.push({
-              name: props.countryRegions[numberRegion].name,
+              name: props.admin1List[numberRegion].name,
               color: colors[indexColors],
               value:
                 props.settings.unit === 'ha'

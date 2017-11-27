@@ -13,7 +13,7 @@ export { default as actions } from './widget-tree-cover-loss-areas-actions';
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeCoverLossAreas.isLoading,
   iso: state.root.iso,
-  countryRegions: state.root.countryRegions,
+  admin1List: state.root.admin1List,
   countryData: state.root.countryData,
   regionData: state.widgetTreeCoverLossAreas.regionData,
   regionChartData: state.widgetTreeCoverLossAreas.regionChartData,
@@ -65,12 +65,12 @@ const WidgetTreeCoverLossAreasContainer = props => {
       let othersValue = 0;
       treeLossByRegion.data.data.forEach((item, index) => {
         const numberRegion = _.findIndex(
-          props.countryRegions,
+          props.admin1List,
           x => x.id === item.adm1
         );
 
         regionsForestLoss.push({
-          name: props.countryRegions[numberRegion].name,
+          name: props.admin1List[numberRegion].name,
           value:
             props.settings.unit === 'ha'
               ? item.value
@@ -81,7 +81,7 @@ const WidgetTreeCoverLossAreasContainer = props => {
 
         if (indexColors < props.paginate.limit) {
           regionForestLossChart.push({
-            name: props.countryRegions[numberRegion].name,
+            name: props.admin1List[numberRegion].name,
             color: colors[indexColors],
             value:
               props.settings.unit === 'ha'

@@ -14,9 +14,9 @@ export { default as actions } from './widget-tree-located-actions';
 const mapStateToProps = state => ({
   isLoading: state.widgetTreeLocated.isLoading,
   iso: state.root.iso,
-  countryRegions: state.root.countryRegions,
-  countryRegion: state.root.countryRegion,
+  admin1: state.root.admin1,
   countryData: state.root.countryData,
+  admin1List: state.root.admin1List,
   topRegions: state.widgetTreeLocated.topRegions,
   paginate: state.widgetTreeLocated.paginate,
   dataSources: state.widgetTreeLocated.dataSources,
@@ -26,38 +26,38 @@ const mapStateToProps = state => ({
 });
 
 const WidgetTreeLocatedContainer = props => {
-  const setInitialData = props => {
-    setWidgetData(props);
+  const setInitialData = newProps => {
+    setWidgetData(newProps);
   };
 
-  const updateData = props => {
-    props.setTreeLocatedIsLoading(true);
-    setWidgetData(props);
+  const updateData = newProps => {
+    newProps.setTreeLocatedIsLoading(true);
+    setWidgetData(newProps);
   };
 
-  const setWidgetData = props => {
-    getTotalCover(props.iso, props.countryRegion, props.settings.canopy).then(
+  const setWidgetData = newProps => {
+    getTotalCover(newProps.iso, newProps.admin1, newProps.settings.canopy).then(
       totalCoverResponse => {
-        getTotalCoverRegions(props.iso, props.settings.canopy).then(
+        getTotalCoverRegions(newProps.iso, newProps.settings.canopy).then(
           totalCoverRegions => {
             const regionsForest = [];
             const totalCover = Math.round(
               totalCoverResponse.data.data[0].value
             );
             totalCoverRegions.data.data.forEach((item, index) => {
-              const numberRegion = _.findIndex(props.countryRegions, (
+              const numberRegion = _.findIndex(newProps.admin1List, (
                 x
               ) => x.id === item.adm1);
               regionsForest.push({
-                name: props.countryRegions[numberRegion].name,
+                name: newProps.admin1List[numberRegion].name,
                 value:
-                  props.settings.unit === 'ha'
-                    ? item.value
-                    : item.value / totalCover * 100,
+                newProps.settings.unit === 'ha'
+                  ? item.value
+                  : item.value / totalCover * 100,
                 position: index + 1
               });
             });
-            props.setTreeLocatedValues(regionsForest);
+            newProps.setTreeLocatedValues(regionsForest);
           }
         );
       }
