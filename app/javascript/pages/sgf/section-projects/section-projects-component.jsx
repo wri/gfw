@@ -4,6 +4,7 @@ import ProjectsGLobe from 'pages/sgf/section-projects/section-projects-globe';
 import ProjectsModal from 'pages/sgf/section-projects/section-projects-modal';
 import Card from 'components/card';
 import ItemsList from 'components/items-list';
+import Search from 'components/search';
 
 import './section-projects-styles.scss';
 
@@ -20,7 +21,9 @@ class SectionProjects extends PureComponent {
       data,
       categories,
       setCategorySelected,
-      categorySelected
+      categorySelected,
+      search,
+      setSearch
     } = this.props;
     const hasData = data && !!data.length;
     const hasCategories = categories && !!categories.length;
@@ -40,11 +43,19 @@ class SectionProjects extends PureComponent {
             </div>
             <div className="column small-6 section-projects-list">
               {hasCategories && (
-                <ItemsList
-                  data={categories}
-                  itemSelected={categorySelected}
-                  onClick={setCategorySelected}
-                />
+                <div>
+                  <Search
+                    className="search"
+                    placeholder="Search"
+                    input={search}
+                    onChange={setSearch}
+                  />
+                  <ItemsList
+                    data={categories}
+                    itemSelected={categorySelected}
+                    onClick={setCategorySelected}
+                  />
+                </div>
               )}
             </div>
           </div>
@@ -71,7 +82,9 @@ SectionProjects.propTypes = {
   categories: PropTypes.array.isRequired,
   categorySelected: PropTypes.string.isRequired,
   setCategorySelected: PropTypes.func.isRequired,
-  setSectionProjectsModal: PropTypes.func.isRequired
+  setSectionProjectsModal: PropTypes.func.isRequired,
+  search: PropTypes.string.isRequired,
+  setSearch: PropTypes.func.isRequired
 };
 
 export default SectionProjects;
