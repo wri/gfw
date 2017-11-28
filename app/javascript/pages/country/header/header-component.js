@@ -12,15 +12,21 @@ class Header extends PureComponent {
     }
   }
 
-  countriesSelectOnChange = event => {
-    const { setInitialState, selectCountry } = this.props;
-    selectCountry(event.value);
+  admin0SelectOnChange = event => {
+    const { setInitialState, setAdmin0 } = this.props;
+    setAdmin0(event.value);
     setInitialState();
   };
 
-  regionsSelectOnChange = event => {
+  admin1SelectOnChange = event => {
     const { location, setInitialState, setAdmin1 } = this.props;
-    setAdmin1(location.admin1, event.value);
+    setAdmin1(location.admin0, event.value);
+    setInitialState();
+  };
+
+  admin2SelectOnChange = event => {
+    const { location, setInitialState, setAdmin2 } = this.props;
+    setAdmin2(location.admin0, location.admin1, event.value);
     setInitialState();
   };
 
@@ -51,7 +57,7 @@ class Header extends PureComponent {
               <Select
                 value={selectedAdmin0}
                 options={admin0SelectData}
-                onChange={this.countriesSelectOnChange}
+                onChange={this.admin0SelectOnChange}
               />
             </div>
             <div className="c-header__select -jurisdiction">
@@ -61,7 +67,7 @@ class Header extends PureComponent {
               <Select
                 value={selectedAdmin1}
                 options={admin1SelectData}
-                onChange={this.regionsSelectOnChange}
+                onChange={this.admin1SelectOnChange}
               />
             </div>
             {location.admin1 ? (
@@ -72,7 +78,7 @@ class Header extends PureComponent {
                 <Select
                   value={selectedAdmin2}
                   options={admin2SelectData}
-                  onChange={this.regionsSelectOnChange}
+                  onChange={this.admin2SelectOnChange}
                 />
               </div>
             ) : null}
@@ -106,8 +112,9 @@ Header.propTypes = {
   admin2SelectData: PropTypes.array.isRequired,
   setInitialData: PropTypes.func.isRequired,
   setInitialState: PropTypes.func.isRequired,
-  selectCountry: PropTypes.func.isRequired,
-  setAdmin1: PropTypes.func.isRequired
+  setAdmin0: PropTypes.func.isRequired,
+  setAdmin1: PropTypes.func.isRequired,
+  setAdmin2: PropTypes.func.isRequired
 };
 
 export default Header;
