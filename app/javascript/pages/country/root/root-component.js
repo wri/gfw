@@ -23,10 +23,10 @@ class Root extends PureComponent {
   }
 
   componentWillUpdate(nextProps) {
-    const { admin0 } = this.props;
+    const { checkLoadingStatus } = this.props;
 
-    if (admin0 !== nextProps.admin0 && admin0 !== '') {
-      //refreshCountryData(nextProps);
+    if (nextProps.isLoading) {
+      checkLoadingStatus(nextProps);
     }
   }
 
@@ -62,12 +62,6 @@ class Root extends PureComponent {
 
   render() {
     const { isMapFixed, showMapMobile } = this.props;
-
-    return (
-      <div className="l-country">
-        <ScrollEvent handleScrollCallback={() => this.handleScrollCallback()} />
-      </div>
-    );
 
     return (
       <div className="l-country">
@@ -140,15 +134,16 @@ class Root extends PureComponent {
 }
 
 Root.propTypes = {
-  admin0: PropTypes.string.isRequired,
   gfwHeaderHeight: PropTypes.number.isRequired,
-  setInitialData: PropTypes.func.isRequired,
   setShowMapMobile: PropTypes.func.isRequired,
   showMapMobile: PropTypes.bool.isRequired,
   setFixedMapStatus: PropTypes.func.isRequired,
   setMapTop: PropTypes.func.isRequired,
   isMapFixed: PropTypes.bool.isRequired,
-  mapTop: PropTypes.number.isRequired
+  mapTop: PropTypes.number.isRequired,
+
+  setInitialData: PropTypes.func.isRequired,
+  checkLoadingStatus: PropTypes.func.isRequired
 };
 
 export default Root;

@@ -1,9 +1,15 @@
 export const initialState = {
+  isLoading: true,
   zoom: 4,
   maptype: 'grayscale',
   layerSpec: {},
   layers: ['forest2000', 'ifl_2013_deg']
 };
+
+const setMapIsLoading = (state, { payload }) => ({
+  ...state,
+  isLoading: payload
+});
 
 const setMapZoom = (state, { payload }) => ({
   ...state,
@@ -26,6 +32,7 @@ const setLayerSpec = (state, { payload }) => ({
 });
 
 export default {
+  setMapIsLoading,
   setMapZoom,
   setLayers,
   addLayer,

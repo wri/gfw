@@ -1,12 +1,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select-me';
-import numeral from 'numeral';
+
+import Loader from 'components/loader/loader';
 
 class Header extends PureComponent {
-  componentDidMount() {
-    const { setInitialData } = this.props;
-    setInitialData(this.props);
+  componentWillUpdate(nextProps) {
+    const { isRootLoading, setInitialData } = this.props;
+    if (!nextProps.isRootLoading && isRootLoading) {
+      setInitialData(nextProps);
+    }
   }
 
   countriesSelectOnChange = event => {
@@ -16,24 +19,26 @@ class Header extends PureComponent {
   };
 
   regionsSelectOnChange = event => {
-    const { iso, setInitialState, setAdmin1 } = this.props;
-    setAdmin1(iso, event.value);
+    const { location, setInitialState, setAdmin1 } = this.props;
+    setAdmin1(location.admin1, event.value);
     setInitialState();
   };
 
   render() {
     const {
-      admin1,
-      admin2,
-      selectedCountry,
-      selectedRegion,
-      countrySelectData,
-      regionSelectData,
-      totalCoverHeader,
-      totalForestHeader,
-      percentageForestHeader,
-      totalCoverLoss
+      isRootLoading,
+      location,
+      selectedAdmin0,
+      selectedAdmin1,
+      selectedAdmin2,
+      admin0SelectData,
+      admin1SelectData,
+      admin2SelectData
     } = this.props;
+
+    if (isRootLoading) {
+      return <Loader parentClass="c-header" isAbsolute />;
+    }
 
     return (
       <div className="c-header">
@@ -44,8 +49,8 @@ class Header extends PureComponent {
                 <use xlinkHref="#icon-angle-arrow-down" />
               </svg>
               <Select
-                value={selectedCountry}
-                options={countrySelectData}
+                value={selectedAdmin0}
+                options={admin0SelectData}
                 onChange={this.countriesSelectOnChange}
               />
             </div>
@@ -54,38 +59,27 @@ class Header extends PureComponent {
                 <use xlinkHref="#icon-angle-arrow-down" />
               </svg>
               <Select
-                value={selectedRegion}
-                options={regionSelectData}
+                value={selectedAdmin1}
+                options={admin1SelectData}
                 onChange={this.regionsSelectOnChange}
               />
             </div>
+            {location.admin1 ? (
+              <div className="c-header__select -jurisdiction">
+                <svg className="icon icon-angle-arrow-down c-header__select-arrow">
+                  <use xlinkHref="#icon-angle-arrow-down" />
+                </svg>
+                <Select
+                  value={selectedAdmin2}
+                  options={admin2SelectData}
+                  onChange={this.regionsSelectOnChange}
+                />
+              </div>
+            ) : null}
           </div>
           <div className="large-6 medium-12 small-12 columns c-header__info">
             <p>
-              In 2010, this {!admin1 ? 'country' : 'jurisdiction'} had{' '}
-              <strong>
-                {numeral(Math.round(totalForestHeader / 1000000)).format('0,0')}{' '}
-                MHa
-              </strong>{' '}
-              tree cover, that represents{' '}
-              <strong>
-                {numeral(Math.round(percentageForestHeader)).format('0,0')}%
-              </strong>{' '}
-              of its
-              <strong>
-                {' '}
-                {numeral(Math.round(totalCoverHeader / 1000000)).format(
-                  '0,0'
-                )}{' '}
-                MHa.
-              </strong>
-            </p>
-            <p>
-              Excluding tree plantations,{' '}
-              <strong>
-                {numeral(Math.round(totalCoverLoss / 1000)).format('0,0')} ha
-              </strong>{' '}
-              of tree cover loss occured in <strong>2015.</strong>
+              In 2010, <strong>this</strong>
             </p>
           </div>
         </div>
@@ -102,21 +96,18 @@ class Header extends PureComponent {
 }
 
 Header.propTypes = {
-  iso: PropTypes.string.isRequired,
-  admin1: PropTypes.number.isRequired,
-  admin2: PropTypes.number.isRequired,
+  isRootLoading: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
+  selectedAdmin0: PropTypes.string.isRequired,
+  selectedAdmin1: PropTypes.string.isRequired,
+  selectedAdmin2: PropTypes.string.isRequired,
+  admin0SelectData: PropTypes.array.isRequired,
+  admin1SelectData: PropTypes.array.isRequired,
+  admin2SelectData: PropTypes.array.isRequired,
   setInitialData: PropTypes.func.isRequired,
   setInitialState: PropTypes.func.isRequired,
   selectCountry: PropTypes.func.isRequired,
-  setAdmin1: PropTypes.func.isRequired,
-  selectedCountry: PropTypes.string.isRequired,
-  selectedRegion: PropTypes.string.isRequired,
-  countrySelectData: PropTypes.array.isRequired,
-  regionSelectData: PropTypes.array.isRequired,
-  totalCoverHeader: PropTypes.number.isRequired,
-  totalForestHeader: PropTypes.number.isRequired,
-  percentageForestHeader: PropTypes.number.isRequired,
-  totalCoverLoss: PropTypes.number.isRequired
+  setAdmin1: PropTypes.func.isRequired
 };
 
 export default Header;

@@ -12,11 +12,11 @@ export { default as reducers } from './widget-tree-located-reducers';
 export { default as actions } from './widget-tree-located-actions';
 
 const mapStateToProps = state => ({
-  isLoading: state.widgetTreeLocated.isLoading,
-  iso: state.root.iso,
-  admin1: state.root.admin1,
-  countryData: state.root.countryData,
+  isRootLoading: state.root.isLoading,
+  location: state.location.payload,
+  locationNames: state.root.locationNames,
   admin1List: state.root.admin1List,
+  isLoading: state.widgetTreeLocated.isLoading,
   topRegions: state.widgetTreeLocated.topRegions,
   paginate: state.widgetTreeLocated.paginate,
   dataSources: state.widgetTreeLocated.dataSources,
@@ -36,9 +36,11 @@ const WidgetTreeLocatedContainer = props => {
   };
 
   const setWidgetData = newProps => {
-    getTotalCover(newProps.iso, newProps.admin1, newProps.settings.canopy).then(
+    const { location, admin1List, settings, setTreeLocatedValues } = newProps;
+
+    getTotalCover(location.admin0, location.admin1, settings.canopy).then(
       totalCoverResponse => {
-        getTotalCoverRegions(newProps.iso, newProps.settings.canopy).then(
+        getTotalCoverRegions(location.admin0, settings.canopy).then(
           totalCoverRegions => {
             const regionsForest = [];
             const totalCover = Math.round(
@@ -46,19 +48,19 @@ const WidgetTreeLocatedContainer = props => {
             );
             totalCoverRegions.data.data.forEach((item, index) => {
               const numberRegion = _.findIndex(
-                newProps.admin1List,
+                admin1List,
                 x => x.id === item.adm1
               );
               regionsForest.push({
-                name: newProps.admin1List[numberRegion].name,
+                name: admin1List[numberRegion].name,
                 value:
-                  newProps.settings.unit === 'ha'
+                  settings.unit === 'ha'
                     ? item.value
                     : item.value / totalCover * 100,
                 position: index + 1
               });
             });
-            newProps.setTreeLocatedValues(regionsForest);
+            setTreeLocatedValues(regionsForest);
           }
         );
       }

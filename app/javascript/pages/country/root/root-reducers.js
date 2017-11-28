@@ -1,12 +1,18 @@
 export const initialState = {
   isLoading: true,
-  admin0: '',
-  admin1: 0,
-  admin2: 0,
-  locationName: '',
+  locationNames: {
+    admin0: '',
+    admin1: '',
+    admin2: '',
+    current: ''
+  },
   admin0List: [],
   admin1List: [],
   admin2List: [],
+  geostore: {
+    areaHa: 0,
+    bounds: []
+  },
   gfwHeaderHeight: 59,
   showMapMobile: false,
   isMapFixed: true,
@@ -16,9 +22,6 @@ export const initialState = {
 const setInitialState = state => ({
   ...state,
   isLoading: true,
-  admin0: '',
-  admin1: 0,
-  admin2: 0,
   admin0List: [],
   admin1List: [],
   admin2List: [],
@@ -26,11 +29,9 @@ const setInitialState = state => ({
   mapTop: 0
 });
 
-const setLocation = (state, { payload }) => ({
+const setIsLoading = (state, { payload }) => ({
   ...state,
-  admin0: payload.admin0,
-  admin1: payload.admin1,
-  admin2: payload.admin2
+  isLoading: payload
 });
 
 const setAdmin0List = (state, { payload }) => ({
@@ -48,9 +49,14 @@ const setAdmin2List = (state, { payload }) => ({
   admin2List: payload
 });
 
-const setLocationName = (state, { payload }) => ({
+const setLocationNames = (state, { payload }) => ({
   ...state,
-  locationName: payload
+  locationNames: payload
+});
+
+const setGeostore = (state, { payload }) => ({
+  ...state,
+  geostore: payload
 });
 
 const setFixedMapStatus = (state, { payload }) => ({
@@ -70,11 +76,12 @@ const setShowMapMobile = (state, { payload }) => ({
 
 export default {
   setInitialState,
-  setLocation,
+  setIsLoading,
   setAdmin0List,
   setAdmin1List,
   setAdmin2List,
-  setLocationName,
+  setLocationNames,
+  setGeostore,
   setFixedMapStatus,
   setMapTop,
   setShowMapMobile

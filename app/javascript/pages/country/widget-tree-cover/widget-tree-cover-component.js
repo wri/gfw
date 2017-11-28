@@ -11,7 +11,7 @@ import WidgetTreeCoverSettings from './widget-tree-cover-settings-component';
 class WidgetTreeCover extends PureComponent {
   componentDidMount() {
     const { setInitialData } = this.props;
-    setInitialData(this.props);
+    setInitialData();
   }
 
   componentWillUpdate(nextProps) {

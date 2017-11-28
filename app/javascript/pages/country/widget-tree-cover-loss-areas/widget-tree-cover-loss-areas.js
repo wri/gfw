@@ -11,10 +11,12 @@ export { default as reducers } from './widget-tree-cover-loss-areas-reducers';
 export { default as actions } from './widget-tree-cover-loss-areas-actions';
 
 const mapStateToProps = state => ({
-  isLoading: state.widgetTreeCoverLossAreas.isLoading,
-  iso: state.root.iso,
+  isRootLoading: state.root.isLoading,
+  location: state.location.payload,
+  locationNames: state.root.locationNames,
   admin1List: state.root.admin1List,
-  countryData: state.root.countryData,
+  areaHa: state.root.geostore.areaHa,
+  isLoading: state.widgetTreeCoverLossAreas.isLoading,
   regionData: state.widgetTreeCoverLossAreas.regionData,
   regionChartData: state.widgetTreeCoverLossAreas.regionChartData,
   startYear: 2001,
@@ -43,20 +45,30 @@ const colors = [
 ];
 
 const WidgetTreeCoverLossAreasContainer = props => {
-  const updateData = props => {
-    props.setTreeCoverLossAreasIsLoading(true);
-    setWidgetData(props);
+  const updateData = newProps => {
+    newProps.setTreeCoverLossAreasIsLoading(true);
+    setWidgetData(newProps);
   };
 
-  const setInitialData = props => {
-    setWidgetData(props);
+  const setInitialData = newProps => {
+    setWidgetData(newProps);
   };
 
-  const setWidgetData = props => {
+  const setWidgetData = newProps => {
+    const {
+      location,
+      admin1List,
+      areaHa,
+      settings,
+      paginate,
+      setPieChartDataTotal,
+      setPieCharDataDistricts
+    } = newProps;
+
     getTreeLossByRegion(
-      props.iso,
-      { minYear: props.settings.startYear, maxYear: props.settings.endYear },
-      props.settings.canopy
+      location.admin0,
+      { minYear: settings.startYear, maxYear: settings.endYear },
+      settings.canopy
     ).then(treeLossByRegion => {
       const regionsForestLoss = [];
       const regionForestLossChart = [];
@@ -64,29 +76,26 @@ const WidgetTreeCoverLossAreasContainer = props => {
       let indexColors = 0;
       let othersValue = 0;
       treeLossByRegion.data.data.forEach((item, index) => {
-        const numberRegion = _.findIndex(
-          props.admin1List,
-          x => x.id === item.adm1
-        );
+        const numberRegion = _.findIndex(admin1List, x => x.id === item.adm1);
 
         regionsForestLoss.push({
-          name: props.admin1List[numberRegion].name,
+          name: admin1List[numberRegion].name,
           value:
-            props.settings.unit === 'ha'
+            settings.unit === 'ha'
               ? item.value
-              : item.value / Math.round(props.countryData.area_ha) * 100,
+              : item.value / Math.round(areaHa) * 100,
           color: colors[indexColors],
           position: index + 1
         });
 
-        if (indexColors < props.paginate.limit) {
+        if (indexColors < paginate.limit) {
           regionForestLossChart.push({
-            name: props.admin1List[numberRegion].name,
+            name: admin1List[numberRegion].name,
             color: colors[indexColors],
             value:
-              props.settings.unit === 'ha'
+              settings.unit === 'ha'
                 ? item.value
-                : item.value / Math.round(props.countryData.area_ha) * 100
+                : item.value / Math.round(areaHa) * 100
           });
           indexColors += 1;
         } else if (index === treeLossByRegion.data.data.length - 1) {
@@ -94,16 +103,17 @@ const WidgetTreeCoverLossAreasContainer = props => {
             name: 'others',
             color: colors[indexColors],
             value:
-              props.settings.unit === 'ha'
+              settings.unit === 'ha'
                 ? othersValue
-                : othersValue / Math.round(props.countryData.area_ha) * 100
+                : othersValue / Math.round(areaHa) * 100
           });
         } else {
           othersValue += item.value;
         }
       });
-      props.setPieChartDataTotal(regionForestLossChart);
-      props.setPieCharDataDistricts(regionsForestLoss);
+
+      setPieChartDataTotal(regionForestLossChart);
+      setPieCharDataDistricts(regionsForestLoss);
     });
   };
 

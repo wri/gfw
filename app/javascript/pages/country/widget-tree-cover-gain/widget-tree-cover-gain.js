@@ -14,11 +14,9 @@ export { default as reducers } from './widget-tree-cover-gain-reducers';
 export { default as actions } from './widget-tree-cover-gain-actions';
 
 const mapStateToProps = state => ({
+  location: state.location.payload,
+  locationNames: state.root.locationNames,
   isLoading: state.widgetTreeCoverGain.isLoading,
-  iso: state.root.iso,
-  admin1: state.root.admin1,
-  countryData: state.root.countryData,
-  admin1List: state.root.admin1List,
   totalAmount: state.widgetTreeCoverGain.totalAmount,
   percentage: state.widgetTreeCoverGain.percentage,
   settings: state.widgetTreeCoverGain.settings,
@@ -36,21 +34,23 @@ const WidgetTreeCoverGainContainer = props => {
   };
 
   const setWidgetData = newProps => {
+    const { location, settings, setTreeCoverGainValues } = newProps;
+
     getTreeCoverGain(
-      newProps.iso,
+      location.admin0,
+      location.admin1,
       {
-        minYear: newProps.settings.startYear,
-        maxYear: newProps.settings.endYear
+        minYear: settings.startYear,
+        maxYear: settings.endYear
       },
-      newProps.settings.canopy,
-      newProps.admin1
+      settings.canopy
     ).then(coverGain => {
       getTotalCountriesTreeCoverGain(
         {
-          minYear: newProps.settings.startYear,
-          maxYear: newProps.settings.endYear
+          minYear: settings.startYear,
+          maxYear: settings.endYear
         },
-        newProps.settings.canopy
+        settings.canopy
       ).then(totalCoverGain => {
         const percentage =
           coverGain.data.data[0].value / totalCoverGain.data.data[0].value;
@@ -58,7 +58,7 @@ const WidgetTreeCoverGainContainer = props => {
           totalAmount: coverGain.data.data[0].value,
           percentage: percentage * 100
         };
-        props.setTreeCoverGainValues(values);
+        setTreeCoverGainValues(values);
       });
     });
   };
