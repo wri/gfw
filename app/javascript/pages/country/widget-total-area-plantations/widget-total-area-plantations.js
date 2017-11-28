@@ -9,26 +9,26 @@ export { default as reducers } from './widget-total-area-plantations-reducers';
 export { default as actions } from './widget-total-area-plantations-actions';
 
 const mapStateToProps = state => ({
+  locationNames: state.root.locationNames,
   isLoading: state.widgetTotalAreaPlantations.isLoading,
-  iso: state.root.iso,
-  countryData: state.root.countryData,
   plantationData: state.widgetTotalAreaPlantations.plantationData,
   units: state.widgetTotalAreaPlantations.units,
   settings: state.widgetTotalAreaPlantations.settings
 });
 
 const WidgetTotalAreaPlantationsContainer = props => {
-  const setInitialData = props => {
+  const setInitialData = () => {
     setWidgetData(props);
   };
 
-  const updateData = props => {
-    props.setTotalAreaPlantationsIsLoading(true);
-    setWidgetData(props);
+  const updateData = newProps => {
+    newProps.setTotalAreaPlantationsIsLoading(true);
+    setWidgetData(newProps);
   };
 
-  const setWidgetData = props => {
-    props.setTotalAreaPlantationsValues([
+  const setWidgetData = newProps => {
+    const { setTotalAreaPlantationsValues } = newProps;
+    setTotalAreaPlantationsValues([
       { name: 'Outside tree plantations', value: 1200, color: '#e9e9ea' },
       {
         name: 'Large industrial tree plantation',

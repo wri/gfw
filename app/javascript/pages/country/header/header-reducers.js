@@ -1,13 +1,21 @@
 export const initialState = {
-  selectedCountry: '',
-  selectedRegion: '',
-  countrySelectData: [],
-  regionSelectData: [],
-  totalCoverHeader: 0,
-  totalForestHeader: 0,
-  percentageForestHeader: 0,
-  totalCoverLoss: 0
+  selectedAdmin0: '',
+  selectedAdmin1: '',
+  selectedAdmin2: '',
+  admin0SelectData: [],
+  admin1SelectData: [],
+  admin2SelectData: []
 };
+
+const setHeaderSelectValues = (state, { payload }) => ({
+  ...state,
+  selectedAdmin0: payload.selectedAdmin0,
+  selectedAdmin1: payload.selectedAdmin1,
+  selectedAdmin2: payload.selectedAdmin2,
+  admin0SelectData: payload.admin0SelectData,
+  admin1SelectData: payload.admin1SelectData,
+  admin2SelectData: payload.admin2SelectData
+});
 
 const setHeaderValues = (state, { payload }) => ({
   ...state,
@@ -22,5 +30,6 @@ const setHeaderValues = (state, { payload }) => ({
 });
 
 export default {
+  setHeaderSelectValues,
   setHeaderValues
 };

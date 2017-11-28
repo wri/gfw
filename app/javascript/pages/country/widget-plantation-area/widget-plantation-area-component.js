@@ -1,15 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer
-} from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 
 import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget-header';
@@ -24,8 +15,8 @@ class WidgetPlantationArea extends PureComponent {
 
   render() {
     const {
+      locationNames,
       isLoading,
-      countryData,
       plantationAreaData,
       settings,
       units,
@@ -42,7 +33,7 @@ class WidgetPlantationArea extends PureComponent {
       <div className="c-widget c-widget-plantation-area">
         <WidgetHeader
           noMap
-          title={`TREE PLANTATION AREA WITHIN ${countryData.name}`}
+          title={`TREE PLANTATION AREA WITHIN ${locationNames.current}`}
           shareAnchor={'plantation-area'}
         >
           <WidgetPlantationAreaSettings
@@ -111,9 +102,16 @@ class WidgetPlantationArea extends PureComponent {
 }
 
 WidgetPlantationArea.propTypes = {
+  locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
-  plantationAreaData: PropTypes.array.isRequired
+  plantationAreaData: PropTypes.array.isRequired,
+  settings: PropTypes.object.isRequired,
+  units: PropTypes.array.isRequired,
+  paginate: PropTypes.object.isRequired,
+  nextPage: PropTypes.func.isRequired,
+  previousPage: PropTypes.func.isRequired,
+  setPlantationAreaSettingsUnit: PropTypes.func.isRequired
 };
 
 export default WidgetPlantationArea;

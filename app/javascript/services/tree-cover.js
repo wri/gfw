@@ -8,32 +8,41 @@ const CONFIG = {
 const APIURL = process.env.GFW_API_HOST_PROD;
 
 const APIURLS = {
-  'getTotalCover': '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' AND thresh={thresh} {region}',
-  'getTotalIntactForest': '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' {region}',
-  'getListRegionsForest': '/query?sql=select sum(area) as value FROM {dataset} WHERE iso=\'{iso}\' AND thresh={thresh} GROUP BY adm1 ORDER BY value DESC',
+  getTotalCover:
+    "/query?sql=select sum(area) as value FROM {dataset} WHERE iso='{admin0}' AND thresh={thresh} {groupBy}",
+  getTotalIntactForest:
+    "/query?sql=select sum(area) as value FROM {dataset} WHERE iso='{admin0}' {groupBy}",
+  getListRegionsForest:
+    "/query?sql=select sum(area) as value FROM {dataset} WHERE iso='{admin0}' AND thresh={thresh} GROUP BY adm1 ORDER BY value DESC"
 };
 
-export const getTotalCover = (iso, region, canopy) => {
+export const getTotalCover = (admin0, admin1, canopy) => {
   const url = `${APIURL}${APIURLS.getTotalCover}`
     .replace('{dataset}', CONFIG.coverDataset)
-    .replace('{iso}', iso)
+    .replace('{admin0}', admin0)
     .replace('{thresh}', canopy)
-    .replace('{region}', region === 0 ? 'GROUP BY iso' : `AND adm1 = ${region} GROUP BY iso, adm1`);
+    .replace(
+      '{groupBy}',
+      admin1 ? `AND adm1 = ${admin1} GROUP BY iso, adm1` : 'GROUP BY iso'
+    );
   return axios.get(url);
 };
 
-export const getTotalIntactForest = (iso, region) => {
+export const getTotalIntactForest = (admin0, admin1) => {
   const url = `${APIURL}${APIURLS.getTotalIntactForest}`
     .replace('{dataset}', CONFIG.intactForestDataset)
-    .replace('{iso}', iso)
-    .replace('{region}', region === 0 ? 'GROUP BY iso' : `AND adm1 = ${region} GROUP BY iso, adm1`);
+    .replace('{admin0}', admin0)
+    .replace(
+      '{groupBy}',
+      admin1 ? `AND adm1 = ${admin1} GROUP BY iso, adm1` : 'GROUP BY iso'
+    );
   return axios.get(url);
 };
 
-export const getTotalCoverRegions = (iso, canopy) => {
+export const getTotalCoverRegions = (admin0, canopy) => {
   const url = `${APIURL}${APIURLS.getListRegionsForest}`
     .replace('{dataset}', CONFIG.coverDataset)
-    .replace('{iso}', iso)
+    .replace('{admin0}', admin0)
     .replace('{thresh}', canopy);
   return axios.get(url);
 };

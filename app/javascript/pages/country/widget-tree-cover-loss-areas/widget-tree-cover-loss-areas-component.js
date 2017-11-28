@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { PieChart, Pie, Legend, Tooltip, Cell } from 'recharts';
+import { PieChart, Pie, Tooltip, Cell } from 'recharts';
 import numeral from 'numeral';
 
 import Loader from 'components/loader/loader';
@@ -10,13 +10,12 @@ import WidgetPaginate from 'pages/country/widget-paginate';
 import WidgetTreeCoverLossAreasSettings from './widget-tree-cover-loss-areas-settings-component';
 
 class WidgetTreeLossAreas extends PureComponent {
-  componentDidMount() {
-    const { setInitialData } = this.props;
-    setInitialData(this.props);
-  }
-
   componentWillUpdate(nextProps) {
-    const { updateData, settings } = this.props;
+    const { isRootLoading, settings, setInitialData, updateData } = this.props;
+
+    if (!nextProps.isRootLoading && isRootLoading) {
+      setInitialData(nextProps);
+    }
 
     if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
       updateData(nextProps);
@@ -25,8 +24,8 @@ class WidgetTreeLossAreas extends PureComponent {
 
   render() {
     const {
+      locationNames,
       isLoading,
-      countryData,
       regionData,
       paginate,
       nextPage,
@@ -49,7 +48,7 @@ class WidgetTreeLossAreas extends PureComponent {
     return (
       <div className="c-widget c-widget-tree-cover-loss-areas">
         <WidgetHeader
-          title={`AREAS WITH MOST TREE COVER LOSS IN ${countryData.name}`}
+          title={`AREAS WITH MOST TREE COVER LOSS IN ${locationNames.current}`}
           shareAnchor={'tree-cover-loss-areas'}
         >
           <WidgetTreeCoverLossAreasSettings
@@ -110,9 +109,7 @@ class WidgetTreeLossAreas extends PureComponent {
                       </div>
                       <div className="c-widget-tree-cover-loss-areas__legend-value">
                         {settings.unit === 'ha'
-                          ? numeral(Math.round(item.value / 1000)).format(
-                            '0,0'
-                          )
+                          ? numeral(Math.round(item.value / 1000)).format('0,0')
                           : Math.round(item.value)}
                         {settings.unit === 'ha' ? 'ha' : '%'}
                       </div>
@@ -134,10 +131,25 @@ class WidgetTreeLossAreas extends PureComponent {
 }
 
 WidgetTreeLossAreas.propTypes = {
+  isRootLoading: PropTypes.bool.isRequired,
+  locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  setInitialData: PropTypes.func.isRequired,
+  settings: PropTypes.object.isRequired,
+  units: PropTypes.array.isRequired,
+  canopies: PropTypes.array.isRequired,
+  paginate: PropTypes.object.isRequired,
+  regions: PropTypes.array.isRequired,
+  years: PropTypes.array.isRequired,
+  nextPage: PropTypes.func.isRequired,
+  previousPage: PropTypes.func.isRequired,
+  updateData: PropTypes.func.isRequired,
   regionData: PropTypes.array.isRequired,
-  regionChartData: PropTypes.array.isRequired
+  regionChartData: PropTypes.array.isRequired,
+  setInitialData: PropTypes.func.isRequired,
+  setTreeCoverLossAreasSettingsUnit: PropTypes.func.isRequired,
+  setTreeCoverLossAreasSettingsCanopy: PropTypes.func.isRequired,
+  setTreeCoverLossAreasSettingsStartYear: PropTypes.func.isRequired,
+  setTreeCoverLossAreasSettingsEndYear: PropTypes.func.isRequired
 };
 
 export default WidgetTreeLossAreas;

@@ -14,10 +14,11 @@ export { default as reducers } from './widget-areas-most-cover-gain-reducers';
 export { default as actions } from './widget-areas-most-cover-gain-actions';
 
 const mapStateToProps = state => ({
-  isLoading: state.widgetAreasMostCoverGain.isLoading,
-  iso: state.root.iso,
+  isRootLoading: state.root.isLoading,
+  location: state.location.payload,
+  locationNames: state.root.locationNames,
   admin1List: state.root.admin1List,
-  countryData: state.root.countryData,
+  isLoading: state.widgetAreasMostCoverGain.isLoading,
   areaData: state.widgetAreasMostCoverGain.areaData,
   areaChartData: state.widgetAreasMostCoverGain.areaChartData,
   paginate: state.widgetAreasMostCoverGain.paginate,
@@ -41,24 +42,32 @@ const colors = [
 ];
 
 const WidgetAreasMostCoverGainContainer = props => {
-  const updateData = props => {
-    props.setAreasMostCoverIsLoading(true);
-    setWidgetData(props);
+  const updateData = newProps => {
+    newProps.setAreasMostCoverIsLoading(true);
+    setWidgetData(newProps);
   };
 
-  const setInitialData = props => {
-    setWidgetData(props);
+  const setInitialData = nextProps => {
+    setWidgetData(nextProps);
   };
 
-  const setWidgetData = props => {
+  const setWidgetData = newProps => {
+    const {
+      location,
+      admin1List,
+      settings,
+      paginate,
+      setAreasMostCoverGainValues
+    } = newProps;
+
     getTotalCountriesTreeCoverGain(
-      { minYear: props.settings.startYear, maxYear: props.settings.endYear },
-      props.settings.canopy
+      { minYear: settings.startYear, maxYear: settings.endYear },
+      settings.canopy
     ).then(totalCoverGain => {
       getTreeCoverGainRegion(
-        props.iso,
-        { minYear: props.settings.startYear, maxYear: props.settings.endYear },
-        props.settings.canopy
+        location.admin0,
+        { minYear: settings.startYear, maxYear: settings.endYear },
+        settings.canopy
       ).then(treeCoverGainByRegion => {
         const regionsCoverGain = [];
         const regionCoverGainChart = [];
@@ -66,24 +75,21 @@ const WidgetAreasMostCoverGainContainer = props => {
         let indexColors = 0;
         let othersValue = 0;
         treeCoverGainByRegion.data.data.forEach((item, index) => {
-          const numberRegion = _.findIndex(
-            props.admin1List,
-            x => x.id === item.adm1
-          );
+          const numberRegion = _.findIndex(admin1List, x => x.id === item.adm1);
 
           regionsCoverGain.push({
-            name: props.admin1List[numberRegion].name,
+            name: admin1List[numberRegion].name,
             value: item.value,
             color: colors[indexColors],
             position: index + 1
           });
 
-          if (indexColors < props.paginate.limit) {
+          if (indexColors < paginate.limit) {
             regionCoverGainChart.push({
-              name: props.admin1List[numberRegion].name,
+              name: admin1List[numberRegion].name,
               color: colors[indexColors],
               value:
-                props.settings.unit === 'ha'
+                settings.unit === 'ha'
                   ? item.value
                   : item.value / totalCoverGain.data.data[0].value * 100
             });
@@ -93,7 +99,7 @@ const WidgetAreasMostCoverGainContainer = props => {
               name: 'others',
               color: colors[indexColors],
               value:
-                props.settings.unit === 'ha'
+                settings.unit === 'ha'
                   ? othersValue
                   : othersValue / totalCoverGain.data.data[0].value * 100
             });
@@ -102,7 +108,7 @@ const WidgetAreasMostCoverGainContainer = props => {
           }
         });
 
-        props.setAreasMostCoverGainValues({
+        setAreasMostCoverGainValues({
           data: regionsCoverGain,
           charData: regionCoverGainChart
         });
@@ -111,11 +117,13 @@ const WidgetAreasMostCoverGainContainer = props => {
   };
 
   const nextPage = () => {
-    props.setAreasMostCoverGainPage(props.paginate.page + 1);
+    const { paginate, setAreasMostCoverGainPage } = props;
+    setAreasMostCoverGainPage(paginate.page + 1);
   };
 
   const previousPage = () => {
-    props.setAreasMostCoverGainPage(props.paginate.page - 1);
+    const { paginate, setAreasMostCoverGainPage } = props;
+    setAreasMostCoverGainPage(paginate.page - 1);
   };
 
   return createElement(WidgetAreasMostCoverGainComponent, {

@@ -1,9 +1,6 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
 
-import { getTotalCover } from 'services/tree-cover';
-import { getTreeLossByYear } from 'services/tree-loss';
-
 import HeaderComponent from './header-component';
 import actions from './header-actions';
 
@@ -12,13 +9,18 @@ export { default as reducers } from './header-reducers';
 export { default as actions } from './header-actions';
 
 const mapStateToProps = state => ({
-  iso: state.root.iso,
-  admin1: state.root.admin1,
-  admin2: state.root.admin2,
-  countryData: state.root.countryData,
+  isRootLoading: state.root.isLoading,
+  location: state.location.payload,
   admin0List: state.root.admin0List,
   admin1List: state.root.admin1List,
   admin2List: state.root.admin2List,
+  selectedAdmin0: state.header.selectedAdmin0,
+  selectedAdmin1: state.header.selectedAdmin1,
+  selectedAdmin2: state.header.selectedAdmin2,
+  admin0SelectData: state.header.admin0SelectData,
+  admin1SelectData: state.header.admin1SelectData,
+  admin2SelectData: state.header.admin2SelectData,
+
   selectedCountry: state.header.selectedCountry,
   selectedRegion: state.header.selectedRegion,
   countrySelectData: state.header.countrySelectData,
@@ -30,20 +32,23 @@ const mapStateToProps = state => ({
 });
 
 const HeaderContainer = props => {
-  const setInitialData = () => {
-    const {
-      iso,
-      admin1,
-      countryData,
-      admin0List,
-      admin1List,
-      setHeaderValues
-    } = props;
+  const setInitialData = newProps => {
+    const { setHeaderSelectValues } = newProps;
 
-    let selectedCountry = '';
-    const countrySelectData = admin0List.map(item => {
-      if (iso === item.iso) {
-        selectedCountry = item.name;
+    setHeaderSelectValues(getSelectValues(newProps));
+  };
+
+  const getSelectValues = newProps => {
+    const { location, admin0List, admin1List, admin2List } = newProps;
+
+    const values = {
+      selectedAdmin0: 'Select Country',
+      selectedAdmin1: 'Select Region',
+      selectedAdmin2: 'Select Region'
+    };
+    values.admin0SelectData = admin0List.map(item => {
+      if (location.admin0 === item.iso) {
+        values.selectedAdmin0 = item.name;
       }
 
       return {
@@ -52,10 +57,9 @@ const HeaderContainer = props => {
       };
     });
 
-    let selectedRegion = 'Select Region';
-    const regionSelectData = admin1List.map(item => {
-      if (admin1 === item.id) {
-        selectedRegion = item.name;
+    values.admin1SelectData = admin1List.map(item => {
+      if (location.admin1 === item.id) {
+        values.selectedAdmin1 = item.name;
       }
 
       return {
@@ -64,30 +68,18 @@ const HeaderContainer = props => {
       };
     });
 
-    getTotalCover(iso, admin1, 30).then(totalCoverResponse => {
-      getTreeLossByYear(iso, admin1, { minYear: 2015, maxYear: 2015 }, 30).then(
-        coverLoss => {
-          const totalCover = Math.round(totalCoverResponse.data.data[0].value);
-          const values = {
-            selectedCountry,
-            selectedRegion,
-            countrySelectData,
-            regionSelectData,
-            totalCoverHeader:
-              admin1 === 0
-                ? countryData.area_ha
-                : admin1List[admin1 - 1].area_ha,
-            totalForestHeader: totalCover,
-            percentageForestHeader:
-              admin1 === 0
-                ? totalCover / Math.round(countryData.area_ha) * 100
-                : totalCover / Math.round(admin1List[admin1 - 1].area_ha) * 100,
-            totalCoverLoss: coverLoss.data.data[0].value
-          };
-          setHeaderValues(values);
-        }
-      );
+    values.admin2SelectData = admin2List.map(item => {
+      if (location.admin2 === item.id) {
+        values.selectedAdmin2 = item.name;
+      }
+
+      return {
+        value: item.id,
+        label: item.name
+      };
     });
+
+    return values;
   };
 
   return createElement(HeaderComponent, {

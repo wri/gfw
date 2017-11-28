@@ -4,60 +4,24 @@ import Proptypes from 'prop-types';
 import Layers from 'map/layers';
 import grayscale from 'map/maptypes/grayscale';
 
+import Loader from 'components/loader/loader';
+
 class Map extends PureComponent {
   componentDidMount() {
-    const {
-      setMapData,
-      mapOptions,
-      zoom,
-      maptype,
-      maxZoom,
-      minZoom,
-      bounds,
-      regionBounds,
-      admin1
-    } = this.props;
+    const { setInitialData } = this.props;
 
-    setMapData(this.props);
-
-    const coordsMap = admin1 === 0 ? bounds : JSON.parse(regionBounds);
-    const boundsMap = new google.maps.LatLngBounds();
-    for (let i = 0; i < coordsMap.coordinates[0].length; i += 1) {
-      boundsMap.extend(
-        new google.maps.LatLng(
-          coordsMap.coordinates[0][i][1],
-          coordsMap.coordinates[0][i][0]
-        )
-      );
-    }
-    const options = {
-      options: Object.assign({}, mapOptions, {
-        zoom,
-        center: {
-          lat: boundsMap.getCenter().lat(),
-          lng: boundsMap.getCenter().lng()
-        },
-        maxZoom,
-        minZoom
-      })
-    };
-    this.map = new google.maps.Map(document.getElementById('map'), options);
-    this.map.fitBounds(boundsMap);
-    this.setMaptypes();
-    this.setMaptypeId(maptype);
-    this.setListeners();
+    setInitialData(this.props);
   }
 
   componentWillUpdate(nextProps) {
-    const oldLayers = this.props.layers;
-    const newLayers = nextProps.layers;
-    const sameLayers =
-      oldLayers.length === newLayers.length &&
-      oldLayers.every((element, index) => element === newLayers[index]);
-
-    if (!sameLayers) {
-      this.updateLayers(newLayers);
+    const { isLoading, checkLoadingStatus } = this.props;
+    if (!nextProps.isLoading && isLoading) {
+      this.buildMap(nextProps);
+    } else {
+      checkLoadingStatus(nextProps);
     }
+
+    this.checkLayers(this.props, nextProps);
   }
 
   onMapInit() {
@@ -90,6 +54,45 @@ class Map extends PureComponent {
     });
   }
 
+  buildMap(nextProps) {
+    const { zoom, maptype, bounds, maxZoom, minZoom, mapOptions } = nextProps;
+
+    const boundsMap = new google.maps.LatLngBounds();
+    bounds.forEach(item => {
+      boundsMap.extend(new google.maps.LatLng(item[1], item[0]));
+    });
+
+    const options = {
+      options: Object.assign({}, mapOptions, {
+        zoom,
+        center: {
+          lat: boundsMap.getCenter().lat(),
+          lng: boundsMap.getCenter().lng()
+        },
+        maxZoom,
+        minZoom
+      })
+    };
+    this.map = new google.maps.Map(document.getElementById('map'), options);
+    this.map.fitBounds(boundsMap);
+    this.setMaptypes();
+    this.setMaptypeId(maptype);
+    this.setListeners();
+    this.checkLayers(this.props, nextProps);
+  }
+
+  checkLayers(props, nextProps) {
+    const oldLayers = props.layers;
+    const newLayers = nextProps.layers;
+    const sameLayers =
+      oldLayers.length === newLayers.length &&
+      oldLayers.every((element, index) => element === newLayers[index]);
+
+    if (!sameLayers) {
+      this.updateLayers(newLayers);
+    }
+  }
+
   removeLayers() {
     const { layers } = this.props;
 
@@ -105,23 +108,18 @@ class Map extends PureComponent {
 
   render() {
     return (
-      <div id="map" className={`c-map ${this.props.fixed ? '-fixed' : ''}`} />
+      <div id="map" className="c-map">
+        <Loader isAbsolute />
+      </div>
     );
   }
 }
 
 Map.propTypes = {
-  setMapData: Proptypes.func.isRequired,
-  zoom: Proptypes.number.isRequired,
-  maptype: Proptypes.string.isRequired,
-  layers: Proptypes.array.isRequired,
-  maxZoom: Proptypes.number.isRequired,
-  minZoom: Proptypes.number.isRequired,
-  bounds: Proptypes.object.isRequired,
-  regionBounds: Proptypes.string.isRequired,
-  admin1: Proptypes.number.isRequired,
+  isLoading: Proptypes.bool.isRequired,
   layerSpec: Proptypes.object.isRequired,
-  mapOptions: Proptypes.object
+  checkLoadingStatus: Proptypes.func.isRequired,
+  setInitialData: Proptypes.func.isRequired
 };
 
 Map.defaultProps = {

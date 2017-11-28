@@ -22,22 +22,19 @@ class WidgetTreeCoverGain extends PureComponent {
 
   render() {
     const {
+      location,
+      locationNames,
       isLoading,
-      countryData,
       totalAmount,
       percentage,
       locations,
       settings,
-      admin1,
-      admin1List,
       setTreeCoverGainSettingsLocation
     } = this.props;
     return (
       <div className="c-widget c-widget-tree-cover-gain">
         <WidgetHeader
-          title={`TREE COVER GAIN IN ${
-            admin1 === 0 ? countryData.name : admin1List[admin1 - 1].name
-          }`}
+          title={`TREE COVER GAIN IN ${locationNames.current}`}
           noMap={false}
           shareAnchor={'tree-cover-gain'}
         >
@@ -56,14 +53,13 @@ class WidgetTreeCoverGain extends PureComponent {
               <p className="title">Hansen - UMD</p>
               <p>
                 Over the period of {settings.startYear}-{settings.endYear}{' '}
-                {admin1 === 0 ? countryData.name : admin1List[admin1 - 1].name}{' '}
-                gained
+                {locationNames.current} gained
                 <strong>
                   {' '}
                   {numeral(Math.round(totalAmount / 1000)).format('0,0')}{' '}
                 </strong>
                 ha of tree cover{' '}
-                {admin1 === 0 ? 'country-wide' : 'jurisdiction-wide'},
+                {location.admin1 ? 'jurisdiction-wide' : 'country-wide'},
                 equivalent to{' '}
                 <strong>
                   {numeral(Math.round(percentage)).format('0,0')}%
@@ -79,10 +75,9 @@ class WidgetTreeCoverGain extends PureComponent {
 }
 
 WidgetTreeCoverGain.propTypes = {
+  location: PropTypes.object.isRequired,
+  locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  admin1: PropTypes.number.isRequired,
-  countryData: PropTypes.object.isRequired,
-  admin1List: PropTypes.array.isRequired,
   totalAmount: PropTypes.number.isRequired,
   percentage: PropTypes.number.isRequired,
   locations: PropTypes.array.isRequired,

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { PieChart, Pie, Legend, Tooltip, Cell } from 'recharts';
+import { PieChart, Pie, Tooltip, Cell } from 'recharts';
 
 import Loader from 'components/loader/loader';
 import TooltipChart from 'pages/country/tooltip-chart';
@@ -23,8 +23,8 @@ class WidgetTotalAreaPlantations extends PureComponent {
 
   render() {
     const {
+      locationNames,
       isLoading,
-      countryData,
       plantationData,
       settings,
       units,
@@ -34,7 +34,9 @@ class WidgetTotalAreaPlantations extends PureComponent {
     return (
       <div className="c-widget c-widget-total-area-plantations">
         <WidgetHeader
-          title={`TOTAL AREA OF TREE PLANTATIONS WITHIN ${countryData.name}`}
+          title={`TOTAL AREA OF TREE PLANTATIONS WITHIN ${
+            locationNames.current
+          }`}
           shareAnchor={'total-area-plantations'}
         >
           <WidgetTotalAreaPlantationsSettings
@@ -92,9 +94,14 @@ class WidgetTotalAreaPlantations extends PureComponent {
 }
 
 WidgetTotalAreaPlantations.propTypes = {
+  locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
-  plantationData: PropTypes.array.isRequired
+  plantationData: PropTypes.array.isRequired,
+  settings: PropTypes.object.isRequired,
+  units: PropTypes.array.isRequired,
+  updateData: PropTypes.func.isRequired,
+  setTotalAreaPlantationsSettingsUnit: PropTypes.func.isRequired
 };
 
 export default WidgetTotalAreaPlantations;

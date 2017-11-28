@@ -9,13 +9,12 @@ import WidgetPaginate from 'pages/country/widget-paginate';
 import WidgetAreasMostCoverGainSettings from './widget-areas-most-cover-gain-settings-component';
 
 class WidgetAreasMostCoverGain extends PureComponent {
-  componentDidMount() {
-    const { setInitialData } = this.props;
-    setInitialData(this.props);
-  }
-
   componentWillUpdate(nextProps) {
-    const { settings, updateData } = this.props;
+    const { isRootLoading, settings, setInitialData, updateData } = this.props;
+
+    if (!nextProps.isRootLoading && isRootLoading) {
+      setInitialData(nextProps);
+    }
 
     if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
       updateData(nextProps);
@@ -24,8 +23,8 @@ class WidgetAreasMostCoverGain extends PureComponent {
 
   render() {
     const {
+      locationNames,
       isLoading,
-      countryData,
       areaData,
       areaChartData,
       paginate,
@@ -44,7 +43,7 @@ class WidgetAreasMostCoverGain extends PureComponent {
     return (
       <div className="c-widget c-widget-areas-most-cover-gain">
         <WidgetHeader
-          title={`AREAS WITH MOST TREE COVER GAIN IN ${countryData.name}`}
+          title={`AREAS WITH MOST TREE COVER GAIN IN ${locationNames.current}`}
           shareAnchor={'areas-most-cover-gain'}
         >
           <WidgetAreasMostCoverGainSettings
@@ -111,9 +110,21 @@ class WidgetAreasMostCoverGain extends PureComponent {
 }
 
 WidgetAreasMostCoverGain.propTypes = {
+  isRootLoading: PropTypes.bool.isRequired,
+  locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  areaData: PropTypes.array.isRequired,
+  areaChartData: PropTypes.array.isRequired,
+  paginate: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired,
+  units: PropTypes.array.isRequired,
+  locations: PropTypes.array.isRequired,
   setInitialData: PropTypes.func.isRequired,
-  areaData: PropTypes.array.isRequired
+  updateData: PropTypes.func.isRequired,
+  nextPage: PropTypes.func.isRequired,
+  previousPage: PropTypes.func.isRequired,
+  setAreasMostCoverGainSettingsLocation: PropTypes.func.isRequired,
+  setAreasMostCoverGainSettingsUnit: PropTypes.func.isRequired
 };
 
 export default WidgetAreasMostCoverGain;

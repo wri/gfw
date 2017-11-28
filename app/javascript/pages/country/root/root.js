@@ -6,6 +6,7 @@ import {
   getCountryAdmin1,
   getCountryAdmin2
 } from 'services/country';
+import { getAdminGeostore } from 'services/geostore';
 
 import RootComponent from './root-component';
 import actions from './root-actions';
@@ -17,9 +18,10 @@ export { default as actions } from './root-actions';
 const mapStateToProps = state => ({
   location: state.location.payload,
   isLoading: state.root.isLoading,
-  admin0: state.root.admin0,
-  admin1: state.root.admin1,
-  admin2: state.root.admin2,
+  admin0List: state.root.admin0List,
+  admin1List: state.root.admin1List,
+  admin2List: state.root.admin2List,
+  geostore: state.root.geostore,
   gfwHeaderHeight: state.root.gfwHeaderHeight,
   isMapFixed: state.root.isMapFixed,
   mapTop: state.root.mapTop,
@@ -28,70 +30,57 @@ const mapStateToProps = state => ({
 });
 
 const RootContainer = props => {
-  const refreshCountryData = newProps => {
-    const { location, setLocation, setAdmin0List, setAdmin1List, setAdmin2List, setCountryData } = newProps;
-
-    
-
-    getCountriesList().then(getCountriesListResponse => {
-      getCountry(location.iso).then(getCountryResponse => {
-        const getCountryData = getCountryResponse.data;
-        getCountryData.area_ha = getCountryResponse.data.umd[0].area_ha;
-
-        getCountryAdmin1(location.iso).then(getCountryAdmin1Response => {
-          if (location.admin1) {
-            getCountryAdmin2(location.iso, location.admin1).then(getCountryAdmin2Response => {
-              setCountryData({
-                data: getCountryData,
-                admin1Data: getCountryAdmin1Response.data.data,
-                admin2Data: getCountryAdmin2Response.data.data,
-                countries: getCountriesListResponse.data.data
-              });
-              setLocationName(
-                location,
-                getCountryData,
-                getCountryAdmin1Response.data.data,
-                getCountryAdmin2Response.data.data
-              );
-            });
-          } else {
-            setCountryData({
-              data: getCountryData,
-              admin1Data: getCountryAdmin1Response.data.data,
-              admin2Data: [],
-              countries: getCountriesListResponse.data.data
-            });
-            setLocationName(
-              location,
-              getCountryData,
-              getCountryAdmin1Response.data.data
-            );
-          }
-        });
-      });
+  const getLocationNames = (location, admin0List, admin1List, admin2List) => {
+    const locationNames = {
+      admin0: '',
+      admin1: '',
+      admin2: '',
+      current: ''
+    };
+    admin0List.forEach(item => {
+      if (item.iso === location.admin0) {
+        locationNames.admin0 = item.name;
+        locationNames.current = item.name;
+      }
     });
-  };
-
-  const updateLocationName = (location, admin0Data, admin1Data, admin2Data) => {
-    const { setLocationName } = props;
-
-    if (location.admin2) {
-      setLocationName(admin2Data[location.admin2 - 1].name);
-    } else if (location.admin1) {
-      setLocationName(admin1Data[location.admin1 - 1].name);
-    } else {
-      setLocationName(admin0Data[location.admin1 - 1].name);
+    if (location.admin1) {
+      locationNames.admin1 = admin1List[location.admin1 - 1].name;
+      locationNames.current = admin1List[location.admin1 - 1].name;
     }
+    if (location.admin2) {
+      locationNames.admin2 = admin2List[location.admin2 - 1].name;
+      locationNames.current = admin2List[location.admin2 - 1].name;
+    }
+
+    return locationNames;
   };
+
+  const getBoxBounds = cornerBounds => [
+    [cornerBounds[0], cornerBounds[1]],
+    [cornerBounds[0], cornerBounds[3]],
+    [cornerBounds[2], cornerBounds[3]],
+    [cornerBounds[2], cornerBounds[1]],
+    [cornerBounds[0], cornerBounds[1]]
+  ];
 
   const setInitialData = () => {
-    const { location, setLocation, setAdmin0List, setAdmin1List, setAdmin2List } = props;
+    const {
+      location,
+      setGeostore,
+      setAdmin0List,
+      setAdmin1List,
+      setAdmin2List
+    } = props;
 
-    setLocation({
-      admin0: location.admin0,
-      admin1: location.admin1,
-      admin2: location.admin2
-    });
+    getAdminGeostore(location.admin0, location.admin1, location.admin2).then(
+      response => {
+        const { areaHa, bbox } = response.data.data.attributes;
+        setGeostore({
+          areaHa,
+          bounds: getBoxBounds(bbox)
+        });
+      }
+    );
 
     getCountryAdmin0().then(response => {
       setAdmin0List(response.data.rows);
@@ -108,12 +97,33 @@ const RootContainer = props => {
     }
   };
 
-  const checkLoadingStatus = (newProps) => {
-    if ()
+  const checkLoadingStatus = newProps => {
+    const { location, admin0List, admin1List, admin2List, geostore } = newProps;
+
+    if (
+      admin0List.length > 0 &&
+      admin1List.length > 0 &&
+      (!location.admin1 || (location.admin1 && admin2List.length > 0)) &&
+      Object.keys(geostore).length > 0
+    ) {
+      setStatusComplete(newProps);
+    }
   };
 
-  const setStatusComplete = () => {
-    
+  const setStatusComplete = newProps => {
+    const {
+      location,
+      admin0List,
+      admin1List,
+      admin2List,
+      setIsLoading,
+      setLocationNames
+    } = newProps;
+
+    setIsLoading(false);
+    setLocationNames(
+      getLocationNames(location, admin0List, admin1List, admin2List)
+    );
   };
 
   return createElement(RootComponent, {

@@ -9,8 +9,8 @@ export { default as reducers } from './widget-plantation-area-reducers';
 export { default as actions } from './widget-plantation-area-actions';
 
 const mapStateToProps = state => ({
+  locationNames: state.root.locationNames,
   isLoading: state.widgetPlantationArea.isLoading,
-  countryData: state.root.countryData,
   plantationAreaData: state.widgetPlantationArea.plantationAreaData,
   paginate: state.widgetPlantationArea.paginate,
   units: state.widgetPlantationArea.units,
@@ -18,17 +18,18 @@ const mapStateToProps = state => ({
 });
 
 const WidgetPlantationAreaContainer = props => {
-  const setInitialData = props => {
+  const setInitialData = () => {
     setWidgetData(props);
   };
 
-  const updateData = props => {
-    props.setTreeLocatedIsLoading(true);
-    setWidgetData(props);
+  const updateData = newProps => {
+    newProps.setTreeLocatedIsLoading(true);
+    setWidgetData(newProps);
   };
 
-  const setWidgetData = props => {
-    props.setPlantationAreaData([
+  const setWidgetData = newProps => {
+    const { setPlantationAreaData } = newProps;
+    setPlantationAreaData([
       { name: 'Minas Gerais', one_0: 230, two_0: 335, three_0: 453 },
       { name: 'Bahia', one_1: 300, two_1: 135, three_1: 953 },
       { name: 'Amazonas', one_2: 20, two_2: 535, three_2: 253 },

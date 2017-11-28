@@ -11,10 +11,10 @@ export { default as reducers } from './widget-tree-cover-reducers';
 export { default as actions } from './widget-tree-cover-actions';
 
 const mapStateToProps = state => ({
+  location: state.location.payload,
+  locationNames: state.root.locationNames,
+  areaHa: state.root.geostore.areaHa,
   isLoading: state.widgetTreeCover.isLoading,
-  iso: state.root.iso,
-  admin1: state.root.admin1,
-  countryData: state.root.countryData,
   admin1List: state.root.admin1List,
   totalCover: state.widgetTreeCover.totalCover,
   totalIntactForest: state.widgetTreeCover.totalIntactForest,
@@ -27,8 +27,8 @@ const mapStateToProps = state => ({
 });
 
 const WidgetTreeCoverContainer = props => {
-  const setInitialData = newProps => {
-    setWidgetData(newProps);
+  const setInitialData = () => {
+    setWidgetData(props);
   };
 
   const updateData = newProps => {
@@ -37,9 +37,10 @@ const WidgetTreeCoverContainer = props => {
   };
 
   const setWidgetData = newProps => {
-    getTotalCover(newProps.iso, newProps.admin1, newProps.settings.canopy).then(
+    const { location, areaHa, settings, setTreeCoverValues } = newProps;
+    getTotalCover(location.admin0, location.admin1, settings.canopy).then(
       totalCoverResponse => {
-        getTotalIntactForest(newProps.iso, newProps.admin1).then(
+        getTotalIntactForest(location.admin0, location.admin1).then(
           totalIntactForestResponse => {
             if (totalIntactForestResponse.data.data.length > 0) {
               const totalCover = Math.round(
@@ -49,13 +50,12 @@ const WidgetTreeCoverContainer = props => {
                 totalIntactForestResponse.data.data[0].value
               );
               const totalNonForest =
-                Math.round(newProps.countryData.area_ha) -
-                (totalCover + totalIntactForest);
+                Math.round(areaHa) - (totalCover + totalIntactForest);
               const values = {
                 totalCover,
                 totalIntactForest,
                 totalNonForest,
-                title: newProps.getTitle(newProps),
+                title: getTitle(newProps),
                 locations: [
                   {
                     value: 'all',
@@ -75,7 +75,8 @@ const WidgetTreeCoverContainer = props => {
                   }
                 ]
               };
-              newProps.setTreeCoverValues(values);
+
+              setTreeCoverValues(values);
             }
           }
         );
@@ -84,15 +85,12 @@ const WidgetTreeCoverContainer = props => {
   };
 
   const getTitle = newProps => {
-    const location =
-      newProps.settings.location !== 'all'
-        ? ` and ${newProps.settings.locationLabel}`
-        : '';
-    const country =
-      newProps.admin1 === 0
-        ? newProps.countryData.name
-        : newProps.admin1List[newProps.admin1 - 1].name;
-    return `Forest cover ${location} in ${country}`;
+    const { locationNames, settings } = newProps;
+
+    const region =
+      settings.location !== 'all' ? ` and ${settings.locationLabel}` : '';
+
+    return `Forest cover ${region} in ${locationNames.current}`;
   };
 
   const viewOnMap = () => {
@@ -103,7 +101,6 @@ const WidgetTreeCoverContainer = props => {
     ...props,
     setInitialData,
     updateData,
-    getTitle,
     viewOnMap
   });
 };
