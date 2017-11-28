@@ -1,57 +1,36 @@
 export const initialState = {
-  isLoading: true,
-  locationNames: {
-    admin0: '',
-    admin1: '',
-    admin2: '',
-    current: ''
-  },
-  admin0List: [],
-  admin1List: [],
-  admin2List: [],
-  geostore: {
-    areaHa: 0,
-    bounds: []
-  },
+  isLoading: false,
   gfwHeaderHeight: 59,
   showMapMobile: false,
   isMapFixed: true,
-  mapTop: 0
+  mapTop: 0,
+  countries: [],
+  regions: [],
+  subRegions: [],
+  geostore: {
+    areaHa: 0,
+    bounds: []
+  }
 };
-
-const setInitialState = state => ({
-  ...state,
-  isLoading: true,
-  admin0List: [],
-  admin1List: [],
-  admin2List: [],
-  isMapFixed: true,
-  mapTop: 0
-});
 
 const setIsLoading = (state, { payload }) => ({
   ...state,
   isLoading: payload
 });
 
-const setAdmin0List = (state, { payload }) => ({
+const setCountries = (state, { payload }) => ({
   ...state,
-  admin0List: payload
+  countries: payload.map(d => ({ label: d.name, value: d.iso }))
 });
 
-const setAdmin1List = (state, { payload }) => ({
+const setRegions = (state, { payload }) => ({
   ...state,
-  admin1List: payload
+  regions: payload.map(d => ({ label: d.name, value: d.id.toString() }))
 });
 
-const setAdmin2List = (state, { payload }) => ({
+const setSubRegions = (state, { payload }) => ({
   ...state,
-  admin2List: payload
-});
-
-const setLocationNames = (state, { payload }) => ({
-  ...state,
-  locationNames: payload
+  subRegions: payload.map(d => ({ label: d.name, value: d.id.toString() }))
 });
 
 const setGeostore = (state, { payload }) => ({
@@ -75,12 +54,10 @@ const setShowMapMobile = (state, { payload }) => ({
 });
 
 export default {
-  setInitialState,
   setIsLoading,
-  setAdmin0List,
-  setAdmin1List,
-  setAdmin2List,
-  setLocationNames,
+  setCountries,
+  setRegions,
+  setSubRegions,
   setGeostore,
   setFixedMapStatus,
   setMapTop,

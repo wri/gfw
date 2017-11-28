@@ -1,12 +1,13 @@
-import { createElement } from 'react';
+import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import {
-  getCountryAdmin0,
-  getCountryAdmin1,
-  getCountryAdmin2
+  getCountriesProvider,
+  getRegionsProvider,
+  getSubRegionsProvider
 } from 'services/country';
-import { getAdminGeostore } from 'services/geostore';
+import { getGeostoreProvider } from 'services/geostore';
 
 import RootComponent from './root-component';
 import actions from './root-actions';
@@ -17,11 +18,6 @@ export { default as actions } from './root-actions';
 
 const mapStateToProps = state => ({
   location: state.location.payload,
-  isLoading: state.root.isLoading,
-  admin0List: state.root.admin0List,
-  admin1List: state.root.admin1List,
-  admin2List: state.root.admin2List,
-  geostore: state.root.geostore,
   gfwHeaderHeight: state.root.gfwHeaderHeight,
   isMapFixed: state.root.isMapFixed,
   mapTop: state.root.mapTop,
@@ -29,33 +25,71 @@ const mapStateToProps = state => ({
   showMapMobile: state.root.showMapMobile
 });
 
-const RootContainer = props => {
-  const getLocationNames = (location, admin0List, admin1List, admin2List) => {
-    const locationNames = {
-      admin0: '',
-      admin1: '',
-      admin2: '',
-      current: ''
-    };
-    admin0List.forEach(item => {
-      if (item.iso === location.admin0) {
-        locationNames.admin0 = item.name;
-        locationNames.current = item.name;
-      }
-    });
-    if (location.admin1) {
-      locationNames.admin1 = admin1List[location.admin1 - 1].name;
-      locationNames.current = admin1List[location.admin1 - 1].name;
+class RootContainer extends PureComponent {
+  componentWillMount() {
+    const { location } = this.props;
+
+    this.getCountries();
+    this.getRegions(location.country);
+    if (location.region) {
+      this.getSubRegions(location.country, location.region);
     }
-    if (location.admin2) {
-      locationNames.admin2 = admin2List[location.admin2 - 1].name;
-      locationNames.current = admin2List[location.admin2 - 1].name;
+    this.getGeoStore(location.country, location.region, location.subRegion);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.country !== this.props.location.country) {
+      this.getRegions(location.country);
+      if (location.region) {
+        this.getSubRegions(location.country, location.region);
+      }
+      this.getGeoStore(location.country, location.region, location.subRegion);
     }
 
-    return locationNames;
+    if (nextProps.location.region !== this.props.location.region) {
+      this.getSubRegions(location.country, location.region);
+      this.getGeoStore(location.country, location.region, location.subRegion);
+    }
+
+    if (nextProps.location.subRegion !== this.props.location.subRegion) {
+      this.getGeoStore(location.country, location.region, location.subRegion);
+    }
+  }
+
+  // fetches for locaton meta data
+  getCountries = () => {
+    const { setCountries } = this.props;
+    getCountriesProvider().then(response => {
+      setCountries(response.data.rows);
+    });
   };
 
-  const getBoxBounds = cornerBounds => [
+  getRegions = location => {
+    const { setRegions } = this.props;
+    getRegionsProvider(location).then(response => {
+      setRegions(response.data.rows);
+    });
+  };
+
+  getSubRegions = (country, region) => {
+    const { setSubRegions } = this.props;
+    getSubRegionsProvider(country, region).then(response => {
+      setSubRegions(response.data.rows);
+    });
+  };
+
+  getGeoStore = (country, region, subRegion) => {
+    const { setGeostore } = this.props;
+    getGeostoreProvider(country, region, subRegion).then(response => {
+      const { areaHa, bbox } = response.data.data.attributes;
+      setGeostore({
+        areaHa,
+        bounds: this.getBoxBounds(bbox)
+      });
+    });
+  };
+
+  getBoxBounds = cornerBounds => [
     [cornerBounds[0], cornerBounds[1]],
     [cornerBounds[0], cornerBounds[3]],
     [cornerBounds[2], cornerBounds[3]],
@@ -63,74 +97,57 @@ const RootContainer = props => {
     [cornerBounds[0], cornerBounds[1]]
   ];
 
-  const setInitialData = () => {
+  handleShowMapMobile() {
+    this.props.setShowMapMobile(!this.props.showMapMobile);
+  }
+
+  handleScrollCallback() {
     const {
-      location,
-      setGeostore,
-      setAdmin0List,
-      setAdmin1List,
-      setAdmin2List
-    } = props;
+      gfwHeaderHeight,
+      isMapFixed,
+      setFixedMapStatus,
+      setMapTop
+    } = this.props;
 
-    getAdminGeostore(location.admin0, location.admin1, location.admin2).then(
-      response => {
-        const { areaHa, bbox } = response.data.data.attributes;
-        setGeostore({
-          areaHa,
-          bounds: getBoxBounds(bbox)
-        });
-      }
-    );
-
-    getCountryAdmin0().then(response => {
-      setAdmin0List(response.data.rows);
-    });
-
-    getCountryAdmin1(location.admin0).then(response => {
-      setAdmin1List(response.data.rows);
-    });
-
-    if (location.admin1) {
-      getCountryAdmin2(location.admin0, location.admin1).then(response => {
-        setAdmin2List(response.data.rows);
-      });
-    }
-  };
-
-  const checkLoadingStatus = newProps => {
-    const { location, admin0List, admin1List, admin2List, geostore } = newProps;
+    const mapFixedLimit =
+      document.getElementById('c-widget-stories').offsetTop -
+      window.innerHeight;
 
     if (
-      admin0List.length > 0 &&
-      admin1List.length > 0 &&
-      (!location.admin1 || (location.admin1 && admin2List.length > 0)) &&
-      Object.keys(geostore).length > 0
+      !isMapFixed &&
+      window.scrollY >= gfwHeaderHeight &&
+      window.scrollY < mapFixedLimit
     ) {
-      setStatusComplete(newProps);
+      setFixedMapStatus(true);
+      setMapTop(0);
+    } else if (isMapFixed && window.scrollY >= mapFixedLimit) {
+      setFixedMapStatus(false);
+      setMapTop(mapFixedLimit);
     }
-  };
+  }
 
-  const setStatusComplete = newProps => {
-    const {
-      location,
-      admin0List,
-      admin1List,
-      admin2List,
-      setIsLoading,
-      setLocationNames
-    } = newProps;
+  render() {
+    return createElement(RootComponent, {
+      ...this.props,
+      checkLoadingStatus: this.checkLoadingStatus,
+      handleShowMapMobile: this.handleShowMapMobile,
+      handleScrollCallback: this.handleScrollCallback
+    });
+  }
+}
 
-    setIsLoading(false);
-    setLocationNames(
-      getLocationNames(location, admin0List, admin1List, admin2List)
-    );
-  };
-
-  return createElement(RootComponent, {
-    ...props,
-    setInitialData,
-    checkLoadingStatus
-  });
+RootContainer.propTypes = {
+  location: PropTypes.object,
+  setGeostore: PropTypes.func,
+  setCountries: PropTypes.func,
+  setRegions: PropTypes.func,
+  setSubRegions: PropTypes.func,
+  setShowMapMobile: PropTypes.func,
+  showMapMobile: PropTypes.bool,
+  gfwHeaderHeight: PropTypes.number,
+  isMapFixed: PropTypes.bool,
+  setFixedMapStatus: PropTypes.func,
+  setMapTop: PropTypes.func
 };
 
 export default connect(mapStateToProps, actions)(RootContainer);
