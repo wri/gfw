@@ -6,17 +6,24 @@ import { COUNTRY } from 'pages/country/router';
 const setInitialState = createAction('setInitialState');
 const setHeaderSelectValues = createAction('setHeaderSelectValues');
 const setHeaderValues = createAction('setHeaderValues');
-const selectCountry = createThunkAction(COUNTRY, iso => dispatch => {
-  dispatch({ type: COUNTRY, payload: { iso } });
+const setAdmin0 = createThunkAction(COUNTRY, admin0 => dispatch => {
+  dispatch({ type: COUNTRY, payload: { admin0 } });
 });
-const setAdmin1 = createThunkAction(COUNTRY, (iso, admin1) => dispatch => {
-  dispatch({ type: COUNTRY, payload: { iso, admin1 } });
+const setAdmin1 = createThunkAction(COUNTRY, (admin0, admin1) => dispatch => {
+  dispatch({ type: COUNTRY, payload: { admin0, admin1 } });
 });
+const setAdmin2 = createThunkAction(
+  COUNTRY,
+  (admin0, admin1, admin2) => dispatch => {
+    dispatch({ type: COUNTRY, payload: { admin0, admin1, admin2 } });
+  }
+);
 
 export default {
   setInitialState,
   setHeaderSelectValues,
   setHeaderValues,
-  selectCountry,
-  setAdmin1
+  setAdmin0,
+  setAdmin1,
+  setAdmin2
 };
