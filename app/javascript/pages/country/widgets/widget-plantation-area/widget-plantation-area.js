@@ -9,7 +9,6 @@ export { default as reducers } from './widget-plantation-area-reducers';
 export { default as actions } from './widget-plantation-area-actions';
 
 const mapStateToProps = state => ({
-  locationNames: state.root.locationNames,
   isLoading: state.widgetPlantationArea.isLoading,
   plantationAreaData: state.widgetPlantationArea.plantationAreaData,
   paginate: state.widgetPlantationArea.paginate,

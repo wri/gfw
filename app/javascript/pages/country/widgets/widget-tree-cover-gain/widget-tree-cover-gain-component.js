@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import numeral from 'numeral';
 
 import Loader from 'components/loader/loader';
-import WidgetHeader from 'pages/country/widget-header';
+import WidgetHeader from 'pages/country/widgets/widget-header';
 import WidgetTreeCoverGainSettings from './widget-tree-cover-gain-settings-component';
 
 class WidgetTreeCoverGain extends PureComponent {

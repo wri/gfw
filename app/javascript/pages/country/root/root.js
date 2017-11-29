@@ -16,14 +16,27 @@ export { initialState } from './root-reducers';
 export { default as reducers } from './root-reducers';
 export { default as actions } from './root-actions';
 
-const mapStateToProps = state => ({
-  location: state.location.payload,
-  gfwHeaderHeight: state.root.gfwHeaderHeight,
-  isMapFixed: state.root.isMapFixed,
-  mapTop: state.root.mapTop,
-  topPage: state.root.topPage,
-  showMapMobile: state.root.showMapMobile
-});
+const mapStateToProps = state => {
+  const {
+    isCountriesLoading,
+    isRegionsLoading,
+    isSubRegionsLoading,
+    isGeostoreLoading
+  } = state.root;
+  return {
+    isRootLoading:
+      isCountriesLoading ||
+      isRegionsLoading ||
+      isSubRegionsLoading ||
+      isGeostoreLoading,
+    location: state.location.payload,
+    gfwHeaderHeight: state.root.gfwHeaderHeight,
+    isMapFixed: state.root.isMapFixed,
+    mapTop: state.root.mapTop,
+    topPage: state.root.topPage,
+    showMapMobile: state.root.showMapMobile
+  };
+};
 
 class RootContainer extends PureComponent {
   componentWillMount() {
@@ -38,54 +51,89 @@ class RootContainer extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.location.country !== this.props.location.country) {
-      this.getRegions(location.country);
-      if (location.region) {
-        this.getSubRegions(location.country, location.region);
+    const hasCountryChanged =
+      nextProps.location.country !== this.props.location.country;
+    const hasRegionChanged =
+      nextProps.location.region !== this.props.location.region;
+    const hasSubRegionChanged =
+      nextProps.location.subRegion !== this.props.location.subRegion;
+
+    if (hasCountryChanged) {
+      this.getRegions(nextProps.location.country);
+      if (nextProps.location.region) {
+        this.getSubRegions(
+          nextProps.location.country,
+          nextProps.location.region
+        );
       }
-      this.getGeoStore(location.country, location.region, location.subRegion);
+      this.getGeoStore(
+        nextProps.location.country,
+        nextProps.location.region,
+        nextProps.location.subRegion
+      );
     }
 
-    if (nextProps.location.region !== this.props.location.region) {
-      this.getSubRegions(location.country, location.region);
-      this.getGeoStore(location.country, location.region, location.subRegion);
+    if (hasRegionChanged) {
+      if (nextProps.location.region) {
+        this.getSubRegions(
+          nextProps.location.country,
+          nextProps.location.region
+        );
+      }
+      this.getGeoStore(
+        nextProps.location.country,
+        nextProps.location.region,
+        nextProps.location.subRegion
+      );
     }
 
-    if (nextProps.location.subRegion !== this.props.location.subRegion) {
-      this.getGeoStore(location.country, location.region, location.subRegion);
+    if (hasSubRegionChanged) {
+      this.getGeoStore(
+        nextProps.location.country,
+        nextProps.location.region,
+        nextProps.location.subRegion
+      );
     }
   }
 
   // fetches for locaton meta data
   getCountries = () => {
-    const { setCountries } = this.props;
+    const { setCountries, setCountriesLoading } = this.props;
+    setCountriesLoading(true);
     getCountriesProvider().then(response => {
       setCountries(response.data.rows);
+      setCountriesLoading(false);
     });
   };
 
   getRegions = location => {
-    const { setRegions } = this.props;
+    const { setRegions, setRegionsLoading } = this.props;
+    setRegionsLoading(true);
     getRegionsProvider(location).then(response => {
       setRegions(response.data.rows);
+      setRegionsLoading(false);
     });
   };
 
   getSubRegions = (country, region) => {
-    const { setSubRegions } = this.props;
+    const { setSubRegions, setSubRegionsLoading } = this.props;
+    setSubRegionsLoading(true);
     getSubRegionsProvider(country, region).then(response => {
       setSubRegions(response.data.rows);
+      setSubRegionsLoading(false);
     });
   };
 
   getGeoStore = (country, region, subRegion) => {
-    const { setGeostore } = this.props;
+    const { setGeostore, setGeostoreLoading } = this.props;
+    setGeostoreLoading(true);
     getGeostoreProvider(country, region, subRegion).then(response => {
       const { areaHa, bbox } = response.data.data.attributes;
       setGeostore({
         areaHa,
         bounds: this.getBoxBounds(bbox)
       });
+      setGeostoreLoading(false);
     });
   };
 
@@ -137,6 +185,10 @@ class RootContainer extends PureComponent {
 }
 
 RootContainer.propTypes = {
+  setCountriesLoading: PropTypes.bool,
+  setRegionsLoading: PropTypes.bool,
+  setSubRegionsLoading: PropTypes.bool,
+  setGeostoreLoading: PropTypes.bool,
   location: PropTypes.object,
   setGeostore: PropTypes.func,
   setCountries: PropTypes.func,

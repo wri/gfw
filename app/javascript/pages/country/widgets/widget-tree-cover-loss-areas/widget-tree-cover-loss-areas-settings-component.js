@@ -33,7 +33,7 @@ class WidgetTreeCoverLossAreasSettings extends PureComponent {
     const startYears = [];
     const endYears = [];
     const { regions, units, canopies, settings, years } = this.props;
-    years.forEach((item) => {
+    years.forEach(item => {
       if (item.value < settings.endYear) {
         startYears.push({
           label: item.label,

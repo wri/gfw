@@ -14,8 +14,9 @@ const TooltipChart = props => {
     } = props;
     let valueShow;
     if (percentageAndArea) {
-      valueShow =
-        `${numeral(Math.round(payload[0].payload.percentage)).format('0,0')}%`;
+      valueShow = `${numeral(Math.round(payload[0].payload.percentage)).format(
+        '0,0'
+      )}%`;
     } else {
       valueShow = !percentage
         ? `${numeral(Math.round(payload[0].value / 1000)).format('0,0')}ha`

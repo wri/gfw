@@ -11,9 +11,7 @@ export { default as reducers } from './widget-tree-cover-loss-areas-reducers';
 export { default as actions } from './widget-tree-cover-loss-areas-actions';
 
 const mapStateToProps = state => ({
-  isRootLoading: state.root.isLoading,
   location: state.location.payload,
-  locationNames: state.root.locationNames,
   admin1List: state.root.admin1List,
   areaHa: state.root.geostore.areaHa,
   isLoading: state.widgetTreeCoverLossAreas.isLoading,

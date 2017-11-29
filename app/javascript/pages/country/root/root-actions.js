@@ -1,6 +1,10 @@
 import { createAction } from 'redux-actions';
 
-const setIsLoading = createAction('setIsLoading');
+const setCountriesLoading = createAction('setCountriesLoading');
+const setRegionsLoading = createAction('setRegionsLoading');
+const setSubRegionsLoading = createAction('setSubRegionsLoading');
+const setGeostoreLoading = createAction('setGeostoreLoading');
+
 const setCountries = createAction('setCountries');
 const setRegions = createAction('setRegions');
 const setSubRegions = createAction('setSubRegions');
@@ -10,7 +14,10 @@ const setMapTop = createAction('setMapTop');
 const setShowMapMobile = createAction('setShowMapMobile');
 
 export default {
-  setIsLoading,
+  setCountriesLoading,
+  setRegionsLoading,
+  setSubRegionsLoading,
+  setGeostoreLoading,
   setCountries,
   setRegions,
   setSubRegions,

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 
 import Loader from 'components/loader/loader';
-import WidgetHeader from 'pages/country/widget-header';
-import WidgetPaginate from 'pages/country/widget-paginate';
+import WidgetHeader from 'pages/country/widgets/widget-header';
+import WidgetPaginate from 'pages/country/widgets/widget-paginate';
 import WidgetPlantationAreaSettings from './widget-plantation-area-settings-component';
 
 class WidgetPlantationArea extends PureComponent {

@@ -15,7 +15,6 @@ export { default as actions } from './widget-tree-cover-gain-actions';
 
 const mapStateToProps = state => ({
   location: state.location.payload,
-  locationNames: state.root.locationNames,
   isLoading: state.widgetTreeCoverGain.isLoading,
   totalAmount: state.widgetTreeCoverGain.totalAmount,
   percentage: state.widgetTreeCoverGain.percentage,

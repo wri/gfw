@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import numeral from 'numeral';
 
 import Loader from 'components/loader/loader';
-import WidgetHeader from 'pages/country/widget-header';
-import WidgetPaginate from 'pages/country/widget-paginate';
+import WidgetHeader from 'pages/country/widgets/widget-header';
+import WidgetPaginate from 'pages/country/widgets/widget-paginate';
 import WidgetTreeLocatedSettings from './widget-tree-located-settings-component';
 
 class WidgetTreeLocated extends PureComponent {
@@ -43,7 +43,7 @@ class WidgetTreeLocated extends PureComponent {
     return (
       <div className="c-widget c-widget-tree-located">
         <WidgetHeader
-          title={`Where are the forest located in ${locationNames.current}`}
+          title={'Where are the forest located in '}
           noMap
           shareAnchor={'tree-located'}
         >
@@ -96,7 +96,7 @@ class WidgetTreeLocated extends PureComponent {
 
 WidgetTreeLocated.propTypes = {
   isRootLoading: PropTypes.bool.isRequired,
-  locationNames: PropTypes.object.isRequired,
+  locationNames: PropTypes.object,
   isLoading: PropTypes.bool.isRequired,
   topRegions: PropTypes.array.isRequired,
   dataSources: PropTypes.array.isRequired,
