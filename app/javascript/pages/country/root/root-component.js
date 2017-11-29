@@ -7,6 +7,7 @@ import Share from 'components/share';
 import Header from 'pages/country/header';
 import Footer from 'pages/country/footer';
 import Map from 'pages/country/map';
+import Stories from 'pages/country/widgets/widget-stories';
 
 const WIDGETS = [
   'tree-cover',
@@ -15,8 +16,7 @@ const WIDGETS = [
   'tree-cover-loss-areas',
   'tree-cover-gain',
   'total-area-plantations',
-  'plantation-area',
-  'stories'
+  'plantation-area'
 ];
 class Root extends PureComponent {
   getWidgets = () => {
@@ -40,9 +40,10 @@ class Root extends PureComponent {
       isMapFixed,
       showMapMobile,
       handleShowMapMobile,
-      handleScrollCallback
+      handleScrollCallback,
+      adminsLists,
+      adminsSelected
     } = this.props;
-
     return (
       <div className="l-country">
         <ScrollEvent handleScrollCallback={handleScrollCallback} />
@@ -51,7 +52,7 @@ class Root extends PureComponent {
             <span>{!showMapMobile ? 'show' : 'close'} map</span>
           </button>
         )}
-        <Header />
+        <Header adminsLists={adminsLists} adminsSelected={adminsSelected} />
         <div
           className={`l-country__map ${isMapFixed ? '-fixed' : ''} ${
             showMapMobile ? '-open-mobile' : ''
@@ -77,6 +78,7 @@ class Root extends PureComponent {
           />
         </div>
         <div className="l-country__widgets row">{this.getWidgets()}</div>
+        <Stories locationNames={{ type: 'test' }} />
         <Footer />
         <Share />
       </div>
@@ -90,7 +92,9 @@ Root.propTypes = {
   isMapFixed: PropTypes.bool.isRequired,
   mapTop: PropTypes.number.isRequired,
   handleShowMapMobile: PropTypes.func.isRequired,
-  isRootLoading: PropTypes.bool
+  isRootLoading: PropTypes.bool,
+  adminsLists: PropTypes.object,
+  adminsSelected: PropTypes.object
 };
 
 export default Root;

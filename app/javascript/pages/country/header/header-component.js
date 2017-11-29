@@ -83,7 +83,7 @@ class Header extends PureComponent {
 
 Header.propTypes = {
   isRootLoading: PropTypes.bool.isRequired,
-  adminsSelected: PropTypes.object,
+  adminsSelected: PropTypes.object.isRequired,
   adminsLists: PropTypes.object.isRequired,
   handleCountryChange: PropTypes.func.isRequired,
   handleRegionChange: PropTypes.func.isRequired,
