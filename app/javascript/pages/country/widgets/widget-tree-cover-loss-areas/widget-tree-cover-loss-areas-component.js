@@ -48,7 +48,7 @@ class WidgetTreeLossAreas extends PureComponent {
     return (
       <div className="c-widget c-widget-tree-cover-loss-areas">
         <WidgetHeader
-          title={`AREAS WITH MOST TREE COVER LOSS IN ${locationNames.current}`}
+          title={`AREAS WITH MOST TREE COVER LOSS IN ${locationNames.country && locationNames.country.label || null}`}
           shareAnchor={'tree-cover-loss-areas'}
         >
           <WidgetTreeCoverLossAreasSettings

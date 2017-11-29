@@ -20,7 +20,7 @@ const WIDGETS = [
 ];
 class Root extends PureComponent {
   getWidgets = () => {
-    const { isRootLoading } = this.props;
+    const { isRootLoading, adminsSelected } = this.props;
     return WIDGETS.map(widget => (
       <div
         key={widget}
@@ -28,7 +28,7 @@ class Root extends PureComponent {
       >
         <Widget
           widget={widget}
-          locationNames={{ type: 'test' }}
+          locationNames={adminsSelected}
           isRootLoading={isRootLoading}
         />
       </div>

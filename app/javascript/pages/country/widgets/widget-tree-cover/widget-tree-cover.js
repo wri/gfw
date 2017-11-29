@@ -89,7 +89,7 @@ const WidgetTreeCoverContainer = props => {
     const region =
       settings.location !== 'all' ? ` and ${settings.locationLabel}` : '';
 
-    return `Forest cover ${region} in ${locationNames.current}`;
+    return `Forest cover ${region} in ${locationNames.country && locationNames.country.label}`;
   };
 
   const viewOnMap = () => {

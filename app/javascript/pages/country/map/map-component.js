@@ -9,7 +9,6 @@ import Loader from 'components/loader/loader';
 class Map extends PureComponent {
   componentDidMount() {
     const { setInitialData } = this.props;
-
     setInitialData(this.props);
   }
 

@@ -22,7 +22,6 @@ const mapStateToProps = state => ({
 const MapContainer = props => {
   const setInitialData = () => {
     const { setLayerSpec, setMapIsLoading } = props;
-    setMapIsLoading(true);
     getLayerSpec().then(response => {
       const layerSpec = {};
       response.data.rows.forEach(layer => {
