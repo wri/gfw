@@ -26,6 +26,9 @@ import * as widgetTreeCoverLossAreasComponent from 'pages/country/widgets/widget
 import * as widgetTreeLocatedComponent from 'pages/country/widgets/widget-tree-located/widget-tree-located';
 import * as widgetTreeLossComponent from 'pages/country/widgets/widget-tree-loss/widget-tree-loss';
 
+// Providers
+import * as countryDataProviderComponent from 'pages/country/providers/country-data-provider';
+
 const componentsReducers = {
   share: handleActions(ShareComponent),
   map: handleActions(mapComponent),
@@ -43,7 +46,12 @@ const componentsReducers = {
   widgetTreeLoss: handleActions(widgetTreeLossComponent)
 };
 
+const providersReducers = {
+  countryData: handleActions(countryDataProviderComponent)
+};
+
 export default combineReducers({
+  ...providersReducers,
   ...countryReducers,
   ...componentsReducers,
   location: router.reducer

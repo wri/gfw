@@ -9,9 +9,9 @@ import WidgetTreeLocatedSettings from './widget-tree-located-settings-component'
 
 class WidgetTreeLocated extends PureComponent {
   componentWillUpdate(nextProps) {
-    const { isRootLoading, settings, updateData, setInitialData } = this.props;
+    const { isLoading, settings, updateData, setInitialData } = this.props;
 
-    if (!nextProps.isRootLoading && isRootLoading) {
+    if (!nextProps.isLoading && isLoading) {
       setInitialData(nextProps);
     }
 
@@ -96,9 +96,8 @@ class WidgetTreeLocated extends PureComponent {
 }
 
 WidgetTreeLocated.propTypes = {
-  isRootLoading: PropTypes.bool.isRequired,
-  locationNames: PropTypes.object,
   isLoading: PropTypes.bool.isRequired,
+  locationNames: PropTypes.object,
   topRegions: PropTypes.array.isRequired,
   dataSources: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,

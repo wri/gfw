@@ -12,8 +12,8 @@ export { default as actions } from './widget-tree-cover-loss-areas-actions';
 
 const mapStateToProps = state => ({
   location: state.location.payload,
-  admin1List: state.root.admin1List,
-  areaHa: state.root.geostore.areaHa,
+  admin1List: state.countryData.regions,
+  areaHa: state.countryData.geostore.areaHa,
   isLoading: state.widgetTreeCoverLossAreas.isLoading,
   regionData: state.widgetTreeCoverLossAreas.regionData,
   regionChartData: state.widgetTreeCoverLossAreas.regionChartData,

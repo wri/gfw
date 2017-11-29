@@ -27,7 +27,7 @@ class Root extends PureComponent {
       handleScrollCallback,
       adminsLists,
       adminsSelected,
-      isRootLoading
+      isLoading
     } = this.props;
     return (
       <div className="l-country">
@@ -72,11 +72,10 @@ class Root extends PureComponent {
                 <Widget
                   widget={widget}
                   locationNames={adminsSelected}
-                  isRootLoading={isRootLoading}
+                  isLoading={isLoading}
                 />
               </div>
-            ))
-          }
+            ))}
         </div>
         <Stories locationNames={{ type: 'test' }} />
         <Footer />
@@ -92,7 +91,7 @@ Root.propTypes = {
   isMapFixed: PropTypes.bool.isRequired,
   mapTop: PropTypes.number.isRequired,
   handleShowMapMobile: PropTypes.func.isRequired,
-  isRootLoading: PropTypes.bool,
+  isLoading: PropTypes.bool,
   adminsLists: PropTypes.object,
   adminsSelected: PropTypes.object
 };

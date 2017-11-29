@@ -12,7 +12,7 @@ export { default as actions } from './widget-tree-loss-actions';
 
 const mapStateToProps = state => ({
   location: state.location.payload,
-  areaHa: state.root.geostore.areaHa,
+  areaHa: state.countryData.geostore.areaHa,
   isLoading: state.widgetTreeLoss.isLoading,
   total: state.widgetTreeLoss.total,
   years: state.widgetTreeLoss.years,
