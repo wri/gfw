@@ -46,11 +46,14 @@ const WidgetTreeLossContainer = props => {
       },
       settings.canopy
     ).then(response => {
-      const total = response.data.data.reduce(
-        (accumulator, item) =>
-          (typeof accumulator === 'object' ? accumulator.value : accumulator) +
-          item.value
-      );
+      const total =
+        response.data.data.length &&
+        response.data.data.reduce(
+          (accumulator, item) =>
+            (typeof accumulator === 'object'
+              ? accumulator.value
+              : accumulator) + item.value
+        );
       if (settings.unit !== 'ha') {
         response.data.data.forEach(item => {
           percentageValues.push({
