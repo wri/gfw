@@ -14,7 +14,6 @@ const countryReducers = {
 
 // Components
 import * as ShareComponent from 'components/share/share';
-import * as headerComponent from 'pages/country/header/header';
 import * as mapComponent from 'pages/country/map/map';
 import * as widgetHeaderComponent from 'pages/country/widget-header/widget-header';
 import * as widgetAreasMostCoverGainComponent from 'pages/country/widget-areas-most-cover-gain/widget-areas-most-cover-gain';
@@ -29,7 +28,6 @@ import * as widgetTreeLossComponent from 'pages/country/widget-tree-loss/widget-
 
 const componentsReducers = {
   share: handleActions(ShareComponent),
-  header: handleActions(headerComponent),
   map: handleActions(mapComponent),
   widgetHeader: handleActions(widgetHeaderComponent),
   widgetAreasMostCoverGain: handleActions(widgetAreasMostCoverGainComponent),

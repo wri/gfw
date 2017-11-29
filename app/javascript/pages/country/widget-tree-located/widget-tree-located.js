@@ -12,11 +12,11 @@ export { default as reducers } from './widget-tree-located-reducers';
 export { default as actions } from './widget-tree-located-actions';
 
 const mapStateToProps = state => ({
+  isRootLoading: state.root.isLoading,
+  location: state.location.payload,
+  locationNames: state.root.locationNames,
+  admin1List: state.root.admin1List,
   isLoading: state.widgetTreeLocated.isLoading,
-  iso: state.root.iso,
-  countryRegions: state.root.countryRegions,
-  countryRegion: state.root.countryRegion,
-  countryData: state.root.countryData,
   topRegions: state.widgetTreeLocated.topRegions,
   paginate: state.widgetTreeLocated.paginate,
   dataSources: state.widgetTreeLocated.dataSources,
@@ -26,38 +26,41 @@ const mapStateToProps = state => ({
 });
 
 const WidgetTreeLocatedContainer = props => {
-  const setInitialData = props => {
-    setWidgetData(props);
+  const setInitialData = newProps => {
+    setWidgetData(newProps);
   };
 
-  const updateData = props => {
-    props.setTreeLocatedIsLoading(true);
-    setWidgetData(props);
+  const updateData = newProps => {
+    newProps.setTreeLocatedIsLoading(true);
+    setWidgetData(newProps);
   };
 
-  const setWidgetData = props => {
-    getTotalCover(props.iso, props.countryRegion, props.settings.canopy).then(
+  const setWidgetData = newProps => {
+    const { location, admin1List, settings, setTreeLocatedValues } = newProps;
+
+    getTotalCover(location.admin0, location.admin1, settings.canopy).then(
       totalCoverResponse => {
-        getTotalCoverRegions(props.iso, props.settings.canopy).then(
+        getTotalCoverRegions(location.admin0, settings.canopy).then(
           totalCoverRegions => {
             const regionsForest = [];
             const totalCover = Math.round(
               totalCoverResponse.data.data[0].value
             );
             totalCoverRegions.data.data.forEach((item, index) => {
-              const numberRegion = _.findIndex(props.countryRegions, (
-                x
-              ) => x.id === item.adm1);
+              const numberRegion = _.findIndex(
+                admin1List,
+                x => x.id === item.adm1
+              );
               regionsForest.push({
-                name: props.countryRegions[numberRegion].name,
+                name: admin1List[numberRegion].name,
                 value:
-                  props.settings.unit === 'ha'
+                  settings.unit === 'ha'
                     ? item.value
                     : item.value / totalCover * 100,
                 position: index + 1
               });
             });
-            props.setTreeLocatedValues(regionsForest);
+            setTreeLocatedValues(regionsForest);
           }
         );
       }

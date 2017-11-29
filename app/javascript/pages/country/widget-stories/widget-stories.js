@@ -9,11 +9,7 @@ export { default as reducers } from './widget-stories-reducers';
 export { default as actions } from './widget-stories-actions';
 
 const mapStateToProps = state => ({
-  iso: state.root.iso,
-  countriesList: state.root.countriesList,
-  countryData: state.root.countryData,
-  countryRegions: state.root.countryRegions,
-  countryRegion: state.root.countryRegion,
+  locationNames: state.root.locationNames,
   totalAmount: 'Nan',
   percentage: 'Nan',
   startYear: 2011,

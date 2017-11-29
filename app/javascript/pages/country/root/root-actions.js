@@ -1,24 +1,20 @@
 import { createAction } from 'redux-actions';
 
-const setInitialState = createAction('setInitialState');
 const setIsLoading = createAction('setIsLoading');
-const setIso = createAction('setIso');
-const setRegion = createAction('setRegion');
-const setNameRegion = createAction('setNameRegion');
-const setCountryData = createAction('setCountryData');
-const setCountryRegions = createAction('setCountryRegions');
+const setCountries = createAction('setCountries');
+const setRegions = createAction('setRegions');
+const setSubRegions = createAction('setSubRegions');
+const setGeostore = createAction('setGeostore');
 const setFixedMapStatus = createAction('setFixedMapStatus');
 const setMapTop = createAction('setMapTop');
 const setShowMapMobile = createAction('setShowMapMobile');
 
 export default {
-  setInitialState,
   setIsLoading,
-  setIso,
-  setRegion,
-  setNameRegion,
-  setCountryData,
-  setCountryRegions,
+  setCountries,
+  setRegions,
+  setSubRegions,
+  setGeostore,
   setFixedMapStatus,
   setMapTop,
   setShowMapMobile

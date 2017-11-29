@@ -8,13 +8,12 @@ import WidgetPaginate from 'pages/country/widget-paginate';
 import WidgetTreeLocatedSettings from './widget-tree-located-settings-component';
 
 class WidgetTreeLocated extends PureComponent {
-  componentDidMount() {
-    const { setInitialData } = this.props;
-    setInitialData(this.props);
-  }
-
   componentWillUpdate(nextProps) {
-    const { updateData, settings } = this.props;
+    const { isRootLoading, settings, updateData, setInitialData } = this.props;
+
+    if (!nextProps.isRootLoading && isRootLoading) {
+      setInitialData(nextProps);
+    }
 
     if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
       updateData(nextProps);
@@ -23,8 +22,8 @@ class WidgetTreeLocated extends PureComponent {
 
   render() {
     const {
+      locationNames,
       isLoading,
-      countryData,
       topRegions,
       dataSources,
       units,
@@ -44,7 +43,7 @@ class WidgetTreeLocated extends PureComponent {
     return (
       <div className="c-widget c-widget-tree-located">
         <WidgetHeader
-          title={`Where are the forest located in ${countryData.name}`}
+          title={`Where are the forest located in ${locationNames.current}`}
           noMap
           shareAnchor={'tree-located'}
         >
@@ -74,8 +73,9 @@ class WidgetTreeLocated extends PureComponent {
                   </div>
                   <div className="c-widget-tree-located__region-value">
                     {settings.unit === 'ha'
-                      ? `${numeral(Math.round(item.value / 1000)).format('0,0')
-                      } ha`
+                      ? `${numeral(Math.round(item.value / 1000)).format(
+                        '0,0'
+                      )} ha`
                       : `${Math.round(item.value)} %`}
                   </div>
                 </li>
@@ -95,10 +95,19 @@ class WidgetTreeLocated extends PureComponent {
 }
 
 WidgetTreeLocated.propTypes = {
+  isRootLoading: PropTypes.bool.isRequired,
+  locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  setInitialData: PropTypes.func.isRequired,
-  countryData: PropTypes.object.isRequired,
   topRegions: PropTypes.array.isRequired,
+  dataSources: PropTypes.array.isRequired,
+  settings: PropTypes.object.isRequired,
+  units: PropTypes.array.isRequired,
+  canopies: PropTypes.array.isRequired,
+  paginate: PropTypes.object.isRequired,
+  setInitialData: PropTypes.func.isRequired,
+  nextPage: PropTypes.func.isRequired,
+  previousPage: PropTypes.func.isRequired,
+  updateData: PropTypes.func.isRequired,
   setTreeLocatedSettingsDataSource: PropTypes.func.isRequired,
   setTreeLocatedSettingsUnit: PropTypes.func.isRequired,
   setTreeLocatedSettingsCanopy: PropTypes.func.isRequired

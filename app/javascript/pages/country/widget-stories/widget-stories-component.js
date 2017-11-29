@@ -1,31 +1,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select-me';
 
 class WidgetStories extends PureComponent {
   render() {
-    const {
-      isLoading,
-      countryData,
-      topRegions,
-      totalAmount,
-      percentage,
-      startYear,
-      endYear,
-      countryRegions,
-      countryRegion
-    } = this.props;
+    const { locationNames } = this.props;
     return (
       <div className="c-widget-stories" id="c-widget-stories">
         <div className="c-widget-stories__container">
           <div className="row">
             <div className="columns c-widget-stories__primary-info">
-              <h2>
-                {countryRegion === 0
-                  ? countryData.name
-                  : countryRegions[countryRegion - 1].name}{' '}
-                Stories
-              </h2>
+              <h2>{locationNames.current} Stories</h2>
               <div className="container-titles">
                 <p>
                   When Tree Cover Loss is Really Forest Loss: New Plantation
@@ -62,6 +46,8 @@ class WidgetStories extends PureComponent {
   }
 }
 
-WidgetStories.propTypes = {};
+WidgetStories.propTypes = {
+  locationNames: PropTypes.object.isRequired
+};
 
 export default WidgetStories;

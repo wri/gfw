@@ -11,11 +11,11 @@ export { default as reducers } from './widget-tree-cover-reducers';
 export { default as actions } from './widget-tree-cover-actions';
 
 const mapStateToProps = state => ({
+  location: state.location.payload,
+  locationNames: state.root.locationNames,
+  areaHa: state.root.geostore.areaHa,
   isLoading: state.widgetTreeCover.isLoading,
-  iso: state.root.iso,
-  countryRegion: state.root.countryRegion,
-  countryRegions: state.root.countryRegions,
-  countryData: state.root.countryData,
+  admin1List: state.root.admin1List,
   totalCover: state.widgetTreeCover.totalCover,
   totalIntactForest: state.widgetTreeCover.totalIntactForest,
   totalNonForest: state.widgetTreeCover.totalNonForest,
@@ -27,8 +27,8 @@ const mapStateToProps = state => ({
 });
 
 const WidgetTreeCoverContainer = props => {
-  const setInitialData = newProps => {
-    setWidgetData(newProps);
+  const setInitialData = () => {
+    setWidgetData(props);
   };
 
   const updateData = newProps => {
@@ -37,64 +37,60 @@ const WidgetTreeCoverContainer = props => {
   };
 
   const setWidgetData = newProps => {
-    getTotalCover(
-      newProps.iso,
-      newProps.countryRegion,
-      newProps.settings.canopy
-    ).then(totalCoverResponse => {
-      getTotalIntactForest(newProps.iso, newProps.countryRegion).then(
-        totalIntactForestResponse => {
-          if (totalIntactForestResponse.data.data.length > 0) {
-            const totalCover = Math.round(
-              totalCoverResponse.data.data[0].value
-            );
-            const totalIntactForest = Math.round(
-              totalIntactForestResponse.data.data[0].value
-            );
-            const totalNonForest =
-              Math.round(newProps.countryData.area_ha) -
-              (totalCover + totalIntactForest);
-            const values = {
-              totalCover,
-              totalIntactForest,
-              totalNonForest,
-              title: newProps.getTitle(newProps),
-              locations: [
-                {
-                  value: 'all',
-                  label: 'All Region'
-                },
-                {
-                  value: 'managed',
-                  label: 'Managed'
-                },
-                {
-                  value: 'protected_areas',
-                  label: 'Protected Areas'
-                },
-                {
-                  value: 'ifls',
-                  label: 'IFLs'
-                }
-              ]
-            };
-            newProps.setTreeCoverValues(values);
+    const { location, areaHa, settings, setTreeCoverValues } = newProps;
+    getTotalCover(location.admin0, location.admin1, settings.canopy).then(
+      totalCoverResponse => {
+        getTotalIntactForest(location.admin0, location.admin1).then(
+          totalIntactForestResponse => {
+            if (totalIntactForestResponse.data.data.length > 0) {
+              const totalCover = Math.round(
+                totalCoverResponse.data.data[0].value
+              );
+              const totalIntactForest = Math.round(
+                totalIntactForestResponse.data.data[0].value
+              );
+              const totalNonForest =
+                Math.round(areaHa) - (totalCover + totalIntactForest);
+              const values = {
+                totalCover,
+                totalIntactForest,
+                totalNonForest,
+                title: getTitle(newProps),
+                locations: [
+                  {
+                    value: 'all',
+                    label: 'All Region'
+                  },
+                  {
+                    value: 'managed',
+                    label: 'Managed'
+                  },
+                  {
+                    value: 'protected_areas',
+                    label: 'Protected Areas'
+                  },
+                  {
+                    value: 'ifls',
+                    label: 'IFLs'
+                  }
+                ]
+              };
+
+              setTreeCoverValues(values);
+            }
           }
-        }
-      );
-    });
+        );
+      }
+    );
   };
 
   const getTitle = newProps => {
-    const location =
-      newProps.settings.location !== 'all'
-        ? ` and ${newProps.settings.locationLabel}`
-        : '';
-    const country =
-      newProps.countryRegion === 0
-        ? newProps.countryData.name
-        : newProps.countryRegions[newProps.countryRegion - 1].name;
-    return `Forest cover ${location} in ${country}`;
+    const { locationNames, settings } = newProps;
+
+    const region =
+      settings.location !== 'all' ? ` and ${settings.locationLabel}` : '';
+
+    return `Forest cover ${region} in ${locationNames.current}`;
   };
 
   const viewOnMap = () => {
@@ -105,7 +101,6 @@ const WidgetTreeCoverContainer = props => {
     ...props,
     setInitialData,
     updateData,
-    getTitle,
     viewOnMap
   });
 };
