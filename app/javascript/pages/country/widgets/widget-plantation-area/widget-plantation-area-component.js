@@ -33,7 +33,7 @@ class WidgetPlantationArea extends PureComponent {
       <div className="c-widget c-widget-plantation-area">
         <WidgetHeader
           noMap
-          title={`TREE PLANTATION AREA WITHIN ${locationNames.current}`}
+          title={`TREE PLANTATION AREA WITHIN ${locationNames.country && locationNames.country.label}`}
           shareAnchor={'plantation-area'}
         >
           <WidgetPlantationAreaSettings

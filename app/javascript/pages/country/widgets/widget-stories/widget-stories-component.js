@@ -9,7 +9,7 @@ class WidgetStories extends PureComponent {
         <div className="c-widget-stories__container">
           <div className="row">
             <div className="columns c-widget-stories__primary-info">
-              <h2>{locationNames.current} Stories</h2>
+              <h2>{locationNames.country && locationNames.country.label} Stories</h2>
               <div className="container-titles">
                 <p>
                   When Tree Cover Loss is Really Forest Loss: New Plantation
