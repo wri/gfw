@@ -1,0 +1,187 @@
+@import '~styles/settings.scss';
+$black-tabs: #404040;
+
+.c-header {
+  position: relative;
+  background-color: $slate-light;
+  height: auto;
+
+  @media screen and (min-width: $screen-m) {
+    height: rem(350px);
+  }
+
+  .container-select {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @media screen and (min-width: $screen-m) {
+      flex-direction: row;
+    }
+
+    @media screen and (min-width: $screen-l) {
+      display: block;
+    }
+  }
+
+  .row {
+    max-width: none;
+    padding-top: rem(100px);
+    width: calc(100% - 100px);
+    min-height: rem(350px);;
+    margin: 0;
+    margin-left: rem(50px);
+    padding-bottom: rem(20px);
+
+    @media screen and (min-width: $screen-m) {
+      padding-top: rem(80px);
+      padding-bottom: 0;
+    }
+
+    @media screen and (min-width: $screen-m) {
+      width: calc(70% - 100px);
+    }
+
+    @media screen and (min-width: $screen-l) {
+      padding-top: rem(80px);
+    }
+  }
+
+  .c-header__select {
+    display: flex;
+    align-items: center;
+    flex-basis: calc(50% - 10px);
+    justify-content: flex-start;
+
+    &.-jurisdiction {
+      position: relative;
+      top: -20px;
+    }
+
+    @media screen and (min-width: $screen-m) {
+      justify-content: flex-end;
+      top: 0 !important;
+
+      &:first-of-type {
+        justify-content: flex-start;
+      }
+    }
+
+    @media screen and (min-width: $screen-l) {
+      margin-bottom: rem(15px);
+      flex-basis: 100%;
+      justify-content: flex-start;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+
+    .c-header__select-arrow {
+      width: rem(12px);
+      height: rem(12px);
+      margin-right: rem(16px);
+      fill: $white;
+    }
+
+    .dd__wrapper {
+
+      &.dd__opened {
+        width: 100%;
+
+        .dd__list {
+          max-width: 100%;
+
+          .dd__option {
+            font-size: 20px;
+            word-break: break-word;
+            max-width: 100%;
+            white-space: pre-line;
+            line-height: 40px;
+
+            @media screen and (min-width: $screen-l) {
+              font-size: 30px;
+            }
+          }
+        }
+      }
+
+      .dd__selectControl {
+        background-color: transparent;
+        border: 0;
+
+        .dd__selected {
+          .dd__placeholder,
+          .dd__selectedItem {
+            height: rem(56px);
+            font-size: 35px;
+            font-weight: 300;
+            color: $white;
+            width: 100%;
+            display: flex;
+            align-items: center;
+
+            @media screen and (min-width: $screen-l) {
+              font-size: 47px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .c-header__info {
+    p {
+      color: rgba($white, .9);
+      font-weight: 500;
+      letter-spacing: .1px;
+      line-height: 1.67;
+      font-size: 18px;
+      font-weight: 300;
+
+      strong {
+        color: $green-gfw;
+      }
+
+      &:first-of-type {
+        margin-bottom: 18px;
+      }
+
+    }
+  }
+
+  .c-header__tabs {
+    height: rem(40px);
+    background-color: $black-tabs;
+
+    .row {
+      padding-top: 0;
+      min-height: auto;
+      max-width: none;
+      width: calc(70% - 100px);
+      margin: 0;
+      margin-left: rem(50px);
+
+      ul {
+        padding: 0 rem(20px);
+
+        li {
+          cursor: pointer;
+          height: rem(40px);
+          font-size: 13px;
+          color: $slate;
+          text-transform: uppercase;
+          letter-spacing: .1px;
+          padding: 0 rem(14px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &.-selected {
+            background-color: $white;
+          }
+        }
+      }
+    }
+  }
+}

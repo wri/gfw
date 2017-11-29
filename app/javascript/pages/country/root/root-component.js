@@ -2,85 +2,57 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ScrollEvent from 'react-onscroll';
 
+import Widget from 'pages/country/widgets';
 import Share from 'components/share';
-
-import Loader from 'components/loader';
 import Header from 'pages/country/header';
 import Footer from 'pages/country/footer';
 import Map from 'pages/country/map';
-import WidgetTreeCover from 'pages/country/widget-tree-cover';
-import WidgetTreeLocated from 'pages/country/widget-tree-located';
-import WidgetTreeLoss from 'pages/country/widget-tree-loss';
-import WidgetTreeCoverLossAreas from 'pages/country/widget-tree-cover-loss-areas';
-import WidgetAreasMostCoverGain from 'pages/country/widget-areas-most-cover-gain';
-import WidgetTotalAreaPlantations from 'pages/country/widget-total-area-plantations';
-import WidgetTreeCoverGain from 'pages/country/widget-tree-cover-gain';
-import WidgetPlantationArea from 'pages/country/widget-plantation-area';
-import WidgetStories from 'pages/country/widget-stories';
+import Stories from 'pages/country/widgets/widget-stories';
 
+const WIDGETS = {
+  treeCover: {
+    gridWidth: 6
+  },
+  treeLocated: {
+    gridWidth: 6
+  },
+  treeLoss: {
+    gridWidth: 12
+  },
+  treeCoverLossAreas: {
+    gridWidth: 6
+  },
+  treeCoverGain: {
+    gridWidth: 6
+  },
+  totalAreaPlantations: {
+    gridWidth: 6
+  },
+  plantationArea: {
+    gridWidth: 6
+  }
+};
 class Root extends PureComponent {
-  componentDidMount() {
-    const { setInitialData } = this.props;
-    setInitialData();
-  }
-
-  componentWillUpdate(nextProps) {
-    const { iso, refreshCountryData } = this.props;
-
-    if (iso !== nextProps.iso && iso !== '') {
-      refreshCountryData(nextProps);
-    }
-  }
-
-  showMapMobile() {
-    this.props.setShowMapMobile(!this.props.showMapMobile);
-  }
-
-  handleScrollCallback() {
-    const {
-      gfwHeaderHeight,
-      isMapFixed,
-      setFixedMapStatus,
-      setMapTop
-    } = this.props;
-
-    const mapFixedLimit =
-      document.getElementById('c-widget-stories').offsetTop -
-      window.innerHeight;
-
-    if (
-      !isMapFixed &&
-      window.scrollY >= gfwHeaderHeight &&
-      window.scrollY < mapFixedLimit
-    ) {
-      setFixedMapStatus(true);
-      setMapTop(0);
-    } else if (isMapFixed && window.scrollY >= mapFixedLimit) {
-      setFixedMapStatus(false);
-      setMapTop(mapFixedLimit);
-    }
-  }
-
   render() {
-    const { isLoading, countryRegion, isMapFixed, showMapMobile } = this.props;
-    const regionSelected = countryRegion === 0;
-
-    if (isLoading) {
-      return <Loader parentClass="l-country" />;
-    }
-
+    const {
+      isMapFixed,
+      showMapMobile,
+      handleShowMapMobile,
+      handleScrollCallback,
+      adminsLists,
+      adminsSelected
+    } = this.props;
     return (
       <div className="l-country">
-        <ScrollEvent handleScrollCallback={() => this.handleScrollCallback()} />
+        <ScrollEvent
+          handleScrollCallback={() => handleScrollCallback(this.props)}
+        />
         {isMapFixed && (
-          <button
-            className="open-map-mobile-tab"
-            onClick={() => this.showMapMobile()}
-          >
+          <button className="open-map-mobile-tab" onClick={handleShowMapMobile}>
             <span>{!showMapMobile ? 'show' : 'close'} map</span>
           </button>
         )}
-        <Header />
+        <Header adminsLists={adminsLists} adminsSelected={adminsSelected} />
         <div
           className={`l-country__map ${isMapFixed ? '-fixed' : ''} ${
             showMapMobile ? '-open-mobile' : ''
@@ -106,44 +78,19 @@ class Root extends PureComponent {
           />
         </div>
         <div className="l-country__widgets row">
-          <div className="large-6 small-12 columns l-country__container-widgets">
-            <WidgetTreeCover />
-          </div>
-          {regionSelected && (
-            <div className="large-6 small-12 columns l-country__container-widgets">
-              <WidgetTreeLocated />
-            </div>
-          )}
-          <div
-            className={`${
-              !regionSelected ? 'large-6 small-12' : 'small-12'
-            } columns l-country__container-widgets `}
-          >
-            <WidgetTreeLoss />
-          </div>
-          {regionSelected && (
-            <div className="small-12 columns l-country__container-widgets">
-              <WidgetTreeCoverLossAreas />
-            </div>
-          )}
-          <div className="large-6 small-12 columns l-country__container-widgets">
-            <WidgetTreeCoverGain />
-          </div>
-          {regionSelected && (
-            <div className="large-6 small-12 columns l-country__container-widgets">
-              <WidgetAreasMostCoverGain />
-            </div>
-          )}
-          <div className="large-6 small-12 columns l-country__container-widgets -last">
-            <WidgetTotalAreaPlantations />
-          </div>
-          {regionSelected && (
-            <div className="large-6 small-12 columns l-country__container-widgets -last">
-              <WidgetPlantationArea />
-            </div>
-          )}
+          {adminsSelected &&
+            Object.keys(WIDGETS).map(widget => (
+              <div
+                key={widget}
+                className={`large-${
+                  WIDGETS[widget].gridWidth
+                } small-12 columns l-country__container-widgets`}
+              >
+                <Widget widget={widget} />
+              </div>
+            ))}
         </div>
-        <WidgetStories />
+        <Stories locationNames={adminsSelected} />
         <Footer />
         <Share />
       </div>
@@ -152,18 +99,13 @@ class Root extends PureComponent {
 }
 
 Root.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  iso: PropTypes.string.isRequired,
-  countryRegion: PropTypes.number.isRequired,
-  gfwHeaderHeight: PropTypes.number.isRequired,
-  setInitialData: PropTypes.func.isRequired,
-  refreshCountryData: PropTypes.func.isRequired,
-  setShowMapMobile: PropTypes.func.isRequired,
   showMapMobile: PropTypes.bool.isRequired,
-  setFixedMapStatus: PropTypes.func.isRequired,
-  setMapTop: PropTypes.func.isRequired,
+  handleScrollCallback: PropTypes.func.isRequired,
   isMapFixed: PropTypes.bool.isRequired,
-  mapTop: PropTypes.number.isRequired
+  mapTop: PropTypes.number.isRequired,
+  handleShowMapMobile: PropTypes.func.isRequired,
+  adminsLists: PropTypes.object,
+  adminsSelected: PropTypes.object
 };
 
 export default Root;

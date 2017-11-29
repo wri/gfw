@@ -1,0 +1,76 @@
+@import '~styles/settings.scss';
+
+.c-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+
+  .c-loader__spinner {
+    position: relative;
+    width: rem(40px);
+    height: rem(40px);
+    border-radius: 50%;
+    background: $white;
+    background: linear-gradient(to right, $slate 10%, rgba($slate, 0) 50%);
+    font-size: 10px;
+    animation: load3 1.4s infinite linear;
+    transform: translateZ(0);
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 50%;
+      background: $white;
+      border-radius: 100% 0 0 0;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto;
+      width: 75%;
+      height: 75%;
+      background: $white;
+      border-radius: 50%;
+    }
+  }
+
+  &.c-loader--absolute {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+@-webkit-keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

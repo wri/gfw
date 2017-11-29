@@ -1,0 +1,119 @@
+@import '~styles/settings.scss';
+
+.c-widget-tree-cover-loss-areas {
+
+  .c-widget-tree-cover-loss-areas__legend-title,
+  .c-widget-tree-cover-loss-areas__legend-years {
+    font-size: 12px;
+    line-height: 1.08;
+    color: $slate;
+    padding-left: rem(16px);
+  }
+
+  .c-widget-tree-cover-loss-areas__legend-years {
+    margin-top: rem(9px);
+    color: rgba($slate, .5);
+  }
+
+  .c-widget-tree-cover-loss-areas__container {
+    display: flex;
+    flex-direction: column;
+    margin-top: rem(30px);
+
+    @media screen and (min-width: $screen-s) {
+      flex-direction: row;
+      margin-top: rem(1px);
+    }
+
+    .c-widget-tree-cover-loss-areas__chart {
+      flex-basis: 100%;
+      margin-bottom: rem(20px);
+
+      @media screen and (min-width: $screen-s) {
+        flex-basis: 50%;
+        margin-bottom: 0;
+      }
+
+      .recharts-wrapper {
+        margin: rem(9px) auto 0;
+      }
+    }
+
+    .c-widget-tree-cover-loss-areas__legend {
+      flex-basis: 100%;
+      margin-top: rem(15px);
+      padding: 0 rem(5px) 0 rem(16px);
+
+      @media screen and (min-width: $screen-s) {
+        flex-basis: 50%;
+        margin-top: 0;
+      }
+
+      li {
+        display: flex;
+        font-size: 12px;
+        color: $slate;
+        justify-content: space-between;
+        margin-bottom: rem(10px);
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        .c-widget-tree-cover-loss-areas__legend-title {
+          display: flex;
+          align-items: center;
+
+          div {
+            width: rem(16px);
+            height: rem(16px);
+            border-radius: rem(16px);
+            display: flex;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            margin-right: rem(12px);
+            color: $white;
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+
+  .c-widget-tree-cover-loss-areas__scroll-more {
+    display: flex;
+    justify-content: center;
+    margin-top: rem(10px);
+    border-top: 1px rgba($slate, .1) solid;
+    padding-bottom: rem(10px);
+
+    .circle-icon {
+      cursor: pointer;
+      width: rem(20px);
+      height: rem(20px);
+      margin-top: rem(10px);
+      border-radius: rem(18px);
+      border: rem(1px) rgba($slate, .1) solid;
+      position: relative;
+
+      &.-up {
+        margin-right: rem(10px);
+        transform: rotate(180deg);
+      }
+      &.-no-right {
+        margin-right: 0;
+      }
+
+      .icon {
+        fill: rgba($slate, .5);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: rem(11px);
+        height: rem(11px);
+      }
+    }
+  }
+}

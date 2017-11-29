@@ -4,32 +4,61 @@ import Proptypes from 'prop-types';
 import Layers from 'map/layers';
 import grayscale from 'map/maptypes/grayscale';
 
+import Loader from 'components/loader/loader';
+import './map-styles.scss';
+
 class Map extends PureComponent {
   componentDidMount() {
-    const {
-      setMapData,
-      mapOptions,
-      zoom,
-      maptype,
-      maxZoom,
-      minZoom,
-      bounds,
-      regionBounds,
-      region
-    } = this.props;
+    const { setInitialData } = this.props;
+    setInitialData(this.props);
+  }
 
-    setMapData(this.props);
-
-    const coordsMap = region === 0 ? bounds : JSON.parse(regionBounds);
-    const boundsMap = new google.maps.LatLngBounds();
-    for (let i = 0; i < coordsMap.coordinates[0].length; i += 1) {
-      boundsMap.extend(
-        new google.maps.LatLng(
-          coordsMap.coordinates[0][i][1],
-          coordsMap.coordinates[0][i][0]
-        )
-      );
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.isLoading && nextProps.bounds && nextProps.layerSpec) {
+      this.buildMap(nextProps);
+      this.checkLayers(this.props, nextProps);
     }
+  }
+
+  onMapInit() {
+    const { layers } = this.props;
+    this.setLayers(layers);
+  }
+
+  setListeners() {
+    google.maps.event // eslint-disable-line
+      .addListenerOnce(this.map, 'idle', () => {
+        this.onMapInit();
+      });
+  }
+
+  setMaptypes() {
+    this.map.mapTypes.set('grayscale', grayscale());
+  }
+
+  setMaptypeId(maptype) {
+    this.map.setMapTypeId(maptype);
+  }
+
+  setLayers(layers) {
+    const { layerSpec } = this.props;
+
+    layers.forEach((slug, index) => {
+      const layer = new Layers[slug](this.map, { layerSpec: layerSpec[slug] });
+      layer.getLayer().then(res => {
+        this.map.overlayMapTypes.setAt(index, res);
+      });
+    });
+  }
+
+  buildMap(nextProps) {
+    const { zoom, maptype, bounds, maxZoom, minZoom, mapOptions } = nextProps;
+
+    const boundsMap = new google.maps.LatLngBounds(); // eslint-disable-line
+    bounds.forEach(item => {
+      boundsMap.extend(new google.maps.LatLng(item[1], item[0])); // eslint-disable-line
+    });
+
     const options = {
       options: Object.assign({}, mapOptions, {
         zoom,
@@ -41,15 +70,16 @@ class Map extends PureComponent {
         minZoom
       })
     };
-    this.map = new google.maps.Map(document.getElementById('map'), options);
+    this.map = new google.maps.Map(document.getElementById('map'), options); // eslint-disable-line
     this.map.fitBounds(boundsMap);
     this.setMaptypes();
     this.setMaptypeId(maptype);
     this.setListeners();
+    this.checkLayers(this.props, nextProps);
   }
 
-  componentWillUpdate(nextProps) {
-    const oldLayers = this.props.layers;
+  checkLayers(props, nextProps) {
+    const oldLayers = props.layers;
     const newLayers = nextProps.layers;
     const sameLayers =
       oldLayers.length === newLayers.length &&
@@ -60,23 +90,12 @@ class Map extends PureComponent {
     }
   }
 
-  setListeners() {
-    google.maps.event.addListenerOnce(this.map, 'idle', () => {
-      this.onMapInit();
-    });
-  }
-
-  onMapInit() {
+  removeLayers() {
     const { layers } = this.props;
-    this.setLayers(layers);
-  }
 
-  setMaptypes() {
-    this.map.mapTypes.set('grayscale', grayscale());
-  }
-
-  setMaptypeId(maptype) {
-    this.map.setMapTypeId(maptype);
+    layers.forEach((slug, index) => {
+      this.map.overlayMapTypes.setAt(index, null);
+    });
   }
 
   updateLayers(layers) {
@@ -84,44 +103,21 @@ class Map extends PureComponent {
     this.setLayers(layers);
   }
 
-  removeLayers() {
-    const { layers } = this.props;
-
-    layers.map((slug, index) => {
-      this.map.overlayMapTypes.setAt(index, null);
-    });
-  }
-
-  setLayers(layers) {
-    const { layerSpec } = this.props;
-
-    layers.map((slug, index) => {
-      const layer = new Layers[slug](this.map, { layerSpec: layerSpec[slug] });
-      layer.getLayer().then(res => {
-        this.map.overlayMapTypes.setAt(index, res);
-      });
-    });
-  }
-
   render() {
     return (
-      <div id="map" className={`c-map ${this.props.fixed ? '-fixed' : ''}`} />
+      <div id="map" className="c-map">
+        <Loader isAbsolute />
+      </div>
     );
   }
 }
 
 Map.propTypes = {
-  setMapData: Proptypes.func.isRequired,
-  zoom: Proptypes.number.isRequired,
-  maptype: Proptypes.string.isRequired,
-  layers: Proptypes.array.isRequired,
-  maxZoom: Proptypes.number.isRequired,
-  minZoom: Proptypes.number.isRequired,
-  bounds: Proptypes.object.isRequired,
-  regionBounds: Proptypes.string.isRequired,
-  region: Proptypes.number.isRequired,
+  isLoading: Proptypes.bool.isRequired,
   layerSpec: Proptypes.object.isRequired,
-  mapOptions: Proptypes.object
+  setInitialData: Proptypes.func.isRequired,
+  bounds: Proptypes.array.isRequired,
+  layers: Proptypes.array.isRequired
 };
 
 Map.defaultProps = {

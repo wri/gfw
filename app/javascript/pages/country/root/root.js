@@ -1,11 +1,8 @@
-import { createElement } from 'react';
+import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import {
-  getCountriesList,
-  getCountry,
-  getCountryRegions
-} from 'services/country';
+import { getAdminsSelected } from './root-selectors';
 
 import RootComponent from './root-component';
 import actions from './root-actions';
@@ -14,54 +11,74 @@ export { initialState } from './root-reducers';
 export { default as reducers } from './root-reducers';
 export { default as actions } from './root-actions';
 
-const mapStateToProps = state => ({
-  location: state.location.payload,
-  isLoading: state.root.isLoading,
-  iso: state.root.iso,
-  countryRegion: state.root.countryRegion,
-  countryData: state.root.countryData,
-  countryRegions: state.root.countryRegions,
-  countriesList: state.root.countriesList,
-  gfwHeaderHeight: state.root.gfwHeaderHeight,
-  isMapFixed: state.root.isMapFixed,
-  mapTop: state.root.mapTop,
-  topPage: state.root.topPage,
-  nameRegion: state.root.nameRegion,
-  showMapMobile: state.root.showMapMobile
-});
+const mapStateToProps = state => {
+  const {
+    isCountriesLoading,
+    isRegionsLoading,
+    isSubRegionsLoading,
+    isGeostoreLoading
+  } = state.countryData;
+  const adminData = {
+    countries: state.countryData.countries,
+    regions: state.countryData.regions,
+    subRegions: state.countryData.subRegions
+  };
+  return {
+    isLoading:
+      isCountriesLoading ||
+      isRegionsLoading ||
+      isSubRegionsLoading ||
+      isGeostoreLoading,
+    location: state.location.payload,
+    gfwHeaderHeight: state.root.gfwHeaderHeight,
+    isMapFixed: state.root.isMapFixed,
+    mapTop: state.root.mapTop,
+    topPage: state.root.topPage,
+    showMapMobile: state.root.showMapMobile,
+    adminsSelected: getAdminsSelected({
+      adminData,
+      location: state.location.payload
+    }),
+    adminsLists: adminData
+  };
+};
 
-const RootContainer = props => {
-  const refreshCountryData = newProps => {
-    const { location, setIso, setRegion, setCountryData } = newProps;
+class RootContainer extends PureComponent {
+  handleShowMapMobile() {
+    this.props.setShowMapMobile(!this.props.showMapMobile);
+  }
 
-    setIso(location.iso);
-    setRegion(location.region ? location.region : 0);
+  handleScrollCallback(props) {
+    const { gfwHeaderHeight, isMapFixed, setFixedMapStatus, setMapTop } = props;
+    const mapFixedLimit =
+      document.getElementById('c-widget-stories').offsetTop -
+      window.innerHeight;
 
-    getCountriesList().then(getCountriesListResponse => {
-      getCountry(location.iso).then(getCountryResponse => {
-        const getCountryData = getCountryResponse.data;
-        getCountryData.area_ha = getCountryResponse.data.umd[0].area_ha;
+    if (
+      !isMapFixed &&
+      window.scrollY >= gfwHeaderHeight &&
+      window.scrollY < mapFixedLimit
+    ) {
+      setFixedMapStatus(true);
+      setMapTop(0);
+    } else if (isMapFixed && window.scrollY >= mapFixedLimit) {
+      setFixedMapStatus(false);
+      setMapTop(mapFixedLimit);
+    }
+  }
 
-        getCountryRegions(location.iso).then(getCountryRegionsResponse => {
-          setCountryData({
-            data: getCountryData,
-            regions: getCountryRegionsResponse.data.data,
-            countries: getCountriesListResponse.data.data
-          });
-        });
-      });
+  render() {
+    return createElement(RootComponent, {
+      ...this.props,
+      handleShowMapMobile: this.handleShowMapMobile,
+      handleScrollCallback: this.handleScrollCallback
     });
-  };
+  }
+}
 
-  const setInitialData = () => {
-    refreshCountryData(props);
-  };
-
-  return createElement(RootComponent, {
-    ...props,
-    setInitialData,
-    refreshCountryData
-  });
+RootContainer.propTypes = {
+  setShowMapMobile: PropTypes.func,
+  showMapMobile: PropTypes.bool
 };
 
 export default connect(mapStateToProps, actions)(RootContainer);

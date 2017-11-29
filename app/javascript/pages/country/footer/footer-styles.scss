@@ -1,0 +1,50 @@
+@import '~styles/settings.scss';
+$back-footer-color: #f7f7f7;
+
+.c-footer {
+  min-height: rem(122px);
+  background-color: $back-footer-color;
+  position: relative;
+  align-items: center;
+  display: flex;
+
+  .row {
+    max-width: none;
+    width: calc(100% - 100px);
+    height: 100%;
+    margin: 0;
+    margin-left: rem(50px);
+    align-items: center;
+
+    .c-footer__alert {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: rem(30px);
+
+      &:last-of-type {
+        margin-bottom: rem(30px);
+      }
+
+      @media screen and (min-width: $screen-m) {
+        margin-top: 0;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+
+      span {
+        font-size: 14px;
+        line-height: 1.14;
+        color: $slate;
+        display: block;
+        margin-bottom: rem(20px);
+      }
+
+      a {
+        max-width: rem(160px);
+      }
+    }
+  }
+}

@@ -1,0 +1,138 @@
+@import '~styles/settings.scss';
+
+.c-widget-stories {
+  margin-top: rem(20px);
+  position: relative;
+  width: 100vw;
+
+  .row {
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    flex-direction: column;
+
+    @media screen and (min-width: $screen-m) {
+      flex-direction: row;
+    }
+
+    .c-widget-stories__primary-info {
+      min-width: calc(70% - 50px);
+      padding-top: rem(40px);
+      margin: 0;
+      margin-left: rem(50px);
+      padding-bottom: rem(40px);
+
+      @media screen and (min-width: $screen-m) {
+        padding-top: rem(120px);
+        padding-bottom: rem(100px);
+      }
+
+      h2 {
+        font-size: 47px;
+        font-weight: 300;
+        line-height: 0.85;
+        letter-spacing: -0.6px;
+        color: $slate;
+      }
+
+      .container-titles {
+        margin-top: rem(60px);
+
+        p {
+          font-size: 18px;
+          line-height: 2.22;
+          color: rgba($slate, 0.5);
+        }
+      }
+
+      .description {
+        font-size: 18px;
+        line-height: 1.67;
+        letter-spacing: -0.4px;
+        color: $slate;
+        margin-top: rem(30px);
+      }
+
+      .link {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.67;
+        letter-spacing: -0.4px;
+        text-decoration: underline;
+        display: inline-block;
+        margin-top: rem(40px);
+        color: #97be32;
+      }
+    }
+
+    .c-widget-stories__secondary-info {
+      padding-top: rem(40px);
+      background-color: #97be32;
+      min-width: 30%;
+      padding-bottom: rem(40px);
+      padding-left: rem(70px);
+      position: relative;
+
+      @media screen and (min-width: $screen-m) {
+        padding-top: rem(120px);
+        padding-bottom: rem(100px);
+      }
+
+      .circle {
+        width: rem(105px);
+        height: rem(105px);
+        border-radius: rem(105px);
+        position: absolute;
+        background-color: white;
+        left: -52px;
+        border: 1px solid rgba($slate, 0.1);
+        display: none;
+
+        @media screen and (min-width: $screen-m) {
+          display: block;
+        }
+      }
+
+      h3 {
+        font-size: 18px;
+        line-height: 2.22;
+        color: rgba($slate, 0.5);
+      }
+
+      .title-name {
+        margin-top: rem(45px);
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.67;
+        letter-spacing: -0.4px;
+        color: $slate;
+
+        &::before {
+          content: '';
+          display: block;
+          height: 1px;
+          width: calc(100% + 50px);
+          position: relative;
+          bottom: 30px;
+          background-color: rgba($slate, 0.5);
+        }
+      }
+
+      .description {
+        margin-top: rem(50px);
+        max-width: rem(210px);
+        font-size: 18px;
+        line-height: 1.67;
+        letter-spacing: -0.4px;
+        color: rgba($slate, 0.7);
+      }
+
+      .link {
+        display: inline-block;
+        margin-top: rem(50px);
+        color: $white;
+        text-decoration: underline;
+      }
+    }
+  }
+}

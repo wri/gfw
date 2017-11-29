@@ -11,30 +11,31 @@ export { default as reducers } from './map-reducers';
 export { default as actions } from './map-actions';
 
 const mapStateToProps = state => ({
+  bounds: state.countryData.geostore.bounds,
+  isLoading: state.map.isLoading,
   zoom: state.map.zoom,
-  bounds: state.root.countryData.bounds,
-  region: state.root.countryRegion,
-  regionBounds: state.root.countryRegions[state.root.countryRegion].bounds,
   maptype: state.map.maptype,
   layerSpec: state.map.layerSpec,
   layers: state.map.layers
 });
 
 const MapContainer = props => {
-  const setMapData = () => {
+  const setInitialData = () => {
+    const { setLayerSpec, setMapIsLoading } = props;
     getLayerSpec().then(response => {
       const layerSpec = {};
       response.data.rows.forEach(layer => {
         layerSpec[layer.slug] = layer;
       });
 
-      props.setLayerSpec(layerSpec);
+      setLayerSpec(layerSpec);
+      setMapIsLoading(false);
     });
   };
 
   return createElement(MapComponent, {
     ...props,
-    setMapData
+    setInitialData
   });
 };
 

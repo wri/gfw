@@ -7,7 +7,7 @@ export const COUNTRY = 'location/COUNTRY';
 
 export const routes = {
   [COUNTRY]: {
-    path: '/country/:iso/:region?'
+    path: '/country/:country/:region?/:subRegion?'
   }
 };
 
