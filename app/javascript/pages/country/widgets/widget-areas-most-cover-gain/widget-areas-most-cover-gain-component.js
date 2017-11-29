@@ -10,9 +10,9 @@ import WidgetAreasMostCoverGainSettings from './widget-areas-most-cover-gain-set
 
 class WidgetAreasMostCoverGain extends PureComponent {
   componentWillUpdate(nextProps) {
-    const { isRootLoading, settings, setInitialData, updateData } = this.props;
+    const { isLoading, settings, setInitialData, updateData } = this.props;
 
-    if (!nextProps.isRootLoading && isRootLoading) {
+    if (!nextProps.isLoading && isLoading) {
       setInitialData(nextProps);
     }
 
@@ -111,9 +111,8 @@ class WidgetAreasMostCoverGain extends PureComponent {
 }
 
 WidgetAreasMostCoverGain.propTypes = {
-  isRootLoading: PropTypes.bool.isRequired,
-  locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  locationNames: PropTypes.object.isRequired,
   areaData: PropTypes.array.isRequired,
   areaChartData: PropTypes.array.isRequired,
   paginate: PropTypes.object.isRequired,

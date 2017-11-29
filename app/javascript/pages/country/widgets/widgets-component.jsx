@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 
+import CountryDataProvider from 'pages/country/providers/country-data-provider';
 import WidgetTreeCover from 'pages/country/widgets/widget-tree-cover';
 import WidgetTreeLocated from 'pages/country/widgets/widget-tree-located';
 import WidgetTreeLoss from 'pages/country/widgets/widget-tree-loss';
@@ -29,7 +30,12 @@ class Widget extends PureComponent {
   render() {
     const { widget } = this.props;
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
-    return <WidgetComponent {...this.props} />;
+    return (
+      <div>
+        <CountryDataProvider />
+        <WidgetComponent {...this.props} />
+      </div>
+    );
   }
 }
 

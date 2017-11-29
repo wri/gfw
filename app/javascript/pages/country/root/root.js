@@ -17,14 +17,14 @@ const mapStateToProps = state => {
     isRegionsLoading,
     isSubRegionsLoading,
     isGeostoreLoading
-  } = state.root;
+  } = state.countryData;
   const adminData = {
-    countries: state.root.countries,
-    regions: state.root.regions,
-    subRegions: state.root.subRegions
+    countries: state.countryData.countries,
+    regions: state.countryData.regions,
+    subRegions: state.countryData.subRegions
   };
   return {
-    isRootLoading:
+    isLoading:
       isCountriesLoading ||
       isRegionsLoading ||
       isSubRegionsLoading ||
@@ -44,63 +44,6 @@ const mapStateToProps = state => {
 };
 
 class RootContainer extends PureComponent {
-  componentWillMount() {
-    const {
-      location,
-      getCountries,
-      getRegions,
-      getSubRegions,
-      getGeostore
-    } = this.props;
-    getCountries();
-    getRegions(location.country);
-    if (location.region) {
-      getSubRegions(location.country, location.region);
-    }
-    getGeostore(location.country, location.region, location.subRegion);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { getRegions, getSubRegions, getGeostore } = this.props;
-    const hasCountryChanged =
-      nextProps.location.country !== this.props.location.country;
-    const hasRegionChanged =
-      nextProps.location.region !== this.props.location.region;
-    const hasSubRegionChanged =
-      nextProps.location.subRegion !== this.props.location.subRegion;
-
-    if (hasCountryChanged) {
-      getRegions(nextProps.location.country);
-      if (nextProps.location.region) {
-        getSubRegions(nextProps.location.country, nextProps.location.region);
-      }
-      getGeostore(
-        nextProps.location.country,
-        nextProps.location.region,
-        nextProps.location.subRegion
-      );
-    }
-
-    if (hasRegionChanged) {
-      if (nextProps.location.region) {
-        getSubRegions(nextProps.location.country, nextProps.location.region);
-      }
-      getGeostore(
-        nextProps.location.country,
-        nextProps.location.region,
-        nextProps.location.subRegion
-      );
-    }
-
-    if (hasSubRegionChanged) {
-      getGeostore(
-        nextProps.location.country,
-        nextProps.location.region,
-        nextProps.location.subRegion
-      );
-    }
-  }
-
   handleShowMapMobile() {
     this.props.setShowMapMobile(!this.props.showMapMobile);
   }
@@ -140,11 +83,6 @@ class RootContainer extends PureComponent {
 }
 
 RootContainer.propTypes = {
-  getCountries: PropTypes.func,
-  getRegions: PropTypes.func,
-  getSubRegions: PropTypes.func,
-  getGeostore: PropTypes.func,
-  location: PropTypes.object,
   setShowMapMobile: PropTypes.func,
   showMapMobile: PropTypes.bool,
   gfwHeaderHeight: PropTypes.number,
@@ -153,4 +91,4 @@ RootContainer.propTypes = {
   setMapTop: PropTypes.func
 };
 
-export default connect(mapStateToProps, actions)(RootContainer);
+export default connect(mapStateToProps, { actions })(RootContainer);

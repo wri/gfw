@@ -9,9 +9,9 @@ const mapStateToProps = state => {
     isRegionsLoading,
     isSubRegionsLoading,
     isGeostoreLoading
-  } = state.root;
+  } = state.countryData;
   return {
-    isRootLoading:
+    isLoading:
       isCountriesLoading ||
       isRegionsLoading ||
       isSubRegionsLoading ||

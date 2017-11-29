@@ -12,7 +12,7 @@ export { default as actions } from './widget-tree-located-actions';
 
 const mapStateToProps = state => ({
   location: state.location.payload,
-  regions: state.root.regions,
+  regions: state.countryData.regions,
   isLoading: state.widgetTreeLocated.isLoading,
   topRegions: state.widgetTreeLocated.topRegions,
   paginate: state.widgetTreeLocated.paginate,

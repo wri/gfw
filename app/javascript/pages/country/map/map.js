@@ -11,7 +11,7 @@ export { default as reducers } from './map-reducers';
 export { default as actions } from './map-actions';
 
 const mapStateToProps = state => ({
-  bounds: state.root.geostore.bounds,
+  bounds: state.countryData.geostore.bounds,
   isLoading: state.map.isLoading,
   zoom: state.map.zoom,
   maptype: state.map.maptype,

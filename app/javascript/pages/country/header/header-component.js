@@ -12,11 +12,11 @@ class Header extends PureComponent {
       handleCountryChange,
       handleRegionChange,
       handleSubRegionChange,
-      isRootLoading
+      isLoading
     } = this.props;
     return (
       <div className="c-header">
-        {isRootLoading && <Loader isAbsolute />}
+        {isLoading && <Loader isAbsolute />}
         <div className="row">
           <div className="large-6 medium-12 small-12 columns container-select">
             <div className="c-header__select">
@@ -79,7 +79,7 @@ class Header extends PureComponent {
 }
 
 Header.propTypes = {
-  isRootLoading: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   adminsSelected: PropTypes.object.isRequired,
   adminsLists: PropTypes.object.isRequired,
   handleCountryChange: PropTypes.func.isRequired,

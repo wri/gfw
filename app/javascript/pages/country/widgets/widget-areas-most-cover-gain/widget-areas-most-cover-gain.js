@@ -15,7 +15,7 @@ export { default as actions } from './widget-areas-most-cover-gain-actions';
 
 const mapStateToProps = state => ({
   location: state.location.payload,
-  admin1List: state.root.admin1List,
+  admin1List: state.countryData.regions,
   isLoading: state.widgetAreasMostCoverGain.isLoading,
   areaData: state.widgetAreasMostCoverGain.areaData,
   areaChartData: state.widgetAreasMostCoverGain.areaChartData,
