@@ -13,6 +13,9 @@ import WidgetTotalAreaPlantations from 'pages/country/widgets/widget-total-area-
 import WidgetTreeCoverGain from 'pages/country/widgets/widget-tree-cover-gain';
 import WidgetPlantationArea from 'pages/country/widgets/widget-plantation-area';
 import WidgetStories from 'pages/country/widgets/widget-stories';
+import './widget-styles.scss';
+import './widget-settings-styles.scss';
+import './widget-tooltip-styles.scss';
 
 const widgets = {
   WidgetTreeCover,

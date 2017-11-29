@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import './loader-styles.scss';
+
 class Loader extends PureComponent {
   render() {
     const { parentClass, isAbsolute } = this.props;

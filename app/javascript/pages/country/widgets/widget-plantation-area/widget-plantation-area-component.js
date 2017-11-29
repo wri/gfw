@@ -6,6 +6,7 @@ import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widgets/widget-header';
 import WidgetPaginate from 'pages/country/widgets/widget-paginate';
 import WidgetPlantationAreaSettings from './widget-plantation-area-settings-component';
+import './widget-plantation-area-styles.scss';
 
 class WidgetPlantationArea extends PureComponent {
   componentDidMount() {

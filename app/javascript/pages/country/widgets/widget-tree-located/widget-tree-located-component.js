@@ -6,6 +6,7 @@ import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widgets/widget-header';
 import WidgetPaginate from 'pages/country/widgets/widget-paginate';
 import WidgetTreeLocatedSettings from './widget-tree-located-settings-component';
+import './widget-tree-located-styles.scss';
 
 class WidgetTreeLocated extends PureComponent {
   componentWillMount() {

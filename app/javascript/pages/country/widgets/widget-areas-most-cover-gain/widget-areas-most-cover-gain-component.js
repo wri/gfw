@@ -7,6 +7,7 @@ import TooltipChart from 'pages/country/widgets/tooltip-chart';
 import WidgetHeader from 'pages/country/widgets/widget-header';
 import WidgetPaginate from 'pages/country/widgets/widget-paginate';
 import WidgetAreasMostCoverGainSettings from './widget-areas-most-cover-gain-settings-component';
+import './widget-areas-most-cover-gain-styles.scss';
 
 class WidgetAreasMostCoverGain extends PureComponent {
   componentWillUpdate(nextProps) {
