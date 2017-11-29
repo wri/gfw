@@ -19,22 +19,6 @@ const WIDGETS = [
   'plantation-area'
 ];
 class Root extends PureComponent {
-  getWidgets = () => {
-    const { isRootLoading, adminsSelected } = this.props;
-    return WIDGETS.map(widget => (
-      <div
-        key={widget}
-        className="large-6 small-12 columns l-country__container-widgets"
-      >
-        <Widget
-          widget={widget}
-          locationNames={adminsSelected}
-          isRootLoading={isRootLoading}
-        />
-      </div>
-    ));
-  };
-
   render() {
     const {
       isMapFixed,
@@ -42,7 +26,8 @@ class Root extends PureComponent {
       handleShowMapMobile,
       handleScrollCallback,
       adminsLists,
-      adminsSelected
+      adminsSelected,
+      isRootLoading
     } = this.props;
     return (
       <div className="l-country">
@@ -77,7 +62,22 @@ class Root extends PureComponent {
             }}
           />
         </div>
-        <div className="l-country__widgets row">{this.getWidgets()}</div>
+        <div className="l-country__widgets row">
+          {adminsSelected &&
+            WIDGETS.map(widget => (
+              <div
+                key={widget}
+                className="large-6 small-12 columns l-country__container-widgets"
+              >
+                <Widget
+                  widget={widget}
+                  locationNames={adminsSelected}
+                  isRootLoading={isRootLoading}
+                />
+              </div>
+            ))
+          }
+        </div>
         <Stories locationNames={{ type: 'test' }} />
         <Footer />
         <Share />
