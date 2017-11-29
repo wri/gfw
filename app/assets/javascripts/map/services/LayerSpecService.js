@@ -89,9 +89,12 @@ define([
         return false;
       } else {
         if (!this._combinationIsValid(layer)) {
-          _.each(this.model.get(layer.category_slug), this._removeLayer);
+          _.each(this.model.get(layer.category_slug), function(l) {
+            if (l.category_name === 'Forest change') {
+              this._removeLayer(l);
+            }
+          }.bind(this));
         }
-
         this._addLayer(layer);
         return layer;
       }
