@@ -44,7 +44,7 @@ class GlobeComponent extends React.Component {
 
     const fov = 40;
     const near = 1;
-    const far = 1500;
+    const far = 1250;
 
     this.scene = new THREE.Scene();
     this.imageLoader = new THREE.TextureLoader();
