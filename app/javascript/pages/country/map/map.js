@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Layers from 'map/layers';
 import grayscale from 'map/maptypes/grayscale';
 import isEqual from 'lodash/isEqual';
-import isEmpty from 'lodash/isEmpty';
 
 import MapComponent from './map-component';
 import actions from './map-actions';
@@ -14,39 +13,33 @@ export { default as reducers } from './map-reducers';
 export { default as actions } from './map-actions';
 
 const mapStateToProps = state => ({
-  bounds: state.countryData.geostore.bounds,
   isLoading: state.map.isLoading,
   isGeostoreLoading: state.countryData.isGeostoreLoading,
-  zoom: state.map.zoom,
-  maptype: state.map.maptype,
-  layerSpec: state.map.layerSpec,
+  bounds: state.countryData.geostore.bounds,
+  layersSpec: state.map.layersSpec,
   layers: state.map.layers
 });
 
 class MapContainer extends PureComponent {
   componentDidMount() {
     this.buildMap(this.props);
-    this.props.getLayers();
+    this.props.getLayersSpec();
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isGeostoreLoading, bounds, layers, layerSpec } = nextProps;
+    const { isGeostoreLoading, bounds, layers, layersSpec } = nextProps;
     if (isGeostoreLoading !== this.props.isGeostoreLoading && bounds) {
       this.boundMap(nextProps.bounds);
     }
 
-    if (
-      !isEqual(layers, this.props.layers) ||
-      (!isEqual(layerSpec, this.props.layerSpec) && !isEmpty(layers))
-    ) {
-      this.updateLayers(layers);
+    if (!isEqual(layersSpec, this.props.layersSpec) && layers.length) {
+      this.updateLayers(layers, layersSpec);
     }
   }
 
-  setLayers(layers) {
-    const { layerSpec } = this.props;
+  setLayers(layers, layersSpec) {
     layers.forEach((slug, index) => {
-      const layer = new Layers[slug](this.map, { layerSpec: layerSpec[slug] });
+      const layer = new Layers[slug](this.map, { layerSpec: layersSpec[slug] });
       layer.getLayer().then(res => {
         this.map.overlayMapTypes.setAt(index, res);
       });
@@ -60,9 +53,9 @@ class MapContainer extends PureComponent {
     });
   }
 
-  updateLayers(layers) {
+  updateLayers(layers, layersSpec) {
     this.removeLayers();
-    this.setLayers(layers);
+    this.setLayers(layers, layersSpec);
   }
 
   buildMap() {
@@ -90,11 +83,11 @@ class MapContainer extends PureComponent {
 
 MapContainer.propTypes = {
   isGeostoreLoading: PropTypes.bool.isRequired,
-  layerSpec: PropTypes.object.isRequired,
+  layersSpec: PropTypes.object.isRequired,
   bounds: PropTypes.array.isRequired,
   layers: PropTypes.array.isRequired,
   mapOptions: PropTypes.object.isRequired,
-  getLayers: PropTypes.func.isRequired
+  getLayersSpec: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, actions)(MapContainer);
