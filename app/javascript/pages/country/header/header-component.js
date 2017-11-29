@@ -14,12 +14,9 @@ class Header extends PureComponent {
       handleSubRegionChange,
       isRootLoading
     } = this.props;
-    if (isRootLoading) {
-      return <Loader parentClass="c-header" isAbsolute />;
-    }
-
     return (
       <div className="c-header">
+        {isRootLoading && <Loader isAbsolute />}
         <div className="row">
           <div className="large-6 medium-12 small-12 columns container-select">
             <div className="c-header__select">
