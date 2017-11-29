@@ -2,12 +2,6 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {
-  getCountriesProvider,
-  getRegionsProvider,
-  getSubRegionsProvider
-} from 'services/country';
-import { getGeostoreProvider } from 'services/geostore';
 import { getAdminsSelected } from './root-selectors';
 
 import RootComponent from './root-component';
@@ -51,17 +45,23 @@ const mapStateToProps = state => {
 
 class RootContainer extends PureComponent {
   componentWillMount() {
-    const { location } = this.props;
-
-    this.getCountries();
-    this.getRegions(location.country);
+    const {
+      location,
+      getCountries,
+      getRegions,
+      getSubRegions,
+      getGeostore
+    } = this.props;
+    getCountries();
+    getRegions(location.country);
     if (location.region) {
-      this.getSubRegions(location.country, location.region);
+      getSubRegions(location.country, location.region);
     }
-    this.getGeoStore(location.country, location.region, location.subRegion);
+    getGeostore(location.country, location.region, location.subRegion);
   }
 
   componentWillReceiveProps(nextProps) {
+    const { getRegions, getSubRegions, getGeostore } = this.props;
     const hasCountryChanged =
       nextProps.location.country !== this.props.location.country;
     const hasRegionChanged =
@@ -70,14 +70,11 @@ class RootContainer extends PureComponent {
       nextProps.location.subRegion !== this.props.location.subRegion;
 
     if (hasCountryChanged) {
-      this.getRegions(nextProps.location.country);
+      getRegions(nextProps.location.country);
       if (nextProps.location.region) {
-        this.getSubRegions(
-          nextProps.location.country,
-          nextProps.location.region
-        );
+        getSubRegions(nextProps.location.country, nextProps.location.region);
       }
-      this.getGeoStore(
+      getGeostore(
         nextProps.location.country,
         nextProps.location.region,
         nextProps.location.subRegion
@@ -86,12 +83,9 @@ class RootContainer extends PureComponent {
 
     if (hasRegionChanged) {
       if (nextProps.location.region) {
-        this.getSubRegions(
-          nextProps.location.country,
-          nextProps.location.region
-        );
+        getSubRegions(nextProps.location.country, nextProps.location.region);
       }
-      this.getGeoStore(
+      getGeostore(
         nextProps.location.country,
         nextProps.location.region,
         nextProps.location.subRegion
@@ -99,62 +93,13 @@ class RootContainer extends PureComponent {
     }
 
     if (hasSubRegionChanged) {
-      this.getGeoStore(
+      getGeostore(
         nextProps.location.country,
         nextProps.location.region,
         nextProps.location.subRegion
       );
     }
   }
-
-  // fetches for locaton meta data
-  getCountries = () => {
-    const { setCountries, setCountriesLoading } = this.props;
-    setCountriesLoading(true);
-    getCountriesProvider().then(response => {
-      setCountries(response.data.rows);
-      setCountriesLoading(false);
-    });
-  };
-
-  getRegions = location => {
-    const { setRegions, setRegionsLoading } = this.props;
-    setRegionsLoading(true);
-    getRegionsProvider(location).then(response => {
-      setRegions(response.data.rows);
-      setRegionsLoading(false);
-    });
-  };
-
-  getSubRegions = (country, region) => {
-    const { setSubRegions, setSubRegionsLoading } = this.props;
-    setSubRegionsLoading(true);
-    getSubRegionsProvider(country, region).then(response => {
-      setSubRegions(response.data.rows);
-      setSubRegionsLoading(false);
-    });
-  };
-
-  getGeoStore = (country, region, subRegion) => {
-    const { setGeostore, setGeostoreLoading } = this.props;
-    setGeostoreLoading(true);
-    getGeostoreProvider(country, region, subRegion).then(response => {
-      const { areaHa, bbox } = response.data.data.attributes;
-      setGeostore({
-        areaHa,
-        bounds: this.getBoxBounds(bbox)
-      });
-      setGeostoreLoading(false);
-    });
-  };
-
-  getBoxBounds = cornerBounds => [
-    [cornerBounds[0], cornerBounds[1]],
-    [cornerBounds[0], cornerBounds[3]],
-    [cornerBounds[2], cornerBounds[3]],
-    [cornerBounds[2], cornerBounds[1]],
-    [cornerBounds[0], cornerBounds[1]]
-  ];
 
   handleShowMapMobile() {
     this.props.setShowMapMobile(!this.props.showMapMobile);
@@ -195,15 +140,11 @@ class RootContainer extends PureComponent {
 }
 
 RootContainer.propTypes = {
-  setCountriesLoading: PropTypes.func,
-  setRegionsLoading: PropTypes.func,
-  setSubRegionsLoading: PropTypes.func,
-  setGeostoreLoading: PropTypes.func,
+  getCountries: PropTypes.func,
+  getRegions: PropTypes.func,
+  getSubRegions: PropTypes.func,
+  getGeostore: PropTypes.func,
   location: PropTypes.object,
-  setGeostore: PropTypes.func,
-  setCountries: PropTypes.func,
-  setRegions: PropTypes.func,
-  setSubRegions: PropTypes.func,
   setShowMapMobile: PropTypes.func,
   showMapMobile: PropTypes.bool,
   gfwHeaderHeight: PropTypes.number,
