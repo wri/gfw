@@ -6,7 +6,7 @@ export const initialState = {
   layers: ['forest2000', 'ifl_2013_deg']
 };
 
-const setMapIsLoading = (state, { payload }) => ({
+const setLayersLoading = (state, { payload }) => ({
   ...state,
   isLoading: payload
 });
@@ -32,7 +32,7 @@ const setLayerSpec = (state, { payload }) => ({
 });
 
 export default {
-  setMapIsLoading,
+  setLayersLoading,
   setMapZoom,
   setLayers,
   addLayer,
