@@ -33,7 +33,8 @@ class WidgetPlantationArea extends PureComponent {
       <div className="c-widget c-widget-plantation-area">
         <WidgetHeader
           noMap
-          title={`TREE PLANTATION AREA WITHIN ${locationNames.country && locationNames.country.label}`}
+          title={`TREE PLANTATION AREA WITHIN ${locationNames.country &&
+            locationNames.country.label}`}
           shareAnchor={'plantation-area'}
         >
           <WidgetPlantationAreaSettings
@@ -51,7 +52,7 @@ class WidgetPlantationArea extends PureComponent {
               {plantationAreaData
                 .slice(paginateFrom, paginateTo)
                 .map((item, index) => (
-                  <li key={index}>
+                  <li key={item.name}>
                     <div className="c-widget-plantation-area__legend">
                       <div className="circle">{index + 1}</div>
                       <div className="title">{item.name}</div>

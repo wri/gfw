@@ -48,7 +48,9 @@ class WidgetTreeLossAreas extends PureComponent {
     return (
       <div className="c-widget c-widget-tree-cover-loss-areas">
         <WidgetHeader
-          title={`AREAS WITH MOST TREE COVER LOSS IN ${locationNames.country && locationNames.country.label || null}`}
+          title={`AREAS WITH MOST TREE COVER LOSS IN ${(locationNames.country &&
+            locationNames.country.label) ||
+            null}`}
           shareAnchor={'tree-cover-loss-areas'}
         >
           <WidgetTreeCoverLossAreasSettings
@@ -84,8 +86,8 @@ class WidgetTreeLossAreas extends PureComponent {
                   innerRadius={52}
                   outerRadius={108}
                 >
-                  {regionChartData.map((item, index) => (
-                    <Cell key={index} fill={item.color} />
+                  {regionChartData.map(item => (
+                    <Cell key={item.name} fill={item.color} />
                   ))}
                 </Pie>
                 <Tooltip
@@ -97,24 +99,22 @@ class WidgetTreeLossAreas extends PureComponent {
             </div>
             <ul className="c-widget-tree-cover-loss-areas__legend">
               <div className="container-list">
-                {regionData
-                  .slice(paginateFrom, paginateTo)
-                  .map((item, index) => (
-                    <li key={index}>
-                      <div className="c-widget-tree-cover-loss-areas__legend-title">
-                        <div style={{ backgroundColor: item.color }}>
-                          {item.position}
-                        </div>
-                        {item.name}
+                {regionData.slice(paginateFrom, paginateTo).map(item => (
+                  <li key={item.name}>
+                    <div className="c-widget-tree-cover-loss-areas__legend-title">
+                      <div style={{ backgroundColor: item.color }}>
+                        {item.position}
                       </div>
-                      <div className="c-widget-tree-cover-loss-areas__legend-value">
-                        {settings.unit === 'ha'
-                          ? numeral(Math.round(item.value / 1000)).format('0,0')
-                          : Math.round(item.value)}
-                        {settings.unit === 'ha' ? 'ha' : '%'}
-                      </div>
-                    </li>
-                  ))}
+                      {item.name}
+                    </div>
+                    <div className="c-widget-tree-cover-loss-areas__legend-value">
+                      {settings.unit === 'ha'
+                        ? numeral(Math.round(item.value / 1000)).format('0,0')
+                        : Math.round(item.value)}
+                      {settings.unit === 'ha' ? 'ha' : '%'}
+                    </div>
+                  </li>
+                ))}
               </div>
               <WidgetPaginate
                 paginate={paginate}

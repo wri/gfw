@@ -34,9 +34,8 @@ class WidgetTotalAreaPlantations extends PureComponent {
     return (
       <div className="c-widget c-widget-total-area-plantations">
         <WidgetHeader
-          title={`TOTAL AREA OF TREE PLANTATIONS WITHIN ${
-            locationNames.country && locationNames.country.label
-          }`}
+          title={`TOTAL AREA OF TREE PLANTATIONS WITHIN ${locationNames.country &&
+            locationNames.country.label}`}
           shareAnchor={'total-area-plantations'}
         >
           <WidgetTotalAreaPlantationsSettings
@@ -56,8 +55,8 @@ class WidgetTotalAreaPlantations extends PureComponent {
             </p>
             <div className="c-widget-total-area-plantations__container">
               <ul className="c-widget-total-area-plantations__legend">
-                {plantationData.map((item, index) => (
-                  <li key={index}>
+                {plantationData.map(item => (
+                  <li key={item.name}>
                     <div
                       className="c-widget-total-area-plantations__bubble"
                       style={{ backgroundColor: item.color }}
@@ -78,8 +77,8 @@ class WidgetTotalAreaPlantations extends PureComponent {
                     innerRadius={28}
                     outerRadius={60}
                   >
-                    {plantationData.map((item, index) => (
-                      <Cell key={index} fill={item.color} />
+                    {plantationData.map(item => (
+                      <Cell key={item.name} fill={item.color} />
                     ))}
                   </Pie>
                   <Tooltip content={<TooltipChart />} />

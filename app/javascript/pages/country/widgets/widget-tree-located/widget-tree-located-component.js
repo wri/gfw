@@ -43,7 +43,8 @@ class WidgetTreeLocated extends PureComponent {
     return (
       <div className="c-widget c-widget-tree-located">
         <WidgetHeader
-          title={'Where are the forest located in '}
+          title={`Where are the forest located in ${locationNames.country &&
+            locationNames.country.label}`}
           noMap
           shareAnchor={'tree-located'}
         >
@@ -63,8 +64,8 @@ class WidgetTreeLocated extends PureComponent {
         ) : (
           <div>
             <ul className="c-widget-tree-located__regions">
-              {topRegions.slice(paginateFrom, paginateTo).map((item, index) => (
-                <li key={index}>
+              {topRegions.slice(paginateFrom, paginateTo).map(item => (
+                <li key={item.name}>
                   <div className="c-widget-tree-located__region-bubble">
                     {item.position}
                   </div>
