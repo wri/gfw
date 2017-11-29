@@ -43,23 +43,23 @@ class Header extends PureComponent {
               />
             </div>
             {adminsSelected.region &&
-            adminsLists.subRegions &&
-            adminsLists.subRegions.length > 0 ? (
-              <div className="c-header__select -jurisdiction">
+              adminsLists.subRegions &&
+              adminsLists.subRegions.length > 0 ? (
+                <div className="c-header__select -jurisdiction">
                   <svg className="icon icon-angle-arrow-down c-header__select-arrow">
-                  <use xlinkHref="#icon-angle-arrow-down" />
-                </svg>
+                    <use xlinkHref="#icon-angle-arrow-down" />
+                  </svg>
                   <Select
-                  value={adminsSelected.subRegion}
-                  options={adminsLists.subRegions}
-                  onChange={subRegion =>
+                    value={adminsSelected.subRegion}
+                    options={adminsLists.subRegions}
+                    onChange={subRegion =>
                       handleSubRegionChange(
                         adminsSelected.country,
                         adminsSelected.region,
                         subRegion
                       )
                     }
-                />
+                  />
                 </div>
               ) : null}
           </div>

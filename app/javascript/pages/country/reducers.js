@@ -15,7 +15,6 @@ const countryReducers = {
 // Components
 import * as ShareComponent from 'components/share/share';
 import * as mapComponent from 'pages/country/map/map';
-import * as widgetHeaderComponent from 'pages/country/widgets/widget-header/widget-header';
 import * as widgetAreasMostCoverGainComponent from 'pages/country/widgets/widget-areas-most-cover-gain/widget-areas-most-cover-gain';
 import * as widgetPlantationAreaComponent from 'pages/country/widgets/widget-plantation-area/widget-plantation-area';
 import * as widgetStoriesComponent from 'pages/country/widgets/widget-stories/widget-stories';
@@ -32,7 +31,6 @@ import * as countryDataProviderComponent from 'pages/country/providers/country-d
 const componentsReducers = {
   share: handleActions(ShareComponent),
   map: handleActions(mapComponent),
-  widgetHeader: handleActions(widgetHeaderComponent),
   widgetAreasMostCoverGain: handleActions(widgetAreasMostCoverGainComponent),
   widgetPlantationArea: handleActions(widgetPlantationAreaComponent),
   widgetStories: handleActions(widgetStoriesComponent),
