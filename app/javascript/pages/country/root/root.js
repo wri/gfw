@@ -50,7 +50,6 @@ class RootContainer extends PureComponent {
 
   handleScrollCallback(props) {
     const { gfwHeaderHeight, isMapFixed, setFixedMapStatus, setMapTop } = props;
-
     const mapFixedLimit =
       document.getElementById('c-widget-stories').offsetTop -
       window.innerHeight;
@@ -82,4 +81,4 @@ RootContainer.propTypes = {
   showMapMobile: PropTypes.bool
 };
 
-export default connect(mapStateToProps, { actions })(RootContainer);
+export default connect(mapStateToProps, actions)(RootContainer);
