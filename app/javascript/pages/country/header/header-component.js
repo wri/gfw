@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Select from 'react-select-me';
 
 import Loader from 'components/loader/loader';
+import './header-styles.scss';
 
 class Header extends PureComponent {
   render() {
@@ -41,24 +42,26 @@ class Header extends PureComponent {
                 }
               />
             </div>
-            {adminsSelected.region && adminsLists.subRegions && adminsLists.subRegions.length > 0 ? (
+            {adminsSelected.region &&
+            adminsLists.subRegions &&
+            adminsLists.subRegions.length > 0 ? (
               <div className="c-header__select -jurisdiction">
-                <svg className="icon icon-angle-arrow-down c-header__select-arrow">
+                  <svg className="icon icon-angle-arrow-down c-header__select-arrow">
                   <use xlinkHref="#icon-angle-arrow-down" />
                 </svg>
-                <Select
+                  <Select
                   value={adminsSelected.subRegion}
                   options={adminsLists.subRegions}
                   onChange={subRegion =>
-                    handleSubRegionChange(
-                      adminsSelected.country,
-                      adminsSelected.region,
-                      subRegion
-                    )
-                  }
+                      handleSubRegionChange(
+                        adminsSelected.country,
+                        adminsSelected.region,
+                        subRegion
+                      )
+                    }
                 />
-              </div>
-            ) : null}
+                </div>
+              ) : null}
           </div>
           <div className="large-6 medium-12 small-12 columns c-header__info">
             <p>

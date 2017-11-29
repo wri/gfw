@@ -7,6 +7,7 @@ import Loader from 'components/loader/loader';
 import TooltipChart from 'pages/country/widgets/tooltip-chart';
 import WidgetHeader from 'pages/country/widgets/widget-header';
 import WidgetTreeCoverSettings from './widget-tree-cover-settings-component';
+import './widget-tree-cover-styles.scss';
 
 class WidgetTreeCover extends PureComponent {
   componentDidMount() {

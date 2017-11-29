@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
 
+import './tooltip-chart-styles.scss';
+
 const TooltipChart = props => {
   const { active } = props;
   if (active) {

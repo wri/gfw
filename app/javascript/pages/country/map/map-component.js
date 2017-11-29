@@ -5,6 +5,7 @@ import Layers from 'map/layers';
 import grayscale from 'map/maptypes/grayscale';
 
 import Loader from 'components/loader/loader';
+import './map-styles.scss';
 
 class Map extends PureComponent {
   componentDidMount() {

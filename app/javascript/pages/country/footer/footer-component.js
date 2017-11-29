@@ -1,31 +1,32 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const Footer = props => (
+import './footer-styles.scss';
+
+const Footer = () => (
   <div className="c-footer">
     <div className="row">
       <div className="small-12 medium-6 large-3 columns c-footer__alert">
         <span>Alerts and Data Bulletin</span>
         <a href="#" className="c-regular-button -green">
-            SUSCRIBE
+          SUSCRIBE
         </a>
       </div>
       <div className="small-12 medium-6 large-3 columns c-footer__alert">
         <span>Alerts and Data Bulletin</span>
         <a href="#" className="c-regular-button -green">
-            BROWSE
+          BROWSE
         </a>
       </div>
       <div className="small-12 medium-6 large-3 columns c-footer__alert">
         <span>Alerts and Data Bulletin</span>
         <a href="#" className="c-regular-button -green">
-            DOWNLOAD
+          DOWNLOAD
         </a>
       </div>
       <div className="small-12 medium-6 large-3 columns c-footer__alert">
         <span>Alerts and Data Bulletin</span>
         <a href="#" className="c-regular-button -green">
-            ANALIZE
+          ANALIZE
         </a>
       </div>
     </div>

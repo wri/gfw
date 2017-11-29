@@ -8,6 +8,7 @@ import TooltipChart from 'pages/country/widgets/tooltip-chart';
 import WidgetHeader from 'pages/country/widgets/widget-header';
 import WidgetPaginate from 'pages/country/widgets/widget-paginate';
 import WidgetTreeCoverLossAreasSettings from './widget-tree-cover-loss-areas-settings-component';
+import './widget-tree-cover-loss-areas-styles.scss';
 
 class WidgetTreeLossAreas extends PureComponent {
   componentWillUpdate(nextProps) {

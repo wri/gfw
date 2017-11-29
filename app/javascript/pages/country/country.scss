@@ -1,3 +1,5 @@
+@import '~styles/settings.scss';
+
 .l-country__map {
   right: -100%;
   width: 100%;
@@ -51,4 +53,8 @@
       }
     }
   }
+}
+
+#footerGfw {
+  position: relative;
 }

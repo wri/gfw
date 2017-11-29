@@ -5,6 +5,7 @@ import numeral from 'numeral';
 import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widgets/widget-header';
 import WidgetTreeCoverGainSettings from './widget-tree-cover-gain-settings-component';
+import './widget-tree-cover-gain-styles.scss';
 
 class WidgetTreeCoverGain extends PureComponent {
   componentDidMount() {
