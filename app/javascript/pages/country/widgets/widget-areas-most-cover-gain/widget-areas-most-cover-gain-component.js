@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { PieChart, Pie, Tooltip, Cell } from 'recharts';
 
 import Loader from 'components/loader';
-import TooltipChart from 'pages/country/tooltip-chart';
-import WidgetHeader from 'pages/country/widget-header';
-import WidgetPaginate from 'pages/country/widget-paginate';
+import TooltipChart from 'pages/country/widgets/tooltip-chart';
+import WidgetHeader from 'pages/country/widgets/widget-header';
+import WidgetPaginate from 'pages/country/widgets/widget-paginate';
 import WidgetAreasMostCoverGainSettings from './widget-areas-most-cover-gain-settings-component';
 
 class WidgetAreasMostCoverGain extends PureComponent {

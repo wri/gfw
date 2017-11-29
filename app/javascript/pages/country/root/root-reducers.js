@@ -1,5 +1,8 @@
 export const initialState = {
-  isLoading: false,
+  isCountriesLoading: false,
+  isRegionsLoading: false,
+  isSubRegionsLoading: false,
+  isGeostoreLoading: false,
   gfwHeaderHeight: 59,
   showMapMobile: false,
   isMapFixed: true,
@@ -13,9 +16,24 @@ export const initialState = {
   }
 };
 
-const setIsLoading = (state, { payload }) => ({
+const setCountriesLoading = (state, { payload }) => ({
   ...state,
-  isLoading: payload
+  isCountriesLoading: payload
+});
+
+const setRegionsLoading = (state, { payload }) => ({
+  ...state,
+  isRegionsLoading: payload
+});
+
+const setSubRegionsLoading = (state, { payload }) => ({
+  ...state,
+  isSubRegionsLoading: payload
+});
+
+const setGeostoreLoading = (state, { payload }) => ({
+  ...state,
+  isGeostoreLoading: payload
 });
 
 const setCountries = (state, { payload }) => ({
@@ -25,12 +43,12 @@ const setCountries = (state, { payload }) => ({
 
 const setRegions = (state, { payload }) => ({
   ...state,
-  regions: payload.map(d => ({ label: d.name, value: d.id.toString() }))
+  regions: payload.map(d => ({ label: d.name, value: d.id }))
 });
 
 const setSubRegions = (state, { payload }) => ({
   ...state,
-  subRegions: payload.map(d => ({ label: d.name, value: d.id.toString() }))
+  subRegions: payload.map(d => ({ label: d.name, value: d.id }))
 });
 
 const setGeostore = (state, { payload }) => ({
@@ -54,7 +72,10 @@ const setShowMapMobile = (state, { payload }) => ({
 });
 
 export default {
-  setIsLoading,
+  setCountriesLoading,
+  setRegionsLoading,
+  setSubRegionsLoading,
+  setGeostoreLoading,
   setCountries,
   setRegions,
   setSubRegions,

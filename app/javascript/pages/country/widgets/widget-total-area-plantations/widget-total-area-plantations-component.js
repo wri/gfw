@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { PieChart, Pie, Tooltip, Cell } from 'recharts';
 
 import Loader from 'components/loader/loader';
-import TooltipChart from 'pages/country/tooltip-chart';
-import WidgetHeader from 'pages/country/widget-header';
+import TooltipChart from 'pages/country/widgets/tooltip-chart';
+import WidgetHeader from 'pages/country/widgets/widget-header';
 import WidgetTotalAreaPlantationsSettings from './widget-total-area-plantations-settings-component';
 
 class WidgetTotalAreaPlantations extends PureComponent {

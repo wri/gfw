@@ -11,13 +11,12 @@ class Header extends PureComponent {
       adminsSelected,
       handleCountryChange,
       handleRegionChange,
-      handleSubRegionChange
+      handleSubRegionChange,
+      isRootLoading
     } = this.props;
-    console.log(adminsSelected);
-
-    // if (isRootLoading) {
-    //   return <Loader parentClass="c-header" isAbsolute />;
-    // }
+    if (isRootLoading) {
+      return <Loader parentClass="c-header" isAbsolute />;
+    }
 
     return (
       <div className="c-header">
@@ -45,7 +44,7 @@ class Header extends PureComponent {
                 }
               />
             </div>
-            {adminsLists.subRegions ? (
+            {adminsSelected.region && adminsLists.subRegions && adminsLists.subRegions.length > 0 ? (
               <div className="c-header__select -jurisdiction">
                 <svg className="icon icon-angle-arrow-down c-header__select-arrow">
                   <use xlinkHref="#icon-angle-arrow-down" />
@@ -83,8 +82,12 @@ class Header extends PureComponent {
 }
 
 Header.propTypes = {
+  isRootLoading: PropTypes.bool.isRequired,
   adminsSelected: PropTypes.object,
-  adminsLists: PropTypes.object.isRequired
+  adminsLists: PropTypes.object.isRequired,
+  handleCountryChange: PropTypes.func.isRequired,
+  handleRegionChange: PropTypes.func.isRequired,
+  handleSubRegionChange: PropTypes.func.isRequired
 };
 
 export default Header;

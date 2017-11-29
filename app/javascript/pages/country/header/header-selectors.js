@@ -13,14 +13,12 @@ export const getAdminsSelected = createSelector(
       null,
     region:
       (adminLists.regions &&
-        adminLists.regions.find(
-          i => i.value === adminsSelected.region.toString()
-        )) ||
+        adminLists.regions.find(i => i.value === adminsSelected.region)) ||
       null,
     subRegion:
       (adminLists.subRegions &&
         adminLists.subRegions.find(
-          i => i.value === adminsSelected.subRegion.toString()
+          i => i.value === adminsSelected.subRegion
         )) ||
       null
   })

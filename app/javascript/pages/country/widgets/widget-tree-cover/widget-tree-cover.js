@@ -12,7 +12,6 @@ export { default as actions } from './widget-tree-cover-actions';
 
 const mapStateToProps = state => ({
   location: state.location.payload,
-  locationNames: state.root.locationNames,
   areaHa: state.root.geostore.areaHa,
   isLoading: state.widgetTreeCover.isLoading,
   admin1List: state.root.admin1List,

@@ -5,12 +5,23 @@ import HeaderComponent from './header-component';
 import { getAdminsSelected } from './header-selectors';
 
 const mapStateToProps = state => {
+  const {
+    isCountriesLoading,
+    isRegionsLoading,
+    isSubRegionsLoading,
+    isGeostoreLoading
+  } = state.root;
   const adminData = {
     countries: state.root.countries,
     regions: state.root.regions,
     subRegions: state.root.subRegions
   };
   return {
+    isRootLoading:
+      isCountriesLoading ||
+      isRegionsLoading ||
+      isSubRegionsLoading ||
+      isGeostoreLoading,
     location: state.location.payload,
     adminsSelected: getAdminsSelected({
       adminData,
