@@ -1,4 +1,11 @@
 import { createAction } from 'redux-actions';
+import { createThunkAction } from 'utils/redux';
+import {
+  getCountriesProvider,
+  getRegionsProvider,
+  getSubRegionsProvider
+} from 'services/country';
+
 
 const setCountriesLoading = createAction('setCountriesLoading');
 const setRegionsLoading = createAction('setRegionsLoading');
@@ -12,6 +19,17 @@ const setGeostore = createAction('setGeostore');
 const setFixedMapStatus = createAction('setFixedMapStatus');
 const setMapTop = createAction('setMapTop');
 const setShowMapMobile = createAction('setShowMapMobile');
+
+const getCountries = createThunkAction(
+  'getCountries',
+  () => dispatch => {
+    dispatch(setCountriesLoading(true));
+    getCountriesProvider().then(response => {
+      setCountries(response.data.rows);
+      setCountriesLoading(false);
+    });
+  }
+);
 
 export default {
   setCountriesLoading,
