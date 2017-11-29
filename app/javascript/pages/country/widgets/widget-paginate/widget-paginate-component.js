@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import './widget-paginate-styles.scss';
+
 class WidgetPaginate extends PureComponent {
   render() {
     const {

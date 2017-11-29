@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import './widget-stories-styles.scss';
+
 class WidgetStories extends PureComponent {
   render() {
     const { locationNames } = this.props;

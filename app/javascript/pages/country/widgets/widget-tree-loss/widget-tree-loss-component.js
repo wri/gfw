@@ -15,6 +15,7 @@ import Loader from 'components/loader/loader';
 import TooltipChart from 'pages/country/widgets/tooltip-chart';
 import WidgetHeader from 'pages/country/widgets/widget-header';
 import WidgetTreeLossSettings from './widget-tree-loss-settings-component';
+import './widget-tree-loss-styles.scss';
 
 class WidgetTreeLoss extends PureComponent {
   componentDidMount() {
