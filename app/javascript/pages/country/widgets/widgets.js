@@ -16,7 +16,7 @@ const mapStateToProps = state => {
     subRegions: state.countryData.subRegions
   };
   return {
-    isLoading:
+    isMetaLoading:
       isCountriesLoading ||
       isRegionsLoading ||
       isSubRegionsLoading ||

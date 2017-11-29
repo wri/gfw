@@ -10,20 +10,33 @@ export { initialState } from './widget-tree-cover-reducers';
 export { default as reducers } from './widget-tree-cover-reducers';
 export { default as actions } from './widget-tree-cover-actions';
 
-const mapStateToProps = state => ({
-  location: state.location.payload,
-  areaHa: state.countryData.geostore.areaHa,
-  isLoading: state.widgetTreeCover.isLoading,
-  admin1List: state.countryData.regions,
-  totalCover: state.widgetTreeCover.totalCover,
-  totalIntactForest: state.widgetTreeCover.totalIntactForest,
-  totalNonForest: state.widgetTreeCover.totalNonForest,
-  title: state.widgetTreeCover.title,
-  locations: state.widgetTreeCover.locations,
-  units: state.widgetTreeCover.units,
-  canopies: state.widgetTreeCover.canopies,
-  settings: state.widgetTreeCover.settings
-});
+const mapStateToProps = state => {
+  const {
+    isCountriesLoading,
+    isRegionsLoading,
+    isSubRegionsLoading,
+    isGeostoreLoading
+  } = state.countryData;
+  return {
+    location: state.location.payload,
+    areaHa: state.countryData.geostore.areaHa,
+    isLoading: state.widgetTreeCover.isLoading,
+    admin1List: state.countryData.regions,
+    totalCover: state.widgetTreeCover.totalCover,
+    totalIntactForest: state.widgetTreeCover.totalIntactForest,
+    totalNonForest: state.widgetTreeCover.totalNonForest,
+    title: state.widgetTreeCover.title,
+    locations: state.widgetTreeCover.locations,
+    units: state.widgetTreeCover.units,
+    canopies: state.widgetTreeCover.canopies,
+    settings: state.widgetTreeCover.settings,
+    isMetaLoading:
+      isCountriesLoading ||
+      isRegionsLoading ||
+      isSubRegionsLoading ||
+      isGeostoreLoading
+  };
+};
 
 const WidgetTreeCoverContainer = props => {
   const setInitialData = () => {
@@ -37,9 +50,9 @@ const WidgetTreeCoverContainer = props => {
 
   const setWidgetData = newProps => {
     const { location, areaHa, settings, setTreeCoverValues } = newProps;
-    getTotalCover(location.admin0, location.admin1, settings.canopy).then(
+    getTotalCover(location.country, location.region, settings.canopy).then(
       totalCoverResponse => {
-        getTotalIntactForest(location.admin0, location.admin1).then(
+        getTotalIntactForest(location.country, location.region).then(
           totalIntactForestResponse => {
             if (totalIntactForestResponse.data.data.length > 0) {
               const totalCover = Math.round(

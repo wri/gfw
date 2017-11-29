@@ -8,10 +8,14 @@ import WidgetPaginate from 'pages/country/widgets/widget-paginate';
 import WidgetTreeLocatedSettings from './widget-tree-located-settings-component';
 
 class WidgetTreeLocated extends PureComponent {
-  componentWillUpdate(nextProps) {
-    const { isLoading, settings, updateData, setInitialData } = this.props;
+  componentWillMount() {
+    this.props.setInitialData(this.props);
+  }
 
-    if (!nextProps.isLoading && isLoading) {
+  componentWillUpdate(nextProps) {
+    const { isMetaLoading, settings, updateData, setInitialData } = this.props;
+
+    if (!nextProps.isMetaLoading && isMetaLoading) {
       setInitialData(nextProps);
     }
 
@@ -65,7 +69,7 @@ class WidgetTreeLocated extends PureComponent {
           <div>
             <ul className="c-widget-tree-located__regions">
               {topRegions.slice(paginateFrom, paginateTo).map(item => (
-                <li key={item.name}>
+                <li key={item.value}>
                   <div className="c-widget-tree-located__region-bubble">
                     {item.position}
                   </div>
@@ -97,6 +101,7 @@ class WidgetTreeLocated extends PureComponent {
 
 WidgetTreeLocated.propTypes = {
   isLoading: PropTypes.bool.isRequired,
+  isMetaLoading: PropTypes.bool.isRequired,
   locationNames: PropTypes.object,
   topRegions: PropTypes.array.isRequired,
   dataSources: PropTypes.array.isRequired,

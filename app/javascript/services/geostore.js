@@ -6,10 +6,10 @@ const APIURLS = {
   getGeostore: '/geostore/admin/'
 };
 
-export const getGeostoreProvider = (country, region, subRegion) => {
+export const getGeostoreProvider = (country, region) => {
   const url = `${APIURL}${APIURLS.getGeostore}${country}${
     region ? `/${region}` : ''
-  }${subRegion ? `/${subRegion}` : ''}`;
+  }`;
   return axios.get(url);
 };
 

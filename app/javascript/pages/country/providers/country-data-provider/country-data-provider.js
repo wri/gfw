@@ -31,7 +31,6 @@ class CountryDataProvider extends PureComponent {
     const { getRegions, getSubRegions, getGeostore } = this.props;
     const hasCountryChanged = country !== this.props.location.country;
     const hasRegionChanged = region !== this.props.location.region;
-    const hasSubRegionChanged = subRegion !== this.props.location.subRegion;
 
     if (hasCountryChanged) {
       getRegions(country);
@@ -45,11 +44,7 @@ class CountryDataProvider extends PureComponent {
       if (region) {
         getSubRegions(country, region);
       }
-      getGeostore(country, region, subRegion);
-    }
-
-    if (hasSubRegionChanged) {
-      getGeostore(country, region, subRegion);
+      getGeostore(country, region);
     }
   }
 

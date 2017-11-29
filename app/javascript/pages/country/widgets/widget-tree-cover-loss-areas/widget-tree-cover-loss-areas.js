@@ -10,23 +10,36 @@ export { initialState } from './widget-tree-cover-loss-areas-reducers';
 export { default as reducers } from './widget-tree-cover-loss-areas-reducers';
 export { default as actions } from './widget-tree-cover-loss-areas-actions';
 
-const mapStateToProps = state => ({
-  location: state.location.payload,
-  admin1List: state.countryData.regions,
-  areaHa: state.countryData.geostore.areaHa,
-  isLoading: state.widgetTreeCoverLossAreas.isLoading,
-  regionData: state.widgetTreeCoverLossAreas.regionData,
-  regionChartData: state.widgetTreeCoverLossAreas.regionChartData,
-  startYear: 2001,
-  endYear: 2015,
-  thresh: 30,
-  paginate: state.widgetTreeCoverLossAreas.paginate,
-  regions: state.widgetTreeCoverLossAreas.regions,
-  units: state.widgetTreeCoverLossAreas.units,
-  canopies: state.widgetTreeCoverLossAreas.canopies,
-  settings: state.widgetTreeCoverLossAreas.settings,
-  years: state.widgetTreeCoverLossAreas.years
-});
+const mapStateToProps = state => {
+  const {
+    isCountriesLoading,
+    isRegionsLoading,
+    isSubRegionsLoading,
+    isGeostoreLoading
+  } = state.countryData;
+  return {
+    location: state.location.payload,
+    admin1List: state.countryData.regions,
+    areaHa: state.countryData.geostore.areaHa,
+    isLoading: state.widgetTreeCoverLossAreas.isLoading,
+    regionData: state.widgetTreeCoverLossAreas.regionData,
+    regionChartData: state.widgetTreeCoverLossAreas.regionChartData,
+    startYear: 2001,
+    endYear: 2015,
+    thresh: 30,
+    paginate: state.widgetTreeCoverLossAreas.paginate,
+    regions: state.widgetTreeCoverLossAreas.regions,
+    units: state.widgetTreeCoverLossAreas.units,
+    canopies: state.widgetTreeCoverLossAreas.canopies,
+    settings: state.widgetTreeCoverLossAreas.settings,
+    years: state.widgetTreeCoverLossAreas.years,
+    isMetaLoading:
+      isCountriesLoading ||
+      isRegionsLoading ||
+      isSubRegionsLoading ||
+      isGeostoreLoading
+  };
+};
 
 const colors = [
   '#510626',
@@ -55,7 +68,7 @@ const WidgetTreeCoverLossAreasContainer = props => {
   const setWidgetData = newProps => {
     const {
       location,
-      admin1List,
+      regions,
       areaHa,
       settings,
       paginate,
@@ -74,21 +87,22 @@ const WidgetTreeCoverLossAreasContainer = props => {
       let indexColors = 0;
       let othersValue = 0;
       treeLossByRegion.data.data.forEach((item, index) => {
-        const numberRegion = _.findIndex(admin1List, x => x.id === item.adm1);
-
-        regionsForestLoss.push({
-          name: admin1List[numberRegion].name,
-          value:
-            settings.unit === 'ha'
-              ? item.value
-              : item.value / Math.round(areaHa) * 100,
-          color: colors[indexColors],
-          position: index + 1
-        });
+        const region = regions.find(r => item.adm1 === r.value) || null;
+        if (region) {
+          regionsForestLoss.push({
+            name: region.label,
+            value:
+              settings.unit === 'ha'
+                ? item.value
+                : item.value / Math.round(areaHa) * 100,
+            color: colors[indexColors],
+            position: index + 1
+          });
+        }
 
         if (indexColors < paginate.limit) {
           regionForestLossChart.push({
-            name: admin1List[numberRegion].name,
+            name: region.name,
             color: colors[indexColors],
             value:
               settings.unit === 'ha'
