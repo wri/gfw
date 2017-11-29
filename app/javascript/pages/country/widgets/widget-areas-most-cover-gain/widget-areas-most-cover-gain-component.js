@@ -43,7 +43,8 @@ class WidgetAreasMostCoverGain extends PureComponent {
     return (
       <div className="c-widget c-widget-areas-most-cover-gain">
         <WidgetHeader
-          title={`AREAS WITH MOST TREE COVER GAIN IN ${locationNames.country && locationNames.country.label}`}
+          title={`AREAS WITH MOST TREE COVER GAIN IN ${locationNames.country &&
+            locationNames.country.label}`}
           shareAnchor={'areas-most-cover-gain'}
         >
           <WidgetAreasMostCoverGainSettings
@@ -63,7 +64,7 @@ class WidgetAreasMostCoverGain extends PureComponent {
             <div className="c-widget-areas-most-cover-gain__container">
               <ul className="c-widget-areas-most-cover-gain__legend">
                 {areaData.slice(paginateFrom, paginateTo).map((item, index) => (
-                  <li key={index}>
+                  <li key={item.name}>
                     <div className="c-widget-areas-most-cover-gain__legend-title">
                       <div style={{ backgroundColor: item.color }}>
                         {index + 1}
@@ -83,8 +84,8 @@ class WidgetAreasMostCoverGain extends PureComponent {
                     innerRadius={35}
                     outerRadius={70}
                   >
-                    {areaChartData.map((item, index) => (
-                      <Cell key={index} fill={item.color} />
+                    {areaChartData.map(item => (
+                      <Cell key={item.name} fill={item.color} />
                     ))}
                   </Pie>
                   <Tooltip
