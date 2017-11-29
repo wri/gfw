@@ -11,12 +11,7 @@ export { default as reducers } from './widget-tree-cover-reducers';
 export { default as actions } from './widget-tree-cover-actions';
 
 const mapStateToProps = state => {
-  const {
-    isCountriesLoading,
-    isRegionsLoading,
-    isSubRegionsLoading,
-    isGeostoreLoading
-  } = state.countryData;
+  const { isCountriesLoading, isRegionsLoading } = state.countryData;
   return {
     location: state.location.payload,
     areaHa: state.countryData.geostore.areaHa,
@@ -30,11 +25,7 @@ const mapStateToProps = state => {
     units: state.widgetTreeCover.units,
     canopies: state.widgetTreeCover.canopies,
     settings: state.widgetTreeCover.settings,
-    isMetaLoading:
-      isCountriesLoading ||
-      isRegionsLoading ||
-      isSubRegionsLoading ||
-      isGeostoreLoading
+    isMetaLoading: isCountriesLoading || isRegionsLoading
   };
 };
 

@@ -11,12 +11,7 @@ export { default as reducers } from './widget-tree-cover-loss-areas-reducers';
 export { default as actions } from './widget-tree-cover-loss-areas-actions';
 
 const mapStateToProps = state => {
-  const {
-    isCountriesLoading,
-    isRegionsLoading,
-    isSubRegionsLoading,
-    isGeostoreLoading
-  } = state.countryData;
+  const { isCountriesLoading, isRegionsLoading } = state.countryData;
   return {
     location: state.location.payload,
     admin1List: state.countryData.regions,
@@ -33,11 +28,7 @@ const mapStateToProps = state => {
     canopies: state.widgetTreeCoverLossAreas.canopies,
     settings: state.widgetTreeCoverLossAreas.settings,
     years: state.widgetTreeCoverLossAreas.years,
-    isMetaLoading:
-      isCountriesLoading ||
-      isRegionsLoading ||
-      isSubRegionsLoading ||
-      isGeostoreLoading
+    isMetaLoading: isCountriesLoading || isRegionsLoading
   };
 };
 

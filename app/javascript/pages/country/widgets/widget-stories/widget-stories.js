@@ -8,7 +8,7 @@ export { initialState } from './widget-stories-reducers';
 export { default as reducers } from './widget-stories-reducers';
 export { default as actions } from './widget-stories-actions';
 
-const mapStateToProps = state => ({
+const mapStateToProps = () => ({
   totalAmount: 'Nan',
   percentage: 'Nan',
   startYear: 2011,
