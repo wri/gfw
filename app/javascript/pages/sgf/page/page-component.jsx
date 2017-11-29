@@ -9,6 +9,7 @@ import './page-styles.scss';
 
 class Page extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
+
   render() {
     const SectionComponent = this.props.section;
     return (

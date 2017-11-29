@@ -32,7 +32,7 @@ class SectionProjects extends PureComponent {
         <div className="l-section">
           <div className="row">
             <div className="column small-6">
-              <h2 className="text -color-2 -title-xs -light">
+              <h2 className="text -color-2 -title-xs -bold -half-opacity">
                 SMALL GRANTS FUND RECIPIENTS
               </h2>
             </div>
@@ -41,6 +41,7 @@ class SectionProjects extends PureComponent {
             <div className="column small-6">
               <ProjectsGLobe data={data} />
             </div>
+
             <div className="column small-6 section-projects-list">
               {hasCategories && (
                 <div>
@@ -60,14 +61,16 @@ class SectionProjects extends PureComponent {
             </div>
           </div>
         </div>
-        <div className="l-section">
+        <div className="l-section card-list-section">
           {hasData && (
             <ul className="row card-list">
-              {data.map(d => (
-                <li key={d.id} className="column small-6">
-                  <Card data={d} onClick={this.handleCardClick} />
-                </li>
-              ))}
+              <div className="row card-list-section">
+                {data.map(d => (
+                  <li key={d.id} className="column small-6">
+                    <Card data={d} onClick={this.handleCardClick} />
+                  </li>
+                ))}
+              </div>
             </ul>
           )}
         </div>

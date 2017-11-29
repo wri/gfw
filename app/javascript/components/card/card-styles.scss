@@ -58,7 +58,12 @@
     margin-top: 30px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+
+    a {
+      margin-top: rem(34px);
+      max-width: rem(150px);
+    }
   }
 
   &__button {
@@ -81,7 +86,7 @@
   }
 
   @media screen and (min-width: $screen-m) {
-    padding: rem(273px) rem(40px) rem(30px) rem(40px);
+    padding: rem(273px) rem(24px) rem(24px) rem(24px);
 
     &__button {
       padding-left: rem(40px);

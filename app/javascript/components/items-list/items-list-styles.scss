@@ -9,6 +9,11 @@
     padding-left: rem(23px);
     cursor: pointer;
 
+    button {
+      outline: 0;
+      cursor: pointer;
+    }
+
     .icon {
       position: absolute;
       left: rem(1px);
