@@ -73,7 +73,9 @@ class Root extends PureComponent {
               streetViewControl: false,
               overviewMapControl: false,
               tilt: 0,
-              scrollwheel: false
+              scrollwheel: false,
+              center: { lat: -34.397, lng: 150.644 },
+              zoom: 8
             }}
           />
         </div>
