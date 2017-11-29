@@ -13,14 +13,10 @@ class Map extends PureComponent {
     setInitialData(this.props);
   }
 
-  componentWillUpdate(nextProps) {
-    const { isLoading, checkLoadingStatus } = this.props;
-    if (!nextProps.isLoading && isLoading) {
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.isLoading && nextProps.bounds && nextProps.layerSpec) {
       this.buildMap(nextProps);
-    } else {
-      checkLoadingStatus(nextProps);
     }
-
     this.checkLayers(this.props, nextProps);
   }
 
@@ -118,8 +114,9 @@ class Map extends PureComponent {
 Map.propTypes = {
   isLoading: Proptypes.bool.isRequired,
   layerSpec: Proptypes.object.isRequired,
-  checkLoadingStatus: Proptypes.func.isRequired,
-  setInitialData: Proptypes.func.isRequired
+  setInitialData: Proptypes.func.isRequired,
+  bounds: Proptypes.array.isRequired,
+  layers: Proptypes.array.isRequired
 };
 
 Map.defaultProps = {

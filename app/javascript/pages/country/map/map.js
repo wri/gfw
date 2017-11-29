@@ -21,8 +21,8 @@ const mapStateToProps = state => ({
 
 const MapContainer = props => {
   const setInitialData = () => {
-    const { setLayerSpec } = props;
-
+    const { setLayerSpec, setMapIsLoading } = props;
+    setMapIsLoading(true);
     getLayerSpec().then(response => {
       const layerSpec = {};
       response.data.rows.forEach(layer => {
@@ -30,21 +30,13 @@ const MapContainer = props => {
       });
 
       setLayerSpec(layerSpec);
-    });
-  };
-
-  const checkLoadingStatus = newProps => {
-    const { layerSpec, bounds, setMapIsLoading } = newProps;
-
-    if (Object.keys(layerSpec).length > 0 && bounds.length > 0) {
       setMapIsLoading(false);
-    }
+    });
   };
 
   return createElement(MapComponent, {
     ...props,
-    setInitialData,
-    checkLoadingStatus
+    setInitialData
   });
 };
 

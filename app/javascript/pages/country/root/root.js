@@ -8,6 +8,7 @@ import {
   getSubRegionsProvider
 } from 'services/country';
 import { getGeostoreProvider } from 'services/geostore';
+import { getAdminsSelected } from './root-selectors';
 
 import RootComponent from './root-component';
 import actions from './root-actions';
@@ -23,6 +24,11 @@ const mapStateToProps = state => {
     isSubRegionsLoading,
     isGeostoreLoading
   } = state.root;
+  const adminData = {
+    countries: state.root.countries,
+    regions: state.root.regions,
+    subRegions: state.root.subRegions
+  };
   return {
     isRootLoading:
       isCountriesLoading ||
@@ -34,7 +40,12 @@ const mapStateToProps = state => {
     isMapFixed: state.root.isMapFixed,
     mapTop: state.root.mapTop,
     topPage: state.root.topPage,
-    showMapMobile: state.root.showMapMobile
+    showMapMobile: state.root.showMapMobile,
+    adminsSelected: getAdminsSelected({
+      adminData,
+      location: state.location.payload
+    }),
+    adminsLists: adminData
   };
 };
 
@@ -177,7 +188,6 @@ class RootContainer extends PureComponent {
   render() {
     return createElement(RootComponent, {
       ...this.props,
-      checkLoadingStatus: this.checkLoadingStatus,
       handleShowMapMobile: this.handleShowMapMobile,
       handleScrollCallback: this.handleScrollCallback
     });
@@ -185,10 +195,10 @@ class RootContainer extends PureComponent {
 }
 
 RootContainer.propTypes = {
-  setCountriesLoading: PropTypes.bool,
-  setRegionsLoading: PropTypes.bool,
-  setSubRegionsLoading: PropTypes.bool,
-  setGeostoreLoading: PropTypes.bool,
+  setCountriesLoading: PropTypes.func,
+  setRegionsLoading: PropTypes.func,
+  setSubRegionsLoading: PropTypes.func,
+  setGeostoreLoading: PropTypes.func,
   location: PropTypes.object,
   setGeostore: PropTypes.func,
   setCountries: PropTypes.func,

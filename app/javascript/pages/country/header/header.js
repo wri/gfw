@@ -2,7 +2,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { COUNTRY } from 'pages/country/router';
 import HeaderComponent from './header-component';
-import { getAdminsSelected } from './header-selectors';
 
 const mapStateToProps = state => {
   const {
@@ -11,23 +10,12 @@ const mapStateToProps = state => {
     isSubRegionsLoading,
     isGeostoreLoading
   } = state.root;
-  const adminData = {
-    countries: state.root.countries,
-    regions: state.root.regions,
-    subRegions: state.root.subRegions
-  };
   return {
     isRootLoading:
       isCountriesLoading ||
       isRegionsLoading ||
       isSubRegionsLoading ||
-      isGeostoreLoading,
-    location: state.location.payload,
-    adminsSelected: getAdminsSelected({
-      adminData,
-      location: state.location.payload
-    }),
-    adminsLists: adminData
+      isGeostoreLoading
     // totalCoverHeader: state.header.totalCoverHeader,
     // totalForestHeader: state.header.totalForestHeader,
     // percentageForestHeader: state.header.percentageForestHeader,
