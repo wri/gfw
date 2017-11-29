@@ -186,6 +186,7 @@ define([
       "umd_as_it_happens_per",
       "umd_as_it_happens_idn",
       "umd_as_it_happens_cog",
+      "uncurated_places_to_watch",
       "places_to_watch",
       'forma_month_3',
       'forma_activity',

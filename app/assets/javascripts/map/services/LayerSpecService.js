@@ -20,18 +20,16 @@ define([
         forest_clearing: {
           except: [
             ['loss', 'forestgain', 'forest2000', 'forest2010'],
-            ['loss', 'forestgain','imazon',"peru_forma_250", "brazil_forma_250", "laos_forma_250", "indonesia_forma_250", "drc_forma_250",
-            'forma', 'forma_coverage', 'forma_month_3', 'forma_activity','viirs_fires_alerts','terrailoss','prodes','umd_as_it_happens', 'places_to_watch', 'uncurated_places_to_watch','forest2000','forest2010'],
-            ['umd_as_it_happens', 'places_to_watch', 'uncurated_places_to_watch','forest2000','forest2010'],
-            ["peru_forma_250", "brazil_forma_250", "laos_forma_250", "indonesia_forma_250", "drc_forma_250",
-            'forma', 'forma_coverage', 'forma_month_3', 'forma_activity', 'forest2000', 'forest2010'],
-            ['loss','forest2000', 'forest2010'],
-            ['forestgain','forest2000', 'forest2010'],
             ['imazon', 'forest2000', 'forest2010'],
-            ['terrailoss', 'forest2000', 'forest2010'],
             ['prodes', 'forest2000', 'forest2010'],
+            ['terrailoss', 'forest2000', 'forest2010'],
+            ['viirs_fires_alerts', 'forest2000', 'forest2010'],
+            ["peru_forma_250", "brazil_forma_250", "laos_forma_250", "indonesia_forma_250", "drc_forma_250",
+            'forma', 'forma_coverage', 'forma_activity', 'forest2000', 'forest2010'],
+            ["peru_forma_250", "brazil_forma_250", "laos_forma_250", "indonesia_forma_250", "drc_forma_250",
+            'forma', 'forma_coverage', 'forma_month_3', 'forest2000', 'forest2010'],
+            ['umd_as_it_happens', 'places_to_watch', 'uncurated_places_to_watch','forest2000','forest2010'],
             ['guyra', 'forest2000', 'forest2010'],
-            ['viirs_fires_alerts','forest2000' , 'forest2010'],
             ['forest2000', 'forest2000'],
           ]
         },
@@ -91,9 +89,12 @@ define([
         return false;
       } else {
         if (!this._combinationIsValid(layer)) {
-          _.each(this.model.get(layer.category_slug), this._removeLayer);
+          _.each(this.model.get(layer.category_slug), function(l) {
+            if (l.category_name === 'Forest change') {
+              this._removeLayer(l);
+            }
+          }.bind(this));
         }
-
         this._addLayer(layer);
         return layer;
       }
