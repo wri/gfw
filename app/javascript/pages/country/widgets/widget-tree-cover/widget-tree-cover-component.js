@@ -9,16 +9,15 @@ import WidgetHeader from 'pages/country/widgets/widget-header';
 import WidgetTreeCoverSettings from './widget-tree-cover-settings-component';
 
 class WidgetTreeCover extends PureComponent {
-  componentDidMount() {
-    const { setInitialData } = this.props;
-    setInitialData();
-  }
-
   componentWillUpdate(nextProps) {
-    const { settings, updateData } = this.props;
+    const { isMetaLoading, settings, updateData, setInitialData } = this.props;
 
     if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
       updateData(nextProps);
+    }
+
+    if (!nextProps.isMetaLoading && isMetaLoading) {
+      setInitialData(nextProps);
     }
   }
 
@@ -129,6 +128,7 @@ class WidgetTreeCover extends PureComponent {
 
 WidgetTreeCover.propTypes = {
   isLoading: PropTypes.bool.isRequired,
+  isMetaLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
   updateData: PropTypes.func.isRequired,
   viewOnMap: PropTypes.func.isRequired,

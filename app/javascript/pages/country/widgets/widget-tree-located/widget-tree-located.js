@@ -10,17 +10,30 @@ export { initialState } from './widget-tree-located-reducers';
 export { default as reducers } from './widget-tree-located-reducers';
 export { default as actions } from './widget-tree-located-actions';
 
-const mapStateToProps = state => ({
-  location: state.location.payload,
-  regions: state.countryData.regions,
-  isLoading: state.widgetTreeLocated.isLoading,
-  topRegions: state.widgetTreeLocated.topRegions,
-  paginate: state.widgetTreeLocated.paginate,
-  dataSources: state.widgetTreeLocated.dataSources,
-  units: state.widgetTreeLocated.units,
-  canopies: state.widgetTreeLocated.canopies,
-  settings: state.widgetTreeLocated.settings
-});
+const mapStateToProps = state => {
+  const {
+    isCountriesLoading,
+    isRegionsLoading,
+    isSubRegionsLoading,
+    isGeostoreLoading
+  } = state.countryData;
+  return {
+    location: state.location.payload,
+    regions: state.countryData.regions,
+    isLoading: state.widgetTreeLocated.isLoading,
+    topRegions: state.widgetTreeLocated.topRegions,
+    paginate: state.widgetTreeLocated.paginate,
+    dataSources: state.widgetTreeLocated.dataSources,
+    units: state.widgetTreeLocated.units,
+    canopies: state.widgetTreeLocated.canopies,
+    settings: state.widgetTreeLocated.settings,
+    isMetaLoading:
+      isCountriesLoading ||
+      isRegionsLoading ||
+      isSubRegionsLoading ||
+      isGeostoreLoading
+  };
+};
 
 const WidgetTreeLocatedContainer = props => {
   const setInitialData = newProps => {
@@ -33,8 +46,14 @@ const WidgetTreeLocatedContainer = props => {
   };
 
   const setWidgetData = newProps => {
-    const { location, regions, settings, setTreeLocatedValues } = newProps;
-
+    const {
+      location,
+      regions,
+      settings,
+      setTreeLocatedValues,
+      setTreeLocatedIsLoading
+    } = newProps;
+    setTreeLocatedIsLoading(true);
     getTotalCover(location.country, location.region, settings.canopy).then(
       totalCoverResponse => {
         getTotalCoverRegions(location.country, settings.canopy).then(
@@ -44,16 +63,20 @@ const WidgetTreeLocatedContainer = props => {
               totalCoverResponse.data.data[0].value
             );
             totalCoverRegions.data.data.forEach((item, index) => {
-              regionsForest.push({
-                name: regions.find(r => item.adm1 === r.value).name,
-                value:
-                  settings.unit === 'ha'
-                    ? item.value
-                    : item.value / totalCover * 100,
-                position: index + 1
-              });
+              const region = regions.find(r => item.adm1 === r.value) || null;
+              if (region) {
+                regionsForest.push({
+                  name: region.label,
+                  value:
+                    settings.unit === 'ha'
+                      ? item.value
+                      : item.value / totalCover * 100,
+                  position: index + 1
+                });
+              }
             });
             setTreeLocatedValues(regionsForest);
+            setTreeLocatedIsLoading(false);
           }
         );
       }

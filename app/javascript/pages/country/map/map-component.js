@@ -15,8 +15,8 @@ class Map extends PureComponent {
   componentWillReceiveProps(nextProps) {
     if (!nextProps.isLoading && nextProps.bounds && nextProps.layerSpec) {
       this.buildMap(nextProps);
+      this.checkLayers(this.props, nextProps);
     }
-    this.checkLayers(this.props, nextProps);
   }
 
   onMapInit() {
@@ -25,9 +25,10 @@ class Map extends PureComponent {
   }
 
   setListeners() {
-    google.maps.event.addListenerOnce(this.map, 'idle', () => {
-      this.onMapInit();
-    });
+    google.maps.event // eslint-disable-line
+      .addListenerOnce(this.map, 'idle', () => {
+        this.onMapInit();
+      });
   }
 
   setMaptypes() {
@@ -52,9 +53,9 @@ class Map extends PureComponent {
   buildMap(nextProps) {
     const { zoom, maptype, bounds, maxZoom, minZoom, mapOptions } = nextProps;
 
-    const boundsMap = new google.maps.LatLngBounds();
+    const boundsMap = new google.maps.LatLngBounds(); // eslint-disable-line
     bounds.forEach(item => {
-      boundsMap.extend(new google.maps.LatLng(item[1], item[0]));
+      boundsMap.extend(new google.maps.LatLng(item[1], item[0])); // eslint-disable-line
     });
 
     const options = {
@@ -68,7 +69,7 @@ class Map extends PureComponent {
         minZoom
       })
     };
-    this.map = new google.maps.Map(document.getElementById('map'), options);
+    this.map = new google.maps.Map(document.getElementById('map'), options); // eslint-disable-line
     this.map.fitBounds(boundsMap);
     this.setMaptypes();
     this.setMaptypeId(maptype);

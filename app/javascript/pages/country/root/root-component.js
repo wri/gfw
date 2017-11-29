@@ -9,15 +9,29 @@ import Footer from 'pages/country/footer';
 import Map from 'pages/country/map';
 import Stories from 'pages/country/widgets/widget-stories';
 
-const WIDGETS = [
-  'tree-cover',
-  'tree-located',
-  'tree-loss',
-  'tree-cover-loss-areas',
-  'tree-cover-gain',
-  'total-area-plantations',
-  'plantation-area'
-];
+const WIDGETS = {
+  treeCover: {
+    gridWidth: 6
+  },
+  treeLocated: {
+    gridWidth: 6
+  },
+  treeLoss: {
+    gridWidth: 12
+  },
+  treeCoverLossAreas: {
+    gridWidth: 6
+  },
+  treeCoverGain: {
+    gridWidth: 6
+  },
+  totalAreaPlantations: {
+    gridWidth: 6
+  },
+  plantationArea: {
+    gridWidth: 6
+  }
+};
 class Root extends PureComponent {
   render() {
     const {
@@ -63,10 +77,12 @@ class Root extends PureComponent {
         </div>
         <div className="l-country__widgets row">
           {adminsSelected &&
-            WIDGETS.map(widget => (
+            Object.keys(WIDGETS).map(widget => (
               <div
                 key={widget}
-                className="large-6 small-12 columns l-country__container-widgets"
+                className={`large-${
+                  WIDGETS[widget].gridWidth
+                } small-12 columns l-country__container-widgets`}
               >
                 <Widget widget={widget} />
               </div>

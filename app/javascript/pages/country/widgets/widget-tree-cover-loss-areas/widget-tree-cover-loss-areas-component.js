@@ -11,9 +11,9 @@ import WidgetTreeCoverLossAreasSettings from './widget-tree-cover-loss-areas-set
 
 class WidgetTreeLossAreas extends PureComponent {
   componentWillUpdate(nextProps) {
-    const { isLoading, settings, setInitialData, updateData } = this.props;
+    const { isMetaLoading, settings, setInitialData, updateData } = this.props;
 
-    if (!nextProps.isLoading && isLoading) {
+    if (!nextProps.isMetaLoading && isMetaLoading) {
       setInitialData(nextProps);
     }
 
@@ -132,6 +132,7 @@ class WidgetTreeLossAreas extends PureComponent {
 
 WidgetTreeLossAreas.propTypes = {
   isLoading: PropTypes.bool.isRequired,
+  isMetaLoading: PropTypes.bool.isRequired,
   locationNames: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   units: PropTypes.array.isRequired,
