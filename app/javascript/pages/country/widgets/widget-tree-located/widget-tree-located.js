@@ -11,12 +11,7 @@ export { default as reducers } from './widget-tree-located-reducers';
 export { default as actions } from './widget-tree-located-actions';
 
 const mapStateToProps = state => {
-  const {
-    isCountriesLoading,
-    isRegionsLoading,
-    isSubRegionsLoading,
-    isGeostoreLoading
-  } = state.countryData;
+  const { isCountriesLoading, isRegionsLoading } = state.countryData;
   return {
     location: state.location.payload,
     regions: state.countryData.regions,
@@ -27,11 +22,7 @@ const mapStateToProps = state => {
     units: state.widgetTreeLocated.units,
     canopies: state.widgetTreeLocated.canopies,
     settings: state.widgetTreeLocated.settings,
-    isMetaLoading:
-      isCountriesLoading ||
-      isRegionsLoading ||
-      isSubRegionsLoading ||
-      isGeostoreLoading
+    isMetaLoading: isCountriesLoading || isRegionsLoading
   };
 };
 
