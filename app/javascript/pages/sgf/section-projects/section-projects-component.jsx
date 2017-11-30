@@ -27,6 +27,7 @@ class SectionProjects extends PureComponent {
     } = this.props;
     const hasData = data && !!data.length;
     const hasCategories = categories && !!categories.length;
+
     return (
       <div className="">
         <div className="l-section">
