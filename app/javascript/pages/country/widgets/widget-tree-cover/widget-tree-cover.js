@@ -40,7 +40,13 @@ const WidgetTreeCoverContainer = props => {
   };
 
   const setWidgetData = newProps => {
-    const { location, areaHa, settings, setTreeCoverValues } = newProps;
+    const {
+      location,
+      areaHa,
+      settings,
+      setTreeCoverValues,
+      setTreeCoverIsLoading
+    } = newProps;
     getTotalCover(location.country, location.region, settings.canopy).then(
       totalCoverResponse => {
         getTotalIntactForest(location.country, location.region).then(
@@ -78,9 +84,9 @@ const WidgetTreeCoverContainer = props => {
                   }
                 ]
               };
-
               setTreeCoverValues(values);
             }
+            setTreeCoverIsLoading(false);
           }
         );
       }
