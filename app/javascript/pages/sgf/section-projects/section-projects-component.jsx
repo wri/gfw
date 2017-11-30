@@ -21,17 +21,19 @@ class SectionProjects extends PureComponent {
   handleScrollCallback = () => {
     const { clientHeight } = this.cardListSection;
     const heightHeaderCover = 415;
-    if (
-      window.scrollY > heightHeaderCover &&
-      window.scrollY < clientHeight + heightHeaderCover
-    ) {
-      this.setState({
-        sticky: true
-      });
-    } else {
-      this.setState({
-        sticky: false
-      });
+    if (clientHeight > 100) {
+      if (
+        window.scrollY > heightHeaderCover &&
+        window.scrollY < clientHeight + heightHeaderCover
+      ) {
+        this.setState({
+          sticky: true
+        });
+      } else {
+        this.setState({
+          sticky: false
+        });
+      }
     }
   };
 
