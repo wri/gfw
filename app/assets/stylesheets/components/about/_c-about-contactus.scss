@@ -6,6 +6,18 @@
     opacity: 0.5;
   }
 
+  .c-about-contactus__address {
+    padding-top: 12px;
+    margin-top: 12px;
+    line-height: 1.54;
+    border-top: 1px solid rgba($slate, 0.5);
+
+    a {
+      margin-top: 10px;
+      display: inline-block;
+    }
+  }
+
   .c-about-contactus__form {
     padding-top: rem(56px);
 
