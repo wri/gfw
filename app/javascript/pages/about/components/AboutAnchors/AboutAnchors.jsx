@@ -7,10 +7,10 @@ const AboutAnchors = (props) => {
       <div className="row">
         <div className="small-12 columns">
           <ul className="c-about-anchors__buttons">
-            <Link to="howTo" spy={true} smooth={true} duration={500} >
+            <Link to="actionGlobe" spy={true} smooth={true} duration={500} >
               <li className="text -paragraph-5 -color-8">GFW in Action</li>
             </Link>
-            <Link to="impacts" spy={true} smooth={true} duration={700} >
+            <Link to="howTo" spy={true} smooth={true} duration={700} >
               <li className="text -paragraph-5 -color-8">Impacts</li>
             </Link>
             <Link to="history" spy={true} smooth={true} duration={900} >
