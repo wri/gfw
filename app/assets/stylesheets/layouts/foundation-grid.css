@@ -409,7 +409,7 @@ button {
   display: none !important; }
 
 .row {
-  max-width: 74rem;
+  max-width: 70rem;
   margin-left: auto;
   margin-right: auto;
   display: -webkit-flex;
