@@ -98,20 +98,6 @@ export const initialState = {
       value: 'moratorium_areas'
     }
   ],
-  units: [
-    {
-      value: 'ha',
-      label: 'Hectare - ha'
-    },
-    {
-      value: '%',
-      label: 'Percent Area - %'
-    },
-    {
-      value: 'mg',
-      label: 'CO2 Emissions - mg'
-    }
-  ],
   canopies: [
     {
       value: 0,
@@ -170,14 +156,6 @@ const setTreeLossSettingsLocation = (state, { payload }) => ({
   }
 });
 
-const setTreeLossSettingsUnit = (state, { payload }) => ({
-  ...state,
-  settings: {
-    ...state.settings,
-    unit: payload
-  }
-});
-
 const setTreeLossSettingsCanopy = (state, { payload }) => ({
   ...state,
   settings: {
@@ -210,7 +188,6 @@ const setTreeLossSettingsEndYear = (state, { payload }) => ({
 export default {
   setTreeLossValues,
   setTreeLossSettingsLocation,
-  setTreeLossSettingsUnit,
   setTreeLossSettingsCanopy,
   setTreeLossIsLoading,
   setTreeLossSettingsStartYear,

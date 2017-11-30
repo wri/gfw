@@ -18,7 +18,6 @@ const mapStateToProps = state => ({
   years: state.widgetTreeLoss.years,
   yearsLoss: state.widgetTreeLoss.yearsLoss,
   locations: state.widgetTreeLoss.locations,
-  units: state.widgetTreeLoss.units,
   canopies: state.widgetTreeLoss.canopies,
   settings: state.widgetTreeLoss.settings
 });
@@ -34,9 +33,8 @@ const WidgetTreeLossContainer = props => {
   };
 
   const setWidgetData = newProps => {
-    const { location, areaHa, settings, setTreeLossValues } = newProps;
+    const { location, settings, setTreeLossValues } = newProps;
 
-    const percentageValues = [];
     getTreeLossByYear(
       location.admin0,
       location.admin1,
@@ -54,18 +52,9 @@ const WidgetTreeLossContainer = props => {
               ? accumulator.value
               : accumulator) + item.value
         );
-      if (settings.unit !== 'ha') {
-        response.data.data.forEach(item => {
-          percentageValues.push({
-            value: item.value / Math.round(areaHa) * 100,
-            label: item.date
-          });
-        });
-      }
       const values = {
-        total:
-          settings.unit === 'ha' ? total : total / Math.round(areaHa) * 100,
-        years: settings.unit === 'ha' ? response.data.data : percentageValues
+        total,
+        years: response.data.data
       };
       setTreeLossValues(values);
     });

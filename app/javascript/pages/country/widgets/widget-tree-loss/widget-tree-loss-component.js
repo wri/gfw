@@ -39,12 +39,10 @@ class WidgetTreeLoss extends PureComponent {
       total,
       yearsLoss,
       years,
-      units,
       settings,
       canopies,
       locations,
       setTreeLossSettingsLocation,
-      setTreeLossSettingsUnit,
       setTreeLossSettingsCanopy,
       setTreeLossSettingsStartYear,
       setTreeLossSettingsEndYear
@@ -61,12 +59,10 @@ class WidgetTreeLoss extends PureComponent {
           <WidgetTreeLossSettings
             type="settings"
             locations={locations}
-            units={units}
             canopies={canopies}
             settings={settings}
             yearsLoss={yearsLoss}
             onLocationChange={setTreeLossSettingsLocation}
-            onUnitChange={setTreeLossSettingsUnit}
             onCanopyChange={setTreeLossSettingsCanopy}
             onStartYearChange={setTreeLossSettingsStartYear}
             onEndYearChange={setTreeLossSettingsEndYear}
@@ -147,14 +143,12 @@ WidgetTreeLoss.propTypes = {
   total: PropTypes.number.isRequired,
   yearsLoss: PropTypes.array.isRequired,
   years: PropTypes.array.isRequired,
-  units: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   canopies: PropTypes.array.isRequired,
   locations: PropTypes.array.isRequired,
   viewOnMap: PropTypes.func.isRequired,
   updateData: PropTypes.func.isRequired,
   setTreeLossSettingsLocation: PropTypes.func.isRequired,
-  setTreeLossSettingsUnit: PropTypes.func.isRequired,
   setTreeLossSettingsCanopy: PropTypes.func.isRequired,
   setTreeLossSettingsStartYear: PropTypes.func.isRequired,
   setTreeLossSettingsEndYear: PropTypes.func.isRequired
