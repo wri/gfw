@@ -1,16 +1,16 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import './widget-stories-styles.scss';
+import './stories-styles.scss';
 
 class WidgetStories extends PureComponent {
   render() {
     const { locationNames } = this.props;
     return (
-      <div className="c-widget-stories" id="c-widget-stories">
-        <div className="c-widget-stories__container">
-          <div className="row">
-            <div className="columns c-widget-stories__primary-info">
+      <div className="c-stories" id="c-stories">
+        <div className="stories-panels">
+          <div className="left-panel">
+            <div className="primary-stories">
               <h2>
                 {locationNames.country && locationNames.country.label} Stories
               </h2>
@@ -32,7 +32,9 @@ class WidgetStories extends PureComponent {
                 See more on the map
               </a>
             </div>
-            <div className="columns c-widget-stories__secondary-info">
+          </div>
+          <div className="right-panel">
+            <div className="secondary-stories">
               <div className="circle" />
               <h3>Stories</h3>
               <p className="title-name">Claire Salisbury</p>

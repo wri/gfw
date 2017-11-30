@@ -5,7 +5,6 @@ import thunk from 'redux-thunk';
 import 'react-select-me/lib/ReactSelectMe.css';
 import 'react-tippy/dist/tippy.css';
 import 'styles/styles.scss';
-import './country.scss';
 
 import reducers from './reducers';
 import router from './router';

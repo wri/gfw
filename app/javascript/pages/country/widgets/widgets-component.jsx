@@ -12,7 +12,7 @@ import WidgetAreasMostCoverGain from 'pages/country/widgets/widget-areas-most-co
 import WidgetTotalAreaPlantations from 'pages/country/widgets/widget-total-area-plantations';
 import WidgetTreeCoverGain from 'pages/country/widgets/widget-tree-cover-gain';
 import WidgetPlantationArea from 'pages/country/widgets/widget-plantation-area';
-import WidgetStories from 'pages/country/widgets/widget-stories';
+import WidgetStories from 'pages/country/stories';
 import './widget-styles.scss';
 import './widget-settings-styles.scss';
 import './widget-tooltip-styles.scss';

@@ -1,50 +1,36 @@
 @import '~styles/settings.scss';
-$back-footer-color: #f7f7f7;
 
 .c-footer {
   min-height: rem(122px);
-  background-color: $back-footer-color;
+  background-color: $grey-light;
+  border-bottom: solid 1px $border;
   position: relative;
-  align-items: center;
-  display: flex;
+  padding: rem(30px) 0 rem(20px);
 
-  .row {
-    max-width: none;
-    width: calc(100% - 100px);
-    height: 100%;
-    margin: 0;
-    margin-left: rem(50px);
+  @media screen and (min-width: $screen-m) {
+    padding: rem(30px) 0;
+  }
+
+  .alert {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    margin-bottom: 20px;
 
-    .c-footer__alert {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: rem(30px);
+    @media screen and (min-width: $screen-l) {
+      margin-bottom: 0;
+    }
 
-      &:last-of-type {
-        margin-bottom: rem(30px);
-      }
+    span {
+      font-size: 14px;
+      line-height: 1.14;
+      color: $slate;
+      display: block;
+      margin-bottom: rem(15px);
+    }
 
-      @media screen and (min-width: $screen-m) {
-        margin-top: 0;
-
-        &:last-of-type {
-          margin-bottom: 0;
-        }
-      }
-
-      span {
-        font-size: 14px;
-        line-height: 1.14;
-        color: $slate;
-        display: block;
-        margin-bottom: rem(20px);
-      }
-
-      a {
-        max-width: rem(160px);
-      }
+    a {
+      max-width: rem(160px);
     }
   }
 }
