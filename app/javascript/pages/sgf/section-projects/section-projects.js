@@ -18,6 +18,7 @@ const mapStateToProps = ({ projects }) => {
     data: projects.data,
     search: projects.search
   };
+
   return {
     data: getProjectsSelected(projectData),
     categories: getCategoriesList(projects),

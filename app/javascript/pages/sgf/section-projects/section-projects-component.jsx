@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import ScrollEvent from 'react-onscroll';
 import ProjectsGLobe from 'pages/sgf/section-projects/section-projects-globe';
 import ProjectsModal from 'pages/sgf/section-projects/section-projects-modal';
 import Card from 'components/card';
@@ -9,6 +10,31 @@ import Search from 'components/search';
 import './section-projects-styles.scss';
 
 class SectionProjects extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sticky: false
+    };
+    this.handleScrollCallback = this.handleScrollCallback.bind(this);
+  }
+
+  handleScrollCallback = () => {
+    const { clientHeight } = this.cardListSection;
+    const heightHeaderCover = 415;
+    if (
+      window.scrollY > heightHeaderCover &&
+      window.scrollY < clientHeight + heightHeaderCover
+    ) {
+      this.setState({
+        sticky: true
+      });
+    } else {
+      this.setState({
+        sticky: false
+      });
+    }
+  };
+
   handleCardClick = d => {
     this.props.setSectionProjectsModal({
       isOpen: true,
@@ -25,11 +51,13 @@ class SectionProjects extends PureComponent {
       search,
       setSearch
     } = this.props;
+    const { sticky } = this.state;
     const hasData = data && !!data.length;
     const hasCategories = categories && !!categories.length;
 
     return (
       <div className="">
+        <ScrollEvent handleScrollCallback={this.handleScrollCallback} />
         <div className="l-section">
           <div className="row">
             <div className="column small-6">
@@ -43,7 +71,11 @@ class SectionProjects extends PureComponent {
               <ProjectsGLobe data={data} />
             </div>
 
-            <div className="column small-6 section-projects-list">
+            <div
+              className={`column small-6 section-projects-list ${
+                sticky ? '-sticky' : ''
+              }`}
+            >
               {hasCategories && (
                 <div>
                   <Search
@@ -62,7 +94,12 @@ class SectionProjects extends PureComponent {
             </div>
           </div>
         </div>
-        <div className="l-section card-list-section">
+        <div
+          className="l-section card-list-section"
+          ref={c => {
+            this.cardListSection = c;
+          }}
+        >
           {hasData && (
             <ul className="row card-list">
               <div className="row card-list-section">
