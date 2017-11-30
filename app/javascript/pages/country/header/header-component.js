@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select-me';
-
 import Loader from 'components/loader/loader';
+
+import 'styles/themes/select/select-dark.scss';
 import './header-styles.scss';
 
 class Header extends PureComponent {
@@ -22,7 +23,7 @@ class Header extends PureComponent {
         <div className="row">
           <div className="columns large-6 medium-12 small-12">
             <div className="select-container">
-              <div className="select">
+              <div className="theme-select-dark">
                 <svg className="icon icon-angle-arrow-down c-header__select-arrow">
                   <use xlinkHref="#icon-angle-arrow-down" />
                 </svg>
@@ -33,7 +34,7 @@ class Header extends PureComponent {
                   onChange={handleCountryChange}
                 />
               </div>
-              <div className="select">
+              <div className="theme-select-dark">
                 <svg className="icon icon-angle-arrow-down c-header__select-arrow">
                   <use xlinkHref="#icon-angle-arrow-down" />
                 </svg>
@@ -49,7 +50,7 @@ class Header extends PureComponent {
               {adminsSelected.region &&
                 adminsLists.subRegions &&
                 adminsLists.subRegions.length > 0 && (
-                  <div className="select">
+                  <div className="theme-select-dark">
                     <svg className="icon icon-angle-arrow-down c-header__select-arrow">
                       <use xlinkHref="#icon-angle-arrow-down" />
                     </svg>

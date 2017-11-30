@@ -5,6 +5,7 @@ import ScrollEvent from 'react-onscroll';
 import Widget from 'pages/country/widgets';
 import Share from 'components/share';
 import Header from 'pages/country/header';
+import Tabs from 'pages/country/tabs';
 import Footer from 'pages/country/footer';
 import Map from 'pages/country/map';
 import Stories from 'pages/country/stories';
@@ -57,13 +58,7 @@ class Root extends PureComponent {
               adminsLists={adminsLists}
               adminsSelected={adminsSelected}
             />
-            <div className="c-tabs">
-              <ul className="tabs-list">
-                <li className="-selected">Summary</li>
-                <li className="">Forest change</li>
-                <li className="">Land cover</li>
-              </ul>
-            </div>
+            <Tabs />
             <div className="widgets">
               <div className="row">
                 {adminsSelected &&

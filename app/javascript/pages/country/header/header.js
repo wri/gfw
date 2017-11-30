@@ -16,10 +16,6 @@ const mapStateToProps = state => {
       isRegionsLoading ||
       isSubRegionsLoading ||
       isGeostoreLoading
-    // totalCoverHeader: state.header.totalCoverHeader,
-    // totalForestHeader: state.header.totalForestHeader,
-    // percentageForestHeader: state.header.percentageForestHeader,
-    // totalCoverLoss: state.header.totalCoverLoss
   };
 };
 
