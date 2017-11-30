@@ -15,9 +15,9 @@ const countryReducers = {
 // Components
 import * as ShareComponent from 'components/share/share';
 import * as mapComponent from 'pages/country/map/map';
+import * as storiesComponent from 'pages/country/stories/stories';
 import * as widgetAreasMostCoverGainComponent from 'pages/country/widgets/widget-areas-most-cover-gain/widget-areas-most-cover-gain';
 import * as widgetPlantationAreaComponent from 'pages/country/widgets/widget-plantation-area/widget-plantation-area';
-import * as widgetStoriesComponent from 'pages/country/widgets/widget-stories/widget-stories';
 import * as widgetTotalAreaPlantationsComponent from 'pages/country/widgets/widget-total-area-plantations/widget-total-area-plantations';
 import * as widgetTreeCoverComponent from 'pages/country/widgets/widget-tree-cover/widget-tree-cover';
 import * as widgetTreeCoverGainComponent from 'pages/country/widgets/widget-tree-cover-gain/widget-tree-cover-gain';
@@ -31,9 +31,9 @@ import * as countryDataProviderComponent from 'pages/country/providers/country-d
 const componentsReducers = {
   share: handleActions(ShareComponent),
   map: handleActions(mapComponent),
+  stories: handleActions(storiesComponent),
   widgetAreasMostCoverGain: handleActions(widgetAreasMostCoverGainComponent),
   widgetPlantationArea: handleActions(widgetPlantationAreaComponent),
-  widgetStories: handleActions(widgetStoriesComponent),
   widgetTotalAreaPlantations: handleActions(
     widgetTotalAreaPlantationsComponent
   ),

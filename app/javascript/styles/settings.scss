@@ -11,6 +11,11 @@ $screen-l: 1024px;
 $screen-xl: 1280px;
 $screen-xxl: 2000px;
 
+/* GRID SETTINGS */
+$max-width: rem(1080px);
+$desktop-gutter: rem(20px);
+$mobile-gutter: rem(15px);
+
 /* COLORS */
 $white: #fff;
 $black: #000;

@@ -1,0 +1,148 @@
+@import '~styles/settings.scss';
+$black-tabs: #404040;
+
+.l-country {
+  margin-top: 58px;
+
+  @media screen and (min-width: $screen-m) {
+    margin-top: 0;
+  }
+
+  .panels {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .data-panel {
+    width: 100%;
+
+    @media screen and (min-width: $screen-m) {
+      width: 70%;
+    }
+
+    @media screen and (min-width: $screen-l) {
+      width: calc((#{$max-width} * 0.7) + ((100vw - #{$max-width}) / 2));
+    }
+  }
+
+  .map-panel {
+    width: 0;
+
+    @media screen and (min-width: $screen-m) {
+      width: 30%;
+      display: block;
+    }
+
+    @media screen and (min-width: $screen-l) {
+      width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
+    }
+  }
+
+  .map {
+    right: -100%;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    transition: right 0.5s linear;
+
+    @media screen and (min-width: $screen-m) {
+      width: 30%;
+    }
+
+    @media screen and (min-width: $screen-l) {
+      width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
+    }
+
+    &.-open-mobile {
+      right: calc(-5%);
+      z-index: 11;
+    }
+
+    &.-fixed {
+      top: 0;
+      position: fixed;
+      width: 100%;
+
+      @media screen and (min-width: $screen-m) {
+        width: 30%;
+      }
+
+      @media screen and (min-width: $screen-l) {
+        width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
+      }
+    }
+
+    &.-bottom {
+      bottom: 0;
+    }
+
+    @media screen and (min-width: $screen-m) {
+      right: 0;
+
+      &.-open-mobile {
+        right: 0;
+      }
+    }
+  }
+
+  .c-tabs {
+    height: rem(40px);
+    background-color: $black-tabs;
+
+    @media screen and (min-width: $screen-l) {
+      padding-left: calc(100% - (#{$max-width} * 0.7));
+    }
+
+    .tabs-list {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+
+      li {
+        cursor: pointer;
+        height: rem(40px);
+        font-size: 13px;
+        color: #9f9f9f;
+        text-transform: uppercase;
+        letter-spacing: 0.1px;
+        padding: 0 rem(14px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.-selected {
+          background-color: $white;
+        }
+      }
+    }
+  }
+
+  .widgets {
+    padding-top: 20px;
+    padding-bottom: 30px;
+
+    @media screen and (min-width: $screen-m) {
+      padding-top: 60px;
+      padding-right: 30px;
+    }
+
+    @media screen and (min-width: $screen-l) {
+      padding-left: calc(100% - (1080px * 0.7) - 20px);
+    }
+
+    .widget {
+      margin-bottom: $mobile-gutter;
+
+      @media screen and (min-width: $screen-m) {
+        margin-bottom: calc(2 * #{$desktop-gutter});
+      }
+    }
+  }
+}
+
+#footerGfw {
+  position: relative;
+}
+

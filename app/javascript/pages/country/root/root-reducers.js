@@ -1,8 +1,6 @@
 export const initialState = {
-  gfwHeaderHeight: 59,
-  showMapMobile: false,
-  isMapFixed: true,
-  mapTop: 0
+  gfwHeaderHeight: 58,
+  showMapMobile: false
 };
 
 const setFixedMapStatus = (state, { payload }) => ({
