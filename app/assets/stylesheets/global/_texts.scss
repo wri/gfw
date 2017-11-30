@@ -76,6 +76,16 @@
     }
   }
 
+  &.-title-m {
+    font-size: 26px;
+    line-height: 1.25;
+    letter-spacing: -0.4px;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: 28px;
+    }
+  }
+
   &.-title-s {
     font-size: 16px;
     line-height: 1.88;
@@ -154,5 +164,15 @@
   &.-paragraph-6 {
     font-size: 12px;
     letter-spacing: -0.3px;
+  }
+
+  &.-paragraph-7 {
+    font-size: 14px;
+    line-height: 1.88;
+    letter-spacing: -0.4px;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: 16px;
+    }
   }
 }
