@@ -11,7 +11,7 @@ class WidgetTreeLossTooltip extends PureComponent {
     }
 
     return (
-      <ul className="">
+      <ul>
         <li>Year: {data[0].payload.year}</li>
         <li>ha loss: {numeral(data[0].payload.area).format('0,0')} ha</li>
         <li>
