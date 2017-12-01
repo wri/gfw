@@ -32,6 +32,7 @@ class Header extends PureComponent {
                   value={adminsSelected.country}
                   options={adminsLists.countries}
                   onChange={handleCountryChange}
+                  searchable
                 />
               </div>
               {adminsLists.regions &&
@@ -48,6 +49,7 @@ class Header extends PureComponent {
                       onChange={region =>
                         handleRegionChange(adminsSelected.country, region)
                       }
+                      searchable
                     />
                   </div>
                 )}
@@ -70,6 +72,7 @@ class Header extends PureComponent {
                           subRegion
                         )
                       }
+                      searchable
                     />
                   </div>
                 )}
