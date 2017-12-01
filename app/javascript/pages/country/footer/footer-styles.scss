@@ -15,14 +15,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: rem(20px);
 
     @media screen and (min-width: $screen-l) {
       margin-bottom: 0;
     }
 
     span {
-      font-size: 14px;
+      font-size: rem(14px);
       line-height: 1.14;
       color: $slate;
       display: block;

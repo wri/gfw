@@ -4,6 +4,7 @@ $black-tabs: #404040;
 .c-tabs {
   height: rem(40px);
   background-color: $black-tabs;
+  padding: 0 $mobile-gutter;
 
   @media screen and (min-width: $screen-l) {
     padding-left: calc(100% - (#{$max-width} * 0.7));
@@ -17,7 +18,7 @@ $black-tabs: #404040;
     li {
       cursor: pointer;
       height: rem(40px);
-      font-size: 13px;
+      font-size: rem(13px);
       color: #9f9f9f;
       text-transform: uppercase;
       letter-spacing: 0.1px;
