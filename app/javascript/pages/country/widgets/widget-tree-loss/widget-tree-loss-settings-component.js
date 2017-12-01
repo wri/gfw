@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Select from 'react-select-me';
 
 class WidgetTreeLossSettings extends PureComponent {
-  locationChange = value => {
-    this.props.onLocationChange(value.value);
+  indicatorChange = value => {
+    this.props.onIndicatorChange(value.value);
   };
 
   canopyChange = value => {
@@ -26,7 +26,7 @@ class WidgetTreeLossSettings extends PureComponent {
   );
 
   render() {
-    const { locations, canopies, settings, yearsLoss } = this.props;
+    const { indicators, canopies, settings, yearsLoss } = this.props;
 
     const startYears = [];
     const endYears = [];
@@ -51,9 +51,9 @@ class WidgetTreeLossSettings extends PureComponent {
           <div className="c-widget-settings__title">LOCATION</div>
           <Select
             iconRenderer={this.iconRenderer}
-            value={settings.location}
-            options={locations}
-            onChange={this.locationChange}
+            value={settings.indicator}
+            options={indicators}
+            onChange={this.indicatorChange}
           />
         </div>
         <div className="c-widget-settings__button-select -years">
@@ -86,11 +86,11 @@ class WidgetTreeLossSettings extends PureComponent {
 }
 
 WidgetTreeLossSettings.propTypes = {
-  locations: PropTypes.array.isRequired,
+  indicators: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   yearsLoss: PropTypes.array.isRequired,
-  onLocationChange: PropTypes.func.isRequired,
+  onIndicatorChange: PropTypes.func.isRequired,
   onCanopyChange: PropTypes.func.isRequired,
   onStartYearChange: PropTypes.func.isRequired,
   onEndYearChange: PropTypes.func.isRequired

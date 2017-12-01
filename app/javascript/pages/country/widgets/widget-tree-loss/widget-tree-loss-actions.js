@@ -1,7 +1,9 @@
 import { createAction } from 'redux-actions';
 
 const setTreeLossValues = createAction('setTreeLossValues');
-const setTreeLossSettingsLocation = createAction('setTreeLossSettingsLocation');
+const setTreeLossSettingsIndicator = createAction(
+  'setTreeLossSettingsIndicator'
+);
 const setTreeLossSettingsCanopy = createAction('setTreeLossSettingsCanopy');
 const setTreeLossIsLoading = createAction('setTreeLossIsLoading');
 const setTreeLossSettingsStartYear = createAction(
@@ -12,7 +14,7 @@ const setLayers = createAction('setLayers');
 
 export default {
   setTreeLossValues,
-  setTreeLossSettingsLocation,
+  setTreeLossSettingsIndicator,
   setTreeLossSettingsCanopy,
   setTreeLossIsLoading,
   setTreeLossSettingsStartYear,

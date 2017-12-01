@@ -1,7 +1,7 @@
 export const initialState = {
   isLoading: true,
-  total: 0,
-  years: [],
+  loss: [],
+  lossSentence: '',
   yearsLoss: [
     {
       label: '2001',
@@ -68,34 +68,34 @@ export const initialState = {
       value: 2016
     }
   ],
-  locations: [
+  indicators: [
+    {
+      label: 'All Regions',
+      value: 'gadm28_only'
+    },
     {
       label: 'Tree Plantations',
-      value: 'plantations'
+      value: 'gfw_plantations'
     },
     {
       label: 'Managed',
-      value: 'managed'
+      value: 'gfw_managed_forests'
     },
     {
       label: 'Protected Areas',
-      value: 'protected_areas'
+      value: 'wdpa'
     },
     {
-      label: 'Intact Forest Landscapes',
-      value: 'intact_forest_landscapes'
+      label: 'Intact Forest Landscapes (2000)',
+      value: 'IFL_2000'
+    },
+    {
+      label: 'Intact Forest Landscapes (2013)',
+      value: 'IFL_2013'
     },
     {
       label: 'Primary Forest',
-      value: 'primary_forest'
-    },
-    {
-      label: 'Mangroves',
-      value: 'mangroves'
-    },
-    {
-      label: 'Moratorium Areas',
-      value: 'moratorium_areas'
+      value: 'primary_forests'
     }
   ],
   canopies: [
@@ -135,8 +135,7 @@ export const initialState = {
   settings: {
     startYear: 2001,
     endYear: 2016,
-    location: 'plantations',
-    unit: 'ha',
+    indicator: 'gadm28_only',
     canopy: 30
   }
 };
@@ -144,15 +143,15 @@ export const initialState = {
 const setTreeLossValues = (state, { payload }) => ({
   ...state,
   isLoading: false,
-  total: payload.total,
-  years: payload.years
+  loss: payload.loss,
+  lossSentence: payload.lossSentence
 });
 
-const setTreeLossSettingsLocation = (state, { payload }) => ({
+const setTreeLossSettingsIndicator = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    location: payload
+    indicator: payload
   }
 });
 
@@ -187,7 +186,7 @@ const setTreeLossSettingsEndYear = (state, { payload }) => ({
 
 export default {
   setTreeLossValues,
-  setTreeLossSettingsLocation,
+  setTreeLossSettingsIndicator,
   setTreeLossSettingsCanopy,
   setTreeLossIsLoading,
   setTreeLossSettingsStartYear,
