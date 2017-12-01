@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select-me';
+import Dropdown from 'components/dropdown';
 
 class WidgetTreeCoverGainSettings extends PureComponent {
   locationChange = value => {
@@ -17,15 +17,13 @@ class WidgetTreeCoverGainSettings extends PureComponent {
     const { locations, settings } = this.props;
     return (
       <div className="c-widget-settings">
-        <div className="c-widget-settings__select">
-          <div className="c-widget-settings__title">LOCATION</div>
-          <Select
-            iconRenderer={this.iconRenderer}
-            value={settings.location}
-            options={locations}
-            onChange={this.locationChange}
-          />
-        </div>
+        <Dropdown
+          theme="theme-select-light"
+          label="LOCATION"
+          value={settings.location}
+          options={locations}
+          onChange={this.locationChange}
+        />
       </div>
     );
   }
@@ -33,7 +31,8 @@ class WidgetTreeCoverGainSettings extends PureComponent {
 
 WidgetTreeCoverGainSettings.propTypes = {
   locations: PropTypes.array.isRequired,
-  settings: PropTypes.object.isRequired
+  settings: PropTypes.object.isRequired,
+  onLocationChange: PropTypes.func
 };
 
 export default WidgetTreeCoverGainSettings;

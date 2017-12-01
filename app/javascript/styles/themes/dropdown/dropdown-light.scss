@@ -1,0 +1,50 @@
+@import '~styles/settings.scss';
+
+.theme-select-light {
+  .dd__wrapper {
+    .dd__selectControl {
+      border: solid 1px #e5e5df;
+      border-radius: 0;
+
+      .icon-angle-arrow-down {
+        width: rem(11px);
+        height: rem(11px);
+      }
+    }
+
+    &.dd__opened {
+      .dd__selectControl {
+        .icon-angle-arrow-down {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+
+  .dd__openTobottom {
+    margin-top: rem(-1px);
+    border: solid 1px #e5e5df;
+    border-radius: 0;
+    border-top: 0;
+  }
+
+  .dd__selectControl,
+  .dd__option {
+    padding: rem(5px) rem(12px);
+  }
+
+  .dd__selectedItem,
+  .dd__option {
+    font-size: 13px;
+    letter-spacing: 0.1px;
+  }
+
+  .dd__option {
+    color: #9e9e9e;
+  }
+
+  .dd__selectedItem,
+  .dd__selectedOption {
+    color: $slate;
+  }
+}

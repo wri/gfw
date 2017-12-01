@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import Component from './widgets-component';
-
 import { getAdminsSelected } from './widgets-selectors';
 
 const mapStateToProps = state => {

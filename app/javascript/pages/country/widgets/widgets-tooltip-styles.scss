@@ -1,0 +1,8 @@
+@import '~styles/settings.scss';
+
+.tippy-popper {
+  .tippy-tooltip {
+    box-shadow: 1px 1px 10px 0 rgba($slate, 0.25) !important;
+    padding: 0;
+  }
+}

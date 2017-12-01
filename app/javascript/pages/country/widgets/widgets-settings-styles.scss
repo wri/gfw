@@ -1,0 +1,39 @@
+@import '~styles/settings.scss';
+
+.c-widget-settings {
+  width: rem(250px);
+  background-color: $white;
+
+  .title {
+    font-size: 14px;
+    color: $slate;
+  }
+
+  .years-select {
+    .label {
+      display: block;
+      margin-bottom: rem(5px);
+      text-align: left;
+    }
+
+    .select-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .body {
+    padding: rem(25px) rem(25px) rem(10px);
+
+    > div {
+      margin-bottom: 20px;
+    }
+  }
+
+  .footer {
+    padding: rem(15px) rem(25px);
+    border-top: solid 1px $border;
+  }
+}

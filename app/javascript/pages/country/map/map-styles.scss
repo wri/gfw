@@ -35,4 +35,8 @@
   @media screen and (min-width: $screen-m) {
     display: none;
   }
+
+  &:focus {
+    outline: none;
+  }
 }
