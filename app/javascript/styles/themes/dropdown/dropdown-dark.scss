@@ -1,32 +1,18 @@
 @import '~styles/settings.scss';
 
 .theme-select-dark {
+  max-height: 70px;
+
   .icon {
     opacity: 0;
   }
 
-  &.dd__opened {
-    width: 100%;
+  .dd__search {
+    display: block;
+  }
 
-    .dd__list {
-      max-width: 100%;
-
-      .dd__option {
-        font-size: 20px;
-        word-break: break-word;
-        max-width: 100%;
-        white-space: pre-line;
-        line-height: 40px;
-
-        @media screen and (min-width: $screen-l) {
-          font-size: 30px;
-        }
-      }
-    }
-
-    .dd__openTobottom {
-      top: 0;
-    }
+  .dd__openTobottom {
+    margin-top: 0;
   }
 
   .dd__selectControl {
