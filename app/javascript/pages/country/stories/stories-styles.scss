@@ -24,7 +24,7 @@
     }
 
     @media screen and (min-width: $screen-l) {
-      width: calc((1080px * 0.7) + ((100vw - 1080px) / 2));
+      width: calc((#{$max-width} * 0.7) + ((100vw - #{$max-width}) / 2));
     }
   }
 
@@ -37,23 +37,23 @@
     }
 
     @media screen and (min-width: $screen-l) {
-      width: calc((1080px * 0.3) + ((100vw - 1080px) / 2));
+      width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
     }
   }
 
   .primary-stories {
-    padding: 0 $mobile-gutter 40px $mobile-gutter;
+    padding: 0 $mobile-gutter rem(40px) $mobile-gutter;
 
     @media screen and (min-width: $screen-m) {
-      padding: 80px 20px 80px 0;
+      padding: rem(80px) rem(20px) rem(80px) 0;
     }
 
     @media screen and (min-width: $screen-l) {
-      padding-left: calc(100% - (1080px * 0.7));
+      padding-left: calc(100% - (#{$max-width} * 0.7));
     }
 
     h2 {
-      font-size: 47px;
+      font-size: rem(47px);
       font-weight: 300;
       line-height: 0.85;
       letter-spacing: -0.6px;
@@ -73,21 +73,21 @@
       }
 
       p {
-        font-size: 18px;
+        font-size: rem(18px);
         line-height: 2.22;
         color: rgba($slate, 0.5);
       }
     }
 
     .description {
-      font-size: 18px;
+      font-size: rem(18px);
       line-height: 1.67;
       letter-spacing: -0.4px;
       color: $slate;
     }
 
     .link {
-      font-size: 18px;
+      font-size: rem(18px);
       font-weight: 500;
       line-height: 1.67;
       letter-spacing: -0.4px;
@@ -99,16 +99,16 @@
   }
 
   .secondary-stories {
-    padding: 20px $mobile-gutter 30px $mobile-gutter;
+    padding: rem(20px) $mobile-gutter rem(30px) $mobile-gutter;
     background-color: $green-gfw;
     height: 100%;
 
     @media screen and (min-width: $screen-m) {
-      padding: 80px 20px 80px 60px;
+      padding: rem(80px) rem(20px) rem(80px) rem(60px);
     }
 
     @media screen and (min-width: $screen-l) {
-      padding-right: calc(100% - (1080px * 0.3));
+      padding-right: calc(100% - (#{$max-width} * 0.3));
     }
 
     .circle {
@@ -117,7 +117,7 @@
       border-radius: rem(50px);
       position: absolute;
       background-color: white;
-      left: -50px;
+      left: rem(-50px);
       border: 1px solid rgba($slate, 0.1);
       display: none;
 
@@ -127,13 +127,13 @@
     }
 
     h3 {
-      font-size: 18px;
+      font-size: rem(18px);
       line-height: 2.22;
       color: rgba($slate, 0.5);
-      height: 50px;
+      height: rem(50px);
       position: relative;
       text-transform: uppercase;
-      margin-bottom: 20px;
+      margin-bottom: rem(20px);
 
       &::after {
         content: '';
@@ -147,7 +147,7 @@
     }
 
     .title-name {
-      font-size: 18px;
+      font-size: rem(18px);
       font-weight: 500;
       line-height: 1.67;
       letter-spacing: -0.4px;
@@ -161,7 +161,7 @@
 
     .description {
       max-width: rem(210px);
-      font-size: 18px;
+      font-size: rem(18px);
       line-height: 1.67;
       letter-spacing: -0.4px;
       color: rgba($slate, 0.7);

@@ -2,7 +2,7 @@
 $black-tabs: #404040;
 
 .l-country {
-  margin-top: 58px;
+  margin-top: rem(58px);
 
   @media screen and (min-width: $screen-m) {
     margin-top: 0;
@@ -88,16 +88,16 @@ $black-tabs: #404040;
   }
 
   .widgets {
-    padding-top: 20px;
-    padding-bottom: 30px;
+    padding-top: rem(20px);
+    padding-bottom: rem(30px);
 
     @media screen and (min-width: $screen-m) {
-      padding-top: 60px;
-      padding-right: 30px;
+      padding-top: rem(60px);
+      padding-right: rem(30px);
     }
 
     @media screen and (min-width: $screen-l) {
-      padding-left: calc(100% - (1080px * 0.7) - 20px);
+      padding-left: calc(100% - (#{$max-width} * 0.7) - #{$desktop-gutter});
     }
 
     .widget {

@@ -24,10 +24,10 @@
   text-transform: uppercase;
   color: #555;
   text-decoration: none;
-  padding: 8px;
+  padding: rem(8px);
   position: fixed;
   top: calc(50% - 50px);
-  right: -32px;
+  right: rem(-32px);
   z-index: 999;
   cursor: pointer;
   transform: rotate(90deg) translate(50%);
