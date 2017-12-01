@@ -65,7 +65,7 @@ class WidgetTreeLoss extends PureComponent {
           />
         </WidgetHeader>
         {isLoading ? (
-          <Loader isAbsolute />
+          <Loader />
         ) : (
           <div>
             <div className="c-widget-tree-loss__sentence">{lossSentence}</div>

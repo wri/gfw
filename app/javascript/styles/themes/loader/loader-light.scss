@@ -1,0 +1,9 @@
+@import '~styles/settings.scss';
+
+.theme-loader-light {
+  .spinner {
+    &::before {
+      border-top-color: $white !important;
+    }
+  }
+}

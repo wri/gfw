@@ -11,7 +11,7 @@ class Map extends PureComponent {
     return (
       <div className="c-map">
         {(isLoading || isGeostoreLoading) && (
-          <Loader parentClass="loader-overlay" isAbsolute />
+          <Loader className="loader" theme="theme-loader-light" />
         )}
         <div id="map" className="c-map" />
       </div>
