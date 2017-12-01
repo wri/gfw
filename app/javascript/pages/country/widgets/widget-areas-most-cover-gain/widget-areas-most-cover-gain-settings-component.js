@@ -3,33 +3,33 @@ import PropTypes from 'prop-types';
 import Dropdown from 'components/dropdown';
 
 class WidgetAreasMostCoverGainSettings extends PureComponent {
-  locationChange = value => {
-    this.props.onLocationChange(value);
-  };
-
-  unitChange = value => {
-    this.props.onUnitChange(value.value);
-  };
-
   render() {
-    const { locations, units, settings } = this.props;
+    const {
+      locations,
+      units,
+      settings,
+      onLocationChange,
+      onUnitChange
+    } = this.props;
     return (
       <div className="c-widget-settings">
-        <Dropdown
-          theme="theme-select-light"
-          label="LOCATION"
-          className="theme-select-light"
-          value={settings.location}
-          options={locations}
-          onChange={this.locationChange}
-        />
-        <Dropdown
-          theme="theme-select-light"
-          label="UNIT"
-          value={settings.unit}
-          options={units}
-          onChange={this.unitChange}
-        />
+        <div className="body">
+          <Dropdown
+            theme="theme-select-light"
+            label="LOCATION"
+            className="theme-select-light"
+            value={settings.location}
+            options={locations}
+            onChange={onLocationChange}
+          />
+          <Dropdown
+            theme="theme-select-light"
+            label="UNIT"
+            value={settings.unit}
+            options={units}
+            onChange={onUnitChange}
+          />
+        </div>
       </div>
     );
   }
