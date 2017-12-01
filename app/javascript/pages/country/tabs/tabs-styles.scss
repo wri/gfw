@@ -6,8 +6,8 @@ $black-tabs: #404040;
   background-color: $black-tabs;
   padding: 0 $mobile-gutter;
 
-  @media screen and (min-width: $screen-l) {
-    padding-left: calc(100% - (#{$max-width} * 0.7));
+  @media screen and (min-width: $screen-xl) {
+    padding-left: calc(100% - (#{$max-width} * 0.7) + #{$desktop-gutter});
   }
 
   .tabs-list {
