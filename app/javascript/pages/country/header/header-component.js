@@ -9,7 +9,7 @@ class Header extends PureComponent {
   render() {
     const {
       className,
-      adminsLists,
+      adminsOptions,
       adminsSelected,
       handleCountryChange,
       handleRegionChange,
@@ -30,13 +30,13 @@ class Header extends PureComponent {
                   theme="theme-select-dark"
                   placeholder="Country"
                   value={adminsSelected.country}
-                  options={adminsLists.countries}
+                  options={adminsOptions.countries}
                   onChange={handleCountryChange}
                   searchable
                 />
               </div>
-              {adminsLists.regions &&
-                adminsLists.regions.length > 0 && (
+              {adminsOptions.regions &&
+                adminsOptions.regions.length > 1 && (
                   <div className="select">
                     <svg className="icon icon-angle-arrow-down c-header__select-arrow">
                       <use xlinkHref="#icon-angle-arrow-down" />
@@ -45,7 +45,7 @@ class Header extends PureComponent {
                       theme="theme-select-dark"
                       placeholder="Region"
                       value={adminsSelected.region}
-                      options={adminsLists.regions}
+                      options={adminsOptions.regions}
                       onChange={region =>
                         handleRegionChange(adminsSelected.country, region)
                       }
@@ -54,8 +54,9 @@ class Header extends PureComponent {
                   </div>
                 )}
               {adminsSelected.region &&
-                adminsLists.subRegions &&
-                adminsLists.subRegions.length > 0 && (
+                adminsSelected.region.value &&
+                adminsOptions.subRegions &&
+                adminsOptions.subRegions.length > 1 && (
                   <div className="select">
                     <svg className="icon icon-angle-arrow-down c-header__select-arrow">
                       <use xlinkHref="#icon-angle-arrow-down" />
@@ -64,7 +65,7 @@ class Header extends PureComponent {
                       theme="theme-select-dark"
                       placeholder="Juristriction"
                       value={adminsSelected.subRegion}
-                      options={adminsLists.subRegions}
+                      options={adminsOptions.subRegions}
                       onChange={subRegion =>
                         handleSubRegionChange(
                           adminsSelected.country,
@@ -100,7 +101,7 @@ Header.propTypes = {
   className: PropTypes.string,
   isLoading: PropTypes.bool.isRequired,
   adminsSelected: PropTypes.object.isRequired,
-  adminsLists: PropTypes.object.isRequired,
+  adminsOptions: PropTypes.object.isRequired,
   handleCountryChange: PropTypes.func.isRequired,
   handleRegionChange: PropTypes.func.isRequired,
   handleSubRegionChange: PropTypes.func.isRequired

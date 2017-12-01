@@ -42,7 +42,7 @@ class Root extends PureComponent {
       showMapMobile,
       handleShowMapMobile,
       handleScrollCallback,
-      adminsLists,
+      adminsOptions,
       adminsSelected
     } = this.props;
     return (
@@ -55,7 +55,7 @@ class Root extends PureComponent {
           <div className="data-panel">
             <Header
               className="header"
-              adminsLists={adminsLists}
+              adminsOptions={adminsOptions}
               adminsSelected={adminsSelected}
             />
             <Tabs />
@@ -118,7 +118,7 @@ Root.propTypes = {
   isMapFixed: PropTypes.bool.isRequired,
   mapTop: PropTypes.number.isRequired,
   handleShowMapMobile: PropTypes.func.isRequired,
-  adminsLists: PropTypes.object,
+  adminsOptions: PropTypes.object,
   adminsSelected: PropTypes.object
 };
 
