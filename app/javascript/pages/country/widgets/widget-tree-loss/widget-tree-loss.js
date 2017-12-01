@@ -19,6 +19,7 @@ const mapStateToProps = state => ({
   isLoading: state.widgetTreeLoss.isLoading,
   loss: state.widgetTreeLoss.loss,
   lossSentence: state.widgetTreeLoss.lossSentence,
+  treeExtent: state.widgetTreeLoss.treeExtent,
   yearsLoss: state.widgetTreeLoss.yearsLoss,
   indicators: state.widgetTreeLoss.indicators,
   canopies: state.widgetTreeLoss.canopies,
@@ -65,7 +66,8 @@ const WidgetTreeLossContainer = props => {
           const loss = getTreeLossByYearResponse.data.data;
           setTreeLossValues({
             loss,
-            lossSentence: getSentence(nextProps, loss, treeExtent)
+            lossSentence: getSentence(nextProps, loss, treeExtent),
+            treeExtent
           });
         })
       );
