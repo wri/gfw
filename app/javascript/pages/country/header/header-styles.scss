@@ -14,8 +14,7 @@
     padding-left: calc(100% - (#{$max-width} * 0.7) - #{$desktop-gutter});
   }
 
-  .c-loader {
-    background: rgba($white, 0.2);
+  .loader {
     z-index: 10;
 
     @media screen and (min-width: $screen-l) {

@@ -68,7 +68,7 @@ class WidgetTreeLossAreas extends PureComponent {
           />
         </WidgetHeader>
         {isLoading ? (
-          <Loader isAbsolute />
+          <Loader />
         ) : (
           <div className="c-widget-tree-cover-loss-areas__container">
             <div className="c-widget-tree-cover-loss-areas__chart">

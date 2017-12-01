@@ -18,7 +18,7 @@ class Header extends PureComponent {
     } = this.props;
     return (
       <div className={`${className} c-header`}>
-        {isLoading && <Loader isAbsolute />}
+        {isLoading && <Loader className="loader" theme="theme-loader-light" />}
         <div className="row">
           <div className="columns large-6 medium-12 small-12">
             <div className="select-container">
