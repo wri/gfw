@@ -20,7 +20,7 @@ class Header extends PureComponent {
       <div className={`${className} c-header`}>
         {isLoading && <Loader className="loader" theme="theme-loader-light" />}
         <div className="row">
-          <div className="columns large-6 medium-12 small-12">
+          <div className="columns small-12 large-6">
             <div className="select-container">
               <div className="select">
                 <svg className="icon icon-angle-arrow-down c-header__select-arrow">
