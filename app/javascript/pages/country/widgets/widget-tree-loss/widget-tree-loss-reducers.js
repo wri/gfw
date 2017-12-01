@@ -2,6 +2,7 @@ export const initialState = {
   isLoading: true,
   loss: [],
   lossSentence: '',
+  treeExtent: 0,
   yearsLoss: [
     {
       label: '2001',
@@ -144,7 +145,8 @@ const setTreeLossValues = (state, { payload }) => ({
   ...state,
   isLoading: false,
   loss: payload.loss,
-  lossSentence: payload.lossSentence
+  lossSentence: payload.lossSentence,
+  treeExtent: payload.treeExtent
 });
 
 const setTreeLossSettingsIndicator = (state, { payload }) => ({

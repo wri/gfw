@@ -11,9 +11,10 @@ import {
 } from 'recharts';
 
 import Loader from 'components/loader/loader';
-import TooltipChart from 'pages/country/widgets/tooltip-chart';
 import WidgetHeader from 'pages/country/widgets/widget-header';
+import WidgetTooltip from 'pages/country/widgets/widget-tooltip';
 import WidgetTreeLossSettings from './widget-tree-loss-settings-component';
+import WidgetTreeLossTooltip from './widget-tree-loss-tooltip-component';
 import './widget-tree-loss-styles.scss';
 
 class WidgetTreeLoss extends PureComponent {
@@ -35,6 +36,7 @@ class WidgetTreeLoss extends PureComponent {
       viewOnMap,
       loss,
       lossSentence,
+      treeExtent,
       yearsLoss,
       settings,
       canopies,
@@ -90,12 +92,14 @@ class WidgetTreeLoss extends PureComponent {
                     tickCount={7}
                   />
                   <CartesianGrid vertical={false} strokeDasharray="3 4" />
-                  <Tooltip content={<TooltipChart />} />
-                  <Bar dataKey="area" barSize={22} fill="#fe6598" />
                   <Tooltip
-                    percentage={settings.unit !== 'ha'}
-                    content={<TooltipChart />}
+                    content={
+                      <WidgetTooltip>
+                        <WidgetTreeLossTooltip extent={treeExtent} />
+                      </WidgetTooltip>
+                    }
                   />
+                  <Bar dataKey="area" barSize={22} fill="#fe6598" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -112,6 +116,7 @@ WidgetTreeLoss.propTypes = {
   setInitialData: PropTypes.func.isRequired,
   loss: PropTypes.array.isRequired,
   lossSentence: PropTypes.string.isRequired,
+  treeExtent: PropTypes.number.isRequired,
   yearsLoss: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   canopies: PropTypes.array.isRequired,
