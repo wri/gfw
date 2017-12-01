@@ -3,44 +3,44 @@ import PropTypes from 'prop-types';
 import Dropdown from 'components/dropdown';
 
 class WidgetTreeCoverSettings extends PureComponent {
-  locationChange = value => {
-    this.props.onLocationChange(value);
-  };
-
-  unitChange = value => {
-    this.props.onUnitChange(value.value);
-  };
-
-  canopyChange = value => {
-    this.props.onCanopyChange(value.value);
-  };
-
   render() {
-    const { locations, units, canopies, settings } = this.props;
+    const {
+      locations,
+      units,
+      canopies,
+      settings,
+      onLocationChange,
+      onCanopyChange,
+      onUnitChange
+    } = this.props;
 
     return (
       <div className="c-widget-settings">
-        <Dropdown
-          theme="theme-select-light"
-          label="LOCATION"
-          value={settings.location}
-          options={locations}
-          onChange={this.locationChange}
-        />
-        <Dropdown
-          theme="theme-select-light"
-          label="UNIT"
-          value={settings.unit}
-          options={units}
-          onChange={this.unitChange}
-        />
-        <Dropdown
-          theme="theme-select-button"
-          label="CANOPY DENSITY"
-          value={settings.canopy}
-          options={canopies}
-          onChange={this.canopyChange}
-        />
+        <div className="body">
+          <Dropdown
+            theme="theme-select-light"
+            label="LOCATION"
+            value={settings.location}
+            options={locations}
+            onChange={onLocationChange}
+          />
+          <Dropdown
+            theme="theme-select-light"
+            label="UNIT"
+            value={settings.unit}
+            options={units}
+            onChange={onUnitChange}
+          />
+        </div>
+        <div className="footer">
+          <Dropdown
+            theme="theme-select-button"
+            label="CANOPY DENSITY"
+            value={settings.canopy}
+            options={canopies}
+            onChange={onCanopyChange}
+          />
+        </div>
       </div>
     );
   }

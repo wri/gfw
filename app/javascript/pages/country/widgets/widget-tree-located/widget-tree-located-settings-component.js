@@ -1,54 +1,43 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select-me';
+import Dropdown from 'components/dropdown';
 
 class WidgetTreeLocatedSettings extends PureComponent {
-  dataSourceChange = value => {
-    this.props.onDataSourceChange(value.value);
-  };
-
-  unitChange = value => {
-    this.props.onUnitChange(value.value);
-  };
-
-  canopyChange = value => {
-    this.props.onCanopyChange(value.value);
-  };
-
-  iconRenderer = () => (
-    <svg className="icon icon-angle-arrow-down">
-      <use xlinkHref="#icon-angle-arrow-down">{}</use>
-    </svg>
-  );
-
   render() {
-    const { dataSources, units, canopies, settings } = this.props;
+    const {
+      dataSources,
+      units,
+      canopies,
+      settings,
+      onDataSourceChange,
+      onUnitChange,
+      onCanopyChange
+    } = this.props;
     return (
       <div className="c-widget-settings">
-        <div className="c-widget-settings__select">
-          <div className="c-widget-settings__title">DATA SOURCE</div>
-          <Select
-            iconRenderer={this.iconRenderer}
+        <div className="body">
+          <Dropdown
+            theme="theme-select-light"
+            label="DATA SOURCE"
             value={settings.dataSource}
             options={dataSources}
-            onChange={this.dataSourceChange}
+            onChange={onDataSourceChange}
           />
-        </div>
-        <div className="c-widget-settings__select">
-          <div className="c-widget-settings__title">UNIT</div>
-          <Select
-            iconRenderer={this.iconRenderer}
-            value={settings.unit}
+          <Dropdown
+            theme="theme-select-light"
+            label="UNIT"
+            vvalue={settings.unit}
             options={units}
-            onChange={this.unitChange}
+            onChange={onUnitChange}
           />
         </div>
-        <div className="c-widget-settings__button-select">
-          <div className="c-widget-settings__title">CANOPY DENSITY</div>
-          <Select
+        <div className="footer">
+          <Dropdown
+            theme="theme-select-button"
+            label="CANOPY DENSITY"
             value={settings.canopy}
             options={canopies}
-            onChange={this.canopyChange}
+            onChange={onCanopyChange}
           />
         </div>
       </div>

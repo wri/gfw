@@ -3,21 +3,19 @@ import PropTypes from 'prop-types';
 import Dropdown from 'components/dropdown';
 
 class WidgetPlantationAreaSettings extends PureComponent {
-  unitChange = value => {
-    this.props.onUnitChange(value.value);
-  };
-
   render() {
-    const { units, settings } = this.props;
+    const { units, settings, onUnitChange } = this.props;
     return (
       <div className="c-widget-settings">
-        <Dropdown
-          theme="theme-select-light"
-          label="UNIT"
-          value={settings.unit}
-          options={units}
-          onChange={this.unitChange}
-        />
+        <div className="body">
+          <Dropdown
+            theme="theme-select-light"
+            label="UNIT"
+            value={settings.unit}
+            options={units}
+            onChange={onUnitChange}
+          />
+        </div>
       </div>
     );
   }

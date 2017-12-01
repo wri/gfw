@@ -87,12 +87,12 @@ WidgetTreeCoverLossAreasSettings.propTypes = {
   units: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
-  years: PropTypes.object.isRequired,
+  years: PropTypes.array.isRequired,
   onUnitChange: PropTypes.func.isRequired,
   onCanopyChange: PropTypes.func.isRequired,
   onStartYearChange: PropTypes.func.isRequired,
   onEndYearChange: PropTypes.func.isRequired,
-  onLocationChange: PropTypes.func.isRequired
+  onLocationChange: PropTypes.func
 };
 
 export default WidgetTreeCoverLossAreasSettings;
