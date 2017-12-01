@@ -10,15 +10,15 @@
     padding: rem(70px) rem(50px) rem(80px) 0;
   }
 
-  @media screen and (min-width: $screen-l) {
-    padding-left: calc(100% - (#{$max-width} * 0.7) - #{$desktop-gutter});
+  @media screen and (min-width: $screen-xl) {
+    padding-left: calc(100% - (#{$max-width} * 0.7));
   }
 
   .loader {
     z-index: 10;
 
-    @media screen and (min-width: $screen-l) {
-      padding-left: calc(100% - (#{$max-width} * 0.7));
+    @media screen and (min-width: $screen-xl) {
+      padding-left: calc(100% - (#{$max-width} * 0.7) + #{$desktop-gutter});
     }
   }
 

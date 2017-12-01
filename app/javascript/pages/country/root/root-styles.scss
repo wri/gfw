@@ -22,7 +22,7 @@ $black-tabs: #404040;
       width: 70%;
     }
 
-    @media screen and (min-width: $screen-l) {
+    @media screen and (min-width: $screen-xl) {
       width: calc((#{$max-width} * 0.7) + ((100vw - #{$max-width}) / 2));
     }
   }
@@ -35,7 +35,7 @@ $black-tabs: #404040;
       display: block;
     }
 
-    @media screen and (min-width: $screen-l) {
+    @media screen and (min-width: $screen-xl) {
       width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
     }
   }
@@ -51,7 +51,7 @@ $black-tabs: #404040;
       width: 30%;
     }
 
-    @media screen and (min-width: $screen-l) {
+    @media screen and (min-width: $screen-xl) {
       width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
     }
 
@@ -69,7 +69,7 @@ $black-tabs: #404040;
         width: 30%;
       }
 
-      @media screen and (min-width: $screen-l) {
+      @media screen and (min-width: $screen-xl) {
         width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
       }
     }
@@ -96,8 +96,8 @@ $black-tabs: #404040;
       padding-right: rem(30px);
     }
 
-    @media screen and (min-width: $screen-l) {
-      padding-left: calc(100% - (#{$max-width} * 0.7) - #{$desktop-gutter});
+    @media screen and (min-width: $screen-xl) {
+      padding-left: calc(100% - (#{$max-width} * 0.7));
     }
 
     .widget {

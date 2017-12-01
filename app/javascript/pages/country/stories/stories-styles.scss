@@ -23,7 +23,7 @@
       width: 70%;
     }
 
-    @media screen and (min-width: $screen-l) {
+    @media screen and (min-width: $screen-xl) {
       width: calc((#{$max-width} * 0.7) + ((100vw - #{$max-width}) / 2));
     }
   }
@@ -36,7 +36,7 @@
       width: 30%;
     }
 
-    @media screen and (min-width: $screen-l) {
+    @media screen and (min-width: $screen-xl) {
       width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
     }
   }
@@ -45,11 +45,11 @@
     padding: 0 $mobile-gutter rem(40px) $mobile-gutter;
 
     @media screen and (min-width: $screen-m) {
-      padding: rem(80px) rem(20px) rem(80px) 0;
+      padding: rem(80px) $desktop-gutter rem(80px) $desktop-gutter;
     }
 
-    @media screen and (min-width: $screen-l) {
-      padding-left: calc(100% - (#{$max-width} * 0.7));
+    @media screen and (min-width: $screen-xl) {
+      padding-left: calc(100% - (#{$max-width} * 0.7) + #{$desktop-gutter});
     }
 
     h2 {
@@ -107,7 +107,7 @@
       padding: rem(80px) rem(20px) rem(80px) rem(60px);
     }
 
-    @media screen and (min-width: $screen-l) {
+    @media screen and (min-width: $screen-xl) {
       padding-right: calc(100% - (#{$max-width} * 0.3));
     }
 

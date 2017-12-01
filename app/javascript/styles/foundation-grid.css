@@ -507,8 +507,8 @@
       -ms-flex-flow: row wrap;
           flex-flow: row wrap; }
       .row .row {
-        margin-right: -1.25rem;
-        margin-left: -1.25rem; }
+        margin-right: -1rem;
+        margin-left: -1rem; }
         @media print, screen and (min-width: 40em) {
           .row .row {
             margin-right: -1.25rem;
@@ -539,9 +539,14 @@
     .column, .columns {
       -ms-flex: 1 1 0px;
           flex: 1 1 0px;
-      padding-right: 1.25rem;
-      padding-left: 1.25rem;
+      padding-right: 1rem;
+      padding-left: 1rem;
       min-width: 0; }
+
+    @media print, screen and (min-width: 40em) {
+      .column, .columns {
+        padding-right: 1.25rem;
+        padding-left: 1.25rem; } }
     
     .column.row.row, .row.row.columns {
       float: none;
