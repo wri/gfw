@@ -1,31 +1,23 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select-me';
+import Dropdown from 'components/dropdown';
 
 class WidgetPlantationAreaSettings extends PureComponent {
   unitChange = value => {
     this.props.onUnitChange(value.value);
   };
 
-  iconRenderer = () => (
-    <svg className="icon icon-angle-arrow-down">
-      <use xlinkHref="#icon-angle-arrow-down">{}</use>
-    </svg>
-  );
-
   render() {
     const { units, settings } = this.props;
     return (
       <div className="c-widget-settings">
-        <div className="c-widget-settings__select">
-          <div className="c-widget-settings__title">UNIT</div>
-          <Select
-            iconRenderer={this.iconRenderer}
-            value={settings.unit}
-            options={units}
-            onChange={this.unitChange}
-          />
-        </div>
+        <Dropdown
+          theme="theme-select-light"
+          label="UNIT"
+          value={settings.unit}
+          options={units}
+          onChange={this.unitChange}
+        />
       </div>
     );
   }

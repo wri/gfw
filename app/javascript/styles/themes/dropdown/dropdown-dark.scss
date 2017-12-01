@@ -1,20 +1,7 @@
 @import '~styles/settings.scss';
 
 .theme-select-dark {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-
   .icon {
-    min-width: rem(12px);
-    width: rem(12px);
-    height: rem(12px);
-    margin-right: rem(16px);
-    fill: $white;
-  }
-
-  .dd__expandIcon {
     opacity: 0;
   }
 

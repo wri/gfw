@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select-me';
+import Dropdown from 'components/dropdown';
 
 class WidgetAreasMostCoverGainSettings extends PureComponent {
   locationChange = value => {
@@ -11,34 +11,25 @@ class WidgetAreasMostCoverGainSettings extends PureComponent {
     this.props.onUnitChange(value.value);
   };
 
-  iconRenderer = () => (
-    <svg className="icon icon-angle-arrow-down">
-      <use xlinkHref="#icon-angle-arrow-down">{}</use>
-    </svg>
-  );
-
   render() {
     const { locations, units, settings } = this.props;
     return (
       <div className="c-widget-settings">
-        <div className="c-widget-settings__select">
-          <div className="c-widget-settings__title">LOCATION</div>
-          <Select
-            iconRenderer={this.iconRenderer}
-            value={settings.location}
-            options={locations}
-            onChange={this.locationChange}
-          />
-        </div>
-        <div className="c-widget-settings__select">
-          <div className="c-widget-settings__title">UNIT</div>
-          <Select
-            iconRenderer={this.iconRenderer}
-            value={settings.unit}
-            options={units}
-            onChange={this.unitChange}
-          />
-        </div>
+        <Dropdown
+          theme="theme-select-light"
+          label="LOCATION"
+          className="theme-select-light"
+          value={settings.location}
+          options={locations}
+          onChange={this.locationChange}
+        />
+        <Dropdown
+          theme="theme-select-light"
+          label="UNIT"
+          value={settings.unit}
+          options={units}
+          onChange={this.unitChange}
+        />
       </div>
     );
   }
@@ -47,7 +38,9 @@ class WidgetAreasMostCoverGainSettings extends PureComponent {
 WidgetAreasMostCoverGainSettings.propTypes = {
   locations: PropTypes.array.isRequired,
   units: PropTypes.array.isRequired,
-  settings: PropTypes.object.isRequired
+  settings: PropTypes.object.isRequired,
+  onLocationChange: PropTypes.func,
+  onUnitChange: PropTypes.func
 };
 
 export default WidgetAreasMostCoverGainSettings;

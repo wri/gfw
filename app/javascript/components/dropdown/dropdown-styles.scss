@@ -1,0 +1,9 @@
+@import '~styles/settings.scss';
+
+.c-dropdown {
+  text-align: left;
+
+  .label {
+    margin-bottom: rem(10px);
+  }
+}

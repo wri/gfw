@@ -1,0 +1,45 @@
+@import '~styles/settings.scss';
+
+.theme-select-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .label {
+    margin-bottom: 0 !important;
+  }
+
+  .icon {
+    display: none;
+  }
+
+  .dd__selectControl {
+    height: rem(27px);
+    padding: 0 rem(21px);
+    border: 0;
+    border-radius: rem(19px);
+    background-color: $green-gfw;
+  }
+
+  .dd__expandIcon {
+    display: none;
+  }
+
+  .dd__selectedItem {
+    font-size: rem(13px);
+    letter-spacing: 0.1px;
+    color: $white;
+  }
+
+  &.-transparent {
+    .dd__selectControl {
+      background-color: $white;
+      border: solid 1px $green-gfw;
+    }
+
+    .dd__selectedItem {
+      color: $green-gfw;
+    }
+  }
+}

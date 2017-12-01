@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select-me';
-import Loader from 'components/loader/loader';
+import Dropdown from 'components/dropdown';
+import Loader from 'components/loader';
 
-import 'styles/themes/select/select-dark.scss';
 import './header-styles.scss';
 
 class Header extends PureComponent {
@@ -23,11 +22,12 @@ class Header extends PureComponent {
         <div className="row">
           <div className="columns large-6 medium-12 small-12">
             <div className="select-container">
-              <div className="theme-select-dark">
+              <div className="select">
                 <svg className="icon icon-angle-arrow-down c-header__select-arrow">
                   <use xlinkHref="#icon-angle-arrow-down" />
                 </svg>
-                <Select
+                <Dropdown
+                  theme="theme-select-dark"
                   placeholder="Country"
                   value={adminsSelected.country}
                   options={adminsLists.countries}
@@ -36,11 +36,12 @@ class Header extends PureComponent {
               </div>
               {adminsLists.regions &&
                 adminsLists.regions.length > 0 && (
-                  <div className="theme-select-dark">
+                  <div className="select">
                     <svg className="icon icon-angle-arrow-down c-header__select-arrow">
                       <use xlinkHref="#icon-angle-arrow-down" />
                     </svg>
-                    <Select
+                    <Dropdown
+                      theme="theme-select-dark"
                       placeholder="Region"
                       value={adminsSelected.region}
                       options={adminsLists.regions}
@@ -53,11 +54,12 @@ class Header extends PureComponent {
               {adminsSelected.region &&
                 adminsLists.subRegions &&
                 adminsLists.subRegions.length > 0 && (
-                  <div className="theme-select-dark">
+                  <div className="select">
                     <svg className="icon icon-angle-arrow-down c-header__select-arrow">
                       <use xlinkHref="#icon-angle-arrow-down" />
                     </svg>
-                    <Select
+                    <Dropdown
+                      theme="theme-select-dark"
                       placeholder="Juristriction"
                       value={adminsSelected.subRegion}
                       options={adminsLists.subRegions}
