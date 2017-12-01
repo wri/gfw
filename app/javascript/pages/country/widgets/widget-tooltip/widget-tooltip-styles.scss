@@ -1,12 +1,8 @@
 @import '~styles/settings.scss';
 
-.c-tooltip-chart {
+.c-widget-tooltip {
   padding: rem(18px);
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.19);
   background-color: $slate;
   color: $white;
-
-  .name {
-    text-transform: capitalize;
-  }
 }
