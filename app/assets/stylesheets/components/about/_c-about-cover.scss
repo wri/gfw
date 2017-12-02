@@ -5,9 +5,8 @@ $about-cover-padding-top-screen-m: rem(27px);
 
 .c-about-cover {
   position: relative;
-  height: $about-cover-height;
-  padding-top: $about-cover-padding-top;
-  margin-top: rem(59px);
+  padding-top: 50px;
+  padding-bottom: 30px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -17,7 +16,6 @@ $about-cover-padding-top-screen-m: rem(27px);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: calc(#{$about-cover-height} - #{$about-cover-padding-top});
 
     h1 {
       margin-bottom: rem(6px);
@@ -62,11 +60,10 @@ $about-cover-padding-top-screen-m: rem(27px);
 
   @media screen and (min-width: $screen-m) {
     height: $about-cover-height-screen-m;
-    padding-top: $about-cover-padding-top-screen-m;
-    margin-top: 0;
+    padding-top: 50px;
+    padding-bottom: 30px;
 
     .c-about-cover-texts {
-      height: calc(#{$about-cover-height-screen-m} - #{$about-cover-padding-top-screen-m});
 
       h1 {
         width: rem(550px);
