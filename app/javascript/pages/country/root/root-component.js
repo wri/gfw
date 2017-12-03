@@ -6,7 +6,7 @@ import Share from 'components/share';
 import Header from 'pages/country/header';
 import Tabs from 'pages/country/tabs';
 import Footer from 'pages/country/footer';
-import Map from 'pages/country/map';
+import Map from 'components/map';
 import Stories from 'pages/country/stories';
 import Sticky from 'components/sticky';
 

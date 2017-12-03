@@ -16,30 +16,30 @@ const mapStateToProps = state => ({
   isLoading: state.map.isLoading,
   isGeostoreLoading: state.countryData.isGeostoreLoading,
   bounds: state.countryData.geostore.bounds,
-  layersSpec: state.map.layersSpec,
+  layerSpec: state.map.layerSpec,
   layers: state.map.layers
 });
 
 class MapContainer extends PureComponent {
   componentDidMount() {
     this.buildMap(this.props);
-    this.props.getLayersSpec();
+    this.props.getLayerSpec();
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isGeostoreLoading, bounds, layers, layersSpec } = nextProps;
+    const { isGeostoreLoading, bounds, layers, layerSpec } = nextProps;
     if (isGeostoreLoading !== this.props.isGeostoreLoading && bounds) {
       this.boundMap(nextProps.bounds);
     }
 
-    if (!isEqual(layersSpec, this.props.layersSpec) && layers.length) {
-      this.updateLayers(layers, layersSpec);
+    if (!isEqual(layerSpec, this.props.layerSpec) && layers.length) {
+      this.updateLayers(layers, layerSpec);
     }
   }
 
-  setLayers(layers, layersSpec) {
+  setLayers(layers, layerSpec) {
     layers.forEach((slug, index) => {
-      const layer = new Layers[slug](this.map, { layerSpec: layersSpec[slug] });
+      const layer = new Layers[slug](this.map, { layerSpec: layerSpec[slug] });
       layer.getLayer().then(res => {
         this.map.overlayMapTypes.setAt(index, res);
       });
@@ -53,9 +53,9 @@ class MapContainer extends PureComponent {
     });
   }
 
-  updateLayers(layers, layersSpec) {
+  updateLayers(layers, layerSpec) {
     this.removeLayers();
-    this.setLayers(layers, layersSpec);
+    this.setLayers(layers, layerSpec);
   }
 
   buildMap() {
@@ -83,11 +83,11 @@ class MapContainer extends PureComponent {
 
 MapContainer.propTypes = {
   isGeostoreLoading: PropTypes.bool.isRequired,
-  layersSpec: PropTypes.object.isRequired,
+  layerSpec: PropTypes.object.isRequired,
   bounds: PropTypes.array.isRequired,
   layers: PropTypes.array.isRequired,
   mapOptions: PropTypes.object.isRequired,
-  getLayersSpec: PropTypes.func.isRequired
+  getLayerSpec: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, actions)(MapContainer);

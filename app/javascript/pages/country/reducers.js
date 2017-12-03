@@ -6,24 +6,24 @@ import { handleActions } from 'utils/redux';
 import router from './router';
 
 // Pages
-import * as country from 'pages/country/root/root';
+import * as country from 'pages/country/root';
 
 const countryReducers = {
   root: handleActions(country)
 };
 
 // Components
-import * as ShareComponent from 'components/share/share';
-import * as mapComponent from 'pages/country/map/map';
-import * as storiesComponent from 'pages/country/stories/stories';
-import * as widgetAreasMostCoverGainComponent from 'pages/country/widgets/widget-areas-most-cover-gain/widget-areas-most-cover-gain';
-import * as widgetPlantationAreaComponent from 'pages/country/widgets/widget-plantation-area/widget-plantation-area';
-import * as widgetTotalAreaPlantationsComponent from 'pages/country/widgets/widget-total-area-plantations/widget-total-area-plantations';
-import * as widgetTreeCoverComponent from 'pages/country/widgets/widget-tree-cover/widget-tree-cover';
-import * as widgetTreeCoverGainComponent from 'pages/country/widgets/widget-tree-cover-gain/widget-tree-cover-gain';
-import * as widgetTreeCoverLossAreasComponent from 'pages/country/widgets/widget-tree-cover-loss-areas/widget-tree-cover-loss-areas';
-import * as widgetTreeLocatedComponent from 'pages/country/widgets/widget-tree-located/widget-tree-located';
-import * as widgetTreeLossComponent from 'pages/country/widgets/widget-tree-loss/widget-tree-loss';
+import * as ShareComponent from 'components/share';
+import * as mapComponent from 'components/map';
+import * as storiesComponent from 'pages/country/stories';
+import * as widgetAreasMostCoverGainComponent from 'pages/country/widgets/widget-areas-most-cover-gain';
+import * as widgetPlantationAreaComponent from 'pages/country/widgets/widget-plantation-area';
+import * as widgetTotalAreaPlantationsComponent from 'pages/country/widgets/widget-total-area-plantations';
+import * as widgetTreeCoverComponent from 'pages/country/widgets/widget-tree-cover';
+import * as widgetTreeCoverGainComponent from 'pages/country/widgets/widget-tree-cover-gain';
+import * as widgetTreeCoverLossAreasComponent from 'pages/country/widgets/widget-tree-cover-loss-areas';
+import * as widgetTreeLocatedComponent from 'pages/country/widgets/widget-tree-located';
+import * as widgetTreeLossComponent from 'pages/country/widgets/widget-tree-loss';
 
 // Providers
 import * as countryDataProviderComponent from 'pages/country/providers/country-data-provider';
