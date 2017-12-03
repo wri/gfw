@@ -2,11 +2,6 @@
 $black-tabs: #404040;
 
 .l-country {
-  margin-top: rem(58px);
-
-  @media screen and (min-width: $screen-m) {
-    margin-top: 0;
-  }
 
   .panels {
     display: flex;
