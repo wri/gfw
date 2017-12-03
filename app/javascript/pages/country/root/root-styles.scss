@@ -2,7 +2,6 @@
 $black-tabs: #404040;
 
 .l-country {
-
   .panels {
     display: flex;
     flex-direction: row;
@@ -56,10 +55,6 @@ $black-tabs: #404040;
     }
 
     &.-fixed {
-      top: 0;
-      position: fixed;
-      width: 100%;
-
       @media screen and (min-width: $screen-m) {
         width: 30%;
       }
@@ -86,7 +81,7 @@ $black-tabs: #404040;
     padding-top: rem(20px);
     padding-bottom: rem(30px);
 
-    @media screen and (min-width: $screen-m) {
+    @media screen and (min-width: $screen-l) {
       padding-top: rem(50px);
       padding-right: rem(30px);
     }

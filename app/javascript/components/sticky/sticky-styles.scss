@@ -1,0 +1,14 @@
+.sticky {
+  width: 100%;
+
+  &.-fixed {
+    top: 0 !important;
+    position: fixed !important;
+    width: 100%;
+  }
+}
+
+.sticky-container {
+  width: 100%;
+  height: 100%;
+}
