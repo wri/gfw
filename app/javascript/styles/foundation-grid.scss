@@ -501,7 +501,7 @@
         display: none !important; }
       
       .row {
-        max-width: 70rem;
+        max-width: $max-width;
         margin-right: auto;
         margin-left: auto;
         display: -ms-flexbox;
@@ -509,16 +509,12 @@
         -ms-flex-flow: row wrap;
             flex-flow: row wrap; }
         .row .row {
-          margin-right: -0.625rem;
-          margin-left: -0.625rem; }
+          margin-right: -$mobile-gutter;
+          margin-left: -$mobile-gutter; }
           @media print, screen and (min-width: $screen-m) {
             .row .row {
-              margin-right: -0.625rem;
-              margin-left: -0.625rem; } }
-          @media print, screen and (min-width: $screen-l) {
-            .row .row {
-              margin-right: -0.625rem;
-              margin-left: -0.625rem; } }
+              margin-right: -$desktop-gutter;
+              margin-left: -$desktop-gutter; } }
           .row .row.collapse {
             margin-right: 0;
             margin-left: 0; }
@@ -541,9 +537,13 @@
       .column, .columns {
         -ms-flex: 1 1 0px;
             flex: 1 1 0px;
-        padding-right: 0.625rem;
-        padding-left: 0.625rem;
+        padding-right: $mobile-gutter;
+        padding-left: $mobile-gutter;
         min-width: 0; }
+        @media print, screen and (min-width: $screen-m) {
+          .column, .columns {
+            padding-right: $desktop-gutter;
+            padding-left: $desktop-gutter; } }
       
       .column.row.row, .row.row.columns {
         float: none;
@@ -720,8 +720,8 @@
         padding-left: 0; }
       
       .small-uncollapse > .column, .small-uncollapse > .columns {
-        padding-right: 0.625rem;
-        padding-left: 0.625rem; }
+        padding-right: $desktop-gutter;
+        padding-left: $desktop-gutter; }
       
       @media print, screen and (min-width: $screen-m) {
         .medium-1 {
@@ -871,8 +871,8 @@
           padding-right: 0;
           padding-left: 0; }
         .medium-uncollapse > .column, .medium-uncollapse > .columns {
-          padding-right: 0.625rem;
-          padding-left: 0.625rem; } }
+          padding-right: $desktop-gutter;
+          padding-left: $desktop-gutter; } }
       
       @media print, screen and (min-width: $screen-l) {
         .large-1 {
@@ -1022,8 +1022,8 @@
           padding-right: 0;
           padding-left: 0; }
         .large-uncollapse > .column, .large-uncollapse > .columns {
-          padding-right: 0.625rem;
-          padding-left: 0.625rem; } }
+          padding-right: $desktop-gutter;
+          padding-left: $desktop-gutter; } }
       
       .shrink {
         -ms-flex: 0 0 auto;
@@ -1031,7 +1031,7 @@
         max-width: 100%; }
       
       .column-block {
-        margin-bottom: 1.25rem; }
+        margin-bottom: $desktop-gutter; }
         .column-block > :last-child {
           margin-bottom: 0; }
       
