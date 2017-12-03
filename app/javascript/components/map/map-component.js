@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
 
-import Loader from 'components/loader/loader';
+import Loader from 'components/loader';
 
 import './map-styles.scss';
 
