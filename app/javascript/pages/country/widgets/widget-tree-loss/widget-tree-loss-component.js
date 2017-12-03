@@ -9,48 +9,44 @@ import {
   Tooltip,
   ResponsiveContainer
 } from 'recharts';
-import numeral from 'numeral';
 
 import Loader from 'components/loader/loader';
-import TooltipChart from 'pages/country/widgets/tooltip-chart';
 import WidgetHeader from 'pages/country/widgets/widget-header';
+import WidgetTooltip from 'pages/country/widgets/widget-tooltip';
 import WidgetTreeLossSettings from './widget-tree-loss-settings-component';
+import WidgetTreeLossTooltip from './widget-tree-loss-tooltip-component';
 import './widget-tree-loss-styles.scss';
 
 class WidgetTreeLoss extends PureComponent {
-  componentDidMount() {
-    const { setInitialData } = this.props;
-    setInitialData(this.props);
-  }
-
   componentWillUpdate(nextProps) {
-    const { updateData, settings } = this.props;
+    const { isMetaLoading, setInitialData, updateData, settings } = this.props;
 
     if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
       updateData(nextProps);
+    }
+
+    if (!nextProps.isMetaLoading && isMetaLoading) {
+      setInitialData(nextProps);
     }
   }
 
   render() {
     const {
-      location,
       isLoading,
       viewOnMap,
-      total,
+      loss,
+      lossSentence,
+      treeExtent,
       yearsLoss,
-      years,
-      units,
       settings,
       canopies,
-      locations,
-      setTreeLossSettingsLocation,
-      setTreeLossSettingsUnit,
+      indicators,
+      setTreeLossSettingsIndicator,
       setTreeLossSettingsCanopy,
       setTreeLossSettingsStartYear,
       setTreeLossSettingsEndYear
     } = this.props;
 
-    const unitMeasure = settings.unit === 'ha' ? 'ha' : '%';
     return (
       <div className="c-widget c-widget-tree-loss">
         <WidgetHeader
@@ -60,13 +56,11 @@ class WidgetTreeLoss extends PureComponent {
         >
           <WidgetTreeLossSettings
             type="settings"
-            locations={locations}
-            units={units}
+            indicators={indicators}
             canopies={canopies}
             settings={settings}
             yearsLoss={yearsLoss}
-            onLocationChange={setTreeLossSettingsLocation}
-            onUnitChange={setTreeLossSettingsUnit}
+            onIndicatorChange={setTreeLossSettingsIndicator}
             onCanopyChange={setTreeLossSettingsCanopy}
             onStartYearChange={setTreeLossSettingsStartYear}
             onEndYearChange={setTreeLossSettingsEndYear}
@@ -76,60 +70,36 @@ class WidgetTreeLoss extends PureComponent {
           <Loader />
         ) : (
           <div>
-            <div className="c-widget-tree-loss__legend">
-              <div className="contain-info-legend">
-                <div className="c-widget-tree-loss__legend-title">
-                  Total Tree Cover Loss
-                </div>
-                <div className="c-widget-tree-loss__legend-years">
-                  ({`${settings.startYear} - ${settings.endYear}`})
-                </div>
-              </div>
-              <div className="">
-                <div className="c-widget-tree-loss__legend-title">
-                  <span style={{ backgroundColor: '#f26798' }}>{}</span>
-                  {location.admin1 ? 'Jurisdiction-wide' : 'Country-wide'}
-                </div>
-                <div
-                  className="c-widget-tree-loss__legend-value"
-                  style={{ color: '#f26798' }}
-                >
-                  {settings.unit === 'ha'
-                    ? numeral(Math.round(total / 1000)).format('0,0')
-                    : Math.round(total)}
-                  {unitMeasure}
-                </div>
-              </div>
-            </div>
+            <div className="c-widget-tree-loss__sentence">{lossSentence}</div>
             <div className="c-widget-tree-loss__chart">
               <ResponsiveContainer height={247} width={'100%'}>
                 <BarChart
                   width={627}
                   height={247}
-                  data={years}
+                  data={loss}
                   margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                 >
                   <XAxis
-                    dataKey="date"
+                    dataKey="year"
                     padding={{ top: 135 }}
                     axisLine={false}
                     tickLine={false}
                   />
                   <YAxis
+                    dataKey="area"
                     axisLine={false}
                     tickLine={false}
                     tickCount={7}
-                    tickFormatter={d =>
-                      numeral(Math.round(d / 1000)).format('0,0')
-                    }
                   />
                   <CartesianGrid vertical={false} strokeDasharray="3 4" />
-                  <Tooltip content={<TooltipChart />} />
-                  <Bar dataKey="value" barSize={22} fill="#fe6598" />
                   <Tooltip
-                    percentage={settings.unit !== 'ha'}
-                    content={<TooltipChart />}
+                    content={
+                      <WidgetTooltip>
+                        <WidgetTreeLossTooltip extent={treeExtent} />
+                      </WidgetTooltip>
+                    }
                   />
+                  <Bar dataKey="area" barSize={22} fill="#fe6598" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -141,20 +111,19 @@ class WidgetTreeLoss extends PureComponent {
 }
 
 WidgetTreeLoss.propTypes = {
-  location: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  isMetaLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
-  total: PropTypes.number.isRequired,
+  loss: PropTypes.array.isRequired,
+  lossSentence: PropTypes.string.isRequired,
+  treeExtent: PropTypes.number.isRequired,
   yearsLoss: PropTypes.array.isRequired,
-  years: PropTypes.array.isRequired,
-  units: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   canopies: PropTypes.array.isRequired,
-  locations: PropTypes.array.isRequired,
+  indicators: PropTypes.array.isRequired,
   viewOnMap: PropTypes.func.isRequired,
   updateData: PropTypes.func.isRequired,
-  setTreeLossSettingsLocation: PropTypes.func.isRequired,
-  setTreeLossSettingsUnit: PropTypes.func.isRequired,
+  setTreeLossSettingsIndicator: PropTypes.func.isRequired,
   setTreeLossSettingsCanopy: PropTypes.func.isRequired,
   setTreeLossSettingsStartYear: PropTypes.func.isRequired,
   setTreeLossSettingsEndYear: PropTypes.func.isRequired

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { PieChart, Pie, Tooltip, Cell } from 'recharts';
 
 import Loader from 'components/loader/loader';
-import TooltipChart from 'pages/country/widgets/tooltip-chart';
+import TooltipChart from 'pages/country/widgets/widget-tooltip';
 import WidgetHeader from 'pages/country/widgets/widget-header';
 import WidgetTotalAreaPlantationsSettings from './widget-total-area-plantations-settings-component';
 import './widget-total-area-plantations-styles.scss';
