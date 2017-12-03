@@ -1,7 +1,10 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
+import numeral from 'numeral';
 
 import { getTreeLossByYear } from 'services/tree-loss';
+import { getExtent } from 'services/tree-extent';
 
 import WidgetTreeLossComponent from './widget-tree-loss-component';
 import actions from './widget-tree-loss-actions';
@@ -14,61 +17,95 @@ const mapStateToProps = state => ({
   location: state.location.payload,
   areaHa: state.countryData.geostore.areaHa,
   isLoading: state.widgetTreeLoss.isLoading,
-  total: state.widgetTreeLoss.total,
-  years: state.widgetTreeLoss.years,
+  loss: state.widgetTreeLoss.loss,
+  lossSentence: state.widgetTreeLoss.lossSentence,
+  treeExtent: state.widgetTreeLoss.treeExtent,
   yearsLoss: state.widgetTreeLoss.yearsLoss,
-  locations: state.widgetTreeLoss.locations,
-  units: state.widgetTreeLoss.units,
+  indicators: state.widgetTreeLoss.indicators,
   canopies: state.widgetTreeLoss.canopies,
   settings: state.widgetTreeLoss.settings
 });
 
 const WidgetTreeLossContainer = props => {
-  const updateData = newProps => {
-    newProps.setTreeLossIsLoading(true);
-    setWidgetData(newProps);
+  const updateData = nextProps => {
+    nextProps.setTreeLossIsLoading(true);
+    setWidgetData(nextProps);
   };
 
-  const setInitialData = newProps => {
-    setWidgetData(newProps);
+  const setInitialData = nextProps => {
+    setWidgetData(nextProps);
   };
 
-  const setWidgetData = newProps => {
-    const { location, areaHa, settings, setTreeLossValues } = newProps;
+  const setWidgetData = nextProps => {
+    const { location, settings, setTreeLossValues } = nextProps;
 
-    const percentageValues = [];
-    getTreeLossByYear(
-      location.admin0,
-      location.admin1,
-      {
-        minYear: settings.startYear,
-        maxYear: settings.endYear
-      },
-      settings.canopy
-    ).then(response => {
-      const total =
-        response.data.data.length &&
-        response.data.data.reduce(
-          (accumulator, item) =>
-            (typeof accumulator === 'object'
-              ? accumulator.value
-              : accumulator) + item.value
-        );
-      if (settings.unit !== 'ha') {
-        response.data.data.forEach(item => {
-          percentageValues.push({
-            value: item.value / Math.round(areaHa) * 100,
-            label: item.date
+    axios
+      .all([
+        getTreeLossByYear(
+          location.country,
+          location.region,
+          location.subRegion,
+          settings.indicator,
+          {
+            minYear: settings.startYear,
+            maxYear: settings.endYear
+          },
+          settings.canopy
+        ),
+        getExtent(
+          location.country,
+          location.region,
+          location.subRegion,
+          settings.indicator,
+          settings.canopy
+        )
+      ])
+      .then(
+        axios.spread((getTreeLossByYearResponse, getExtentResponse) => {
+          const treeExtent = getExtentResponse.data.data[0].value;
+          const loss = getTreeLossByYearResponse.data.data;
+          setTreeLossValues({
+            loss,
+            lossSentence: getSentence(nextProps, loss, treeExtent),
+            treeExtent
           });
-        });
-      }
-      const values = {
-        total:
-          settings.unit === 'ha' ? total : total / Math.round(areaHa) * 100,
-        years: settings.unit === 'ha' ? response.data.data : percentageValues
-      };
-      setTreeLossValues(values);
-    });
+        })
+      );
+  };
+
+  const getSentence = (nextProps, loss, treeExtent) => {
+    const { locationNames, indicators, settings } = nextProps;
+
+    const totalLoss = loss.reduce(
+      (sum, item) => (typeof sum === 'object' ? sum.area : sum) + item.area
+    );
+    const totalEmissions = loss.reduce(
+      (sum, item) =>
+        (typeof sum === 'object' ? sum.emissions : sum) + item.emissions
+    );
+    const indicator = indicators.filter(
+      item => item.value === settings.indicator
+    );
+
+    const locationText = locationNames.region
+      ? `${indicator[0].label} of ${
+        locationNames.subRegion
+          ? locationNames.subRegion.label
+          : locationNames.region.label
+      } `
+      : `${locationNames.country.label} (${indicator[0].label.toLowerCase()}) `;
+
+    return `Between ${settings.startYear} and ${settings.endYear}, ${
+      locationText
+    } lost ${numeral(totalLoss).format(
+      '0,0'
+    )} ha of tree cover: This loss is equal to ${numeral(
+      totalLoss / (treeExtent * 100)
+    ).format(
+      '0.0'
+    )}% of the total ${indicator[0].label.toLowerCase()} tree cover extent in 2010, and equivalent to ${numeral(
+      totalEmissions
+    ).format('0,0')} tonnes of CO\u2082 emissions.`;
   };
 
   const viewOnMap = () => {
@@ -79,7 +116,8 @@ const WidgetTreeLossContainer = props => {
     ...props,
     setInitialData,
     viewOnMap,
-    updateData
+    updateData,
+    getSentence
   });
 };
 

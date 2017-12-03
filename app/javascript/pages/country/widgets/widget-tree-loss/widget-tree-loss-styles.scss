@@ -1,68 +1,18 @@
 @import '~styles/settings.scss';
 
 .c-widget-tree-loss {
-
-  .c-widget-tree-loss__legend {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 rem(13px);
-    flex-direction: column;
-
-    @media screen and (min-width: $screen-s) {
-      flex-direction: row;
-    }
-
-    .contain-info-legend {
-      display: flex;
-      flex-direction: column;
-
-      @media screen and (min-width: $screen-s) {
-        display: block;
-      }
-    }
-
-    .c-widget-tree-loss__legend-title {
-      font-size: 12px;
-      line-height: 1.08;
-      color: $slate;
-      text-align: left;
-      margin-top: rem(10px);
-
-      @media screen and (min-width: $screen-s) {
-        text-align: right;
-        margin-top: 0;
-      }
-
-      span {
-        position: relative;
-        top: rem(1px);
-        display: inline-block;
-        width: rem(12px);
-        height: rem(12px);
-        margin-right: rem(12px);
-        border-radius: 100%;
-      }
-    }
-
-    .c-widget-tree-loss__legend-value {
-      font-size: 28px;
-      font-weight: 500;
-      margin-top: rem(8px);
-    }
-
-    .c-widget-tree-loss__legend-years {
-      font-size: 12px;
-      line-height: 1.08;
-      text-align: left;
-      color: rgba($slate, 0.5);
-      margin-top: rem(9px);
-    }
+  .c-widget-tree-loss__sentence {
+    font-size: 19px;
+    font-weight: 300;
+    line-height: 1.58;
+    letter-spacing: 0.1px;
+    color: #4a4a4a;
   }
 
   .c-widget-tree-loss__chart {
     display: flex;
     justify-content: center;
-    margin-top: rem(33px);
+    margin-top: rem(20px);
 
     .recharts-text {
       font-size: 10px;
