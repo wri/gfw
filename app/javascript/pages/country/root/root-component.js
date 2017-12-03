@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import ScrollEvent from 'react-onscroll';
 
 import Widget from 'pages/country/widgets';
 import Share from 'components/share';
@@ -9,6 +8,7 @@ import Tabs from 'pages/country/tabs';
 import Footer from 'pages/country/footer';
 import Map from 'pages/country/map';
 import Stories from 'pages/country/stories';
+import Sticky from 'components/sticky';
 
 import './root-styles.scss';
 
@@ -38,16 +38,13 @@ const WIDGETS = {
 class Root extends PureComponent {
   render() {
     const {
-      isMapFixed,
       showMapMobile,
       handleShowMapMobile,
-      handleScrollCallback,
       adminsOptions,
       adminsSelected
     } = this.props;
     return (
       <div className="l-country">
-        <ScrollEvent handleScrollCallback={handleScrollCallback} />
         <button className="open-map-mobile-tab" onClick={handleShowMapMobile}>
           <span>{!showMapMobile ? 'show' : 'close'} map</span>
         </button>
@@ -76,11 +73,9 @@ class Root extends PureComponent {
             </div>
           </div>
           <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
-            <div
-              className={`map ${isMapFixed ? '-fixed' : ''} ${
-                showMapMobile ? '-open-mobile' : ''
-              }`}
-              style={{ top: this.props.mapTop }}
+            <Sticky
+              className={`map ${showMapMobile ? '-open-mobile' : ''}`}
+              limitElement="c-stories"
             >
               <Map
                 maxZoom={14}
@@ -101,7 +96,7 @@ class Root extends PureComponent {
                   zoom: 8
                 }}
               />
-            </div>
+            </Sticky>
           </div>
         </div>
         <Stories locationNames={adminsSelected} />
@@ -114,9 +109,6 @@ class Root extends PureComponent {
 
 Root.propTypes = {
   showMapMobile: PropTypes.bool.isRequired,
-  handleScrollCallback: PropTypes.func.isRequired,
-  isMapFixed: PropTypes.bool.isRequired,
-  mapTop: PropTypes.number.isRequired,
   handleShowMapMobile: PropTypes.func.isRequired,
   adminsOptions: PropTypes.object,
   adminsSelected: PropTypes.object

@@ -45,56 +45,13 @@ const mapStateToProps = state => {
 };
 
 class RootContainer extends PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      mapFixedLimit: 0,
-      isMapFixed: true,
-      mapTop: 0
-    };
-  }
-
   handleShowMapMobile = () => {
     this.props.setShowMapMobile(!this.props.showMapMobile);
   };
 
-  handleScrollCallback = () => {
-    const { isMapFixed, mapFixedLimit } = this.state;
-    const { gfwHeaderHeight } = this.props;
-
-    if (!mapFixedLimit) {
-      this.setState({
-        mapFixedLimit:
-          document.getElementById('c-stories').offsetTop - window.innerHeight
-      });
-    }
-
-    if (
-      !isMapFixed &&
-      window.scrollY < mapFixedLimit &&
-      window.pageYOffset >= gfwHeaderHeight
-    ) {
-      this.setState({ isMapFixed: true, mapTop: 0 });
-    }
-
-    if (isMapFixed && window.scrollY >= mapFixedLimit) {
-      this.setState({
-        isMapFixed: false,
-        mapTop: mapFixedLimit - gfwHeaderHeight
-      });
-    }
-
-    if (isMapFixed && window.scrollY < gfwHeaderHeight) {
-      this.setState({ isMapFixed: false, mapTop: 0 });
-    }
-  };
-
   render() {
-    const { isMapFixed, mapTop } = this.state;
     return createElement(RootComponent, {
       ...this.props,
-      isMapFixed,
-      mapTop,
       handleShowMapMobile: this.handleShowMapMobile,
       handleScrollCallback: this.handleScrollCallback
     });
@@ -103,8 +60,7 @@ class RootContainer extends PureComponent {
 
 RootContainer.propTypes = {
   setShowMapMobile: PropTypes.func,
-  showMapMobile: PropTypes.bool,
-  gfwHeaderHeight: PropTypes.number
+  showMapMobile: PropTypes.bool
 };
 
 export default connect(mapStateToProps, actions)(RootContainer);
