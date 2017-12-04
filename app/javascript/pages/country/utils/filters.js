@@ -61,10 +61,18 @@ export const getAdminsSelected = createSelector(
           return i.value === adminsSelected.subRegion;
         })) ||
       null;
+    let current = country;
+    if (adminsSelected.subRegion) {
+      current = subRegion;
+    } else if (adminsSelected.region) {
+      current = region;
+    }
+
     return {
       country,
       region,
-      subRegion
+      subRegion,
+      current
     };
   }
 );
