@@ -4,16 +4,16 @@ import Dropdown from 'components/dropdown';
 
 class WidgetTreeCoverGainSettings extends PureComponent {
   render() {
-    const { locations, settings, onLocationChange } = this.props;
+    const { indicators, settings, onIndicatorChange } = this.props;
     return (
       <div className="c-widget-settings">
         <div className="body">
           <Dropdown
             theme="theme-select-light"
             label="LOCATION"
-            value={settings.location}
-            options={locations}
-            onChange={onLocationChange}
+            value={settings.indicator}
+            options={indicators}
+            onChange={option => onIndicatorChange(option.value)}
           />
         </div>
       </div>
@@ -22,9 +22,9 @@ class WidgetTreeCoverGainSettings extends PureComponent {
 }
 
 WidgetTreeCoverGainSettings.propTypes = {
-  locations: PropTypes.array.isRequired,
+  indicators: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
-  onLocationChange: PropTypes.func
+  onIndicatorChange: PropTypes.func
 };
 
 export default WidgetTreeCoverGainSettings;
