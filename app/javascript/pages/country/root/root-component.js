@@ -37,12 +37,7 @@ const WIDGETS = {
 };
 class Root extends PureComponent {
   render() {
-    const {
-      showMapMobile,
-      handleShowMapMobile,
-      adminsOptions,
-      adminsSelected
-    } = this.props;
+    const { showMapMobile, handleShowMapMobile } = this.props;
     return (
       <div className="l-country">
         <button className="open-map-mobile-tab" onClick={handleShowMapMobile}>
@@ -50,25 +45,20 @@ class Root extends PureComponent {
         </button>
         <div className="panels">
           <div className="data-panel">
-            <Header
-              className="header"
-              adminsOptions={adminsOptions}
-              adminsSelected={adminsSelected}
-            />
+            <Header className="header" />
             <Tabs />
             <div className="widgets">
               <div className="row">
-                {adminsSelected &&
-                  Object.keys(WIDGETS).map(widget => (
-                    <div
-                      key={widget}
-                      className={`columns large-${
-                        WIDGETS[widget].gridWidth
-                      } small-12 widget`}
-                    >
-                      <Widget widget={widget} />
-                    </div>
-                  ))}
+                {Object.keys(WIDGETS).map(widget => (
+                  <div
+                    key={widget}
+                    className={`columns large-${
+                      WIDGETS[widget].gridWidth
+                    } small-12 widget`}
+                  >
+                    <Widget widget={widget} />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -99,7 +89,7 @@ class Root extends PureComponent {
             </Sticky>
           </div>
         </div>
-        <Stories locationNames={adminsSelected} />
+        <Stories />
         <Footer />
         <Share />
       </div>
@@ -109,9 +99,7 @@ class Root extends PureComponent {
 
 Root.propTypes = {
   showMapMobile: PropTypes.bool.isRequired,
-  handleShowMapMobile: PropTypes.func.isRequired,
-  adminsOptions: PropTypes.object,
-  adminsSelected: PropTypes.object
+  handleShowMapMobile: PropTypes.func.isRequired
 };
 
 export default Root;
