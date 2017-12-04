@@ -17,13 +17,13 @@ class WidgetTreeLossSettings extends PureComponent {
     const startYears = [];
     const endYears = [];
     yearsLoss.forEach(item => {
-      if (item.value < settings.endYear) {
+      if (item.value < settings.endYear.value) {
         startYears.push({
           label: item.label,
           value: item.value
         });
       }
-      if (item.value > settings.startYear) {
+      if (item.value > settings.startYear.value) {
         endYears.push({
           label: item.label,
           value: item.value
@@ -37,7 +37,7 @@ class WidgetTreeLossSettings extends PureComponent {
           <Dropdown
             theme="theme-select-light"
             label="LOCATION"
-            value={settings.indicator}
+            value={settings.indicator.value}
             options={indicators}
             onChange={onIndicatorChange}
           />
@@ -46,14 +46,14 @@ class WidgetTreeLossSettings extends PureComponent {
             <div className="select-container">
               <Dropdown
                 theme="theme-select-button -transparent"
-                value={settings.startYear}
+                value={settings.startYear.value}
                 options={startYears}
                 onChange={onStartYearChange}
               />
               <span className="text-date">to</span>
               <Dropdown
                 theme="theme-select-button -transparent"
-                value={settings.endYear}
+                value={settings.endYear.value}
                 options={endYears}
                 onChange={onEndYearChange}
               />
@@ -64,7 +64,7 @@ class WidgetTreeLossSettings extends PureComponent {
           <Dropdown
             theme="theme-select-button"
             label="CANOPY DENSITY"
-            value={settings.canopy === 0 ? '> 0%' : settings.canopy}
+            value={settings.canopy.value}
             options={canopies}
             onChange={onCanopyChange}
           />
