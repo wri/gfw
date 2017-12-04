@@ -101,7 +101,7 @@ export const initialState = {
   ],
   canopies: [
     {
-      value: '0',
+      value: 0,
       label: '> 0%'
     },
     {
@@ -134,10 +134,10 @@ export const initialState = {
     }
   ],
   settings: {
-    startYear: { value: 2001 },
-    endYear: { value: 2016 },
-    indicator: { value: 'gadm28_only' },
-    canopy: { value: 30 }
+    startYear: 2001,
+    endYear: 2016,
+    indicator: 'gadm28_only',
+    canopy: 30
   }
 };
 
