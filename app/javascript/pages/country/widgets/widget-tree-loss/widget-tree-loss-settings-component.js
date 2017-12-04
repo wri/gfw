@@ -64,7 +64,7 @@ class WidgetTreeLossSettings extends PureComponent {
           <Dropdown
             theme="theme-select-button"
             label="CANOPY DENSITY"
-            value={settings.canopy === 0 ? '> 0%' : settings.canopy}
+            value={settings.canopy}
             options={canopies}
             onChange={option => onCanopyChange(option.value)}
           />
