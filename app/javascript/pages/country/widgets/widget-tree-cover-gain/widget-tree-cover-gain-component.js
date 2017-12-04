@@ -48,7 +48,7 @@ class WidgetTreeCoverGain extends PureComponent {
           />
         </WidgetHeader>
         {isLoading ? (
-          <Loader isAbsolute />
+          <Loader />
         ) : (
           <div className="c-widget-tree-cover-gain__container">
             <div className="c-widget-tree-cover-gain__info">

@@ -4,12 +4,15 @@
 $font-family-1: 'Fira Sans', sans-serif;
 
 /* SCREENS */
-$screen-xs: 320px;
-$screen-s: 540px;
-$screen-m: 850px;
-$screen-l: 1024px;
-$screen-xl: 1280px;
-$screen-xxl: 2000px;
+$screen-s: 20rem;
+$screen-m: 40rem;
+$screen-l: 64rem;
+$screen-xl: 70rem;
+
+/* GRID SETTINGS */
+$max-width: 70rem;
+$desktop-gutter: 1.25rem;
+$mobile-gutter: 1rem;
 
 /* COLORS */
 $white: #fff;

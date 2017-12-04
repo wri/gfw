@@ -1,14 +1,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select-me';
+import Dropdown from 'components/dropdown';
+import Loader from 'components/loader';
 
-import Loader from 'components/loader/loader';
 import './header-styles.scss';
 
 class Header extends PureComponent {
   render() {
     const {
-      adminsLists,
+      className,
+      adminsOptions,
       adminsSelected,
       handleCountryChange,
       handleRegionChange,
@@ -16,64 +17,79 @@ class Header extends PureComponent {
       isLoading
     } = this.props;
     return (
-      <div className="c-header">
-        {isLoading && <Loader isAbsolute />}
+      <div className={`${className} c-header`}>
+        {isLoading && <Loader className="loader" theme="theme-loader-light" />}
         <div className="row">
-          <div className="large-6 medium-12 small-12 columns container-select">
-            <div className="c-header__select">
-              <svg className="icon icon-angle-arrow-down c-header__select-arrow">
-                <use xlinkHref="#icon-angle-arrow-down" />
-              </svg>
-              <Select
-                value={adminsSelected.country}
-                options={adminsLists.countries}
-                onChange={handleCountryChange}
-              />
-            </div>
-            <div className="c-header__select -jurisdiction">
-              <svg className="icon icon-angle-arrow-down c-header__select-arrow">
-                <use xlinkHref="#icon-angle-arrow-down" />
-              </svg>
-              <Select
-                value={adminsSelected.region}
-                options={adminsLists.regions}
-                onChange={region =>
-                  handleRegionChange(adminsSelected.country, region)
-                }
-              />
-            </div>
-            {adminsSelected.region &&
-            adminsLists.subRegions &&
-            adminsLists.subRegions.length > 0 ? (
-              <div className="c-header__select -jurisdiction">
-                  <svg className="icon icon-angle-arrow-down c-header__select-arrow">
+          <div className="columns small-12 large-6">
+            <div className="select-container">
+              <div className="select">
+                <svg className="icon icon-angle-arrow-down c-header__select-arrow">
                   <use xlinkHref="#icon-angle-arrow-down" />
                 </svg>
-                  <Select
-                  value={adminsSelected.subRegion}
-                  options={adminsLists.subRegions}
-                  onChange={subRegion =>
-                      handleSubRegionChange(
-                        adminsSelected.country,
-                        adminsSelected.region,
-                        subRegion
-                      )
-                    }
+                <Dropdown
+                  theme="theme-select-dark"
+                  placeholder="Country"
+                  value={adminsSelected.country}
+                  options={adminsOptions.countries}
+                  onChange={handleCountryChange}
+                  searchable
                 />
-                </div>
-              ) : null}
+              </div>
+              {adminsOptions.regions &&
+                adminsOptions.regions.length > 1 && (
+                  <div className="select">
+                    <svg className="icon icon-angle-arrow-down c-header__select-arrow">
+                      <use xlinkHref="#icon-angle-arrow-down" />
+                    </svg>
+                    <Dropdown
+                      theme="theme-select-dark"
+                      placeholder="Region"
+                      value={adminsSelected.region}
+                      options={adminsOptions.regions}
+                      onChange={region =>
+                        handleRegionChange(adminsSelected.country, region)
+                      }
+                      searchable
+                    />
+                  </div>
+                )}
+              {adminsSelected.region &&
+                adminsSelected.region.value &&
+                adminsOptions.subRegions &&
+                adminsOptions.subRegions.length > 1 && (
+                  <div className="select">
+                    <svg className="icon icon-angle-arrow-down c-header__select-arrow">
+                      <use xlinkHref="#icon-angle-arrow-down" />
+                    </svg>
+                    <Dropdown
+                      theme="theme-select-dark"
+                      placeholder="Juristriction"
+                      value={adminsSelected.subRegion}
+                      options={adminsOptions.subRegions}
+                      onChange={subRegion =>
+                        handleSubRegionChange(
+                          adminsSelected.country,
+                          adminsSelected.region,
+                          subRegion
+                        )
+                      }
+                      searchable
+                    />
+                  </div>
+                )}
+            </div>
           </div>
-          <div className="large-6 medium-12 small-12 columns c-header__info">
-            <p>
-              In 2010, <strong>this</strong>
-            </p>
-          </div>
-        </div>
-        <div className="c-header__tabs">
-          <div className="row">
-            <ul>
-              <li className="-selected">Summary</li>
-            </ul>
+          <div className="columns large-6 medium-12 small-12">
+            <div className="description text -title-xs">
+              <p>
+                In 2010, this country had <b>519 MHa</b> tree cover, that
+                represents <b>61%</b> of its <b>851 Mha</b>.
+              </p>
+              <p>
+                Excluding plantations, <b>40 MHa</b> of tree cover loss occured
+                in <b>2016</b>.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -82,9 +98,10 @@ class Header extends PureComponent {
 }
 
 Header.propTypes = {
+  className: PropTypes.string,
   isLoading: PropTypes.bool.isRequired,
   adminsSelected: PropTypes.object.isRequired,
-  adminsLists: PropTypes.object.isRequired,
+  adminsOptions: PropTypes.object.isRequired,
   handleCountryChange: PropTypes.func.isRequired,
   handleRegionChange: PropTypes.func.isRequired,
   handleSubRegionChange: PropTypes.func.isRequired

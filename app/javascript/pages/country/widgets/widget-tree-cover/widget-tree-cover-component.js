@@ -81,7 +81,7 @@ class WidgetTreeCover extends PureComponent {
           />
         </WidgetHeader>
         {isLoading ? (
-          <Loader isAbsolute />
+          <Loader />
         ) : (
           <div>
             <ul className="c-widget-tree-cover__legend">

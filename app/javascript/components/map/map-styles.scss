@@ -6,6 +6,10 @@
   background-color: #b3e2ff;
 }
 
+.loader-overlay {
+  background-color: rgba(white, 0.5);
+}
+
 .open-map-mobile-tab {
   display: block;
   background: #ffd24d;
@@ -13,15 +17,19 @@
   text-transform: uppercase;
   color: #555;
   text-decoration: none;
-  padding: 8px;
+  padding: rem(8px);
   position: fixed;
   top: calc(50% - 50px);
-  right: -32px;
+  right: rem(-32px);
   z-index: 999;
   cursor: pointer;
   transform: rotate(90deg) translate(50%);
 
   @media screen and (min-width: $screen-m) {
     display: none;
+  }
+
+  &:focus {
+    outline: none;
   }
 }

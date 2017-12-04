@@ -1,29 +1,19 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select-me';
+import Dropdown from 'components/dropdown';
 
 class WidgetTreeCoverGainSettings extends PureComponent {
-  locationChange = value => {
-    this.props.onLocationChange(value);
-  };
-
-  iconRenderer = () => (
-    <svg className="icon icon-angle-arrow-down">
-      <use xlinkHref="#icon-angle-arrow-down">{}</use>
-    </svg>
-  );
-
   render() {
-    const { locations, settings } = this.props;
+    const { locations, settings, onLocationChange } = this.props;
     return (
       <div className="c-widget-settings">
-        <div className="c-widget-settings__select">
-          <div className="c-widget-settings__title">LOCATION</div>
-          <Select
-            iconRenderer={this.iconRenderer}
+        <div className="body">
+          <Dropdown
+            theme="theme-select-light"
+            label="LOCATION"
             value={settings.location}
             options={locations}
-            onChange={this.locationChange}
+            onChange={onLocationChange}
           />
         </div>
       </div>
@@ -33,7 +23,8 @@ class WidgetTreeCoverGainSettings extends PureComponent {
 
 WidgetTreeCoverGainSettings.propTypes = {
   locations: PropTypes.array.isRequired,
-  settings: PropTypes.object.isRequired
+  settings: PropTypes.object.isRequired,
+  onLocationChange: PropTypes.func
 };
 
 export default WidgetTreeCoverGainSettings;

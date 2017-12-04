@@ -47,7 +47,7 @@ class WidgetTotalAreaPlantations extends PureComponent {
           />
         </WidgetHeader>
         {isLoading ? (
-          <Loader isAbsolute />
+          <Loader />
         ) : (
           <div>
             <p className="title-legend">By Type</p>

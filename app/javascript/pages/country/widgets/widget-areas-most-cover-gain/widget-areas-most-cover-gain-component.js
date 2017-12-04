@@ -58,7 +58,7 @@ class WidgetAreasMostCoverGain extends PureComponent {
           />
         </WidgetHeader>
         {isLoading ? (
-          <Loader isAbsolute />
+          <Loader />
         ) : (
           <div>
             <p className="title-legend">Hansen - UMD</p>

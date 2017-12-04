@@ -1,33 +1,19 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select-me';
+import Dropdown from 'components/dropdown';
 
 class WidgetTreeLossSettings extends PureComponent {
-  indicatorChange = value => {
-    this.props.onIndicatorChange(value.value);
-  };
-
-  canopyChange = value => {
-    this.props.onCanopyChange(value.value);
-  };
-
-  startYearChange = value => {
-    this.props.onStartYearChange(value.value);
-  };
-
-  endYearChange = value => {
-    this.props.onEndYearChange(value.value);
-  };
-
-  iconRenderer = () => (
-    <svg className="icon icon-angle-arrow-down">
-      <use xlinkHref="#icon-angle-arrow-down">{}</use>
-    </svg>
-  );
-
   render() {
-    const { indicators, canopies, settings, yearsLoss } = this.props;
-
+    const {
+      indicators,
+      canopies,
+      settings,
+      yearsLoss,
+      onEndYearChange,
+      onCanopyChange,
+      onStartYearChange,
+      onIndicatorChange
+    } = this.props;
     const startYears = [];
     const endYears = [];
     yearsLoss.forEach(item => {
@@ -47,37 +33,40 @@ class WidgetTreeLossSettings extends PureComponent {
 
     return (
       <div className="c-widget-settings">
-        <div className="c-widget-settings__select">
-          <div className="c-widget-settings__title">LOCATION</div>
-          <Select
-            iconRenderer={this.iconRenderer}
+        <div className="body">
+          <Dropdown
+            theme="theme-select-light"
+            label="LOCATION"
             value={settings.indicator}
             options={indicators}
-            onChange={this.indicatorChange}
+            onChange={onIndicatorChange}
           />
-        </div>
-        <div className="c-widget-settings__button-select -years">
-          <div className="c-widget-settings__title">YEARS</div>
-          <div className="c-widget-settings__container-years">
-            <Select
-              value={settings.startYear}
-              options={startYears}
-              onChange={this.startYearChange}
-            />
-            <span className="text-date">to</span>
-            <Select
-              value={settings.endYear}
-              options={endYears}
-              onChange={this.endYearChange}
-            />
+          <div className="years-select">
+            <span className="label">YEARS</span>
+            <div className="select-container">
+              <Dropdown
+                theme="theme-select-button -transparent"
+                value={settings.startYear}
+                options={startYears}
+                onChange={onStartYearChange}
+              />
+              <span className="text-date">to</span>
+              <Dropdown
+                theme="theme-select-button -transparent"
+                value={settings.endYear}
+                options={endYears}
+                onChange={onEndYearChange}
+              />
+            </div>
           </div>
         </div>
-        <div className="c-widget-settings__button-select">
-          <div className="c-widget-settings__title">CANOPY DENSITY</div>
-          <Select
-            value={settings.canopy}
+        <div className="footer">
+          <Dropdown
+            theme="theme-select-button"
+            label="CANOPY DENSITY"
+            value={settings.canopy === 0 ? '> 0%' : settings.canopy}
             options={canopies}
-            onChange={this.canopyChange}
+            onChange={onCanopyChange}
           />
         </div>
       </div>

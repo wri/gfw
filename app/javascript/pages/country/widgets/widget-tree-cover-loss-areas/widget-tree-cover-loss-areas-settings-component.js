@@ -1,38 +1,23 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select-me';
+import Dropdown from 'components/dropdown';
 
 class WidgetTreeCoverLossAreasSettings extends PureComponent {
-  // regionChange = (value) => {
-  //   this.props.onRegionChange(value.value);
-  // };
-  //
-  unitChange = value => {
-    this.props.onUnitChange(value.value);
-  };
-
-  canopyChange = value => {
-    this.props.onCanopyChange(value.value);
-  };
-
-  startYearChange = value => {
-    this.props.onStartYearChange(value.value);
-  };
-
-  endYearChange = value => {
-    this.props.onEndYearChange(value.value);
-  };
-
-  iconRenderer = () => (
-    <svg className="icon icon-angle-arrow-down">
-      <use xlinkHref="#icon-angle-arrow-down">{}</use>
-    </svg>
-  );
-
   render() {
     const startYears = [];
     const endYears = [];
-    const { regions, units, canopies, settings, years } = this.props;
+    const {
+      regions,
+      units,
+      canopies,
+      settings,
+      years,
+      onUnitChange,
+      onCanopyChange,
+      onStartYearChange,
+      onEndYearChange,
+      onLocationChange
+    } = this.props;
     years.forEach(item => {
       if (item.value < settings.endYear) {
         startYears.push({
@@ -49,45 +34,47 @@ class WidgetTreeCoverLossAreasSettings extends PureComponent {
     });
     return (
       <div className="c-widget-settings">
-        <div className="c-widget-settings__select">
-          <div className="c-widget-settings__title">LOCATION</div>
-          <Select
-            iconRenderer={this.iconRenderer}
+        <div className="body">
+          <Dropdown
+            theme="theme-select-light"
+            label="LOCATION"
             value={settings.region}
             options={regions}
+            onChange={onLocationChange}
           />
-        </div>
-        <div className="c-widget-settings__select">
-          <div className="c-widget-settings__title">UNIT</div>
-          <Select
-            iconRenderer={this.iconRenderer}
+          <Dropdown
+            theme="theme-select-light"
+            label="UNIT"
             value={settings.unit}
             options={units}
-            onChange={this.unitChange}
+            onChange={onUnitChange}
           />
-        </div>
-        <div className="c-widget-settings__button-select -years">
-          <div className="c-widget-settings__title">YEARS</div>
-          <div className="c-widget-settings__container-years">
-            <Select
-              value={settings.startYear}
-              options={startYears}
-              onChange={this.startYearChange}
-            />
-            <span className="text-date">to</span>
-            <Select
-              value={settings.endYear}
-              options={endYears}
-              onChange={this.endYearChange}
-            />
+          <div className="years-select">
+            <span className="label">YEARS</span>
+            <div className="select-container">
+              <Dropdown
+                theme="theme-select-button -transparent"
+                value={settings.startYear}
+                options={startYears}
+                onChange={onStartYearChange}
+              />
+              <span className="text-date">to</span>
+              <Dropdown
+                theme="theme-select-button -transparent"
+                value={settings.endYear}
+                options={endYears}
+                onChange={onEndYearChange}
+              />
+            </div>
           </div>
         </div>
-        <div className="c-widget-settings__button-select">
-          <div className="c-widget-settings__title">CANOPY DENSITY</div>
-          <Select
+        <div className="footer">
+          <Dropdown
+            theme="theme-select-button"
+            label="CANOPY DENSITY"
             value={settings.canopy === 0 ? '> 0%' : settings.canopy}
             options={canopies}
-            onChange={this.canopyChange}
+            onChange={onCanopyChange}
           />
         </div>
       </div>
@@ -99,7 +86,13 @@ WidgetTreeCoverLossAreasSettings.propTypes = {
   regions: PropTypes.array.isRequired,
   units: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
-  settings: PropTypes.object.isRequired
+  settings: PropTypes.object.isRequired,
+  years: PropTypes.array.isRequired,
+  onUnitChange: PropTypes.func.isRequired,
+  onCanopyChange: PropTypes.func.isRequired,
+  onStartYearChange: PropTypes.func.isRequired,
+  onEndYearChange: PropTypes.func.isRequired,
+  onLocationChange: PropTypes.func
 };
 
 export default WidgetTreeCoverLossAreasSettings;

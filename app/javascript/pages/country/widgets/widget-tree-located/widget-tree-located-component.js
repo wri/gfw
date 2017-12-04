@@ -65,7 +65,7 @@ class WidgetTreeLocated extends PureComponent {
           />
         </WidgetHeader>
         {isLoading ? (
-          <Loader isAbsolute />
+          <Loader />
         ) : (
           <div>
             <ul className="c-widget-tree-located__regions">

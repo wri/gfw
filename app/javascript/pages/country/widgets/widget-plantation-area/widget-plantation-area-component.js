@@ -46,7 +46,7 @@ class WidgetPlantationArea extends PureComponent {
           />
         </WidgetHeader>
         {isLoading ? (
-          <Loader isAbsolute />
+          <Loader />
         ) : (
           <div className="c-widget-plantation-area__container">
             <ul className="c-widget-plantation-area__chart">

@@ -1,0 +1,106 @@
+@import '~styles/settings.scss';
+$black-tabs: #404040;
+
+.l-country {
+  .panels {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .data-panel {
+    width: 100%;
+
+    @media screen and (min-width: $screen-m) {
+      width: 70%;
+    }
+
+    @media screen and (min-width: $screen-xl) {
+      width: calc((#{$max-width} * 0.7) + ((100vw - #{$max-width}) / 2));
+    }
+  }
+
+  .map-panel {
+    width: 0;
+
+    @media screen and (min-width: $screen-m) {
+      width: 30%;
+      display: block;
+    }
+
+    @media screen and (min-width: $screen-xl) {
+      width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
+    }
+  }
+
+  .map {
+    right: -100%;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    transition: right 0.5s linear;
+
+    @media screen and (min-width: $screen-m) {
+      width: 30%;
+    }
+
+    @media screen and (min-width: $screen-xl) {
+      width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
+    }
+
+    &.-open-mobile {
+      right: calc(-5%);
+      z-index: 11;
+    }
+
+    &.-fixed {
+      @media screen and (min-width: $screen-m) {
+        width: 30%;
+      }
+
+      @media screen and (min-width: $screen-xl) {
+        width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
+      }
+    }
+
+    &.-bottom {
+      bottom: 0;
+    }
+
+    @media screen and (min-width: $screen-m) {
+      right: 0;
+
+      &.-open-mobile {
+        right: 0;
+      }
+    }
+  }
+
+  .widgets {
+    padding-top: rem(20px);
+    padding-bottom: rem(30px);
+
+    @media screen and (min-width: $screen-l) {
+      padding-top: rem(50px);
+      padding-right: rem(30px);
+    }
+
+    @media screen and (min-width: $screen-xl) {
+      padding-left: calc(100% - (#{$max-width} * 0.7));
+    }
+
+    .widget {
+      margin-bottom: $mobile-gutter;
+
+      @media screen and (min-width: $screen-m) {
+        margin-bottom: calc(2 * #{$desktop-gutter});
+      }
+    }
+  }
+}
+
+#footerGfw {
+  position: relative;
+}
+

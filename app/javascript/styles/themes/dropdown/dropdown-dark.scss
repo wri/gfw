@@ -1,0 +1,51 @@
+@import '~styles/settings.scss';
+
+.theme-select-dark {
+  max-height: 70px;
+
+  .icon {
+    opacity: 0;
+  }
+
+  .dd__search {
+    display: block;
+  }
+
+  .dd__openTobottom {
+    margin-top: 0;
+  }
+
+  .dd__selectControl {
+    background-color: transparent;
+    border: 0;
+
+    .dd__selected,
+    .dd__placeholder,
+    .dd__selectedItem {
+      height: rem(56px);
+      font-weight: 300;
+      color: $white;
+      width: 100%;
+      align-items: center;
+      font-size: 47px;
+      display: table;
+      table-layout: fixed;
+
+      > div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 100%;
+        line-height: 50px;
+      }
+
+      @media screen and (min-width: $screen-l) {
+        font-size: 47px;
+      }
+
+      .dd__placeholder {
+        color: rgba($white, 0.5);
+      }
+    }
+  }
+}

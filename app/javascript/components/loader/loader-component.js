@@ -1,25 +1,23 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import 'styles/themes/loader/loader-light.scss';
 import './loader-styles.scss';
 
 class Loader extends PureComponent {
   render() {
-    const { parentClass, isAbsolute } = this.props;
-
-    const loader = (
-      <div className={`c-loader ${isAbsolute ? 'c-loader--absolute' : ''}`}>
-        <div className="c-loader__spinner" />
+    const { className, theme } = this.props;
+    return (
+      <div className={`c-loader ${className} ${theme}`}>
+        <div className="spinner" />
       </div>
     );
-
-    return parentClass ? <div className={parentClass}>{loader}</div> : loader;
   }
 }
 
 Loader.propTypes = {
-  parentClass: PropTypes.string,
-  isAbsolute: PropTypes.bool
+  className: PropTypes.string,
+  theme: PropTypes.string
 };
 
 export default Loader;

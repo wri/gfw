@@ -2,7 +2,10 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getAdminsSelected } from './root-selectors';
+import {
+  getAdminsOptions,
+  getAdminsSelected
+} from 'pages/country/utils/filters';
 
 import RootComponent from './root-component';
 import actions from './root-actions';
@@ -19,6 +22,7 @@ const mapStateToProps = state => {
     isGeostoreLoading
   } = state.countryData;
   const adminData = {
+    location: state.location.payload,
     countries: state.countryData.countries,
     regions: state.countryData.regions,
     subRegions: state.countryData.subRegions
@@ -35,37 +39,15 @@ const mapStateToProps = state => {
     mapTop: state.root.mapTop,
     topPage: state.root.topPage,
     showMapMobile: state.root.showMapMobile,
-    adminsSelected: getAdminsSelected({
-      adminData,
-      location: state.location.payload
-    }),
-    adminsLists: adminData
+    adminsSelected: getAdminsSelected(adminData),
+    adminsOptions: getAdminsOptions(adminData)
   };
 };
 
 class RootContainer extends PureComponent {
-  handleShowMapMobile() {
+  handleShowMapMobile = () => {
     this.props.setShowMapMobile(!this.props.showMapMobile);
-  }
-
-  handleScrollCallback(props) {
-    const { gfwHeaderHeight, isMapFixed, setFixedMapStatus, setMapTop } = props;
-    const mapFixedLimit =
-      document.getElementById('c-widget-stories').offsetTop -
-      window.innerHeight;
-
-    if (
-      !isMapFixed &&
-      window.scrollY >= gfwHeaderHeight &&
-      window.scrollY < mapFixedLimit
-    ) {
-      setFixedMapStatus(true);
-      setMapTop(0);
-    } else if (isMapFixed && window.scrollY >= mapFixedLimit) {
-      setFixedMapStatus(false);
-      setMapTop(mapFixedLimit);
-    }
-  }
+  };
 
   render() {
     return createElement(RootComponent, {

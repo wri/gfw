@@ -22,10 +22,15 @@ export const getCountries = createThunkAction(
   () => (dispatch, state) => {
     if (!state().countryData.isCountriesLoading) {
       dispatch(setCountriesLoading(true));
-      getCountriesProvider().then(response => {
-        dispatch(setCountries(response.data.rows));
-        dispatch(setCountriesLoading(false));
-      });
+      getCountriesProvider()
+        .then(response => {
+          dispatch(setCountries(response.data.rows));
+          dispatch(setCountriesLoading(false));
+        })
+        .catch(error => {
+          console.info(error);
+          dispatch(setCountriesLoading(false));
+        });
     }
   }
 );
@@ -35,10 +40,15 @@ export const getRegions = createThunkAction(
   country => (dispatch, state) => {
     if (!state().countryData.isRegionsLoading) {
       dispatch(setRegionsLoading(true));
-      getRegionsProvider(country).then(response => {
-        dispatch(setRegions(response.data.rows));
-        dispatch(setRegionsLoading(false));
-      });
+      getRegionsProvider(country)
+        .then(response => {
+          dispatch(setRegions(response.data.rows));
+          dispatch(setRegionsLoading(false));
+        })
+        .catch(error => {
+          console.info(error);
+          dispatch(setRegionsLoading(false));
+        });
     }
   }
 );
@@ -48,10 +58,15 @@ export const getSubRegions = createThunkAction(
   (country, region) => (dispatch, state) => {
     if (!state().countryData.isSubRegionsLoading) {
       dispatch(setSubRegionsLoading(true));
-      getSubRegionsProvider(country, region).then(response => {
-        dispatch(setSubRegions(response.data.rows));
-        dispatch(setSubRegionsLoading(false));
-      });
+      getSubRegionsProvider(country, region)
+        .then(response => {
+          dispatch(setSubRegions(response.data.rows));
+          dispatch(setSubRegionsLoading(false));
+        })
+        .catch(error => {
+          console.info(error);
+          dispatch(setSubRegionsLoading(false));
+        });
     }
   }
 );
@@ -61,16 +76,21 @@ export const getGeostore = createThunkAction(
   (country, region) => (dispatch, state) => {
     if (!state().countryData.isGeostoreLoading) {
       dispatch(setGeostoreLoading(true));
-      getGeostoreProvider(country, region).then(response => {
-        const { areaHa, bbox } = response.data.data.attributes;
-        dispatch(
-          setGeostore({
-            areaHa,
-            bounds: getBoxBounds(bbox)
-          })
-        );
-        dispatch(setGeostoreLoading(false));
-      });
+      getGeostoreProvider(country, region)
+        .then(response => {
+          const { areaHa, bbox } = response.data.data.attributes;
+          dispatch(
+            setGeostore({
+              areaHa,
+              bounds: getBoxBounds(bbox)
+            })
+          );
+          dispatch(setGeostoreLoading(false));
+        })
+        .catch(error => {
+          console.info(error);
+          dispatch(setGeostoreLoading(false));
+        });
     }
   }
 );
