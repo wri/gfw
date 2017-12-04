@@ -7,15 +7,15 @@ import {
 } from 'services/country';
 import { getGeostoreProvider } from 'services/geostore';
 
-export const setCountriesLoading = createAction('setCountriesLoading');
-export const setRegionsLoading = createAction('setRegionsLoading');
-export const setSubRegionsLoading = createAction('setSubRegionsLoading');
-export const setGeostoreLoading = createAction('setGeostoreLoading');
+const setCountriesLoading = createAction('setCountriesLoading');
+const setRegionsLoading = createAction('setRegionsLoading');
+const setSubRegionsLoading = createAction('setSubRegionsLoading');
+const setGeostoreLoading = createAction('setGeostoreLoading');
 
-export const setCountries = createAction('setCountries');
-export const setRegions = createAction('setRegions');
-export const setSubRegions = createAction('setSubRegions');
-export const setGeostore = createAction('setGeostore');
+const setCountries = createAction('setCountries');
+const setRegions = createAction('setRegions');
+const setSubRegions = createAction('setSubRegions');
+const setGeostore = createAction('setGeostore');
 
 export const getCountries = createThunkAction(
   'getCountries',
