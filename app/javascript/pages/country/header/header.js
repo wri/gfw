@@ -1,6 +1,11 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { COUNTRY } from 'pages/country/router';
+import {
+  getAdminsOptions,
+  getAdminsSelected
+} from 'pages/country/utils/filters';
+
 import HeaderComponent from './header-component';
 
 const mapStateToProps = state => {
@@ -10,12 +15,20 @@ const mapStateToProps = state => {
     isSubRegionsLoading,
     isGeostoreLoading
   } = state.countryData;
+  const adminData = {
+    location: state.location.payload,
+    countries: state.countryData.countries,
+    regions: state.countryData.regions,
+    subRegions: state.countryData.subRegions
+  };
   return {
     isLoading:
       isCountriesLoading ||
       isRegionsLoading ||
       isSubRegionsLoading ||
-      isGeostoreLoading
+      isGeostoreLoading,
+    adminsSelected: getAdminsSelected(adminData),
+    adminsOptions: getAdminsOptions(adminData)
   };
 };
 
