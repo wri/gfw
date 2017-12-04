@@ -2,25 +2,27 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Dropdown from 'components/dropdown';
 import Loader from 'components/loader';
-import GadmAreaProvider from 'pages/country/providers/gadm-area-provider';
 import { format } from 'd3-format';
 
+import CountryDataProvider from 'pages/country/providers/country-data-provider';
 import './header-styles.scss';
 
 class Header extends PureComponent {
   getHeaderDescription = () => {
-    const { totalArea, adminsSelected } = this.props;
+    const { treeCover, parcentageCover, adminsSelected } = this.props;
     return (
       <div>
         <p>
           In 2010, {adminsSelected.country && adminsSelected.country.label} had{' '}
-          <b>{format('.2s')(totalArea)}ha</b> of tree cover, extending over{' '}
-          <b>49.2%</b> of its <b>{format('.2s')(totalArea)}ha</b> land area.
+          <b>{format('.2s')(treeCover)}ha</b> of tree cover
+          {parcentageCover && ', extending over '}
+          {parcentageCover && <b>{format('.0f')(parcentageCover)}%</b>}
+          {parcentageCover && ' of its land area'}.
         </p>
         <p>
-          In <b>2016</b>, it lost <b>1,566,959 ha</b> of forest excluding tree
-          plantations, equivalent to <b>350,328,700</b> tonnes of CO₂ of
-          emissions.
+          In <b>2016</b>, it lost <b>{format('.2s')(1566959)}ha</b> of forest
+          excluding tree plantations, equivalent to{' '}
+          <b>{format('.2s')(350328700)}</b> tonnes of CO₂ of emissions.
         </p>
       </div>
     );
@@ -38,7 +40,7 @@ class Header extends PureComponent {
     } = this.props;
     return (
       <div className={`${className} c-header`}>
-        <GadmAreaProvider />
+        <CountryDataProvider />
         {isLoading && <Loader className="loader" theme="theme-loader-light" />}
         <div className="row">
           <div className="columns small-12 large-6">
@@ -119,7 +121,8 @@ Header.propTypes = {
   handleCountryChange: PropTypes.func.isRequired,
   handleRegionChange: PropTypes.func.isRequired,
   handleSubRegionChange: PropTypes.func.isRequired,
-  totalArea: PropTypes.number.isRequired
+  treeCover: PropTypes.number.isRequired,
+  parcentageCover: PropTypes.number
 };
 
 export default Header;

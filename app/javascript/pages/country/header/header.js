@@ -1,5 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { createElement, PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { COUNTRY } from 'pages/country/router';
 import {
@@ -25,6 +26,7 @@ const mapStateToProps = state => {
     regions: state.countryData.regions,
     subRegions: state.countryData.subRegions
   };
+  const totalArea = state.header.countryArea;
   return {
     isLoading:
       isCountriesLoading ||
@@ -34,7 +36,8 @@ const mapStateToProps = state => {
     adminsSelected: getAdminsSelected(adminData),
     adminsOptions: getAdminsOptions(adminData),
     location: adminData.location,
-    totalArea: state.Areas.countryArea
+    treeCover: state.header.treeCoverExtent,
+    parcentageCover: state.header.treeCoverExtent / totalArea * 100
   };
 };
 
@@ -77,11 +80,10 @@ class HeaderContainer extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { country, region, subRegion } = nextProps.location;
-    const { prevLocation } = this.props;
     const { getArea, getTreeCoverExtent } = this.props;
-    const hasCountryChanged = country !== prevLocation.country;
-    const hasRegionChanged = region !== prevLocation.region;
-    const hasSubRegionChanged = subRegion !== prevLocation.subRegion;
+    const hasCountryChanged = country !== this.props.location.country;
+    const hasRegionChanged = region !== this.props.location.region;
+    const hasSubRegionChanged = subRegion !== this.props.location.subRegion;
 
     if (hasCountryChanged) {
       getArea(country);
@@ -103,6 +105,12 @@ class HeaderContainer extends PureComponent {
     });
   }
 }
+
+HeaderContainer.propTypes = {
+  location: PropTypes.object.isRequired,
+  getArea: PropTypes.func.isRequired,
+  getTreeCoverExtent: PropTypes.func.isRequired
+};
 
 export { actions, reducers, initialState };
 

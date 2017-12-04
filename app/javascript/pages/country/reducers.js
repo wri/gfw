@@ -28,7 +28,6 @@ import * as widgetTreeLossComponent from 'pages/country/widgets/widget-tree-loss
 
 // Providers
 import * as countryDataProviderComponent from 'pages/country/providers/country-data-provider';
-import * as gadmAreaProviderComponent from 'pages/country/providers/gadm-area-provider';
 
 const componentsReducers = {
   share: handleActions(ShareComponent),
@@ -48,8 +47,7 @@ const componentsReducers = {
 };
 
 const providersReducers = {
-  countryData: handleActions(countryDataProviderComponent),
-  gadmAreas: handleActions(gadmAreaProviderComponent)
+  countryData: handleActions(countryDataProviderComponent)
 };
 
 export default combineReducers({

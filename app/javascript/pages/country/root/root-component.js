@@ -35,6 +35,7 @@ const WIDGETS = {
     gridWidth: 6
   }
 };
+
 class Root extends PureComponent {
   render() {
     const { showMapMobile, handleShowMapMobile } = this.props;
@@ -63,11 +64,11 @@ class Root extends PureComponent {
             </div>
           </div>
           <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
-            {/* <Sticky
+            <Sticky
               className={`map ${showMapMobile ? '-open-mobile' : ''}`}
               limitElement="c-stories"
-            > */}
-            {/* <Map
+            >
+              <Map
                 maxZoom={14}
                 minZoom={3}
                 mapOptions={{
@@ -85,8 +86,8 @@ class Root extends PureComponent {
                   center: { lat: -34.397, lng: 150.644 },
                   zoom: 8
                 }}
-              /> */}
-            {/* </Sticky> */}
+              />
+            </Sticky>
           </div>
         </div>
         <Stories />

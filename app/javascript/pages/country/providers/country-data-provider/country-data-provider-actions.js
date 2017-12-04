@@ -12,10 +12,10 @@ const setRegionsLoading = createAction('setRegionsLoading');
 const setSubRegionsLoading = createAction('setSubRegionsLoading');
 const setGeostoreLoading = createAction('setGeostoreLoading');
 
-const setCountries = createAction('setCountries');
-const setRegions = createAction('setRegions');
-const setSubRegions = createAction('setSubRegions');
-const setGeostore = createAction('setGeostore');
+export const setCountries = createAction('setCountries');
+export const setRegions = createAction('setRegions');
+export const setSubRegions = createAction('setSubRegions');
+export const setGeostore = createAction('setGeostore');
 
 export const getCountries = createThunkAction(
   'getCountries',

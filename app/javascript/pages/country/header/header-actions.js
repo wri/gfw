@@ -6,16 +6,16 @@ import { fetchArea } from 'services/total-area';
 const setAreaLoading = createAction('setAreaLoading');
 const setExtentLoading = createAction('setExtentLoading');
 
-const setCountryArea = createAction('setCountryArea');
-const setRegionArea = createAction('setRegionArea');
-const setSubRegionArea = createAction('setSubRegionArea');
+export const setCountryArea = createAction('setCountryArea');
+export const setRegionArea = createAction('setRegionArea');
+export const setSubRegionArea = createAction('setSubRegionArea');
 
-const setTreeCoverExtent = createAction('setTreeCoverExtent');
+export const setTreeCoverExtent = createAction('setTreeCoverExtent');
 
 export const getArea = createThunkAction(
   'getArea',
   (country, region, subRegion) => (dispatch, state) => {
-    if (!state().headers.isAreaLoading) {
+    if (!state().header.isAreaLoading) {
       dispatch(setAreaLoading(true));
       fetchArea(country, region, subRegion)
         .then(response => {
@@ -29,8 +29,8 @@ export const getArea = createThunkAction(
           dispatch(setAreaLoading(false));
         })
         .catch(error => {
-          console.info(error);
           dispatch(setAreaLoading(false));
+          console.info(error);
         });
     }
   }
@@ -43,12 +43,12 @@ export const getTreeCoverExtent = createThunkAction(
       dispatch(setExtentLoading(true));
       getExtent(country, region, subRegion, 'gadm28_only', 30)
         .then(response => {
-          dispatch(setTreeCoverExtent(response.data.rows));
+          dispatch(setTreeCoverExtent(response.data.data[0].value));
           dispatch(setExtentLoading(false));
         })
         .catch(error => {
-          console.info(error);
           dispatch(setExtentLoading(false));
+          console.info(error);
         });
     }
   }
