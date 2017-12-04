@@ -39,7 +39,7 @@ class WidgetTreeLossSettings extends PureComponent {
             label="LOCATION"
             value={settings.indicator}
             options={indicators}
-            onChange={onIndicatorChange}
+            onChange={option => onIndicatorChange(option.value)}
           />
           <div className="years-select">
             <span className="label">YEARS</span>
@@ -48,14 +48,14 @@ class WidgetTreeLossSettings extends PureComponent {
                 theme="theme-select-button -transparent"
                 value={settings.startYear}
                 options={startYears}
-                onChange={onStartYearChange}
+                onChange={option => onStartYearChange(option.value)}
               />
               <span className="text-date">to</span>
               <Dropdown
                 theme="theme-select-button -transparent"
                 value={settings.endYear}
                 options={endYears}
-                onChange={onEndYearChange}
+                onChange={option => onEndYearChange(option.value)}
               />
             </div>
           </div>
@@ -64,9 +64,9 @@ class WidgetTreeLossSettings extends PureComponent {
           <Dropdown
             theme="theme-select-button"
             label="CANOPY DENSITY"
-            value={settings.canopy === 0 ? '> 0%' : settings.canopy}
+            value={settings.canopy}
             options={canopies}
-            onChange={onCanopyChange}
+            onChange={option => onCanopyChange(option.value)}
           />
         </div>
       </div>

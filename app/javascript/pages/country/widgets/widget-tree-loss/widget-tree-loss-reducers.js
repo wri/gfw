@@ -101,7 +101,7 @@ export const initialState = {
   ],
   canopies: [
     {
-      value: 0,
+      value: '0',
       label: '> 0%'
     },
     {
