@@ -45,19 +45,19 @@ const WidgetTreeLossContainer = props => {
           location.country,
           location.region,
           location.subRegion,
-          settings.indicator,
+          settings.indicator.value,
           {
-            minYear: settings.startYear,
-            maxYear: settings.endYear
+            minYear: settings.startYear.value,
+            maxYear: settings.endYear.value
           },
-          settings.canopy
+          settings.canopy.value
         ),
         getExtent(
           location.country,
           location.region,
           location.subRegion,
-          settings.indicator,
-          settings.canopy
+          settings.indicator.value,
+          settings.canopy.value
         )
       ])
       .then(
@@ -84,7 +84,7 @@ const WidgetTreeLossContainer = props => {
         (typeof sum === 'object' ? sum.emissions : sum) + item.emissions
     );
     const indicator = indicators.filter(
-      item => item.value === settings.indicator
+      item => item.value === settings.indicator.value
     );
 
     const locationText = locationNames.region
@@ -95,9 +95,9 @@ const WidgetTreeLossContainer = props => {
       } `
       : `${locationNames.country.label} (${indicator[0].label.toLowerCase()}) `;
 
-    return `Between ${settings.startYear} and ${settings.endYear}, ${
-      locationText
-    } lost ${numeral(totalLoss).format(
+    return `Between ${settings.startYear.value} and ${
+      settings.endYear.value
+    }, ${locationText} lost ${numeral(totalLoss).format(
       '0,0'
     )} ha of tree cover: This loss is equal to ${numeral(
       totalLoss / (treeExtent * 100)
