@@ -1,16 +1,18 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+
 import Dropdown from 'components/dropdown';
 
 class WidgetTreeCoverSettings extends PureComponent {
   render() {
     const {
+      locationNames,
       indicators,
       units,
-      thresholds,
+      canopies,
       settings,
-      onIndicatorChange,
-      onThresholdChange,
+      onLocationChange,
+      onCanopyChange,
       onUnitChange
     } = this.props;
 
@@ -19,10 +21,10 @@ class WidgetTreeCoverSettings extends PureComponent {
         <div className="body">
           <Dropdown
             theme="theme-select-light"
-            label="LOCATION"
+            label={`REFINE LOCATION WITHIN ${locationNames.current.label.toUpperCase()}`}
             value={settings.indicator}
             options={indicators}
-            onChange={onIndicatorChange}
+            onChange={onLocationChange}
           />
           <Dropdown
             theme="theme-select-light"
@@ -36,9 +38,9 @@ class WidgetTreeCoverSettings extends PureComponent {
           <Dropdown
             theme="theme-select-button"
             label="CANOPY DENSITY"
-            value={settings.threshold}
-            options={thresholds}
-            onChange={onThresholdChange}
+            value={settings.canopy}
+            options={canopies}
+            onChange={onCanopyChange}
           />
         </div>
       </div>
@@ -47,13 +49,14 @@ class WidgetTreeCoverSettings extends PureComponent {
 }
 
 WidgetTreeCoverSettings.propTypes = {
-  indicators: PropTypes.array.isRequired,
+  locationNames: PropTypes.object.isRequired,
+  indicators: PropTypes.array,
   units: PropTypes.array.isRequired,
-  thresholds: PropTypes.array.isRequired,
+  canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
-  onIndicatorChange: PropTypes.func.isRequired,
+  onLocationChange: PropTypes.func.isRequired,
   onUnitChange: PropTypes.func.isRequired,
-  onThresholdChange: PropTypes.func.isRequired
+  onCanopyChange: PropTypes.func.isRequired
 };
 
 export default WidgetTreeCoverSettings;
