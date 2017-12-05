@@ -4,7 +4,7 @@ export const initialState = {
   totalIntactForest: 0,
   totalNonForest: 0,
   title: '',
-  locations: [],
+  indicators: ['gadm28', 'wdpa', 'ifl_2013'],
   units: [
     {
       value: 'ha',
@@ -50,8 +50,7 @@ export const initialState = {
     }
   ],
   settings: {
-    location: 'all',
-    locationLabel: 'All Region',
+    indicator: 'gadm28',
     unit: 'ha',
     canopy: 30
   }
@@ -72,12 +71,11 @@ const setTreeCoverValues = (state, { payload }) => ({
   locations: payload.locations
 });
 
-const setTreeCoverSettingsLocation = (state, { payload }) => ({
+const setTreeCoverSettingsIndicator = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    location: payload.value,
-    locationLabel: payload.label
+    indicator: payload
   }
 });
 
@@ -100,7 +98,7 @@ const setTreeCoverSettingsCanopy = (state, { payload }) => ({
 export default {
   setTreeCoverIsLoading,
   setTreeCoverValues,
-  setTreeCoverSettingsLocation,
+  setTreeCoverSettingsIndicator,
   setTreeCoverSettingsUnit,
   setTreeCoverSettingsCanopy
 };

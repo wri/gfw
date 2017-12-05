@@ -2,6 +2,7 @@ import { createElement } from 'react';
 import { connect } from 'react-redux';
 
 import { getTotalCover, getTotalIntactForest } from 'services/tree-cover';
+import { getIndicators } from 'pages/country/utils/filters';
 
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
 import actions from './widget-tree-cover-actions';
@@ -12,6 +13,12 @@ export { default as actions } from './widget-tree-cover-actions';
 
 const mapStateToProps = state => {
   const { isCountriesLoading, isRegionsLoading } = state.countryData;
+  const adminData = {
+    location: state.location.payload,
+    countries: state.countryData.countries,
+    regions: state.countryData.regions,
+    subRegions: state.countryData.subRegions
+  };
   return {
     location: state.location.payload,
     areaHa: state.countryData.geostore.areaHa,
@@ -21,7 +28,10 @@ const mapStateToProps = state => {
     totalIntactForest: state.widgetTreeCover.totalIntactForest,
     totalNonForest: state.widgetTreeCover.totalNonForest,
     title: state.widgetTreeCover.title,
-    locations: state.widgetTreeCover.locations,
+    indicators: getIndicators({
+      whitelist: state.widgetTreeCover.indicators,
+      ...adminData
+    }),
     units: state.widgetTreeCover.units,
     canopies: state.widgetTreeCover.canopies,
     settings: state.widgetTreeCover.settings,

@@ -1,11 +1,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+
+import { getIndicators } from 'pages/country/utils/filters';
+
 import Dropdown from 'components/dropdown';
 
 class WidgetTreeCoverSettings extends PureComponent {
   render() {
     const {
-      locations,
+      locationNames,
+      indicators,
       units,
       canopies,
       settings,
@@ -19,9 +23,9 @@ class WidgetTreeCoverSettings extends PureComponent {
         <div className="body">
           <Dropdown
             theme="theme-select-light"
-            label="LOCATION"
-            value={settings.location}
-            options={locations}
+            label={`REFINE LOCATION WITHIN ${locationNames.current.label.toUpperCase()}`}
+            value={settings.indicator}
+            options={indicators}
             onChange={onLocationChange}
           />
           <Dropdown
@@ -47,7 +51,8 @@ class WidgetTreeCoverSettings extends PureComponent {
 }
 
 WidgetTreeCoverSettings.propTypes = {
-  locations: PropTypes.array.isRequired,
+  locationNames: PropTypes.object.isRequired,
+  indicators: PropTypes.array.isRequired,
   units: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
