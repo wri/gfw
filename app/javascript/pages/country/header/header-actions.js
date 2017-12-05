@@ -14,14 +14,14 @@ export const setTreeCoverExtent = createAction('setTreeCoverExtent');
 
 export const getTotalArea = createThunkAction(
   'getTotalArea',
-  (country, region, subRegion) => (dispatch, state) => {
+  params => (dispatch, state) => {
     if (!state().header.isAreaLoading) {
       dispatch(setAreaLoading(true));
-      getArea(country, region, subRegion)
+      getArea(params)
         .then(response => {
-          if (subRegion) {
+          if (params.subRegion) {
             dispatch(setSubRegionArea(response.data.rows[0].value));
-          } else if (region) {
+          } else if (params.region) {
             dispatch(setRegionArea(response.data.rows[0].value));
           } else {
             dispatch(setCountryArea(response.data.rows[0].value));
@@ -38,10 +38,10 @@ export const getTotalArea = createThunkAction(
 
 export const getTreeCoverExtent = createThunkAction(
   'getTreeCoverExtent',
-  (country, region, subRegion) => (dispatch, state) => {
+  location => (dispatch, state) => {
     if (!state().header.isLoading) {
       dispatch(setExtentLoading(true));
-      getExtent(country, region, subRegion, 'gadm28', 30)
+      getExtent({ ...location, indicator: 'gadm28', threshold: 30 })
         .then(response => {
           dispatch(setTreeCoverExtent(response.data.data[0].value));
           dispatch(setExtentLoading(false));

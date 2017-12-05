@@ -46,14 +46,14 @@ class WidgetTreeCoverSettings extends PureComponent {
   }
 }
 
-WidgetTreeCoverSettings.propTypes = {
-  locations: PropTypes.array.isRequired,
-  units: PropTypes.array.isRequired,
-  canopies: PropTypes.array.isRequired,
-  settings: PropTypes.object.isRequired,
-  onLocationChange: PropTypes.func.isRequired,
-  onUnitChange: PropTypes.func.isRequired,
-  onCanopyChange: PropTypes.func.isRequired
-};
+// WidgetTreeCoverSettings.propTypes = {
+//   locations: PropTypes.array.isRequired,
+//   units: PropTypes.array.isRequired,
+//   canopies: PropTypes.array.isRequired,
+//   settings: PropTypes.object.isRequired,
+//   onLocationChange: PropTypes.func.isRequired,
+//   onUnitChange: PropTypes.func.isRequired,
+//   onCanopyChange: PropTypes.func.isRequired
+// };
 
 export default WidgetTreeCoverSettings;

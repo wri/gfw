@@ -13,6 +13,7 @@ class WidgetTreeCover extends PureComponent {
   render() {
     const {
       isLoading,
+      isMetaLoading,
       viewOnMap,
       totalCover,
       totalIntactForest,
@@ -115,23 +116,20 @@ class WidgetTreeCover extends PureComponent {
   }
 }
 
-WidgetTreeCover.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  isMetaLoading: PropTypes.bool.isRequired,
-  setInitialData: PropTypes.func.isRequired,
-  updateData: PropTypes.func.isRequired,
-  viewOnMap: PropTypes.func.isRequired,
-  totalCover: PropTypes.number.isRequired,
-  totalIntactForest: PropTypes.number.isRequired,
-  totalNonForest: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  locations: PropTypes.array.isRequired,
-  units: PropTypes.array.isRequired,
-  canopies: PropTypes.array.isRequired,
-  settings: PropTypes.object.isRequired,
-  setTreeCoverSettingsLocation: PropTypes.func.isRequired,
-  setTreeCoverSettingsUnit: PropTypes.func.isRequired,
-  setTreeCoverSettingsCanopy: PropTypes.func.isRequired
-};
+// WidgetTreeCover.propTypes = {
+//   isLoading: PropTypes.bool.isRequired,
+//   isMetaLoading: PropTypes.bool.isRequired,
+//   totalCover: PropTypes.number.isRequired,
+//   totalIntactForest: PropTypes.number.isRequired,
+//   totalNonForest: PropTypes.number.isRequired,
+//   title: PropTypes.string.isRequired,
+//   locations: PropTypes.array.isRequired,
+//   units: PropTypes.array.isRequired,
+//   canopies: PropTypes.array.isRequired,
+//   settings: PropTypes.object.isRequired,
+//   setTreeCoverSettingsLocation: PropTypes.func.isRequired,
+//   setTreeCoverSettingsUnit: PropTypes.func.isRequired,
+//   setTreeCoverSettingsCanopy: PropTypes.func.isRequired
+// };
 
 export default WidgetTreeCover;
