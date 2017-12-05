@@ -52,13 +52,6 @@ class WidgetTreeCoverGainContainer extends PureComponent {
       settings
     } = this.props;
 
-    let currentLocationName = locationNames.country.label;
-    if (locationNames.subRegion) {
-      currentLocationName = locationNames.subRegion.label;
-    } else if (locationNames.region) {
-      currentLocationName = locationNames.region.label;
-    }
-
     const indicator = indicators.filter(
       item => item.value === settings.indicator
     );
@@ -71,7 +64,7 @@ class WidgetTreeCoverGainContainer extends PureComponent {
 
     return {
       __html: `From 2001 to 2012, ${
-        currentLocationName
+        locationNames.current.label
       } gained <strong>${numeral(gain).format(
         '0,0'
       )} ha</strong> of tree cover in ${
