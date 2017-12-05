@@ -22,10 +22,6 @@ class StickyContainer extends PureComponent {
     });
   };
 
-  setStickyState = (state, top) => {
-    this.setState({ isFixed: state, top });
-  };
-
   handleScrollCallback = () => {
     const { isFixed, fixedLimit, stickyDivPos } = this.state;
     const { offSet, limitElement } = this.props;
@@ -43,17 +39,17 @@ class StickyContainer extends PureComponent {
 
     // not fixed when less than container div
     if (isFixed && currentPos < stickyPos) {
-      this.setStickyState(false, 0);
+      this.setState({ isFixed: false, top: 0 });
     }
 
     // fixed between div at top (+ offset) and limitEl
     if (!isFixed && currentPos >= stickyPos && currentPos < fixedLimit) {
-      this.setStickyState(true, 0);
+      this.setState({ isFixed: true, top: 0 });
     }
 
     // greater than limitEl
     if (isFixed && currentPos >= fixedLimit) {
-      this.setStickyState(false, fixedLimit - stickyPos);
+      this.setState({ isFixed: false, top: fixedLimit - stickyPos });
     }
   };
 

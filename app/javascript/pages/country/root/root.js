@@ -2,11 +2,6 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {
-  getAdminsOptions,
-  getAdminsSelected
-} from 'pages/country/utils/filters';
-
 import RootComponent from './root-component';
 import actions from './root-actions';
 
@@ -21,12 +16,6 @@ const mapStateToProps = state => {
     isSubRegionsLoading,
     isGeostoreLoading
   } = state.countryData;
-  const adminData = {
-    location: state.location.payload,
-    countries: state.countryData.countries,
-    regions: state.countryData.regions,
-    subRegions: state.countryData.subRegions
-  };
   return {
     isLoading:
       isCountriesLoading ||
@@ -38,9 +27,7 @@ const mapStateToProps = state => {
     isMapFixed: state.root.isMapFixed,
     mapTop: state.root.mapTop,
     topPage: state.root.topPage,
-    showMapMobile: state.root.showMapMobile,
-    adminsSelected: getAdminsSelected(adminData),
-    adminsOptions: getAdminsOptions(adminData)
+    showMapMobile: state.root.showMapMobile
   };
 };
 

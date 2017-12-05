@@ -1,10 +1,7 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
 
-import {
-  getTreeCoverGain,
-  getTotalCountriesTreeCoverGain
-} from 'services/tree-gain';
+import { getGain } from 'services/forest-data';
 
 import WidgetTreeCoverGainComponent from './widget-tree-cover-gain-component';
 import actions from './widget-tree-cover-gain-actions';
@@ -35,7 +32,7 @@ const WidgetTreeCoverGainContainer = props => {
   const setWidgetData = newProps => {
     const { location, settings, setTreeCoverGainValues } = newProps;
 
-    getTreeCoverGain(
+    getGain(
       location.admin0,
       location.admin1,
       {
@@ -44,7 +41,7 @@ const WidgetTreeCoverGainContainer = props => {
       },
       settings.canopy
     ).then(coverGain => {
-      getTotalCountriesTreeCoverGain(
+      getGain(
         {
           minYear: settings.startYear,
           maxYear: settings.endYear
