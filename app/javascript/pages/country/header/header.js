@@ -8,7 +8,7 @@ import {
   getAdminsSelected,
   getActiveAdmin
 } from 'pages/country/utils/filters';
-import { format } from 'd3-format';
+import numeral from 'numeral';
 
 import * as actions from './header-actions';
 import reducers, { initialState } from './header-reducers';
@@ -41,8 +41,9 @@ const mapStateToProps = state => {
     adminsOptions: getAdminsOptions(adminData),
     location,
     activeAdmin: getActiveAdmin(location),
-    treeCover: format('.2s')(state.header.treeCoverExtent),
-    parcentageCover: percentageCover > 1 ? format('.0f')(percentageCover) : 0
+    treeCover: numeral(state.header.treeCoverExtent).format('0 a'),
+    parcentageCover:
+      percentageCover > 1 ? numeral(percentageCover).format('0,0') : null
   };
 };
 
