@@ -18,6 +18,11 @@
     content: attr(data-text);
   }
 
+  &.-disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
   &.-green {
     background-color: $green-gfw;
     color: $white;

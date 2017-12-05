@@ -23,6 +23,7 @@ class WidgetHeader extends PureComponent {
             <button
               className="c-widget-header__option-button"
               onClick={viewOnMapCallback}
+              disabled
             >
               VIEW ON MAP
             </button>

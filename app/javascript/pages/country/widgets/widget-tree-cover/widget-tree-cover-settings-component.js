@@ -5,12 +5,12 @@ import Dropdown from 'components/dropdown';
 class WidgetTreeCoverSettings extends PureComponent {
   render() {
     const {
-      locations,
+      indicators,
       units,
-      canopies,
+      thresholds,
       settings,
-      onLocationChange,
-      onCanopyChange,
+      onIndicatorChange,
+      onThresholdChange,
       onUnitChange
     } = this.props;
 
@@ -20,9 +20,9 @@ class WidgetTreeCoverSettings extends PureComponent {
           <Dropdown
             theme="theme-select-light"
             label="LOCATION"
-            value={settings.location}
-            options={locations}
-            onChange={onLocationChange}
+            value={settings.indicator}
+            options={indicators}
+            onChange={onIndicatorChange}
           />
           <Dropdown
             theme="theme-select-light"
@@ -36,9 +36,9 @@ class WidgetTreeCoverSettings extends PureComponent {
           <Dropdown
             theme="theme-select-button"
             label="CANOPY DENSITY"
-            value={settings.canopy}
-            options={canopies}
-            onChange={onCanopyChange}
+            value={settings.threshold}
+            options={thresholds}
+            onChange={onThresholdChange}
           />
         </div>
       </div>
@@ -46,14 +46,14 @@ class WidgetTreeCoverSettings extends PureComponent {
   }
 }
 
-// WidgetTreeCoverSettings.propTypes = {
-//   locations: PropTypes.array.isRequired,
-//   units: PropTypes.array.isRequired,
-//   canopies: PropTypes.array.isRequired,
-//   settings: PropTypes.object.isRequired,
-//   onLocationChange: PropTypes.func.isRequired,
-//   onUnitChange: PropTypes.func.isRequired,
-//   onCanopyChange: PropTypes.func.isRequired
-// };
+WidgetTreeCoverSettings.propTypes = {
+  indicators: PropTypes.array.isRequired,
+  units: PropTypes.array.isRequired,
+  thresholds: PropTypes.array.isRequired,
+  settings: PropTypes.object.isRequired,
+  onIndicatorChange: PropTypes.func.isRequired,
+  onUnitChange: PropTypes.func.isRequired,
+  onThresholdChange: PropTypes.func.isRequired
+};
 
 export default WidgetTreeCoverSettings;
