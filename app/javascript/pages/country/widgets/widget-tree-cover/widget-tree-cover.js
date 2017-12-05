@@ -1,7 +1,7 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
 
-import { getTotalCover, getTotalIntactForest } from 'services/tree-cover';
+import { getTotalCover, getTotalIntactForest } from 'services/tree-extent';
 
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
 import actions from './widget-tree-cover-actions';
