@@ -140,7 +140,7 @@ WidgetTreeCover.propTypes = {
   totalIntactForest: PropTypes.number.isRequired,
   totalNonForest: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  indicators: PropTypes.array.isRequired,
+  indicators: PropTypes.array,
   units: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,

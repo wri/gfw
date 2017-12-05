@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import { getIndicators } from 'pages/country/utils/filters';
-
 import Dropdown from 'components/dropdown';
 
 class WidgetTreeCoverSettings extends PureComponent {
@@ -52,7 +50,7 @@ class WidgetTreeCoverSettings extends PureComponent {
 
 WidgetTreeCoverSettings.propTypes = {
   locationNames: PropTypes.object.isRequired,
-  indicators: PropTypes.array.isRequired,
+  indicators: PropTypes.array,
   units: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
