@@ -85,6 +85,7 @@
     "coffee-loader": "^0.7.3",
     "coffee-script": "^1.12.7",
     "constants": "0.0.2",
+    "dotenv": "^4.0.0",
     "fbjs": "^0.8.16",
     "glob": "^7.1.2",
     "history": "4.7.2",
