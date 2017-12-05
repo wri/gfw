@@ -76,3 +76,9 @@ export const getAdminsSelected = createSelector(
     };
   }
 );
+
+export const getActiveAdmin = location => {
+  if (location.subRegion) return 'subRegion';
+  if (location.region) return 'region';
+  return 'country';
+};
