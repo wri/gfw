@@ -74,13 +74,13 @@ const mapDispatchToProps = dispatch =>
 class HeaderContainer extends PureComponent {
   componentDidMount() {
     const { location, getTotalArea, getTreeCoverExtent } = this.props;
-    getTotalArea(location.country);
-    getTreeCoverExtent(location.country, location.region, location.subRegion);
+    getTotalArea({ ...location });
+    getTreeCoverExtent({ ...location });
     if (location.region) {
-      getTotalArea(location.country, location.region);
+      getTotalArea({ ...location });
     }
     if (location.subRegion) {
-      getTotalArea(location.country, location.region, location.subRegion);
+      getTotalArea({ ...location });
     }
   }
 
@@ -92,16 +92,16 @@ class HeaderContainer extends PureComponent {
     const hasSubRegionChanged = subRegion !== this.props.location.subRegion;
 
     if (hasCountryChanged) {
-      getTotalArea(country);
-      getTreeCoverExtent(country);
+      getTotalArea({ ...nextProps.location });
+      getTreeCoverExtent({ ...nextProps.location });
     }
     if (region && hasRegionChanged) {
-      getTotalArea(country, region);
-      getTreeCoverExtent(country, region);
+      getTotalArea({ ...nextProps.location });
+      getTreeCoverExtent({ ...nextProps.location });
     }
     if (subRegion && hasSubRegionChanged) {
-      getTotalArea(country, region, subRegion);
-      getTreeCoverExtent(country, region, subRegion);
+      getTotalArea({ ...nextProps.location });
+      getTreeCoverExtent({ ...nextProps.location });
     }
   }
 

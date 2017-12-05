@@ -1,10 +1,8 @@
 export const initialState = {
-  isLoading: true,
+  isLoading: false,
   totalCover: 0,
   totalIntactForest: 0,
   totalNonForest: 0,
-  title: '',
-  indicators: ['gadm28', 'wdpa', 'ifl_2013'],
   units: [
     {
       value: 'ha',
@@ -15,40 +13,6 @@ export const initialState = {
       label: 'Percent Area - %'
     }
   ],
-  canopies: [
-    {
-      value: 0,
-      label: '> 0%'
-    },
-    {
-      value: 10,
-      label: '> 10%'
-    },
-    {
-      value: 15,
-      label: '> 15%'
-    },
-    {
-      value: 20,
-      label: '> 20%'
-    },
-    {
-      value: 25,
-      label: '> 25%'
-    },
-    {
-      value: 30,
-      label: '> 30%'
-    },
-    {
-      value: 50,
-      label: '> 50%'
-    },
-    {
-      value: 75,
-      label: '> 75%'
-    }
-  ],
   settings: {
     indicator: 'gadm28',
     unit: 'ha',
@@ -56,49 +20,72 @@ export const initialState = {
   }
 };
 
-const setTreeCoverIsLoading = (state, { payload }) => ({
+const setTreeLoading = (state, { payload }) => ({
   ...state,
   isLoading: payload
 });
 
-const setTreeCoverValues = (state, { payload }) => ({
+const setTreeCoverData = (state, { payload }) => ({
   ...state,
-  isLoading: false,
-  totalCover: payload.totalCover,
-  totalIntactForest: payload.totalIntactForest,
-  totalNonForest: payload.totalNonForest,
-  title: payload.title,
-  locations: payload.locations
+  ...payload
 });
 
-const setTreeCoverSettingsIndicator = (state, { payload }) => ({
+const setCoverCountryArea = (state, { payload }) => ({
   ...state,
-  settings: {
-    ...state.settings,
-    indicator: payload
+  areas: {
+    ...state.areas,
+    country: payload
   }
 });
 
-const setTreeCoverSettingsUnit = (state, { payload }) => ({
+const setCoverRegionArea = (state, { payload }) => ({
   ...state,
-  settings: {
-    ...state.settings,
-    unit: payload
+  areas: {
+    ...state.areas,
+    region: payload
   }
 });
 
-const setTreeCoverSettingsCanopy = (state, { payload }) => ({
+const setCoverSubRegionArea = (state, { payload }) => ({
   ...state,
-  settings: {
-    ...state.settings,
-    canopy: payload
+  areas: {
+    ...state.areas,
+    subRegion: payload
   }
 });
+
+// const setTreeCoverSettingsLocation = (state, { payload }) => ({
+//   ...state,
+//   settings: {
+//     ...state.settings,
+//     location: payload.value,
+//     locationLabel: payload.label
+//   }
+// });
+
+// const setTreeCoverSettingsUnit = (state, { payload }) => ({
+//   ...state,
+//   settings: {
+//     ...state.settings,
+//     unit: payload
+//   }
+// });
+
+// const setTreeCoverSettingsCanopy = (state, { payload }) => ({
+//   ...state,
+//   settings: {
+//     ...state.settings,
+//     canopy: payload
+//   }
+// });
 
 export default {
-  setTreeCoverIsLoading,
-  setTreeCoverValues,
-  setTreeCoverSettingsIndicator,
-  setTreeCoverSettingsUnit,
-  setTreeCoverSettingsCanopy
+  setTreeLoading,
+  setTreeCoverData,
+  setCoverCountryArea,
+  setCoverRegionArea,
+  setCoverSubRegionArea
+  // setTreeCoverSettingsLocation,
+  // setTreeCoverSettingsUnit,
+  // setTreeCoverSettingsCanopy
 };

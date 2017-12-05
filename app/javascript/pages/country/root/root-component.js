@@ -16,24 +16,24 @@ const WIDGETS = {
   treeCover: {
     gridWidth: 6
   },
-  treeLocated: {
-    gridWidth: 6
-  },
-  treeLoss: {
-    gridWidth: 12
-  },
-  treeCoverLossAreas: {
-    gridWidth: 6
-  },
-  treeCoverGain: {
-    gridWidth: 6
-  },
-  totalAreaPlantations: {
-    gridWidth: 6
-  },
-  plantationArea: {
-    gridWidth: 6
-  }
+  // treeLocated: {
+  //   gridWidth: 6
+  // },
+  // treeLoss: {
+  //   gridWidth: 12
+  // },
+  // treeCoverLossAreas: {
+  //   gridWidth: 6
+  // },
+  // treeCoverGain: {
+  //   gridWidth: 6
+  // },
+  // totalAreaPlantations: {
+  //   gridWidth: 6
+  // },
+  // plantationArea: {
+  //   gridWidth: 6
+  // }
 };
 
 class Root extends PureComponent {
@@ -64,7 +64,7 @@ class Root extends PureComponent {
             </div>
           </div>
           <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
-            <Sticky
+            {/* <Sticky
               className={`map ${showMapMobile ? '-open-mobile' : ''}`}
               limitElement="c-stories"
             >
@@ -87,7 +87,7 @@ class Root extends PureComponent {
                   zoom: 8
                 }}
               />
-            </Sticky>
+            </Sticky> */}
           </div>
         </div>
         <Stories />

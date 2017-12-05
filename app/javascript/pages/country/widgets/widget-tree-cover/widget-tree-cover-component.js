@@ -12,18 +12,18 @@ import './widget-tree-cover-styles.scss';
 class WidgetTreeCover extends PureComponent {
   render() {
     const {
-      locationNames,
       isLoading,
+      isMetaLoading,
       viewOnMap,
       totalCover,
       totalIntactForest,
       totalNonForest,
       title,
-      indicators,
+      locations,
       units,
       canopies,
       settings,
-      setTreeCoverSettingsIndicator,
+      setTreeCoverSettingsLocation,
       setTreeCoverSettingsUnit,
       setTreeCoverSettingsCanopy
     } = this.props;
@@ -60,12 +60,11 @@ class WidgetTreeCover extends PureComponent {
         >
           <WidgetTreeCoverSettings
             type="settings"
-            locationNames={locationNames}
-            indicators={indicators}
+            locations={locations}
             units={units}
             canopies={canopies}
             settings={settings}
-            onLocationChange={setTreeCoverSettingsIndicator}
+            onLocationChange={setTreeCoverSettingsLocation}
             onUnitChange={setTreeCoverSettingsUnit}
             onCanopyChange={setTreeCoverSettingsCanopy}
           />
@@ -117,24 +116,20 @@ class WidgetTreeCover extends PureComponent {
   }
 }
 
-WidgetTreeCover.propTypes = {
-  locationNames: PropTypes.object.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  isMetaLoading: PropTypes.bool.isRequired,
-  setInitialData: PropTypes.func.isRequired,
-  updateData: PropTypes.func.isRequired,
-  viewOnMap: PropTypes.func.isRequired,
-  totalCover: PropTypes.number.isRequired,
-  totalIntactForest: PropTypes.number.isRequired,
-  totalNonForest: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  indicators: PropTypes.array.isRequired,
-  units: PropTypes.array.isRequired,
-  canopies: PropTypes.array.isRequired,
-  settings: PropTypes.object.isRequired,
-  setTreeCoverSettingsIndicator: PropTypes.func.isRequired,
-  setTreeCoverSettingsUnit: PropTypes.func.isRequired,
-  setTreeCoverSettingsCanopy: PropTypes.func.isRequired
-};
+// WidgetTreeCover.propTypes = {
+//   isLoading: PropTypes.bool.isRequired,
+//   isMetaLoading: PropTypes.bool.isRequired,
+//   totalCover: PropTypes.number.isRequired,
+//   totalIntactForest: PropTypes.number.isRequired,
+//   totalNonForest: PropTypes.number.isRequired,
+//   title: PropTypes.string.isRequired,
+//   locations: PropTypes.array.isRequired,
+//   units: PropTypes.array.isRequired,
+//   canopies: PropTypes.array.isRequired,
+//   settings: PropTypes.object.isRequired,
+//   setTreeCoverSettingsLocation: PropTypes.func.isRequired,
+//   setTreeCoverSettingsUnit: PropTypes.func.isRequired,
+//   setTreeCoverSettingsCanopy: PropTypes.func.isRequired
+// };
 
 export default WidgetTreeCover;

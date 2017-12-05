@@ -12,7 +12,7 @@ const SQL_QUERIES = {
     "SELECT sum(area) as area, sum(emissions) as emissions FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'"
 };
 
-const getLocationQuery = ({ country, region, subRegion }) =>
+const getLocationQuery = (country, region, subRegion) =>
   `iso = '${country}'${region ? ` AND adm1 = ${region}` : ''}${
     subRegion ? ` AND adm2 = ${subRegion}` : ''
   }`;
