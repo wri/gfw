@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import ButtonRegular from 'components/button-regular/button-regular';
-import Globe from 'pages/about/components/AboutUsers/globe/index';
+import Globe from 'pages/about/components/AboutUsers/Globe/index';
 import AboutModalWorld from 'pages/about/components/AboutModals/AboutModalWorld';
 
 class AboutUsers extends Component {
