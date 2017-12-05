@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Globe from 'components/globe';
 
-// import './section-projects-globe-styles.scss';
+import './section-projects-globe-styles.scss';
 
 class SectionProjectsGlobe extends PureComponent {
   constructor(props) {
@@ -32,7 +32,7 @@ class SectionProjectsGlobe extends PureComponent {
     const { globeSize } = this.state;
     const globe =
       globeSize > 0 ? (
-        <div style={{ height: globeSize }}>
+        <div className="c-projects-globe" style={{ height: globeSize }}>
           <Globe
             width={globeSize}
             height={globeSize}

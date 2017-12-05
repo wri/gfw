@@ -63,7 +63,7 @@ class SectionProjects extends PureComponent {
         <div className="l-section">
           <div className="row">
             <div className="column small-6">
-              <h2 className="text -color-2 -title-xs -bold -half-opacity">
+              <h2 className="text -color-2 -title-xs -half-opacity">
                 SMALL GRANTS FUND RECIPIENTS
               </h2>
             </div>
@@ -106,7 +106,7 @@ class SectionProjects extends PureComponent {
             <ul className="row card-list">
               <div className="row card-list-section">
                 {data.map(d => (
-                  <li key={d.id} className="column small-6">
+                  <li key={d.id} className="column small-12 large-6">
                     <Card data={d} onClick={this.handleCardClick} />
                   </li>
                 ))}

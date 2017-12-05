@@ -8,7 +8,7 @@
 
 .l-section {
   position: relative;
-  padding: 50px 0;
+  padding: 20px 0;
 
   &.-large-p {
     padding: 150px 0;
@@ -38,16 +38,25 @@
     }
 
     .card-list-section {
-      width: 50%;
+      margin-left: 0;
+      margin-right: 0;
 
       li {
         margin-bottom: 40px;
+      }
+
+      @media screen and (min-width: $screen-l) {
+        width: 50%;
       }
     }
   }
 
   .section-footer {
     margin-top: 12px;
+  }
+
+  @media screen and (min-width: $screen-l) {
+    padding: 50px 0;
   }
 }
 
