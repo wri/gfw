@@ -18,7 +18,7 @@ export const getExtent = (
     .replace(
       '{location}',
       `iso = '${country}'${region ? ` AND adm1 = ${region}` : ''}${
-        region ? ` AND adm2 = ${subRegion}` : ''
+        subRegion ? ` AND adm2 = ${subRegion}` : ''
       }`
     )
     .replace('{threshold}', threshold)

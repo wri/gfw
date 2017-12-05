@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 import { COUNTRY } from 'pages/country/router';
 import {
   getAdminsOptions,
-  getAdminsSelected
+  getAdminsSelected,
+  getActiveAdmin
 } from 'pages/country/utils/filters';
+import { format } from 'd3-format';
 
 import * as actions from './header-actions';
 import reducers, { initialState } from './header-reducers';
@@ -14,6 +16,7 @@ import reducers, { initialState } from './header-reducers';
 import HeaderComponent from './header-component';
 
 const mapStateToProps = state => {
+  const location = state.location.payload;
   const {
     isCountriesLoading,
     isRegionsLoading,
@@ -21,12 +24,13 @@ const mapStateToProps = state => {
     isGeostoreLoading
   } = state.countryData;
   const adminData = {
-    location: state.location.payload,
+    location,
     countries: state.countryData.countries,
     regions: state.countryData.regions,
     subRegions: state.countryData.subRegions
   };
-  const totalArea = state.header.countryArea;
+  const totalArea = state.header[`${getActiveAdmin(location)}Area`];
+  const percentageCover = state.header.treeCoverExtent / totalArea * 100;
   return {
     isLoading:
       isCountriesLoading ||
@@ -35,9 +39,10 @@ const mapStateToProps = state => {
       isGeostoreLoading,
     adminsSelected: getAdminsSelected(adminData),
     adminsOptions: getAdminsOptions(adminData),
-    location: adminData.location,
-    treeCover: state.header.treeCoverExtent,
-    parcentageCover: state.header.treeCoverExtent / totalArea * 100
+    location,
+    activeAdmin: getActiveAdmin(location),
+    treeCover: format('.2s')(state.header.treeCoverExtent),
+    parcentageCover: percentageCover > 1 ? format('.0f')(percentageCover) : 0
   };
 };
 

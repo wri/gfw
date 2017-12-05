@@ -9,15 +9,21 @@ import './header-styles.scss';
 
 class Header extends PureComponent {
   getHeaderDescription = () => {
-    const { treeCover, parcentageCover, adminsSelected } = this.props;
+    const {
+      treeCover,
+      parcentageCover,
+      adminsSelected,
+      activeAdmin
+    } = this.props;
     return (
       <div>
         <p>
-          In 2010, {adminsSelected.country && adminsSelected.country.label} had{' '}
-          <b>{format('.2s')(treeCover)}ha</b> of tree cover
-          {parcentageCover && ', extending over '}
-          {parcentageCover && <b>{format('.0f')(parcentageCover)}%</b>}
-          {parcentageCover && ' of its land area'}.
+          In 2010,{' '}
+          {adminsSelected[activeAdmin] && adminsSelected[activeAdmin].label} had{' '}
+          <b>{treeCover}ha</b> of tree cover
+          {parcentageCover > 0 && ', extending over '}
+          {parcentageCover > 0 && <b>{parcentageCover}%</b>}
+          {parcentageCover > 0 && ' of its land area'}.
         </p>
         <p>
           In <b>2016</b>, it lost <b>{format('.2s')(1566959)}ha</b> of forest
@@ -122,7 +128,8 @@ Header.propTypes = {
   handleRegionChange: PropTypes.func.isRequired,
   handleSubRegionChange: PropTypes.func.isRequired,
   treeCover: PropTypes.number.isRequired,
-  parcentageCover: PropTypes.number
+  parcentageCover: PropTypes.number,
+  activeAdmin: PropTypes.string
 };
 
 export default Header;
