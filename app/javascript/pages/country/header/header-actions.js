@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
-import { getExtent } from 'services/tree-extent';
-import { fetchArea } from 'services/total-area';
+import { getExtent } from 'services/forest-data';
+import { getArea } from 'services/total-area';
 
 const setAreaLoading = createAction('setAreaLoading');
 const setExtentLoading = createAction('setExtentLoading');
@@ -12,12 +12,12 @@ export const setSubRegionArea = createAction('setSubRegionArea');
 
 export const setTreeCoverExtent = createAction('setTreeCoverExtent');
 
-export const getArea = createThunkAction(
-  'getArea',
+export const getTotalArea = createThunkAction(
+  'getTotalArea',
   (country, region, subRegion) => (dispatch, state) => {
     if (!state().header.isAreaLoading) {
       dispatch(setAreaLoading(true));
-      fetchArea(country, region, subRegion)
+      getArea(country, region, subRegion)
         .then(response => {
           if (subRegion) {
             dispatch(setSubRegionArea(response.data.rows[0].value));
@@ -41,7 +41,7 @@ export const getTreeCoverExtent = createThunkAction(
   (country, region, subRegion) => (dispatch, state) => {
     if (!state().header.isLoading) {
       dispatch(setExtentLoading(true));
-      getExtent(country, region, subRegion, 'gadm28_only', 30)
+      getExtent(country, region, subRegion, 'gadm28', 30)
         .then(response => {
           dispatch(setTreeCoverExtent(response.data.data[0].value));
           dispatch(setExtentLoading(false));

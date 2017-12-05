@@ -28,8 +28,8 @@ export const getCountries = createThunkAction(
           dispatch(setCountriesLoading(false));
         })
         .catch(error => {
-          console.info(error);
           dispatch(setCountriesLoading(false));
+          console.info(error);
         });
     }
   }
@@ -46,8 +46,8 @@ export const getRegions = createThunkAction(
           dispatch(setRegionsLoading(false));
         })
         .catch(error => {
-          console.info(error);
           dispatch(setRegionsLoading(false));
+          console.info(error);
         });
     }
   }
@@ -64,8 +64,8 @@ export const getSubRegions = createThunkAction(
           dispatch(setSubRegionsLoading(false));
         })
         .catch(error => {
-          console.info(error);
           dispatch(setSubRegionsLoading(false));
+          console.info(error);
         });
     }
   }
@@ -88,8 +88,8 @@ export const getGeostore = createThunkAction(
           dispatch(setGeostoreLoading(false));
         })
         .catch(error => {
-          console.info(error);
           dispatch(setGeostoreLoading(false));
+          console.info(error);
         });
     }
   }
