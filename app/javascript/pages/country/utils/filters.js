@@ -1,6 +1,7 @@
 import deburr from 'lodash/deburr';
 import toUpper from 'lodash/toUpper';
 import pick from 'lodash/pick';
+import values from 'lodash/values';
 import isEmpty from 'lodash/isEmpty';
 import { createSelector } from 'reselect';
 
@@ -88,14 +89,10 @@ export const getIndicators = createSelector(
   (whitelist, locationNames) => {
     if (isEmpty(locationNames) || !locationNames.current) return null;
 
-    const selectedIndicators = pick(INDICATORS, whitelist);
-    const indicators = Object.keys(selectedIndicators).map(index => {
-      const indicator = selectedIndicators[index];
+    const indicators = values(pick(INDICATORS, whitelist)).map(item => {
+      const indicator = item;
       if (indicator.value === 'gadm28') {
-        indicator.label = indicator.label.replace(
-          '{location}',
-          locationNames.current.label
-        );
+        indicator.label = `All of ${locationNames.current.label}`;
       }
       return indicator;
     });
