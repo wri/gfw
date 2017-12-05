@@ -1,8 +1,8 @@
-import { createElement, PureComponent } from 'react';
+import { createElement } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
-import { getExtent } from 'services/forest-data';
+import { getTotalCover, getTotalIntactForest } from 'services/tree-cover';
+import { getIndicators } from 'pages/country/utils/filters';
 
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
 import actions from './widget-tree-cover-actions';
@@ -13,6 +13,12 @@ export { default as actions } from './widget-tree-cover-actions';
 
 const mapStateToProps = state => {
   const { isCountriesLoading, isRegionsLoading } = state.countryData;
+  const adminData = {
+    location: state.location.payload,
+    countries: state.countryData.countries,
+    regions: state.countryData.regions,
+    subRegions: state.countryData.subRegions
+  };
   return {
     location: state.location.payload,
     areaHa: state.countryData.geostore.areaHa,
@@ -22,7 +28,10 @@ const mapStateToProps = state => {
     totalIntactForest: state.widgetTreeCover.totalIntactForest,
     totalNonForest: state.widgetTreeCover.totalNonForest,
     title: state.widgetTreeCover.title,
-    locations: state.widgetTreeCover.locations,
+    indicators: getIndicators({
+      whitelist: state.widgetTreeCover.indicators,
+      ...adminData
+    }),
     units: state.widgetTreeCover.units,
     canopies: state.widgetTreeCover.canopies,
     settings: state.widgetTreeCover.settings,
@@ -30,25 +39,17 @@ const mapStateToProps = state => {
   };
 };
 
-class WidgetTreeCoverContainer extends PureComponent {
-  componentDidMount() {
-    const { location, settings } = this.props;
-    this.getData({ ...location, threshold: settings.threshold, indicator: settings.indicator });
-  }
+const WidgetTreeCoverContainer = props => {
+  const setInitialData = () => {
+    setWidgetData(props);
+  };
 
-  // componentWillUpdate(nextProps) {
-  //   const { settings } = this.props;
+  const updateData = newProps => {
+    newProps.setTreeCoverIsLoading(true);
+    setWidgetData(newProps);
+  };
 
-  //   if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
-  //     this.getData(nextProps);
-  //   }
-
-  //   if (!nextProps.isMetaLoading && isMetaLoading) {
-  //     this.getData(nextProps);
-  //   }
-  // }
-
-  getData = newProps => {
+  const setWidgetData = newProps => {
     const {
       location,
       areaHa,
@@ -56,15 +57,54 @@ class WidgetTreeCoverContainer extends PureComponent {
       setTreeCoverValues,
       setTreeCoverIsLoading
     } = newProps;
-    getExtent({
-      ...location,
-      threshold: settings.threshold,
-      indicator: settings.location
-    });
+    getTotalCover(location.country, location.region, settings.canopy).then(
+      totalCoverResponse => {
+        getTotalIntactForest(location.country, location.region).then(
+          totalIntactForestResponse => {
+            if (totalIntactForestResponse.data.data.length > 0) {
+              const totalCover = Math.round(
+                totalCoverResponse.data.data[0].value
+              );
+              const totalIntactForest = Math.round(
+                totalIntactForestResponse.data.data[0].value
+              );
+              const totalNonForest =
+                Math.round(areaHa) - (totalCover + totalIntactForest);
+              const values = {
+                totalCover,
+                totalIntactForest,
+                totalNonForest,
+                title: getTitle(newProps),
+                locations: [
+                  {
+                    value: 'all',
+                    label: 'All Region'
+                  },
+                  {
+                    value: 'managed',
+                    label: 'Managed'
+                  },
+                  {
+                    value: 'protected_areas',
+                    label: 'Protected Areas'
+                  },
+                  {
+                    value: 'ifls',
+                    label: 'IFLs'
+                  }
+                ]
+              };
+              setTreeCoverValues(values);
+            }
+            setTreeCoverIsLoading(false);
+          }
+        );
+      }
+    );
   };
 
-  getTitle = () => {
-    const { locationNames, settings } = this.props;
+  const getTitle = newProps => {
+    const { locationNames, settings } = newProps;
 
     const region =
       settings.location !== 'all' ? ` and ${settings.locationLabel}` : '';
@@ -73,17 +113,16 @@ class WidgetTreeCoverContainer extends PureComponent {
       locationNames.country.label}`;
   };
 
-  render() {
-    return createElement(WidgetTreeCoverComponent, {
-      ...this.props
-    });
-  }
-}
+  const viewOnMap = () => {
+    props.setLayers(['forest2000', 'ifl_2013_deg']);
+  };
 
-WidgetTreeCoverContainer.propTypes = {
-  locationNames: PropTypes.object.isRequired,
-  settings: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  return createElement(WidgetTreeCoverComponent, {
+    ...props,
+    setInitialData,
+    updateData,
+    viewOnMap
+  });
 };
 
 export default connect(mapStateToProps, actions)(WidgetTreeCoverContainer);

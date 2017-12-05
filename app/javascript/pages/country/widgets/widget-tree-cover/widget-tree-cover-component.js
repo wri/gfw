@@ -12,17 +12,18 @@ import './widget-tree-cover-styles.scss';
 class WidgetTreeCover extends PureComponent {
   render() {
     const {
+      locationNames,
       isLoading,
       viewOnMap,
       totalCover,
       totalIntactForest,
       totalNonForest,
       title,
-      locations,
+      indicators,
       units,
       canopies,
       settings,
-      setTreeCoverSettingsLocation,
+      setTreeCoverSettingsIndicator,
       setTreeCoverSettingsUnit,
       setTreeCoverSettingsCanopy
     } = this.props;
@@ -59,11 +60,12 @@ class WidgetTreeCover extends PureComponent {
         >
           <WidgetTreeCoverSettings
             type="settings"
-            locations={locations}
+            locationNames={locationNames}
+            indicators={indicators}
             units={units}
             canopies={canopies}
             settings={settings}
-            onLocationChange={setTreeCoverSettingsLocation}
+            onLocationChange={setTreeCoverSettingsIndicator}
             onUnitChange={setTreeCoverSettingsUnit}
             onCanopyChange={setTreeCoverSettingsCanopy}
           />
@@ -116,6 +118,7 @@ class WidgetTreeCover extends PureComponent {
 }
 
 WidgetTreeCover.propTypes = {
+  locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   isMetaLoading: PropTypes.bool.isRequired,
   setInitialData: PropTypes.func.isRequired,
@@ -125,11 +128,11 @@ WidgetTreeCover.propTypes = {
   totalIntactForest: PropTypes.number.isRequired,
   totalNonForest: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  locations: PropTypes.array.isRequired,
+  indicators: PropTypes.array.isRequired,
   units: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
-  setTreeCoverSettingsLocation: PropTypes.func.isRequired,
+  setTreeCoverSettingsIndicator: PropTypes.func.isRequired,
   setTreeCoverSettingsUnit: PropTypes.func.isRequired,
   setTreeCoverSettingsCanopy: PropTypes.func.isRequired
 };
