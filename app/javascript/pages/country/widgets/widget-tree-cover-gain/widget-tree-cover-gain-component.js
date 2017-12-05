@@ -20,8 +20,8 @@ class WidgetTreeCoverGain extends PureComponent {
     return (
       <div className="c-widget c-widget-tree-cover-gain">
         <WidgetHeader
-          title={`TREE COVER GAIN IN ${locationNames.country &&
-            locationNames.country.label}`}
+          title={`TREE COVER GAIN IN ${locationNames.current &&
+            locationNames.current.label}`}
           noMap={false}
           shareAnchor={'tree-cover-gain'}
         >
