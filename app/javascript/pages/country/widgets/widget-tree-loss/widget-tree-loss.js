@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import numeral from 'numeral';
 
-import { getTreeLossByYear } from 'services/tree-loss';
-import { getExtent } from 'services/tree-extent';
+import { getExtent } from 'services/forest-data';
 
 import WidgetTreeLossComponent from './widget-tree-loss-component';
 import actions from './widget-tree-loss-actions';
@@ -41,7 +40,7 @@ const WidgetTreeLossContainer = props => {
 
     axios
       .all([
-        getTreeLossByYear(
+        getExtent(
           location.country,
           location.region,
           location.subRegion,

@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const APIURL = 'https://wri-01.carto.com/api/v2';
+const API_URL = process.env.CARTO_API_URL;
 
-const APIURLS = {
+const SQL_QUERIES = {
   getCountries:
     '/sql?q=SELECT iso, country as name FROM umd_nat_staging GROUP BY iso, name ORDER BY name',
   getRegions:
@@ -12,17 +12,17 @@ const APIURLS = {
 };
 
 export const getCountriesProvider = () => {
-  const url = `${APIURL}${APIURLS.getCountries}`;
+  const url = `${API_URL}${SQL_QUERIES.getCountries}`;
   return axios.get(url);
 };
 
 export const getRegionsProvider = country => {
-  const url = `${APIURL}${APIURLS.getRegions}`.replace('{iso}', country);
+  const url = `${API_URL}${SQL_QUERIES.getRegions}`.replace('{iso}', country);
   return axios.get(url);
 };
 
 export const getSubRegionsProvider = (admin0, admin1) => {
-  const url = `${APIURL}${APIURLS.getSubRegions}`
+  const url = `${API_URL}${SQL_QUERIES.getSubRegions}`
     .replace('{iso}', admin0)
     .replace('{admin1}', admin1);
   return axios.get(url);
