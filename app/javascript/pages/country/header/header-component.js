@@ -127,9 +127,9 @@ Header.propTypes = {
   handleCountryChange: PropTypes.func.isRequired,
   handleRegionChange: PropTypes.func.isRequired,
   handleSubRegionChange: PropTypes.func.isRequired,
-  treeCover: PropTypes.number.isRequired,
-  parcentageCover: PropTypes.number,
-  activeAdmin: PropTypes.string
+  treeCover: PropTypes.string.isRequired,
+  parcentageCover: PropTypes.string,
+  activeAdmin: PropTypes.string.isRequired
 };
 
 export default Header;
