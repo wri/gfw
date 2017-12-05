@@ -10,22 +10,26 @@ import WidgetTreeCoverSettings from './widget-tree-cover-settings-component';
 import './widget-tree-cover-styles.scss';
 
 class WidgetTreeCover extends PureComponent {
+  getTitle = () => {
+    const { adminsSelected } = this.props;
+    return `Forest cover ${adminsSelected.current &&
+      adminsSelected.current.label} in ${adminsSelected.country &&
+      adminsSelected.country.label}`;
+  };
+
   render() {
     const {
       isLoading,
-      isMetaLoading,
-      viewOnMap,
       totalCover,
       totalIntactForest,
       totalNonForest,
-      title,
-      locations,
+      indicators,
       units,
-      canopies,
+      thresholds,
       settings,
-      setTreeCoverSettingsLocation,
+      setTreeCoverSettingsIndicator,
       setTreeCoverSettingsUnit,
-      setTreeCoverSettingsCanopy
+      setTreeCoverSettingsThreshold
     } = this.props;
 
     const totalValue = totalCover + totalIntactForest + totalNonForest;
@@ -53,20 +57,20 @@ class WidgetTreeCover extends PureComponent {
 
     return (
       <div className="c-widget c-widget-tree-cover">
-        <WidgetHeader
-          title={title}
-          viewOnMapCallback={viewOnMap}
-          shareAnchor={'tree-cover'}
-        >
+        <WidgetHeader title={this.getTitle()} shareAnchor={'tree-cover'}>
           <WidgetTreeCoverSettings
             type="settings"
-            locations={locations}
+            indicators={indicators}
             units={units}
-            canopies={canopies}
+            thresholds={thresholds}
             settings={settings}
-            onLocationChange={setTreeCoverSettingsLocation}
-            onUnitChange={setTreeCoverSettingsUnit}
-            onCanopyChange={setTreeCoverSettingsCanopy}
+            onIndicatorChange={option =>
+              setTreeCoverSettingsIndicator(option.value)
+            }
+            onUnitChange={option => setTreeCoverSettingsUnit(option.value)}
+            onThresholdChange={option =>
+              setTreeCoverSettingsThreshold(option.value)
+            }
           />
         </WidgetHeader>
         {isLoading ? (
@@ -116,20 +120,19 @@ class WidgetTreeCover extends PureComponent {
   }
 }
 
-// WidgetTreeCover.propTypes = {
-//   isLoading: PropTypes.bool.isRequired,
-//   isMetaLoading: PropTypes.bool.isRequired,
-//   totalCover: PropTypes.number.isRequired,
-//   totalIntactForest: PropTypes.number.isRequired,
-//   totalNonForest: PropTypes.number.isRequired,
-//   title: PropTypes.string.isRequired,
-//   locations: PropTypes.array.isRequired,
-//   units: PropTypes.array.isRequired,
-//   canopies: PropTypes.array.isRequired,
-//   settings: PropTypes.object.isRequired,
-//   setTreeCoverSettingsLocation: PropTypes.func.isRequired,
-//   setTreeCoverSettingsUnit: PropTypes.func.isRequired,
-//   setTreeCoverSettingsCanopy: PropTypes.func.isRequired
-// };
+WidgetTreeCover.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  totalCover: PropTypes.number.isRequired,
+  totalIntactForest: PropTypes.number.isRequired,
+  totalNonForest: PropTypes.number.isRequired,
+  adminsSelected: PropTypes.object.isRequired,
+  indicators: PropTypes.array.isRequired,
+  units: PropTypes.array.isRequired,
+  thresholds: PropTypes.array.isRequired,
+  settings: PropTypes.object.isRequired,
+  setTreeCoverSettingsIndicator: PropTypes.func.isRequired,
+  setTreeCoverSettingsUnit: PropTypes.func.isRequired,
+  setTreeCoverSettingsThreshold: PropTypes.func.isRequired
+};
 
 export default WidgetTreeCover;

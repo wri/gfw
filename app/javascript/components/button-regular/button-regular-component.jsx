@@ -4,13 +4,21 @@ import PropTypes from 'prop-types';
 import './button-regular-styles.scss';
 
 const ButtonRegular = props => {
-  const { text, link, blank, color, className, clickFunction } = props;
+  const {
+    text,
+    link,
+    blank,
+    color,
+    className,
+    clickFunction,
+    disabled
+  } = props;
   if (link) {
     return (
       <a
         href={link}
         target={blank ? '__blank' : ''}
-        className={'c-regular-button -green'}
+        className={`c-regular-button -green ${disabled && '-disabled'}`}
       >
         {text}
       </a>
@@ -18,7 +26,8 @@ const ButtonRegular = props => {
   }
   return (
     <button
-      className={`c-regular-button -${color} ${className}`}
+      className={`c-regular-button -${color} ${className} ${disabled &&
+        '-disabled'}`}
       onClick={clickFunction}
     >
       {text}
@@ -32,7 +41,8 @@ ButtonRegular.propTypes = {
   color: PropTypes.string,
   blank: PropTypes.bool,
   className: PropTypes.string,
-  clickFunction: PropTypes.func
+  clickFunction: PropTypes.func,
+  disabled: PropTypes.bool
 };
 
 ButtonRegular.defaultProps = {

@@ -1,6 +1,6 @@
-export const canopies = [
+export const thresholds = [
   {
-    value: 0,
+    value: '0',
     label: '> 0%'
   },
   {
@@ -44,3 +44,21 @@ export const units = [
   }
 ];
 
+export const indicators = [
+  {
+    value: 'gadm28',
+    label: 'All Region'
+  },
+  {
+    value: 'managed',
+    label: 'Managed'
+  },
+  {
+    value: 'protected_areas',
+    label: 'Protected Areas'
+  },
+  {
+    value: 'ifls',
+    label: 'IFLs'
+  }
+];
