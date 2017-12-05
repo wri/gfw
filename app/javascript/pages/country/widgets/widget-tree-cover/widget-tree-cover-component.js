@@ -10,18 +10,6 @@ import WidgetTreeCoverSettings from './widget-tree-cover-settings-component';
 import './widget-tree-cover-styles.scss';
 
 class WidgetTreeCover extends PureComponent {
-  componentWillUpdate(nextProps) {
-    const { isMetaLoading, settings, updateData, setInitialData } = this.props;
-
-    if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
-      updateData(nextProps);
-    }
-
-    if (!nextProps.isMetaLoading && isMetaLoading) {
-      setInitialData(nextProps);
-    }
-  }
-
   render() {
     const {
       isLoading,

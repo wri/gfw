@@ -50,8 +50,7 @@ export const initialState = {
     }
   ],
   settings: {
-    location: 'all',
-    locationLabel: 'All Region',
+    location: 'gadm28',
     unit: 'ha',
     canopy: 30
   }

@@ -1,5 +1,6 @@
-import { createElement } from 'react';
+import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { getExtent } from 'services/forest-data';
 
@@ -29,17 +30,25 @@ const mapStateToProps = state => {
   };
 };
 
-const WidgetTreeCoverContainer = props => {
-  const setInitialData = () => {
-    setWidgetData(props);
-  };
+class WidgetTreeCoverContainer extends PureComponent {
+  componentDidMount() {
+    const { location, settings } = this.props;
+    this.getData({ ...location, threshold: settings.threshold, indicator: settings.indicator });
+  }
 
-  const updateData = newProps => {
-    newProps.setTreeCoverIsLoading(true);
-    setWidgetData(newProps);
-  };
+  // componentWillUpdate(nextProps) {
+  //   const { settings } = this.props;
 
-  const setWidgetData = newProps => {
+  //   if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
+  //     this.getData(nextProps);
+  //   }
+
+  //   if (!nextProps.isMetaLoading && isMetaLoading) {
+  //     this.getData(nextProps);
+  //   }
+  // }
+
+  getData = newProps => {
     const {
       location,
       areaHa,
@@ -47,54 +56,15 @@ const WidgetTreeCoverContainer = props => {
       setTreeCoverValues,
       setTreeCoverIsLoading
     } = newProps;
-    getExtent(location.country, location.region, settings.canopy).then(
-      totalCoverResponse => {
-        getExtent(location.country, location.region).then(
-          totalIntactForestResponse => {
-            if (totalIntactForestResponse.data.data.length > 0) {
-              const totalCover = Math.round(
-                totalCoverResponse.data.data[0].value
-              );
-              const totalIntactForest = Math.round(
-                totalIntactForestResponse.data.data[0].value
-              );
-              const totalNonForest =
-                Math.round(areaHa) - (totalCover + totalIntactForest);
-              const values = {
-                totalCover,
-                totalIntactForest,
-                totalNonForest,
-                title: getTitle(newProps),
-                locations: [
-                  {
-                    value: 'all',
-                    label: 'All Region'
-                  },
-                  {
-                    value: 'managed',
-                    label: 'Managed'
-                  },
-                  {
-                    value: 'protected_areas',
-                    label: 'Protected Areas'
-                  },
-                  {
-                    value: 'ifls',
-                    label: 'IFLs'
-                  }
-                ]
-              };
-              setTreeCoverValues(values);
-            }
-            setTreeCoverIsLoading(false);
-          }
-        );
-      }
-    );
+    getExtent({
+      ...location,
+      threshold: settings.threshold,
+      indicator: settings.location
+    });
   };
 
-  const getTitle = newProps => {
-    const { locationNames, settings } = newProps;
+  getTitle = () => {
+    const { locationNames, settings } = this.props;
 
     const region =
       settings.location !== 'all' ? ` and ${settings.locationLabel}` : '';
@@ -103,16 +73,17 @@ const WidgetTreeCoverContainer = props => {
       locationNames.country.label}`;
   };
 
-  const viewOnMap = () => {
-    props.setLayers(['forest2000', 'ifl_2013_deg']);
-  };
+  render() {
+    return createElement(WidgetTreeCoverComponent, {
+      ...this.props
+    });
+  }
+}
 
-  return createElement(WidgetTreeCoverComponent, {
-    ...props,
-    setInitialData,
-    updateData,
-    viewOnMap
-  });
+WidgetTreeCoverContainer.propTypes = {
+  locationNames: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, actions)(WidgetTreeCoverContainer);
