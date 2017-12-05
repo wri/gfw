@@ -1,7 +1,7 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
 
-import { getTotalCover, getTotalCoverRegions } from 'services/tree-extent';
+import { getExtent } from 'services/forest-data';
 
 import WidgetTreeLocatedComponent from './widget-tree-located-component';
 import actions from './widget-tree-located-actions';
@@ -45,31 +45,27 @@ const WidgetTreeLocatedContainer = props => {
       setTreeLocatedIsLoading
     } = newProps;
     setTreeLocatedIsLoading(true);
-    getTotalCover(location.country, location.region, settings.canopy).then(
+    getExtent(location.country, location.region, settings.canopy).then(
       totalCoverResponse => {
-        getTotalCoverRegions(location.country, settings.canopy).then(
-          totalCoverRegions => {
-            const regionsForest = [];
-            const totalCover = Math.round(
-              totalCoverResponse.data.data[0].value
-            );
-            totalCoverRegions.data.data.forEach((item, index) => {
-              const region = regions.find(r => item.adm1 === r.value) || null;
-              if (region) {
-                regionsForest.push({
-                  name: region.label,
-                  value:
-                    settings.unit === 'ha'
-                      ? item.value
-                      : item.value / totalCover * 100,
-                  position: index + 1
-                });
-              }
-            });
-            setTreeLocatedValues(regionsForest);
-            setTreeLocatedIsLoading(false);
-          }
-        );
+        getExtent(location.country, settings.canopy).then(totalCoverRegions => {
+          const regionsForest = [];
+          const totalCover = Math.round(totalCoverResponse.data.data[0].value);
+          totalCoverRegions.data.data.forEach((item, index) => {
+            const region = regions.find(r => item.adm1 === r.value) || null;
+            if (region) {
+              regionsForest.push({
+                name: region.label,
+                value:
+                  settings.unit === 'ha'
+                    ? item.value
+                    : item.value / totalCover * 100,
+                position: index + 1
+              });
+            }
+          });
+          setTreeLocatedValues(regionsForest);
+          setTreeLocatedIsLoading(false);
+        });
       }
     );
   };

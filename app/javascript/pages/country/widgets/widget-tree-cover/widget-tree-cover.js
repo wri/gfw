@@ -1,7 +1,7 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
 
-import { getTotalCover, getTotalIntactForest } from 'services/tree-extent';
+import { getExtent } from 'services/forest-data';
 
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
 import actions from './widget-tree-cover-actions';
@@ -47,9 +47,9 @@ const WidgetTreeCoverContainer = props => {
       setTreeCoverValues,
       setTreeCoverIsLoading
     } = newProps;
-    getTotalCover(location.country, location.region, settings.canopy).then(
+    getExtent(location.country, location.region, settings.canopy).then(
       totalCoverResponse => {
-        getTotalIntactForest(location.country, location.region).then(
+        getExtent(location.country, location.region).then(
           totalIntactForestResponse => {
             if (totalIntactForestResponse.data.data.length > 0) {
               const totalCover = Math.round(

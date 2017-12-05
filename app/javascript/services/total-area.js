@@ -11,7 +11,7 @@ const SQL_QUERIES = {
     "/sql?q=SELECT ROUND(ST_AREA(the_geom::geography) * 0.0001) as value FROM gadm28_adm2 WHERE iso = '{adm0}' AND id_1 = {adm1} AND id_2 = {adm2}"
 };
 
-export const fetchArea = (country, region, subRegion) => {
+export const getArea = (country, region, subRegion) => {
   let url = '';
   if (subRegion) {
     url = `${API_URL}${SQL_QUERIES.getSubRegionArea}`
