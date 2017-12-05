@@ -1,7 +1,7 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
 
-import { getTotalCover, getTotalCoverRegions } from 'services/tree-cover';
+import { getTotalCover, getTotalCoverRegions } from 'services/tree-extent';
 
 import WidgetTreeLocatedComponent from './widget-tree-located-component';
 import actions from './widget-tree-located-actions';

@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const APIURL = 'https://wri-01.carto.com/api/v2';
+const API_URL = process.env.CARTO_API_URL;
 
-const APIURLS = {
+const SQL_QUERIES = {
   getCountryArea:
     "/sql?q=SELECT land as value FROM umd_nat_staging WHERE iso = '{adm0}' AND year = 2001 and thresh = 30",
   getRegionArea:
@@ -14,16 +14,16 @@ const APIURLS = {
 export const fetchArea = (country, region, subRegion) => {
   let url = '';
   if (subRegion) {
-    url = `${APIURL}${APIURLS.getSubRegionArea}`
+    url = `${API_URL}${SQL_QUERIES.getSubRegionArea}`
       .replace('{adm0}', country)
       .replace('{adm1}', region)
       .replace('{adm2}', subRegion);
   } else if (region) {
-    url = `${APIURL}${APIURLS.getRegionArea}`
+    url = `${API_URL}${SQL_QUERIES.getRegionArea}`
       .replace('{adm0}', country)
       .replace('{adm1}', region);
   } else {
-    url = `${APIURL}${APIURLS.getCountryArea}`.replace('{adm0}', country);
+    url = `${API_URL}${SQL_QUERIES.getCountryArea}`.replace('{adm0}', country);
   }
   return axios.get(url);
 };

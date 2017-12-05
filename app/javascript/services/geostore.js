@@ -1,13 +1,9 @@
 import axios from 'axios';
 
-const APIURL = 'https://api.resourcewatch.org/v1';
-
-const APIURLS = {
-  getGeostore: '/geostore/admin/'
-};
+const API_URL = process.env.RESOURCE_WATCH_API_URL;
 
 export const getGeostoreProvider = (country, region) => {
-  const url = `${APIURL}${APIURLS.getGeostore}${country}${
+  const url = `${API_URL}/geostore/admin/${country}${
     region ? `/${region}` : ''
   }`;
   return axios.get(url);
