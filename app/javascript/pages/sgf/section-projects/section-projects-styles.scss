@@ -5,16 +5,21 @@
   margin-top: -28px;
 
   .search {
-    margin-bottom: 50px;
     margin-left: 20px;
   }
 
-  &.-sticky {
-    position: fixed;
-    transform: translate(100%, 0);
-    right: 50%;
-    top: 106px;
-    transition: top 0.2s linear;
-    z-index: 10;
+  @media screen and (min-width: $screen-l) {
+    .search {
+      margin-bottom: 50px;
+    }
+
+    &.-sticky {
+      position: fixed;
+      transform: translate(100%, 0);
+      right: 50%;
+      top: 106px;
+      transition: top 0.2s linear;
+      z-index: 10;
+    }
   }
 }

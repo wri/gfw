@@ -1,0 +1,9 @@
+@import '~styles/settings.scss';
+
+.c-projects-globe {
+  display: none;
+
+  @media screen and (min-width: $screen-l) {
+    display: block;
+  }
+}

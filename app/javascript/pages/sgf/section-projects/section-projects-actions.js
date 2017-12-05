@@ -35,7 +35,7 @@ export const fetchProjects = createThunkAction(
             link: d.link,
             latitude: d.latitude_average,
             longitude: d.longitude_average,
-            legend: d.year.toString(),
+            legend: `${d.year.toString()} - ${d.city}`,
             category: d.use_case_type_how_to_portal
           }));
           dispatch(fetchProjectsReady(dataParsed));
