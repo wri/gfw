@@ -38,7 +38,7 @@ class SectionProjects extends PureComponent {
               <ProjectsGLobe data={data} />
             </div>
             <div className="column small-12 large-5">
-              <Sticky>
+              <Sticky offSet={-50}>
                 <Search
                   className="project-search"
                   placeholder="Search"
