@@ -6,4 +6,24 @@
   .label {
     margin-bottom: rem(10px);
   }
+  
+  .dd__selected,
+  .dd__placeholder,
+  .dd__selectedItem,
+  .dd__list {
+
+    > div {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 100%;
+    }
+  }
+
+  .dd__option {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 100%;
+  }
 }

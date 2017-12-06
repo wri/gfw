@@ -33,7 +33,7 @@ export const thresholds = [
   }
 ];
 
-export const units = [
+export const UNITS = [
   {
     value: 'ha',
     label: 'Hectare - ha'
@@ -41,24 +41,5 @@ export const units = [
   {
     value: '%',
     label: 'Percent Area - %'
-  }
-];
-
-export const indicators = [
-  {
-    value: 'gadm28',
-    label: 'All Regions'
-  },
-  {
-    value: 'managed',
-    label: 'Managed Areas'
-  },
-  {
-    value: 'protected_areas',
-    label: 'Protected Areas'
-  },
-  {
-    value: 'ifls',
-    label: 'IFLs'
   }
 ];
