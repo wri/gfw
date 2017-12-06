@@ -1,10 +1,7 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
 
-import {
-  getTreeCoverGainRegion,
-  getTotalCountriesTreeCoverGain
-} from 'services/tree-gain';
+import { getGain } from 'services/forest-data';
 
 import WidgetAreasMostCoverGainComponent from './widget-areas-most-cover-gain-component';
 import actions from './widget-areas-most-cover-gain-actions';
@@ -58,11 +55,11 @@ const WidgetAreasMostCoverGainContainer = props => {
       setAreasMostCoverGainValues
     } = newProps;
 
-    getTotalCountriesTreeCoverGain(
+    getGain(
       { minYear: settings.startYear, maxYear: settings.endYear },
       settings.canopy
     ).then(totalCoverGain => {
-      getTreeCoverGainRegion(
+      getGain(
         location.admin0,
         { minYear: settings.startYear, maxYear: settings.endYear },
         settings.canopy
@@ -73,7 +70,7 @@ const WidgetAreasMostCoverGainContainer = props => {
         let indexColors = 0;
         let othersValue = 0;
         treeCoverGainByRegion.data.data.forEach((item, index) => {
-          const numberRegion = _.findIndex(admin1List, x => x.id === item.adm1);
+          const numberRegion = admin1List.find(x => x.id === item.adm1);
 
           regionsCoverGain.push({
             name: admin1List[numberRegion].name,

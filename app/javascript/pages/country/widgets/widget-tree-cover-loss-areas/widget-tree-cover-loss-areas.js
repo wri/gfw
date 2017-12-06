@@ -1,7 +1,7 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
 
-import { getTreeLossByRegion } from 'services/tree-loss';
+import { getLoss } from 'services/forest-data';
 
 import WidgetTreeCoverLossAreasComponent from './widget-tree-cover-loss-areas-component';
 import actions from './widget-tree-cover-loss-areas-actions';
@@ -67,7 +67,7 @@ const WidgetTreeCoverLossAreasContainer = props => {
       setPieCharDataDistricts
     } = newProps;
 
-    getTreeLossByRegion(
+    getLoss(
       location.admin0,
       { minYear: settings.startYear, maxYear: settings.endYear },
       settings.canopy

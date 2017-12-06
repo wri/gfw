@@ -2,10 +2,38 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Dropdown from 'components/dropdown';
 import Loader from 'components/loader';
+import { format } from 'd3-format';
 
+import CountryDataProvider from 'pages/country/providers/country-data-provider';
 import './header-styles.scss';
 
 class Header extends PureComponent {
+  getHeaderDescription = () => {
+    const {
+      treeCover,
+      parcentageCover,
+      adminsSelected,
+      activeAdmin
+    } = this.props;
+    return (
+      <div>
+        <p>
+          In 2010,{' '}
+          {adminsSelected[activeAdmin] && adminsSelected[activeAdmin].label} had{' '}
+          <b>{treeCover}ha</b> of tree cover
+          {parcentageCover > 0 && ', extending over '}
+          {parcentageCover > 0 && <b>{parcentageCover}%</b>}
+          {parcentageCover > 0 && ' of its land area'}.
+        </p>
+        <p>
+          In <b>2016</b>, it lost <b>{format('.2s')(1566959)}ha</b> of forest
+          excluding tree plantations, equivalent to{' '}
+          <b>{format('.2s')(350328700)}</b> tonnes of CO₂ of emissions.
+        </p>
+      </div>
+    );
+  };
+
   render() {
     const {
       className,
@@ -18,6 +46,7 @@ class Header extends PureComponent {
     } = this.props;
     return (
       <div className={`${className} c-header`}>
+        <CountryDataProvider />
         {isLoading && <Loader className="loader" theme="theme-loader-light" />}
         <div className="row">
           <div className="columns small-12 large-6">
@@ -81,14 +110,7 @@ class Header extends PureComponent {
           </div>
           <div className="columns large-6 medium-12 small-12">
             <div className="description text -title-xs">
-              <p>
-                In 2010, this country had <b>519 MHa</b> tree cover, that
-                represents <b>61%</b> of its <b>851 Mha</b>.
-              </p>
-              <p>
-                Excluding plantations, <b>40 MHa</b> of tree cover loss occured
-                in <b>2016</b>.
-              </p>
+              {!isLoading && this.getHeaderDescription()}
             </div>
           </div>
         </div>
@@ -104,7 +126,10 @@ Header.propTypes = {
   adminsOptions: PropTypes.object.isRequired,
   handleCountryChange: PropTypes.func.isRequired,
   handleRegionChange: PropTypes.func.isRequired,
-  handleSubRegionChange: PropTypes.func.isRequired
+  handleSubRegionChange: PropTypes.func.isRequired,
+  treeCover: PropTypes.string.isRequired,
+  parcentageCover: PropTypes.string,
+  activeAdmin: PropTypes.string.isRequired
 };
 
 export default Header;
