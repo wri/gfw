@@ -24,7 +24,6 @@ class WidgetTreeCover extends PureComponent {
       setTreeCoverSettingsThreshold,
       getTitle
     } = this.props;
-
     return (
       <div className="c-widget c-widget-tree-cover">
         <WidgetHeader title={getTitle()} shareAnchor={'tree-cover'}>

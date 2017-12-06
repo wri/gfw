@@ -6,6 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 import { createSelector } from 'reselect';
 
 import INDICATORS from './indicators.json';
+import { UNITS } from './constants';
 
 export function deburrUpper(string) {
   return toUpper(deburr(string));
@@ -24,7 +25,7 @@ const getCountries = state => state.countries || null;
 const getRegions = state => state.regions || null;
 const getSubRegions = state => state.subRegions || null;
 
-const loadWhiteList = state => state.whitelist || null;
+const getWhitelist = state => state.whitelist || null;
 
 // get lists selected
 export const getAdminsOptions = createSelector(
@@ -91,10 +92,9 @@ export const getActiveAdmin = location => {
 };
 
 export const getIndicators = createSelector(
-  [loadWhiteList, getAdminsSelected],
+  [getWhitelist, getAdminsSelected],
   (whitelist, locationNames) => {
     if (isEmpty(locationNames) || !locationNames.current) return null;
-
     const indicators = values(pick(INDICATORS, whitelist)).map(item => {
       const indicator = item;
       if (indicator.value === 'gadm28') {
@@ -104,5 +104,14 @@ export const getIndicators = createSelector(
     });
 
     return indicators;
+  }
+);
+
+export const getUnits = createSelector(
+  [getWhitelist],
+  (whitelist) => {
+    if (isEmpty(UNITS)) return null;
+    if (!whitelist) return UNITS;
+    return UNITS.filter(u => whitelist.indexOf(u.value) > -1);
   }
 );

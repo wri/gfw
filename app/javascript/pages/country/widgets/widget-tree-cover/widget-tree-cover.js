@@ -2,8 +2,8 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import { thresholds, units, indicators } from 'pages/country/utils/constants';
-import { getAdminsSelected } from 'pages/country/utils/filters';
+import { thresholds } from 'pages/country/utils/constants';
+import { getAdminsSelected, getIndicators, getUnits } from 'pages/country/utils/filters';
 
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
 import actions from './widget-tree-cover-actions';
@@ -12,12 +12,15 @@ export { initialState } from './widget-tree-cover-reducers';
 export { default as reducers } from './widget-tree-cover-reducers';
 export { default as actions } from './widget-tree-cover-actions';
 
-const mapStateToProps = state => {
-  const { isCountriesLoading, isRegionsLoading } = state.countryData;
-  const totalArea = state.widgetTreeCover.totalArea;
-  const totalCover = state.widgetTreeCover.totalCover;
-  const totalIntactForest = state.widgetTreeCover.totalIntactForest;
-  const totalNonForest = state.widgetTreeCover.totalNonForest;
+const INDICATORS_WHITELIST = ['gadm28', 'wpda', 'ifl_2013', 'ifl_2013__wdpa', 'ifl_2013__mining'];
+const UNIT_WHITELIST = ['ha', '%'];
+
+const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
+  const { isCountriesLoading, isRegionsLoading } = countryData;
+  const totalArea = widgetTreeCover.totalArea;
+  const totalCover = widgetTreeCover.totalCover;
+  const totalIntactForest = widgetTreeCover.totalIntactForest;
+  const totalNonForest = widgetTreeCover.totalNonForest;
   const data = [
     {
       name: 'Forest',
@@ -40,18 +43,18 @@ const mapStateToProps = state => {
   ];
   return {
     isLoading:
-      state.widgetTreeCover.isLoading || isCountriesLoading || isRegionsLoading,
-    location: state.location.payload,
-    regions: state.countryData.regions,
+      widgetTreeCover.isLoading || isCountriesLoading || isRegionsLoading,
+    location: location.payload,
+    regions: countryData.regions,
     data,
     adminsSelected: getAdminsSelected({
-      ...state.countryData,
-      location: state.location.payload
+      ...countryData,
+      location: location.payload
     }),
-    units,
+    units: getUnits({ whitelist: UNIT_WHITELIST }),
     thresholds,
-    indicators,
-    settings: state.widgetTreeCover.settings
+    indicators: getIndicators({ whitelist: INDICATORS_WHITELIST, location: location.payload, ...countryData }) || [],
+    settings: widgetTreeCover.settings
   };
 };
 
@@ -82,18 +85,21 @@ class WidgetTreeCoverContainer extends PureComponent {
   }
 
   getTitle = () => {
-    const { adminsSelected, settings } = this.props;
-    const activeThreshold = thresholds.find(
-      t => t.value === settings.threshold
-    );
-    const activeIndicator = indicators.find(
-      i => i.value === settings.indicator
-    );
-    return `Tree  cover for 
-      ${activeIndicator.label} of 
-      ${adminsSelected.current &&
-        adminsSelected.current.label} with a tree canopy of 
-      ${activeThreshold.label}`;
+    const { adminsSelected, settings, indicators } = this.props;
+    if (adminsSelected && indicators.length) {
+      const activeThreshold = thresholds.find(
+        t => t.value === settings.threshold
+      );
+      const activeIndicator = indicators.find(
+        i => i.value === settings.indicator
+      );
+      return `Tree  cover for 
+        ${activeIndicator.label} of 
+        ${adminsSelected.current &&
+          adminsSelected.current.label} with a tree canopy of 
+        ${activeThreshold.label}`;
+    }
+    return '';
   };
 
   render() {
@@ -108,7 +114,8 @@ WidgetTreeCoverContainer.propTypes = {
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   getTreeCover: PropTypes.func.isRequired,
-  adminsSelected: PropTypes.object.isRequired
+  adminsSelected: PropTypes.object.isRequired,
+  indicators: PropTypes.array.isRequired
 };
 
 export default connect(mapStateToProps, actions)(WidgetTreeCoverContainer);
