@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+
 import Dropdown from 'components/dropdown';
 
 class WidgetTreeCoverSettings extends PureComponent {

@@ -5,7 +5,6 @@ import { getArea } from 'services/total-area';
 
 const setTreeCoverLoading = createAction('setTreeCoverLoading');
 const setTreeCoverData = createAction('setTreeCoverData');
-
 const setTreeCoverSettingsIndicator = createAction(
   'setTreeCoverSettingsIndicator'
 );
