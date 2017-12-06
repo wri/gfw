@@ -1,7 +1,7 @@
-import { createElement } from 'react';
+import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
-
-import { getGain } from 'services/forest-data';
+import PropTypes from 'prop-types';
+import numeral from 'numeral';
 
 import WidgetTreeCoverGainComponent from './widget-tree-cover-gain-component';
 import actions from './widget-tree-cover-gain-actions';
@@ -13,57 +13,91 @@ export { default as actions } from './widget-tree-cover-gain-actions';
 const mapStateToProps = state => ({
   location: state.location.payload,
   isLoading: state.widgetTreeCoverGain.isLoading,
-  totalAmount: state.widgetTreeCoverGain.totalAmount,
-  percentage: state.widgetTreeCoverGain.percentage,
-  settings: state.widgetTreeCoverGain.settings,
-  locations: state.widgetTreeCoverGain.locations
+  gain: state.widgetTreeCoverGain.gain,
+  treeExtent: state.widgetTreeCoverGain.treeExtent,
+  indicators: state.widgetTreeCoverGain.indicators,
+  settings: state.widgetTreeCoverGain.settings
 });
 
-const WidgetTreeCoverGainContainer = props => {
-  const setInitialData = newProps => {
-    setWidgetData(newProps);
+class WidgetTreeCoverGainContainer extends PureComponent {
+  componentWillUpdate(nextProps) {
+    const { isMetaLoading, settings } = this.props;
+
+    if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
+      this.updateData(nextProps);
+    }
+
+    if (!nextProps.isMetaLoading && isMetaLoading) {
+      this.setWidgetData(nextProps);
+    }
+  }
+
+  setWidgetData = newProps => {
+    const { location, settings, getTreeCoverGain } = newProps;
+
+    getTreeCoverGain(
+      location.country,
+      location.region,
+      location.subRegion,
+      settings.indicator
+    );
   };
 
-  const updateData = newProps => {
+  getSentence = () => {
+    const {
+      locationNames,
+      gain,
+      treeExtent,
+      indicators,
+      settings
+    } = this.props;
+
+    const indicator = indicators.filter(
+      item => item.value === settings.indicator
+    );
+    const regionPhrase =
+      settings.indicator === 'gadm28_only'
+        ? 'region-wide'
+        : `in ${indicator[0].label.toLowerCase()}`;
+
+    const areaPercent = numeral(100 * treeExtent / gain).format('0,00');
+
+    return {
+      __html: `From 2001 to 2012, ${
+        locationNames.current.label
+      } gained <strong>${numeral(gain).format(
+        '0,0'
+      )} ha</strong> of tree cover in ${
+        regionPhrase
+      }, equivalent to a <strong>${
+        areaPercent
+      }%</strong> increase relative to 2010 tree cover extent.`
+    };
+  };
+
+  updateData = newProps => {
     newProps.setTreeCoverGainIsLoading(true);
-    setWidgetData(newProps);
+    this.setWidgetData(newProps);
   };
 
-  const setWidgetData = newProps => {
-    const { location, settings, setTreeCoverGainValues } = newProps;
-
-    getGain(
-      location.admin0,
-      location.admin1,
-      {
-        minYear: settings.startYear,
-        maxYear: settings.endYear
-      },
-      settings.canopy
-    ).then(coverGain => {
-      getGain(
-        {
-          minYear: settings.startYear,
-          maxYear: settings.endYear
-        },
-        settings.canopy
-      ).then(totalCoverGain => {
-        const percentage =
-          coverGain.data.data[0].value / totalCoverGain.data.data[0].value;
-        const values = {
-          totalAmount: coverGain.data.data[0].value,
-          percentage: percentage * 100
-        };
-        setTreeCoverGainValues(values);
-      });
+  render() {
+    return createElement(WidgetTreeCoverGainComponent, {
+      ...this.props,
+      componentWillUpdate: this.componentWillUpdate,
+      setWidgetData: this.setWidgetData,
+      updateData: this.updateData,
+      getSentence: this.getSentence
     });
-  };
+  }
+}
 
-  return createElement(WidgetTreeCoverGainComponent, {
-    ...props,
-    setInitialData,
-    updateData
-  });
+WidgetTreeCoverGainContainer.propTypes = {
+  isMetaLoading: PropTypes.bool,
+  locationNames: PropTypes.object,
+  gain: PropTypes.number,
+  treeExtent: PropTypes.number,
+  indicators: PropTypes.array,
+  settings: PropTypes.object
 };
 
 export default connect(mapStateToProps, actions)(WidgetTreeCoverGainContainer);
