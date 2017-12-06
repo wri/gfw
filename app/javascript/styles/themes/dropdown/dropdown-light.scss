@@ -31,6 +31,7 @@
   .dd__selectControl,
   .dd__option {
     padding: rem(5px) rem(12px);
+    background-color: transparent;
   }
 
   .dd__selectedItem,
@@ -46,5 +47,10 @@
   .dd__selectedItem,
   .dd__selectedOption {
     color: $slate;
+  }
+
+  .dd__disabled {
+    opacity: 0.7;
+    background-color: $grey-light;
   }
 }

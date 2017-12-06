@@ -14,18 +14,40 @@ export { default as actions } from './widget-tree-cover-actions';
 
 const mapStateToProps = state => {
   const { isCountriesLoading, isRegionsLoading } = state.countryData;
+  const totalArea = state.widgetTreeCover.totalArea;
+  const totalCover = state.widgetTreeCover.totalCover;
+  const totalIntactForest = state.widgetTreeCover.totalIntactForest;
+  const totalNonForest = state.widgetTreeCover.totalNonForest;
+  const data = [
+    {
+      name: 'Forest',
+      value: totalCover,
+      color: '#959a00',
+      percentage: totalCover / totalArea * 100
+    },
+    {
+      name: 'Intact Forest',
+      value: totalIntactForest,
+      color: '#2d8700',
+      percentage: totalIntactForest / totalArea * 100
+    },
+    {
+      name: 'Non Forest',
+      value: totalNonForest,
+      color: '#d1d1d1',
+      percentage: totalNonForest / totalArea * 100
+    }
+  ];
   return {
     isLoading:
       state.widgetTreeCover.isLoading || isCountriesLoading || isRegionsLoading,
     location: state.location.payload,
     regions: state.countryData.regions,
-    totalCover: state.widgetTreeCover.totalCover,
+    data,
     adminsSelected: getAdminsSelected({
       ...state.countryData,
       location: state.location.payload
     }),
-    totalIntactForest: state.widgetTreeCover.totalIntactForest,
-    totalNonForest: state.widgetTreeCover.totalNonForest,
     units,
     thresholds,
     indicators,
@@ -48,7 +70,8 @@ class WidgetTreeCoverContainer extends PureComponent {
 
     if (
       !isEqual(nextProps.location, this.props.location) ||
-      !isEqual(settings, this.props.settings)
+      !isEqual(settings.indicator, this.props.settings.indicator) ||
+      !isEqual(settings.threshold, this.props.settings.threshold)
     ) {
       getTreeCover({
         ...location,
@@ -57,6 +80,21 @@ class WidgetTreeCoverContainer extends PureComponent {
       });
     }
   }
+
+  getTitle = () => {
+    const { adminsSelected, settings } = this.props;
+    const activeThreshold = thresholds.find(
+      t => t.value === settings.threshold
+    );
+    const activeIndicator = indicators.find(
+      i => i.value === settings.indicator
+    );
+    return `Tree  cover for 
+      ${activeIndicator.label} of 
+      ${adminsSelected.current &&
+        adminsSelected.current.label} with a tree canopy of 
+      ${activeThreshold.label}`;
+  };
 
   render() {
     return createElement(WidgetTreeCoverComponent, {
@@ -69,7 +107,8 @@ class WidgetTreeCoverContainer extends PureComponent {
 WidgetTreeCoverContainer.propTypes = {
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  getTreeCover: PropTypes.func.isRequired
+  getTreeCover: PropTypes.func.isRequired,
+  adminsSelected: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, actions)(WidgetTreeCoverContainer);

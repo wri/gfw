@@ -11,7 +11,8 @@ class WidgetTreeCoverSettings extends PureComponent {
       settings,
       onIndicatorChange,
       onThresholdChange,
-      onUnitChange
+      onUnitChange,
+      isLoading
     } = this.props;
 
     return (
@@ -23,6 +24,7 @@ class WidgetTreeCoverSettings extends PureComponent {
             value={settings.indicator}
             options={indicators}
             onChange={onIndicatorChange}
+            disabled={isLoading}
           />
           <Dropdown
             theme="theme-select-light"
@@ -39,6 +41,7 @@ class WidgetTreeCoverSettings extends PureComponent {
             value={settings.threshold}
             options={thresholds}
             onChange={onThresholdChange}
+            disabled={isLoading}
           />
         </div>
       </div>
@@ -53,7 +56,8 @@ WidgetTreeCoverSettings.propTypes = {
   settings: PropTypes.object.isRequired,
   onIndicatorChange: PropTypes.func.isRequired,
   onUnitChange: PropTypes.func.isRequired,
-  onThresholdChange: PropTypes.func.isRequired
+  onThresholdChange: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired
 };
 
 export default WidgetTreeCoverSettings;

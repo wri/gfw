@@ -1,5 +1,6 @@
 export const initialState = {
   isLoading: false,
+  totalArea: 0,
   totalCover: 0,
   totalIntactForest: 0,
   totalNonForest: 0,
