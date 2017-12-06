@@ -1,0 +1,31 @@
+@import '~styles/settings.scss';
+
+.c-cover {
+  position: relative;
+  padding: rem(60px) 0 rem(40px);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  @media screen and (min-width: $screen-m) {
+    padding: rem(80px) 0;
+  }
+
+  .cover-texts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    h1 {
+      margin-bottom: rem(5px);
+
+      @media screen and (min-width: $screen-m) {
+        margin-bottom: rem(10px);
+      }
+    }
+
+    .description {
+      max-width: rem(768px);
+    }
+  }
+}
