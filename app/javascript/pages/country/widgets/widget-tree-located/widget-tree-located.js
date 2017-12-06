@@ -2,6 +2,7 @@ import { createElement } from 'react';
 import { connect } from 'react-redux';
 
 import { getExtent } from 'services/forest-data';
+import { getCanopies } from 'pages/country/utils/filters';
 
 import WidgetTreeLocatedComponent from './widget-tree-located-component';
 import actions from './widget-tree-located-actions';
@@ -20,7 +21,7 @@ const mapStateToProps = state => {
     paginate: state.widgetTreeLocated.paginate,
     dataSources: state.widgetTreeLocated.dataSources,
     units: state.widgetTreeLocated.units,
-    canopies: state.widgetTreeLocated.canopies,
+    canopies: getCanopies(),
     settings: state.widgetTreeLocated.settings,
     isMetaLoading: isCountriesLoading || isRegionsLoading
   };
