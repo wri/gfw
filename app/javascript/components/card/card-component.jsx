@@ -27,10 +27,10 @@ class Card extends PureComponent {
         )}
         {data.title && (
           <div className="c-about-impacts-item__header">
-            <h3 className="text -title -color-2 -light">{data.title}</h3>
+            <h3 className="text -title-m -color-2 -light">{data.title}</h3>
           </div>
         )}
-        <div className="c-about-impacts-item__paragraph text -paragraph -color-2">
+        <div className="c-about-impacts-item__paragraph text -paragraph-7 -color-2">
           <Dotdotdot clamp={4}>{data.outcome}</Dotdotdot>
         </div>
         <div className="c-about-impacts-item__footer">
