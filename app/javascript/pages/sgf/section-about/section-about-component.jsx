@@ -11,10 +11,10 @@ class SectionAbout extends PureComponent {
   render() {
     const { cards } = this.props;
     return (
-      <div>
-        <section className="l-section">
-          <div className="row">
-            <div className="column small-9">
+      <div className="l-section-about">
+        <section className="intro">
+          <div className="row intro">
+            <div className="column small-12 medium-9">
               <p className="text -paragraph -color-2 -light -spaced">
                 Civil Society Organizations operating in and around forested
                 areas are some of the most effective champions of forest
@@ -29,7 +29,7 @@ class SectionAbout extends PureComponent {
                 our tools to meet the unique needs of this user group.
               </p>
             </div>
-            <div className="column small-3 -right">
+            <div className="column small-12 medium-3 logo">
               <img
                 src={sgfLogo}
                 alt="Logo Global Forest Watch Small Grant Funds"
@@ -38,26 +38,36 @@ class SectionAbout extends PureComponent {
           </div>
         </section>
         <section
-          className="l-section -large-p"
+          className="about-cards"
           style={{ backgroundImage: `url(${sfgBg1})` }}
         >
-          {cards &&
-            cards.length && (
-              <ul className="row">
-                {this.props.cards.map(card => (
-                  <li className="column small-4" key={card.title}>
-                    <Card data={card} className="-big-padding -min-h" />
-                  </li>
-                ))}
-              </ul>
-            )}
-          <p className="copyright-section">
-            <strong>Photo credit:</strong> African Conservation Foundation
-          </p>
+          <div className="row cards">
+            <div className="column small-12">
+              {cards &&
+                cards.length && (
+                  <ul className="row">
+                    {this.props.cards.map(card => (
+                      <li
+                        className="column small-12 medium-6 large-4"
+                        key={card.title}
+                      >
+                        <Card
+                          data={card}
+                          className="about-card -big-padding -min-h"
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              <p className="copyright-section">
+                <strong>Photo credit:</strong> African Conservation Foundation
+              </p>
+            </div>
+          </div>
         </section>
-        <section className="l-section">
+        <section className="support">
           <div className="row">
-            <div className="column small-9">
+            <div className="column small-12 medium-9">
               <div className="section-header">
                 <h2 className="text -color-2 -title-big -light">
                   Support the Small Grants Fund

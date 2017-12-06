@@ -2,6 +2,7 @@
 
 .c-projects-globe {
   display: none;
+  margin-bottom: rem(60px);
 
   @media screen and (min-width: $screen-l) {
     display: block;

@@ -14,6 +14,7 @@ class Sticky extends PureComponent {
       top,
       getStickyDiv
     } = this.props;
+
     return (
       <div ref={getStickyDiv} className="sticky-container">
         <div

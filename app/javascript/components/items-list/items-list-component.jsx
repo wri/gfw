@@ -8,9 +8,9 @@ import './items-list-styles.scss';
 class ItemsList extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { data, itemSelected, onClick } = this.props;
+    const { data, itemSelected, onClick, className } = this.props;
     return (
-      <ul className="c-items-list text -paragraph -color-2">
+      <ul className={`c-items-list text -paragraph -color-2 ${className}`}>
         {data.map(d => (
           <li key={d} className={d === itemSelected ? '-selected' : ''}>
             <button onClick={() => onClick && onClick(d)}>
@@ -26,7 +26,8 @@ class ItemsList extends PureComponent {
 ItemsList.propTypes = {
   data: PropTypes.array.isRequired,
   itemSelected: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default ItemsList;

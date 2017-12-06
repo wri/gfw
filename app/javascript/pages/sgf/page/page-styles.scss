@@ -1,66 +1,14 @@
 @import '~styles/settings.scss';
 
 .l-main {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: rem(30px) 0;
   border-bottom: solid 1px $grey-dark;
+
+  @media screen and (min-width: $screen-m) {
+    padding: rem(50px) 0;
+  }
 }
 
 .l-section {
   position: relative;
-  padding: 20px 0;
-
-  &.-large-p {
-    padding: 150px 0;
-  }
-
-  .section-header {
-    padding-bottom: 10px;
-
-    > h2 {
-      padding-bottom: 35px;
-    }
-
-    > p {
-      padding-bottom: 40px;
-    }
-  }
-
-  .section-separator {
-    height: 1px;
-    border: 1px solid rgba($grey-dark, 0.6);
-    margin: 30px 0;
-  }
-
-  .card-list {
-    > li {
-      margin-bottom: 30px;
-    }
-
-    .card-list-section {
-      margin-left: 0;
-      margin-right: 0;
-
-      li {
-        margin-bottom: 40px;
-      }
-
-      @media screen and (min-width: $screen-l) {
-        width: 50%;
-      }
-    }
-  }
-
-  .section-footer {
-    margin-top: 12px;
-  }
-
-  @media screen and (min-width: $screen-l) {
-    padding: 50px 0;
-  }
-}
-
-html,
-body {
-  height: auto;
 }

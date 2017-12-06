@@ -15,11 +15,13 @@ class StickyContainer extends PureComponent {
   }
 
   getStickyDiv = el => {
-    this.setState({
-      stickyDivPos:
-        el.getBoundingClientRect().top -
-        document.body.getBoundingClientRect().top
-    });
+    if (el) {
+      this.setState({
+        stickyDivPos:
+          el.getBoundingClientRect().top -
+          document.body.getBoundingClientRect().top
+      });
+    }
   };
 
   handleScrollCallback = () => {

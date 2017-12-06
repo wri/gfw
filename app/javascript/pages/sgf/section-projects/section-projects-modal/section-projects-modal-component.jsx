@@ -10,7 +10,7 @@ class SectionProjectsModal extends PureComponent {
     if (!data) return null;
     return (
       <div className="c-projects-modal">
-        <div className="c-projects-modal__header">
+        <div className="header">
           {data.title && (
             <h1 className="text -title-big -color-2 -light">{data.title}</h1>
           )}
@@ -19,17 +19,17 @@ class SectionProjectsModal extends PureComponent {
           </h2>
         </div>
         {data.image && (
-          <div className="c-projects-modal__image">
+          <div className="image">
             <img src={data.image} alt="SGF project detail" />
             <span>{data.image_credit}</span>
           </div>
         )}
-        <div className="c-projects-modal__content">
+        <div className="content">
           {data.outcome && (
             <p className="text -paragraph -color-2 -light">{data.outcome}</p>
           )}
         </div>
-        <div className="c-projects-modal__footer">
+        <div className="footer">
           {data.category && (
             <p className="text -paragraph-5 -color-4">{data.category}</p>
           )}

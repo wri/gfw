@@ -10,7 +10,7 @@ class SectionAbout extends PureComponent {
       <div>
         <section className="l-section">
           <div className="row">
-            <div className="column small-9">
+            <div className="column small-12 medium-9">
               <p className="text -paragraph -color-2 -light -spaced">
                 The Small Grants Fund Call for Applications opens once a year in
                 February. Though the specific focus of the Call varies from year
