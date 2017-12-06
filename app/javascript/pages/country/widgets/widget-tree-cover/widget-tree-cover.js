@@ -2,7 +2,7 @@ import { createElement } from 'react';
 import { connect } from 'react-redux';
 
 import { getExtent } from 'services/forest-data';
-import { getIndicators } from 'pages/country/utils/filters';
+import { getIndicators, getCanopies } from 'pages/country/utils/filters';
 
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
 import actions from './widget-tree-cover-actions';
@@ -33,7 +33,7 @@ const mapStateToProps = state => {
       ...adminData
     }),
     units: state.widgetTreeCover.units,
-    canopies: state.widgetTreeCover.canopies,
+    canopies: getCanopies(),
     settings: state.widgetTreeCover.settings,
     isMetaLoading: isCountriesLoading || isRegionsLoading
   };
