@@ -1,0 +1,54 @@
+{
+  "gadm28": {
+    "label": "All of {location}",
+    "value": "gadm28"
+  },
+  "biodiversity_hot_spots": {
+    "label": "Biodiversity Hot Spots",
+    "value": "biodiversity_hot_spots"
+  },
+  "bra_biomes": {
+    "label": "Biomes",
+    "value": "bra_biomes"
+  },
+  "ifl_2013": {
+    "label": "Intact Forest Landscapes (2013)",
+    "value": "ifl_2013"
+  },
+  "ifl_2013__wdpa": {
+    "label": "Protected Areas in Intact Forest Landscapes",
+    "value": "ifl_2013__wdpa"
+  },
+  "ifl_2013__mining": {
+    "label": "Mining in Intact Forest Landscapes",
+    "value": "ifl_2013__mining"
+  },
+  "mining": {
+    "label": "Mining",
+    "value": "mining"
+  },
+  "primary_forests": {
+    "label": "Primary Forest",
+    "value": "primary_forests"
+  },
+  "primary_forest__mining": {
+    "label": "Mining in Primary Forests",
+    "value": "primary_forest__mining"
+  },
+  "primary_forest__wdpa": {
+    "label": "Protected Areas in Primary Forests",
+    "value": "primary_forest__wdpa"
+  },
+  "primary_forest__landmark": {
+    "label": "Indigenous Lands in Primary Forests",
+    "value": "primary_forest__landmark"
+  },
+  "wdpa": {
+    "label": "Protected Areas",
+    "value": "wdpa"
+  },
+  "landmark": {
+    "label": "Indigenous Lands",
+    "value": "landmark"
+  }
+}
