@@ -7,6 +7,7 @@ import { createSelector } from 'reselect';
 
 import INDICATORS from './indicators.json';
 import CANOPIES from './canopies.json';
+import UNITS from './units.json';
 
 export function deburrUpper(string) {
   return toUpper(deburr(string));
@@ -109,3 +110,5 @@ export const getIndicators = createSelector(
 );
 
 export const getCanopies = createSelector([], () => CANOPIES);
+
+export const getUnits = createSelector([], () => UNITS);

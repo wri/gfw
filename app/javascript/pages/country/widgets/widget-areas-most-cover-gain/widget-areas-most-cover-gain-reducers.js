@@ -20,16 +20,6 @@ export const initialState = {
       label: 'Protected Areas'
     }
   ],
-  units: [
-    {
-      value: 'ha',
-      label: 'Hectare - ha'
-    },
-    {
-      value: '%',
-      label: 'Percent Area - %'
-    }
-  ],
   settings: {
     location: 'all',
     locationLabel: 'All Region',

@@ -2,6 +2,7 @@ import { createElement } from 'react';
 import { connect } from 'react-redux';
 
 import { getGain } from 'services/forest-data';
+import { getUnits } from 'pages/country/utils/filters';
 
 import WidgetAreasMostCoverGainComponent from './widget-areas-most-cover-gain-component';
 import actions from './widget-areas-most-cover-gain-actions';
@@ -18,7 +19,7 @@ const mapStateToProps = state => ({
   areaChartData: state.widgetAreasMostCoverGain.areaChartData,
   paginate: state.widgetAreasMostCoverGain.paginate,
   locations: state.widgetAreasMostCoverGain.locations,
-  units: state.widgetAreasMostCoverGain.units,
+  units: getUnits(),
   settings: state.widgetAreasMostCoverGain.settings
 });
 

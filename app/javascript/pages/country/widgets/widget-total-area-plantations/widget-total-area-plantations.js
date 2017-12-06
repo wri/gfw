@@ -1,6 +1,8 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
 
+import { getUnits } from 'pages/country/utils/filters';
+
 import WidgetTotalAreaPlantationsComponent from './widget-total-area-plantations-component';
 import actions from './widget-total-area-plantations-actions';
 
@@ -11,7 +13,7 @@ export { default as actions } from './widget-total-area-plantations-actions';
 const mapStateToProps = state => ({
   isLoading: state.widgetTotalAreaPlantations.isLoading,
   plantationData: state.widgetTotalAreaPlantations.plantationData,
-  units: state.widgetTotalAreaPlantations.units,
+  units: getUnits(),
   settings: state.widgetTotalAreaPlantations.settings
 });
 
