@@ -6,6 +6,7 @@ import Card from 'components/card';
 import ItemsList from 'components/items-list';
 import Search from 'components/search';
 import Sticky from 'components/sticky';
+import NoContent from 'components/no-content';
 
 import './section-projects-styles.scss';
 
@@ -58,7 +59,7 @@ class SectionProjects extends PureComponent {
           <div className="row">
             <div className="column small-12 large-7">
               <div className="row">
-                {hasData &&
+                {hasData ? (
                   data.map(d => (
                     <div key={d.id} className="column small-12 medium-6">
                       <Card
@@ -67,7 +68,10 @@ class SectionProjects extends PureComponent {
                         onClick={this.handleCardClick}
                       />
                     </div>
-                  ))}
+                  ))
+                ) : (
+                  <NoContent message="No projects for that search" />
+                )}
               </div>
             </div>
           </div>
