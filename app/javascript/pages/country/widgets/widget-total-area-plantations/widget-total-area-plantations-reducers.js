@@ -1,16 +1,6 @@
 export const initialState = {
   isLoading: true,
   plantationData: [],
-  units: [
-    {
-      value: 'ha',
-      label: 'Hectare - ha'
-    },
-    {
-      value: '%',
-      label: 'Percent Area - %'
-    }
-  ],
   settings: {
     unit: 'ha',
     startYear: 2011,
