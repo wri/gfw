@@ -37,6 +37,12 @@ class AboutHow extends Component {
               <div className="c-about-contactus__content">
                 <div className="c-about-contactus__title text -title-xs -color-3">CONTACT US</div>
                 <div className="c-about-contactus__summary text -paragraph -color-2">Question, comment, request, feedback? We want to hear from you! Help us improve Global Forest Watch by completing the form on the right.</div>
+                <div className="c-about-contactus__address text -paragraph-2 -color-2">
+                  <p>Global Forest Watch, 10 G Street NE Suite 800</p>
+                  <p>Washington, DC 20002, USA</p>
+                  <p><a className="text -title-xxs -color-4" href="http://www.wri.org/our-work/project/global-forest-watch" target="_blank">Explore the team</a></p>
+                  <p><a className="text -title-xxs -color-4" href="https://careers.wri.org/" target="_blank">Explore jobs</a></p>
+                </div>
               </div>
             </div>
             <div className="small-12 large-6 columns">

@@ -92,7 +92,7 @@ class AboutImpacts extends Component {
                     <li key={i} className={`slide js_slide ${i === 0 ? 'active' : ''}`}>
                       <div className="c-about-impacts-item">
                         <div className="c-about-impacts-item__image" style={{backgroundImage: `url(${item.image})`}}>
-                          <span>{item.image_credit}</span>
+                          <div className="c-about-impacts-item__credit"><span>{item.image_credit}</span></div>
                         </div>
                         <div className="c-about-impacts-item__paragraph text -paragraph -color-2"><Dotdotdot clamp={4}>{item.outcome}</Dotdotdot></div>
                         {item.link ?
