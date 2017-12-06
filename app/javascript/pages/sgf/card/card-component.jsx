@@ -14,7 +14,7 @@ class ProjectCard extends PureComponent {
     const { title, link, items } = this.props.data;
     const cardTitle = <h3 className="card-title">{title}</h3>;
     return (
-      <div className={`m-card ${className}`}>
+      <div className={`c-card ${className}`}>
         {link ? <a href={link}>{cardTitle}</a> : cardTitle}
         {items &&
           !!items.length && (

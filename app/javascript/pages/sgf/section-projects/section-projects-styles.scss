@@ -1,25 +1,31 @@
 @import '~styles/settings.scss';
 
-.section-projects-list {
-  display: flex;
-  margin-top: -28px;
+.l-section-projects {
+  .project-header {
+    display: none;
 
-  .search {
-    margin-left: 20px;
+    @media screen and (min-width: $screen-l) {
+      display: block;
+    }
   }
 
-  @media screen and (min-width: $screen-l) {
-    .search {
-      margin-bottom: 50px;
-    }
+  .project-search {
+    margin-bottom: rem(30px);
 
-    &.-sticky {
-      position: fixed;
-      transform: translate(100%, 0);
-      right: 50%;
-      top: 106px;
-      transition: top 0.2s linear;
-      z-index: 10;
+    @media screen and (min-width: $screen-l) {
+      margin: rem(50px) 0 rem(40px) rem(20px);
+    }
+  }
+
+  .project-list {
+    margin-bottom: rem(30px);
+  }
+
+  .project-card {
+    margin-bottom: rem(20px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(40px);
     }
   }
 }

@@ -1,49 +1,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import ScrollEvent from 'react-onscroll';
 import ProjectsGLobe from 'pages/sgf/section-projects/section-projects-globe';
 import ProjectsModal from 'pages/sgf/section-projects/section-projects-modal';
 import Card from 'components/card';
 import ItemsList from 'components/items-list';
 import Search from 'components/search';
+import Sticky from 'components/sticky';
 
 import './section-projects-styles.scss';
 
 class SectionProjects extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sticky: false
-    };
-    this.handleScrollCallback = this.handleScrollCallback.bind(this);
-  }
-
-  handleScrollCallback = () => {
-    const { clientHeight } = this.cardListSection;
-    const heightHeaderCover = 415;
-    if (clientHeight > 100) {
-      if (
-        window.scrollY > heightHeaderCover &&
-        window.scrollY < clientHeight + heightHeaderCover
-      ) {
-        this.setState({
-          sticky: true
-        });
-      } else {
-        this.setState({
-          sticky: false
-        });
-      }
-    }
-  };
-
-  handleCardClick = d => {
-    this.props.setSectionProjectsModal({
-      isOpen: true,
-      data: d
-    });
-  };
-
   render() {
     const {
       data,
@@ -53,66 +19,58 @@ class SectionProjects extends PureComponent {
       search,
       setSearch
     } = this.props;
-    const { sticky } = this.state;
     const hasData = data && !!data.length;
     const hasCategories = categories && !!categories.length;
 
     return (
-      <div className="">
-        <ScrollEvent handleScrollCallback={this.handleScrollCallback} />
-        <div className="l-section">
-          <div className="row">
-            <div className="column small-6">
+      <div>
+        <div className="l-section-projects">
+          <div className="row project-header">
+            <div className="column small-12">
               <h2 className="text -color-2 -title-xs -half-opacity">
                 SMALL GRANTS FUND RECIPIENTS
               </h2>
             </div>
           </div>
           <div className="row">
-            <div className="column small-6">
+            <div className="column small-12 large-7 project-globe">
               <ProjectsGLobe data={data} />
             </div>
-
-            <div
-              className={`column small-6 section-projects-list ${
-                sticky ? '-sticky' : ''
-              }`}
-            >
-              {hasCategories && (
-                <div>
-                  <Search
-                    className="search"
-                    placeholder="Search"
-                    input={search}
-                    onChange={setSearch}
-                  />
+            <div className="column small-12 large-5">
+              <Sticky>
+                <Search
+                  className="project-search"
+                  placeholder="Search"
+                  input={search}
+                  onChange={setSearch}
+                />
+                {hasCategories && (
                   <ItemsList
+                    className="project-list"
                     data={categories}
                     itemSelected={categorySelected}
                     onClick={setCategorySelected}
                   />
-                </div>
-              )}
+                )}
+              </Sticky>
             </div>
           </div>
-        </div>
-        <div
-          className="l-section card-list-section"
-          ref={c => {
-            this.cardListSection = c;
-          }}
-        >
-          {hasData && (
-            <ul className="row card-list">
-              <div className="row card-list-section">
-                {data.map(d => (
-                  <li key={d.id} className="column small-12 large-6">
-                    <Card data={d} onClick={this.handleCardClick} />
-                  </li>
-                ))}
+          <div className="row">
+            <div className="column small-12 large-7">
+              <div className="row">
+                {hasData &&
+                  data.map(d => (
+                    <div key={d.id} className="column small-12 medium-6">
+                      <Card
+                        className="project-card"
+                        data={d}
+                        onClick={this.handleCardClick}
+                      />
+                    </div>
+                  ))}
               </div>
-            </ul>
-          )}
+            </div>
+          </div>
         </div>
         <ProjectsModal />
       </div>
@@ -125,7 +83,6 @@ SectionProjects.propTypes = {
   categories: PropTypes.array.isRequired,
   categorySelected: PropTypes.string.isRequired,
   setCategorySelected: PropTypes.func.isRequired,
-  setSectionProjectsModal: PropTypes.func.isRequired,
   search: PropTypes.string.isRequired,
   setSearch: PropTypes.func.isRequired
 };

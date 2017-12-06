@@ -3,7 +3,6 @@ import { createThunkAction } from 'utils/redux';
 
 export const fetchProjectsInit = createAction('fetchProjectsInit');
 export const fetchProjectsReady = createAction('fetchProjectsReady');
-export const fetchProjectsFail = createAction('fetchProjectsFail');
 
 export const setCategorySelected = createAction('setCategorySelected');
 export const setSearch = createAction('setSearch');
@@ -42,7 +41,7 @@ export const fetchProjects = createThunkAction(
         })
         .catch(error => {
           console.warn(error);
-          dispatch(fetchProjectsFail());
+          dispatch(fetchProjectsReady([]));
         });
     }
   }
