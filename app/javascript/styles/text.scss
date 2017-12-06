@@ -55,6 +55,10 @@
     line-height: 1.7;
   }
 
+  &.-half-opacity {
+    opacity: 0.5;
+  }
+
   &.-title-biggest {
     font-size: 30px;
     line-height: 1.33;
@@ -83,6 +87,16 @@
     @media screen and (min-width: $screen-m) {
       font-size: 30px;
       line-height: 1.34;
+    }
+  }
+
+  &.-title-m {
+    font-size: 26px;
+    line-height: 1.25;
+    letter-spacing: -0.4px;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: 28px;
     }
   }
 
