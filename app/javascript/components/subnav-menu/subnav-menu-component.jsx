@@ -8,9 +8,9 @@ import './subnav-menu-styles.scss';
 class SubNavMenu extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { links } = this.props;
+    const { links, className } = this.props;
     return (
-      <div className="c-subnav-menu">
+      <div className={`c-subnav-menu ${className}`}>
         <div className="row">
           <div className="small-12 columns">
             <ul className="buttons">
@@ -52,7 +52,8 @@ SubNavMenu.propTypes = {
       anchor: PropTypes.string,
       path: PropTypes.string
     })
-  ).isRequired
+  ).isRequired,
+  className: PropTypes.string
 };
 
 export default SubNavMenu;

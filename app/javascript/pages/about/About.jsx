@@ -21,30 +21,29 @@ const preloadedState = {
   }
 };
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-let store = createStore(
+const store = createStore(
   reducers,
   preloadedState,
-  composeEnhancers(
-    applyMiddleware(thunk)
-  )
+  composeEnhancers(applyMiddleware(thunk))
 );
 
-const About = () => {
-  return (
-    <Provider store={store}>
-      <div>
-        <AboutCover title="About" description="Global Forest Watch (GFW) is an online platform that provides data and tools for monitoring forests. By harnessing cutting-edge technology, GFW allows anyone to access near real-time information about where and how forests are changing around the world."/>
-        <AboutAnchors />
-        <AboutUsers />
-        <AboutHow />
-        <AboutImpacts />
-        <AboutAwards />
-        <AboutHistory />
-        <AboutContactUs />
-        <AboutLogos />
-      </div>
-    </Provider>
-  );
-};
+const About = () => (
+  <Provider store={store}>
+    <div>
+      <AboutCover
+        title="About"
+        description="Global Forest Watch (GFW) is an online platform that provides data and tools for monitoring forests. By harnessing cutting-edge technology, GFW allows anyone to access near real-time information about where and how forests are changing around the world."
+      />
+      <AboutAnchors />
+      <AboutUsers />
+      <AboutHow />
+      <AboutImpacts />
+      <AboutAwards />
+      <AboutHistory />
+      <AboutContactUs />
+      <AboutLogos />
+    </div>
+  </Provider>
+);
 
 export default About;

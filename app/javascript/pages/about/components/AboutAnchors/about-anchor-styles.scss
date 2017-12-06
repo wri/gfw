@@ -1,0 +1,9 @@
+@import '~styles/settings.scss';
+
+.about-menu {
+  display: none;
+
+  @media screen and (min-width: $screen-m) {
+    display: block;
+  }
+}
