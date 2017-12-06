@@ -30,6 +30,7 @@ export const getTreeCover = createThunkAction(
               dispatch(
                 setTreeCoverData({
                   isLoading: false,
+                  totalArea,
                   totalCover,
                   totalNonForest,
                   totalIntactForest

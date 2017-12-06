@@ -47,11 +47,11 @@ export const units = [
 export const indicators = [
   {
     value: 'gadm28',
-    label: 'All Region'
+    label: 'All Regions'
   },
   {
     value: 'managed',
-    label: 'Managed'
+    label: 'Managed Areas'
   },
   {
     value: 'protected_areas',

@@ -1,8 +1,7 @@
 @import '~styles/settings.scss';
 
 .c-widget-tree-cover {
-
-  .c-widget-tree-cover__legend {
+  .legend {
     display: inline-block;
     width: 100%;
     padding-top: rem(14px);
@@ -15,7 +14,7 @@
       margin-bottom: rem(24px);
     }
 
-    .c-widget-tree-cover__legend-title {
+    .legend-title {
       font-size: 12px;
       line-height: 1.08;
       color: $slate;
@@ -31,14 +30,14 @@
       }
     }
 
-    .c-widget-tree-cover__legend-value {
+    .legend-value {
       padding: rem(7px) 0 0 rem(19px);
       font-size: 28px;
       font-weight: 500;
     }
   }
 
-  .c-widget-tree-cover__chart {
+  .chart {
     display: inline-block;
     vertical-align: top;
     margin: rem(20px) auto 0;

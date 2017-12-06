@@ -3,6 +3,7 @@
 .c-widget-header {
   position: relative;
   height: rem(78px);
+  z-index: 1;
 
   .c-widget-header__title {
     width: 100%;
