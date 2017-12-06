@@ -22,3 +22,11 @@ by actual layers, such as `LossLayer`. These layers are expected to
 implement a `filterCanvasImgdata` method, which processes the pixel data
 in some way (such as only showing pixels within the current date range)
 and returns the data to be rendered on the canvas layer.
+
+### Adding Layers
+
+When adding a new layer make sure to update `gfw/app/assets/javascripts/map/models/layerSpecModel.js` by adding the slug from LayerSpec to the `LayerOrder`.
+
+Note that LayerOrder prioritised layers found towards the *bottom* of the list! Hence, if you want your layer to sit beneath another, place it near the top. Alternatively, if you want your layer to be on top of the stack, place it at the bottom. 
+
+**If you do not add the slug to `LayerOrder`, by default, the layer will sit at the bottom of the layer stack - so you may not be able to see it!**

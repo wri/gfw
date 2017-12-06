@@ -57,7 +57,7 @@ class AboutUsers extends Component {
     }
 
     return (
-      <div className="c-about-users">
+      <div name="actionGlobe" className="c-about-users">
         <div className="row">
           <div className="large-6 columns">
             <div className="c-about-users__globe-container">

@@ -18,6 +18,7 @@ define([
     layerOrder: [
       //high resolution maps
       "highres",
+      "sentinel_tiles",
       //-
       "grump2000",
       "mex_forest_zoning_cat",
@@ -25,6 +26,7 @@ define([
       //FOREST/LAND COVER CONTEXTUAL LAYER
       "forma_coverage",
       "forest2000",
+      "forest2010",
       "per_minam_tree_cover",
       "cod_primary_forest_wgs",
       "can_ifl",
@@ -184,10 +186,10 @@ define([
       "umd_as_it_happens_per",
       "umd_as_it_happens_idn",
       "umd_as_it_happens_cog",
+      "uncurated_places_to_watch",
       "places_to_watch",
       'forma_month_3',
       'forma_activity',
-      'sentinel_tiles'
     ],
 
     categoryOrder: [
