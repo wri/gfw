@@ -5,16 +5,6 @@ export const initialState = {
   totalNonForest: 0,
   title: '',
   indicators: ['gadm28', 'wdpa', 'ifl_2013'],
-  units: [
-    {
-      value: 'ha',
-      label: 'Hectare - ha'
-    },
-    {
-      value: '%',
-      label: 'Percent Area - %'
-    }
-  ],
   settings: {
     indicator: 'gadm28',
     unit: 'ha',

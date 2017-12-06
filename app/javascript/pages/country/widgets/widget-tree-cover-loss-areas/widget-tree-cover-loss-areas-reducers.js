@@ -102,16 +102,6 @@ export const initialState = {
       value: 'moratorium_areas'
     }
   ],
-  units: [
-    {
-      value: 'ha',
-      label: 'Hectare - ha'
-    },
-    {
-      value: '%',
-      label: 'Percent Area - %'
-    }
-  ],
   settings: {
     region: 'All',
     unit: 'ha',

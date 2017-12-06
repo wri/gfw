@@ -15,16 +15,6 @@ export const initialState = {
       label: 'FAO'
     }
   ],
-  units: [
-    {
-      value: 'ha',
-      label: 'Hectare - ha'
-    },
-    {
-      value: '%',
-      label: 'Percent Area - %'
-    }
-  ],
   settings: {
     dataSource: 'hansen',
     unit: 'ha',
