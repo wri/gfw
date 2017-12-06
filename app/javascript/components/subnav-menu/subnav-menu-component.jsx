@@ -13,7 +13,7 @@ class SubNavMenu extends PureComponent {
       <div className="c-subnav-menu">
         <div className="row">
           <div className="small-12 columns">
-            <ul className="c-subnav-menu__buttons">
+            <ul className="buttons">
               {links.map(link => {
                 const LinkComponent = link.anchor ? (
                   <AnchorLink

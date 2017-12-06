@@ -3,21 +3,30 @@
 .c-subnav-menu {
   background-color: $grey-light;
   border-bottom: 1px solid $grey-dark;
-  display: none;
 
-  .c-subnav-menu__buttons {
+  .buttons {
     font-size: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    @media screen and (min-width: $screen-m) {
+      justify-content: flex-start;
+    }
 
     li {
       position: relative;
-      display: inline-flex;
+      display: flex;
       justify-content: center;
       align-items: center;
-      width: 20%;
+      width: 100%;
       height: rem(56px);
-      max-width: rem(183px);
       cursor: pointer;
       border-right: 1px solid rgba($slate, 0.2);
+
+      @media screen and (min-width: $screen-m) {
+        max-width: 180px;
+      }
 
       > a {
         padding: 18px 0;
@@ -33,9 +42,5 @@
         border-left: 1px solid rgba($slate, 0.2);
       }
     }
-  }
-
-  @media screen and (min-width: $screen-m) {
-    display: block;
   }
 }

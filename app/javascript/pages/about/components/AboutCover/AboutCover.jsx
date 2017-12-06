@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Cover from 'components/cover';
 
 import bgImage from './header-bg';
+import './about-cover-styles.scss';
 
 class AboutCover extends Component {
   constructor(props) {

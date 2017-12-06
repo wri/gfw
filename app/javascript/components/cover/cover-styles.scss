@@ -1,82 +1,31 @@
 @import '~styles/settings.scss';
 
-$about-cover-height: rem(390px);
-$about-cover-height-screen-m: rem(300px);
-$about-cover-padding-top: rem(34px);
-$about-cover-padding-top-screen-m: rem(27px);
-
 .c-cover {
   position: relative;
-  height: $about-cover-height;
-  padding-top: $about-cover-padding-top;
+  padding: rem(60px) 0 rem(40px);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 
-  .c-cover-texts {
+  @media screen and (min-width: $screen-m) {
+    padding: rem(80px) 0;
+  }
+
+  .cover-texts {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: calc(#{$about-cover-height} - #{$about-cover-padding-top});
 
     h1 {
-      margin-bottom: rem(6px);
-    }
+      margin-bottom: rem(5px);
 
-    .c-cover__play-button {
-      display: flex;
-      align-items: center;
-      margin-top: rem(4px);
-      cursor: pointer;
-
-      .c-play-button {
-        display: inline-block;
-        width: rem(46px);
-        height: rem(46px);
-        outline: none;
-      }
-
-      span {
-        margin-left: rem(10px);
+      @media screen and (min-width: $screen-m) {
+        margin-bottom: rem(10px);
       }
     }
-  }
 
-  .c-cover__video {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 9999;
-    height: 100%;
-
-    .icon-close {
-      position: absolute;
-      top: rem(20px);
-      right: rem(20px);
-      width: rem(20px);
-      height: rem(20px);
-      fill: $white;
-      cursor: pointer;
-    }
-  }
-
-  @media screen and (min-width: $screen-m) {
-    height: $about-cover-height-screen-m;
-    padding-top: $about-cover-padding-top-screen-m;
-    margin-top: 0;
-
-    .c-cover-texts {
-      height: calc(#{$about-cover-height-screen-m} - #{$about-cover-padding-top-screen-m});
-
-      h1 {
-        width: rem(550px);
-        margin-bottom: rem(9px);
-      }
-
-      .c-cover__description {
-        max-width: rem(768px);
-      }
+    .description {
+      max-width: rem(768px);
     }
   }
 }
