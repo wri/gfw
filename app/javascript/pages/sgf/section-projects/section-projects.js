@@ -16,7 +16,8 @@ const actions = { ...sectionActions, ...modalActions };
 const mapStateToProps = ({ projects }) => {
   const projectData = {
     data: projects.data,
-    search: projects.search
+    search: projects.search,
+    categorySelected: projects.categorySelected
   };
 
   return {
