@@ -6,7 +6,8 @@ import {
   getAdminsSelected,
   getIndicators,
   getUnits,
-  getCanopies
+  getCanopies,
+  getActiveFilter
 } from 'pages/country/utils/filters';
 
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
@@ -107,11 +108,9 @@ class WidgetTreeCoverContainer extends PureComponent {
       const activeThreshold = thresholds.find(
         t => t.value === settings.threshold
       );
-      const activeIndicator = indicators.find(
-        i => i.value === settings.indicator
-      );
+      const indicator = getActiveFilter(settings, indicators, 'indicator');
       return `Tree  cover for 
-        ${activeIndicator.label} of 
+        ${indicator.label} of 
         ${adminsSelected.current &&
           adminsSelected.current.label} with a tree canopy of 
         ${activeThreshold.label}`;

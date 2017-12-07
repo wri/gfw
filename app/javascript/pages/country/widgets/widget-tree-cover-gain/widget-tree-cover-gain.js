@@ -2,7 +2,11 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
-import { getAdminsSelected, getIndicators } from 'pages/country/utils/filters';
+import {
+  getAdminsSelected,
+  getIndicators,
+  getActiveFilter
+} from 'pages/country/utils/filters';
 import isEqual from 'lodash/isEqual';
 
 import WidgetTreeCoverGainComponent from './widget-tree-cover-gain-component';
@@ -81,13 +85,11 @@ class WidgetTreeCoverGainContainer extends PureComponent {
       settings
     } = this.props;
 
-    const indicator = indicators.filter(
-      item => item.value === settings.indicator
-    );
+    const indicator = getActiveFilter(settings, indicators, 'indicator');
     const regionPhrase =
       settings.indicator === 'gadm28'
         ? 'region-wide'
-        : `in ${indicator[0].label.toLowerCase()}`;
+        : `in ${indicator.label.toLowerCase()}`;
 
     const areaPercent = numeral(100 * treeExtent / gain).format('0,00');
 

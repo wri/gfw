@@ -108,3 +108,6 @@ export const getIndicators = createSelector(
 export const getCanopies = createSelector([], () => CANOPIES);
 
 export const getUnits = createSelector([], () => UNITS);
+
+export const getActiveFilter = (settings, filters, key) =>
+  filters.find(i => i.value === settings[key]);
