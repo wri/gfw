@@ -4,6 +4,7 @@ import Icon from 'components/icon';
 import debounce from 'lodash/debounce';
 
 import searchIcon from 'assets/icons/search.svg';
+import 'styles/themes/search/search-light.scss';
 import './search-styles.scss';
 
 class Search extends Component {
@@ -34,9 +35,19 @@ class Search extends Component {
 
   render() {
     const { search } = this.state;
-    const { input, placeholder, handleKeyUp, disabled, className } = this.props;
+    const {
+      input,
+      placeholder,
+      handleKeyUp,
+      disabled,
+      className,
+      theme
+    } = this.props;
     return (
-      <div className={`c-search ${className || ''}`}>
+      <div
+        className={`c-search ${theme || 'theme-search-light'} ${className ||
+          ''}`}
+      >
         <input
           type="text"
           className="input text"
@@ -58,7 +69,8 @@ Search.propTypes = {
   onChange: PropTypes.func,
   handleKeyUp: PropTypes.func,
   disabled: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  theme: PropTypes.string
 };
 
 Search.defaultProps = {
