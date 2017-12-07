@@ -2,8 +2,12 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import { thresholds } from 'pages/country/utils/constants';
-import { getAdminsSelected, getIndicators, getUnits } from 'pages/country/utils/filters';
+import {
+  getAdminsSelected,
+  getIndicators,
+  getUnits,
+  getCanopies
+} from 'pages/country/utils/filters';
 
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
 import actions from './widget-tree-cover-actions';
@@ -12,8 +16,13 @@ export { initialState } from './widget-tree-cover-reducers';
 export { default as reducers } from './widget-tree-cover-reducers';
 export { default as actions } from './widget-tree-cover-actions';
 
-const INDICATORS_WHITELIST = ['gadm28', 'wpda', 'ifl_2013', 'ifl_2013__wdpa', 'ifl_2013__mining'];
-const UNIT_WHITELIST = ['ha', '%'];
+const INDICATORS_WHITELIST = [
+  'gadm28',
+  'wpda',
+  'ifl_2013',
+  'ifl_2013__wdpa',
+  'ifl_2013__mining'
+];
 
 const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
@@ -51,10 +60,16 @@ const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
       ...countryData,
       location: location.payload
     }),
-    units: getUnits({ whitelist: UNIT_WHITELIST }),
-    thresholds,
-    indicators: getIndicators({ whitelist: INDICATORS_WHITELIST, location: location.payload, ...countryData }) || [],
-    settings: widgetTreeCover.settings
+    indicators:
+      getIndicators({
+        whitelist: INDICATORS_WHITELIST,
+        location: location.payload,
+        ...countryData
+      }) || [],
+    units: getUnits(),
+    thresholds: getCanopies(),
+    settings: widgetTreeCover.settings,
+    isMetaLoading: isCountriesLoading || isRegionsLoading
   };
 };
 
@@ -85,7 +100,7 @@ class WidgetTreeCoverContainer extends PureComponent {
   }
 
   getTitle = () => {
-    const { adminsSelected, settings, indicators } = this.props;
+    const { adminsSelected, settings, indicators, thresholds } = this.props;
     if (adminsSelected && indicators.length) {
       const activeThreshold = thresholds.find(
         t => t.value === settings.threshold
@@ -115,7 +130,8 @@ WidgetTreeCoverContainer.propTypes = {
   location: PropTypes.object.isRequired,
   getTreeCover: PropTypes.func.isRequired,
   adminsSelected: PropTypes.object.isRequired,
-  indicators: PropTypes.array.isRequired
+  indicators: PropTypes.array.isRequired,
+  thresholds: PropTypes.array.isRequired
 };
 
 export default connect(mapStateToProps, actions)(WidgetTreeCoverContainer);
