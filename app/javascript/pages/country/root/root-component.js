@@ -22,10 +22,10 @@ const WIDGETS = {
   treeLoss: {
     gridWidth: 12
   },
-  treeCoverLossAreas: {
+  treeCoverGain: {
     gridWidth: 6
   },
-  treeCoverGain: {
+  treeCoverLossAreas: {
     gridWidth: 6
   },
   totalAreaPlantations: {

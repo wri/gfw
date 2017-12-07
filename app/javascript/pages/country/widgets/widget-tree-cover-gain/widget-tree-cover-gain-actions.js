@@ -11,29 +11,28 @@ const setTreeCoverGainSettingsIndicator = createAction(
 );
 const getTreeCoverGain = createThunkAction(
   'getTreeCoverGain',
-  (country, region, subRegion, indicator) => dispatch => {
-    axios
-      .all([
-        getGain(country, region, subRegion, indicator),
-        getExtent(country, region, subRegion, indicator, 0)
-      ])
-      .then(
-        axios.spread((getTreeGainResponse, getExtentResponse) => {
-          const gain = getTreeGainResponse.data.data[0].value;
-          const treeExtent = getExtentResponse.data.data[0].value;
-
-          dispatch(
-            setTreeCoverGainValues({
-              gain,
-              treeExtent
-            })
-          );
-        })
-      )
-      .catch(error => {
-        console.info(error);
-        dispatch(setTreeCoverGainIsLoading(false));
-      });
+  params => (dispatch, state) => {
+    if (!state().widgetTreeCoverGain.isLoading) {
+      dispatch(setTreeCoverGainIsLoading(true));
+      axios
+        .all([getGain({ ...params }), getExtent({ ...params, threshold: 0 })])
+        .then(
+          axios.spread((getTreeGainResponse, getExtentResponse) => {
+            const gain = getTreeGainResponse.data.data[0].value;
+            const treeExtent = getExtentResponse.data.data[0].value;
+            dispatch(
+              setTreeCoverGainValues({
+                gain,
+                treeExtent
+              })
+            );
+          })
+        )
+        .catch(error => {
+          console.info(error);
+          dispatch(setTreeCoverGainIsLoading(false));
+        });
+    }
   }
 );
 
