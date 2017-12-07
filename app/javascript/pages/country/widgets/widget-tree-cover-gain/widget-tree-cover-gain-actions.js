@@ -2,8 +2,7 @@ import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
 import axios from 'axios';
 
-import { getTreeGain } from 'services/tree-gain';
-import { getExtent } from 'services/tree-extent';
+import { getGain, getExtent } from 'services/forest-data';
 
 const setTreeCoverGainIsLoading = createAction('setTreeCoverGainIsLoading');
 const setTreeCoverGainValues = createAction('setTreeCoverGainValues');
@@ -12,30 +11,28 @@ const setTreeCoverGainSettingsIndicator = createAction(
 );
 const getTreeCoverGain = createThunkAction(
   'getTreeCoverGain',
-  (country, region, subRegion, indicator) => dispatch => {
-    dispatch(setTreeCoverGainIsLoading(true));
-    axios
-      .all([
-        getTreeGain(country, region, subRegion, indicator),
-        getExtent(country, region, subRegion, indicator, 0)
-      ])
-      .then(
-        axios.spread((getTreeGainResponse, getExtentResponse) => {
-          const gain = getTreeGainResponse.data.data[0].value;
-          const treeExtent = getExtentResponse.data.data[0].value;
-
-          dispatch(
-            setTreeCoverGainValues({
-              gain,
-              treeExtent
-            })
-          );
-        })
-      )
-      .catch(error => {
-        console.info(error);
-        dispatch(setTreeCoverGainIsLoading(false));
-      });
+  params => (dispatch, state) => {
+    if (!state().widgetTreeCoverGain.isLoading) {
+      dispatch(setTreeCoverGainIsLoading(true));
+      axios
+        .all([getGain({ ...params }), getExtent({ ...params, threshold: 0 })])
+        .then(
+          axios.spread((getTreeGainResponse, getExtentResponse) => {
+            const gain = getTreeGainResponse.data.data[0].value;
+            const treeExtent = getExtentResponse.data.data[0].value;
+            dispatch(
+              setTreeCoverGainValues({
+                gain,
+                treeExtent
+              })
+            );
+          })
+        )
+        .catch(error => {
+          console.info(error);
+          dispatch(setTreeCoverGainIsLoading(false));
+        });
+    }
   }
 );
 
