@@ -31,7 +31,7 @@ const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
     totalCover,
     totalIntactForest,
     totalNonForest
-  } = widgetTreeCover.totalArea;
+  } = widgetTreeCover;
   const data = [
     {
       name: 'Forest',
