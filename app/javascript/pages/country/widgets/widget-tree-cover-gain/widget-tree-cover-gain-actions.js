@@ -12,6 +12,7 @@ const setTreeCoverGainSettingsIndicator = createAction(
 const getTreeCoverGain = createThunkAction(
   'getTreeCoverGain',
   (country, region, subRegion, indicator) => dispatch => {
+    dispatch(setTreeCoverGainIsLoading(true));
     axios
       .all([
         getGain(country, region, subRegion, indicator),

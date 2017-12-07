@@ -30,15 +30,18 @@ class WidgetTreeCoverGain extends PureComponent {
             indicators={indicators}
             settings={settings}
             onIndicatorChange={setTreeCoverGainSettingsIndicator}
+            isLoading={isLoading}
           />
         </WidgetHeader>
         {isLoading ? (
-          <Loader />
+          <Loader className="loader-offset" />
         ) : (
-          <div className="c-widget-tree-cover-gain__container">
-            <div className="c-widget-tree-cover-gain__info">
+          <div className="container">
+            <div className="info">
               <p className="title">Hansen - UMD</p>
-              <p dangerouslySetInnerHTML={getSentence()} />
+              <p
+                dangerouslySetInnerHTML={getSentence()} // eslint-disable-line
+              />
             </div>
           </div>
         )}
