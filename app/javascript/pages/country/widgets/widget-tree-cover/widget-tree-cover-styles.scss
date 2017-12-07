@@ -15,7 +15,7 @@
     }
 
     .legend-title {
-      font-size: 12px;
+      font-size: rem(12px);
       line-height: 1.08;
       color: $slate;
 
@@ -32,7 +32,7 @@
 
     .legend-value {
       padding: rem(7px) 0 0 rem(19px);
-      font-size: 28px;
+      font-size: rem(28px);
       font-weight: 500;
     }
   }
@@ -47,5 +47,10 @@
     .recharts-wrapper {
       display: inline-block;
     }
+  }
+
+  .loader-offset {
+    top: rem(50px);
+    height: calc(100% - 50px);
   }
 }

@@ -44,7 +44,7 @@ class WidgetTreeCover extends PureComponent {
           />
         </WidgetHeader>
         {isLoading ? (
-          <Loader />
+          <Loader className="loader-offset" />
         ) : (
           <div>
             <ul className="legend">
