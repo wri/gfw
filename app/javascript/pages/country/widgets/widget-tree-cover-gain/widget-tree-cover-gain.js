@@ -15,10 +15,8 @@ const INDICATORS_WHITELIST = [
   'gadm28',
   'biodiversity_hot_spots',
   'wdpa',
-  'gfw_plantations',
-  'gfw_managed_forests',
-  'IFL_2000',
-  'IFL_2013'
+  'primary_forests',
+  'ifl_2013'
 ];
 
 const mapStateToProps = ({ countryData, widgetTreeCoverGain, location }) => {
