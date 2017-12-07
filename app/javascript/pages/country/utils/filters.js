@@ -4,7 +4,8 @@ import isEmpty from 'lodash/isEmpty';
 import { createSelector } from 'reselect';
 
 import INDICATORS from './indicators.json';
-import { UNITS } from './constants';
+import CANOPIES from './canopies.json';
+import UNITS from './units.json';
 
 export function deburrUpper(string) {
   return toUpper(deburr(string));
@@ -104,11 +105,9 @@ export const getIndicators = createSelector(
   }
 );
 
-export const getUnits = createSelector(
-  [getWhitelist],
-  (whitelist) => {
-    if (isEmpty(UNITS)) return null;
-    if (!whitelist) return UNITS;
-    return UNITS.filter(u => whitelist.indexOf(u.value) > -1);
-  }
-);
+export const getCanopies = createSelector([], () => CANOPIES);
+
+export const getUnits = createSelector([], () => UNITS);
+
+export const getActiveFilter = (settings, filters, key) =>
+  filters.find(i => i.value === settings[key]);
