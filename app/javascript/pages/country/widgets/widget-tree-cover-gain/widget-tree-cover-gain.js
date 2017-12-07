@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
 import { getAdminsSelected, getIndicators } from 'pages/country/utils/filters';
+import isEqual from 'lodash/isEqual';
 
 import WidgetTreeCoverGainComponent from './widget-tree-cover-gain-component';
 import actions from './widget-tree-cover-gain-actions';
@@ -60,7 +61,10 @@ class WidgetTreeCoverGainContainer extends PureComponent {
   componentWillReceiveProps(nextProps) {
     const { settings, location, getTreeCoverGain } = nextProps;
 
-    if (settings.indicator !== this.props.settings.indicator) {
+    if (
+      !isEqual(nextProps.location, this.props.location) ||
+      !isEqual(settings.indicator !== this.props.settings.indicator)
+    ) {
       getTreeCoverGain({
         ...location,
         indicator: settings.indicator
