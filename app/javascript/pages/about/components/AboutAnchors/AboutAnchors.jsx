@@ -1,6 +1,8 @@
 import React from 'react';
 import SubMenuNav from 'components/subnav-menu';
 
+import './about-anchor-styles.scss';
+
 const links = [
   { anchor: 'howTo', label: 'GFW in Action' },
   { anchor: 'impacts', label: 'Impacts' },
@@ -9,6 +11,6 @@ const links = [
   { anchor: 'partnership', label: 'Partnership' }
 ];
 
-const AboutAnchors = () => <SubMenuNav links={links} />;
+const AboutAnchors = () => <SubMenuNav className="about-menu" links={links} />;
 
 export default AboutAnchors;

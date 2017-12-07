@@ -1,9 +1,56 @@
 @import '~styles/settings.scss';
 
-.copyright-section {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  font-size: 11px;
-  color: $white;
+.l-section-about {
+  .intro {
+    margin-bottom: rem(30px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(60px);
+    }
+
+    .logo {
+      margin-top: 30px;
+
+      @media screen and (min-width: $screen-m) {
+        margin-top: 0;
+        float: right;
+      }
+    }
+  }
+
+  .about-cards {
+    background-repeat: none;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .cards {
+    position: relative;
+    padding: rem(60px) 0 rem(30px);
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(150px) 0;
+    }
+
+    .about-card {
+      margin-bottom: 30px;
+    }
+
+    .copyright-section {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 11px;
+      color: $white;
+    }
+  }
+
+  .support {
+    padding: rem(30px) 0 0;
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(50px) 0 0;
+    }
+  }
 }
+

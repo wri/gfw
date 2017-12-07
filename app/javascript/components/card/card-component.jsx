@@ -8,10 +8,14 @@ import './card-styles.scss';
 class Card extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { data, readMoreText } = this.props;
+    const { data, readMoreText, className } = this.props;
     const onClick = this.props.onClick || false;
     return (
-      <div className={`c-about-impacts-item ${data.image ? '' : '-no-image'}`}>
+      <div
+        className={`c-about-impacts-item ${className} ${
+          data.image ? '' : '-no-image'
+        }`}
+      >
         {data.image && (
           <div
             className={`c-about-impacts-item__image ${
@@ -27,10 +31,10 @@ class Card extends PureComponent {
         )}
         {data.title && (
           <div className="c-about-impacts-item__header">
-            <h3 className="text -title -color-2 -light">{data.title}</h3>
+            <h3 className="text -title-m -color-2 -light">{data.title}</h3>
           </div>
         )}
-        <div className="c-about-impacts-item__paragraph text -paragraph -color-2">
+        <div className="c-about-impacts-item__paragraph text -paragraph-7 -color-2">
           <Dotdotdot clamp={4}>{data.outcome}</Dotdotdot>
         </div>
         <div className="c-about-impacts-item__footer">
@@ -55,6 +59,7 @@ Card.propTypes = {
     link: PropTypes.string,
     legend: PropTypes.string
   }),
+  className: PropTypes.string,
   onClick: PropTypes.func,
   readMoreText: PropTypes.string.isRequired
 };

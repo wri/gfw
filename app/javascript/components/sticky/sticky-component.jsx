@@ -12,13 +12,15 @@ class Sticky extends PureComponent {
       className,
       isFixed,
       top,
-      getStickyDiv
+      getStickyDiv,
+      stickyDivPos
     } = this.props;
+
     return (
       <div ref={getStickyDiv} className="sticky-container">
         <div
           className={`sticky ${className} ${isFixed ? '-fixed' : ''}`}
-          style={{ top }}
+          style={{ top, left: stickyDivPos.left, width: stickyDivPos.width }}
         >
           <ScrollEvent handleScrollCallback={handleScrollCallback} />
           {children}
@@ -34,7 +36,8 @@ Sticky.propTypes = {
   handleScrollCallback: PropTypes.func.isRequired,
   className: PropTypes.string,
   isFixed: PropTypes.bool.isRequired,
-  top: PropTypes.number.isRequired
+  top: PropTypes.number.isRequired,
+  stickyDivPos: PropTypes.object.isRequired
 };
 
 export default Sticky;

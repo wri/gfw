@@ -1,0 +1,38 @@
+@import '~styles/settings.scss';
+
+.c-cover__video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  height: 100%;
+
+  .icon-close {
+    position: absolute;
+    top: rem(20px);
+    right: rem(20px);
+    width: rem(20px);
+    height: rem(20px);
+    fill: $white;
+    cursor: pointer;
+  }
+}
+
+.c-cover__play-button {
+  display: flex;
+  align-items: center;
+  margin-top: rem(10px);
+  cursor: pointer;
+
+  .c-play-button {
+    display: inline-block;
+    width: rem(46px);
+    height: rem(46px);
+    outline: none;
+  }
+
+  span {
+    margin-left: rem(10px);
+  }
+}
