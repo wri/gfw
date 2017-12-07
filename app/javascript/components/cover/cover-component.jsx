@@ -12,11 +12,11 @@ class Cover extends PureComponent {
       <div className="c-cover" style={bgStyle}>
         <div className="row">
           <div className="small-12 columns">
-            <div className="c-cover-texts">
+            <div className="cover-texts">
               <h1 className="text -title-biggest -color-1">
                 {this.props.title}
               </h1>
-              <p className="c-cover__description text -paragraph -color-1">
+              <p className="description text -paragraph -color-1">
                 {this.props.description}
               </p>
               {this.props.children}

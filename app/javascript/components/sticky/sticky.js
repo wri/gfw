@@ -10,23 +10,31 @@ class StickyContainer extends PureComponent {
       fixedLimit: 0,
       isFixed: false,
       top: 0,
-      stickyDivPos: 0
+      stickyDivPos: {
+        top: 0
+      }
     };
   }
 
   getStickyDiv = el => {
-    this.setState({
-      stickyDivPos:
-        el.getBoundingClientRect().top -
-        document.body.getBoundingClientRect().top
-    });
+    if (el) {
+      const pos = el.getBoundingClientRect();
+      this.setState({
+        stickyDivPos: {
+          top: pos.top - document.body.getBoundingClientRect().top,
+          left: pos.left,
+          width: pos.width
+        }
+      });
+      el.addEventListener('scroll', this.handleScrollCallback);
+    }
   };
 
   handleScrollCallback = () => {
     const { isFixed, fixedLimit, stickyDivPos } = this.state;
     const { offSet, limitElement } = this.props;
     const currentPos = window.pageYOffset;
-    const stickyPos = offSet ? stickyDivPos + offSet : stickyDivPos;
+    const stickyPos = offSet ? stickyDivPos.top + offSet : stickyDivPos.top;
 
     // find limit element y pos
     if (!fixedLimit) {
@@ -54,10 +62,11 @@ class StickyContainer extends PureComponent {
   };
 
   render() {
-    const { isFixed, top } = this.state;
+    const { isFixed, top, stickyDivPos } = this.state;
     return createElement(StickyComponent, {
       isFixed,
       top,
+      stickyDivPos,
       getStickyDiv: this.getStickyDiv,
       handleScrollCallback: this.handleScrollCallback,
       ...this.props

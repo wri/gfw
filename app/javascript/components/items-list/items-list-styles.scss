@@ -1,13 +1,15 @@
 @import '~styles/settings.scss';
 
 .c-items-list {
-  margin-top: rem(30px);
-  display: none;
-
   li {
     position: relative;
     padding-left: rem(23px);
     cursor: pointer;
+
+    button {
+      outline: 0;
+      cursor: pointer;
+    }
 
     .icon {
       position: absolute;
@@ -27,9 +29,5 @@
         display: none;
       }
     }
-  }
-
-  @media screen and (min-width: $screen-l) {
-    display: block;
   }
 }

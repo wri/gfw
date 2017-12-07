@@ -24,7 +24,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: rem(242px);
+    height: rem(219px);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -55,16 +55,21 @@
   }
 
   &__footer {
-    margin-top: 30px;
+    margin-top: rem(20px);
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+
+    a {
+      margin-top: rem(24px);
+      max-width: rem(150px);
+    }
   }
 
   &__button {
     position: absolute;
     left: 0;
-    bottom: rem(24px);
+    bottom: rem(20px);
     width: 100%;
     padding-left: rem(24px);
     z-index: 2;
@@ -81,7 +86,7 @@
   }
 
   @media screen and (min-width: $screen-m) {
-    padding: rem(273px) rem(40px) rem(30px) rem(40px);
+    padding: rem(239px) rem(24px) rem(24px) rem(24px);
 
     &__button {
       padding-left: rem(40px);

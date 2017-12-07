@@ -1,6 +1,5 @@
 // HEADER
 .layout-header {
-  position: absolute;
   width: 100%;
   height: auto;
   z-index: 1000;
@@ -40,7 +39,7 @@
 // Bottom HEADER
 .layout-header-bottom {
   position: absolute;
-  top: -42px; //change
+  top: -45px; //change
   left: 0;
   z-index: 10;
   width: 100%;

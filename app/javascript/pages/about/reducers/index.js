@@ -4,7 +4,7 @@ import globe from './globe';
 
 const reducers = combineReducers({
   form: reduxFormReducer,
-  globe: globe
+  globe
 });
 
-export default reducers
+export default reducers;

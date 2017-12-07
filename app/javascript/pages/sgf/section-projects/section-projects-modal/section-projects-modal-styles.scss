@@ -1,13 +1,12 @@
 @import '~styles/settings.scss';
-$max-content-width: 560px;
 
 %modalContent {
   margin: 0 auto;
-  max-width: $max-content-width;
+  max-width: rem(590px);
 }
 
 .c-projects-modal {
-  &__header {
+  .header {
     @extend %modalContent;
 
     padding: rem(50px) 0 rem(40px);
@@ -17,7 +16,7 @@ $max-content-width: 560px;
     }
   }
 
-  &__image {
+  .image {
     width: 100%;
     position: relative;
 
@@ -32,13 +31,13 @@ $max-content-width: 560px;
     }
   }
 
-  &__content {
+  .content {
     @extend %modalContent;
 
     padding: rem(20px) 0;
   }
 
-  &__footer {
+  .footer {
     @extend %modalContent;
 
     padding: rem(20px) 0 rem(40px);
