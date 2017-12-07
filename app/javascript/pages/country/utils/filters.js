@@ -1,7 +1,5 @@
 import deburr from 'lodash/deburr';
 import toUpper from 'lodash/toUpper';
-import pick from 'lodash/pick';
-import values from 'lodash/values';
 import isEmpty from 'lodash/isEmpty';
 import { createSelector } from 'reselect';
 
@@ -26,7 +24,7 @@ const getCountries = state => state.countries || null;
 const getRegions = state => state.regions || null;
 const getSubRegions = state => state.subRegions || null;
 
-const loadWhiteList = state => state.whitelist || null;
+const getWhitelist = state => state.whitelist || null;
 
 // get lists selected
 export const getAdminsOptions = createSelector(
@@ -93,19 +91,17 @@ export const getActiveAdmin = location => {
 };
 
 export const getIndicators = createSelector(
-  [loadWhiteList, getAdminsSelected],
+  [getWhitelist, getAdminsSelected],
   (whitelist, locationNames) => {
     if (isEmpty(locationNames) || !locationNames.current) return null;
-
-    const indicators = values(pick(INDICATORS, whitelist)).map(item => {
+    if (!whitelist) return INDICATORS;
+    return INDICATORS.filter(i => whitelist.indexOf(i.value) > -1).map(item => {
       const indicator = item;
       if (indicator.value === 'gadm28') {
         indicator.label = `All of ${locationNames.current.label}`;
       }
       return indicator;
     });
-
-    return indicators;
   }
 );
 

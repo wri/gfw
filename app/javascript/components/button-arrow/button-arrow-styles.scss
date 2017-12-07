@@ -21,6 +21,11 @@
     border-radius: 50%;
   }
 
+  &.-disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
   &:hover::before {
     background-color: darken($green-gfw, 10%);
   }

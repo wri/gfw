@@ -31,7 +31,7 @@ class Dropdown extends PureComponent {
   render() {
     const { theme, label } = this.props;
     return (
-      <div className={`c-dropdown ${theme}`}>
+      <div className={`c-dropdown ${theme || 'theme-select-light'}`}>
         {label && <div className="label">{label}</div>}{' '}
         <Select
           iconRenderer={() => (

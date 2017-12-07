@@ -1,7 +1,8 @@
 @import '~styles/settings.scss';
 
 .theme-select-dark {
-  max-height: 70px;
+  max-height: rem(70px);
+  margin-left: rem(-28px);
 
   .icon {
     opacity: 0;
@@ -16,6 +17,7 @@
   }
 
   .dd__selectControl {
+    padding-left: rem(25px);
     background-color: transparent;
     border: 0;
 
@@ -47,5 +49,11 @@
         color: rgba($white, 0.5);
       }
     }
+  }
+
+  .dd__list {
+    margin-left: rem(25px);
+    width: calc(100% - 33px) !important;
+    min-width: rem(150px);
   }
 }

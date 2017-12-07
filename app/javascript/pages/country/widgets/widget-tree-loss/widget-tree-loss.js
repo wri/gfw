@@ -95,9 +95,9 @@ const WidgetTreeLossContainer = props => {
       } `
       : `${locationNames.country.label} (${indicator[0].label.toLowerCase()}) `;
 
-    return `Between ${settings.startYear} and ${settings.endYear}, ${
-      locationText
-    } lost ${numeral(totalLoss).format(
+    return `Between ${settings.startYear} and ${
+      settings.endYear
+    }, ${locationText} lost ${numeral(totalLoss).format(
       '0,0'
     )} ha of tree cover: This loss is equal to ${numeral(
       totalLoss / (treeExtent * 100)
