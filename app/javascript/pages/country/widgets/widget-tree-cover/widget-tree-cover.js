@@ -2,7 +2,6 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import { thresholds } from 'pages/country/utils/constants';
 import {
   getAdminsSelected,
   getIndicators,
@@ -101,7 +100,7 @@ class WidgetTreeCoverContainer extends PureComponent {
   }
 
   getTitle = () => {
-    const { adminsSelected, settings, indicators } = this.props;
+    const { adminsSelected, settings, indicators, thresholds } = this.props;
     if (adminsSelected && indicators.length) {
       const activeThreshold = thresholds.find(
         t => t.value === settings.threshold
@@ -131,7 +130,8 @@ WidgetTreeCoverContainer.propTypes = {
   location: PropTypes.object.isRequired,
   getTreeCover: PropTypes.func.isRequired,
   adminsSelected: PropTypes.object.isRequired,
-  indicators: PropTypes.array.isRequired
+  indicators: PropTypes.array.isRequired,
+  thresholds: PropTypes.array.isRequired
 };
 
 export default connect(mapStateToProps, actions)(WidgetTreeCoverContainer);
