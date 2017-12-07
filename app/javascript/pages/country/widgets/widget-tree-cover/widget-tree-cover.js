@@ -26,10 +26,12 @@ const INDICATORS_WHITELIST = [
 
 const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
-  const totalArea = widgetTreeCover.totalArea;
-  const totalCover = widgetTreeCover.totalCover;
-  const totalIntactForest = widgetTreeCover.totalIntactForest;
-  const totalNonForest = widgetTreeCover.totalNonForest;
+  const {
+    totalArea,
+    totalCover,
+    totalIntactForest,
+    totalNonForest
+  } = widgetTreeCover;
   const data = [
     {
       name: 'Forest',
@@ -83,7 +85,7 @@ class WidgetTreeCoverContainer extends PureComponent {
     });
   }
 
-  componentWillUpdate(nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { settings, getTreeCover, location } = nextProps;
 
     if (
