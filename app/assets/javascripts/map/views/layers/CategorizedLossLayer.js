@@ -4,12 +4,12 @@
  * @return CategorizedLossLayer class (extends CanvasLayerClass)
  */
 
-var RGBS = [
+const RGBS = [
   [220, 102, 153],
-  [255, 0, 0],
-  [255, 191, 0],
-  [184, 130, 53],
-  [128, 128, 128],
+  [252, 13, 27],
+  [253, 191, 45],
+  [85, 129, 57],
+  [127, 127, 127],
   [0, 0, 255]
 ];
 
