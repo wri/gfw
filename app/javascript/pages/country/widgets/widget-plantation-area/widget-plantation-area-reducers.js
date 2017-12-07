@@ -5,16 +5,6 @@ export const initialState = {
     limit: 5,
     page: 1
   },
-  units: [
-    {
-      value: 'ha',
-      label: 'Hectare - ha'
-    },
-    {
-      value: '%',
-      label: 'Percent Area - %'
-    }
-  ],
   settings: {
     unit: 'ha'
   }

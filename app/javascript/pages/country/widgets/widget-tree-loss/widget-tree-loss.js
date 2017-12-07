@@ -4,6 +4,7 @@ import axios from 'axios';
 import numeral from 'numeral';
 
 import { getExtent } from 'services/forest-data';
+import { getCanopies } from 'pages/country/utils/filters';
 
 import WidgetTreeLossComponent from './widget-tree-loss-component';
 import actions from './widget-tree-loss-actions';
@@ -21,7 +22,7 @@ const mapStateToProps = state => ({
   treeExtent: state.widgetTreeLoss.treeExtent,
   yearsLoss: state.widgetTreeLoss.yearsLoss,
   indicators: state.widgetTreeLoss.indicators,
-  canopies: state.widgetTreeLoss.canopies,
+  canopies: getCanopies(),
   settings: state.widgetTreeLoss.settings
 });
 
@@ -94,9 +95,9 @@ const WidgetTreeLossContainer = props => {
       } `
       : `${locationNames.country.label} (${indicator[0].label.toLowerCase()}) `;
 
-    return `Between ${settings.startYear} and ${settings.endYear}, ${
-      locationText
-    } lost ${numeral(totalLoss).format(
+    return `Between ${settings.startYear} and ${
+      settings.endYear
+    }, ${locationText} lost ${numeral(totalLoss).format(
       '0,0'
     )} ha of tree cover: This loss is equal to ${numeral(
       totalLoss / (treeExtent * 100)

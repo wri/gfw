@@ -1,6 +1,8 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
 
+import { getUnits } from 'pages/country/utils/filters';
+
 import WidgetPlantationAreaComponent from './widget-plantation-area-component';
 import actions from './widget-plantation-area-actions';
 
@@ -12,7 +14,7 @@ const mapStateToProps = state => ({
   isLoading: state.widgetPlantationArea.isLoading,
   plantationAreaData: state.widgetPlantationArea.plantationAreaData,
   paginate: state.widgetPlantationArea.paginate,
-  units: state.widgetPlantationArea.units,
+  units: getUnits(),
   settings: state.widgetPlantationArea.settings
 });
 
