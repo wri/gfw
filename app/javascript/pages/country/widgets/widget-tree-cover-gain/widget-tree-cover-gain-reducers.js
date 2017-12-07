@@ -1,39 +1,9 @@
 export const initialState = {
-  isLoading: true,
+  isLoading: false,
   gain: 0,
   treeExtent: 0,
-  indicators: [
-    {
-      label: 'All Regions',
-      value: 'gadm28_only'
-    },
-    {
-      label: 'Biodiversity Hotspots',
-      value: 'biodiversity_hot_spots'
-    },
-    {
-      label: 'Protected Areas',
-      value: 'wdpa'
-    },
-    {
-      label: 'Tree Plantations',
-      value: 'gfw_plantations'
-    },
-    {
-      label: 'Managed',
-      value: 'gfw_managed_forests'
-    },
-    {
-      label: 'Intact Forest Landscapes (2000)',
-      value: 'IFL_2000'
-    },
-    {
-      label: 'Intact Forest Landscapes (2013)',
-      value: 'IFL_2013'
-    }
-  ],
   settings: {
-    indicator: 'gadm28_only'
+    indicator: 'gadm28'
   }
 };
 
@@ -45,8 +15,7 @@ const setTreeCoverGainIsLoading = (state, { payload }) => ({
 const setTreeCoverGainValues = (state, { payload }) => ({
   ...state,
   isLoading: false,
-  gain: payload.gain,
-  treeExtent: payload.treeExtent
+  ...payload
 });
 
 const setTreeCoverGainSettingsIndicator = (state, { payload }) => ({
