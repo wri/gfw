@@ -37,8 +37,8 @@ const mapStateToProps = ({ countryData, widgetTreeCoverGain, location }) => {
       isCountriesLoading ||
       isRegionsLoading ||
       isSubRegionsLoading,
-    gain: widgetTreeCoverGain.gain,
-    treeExtent: widgetTreeCoverGain.treeExtent,
+    gain: widgetTreeCoverGain.data.gain,
+    extent: widgetTreeCoverGain.data.extent,
     indicators:
       getIndicators({
         whitelist: INDICATORS_WHITELIST,
@@ -58,7 +58,7 @@ class WidgetTreeCoverGainContainer extends PureComponent {
     const { location, settings, getTreeCoverGain } = this.props;
     getTreeCoverGain({
       ...location,
-      indicator: settings.indicator
+      ...settings
     });
   }
 
@@ -71,19 +71,13 @@ class WidgetTreeCoverGainContainer extends PureComponent {
     ) {
       getTreeCoverGain({
         ...location,
-        indicator: settings.indicator
+        ...settings
       });
     }
   }
 
   getSentence = () => {
-    const {
-      locationNames,
-      gain,
-      treeExtent,
-      indicators,
-      settings
-    } = this.props;
+    const { locationNames, gain, extent, indicators, settings } = this.props;
 
     const indicator = getActiveFilter(settings, indicators, 'indicator');
     const regionPhrase =
@@ -91,7 +85,7 @@ class WidgetTreeCoverGainContainer extends PureComponent {
         ? 'region-wide'
         : `in ${indicator.label.toLowerCase()}`;
 
-    const areaPercent = numeral(100 * treeExtent / gain).format('0,00');
+    const areaPercent = numeral(100 * extent / gain).format('0,00');
 
     return {
       __html: `From 2001 to 2012, ${locationNames.current &&
@@ -112,7 +106,7 @@ class WidgetTreeCoverGainContainer extends PureComponent {
 WidgetTreeCoverGainContainer.propTypes = {
   locationNames: PropTypes.object.isRequired,
   gain: PropTypes.number.isRequired,
-  treeExtent: PropTypes.number.isRequired,
+  extent: PropTypes.number.isRequired,
   indicators: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,

@@ -108,7 +108,7 @@ export const getIndicators = createSelector(
   }
 );
 
-export const getCanopies = createSelector([], () => CANOPIES);
+export const getThresholds = createSelector([], () => CANOPIES);
 
 export const getUnits = createSelector([], () => UNITS);
 

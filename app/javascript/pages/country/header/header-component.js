@@ -4,7 +4,6 @@ import Dropdown from 'components/dropdown';
 import Loader from 'components/loader';
 import { format } from 'd3-format';
 
-import CountryDataProvider from 'pages/country/providers/country-data-provider';
 import './header-styles.scss';
 
 class Header extends PureComponent {
@@ -46,7 +45,6 @@ class Header extends PureComponent {
     } = this.props;
     return (
       <div className={`${className} c-header`}>
-        <CountryDataProvider />
         {isLoading && <Loader className="loader" theme="theme-loader-light" />}
         <div className="row">
           <div className="columns small-12 large-6">

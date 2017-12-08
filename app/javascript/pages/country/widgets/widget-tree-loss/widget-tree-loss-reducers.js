@@ -8,7 +8,7 @@ export const initialState = {
     startYear: 2001,
     endYear: 2016,
     indicator: 'gadm28',
-    canopy: 30
+    threshold: 30
   }
 };
 
@@ -26,11 +26,11 @@ const setTreeLossSettingsIndicator = (state, { payload }) => ({
   }
 });
 
-const setTreeLossSettingsCanopy = (state, { payload }) => ({
+const setTreeLossSettingsThreshold = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    canopy: payload
+    threshold: payload
   }
 });
 
@@ -58,7 +58,7 @@ const setTreeLossSettingsEndYear = (state, { payload }) => ({
 export default {
   setTreeLossValues,
   setTreeLossSettingsIndicator,
-  setTreeLossSettingsCanopy,
+  setTreeLossSettingsThreshold,
   setTreeLossIsLoading,
   setTreeLossSettingsStartYear,
   setTreeLossSettingsEndYear

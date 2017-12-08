@@ -9,27 +9,11 @@ export { initialState } from './root-reducers';
 export { default as reducers } from './root-reducers';
 export { default as actions } from './root-actions';
 
-const mapStateToProps = state => {
-  const {
-    isCountriesLoading,
-    isRegionsLoading,
-    isSubRegionsLoading,
-    isGeostoreLoading
-  } = state.countryData;
-  return {
-    isLoading:
-      isCountriesLoading ||
-      isRegionsLoading ||
-      isSubRegionsLoading ||
-      isGeostoreLoading,
-    location: state.location.payload,
-    gfwHeaderHeight: state.root.gfwHeaderHeight,
-    isMapFixed: state.root.isMapFixed,
-    mapTop: state.root.mapTop,
-    topPage: state.root.topPage,
-    showMapMobile: state.root.showMapMobile
-  };
-};
+const mapStateToProps = state => ({
+  gfwHeaderHeight: state.root.gfwHeaderHeight,
+  isMapFixed: state.root.isMapFixed,
+  showMapMobile: state.root.showMapMobile
+});
 
 class RootContainer extends PureComponent {
   handleShowMapMobile = () => {

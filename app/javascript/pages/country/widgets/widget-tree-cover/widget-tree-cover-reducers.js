@@ -1,30 +1,29 @@
 export const initialState = {
-  isLoading: true,
-  totalCover: 0,
-  totalIntactForest: 0,
-  totalNonForest: 0,
-  title: '',
-  indicators: ['gadm28', 'wdpa', 'ifl_2013'],
+  isLoading: false,
+  data: {
+    totalArea: 0,
+    totalCover: 0,
+    totalIntactForest: 0,
+    totalNonForest: 0
+  },
   settings: {
     indicator: 'gadm28',
     unit: 'ha',
-    canopy: 30
+    threshold: 30
   }
 };
 
-const setTreeCoverIsLoading = (state, { payload }) => ({
+const setTreeCoverLoading = (state, { payload }) => ({
   ...state,
   isLoading: payload
 });
 
-const setTreeCoverValues = (state, { payload }) => ({
+const setTreeCoverData = (state, { payload }) => ({
   ...state,
   isLoading: false,
-  totalCover: payload.totalCover,
-  totalIntactForest: payload.totalIntactForest,
-  totalNonForest: payload.totalNonForest,
-  title: payload.title,
-  locations: payload.locations
+  data: {
+    ...payload
+  }
 });
 
 const setTreeCoverSettingsIndicator = (state, { payload }) => ({
@@ -43,18 +42,18 @@ const setTreeCoverSettingsUnit = (state, { payload }) => ({
   }
 });
 
-const setTreeCoverSettingsCanopy = (state, { payload }) => ({
+const setTreeCoverSettingsThreshold = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    canopy: payload
+    threshold: payload
   }
 });
 
 export default {
-  setTreeCoverIsLoading,
-  setTreeCoverValues,
+  setTreeCoverLoading,
+  setTreeCoverData,
   setTreeCoverSettingsIndicator,
   setTreeCoverSettingsUnit,
-  setTreeCoverSettingsCanopy
+  setTreeCoverSettingsThreshold
 };

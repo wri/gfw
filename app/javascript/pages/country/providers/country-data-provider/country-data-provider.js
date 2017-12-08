@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 });
 
 class CountryDataProvider extends PureComponent {
-  componentDidMount() {
+  componentWillMount() {
     const {
       location,
       getCountries,

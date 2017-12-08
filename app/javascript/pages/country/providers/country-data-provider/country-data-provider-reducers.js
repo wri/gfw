@@ -49,7 +49,9 @@ const setSubRegions = (state, { payload }) => ({
 
 const setGeostore = (state, { payload }) => ({
   ...state,
-  geostore: payload
+  geostore: {
+    ...payload
+  }
 });
 
 export default {
