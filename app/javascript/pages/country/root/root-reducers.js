@@ -8,11 +8,6 @@ const setFixedMapStatus = (state, { payload }) => ({
   isMapFixed: payload
 });
 
-const setMapTop = (state, { payload }) => ({
-  ...state,
-  mapTop: payload
-});
-
 const setShowMapMobile = (state, { payload }) => ({
   ...state,
   showMapMobile: payload
@@ -20,6 +15,5 @@ const setShowMapMobile = (state, { payload }) => ({
 
 export default {
   setFixedMapStatus,
-  setMapTop,
   setShowMapMobile
 };

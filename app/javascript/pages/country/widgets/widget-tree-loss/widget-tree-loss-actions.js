@@ -10,7 +10,9 @@ const setTreeLossValues = createAction('setTreeLossValues');
 const setTreeLossSettingsIndicator = createAction(
   'setTreeLossSettingsIndicator'
 );
-const setTreeLossSettingsCanopy = createAction('setTreeLossSettingsCanopy');
+const setTreeLossSettingsThreshold = createAction(
+  'setTreeLossSettingsThreshold'
+);
 const setTreeLossSettingsStartYear = createAction(
   'setTreeLossSettingsStartYear'
 );
@@ -37,7 +39,7 @@ const getTreeLoss = createThunkAction(
 export default {
   setTreeLossValues,
   setTreeLossSettingsIndicator,
-  setTreeLossSettingsCanopy,
+  setTreeLossSettingsThreshold,
   setTreeLossIsLoading,
   setTreeLossSettingsStartYear,
   setTreeLossSettingsEndYear,

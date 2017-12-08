@@ -5,7 +5,7 @@ import numeral from 'numeral';
 import isEqual from 'lodash/isEqual';
 
 import {
-  getCanopies,
+  getThresholds,
   getIndicators,
   getStartYears,
   getEndYears,
@@ -49,7 +49,7 @@ const mapStateToProps = ({ widgetTreeLoss, location, countryData }) => ({
       location: location.payload,
       ...countryData
     }) || [],
-  canopies: getCanopies(),
+  thresholds: getThresholds(),
   settings: widgetTreeLoss.settings,
   locationNames: getAdminsSelected({
     ...countryData,

@@ -27,10 +27,10 @@ class WidgetTreeLoss extends PureComponent {
       startYears,
       endYears,
       settings,
-      canopies,
+      thresholds,
       indicators,
       setTreeLossSettingsIndicator,
-      setTreeLossSettingsCanopy,
+      setTreeLossSettingsThreshold,
       setTreeLossSettingsStartYear,
       setTreeLossSettingsEndYear,
       getSentence
@@ -47,12 +47,12 @@ class WidgetTreeLoss extends PureComponent {
             isLoading={isLoading}
             type="settings"
             indicators={indicators}
-            canopies={canopies}
+            thresholds={thresholds}
             settings={settings}
             startYears={startYears}
             endYears={endYears}
             onIndicatorChange={setTreeLossSettingsIndicator}
-            onCanopyChange={setTreeLossSettingsCanopy}
+            onThresholdChange={setTreeLossSettingsThreshold}
             onStartYearChange={setTreeLossSettingsStartYear}
             onEndYearChange={setTreeLossSettingsEndYear}
           />
@@ -106,11 +106,11 @@ WidgetTreeLoss.propTypes = {
   loss: PropTypes.array.isRequired,
   extent: PropTypes.number.isRequired,
   settings: PropTypes.object.isRequired,
-  canopies: PropTypes.array.isRequired,
+  thresholds: PropTypes.array.isRequired,
   indicators: PropTypes.array.isRequired,
   viewOnMap: PropTypes.func.isRequired,
   setTreeLossSettingsIndicator: PropTypes.func.isRequired,
-  setTreeLossSettingsCanopy: PropTypes.func.isRequired,
+  setTreeLossSettingsThreshold: PropTypes.func.isRequired,
   setTreeLossSettingsStartYear: PropTypes.func.isRequired,
   setTreeLossSettingsEndYear: PropTypes.func.isRequired,
   getSentence: PropTypes.func.isRequired,

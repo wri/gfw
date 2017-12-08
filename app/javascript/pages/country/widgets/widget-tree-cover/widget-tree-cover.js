@@ -6,7 +6,7 @@ import {
   getAdminsSelected,
   getIndicators,
   getUnits,
-  getCanopies,
+  getThresholds,
   getActiveFilter
 } from 'pages/country/utils/filters';
 
@@ -70,7 +70,7 @@ const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
         ...countryData
       }) || [],
     units: getUnits(),
-    thresholds: getCanopies(),
+    thresholds: getThresholds(),
     settings: widgetTreeCover.settings,
     isMetaLoading: isCountriesLoading || isRegionsLoading
   };

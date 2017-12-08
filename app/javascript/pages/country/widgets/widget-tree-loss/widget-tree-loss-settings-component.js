@@ -6,12 +6,12 @@ class WidgetTreeLossSettings extends PureComponent {
   render() {
     const {
       indicators,
-      canopies,
+      thresholds,
       settings,
       startYears,
       endYears,
       onEndYearChange,
-      onCanopyChange,
+      onThresholdChange,
       onStartYearChange,
       onIndicatorChange,
       isLoading
@@ -53,9 +53,9 @@ class WidgetTreeLossSettings extends PureComponent {
           <Dropdown
             theme="theme-select-button"
             label="CANOPY DENSITY"
-            value={settings.canopy}
-            options={canopies}
-            onChange={option => onCanopyChange(option.value)}
+            value={settings.threshold}
+            options={thresholds}
+            onChange={option => onThresholdChange(option.value)}
             disabled={isLoading}
           />
         </div>
@@ -66,12 +66,12 @@ class WidgetTreeLossSettings extends PureComponent {
 
 WidgetTreeLossSettings.propTypes = {
   indicators: PropTypes.array.isRequired,
-  canopies: PropTypes.array.isRequired,
+  thresholds: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   startYears: PropTypes.array.isRequired,
   endYears: PropTypes.array.isRequired,
   onIndicatorChange: PropTypes.func.isRequired,
-  onCanopyChange: PropTypes.func.isRequired,
+  onThresholdChange: PropTypes.func.isRequired,
   onStartYearChange: PropTypes.func.isRequired,
   onEndYearChange: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired
