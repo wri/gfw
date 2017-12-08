@@ -1,31 +1,23 @@
 export const initialState = {
   isLoading: true,
-  topRegions: [],
+  data: {
+    topRegions: []
+  },
   paginate: {
     limit: 10,
     page: 1
   },
-  dataSources: [
-    {
-      value: 'hansen',
-      label: 'Hansen - 2010'
-    },
-    {
-      value: 'fao',
-      label: 'FAO'
-    }
-  ],
   settings: {
     dataSource: 'hansen',
     unit: 'ha',
-    canopy: 30
+    threshold: 30
   }
 };
 
-const setTreeLocatedValues = (state, { payload }) => ({
+const setTreeLocatedData = (state, { payload }) => ({
   ...state,
   isLoading: false,
-  topRegions: payload
+  data: payload
 });
 
 const setTreeLocatedPage = (state, { payload }) => ({
@@ -52,11 +44,11 @@ const setTreeLocatedSettingsUnit = (state, { payload }) => ({
   }
 });
 
-const setTreeLocatedSettingsCanopy = (state, { payload }) => ({
+const setTreeLocatedSettingsThreshold = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    canopy: payload
+    threshold: payload
   }
 });
 
@@ -66,10 +58,10 @@ const setTreeLocatedIsLoading = (state, { payload }) => ({
 });
 
 export default {
-  setTreeLocatedValues,
+  setTreeLocatedData,
   setTreeLocatedPage,
   setTreeLocatedSettingsDataSource,
   setTreeLocatedSettingsUnit,
-  setTreeLocatedSettingsCanopy,
+  setTreeLocatedSettingsThreshold,
   setTreeLocatedIsLoading
 };

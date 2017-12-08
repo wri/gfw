@@ -6,6 +6,7 @@ import { sortLabelByAlpha } from 'utils/data';
 import INDICATORS from 'pages/country/data/indicators.json';
 import THRESHOLDS from 'pages/country/data/thresholds.json';
 import UNITS from 'pages/country/data/units.json';
+import DATA_SOURCES from 'pages/country/data/data-sources.json';
 
 // get list data
 const getAdmins = state => state.location || null;
@@ -104,6 +105,8 @@ export const getIndicators = createSelector(
 export const getThresholds = createSelector([], () => THRESHOLDS);
 
 export const getUnits = createSelector([], () => UNITS);
+
+export const getDataSources = createSelector([], () => DATA_SOURCES);
 
 export const getYears = createSelector([getData], data => {
   if (isEmpty(data) || !data.length) return null;

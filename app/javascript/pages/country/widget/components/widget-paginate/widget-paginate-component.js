@@ -5,12 +5,7 @@ import './widget-paginate-styles.scss';
 
 class WidgetPaginate extends PureComponent {
   render() {
-    const {
-      paginate,
-      count,
-      onClickNextPage,
-      onClickPreviousPage
-    } = this.props;
+    const { paginate, count, onClickChange } = this.props;
 
     const showNext = paginate.page * paginate.limit < count;
     const showPrevious = paginate.page > 1;
@@ -20,7 +15,7 @@ class WidgetPaginate extends PureComponent {
         {showPrevious && (
           <button
             className="c-widget-paginate__icon c-widget-paginate__icon--up"
-            onClick={() => onClickPreviousPage()}
+            onClick={() => onClickChange(-1)}
           >
             <svg className="icon icon-angle-arrow-down">
               <use xlinkHref="#icon-angle-arrow-down" />
@@ -30,7 +25,7 @@ class WidgetPaginate extends PureComponent {
         {showNext && (
           <button
             className="c-widget-paginate__icon"
-            onClick={() => onClickNextPage()}
+            onClick={() => onClickChange(1)}
           >
             <svg className="icon icon-angle-arrow-down">
               <use xlinkHref="#icon-angle-arrow-down" />
@@ -45,8 +40,7 @@ class WidgetPaginate extends PureComponent {
 WidgetPaginate.propTypes = {
   paginate: PropTypes.object.isRequired,
   count: PropTypes.number.isRequired,
-  onClickNextPage: PropTypes.func.isRequired,
-  onClickPreviousPage: PropTypes.func.isRequired
+  onClickChange: PropTypes.func.isRequired
 };
 
 export default WidgetPaginate;
