@@ -5,13 +5,13 @@
  */
 
 const RGBS = [
-  [0, 0, 255],
-  [252, 13, 27],
-  [253, 191, 45],
-  [85, 129, 57],
-  [127, 127, 127],
-  [220, 102, 153],
-  [0, 255, 0][(0, 0, 0)]
+  [152, 152, 152],
+  [227, 26, 28],
+  [225, 169, 0],
+  [51, 160, 44],
+  [206, 99, 0],
+  [156, 34, 180],
+  [0, 0, 0]
 ];
 
 define(
@@ -76,11 +76,9 @@ define(
             const pixelPos = (j * w + i) * components;
             const intensity = imgdata[pixelPos];
             let category_index = imgdata[pixelPos + 1];
-            if (category_index == 0) {
-              console.log('uncategorized (blue)');
-            } else if (category_index > 6) {
+            if (category_index > 5) {
               console.log('bad-category (black)');
-              category_index = 7;
+              category_index = 6;
             }
             const rgb = RGBS[category_index];
             const yearLoss = 2000 + imgdata[pixelPos + 2];
