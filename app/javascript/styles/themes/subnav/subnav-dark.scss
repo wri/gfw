@@ -1,0 +1,31 @@
+@import '~styles/settings';
+$black-menu: #404040;
+$subnav-height-dark: rem(40px);
+
+.theme-subnav-dark {
+  background-color: $black-menu;
+  height: $subnav-height-dark;
+
+  .buttons {
+    height: $subnav-height-dark;
+
+    li {
+      border-right: 0;
+      background-color: $white;
+
+      @media screen and (min-width: $screen-m) {
+        max-width: rem(100px);
+      }
+
+      > a {
+        color: #9f9f9f;
+        text-transform: uppercase;
+        font-size: rem(13px);
+      }
+
+      &:first-child {
+        border-left: 0;
+      }
+    }
+  }
+}

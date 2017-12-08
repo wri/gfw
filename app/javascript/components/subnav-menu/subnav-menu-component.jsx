@@ -4,13 +4,14 @@ import { Link as AnchorLink } from 'react-scroll';
 import { NavLink } from 'redux-first-router-link';
 
 import './subnav-menu-styles.scss';
+import 'styles/themes/subnav/subnav-dark.scss'; // eslint-disable-line
 
 class SubNavMenu extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { links, className } = this.props;
+    const { links, className, theme } = this.props;
     return (
-      <div className={`c-subnav-menu ${className}`}>
+      <div className={`c-subnav-menu ${theme || ''} ${className || ''}`}>
         <div className="row">
           <div className="small-12 columns">
             <ul className="buttons">
@@ -53,7 +54,8 @@ SubNavMenu.propTypes = {
       path: PropTypes.string
     })
   ).isRequired,
-  className: PropTypes.string
+  className: PropTypes.string,
+  theme: PropTypes.string
 };
 
 export default SubNavMenu;
