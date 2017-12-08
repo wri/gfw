@@ -8,6 +8,7 @@ import {
   getUnits,
   getDataSources
 } from 'pages/country/widget/widget-selectors';
+import { filterData } from './widget-tree-located-selectors';
 
 import WidgetTreeLocatedComponent from './widget-tree-located-component';
 import actions from './widget-tree-located-actions';
@@ -16,15 +17,148 @@ export { initialState } from './widget-tree-located-reducers';
 export { default as reducers } from './widget-tree-located-reducers';
 export { default as actions } from './widget-tree-located-actions';
 
+const test_data = [
+  {
+    position: 1,
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 9,
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 10,
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 11,
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 20,
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 21,
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'dsa/l;dkas;lkd;lka',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  },
+  {
+    position: 'test',
+    name: 'test',
+    value: 1223
+  }
+];
+
 const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
+  const data = {
+    data: test_data || widgetTreeLocated.data.topRegions,
+    page: widgetTreeLocated.settings.page,
+    pageSize: widgetTreeLocated.settings.pageSize
+  };
   return {
     location: location.payload,
     regions: countryData.regions,
     isLoading:
       widgetTreeLocated.isLoading || isCountriesLoading || isRegionsLoading,
-    topRegions: widgetTreeLocated.data.topRegions,
-    paginate: widgetTreeLocated.paginate,
+    data: filterData(data) || [],
+    count: data.data.length,
     dataSources: getDataSources(),
     units: getUnits(),
     thresholds: getThresholds(),
@@ -56,8 +190,8 @@ class WidgetTreeLocatedContainer extends PureComponent {
   }
 
   handlePageChange = change => {
-    const { setTreeLocatedPage, paginate } = this.props;
-    setTreeLocatedPage(paginate.page + change);
+    const { setTreeLocatedPage, settings } = this.props;
+    setTreeLocatedPage(settings.page + change);
   };
 
   render() {
@@ -70,9 +204,8 @@ class WidgetTreeLocatedContainer extends PureComponent {
 
 WidgetTreeLocatedContainer.propTypes = {
   setTreeLocatedPage: PropTypes.func.isRequired,
-  paginate: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   getTreeLocated: PropTypes.func.isRequired
 };
 

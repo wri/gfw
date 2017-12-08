@@ -1,44 +1,45 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Button from 'components/button';
 
 import './widget-paginate-styles.scss';
 
 class WidgetPaginate extends PureComponent {
   render() {
-    const { paginate, count, onClickChange } = this.props;
+    const { settings, count, onClickChange } = this.props;
+    const { page, pageSize } = settings;
+    const showPrev = page > 0;
+    const showNext = count > pageSize * (page + 1);
 
-    const showNext = paginate.page * paginate.limit < count;
-    const showPrevious = paginate.page > 1;
-
-    return count > paginate.limit ? (
+    return (
       <div className="c-widget-paginate">
-        {showPrevious && (
-          <button
-            className="c-widget-paginate__icon c-widget-paginate__icon--up"
+        {showPrev && (
+          <Button
+            className="button-up square theme-button-small theme-button-light"
             onClick={() => onClickChange(-1)}
           >
             <svg className="icon icon-angle-arrow-down">
               <use xlinkHref="#icon-angle-arrow-down" />
             </svg>
-          </button>
+          </Button>
         )}
         {showNext && (
-          <button
-            className="c-widget-paginate__icon"
+          <Button
+            className="button-down square theme-button-small theme-button-light"
             onClick={() => onClickChange(1)}
           >
             <svg className="icon icon-angle-arrow-down">
               <use xlinkHref="#icon-angle-arrow-down" />
             </svg>
-          </button>
+          </Button>
         )}
       </div>
-    ) : null;
+    );
   }
 }
 
 WidgetPaginate.propTypes = {
-  paginate: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired,
   count: PropTypes.number.isRequired,
   onClickChange: PropTypes.func.isRequired
 };

@@ -3,14 +3,12 @@ export const initialState = {
   data: {
     topRegions: []
   },
-  paginate: {
-    limit: 10,
-    page: 1
-  },
   settings: {
     dataSource: 'hansen',
     unit: 'ha',
-    threshold: 30
+    threshold: 30,
+    pageSize: 10,
+    page: 0
   }
 };
 
@@ -22,8 +20,8 @@ const setTreeLocatedData = (state, { payload }) => ({
 
 const setTreeLocatedPage = (state, { payload }) => ({
   ...state,
-  paginate: {
-    ...state.paginate,
+  settings: {
+    ...state.settings,
     page: payload
   }
 });
