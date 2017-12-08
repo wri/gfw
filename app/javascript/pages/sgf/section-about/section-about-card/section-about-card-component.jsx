@@ -5,16 +5,16 @@ import 'react-tippy/dist/tippy.css';
 import Icon from 'components/icon/icon';
 
 import infoIcon from 'assets/icons/info.svg';
-import './card-styles.scss';
+import './section-about-card-styles.scss';
 
-class ProjectCard extends PureComponent {
+class SectionAboutCard extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const { className } = this.props;
     const { title, link, items } = this.props.data;
     const cardTitle = <h3 className="card-title">{title}</h3>;
     return (
-      <div className={`c-card ${className}`}>
+      <div className={`c-section-about-card ${className}`}>
         {link ? <a href={link}>{cardTitle}</a> : cardTitle}
         {items &&
           !!items.length && (
@@ -47,7 +47,7 @@ class ProjectCard extends PureComponent {
   }
 }
 
-ProjectCard.propTypes = {
+SectionAboutCard.propTypes = {
   data: PropTypes.shape({
     title: PropTypes.string.isRequired,
     link: PropTypes.string,
@@ -56,8 +56,8 @@ ProjectCard.propTypes = {
   className: PropTypes.string.isRequired
 };
 
-ProjectCard.defaultProps = {
+SectionAboutCard.defaultProps = {
   className: ''
 };
 
-export default ProjectCard;
+export default SectionAboutCard;

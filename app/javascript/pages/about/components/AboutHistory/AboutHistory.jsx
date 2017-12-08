@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Element } from 'react-scroll';
 import { lory } from 'lory.js';
 
-import ButtonArrow from 'components/button-arrow/button-arrow';
+import Button from 'components/button';
 
 class AboutHistory extends Component {
   constructor(props) {
@@ -150,18 +150,22 @@ class AboutHistory extends Component {
                       </li>
                     ))}
                   </ul>
-                  <div
-                    className={slidePrevVisibilityClass}
+                  <Button
+                    className="square nav-left"
                     onClick={this.onClickPrevSlide}
                   >
-                    <ButtonArrow orientation="left" />
-                  </div>
-                  <div
-                    className={slideNextVisibilityClass}
+                    <svg className="icon">
+                      <use xlinkHref="#icon-arrow" />
+                    </svg>
+                  </Button>
+                  <Button
+                    className="square nav-right"
                     onClick={this.onClickNextSlide}
                   >
-                    <ButtonArrow orientation={slideNextVisibilityClass} />
-                  </div>
+                    <svg className="icon">
+                      <use xlinkHref="#icon-arrow" />
+                    </svg>
+                  </Button>
                 </div>
               </div>
             </div>

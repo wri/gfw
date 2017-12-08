@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Card from 'pages/sgf/card';
+import Card from 'pages/sgf/section-about/section-about-card';
 import sgfLogo from './img/GFW_SGF_logo.png';
 import sfgBg1 from './img/sgf-about-bg.png';
 import './section-about-styles.scss';

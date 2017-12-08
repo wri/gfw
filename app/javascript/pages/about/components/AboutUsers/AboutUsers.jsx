@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import ButtonRegular from 'components/button-regular/button-regular';
+import Button from 'components/button';
 import Globe from 'pages/about/components/AboutUsers/Globe/index';
 import AboutModalWorld from 'pages/about/components/AboutModals/AboutModalWorld';
 
@@ -100,7 +100,9 @@ class AboutUsers extends Component {
                 ))}
               </ul>
               <div className="c-about-users__button">
-                <ButtonRegular text="LEARN HOW TO USE GFW" color="green" />
+                <Button extLink="https://globalforestwatch.org/howto">
+                  LEARN HOW TO USE GFW
+                </Button>
               </div>
             </div>
           </div>
