@@ -5,12 +5,13 @@
  */
 
 const RGBS = [
-  [220, 102, 153],
+  [0, 0, 255],
   [252, 13, 27],
   [253, 191, 45],
   [85, 129, 57],
   [127, 127, 127],
-  [0, 0, 255]
+  [220, 102, 153],
+  [0, 255, 0][(0, 0, 0)]
 ];
 
 define(
@@ -27,7 +28,7 @@ define(
         threshold: 30,
         dataMaxZoom: 12,
         urlTemplate:
-          'https://storage.googleapis.com/wri-public/lossyear_classification_map/gfw/tiles/hansen_world/v1/tc50{/z}{/x}{/y}.png',
+          'https://storage.googleapis.com/wri-public/lossyear_classification_map/gfw/tiles/hansen_world/v2/tc30{/z}{/x}{/y}.png',
         currentDate: ['2001-01-01', '2017-01-01']
       },
 
@@ -76,10 +77,10 @@ define(
             const intensity = imgdata[pixelPos];
             let category_index = imgdata[pixelPos + 1];
             if (category_index == 0) {
-              console.log('uncategorized (gfw-pink)');
-            } else if (category_index > 4) {
-              console.log('bad-category (blue)');
-              category_index = 5;
+              console.log('uncategorized (blue)');
+            } else if (category_index > 6) {
+              console.log('bad-category (black)');
+              category_index = 7;
             }
             const rgb = RGBS[category_index];
             const yearLoss = 2000 + imgdata[pixelPos + 2];
