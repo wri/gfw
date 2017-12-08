@@ -2,7 +2,10 @@ import { createElement } from 'react';
 import { connect } from 'react-redux';
 
 import { getLoss } from 'services/forest-data';
-import { getThresholds, getUnits } from 'pages/country/utils/filters';
+import {
+  getThresholds,
+  getUnits
+} from 'pages/country/widgets/widgets-selectors';
 
 import WidgetTreeCoverLossAreasComponent from './widget-tree-cover-loss-areas-component';
 import actions from './widget-tree-cover-loss-areas-actions';

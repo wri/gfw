@@ -57,7 +57,7 @@ class WidgetTreeLoss extends PureComponent {
             onEndYearChange={setTreeLossSettingsEndYear}
           />
         </WidgetHeader>
-        {isLoading ? (
+        {!isLoading ? (
           <Loader className="loader-offset" />
         ) : (
           <div>

@@ -2,7 +2,7 @@ import { createElement } from 'react';
 import { connect } from 'react-redux';
 
 import { getGain } from 'services/forest-data';
-import { getUnits } from 'pages/country/utils/filters';
+import { getUnits } from 'pages/country/widgets/widgets-selectors';
 
 import WidgetAreasMostCoverGainComponent from './widget-areas-most-cover-gain-component';
 import actions from './widget-areas-most-cover-gain-actions';

@@ -6,7 +6,7 @@ import {
   getAdminsSelected,
   getIndicators,
   getActiveFilter
-} from 'pages/country/utils/filters';
+} from 'pages/country/widgets/widgets-selectors';
 import isEqual from 'lodash/isEqual';
 
 import WidgetTreeCoverGainComponent from './widget-tree-cover-gain-component';

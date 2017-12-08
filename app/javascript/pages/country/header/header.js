@@ -7,7 +7,7 @@ import {
   getAdminsOptions,
   getAdminsSelected,
   getActiveAdmin
-} from 'pages/country/utils/filters';
+} from 'pages/country/widgets/widgets-selectors';
 import numeral from 'numeral';
 
 import * as actions from './header-actions';

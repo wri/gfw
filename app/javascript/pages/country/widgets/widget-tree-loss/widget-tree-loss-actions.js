@@ -1,6 +1,8 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
 import axios from 'axios';
+import minBy from 'lodash/minBy';
+import maxBy from 'lodash/maxBy';
 
 import { getExtent, getLoss } from 'services/forest-data';
 
@@ -24,14 +26,32 @@ const getTreeLoss = createThunkAction(
   params => (dispatch, state) => {
     if (!state().widgetTreeLoss.isLoading) {
       dispatch(setTreeLossIsLoading(true));
-      axios.all([getExtent(params), getLoss(params)]).then(
-        axios.spread((loss, extent) => {
-          setTreeLossValues({
-            loss: loss.data.data,
-            extent: extent.data.data[0].value
-          });
-        })
-      );
+      axios
+        .all([getExtent(params), getLoss(params)])
+        .then(
+          axios.spread((loss, extent) => {
+            if (loss && extent) {
+              dispatch(
+                setTreeLossValues({
+                  loss: loss.data.data,
+                  extent: extent.data.data[0].value
+                })
+              );
+              dispatch(
+                setTreeLossSettingsStartYear(minBy(loss.data.data, 'year'))
+              );
+              dispatch(
+                setTreeLossSettingsEndYear(maxBy(loss.data.data, 'year'))
+              );
+            } else {
+              dispatch(setTreeLossIsLoading(false));
+            }
+          })
+        )
+        .catch(error => {
+          dispatch(setTreeLossIsLoading(false));
+          console.info(error);
+        });
     }
   }
 );
