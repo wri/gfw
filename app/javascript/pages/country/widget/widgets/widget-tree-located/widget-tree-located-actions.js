@@ -18,6 +18,7 @@ const getTreeLocated = createThunkAction(
   'getTreeLocated',
   params => (dispatch, state) => {
     if (!state().widgetTreeLocated.isLoading) {
+      dispatch(setTreeLocatedIsLoading(true));
       getLocations(params)
         .then(response => {
           setTreeLocatedData(response.data.data);

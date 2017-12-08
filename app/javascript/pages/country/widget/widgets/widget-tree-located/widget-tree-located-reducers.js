@@ -1,5 +1,5 @@
 export const initialState = {
-  isLoading: true,
+  isLoading: false,
   data: {
     topRegions: []
   },
