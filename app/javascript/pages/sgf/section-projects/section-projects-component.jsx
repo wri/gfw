@@ -7,6 +7,7 @@ import ItemsList from 'components/items-list';
 import Search from 'components/search';
 import Sticky from 'components/sticky';
 import NoContent from 'components/no-content';
+import { SCREEN_L } from 'utils/constants';
 
 import './section-projects-styles.scss';
 
@@ -38,7 +39,7 @@ class SectionProjects extends PureComponent {
               <ProjectsGLobe data={data} />
             </div>
             <div className="column small-12 large-5">
-              <Sticky offSet={-50}>
+              <Sticky offSet={-50} enabled={window.innerWidth >= SCREEN_L}>
                 <Search
                   className="project-search"
                   placeholder="Search"
