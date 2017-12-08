@@ -6,8 +6,9 @@ import {
   getAdminsSelected,
   getIndicators,
   getUnits,
-  getCanopies
-} from 'pages/country/utils/filters';
+  getThresholds,
+  getActiveFilter
+} from 'pages/country/widgets/widgets-selectors';
 
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
 import actions from './widget-tree-cover-actions';
@@ -69,7 +70,7 @@ const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
         ...countryData
       }) || [],
     units: getUnits(),
-    thresholds: getCanopies(),
+    thresholds: getThresholds(),
     settings: widgetTreeCover.settings,
     isMetaLoading: isCountriesLoading || isRegionsLoading
   };
@@ -80,8 +81,7 @@ class WidgetTreeCoverContainer extends PureComponent {
     const { location, settings, getTreeCover } = this.props;
     getTreeCover({
       ...location,
-      threshold: settings.threshold,
-      indicator: settings.indicator
+      ...settings
     });
   }
 
@@ -95,8 +95,7 @@ class WidgetTreeCoverContainer extends PureComponent {
     ) {
       getTreeCover({
         ...location,
-        threshold: settings.threshold,
-        indicator: settings.indicator
+        ...settings
       });
     }
   }
@@ -107,11 +106,9 @@ class WidgetTreeCoverContainer extends PureComponent {
       const activeThreshold = thresholds.find(
         t => t.value === settings.threshold
       );
-      const activeIndicator = indicators.find(
-        i => i.value === settings.indicator
-      );
+      const indicator = getActiveFilter(settings, indicators, 'indicator');
       return `Tree  cover for 
-        ${activeIndicator.label} of 
+        ${indicator.label} of 
         ${adminsSelected.current &&
           adminsSelected.current.label} with a tree canopy of 
         ${activeThreshold.label}`;

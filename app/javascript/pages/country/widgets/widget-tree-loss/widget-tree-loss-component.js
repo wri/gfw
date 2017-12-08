@@ -18,33 +18,22 @@ import WidgetTreeLossTooltip from './widget-tree-loss-tooltip-component';
 import './widget-tree-loss-styles.scss';
 
 class WidgetTreeLoss extends PureComponent {
-  componentWillUpdate(nextProps) {
-    const { isMetaLoading, setInitialData, updateData, settings } = this.props;
-
-    if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
-      updateData(nextProps);
-    }
-
-    if (!nextProps.isMetaLoading && isMetaLoading) {
-      setInitialData(nextProps);
-    }
-  }
-
   render() {
     const {
       isLoading,
       viewOnMap,
       loss,
-      lossSentence,
-      treeExtent,
-      yearsLoss,
+      extent,
+      startYears,
+      endYears,
       settings,
-      canopies,
+      thresholds,
       indicators,
       setTreeLossSettingsIndicator,
-      setTreeLossSettingsCanopy,
+      setTreeLossSettingsThreshold,
       setTreeLossSettingsStartYear,
-      setTreeLossSettingsEndYear
+      setTreeLossSettingsEndYear,
+      getSentence
     } = this.props;
 
     return (
@@ -55,23 +44,25 @@ class WidgetTreeLoss extends PureComponent {
           shareAnchor={'tree-loss'}
         >
           <WidgetTreeLossSettings
+            isLoading={isLoading}
             type="settings"
             indicators={indicators}
-            canopies={canopies}
+            thresholds={thresholds}
             settings={settings}
-            yearsLoss={yearsLoss}
+            startYears={startYears}
+            endYears={endYears}
             onIndicatorChange={setTreeLossSettingsIndicator}
-            onCanopyChange={setTreeLossSettingsCanopy}
+            onThresholdChange={setTreeLossSettingsThreshold}
             onStartYearChange={setTreeLossSettingsStartYear}
             onEndYearChange={setTreeLossSettingsEndYear}
           />
         </WidgetHeader>
         {isLoading ? (
-          <Loader />
+          <Loader className="loader-offset" />
         ) : (
           <div>
-            <div className="c-widget-tree-loss__sentence">{lossSentence}</div>
-            <div className="c-widget-tree-loss__chart">
+            <div className="sentence">{getSentence()}</div>
+            <div className="chart">
               <ResponsiveContainer height={247} width={'100%'}>
                 <BarChart
                   width={627}
@@ -95,7 +86,7 @@ class WidgetTreeLoss extends PureComponent {
                   <Tooltip
                     content={
                       <WidgetTooltip>
-                        <WidgetTreeLossTooltip extent={treeExtent} />
+                        <WidgetTreeLossTooltip extent={extent} />
                       </WidgetTooltip>
                     }
                   />
@@ -112,21 +103,19 @@ class WidgetTreeLoss extends PureComponent {
 
 WidgetTreeLoss.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  isMetaLoading: PropTypes.bool.isRequired,
-  setInitialData: PropTypes.func.isRequired,
   loss: PropTypes.array.isRequired,
-  lossSentence: PropTypes.string.isRequired,
-  treeExtent: PropTypes.number.isRequired,
-  yearsLoss: PropTypes.array.isRequired,
+  extent: PropTypes.number.isRequired,
   settings: PropTypes.object.isRequired,
-  canopies: PropTypes.array.isRequired,
+  thresholds: PropTypes.array.isRequired,
   indicators: PropTypes.array.isRequired,
   viewOnMap: PropTypes.func.isRequired,
-  updateData: PropTypes.func.isRequired,
   setTreeLossSettingsIndicator: PropTypes.func.isRequired,
-  setTreeLossSettingsCanopy: PropTypes.func.isRequired,
+  setTreeLossSettingsThreshold: PropTypes.func.isRequired,
   setTreeLossSettingsStartYear: PropTypes.func.isRequired,
-  setTreeLossSettingsEndYear: PropTypes.func.isRequired
+  setTreeLossSettingsEndYear: PropTypes.func.isRequired,
+  getSentence: PropTypes.func.isRequired,
+  startYears: PropTypes.array.isRequired,
+  endYears: PropTypes.array.isRequired
 };
 
 export default WidgetTreeLoss;

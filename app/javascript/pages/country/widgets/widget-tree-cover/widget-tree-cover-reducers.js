@@ -1,9 +1,11 @@
 export const initialState = {
   isLoading: false,
-  totalArea: 0,
-  totalCover: 0,
-  totalIntactForest: 0,
-  totalNonForest: 0,
+  data: {
+    totalArea: 0,
+    totalCover: 0,
+    totalIntactForest: 0,
+    totalNonForest: 0
+  },
   settings: {
     indicator: 'gadm28',
     unit: 'ha',
@@ -18,7 +20,10 @@ const setTreeCoverLoading = (state, { payload }) => ({
 
 const setTreeCoverData = (state, { payload }) => ({
   ...state,
-  ...payload
+  isLoading: false,
+  data: {
+    ...payload
+  }
 });
 
 const setTreeCoverSettingsIndicator = (state, { payload }) => ({

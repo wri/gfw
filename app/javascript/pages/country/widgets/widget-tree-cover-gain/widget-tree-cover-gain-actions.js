@@ -5,7 +5,7 @@ import axios from 'axios';
 import { getGain, getExtent } from 'services/forest-data';
 
 const setTreeCoverGainIsLoading = createAction('setTreeCoverGainIsLoading');
-const setTreeCoverGainValues = createAction('setTreeCoverGainValues');
+const setTreeCoverGainData = createAction('setTreeCoverGainData');
 const setTreeCoverGainSettingsIndicator = createAction(
   'setTreeCoverGainSettingsIndicator'
 );
@@ -19,11 +19,11 @@ const getTreeCoverGain = createThunkAction(
         .then(
           axios.spread((getTreeGainResponse, getExtentResponse) => {
             const gain = getTreeGainResponse.data.data[0].value;
-            const treeExtent = getExtentResponse.data.data[0].value;
+            const extent = getExtentResponse.data.data[0].value;
             dispatch(
-              setTreeCoverGainValues({
+              setTreeCoverGainData({
                 gain,
-                treeExtent
+                extent
               })
             );
           })
@@ -38,7 +38,7 @@ const getTreeCoverGain = createThunkAction(
 
 export default {
   setTreeCoverGainIsLoading,
-  setTreeCoverGainValues,
+  setTreeCoverGainData,
   setTreeCoverGainSettingsIndicator,
   getTreeCoverGain
 };

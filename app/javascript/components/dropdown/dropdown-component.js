@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select-me';
-import { deburrUpper } from 'pages/country/utils/filters';
+import { deburrUpper } from 'utils/data';
 
 import 'styles/themes/dropdown/dropdown-dark.scss';
 import 'styles/themes/dropdown/dropdown-light.scss';

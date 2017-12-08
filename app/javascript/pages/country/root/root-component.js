@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { SCREEN_M } from 'utils/constants';
 
 import Widget from 'pages/country/widgets';
 import Share from 'components/share';
@@ -9,6 +10,7 @@ import Footer from 'pages/country/footer';
 import Map from 'components/map';
 import Stories from 'pages/country/stories';
 import Sticky from 'components/sticky';
+import CountryDataProvider from 'pages/country/providers/country-data-provider';
 
 import './root-styles.scss';
 
@@ -67,6 +69,7 @@ class Root extends PureComponent {
             <Sticky
               className={`map ${showMapMobile ? '-open-mobile' : ''}`}
               limitElement="c-stories"
+              enabled={window.innerWidth >= SCREEN_M}
             >
               <Map
                 maxZoom={14}
@@ -93,6 +96,7 @@ class Root extends PureComponent {
         <Stories />
         <Footer />
         <Share />
+        <CountryDataProvider />
       </div>
     );
   }

@@ -2,7 +2,10 @@ import { createElement } from 'react';
 import { connect } from 'react-redux';
 
 import { getLoss } from 'services/forest-data';
-import { getCanopies, getUnits } from 'pages/country/utils/filters';
+import {
+  getThresholds,
+  getUnits
+} from 'pages/country/widgets/widgets-selectors';
 
 import WidgetTreeCoverLossAreasComponent from './widget-tree-cover-loss-areas-component';
 import actions from './widget-tree-cover-loss-areas-actions';
@@ -26,7 +29,7 @@ const mapStateToProps = state => {
     paginate: state.widgetTreeCoverLossAreas.paginate,
     regions: state.widgetTreeCoverLossAreas.regions,
     units: getUnits(),
-    canopies: getCanopies(),
+    canopies: getThresholds(),
     settings: state.widgetTreeCoverLossAreas.settings,
     years: state.widgetTreeCoverLossAreas.years,
     isMetaLoading: isCountriesLoading || isRegionsLoading

@@ -1,7 +1,9 @@
 export const initialState = {
   isLoading: false,
-  gain: 0,
-  treeExtent: 0,
+  data: {
+    gain: 0,
+    extent: 0
+  },
   settings: {
     indicator: 'gadm28'
   }
@@ -12,10 +14,12 @@ const setTreeCoverGainIsLoading = (state, { payload }) => ({
   isLoading: payload
 });
 
-const setTreeCoverGainValues = (state, { payload }) => ({
+const setTreeCoverGainData = (state, { payload }) => ({
   ...state,
   isLoading: false,
-  ...payload
+  data: {
+    ...payload
+  }
 });
 
 const setTreeCoverGainSettingsIndicator = (state, { payload }) => ({
@@ -28,6 +32,6 @@ const setTreeCoverGainSettingsIndicator = (state, { payload }) => ({
 
 export default {
   setTreeCoverGainIsLoading,
-  setTreeCoverGainValues,
+  setTreeCoverGainData,
   setTreeCoverGainSettingsIndicator
 };
