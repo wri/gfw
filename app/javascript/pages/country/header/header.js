@@ -15,33 +15,37 @@ import reducers, { initialState } from './header-reducers';
 
 import HeaderComponent from './header-component';
 
-const mapStateToProps = state => {
-  const location = state.location.payload;
+const mapStateToProps = ({ countryData, location, header }) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
     isSubRegionsLoading,
     isGeostoreLoading
-  } = state.countryData;
+  } = countryData;
   const adminData = {
-    location,
-    countries: state.countryData.countries,
-    regions: state.countryData.regions,
-    subRegions: state.countryData.subRegions
+    countries: countryData.countries,
+    regions: countryData.regions,
+    subRegions: countryData.subRegions
   };
-  const totalArea = state.header[`${getActiveAdmin(location)}Area`];
-  const percentageCover = state.header.treeCoverExtent / totalArea * 100;
+  const totalArea = header[`${getActiveAdmin(location)}Area`];
+  const percentageCover = header.treeCoverExtent / totalArea * 100;
   return {
     isLoading:
       isCountriesLoading ||
       isRegionsLoading ||
       isSubRegionsLoading ||
       isGeostoreLoading,
-    adminsSelected: getAdminsSelected(adminData),
-    adminsOptions: getAdminsOptions(adminData),
-    location,
+    adminsSelected: getAdminsSelected({
+      ...adminData,
+      location: location.payload
+    }),
+    adminsOptions: getAdminsOptions({
+      ...adminData,
+      location: location.payload
+    }),
+    location: location.payload,
     activeAdmin: getActiveAdmin(location),
-    treeCover: numeral(state.header.treeCoverExtent).format('0 a'),
+    treeCover: numeral(header.treeCoverExtent).format('0 a'),
     parcentageCover:
       percentageCover > 1 ? numeral(percentageCover).format('0,0') : null
   };
