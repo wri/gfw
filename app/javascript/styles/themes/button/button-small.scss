@@ -1,0 +1,17 @@
+@import '~styles/settings';
+
+.theme-button-small {
+  height: 20px;
+  border-radius: 10px;
+  padding: 0 5px;
+  font-size: rem(12px);
+
+  &.square {
+    width: 20px;
+  }
+
+  svg {
+    width: rem(10px);
+    height: rem(10px);
+  }
+}
