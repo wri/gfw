@@ -30,7 +30,7 @@ class WidgetTreeLocated extends PureComponent {
         <WidgetHeader
           title={`Where are the forest located in ${locationNames.country &&
             locationNames.country.label}`}
-          noMap
+          hasMap
           shareAnchor={'tree-located'}
         >
           <WidgetTreeLocatedSettings

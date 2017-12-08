@@ -11,6 +11,12 @@
     background-color: transparent;
   }
 
+  &.disabled {
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
   svg {
     fill: $grey-dark;
   }

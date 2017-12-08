@@ -8,7 +8,9 @@ import 'styles/themes/button/button-small.scss'; // eslint-disable-line
 
 const Button = props => {
   const { link, children, className, theme, disabled, onClick } = props;
-  const classNames = `c-button ${theme || ''} ${className || ''}`;
+  const classNames = `c-button ${theme || ''} ${className || ''} ${
+    disabled ? 'disabled' : ''
+  }`;
 
   return link ? (
     <Link className={classNames} to={link}>
