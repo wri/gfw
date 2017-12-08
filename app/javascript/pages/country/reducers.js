@@ -17,14 +17,14 @@ import * as ShareComponent from 'components/share';
 import * as mapComponent from 'components/map';
 import * as storiesComponent from 'pages/country/stories';
 import * as headerComponent from 'pages/country/header';
-import * as widgetAreasMostCoverGainComponent from 'pages/country/widgets/widget-areas-most-cover-gain';
-import * as widgetPlantationAreaComponent from 'pages/country/widgets/widget-plantation-area';
-import * as widgetTotalAreaPlantationsComponent from 'pages/country/widgets/widget-total-area-plantations';
-import * as widgetTreeCoverComponent from 'pages/country/widgets/widget-tree-cover';
-import * as widgetTreeCoverGainComponent from 'pages/country/widgets/widget-tree-cover-gain';
-import * as widgetTreeCoverLossAreasComponent from 'pages/country/widgets/widget-tree-cover-loss-areas';
-import * as widgetTreeLocatedComponent from 'pages/country/widgets/widget-tree-located';
-import * as widgetTreeLossComponent from 'pages/country/widgets/widget-tree-loss';
+import * as widgetAreasMostCoverGainComponent from 'pages/country/widget/widgets/widget-areas-most-cover-gain';
+import * as widgetPlantationAreaComponent from 'pages/country/widget/widgets/widget-plantation-area';
+import * as widgetTotalAreaPlantationsComponent from 'pages/country/widget/widgets/widget-total-area-plantations';
+import * as widgetTreeCoverComponent from 'pages/country/widget/widgets/widget-tree-cover';
+import * as widgetTreeCoverGainComponent from 'pages/country/widget/widgets/widget-tree-gain';
+import * as widgetTreeCoverLossAreasComponent from 'pages/country/widget/widgets/widget-tree-cover-loss-areas';
+import * as widgetTreeLocatedComponent from 'pages/country/widget/widgets/widget-tree-located';
+import * as widgetTreeLossComponent from 'pages/country/widget/widgets/widget-tree-loss';
 
 // Providers
 import * as countryDataProviderComponent from 'pages/country/providers/country-data-provider';

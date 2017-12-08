@@ -1,6 +1,6 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
-import { getAdminsSelected } from 'pages/country/widgets/widgets-selectors';
+import { getAdminsSelected } from 'pages/country/widget/widget-selectors';
 
 import StoriesComponent from './stories-component';
 import actions from './stories-actions';

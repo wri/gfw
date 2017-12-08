@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { SCREEN_M } from 'utils/constants';
 
-import Widget from 'pages/country/widgets';
+import Widget from 'pages/country/widget';
 import Share from 'components/share';
 import Header from 'pages/country/header';
 import Tabs from 'pages/country/tabs';
@@ -24,10 +24,7 @@ const WIDGETS = {
   treeLoss: {
     gridWidth: 12
   },
-  treeCoverGain: {
-    gridWidth: 6
-  },
-  treeCoverLossAreas: {
+  treeGain: {
     gridWidth: 6
   },
   totalAreaPlantations: {
