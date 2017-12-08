@@ -1,7 +1,8 @@
 @import '~styles/settings';
+$button-height: rem(40px);
 
 .c-button {
-  height: rem(35px);
+  height: $button-height;
   border-radius: rem(20px);
   width: 100%;
   padding: 0 rem(15px);
@@ -33,9 +34,10 @@
   }
 
   &.square {
-    width: rem(35px);
-    min-width: rem(35px);
+    width: $button-height;
+    min-width: $button-height;
     padding: 0;
+    font-size: 0;
   }
 
   svg {

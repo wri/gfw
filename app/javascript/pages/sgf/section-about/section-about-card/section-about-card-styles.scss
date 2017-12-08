@@ -1,28 +1,20 @@
 @import '~styles/settings.scss';
 
-.c-card {
+.c-section-about-card {
   position: relative;
   width: 100%;
-  padding: 40px;
   background: $white;
   border: 1px solid $border;
-  min-height: 150px;
+  padding: rem(20px);
+  min-height: rem(250px);
 
-  &.-big-padding {
-    padding-bottom: 85px;
-  }
-
-  &.-min-h {
-    min-height: 340px;
-  }
-
-  &.-centered {
-    display: flex;
-    align-items: center;
+  @media screen and (min-width: $screen-m) {
+    padding: rem(40px);
+    min-height: rem(340px);
   }
 
   .card-title {
-    font-size: 21px;
+    font-size: rem(21px);
     line-height: 1.4;
     letter-spacing: 0.1px;
     color: $font-color-2;
@@ -31,16 +23,16 @@
 
   .card-title-subtitle {
     display: inline-block;
-    margin-bottom: 10px;
-    font-size: 13px;
+    margin-bottom: rem(10px);
+    font-size: rem(13px);
   }
 
   .card-description {
-    font-size: 14px;
+    font-size: rem(14px);
     line-height: 1.9;
     color: $font-color-2;
     list-style-type: disc;
-    margin-top: 20px;
+    margin-top: rem(20px);
 
     > li {
       display: flex;
@@ -56,7 +48,7 @@
 }
 
 .tippy-tooltip {
-  max-width: 220px;
+  max-width: rem(220px);
   background-color: $yellow;
   color: $font-color-2;
   box-shadow: 0 2px 4px 0 rgba($black, 0.5);

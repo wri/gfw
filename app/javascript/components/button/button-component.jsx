@@ -1,21 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import NavLink from 'redux-first-router-link';
+import Link from 'redux-first-router-link';
 
 import './button-styles.scss';
 import 'styles/themes/button/button-light.scss'; // eslint-disable-line
 import 'styles/themes/button/button-small.scss'; // eslint-disable-line
 
 const Button = props => {
-  const { link, children, className, theme, disabled, onClick } = props;
+  const {
+    extLink,
+    link,
+    children,
+    className,
+    theme,
+    disabled,
+    onClick
+  } = props;
   const classNames = `c-button ${theme || ''} ${className || ''} ${
     disabled ? 'disabled' : ''
   }`;
-
+  if (extLink) {
+    return (
+      <a
+        className={classNames}
+        href={extLink}
+        target="_blank"
+        rel="noopener"
+        disabled={disabled}
+      >
+        {children}
+      </a>
+    );
+  }
   return link ? (
-    <NavLink className={classNames} to={link}>
+    <Link className={classNames} to={link} disabled={disabled}>
       {children}
-    </NavLink>
+    </Link>
   ) : (
     <button className={classNames} onClick={onClick} disabled={disabled}>
       {children}
@@ -29,7 +49,8 @@ Button.propTypes = {
   link: PropTypes.string,
   theme: PropTypes.string,
   disabled: PropTypes.bool,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  extLink: PropTypes.string
 };
 
 export default Button;
