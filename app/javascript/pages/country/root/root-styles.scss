@@ -37,12 +37,14 @@ $black-tabs: #404040;
   .map {
     right: -100%;
     width: 100%;
-    height: 100vh;
-    position: absolute;
+    height: calc(100vh - #{$header-height});
+    position: fixed;
     transition: right 0.5s linear;
 
     @media screen and (min-width: $screen-m) {
       width: 30%;
+      height: 100vh;
+      position: absolute;
     }
 
     @media screen and (min-width: $screen-xl) {
@@ -50,7 +52,7 @@ $black-tabs: #404040;
     }
 
     &.-open-mobile {
-      right: calc(-5%);
+      right: -$mobile-gutter;
       z-index: 11;
     }
 

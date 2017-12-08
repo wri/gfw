@@ -33,7 +33,8 @@ class WidgetTreeLoss extends PureComponent {
       setTreeLossSettingsThreshold,
       setTreeLossSettingsStartYear,
       setTreeLossSettingsEndYear,
-      getSentence
+      getSentence,
+      size
     } = this.props;
 
     return (
@@ -42,6 +43,7 @@ class WidgetTreeLoss extends PureComponent {
           title={'Tree cover loss'}
           viewOnMapCallback={viewOnMap}
           shareAnchor={'tree-loss'}
+          size={size}
         >
           <WidgetTreeLossSettings
             isLoading={isLoading}
@@ -115,7 +117,8 @@ WidgetTreeLoss.propTypes = {
   setTreeLossSettingsEndYear: PropTypes.func.isRequired,
   getSentence: PropTypes.func.isRequired,
   startYears: PropTypes.array.isRequired,
-  endYears: PropTypes.array.isRequired
+  endYears: PropTypes.array.isRequired,
+  size: PropTypes.number
 };
 
 export default WidgetTreeLoss;

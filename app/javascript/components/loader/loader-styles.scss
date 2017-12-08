@@ -21,7 +21,7 @@
     margin-top: -20px;
     margin-left: -20px;
     border-radius: 50%;
-    border-top: 5px solid $slate;
+    border-top: 5px solid rgba($slate, 0.7);
     border-right: 5px solid transparent;
     animation: load3 1.4s infinite linear;
   }

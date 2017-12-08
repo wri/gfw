@@ -10,24 +10,24 @@ class WidgetHeader extends PureComponent {
     const {
       children,
       title,
-      hasMap,
       viewOnMapCallback,
       openShare,
-      shareAnchor
+      shareAnchor,
+      size
     } = this.props;
 
     return (
       <div className="c-widget-header">
         <div className="title">{title}</div>
-        <div className="options">
+        <div className={`options size-${size}`}>
           <div className="small-options">
             <Button className="theme-button-small square" disabled>
               <svg className="icon icon-info">
                 <use xlinkHref="#icon-info" />
               </svg>
             </Button>
-            <Button className="theme-button-small square">
-              {children !== undefined && children.props.type === 'settings' ? (
+            {children &&
+              children.props.type === 'settings' && (
                 <Tooltip
                   theme="light"
                   position="bottom-right"
@@ -37,12 +37,13 @@ class WidgetHeader extends PureComponent {
                   arrow
                   html={children}
                 >
-                  <svg className="icon icon-settings">
-                    <use xlinkHref="#icon-settings" />
-                  </svg>
+                  <Button className="theme-button-small square">
+                    <svg className="icon icon-settings">
+                      <use xlinkHref="#icon-settings" />
+                    </svg>
+                  </Button>
                 </Tooltip>
-              ) : null}
-            </Button>
+              )}
             <Button
               className="theme-button-small theme-button-light square"
               onClick={() => openShare(shareAnchor)}
@@ -52,7 +53,7 @@ class WidgetHeader extends PureComponent {
               </svg>
             </Button>
           </div>
-          {hasMap && (
+          {viewOnMapCallback && (
             <Button
               className="theme-button-small"
               onClick={viewOnMapCallback}
@@ -71,9 +72,9 @@ WidgetHeader.propTypes = {
   title: PropTypes.string.isRequired,
   openShare: PropTypes.func.isRequired,
   shareAnchor: PropTypes.string,
-  hasMap: PropTypes.bool,
   viewOnMapCallback: PropTypes.func,
-  children: PropTypes.object
+  children: PropTypes.object,
+  size: PropTypes.number
 };
 
 export default WidgetHeader;

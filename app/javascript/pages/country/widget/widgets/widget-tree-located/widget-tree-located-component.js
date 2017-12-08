@@ -24,13 +24,11 @@ class WidgetTreeLocated extends PureComponent {
       setTreeLocatedSettingsUnit,
       setTreeLocatedSettingsThreshold
     } = this.props;
-
     return (
       <div className="c-widget c-widget-tree-located">
         <WidgetHeader
-          title={`Where are the forest located in ${locationNames.country &&
-            locationNames.country.label}`}
-          hasMap
+          title={`Where are the forest located in ${locationNames.current &&
+            locationNames.current.label}`}
           shareAnchor={'tree-located'}
         >
           <WidgetTreeLocatedSettings
