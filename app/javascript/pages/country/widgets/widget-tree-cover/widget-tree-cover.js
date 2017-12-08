@@ -81,8 +81,7 @@ class WidgetTreeCoverContainer extends PureComponent {
     const { location, settings, getTreeCover } = this.props;
     getTreeCover({
       ...location,
-      threshold: settings.threshold,
-      indicator: settings.indicator
+      ...settings
     });
   }
 
@@ -96,8 +95,7 @@ class WidgetTreeCoverContainer extends PureComponent {
     ) {
       getTreeCover({
         ...location,
-        threshold: settings.threshold,
-        indicator: settings.indicator
+        ...settings
       });
     }
   }

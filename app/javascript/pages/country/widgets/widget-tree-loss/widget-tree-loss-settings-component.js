@@ -8,28 +8,14 @@ class WidgetTreeLossSettings extends PureComponent {
       indicators,
       canopies,
       settings,
-      yearsLoss,
+      startYears,
+      endYears,
       onEndYearChange,
       onCanopyChange,
       onStartYearChange,
-      onIndicatorChange
+      onIndicatorChange,
+      isLoading
     } = this.props;
-    const startYears = [];
-    const endYears = [];
-    yearsLoss.forEach(item => {
-      if (item.value < settings.endYear) {
-        startYears.push({
-          label: item.label,
-          value: item.value
-        });
-      }
-      if (item.value > settings.startYear) {
-        endYears.push({
-          label: item.label,
-          value: item.value
-        });
-      }
-    });
 
     return (
       <div className="c-widget-settings">
@@ -40,6 +26,7 @@ class WidgetTreeLossSettings extends PureComponent {
             value={settings.indicator}
             options={indicators}
             onChange={option => onIndicatorChange(option.value)}
+            disabled={isLoading}
           />
           <div className="years-select">
             <span className="label">YEARS</span>
@@ -49,6 +36,7 @@ class WidgetTreeLossSettings extends PureComponent {
                 value={settings.startYear}
                 options={startYears}
                 onChange={option => onStartYearChange(option.value)}
+                disabled={isLoading}
               />
               <span className="text-date">to</span>
               <Dropdown
@@ -56,6 +44,7 @@ class WidgetTreeLossSettings extends PureComponent {
                 value={settings.endYear}
                 options={endYears}
                 onChange={option => onEndYearChange(option.value)}
+                disabled={isLoading}
               />
             </div>
           </div>
@@ -67,6 +56,7 @@ class WidgetTreeLossSettings extends PureComponent {
             value={settings.canopy}
             options={canopies}
             onChange={option => onCanopyChange(option.value)}
+            disabled={isLoading}
           />
         </div>
       </div>
@@ -78,11 +68,13 @@ WidgetTreeLossSettings.propTypes = {
   indicators: PropTypes.array.isRequired,
   canopies: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
-  yearsLoss: PropTypes.array.isRequired,
+  startYears: PropTypes.array.isRequired,
+  endYears: PropTypes.array.isRequired,
   onIndicatorChange: PropTypes.func.isRequired,
   onCanopyChange: PropTypes.func.isRequired,
   onStartYearChange: PropTypes.func.isRequired,
-  onEndYearChange: PropTypes.func.isRequired
+  onEndYearChange: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired
 };
 
 export default WidgetTreeLossSettings;

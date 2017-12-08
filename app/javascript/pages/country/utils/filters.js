@@ -1,7 +1,8 @@
+import { createSelector } from 'reselect';
 import deburr from 'lodash/deburr';
 import toUpper from 'lodash/toUpper';
 import isEmpty from 'lodash/isEmpty';
-import { createSelector } from 'reselect';
+import uniq from 'lodash/uniq';
 
 import INDICATORS from './indicators.json';
 import CANOPIES from './canopies.json';
@@ -23,8 +24,10 @@ const getAdmins = state => state.location || null;
 const getCountries = state => state.countries || null;
 const getRegions = state => state.regions || null;
 const getSubRegions = state => state.subRegions || null;
-
 const getWhitelist = state => state.whitelist || null;
+const getData = state => state.data || null;
+const getStartYear = state => state.startYear || null;
+const getEndYear = state => state.endYear || null;
 
 // get lists selected
 export const getAdminsOptions = createSelector(
@@ -111,3 +114,27 @@ export const getUnits = createSelector([], () => UNITS);
 
 export const getActiveFilter = (settings, filters, key) =>
   filters.find(i => i.value === settings[key]);
+
+export const getYears = createSelector([getData], data => {
+  if (isEmpty(data) || !data.length) return null;
+  return uniq(data.map(d => d.year)).map(d => ({
+    label: d,
+    value: d
+  }));
+});
+
+export const getStartYears = createSelector(
+  [getYears, getEndYear],
+  (years, endYear) => {
+    if (isEmpty(years) || !endYear) return null;
+    return years.filter(y => y.value <= endYear);
+  }
+);
+
+export const getEndYears = createSelector(
+  [getYears, getStartYear],
+  (years, startYear) => {
+    if (isEmpty(years) || !startYear) return null;
+    return years.filter(y => y.value >= startYear);
+  }
+);

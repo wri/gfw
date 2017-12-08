@@ -19,4 +19,9 @@
       color: $slate;
     }
   }
+
+  .loader-offset {
+    top: rem(50px);
+    height: calc(100% - 50px);
+  }
 }
