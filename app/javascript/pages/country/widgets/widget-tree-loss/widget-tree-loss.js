@@ -11,7 +11,7 @@ import {
   getEndYears,
   getAdminsSelected,
   getActiveFilter
-} from 'pages/country/utils/filters';
+} from 'pages/country/widgets/widgets-selectors';
 
 import WidgetTreeLossComponent from './widget-tree-loss-component';
 import actions from './widget-tree-loss-actions';

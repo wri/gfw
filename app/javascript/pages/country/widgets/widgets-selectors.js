@@ -1,23 +1,11 @@
 import { createSelector } from 'reselect';
-import deburr from 'lodash/deburr';
-import toUpper from 'lodash/toUpper';
 import isEmpty from 'lodash/isEmpty';
 import uniq from 'lodash/uniq';
+import { sortLabelByAlpha } from 'utils/data';
 
-import INDICATORS from './indicators.json';
-import CANOPIES from './canopies.json';
-import UNITS from './units.json';
-
-export function deburrUpper(string) {
-  return toUpper(deburr(string));
-}
-
-export const sortLabelByAlpha = array =>
-  array.sort((a, b) => {
-    if (a.label < b.label) return -1;
-    if (a.label > b.label) return 1;
-    return 0;
-  });
+import INDICATORS from 'pages/country/data/indicators.json';
+import THRESHOLDS from 'pages/country/data/thresholds.json';
+import UNITS from 'pages/country/data/units.json';
 
 // get list data
 const getAdmins = state => state.location || null;
@@ -28,6 +16,17 @@ const getWhitelist = state => state.whitelist || null;
 const getData = state => state.data || null;
 const getStartYear = state => state.startYear || null;
 const getEndYear = state => state.endYear || null;
+
+// helper to get active key for location
+export const getActiveAdmin = location => {
+  if (location.subRegion) return 'subRegion';
+  if (location.region) return 'region';
+  return 'country';
+};
+
+// helper to get active filter from state based on key
+export const getActiveFilter = (settings, filters, key) =>
+  filters.find(i => i.value === settings[key]);
 
 // get lists selected
 export const getAdminsOptions = createSelector(
@@ -87,12 +86,6 @@ export const getAdminsSelected = createSelector(
   }
 );
 
-export const getActiveAdmin = location => {
-  if (location.subRegion) return 'subRegion';
-  if (location.region) return 'region';
-  return 'country';
-};
-
 export const getIndicators = createSelector(
   [getWhitelist, getAdminsSelected],
   (whitelist, locationNames) => {
@@ -108,12 +101,9 @@ export const getIndicators = createSelector(
   }
 );
 
-export const getThresholds = createSelector([], () => CANOPIES);
+export const getThresholds = createSelector([], () => THRESHOLDS);
 
 export const getUnits = createSelector([], () => UNITS);
-
-export const getActiveFilter = (settings, filters, key) =>
-  filters.find(i => i.value === settings[key]);
 
 export const getYears = createSelector([getData], data => {
   if (isEmpty(data) || !data.length) return null;

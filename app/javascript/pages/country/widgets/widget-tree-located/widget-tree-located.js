@@ -2,7 +2,10 @@ import { createElement } from 'react';
 import { connect } from 'react-redux';
 
 import { getExtent } from 'services/forest-data';
-import { getThresholds, getUnits } from 'pages/country/utils/filters';
+import {
+  getThresholds,
+  getUnits
+} from 'pages/country/widgets/widgets-selectors';
 
 import WidgetTreeLocatedComponent from './widget-tree-located-component';
 import actions from './widget-tree-located-actions';

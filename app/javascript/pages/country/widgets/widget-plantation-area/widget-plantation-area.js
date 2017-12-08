@@ -1,7 +1,7 @@
 import { createElement } from 'react';
 import { connect } from 'react-redux';
 
-import { getUnits } from 'pages/country/utils/filters';
+import { getUnits } from 'pages/country/widgets/widgets-selectors';
 
 import WidgetPlantationAreaComponent from './widget-plantation-area-component';
 import actions from './widget-plantation-area-actions';

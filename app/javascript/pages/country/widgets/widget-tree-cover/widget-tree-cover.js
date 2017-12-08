@@ -8,7 +8,7 @@ import {
   getUnits,
   getThresholds,
   getActiveFilter
-} from 'pages/country/utils/filters';
+} from 'pages/country/widgets/widgets-selectors';
 
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
 import actions from './widget-tree-cover-actions';
