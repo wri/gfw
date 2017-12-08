@@ -43,7 +43,7 @@ class WidgetTreeLocated extends PureComponent {
             isLoading={isLoading}
           />
         </WidgetHeader>
-        {!isLoading ? (
+        {isLoading ? (
           <Loader className="loader-offset" />
         ) : (
           <div>

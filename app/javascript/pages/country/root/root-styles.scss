@@ -79,6 +79,12 @@ $black-tabs: #404040;
     }
   }
 
+  .subnav-tabs {
+    @media screen and (min-width: $screen-xl) {
+      padding-left: calc(100% - (#{$max-width} * 0.7));
+    }
+  }
+
   .widgets {
     padding-top: rem(20px);
     padding-bottom: rem(30px);

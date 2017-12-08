@@ -46,7 +46,11 @@ class Root extends PureComponent {
         <div className="panels">
           <div className="data-panel">
             <Header className="header" />
-            <SubNavMenu links={links} theme="theme-subnav-dark" />
+            <SubNavMenu
+              links={links}
+              className="subnav-tabs"
+              theme="theme-subnav-dark"
+            />
             <div className="widgets">
               <div className="row">
                 {Object.keys(WIDGETS).map(widget => (
