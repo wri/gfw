@@ -15,18 +15,18 @@ import CountryDataProvider from 'pages/country/providers/country-data-provider';
 import './root-styles.scss';
 
 const WIDGETS = {
-  // treeCover: {
-  //   gridWidth: 6
-  // },
+  treeCover: {
+    gridWidth: 6
+  },
   treeLocated: {
     gridWidth: 6
+  },
+  treeLoss: {
+    gridWidth: 12
+  },
+  treeGain: {
+    gridWidth: 6
   }
-  // treeLoss: {
-  //   gridWidth: 12
-  // },
-  // treeGain: {
-  //   gridWidth: 6
-  // },
   // totalAreaPlantations: {
   //   gridWidth: 6
   // },
@@ -56,7 +56,7 @@ class Root extends PureComponent {
                       WIDGETS[widget].gridWidth
                     } small-12 widget`}
                   >
-                    <Widget widget={widget} />
+                    <Widget widget={widget} size={WIDGETS[widget].gridWidth} />
                   </div>
                 ))}
               </div>

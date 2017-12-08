@@ -22,7 +22,6 @@ class WidgetTreeCoverGain extends PureComponent {
         <WidgetHeader
           title={`TREE COVER GAIN IN ${locationNames.current &&
             locationNames.current.label}`}
-          noMap={false}
           shareAnchor={'tree-cover-gain'}
         >
           <WidgetTreeCoverGainSettings
