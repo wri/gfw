@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from 'redux-first-router-link';
+import NavLink from 'redux-first-router-link';
 
 import './button-styles.scss';
 import 'styles/themes/button/button-light.scss'; // eslint-disable-line
@@ -13,9 +13,9 @@ const Button = props => {
   }`;
 
   return link ? (
-    <Link className={classNames} to={link}>
+    <NavLink className={classNames} to={link}>
       {children}
-    </Link>
+    </NavLink>
   ) : (
     <button className={classNames} onClick={onClick} disabled={disabled}>
       {children}

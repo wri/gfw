@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { routes } from 'pages/country/router';
 
 import RootComponent from './root-component';
 import actions from './root-actions';
@@ -12,7 +13,10 @@ export { default as actions } from './root-actions';
 const mapStateToProps = state => ({
   gfwHeaderHeight: state.root.gfwHeaderHeight,
   isMapFixed: state.root.isMapFixed,
-  showMapMobile: state.root.showMapMobile
+  showMapMobile: state.root.showMapMobile,
+  links: Object.values(routes)
+    .filter(r => r.submenu)
+    .map(r => ({ label: r.label, path: r.path }))
 });
 
 class RootContainer extends PureComponent {
