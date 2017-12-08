@@ -1,21 +1,41 @@
 import { createAction } from 'redux-actions';
+import { createThunkAction } from 'utils/redux';
 
-const setTreeLocatedValues = createAction('setTreeLocatedValues');
+import { getLocations } from 'services/forest-data';
+
+const setTreeLocatedData = createAction('setTreeLocatedData');
 const setTreeLocatedPage = createAction('setTreeLocatedPage');
 const setTreeLocatedSettingsDataSource = createAction(
   'setTreeLocatedSettingsDataSource'
 );
 const setTreeLocatedSettingsUnit = createAction('setTreeLocatedSettingsUnit');
-const setTreeLocatedSettingsCanopy = createAction(
-  'setTreeLocatedSettingsCanopy'
+const setTreeLocatedSettingsThreshold = createAction(
+  'setTreeLocatedSettingsThreshold'
 );
 const setTreeLocatedIsLoading = createAction('setTreeLocatedIsLoading');
 
+const getTreeLocated = createThunkAction(
+  'getTreeLocated',
+  params => (dispatch, state) => {
+    if (!state().widgetTreeLocated.isLoading) {
+      getLocations(params)
+        .then(response => {
+          setTreeLocatedData(response.data.data);
+        })
+        .catch(error => {
+          console.info(error);
+          dispatch(setTreeLocatedIsLoading(false));
+        });
+    }
+  }
+);
+
 export default {
-  setTreeLocatedValues,
+  setTreeLocatedData,
   setTreeLocatedPage,
   setTreeLocatedSettingsDataSource,
   setTreeLocatedSettingsUnit,
-  setTreeLocatedSettingsCanopy,
-  setTreeLocatedIsLoading
+  setTreeLocatedSettingsThreshold,
+  setTreeLocatedIsLoading,
+  getTreeLocated
 };
