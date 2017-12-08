@@ -6,11 +6,7 @@ class WidgetTreeLossTooltip extends PureComponent {
   render() {
     const { data, extent } = this.props;
 
-    if (!data || data.length === 0) {
-      return null;
-    }
-
-    return (
+    return data || data.length ? (
       <ul>
         <li>Year: {data[0].payload.year}</li>
         <li>ha loss: {numeral(data[0].payload.area).format('0,0')} ha</li>
@@ -19,7 +15,7 @@ class WidgetTreeLossTooltip extends PureComponent {
           {numeral(data[0].payload.area / (extent * 100)).format('0.00')}%
         </li>
       </ul>
-    );
+    ) : null;
   }
 }
 
