@@ -452,7 +452,9 @@ class AboutLogos extends Component {
               <span className="text -title-xs -color-3">
                 We welcome others to join the growing GFW partnership.
               </span>
-              <Button className="contact-us-button" onClick={this.openModal}>EMAIL US</Button>
+              <Button className="contact-us-button" onClick={this.openModal}>
+                EMAIL US
+              </Button>
             </div>
           </div>
         </div>
