@@ -100,7 +100,7 @@ class AboutUsers extends Component {
                 ))}
               </ul>
               <div className="c-about-users__button">
-                <Button extLink="https://globalforestwatch.org/howto">
+                <Button className="c-about-users__button" extLink="https://globalforestwatch.org/howto">
                   LEARN HOW TO USE GFW
                 </Button>
               </div>
