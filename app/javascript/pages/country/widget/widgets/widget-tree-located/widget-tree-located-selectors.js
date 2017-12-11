@@ -23,7 +23,7 @@ export const getSortedData = createSelector(
         });
       }
     });
-    return sortByKey(dataMapped, unit === 'ha' ? 'area' : 'percentage');
+    return sortByKey(dataMapped, unit === 'ha' ? 'area' : 'percentage', false);
   }
 );
 
