@@ -12,15 +12,15 @@ export const getTreeCoverData = createSelector(
     if (!total || !cover) return null;
     return [
       {
-        name: plantations ? 'Natural forest' : 'Tree cover extent',
+        name: plantations ? 'Natural forest' : 'Tree cover',
         value: cover - plantations,
-        color: '#959a00',
+        color: '#2d8700',
         percentage: (cover - plantations) / total * 100
       },
       {
         name: 'Tree plantations',
         value: plantations,
-        color: '#1e5b00',
+        color: '#959a00',
         percentage: plantations / total * 100
       },
       {
