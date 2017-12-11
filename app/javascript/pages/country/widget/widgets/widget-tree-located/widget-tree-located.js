@@ -21,7 +21,7 @@ const INDICATORS_WHITELIST = [
   'gadm28',
   'plantations',
   'ifl_2013',
-  'primary_forests'
+  'primary_forest'
 ];
 
 const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
