@@ -23,8 +23,7 @@ export const getLocations = ({ country, region, indicator, threshold }) => {
     .replace('{iso}', country)
     .replace('{threshold}', threshold)
     .replace('{polyname}', indicator)
-    .replace('{grouping}', region ? `AND adm1 = '${region}'` : 'GROUP BY adm1')
-    .replace('{ds}', DATASET);
+    .replace('{grouping}', region ? `AND adm1 = '${region}'` : 'GROUP BY adm1');
   return axios.get(url);
 };
 

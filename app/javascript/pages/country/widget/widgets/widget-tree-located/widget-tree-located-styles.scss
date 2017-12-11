@@ -7,10 +7,10 @@
   }
 
   .locations-list {
-    padding: 0 rem(15px) 0 rem(10px);
+    padding: 0 rem(10px);
 
     @media screen and (min-width: $screen-m) {
-      padding: 0 rem(20px) 0 rem(15px);
+      padding: 0 rem(20px);
     }
   }
 }
