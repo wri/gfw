@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import {
-  getAdminsSelected,
   getIndicators,
   getUnits,
   getThresholds,
@@ -36,10 +35,6 @@ const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
     location: location.payload,
     regions: countryData.regions,
     data: getTreeCoverData({ totalArea, cover, plantations }) || [],
-    adminsSelected: getAdminsSelected({
-      ...countryData,
-      location: location.payload
-    }),
     indicators:
       getIndicators({
         whitelist: INDICATORS_WHITELIST,
@@ -78,16 +73,16 @@ class WidgetTreeCoverContainer extends PureComponent {
   }
 
   getSentence = () => {
-    const { adminsSelected, settings, indicators, thresholds } = this.props;
-    if (adminsSelected && indicators.length) {
+    const { locationNames, settings, indicators, thresholds } = this.props;
+    if (locationNames && indicators.length) {
       const activeThreshold = thresholds.find(
         t => t.value === settings.threshold
       );
       const indicator = getActiveFilter(settings, indicators, 'indicator');
       return `Tree  cover for 
         ${indicator.label} of 
-        ${adminsSelected.current &&
-          adminsSelected.current.label} with a tree canopy of 
+        ${locationNames.current &&
+          locationNames.current.label} with a tree canopy of 
         ${activeThreshold.label}`;
     }
     return '';
@@ -105,7 +100,7 @@ WidgetTreeCoverContainer.propTypes = {
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   getTreeCover: PropTypes.func.isRequired,
-  adminsSelected: PropTypes.object.isRequired,
+  locationNames: PropTypes.object.isRequired,
   indicators: PropTypes.array.isRequired,
   thresholds: PropTypes.array.isRequired
 };
