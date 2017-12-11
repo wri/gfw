@@ -1,11 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'd3-format';
 
 import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
-import WidgetPaginate from 'pages/country/widget/components/widget-paginate';
 import WidgetSettings from 'pages/country/widget/components/widget-settings';
+import WidgetNumberedList from 'pages/country/widget/components/widget-numbered-list';
 import './widget-tree-located-styles.scss';
 
 class WidgetTreeLocated extends PureComponent {
@@ -14,7 +13,6 @@ class WidgetTreeLocated extends PureComponent {
       locationNames,
       isLoading,
       data,
-      allData,
       indicators,
       units,
       thresholds,
@@ -46,30 +44,13 @@ class WidgetTreeLocated extends PureComponent {
         {isLoading ? (
           <Loader className="loader-offset" />
         ) : (
-          <div>
-            <ul className="regions">
-              {data &&
-                data.length > 0 &&
-                data.map((item, index) => (
-                  <li key={item.id}>
-                    <div className="region-bubble">
-                      {index + 1 + settings.pageSize * settings.page}
-                    </div>
-                    <div className="region-name">{item.label}</div>
-                    <div className="region-value">
-                      {settings.unit === 'ha'
-                        ? `${format('.3s')(item.area)} ha`
-                        : `${format('.1f')(item.percentage)} %`}
-                    </div>
-                  </li>
-                ))}
-            </ul>
-            <WidgetPaginate
-              settings={settings}
-              count={(allData && allData.length) || 0}
-              onClickChange={handlePageChange}
-            />
-          </div>
+          <WidgetNumberedList
+            className="locations-list"
+            data={data}
+            settings={settings}
+            handlePageChange={handlePageChange}
+            colorRange={['#113002', '#e7e5a4']}
+          />
         )}
       </div>
     );
@@ -80,7 +61,6 @@ WidgetTreeLocated.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   locationNames: PropTypes.object,
   data: PropTypes.array.isRequired,
-  allData: PropTypes.array.isRequired,
   indicators: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   units: PropTypes.array.isRequired,
