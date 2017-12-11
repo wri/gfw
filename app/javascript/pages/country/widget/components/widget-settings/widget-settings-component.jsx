@@ -13,17 +13,30 @@ class WidgetSettings extends PureComponent {
       settings,
       startYears,
       endYears,
+      dataSources,
       onStartYearChange,
       onEndYearChange,
       onUnitChange,
       onThresholdChange,
       onIndicatorChange,
+      onDataSourceChange,
       isLoading
     } = this.props;
 
     return (
       <div className="c-widget-settings">
         <div className="body">
+          {dataSources &&
+            onDataSourceChange && (
+              <Dropdown
+                theme="theme-select-light"
+                label="DATA SOURCE"
+                value={settings.dataSource}
+                options={dataSources}
+                onChange={option => onDataSourceChange(option.value)}
+                disabled={isLoading}
+              />
+            )}
           {indicators &&
             onIndicatorChange && (
               <Dropdown
@@ -39,8 +52,8 @@ class WidgetSettings extends PureComponent {
             onUnitChange && (
               <Dropdown
                 theme="theme-select-light"
-                label="LOCATION"
-                value={settings.indicator}
+                label="UNIT"
+                value={settings.unit}
                 options={units}
                 onChange={option => onUnitChange(option.value)}
               />
@@ -96,11 +109,13 @@ WidgetSettings.propTypes = {
   settings: PropTypes.object,
   startYears: PropTypes.array,
   endYears: PropTypes.array,
+  dataSources: PropTypes.array,
   onIndicatorChange: PropTypes.func,
   onThresholdChange: PropTypes.func,
   onUnitChange: PropTypes.func,
   onStartYearChange: PropTypes.func,
   onEndYearChange: PropTypes.func,
+  onDataSourceChange: PropTypes.func,
   isLoading: PropTypes.bool
 };
 
