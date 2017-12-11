@@ -1,0 +1,14 @@
+{
+  "treeCover": {
+    "gridWidth": 6
+  },
+  "treeLocated": {
+    "gridWidth": 6
+  },
+  "treeLoss": {
+    "gridWidth": 12
+  },
+  "treeGain": {
+    "gridWidth": 6
+  }
+}

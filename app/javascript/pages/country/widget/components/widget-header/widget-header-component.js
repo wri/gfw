@@ -2,7 +2,11 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import Button from 'components/button';
+import Icon from 'components/icon';
 
+import settingsIcon from 'assets/icons/settings.svg';
+import shareIcon from 'assets/icons/share.svg';
+import infoIcon from 'assets/icons/info.svg';
 import './widget-header-styles.scss';
 
 class WidgetHeader extends PureComponent {
@@ -22,9 +26,7 @@ class WidgetHeader extends PureComponent {
         <div className={`options size-${size}`}>
           <div className="small-options">
             <Button className="theme-button-small square" disabled>
-              <svg className="icon icon-info">
-                <use xlinkHref="#icon-info" />
-              </svg>
+              <Icon icon={infoIcon} />
             </Button>
             {children &&
               children.props.type === 'settings' && (
@@ -38,9 +40,7 @@ class WidgetHeader extends PureComponent {
                   html={children}
                 >
                   <Button className="theme-button-small square">
-                    <svg className="icon icon-settings">
-                      <use xlinkHref="#icon-settings" />
-                    </svg>
+                    <Icon icon={settingsIcon} className="settings-icon" />
                   </Button>
                 </Tooltip>
               )}
@@ -48,9 +48,7 @@ class WidgetHeader extends PureComponent {
               className="theme-button-small theme-button-light square"
               onClick={() => openShare(shareAnchor)}
             >
-              <svg className="icon icon-share -dark">
-                <use xlinkHref="#icon-share" />
-              </svg>
+              <Icon icon={shareIcon} />
             </Button>
           </div>
           {viewOnMapCallback && (
