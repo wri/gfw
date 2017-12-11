@@ -1,33 +1,42 @@
 import React from 'react';
+import Button from 'components/button';
 
 import './footer-styles.scss';
 
 const Footer = () => (
   <div className="c-footer">
     <div className="row">
-      <div className="small-12 medium-6 large-3 columns alert">
-        <span>Alerts and Data Bulletin</span>
-        <a href="#" className="c-regular-button -green">
-          SUSCRIBE
-        </a>
+      <div className="small-12 medium-6 large-3 columns">
+        <div className="alert">
+          <span>Alerts and Data Bulletin</span>
+          <Button className="action" disabled>
+            SUSCRIBE
+          </Button>
+        </div>
       </div>
-      <div className="small-12 medium-6 large-3 columns alert">
-        <span>Alerts and Data Bulletin</span>
-        <a href="#" className="c-regular-button -green">
-          BROWSE
-        </a>
+      <div className="small-12 medium-6 large-3 columns">
+        <div className="alert">
+          <span>Alerts and Data Bulletin</span>
+          <Button className="action" disabled>
+            BROWSE
+          </Button>
+        </div>
       </div>
-      <div className="small-12 medium-6 large-3 columns alert">
-        <span>Alerts and Data Bulletin</span>
-        <a href="#" className="c-regular-button -green">
-          DOWNLOAD
-        </a>
+      <div className="small-12 medium-6 large-3 columns">
+        <div className="alert">
+          <span>Alerts and Data Bulletin</span>
+          <Button className="action" disabled>
+            DOWNLOAD
+          </Button>
+        </div>
       </div>
-      <div className="small-12 medium-6 large-3 columns alert">
-        <span>Alerts and Data Bulletin</span>
-        <a href="#" className="c-regular-button -green">
-          ANALIZE
-        </a>
+      <div className="small-12 medium-6 large-3 columns">
+        <div className="alert">
+          <span>Alerts and Data Bulletin</span>
+          <Button className="action" disabled>
+            ANALIZE
+          </Button>
+        </div>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/modal';
 
-import ButtonRegular from 'components/button-regular';
+import Button from 'components/button';
 import Icon from 'components/icon/icon';
 
 import googleplusIcon from 'assets/icons/googleplus.svg';
@@ -54,22 +54,22 @@ class Share extends PureComponent {
         </div>
         {haveEmbed ? (
           <div className="c-share__buttons-container">
-            <ButtonRegular
-              text="EMBED"
-              color="white-border"
-              className={`c-share__button ${
-                selectedType === 'embed' ? '-selected' : ''
+            <Button
+              className={`share-button ${
+                selectedType !== 'embed' ? 'theme-button-light-green' : ''
               }`}
-              clickFunction={() => this.changeType('embed')}
-            />
-            <ButtonRegular
-              text="LINK"
-              color="white-border"
-              className={`c-share__button ${
-                selectedType === 'link' ? '-selected' : ''
+              onClick={() => this.changeType('embed')}
+            >
+              EMBED
+            </Button>
+            <Button
+              className={`share-button ${
+                selectedType === 'embed' ? 'theme-button-light-green' : ''
               }`}
-              clickFunction={() => this.changeType('link')}
-            />
+              onClick={() => this.changeType('link')}
+            >
+              LINK
+            </Button>
           </div>
         ) : null}
         <div className="c-share__social-container">

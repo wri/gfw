@@ -9,89 +9,63 @@ import WidgetTreeLocatedSettings from './widget-tree-located-settings-component'
 import './widget-tree-located-styles.scss';
 
 class WidgetTreeLocated extends PureComponent {
-  componentWillMount() {
-    this.props.setInitialData(this.props);
-  }
-
-  componentWillUpdate(nextProps) {
-    const { isMetaLoading, settings, updateData, setInitialData } = this.props;
-
-    if (!nextProps.isMetaLoading && isMetaLoading) {
-      setInitialData(nextProps);
-    }
-
-    if (JSON.stringify(settings) !== JSON.stringify(nextProps.settings)) {
-      updateData(nextProps);
-    }
-  }
-
   render() {
     const {
       locationNames,
       isLoading,
-      topRegions,
+      data,
+      count,
       dataSources,
       units,
-      canopies,
+      thresholds,
       settings,
-      paginate,
-      nextPage,
-      previousPage,
+      handlePageChange,
       setTreeLocatedSettingsDataSource,
       setTreeLocatedSettingsUnit,
-      setTreeLocatedSettingsCanopy
+      setTreeLocatedSettingsThreshold
     } = this.props;
-
-    const paginateFrom = paginate.page * paginate.limit - paginate.limit;
-    const paginateTo = paginateFrom + paginate.limit;
-
     return (
       <div className="c-widget c-widget-tree-located">
         <WidgetHeader
-          title={`Where are the forest located in ${locationNames.country &&
-            locationNames.country.label}`}
-          noMap
+          title={`Where are the forest located in ${locationNames.current &&
+            locationNames.current.label}`}
           shareAnchor={'tree-located'}
         >
           <WidgetTreeLocatedSettings
             type="settings"
             dataSources={dataSources}
             units={units}
-            canopies={canopies}
+            thresholds={thresholds}
             settings={settings}
             onDataSourceChange={setTreeLocatedSettingsDataSource}
             onUnitChange={setTreeLocatedSettingsUnit}
-            onCanopyChange={setTreeLocatedSettingsCanopy}
+            onThresholdChange={setTreeLocatedSettingsThreshold}
+            isLoading={isLoading}
           />
         </WidgetHeader>
         {isLoading ? (
-          <Loader />
+          <Loader className="loader-offset" />
         ) : (
           <div>
-            <ul className="c-widget-tree-located__regions">
-              {topRegions.slice(paginateFrom, paginateTo).map(item => (
-                <li key={item.value}>
-                  <div className="c-widget-tree-located__region-bubble">
-                    {item.position}
-                  </div>
-                  <div className="c-widget-tree-located__region-name">
-                    {item.name}
-                  </div>
-                  <div className="c-widget-tree-located__region-value">
-                    {settings.unit === 'ha'
-                      ? `${numeral(Math.round(item.value / 1000)).format(
-                        '0,0'
-                      )} ha`
-                      : `${Math.round(item.value)} %`}
-                  </div>
-                </li>
-              ))}
+            <ul className="regions">
+              {data &&
+                data.length > 0 &&
+                data.map(item => (
+                  <li key={Math.random() + item.value}>
+                    <div className="region-bubble">{item.position}</div>
+                    <div className="region-name">{item.name}</div>
+                    <div className="region-value">
+                      {settings.unit === 'ha'
+                        ? `${numeral(item.value).format('0,0')} ha`
+                        : `${item.value} %`}
+                    </div>
+                  </li>
+                ))}
             </ul>
             <WidgetPaginate
-              paginate={paginate}
-              count={topRegions.length}
-              onClickNextPage={nextPage}
-              onClickPreviousPage={previousPage}
+              settings={settings}
+              count={count}
+              onClickChange={handlePageChange}
             />
           </div>
         )}
@@ -102,21 +76,17 @@ class WidgetTreeLocated extends PureComponent {
 
 WidgetTreeLocated.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  isMetaLoading: PropTypes.bool.isRequired,
   locationNames: PropTypes.object,
-  topRegions: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  count: PropTypes.number.isRequired,
   dataSources: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   units: PropTypes.array.isRequired,
-  canopies: PropTypes.array.isRequired,
-  paginate: PropTypes.object.isRequired,
-  setInitialData: PropTypes.func.isRequired,
-  nextPage: PropTypes.func.isRequired,
-  previousPage: PropTypes.func.isRequired,
-  updateData: PropTypes.func.isRequired,
+  thresholds: PropTypes.array.isRequired,
+  handlePageChange: PropTypes.func.isRequired,
   setTreeLocatedSettingsDataSource: PropTypes.func.isRequired,
   setTreeLocatedSettingsUnit: PropTypes.func.isRequired,
-  setTreeLocatedSettingsCanopy: PropTypes.func.isRequired
+  setTreeLocatedSettingsThreshold: PropTypes.func.isRequired
 };
 
 export default WidgetTreeLocated;

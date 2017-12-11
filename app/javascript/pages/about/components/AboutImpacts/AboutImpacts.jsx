@@ -4,7 +4,7 @@ import { lory } from 'lory.js';
 import Script from 'react-load-script';
 import Card from 'components/card';
 
-import ButtonArrow from 'components/button-arrow/button-arrow';
+import Button from 'components/button';
 import SliderDots from 'components/slider-dots/slider-dots';
 
 class AboutImpacts extends Component {
@@ -79,10 +79,10 @@ class AboutImpacts extends Component {
   }
 
   render() {
-    const slidePrevVisibilityClass = `c-about-impacts__arrow-button -left ${
+    const slidePrevVisibilityClass = `c-about-impacts__arrow-button -button-left ${
       !this.state.sliderPrevIsVisible ? '-hidden' : ''
     } js_slide_prev`;
-    const slideNextVisibilityClass = `c-about-impacts__arrow-button -right ${
+    const slideNextVisibilityClass = `c-about-impacts__arrow-button -button-right ${
       !this.state.sliderNextIsVisible ? '-hidden' : ''
     } js_slide_next`;
     const { impacts } = this.state;
@@ -109,18 +109,22 @@ class AboutImpacts extends Component {
                     </li>
                   ))}
                 </ul>
-                <div
-                  className={slidePrevVisibilityClass}
+                <Button
+                  className={`square ${slidePrevVisibilityClass}`}
                   onClick={this.onClickPrevSlide}
                 >
-                  <ButtonArrow orientation="left" />
-                </div>
-                <div
-                  className={slideNextVisibilityClass}
+                  <svg className="icon">
+                    <use xlinkHref="#icon-arrow" />
+                  </svg>
+                </Button>
+                <Button
+                  className={`square ${slideNextVisibilityClass}`}
                   onClick={this.onClickNextSlide}
                 >
-                  <ButtonArrow orientation="right" />
-                </div>
+                  <svg className="icon">
+                    <use xlinkHref="#icon-arrow" />
+                  </svg>
+                </Button>
               </div>
               <div className="c-about-impacts__slider-dots js_slider_dots">
                 <SliderDots

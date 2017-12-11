@@ -60,6 +60,7 @@ $about-users-height-screen-l: rem(640px);
   }
 
   .c-about-users__button {
+    max-width: rem(240px);
     margin-top: rem(20px);
 
     .c-regular-button {

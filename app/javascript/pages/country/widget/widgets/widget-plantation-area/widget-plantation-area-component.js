@@ -91,7 +91,7 @@ class WidgetPlantationArea extends PureComponent {
                 ))}
             </ul>
             <WidgetPaginate
-              paginate={paginate}
+              settings={paginate}
               count={plantationAreaData.length}
               onClickNextPage={nextPage}
               onClickPreviousPage={previousPage}

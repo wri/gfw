@@ -4,8 +4,8 @@ import Icon from 'components/icon';
 import debounce from 'lodash/debounce';
 
 import searchIcon from 'assets/icons/search.svg';
-import 'styles/themes/search/search-light.scss';
 import './search-styles.scss';
+import 'styles/themes/search/search-light.scss'; // eslint-disable-line
 
 class Search extends Component {
   constructor(props) {

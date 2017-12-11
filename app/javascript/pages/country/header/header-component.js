@@ -60,6 +60,7 @@ class Header extends PureComponent {
                   options={adminsOptions.countries}
                   onChange={handleCountryChange}
                   searchable
+                  disabled={isLoading}
                 />
               </div>
               {adminsOptions.regions &&
@@ -77,6 +78,7 @@ class Header extends PureComponent {
                         handleRegionChange(adminsSelected.country, region)
                       }
                       searchable
+                      disabled={isLoading}
                     />
                   </div>
                 )}
@@ -101,6 +103,7 @@ class Header extends PureComponent {
                         )
                       }
                       searchable
+                      disabled={isLoading}
                     />
                   </div>
                 )}

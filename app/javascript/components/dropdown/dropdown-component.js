@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Select from 'react-select-me';
 import { deburrUpper } from 'utils/data';
 
-import 'styles/themes/dropdown/dropdown-dark.scss';
-import 'styles/themes/dropdown/dropdown-light.scss';
-import 'styles/themes/dropdown/dropdown-button.scss';
 import './dropdown-styles.scss';
+import 'styles/themes/dropdown/dropdown-dark.scss'; // eslint-disable-line
+import 'styles/themes/dropdown/dropdown-light.scss'; // eslint-disable-line
+import 'styles/themes/dropdown/dropdown-button.scss'; // eslint-disable-line
 
 class Dropdown extends PureComponent {
   constructor(props) {

@@ -1,33 +1,21 @@
 @import '~styles/settings.scss';
 
-.c-about-impacts-item {
+.c-card {
   position: relative;
   width: 100%;
-  padding: rem(261px) rem(16px) rem(17px) rem(16px);
   background-color: $grey-light;
+  border: solid 1px $border;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  &::before {
-    content: "";
-    position: absolute;
-    left: rem(-1px);
-    top: rem(-1px);
-    width: calc(100% + #{rem(2px)});
-    height: calc(100% + #{rem(2px)});
-    border: solid rem(1px) $grey-dark;
-  }
-
-  &__image {
-    position: absolute;
-    top: 0;
-    left: 0;
+  .image {
     width: 100%;
-    height: rem(219px);
+    height: rem(220px);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    position: relative;
 
     &.-action {
       cursor: pointer;
@@ -35,66 +23,37 @@
 
     span {
       display: block;
-      z-index: 999999;
       font-size: 12px;
       position: absolute;
-      bottom: 8px;
-      right: 5px;
+      bottom: rem(10px);
+      right: rem(10px);
       color: rgba(255, 255, 255, 0.8);
     }
   }
 
-  &__header {
-    margin-bottom: 10px;
-  }
+  .body {
+    padding: rem(15px);
 
-  &__paragraph {
-    font-size: 16px;
-    position: relative;
-    z-index: 2;
-  }
+    @media screen and (min-width: $screen-m) {
+      padding: rem(25px);
+    }
 
-  &__footer {
-    margin-top: rem(20px);
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
+    .header {
+      margin-bottom: rem(15px);
+    }
 
-    a {
-      margin-top: rem(24px);
+    .paragraph {
+      font-size: rem(16px);
+      margin-bottom: rem(15px);
+    }
+
+    .meta {
+      margin-bottom: rem(10px);
+    }
+
+    .card-button {
       max-width: rem(150px);
-    }
-  }
-
-  &__button {
-    position: absolute;
-    left: 0;
-    bottom: rem(20px);
-    width: 100%;
-    padding-left: rem(24px);
-    z-index: 2;
-
-    .c-regular-button {
-      width: calc(100% - #{rem(24px)});
-    }
-  }
-
-  &.-no-image {
-    padding-top: rem(16px);
-    height: auto;
-    min-height: 230px;
-  }
-
-  @media screen and (min-width: $screen-m) {
-    padding: rem(239px) rem(24px) rem(24px) rem(24px);
-
-    &__button {
-      padding-left: rem(40px);
-      bottom: rem(30px);
-
-      .c-regular-button {
-        width: rem(200px);
-      }
+      margin-top: rem(20px);
     }
   }
 }

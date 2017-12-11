@@ -66,8 +66,8 @@ class WidgetTreeCoverGainContainer extends PureComponent {
     const { settings, location, getTreeCoverGain } = nextProps;
 
     if (
-      !isEqual(nextProps.location, this.props.location) ||
-      !isEqual(settings.indicator !== this.props.settings.indicator)
+      !isEqual(location, this.props.location) ||
+      !isEqual(settings.indicator, this.props.settings.indicator)
     ) {
       getTreeCoverGain({
         ...location,

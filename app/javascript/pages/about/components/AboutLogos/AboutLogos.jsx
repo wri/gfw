@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Element } from 'react-scroll';
-import ButtonRegular from 'components/button-regular';
+import Button from 'components/button';
 import ModalSubscribe from '../AboutModals/AboutModalSubscribe';
 
 class AboutLogos extends Component {
@@ -452,11 +452,9 @@ class AboutLogos extends Component {
               <span className="text -title-xs -color-3">
                 We welcome others to join the growing GFW partnership.
               </span>
-              <ButtonRegular
-                text="EMAIL US"
-                color="green"
-                clickFunction={this.openModal}
-              />
+              <Button className="contact-us-button" onClick={this.openModal}>
+                EMAIL US
+              </Button>
             </div>
           </div>
         </div>

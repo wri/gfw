@@ -5,13 +5,14 @@ import Dropdown from 'components/dropdown';
 class WidgetTreeLocatedSettings extends PureComponent {
   render() {
     const {
+      isLoading,
       dataSources,
       units,
-      canopies,
+      thresholds,
       settings,
       onDataSourceChange,
       onUnitChange,
-      onCanopyChange
+      onThresholdChange
     } = this.props;
     return (
       <div className="c-widget-settings">
@@ -22,11 +23,12 @@ class WidgetTreeLocatedSettings extends PureComponent {
             value={settings.dataSource}
             options={dataSources}
             onChange={onDataSourceChange}
+            disabled={isLoading}
           />
           <Dropdown
             theme="theme-select-light"
             label="UNIT"
-            vvalue={settings.unit}
+            value={settings.unit}
             options={units}
             onChange={onUnitChange}
           />
@@ -35,9 +37,10 @@ class WidgetTreeLocatedSettings extends PureComponent {
           <Dropdown
             theme="theme-select-button"
             label="CANOPY DENSITY"
-            value={settings.canopy}
-            options={canopies}
-            onChange={onCanopyChange}
+            value={settings.threshold}
+            options={thresholds}
+            onChange={onThresholdChange}
+            disabled={isLoading}
           />
         </div>
       </div>
@@ -48,11 +51,12 @@ class WidgetTreeLocatedSettings extends PureComponent {
 WidgetTreeLocatedSettings.propTypes = {
   dataSources: PropTypes.array.isRequired,
   units: PropTypes.array.isRequired,
-  canopies: PropTypes.array.isRequired,
+  thresholds: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   onDataSourceChange: PropTypes.func.isRequired,
   onUnitChange: PropTypes.func.isRequired,
-  onCanopyChange: PropTypes.func.isRequired
+  onThresholdChange: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired
 };
 
 export default WidgetTreeLocatedSettings;
