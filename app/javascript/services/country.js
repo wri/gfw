@@ -34,7 +34,7 @@ export const getSubRegionsProvider = (admin0, admin1) => {
   return axios.get(url);
 };
 
-export const getRanking = country => {
+export const getRanking = ({ country }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.getRanking}`.replace(
     '{country}',
     country
