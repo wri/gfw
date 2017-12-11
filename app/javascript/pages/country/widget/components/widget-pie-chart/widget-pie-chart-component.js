@@ -8,10 +8,28 @@ import WidgetPieChartTooltip from './widget-pie-chart-tooltip-component';
 
 class WidgetPieChart extends PureComponent {
   render() {
-    const { data, width, height } = this.props;
+    const {
+      data,
+      width,
+      height,
+      dataKey,
+      cx,
+      cy,
+      innerRadius,
+      outerRadius,
+      startAngle
+    } = this.props;
     return (
       <PieChart width={width} height={height}>
-        <Pie {...this.props}>
+        <Pie
+          data={data}
+          dataKey={dataKey}
+          cx={cx}
+          cy={cy}
+          innerRadius={innerRadius}
+          outerRadius={outerRadius}
+          startAngle={startAngle}
+        >
           {data.map(
             (item, index) =>
               (item.value ? (
@@ -35,12 +53,24 @@ class WidgetPieChart extends PureComponent {
 WidgetPieChart.propTypes = {
   data: PropTypes.array,
   width: PropTypes.number,
-  height: PropTypes.number
+  height: PropTypes.number,
+  dataKey: PropTypes.string,
+  cx: PropTypes.number,
+  cy: PropTypes.number,
+  innerRadius: PropTypes.number,
+  outerRadius: PropTypes.number,
+  startAngle: PropTypes.number
 };
 
 WidgetPieChart.defaultProps = {
   width: 120,
-  height: 120
+  height: 120,
+  dataKey: 'value',
+  cx: 56,
+  cy: 56,
+  innerRadius: 28,
+  outerRadius: 60,
+  startAngle: 0
 };
 
 export default WidgetPieChart;
