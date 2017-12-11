@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniq from 'lodash/uniq';
-import { sortLabelByAlpha } from 'utils/data';
+import { sortByKey } from 'utils/data';
 
 import INDICATORS from 'pages/country/data/indicators.json';
 import THRESHOLDS from 'pages/country/data/thresholds.json';
@@ -33,17 +33,17 @@ export const getActiveFilter = (settings, filters, key) =>
 export const getAdminsOptions = createSelector(
   [getCountries, getRegions, getSubRegions],
   (countries, regions, subRegions) => ({
-    countries: (countries && sortLabelByAlpha(countries)) || null,
+    countries: (countries && sortByKey(countries, 'value')) || null,
     regions:
       (regions &&
         [{ label: 'All Regions', value: null }].concat(
-          sortLabelByAlpha(regions)
+          sortByKey(regions, 'value')
         )) ||
       null,
     subRegions:
       (subRegions &&
         [{ label: 'All Juristictions', value: null }].concat(
-          sortLabelByAlpha(subRegions)
+          sortByKey(subRegions, 'value')
         )) ||
       null
   })

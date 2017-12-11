@@ -8,7 +8,7 @@ import {
   getUnits,
   getDataSources
 } from 'pages/country/widget/widget-selectors';
-import { filterData } from './widget-tree-located-selectors';
+import { filterData, getSortedData } from './widget-tree-located-selectors';
 
 import WidgetTreeLocatedComponent from './widget-tree-located-component';
 import actions from './widget-tree-located-actions';
@@ -20,9 +20,11 @@ export { default as actions } from './widget-tree-located-actions';
 const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
   const data = {
-    data: widgetTreeLocated.data.topRegions,
+    data: widgetTreeLocated.data.regions,
     page: widgetTreeLocated.settings.page,
-    pageSize: widgetTreeLocated.settings.pageSize
+    pageSize: widgetTreeLocated.settings.pageSize,
+    unit: widgetTreeLocated.settings.unit,
+    meta: countryData[!location.payload.region ? 'regions' : 'subRegions']
   };
   return {
     location: location.payload,
@@ -30,7 +32,7 @@ const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
     isLoading:
       widgetTreeLocated.isLoading || isCountriesLoading || isRegionsLoading,
     data: filterData(data) || [],
-    count: data.data.length,
+    allData: getSortedData(data) || [],
     dataSources: getDataSources(),
     units: getUnits(),
     thresholds: getThresholds(),
@@ -51,8 +53,9 @@ class WidgetTreeLocatedContainer extends PureComponent {
     const { settings, location, getTreeLocated } = nextProps;
 
     if (
-      !isEqual(nextProps.location, this.props.location) ||
-      !isEqual(settings.threshold !== this.props.settings.threshold)
+      !isEqual(nextProps.location.country, this.props.location.country) ||
+      !isEqual(nextProps.location.region, this.props.location.region) ||
+      !isEqual(settings.threshold, this.props.settings.threshold)
     ) {
       getTreeLocated({
         ...location,

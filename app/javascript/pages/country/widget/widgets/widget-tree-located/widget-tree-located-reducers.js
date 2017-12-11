@@ -1,12 +1,13 @@
 export const initialState = {
   isLoading: false,
   data: {
-    topRegions: []
+    regions: []
   },
   settings: {
     dataSource: 'hansen',
     unit: 'ha',
-    threshold: 30,
+    indicator: 'gadm28',
+    threshold: '0',
     pageSize: 10,
     page: 0
   }
@@ -15,7 +16,13 @@ export const initialState = {
 const setTreeLocatedData = (state, { payload }) => ({
   ...state,
   isLoading: false,
-  data: payload
+  data: {
+    regions: payload
+  },
+  settings: {
+    ...state.settings,
+    page: 0
+  }
 });
 
 const setTreeLocatedPage = (state, { payload }) => ({

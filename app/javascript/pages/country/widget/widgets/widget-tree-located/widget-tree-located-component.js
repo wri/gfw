@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import numeral from 'numeral';
+import { format } from 'd3-format';
 
 import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetPaginate from 'pages/country/widget/components/widget-paginate';
-import WidgetTreeLocatedSettings from './widget-tree-located-settings-component';
+import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import './widget-tree-located-styles.scss';
 
 class WidgetTreeLocated extends PureComponent {
@@ -14,7 +14,7 @@ class WidgetTreeLocated extends PureComponent {
       locationNames,
       isLoading,
       data,
-      count,
+      allData,
       dataSources,
       units,
       thresholds,
@@ -31,7 +31,7 @@ class WidgetTreeLocated extends PureComponent {
             locationNames.current.label}`}
           shareAnchor={'tree-located'}
         >
-          <WidgetTreeLocatedSettings
+          <WidgetSettings
             type="settings"
             dataSources={dataSources}
             units={units}
@@ -50,21 +50,23 @@ class WidgetTreeLocated extends PureComponent {
             <ul className="regions">
               {data &&
                 data.length > 0 &&
-                data.map(item => (
-                  <li key={Math.random() + item.value}>
-                    <div className="region-bubble">{item.position}</div>
-                    <div className="region-name">{item.name}</div>
+                data.map((item, index) => (
+                  <li key={item.id}>
+                    <div className="region-bubble">
+                      {index + 1 + settings.pageSize * settings.page}
+                    </div>
+                    <div className="region-name">{item.label}</div>
                     <div className="region-value">
                       {settings.unit === 'ha'
-                        ? `${numeral(item.value).format('0,0')} ha`
-                        : `${item.value} %`}
+                        ? `${format('.3s')(item.area)} ha`
+                        : `${item.percentage} %`}
                     </div>
                   </li>
                 ))}
             </ul>
             <WidgetPaginate
               settings={settings}
-              count={count}
+              count={(allData && allData.length) || 0}
               onClickChange={handlePageChange}
             />
           </div>
@@ -78,7 +80,7 @@ WidgetTreeLocated.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   locationNames: PropTypes.object,
   data: PropTypes.array.isRequired,
-  count: PropTypes.number.isRequired,
+  allData: PropTypes.array.isRequired,
   dataSources: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   units: PropTypes.array.isRequired,
