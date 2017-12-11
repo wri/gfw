@@ -55,16 +55,16 @@ class Share extends PureComponent {
         {haveEmbed ? (
           <div className="c-share__buttons-container">
             <Button
-              className={`c-share__button ${
-                selectedType === 'embed' ? '-selected' : ''
+              className={`share-button ${
+                selectedType !== 'embed' ? 'theme-button-light-green' : ''
               }`}
               onClick={() => this.changeType('embed')}
             >
               EMBED
             </Button>
             <Button
-              className={`c-share__button ${
-                selectedType === 'link' ? '-selected' : ''
+              className={`share-button ${
+                selectedType === 'embed' ? 'theme-button-light-green' : ''
               }`}
               onClick={() => this.changeType('link')}
             >
