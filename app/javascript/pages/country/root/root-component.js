@@ -26,6 +26,9 @@ const WIDGETS = {
   },
   treeGain: {
     gridWidth: 6
+  },
+  faoForest: {
+    gridWidth: 6
   }
   // totalAreaPlantations: {
   //   gridWidth: 6
