@@ -9,6 +9,7 @@ import {
   getThresholds,
   getActiveFilter
 } from 'pages/country/widget/widget-selectors';
+import { getTreeCoverData } from './widget-tree-cover-selectors';
 
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
 import actions from './widget-tree-cover-actions';
@@ -27,38 +28,14 @@ const INDICATORS_WHITELIST = [
 
 const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
-  const {
-    totalArea,
-    totalCover,
-    totalIntactForest,
-    totalNonForest
-  } = widgetTreeCover;
-  const data = [
-    {
-      name: 'Forest',
-      value: totalCover,
-      color: '#959a00',
-      percentage: totalCover / totalArea * 100
-    },
-    {
-      name: 'Intact Forest',
-      value: totalIntactForest,
-      color: '#2d8700',
-      percentage: totalIntactForest / totalArea * 100
-    },
-    {
-      name: 'Non Forest',
-      value: totalNonForest,
-      color: '#d1d1d1',
-      percentage: totalNonForest / totalArea * 100
-    }
-  ];
+  const { totalArea, cover, plantations } = widgetTreeCover.data;
+
   return {
     isLoading:
       widgetTreeCover.isLoading || isCountriesLoading || isRegionsLoading,
     location: location.payload,
     regions: countryData.regions,
-    data,
+    data: getTreeCoverData({ totalArea, cover, plantations }) || [],
     adminsSelected: getAdminsSelected({
       ...countryData,
       location: location.payload
@@ -100,7 +77,7 @@ class WidgetTreeCoverContainer extends PureComponent {
     }
   }
 
-  getTitle = () => {
+  getSentence = () => {
     const { adminsSelected, settings, indicators, thresholds } = this.props;
     if (adminsSelected && indicators.length) {
       const activeThreshold = thresholds.find(
@@ -119,7 +96,7 @@ class WidgetTreeCoverContainer extends PureComponent {
   render() {
     return createElement(WidgetTreeCoverComponent, {
       ...this.props,
-      getTitle: this.getTitle
+      getSentence: this.getSentence
     });
   }
 }

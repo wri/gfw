@@ -3,9 +3,10 @@ import axios from 'axios';
 const DATASET = process.env.COUNTRIES_PAGE_DATASET;
 const API_URL = process.env.GFW_API_HOST_PROD;
 const REQUEST_URL = `${API_URL}/query/${DATASET}?sql=`;
+
 const SQL_QUERIES = {
   extent:
-    "SELECT SUM(area_extent) as value FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
+    "SELECT SUM(area_extent) as value SUM(area_gadm28) as total_area, FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
   gain:
     "SELECT SUM(area) as value FROM data WHERE {location} AND polyname = '{indicator}'",
   loss:
