@@ -13,6 +13,7 @@ class WidgetTreeCover extends PureComponent {
   render() {
     const {
       isLoading,
+      locationNames,
       data,
       indicators,
       units,
@@ -33,6 +34,7 @@ class WidgetTreeCover extends PureComponent {
             onIndicatorChange={setTreeCoverSettingsIndicator}
             onThresholdChange={setTreeCoverSettingsThreshold}
             isLoading={isLoading}
+            locationNames={locationNames}
           />
         </WidgetHeader>
         {isLoading ? (
@@ -50,6 +52,7 @@ class WidgetTreeCover extends PureComponent {
 
 WidgetTreeCover.propTypes = {
   isLoading: PropTypes.bool.isRequired,
+  locationNames: PropTypes.object.isRequired,
   data: PropTypes.array.isRequired,
   indicators: PropTypes.array.isRequired,
   units: PropTypes.array.isRequired,
