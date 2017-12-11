@@ -34,12 +34,9 @@ class WidgetPieChart extends PureComponent {
             startAngle={startAngle}
             endAngle={endAngle}
           >
-            {data.map(
-              (item, index) =>
-                (item.value ? (
-                  <Cell key={index.toString()} fill={item.color} />
-                ) : null)
-            )}
+            {data.map((item, index) => (
+              <Cell key={index.toString()} fill={item.color} />
+            ))}
           </Pie>
           <Tooltip
             percentageAndArea
