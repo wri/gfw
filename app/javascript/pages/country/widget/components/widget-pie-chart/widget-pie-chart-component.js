@@ -18,6 +18,7 @@ class WidgetPieChart extends PureComponent {
       innerRadius,
       outerRadius,
       startAngle,
+      endAngle,
       className
     } = this.props;
     return (
@@ -31,6 +32,7 @@ class WidgetPieChart extends PureComponent {
             innerRadius={innerRadius}
             outerRadius={outerRadius}
             startAngle={startAngle}
+            endAngle={endAngle}
           >
             {data.map(
               (item, index) =>
@@ -63,6 +65,7 @@ WidgetPieChart.propTypes = {
   innerRadius: PropTypes.number,
   outerRadius: PropTypes.number,
   startAngle: PropTypes.number,
+  endAngle: PropTypes.number,
   className: PropTypes.string
 };
 
@@ -74,7 +77,8 @@ WidgetPieChart.defaultProps = {
   cy: 56,
   innerRadius: 28,
   outerRadius: 60,
-  startAngle: 0
+  startAngle: 90,
+  endAngle: 450
 };
 
 export default WidgetPieChart;
