@@ -46,23 +46,21 @@ CustomModal.defaultProps = {
   contentLabel: 'Modal content',
   customStyles: {
     overlay: {
-      zIndex: 20,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      zIndex: 1000,
       boxShadow: '0 5px 15px 0 rgba(71, 44, 184, 0.1)',
-      backgroundColor: 'rgba(17, 55, 80, 0.4)'
+      backgroundColor: 'rgba(17, 55, 80, 0.4)',
+      overflow: 'auto',
+      padding: '40px 0'
     },
     content: {
       position: 'relative',
       top: 'auto',
+      margin: 'auto',
       left: 'auto',
       right: 'auto',
       bottom: 'auto',
       width: '1080px',
       padding: '0',
-      maxHeight: '640px',
-      height: 'calc(100vh - 100px)',
       border: 'none',
       borderRadius: 0
     }
