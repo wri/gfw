@@ -1,0 +1,20 @@
+{
+  "treeCover": {
+    "gridWidth": 6
+  },
+  "treeLocated": {
+    "gridWidth": 6
+  },
+  "treeLoss": {
+    "gridWidth": 12
+  },
+  "treeGain": {
+    "gridWidth": 6
+  },
+  "totalAreaPlantations": {
+    "gridWidth": 6
+  },
+  "plantationArea": {
+    "gridWidth": 6
+  }
+}
