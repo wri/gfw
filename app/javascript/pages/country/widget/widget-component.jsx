@@ -26,11 +26,7 @@ class Widget extends PureComponent {
   render() {
     const { widget } = this.props;
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
-    return (
-      <div>
-        <WidgetComponent {...this.props} />
-      </div>
-    );
+    return <WidgetComponent {...this.props} />;
   }
 }
 

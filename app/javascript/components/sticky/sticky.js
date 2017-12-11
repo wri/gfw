@@ -43,32 +43,24 @@ class StickyContainer extends PureComponent {
     }
   };
 
-  setElLimit = () => {
-    const { limitElement } = this.props;
-    this.setState({
-      fixedLimit: limitElement
-        ? document.getElementById(limitElement).offsetTop - window.innerHeight
-        : document.body.scrollHeight
-    });
-  };
-
   handleResize = () => {
     const { el } = this.state;
     this.getStickyDiv(el);
-    this.setElLimit();
     this.handleScrollCallback();
   };
 
   handleScrollCallback = () => {
     const { isFixed, fixedLimit, stickyDivPos, scrollPos } = this.state;
-    const { offSet } = this.props;
+    const { offSet, limitElement } = this.props;
     const stickyPos = offSet ? stickyDivPos.top + offSet : stickyDivPos.top;
     this.setState({ scrollPos: window.pageYOffset });
 
     // find limit element y pos
-    if (!fixedLimit) {
-      this.setElLimit();
-    }
+    this.setState({
+      fixedLimit: limitElement
+        ? document.getElementById(limitElement).offsetTop - window.innerHeight
+        : document.body.scrollHeight
+    });
 
     // not fixed when less than container div
     if (isFixed && scrollPos < stickyPos) {
