@@ -10,11 +10,5 @@
   },
   "treeGain": {
     "gridWidth": 6
-  },
-  "totalAreaPlantations": {
-    "gridWidth": 6
-  },
-  "plantationArea": {
-    "gridWidth": 6
   }
 }
