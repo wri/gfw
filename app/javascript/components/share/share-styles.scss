@@ -2,7 +2,7 @@
 $input-button-width: rem(78px);
 
 .c-share {
-  padding: rem(13px) rem(20px);
+  padding: rem(20px) rem(20px);
 
   &__title {
     padding: 0 0 rem(4px);
@@ -39,10 +39,11 @@ $input-button-width: rem(78px);
     width: $input-button-width;
     border: 1px solid $green-gfw;
     border-radius: 0;
-    font-size: 14px;
+    font-size: 13px;
     color: $slate;
     background-color: $white;
     outline: none;
+    cursor: pointer;
 
     &:hover {
       background-color: darken($white, 10%);
@@ -52,7 +53,11 @@ $input-button-width: rem(78px);
   &__buttons-container {
     display: flex;
     justify-content: space-between;
-    margin-top: rem(10px);
+    margin-top: rem(15px);
+  }
+
+  .share-button {
+    margin: 0 rem(8px);
   }
 
   &__button {
@@ -75,8 +80,8 @@ $input-button-width: rem(78px);
 
   &__social-container {
     display: flex;
-    justify-content: space-between;
-    margin-top: rem(50px);
+    justify-content: center;
+    margin-top: rem(25px);
   }
 
   &__social-button {
@@ -85,6 +90,7 @@ $input-button-width: rem(78px);
     align-items: center;
     width: rem(44px);
     height: rem(44px);
+    margin: 0 rem(8px);
 
     .c-icon {
       width: rem(20px);
