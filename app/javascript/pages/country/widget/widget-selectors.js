@@ -105,7 +105,7 @@ export const getIndicators = createSelector(
 );
 
 export const getThresholds = createSelector([], () =>
-  sortByKey(THRESHOLDS, 'label')
+  sortByKey(THRESHOLDS, 'value')
 );
 
 export const getUnits = createSelector([], () => sortByKey(UNITS, 'label'));

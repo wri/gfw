@@ -8,7 +8,7 @@ import {
   getUnits,
   getIndicators
 } from 'pages/country/widget/widget-selectors';
-import { filterData, getSortedData } from './widget-tree-located-selectors';
+import { getSortedData } from './widget-tree-located-selectors';
 
 import WidgetTreeLocatedComponent from './widget-tree-located-component';
 import actions from './widget-tree-located-actions';
@@ -28,8 +28,6 @@ const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
   const data = {
     data: widgetTreeLocated.data.regions,
-    page: widgetTreeLocated.settings.page,
-    pageSize: widgetTreeLocated.settings.pageSize,
     unit: widgetTreeLocated.settings.unit,
     meta: countryData[!location.payload.region ? 'regions' : 'subRegions']
   };
@@ -38,8 +36,7 @@ const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
     regions: countryData.regions,
     isLoading:
       widgetTreeLocated.isLoading || isCountriesLoading || isRegionsLoading,
-    data: filterData(data) || [],
-    allData: getSortedData(data) || [],
+    data: getSortedData(data) || [],
     indicators:
       getIndicators({
         whitelist: INDICATORS_WHITELIST,
