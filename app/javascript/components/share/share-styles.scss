@@ -5,10 +5,12 @@ $input-button-width: rem(78px);
   padding: rem(20px) rem(20px);
 
   &__title {
-    padding: 0 0 rem(4px);
+    padding: rem(10px) 0;
     font-size: 21px;
     font-weight: 300;
     text-align: center;
+    margin-bottom: rem(15px);
+    border-bottom: solid 1px $border;
   }
 
   &__subtitle {
@@ -127,4 +129,5 @@ $input-button-width: rem(78px);
 .c-share-close {
   right: rem(13px);
   top: rem(13px);
+  cursor: pointer;
 }
