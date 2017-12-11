@@ -9,7 +9,7 @@ class WidgetPieChartTooltip extends PureComponent {
     return payload ? (
       <div>
         <p>{payload.name}</p>
-        <span>{format('.3s')(payload.percentage)}%</span>
+        <span>{format('.1f')(payload.percentage)}%</span>
       </div>
     ) : null;
   }

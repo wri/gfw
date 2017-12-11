@@ -4,7 +4,7 @@ import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import WidgetTooltip from 'pages/country/widget/components/widget-tooltip';
 import WidgetPieChartTooltip from './widget-pie-chart-tooltip-component';
 
-// import './widget-pie-chart-styles.scss';
+import './widget-pie-chart-styles.scss';
 
 class WidgetPieChart extends PureComponent {
   render() {
@@ -17,35 +17,38 @@ class WidgetPieChart extends PureComponent {
       cy,
       innerRadius,
       outerRadius,
-      startAngle
+      startAngle,
+      className
     } = this.props;
     return (
-      <PieChart width={width} height={height}>
-        <Pie
-          data={data}
-          dataKey={dataKey}
-          cx={cx}
-          cy={cy}
-          innerRadius={innerRadius}
-          outerRadius={outerRadius}
-          startAngle={startAngle}
-        >
-          {data.map(
-            (item, index) =>
-              (item.value ? (
-                <Cell key={index.toString()} fill={item.color} />
-              ) : null)
-          )}
-        </Pie>
-        <Tooltip
-          percentageAndArea
-          content={
-            <WidgetTooltip>
-              <WidgetPieChartTooltip data={data} />
-            </WidgetTooltip>
-          }
-        />
-      </PieChart>
+      <div className={`c-pie-chart ${className}`}>
+        <PieChart width={width} height={height}>
+          <Pie
+            data={data}
+            dataKey={dataKey}
+            cx={cx}
+            cy={cy}
+            innerRadius={innerRadius}
+            outerRadius={outerRadius}
+            startAngle={startAngle}
+          >
+            {data.map(
+              (item, index) =>
+                (item.value ? (
+                  <Cell key={index.toString()} fill={item.color} />
+                ) : null)
+            )}
+          </Pie>
+          <Tooltip
+            percentageAndArea
+            content={
+              <WidgetTooltip>
+                <WidgetPieChartTooltip data={data} />
+              </WidgetTooltip>
+            }
+          />
+        </PieChart>
+      </div>
     );
   }
 }
@@ -59,12 +62,13 @@ WidgetPieChart.propTypes = {
   cy: PropTypes.number,
   innerRadius: PropTypes.number,
   outerRadius: PropTypes.number,
-  startAngle: PropTypes.number
+  startAngle: PropTypes.number,
+  className: PropTypes.string
 };
 
 WidgetPieChart.defaultProps = {
-  width: 120,
-  height: 120,
+  width: 121,
+  height: 121,
   dataKey: 'value',
   cx: 56,
   cy: 56,

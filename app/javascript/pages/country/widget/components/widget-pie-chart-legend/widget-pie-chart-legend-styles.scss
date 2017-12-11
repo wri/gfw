@@ -1,0 +1,31 @@
+@import '~styles/settings.scss';
+
+.c-pie-chart-legend {
+  display: inline-block;
+  width: 100%;
+
+  .legend-title {
+    font-size: rem(12px);
+    line-height: 1;
+    color: $slate;
+
+    span {
+      position: relative;
+      top: rem(1px);
+      display: inline-block;
+      width: rem(12px);
+      min-width: rem(12px);
+      min-height: rem(12px);
+      height: rem(12px);
+      margin-right: rem(7px);
+      border-radius: 100%;
+    }
+  }
+
+  .legend-value {
+    padding: rem(7px) 0 0 rem(19px);
+    font-size: rem(28px);
+    font-weight: 500;
+    margin-bottom: rem(20px);
+  }
+}

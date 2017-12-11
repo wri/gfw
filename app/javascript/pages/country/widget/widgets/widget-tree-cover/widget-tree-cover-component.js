@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'd3-format';
 
 import WidgetPieChart from 'pages/country/widget/components/widget-pie-chart';
+import WidgetPieChartLegend from 'pages/country/widget/components/widget-pie-chart-legend';
 import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetSettings from 'pages/country/widget/components/widget-settings';
@@ -38,30 +38,9 @@ class WidgetTreeCover extends PureComponent {
         {isLoading ? (
           <Loader className="loader-offset" />
         ) : (
-          <div>
-            <ul className="legend">
-              {data.map(
-                (item, index) =>
-                  (item.value ? (
-                    <li key={index.toString()}>
-                      <div className="legend-title">
-                        <span style={{ backgroundColor: item.color }}>{}</span>
-                        {item.name}
-                      </div>
-                      <div
-                        className="legend-value"
-                        style={{ color: item.color }}
-                      >
-                        {format('.3s')(item.value)}ha
-                        <span className="unit-text"> {settings.unit}</span>
-                      </div>
-                    </li>
-                  ) : null)
-              )}
-            </ul>
-            <div className="chart">
-              <WidgetPieChart data={data} />
-            </div>
+          <div className="pie-chart-container">
+            <WidgetPieChartLegend data={data} settings={settings} />
+            <WidgetPieChart className="cover-pie-chart" data={data} />
           </div>
         )}
       </div>
