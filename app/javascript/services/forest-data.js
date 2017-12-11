@@ -12,14 +12,14 @@ const SQL_QUERIES = {
   loss:
     "SELECT sum(area) as area, sum(emissions) as emissions FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
   locations:
-    "SELECT {location}, {calc1} as value, {calc2} as total_area FROM data WHERE iso = '{iso}' AND thresh = {threshold} AND polyname = '{polyname}' {grouping}"
+    "SELECT {location}, {extent} as value, {area} as total_area FROM data WHERE iso = '{iso}' AND thresh = {threshold} AND polyname = '{polyname}' {grouping}"
 };
 
 export const getLocations = ({ country, region, indicator, threshold }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.locations}`
     .replace('{location}', region ? 'adm2' : 'adm1')
-    .replace('{calc1}', region ? 'area_gadm28' : 'sum(area_gadm28)')
-    .replace('{calc2}', region ? 'area_gadm28' : 'sum(area_gadm28)')
+    .replace('{extent}', region ? 'area_extent' : 'sum(area_extent)')
+    .replace('{area}', region ? 'area_gadm28' : 'sum(area_gadm28)')
     .replace('{iso}', country)
     .replace('{threshold}', threshold)
     .replace('{polyname}', indicator)

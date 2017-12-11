@@ -6,7 +6,7 @@ import isEqual from 'lodash/isEqual';
 import {
   getThresholds,
   getUnits,
-  getDataSources
+  getIndicators
 } from 'pages/country/widget/widget-selectors';
 import { filterData, getSortedData } from './widget-tree-located-selectors';
 
@@ -16,6 +16,13 @@ import actions from './widget-tree-located-actions';
 export { initialState } from './widget-tree-located-reducers';
 export { default as reducers } from './widget-tree-located-reducers';
 export { default as actions } from './widget-tree-located-actions';
+
+const INDICATORS_WHITELIST = [
+  'gadm28',
+  'plantations',
+  'ifl_2013',
+  'primary_forests'
+];
 
 const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
@@ -33,7 +40,12 @@ const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
       widgetTreeLocated.isLoading || isCountriesLoading || isRegionsLoading,
     data: filterData(data) || [],
     allData: getSortedData(data) || [],
-    dataSources: getDataSources(),
+    indicators:
+      getIndicators({
+        whitelist: INDICATORS_WHITELIST,
+        location: location.payload,
+        ...countryData
+      }) || [],
     units: getUnits(),
     thresholds: getThresholds(),
     settings: widgetTreeLocated.settings
@@ -55,6 +67,7 @@ class WidgetTreeLocatedContainer extends PureComponent {
     if (
       !isEqual(nextProps.location.country, this.props.location.country) ||
       !isEqual(nextProps.location.region, this.props.location.region) ||
+      !isEqual(settings.indicator, this.props.settings.indicator) ||
       !isEqual(settings.threshold, this.props.settings.threshold)
     ) {
       getTreeLocated({

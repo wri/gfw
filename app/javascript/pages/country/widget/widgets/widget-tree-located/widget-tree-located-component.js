@@ -15,12 +15,12 @@ class WidgetTreeLocated extends PureComponent {
       isLoading,
       data,
       allData,
-      dataSources,
+      indicators,
       units,
       thresholds,
       settings,
       handlePageChange,
-      setTreeLocatedSettingsDataSource,
+      setTreeLocatedSettingsIndicator,
       setTreeLocatedSettingsUnit,
       setTreeLocatedSettingsThreshold
     } = this.props;
@@ -33,11 +33,11 @@ class WidgetTreeLocated extends PureComponent {
         >
           <WidgetSettings
             type="settings"
-            dataSources={dataSources}
+            indicators={indicators}
             units={units}
             thresholds={thresholds}
             settings={settings}
-            onDataSourceChange={setTreeLocatedSettingsDataSource}
+            onIndicatorChange={setTreeLocatedSettingsIndicator}
             onUnitChange={setTreeLocatedSettingsUnit}
             onThresholdChange={setTreeLocatedSettingsThreshold}
             isLoading={isLoading}
@@ -59,7 +59,7 @@ class WidgetTreeLocated extends PureComponent {
                     <div className="region-value">
                       {settings.unit === 'ha'
                         ? `${format('.3s')(item.area)} ha`
-                        : `${item.percentage} %`}
+                        : `${format('.1f')(item.percentage)} %`}
                     </div>
                   </li>
                 ))}
@@ -81,12 +81,12 @@ WidgetTreeLocated.propTypes = {
   locationNames: PropTypes.object,
   data: PropTypes.array.isRequired,
   allData: PropTypes.array.isRequired,
-  dataSources: PropTypes.array.isRequired,
+  indicators: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   units: PropTypes.array.isRequired,
   thresholds: PropTypes.array.isRequired,
   handlePageChange: PropTypes.func.isRequired,
-  setTreeLocatedSettingsDataSource: PropTypes.func.isRequired,
+  setTreeLocatedSettingsIndicator: PropTypes.func.isRequired,
   setTreeLocatedSettingsUnit: PropTypes.func.isRequired,
   setTreeLocatedSettingsThreshold: PropTypes.func.isRequired
 };

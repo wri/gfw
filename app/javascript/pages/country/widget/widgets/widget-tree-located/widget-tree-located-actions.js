@@ -5,8 +5,8 @@ import { getLocations } from 'services/forest-data';
 
 const setTreeLocatedData = createAction('setTreeLocatedData');
 const setTreeLocatedPage = createAction('setTreeLocatedPage');
-const setTreeLocatedSettingsDataSource = createAction(
-  'setTreeLocatedSettingsDataSource'
+const setTreeLocatedSettingsIndicator = createAction(
+  'setTreeLocatedSettingsIndicator'
 );
 const setTreeLocatedSettingsUnit = createAction('setTreeLocatedSettingsUnit');
 const setTreeLocatedSettingsThreshold = createAction(
@@ -44,7 +44,7 @@ const getTreeLocated = createThunkAction(
 export default {
   setTreeLocatedData,
   setTreeLocatedPage,
-  setTreeLocatedSettingsDataSource,
+  setTreeLocatedSettingsIndicator,
   setTreeLocatedSettingsUnit,
   setTreeLocatedSettingsThreshold,
   setTreeLocatedIsLoading,
