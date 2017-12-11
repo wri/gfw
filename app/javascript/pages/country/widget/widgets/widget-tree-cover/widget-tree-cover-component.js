@@ -5,7 +5,7 @@ import { format } from 'd3-format';
 import WidgetPieChart from 'pages/country/widget/components/widget-pie-chart';
 import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
-import WidgetTreeCoverSettings from './widget-tree-cover-settings-component';
+import WidgetSettings from 'pages/country/widget/components/widget-settings';
 
 import './widget-tree-cover-styles.scss';
 
@@ -24,18 +24,14 @@ class WidgetTreeCover extends PureComponent {
     return (
       <div className="c-widget c-widget-tree-cover">
         <WidgetHeader title="Tree cover extent" shareAnchor={'tree-cover'}>
-          <WidgetTreeCoverSettings
+          <WidgetSettings
             type="settings"
             indicators={indicators}
             units={units}
             thresholds={thresholds}
             settings={settings}
-            onIndicatorChange={option =>
-              setTreeCoverSettingsIndicator(option.value)
-            }
-            onThresholdChange={option =>
-              setTreeCoverSettingsThreshold(option.value)
-            }
+            onIndicatorChange={setTreeCoverSettingsIndicator}
+            onThresholdChange={setTreeCoverSettingsThreshold}
             isLoading={isLoading}
           />
         </WidgetHeader>
@@ -64,15 +60,7 @@ class WidgetTreeCover extends PureComponent {
               )}
             </ul>
             <div className="chart">
-              <WidgetPieChart
-                data={data}
-                dataKey="value"
-                cx={56}
-                cy={56}
-                innerRadius={28}
-                outerRadius={60}
-                startAngle={0}
-              />
+              <WidgetPieChart data={data} />
             </div>
           </div>
         )}
