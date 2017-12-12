@@ -2,18 +2,18 @@ import { connect } from 'react-redux';
 import { getAdminsSelected } from 'pages/country/widget/widget-selectors';
 import Component from './widget-component';
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ location, countryData }) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
     isSubRegionsLoading,
     isGeostoreLoading
-  } = state.countryData;
+  } = countryData;
   const adminData = {
-    location: state.location.payload,
-    countries: state.countryData.countries,
-    regions: state.countryData.regions,
-    subRegions: state.countryData.subRegions
+    location: location.payload,
+    countries: countryData.countries,
+    regions: countryData.regions,
+    subRegions: countryData.subRegions
   };
   return {
     isMetaLoading:
