@@ -1,10 +1,13 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
 import { getExtent, getLoss } from 'services/forest-data';
-import { getActiveAdmin } from 'pages/country/widget/widget-selectors';
+import sortBy from 'lodash/sortBy';
+import reverse from 'lodash/reverse';
 
 export const setExtentLoading = createAction('setExtentLoading');
-export const setPlantationsLossLoading = createAction('setPlantationsLossLoading');
+export const setPlantationsLossLoading = createAction(
+  'setPlantationsLossLoading'
+);
 export const setTotalLossLoading = createAction('setTotalLossLoading');
 
 export const setTotalExtent = createAction('setTotalExtent');
@@ -18,11 +21,13 @@ export const getTotalExtent = createThunkAction(
       dispatch(setExtentLoading(true));
       getExtent(params)
         .then(response => {
-          const activeLocation = getActiveAdmin(state().location.payload);
-          dispatch({
-            [`${activeLocation}Area`]: response.data.rows[0].total_area,
-            extent: response.data.rows[0].value
-          });
+          const data = response.data.data;
+          dispatch(
+            setTotalExtent({
+              totalArea: (data[0] && data[0].total_area) || 0,
+              extent: (data[0] && data[0].value) || 0
+            })
+          );
         })
         .catch(error => {
           dispatch(setExtentLoading(false));
@@ -39,8 +44,10 @@ export const getTotalLoss = createThunkAction(
       dispatch(setTotalLoss(true));
       getLoss(params)
         .then(response => {
-          console.log(response);
-          // dispatch(setTotalLoss(response.data.data[0].value));
+          const data = response.data.data.length
+            ? reverse(sortBy(response.data.data, 'year'))[0]
+            : {};
+          dispatch(setTotalLoss(data));
         })
         .catch(error => {
           dispatch(setTotalLoss(false));
@@ -57,8 +64,10 @@ export const getPlantationsLoss = createThunkAction(
       dispatch(setPlantationsLossLoading(true));
       getLoss(params)
         .then(response => {
-          console.log(response);
-          // dispatch(setTotalLoss(response.data.data[0].value));
+          const data = response.data.data.length
+            ? reverse(sortBy(response.data.data, 'year'))[0]
+            : {};
+          dispatch(setPlantationsLoss(data));
         })
         .catch(error => {
           dispatch(setPlantationsLossLoading(false));
