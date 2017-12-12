@@ -12,7 +12,6 @@ import WidgetPlantationArea from 'pages/country/widget/widgets/widget-plantation
 import WidgetFaoForest from 'pages/country/widget/widgets/widget-fao-forest';
 
 import './widget-styles.scss';
-import './widget-settings-styles.scss';
 import './widget-tooltip-styles.scss';
 
 const widgets = {

@@ -1,14 +1,12 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
 import { getExtent } from 'services/forest-data';
-import { getArea } from 'services/total-area';
 
 const setTreeCoverLoading = createAction('setTreeCoverLoading');
 const setTreeCoverData = createAction('setTreeCoverData');
 const setTreeCoverSettingsIndicator = createAction(
   'setTreeCoverSettingsIndicator'
 );
-const setTreeCoverSettingsUnit = createAction('setTreeCoverSettingsUnit');
 const setTreeCoverSettingsThreshold = createAction(
   'setTreeCoverSettingsThreshold'
 );
@@ -19,26 +17,33 @@ export const getTreeCover = createThunkAction(
     if (!state().widgetTreeCover.isLoading) {
       dispatch(setTreeCoverLoading(true));
       getExtent(params)
-        .then(treeCoverResponse => {
-          getArea(params)
-            .then(areaResponse => {
-              const totalArea = areaResponse.data.rows[0].value;
-              const totalCover = treeCoverResponse.data.data[0].value;
-              const totalNonForest = totalArea - totalCover;
-              const totalIntactForest = totalCover;
-              dispatch(
-                setTreeCoverData({
-                  isLoading: false,
-                  totalArea,
-                  totalCover,
-                  totalNonForest,
-                  totalIntactForest
-                })
-              );
-            })
-            .catch(error => {
-              console.info(error);
-            });
+        .then(response => {
+          const totalArea = response.data.data[0].total_area;
+          const cover = response.data.data[0].value;
+          if (params.indicator !== 'gadm28') {
+            dispatch(
+              setTreeCoverData({
+                isLoading: false,
+                totalArea,
+                cover,
+                plantations: 0
+              })
+            );
+          } else {
+            getExtent({ ...params, indicator: 'plantations' }).then(
+              plantationsResponse => {
+                const plantations = plantationsResponse.data.data[0].value;
+                dispatch(
+                  setTreeCoverData({
+                    isLoading: false,
+                    totalArea,
+                    cover,
+                    plantations
+                  })
+                );
+              }
+            );
+          }
         })
         .catch(error => {
           dispatch(setTreeCoverLoading(false));
@@ -53,6 +58,5 @@ export default {
   setTreeCoverData,
   getTreeCover,
   setTreeCoverSettingsIndicator,
-  setTreeCoverSettingsUnit,
   setTreeCoverSettingsThreshold
 };

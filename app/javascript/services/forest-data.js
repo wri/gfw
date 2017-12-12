@@ -7,7 +7,7 @@ const REQUEST_URL = `${API_URL}/query/${DATASET}?sql=`;
 const CARTO_REQUEST_URL = `${CARTO_API_URL}/sql?q=`;
 const SQL_QUERIES = {
   extent:
-    "SELECT SUM(area_extent) as value FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
+    "SELECT SUM(area_extent) as value SUM(area_gadm28) as total_area, FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
   gain:
     "SELECT SUM(area) as value FROM data WHERE {location} AND polyname = '{indicator}'",
   loss:
