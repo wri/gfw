@@ -25,14 +25,10 @@
 
   .dd__list {
     display: block;
-    table-layout: fixed;
     width: 100%;
   }
 
   .dd__option {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    height: 100%;
+    white-space: normal;
   }
 }

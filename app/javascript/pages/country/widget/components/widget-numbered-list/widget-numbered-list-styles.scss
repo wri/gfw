@@ -1,0 +1,35 @@
+@import '~styles/settings.scss';
+
+.c-widget-numbered-list {
+  font-size: rem(12px);
+  color: $slate;
+
+  .list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: rem(10px);
+  }
+
+  .item-label {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .item-bubble {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: rem(20px);
+    min-width: rem(20px);
+    height: rem(20px);
+    min-height: rem(20px);
+    color: $white;
+    font-weight: 500;
+    border-radius: 100%;
+    margin-right: rem(10px);
+  }
+}

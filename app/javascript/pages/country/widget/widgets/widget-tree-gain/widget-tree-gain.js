@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
 import {
-  getAdminsSelected,
   getIndicators,
   getActiveFilter
 } from 'pages/country/widget/widget-selectors';
@@ -45,11 +44,7 @@ const mapStateToProps = ({ countryData, widgetTreeCoverGain, location }) => {
         location: location.payload,
         ...countryData
       }) || [],
-    settings: widgetTreeCoverGain.settings,
-    locationNames: getAdminsSelected({
-      ...countryData,
-      location: location.payload
-    })
+    settings: widgetTreeCoverGain.settings
   };
 };
 
@@ -91,7 +86,11 @@ class WidgetTreeCoverGainContainer extends PureComponent {
       __html: `From 2001 to 2012, ${locationNames.current &&
         locationNames.current.label} gained <strong>${numeral(gain).format(
         '0,0'
-      )} ha</strong> of tree cover in ${regionPhrase}, equivalent to a <strong>${areaPercent}%</strong> increase relative to 2010 tree cover extent.`
+      )} ha</strong> of tree cover in ${
+        regionPhrase
+      }, equivalent to a <strong>${
+        areaPercent
+      }%</strong> increase relative to 2010 tree cover extent.`
     };
   };
 

@@ -7,7 +7,8 @@ export const initialState = {
   },
   settings: {
     indicator: 'gadm28',
-    threshold: 30
+    threshold: 30,
+    unit: 'ha'
   }
 };
 
