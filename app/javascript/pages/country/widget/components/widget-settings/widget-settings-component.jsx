@@ -9,6 +9,7 @@ class WidgetSettings extends PureComponent {
     const {
       units,
       indicators,
+      periods,
       thresholds,
       settings,
       startYears,
@@ -16,6 +17,7 @@ class WidgetSettings extends PureComponent {
       onStartYearChange,
       onEndYearChange,
       onUnitChange,
+      onPeriodChange,
       onThresholdChange,
       onIndicatorChange,
       isLoading,
@@ -45,6 +47,16 @@ class WidgetSettings extends PureComponent {
                 value={settings.unit}
                 options={units}
                 onChange={option => onUnitChange(option.value)}
+              />
+            )}
+          {periods &&
+            onPeriodChange && (
+              <Dropdown
+                theme="theme-select-light"
+                label="PERIOD"
+                value={settings.period}
+                options={periods}
+                onChange={option => onPeriodChange(option.value)}
               />
             )}
           {startYears &&
@@ -95,12 +107,14 @@ WidgetSettings.propTypes = {
   indicators: PropTypes.array,
   thresholds: PropTypes.array,
   units: PropTypes.array,
+  periods: PropTypes.array,
   settings: PropTypes.object,
   startYears: PropTypes.array,
   endYears: PropTypes.array,
   onIndicatorChange: PropTypes.func,
   onThresholdChange: PropTypes.func,
   onUnitChange: PropTypes.func,
+  onPeriodChange: PropTypes.func,
   onStartYearChange: PropTypes.func,
   onEndYearChange: PropTypes.func,
   isLoading: PropTypes.bool,
