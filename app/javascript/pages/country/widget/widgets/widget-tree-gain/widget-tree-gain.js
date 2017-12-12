@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
 import {
-  getAdminsSelected,
   getIndicators,
   getActiveFilter
 } from 'pages/country/widget/widget-selectors';
@@ -45,11 +44,7 @@ const mapStateToProps = ({ countryData, widgetTreeCoverGain, location }) => {
         location: location.payload,
         ...countryData
       }) || [],
-    settings: widgetTreeCoverGain.settings,
-    locationNames: getAdminsSelected({
-      ...countryData,
-      location: location.payload
-    })
+    settings: widgetTreeCoverGain.settings
   };
 };
 

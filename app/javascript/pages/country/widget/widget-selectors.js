@@ -1,12 +1,11 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniq from 'lodash/uniq';
-import { sortLabelByAlpha } from 'utils/data';
+import { sortByKey } from 'utils/data';
 
 import INDICATORS from 'pages/country/data/indicators.json';
 import THRESHOLDS from 'pages/country/data/thresholds.json';
 import UNITS from 'pages/country/data/units.json';
-import DATA_SOURCES from 'pages/country/data/data-sources.json';
 
 // get list data
 const getAdmins = state => state.location || null;
@@ -33,17 +32,17 @@ export const getActiveFilter = (settings, filters, key) =>
 export const getAdminsOptions = createSelector(
   [getCountries, getRegions, getSubRegions],
   (countries, regions, subRegions) => ({
-    countries: (countries && sortLabelByAlpha(countries)) || null,
+    countries: (countries && sortByKey(countries, 'label')) || null,
     regions:
       (regions &&
         [{ label: 'All Regions', value: null }].concat(
-          sortLabelByAlpha(regions)
+          sortByKey(regions, 'label')
         )) ||
       null,
     subRegions:
       (subRegions &&
         [{ label: 'All Juristictions', value: null }].concat(
-          sortLabelByAlpha(subRegions)
+          sortByKey(subRegions, 'label')
         )) ||
       null
   })
@@ -92,21 +91,24 @@ export const getIndicators = createSelector(
   (whitelist, locationNames) => {
     if (isEmpty(locationNames) || !locationNames.current) return null;
     if (!whitelist) return INDICATORS;
-    return INDICATORS.filter(i => whitelist.indexOf(i.value) > -1).map(item => {
-      const indicator = item;
-      if (indicator.value === 'gadm28') {
-        indicator.label = `All of ${locationNames.current.label}`;
-      }
-      return indicator;
-    });
+    return sortByKey(
+      INDICATORS.filter(i => whitelist.indexOf(i.value) > -1).map(item => {
+        const indicator = item;
+        if (indicator.value === 'gadm28') {
+          indicator.label = `All of ${locationNames.current.label}`;
+        }
+        return indicator;
+      }),
+      'label'
+    );
   }
 );
 
-export const getThresholds = createSelector([], () => THRESHOLDS);
+export const getThresholds = createSelector([], () =>
+  sortByKey(THRESHOLDS, 'value')
+);
 
-export const getUnits = createSelector([], () => UNITS);
-
-export const getDataSources = createSelector([], () => DATA_SOURCES);
+export const getUnits = createSelector([], () => sortByKey(UNITS, 'label'));
 
 export const getYears = createSelector([getData], data => {
   if (isEmpty(data) || !data.length) return null;

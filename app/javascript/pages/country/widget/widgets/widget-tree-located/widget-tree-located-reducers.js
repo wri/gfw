@@ -1,11 +1,11 @@
 export const initialState = {
   isLoading: false,
   data: {
-    topRegions: []
+    regions: []
   },
   settings: {
-    dataSource: 'hansen',
     unit: 'ha',
+    indicator: 'gadm28',
     threshold: 30,
     pageSize: 10,
     page: 0
@@ -15,7 +15,13 @@ export const initialState = {
 const setTreeLocatedData = (state, { payload }) => ({
   ...state,
   isLoading: false,
-  data: payload
+  data: {
+    regions: payload
+  },
+  settings: {
+    ...state.settings,
+    page: 0
+  }
 });
 
 const setTreeLocatedPage = (state, { payload }) => ({
@@ -26,11 +32,11 @@ const setTreeLocatedPage = (state, { payload }) => ({
   }
 });
 
-const setTreeLocatedSettingsDataSource = (state, { payload }) => ({
+const setTreeLocatedSettingsIndicator = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    dataSource: payload
+    indicator: payload
   }
 });
 
@@ -58,7 +64,7 @@ const setTreeLocatedIsLoading = (state, { payload }) => ({
 export default {
   setTreeLocatedData,
   setTreeLocatedPage,
-  setTreeLocatedSettingsDataSource,
+  setTreeLocatedSettingsIndicator,
   setTreeLocatedSettingsUnit,
   setTreeLocatedSettingsThreshold,
   setTreeLocatedIsLoading

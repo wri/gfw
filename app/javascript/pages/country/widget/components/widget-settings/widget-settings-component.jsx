@@ -41,8 +41,8 @@ class WidgetSettings extends PureComponent {
             onUnitChange && (
               <Dropdown
                 theme="theme-select-light"
-                label="LOCATION"
-                value={settings.indicator}
+                label="UNIT"
+                value={settings.unit}
                 options={units}
                 onChange={option => onUnitChange(option.value)}
               />

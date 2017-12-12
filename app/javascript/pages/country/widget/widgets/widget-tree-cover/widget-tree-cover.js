@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import {
-  getAdminsSelected,
   getIndicators,
   getUnits,
   getThresholds,
@@ -36,10 +35,6 @@ const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
     location: location.payload,
     regions: countryData.regions,
     data: getTreeCoverData({ totalArea, cover, plantations }) || [],
-    locationNames: getAdminsSelected({
-      ...countryData,
-      location: location.payload
-    }),
     indicators:
       getIndicators({
         whitelist: INDICATORS_WHITELIST,

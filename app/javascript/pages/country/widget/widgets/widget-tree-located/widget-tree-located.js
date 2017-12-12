@@ -6,9 +6,9 @@ import isEqual from 'lodash/isEqual';
 import {
   getThresholds,
   getUnits,
-  getDataSources
+  getIndicators
 } from 'pages/country/widget/widget-selectors';
-import { filterData } from './widget-tree-located-selectors';
+import { getSortedData } from './widget-tree-located-selectors';
 
 import WidgetTreeLocatedComponent from './widget-tree-located-component';
 import actions from './widget-tree-located-actions';
@@ -17,21 +17,32 @@ export { initialState } from './widget-tree-located-reducers';
 export { default as reducers } from './widget-tree-located-reducers';
 export { default as actions } from './widget-tree-located-actions';
 
+const INDICATORS_WHITELIST = [
+  'gadm28',
+  'plantations',
+  'ifl_2013',
+  'primary_forest'
+];
+
 const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
   const data = {
-    data: widgetTreeLocated.data.topRegions,
-    page: widgetTreeLocated.settings.page,
-    pageSize: widgetTreeLocated.settings.pageSize
+    data: widgetTreeLocated.data.regions,
+    unit: widgetTreeLocated.settings.unit,
+    meta: countryData[!location.payload.region ? 'regions' : 'subRegions']
   };
   return {
     location: location.payload,
     regions: countryData.regions,
     isLoading:
       widgetTreeLocated.isLoading || isCountriesLoading || isRegionsLoading,
-    data: filterData(data) || [],
-    count: data.data.length,
-    dataSources: getDataSources(),
+    data: getSortedData(data) || [],
+    indicators:
+      getIndicators({
+        whitelist: INDICATORS_WHITELIST,
+        location: location.payload,
+        ...countryData
+      }) || [],
     units: getUnits(),
     thresholds: getThresholds(),
     settings: widgetTreeLocated.settings
@@ -51,8 +62,10 @@ class WidgetTreeLocatedContainer extends PureComponent {
     const { settings, location, getTreeLocated } = nextProps;
 
     if (
-      !isEqual(nextProps.location, this.props.location) ||
-      !isEqual(settings.threshold !== this.props.settings.threshold)
+      !isEqual(nextProps.location.country, this.props.location.country) ||
+      !isEqual(nextProps.location.region, this.props.location.region) ||
+      !isEqual(settings.indicator, this.props.settings.indicator) ||
+      !isEqual(settings.threshold, this.props.settings.threshold)
     ) {
       getTreeLocated({
         ...location,

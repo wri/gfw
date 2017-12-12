@@ -30,6 +30,7 @@ class WidgetTreeCoverGain extends PureComponent {
             settings={settings}
             onIndicatorChange={setTreeCoverGainSettingsIndicator}
             isLoading={isLoading}
+            locationNames={locationNames}
           />
         </WidgetHeader>
         {isLoading ? (
