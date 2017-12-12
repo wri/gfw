@@ -39,6 +39,7 @@ class WidgetTreeLocated extends PureComponent {
             onUnitChange={setTreeLocatedSettingsUnit}
             onThresholdChange={setTreeLocatedSettingsThreshold}
             isLoading={isLoading}
+            locationNames={locationNames}
           />
         </WidgetHeader>
         {isLoading ? (

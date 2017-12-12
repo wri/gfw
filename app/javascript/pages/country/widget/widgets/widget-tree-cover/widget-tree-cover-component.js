@@ -13,14 +13,14 @@ class WidgetTreeCover extends PureComponent {
   render() {
     const {
       isLoading,
-      locationNames,
       data,
       indicators,
       units,
       thresholds,
       settings,
       setTreeCoverSettingsIndicator,
-      setTreeCoverSettingsThreshold
+      setTreeCoverSettingsThreshold,
+      locationNames
     } = this.props;
     return (
       <div className="c-widget c-widget-tree-cover">
