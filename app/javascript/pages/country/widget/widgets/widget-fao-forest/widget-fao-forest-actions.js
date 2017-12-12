@@ -7,8 +7,8 @@ import { getRanking } from 'services/country';
 
 const setFAOForestIsLoading = createAction('setFAOIsLoading');
 const setFAOForestData = createAction('setFAOData');
-const getFAOForestData = createThunkAction(
-  'getFAOData',
+const getFAOForest = createThunkAction(
+  'getFAOForest',
   params => (dispatch, state) => {
     if (!state().widgetFAOForest.isLoading) {
       dispatch(setFAOForestIsLoading(true));
@@ -48,5 +48,5 @@ const getFAOForestData = createThunkAction(
 export default {
   setFAOForestIsLoading,
   setFAOForestData,
-  getFAOForestData
+  getFAOForest
 };
