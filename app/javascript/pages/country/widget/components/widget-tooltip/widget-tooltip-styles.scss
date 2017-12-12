@@ -1,7 +1,7 @@
 @import '~styles/settings.scss';
 
 .c-widget-tooltip {
-  padding: rem(18px);
+  padding: rem(8px) rem(20px);
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.19);
   background-color: $slate;
   color: $white;

@@ -12,8 +12,13 @@ class StickyContainer extends PureComponent {
       top: 0,
       stickyDivPos: {
         top: 0
-      }
+      },
+      scrollPos: 0
     };
+  }
+
+  componentDidMount() {
+    this.handleScrollCallback();
   }
 
   getStickyDiv = el => {
@@ -31,10 +36,10 @@ class StickyContainer extends PureComponent {
   };
 
   handleScrollCallback = () => {
-    const { isFixed, fixedLimit, stickyDivPos } = this.state;
+    const { isFixed, fixedLimit, stickyDivPos, scrollPos } = this.state;
     const { offSet, limitElement } = this.props;
-    const currentPos = window.pageYOffset;
     const stickyPos = offSet ? stickyDivPos.top + offSet : stickyDivPos.top;
+    this.setState({ scrollPos: window.pageYOffset });
 
     // find limit element y pos
     if (!fixedLimit) {
@@ -46,17 +51,17 @@ class StickyContainer extends PureComponent {
     }
 
     // not fixed when less than container div
-    if (isFixed && currentPos < stickyPos) {
+    if (isFixed && scrollPos < stickyPos) {
       this.setState({ isFixed: false, top: 0 });
     }
 
     // fixed between div at top (+ offset) and limitEl
-    if (!isFixed && currentPos >= stickyPos && currentPos < fixedLimit) {
+    if (!isFixed && scrollPos >= stickyPos && scrollPos < fixedLimit) {
       this.setState({ isFixed: true, top: 0 });
     }
 
     // greater than limitEl
-    if (isFixed && currentPos >= fixedLimit) {
+    if (isFixed && scrollPos >= fixedLimit) {
       this.setState({ isFixed: false, top: fixedLimit - stickyPos });
     }
   };
