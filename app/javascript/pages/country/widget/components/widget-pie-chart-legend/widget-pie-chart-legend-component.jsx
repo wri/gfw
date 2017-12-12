@@ -18,8 +18,10 @@ class WidgetPieChartLegend extends PureComponent {
                   {item.name}
                 </div>
                 <div className="legend-value" style={{ color: item.color }}>
-                  {format('.3s')(item.value)}
-                  {settings.unit}
+                  {item.legendValue
+                    ? item.legendValue
+                    : format('.3s')(item.value)}
+                  <span className="unit-text">{settings.unit}</span>
                 </div>
               </li>
             ) : null)
