@@ -114,30 +114,39 @@ class HeaderContainer extends PureComponent {
   }
 
   getHeaderDescription = () => {
-    const { locationNames, activeLocation, data } = this.props;
+    const { locationNames, data } = this.props;
+    const extent = format('.2s')(data.extent);
     const percentageCover = format('.1f')(data.extent / data.totalArea * 100);
-    const currentLocation =
-      locationNames.current && locationNames.current[activeLocation];
-    const lossWithOutPlantations =
-      data.totalLoss.area - (data.plantationsLoss.area || 0);
-    const emissionsWithoutPlantations =
-      data.totalLoss.emissions - (data.plantationsLoss.emissions || 0);
-    return (
-      <div>
-        <p>
-          In 2010, {currentLocation && currentLocation.label} had{' '}
-          <b>{format('.2s')(data.extent)}ha</b> of tree cover
-          {percentageCover > 0 && ', extending over '}
-          {percentageCover > 0 && <b>{percentageCover}%</b>}
-          {percentageCover > 0 && ' of its land area'}. In{' '}
-          <b>{data.totalLoss.year}</b>, it lost{' '}
-          <b>{format('.2s')(lossWithOutPlantations)}ha</b> of forest excluding
-          tree plantations, equivalent to{' '}
-          <b>{format('.2s')(emissionsWithoutPlantations)}</b> tonnes of CO₂ of
-          emissions.
-        </p>
-      </div>
+    const lossWithOutPlantations = format('.2s')(
+      data.totalLoss.area - (data.plantationsLoss.area || 0)
     );
+    const emissionsWithoutPlantations = format('.2s')(
+      data.totalLoss.emissions - (data.plantationsLoss.emissions || 0)
+    );
+    const location = locationNames.current && locationNames.current.label;
+    let firstSentence = '';
+    let secondSentence = '';
+    if (extent) {
+      firstSentence = `
+        In 2010, <b>${location}</b> had <b>${extent}ha</b> of tree cover, extending over <b>${percentageCover}%</b> of its land area.
+      `;
+    } else {
+      firstSentence = `
+        In 2010, <b>${location}</b> had <b>${extent}ha</b> of tree cover.
+      `;
+    }
+    if (data.totalLoss.area) {
+      secondSentence = `
+        In ${
+          data.totalLoss.year
+        }, it lost <b>${lossWithOutPlantations}ha</b> of forest ${
+          data.plantationsLoss.area ? 'excluding tree plantations' : ''
+        }, equivalent to <b>${emissionsWithoutPlantations}tonnes</b> of CO₂ of emissions.
+      `;
+    }
+    const totalSentence = `${firstSentence} ${secondSentence}`;
+
+    return <p dangerouslySetInnerHTML={{ __html: totalSentence }} />;
   };
 
   render() {
@@ -155,7 +164,6 @@ HeaderContainer.propTypes = {
   getTotalLoss: PropTypes.func.isRequired,
   getPlantationsLoss: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
-  activeLocation: PropTypes.string.isRequired,
   settings: PropTypes.object.isRequired
 };
 
