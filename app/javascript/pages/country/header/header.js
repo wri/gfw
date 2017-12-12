@@ -3,6 +3,8 @@ import React, { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { COUNTRY } from 'pages/country/router';
+import isEqual from 'lodash/isEqual';
+
 import {
   getAdminsOptions,
   getActiveAdmin,
@@ -19,35 +21,36 @@ const mapStateToProps = ({ countryData, location, header }) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
-    isSubRegionsLoading,
-    isGeostoreLoading
+    isSubRegionsLoading
   } = countryData;
+  const {
+    isExtentLoading,
+    isPlantationsLossLoading,
+    isTotalLossLoading
+  } = header;
+  const countryDataLoading =
+    isCountriesLoading || isRegionsLoading || isSubRegionsLoading;
+  const headerDataLoading =
+    isExtentLoading || isPlantationsLossLoading || isTotalLossLoading;
   const adminData = {
     countries: countryData.countries,
     regions: countryData.regions,
     subRegions: countryData.subRegions
   };
-  const totalArea = header[`${getActiveAdmin(location)}Area`];
-  const percentageCover = header.treeCoverExtent / totalArea * 100;
   return {
-    isLoading:
-      isCountriesLoading ||
-      isRegionsLoading ||
-      isSubRegionsLoading ||
-      isGeostoreLoading,
+    isLoading: countryDataLoading || headerDataLoading,
     locationOptions: getAdminsOptions({
       ...adminData,
       location: location.payload
     }),
+    settings: header.settings,
     location: location.payload,
     locationNames: getAdminsSelected({
       ...adminData,
       location: location.payload
     }),
     activeLocation: getActiveAdmin({ location: location.payload }),
-    treeCover: format('.2s')(header.treeCoverExtent),
-    parcentageCover:
-      percentageCover > 1 ? format('.2s')(percentageCover) : null
+    data: header.data
   };
 };
 
@@ -77,59 +80,61 @@ const mapDispatchToProps = dispatch =>
 
 class HeaderContainer extends PureComponent {
   componentDidMount() {
-    const { location, settings, getTotalExtent, getTotalLoss } = this.props;
+    const {
+      location,
+      settings,
+      getTotalExtent,
+      getTotalLoss,
+      getPlantationsLoss
+    } = this.props;
     getTotalExtent({ ...location, ...settings });
     getTotalLoss({ ...location, ...settings });
-    // getTreeCoverExtent({ ...location });
-    // if (location.region) {
-    //   getTotalArea({ ...location });
-    // }
-    // if (location.subRegion) {
-    //   getTotalArea({ ...location });
-    // }
+    getPlantationsLoss({ ...location, ...settings, indicator: 'plantations' });
+    if (location.region) {
+      getTotalExtent({ ...location, ...settings });
+    }
+    if (location.subRegion) {
+      getTotalExtent({ ...location, ...settings });
+    }
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   const { country, region, subRegion } = nextProps.location;
-  //   const { getTotalArea, getTreeCoverExtent } = this.props;
-  //   const hasCountryChanged = country !== this.props.location.country;
-  //   const hasRegionChanged = region !== this.props.location.region;
-  //   const hasSubRegionChanged = subRegion !== this.props.location.subRegion;
+  componentWillReceiveProps(nextProps) {
+    const { location, settings } = nextProps;
+    const { getTotalExtent, getTotalLoss, getPlantationsLoss } = this.props;
 
-  //   if (hasCountryChanged) {
-  //     getTotalArea({ ...nextProps.location });
-  //     getTreeCoverExtent({ ...nextProps.location });
-  //   }
-  //   if (region && hasRegionChanged) {
-  //     getTotalArea({ ...nextProps.location });
-  //     getTreeCoverExtent({ ...nextProps.location });
-  //   }
-  //   if (subRegion && hasSubRegionChanged) {
-  //     getTotalArea({ ...nextProps.location });
-  //     getTreeCoverExtent({ ...nextProps.location });
-  //   }
-  // }
+    if (!isEqual(location, this.props.location)) {
+      getTotalExtent({ ...nextProps.location, ...settings });
+      getTotalLoss({ ...nextProps.location, ...settings });
+      getPlantationsLoss({
+        ...nextProps.location,
+        ...settings,
+        indicator: 'plantations'
+      });
+    }
+  }
 
   getHeaderDescription = () => {
-    const {
-      treeCover,
-      parcentageCover,
-      locationNames,
-      activeLocation
-    } = this.props;
-    const currentLocation = locationNames.current && locationNames.current[activeLocation];
+    const { locationNames, activeLocation, data } = this.props;
+    const percentageCover = format('.1f')(data.extent / data.totalArea * 100);
+    const currentLocation =
+      locationNames.current && locationNames.current[activeLocation];
+    const lossWithOutPlantations =
+      data.totalLoss.area - (data.plantationsLoss.area || 0);
+    const emissionsWithoutPlantations =
+      data.totalLoss.emissions - (data.plantationsLoss.emissions || 0);
     return (
       <div>
         <p>
-          In 2010,{' '}
-          {currentLocation && currentLocation.label} had{' '}
-          <b>{treeCover}ha</b> of tree cover
-          {parcentageCover > 0 && ', extending over '}
-          {parcentageCover > 0 && <b>{parcentageCover}%</b>}
-          {parcentageCover > 0 && ' of its land area'}.
-          In <b>2016</b>, it lost <b>{format('.2s')(1566959)}ha</b> of forest
-          excluding tree plantations, equivalent to{' '}
-          <b>{format('.2s')(350328700)}</b> tonnes of CO₂ of emissions.
+          In 2010, {currentLocation && currentLocation.label} had{' '}
+          <b>{format('.2s')(data.extent)}ha</b> of tree cover
+          {percentageCover > 0 && ', extending over '}
+          {percentageCover > 0 && <b>{percentageCover}%</b>}
+          {percentageCover > 0 && ' of its land area'}. In{' '}
+          <b>{data.totalLoss.year}</b>, it lost{' '}
+          <b>{format('.2s')(lossWithOutPlantations)}ha</b> of forest excluding
+          tree plantations, equivalent to{' '}
+          <b>{format('.2s')(emissionsWithoutPlantations)}</b> tonnes of CO₂ of
+          emissions.
         </p>
       </div>
     );
@@ -148,9 +153,10 @@ HeaderContainer.propTypes = {
   locationNames: PropTypes.object.isRequired,
   getTotalExtent: PropTypes.func.isRequired,
   getTotalLoss: PropTypes.func.isRequired,
-  treeCover: PropTypes.string.isRequired,
-  parcentageCover: PropTypes.string,
-  activeLocation: PropTypes.string.isRequired
+  getPlantationsLoss: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
+  activeLocation: PropTypes.string.isRequired,
+  settings: PropTypes.object.isRequired
 };
 
 export { actions, reducers, initialState };

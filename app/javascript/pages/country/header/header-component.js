@@ -17,7 +17,6 @@ class Header extends PureComponent {
       getHeaderDescription,
       isLoading
     } = this.props;
-    // console.log(this.props);
     return (
       <div className={`${className} c-header`}>
         {isLoading && <Loader className="loader" theme="theme-loader-light" />}

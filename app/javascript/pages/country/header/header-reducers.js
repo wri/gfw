@@ -3,15 +3,13 @@ export const initialState = {
   isPlantationsLossLoading: false,
   isTotalLossLoading: false,
   data: {
-    countryArea: 0,
-    regionArea: 0,
-    subRegionArea: 0,
+    totalArea: 0,
     extent: 0,
-    totalLoss: 0,
-    plantationsLoss: 0
+    totalLoss: {},
+    plantationsLoss: {}
   },
   settings: {
-    indicator: 'gadm23',
+    indicator: 'gadm28',
     threshold: 30
   }
 };
