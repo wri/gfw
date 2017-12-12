@@ -2,14 +2,13 @@ export const initialState = {
   isLoading: false,
   data: {
     totalArea: 0,
-    totalCover: 0,
-    totalIntactForest: 0,
-    totalNonForest: 0
+    cover: 0,
+    plantations: 0
   },
   settings: {
     indicator: 'gadm28',
-    unit: 'ha',
-    threshold: 30
+    threshold: 30,
+    unit: 'ha'
   }
 };
 
@@ -34,14 +33,6 @@ const setTreeCoverSettingsIndicator = (state, { payload }) => ({
   }
 });
 
-const setTreeCoverSettingsUnit = (state, { payload }) => ({
-  ...state,
-  settings: {
-    ...state.settings,
-    unit: payload
-  }
-});
-
 const setTreeCoverSettingsThreshold = (state, { payload }) => ({
   ...state,
   settings: {
@@ -54,6 +45,5 @@ export default {
   setTreeCoverLoading,
   setTreeCoverData,
   setTreeCoverSettingsIndicator,
-  setTreeCoverSettingsUnit,
   setTreeCoverSettingsThreshold
 };

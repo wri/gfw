@@ -4,32 +4,20 @@
     "value": "gadm28"
   },
   {
-    "label": "Biodiversity Hot Spots",
-    "value": "biodiversity_hot_spots"
-  },
-   {
     "label": "Biomes",
     "value": "bra_biomes"
-  },
-  {
-    "label": "Intact Forest Landscapes (2013)",
-    "value": "ifl_2013"
-  },
-   {
-    "label": "Protected Areas in Intact Forest Landscapes",
-    "value": "ifl_2013__wdpa"
-  },
-   {
-    "label": "Mining in Intact Forest Landscapes",
-    "value": "ifl_2013__mining"
   },
   {
     "label": "Mining",
     "value": "mining"
   },
   {
-    "label": "Primary Forest",
-    "value": "primary_forests"
+    "label": "Protected Areas",
+    "value": "wdpa"
+  },
+  {
+    "label": "Primary Forests",
+    "value": "primary_forest"
   },
   {
     "label": "Mining in Primary Forests",
@@ -40,15 +28,39 @@
     "value": "primary_forest__wdpa"
   },
   {
-    "label": "Indigenous Lands in Primary Forests",
-    "value": "primary_forest__landmark"
+    "label": "Intact Forest Landscapes",
+    "value": "ifl_2013"
   },
   {
-    "label": "Protected Areas",
-    "value": "wdpa"
+    "label": "Protected Areas in Intact Forest Landscapes",
+    "value": "ifl_2013__wdpa"
+  },
+  {
+    "label": "Mining in Intact Forest Landscapes",
+    "value": "ifl_2013__mining"
   },
   {
     "label": "Indigenous Lands",
     "value": "landmark"
+  },
+  {
+    "label": "Indigenous Lands in Primary Forests",
+    "value": "primary_forest__landmark"
+  },
+  {
+    "label": "Plantations",
+    "value": "plantations"
+  },
+  {
+    "label": "Mining in Plantation Areas",
+    "value": "plantations__mining"
+  },
+  {
+    "label": "Protected areas in Plantations",
+    "value": "plantations__wdpa"
+  },
+  {
+    "label": "Indigenous Lands in Plantations",
+    "value": "plantations__landmark"
   }
 ]

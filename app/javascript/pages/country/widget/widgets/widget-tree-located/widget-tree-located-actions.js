@@ -5,8 +5,8 @@ import { getLocations } from 'services/forest-data';
 
 const setTreeLocatedData = createAction('setTreeLocatedData');
 const setTreeLocatedPage = createAction('setTreeLocatedPage');
-const setTreeLocatedSettingsDataSource = createAction(
-  'setTreeLocatedSettingsDataSource'
+const setTreeLocatedSettingsIndicator = createAction(
+  'setTreeLocatedSettingsIndicator'
 );
 const setTreeLocatedSettingsUnit = createAction('setTreeLocatedSettingsUnit');
 const setTreeLocatedSettingsThreshold = createAction(
@@ -21,7 +21,17 @@ const getTreeLocated = createThunkAction(
       dispatch(setTreeLocatedIsLoading(true));
       getLocations(params)
         .then(response => {
-          setTreeLocatedData(response.data.data);
+          if (response.data.data.length) {
+            dispatch(
+              setTreeLocatedData(
+                response.data.data.map(d => ({
+                  id: d[params.region ? 'adm2' : 'adm1'],
+                  area: d.value,
+                  percentage: d.value / d.total_area * 100
+                }))
+              )
+            );
+          }
         })
         .catch(error => {
           console.info(error);
@@ -34,7 +44,7 @@ const getTreeLocated = createThunkAction(
 export default {
   setTreeLocatedData,
   setTreeLocatedPage,
-  setTreeLocatedSettingsDataSource,
+  setTreeLocatedSettingsIndicator,
   setTreeLocatedSettingsUnit,
   setTreeLocatedSettingsThreshold,
   setTreeLocatedIsLoading,

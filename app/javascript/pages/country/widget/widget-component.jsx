@@ -11,7 +11,6 @@ import WidgetTreeGain from 'pages/country/widget/widgets/widget-tree-gain';
 import WidgetPlantationArea from 'pages/country/widget/widgets/widget-plantation-area';
 
 import './widget-styles.scss';
-import './widget-settings-styles.scss';
 import './widget-tooltip-styles.scss';
 
 const widgets = {
@@ -27,11 +26,7 @@ class Widget extends PureComponent {
   render() {
     const { widget } = this.props;
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
-    return (
-      <div>
-        <WidgetComponent {...this.props} />
-      </div>
-    );
+    return <WidgetComponent {...this.props} />;
   }
 }
 
