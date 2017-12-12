@@ -133,3 +133,8 @@ export const getEndYears = createSelector(
     return years.filter(y => y.value >= startYear);
   }
 );
+
+export const getPeriods = createSelector([getData], data => {
+  if (isEmpty(data) || !data.length) return null;
+  return data;
+});
