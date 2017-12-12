@@ -99,8 +99,8 @@ class WidgetTreeCoverContainer extends PureComponent {
 WidgetTreeCoverContainer.propTypes = {
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  getTreeCover: PropTypes.func.isRequired,
   locationNames: PropTypes.object.isRequired,
+  getTreeCover: PropTypes.func.isRequired,
   indicators: PropTypes.array.isRequired,
   thresholds: PropTypes.array.isRequired
 };

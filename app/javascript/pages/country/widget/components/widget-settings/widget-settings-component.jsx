@@ -18,7 +18,8 @@ class WidgetSettings extends PureComponent {
       onUnitChange,
       onThresholdChange,
       onIndicatorChange,
-      isLoading
+      isLoading,
+      locationNames
     } = this.props;
 
     return (
@@ -28,7 +29,8 @@ class WidgetSettings extends PureComponent {
             onIndicatorChange && (
               <Dropdown
                 theme="theme-select-light"
-                label="LOCATION"
+                label={`REFINE LOCATION WITHIN ${locationNames.current &&
+                  locationNames.current.label.toUpperCase()}`}
                 value={settings.indicator}
                 options={indicators}
                 onChange={option => onIndicatorChange(option.value)}
@@ -101,7 +103,8 @@ WidgetSettings.propTypes = {
   onUnitChange: PropTypes.func,
   onStartYearChange: PropTypes.func,
   onEndYearChange: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  locationNames: PropTypes.object
 };
 
 export default WidgetSettings;
