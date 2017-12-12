@@ -32,7 +32,6 @@ const mapStateToProps = ({ countryData, widgetFAOForest, location }) => {
       isCountriesLoading ||
       isRegionsLoading ||
       isSubRegionsLoading,
-    locationNames,
     data: getFAOForestData({ fao, rank, locationNames }) || {}
   };
 };
