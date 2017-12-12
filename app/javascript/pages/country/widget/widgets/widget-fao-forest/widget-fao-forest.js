@@ -52,10 +52,7 @@ class WidgetFAOForestContainer extends PureComponent {
 
   render() {
     return createElement(WidgetFAOForestComponent, {
-      ...this.props,
-      getWidgetValues: this.getWidgetValues,
-      getSentence: this.getSentence,
-      getChartData: this.getChartData
+      ...this.props
     });
   }
 }
