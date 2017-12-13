@@ -71,8 +71,7 @@ define([
   'text!map/templates/legend/lbr_mining.handlebars',
   'text!map/templates/legend/lbr_forest.handlebars',
   'text!map/templates/legend/lbr_community.handlebars',
-  'text!map/templates/legend/bol_user_fire_frequency.handlebars',
-  'text!map/templates/legend/sentinel_tiles.handlebars',
+  'text!map/templates/legend/bol_user_fire_frequency.handlebars'
 ], function(_, Handlebars, enquire, Presenter, datasetsHelper, tpl, tplMore, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, forest2010Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl,
     concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL,
