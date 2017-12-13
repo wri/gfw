@@ -47,6 +47,7 @@ class WidgetTreeCover extends PureComponent {
               <NoContent
                 message={`No tree cover for ${locationNames.current &&
                   locationNames.current.label}`}
+                icon
               />
             )}
           {!isLoading &&

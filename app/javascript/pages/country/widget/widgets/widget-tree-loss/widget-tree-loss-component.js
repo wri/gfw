@@ -70,6 +70,7 @@ class WidgetTreeLoss extends PureComponent {
               <NoContent
                 message={`No loss data for ${locationNames.current &&
                   locationNames.current.label}`}
+                icon
               />
             )}
           {!isLoading &&
