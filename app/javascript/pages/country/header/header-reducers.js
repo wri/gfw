@@ -16,7 +16,7 @@ export const initialState = {
 
 const setExtentLoading = (state, { payload }) => ({
   ...state,
-  setExtentLoading: payload
+  isExtentLoading: payload
 });
 
 const setPlantationsLossLoading = (state, { payload }) => ({
