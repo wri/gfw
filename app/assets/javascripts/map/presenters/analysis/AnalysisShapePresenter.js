@@ -5,14 +5,14 @@
  */
 define([
   'map/presenters/PresenterClass',
-  'underscore', 
-  'backbone', 
-  'mps', 
-  'topojson', 
-  'bluebird', 
+  'underscore',
+  'backbone',
+  'mps',
+  'topojson',
+  'bluebird',
   'moment',
   'map/services/ShapeService',
-  'helpers/geojsonUtilsHelper',   
+  'helpers/geojsonUtilsHelper',
 
 ], function(PresenterClass, _, Backbone, mps, topojson, Promise, moment, ShapeService, geojsonUtilsHelper) {
 
@@ -24,7 +24,7 @@ define([
         is_playing: false,
         wdpaid: null,
         use: null,
-        useid: null,               
+        useid: null,
 
         overlay_stroke_weight: 2
       }
@@ -41,7 +41,7 @@ define([
 
       this.status.on('change:use', this.changeUse.bind(this));
       this.status.on('change:useid', this.changeUse.bind(this));
-      this.status.on('change:wdpaid', this.changeWdpaid.bind(this));      
+      this.status.on('change:wdpaid', this.changeWdpaid.bind(this));
     },
 
     /**
@@ -55,7 +55,7 @@ define([
           this.status.set({
             // Shapes
             wdpaid: params.wdpaid,
-            // Replace gfw_ from the use. 
+            // Replace gfw_ from the use.
             // We should have a pair compare array intead of using a replace...
             use: params.use,
             useid: params.useid,
@@ -81,7 +81,7 @@ define([
         'Analysis/delete': function() {
           this.deleteAnalysis();
         }
-      }      
+      }
     ],
 
     /**
@@ -157,7 +157,7 @@ define([
         useid: null,
       });
 
-      this.view.deleteGeojson();      
+      this.view.deleteGeojson();
     }
 
 

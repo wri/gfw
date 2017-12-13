@@ -175,11 +175,11 @@ define([
           if ( status === "success" ) {
             success( data, xhr );
           } else if ( status === "fail" || status === "error" ) {
-            error( JSON.parse(xhr.responseText) );
+            error(xhr.statusText);
           } else if ( status === "abort") {
 
           } else {
-            error( JSON.parse(xhr.responseText) );
+            error(xhr.statusText);
           }
         }
       });

@@ -11,6 +11,7 @@ define([
   'map/views/layers/ImazonLayer',
   'map/views/layers/ImazonCoverLayer',
   'map/views/layers/Forest2000Layer',
+  'map/views/layers/Forest2010Layer',
   'map/views/layers/IntactForestLayer',
   'map/views/layers/IntactForestLayer2000',
   'map/views/layers/IntactForestLayer2013',
@@ -146,6 +147,7 @@ define([
   'map/views/layers/MexForestCatLayer',
   'map/views/layers/MexForestSubCatLayer',
   'map/views/layers/Places2WatchLayer',
+  'map/views/layers/UncuratedPlaces2WatchLayer',
   'map/views/layers/MexicoPaymentsLayer',
   'map/views/layers/MexLandRightsLayer',
   'map/views/layers/BraLoggingLayer',
@@ -192,6 +194,7 @@ define([
   ImazonLayer,
   ImazonCoverLayer,
   Forest2000Layer,
+  Forest2010Layer,
   IntactForestLayer,
   IntactForestLayer2000,
   IntactForestLayer2013,
@@ -327,6 +330,7 @@ define([
   MexForestCatLayer,
   MexForestSubCatLayer,
   Places2WatchLayer,
+  UncuratedPlaces2WatchLayer,
   MexicoPaymentsLayer,
   MexLandRightsLayer,
   BraLoggingLayer,
@@ -399,6 +403,9 @@ define([
     },
     forest2000: {
       view: Forest2000Layer
+    },
+    forest2010: {
+      view: Forest2010Layer
     },
     intact_forest: {
       view: IntactForestLayer
@@ -817,6 +824,9 @@ define([
     },
     places_to_watch: {
       view:  Places2WatchLayer
+    },
+    uncurated_places_to_watch: {
+      view:  UncuratedPlaces2WatchLayer
     },
     mexican_psa: {
       view:  MexicoPaymentsLayer

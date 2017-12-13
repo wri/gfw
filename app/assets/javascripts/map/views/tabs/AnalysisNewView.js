@@ -154,11 +154,6 @@ define([
 
     onClickAdvanced: function(e) {
       e && e.preventDefault() && e.stopPropagation();
-      console.log('Advanced analysis');
-      // var view = new AdvancedAnalysisView({
-      //   resource: this.presenter.status.get('resource')});
-      // $('#advanced-analysis').html(view.render().el);
-
     },
 
     onClickDownloads: function(e) {

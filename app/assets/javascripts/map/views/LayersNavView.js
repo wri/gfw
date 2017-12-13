@@ -130,7 +130,7 @@ define([
         var isSubLayer = $elem.data('parent') || false;
         var openWithSublayer = $elem.data('open-with-sublayer');
 
-        if ($(event.currentTarget).hasClass('wrapped')) {
+        if ($elem.hasClass('wrapped')) {
           event && event.stopPropagation();
 
           if ($elem.prop('tagName') !== 'LI' && !$elem.siblings().hasClass('sublayer')){
@@ -143,7 +143,6 @@ define([
             }
           }
         }
-
         if (!isSubLayer) {
           this._toggleSubLayers($elem, layerSlug);
         } else {
@@ -164,11 +163,14 @@ define([
 
     _toggleSubLayers: function($parent, layerSlug) {
       var $subLayers = $parent.find('[data-parent=\'' + layerSlug + '\']');
+      var layerChecked = $parent.find('.onoffswitch').hasClass('checked');
       if ($subLayers.length > 0) {
         var _this = this;
         $subLayers.each(function() {
           var subLayerSlug = $(this).data('layer');
-          if (subLayerSlug) {
+          var subLayerChecked = $(this).find('.onoffswitch').hasClass('checked');
+          var sublayerAuto = $(this).data('autotoggle');
+          if ((subLayerSlug && layerChecked === subLayerChecked) && (!layerChecked && sublayerAuto || layerChecked)) {
             setTimeout(function() {
               _this.presenter.toggleLayer(subLayerSlug, null);
               ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + subLayerSlug);

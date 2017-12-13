@@ -27,6 +27,8 @@
     opacity: 0;
   }
 
+
+
   .cartodb-popup {
     position: relative;
     width: 250px;
@@ -83,10 +85,10 @@
         }
 
         .thumb-mask {
-          min-height: 130px;
-          max-height: 130px;
-          background-size: cover;
-          background-repeat: no-repeat;
+          min-height: 140px;
+          > img {
+            max-width: 100%;
+          }
         }
 
         .image-legend {
@@ -96,12 +98,42 @@
           color: #AAA;
           word-wrap: break-word;
         }
+
+        .thumb-mask > img {
+          max-width: 100%;
+        }
       }
 
       .cartodb-popup-fixed {
         position: absolute;
         bottom: 0;
         left: 0;
+        width: 100%;
+        padding: 0 20px;
+        z-index: 5;
+        background: $white;
+        border-top: 1px solid $border;
+        display: flex;
+        justify-content: space-between;
+        @media (max-width: $br-mobile - 1) {
+          padding: 0 10px;
+        }
+
+        .btn {
+          width: 100%;
+          margin: 15px 1px;
+          @media (max-width: $br-mobileMap - 1){
+            font-size: 12px;
+          }
+
+          &.dont-analyze {
+            // display: none !important;
+            opacity: 0.5;
+          }
+        }
+      }
+
+      .cartodb-popup-actions {
         width: 100%;
         padding: 0 20px;
         z-index: 5;
@@ -175,6 +207,15 @@
             font-size: 10px;
           }
 
+          &.inline {
+            width: auto;
+            display: inline-block;
+
+            & + span {
+              margin-right: 10px;
+            }
+          }
+
           &.no-float {
             width: 100%;
             float: none;
@@ -198,6 +239,23 @@
             width: 100%;
             float: none;
             padding: 0;
+          }
+        }
+
+        .checkbox-wrapper {
+          display: inline-block;
+        }
+
+        .checkbox {
+          width: 10px;
+          height: 10px;
+          margin-top: 9px;
+          border-radius: 5px;
+          display: inline-block;
+          background-color: #ddd;
+
+          &.-checked {
+            background-color: #97bd3d;
           }
         }
 
