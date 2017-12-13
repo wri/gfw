@@ -85,7 +85,10 @@
         }
 
         .thumb-mask {
-          min-height: 140px;
+          min-height: 130px;
+          max-height: 130px;
+          background-size: cover;
+          background-repeat: no-repeat;
           > img {
             max-width: 100%;
           }
