@@ -34,7 +34,7 @@ class WidgetTreeCoverGain extends PureComponent {
           />
         </WidgetHeader>
         {isLoading ? (
-          <Loader className="loader-offset" />
+          <Loader />
         ) : (
           <div className="container">
             <div className="info">

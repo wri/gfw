@@ -6,6 +6,7 @@ import WidgetPieChartLegend from 'pages/country/widget/components/widget-pie-cha
 import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetSettings from 'pages/country/widget/components/widget-settings';
+import NoContent from 'components/no-content';
 
 import './widget-tree-cover-styles.scss';
 
@@ -22,6 +23,7 @@ class WidgetTreeCover extends PureComponent {
       setTreeCoverSettingsThreshold,
       locationNames
     } = this.props;
+
     return (
       <div className="c-widget c-widget-tree-cover">
         <WidgetHeader title="Tree cover extent" shareAnchor={'tree-cover'}>
@@ -37,14 +39,25 @@ class WidgetTreeCover extends PureComponent {
             locationNames={locationNames}
           />
         </WidgetHeader>
-        {isLoading ? (
-          <Loader className="loader-offset" />
-        ) : (
-          <div className="pie-chart-container">
-            <WidgetPieChartLegend data={data} settings={settings} />
-            <WidgetPieChart className="cover-pie-chart" data={data} />
-          </div>
-        )}
+        <div className="container">
+          {isLoading && <Loader />}
+          {!isLoading &&
+            data &&
+            data.length === 0 && (
+              <NoContent
+                message={`No tree cover for ${locationNames.current &&
+                  locationNames.current.label}`}
+              />
+            )}
+          {!isLoading &&
+            data &&
+            data.length > 0 && (
+              <div className="pie-chart-container">
+                <WidgetPieChartLegend data={data} settings={settings} />
+                <WidgetPieChart className="cover-pie-chart" data={data} />
+              </div>
+            )}
+        </div>
       </div>
     );
   }
