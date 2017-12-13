@@ -465,8 +465,10 @@
     width: 44px;
     height: 44px;
     background: $white;
+    z-index: 1;
     .is-map-page &{
-      top: 15px;
+      top: 55px;
+      right: 10px;
     }
     svg{
       fill: $dark;
