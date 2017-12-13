@@ -1,34 +1,28 @@
 @import '~styles/settings.scss';
 
 .c-widget-tree-cover-gain {
-  .container {
-    .info {
-      border-top: 1px solid rgba($slate, 0.2);
+  .info {
+    margin-top: rem(20px);
+    border-top: 1px solid rgba($slate, 0.2);
 
-      .title {
-        display: block;
-        margin: rem(10px) 0 rem(18px);
-        font-size: 12px;
-        line-height: 1.08;
-        color: rgba($slate, 0.5);
-        font-weight: 400;
-      }
+    .title {
+      display: block;
+      margin: rem(10px) 0 rem(18px);
+      font-size: 12px;
+      line-height: 1.08;
+      color: rgba($slate, 0.5);
+      font-weight: 400;
+    }
 
-      p {
-        font-weight: 300;
-        line-height: 1.58;
-        letter-spacing: 0.1px;
-        font-size: 20px;
+    p {
+      font-weight: 300;
+      line-height: 1.58;
+      letter-spacing: 0.1px;
+      font-size: 20px;
 
-        strong {
-          color: #6f6de9;
-        }
+      strong {
+        color: #6f6de9;
       }
     }
-  }
-
-  .loader-offset {
-    top: rem(50px);
-    height: calc(100% - 50px);
   }
 }
