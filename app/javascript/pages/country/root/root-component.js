@@ -40,7 +40,12 @@ const WIDGETS = {
 
 class Root extends PureComponent {
   render() {
-    const { showMapMobile, handleShowMapMobile, links } = this.props;
+    const {
+      showMapMobile,
+      handleShowMapMobile,
+      links,
+      isGeostoreLoading
+    } = this.props;
     return (
       <div className="l-country">
         <button className="open-map-mobile-tab" onClick={handleShowMapMobile}>
@@ -93,6 +98,7 @@ class Root extends PureComponent {
                   center: { lat: -34.397, lng: 150.644 },
                   zoom: 8
                 }}
+                isParentLoading={isGeostoreLoading}
               />
             </Sticky>
           </div>
@@ -109,7 +115,8 @@ class Root extends PureComponent {
 Root.propTypes = {
   showMapMobile: PropTypes.bool.isRequired,
   handleShowMapMobile: PropTypes.func.isRequired,
-  links: PropTypes.array.isRequired
+  links: PropTypes.array.isRequired,
+  isGeostoreLoading: PropTypes.bool
 };
 
 export default Root;

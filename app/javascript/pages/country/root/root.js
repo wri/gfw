@@ -10,13 +10,14 @@ export { initialState } from './root-reducers';
 export { default as reducers } from './root-reducers';
 export { default as actions } from './root-actions';
 
-const mapStateToProps = state => ({
-  gfwHeaderHeight: state.root.gfwHeaderHeight,
-  isMapFixed: state.root.isMapFixed,
-  showMapMobile: state.root.showMapMobile,
+const mapStateToProps = ({ root, countryData }) => ({
+  gfwHeaderHeight: root.gfwHeaderHeight,
+  isMapFixed: root.isMapFixed,
+  showMapMobile: root.showMapMobile,
   links: Object.values(routes)
     .filter(r => r.submenu)
-    .map(r => ({ label: r.label, path: r.path }))
+    .map(r => ({ label: r.label, path: r.path })),
+  isGeostoreLoading: countryData.isGeostoreLoading
 });
 
 class RootContainer extends PureComponent {
