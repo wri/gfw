@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Loader from 'components/loader/loader';
+import Loader from 'components/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
-import WidgetTreeCoverGainSettings from './widget-tree-gain-settings-component';
+import WidgetSettings from 'pages/country/widget/components/widget-settings';
+import WdigetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 import './widget-tree-gain-styles.scss';
 
 class WidgetTreeCoverGain extends PureComponent {
@@ -12,9 +13,11 @@ class WidgetTreeCoverGain extends PureComponent {
       locationNames,
       isLoading,
       indicators,
+      thresholds,
       settings,
       getSentence,
-      setTreeCoverGainSettingsIndicator
+      setTreeCoverGainSettingsIndicator,
+      setTreeCoverGainSettingsThreshold
     } = this.props;
 
     return (
@@ -24,11 +27,13 @@ class WidgetTreeCoverGain extends PureComponent {
             locationNames.current.label}`}
           shareAnchor={'tree-cover-gain'}
         >
-          <WidgetTreeCoverGainSettings
+          <WidgetSettings
             type="settings"
             indicators={indicators}
+            thresholds={thresholds}
             settings={settings}
             onIndicatorChange={setTreeCoverGainSettingsIndicator}
+            onThresholdChange={setTreeCoverGainSettingsThreshold}
             isLoading={isLoading}
             locationNames={locationNames}
           />
@@ -39,9 +44,7 @@ class WidgetTreeCoverGain extends PureComponent {
           <div className="container">
             <div className="info">
               <p className="title">Hansen - UMD</p>
-              <p
-                dangerouslySetInnerHTML={getSentence()} // eslint-disable-line
-              />
+              <WdigetDynamicSentence sentence={getSentence()} />
             </div>
           </div>
         )}
@@ -54,9 +57,11 @@ WidgetTreeCoverGain.propTypes = {
   locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   indicators: PropTypes.array.isRequired,
+  thresholds: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   getSentence: PropTypes.func.isRequired,
-  setTreeCoverGainSettingsIndicator: PropTypes.func.isRequired
+  setTreeCoverGainSettingsIndicator: PropTypes.func.isRequired,
+  setTreeCoverGainSettingsThreshold: PropTypes.func.isRequired
 };
 
 export default WidgetTreeCoverGain;
