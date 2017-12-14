@@ -61,7 +61,7 @@ class WidgetTreeCoverContainer extends PureComponent {
     const { settings, getTreeCover, location } = nextProps;
 
     if (
-      !isEqual(nextProps.location, this.props.location) ||
+      !isEqual(location, this.props.location) ||
       !isEqual(settings.indicator, this.props.settings.indicator) ||
       !isEqual(settings.threshold, this.props.settings.threshold)
     ) {
