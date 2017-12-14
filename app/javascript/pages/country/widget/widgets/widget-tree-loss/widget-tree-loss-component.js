@@ -13,7 +13,7 @@ import {
 import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetTooltip from 'pages/country/widget/components/widget-tooltip';
-import WidgetTreeLossSettings from './widget-tree-loss-settings-component';
+import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import WidgetTreeLossTooltip from './widget-tree-loss-tooltip-component';
 import './widget-tree-loss-styles.scss';
 
@@ -34,7 +34,8 @@ class WidgetTreeLoss extends PureComponent {
       setTreeLossSettingsStartYear,
       setTreeLossSettingsEndYear,
       getSentence,
-      size
+      size,
+      locationNames
     } = this.props;
 
     return (
@@ -45,7 +46,7 @@ class WidgetTreeLoss extends PureComponent {
           shareAnchor={'tree-loss'}
           size={size}
         >
-          <WidgetTreeLossSettings
+          <WidgetSettings
             isLoading={isLoading}
             type="settings"
             indicators={indicators}
@@ -57,6 +58,7 @@ class WidgetTreeLoss extends PureComponent {
             onThresholdChange={setTreeLossSettingsThreshold}
             onStartYearChange={setTreeLossSettingsStartYear}
             onEndYearChange={setTreeLossSettingsEndYear}
+            locationNames={locationNames}
           />
         </WidgetHeader>
         {isLoading ? (
@@ -118,7 +120,8 @@ WidgetTreeLoss.propTypes = {
   getSentence: PropTypes.func.isRequired,
   startYears: PropTypes.array.isRequired,
   endYears: PropTypes.array.isRequired,
-  size: PropTypes.number
+  size: PropTypes.number,
+  locationNames: PropTypes.object
 };
 
 export default WidgetTreeLoss;
