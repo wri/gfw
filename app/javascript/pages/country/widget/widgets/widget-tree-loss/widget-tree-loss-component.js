@@ -13,7 +13,7 @@ import {
 import Loader from 'components/loader/loader';
 import NoContent from 'components/no-content';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
-import WidgetTooltip from 'pages/country/widget/components/widget-tooltip';
+import WidgetTooltip from 'pages/country/widget/components/widget-chart-tooltip';
 import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import WidgetTreeLossTooltip from './widget-tree-loss-tooltip-component';
 
