@@ -6,7 +6,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: rem(30px);
+  padding-bottom: rem(5px);
 
   .title {
     width: 100%;
@@ -16,10 +16,6 @@
     color: $slate;
     text-transform: uppercase;
     padding-right: rem(20px);
-
-    @media screen and (min-width: $screen-s) {
-      width: 50%;
-    }
   }
 
   .options {
@@ -46,6 +42,10 @@
         margin-left: rem(10px);
         padding-left: rem(5px);
       }
+    }
+
+    .view-on-map {
+      min-width: rem(100px);
     }
   }
 

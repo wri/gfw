@@ -42,11 +42,13 @@ class WidgetNumberedList extends PureComponent {
               </li>
             ))}
         </ul>
-        <WidgetPaginate
-          settings={settings}
-          count={data.length}
-          onClickChange={handlePageChange}
-        />
+        {data.length > settings.pageSize && (
+          <WidgetPaginate
+            settings={settings}
+            count={data.length}
+            onClickChange={handlePageChange}
+          />
+        )}
       </div>
     );
   }

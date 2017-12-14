@@ -1,15 +1,11 @@
 @import '~styles/settings.scss';
 
 .c-widget-tree-cover {
-  .loader-offset {
-    top: rem(50px);
-    height: calc(100% - 50px);
-  }
-
   .pie-chart-container {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     justify-content: space-between;
+    padding-top: rem(40px);
   }
 }
