@@ -30,7 +30,7 @@ class WidgetFAOExtent extends PureComponent {
           />
         </WidgetHeader>
         {isLoading ? (
-          <Loader className="loader-offset" />
+          <Loader />
         ) : (
           <div
             className="sentence"
