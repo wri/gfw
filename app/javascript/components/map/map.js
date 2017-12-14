@@ -14,7 +14,6 @@ export { default as actions } from './map-actions';
 
 const mapStateToProps = state => ({
   isLoading: state.map.isLoading,
-  isGeostoreLoading: state.countryData.isGeostoreLoading,
   bounds: state.countryData.geostore.bounds,
   layerSpec: state.map.layerSpec,
   layers: state.map.layers
@@ -27,8 +26,8 @@ class MapContainer extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isGeostoreLoading, bounds, layers, layerSpec } = nextProps;
-    if (isGeostoreLoading !== this.props.isGeostoreLoading && bounds) {
+    const { isParentLoading, bounds, layers, layerSpec } = nextProps;
+    if (isParentLoading !== this.props.isParentLoading && bounds) {
       this.boundMap(nextProps.bounds);
     }
 
@@ -82,7 +81,7 @@ class MapContainer extends PureComponent {
 }
 
 MapContainer.propTypes = {
-  isGeostoreLoading: PropTypes.bool.isRequired,
+  isParentLoading: PropTypes.bool,
   layerSpec: PropTypes.object.isRequired,
   bounds: PropTypes.array.isRequired,
   layers: PropTypes.array.isRequired,

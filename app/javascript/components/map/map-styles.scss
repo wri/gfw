@@ -6,8 +6,8 @@
   background-color: #b3e2ff;
 }
 
-.loader-overlay {
-  background-color: rgba(white, 0.5);
+.map-loader {
+  z-index: 10;
 }
 
 .open-map-mobile-tab {

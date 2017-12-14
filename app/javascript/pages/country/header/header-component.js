@@ -2,45 +2,19 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Dropdown from 'components/dropdown';
 import Loader from 'components/loader';
-import { format } from 'd3-format';
 
 import './header-styles.scss';
 
 class Header extends PureComponent {
-  getHeaderDescription = () => {
-    const {
-      treeCover,
-      parcentageCover,
-      adminsSelected,
-      activeAdmin
-    } = this.props;
-    return (
-      <div>
-        <p>
-          In 2010,{' '}
-          {adminsSelected[activeAdmin] && adminsSelected[activeAdmin].label} had{' '}
-          <b>{treeCover}ha</b> of tree cover
-          {parcentageCover > 0 && ', extending over '}
-          {parcentageCover > 0 && <b>{parcentageCover}%</b>}
-          {parcentageCover > 0 && ' of its land area'}.
-        </p>
-        <p>
-          In <b>2016</b>, it lost <b>{format('.2s')(1566959)}ha</b> of forest
-          excluding tree plantations, equivalent to{' '}
-          <b>{format('.2s')(350328700)}</b> tonnes of CO₂ of emissions.
-        </p>
-      </div>
-    );
-  };
-
   render() {
     const {
       className,
-      adminsOptions,
-      adminsSelected,
+      locationOptions,
+      locationNames,
       handleCountryChange,
       handleRegionChange,
       handleSubRegionChange,
+      getHeaderDescription,
       isLoading
     } = this.props;
     return (
@@ -56,15 +30,15 @@ class Header extends PureComponent {
                 <Dropdown
                   theme="theme-select-dark"
                   placeholder="Country"
-                  value={adminsSelected.country}
-                  options={adminsOptions.countries}
+                  value={locationNames.country}
+                  options={locationOptions.countries}
                   onChange={handleCountryChange}
                   searchable
                   disabled={isLoading}
                 />
               </div>
-              {adminsOptions.regions &&
-                adminsOptions.regions.length > 1 && (
+              {locationOptions.regions &&
+                locationOptions.regions.length > 1 && (
                   <div className="select">
                     <svg className="icon icon-angle-arrow-down c-header__select-arrow">
                       <use xlinkHref="#icon-angle-arrow-down" />
@@ -72,20 +46,20 @@ class Header extends PureComponent {
                     <Dropdown
                       theme="theme-select-dark"
                       placeholder="Region"
-                      value={adminsSelected.region}
-                      options={adminsOptions.regions}
+                      value={locationNames.region}
+                      options={locationOptions.regions}
                       onChange={region =>
-                        handleRegionChange(adminsSelected.country, region)
+                        handleRegionChange(locationNames.country, region)
                       }
                       searchable
                       disabled={isLoading}
                     />
                   </div>
                 )}
-              {adminsSelected.region &&
-                adminsSelected.region.value &&
-                adminsOptions.subRegions &&
-                adminsOptions.subRegions.length > 1 && (
+              {locationNames.region &&
+                locationNames.region.value &&
+                locationOptions.subRegions &&
+                locationOptions.subRegions.length > 1 && (
                   <div className="select">
                     <svg className="icon icon-angle-arrow-down c-header__select-arrow">
                       <use xlinkHref="#icon-angle-arrow-down" />
@@ -93,12 +67,12 @@ class Header extends PureComponent {
                     <Dropdown
                       theme="theme-select-dark"
                       placeholder="Juristriction"
-                      value={adminsSelected.subRegion}
-                      options={adminsOptions.subRegions}
+                      value={locationNames.subRegion}
+                      options={locationOptions.subRegions}
                       onChange={subRegion =>
                         handleSubRegionChange(
-                          adminsSelected.country,
-                          adminsSelected.region,
+                          locationNames.country,
+                          locationNames.region,
                           subRegion
                         )
                       }
@@ -111,7 +85,11 @@ class Header extends PureComponent {
           </div>
           <div className="columns large-6 medium-12 small-12">
             <div className="description text -title-xs">
-              {!isLoading && this.getHeaderDescription()}
+              {!isLoading && (
+                <p
+                  dangerouslySetInnerHTML={{ __html: getHeaderDescription() }}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -123,14 +101,12 @@ class Header extends PureComponent {
 Header.propTypes = {
   className: PropTypes.string,
   isLoading: PropTypes.bool.isRequired,
-  adminsSelected: PropTypes.object.isRequired,
-  adminsOptions: PropTypes.object.isRequired,
+  locationNames: PropTypes.object.isRequired,
+  locationOptions: PropTypes.object.isRequired,
   handleCountryChange: PropTypes.func.isRequired,
   handleRegionChange: PropTypes.func.isRequired,
   handleSubRegionChange: PropTypes.func.isRequired,
-  treeCover: PropTypes.string.isRequired,
-  parcentageCover: PropTypes.string,
-  activeAdmin: PropTypes.string.isRequired
+  getHeaderDescription: PropTypes.func.isRequired
 };
 
 export default Header;

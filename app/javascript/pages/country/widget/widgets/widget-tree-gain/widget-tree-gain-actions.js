@@ -9,21 +9,25 @@ const setTreeCoverGainData = createAction('setTreeCoverGainData');
 const setTreeCoverGainSettingsIndicator = createAction(
   'setTreeCoverGainSettingsIndicator'
 );
+const setTreeCoverGainSettingsThreshold = createAction(
+  'setTreeCoverGainSettingsThreshold'
+);
+
 const getTreeCoverGain = createThunkAction(
   'getTreeCoverGain',
   params => (dispatch, state) => {
     if (!state().widgetTreeCoverGain.isLoading) {
       dispatch(setTreeCoverGainIsLoading(true));
       axios
-        .all([getGain({ ...params }), getExtent({ ...params, threshold: 0 })])
+        .all([getGain({ ...params }), getExtent({ ...params })])
         .then(
-          axios.spread((getTreeGainResponse, getExtentResponse) => {
-            const gain = getTreeGainResponse.data.data[0].value;
-            const extent = getExtentResponse.data.data[0].value;
+          axios.spread((gainResponse, extentResponse) => {
+            const gain = gainResponse.data.data;
+            const extent = extentResponse.data.data;
             dispatch(
               setTreeCoverGainData({
-                gain,
-                extent
+                gain: (gain && gain[0].value) || 0,
+                extent: (extent && extent[0].value) || 0
               })
             );
           })
@@ -40,5 +44,6 @@ export default {
   setTreeCoverGainIsLoading,
   setTreeCoverGainData,
   setTreeCoverGainSettingsIndicator,
+  setTreeCoverGainSettingsThreshold,
   getTreeCoverGain
 };

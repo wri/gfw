@@ -1,5 +1,8 @@
 import { connect } from 'react-redux';
-import { getAdminsSelected } from 'pages/country/widget/widget-selectors';
+import {
+  getAdminsSelected,
+  getActiveAdmin
+} from 'pages/country/widget/widget-selectors';
 import Component from './widget-component';
 
 const mapStateToProps = ({ location, countryData }) => {
@@ -21,7 +24,8 @@ const mapStateToProps = ({ location, countryData }) => {
       isRegionsLoading ||
       isSubRegionsLoading ||
       isGeostoreLoading,
-    locationNames: getAdminsSelected(adminData)
+    locationNames: getAdminsSelected(adminData),
+    activeLocation: getActiveAdmin({ location: location.payload })
   };
 };
 
