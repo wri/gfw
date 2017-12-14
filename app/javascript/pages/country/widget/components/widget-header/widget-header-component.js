@@ -53,7 +53,7 @@ class WidgetHeader extends PureComponent {
           </div>
           {viewOnMapCallback && (
             <Button
-              className="theme-button-small"
+              className="theme-button-small view-on-map"
               onClick={viewOnMapCallback}
               disabled
             >
