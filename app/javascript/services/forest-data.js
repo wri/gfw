@@ -8,7 +8,7 @@ const SQL_QUERIES = {
   extent:
     "SELECT SUM(area_extent) as value SUM(area_gadm28) as total_area, FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
   gain:
-    "SELECT SUM(area) as value FROM data WHERE {location} AND polyname = '{indicator}'",
+    "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = {threshold}",
   loss:
     "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.emissions) as emissions FROM data WHERE polyname = '{indicator}' AND {location} AND thresh= {threshold} GROUP BY polyname, iso, nested(year_data.year)",
   locations:
@@ -46,9 +46,17 @@ export const getExtent = ({
   return axios.get(url);
 };
 
-export const getGain = ({ country, region, subRegion, indicator }) => {
+export const getGain = ({
+  country,
+  region,
+  subRegion,
+  indicator,
+  threshold
+}) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.gain}`
     .replace('{location}', getLocationQuery(country, region, subRegion))
+    .replace('{threshold}', threshold)
+    .replace('{calc}', region ? 'area_gain' : 'SUM(area_gain)')
     .replace('{indicator}', indicator);
   return axios.get(url);
 };
