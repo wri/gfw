@@ -14,7 +14,7 @@ import Loader from 'components/loader/loader';
 import NoContent from 'components/no-content';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetTooltip from 'pages/country/widget/components/widget-tooltip';
-import WidgetTreeLossSettings from './widget-tree-loss-settings-component';
+import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import WidgetTreeLossTooltip from './widget-tree-loss-tooltip-component';
 
 import './widget-tree-loss-styles.scss';
@@ -48,7 +48,7 @@ class WidgetTreeLoss extends PureComponent {
           shareAnchor={'tree-loss'}
           size={size}
         >
-          <WidgetTreeLossSettings
+          <WidgetSettings
             isLoading={isLoading}
             type="settings"
             indicators={indicators}
@@ -60,6 +60,7 @@ class WidgetTreeLoss extends PureComponent {
             onThresholdChange={setTreeLossSettingsThreshold}
             onStartYearChange={setTreeLossSettingsStartYear}
             onEndYearChange={setTreeLossSettingsEndYear}
+            locationNames={locationNames}
           />
         </WidgetHeader>
         <div className="container">
