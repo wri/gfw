@@ -5,7 +5,6 @@ import Loader from 'components/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import WdigetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
-import './widget-tree-gain-styles.scss';
 
 class WidgetTreeCoverGain extends PureComponent {
   render() {
@@ -42,10 +41,7 @@ class WidgetTreeCoverGain extends PureComponent {
           <Loader />
         ) : (
           <div className="container">
-            <div className="info">
-              <p className="title">Hansen - UMD</p>
-              <WdigetDynamicSentence sentence={getSentence()} />
-            </div>
+            <WdigetDynamicSentence sentence={getSentence()} />
           </div>
         )}
       </div>
