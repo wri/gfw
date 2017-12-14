@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
+import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 import WidgetPieChart from 'pages/country/widget/components/widget-pie-chart';
 import WidgetPieChartLegend from 'pages/country/widget/components/widget-pie-chart-legend';
 import './widget-fao-forest-styles.scss';
@@ -19,13 +20,10 @@ class WidgetFAOForestGain extends PureComponent {
           shareAnchor={'fao-forest'}
         />
         {isLoading ? (
-          <Loader className="loader-offset" />
+          <Loader />
         ) : (
-          <div>
-            <div
-              className="sentence"
-              dangerouslySetInnerHTML={getSentence(this.props)} // eslint-disable-line
-            />
+          <div className="container">
+            <WidgetDynamicSentence sentence={getSentence()} />
             <div className="pie-chart-container">
               <WidgetPieChartLegend
                 data={data}

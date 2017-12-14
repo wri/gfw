@@ -1,17 +1,6 @@
 @import '~styles/settings.scss';
 
 .c-widget-fao-forest {
-  .sentence {
-    font-weight: 300;
-    line-height: 1.58;
-    letter-spacing: 0.1px;
-    font-size: 20px;
-
-    strong {
-      color: #6f6de9;
-    }
-  }
-
   .pie-chart-container {
     display: flex;
     padding-top: rem(20px);
@@ -19,10 +8,5 @@
     .c-pie-chart-legend {
       width: auto;
     }
-  }
-
-  .loader-offset {
-    top: rem(50px);
-    height: calc(100% - 50px);
   }
 }

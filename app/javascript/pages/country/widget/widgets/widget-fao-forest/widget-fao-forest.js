@@ -53,7 +53,7 @@ class WidgetFAOForestContainer extends PureComponent {
     }
   }
 
-  getSentence = props => {
+  getSentence = () => {
     const {
       locationNames,
       fao: {
@@ -64,7 +64,7 @@ class WidgetFAOForestContainer extends PureComponent {
         forest_regenerated
       },
       rank
-    } = props;
+    } = this.props;
 
     const naturallyRegenerated = extent / 100 * forest_regenerated;
     const primaryForest = extent / 100 * forest_primary;
@@ -72,20 +72,19 @@ class WidgetFAOForestContainer extends PureComponent {
     const nonForest =
       area_ha - (naturallyRegenerated + primaryForest + plantedForest);
 
-    return {
-      __html: `FAO data from 2015 shows that ${locationNames.current &&
-        locationNames.current.label} is ${
-        nonForest / area_ha > 0.5 ? 'mostly non-forest.' : 'mostly forest.'
-      }${
-        primaryForest > 0
-          ? ` Primary forest occupies <strong>${format('.1f')(
-            primaryForest / area_ha * 100
-          )}%</strong> of the country. This gives ${locationNames.current &&
-              locationNames.current
-                .label} a rank of <strong>${rank}th</strong> out of 110 countries in terms of its relative amount of primary forest.`
-          : ''
-      }`
-    };
+    const sentence = `FAO data from 2015 shows that ${locationNames.current &&
+      locationNames.current.label} is ${
+      nonForest / area_ha > 0.5 ? 'mostly non-forest.' : 'mostly forest.'
+    }${
+      primaryForest > 0
+        ? ` Primary forest occupies <strong>${format('.1f')(
+          primaryForest / area_ha * 100
+        )}%</strong> of the country. This gives ${locationNames.current &&
+            locationNames.current
+              .label} a rank of <strong>${rank}th</strong> out of 110 countries in terms of its relative amount of primary forest.`
+        : ''
+    }`;
+    return sentence;
   };
 
   render() {
