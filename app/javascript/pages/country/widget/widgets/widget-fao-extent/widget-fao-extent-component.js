@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
+import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 import WidgetSettings from 'pages/country/widget/components/widget-settings';
-import './widget-fao-extent-styles.scss';
 
 class WidgetFAOExtent extends PureComponent {
   render() {
@@ -32,10 +32,9 @@ class WidgetFAOExtent extends PureComponent {
         {isLoading ? (
           <Loader />
         ) : (
-          <div
-            className="sentence"
-            dangerouslySetInnerHTML={getSentence()} // eslint-disable-line
-          />
+          <div className="container">
+            <WidgetDynamicSentence sentence={getSentence()} />
+          </div>
         )}
       </div>
     );
