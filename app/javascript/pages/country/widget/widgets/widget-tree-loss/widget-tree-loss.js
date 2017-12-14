@@ -36,7 +36,10 @@ const mapStateToProps = ({ widgetTreeLoss, location, countryData }) => ({
   isLoading: widgetTreeLoss.isLoading,
   location: location.payload,
   data:
-    filterData({ data: widgetTreeLoss.data, ...widgetTreeLoss.settings }) || [],
+    filterData({
+      data: widgetTreeLoss.data,
+      ...widgetTreeLoss.settings
+    }) || [],
   extent: widgetTreeLoss.data.extent,
   startYears:
     getStartYears({
