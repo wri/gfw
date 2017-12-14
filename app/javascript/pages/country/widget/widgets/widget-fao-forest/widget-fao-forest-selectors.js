@@ -10,7 +10,7 @@ const getLocationNames = state => state.locationNames || null;
 export const getFAOForestData = createSelector(
   [getFAO, getRank, getLocationNames],
   (fao, rank, locationNames) => {
-    if (!fao || !rank || !locationNames) return null;
+    if (!fao || !rank || !locationNames) { return { chartData: [], sentence: null }; }
 
     const {
       area_ha,
@@ -67,9 +67,8 @@ export const getFAOForestData = createSelector(
             ? ` Primary forest occupies <strong>${format('.1f')(
               primaryForest / area_ha * 100
             )}%</strong> of the country. This gives ${locationNames.current &&
-                locationNames.current.label} a rank of <strong>${
-              rank
-            }th</strong> out of 110 countries in terms of its relative amount of primary forest.`
+                locationNames.current
+                  .label} a rank of <strong>${rank}th</strong> out of 110 countries in terms of its relative amount of primary forest.`
             : ''
         }`
       }
