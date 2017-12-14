@@ -1,8 +1,9 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import numeral from 'numeral';
+import { format } from 'd3-format';
 import isEqual from 'lodash/isEqual';
+import sumBy from 'lodash/sumBy';
 
 import {
   getThresholds,
@@ -36,6 +37,7 @@ const mapStateToProps = ({ widgetTreeLoss, location, countryData }) => ({
   location: location.payload,
   data:
     filterData({ data: widgetTreeLoss.data, ...widgetTreeLoss.settings }) || [],
+  extent: widgetTreeLoss.data.extent,
   startYears:
     getStartYears({
       data: widgetTreeLoss.data.loss,
@@ -81,31 +83,25 @@ class WidgetTreeLossContainer extends PureComponent {
   getSentence = () => {
     const { locationNames, indicators, settings, data, extent } = this.props;
     const indicator = getActiveFilter(settings, indicators, 'indicator');
-    const totalLoss =
-      data.length &&
-      data.reduce(
-        (sum, item) => (typeof sum === 'object' ? sum.area : sum) + item.area
-      );
+    const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
-      data.length &&
-      data.reduce(
-        (sum, item) =>
-          (typeof sum === 'object' ? sum.emissions : sum) + item.emissions
-      );
-    const locationText = `${indicator &&
-      indicator.label} of ${locationNames.current &&
-      locationNames.current.label}`;
-
-    return `Between ${settings.startYear} and ${settings.endYear}, ${
-      locationText
-    } lost ${numeral(totalLoss).format(
-      '0,0'
-    )} ha of tree cover: This loss is equal to ${numeral(
-      totalLoss / (extent * 100)
-    ).format('0.0')}% of the total ${indicator &&
-      indicator.label.toLowerCase()} tree cover extent in 2010, and equivalent to ${numeral(
-      totalEmissions
-    ).format('0,0')} tonnes of CO\u2082 emissions.`;
+      (data && data.length && sumBy(data, 'emissions')) || 0;
+    const percentageLoss = extent / totalLoss * 100;
+    const locationText = `${locationNames.current &&
+      locationNames.current.label} (${indicator &&
+      indicator.label.toLowerCase()})`;
+    return `Between <b>${settings.startYear}</b> and <b>${
+      settings.endYear
+    }</b>, 
+      ${locationText} lost <b>${format('.3s')(totalLoss)}ha</b> of tree cover: 
+      This loss is equal to <b>${format('.1f')(
+      percentageLoss
+    )}%</b> of the total 
+      <b>${indicator &&
+        indicator.label.toLowerCase()}</b> tree cover extent in 2010, 
+      and equivalent to <b>${format('.3s')(
+          totalEmissions
+        )}tonnes</b> of CO\u2082 emissions.`;
   };
 
   viewOnMap = () => {
@@ -128,7 +124,8 @@ WidgetTreeLossContainer.propTypes = {
   location: PropTypes.object.isRequired,
   getTreeLoss: PropTypes.func.isRequired,
   setLayers: PropTypes.func.isRequired,
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  extent: PropTypes.number.isRequired
 };
 
 export default connect(mapStateToProps, actions)(WidgetTreeLossContainer);

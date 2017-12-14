@@ -36,7 +36,26 @@ class WidgetBarChart extends PureComponent {
               tickCount={7}
             />
             <CartesianGrid vertical={false} strokeDasharray="3 4" />
-            <Tooltip content={<WidgetChartToolTip />} />
+            <Tooltip
+              content={
+                <WidgetChartToolTip
+                  settings={[
+                    {
+                      key: 'year',
+                      unit: ''
+                    },
+                    {
+                      key: 'area',
+                      unit: 'ha'
+                    },
+                    {
+                      key: 'percentage',
+                      unit: '%'
+                    }
+                  ]}
+                />
+              }
+            />
             <Bar dataKey={yKey} barSize={22} fill="#fe6598" />
           </BarChart>
         </ResponsiveContainer>
