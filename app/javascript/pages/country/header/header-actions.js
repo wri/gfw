@@ -1,53 +1,76 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
-import { getExtent } from 'services/forest-data';
-import { getArea } from 'services/total-area';
+import { getExtent, getLoss } from 'services/forest-data';
+import sortBy from 'lodash/sortBy';
+import reverse from 'lodash/reverse';
 
-const setAreaLoading = createAction('setAreaLoading');
-const setExtentLoading = createAction('setExtentLoading');
+export const setExtentLoading = createAction('setExtentLoading');
+export const setPlantationsLossLoading = createAction(
+  'setPlantationsLossLoading'
+);
+export const setTotalLossLoading = createAction('setTotalLossLoading');
 
-export const setCountryArea = createAction('setCountryArea');
-export const setRegionArea = createAction('setRegionArea');
-export const setSubRegionArea = createAction('setSubRegionArea');
+export const setTotalExtent = createAction('setTotalExtent');
+export const setTotalLoss = createAction('setTotalLoss');
+export const setPlantationsLoss = createAction('setPlantationsLoss');
 
-export const setTreeCoverExtent = createAction('setTreeCoverExtent');
-
-export const getTotalArea = createThunkAction(
-  'getTotalArea',
+export const getTotalExtent = createThunkAction(
+  'getTotalExtent',
   params => (dispatch, state) => {
-    if (!state().header.isAreaLoading) {
-      dispatch(setAreaLoading(true));
-      getArea(params)
+    if (!state().header.isExtentLoading) {
+      dispatch(setExtentLoading(true));
+      getExtent(params)
         .then(response => {
-          if (params.subRegion) {
-            dispatch(setSubRegionArea(response.data.rows[0].value));
-          } else if (params.region) {
-            dispatch(setRegionArea(response.data.rows[0].value));
-          } else {
-            dispatch(setCountryArea(response.data.rows[0].value));
-          }
-          dispatch(setAreaLoading(false));
+          const data = response.data.data;
+          dispatch(
+            setTotalExtent({
+              totalArea: (data[0] && data[0].total_area) || 0,
+              extent: (data[0] && data[0].value) || 0
+            })
+          );
         })
         .catch(error => {
-          dispatch(setAreaLoading(false));
+          dispatch(setExtentLoading(false));
           console.info(error);
         });
     }
   }
 );
 
-export const getTreeCoverExtent = createThunkAction(
-  'getTreeCoverExtent',
-  location => (dispatch, state) => {
-    if (!state().header.isLoading) {
-      dispatch(setExtentLoading(true));
-      getExtent({ ...location, indicator: 'gadm28', threshold: 30 })
+export const getTotalLoss = createThunkAction(
+  'getTotalLoss',
+  params => (dispatch, state) => {
+    if (!state().header.isTotalLossLoading) {
+      dispatch(setTotalLoss(true));
+      getLoss(params)
         .then(response => {
-          dispatch(setTreeCoverExtent(response.data.data[0].value));
-          dispatch(setExtentLoading(false));
+          const data = response.data.data.length
+            ? reverse(sortBy(response.data.data, 'year'))[0]
+            : {};
+          dispatch(setTotalLoss(data));
         })
         .catch(error => {
-          dispatch(setExtentLoading(false));
+          dispatch(setTotalLoss(false));
+          console.info(error);
+        });
+    }
+  }
+);
+
+export const getPlantationsLoss = createThunkAction(
+  'getPlantationsLoss',
+  params => (dispatch, state) => {
+    if (!state().header.isPlantationsLossLoading) {
+      dispatch(setPlantationsLossLoading(true));
+      getLoss(params)
+        .then(response => {
+          const data = response.data.data.length
+            ? reverse(sortBy(response.data.data, 'year'))[0]
+            : {};
+          dispatch(setPlantationsLoss(data));
+        })
+        .catch(error => {
+          dispatch(setPlantationsLossLoading(false));
           console.info(error);
         });
     }

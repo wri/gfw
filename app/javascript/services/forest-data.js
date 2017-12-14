@@ -10,10 +10,15 @@ const SQL_QUERIES = {
   gain:
     "SELECT SUM(area) as value FROM data WHERE {location} AND polyname = '{indicator}'",
   loss:
-    "SELECT sum(area) as area, sum(emissions) as emissions FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
+    "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.emissions) as emissions FROM data WHERE polyname = '{indicator}' AND {location} AND thresh= {threshold} GROUP BY polyname, iso, nested(year_data.year)",
   locations:
     "SELECT {location}, {extent} as value, {area} as total_area FROM data WHERE iso = '{iso}' AND thresh = {threshold} AND polyname = '{polyname}' {grouping}"
 };
+
+const getLocationQuery = (country, region, subRegion) =>
+  `iso = '${country}'${region ? ` AND adm1 = ${region}` : ''}${
+    subRegion ? ` AND adm2 = ${subRegion}` : ''
+  }`;
 
 export const getLocations = ({ country, region, indicator, threshold }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.locations}`
@@ -26,11 +31,6 @@ export const getLocations = ({ country, region, indicator, threshold }) => {
     .replace('{grouping}', region ? `AND adm1 = '${region}'` : 'GROUP BY adm1');
   return axios.get(url);
 };
-
-const getLocationQuery = (country, region, subRegion) =>
-  `iso = '${country}'${region ? ` AND adm1 = ${region}` : ''}${
-    subRegion ? ` AND adm2 = ${subRegion}` : ''
-  }`;
 
 export const getExtent = ({
   country,

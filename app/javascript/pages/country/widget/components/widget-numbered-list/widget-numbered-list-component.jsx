@@ -25,7 +25,7 @@ class WidgetNumberedList extends PureComponent {
         <ul className="list">
           {data.length > 0 &&
             pageData.map((item, index) => (
-              <li className="list-item" key={item.value}>
+              <li className="list-item" key={item.label}>
                 <div className="item-label">
                   <div
                     className="item-bubble"
