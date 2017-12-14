@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const DATASET = process.env.COUNTRIES_PAGE_DATASET;
-const API_URL = process.env.GFW_API_HOST_PROD;
-const REQUEST_URL = `${API_URL}/query/${DATASET}?sql=`;
+const REQUEST_URL = `${process.env.GFW_API_HOST_PROD}/query/${DATASET}?sql=`;
+const CARTO_REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
 
 const SQL_QUERIES = {
   extent:
@@ -12,7 +12,9 @@ const SQL_QUERIES = {
   loss:
     "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.emissions) as emissions FROM data WHERE polyname = '{indicator}' AND {location} AND thresh= {threshold} GROUP BY polyname, iso, nested(year_data.year)",
   locations:
-    "SELECT {location}, {extent} as value, {area} as total_area FROM data WHERE iso = '{iso}' AND thresh = {threshold} AND polyname = '{polyname}' {grouping}"
+    "SELECT {location}, {extent} as value, {area} as total_area FROM data WHERE iso = '{iso}' AND thresh = {threshold} AND polyname = '{polyname}' {grouping}",
+  fao:
+    "SELECT fao.iso, fao.name, forest_planted, forest_primary, forest_regenerated, fao.forest_primary, fao.extent, a.land as area_ha FROM gfw2_countries as fao INNER JOIN umd_nat_staging as a ON fao.iso = a.iso WHERE fao.forest_primary is not null AND fao.iso = '{country}' AND a.year = 2001 AND a.thresh = 30"
 };
 
 const getLocationQuery = (country, region, subRegion) =>
@@ -72,5 +74,13 @@ export const getLoss = ({
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
     .replace('{indicator}', indicator);
+  return axios.get(url);
+};
+
+export const getFAO = ({ country }) => {
+  const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.fao}`.replace(
+    '{country}',
+    country
+  );
   return axios.get(url);
 };

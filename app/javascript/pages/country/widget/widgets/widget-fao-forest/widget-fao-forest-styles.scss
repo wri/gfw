@@ -1,0 +1,12 @@
+@import '~styles/settings.scss';
+
+.c-widget-fao-forest {
+  .pie-chart-container {
+    display: flex;
+    padding-top: rem(20px);
+
+    .c-pie-chart-legend {
+      width: auto;
+    }
+  }
+}

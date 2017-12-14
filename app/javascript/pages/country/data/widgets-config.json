@@ -10,5 +10,8 @@
   },
   "treeGain": {
     "gridWidth": 6
+  },
+  "faoForest": {
+    "gridWidth": 6
   }
 }
