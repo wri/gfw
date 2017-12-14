@@ -85,7 +85,11 @@ class Header extends PureComponent {
           </div>
           <div className="columns large-6 medium-12 small-12">
             <div className="description text -title-xs">
-              {!isLoading && getHeaderDescription()}
+              {!isLoading && (
+                <p
+                  dangerouslySetInnerHTML={{ __html: getHeaderDescription() }}
+                />
+              )}
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { bindActionCreators } from 'redux';
-import React, { createElement, PureComponent } from 'react';
+import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { COUNTRY } from 'pages/country/router';
@@ -144,9 +144,7 @@ class HeaderContainer extends PureComponent {
         }, equivalent to <b>${emissionsWithoutPlantations}tonnes</b> of CO₂ of emissions.
       `;
     }
-    const totalSentence = `${firstSentence} ${secondSentence}`;
-
-    return <p dangerouslySetInnerHTML={{ __html: totalSentence }} />;
+    return `${firstSentence} ${secondSentence}`;
   };
 
   render() {
