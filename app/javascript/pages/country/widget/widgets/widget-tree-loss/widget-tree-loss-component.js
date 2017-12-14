@@ -6,6 +6,7 @@ import NoContent from 'components/no-content';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import WidgetBarChart from 'pages/country/widget/components/widget-bar-chart';
+import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 
 import './widget-tree-loss-styles.scss';
 
@@ -67,10 +68,13 @@ class WidgetTreeLoss extends PureComponent {
             data &&
             data.length > 0 && (
               <div>
-                <div className="sentence">{getSentence()}</div>
-                <div className="chart">
-                  <WidgetBarChart data={data} xKey="year" yKey="area" />
-                </div>
+                <WidgetDynamicSentence sentence={getSentence()} />
+                <WidgetBarChart
+                  className="loss-chart"
+                  data={data}
+                  xKey="year"
+                  yKey="area"
+                />
               </div>
             )}
         </div>

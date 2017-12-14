@@ -20,6 +20,7 @@ class WidgetPieChart extends PureComponent {
       endAngle,
       className
     } = this.props;
+
     return (
       <div className={`c-pie-chart ${className}`}>
         <PieChart width={width} height={height}>
@@ -38,8 +39,16 @@ class WidgetPieChart extends PureComponent {
             ))}
           </Pie>
           <Tooltip
-            percentageAndArea
-            content={<WidgetChartToolTip unit="%" />}
+            content={
+              <WidgetChartToolTip
+                settings={[
+                  {
+                    key: 'percentage',
+                    unit: '%'
+                  }
+                ]}
+              />
+            }
           />
         </PieChart>
       </div>

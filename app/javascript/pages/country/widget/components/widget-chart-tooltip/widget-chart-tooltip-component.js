@@ -6,15 +6,17 @@ import './widget-chart-tooltip-styles.scss';
 
 class WidgetChartTooltip extends PureComponent {
   render() {
-    const { payload, unit } = this.props;
-    const payloadKey = unit === '%' ? 'percentage' : 'value';
-    const value = payload.length > 0 && payload[0].payload[payloadKey];
-    const valueFormat = unit === '%' ? '.1f' : '.2s';
+    const { payload, settings } = this.props;
+    const values = payload.length > 0 && payload[0].payload;
 
     return (
       <div className="c-widget-chart-tooltip">
-        {format(valueFormat)(value)}
-        {unit}
+        {settings.map(d => (
+          <div key={d.key} className="data-line">
+            {format(d.unit === '%' ? '.1f' : '.3s')(values[d.key])}
+            {d.unit}
+          </div>
+        ))}
       </div>
     );
   }
@@ -22,7 +24,7 @@ class WidgetChartTooltip extends PureComponent {
 
 WidgetChartTooltip.propTypes = {
   payload: PropTypes.array,
-  unit: PropTypes.string
+  settings: PropTypes.array
 };
 
 export default WidgetChartTooltip;

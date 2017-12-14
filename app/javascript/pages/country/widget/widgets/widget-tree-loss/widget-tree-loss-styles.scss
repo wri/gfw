@@ -1,22 +1,7 @@
 @import '~styles/settings.scss';
 
 .c-widget-tree-loss {
-  .sentence {
-    font-size: 19px;
-    font-weight: 300;
-    line-height: 1.58;
-    letter-spacing: 0.1px;
-    color: #4a4a4a;
-  }
-
-  .chart {
-    display: flex;
-    justify-content: center;
-    margin-top: rem(20px);
-
-    .recharts-text {
-      font-size: 10px;
-      color: $slate;
-    }
+  .loss-chart {
+    margin-top: rem(30px);
   }
 }

@@ -11,6 +11,11 @@ export const filterData = createSelector(
   [getData, getStartYear, getEndYear],
   (data, startYear, endYear) => {
     if (!data || isEmpty(data.loss)) return null;
-    return data.loss.filter(d => d.year >= startYear && d.year <= endYear);
+    return data.loss
+      .filter(d => d.year >= startYear && d.year <= endYear)
+      .map(d => ({
+        ...d,
+        percentage: d.area / data.extent * 100
+      }));
   }
 );
