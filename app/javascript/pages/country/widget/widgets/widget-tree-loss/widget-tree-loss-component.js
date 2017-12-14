@@ -64,8 +64,7 @@ class WidgetTreeLoss extends PureComponent {
                 icon
               />
             )}
-          {!isLoading &&
-            data &&
+          {data &&
             data.length > 0 && (
               <div className="data-container">
                 <WidgetDynamicSentence sentence={getSentence()} />
@@ -74,6 +73,23 @@ class WidgetTreeLoss extends PureComponent {
                   data={data}
                   xKey="year"
                   yKey="area"
+                  config={{
+                    color: '#fe6598',
+                    tooltip: [
+                      {
+                        key: 'year',
+                        unit: null
+                      },
+                      {
+                        key: 'area',
+                        unit: 'ha'
+                      },
+                      {
+                        key: 'percentage',
+                        unit: '%'
+                      }
+                    ]
+                  }}
                 />
               </div>
             )}

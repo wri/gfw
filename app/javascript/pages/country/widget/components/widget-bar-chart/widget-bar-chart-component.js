@@ -17,50 +17,30 @@ import './widget-bar-chart-styles.scss';
 class WidgetBarChart extends PureComponent {
   render() {
     const { data, xKey, yKey, className } = this.props;
+    const { tooltip, color } = this.props.config;
     return (
       <div className={`c-bar-chart ${className}`}>
         <ResponsiveContainer>
           <BarChart
             data={data}
-            margin={{ top: 0, right: 0, left: -10, bottom: 0 }}
+            margin={{ top: 15, right: 0, left: -15, bottom: 0 }}
           >
             <XAxis
               dataKey={xKey}
-              padding={{ top: 135 }}
               axisLine={false}
               tickLine={false}
-              domain={['dataMin', 'dataMax']}
+              tick={{ dy: 8, fontSize: '12px' }}
             />
             <YAxis
               dataKey={yKey}
               axisLine={false}
               tickLine={false}
-              tickCount={7}
-              tickFormatter={tick => format('.3s')(tick)}
-              domain={[0, 'dataMax']}
+              tickFormatter={tick => (tick ? format('.3s')(tick) : 0)}
+              tick={{ fontSize: '12px' }}
             />
             <CartesianGrid vertical={false} strokeDasharray="3 4" />
-            <Tooltip
-              content={
-                <WidgetChartToolTip
-                  settings={[
-                    {
-                      key: 'year',
-                      unit: null
-                    },
-                    {
-                      key: 'area',
-                      unit: 'ha'
-                    },
-                    {
-                      key: 'percentage',
-                      unit: '%'
-                    }
-                  ]}
-                />
-              }
-            />
-            <Bar dataKey={yKey} barSize={22} fill="#fe6598" />
+            <Tooltip content={<WidgetChartToolTip settings={tooltip} />} />
+            <Bar dataKey={yKey} barSize={22} fill={color} background={false} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -72,9 +52,15 @@ WidgetBarChart.propTypes = {
   data: PropTypes.array,
   xKey: PropTypes.string,
   yKey: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
+  config: PropTypes.object
 };
 
-WidgetBarChart.defaultProps = {};
+WidgetBarChart.defaultProps = {
+  config: {
+    tooltip: [{ key: 'value', unit: null }],
+    color: '#fe6598'
+  }
+};
 
 export default WidgetBarChart;
