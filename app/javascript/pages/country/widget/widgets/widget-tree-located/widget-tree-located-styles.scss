@@ -1,16 +1,11 @@
 @import '~styles/settings.scss';
 
 .c-widget-tree-located {
-  .loader-offset {
-    top: rem(50px);
-    height: calc(100% - 50px);
-  }
-
   .locations-list {
-    padding: 0 rem(10px);
+    padding: rem(40px) rem(10px) 0;
 
     @media screen and (min-width: $screen-m) {
-      padding: 0 rem(20px);
+      padding: rem(40px) rem(20px) 0;
     }
   }
 }

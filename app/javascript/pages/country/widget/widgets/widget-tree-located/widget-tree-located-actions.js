@@ -26,7 +26,7 @@ const getTreeLocated = createThunkAction(
               setTreeLocatedData(
                 response.data.data.map(d => ({
                   id: d[params.region ? 'adm2' : 'adm1'],
-                  area: d.value,
+                  area: d.value || 0,
                   percentage: d.value / d.total_area * 100
                 }))
               )

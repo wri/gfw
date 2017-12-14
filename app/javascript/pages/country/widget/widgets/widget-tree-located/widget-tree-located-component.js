@@ -5,6 +5,8 @@ import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import WidgetNumberedList from 'pages/country/widget/components/widget-numbered-list';
+import NoContent from 'components/no-content';
+
 import './widget-tree-located-styles.scss';
 
 class WidgetTreeLocated extends PureComponent {
@@ -42,17 +44,29 @@ class WidgetTreeLocated extends PureComponent {
             locationNames={locationNames}
           />
         </WidgetHeader>
-        {isLoading ? (
-          <Loader className="loader-offset" />
-        ) : (
-          <WidgetNumberedList
-            className="locations-list"
-            data={data}
-            settings={settings}
-            handlePageChange={handlePageChange}
-            colorRange={['#113002', '#e7e5a4']}
-          />
-        )}
+        <div className="container">
+          {isLoading && <Loader />}
+          {!isLoading &&
+            data &&
+            data.length === 0 && (
+              <NoContent
+                message={`No tree cover for ${locationNames.current &&
+                  locationNames.current.label}`}
+                icon
+              />
+            )}
+          {!isLoading &&
+            data &&
+            data.length > 0 && (
+              <WidgetNumberedList
+                className="locations-list"
+                data={data}
+                settings={settings}
+                handlePageChange={handlePageChange}
+                colorRange={['#113002', '#e7e5a4']}
+              />
+            )}
+        </div>
       </div>
     );
   }

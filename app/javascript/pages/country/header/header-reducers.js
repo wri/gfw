@@ -1,47 +1,66 @@
 export const initialState = {
-  isAreaLoading: false,
   isExtentLoading: false,
-  countryArea: 0,
-  regionArea: 0,
-  subRegionArea: 0,
-  treeCoverExtent: 0
+  isPlantationsLossLoading: false,
+  isTotalLossLoading: false,
+  data: {
+    totalArea: 0,
+    extent: 0,
+    totalLoss: {},
+    plantationsLoss: {}
+  },
+  settings: {
+    indicator: 'gadm28',
+    threshold: 30
+  }
 };
-
-const setAreaLoading = (state, { payload }) => ({
-  ...state,
-  isAreaLoading: payload
-});
 
 const setExtentLoading = (state, { payload }) => ({
   ...state,
   isExtentLoading: payload
 });
 
-const setCountryArea = (state, { payload }) => ({
+const setPlantationsLossLoading = (state, { payload }) => ({
   ...state,
-  countryArea: payload
+  isPlantationsLossLoading: payload
 });
 
-const setRegionArea = (state, { payload }) => ({
+const setTotalLossLoading = (state, { payload }) => ({
   ...state,
-  regionArea: payload
+  isTotalLossLoading: payload
 });
 
-const setSubRegionArea = (state, { payload }) => ({
+const setTotalExtent = (state, { payload }) => ({
   ...state,
-  subRegionArea: payload
+  data: {
+    ...state.data,
+    ...payload
+  },
+  isExtentLoading: false
 });
 
-const setTreeCoverExtent = (state, { payload }) => ({
+const setTotalLoss = (state, { payload }) => ({
   ...state,
-  treeCoverExtent: payload
+  data: {
+    ...state.data,
+    totalLoss: payload
+  },
+  isTotalLossLoading: false
+});
+
+const setPlantationsLoss = (state, { payload }) => ({
+  ...state,
+  data: {
+    ...state.data,
+    plantationsLoss: payload
+  },
+  isPlantationsLossLoading: false
 });
 
 export default {
-  setAreaLoading,
   setExtentLoading,
-  setCountryArea,
-  setRegionArea,
-  setSubRegionArea,
-  setTreeCoverExtent
+  setPlantationsLossLoading,
+  setTotalLossLoading,
+  setTotalExtent,
+  setTotalLoss,
+  setPlantationsLoss
 };
