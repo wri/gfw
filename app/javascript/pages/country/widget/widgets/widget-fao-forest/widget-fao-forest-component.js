@@ -28,7 +28,9 @@ class WidgetFAOForestGain extends PureComponent {
               <WidgetPieChartLegend
                 data={data}
                 settings={{
-                  unit: '%'
+                  unit: '%',
+                  format: '.1f',
+                  key: 'percentage'
                 }}
               />
               <WidgetPieChart className="cover-pie-chart" data={data} />

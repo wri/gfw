@@ -6,7 +6,8 @@ import './widget-pie-chart-legend-styles.scss';
 
 class WidgetPieChartLegend extends PureComponent {
   render() {
-    const { data, settings, className } = this.props;
+    const { data, config, className } = this.props;
+
     return (
       <ul className={`c-pie-chart-legend ${className}`}>
         {data.map(
@@ -18,10 +19,8 @@ class WidgetPieChartLegend extends PureComponent {
                   {item.name}
                 </div>
                 <div className="legend-value" style={{ color: item.color }}>
-                  {settings.unit === '%'
-                    ? format('.1f')(item.percentage)
-                    : format('.3s')(item.value)}
-                  {settings.unit}
+                  {format(config.format)(item[config.key])}
+                  {config.unit}
                 </div>
               </li>
             ) : null)
@@ -33,8 +32,16 @@ class WidgetPieChartLegend extends PureComponent {
 
 WidgetPieChartLegend.propTypes = {
   data: PropTypes.array,
-  settings: PropTypes.object,
+  config: PropTypes.object,
   className: PropTypes.string
+};
+
+WidgetPieChartLegend.defaultProps = {
+  config: {
+    unit: '',
+    key: 'value',
+    format: '.3s'
+  }
 };
 
 export default WidgetPieChartLegend;
