@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.CARTO_API_URL;
-const REQUEST_URL = `${API_URL}/sql?q=`;
+const REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
 
 const SQL_QUERIES = {
   getCountries:
