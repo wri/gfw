@@ -10,7 +10,6 @@ import './widget-fao-forest-styles.scss';
 class WidgetFAOForestGain extends PureComponent {
   render() {
     const { locationNames, isLoading, data } = this.props;
-    const chartData = data.chartData ? data.chartData : [];
 
     return (
       <div className="c-widget c-widget-fao-forest">
@@ -29,12 +28,15 @@ class WidgetFAOForestGain extends PureComponent {
             />
             <div className="pie-chart-container">
               <WidgetPieChartLegend
-                data={chartData}
+                data={data.chartData}
                 settings={{
                   unit: '%'
                 }}
               />
-              <WidgetPieChart className="cover-pie-chart" data={chartData} />
+              <WidgetPieChart
+                className="cover-pie-chart"
+                data={data.chartData}
+              />
             </div>
           </div>
         )}
