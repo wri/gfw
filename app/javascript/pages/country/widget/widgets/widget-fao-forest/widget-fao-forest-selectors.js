@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import { format } from 'd3-format';
 
 // get list data
 const getFAO = state => state.fao || null;
@@ -34,29 +33,25 @@ export const getFAOForestData = createSelector(
         name: 'Naturally regenerated Forest',
         value: naturallyRegenerated,
         percentage: naturallyRegenerated / total * 100,
-        color: '#959a00',
-        legendValue: format('.1f')(naturallyRegenerated / total * 100)
+        color: '#959a00'
       },
       {
         name: 'Primary Forest',
         value: primaryForest,
         percentage: primaryForest / total * 100,
-        color: '#2d8700',
-        legendValue: format('.1f')(primaryForest / total * 100)
+        color: '#2d8700'
       },
       {
         name: 'Planted Forest',
         value: plantedForest,
         percentage: plantedForest / total * 100,
-        color: '#1e5a00',
-        legendValue: format('.1f')(plantedForest / total * 100)
+        color: '#1e5a00'
       },
       {
         name: 'Non-Forest',
         value: nonForest,
         percentage: nonForest / total * 100,
-        color: '#d1d1d1',
-        legendValue: format('.1f')(nonForest / total * 100)
+        color: '#d1d1d1'
       }
     ];
   }
