@@ -15,25 +15,6 @@ export { initialState } from './widget-fao-extent-reducers';
 export { default as reducers } from './widget-fao-extent-reducers';
 export { default as actions } from './widget-fao-extent-actions';
 
-const PERIODS_LIST = [
-  {
-    label: '1990–2000',
-    value: 1990
-  },
-  {
-    label: '2000–2005',
-    value: 2000
-  },
-  {
-    label: '2005–2010',
-    value: 2005
-  },
-  {
-    label: '2010–2015',
-    value: 2010
-  }
-];
-
 const mapStateToProps = ({ countryData, widgetFAOExtent, location }) => {
   const {
     isCountriesLoading,
@@ -48,7 +29,7 @@ const mapStateToProps = ({ countryData, widgetFAOExtent, location }) => {
       isRegionsLoading ||
       isSubRegionsLoading,
     data: widgetFAOExtent.data,
-    periods: getPeriods({ data: PERIODS_LIST }) || [],
+    periods: getPeriods() || [],
     settings: widgetFAOExtent.settings
   };
 };

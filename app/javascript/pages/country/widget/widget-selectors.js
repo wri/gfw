@@ -6,6 +6,7 @@ import { sortByKey } from 'utils/data';
 import INDICATORS from 'pages/country/data/indicators.json';
 import THRESHOLDS from 'pages/country/data/thresholds.json';
 import UNITS from 'pages/country/data/units.json';
+import PERIODS from 'pages/country/data/periods.json';
 
 // get list data
 const getAdmins = state => state.location || null;
@@ -134,7 +135,4 @@ export const getEndYears = createSelector(
   }
 );
 
-export const getPeriods = createSelector([getData], data => {
-  if (isEmpty(data) || !data.length) return null;
-  return data;
-});
+export const getPeriods = createSelector([], () => PERIODS);
