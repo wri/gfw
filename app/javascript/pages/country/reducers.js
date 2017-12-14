@@ -26,6 +26,7 @@ import * as widgetTreeCoverLossAreasComponent from 'pages/country/widget/widgets
 import * as widgetTreeLocatedComponent from 'pages/country/widget/widgets/widget-tree-located';
 import * as widgetTreeLossComponent from 'pages/country/widget/widgets/widget-tree-loss';
 import * as widgetFAOForestComponent from 'pages/country/widget/widgets/widget-fao-forest';
+import * as widgetFAOExtentComponent from 'pages/country/widget/widgets/widget-fao-extent';
 
 // Providers
 import * as countryDataProviderComponent from 'pages/country/providers/country-data-provider';
@@ -45,7 +46,8 @@ const componentsReducers = {
   widgetTreeCoverLossAreas: handleActions(widgetTreeCoverLossAreasComponent),
   widgetTreeLocated: handleActions(widgetTreeLocatedComponent),
   widgetTreeLoss: handleActions(widgetTreeLossComponent),
-  widgetFAOForest: handleActions(widgetFAOForestComponent)
+  widgetFAOForest: handleActions(widgetFAOForestComponent),
+  widgetFAOExtent: handleActions(widgetFAOExtentComponent)
 };
 
 const providersReducers = {
