@@ -12,6 +12,7 @@ import {
   getAdminsSelected,
   getActiveFilter
 } from 'pages/country/widget/widget-selectors';
+import { filterData } from './widget-tree-loss-selectors';
 
 import WidgetTreeLossComponent from './widget-tree-loss-component';
 import actions from './widget-tree-loss-actions';
@@ -33,16 +34,18 @@ const INDICATORS_WHITELIST = [
 const mapStateToProps = ({ widgetTreeLoss, location, countryData }) => ({
   isLoading: widgetTreeLoss.isLoading,
   location: location.payload,
-  loss: widgetTreeLoss.data.loss,
-  extent: widgetTreeLoss.data.extent,
+  data:
+    filterData({ data: widgetTreeLoss.data, ...widgetTreeLoss.settings }) || [],
   startYears:
     getStartYears({
       data: widgetTreeLoss.data.loss,
       ...widgetTreeLoss.settings
     }) || [],
   endYears:
-    getEndYears({ data: widgetTreeLoss.data, ...widgetTreeLoss.settings }) ||
-    [],
+    getEndYears({
+      data: widgetTreeLoss.data.loss,
+      ...widgetTreeLoss.settings
+    }) || [],
   indicators:
     getIndicators({
       whitelist: INDICATORS_WHITELIST,
@@ -76,16 +79,16 @@ class WidgetTreeLossContainer extends PureComponent {
   }
 
   getSentence = () => {
-    const { locationNames, indicators, settings, loss, extent } = this.props;
+    const { locationNames, indicators, settings, data, extent } = this.props;
     const indicator = getActiveFilter(settings, indicators, 'indicator');
     const totalLoss =
-      loss.length &&
-      loss.reduce(
+      data.length &&
+      data.reduce(
         (sum, item) => (typeof sum === 'object' ? sum.area : sum) + item.area
       );
     const totalEmissions =
-      loss.length &&
-      loss.reduce(
+      data.length &&
+      data.reduce(
         (sum, item) =>
           (typeof sum === 'object' ? sum.emissions : sum) + item.emissions
       );
@@ -125,8 +128,7 @@ WidgetTreeLossContainer.propTypes = {
   location: PropTypes.object.isRequired,
   getTreeLoss: PropTypes.func.isRequired,
   setLayers: PropTypes.func.isRequired,
-  loss: PropTypes.array.isRequired,
-  extent: PropTypes.number.isRequired
+  data: PropTypes.array.isRequired
 };
 
 export default connect(mapStateToProps, actions)(WidgetTreeLossContainer);
