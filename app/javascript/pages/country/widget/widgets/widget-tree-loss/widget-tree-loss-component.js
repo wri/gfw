@@ -67,7 +67,7 @@ class WidgetTreeLoss extends PureComponent {
           {!isLoading &&
             data &&
             data.length > 0 && (
-              <div>
+              <div className="data-container">
                 <WidgetDynamicSentence sentence={getSentence()} />
                 <WidgetBarChart
                   className="loss-chart"

@@ -22,13 +22,14 @@ class WidgetBarChart extends PureComponent {
         <ResponsiveContainer>
           <BarChart
             data={data}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            margin={{ top: 0, right: 0, left: -10, bottom: 0 }}
           >
             <XAxis
               dataKey={xKey}
               padding={{ top: 135 }}
               axisLine={false}
               tickLine={false}
+              domain={['dataMin', 'dataMax']}
             />
             <YAxis
               dataKey={yKey}
@@ -36,6 +37,7 @@ class WidgetBarChart extends PureComponent {
               tickLine={false}
               tickCount={7}
               tickFormatter={tick => format('.3s')(tick)}
+              domain={[0, 'dataMax']}
             />
             <CartesianGrid vertical={false} strokeDasharray="3 4" />
             <Tooltip
