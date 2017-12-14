@@ -14,7 +14,9 @@ const SQL_QUERIES = {
   locations:
     "SELECT {location}, {extent} as value, {area} as total_area FROM data WHERE iso = '{iso}' AND thresh = {threshold} AND polyname = '{polyname}' {grouping}",
   fao:
-    "SELECT fao.iso, fao.name, forest_planted, forest_primary, forest_regenerated, fao.forest_primary, fao.extent, a.land as area_ha FROM gfw2_countries as fao INNER JOIN umd_nat_staging as a ON fao.iso = a.iso WHERE fao.forest_primary is not null AND fao.iso = '{country}' AND a.year = 2001 AND a.thresh = 30"
+    "SELECT fao.iso, fao.name, forest_planted, forest_primary, forest_regenerated, fao.forest_primary, fao.extent, a.land as area_ha FROM gfw2_countries as fao INNER JOIN umd_nat_staging as a ON fao.iso = a.iso WHERE fao.forest_primary is not null AND fao.iso = '{country}' AND a.year = 2001 AND a.thresh = 30",
+  faoExtent:
+    "SELECT country AS iso, name, year, reforest AS rate, forest*1000 AS extent FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {period} AND fao.country = '{country}'"
 };
 
 const getLocationQuery = (country, region, subRegion) =>
@@ -82,5 +84,12 @@ export const getFAO = ({ country }) => {
     '{country}',
     country
   );
+  return axios.get(url);
+};
+
+export const getFAOExtent = ({ country, period }) => {
+  const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.faoExtent}`
+    .replace('{country}', country)
+    .replace('{period}', period);
   return axios.get(url);
 };
