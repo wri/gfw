@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Loader from 'components/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetSettings from 'pages/country/widget/components/widget-settings';
-import WdigetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
+import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 
 class WidgetTreeCoverGain extends PureComponent {
   render() {
@@ -41,7 +41,7 @@ class WidgetTreeCoverGain extends PureComponent {
           <Loader />
         ) : (
           <div className="container">
-            <WdigetDynamicSentence sentence={getSentence()} />
+            <WidgetDynamicSentence sentence={getSentence()} />
           </div>
         )}
       </div>
