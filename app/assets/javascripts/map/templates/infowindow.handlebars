@@ -590,10 +590,10 @@
     {{#if content.data.actions}}
       <div id="cartodb-popup-fixed" class="cartodb-popup-actions">
       {{#if content.data.analize}}
-        <span style="cursor:pointer;" data-zoom="true" class="analyze-shape btn green uppercase zoom-analyze" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}" data-bbox="{{content.data.bbox}}">zoom</span>
+        <span style="cursor:pointer;" data-zoom="true" class="js-ptw-track analyze-shape btn green uppercase zoom-analyze" data-ptw-key="zoom_{{content.data.cartodb_id}}" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid="{{content.data.id}}" data-bbox="{{content.data.bbox}}">zoom</span>
       {{/if}}
       {{#if content.data.readmore}}
-        <a style="cursor:pointer;" class="btn green uppercase" href="{{content.data.link}}" target="_blank" rel="noopener">read more</a>
+        <a style="cursor:pointer;" data-readmore="true" class="js-ptw-track btn green uppercase" data-ptw-key="readmore_{{content.data.cartodb_id}}" href="{{content.data.link}}" target="_blank" rel="noopener">read more</a>
       {{/if}}
       </div>
     {{/if}}
