@@ -1,10 +1,8 @@
 import axios from 'axios';
 
 const DATASET = process.env.COUNTRIES_PAGE_DATASET;
-const API_URL = process.env.GFW_API_HOST_PROD;
-const CARTO_API_URL = process.env.CARTO_API_URL;
-const REQUEST_URL = `${API_URL}/query/${DATASET}?sql=`;
-const CARTO_REQUEST_URL = `${CARTO_API_URL}/sql?q=`;
+const REQUEST_URL = `${process.env.GFW_API_HOST_PROD}/query/${DATASET}?sql=`;
+const CARTO_REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
 
 const SQL_QUERIES = {
   extent:
