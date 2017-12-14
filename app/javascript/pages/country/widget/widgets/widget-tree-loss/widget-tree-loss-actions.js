@@ -27,16 +27,16 @@ const getTreeLoss = createThunkAction(
     if (!state().widgetTreeLoss.isLoading) {
       dispatch(setTreeLossIsLoading(true));
       axios
-        .all([getLoss(params)])
+        .all([getLoss(params), getExtent(params)])
         .then(
-          axios.spread(loss => {
-            if (loss) {
+          axios.spread((loss, extent) => {
+            if (loss && extent) {
               dispatch(
                 setTreeLossValues({
                   loss: loss.data.data,
                   startYear: minBy(loss.data.data, 'year').year,
-                  endYear: maxBy(loss.data.data, 'year').year
-                  // extent: extent.data.data[0].value,
+                  endYear: maxBy(loss.data.data, 'year').year,
+                  extent: extent.data.data[0].value
                 })
               );
             } else {

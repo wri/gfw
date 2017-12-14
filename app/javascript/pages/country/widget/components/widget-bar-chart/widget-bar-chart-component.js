@@ -10,6 +10,7 @@ import {
   Tooltip,
   ResponsiveContainer
 } from 'recharts';
+import { format } from 'd3-format';
 
 import './widget-bar-chart-styles.scss';
 
@@ -34,6 +35,7 @@ class WidgetBarChart extends PureComponent {
               axisLine={false}
               tickLine={false}
               tickCount={7}
+              tickFormatter={tick => format('.3s')(tick)}
             />
             <CartesianGrid vertical={false} strokeDasharray="3 4" />
             <Tooltip
@@ -42,7 +44,7 @@ class WidgetBarChart extends PureComponent {
                   settings={[
                     {
                       key: 'year',
-                      unit: ''
+                      unit: null
                     },
                     {
                       key: 'area',
