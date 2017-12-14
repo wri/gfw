@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import tree from 'assets/icons/tree.png';
 import './no-content-styles.scss';
 
 const NoContent = ({ className, message, icon }) => (
   <div className={`c-no-content ${className}`}>
     <p className="message">{message}</p>
-    {icon && <img className="message-icon" alt="Monete" />}
+    {icon && <img className="message-icon" src={tree} alt="tree" />}
   </div>
 );
 

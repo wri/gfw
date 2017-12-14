@@ -1,10 +1,11 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import numeral from 'numeral';
+import { format } from 'd3-format';
 import {
   getIndicators,
-  getActiveFilter
+  getActiveFilter,
+  getThresholds
 } from 'pages/country/widget/widget-selectors';
 import isEqual from 'lodash/isEqual';
 
@@ -19,8 +20,8 @@ const INDICATORS_WHITELIST = [
   'gadm28',
   'biodiversity_hot_spots',
   'wdpa',
-  'primary_forests',
-  'ifl_2013'
+  'plantations',
+  'primary_forest'
 ];
 
 const mapStateToProps = ({ countryData, widgetTreeCoverGain, location }) => {
@@ -44,6 +45,7 @@ const mapStateToProps = ({ countryData, widgetTreeCoverGain, location }) => {
         location: location.payload,
         ...countryData
       }) || [],
+    thresholds: getThresholds(),
     settings: widgetTreeCoverGain.settings
   };
 };
@@ -62,7 +64,7 @@ class WidgetTreeCoverGainContainer extends PureComponent {
 
     if (
       !isEqual(location, this.props.location) ||
-      !isEqual(settings.indicator, this.props.settings.indicator)
+      !isEqual(settings, this.props.settings)
     ) {
       getTreeCoverGain({
         ...location,
@@ -80,18 +82,16 @@ class WidgetTreeCoverGainContainer extends PureComponent {
         ? 'region-wide'
         : `in ${indicator.label.toLowerCase()}`;
 
-    const areaPercent = numeral(100 * extent / gain).format('0,00');
+    const areaPercent = format('.1f')(100 * gain / extent);
+    const firstSentence = `From 2001 to 2012, ${locationNames.current &&
+      locationNames.current.label} gained <strong>${
+      gain ? format('.3s')(gain) : '0'
+    }ha</strong> of tree cover in ${regionPhrase}`;
+    const secondSentence = gain
+      ? `, equivalent to a <strong>${areaPercent}%</strong> increase relative to 2010 tree cover extent.`
+      : '.';
 
-    return {
-      __html: `From 2001 to 2012, ${locationNames.current &&
-        locationNames.current.label} gained <strong>${numeral(gain).format(
-        '0,0'
-      )} ha</strong> of tree cover in ${
-        regionPhrase
-      }, equivalent to a <strong>${
-        areaPercent
-      }%</strong> increase relative to 2010 tree cover extent.`
-    };
+    return `${firstSentence}${secondSentence}`;
   };
 
   render() {

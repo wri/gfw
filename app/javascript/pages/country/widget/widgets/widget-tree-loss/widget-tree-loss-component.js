@@ -11,10 +11,12 @@ import {
 } from 'recharts';
 
 import Loader from 'components/loader/loader';
+import NoContent from 'components/no-content';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetTooltip from 'pages/country/widget/components/widget-tooltip';
 import WidgetTreeLossSettings from './widget-tree-loss-settings-component';
 import WidgetTreeLossTooltip from './widget-tree-loss-tooltip-component';
+
 import './widget-tree-loss-styles.scss';
 
 class WidgetTreeLoss extends PureComponent {
@@ -34,7 +36,8 @@ class WidgetTreeLoss extends PureComponent {
       setTreeLossSettingsStartYear,
       setTreeLossSettingsEndYear,
       getSentence,
-      size
+      size,
+      locationNames
     } = this.props;
 
     return (
@@ -59,45 +62,57 @@ class WidgetTreeLoss extends PureComponent {
             onEndYearChange={setTreeLossSettingsEndYear}
           />
         </WidgetHeader>
-        {isLoading ? (
-          <Loader className="loader-offset" />
-        ) : (
-          <div>
-            <div className="sentence">{getSentence()}</div>
-            <div className="chart">
-              <ResponsiveContainer height={247} width={'100%'}>
-                <BarChart
-                  width={627}
-                  height={247}
-                  data={loss}
-                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                >
-                  <XAxis
-                    dataKey="year"
-                    padding={{ top: 135 }}
-                    axisLine={false}
-                    tickLine={false}
-                  />
-                  <YAxis
-                    dataKey="area"
-                    axisLine={false}
-                    tickLine={false}
-                    tickCount={7}
-                  />
-                  <CartesianGrid vertical={false} strokeDasharray="3 4" />
-                  <Tooltip
-                    content={
-                      <WidgetTooltip>
-                        <WidgetTreeLossTooltip extent={extent} />
-                      </WidgetTooltip>
-                    }
-                  />
-                  <Bar dataKey="area" barSize={22} fill="#fe6598" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        )}
+        <div className="container">
+          {isLoading && <Loader />}
+          {!isLoading &&
+            loss &&
+            loss.length === 0 && (
+              <NoContent
+                message={`No loss data for ${locationNames.current &&
+                  locationNames.current.label}`}
+                icon
+              />
+            )}
+          {!isLoading &&
+            loss &&
+            loss.length > 0 && (
+              <div>
+                <div className="sentence">{getSentence()}</div>
+                <div className="chart">
+                  <ResponsiveContainer height={247} width={'100%'}>
+                    <BarChart
+                      width={627}
+                      height={247}
+                      data={loss}
+                      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                    >
+                      <XAxis
+                        dataKey="year"
+                        padding={{ top: 135 }}
+                        axisLine={false}
+                        tickLine={false}
+                      />
+                      <YAxis
+                        dataKey="area"
+                        axisLine={false}
+                        tickLine={false}
+                        tickCount={7}
+                      />
+                      <CartesianGrid vertical={false} strokeDasharray="3 4" />
+                      <Tooltip
+                        content={
+                          <WidgetTooltip>
+                            <WidgetTreeLossTooltip extent={extent} />
+                          </WidgetTooltip>
+                        }
+                      />
+                      <Bar dataKey="area" barSize={22} fill="#fe6598" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            )}
+        </div>
       </div>
     );
   }
@@ -118,7 +133,8 @@ WidgetTreeLoss.propTypes = {
   getSentence: PropTypes.func.isRequired,
   startYears: PropTypes.array.isRequired,
   endYears: PropTypes.array.isRequired,
-  size: PropTypes.number
+  size: PropTypes.number,
+  locationNames: PropTypes.object
 };
 
 export default WidgetTreeLoss;

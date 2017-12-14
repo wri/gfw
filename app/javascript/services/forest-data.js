@@ -8,9 +8,9 @@ const SQL_QUERIES = {
   extent:
     "SELECT SUM(area_extent) as value SUM(area_gadm28) as total_area, FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
   gain:
-    "SELECT SUM(area) as value FROM data WHERE {location} AND polyname = '{indicator}'",
+    "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = {threshold}",
   loss:
-    "SELECT sum(area) as area, sum(emissions) as emissions FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
+    "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.emissions) as emissions FROM data WHERE polyname = '{indicator}' AND {location} AND thresh= {threshold} GROUP BY polyname, iso, nested(year_data.year)",
   locations:
     "SELECT {location}, {extent} as value, {area} as total_area FROM data WHERE iso = '{iso}' AND thresh = {threshold} AND polyname = '{polyname}' {grouping}",
   fao:
@@ -18,6 +18,11 @@ const SQL_QUERIES = {
   faoExtent:
     "SELECT country AS iso, name, year, reforest AS rate, forest*1000 AS extent FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {period} AND fao.country = '{country}'"
 };
+
+const getLocationQuery = (country, region, subRegion) =>
+  `iso = '${country}'${region ? ` AND adm1 = ${region}` : ''}${
+    subRegion ? ` AND adm2 = ${subRegion}` : ''
+  }`;
 
 export const getLocations = ({ country, region, indicator, threshold }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.locations}`
@@ -30,11 +35,6 @@ export const getLocations = ({ country, region, indicator, threshold }) => {
     .replace('{grouping}', region ? `AND adm1 = '${region}'` : 'GROUP BY adm1');
   return axios.get(url);
 };
-
-const getLocationQuery = (country, region, subRegion) =>
-  `iso = '${country}'${region ? ` AND adm1 = ${region}` : ''}${
-    subRegion ? ` AND adm2 = ${subRegion}` : ''
-  }`;
 
 export const getExtent = ({
   country,
@@ -50,9 +50,17 @@ export const getExtent = ({
   return axios.get(url);
 };
 
-export const getGain = ({ country, region, subRegion, indicator }) => {
+export const getGain = ({
+  country,
+  region,
+  subRegion,
+  indicator,
+  threshold
+}) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.gain}`
     .replace('{location}', getLocationQuery(country, region, subRegion))
+    .replace('{threshold}', threshold)
+    .replace('{calc}', region ? 'area_gain' : 'SUM(area_gain)')
     .replace('{indicator}', indicator);
   return axios.get(url);
 };
