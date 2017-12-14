@@ -9,7 +9,7 @@ import './widget-fao-forest-styles.scss';
 
 class WidgetFAOForestGain extends PureComponent {
   render() {
-    const { locationNames, isLoading, data } = this.props;
+    const { locationNames, isLoading, data, getSentence } = this.props;
 
     return (
       <div className="c-widget c-widget-fao-forest">
@@ -24,19 +24,16 @@ class WidgetFAOForestGain extends PureComponent {
           <div>
             <div
               className="sentence"
-              dangerouslySetInnerHTML={data.sentence} // eslint-disable-line
+              dangerouslySetInnerHTML={getSentence(this.props)} // eslint-disable-line
             />
             <div className="pie-chart-container">
               <WidgetPieChartLegend
-                data={data.chartData}
+                data={data}
                 settings={{
                   unit: '%'
                 }}
               />
-              <WidgetPieChart
-                className="cover-pie-chart"
-                data={data.chartData}
-              />
+              <WidgetPieChart className="cover-pie-chart" data={data} />
             </div>
           </div>
         )}
@@ -48,7 +45,8 @@ class WidgetFAOForestGain extends PureComponent {
 WidgetFAOForestGain.propTypes = {
   locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  data: PropTypes.object.isRequired
+  data: PropTypes.array.isRequired,
+  getSentence: PropTypes.func.isRequired
 };
 
 export default WidgetFAOForestGain;
