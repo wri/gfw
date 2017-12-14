@@ -5,6 +5,7 @@ import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 import WidgetSettings from 'pages/country/widget/components/widget-settings';
+import './widget-fao-extent-styles.scss';
 
 class WidgetFAOExtent extends PureComponent {
   render() {
