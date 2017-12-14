@@ -13,7 +13,9 @@ class WidgetChartTooltip extends PureComponent {
       <div className="c-widget-chart-tooltip">
         {settings.map(d => (
           <div key={d.key} className="data-line">
-            {format(d.unit === '%' ? '.1f' : '.3s')(values[d.key])}
+            {d.unit
+              ? format(d.unit === '%' ? '.1f' : '.3s')(values[d.key])
+              : values[d.key]}
             {d.unit}
           </div>
         ))}
