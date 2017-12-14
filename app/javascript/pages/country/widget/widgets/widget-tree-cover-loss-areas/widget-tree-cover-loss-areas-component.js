@@ -4,7 +4,7 @@ import { PieChart, Pie, Tooltip, Cell } from 'recharts';
 import numeral from 'numeral';
 
 import Loader from 'components/loader/loader';
-import TooltipChart from 'pages/country/widget/components/widget-tooltip';
+import TooltipChart from 'pages/country/widget/components/widget-chart-tooltip';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetPaginate from 'pages/country/widget/components/widget-paginate';
 import WidgetTreeCoverLossAreasSettings from './widget-tree-cover-loss-areas-settings-component';

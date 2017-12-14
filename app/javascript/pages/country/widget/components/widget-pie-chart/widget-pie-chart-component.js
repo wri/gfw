@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
-import WidgetTooltip from 'pages/country/widget/components/widget-tooltip';
-import WidgetPieChartTooltip from './widget-pie-chart-tooltip-component';
+import WidgetChartToolTip from 'pages/country/widget/components/widget-chart-tooltip';
 
 import './widget-pie-chart-styles.scss';
 
@@ -40,11 +39,7 @@ class WidgetPieChart extends PureComponent {
           </Pie>
           <Tooltip
             percentageAndArea
-            content={
-              <WidgetTooltip>
-                <WidgetPieChartTooltip data={data} />
-              </WidgetTooltip>
-            }
+            content={<WidgetChartToolTip unit="%" />}
           />
         </PieChart>
       </div>
