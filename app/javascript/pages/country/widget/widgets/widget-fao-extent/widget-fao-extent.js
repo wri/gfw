@@ -80,13 +80,12 @@ class WidgetFAOExtentContainer extends PureComponent {
     const { data, periods, settings } = this.props;
     const period = getActiveFilter(settings, periods, 'period');
 
-    return {
-      __html: `From <strong>${
-        period.label
-      }</strong>, the rate of reforestation in <strong>${
-        data.name
-      }</strong> was <strong>${format(',')(data.rate * 1000)} ha/year</strong>.`
-    };
+    const sentence = `From <strong>${
+      period.label
+    }</strong>, the rate of reforestation in <strong>${
+      data.name
+    }</strong> was <strong>${format(',')(data.rate * 1000)} ha/year</strong>.`;
+    return sentence;
   };
 
   render() {
