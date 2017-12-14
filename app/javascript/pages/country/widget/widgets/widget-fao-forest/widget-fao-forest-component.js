@@ -20,7 +20,7 @@ class WidgetFAOForestGain extends PureComponent {
           shareAnchor={'fao-forest'}
         />
         {isLoading ? (
-          <Loader className="loader-offset" />
+          <Loader />
         ) : (
           <div className="container">
             <WidgetDynamicSentence sentence={getSentence()} />
