@@ -15,7 +15,15 @@ export const initialState = {
 const setTreeLossValues = (state, { payload }) => ({
   ...state,
   isLoading: false,
-  ...payload
+  data: {
+    loss: payload.loss,
+    extent: payload.extent
+  },
+  settings: {
+    ...state.settings,
+    startYear: payload.startYear,
+    endYear: payload.endYear
+  }
 });
 
 const setTreeLossSettingsIndicator = (state, { payload }) => ({

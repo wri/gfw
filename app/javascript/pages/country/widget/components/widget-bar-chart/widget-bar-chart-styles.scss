@@ -1,0 +1,10 @@
+@import '~styles/settings.scss';
+
+.c-bar-chart {
+  height: 250px;
+  width: 100%;
+
+  tspan {
+    font-family: $font-family-1;
+  }
+}
