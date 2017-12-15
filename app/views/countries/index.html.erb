@@ -25,7 +25,7 @@
     <% @countries.each do |c| %>
       <% if c['enabled'] %>
         <li id="<%= c['iso'] %>" class="country">
-          <a class="country-href" href="<%= country_path(id: c['iso']) %>">
+          <a class="country-href" href="/country/<%= c['iso'] %>">
             <span class="country-content">
               <h3 class="country-name <%= c['name'].length > 14 ? ' small' : '' %>"><%= c['name'] %></h3>
             </span>
