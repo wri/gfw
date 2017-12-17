@@ -3,10 +3,13 @@
  */
 .m-latest-stories {
 	position: relative;
+	// padding-top: 30px;
+	
   @media (min-width: $br-mobile) {
+		// padding-top: 70px;
 		margin: 0 0 80px;
 		min-height: 660px;
-  }
+	}
 }
 
 
