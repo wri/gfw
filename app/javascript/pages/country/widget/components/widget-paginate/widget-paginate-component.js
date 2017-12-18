@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+
 import Button from 'components/button';
+import Icon from 'components/icon';
+import arrowDownIcon from 'assets/icons/arrow-down.svg';
 
 import './widget-paginate-styles.scss';
 
@@ -18,9 +21,7 @@ class WidgetPaginate extends PureComponent {
             className="button-up square theme-button-small theme-button-light"
             onClick={() => onClickChange(-1)}
           >
-            <svg className="icon icon-angle-arrow-down">
-              <use xlinkHref="#icon-angle-arrow-down" />
-            </svg>
+            <Icon icon={arrowDownIcon} className="icon" />
           </Button>
         )}
         {showNext && (
@@ -28,9 +29,7 @@ class WidgetPaginate extends PureComponent {
             className="button-down square theme-button-small theme-button-light"
             onClick={() => onClickChange(1)}
           >
-            <svg className="icon icon-angle-arrow-down">
-              <use xlinkHref="#icon-angle-arrow-down" />
-            </svg>
+            <Icon icon={arrowDownIcon} className="icon" />
           </Button>
         )}
       </div>
