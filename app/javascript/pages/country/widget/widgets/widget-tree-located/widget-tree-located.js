@@ -62,8 +62,8 @@ class WidgetTreeLocatedContainer extends PureComponent {
     const { settings, location, getTreeLocated } = nextProps;
 
     if (
-      !isEqual(nextProps.location.country, this.props.location.country) ||
-      !isEqual(nextProps.location.region, this.props.location.region) ||
+      !isEqual(location.country, this.props.location.country) ||
+      !isEqual(location.region, this.props.location.region) ||
       !isEqual(settings.indicator, this.props.settings.indicator) ||
       !isEqual(settings.threshold, this.props.settings.threshold)
     ) {

@@ -75,7 +75,7 @@ class WidgetTreeLossContainer extends PureComponent {
     const { getTreeLoss, location, settings } = nextProps;
 
     if (
-      !isEqual(nextProps.location, this.props.location) ||
+      !isEqual(location, this.props.location) ||
       !isEqual(settings.indicator, this.props.settings.indicator) ||
       !isEqual(settings.threshold, this.props.settings.threshold)
     ) {
