@@ -11,8 +11,6 @@ body,html{
 
 @media (max-width:$br-mobile - 1){
   .layout-header{
-    top: auto;
-    bottom: 0;
     .layout-header-top{
       position: absolute;
     }
