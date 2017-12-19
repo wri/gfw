@@ -35,7 +35,7 @@ class WidgetTreeLoss extends PureComponent {
         <WidgetHeader
           title={'Tree cover loss'}
           viewOnMapCallback={viewOnMap}
-          shareAnchor={'tree-loss'}
+          widget={'treeLoss'}
           size={size}
         >
           <WidgetSettings

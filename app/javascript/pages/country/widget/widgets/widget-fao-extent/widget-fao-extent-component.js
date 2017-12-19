@@ -20,7 +20,7 @@ class WidgetFAOExtent extends PureComponent {
 
     return (
       <div className="c-widget c-widget-fao-extent">
-        <WidgetHeader title={'FAO REFORESTATION'} shareAnchor={'fao-extent'}>
+        <WidgetHeader title={'FAO REFORESTATION'} widget={'faoExtent'}>
           <WidgetSettings
             type="settings"
             periods={periods}

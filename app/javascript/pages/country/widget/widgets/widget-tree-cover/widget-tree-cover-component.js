@@ -26,7 +26,7 @@ class WidgetTreeCover extends PureComponent {
 
     return (
       <div className="c-widget c-widget-tree-cover">
-        <WidgetHeader title="Tree cover extent" shareAnchor={'tree-cover'}>
+        <WidgetHeader title="Tree cover extent" widget={'treeCover'}>
           <WidgetSettings
             type="settings"
             indicators={indicators}

@@ -11,14 +11,7 @@ import './widget-header-styles.scss';
 
 class WidgetHeader extends PureComponent {
   render() {
-    const {
-      children,
-      title,
-      viewOnMapCallback,
-      openShare,
-      shareAnchor,
-      size
-    } = this.props;
+    const { children, title, viewOnMapCallback, openShare, size } = this.props;
 
     return (
       <div className="c-widget-header">
@@ -46,7 +39,7 @@ class WidgetHeader extends PureComponent {
               )}
             <Button
               className="theme-button-small theme-button-light square"
-              onClick={() => openShare(shareAnchor)}
+              onClick={() => openShare()}
             >
               <Icon icon={shareIcon} />
             </Button>
@@ -69,7 +62,6 @@ class WidgetHeader extends PureComponent {
 WidgetHeader.propTypes = {
   title: PropTypes.string.isRequired,
   openShare: PropTypes.func.isRequired,
-  shareAnchor: PropTypes.string,
   viewOnMapCallback: PropTypes.func,
   children: PropTypes.object,
   size: PropTypes.number
