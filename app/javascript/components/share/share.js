@@ -12,14 +12,12 @@ const mapStateToProps = state => ({
   isOpen: state.share.isOpen,
   haveEmbed: state.share.haveEmbed,
   selectedType: state.share.selectedType,
-  url: state.share.url,
-  embedSettings: state.share.embedSettings,
   data: state.share.data
 });
 
 const ShareContainer = props => {
   const setShareableUrl = newProps => {
-    const { data, selectedType, embedSettings, setShareUrl } = newProps;
+    const { data, selectedType, setShareUrl } = newProps;
 
     if (selectedType === 'link') {
       getShortenUrl(data.url).then(response => {
@@ -29,9 +27,11 @@ const ShareContainer = props => {
       });
     } else if (selectedType === 'embed') {
       setShareUrl(
-        `<iframe width="${embedSettings.width}" height="${
-          embedSettings.height
-        }" frameborder="0" src="${data.url}"></iframe>`
+        `<iframe width="${data.embedSettings.width}" height="${
+          data.embedSettings.height
+        }" frameborder="0" src="${
+          data.embedUrl ? data.embedUrl : data.url
+        }"></iframe>`
       );
     }
   };

@@ -46,7 +46,7 @@ class WidgetAreasMostCoverGain extends PureComponent {
         <WidgetHeader
           title={`AREAS WITH MOST TREE COVER GAIN IN ${locationNames.country &&
             locationNames.country.label}`}
-          shareAnchor={'areas-most-cover-gain'}
+          widget={'areas-most-cover-gain'}
         >
           <WidgetAreasMostCoverGainSettings
             type="settings"

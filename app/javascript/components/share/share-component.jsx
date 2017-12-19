@@ -13,22 +13,26 @@ import './share-styles.scss';
 
 class Share extends PureComponent {
   componentWillUpdate(newProps) {
+    const { isOpen, data: { url, embedUrl }, setShareableUrl } = newProps;
+
     if (
-      newProps.isOpen &&
-      (newProps.data.url !== this.props.data.url ||
-        newProps.selectedType !== this.props.selectedType)
+      isOpen &&
+      (url !== this.props.data.url || embedUrl !== this.props.data.embedUrl)
     ) {
-      const { setShareableUrl } = newProps;
       setShareableUrl(newProps);
     }
   }
 
   getContent() {
-    const { url, haveEmbed, data, selectedType } = this.props;
+    const {
+      haveEmbed,
+      selectedType,
+      data: { title, url, embedUrl }
+    } = this.props;
 
     return (
       <div className="c-share">
-        <div className="c-share__title">{data.title}</div>
+        <div className="c-share__title">{title}</div>
         <div className="c-share__subtitle">
           {selectedType === 'embed'
             ? 'Click and paste HTML to embed in website.'
@@ -40,7 +44,7 @@ class Share extends PureComponent {
               this.textInput = input;
             }}
             type="text"
-            value={url}
+            value={selectedType === 'embed' ? embedUrl : url}
             readOnly
             onClick={this.handleFocus}
             className="c-share__input"
@@ -161,7 +165,6 @@ Share.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   haveEmbed: PropTypes.bool.isRequired,
   selectedType: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
   setShareModal: PropTypes.func.isRequired,
   setShareType: PropTypes.func.isRequired
