@@ -2,10 +2,15 @@ export const initialState = {
   isOpen: false,
   haveEmbed: false,
   selectedType: 'link',
-  data: {}
+  data: {
+    title: '',
+    url: '',
+    embedUrl: '',
+    embedSettings: { width: 0, height: 0 }
+  }
 };
 
-const setShareModal = (state, { payload }) => ({
+const setShareData = (state, { payload }) => ({
   ...state,
   isOpen: payload.isOpen,
   haveEmbed:
@@ -13,21 +18,18 @@ const setShareModal = (state, { payload }) => ({
   data: payload.data !== undefined ? payload.data : state.data
 });
 
-const setShareUrl = (state, { payload }) => ({
-  ...state,
-  data: {
-    ...state.data,
-    url: payload
-  }
-});
-
 const setShareType = (state, { payload }) => ({
   ...state,
   selectedType: payload
 });
 
+const setIsOpen = (state, { payload }) => ({
+  ...state,
+  isOpen: payload
+});
+
 export default {
-  setShareModal,
-  setShareUrl,
-  setShareType
+  setShareData,
+  setShareType,
+  setIsOpen
 };
