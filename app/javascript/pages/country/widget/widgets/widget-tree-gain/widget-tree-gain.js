@@ -16,7 +16,13 @@ export { initialState } from './widget-tree-gain-reducers';
 export { default as reducers } from './widget-tree-gain-reducers';
 export { default as actions } from './widget-tree-gain-actions';
 
-const INDICATORS_WHITELIST = ['gadm28', 'wdpa', 'primary_forest', 'ifl_2013'];
+const INDICATORS_WHITELIST = [
+  'gadm28',
+  'wdpa',
+  'primary_forest',
+  'ifl_2013',
+  'plantations'
+];
 
 const mapStateToProps = ({ countryData, widgetTreeCoverGain, location }) => {
   const {
