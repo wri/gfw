@@ -8,6 +8,23 @@
 
   strong,
   b {
-    color: #6f6de9;
+    font-weight: 500;
+  }
+
+  span {
+    color: $green-gfw;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover {
+      color: darken($green-gfw, 10%);
+    }
+  }
+
+  &.-gain {
+    strong,
+    b {
+      color: #6f6de9;
+    }
   }
 }

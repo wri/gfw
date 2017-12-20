@@ -94,10 +94,12 @@ class WidgetTreeLossContainer extends PureComponent {
     const locationText = `${locationNames.current &&
       locationNames.current.label} (${indicator &&
       lowerFirst(indicator.label)})`;
-    return `Between <b>${settings.startYear}</b> and <b>${
+    return `Between <span>${settings.startYear}</span> and <span>${
       settings.endYear
-    }</b>, 
-      ${locationText} lost <b>${format('.3s')(totalLoss)}ha</b> of tree cover: 
+    }</span>, 
+      <span>${locationText}</span> lost <b>${format('.3s')(
+      totalLoss
+    )}ha</b> of tree cover: 
       This loss is equal to <b>${format('.1f')(
       percentageLoss
     )}%</b> of the regions tree cover extent in 2010, 
