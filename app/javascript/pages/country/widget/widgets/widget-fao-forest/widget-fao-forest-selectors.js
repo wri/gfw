@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import COLORS from 'pages/country/data/colors.json';
 
 // get list data
 const getFAO = state => state.fao || null;
@@ -51,7 +52,7 @@ export const getFAOForestData = createSelector(
         name: 'Non-Forest',
         value: nonForest,
         percentage: nonForest / total * 100,
-        color: '#d1d1d1'
+        color: COLORS.nonForest
       }
     ];
   }
