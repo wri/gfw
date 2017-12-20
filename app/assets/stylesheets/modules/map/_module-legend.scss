@@ -214,7 +214,11 @@
     display: inline-block;
     position: absolute;
     top: -2px;
-    right: 17px;
+    right: 50px;
+
+    @media (min-width: $br-mobileMap){
+      right: 17px;
+    }
 
     &.hidden {
       display: none;
@@ -281,8 +285,12 @@
     display: inline-block;
     position: absolute;
     top: -2px;
-    right: 36px;
+    right: 68px;
     background: $white;
+
+    @media (min-width: $br-mobileMap){
+      right: 36px;
+    }
 
     svg {
       width: 14px;
@@ -429,9 +437,6 @@
         &.-alerts {
           .layer-close {
             right: 0;
-          }
-          .source {
-            right: 18px;
           }
         }
       }
