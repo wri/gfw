@@ -6,7 +6,7 @@ export const initialState = {
   },
   settings: {
     indicator: 'gadm28',
-    threshold: 30
+    threshold: 0
   }
 };
 
@@ -31,17 +31,8 @@ const setTreeCoverGainSettingsIndicator = (state, { payload }) => ({
   }
 });
 
-const setTreeCoverGainSettingsThreshold = (state, { payload }) => ({
-  ...state,
-  settings: {
-    ...state.settings,
-    threshold: payload
-  }
-});
-
 export default {
   setTreeCoverGainIsLoading,
   setTreeCoverGainData,
-  setTreeCoverGainSettingsIndicator,
-  setTreeCoverGainSettingsThreshold
+  setTreeCoverGainSettingsIndicator
 };

@@ -12,11 +12,9 @@ class WidgetTreeCoverGain extends PureComponent {
       locationNames,
       isLoading,
       indicators,
-      thresholds,
       settings,
       getSentence,
-      setTreeCoverGainSettingsIndicator,
-      setTreeCoverGainSettingsThreshold
+      setTreeCoverGainSettingsIndicator
     } = this.props;
 
     return (
@@ -29,10 +27,8 @@ class WidgetTreeCoverGain extends PureComponent {
           <WidgetSettings
             type="settings"
             indicators={indicators}
-            thresholds={thresholds}
             settings={settings}
             onIndicatorChange={setTreeCoverGainSettingsIndicator}
-            onThresholdChange={setTreeCoverGainSettingsThreshold}
             isLoading={isLoading}
             locationNames={locationNames}
           />
@@ -53,11 +49,9 @@ WidgetTreeCoverGain.propTypes = {
   locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   indicators: PropTypes.array.isRequired,
-  thresholds: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   getSentence: PropTypes.func.isRequired,
-  setTreeCoverGainSettingsIndicator: PropTypes.func.isRequired,
-  setTreeCoverGainSettingsThreshold: PropTypes.func.isRequired
+  setTreeCoverGainSettingsIndicator: PropTypes.func.isRequired
 };
 
 export default WidgetTreeCoverGain;

@@ -8,7 +8,6 @@ import {
   getThresholds
 } from 'pages/country/widget/widget-selectors';
 import isEqual from 'lodash/isEqual';
-import lowerFirst from 'lodash/lowerFirst';
 
 import WidgetTreeCoverGainComponent from './widget-tree-gain-component';
 import actions from './widget-tree-gain-actions';
@@ -17,13 +16,7 @@ export { initialState } from './widget-tree-gain-reducers';
 export { default as reducers } from './widget-tree-gain-reducers';
 export { default as actions } from './widget-tree-gain-actions';
 
-const INDICATORS_WHITELIST = [
-  'gadm28',
-  'biodiversity_hot_spots',
-  'wdpa',
-  'plantations',
-  'primary_forest'
-];
+const INDICATORS_WHITELIST = ['gadm28', 'wdpa', 'primary_forest', 'ifl_2013'];
 
 const mapStateToProps = ({ countryData, widgetTreeCoverGain, location }) => {
   const {
@@ -80,15 +73,14 @@ class WidgetTreeCoverGainContainer extends PureComponent {
     const indicator = getActiveFilter(settings, indicators, 'indicator');
     const regionPhrase =
       settings.indicator === 'gadm28'
-        ? 'region-wide'
-        : `in ${indicator.label.toLowerCase()}`;
+        ? '<span>region-wide</span>'
+        : `in <span>${indicator.label.toLowerCase()}</span>`;
 
     const areaPercent = format('.1f')(100 * gain / extent);
     const firstSentence = `From 2001 to 2012, <span>${locationNames.current &&
-      locationNames.current.label} (${indicator &&
-      lowerFirst(indicator.label)})</span> gained <strong>${
+      locationNames.current.label}</span> gained <strong>${
       gain ? format('.3s')(gain) : '0'
-    }ha</strong> of tree cover in ${regionPhrase}`;
+    }ha</strong> of tree cover ${regionPhrase}`;
     const secondSentence = gain
       ? `, equivalent to a <strong>${areaPercent}%</strong> increase relative to 2010 tree cover extent.`
       : '.';
