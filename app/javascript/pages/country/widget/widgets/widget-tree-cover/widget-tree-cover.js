@@ -17,16 +17,9 @@ export { initialState } from './widget-tree-cover-reducers';
 export { default as reducers } from './widget-tree-cover-reducers';
 export { default as actions } from './widget-tree-cover-actions';
 
-const INDICATORS_WHITELIST = [
-  'gadm28',
-  'wpda',
-  'ifl_2013',
-  'ifl_2013__wdpa',
-  'ifl_2013__mining'
-];
-
 const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
+  const { indicators } = widgetTreeCover.config;
   const { totalArea, cover, plantations } = widgetTreeCover.data;
 
   return {
@@ -37,7 +30,7 @@ const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
     data: getTreeCoverData({ totalArea, cover, plantations }) || [],
     indicators:
       getIndicators({
-        whitelist: INDICATORS_WHITELIST,
+        whitelist: indicators,
         location: location.payload,
         ...countryData
       }) || [],

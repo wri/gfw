@@ -1,3 +1,5 @@
+import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
+
 export const initialState = {
   isLoading: false,
   data: {
@@ -5,11 +7,7 @@ export const initialState = {
     cover: 0,
     plantations: 0
   },
-  settings: {
-    indicator: 'gadm28',
-    threshold: 30,
-    unit: 'ha'
-  }
+  ...WIDGETS_CONFIG.treeCover
 };
 
 const setTreeCoverLoading = (state, { payload }) => ({

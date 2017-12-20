@@ -1,20 +1,18 @@
 {
   "treeCover": {
-    "gridWidth": 6
-  },
-  "treeLocated": {
-    "gridWidth": 6
-  },
-  "treeLoss": {
-    "gridWidth": 12
-  },
-  "treeGain": {
-    "gridWidth": 6
-  },
-  "faoForest": {
-    "gridWidth": 6
-  },
-  "faoExtent": {
-    "gridWidth": 6
+    "gridWidth": 6,
+    "config": {
+      "indicators": ["gadm28", "plantations"],
+      "categories": ["land-cover", "forest-change", "land-use", "people", ""],
+      "admins": ["adm0", "adm1", "adm2"],
+      "settings": ["threshold", "indicator", "year", "unit"]
+    },
+    "settings": {
+      "indicator": "gadm28",
+      "threshold": 30,
+      "unit": "ha",
+      "yearStart": "2011",
+      "yearEnd": "2016"
+    }
   }
 }
