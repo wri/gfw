@@ -6,6 +6,7 @@ import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import WidgetNumberedList from 'pages/country/widget/components/widget-numbered-list';
 import NoContent from 'components/no-content';
+import COLORS from 'pages/country/data/colors.json';
 
 import './widget-tree-located-styles.scss';
 
@@ -63,7 +64,7 @@ class WidgetTreeLocated extends PureComponent {
                 data={data}
                 settings={settings}
                 handlePageChange={handlePageChange}
-                colorRange={['#113002', '#e7e5a4']}
+                colorRange={[COLORS.darkGreen, COLORS.nonForest]}
               />
             )}
         </div>

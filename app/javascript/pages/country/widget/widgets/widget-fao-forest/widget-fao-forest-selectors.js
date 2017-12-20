@@ -34,19 +34,19 @@ export const getFAOForestData = createSelector(
         name: 'Naturally regenerated Forest',
         value: naturallyRegenerated,
         percentage: naturallyRegenerated / total * 100,
-        color: '#959a00'
+        color: COLORS.darkGreen
       },
       {
         name: 'Primary Forest',
         value: primaryForest,
         percentage: primaryForest / total * 100,
-        color: '#2d8700'
+        color: COLORS.mediumGreen
       },
       {
         name: 'Planted Forest',
         value: plantedForest,
         percentage: plantedForest / total * 100,
-        color: '#1e5a00'
+        color: COLORS.lightGreen
       },
       {
         name: 'Non-Forest',

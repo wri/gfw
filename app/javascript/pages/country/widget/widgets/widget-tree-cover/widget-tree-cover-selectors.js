@@ -15,13 +15,13 @@ export const getTreeCoverData = createSelector(
       {
         name: plantations ? 'Natural forest' : 'Tree cover',
         value: cover - plantations,
-        color: '#2d8700',
+        color: COLORS.darkGreen,
         percentage: (cover - plantations) / total * 100
       },
       {
         name: 'Tree plantations',
         value: plantations,
-        color: '#959a00',
+        color: COLORS.mediumGreen,
         percentage: plantations / total * 100
       },
       {
