@@ -23,6 +23,8 @@ export { default as reducers } from './widget-tree-loss-reducers';
 export { default as actions } from './widget-tree-loss-actions';
 
 const mapStateToProps = ({ widgetTreeLoss, location, countryData }) => ({
+  title: widgetTreeLoss.title,
+  anchorLink: widgetTreeLoss.anchorLink,
   isLoading: widgetTreeLoss.isLoading,
   location: location.payload,
   data:

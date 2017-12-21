@@ -24,6 +24,8 @@ const mapStateToProps = ({ countryData, widgetTreeCoverGain, location }) => {
   } = countryData;
   const { indicators } = widgetTreeCoverGain.config;
   return {
+    title: widgetTreeCoverGain.title,
+    anchorLink: widgetTreeCoverGain.anchorLink,
     location: location.payload,
     isLoading:
       widgetTreeCoverGain.isLoading ||

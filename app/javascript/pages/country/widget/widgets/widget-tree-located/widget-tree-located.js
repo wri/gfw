@@ -26,6 +26,8 @@ const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
     meta: countryData[!location.payload.region ? 'regions' : 'subRegions']
   };
   return {
+    title: widgetTreeLocated.title,
+    anchorLink: widgetTreeLocated.anchorLink,
     location: location.payload,
     regions: countryData.regions,
     isLoading:

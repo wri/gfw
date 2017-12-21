@@ -21,13 +21,15 @@ class WidgetTreeLocated extends PureComponent {
       handlePageChange,
       setTreeLocatedSettingsIndicator,
       setTreeLocatedSettingsUnit,
-      setTreeLocatedSettingsThreshold
+      setTreeLocatedSettingsThreshold,
+      title,
+      anchorLink
     } = this.props;
     return (
       <div className="c-widget c-widget-tree-located">
         <WidgetHeader
-          title="WHERE ARE THE FOREST LOCATED"
-          shareAnchor={'tree-cover-loss'}
+          title={title}
+          anchorLink={anchorLink}
           locationNames={locationNames}
           settingsConfig={{
             isLoading,
@@ -79,7 +81,9 @@ WidgetTreeLocated.propTypes = {
   handlePageChange: PropTypes.func.isRequired,
   setTreeLocatedSettingsIndicator: PropTypes.func.isRequired,
   setTreeLocatedSettingsUnit: PropTypes.func.isRequired,
-  setTreeLocatedSettingsThreshold: PropTypes.func.isRequired
+  setTreeLocatedSettingsThreshold: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  anchorLink: PropTypes.string.isRequired
 };
 
 export default WidgetTreeLocated;

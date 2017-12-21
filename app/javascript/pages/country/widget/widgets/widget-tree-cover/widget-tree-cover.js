@@ -22,6 +22,8 @@ const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
   const { indicators } = widgetTreeCover.config;
 
   return {
+    title: widgetTreeCover.title,
+    anchorLink: widgetTreeCover.anchorLink,
     isLoading:
       widgetTreeCover.isLoading || isCountriesLoading || isRegionsLoading,
     location: location.payload,

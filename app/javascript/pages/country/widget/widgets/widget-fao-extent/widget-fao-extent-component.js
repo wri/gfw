@@ -15,14 +15,16 @@ class WidgetFAOExtent extends PureComponent {
       config,
       settings,
       getSentence,
-      setFAOExtentSettingsPeriod
+      setFAOExtentSettingsPeriod,
+      title,
+      anchorLink
     } = this.props;
 
     return (
       <div className="c-widget c-widget-fao-extent">
         <WidgetHeader
-          title="FAO REFORESTATION"
-          shareAnchor={'fao-reforestation'}
+          title={title}
+          anchorLink={anchorLink}
           locationNames={locationNames}
           settingsConfig={{
             isLoading,
@@ -53,7 +55,9 @@ WidgetFAOExtent.propTypes = {
   settings: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
   getSentence: PropTypes.func.isRequired,
-  setFAOExtentSettingsPeriod: PropTypes.func.isRequired
+  setFAOExtentSettingsPeriod: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  anchorLink: PropTypes.string.isRequired
 };
 
 export default WidgetFAOExtent;

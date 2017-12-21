@@ -1,10 +1,12 @@
 {
   "treeCover": {
+    "title": "Tree cover extent",
+    "anchorLink": "tree-cover-extent",
     "gridWidth": 6,
     "config": {
       "indicators": ["gadm28", "wdpa", "primary_forests", "plantations"],
       "categories": ["summary", "forest-change", "land-cover"],
-      "admins": ["country", "region"]
+      "admins": ["country", "region", "subRegion"]
     },
     "settings": {
       "indicator": "gadm28",
@@ -12,11 +14,13 @@
     }
   },
   "treeGain": {
+    "title": "Tree cover gain",
+    "anchorLink": "tree-cover-gain",
     "gridWidth": 6,
     "config": {
       "indicators": ["gadm28", "wdpa", "primary_forests", "plantations", "ifl_2013"],
       "categories": ["summary", "forest-change", "land-cover"],
-      "admins": ["country", "region"]
+      "admins": ["country", "region", "subRegion"]
     },
     "settings": {
       "indicator": "gadm28",
@@ -24,11 +28,13 @@
     }
   },
   "treeLoss": {
+    "title": "Tree cover loss",
+    "anchorLink": "tree-cover-loss",
     "gridWidth": 12,
     "config": {
       "indicators": ["gadm28", "gfw_plantations", "gfw_managed_forests", "wdpa", "primary_forests", "ifl_2013", "ifl_2000"],
       "categories": ["summary", "forest-change", "land-cover"],
-      "admins": ["country", "region"]
+      "admins": ["country", "region", "subRegion"]
     },
     "settings": {
       "indicator": "gadm28",
@@ -38,11 +44,13 @@
     }
   },
   "treeLocated": {
+    "title": "WHERE ARE THE FOREST LOCATED",
+    "anchorLink": "tree-located",
     "gridWidth": 6,
     "config": {
       "indicators": ["gadm28", "plantations", "ifl_2013", "primary_forest"],
       "categories": ["summary", "forest-change", "land-cover"],
-      "admins": ["country", "region"]
+      "admins": ["country", "region", "subRegion"]
     },
     "settings": {
       "indicator": "gadm28",
@@ -53,16 +61,20 @@
     }
   },
   "faoExtent": {
+    "title": "FAO REFORESTATION",
+    "anchorLink": "fao-reforestation",
     "gridWidth": 6,
     "config": {
       "categories": ["summary", "forest-change", "land-cover"],
-      "admins": ["country", "region"]
+      "admins": ["country", "region", "subRegion"]
     },
     "settings": {
       "period": 1990
     }
   },
   "faoForest": {
+    "title": "Forest cover",
+    "anchorLink": "fao-forest",
     "gridWidth": 6,
     "config": {
       "categories": ["summary", "forest-change", "land-cover"],

@@ -22,6 +22,8 @@ const mapStateToProps = ({ countryData, widgetFAOExtent, location }) => {
     isSubRegionsLoading
   } = countryData;
   return {
+    title: widgetFAOExtent.title,
+    anchorLink: widgetFAOExtent.anchorLink,
     location: location.payload,
     isLoading:
       widgetFAOExtent.isLoading ||

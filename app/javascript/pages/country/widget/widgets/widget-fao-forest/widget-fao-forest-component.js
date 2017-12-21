@@ -11,13 +11,20 @@ import './widget-fao-forest-styles.scss';
 
 class WidgetFAOForestGain extends PureComponent {
   render() {
-    const { locationNames, isLoading, data, getSentence } = this.props;
+    const {
+      locationNames,
+      isLoading,
+      data,
+      getSentence,
+      title,
+      anchorLink
+    } = this.props;
 
     return (
       <div className="c-widget c-widget-fao-forest">
         <WidgetHeader
-          title="Forest cover"
-          shareAnchor={'fao-forest'}
+          title={title}
+          anchorLink={anchorLink}
           locationNames={locationNames}
         />
         <div className="container">
@@ -60,7 +67,9 @@ WidgetFAOForestGain.propTypes = {
   locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   data: PropTypes.array.isRequired,
-  getSentence: PropTypes.func.isRequired
+  getSentence: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  anchorLink: PropTypes.string.isRequired
 };
 
 export default WidgetFAOForestGain;

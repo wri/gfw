@@ -24,14 +24,16 @@ class WidgetTreeLoss extends PureComponent {
       setTreeLossSettingsEndYear,
       getSentence,
       size,
-      locationNames
+      locationNames,
+      title,
+      anchorLink
     } = this.props;
 
     return (
       <div className="c-widget c-widget-tree-loss">
         <WidgetHeader
-          title="tree cover loss"
-          shareAnchor={'tree-cover-loss'}
+          title={title}
+          anchorLink={anchorLink}
           locationNames={locationNames}
           viewOnMapCallback={viewOnMap}
           size={size}
@@ -107,7 +109,9 @@ WidgetTreeLoss.propTypes = {
   setTreeLossSettingsEndYear: PropTypes.func.isRequired,
   getSentence: PropTypes.func.isRequired,
   size: PropTypes.number,
-  locationNames: PropTypes.object
+  locationNames: PropTypes.object,
+  title: PropTypes.string.isRequired,
+  anchorLink: PropTypes.string.isRequired
 };
 
 export default WidgetTreeLoss;
