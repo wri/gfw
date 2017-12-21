@@ -97,13 +97,18 @@ class WidgetTreeLossContainer extends PureComponent {
     }</span>, 
       <span>${locationText}</span> lost <b>${format('.3s')(
       totalLoss
-    )}ha</b> of tree cover: 
+    )}ha</b> of tree cover${totalLoss ? '.' : ','} ${
+      totalLoss > 0
+        ? ` 
       This loss is equal to <b>${format('.1f')(
-      percentageLoss
-    )}%</b> of the regions tree cover extent in 2010, 
+          percentageLoss
+        )}%</b> of the regions tree cover extent in 2010, 
       and equivalent to <b>${format('.3s')(
-      totalEmissions
-    )}tonnes</b> of CO\u2082 emissions.`;
+          totalEmissions
+        )}tonnes</b> of CO\u2082 emissions`
+        : ''
+    }
+     with canopy density <span>> ${settings.threshold}%</span>.`;
   };
 
   viewOnMap = () => {

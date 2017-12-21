@@ -24,8 +24,9 @@ class WidgetHeader extends PureComponent {
 
     return (
       <div className="c-widget-header">
-        <div className="title">{`${title} in ${locationNames.current &&
-          locationNames.current.label}`}</div>
+        <div className="title">{`${title} in ${
+          locationNames.current ? locationNames.current.label : ''
+        }`}</div>
         <div className={`options size-${size}`}>
           <div className="small-options">
             <Button className="theme-button-small square" disabled>
