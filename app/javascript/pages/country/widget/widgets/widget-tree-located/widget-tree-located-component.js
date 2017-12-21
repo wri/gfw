@@ -26,8 +26,8 @@ class WidgetTreeLocated extends PureComponent {
     return (
       <div className="c-widget c-widget-tree-located">
         <WidgetHeader
-          title="tree cover gain"
-          shareAnchor={'tree-cover-gain'}
+          title="WHERE ARE THE FOREST LOCATED"
+          shareAnchor={'tree-cover-loss'}
           locationNames={locationNames}
           settingsConfig={{
             isLoading,

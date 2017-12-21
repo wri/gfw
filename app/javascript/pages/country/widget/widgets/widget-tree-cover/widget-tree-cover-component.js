@@ -26,7 +26,7 @@ class WidgetTreeCover extends PureComponent {
       <div className="c-widget c-widget-tree-cover">
         <WidgetHeader
           title="Tree cover extent"
-          shareAnchor={'tree-cover'}
+          shareAnchor={'tree-cover-extent'}
           locationNames={locationNames}
           settingsConfig={{
             isLoading,

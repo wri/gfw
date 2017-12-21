@@ -29,8 +29,11 @@ const mapStateToProps = ({ countryData, widgetFAOExtent, location }) => {
       isRegionsLoading ||
       isSubRegionsLoading,
     data: widgetFAOExtent.data,
-    periods: getPeriods() || [],
-    settings: widgetFAOExtent.settings
+    options: {
+      periods: getPeriods() || []
+    },
+    settings: widgetFAOExtent.settings,
+    config: widgetFAOExtent.config
   };
 };
 
@@ -58,12 +61,11 @@ class WidgetFAOExtentContainer extends PureComponent {
   }
 
   getSentence = () => {
-    const { data, periods, settings } = this.props;
+    const { data, settings } = this.props;
+    const { periods } = this.props.options;
     const period = getActiveFilter(settings, periods, 'period');
-
-    const sentence = `From <strong>${
-      period.label
-    }</strong>, the rate of reforestation in <strong>${
+    const sentence = `From <strong>${period &&
+      period.label}</strong>, the rate of reforestation in <strong>${
       data.name
     }</strong> was <strong>${format(',')(data.rate * 1000)} ha/year</strong>.`;
     return sentence;
@@ -80,7 +82,7 @@ class WidgetFAOExtentContainer extends PureComponent {
 WidgetFAOExtentContainer.propTypes = {
   location: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
-  periods: PropTypes.array.isRequired,
+  options: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   getFAOExtentData: PropTypes.func.isRequired
 };

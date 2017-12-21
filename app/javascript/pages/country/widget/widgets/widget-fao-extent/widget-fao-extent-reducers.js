@@ -1,9 +1,9 @@
+import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
+
 export const initialState = {
   isLoading: false,
   data: {},
-  settings: {
-    period: 1990
-  }
+  ...WIDGETS_CONFIG.faoExtent
 };
 
 const setFAOExtentIsLoading = (state, { payload }) => ({
