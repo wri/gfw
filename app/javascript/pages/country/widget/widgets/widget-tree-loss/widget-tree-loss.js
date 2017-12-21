@@ -22,16 +22,6 @@ export { initialState } from './widget-tree-loss-reducers';
 export { default as reducers } from './widget-tree-loss-reducers';
 export { default as actions } from './widget-tree-loss-actions';
 
-const INDICATORS_WHITELIST = [
-  'gadm28',
-  'gfw_plantations',
-  'gfw_managed_forests',
-  'wdpa',
-  'IFL_2000',
-  'IFL_2013',
-  'primary_forests'
-];
-
 const mapStateToProps = ({ widgetTreeLoss, location, countryData }) => ({
   isLoading: widgetTreeLoss.isLoading,
   location: location.payload,
@@ -41,24 +31,27 @@ const mapStateToProps = ({ widgetTreeLoss, location, countryData }) => ({
       ...widgetTreeLoss.settings
     }) || [],
   extent: widgetTreeLoss.data.extent,
-  startYears:
-    getStartYears({
-      data: widgetTreeLoss.data.loss,
-      ...widgetTreeLoss.settings
-    }) || [],
-  endYears:
-    getEndYears({
-      data: widgetTreeLoss.data.loss,
-      ...widgetTreeLoss.settings
-    }) || [],
-  indicators:
-    getIndicators({
-      whitelist: INDICATORS_WHITELIST,
-      location: location.payload,
-      ...countryData
-    }) || [],
-  thresholds: getThresholds(),
+  options: {
+    startYears:
+      getStartYears({
+        data: widgetTreeLoss.data.loss,
+        ...widgetTreeLoss.settings
+      }) || [],
+    endYears:
+      getEndYears({
+        data: widgetTreeLoss.data.loss,
+        ...widgetTreeLoss.settings
+      }) || [],
+    indicators:
+      getIndicators({
+        whitelist: widgetTreeLoss.config.indicators,
+        location: location.payload,
+        ...countryData
+      }) || [],
+    thresholds: getThresholds()
+  },
   settings: widgetTreeLoss.settings,
+  config: widgetTreeLoss.config,
   locationNames: getAdminsSelected({
     ...countryData,
     location: location.payload
@@ -84,7 +77,8 @@ class WidgetTreeLossContainer extends PureComponent {
   }
 
   getSentence = () => {
-    const { locationNames, indicators, settings, data, extent } = this.props;
+    const { locationNames, settings, data, extent } = this.props;
+    const { indicators } = this.props.options;
     const indicator = getActiveFilter(settings, indicators, 'indicator');
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
@@ -125,7 +119,7 @@ class WidgetTreeLossContainer extends PureComponent {
 
 WidgetTreeLossContainer.propTypes = {
   locationNames: PropTypes.object.isRequired,
-  indicators: PropTypes.array.isRequired,
+  options: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   getTreeLoss: PropTypes.func.isRequired,

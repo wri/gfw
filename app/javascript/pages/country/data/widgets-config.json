@@ -22,5 +22,34 @@
       "indicator": "gadm28",
       "threshold": "0"
     }
+  },
+  "treeLoss": {
+    "gridWidth": 12,
+    "config": {
+      "indicators": ["gadm28", "gfw_plantations", "gfw_managed_forests", "wdpa", "primary_forests", "ifl_2013", "ifl_2000"],
+      "categories": ["summary", "forest-change", "land-cover"],
+      "admins": ["country", "region"]
+    },
+    "settings": {
+      "indicator": "gadm28",
+      "threshold": 30,
+      "startYear": 2001,
+      "endYear": 2016
+    }
+  },
+  "treeLocated": {
+    "gridWidth": 6,
+    "config": {
+      "indicators": ["gadm28", "plantations", "ifl_2013", "primary_forest"],
+      "categories": ["summary", "forest-change", "land-cover"],
+      "admins": ["country", "region"]
+    },
+    "settings": {
+      "indicator": "gadm28",
+      "threshold": 30,
+      "unit": "ha",
+      "pageSize": 10,
+      "page": 0
+    }
   }
 }

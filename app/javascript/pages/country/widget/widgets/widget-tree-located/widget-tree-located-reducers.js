@@ -1,15 +1,11 @@
+import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
+
 export const initialState = {
   isLoading: false,
   data: {
     regions: []
   },
-  settings: {
-    unit: 'ha',
-    indicator: 'gadm28',
-    threshold: 30,
-    pageSize: 10,
-    page: 0
-  }
+  ...WIDGETS_CONFIG.treeLocated
 };
 
 const setTreeLocatedData = (state, { payload }) => ({

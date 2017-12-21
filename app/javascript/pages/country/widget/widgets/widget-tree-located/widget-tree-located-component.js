@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
-import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import WidgetNumberedList from 'pages/country/widget/components/widget-numbered-list';
 import NoContent from 'components/no-content';
 import COLORS from 'pages/country/data/colors.json';
@@ -16,10 +15,9 @@ class WidgetTreeLocated extends PureComponent {
       locationNames,
       isLoading,
       data,
-      indicators,
-      units,
-      thresholds,
+      options,
       settings,
+      config,
       handlePageChange,
       setTreeLocatedSettingsIndicator,
       setTreeLocatedSettingsUnit,
@@ -28,23 +26,21 @@ class WidgetTreeLocated extends PureComponent {
     return (
       <div className="c-widget c-widget-tree-located">
         <WidgetHeader
-          title={`Where are the forest located in ${locationNames.current &&
-            locationNames.current.label}`}
-          shareAnchor={'tree-located'}
-        >
-          <WidgetSettings
-            type="settings"
-            indicators={indicators}
-            units={units}
-            thresholds={thresholds}
-            settings={settings}
-            onIndicatorChange={setTreeLocatedSettingsIndicator}
-            onUnitChange={setTreeLocatedSettingsUnit}
-            onThresholdChange={setTreeLocatedSettingsThreshold}
-            isLoading={isLoading}
-            locationNames={locationNames}
-          />
-        </WidgetHeader>
+          title="tree cover gain"
+          shareAnchor={'tree-cover-gain'}
+          locationNames={locationNames}
+          settingsConfig={{
+            isLoading,
+            config,
+            settings,
+            options,
+            actions: {
+              onIndicatorChange: setTreeLocatedSettingsIndicator,
+              onUnitChange: setTreeLocatedSettingsUnit,
+              onThresholdChange: setTreeLocatedSettingsThreshold
+            }
+          }}
+        />
         <div className="container">
           {isLoading && <Loader />}
           {!isLoading &&
@@ -77,10 +73,9 @@ WidgetTreeLocated.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   locationNames: PropTypes.object,
   data: PropTypes.array.isRequired,
-  indicators: PropTypes.array.isRequired,
+  options: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
-  units: PropTypes.array.isRequired,
-  thresholds: PropTypes.array.isRequired,
   handlePageChange: PropTypes.func.isRequired,
   setTreeLocatedSettingsIndicator: PropTypes.func.isRequired,
   setTreeLocatedSettingsUnit: PropTypes.func.isRequired,

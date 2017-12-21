@@ -17,15 +17,9 @@ export { initialState } from './widget-tree-located-reducers';
 export { default as reducers } from './widget-tree-located-reducers';
 export { default as actions } from './widget-tree-located-actions';
 
-const INDICATORS_WHITELIST = [
-  'gadm28',
-  'plantations',
-  'ifl_2013',
-  'primary_forest'
-];
-
 const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
+  const { indicators } = widgetTreeLocated.config;
   const data = {
     data: widgetTreeLocated.data.regions,
     unit: widgetTreeLocated.settings.unit,
@@ -37,15 +31,18 @@ const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
     isLoading:
       widgetTreeLocated.isLoading || isCountriesLoading || isRegionsLoading,
     data: getSortedData(data) || [],
-    indicators:
-      getIndicators({
-        whitelist: INDICATORS_WHITELIST,
-        location: location.payload,
-        ...countryData
-      }) || [],
-    units: getUnits(),
-    thresholds: getThresholds(),
-    settings: widgetTreeLocated.settings
+    options: {
+      indicators:
+        getIndicators({
+          whitelist: indicators,
+          location: location.payload,
+          ...countryData
+        }) || [],
+      units: getUnits(),
+      thresholds: getThresholds()
+    },
+    settings: widgetTreeLocated.settings,
+    config: widgetTreeLocated.config
   };
 };
 
