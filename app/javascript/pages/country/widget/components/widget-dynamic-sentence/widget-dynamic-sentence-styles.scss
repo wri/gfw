@@ -7,7 +7,19 @@
   font-size: 20px;
 
   strong,
-  b {
-    color: #6f6de9;
+  b,
+  span {
+    font-weight: 500;
   }
+
+  // for later review
+  // span {
+  //   color: $green-gfw;
+  //   font-weight: 500;
+  //   cursor: pointer;
+
+  //   &:hover {
+  //     color: darken($green-gfw, 10%);
+  //   }
+  // }
 }
