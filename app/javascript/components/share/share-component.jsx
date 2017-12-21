@@ -41,7 +41,7 @@ class Share extends PureComponent {
             type="text"
             value={inputValue}
             readOnly
-            onClick={() => handleFocus()}
+            onClick={handleFocus}
             className="c-share__input"
           />
           <button
@@ -103,7 +103,7 @@ class Share extends PureComponent {
     return (
       <Modal
         isOpen={isOpen}
-        onRequestClose={() => handleClose()}
+        onRequestClose={handleClose}
         customStyles={{
           overlay: {
             zIndex: 20,
