@@ -6,7 +6,7 @@ export const initialState = {
   },
   settings: {
     indicator: 'gadm28',
-    threshold: 0
+    threshold: '0'
   }
 };
 
