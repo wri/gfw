@@ -35,7 +35,11 @@ class WidgetPieChart extends PureComponent {
             endAngle={endAngle}
           >
             {data.map((item, index) => (
-              <Cell key={index.toString()} fill={item.color} />
+              <Cell
+                key={index.toString()}
+                fill={item.color}
+                stroke={item.color}
+              />
             ))}
           </Pie>
           <Tooltip
@@ -71,8 +75,8 @@ WidgetPieChart.propTypes = {
 };
 
 WidgetPieChart.defaultProps = {
-  width: 121,
-  height: 121,
+  width: 123,
+  height: 123,
   dataKey: 'value',
   cx: 56,
   cy: 56,
