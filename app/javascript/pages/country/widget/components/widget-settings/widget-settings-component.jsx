@@ -6,23 +6,23 @@ import './widget-settings-styles.scss';
 
 class WidgetSettings extends PureComponent {
   render() {
+    const { settings, isLoading, locationNames } = this.props;
     const {
       units,
       indicators,
       periods,
       thresholds,
-      settings,
       startYears,
-      endYears,
+      endYears
+    } = this.props.options;
+    const {
       onStartYearChange,
       onEndYearChange,
       onUnitChange,
       onPeriodChange,
       onThresholdChange,
-      onIndicatorChange,
-      isLoading,
-      locationNames
-    } = this.props;
+      onIndicatorChange
+    } = this.props.actions;
 
     return (
       <div className="c-widget-settings">
@@ -118,7 +118,9 @@ WidgetSettings.propTypes = {
   onStartYearChange: PropTypes.func,
   onEndYearChange: PropTypes.func,
   isLoading: PropTypes.bool,
-  locationNames: PropTypes.object
+  locationNames: PropTypes.object,
+  options: PropTypes.object,
+  actions: PropTypes.object
 };
 
 export default WidgetSettings;

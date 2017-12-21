@@ -1,15 +1,12 @@
+import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
+
 export const initialState = {
   isLoading: false,
   data: {
     loss: [],
     extent: 0
   },
-  settings: {
-    startYear: 2001,
-    endYear: 2016,
-    indicator: 'gadm28',
-    threshold: 30
-  }
+  ...WIDGETS_CONFIG.treeLoss
 };
 
 const setTreeLossValues = (state, { payload }) => ({
