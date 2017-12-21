@@ -3,12 +3,24 @@
     "gridWidth": 6,
     "config": {
       "indicators": ["gadm28", "wdpa", "primary_forests", "plantations"],
-      "categories": ["forest-change", "land-cover"],
+      "categories": ["summary", "forest-change", "land-cover"],
       "admins": ["country", "region"]
     },
     "settings": {
       "indicator": "gadm28",
       "threshold": 30
+    }
+  },
+  "treeGain": {
+    "gridWidth": 6,
+    "config": {
+      "indicators": ["gadm28", "wdpa", "primary_forests", "plantations", "ifl_2013"],
+      "categories": ["summary", "forest-change", "land-cover"],
+      "admins": ["country", "region"]
+    },
+    "settings": {
+      "indicator": "gadm28",
+      "threshold": "0"
     }
   }
 }

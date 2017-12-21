@@ -16,20 +16,13 @@ export { initialState } from './widget-tree-gain-reducers';
 export { default as reducers } from './widget-tree-gain-reducers';
 export { default as actions } from './widget-tree-gain-actions';
 
-const INDICATORS_WHITELIST = [
-  'gadm28',
-  'wdpa',
-  'primary_forest',
-  'ifl_2013',
-  'plantations'
-];
-
 const mapStateToProps = ({ countryData, widgetTreeCoverGain, location }) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
     isSubRegionsLoading
   } = countryData;
+  const { indicators } = widgetTreeCoverGain.config;
   return {
     location: location.payload,
     isLoading:
@@ -39,14 +32,17 @@ const mapStateToProps = ({ countryData, widgetTreeCoverGain, location }) => {
       isSubRegionsLoading,
     gain: widgetTreeCoverGain.data.gain,
     extent: widgetTreeCoverGain.data.extent,
-    indicators:
-      getIndicators({
-        whitelist: INDICATORS_WHITELIST,
-        location: location.payload,
-        ...countryData
-      }) || [],
-    thresholds: getThresholds(),
-    settings: widgetTreeCoverGain.settings
+    options: {
+      indicators:
+        getIndicators({
+          whitelist: indicators,
+          location: location.payload,
+          ...countryData
+        }) || [],
+      thresholds: getThresholds()
+    },
+    settings: widgetTreeCoverGain.settings,
+    config: widgetTreeCoverGain.config
   };
 };
 
@@ -74,7 +70,8 @@ class WidgetTreeCoverGainContainer extends PureComponent {
   }
 
   getSentence = () => {
-    const { locationNames, gain, extent, indicators, settings } = this.props;
+    const { locationNames, gain, extent, settings } = this.props;
+    const { indicators } = this.props.options;
 
     const indicator = getActiveFilter(settings, indicators, 'indicator');
     const regionPhrase =
@@ -106,7 +103,7 @@ WidgetTreeCoverGainContainer.propTypes = {
   locationNames: PropTypes.object.isRequired,
   gain: PropTypes.number.isRequired,
   extent: PropTypes.number.isRequired,
-  indicators: PropTypes.array.isRequired,
+  options: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   getTreeCoverGain: PropTypes.func.isRequired

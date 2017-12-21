@@ -48,7 +48,7 @@ class Root extends PureComponent {
                 {Object.keys(WIDGETS_CONFIG).map(
                   widget =>
                     (WIDGETS_CONFIG[widget].config.categories.indexOf(category) >
-                      -1 ||
+                      -1 &&
                     WIDGETS_CONFIG[widget].config.admins.indexOf(adminLevel) >
                       -1 ? (
                         <div
