@@ -15,7 +15,9 @@ export const filterData = createSelector(
       .filter(d => d.year >= startYear && d.year <= endYear)
       .map(d => ({
         ...d,
-        percentage: d.area / data.extent * 100
+        area: d.area || 0,
+        emissions: d.emissions || 0,
+        percentage: (d.area && d.area && d.area / data.extent * 100) || 0
       }));
   }
 );

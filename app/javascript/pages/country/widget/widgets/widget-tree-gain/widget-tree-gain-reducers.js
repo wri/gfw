@@ -31,17 +31,8 @@ const setTreeCoverGainSettingsIndicator = (state, { payload }) => ({
   }
 });
 
-const setTreeCoverGainSettingsThreshold = (state, { payload }) => ({
-  ...state,
-  settings: {
-    ...state.settings,
-    threshold: payload
-  }
-});
-
 export default {
   setTreeCoverGainIsLoading,
   setTreeCoverGainData,
-  setTreeCoverGainSettingsIndicator,
-  setTreeCoverGainSettingsThreshold
+  setTreeCoverGainSettingsIndicator
 };
