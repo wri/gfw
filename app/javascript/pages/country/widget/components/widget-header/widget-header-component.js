@@ -4,6 +4,7 @@ import { Tooltip } from 'react-tippy';
 import Button from 'components/button';
 import Icon from 'components/icon';
 
+import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import settingsIcon from 'assets/icons/settings.svg';
 import shareIcon from 'assets/icons/share.svg';
 import infoIcon from 'assets/icons/info.svg';
@@ -12,24 +13,26 @@ import './widget-header-styles.scss';
 class WidgetHeader extends PureComponent {
   render() {
     const {
-      children,
       title,
       viewOnMapCallback,
       openShare,
       shareAnchor,
-      size
+      size,
+      settingsConfig,
+      locationNames
     } = this.props;
 
     return (
       <div className="c-widget-header">
-        <div className="title">{title}</div>
+        <div className="title">{`${title} in ${locationNames.current &&
+          locationNames.current.label}`}</div>
         <div className={`options size-${size}`}>
           <div className="small-options">
             <Button className="theme-button-small square" disabled>
               <Icon icon={infoIcon} />
             </Button>
-            {children &&
-              children.props.type === 'settings' && (
+            {settingsConfig.options &&
+              settingsConfig.actions && (
                 <Tooltip
                   theme="light"
                   position="bottom-right"
@@ -37,7 +40,13 @@ class WidgetHeader extends PureComponent {
                   trigger="click"
                   interactive
                   arrow
-                  html={children}
+                  useContext
+                  html={
+                    <WidgetSettings
+                      {...settingsConfig}
+                      locationNames={locationNames}
+                    />
+                  }
                 >
                   <Button className="theme-button-small square">
                     <Icon icon={settingsIcon} className="settings-icon" />
@@ -71,8 +80,9 @@ WidgetHeader.propTypes = {
   openShare: PropTypes.func.isRequired,
   shareAnchor: PropTypes.string,
   viewOnMapCallback: PropTypes.func,
-  children: PropTypes.object,
-  size: PropTypes.number
+  size: PropTypes.number,
+  settingsConfig: PropTypes.object,
+  locationNames: PropTypes.object
 };
 
 export default WidgetHeader;

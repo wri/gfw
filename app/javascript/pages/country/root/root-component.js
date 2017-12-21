@@ -24,7 +24,8 @@ class Root extends PureComponent {
       links,
       isGeostoreLoading,
       setCategory,
-      category
+      category,
+      adminLevel
     } = this.props;
 
     return (
@@ -44,24 +45,25 @@ class Root extends PureComponent {
             />
             <div className="widgets">
               <div className="row">
-                {Object.keys(WIDGETS_CONFIG).map(widget => (
-                  WIDGETS_CONFIG[widget].config.categories.indexOf(category) > -1 ?
-                    (
-                      <div
-                        key={widget}
-                        className={`columns large-${
-                          WIDGETS_CONFIG[widget].gridWidth
-                        } small-12 widget`}
-                      >
-                        <Widget
-                          widget={widget}
-                          size={WIDGETS_CONFIG[widget].gridWidth}
-                        />
-                      </div>
-                    )
-                    :
-                    null
-                ))}
+                {Object.keys(WIDGETS_CONFIG).map(
+                  widget =>
+                    (WIDGETS_CONFIG[widget].config.categories.indexOf(category) >
+                      -1 ||
+                    WIDGETS_CONFIG[widget].config.admins.indexOf(adminLevel) >
+                      -1 ? (
+                        <div
+                          key={widget}
+                          className={`columns large-${
+                            WIDGETS_CONFIG[widget].gridWidth
+                          } small-12 widget`}
+                        >
+                          <Widget
+                            widget={widget}
+                            size={WIDGETS_CONFIG[widget].gridWidth}
+                          />
+                        </div>
+                      ) : null)
+                )}
               </div>
             </div>
           </div>
@@ -109,7 +111,8 @@ Root.propTypes = {
   links: PropTypes.array.isRequired,
   isGeostoreLoading: PropTypes.bool,
   setCategory: PropTypes.func,
-  category: PropTypes.string
+  category: PropTypes.string,
+  adminLevel: PropTypes.string
 };
 
 export default Root;

@@ -5,7 +5,6 @@ import WidgetPieChart from 'pages/country/widget/components/widget-pie-chart';
 import WidgetPieChartLegend from 'pages/country/widget/components/widget-pie-chart-legend';
 import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
-import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import NoContent from 'components/no-content';
 
 import './widget-tree-cover-styles.scss';
@@ -15,10 +14,9 @@ class WidgetTreeCover extends PureComponent {
     const {
       isLoading,
       data,
-      indicators,
-      units,
-      thresholds,
       settings,
+      options,
+      config,
       setTreeCoverSettingsIndicator,
       setTreeCoverSettingsThreshold,
       locationNames
@@ -26,19 +24,21 @@ class WidgetTreeCover extends PureComponent {
 
     return (
       <div className="c-widget c-widget-tree-cover">
-        <WidgetHeader title="Tree cover extent" shareAnchor={'tree-cover'}>
-          <WidgetSettings
-            type="settings"
-            indicators={indicators}
-            units={units}
-            thresholds={thresholds}
-            settings={settings}
-            onIndicatorChange={setTreeCoverSettingsIndicator}
-            onThresholdChange={setTreeCoverSettingsThreshold}
-            isLoading={isLoading}
-            locationNames={locationNames}
-          />
-        </WidgetHeader>
+        <WidgetHeader
+          title="Tree cover extent"
+          shareAnchor={'tree-cover'}
+          locationNames={locationNames}
+          settingsConfig={{
+            isLoading,
+            config,
+            settings,
+            options,
+            actions: {
+              onIndicatorChange: setTreeCoverSettingsIndicator,
+              onThresholdChange: setTreeCoverSettingsThreshold
+            }
+          }}
+        />
         <div className="container">
           {isLoading && <Loader />}
           {!isLoading &&
@@ -68,10 +68,9 @@ WidgetTreeCover.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   locationNames: PropTypes.object.isRequired,
   data: PropTypes.array.isRequired,
-  indicators: PropTypes.array.isRequired,
-  units: PropTypes.array.isRequired,
-  thresholds: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
+  config: PropTypes.object,
+  options: PropTypes.object,
   setTreeCoverSettingsIndicator: PropTypes.func.isRequired,
   setTreeCoverSettingsThreshold: PropTypes.func.isRequired
 };

@@ -2,17 +2,13 @@
   "treeCover": {
     "gridWidth": 6,
     "config": {
-      "indicators": ["gadm28", "plantations"],
-      "categories": ["summary", "land-cover", "forest-change", "land-use"],
-      "admins": ["adm0", "adm1", "adm2"],
-      "settings": ["threshold", "indicator", "year", "unit"]
+      "indicators": ["gadm28", "wdpa", "primary_forests", "plantations"],
+      "categories": ["forest-change", "land-cover"],
+      "admins": ["country", "region"]
     },
     "settings": {
       "indicator": "gadm28",
-      "threshold": 30,
-      "unit": "ha",
-      "yearStart": "2011",
-      "yearEnd": "2016"
+      "threshold": 30
     }
   }
 }

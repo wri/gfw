@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import {
   getIndicators,
-  getUnits,
   getThresholds,
   getActiveFilter
 } from 'pages/country/widget/widget-selectors';
@@ -19,8 +18,8 @@ export { default as actions } from './widget-tree-cover-actions';
 
 const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
-  const { indicators } = widgetTreeCover.config;
   const { totalArea, cover, plantations } = widgetTreeCover.data;
+  const { indicators } = widgetTreeCover.config;
 
   return {
     isLoading:
@@ -28,16 +27,18 @@ const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
     location: location.payload,
     regions: countryData.regions,
     data: getTreeCoverData({ totalArea, cover, plantations }) || [],
-    indicators:
-      getIndicators({
-        whitelist: indicators,
-        location: location.payload,
-        ...countryData
-      }) || [],
-    units: getUnits(),
-    thresholds: getThresholds(),
+    options:
+      {
+        indicators:
+          getIndicators({
+            whitelist: indicators,
+            location: location.payload,
+            ...countryData
+          }) || [],
+        thresholds: getThresholds()
+      } || {},
     settings: widgetTreeCover.settings,
-    isMetaLoading: isCountriesLoading || isRegionsLoading
+    config: widgetTreeCover.config
   };
 };
 
@@ -66,7 +67,8 @@ class WidgetTreeCoverContainer extends PureComponent {
   }
 
   getSentence = () => {
-    const { locationNames, settings, indicators, thresholds } = this.props;
+    const { locationNames, settings } = this.props;
+    const { indicators, thresholds } = this.props.options;
     if (locationNames && indicators.length) {
       const activeThreshold = thresholds.find(
         t => t.value === settings.threshold
@@ -94,8 +96,7 @@ WidgetTreeCoverContainer.propTypes = {
   location: PropTypes.object.isRequired,
   locationNames: PropTypes.object.isRequired,
   getTreeCover: PropTypes.func.isRequired,
-  indicators: PropTypes.array.isRequired,
-  thresholds: PropTypes.array.isRequired
+  options: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, actions)(WidgetTreeCoverContainer);

@@ -6,8 +6,6 @@ import reducers, { initialState } from './widget-header-reducers';
 
 import WidgetHeaderComponent from './widget-header-component';
 
-const mapStateToProps = () => ({});
-
 const WidgetHeaderContainer = props => {
   const openShare = shareAnchor => {
     props.setShareModal({
@@ -32,4 +30,4 @@ const WidgetHeaderContainer = props => {
 
 export { actions, reducers, initialState };
 
-export default connect(mapStateToProps, actions)(WidgetHeaderContainer);
+export default connect(null, actions)(WidgetHeaderContainer);
