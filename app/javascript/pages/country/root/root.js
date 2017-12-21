@@ -1,8 +1,8 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { routes } from 'pages/country/router';
 
+import CATEGORIES from 'pages/country/data/categories.json';
 import RootComponent from './root-component';
 import actions from './root-actions';
 
@@ -14,10 +14,9 @@ const mapStateToProps = ({ root, countryData }) => ({
   gfwHeaderHeight: root.gfwHeaderHeight,
   isMapFixed: root.isMapFixed,
   showMapMobile: root.showMapMobile,
-  links: Object.values(routes)
-    .filter(r => r.submenu)
-    .map(r => ({ label: r.label, path: r.path })),
-  isGeostoreLoading: countryData.isGeostoreLoading
+  links: CATEGORIES,
+  isGeostoreLoading: countryData.isGeostoreLoading,
+  category: root.category
 });
 
 class RootContainer extends PureComponent {

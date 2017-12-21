@@ -3,7 +3,7 @@
     "gridWidth": 6,
     "config": {
       "indicators": ["gadm28", "plantations"],
-      "categories": ["land-cover", "forest-change", "land-use", "people", ""],
+      "categories": ["summary", "land-cover", "forest-change", "land-use"],
       "admins": ["adm0", "adm1", "adm2"],
       "settings": ["threshold", "indicator", "year", "unit"]
     },

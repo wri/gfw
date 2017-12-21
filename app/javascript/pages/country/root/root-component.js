@@ -22,8 +22,11 @@ class Root extends PureComponent {
       showMapMobile,
       handleShowMapMobile,
       links,
-      isGeostoreLoading
+      isGeostoreLoading,
+      setCategory,
+      category
     } = this.props;
+
     return (
       <div className="l-country">
         <button className="open-map-mobile-tab" onClick={handleShowMapMobile}>
@@ -34,23 +37,30 @@ class Root extends PureComponent {
             <Header className="header" />
             <SubNavMenu
               links={links}
+              activeLink={category}
               className="subnav-tabs"
               theme="theme-subnav-dark"
+              handleClick={setCategory}
             />
             <div className="widgets">
               <div className="row">
                 {Object.keys(WIDGETS_CONFIG).map(widget => (
-                  <div
-                    key={widget}
-                    className={`columns large-${
-                      WIDGETS_CONFIG[widget].gridWidth
-                    } small-12 widget`}
-                  >
-                    <Widget
-                      widget={widget}
-                      size={WIDGETS_CONFIG[widget].gridWidth}
-                    />
-                  </div>
+                  WIDGETS_CONFIG[widget].config.categories.indexOf(category) > -1 ?
+                    (
+                      <div
+                        key={widget}
+                        className={`columns large-${
+                          WIDGETS_CONFIG[widget].gridWidth
+                        } small-12 widget`}
+                      >
+                        <Widget
+                          widget={widget}
+                          size={WIDGETS_CONFIG[widget].gridWidth}
+                        />
+                      </div>
+                    )
+                    :
+                    null
                 ))}
               </div>
             </div>
@@ -97,7 +107,9 @@ Root.propTypes = {
   showMapMobile: PropTypes.bool.isRequired,
   handleShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
-  isGeostoreLoading: PropTypes.bool
+  isGeostoreLoading: PropTypes.bool,
+  setCategory: PropTypes.func,
+  category: PropTypes.string
 };
 
 export default Root;

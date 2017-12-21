@@ -80,6 +80,12 @@ $black-tabs: #404040;
   }
 
   .subnav-tabs {
+    @media screen and (min-width: $screen-m) {
+      .columns {
+        padding-right: 0;
+      }
+    }
+
     @media screen and (min-width: $screen-xl) {
       padding-left: calc(100% - (#{$max-width} * 0.7));
     }
