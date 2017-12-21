@@ -9,6 +9,9 @@ const setTreeCoverGainData = createAction('setTreeCoverGainData');
 const setTreeCoverGainSettingsIndicator = createAction(
   'setTreeCoverGainSettingsIndicator'
 );
+const setTreeCoverGainSettingsThreshold = createAction(
+  'setTreeCoverGainSettingsThreshold'
+);
 
 const getTreeCoverGain = createThunkAction(
   'getTreeCoverGain',
@@ -41,5 +44,6 @@ export default {
   setTreeCoverGainIsLoading,
   setTreeCoverGainData,
   setTreeCoverGainSettingsIndicator,
+  setTreeCoverGainSettingsThreshold,
   getTreeCoverGain
 };
