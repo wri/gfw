@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import isEqual from 'lodash/isEqual';
 import sumBy from 'lodash/sumBy';
+import lowerFirst from 'lodash/lowerFirst';
 
 import {
   getThresholds,
@@ -89,22 +90,20 @@ class WidgetTreeLossContainer extends PureComponent {
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
       (data && data.length && sumBy(data, 'emissions')) || 0;
-    const percentageLoss = extent / totalLoss * 100;
+    const percentageLoss = totalLoss / extent * 100;
     const locationText = `${locationNames.current &&
       locationNames.current.label} (${indicator &&
-      indicator.label.toLowerCase()})`;
+      lowerFirst(indicator.label)})`;
     return `Between <b>${settings.startYear}</b> and <b>${
       settings.endYear
     }</b>, 
       ${locationText} lost <b>${format('.3s')(totalLoss)}ha</b> of tree cover: 
       This loss is equal to <b>${format('.1f')(
       percentageLoss
-    )}%</b> of the total 
-      <b>${indicator &&
-        indicator.label.toLowerCase()}</b> tree cover extent in 2010, 
+    )}%</b> of the regions tree cover extent in 2010, 
       and equivalent to <b>${format('.3s')(
-          totalEmissions
-        )}tonnes</b> of CO\u2082 emissions.`;
+      totalEmissions
+    )}tonnes</b> of CO\u2082 emissions.`;
   };
 
   viewOnMap = () => {
