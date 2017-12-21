@@ -24,7 +24,8 @@ $subnav-height: rem(60px);
         max-width: rem(180px);
       }
 
-      > a {
+      > a,
+      button {
         position: relative;
         display: flex;
         justify-content: center;
@@ -32,6 +33,7 @@ $subnav-height: rem(60px);
         height: 100%;
         width: 100%;
         text-align: center;
+        cursor: pointer;
 
         &.active {
           background-color: $white;

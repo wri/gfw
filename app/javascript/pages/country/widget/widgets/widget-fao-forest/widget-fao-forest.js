@@ -23,10 +23,13 @@ const mapStateToProps = ({ countryData, widgetFAOForest, location }) => {
   const { fao, rank } = widgetFAOForest.data;
   const locationNames = getAdminsSelected({
     ...countryData,
-    location: location.payload
+    location: location.payload,
+    config: widgetFAOForest.config
   });
 
   return {
+    title: widgetFAOForest.title,
+    anchorLink: widgetFAOForest.anchorLink,
     location: location.payload,
     isLoading:
       widgetFAOForest.isLoading ||

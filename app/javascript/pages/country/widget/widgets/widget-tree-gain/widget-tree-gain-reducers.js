@@ -1,13 +1,12 @@
+import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
+
 export const initialState = {
   isLoading: false,
   data: {
     gain: 0,
     extent: 0
   },
-  settings: {
-    indicator: 'gadm28',
-    threshold: '0'
-  }
+  ...WIDGETS_CONFIG.treeGain
 };
 
 const setTreeCoverGainIsLoading = (state, { payload }) => ({

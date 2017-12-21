@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Loader from 'components/loader/loader';
 import NoContent from 'components/no-content';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
-import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import WidgetBarChart from 'pages/country/widget/components/widget-bar-chart';
 import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 
@@ -16,43 +15,41 @@ class WidgetTreeLoss extends PureComponent {
       isLoading,
       viewOnMap,
       data,
-      startYears,
-      endYears,
+      options,
       settings,
-      thresholds,
-      indicators,
+      config,
       setTreeLossSettingsIndicator,
       setTreeLossSettingsThreshold,
       setTreeLossSettingsStartYear,
       setTreeLossSettingsEndYear,
       getSentence,
       size,
-      locationNames
+      locationNames,
+      title,
+      anchorLink
     } = this.props;
 
     return (
       <div className="c-widget c-widget-tree-loss">
         <WidgetHeader
-          title={'Tree cover loss'}
+          title={title}
+          anchorLink={anchorLink}
+          locationNames={locationNames}
           viewOnMapCallback={viewOnMap}
-          widget={'treeLoss'}
           size={size}
-        >
-          <WidgetSettings
-            isLoading={isLoading}
-            type="settings"
-            indicators={indicators}
-            thresholds={thresholds}
-            settings={settings}
-            startYears={startYears}
-            endYears={endYears}
-            onIndicatorChange={setTreeLossSettingsIndicator}
-            onThresholdChange={setTreeLossSettingsThreshold}
-            onStartYearChange={setTreeLossSettingsStartYear}
-            onEndYearChange={setTreeLossSettingsEndYear}
-            locationNames={locationNames}
-          />
-        </WidgetHeader>
+          settingsConfig={{
+            isLoading,
+            config,
+            settings,
+            options,
+            actions: {
+              onIndicatorChange: setTreeLossSettingsIndicator,
+              onThresholdChange: setTreeLossSettingsThreshold,
+              onStartYearChange: setTreeLossSettingsStartYear,
+              onEndYearChange: setTreeLossSettingsEndYear
+            }
+          }}
+        />
         <div className="container">
           {isLoading && <Loader />}
           {!isLoading &&
@@ -103,18 +100,18 @@ WidgetTreeLoss.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   data: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
-  thresholds: PropTypes.array.isRequired,
-  indicators: PropTypes.array.isRequired,
+  options: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired,
   viewOnMap: PropTypes.func.isRequired,
   setTreeLossSettingsIndicator: PropTypes.func.isRequired,
   setTreeLossSettingsThreshold: PropTypes.func.isRequired,
   setTreeLossSettingsStartYear: PropTypes.func.isRequired,
   setTreeLossSettingsEndYear: PropTypes.func.isRequired,
   getSentence: PropTypes.func.isRequired,
-  startYears: PropTypes.array.isRequired,
-  endYears: PropTypes.array.isRequired,
   size: PropTypes.number,
-  locationNames: PropTypes.object
+  locationNames: PropTypes.object,
+  title: PropTypes.string.isRequired,
+  anchorLink: PropTypes.string.isRequired
 };
 
 export default WidgetTreeLoss;

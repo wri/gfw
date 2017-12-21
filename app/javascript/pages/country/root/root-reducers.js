@@ -1,6 +1,7 @@
 export const initialState = {
   gfwHeaderHeight: 58,
-  showMapMobile: false
+  showMapMobile: false,
+  category: 'summary'
 };
 
 const setFixedMapStatus = (state, { payload }) => ({
@@ -13,7 +14,13 @@ const setShowMapMobile = (state, { payload }) => ({
   showMapMobile: payload
 });
 
+const setCategory = (state, { payload }) => ({
+  ...state,
+  category: payload
+});
+
 export default {
   setFixedMapStatus,
-  setShowMapMobile
+  setShowMapMobile,
+  setCategory
 };
