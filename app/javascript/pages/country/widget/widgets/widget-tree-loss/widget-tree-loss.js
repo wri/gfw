@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import isEqual from 'lodash/isEqual';
 import sumBy from 'lodash/sumBy';
-import lowerFirst from 'lodash/lowerFirst';
 
 import {
   getThresholds,
@@ -93,7 +92,9 @@ class WidgetTreeLossContainer extends PureComponent {
     const percentageLoss = totalLoss / extent * 100;
     const locationText = `${locationNames.current &&
       locationNames.current.label} (${indicator &&
-      lowerFirst(indicator.label)})`;
+      (settings.indicator === 'gadm28'
+        ? 'all regions'
+        : indicator.label.toLowerCase())})`;
     return `Between <span>${settings.startYear}</span> and <span>${
       settings.endYear
     }</span>, 
