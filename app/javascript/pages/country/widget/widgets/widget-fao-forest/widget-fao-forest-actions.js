@@ -16,22 +16,14 @@ const getFAOForest = createThunkAction(
         .all([getFAO({ ...params }), getRanking({ ...params })])
         .then(
           axios.spread((getFAOResponse, getRankingResponse) => {
-            const {
-              area_ha,
-              extent,
-              forest_planted,
-              forest_primary,
-              forest_regenerated
-            } = getFAOResponse.data.rows[0];
+            const data =
+              getFAOResponse.data.rows.length && getFAOResponse.data.rows[0];
+            const ranking = getRankingResponse.data.rows;
             const values = {
               fao: {
-                area_ha,
-                extent,
-                forest_planted,
-                forest_primary,
-                forest_regenerated
+                ...data
               },
-              rank: getRankingResponse.data.rows[0].rank
+              rank: ranking[0].rank || 0
             };
 
             dispatch(setFAOForestData(values));

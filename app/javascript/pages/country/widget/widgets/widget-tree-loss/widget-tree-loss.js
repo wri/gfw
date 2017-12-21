@@ -89,7 +89,8 @@ class WidgetTreeLossContainer extends PureComponent {
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
       (data && data.length && sumBy(data, 'emissions')) || 0;
-    const percentageLoss = totalLoss / extent * 100;
+    const percentageLoss =
+      (totalLoss && extent && totalLoss / extent * 100) || 0;
     const locationText = `${locationNames.current &&
       locationNames.current.label} (${indicator &&
       (settings.indicator === 'gadm28'
