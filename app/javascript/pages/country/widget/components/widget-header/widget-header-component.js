@@ -31,8 +31,8 @@ class WidgetHeader extends PureComponent {
             <Button className="theme-button-small square" disabled>
               <Icon icon={infoIcon} />
             </Button>
-            {settingsConfig.options &&
-              settingsConfig.actions && (
+            {settingsConfig &&
+              settingsConfig.options && (
                 <Tooltip
                   theme="light"
                   position="bottom-right"

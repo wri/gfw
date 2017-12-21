@@ -16,9 +16,9 @@ class WidgetFAOForestGain extends PureComponent {
     return (
       <div className="c-widget c-widget-fao-forest">
         <WidgetHeader
-          title={`Forest cover in ${locationNames.current &&
-            locationNames.current.label}`}
+          title="Forest cover"
           shareAnchor={'fao-forest'}
+          locationNames={locationNames}
         />
         <div className="container">
           {isLoading && <Loader />}

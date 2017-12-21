@@ -61,5 +61,12 @@
     "settings": {
       "period": 1990
     }
+  },
+  "faoForest": {
+    "gridWidth": 6,
+    "config": {
+      "categories": ["summary", "forest-change", "land-cover"],
+      "admins": ["country", "region"]
+    }
   }
 }
