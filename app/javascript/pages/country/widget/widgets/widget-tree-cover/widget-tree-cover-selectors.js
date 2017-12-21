@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import COLORS from 'pages/country/data/colors.json';
 
 // get list data
 const getTotalCover = state => state.totalArea || null;
@@ -14,19 +15,19 @@ export const getTreeCoverData = createSelector(
       {
         name: plantations ? 'Natural forest' : 'Tree cover',
         value: cover - plantations,
-        color: '#2d8700',
+        color: COLORS.darkGreen,
         percentage: (cover - plantations) / total * 100
       },
       {
         name: 'Tree plantations',
         value: plantations,
-        color: '#959a00',
+        color: COLORS.mediumGreen,
         percentage: plantations / total * 100
       },
       {
         name: 'Non Forest',
         value: total - cover,
-        color: '#d1d1d1',
+        color: COLORS.nonForest,
         percentage: (total - cover) / total * 100
       }
     ];

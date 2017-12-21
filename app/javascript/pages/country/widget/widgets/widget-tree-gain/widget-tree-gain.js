@@ -8,6 +8,7 @@ import {
   getThresholds
 } from 'pages/country/widget/widget-selectors';
 import isEqual from 'lodash/isEqual';
+import lowerFirst from 'lodash/lowerFirst';
 
 import WidgetTreeCoverGainComponent from './widget-tree-gain-component';
 import actions from './widget-tree-gain-actions';
@@ -83,8 +84,9 @@ class WidgetTreeCoverGainContainer extends PureComponent {
         : `in ${indicator.label.toLowerCase()}`;
 
     const areaPercent = format('.1f')(100 * gain / extent);
-    const firstSentence = `From 2001 to 2012, ${locationNames.current &&
-      locationNames.current.label} gained <strong>${
+    const firstSentence = `From 2001 to 2012, <span>${locationNames.current &&
+      locationNames.current.label} (${indicator &&
+      lowerFirst(indicator.label)})</span> gained <strong>${
       gain ? format('.3s')(gain) : '0'
     }ha</strong> of tree cover in ${regionPhrase}`;
     const secondSentence = gain
