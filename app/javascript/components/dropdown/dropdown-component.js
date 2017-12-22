@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Select from 'react-select-me';
 import { deburrUpper } from 'utils/data';
 
+import Icon from 'components/icon';
+import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import './dropdown-styles.scss';
 import 'styles/themes/dropdown/dropdown-dark.scss'; // eslint-disable-line
 import 'styles/themes/dropdown/dropdown-light.scss'; // eslint-disable-line
@@ -35,9 +37,7 @@ class Dropdown extends PureComponent {
         {label && <div className="label">{label}</div>}{' '}
         <Select
           iconRenderer={() => (
-            <svg className="icon icon-angle-arrow-down">
-              <use xlinkHref="#icon-angle-arrow-down">{}</use>
-            </svg>
+            <Icon icon={arrowDownIcon} className="icon icon-arrow-down" />
           )}
           onSearch={this.handleSearch}
           {...this.props}

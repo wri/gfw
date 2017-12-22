@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 
-export const setShareModal = createAction('setShareModal');
+export const setShareData = createAction('setShareData');
 
 export default {
-  setShareModal
+  setShareData
 };

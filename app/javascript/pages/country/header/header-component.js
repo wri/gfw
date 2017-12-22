@@ -1,7 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+
 import Dropdown from 'components/dropdown';
 import Loader from 'components/loader';
+import Icon from 'components/icon';
+import arrowDownIcon from 'assets/icons/arrow-down.svg';
 
 import './header-styles.scss';
 
@@ -24,9 +27,7 @@ class Header extends PureComponent {
           <div className="columns small-12 large-6">
             <div className="select-container">
               <div className="select">
-                <svg className="icon icon-angle-arrow-down c-header__select-arrow">
-                  <use xlinkHref="#icon-angle-arrow-down" />
-                </svg>
+                <Icon icon={arrowDownIcon} className="icon" />
                 <Dropdown
                   theme="theme-select-dark"
                   placeholder="Country"
@@ -40,9 +41,7 @@ class Header extends PureComponent {
               {locationOptions.regions &&
                 locationOptions.regions.length > 1 && (
                   <div className="select">
-                    <svg className="icon icon-angle-arrow-down c-header__select-arrow">
-                      <use xlinkHref="#icon-angle-arrow-down" />
-                    </svg>
+                    <Icon icon={arrowDownIcon} className="icon" />
                     <Dropdown
                       theme="theme-select-dark"
                       placeholder="Region"
@@ -61,9 +60,10 @@ class Header extends PureComponent {
                 locationOptions.subRegions &&
                 locationOptions.subRegions.length > 1 && (
                   <div className="select">
-                    <svg className="icon icon-angle-arrow-down c-header__select-arrow">
-                      <use xlinkHref="#icon-angle-arrow-down" />
-                    </svg>
+                    <Icon
+                      icon={arrowDownIcon}
+                      className="icon c-header__select-arrow"
+                    />
                     <Dropdown
                       theme="theme-select-dark"
                       placeholder="Juristriction"

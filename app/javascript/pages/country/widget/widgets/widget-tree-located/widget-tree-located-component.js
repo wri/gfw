@@ -23,11 +23,13 @@ class WidgetTreeLocated extends PureComponent {
       setTreeLocatedSettingsUnit,
       setTreeLocatedSettingsThreshold,
       title,
-      anchorLink
+      anchorLink,
+      widget
     } = this.props;
     return (
       <div className="c-widget c-widget-tree-located">
         <WidgetHeader
+          widget={widget}
           title={title}
           anchorLink={anchorLink}
           locationNames={locationNames}
@@ -83,7 +85,8 @@ WidgetTreeLocated.propTypes = {
   setTreeLocatedSettingsUnit: PropTypes.func.isRequired,
   setTreeLocatedSettingsThreshold: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  anchorLink: PropTypes.string.isRequired
+  anchorLink: PropTypes.string.isRequired,
+  widget: PropTypes.string.isRequired
 };
 
 export default WidgetTreeLocated;

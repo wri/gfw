@@ -19,12 +19,14 @@ class WidgetTreeCoverGain extends PureComponent {
       setTreeCoverGainSettingsIndicator,
       setTreeCoverGainSettingsThreshold,
       title,
-      anchorLink
+      anchorLink,
+      widget
     } = this.props;
 
     return (
       <div className="c-widget c-widget-tree-cover-gain">
         <WidgetHeader
+          widget={widget}
           title={title}
           anchorLink={anchorLink}
           locationNames={locationNames}
@@ -63,7 +65,8 @@ WidgetTreeCoverGain.propTypes = {
   setTreeCoverGainSettingsIndicator: PropTypes.func.isRequired,
   setTreeCoverGainSettingsThreshold: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  anchorLink: PropTypes.string.isRequired
+  anchorLink: PropTypes.string.isRequired,
+  widget: PropTypes.string.isRequired
 };
 
 export default WidgetTreeCoverGain;

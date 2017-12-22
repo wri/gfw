@@ -17,12 +17,14 @@ class WidgetFAOForestGain extends PureComponent {
       data,
       getSentence,
       title,
-      anchorLink
+      anchorLink,
+      widget
     } = this.props;
 
     return (
       <div className="c-widget c-widget-fao-forest">
         <WidgetHeader
+          widget={widget}
           title={title}
           anchorLink={anchorLink}
           locationNames={locationNames}
@@ -69,7 +71,8 @@ WidgetFAOForestGain.propTypes = {
   data: PropTypes.array.isRequired,
   getSentence: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  anchorLink: PropTypes.string.isRequired
+  anchorLink: PropTypes.string.isRequired,
+  widget: PropTypes.string.isRequired
 };
 
 export default WidgetFAOForestGain;

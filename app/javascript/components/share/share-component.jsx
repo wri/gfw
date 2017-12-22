@@ -12,42 +12,41 @@ import facebookIcon from 'assets/icons/facebook.svg';
 import './share-styles.scss';
 
 class Share extends PureComponent {
-  componentWillUpdate(newProps) {
-    if (
-      newProps.isOpen &&
-      (newProps.data.url !== this.props.data.url ||
-        newProps.selectedType !== this.props.selectedType)
-    ) {
-      const { setShareableUrl } = newProps;
-      setShareableUrl(newProps);
-    }
-  }
-
   getContent() {
-    const { url, haveEmbed, data, selectedType } = this.props;
+    const {
+      haveEmbed,
+      selectedType,
+      data: { title, url, embedUrl },
+      handleFocus,
+      changeType,
+      copyToClipboard
+    } = this.props;
+
+    const subtitle =
+      selectedType === 'embed'
+        ? 'Click and paste HTML to embed in website.'
+        : 'Click and paste link in email or IM';
+
+    const inputValue = selectedType === 'embed' ? embedUrl : url;
 
     return (
       <div className="c-share">
-        <div className="c-share__title">{data.title}</div>
-        <div className="c-share__subtitle">
-          {selectedType === 'embed'
-            ? 'Click and paste HTML to embed in website.'
-            : 'Click and paste link in email or IM'}
-        </div>
+        <div className="c-share__title">{title}</div>
+        <div className="c-share__subtitle">{subtitle}</div>
         <div className="c-share__input-container">
           <input
             ref={input => {
               this.textInput = input;
             }}
             type="text"
-            value={url}
+            value={inputValue}
             readOnly
-            onClick={this.handleFocus}
+            onClick={handleFocus}
             className="c-share__input"
           />
           <button
             className="c-share__input-button"
-            onClick={this.copyToClipboard}
+            onClick={() => copyToClipboard(this.textInput)}
           >
             COPY
           </button>
@@ -58,7 +57,7 @@ class Share extends PureComponent {
               className={`share-button ${
                 selectedType !== 'embed' ? 'theme-button-light-green' : ''
               }`}
-              onClick={() => this.changeType('embed')}
+              onClick={() => changeType('embed')}
             >
               EMBED
             </Button>
@@ -66,7 +65,7 @@ class Share extends PureComponent {
               className={`share-button ${
                 selectedType === 'embed' ? 'theme-button-light-green' : ''
               }`}
-              onClick={() => this.changeType('link')}
+              onClick={() => changeType('link')}
             >
               LINK
             </Button>
@@ -99,35 +98,12 @@ class Share extends PureComponent {
     );
   }
 
-  changeType(type) {
-    const { setShareType } = this.props;
-    setShareType(type);
-  }
-
-  copyToClipboard = () => {
-    this.textInput.select();
-
-    try {
-      document.execCommand('copy');
-    } catch (err) {
-      alert('This browser does not support clipboard access');
-    }
-  };
-
-  handleFocus = event => {
-    event.target.select();
-  };
-
-  handleClose = () => {
-    this.props.setShareModal({ isOpen: false });
-  };
-
   render() {
-    const { isOpen } = this.props;
+    const { isOpen, handleClose } = this.props;
     return (
       <Modal
         isOpen={isOpen}
-        onRequestClose={this.handleClose}
+        onRequestClose={handleClose}
         customStyles={{
           overlay: {
             zIndex: 20,
@@ -158,13 +134,14 @@ class Share extends PureComponent {
 }
 
 Share.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  haveEmbed: PropTypes.bool.isRequired,
-  selectedType: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  data: PropTypes.object.isRequired,
-  setShareModal: PropTypes.func.isRequired,
-  setShareType: PropTypes.func.isRequired
+  isOpen: PropTypes.bool,
+  haveEmbed: PropTypes.bool,
+  selectedType: PropTypes.string,
+  data: PropTypes.object,
+  handleClose: PropTypes.func,
+  handleFocus: PropTypes.func,
+  changeType: PropTypes.func,
+  copyToClipboard: PropTypes.func
 };
 
 export default Share;
