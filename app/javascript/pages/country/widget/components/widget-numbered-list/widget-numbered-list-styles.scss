@@ -16,7 +16,7 @@
     color: $slate;
 
     &:hover {
-      color: darken($slate, 20%);
+      text-decoration: underline;
     }
   }
 
