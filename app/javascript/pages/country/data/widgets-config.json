@@ -24,7 +24,7 @@
                       "plantations", "plantations__mining",
                       "plantations__wdpa", "plantations__landmark"],
       "categories": ["summary", "land-cover"],
-      "admins": ["country", "region"]
+      "admins": ["country", "region", "subRegion"]
     },
     "settings": {
       "indicator": "gadm28",
