@@ -77,10 +77,10 @@ class WidgetTreeCoverContainer extends PureComponent {
         t => t.value === settings.threshold
       );
       const indicator = getActiveFilter(settings, indicators, 'indicator');
-      return `Tree  cover for 
-        ${indicator.label} of 
+      return `Tree  cover for
+        ${indicator.label} of
         ${locationNames.current &&
-          locationNames.current.label} with a tree canopy of 
+          locationNames.current.label} with a tree canopy of
         ${activeThreshold.label}`;
     }
     return '';

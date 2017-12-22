@@ -7,6 +7,13 @@ const getTotalArea = state => state.cover;
 const getPlantationsCover = state => state.plantations;
 const getIndicator = state => state.indicator;
 
+function getNameLabel(indicator, plantations) {
+  if (indicator === 'plantations') {
+    return 'Tree plantations';
+  }
+  return plantations ? 'Natural forest' : 'Tree cover';
+}
+
 // get lists selected
 export const getTreeCoverData = createSelector(
   [getTotalCover, getTotalArea, getPlantationsCover, getIndicator],
@@ -14,7 +21,7 @@ export const getTreeCoverData = createSelector(
     if (!total) return null;
     const data = [
       {
-        name: plantations ? 'Natural forest' : 'Tree cover',
+        name: getNameLabel(indicator, plantations),
         value: cover - plantations,
         color: COLORS.darkGreen,
         percentage: (cover - plantations) / total * 100
