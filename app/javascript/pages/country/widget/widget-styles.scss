@@ -10,7 +10,7 @@
   min-height: rem(460px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
 
   @media screen and (min-width: $screen-m) {
     padding: rem(25px) rem(20px);
