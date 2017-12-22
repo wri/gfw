@@ -11,8 +11,7 @@ import Stories from 'pages/country/stories';
 import Sticky from 'components/sticky';
 import CountryDataProvider from 'pages/country/providers/country-data-provider';
 import SubNavMenu from 'components/subnav-menu';
-
-import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
+import NoContent from 'components/no-content';
 
 import './root-styles.scss';
 
@@ -22,8 +21,12 @@ class Root extends PureComponent {
       showMapMobile,
       handleShowMapMobile,
       links,
-      isGeostoreLoading
+      isGeostoreLoading,
+      setCategory,
+      widgets,
+      category
     } = this.props;
+
     return (
       <div className="l-country">
         <button className="open-map-mobile-tab" onClick={handleShowMapMobile}>
@@ -34,24 +37,29 @@ class Root extends PureComponent {
             <Header className="header" />
             <SubNavMenu
               links={links}
+              activeLink={category}
               className="subnav-tabs"
               theme="theme-subnav-dark"
+              handleClick={setCategory}
             />
             <div className="widgets">
               <div className="row">
-                {Object.keys(WIDGETS_CONFIG).map(widget => (
-                  <div
-                    key={widget}
-                    className={`columns large-${
-                      WIDGETS_CONFIG[widget].gridWidth
-                    } small-12 widget`}
-                  >
-                    <Widget
-                      widget={widget}
-                      size={WIDGETS_CONFIG[widget].gridWidth}
-                    />
+                {widgets.length > 0 ? (
+                  widgets.map(widget => (
+                    <div
+                      key={widget.name}
+                      className={`columns large-${
+                        widget.gridWidth
+                      } small-12 widget`}
+                    >
+                      <Widget widget={widget.name} size={widget.gridWidth} />
+                    </div>
+                  ))
+                ) : (
+                  <div className="columns small-12">
+                    <NoContent message="No widgets available" icon />
                   </div>
-                ))}
+                )}
               </div>
             </div>
           </div>
@@ -97,7 +105,10 @@ Root.propTypes = {
   showMapMobile: PropTypes.bool.isRequired,
   handleShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
-  isGeostoreLoading: PropTypes.bool
+  isGeostoreLoading: PropTypes.bool,
+  setCategory: PropTypes.func,
+  category: PropTypes.string,
+  widgets: PropTypes.array
 };
 
 export default Root;

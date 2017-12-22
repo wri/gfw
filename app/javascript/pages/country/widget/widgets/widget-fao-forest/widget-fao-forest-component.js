@@ -6,37 +6,60 @@ import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 import WidgetPieChart from 'pages/country/widget/components/widget-pie-chart';
 import WidgetPieChartLegend from 'pages/country/widget/components/widget-pie-chart-legend';
+import NoContent from 'components/no-content';
 import './widget-fao-forest-styles.scss';
 
 class WidgetFAOForestGain extends PureComponent {
   render() {
-    const { locationNames, isLoading, data, getSentence } = this.props;
+    const {
+      locationNames,
+      isLoading,
+      data,
+      getSentence,
+      title,
+      anchorLink,
+      widget
+    } = this.props;
 
     return (
       <div className="c-widget c-widget-fao-forest">
         <WidgetHeader
-          title={`Forest cover in ${locationNames.current &&
-            locationNames.current.label}`}
-          widget={'faoForest'}
+          widget={widget}
+          title={title}
+          anchorLink={anchorLink}
+          locationNames={locationNames}
         />
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <div className="container">
-            <WidgetDynamicSentence sentence={getSentence()} />
-            <div className="pie-chart-container">
-              <WidgetPieChartLegend
-                data={data}
-                settings={{
-                  unit: '%',
-                  format: '.1f',
-                  key: 'percentage'
-                }}
+        <div className="container">
+          {isLoading && <Loader />}
+          {!isLoading &&
+            data &&
+            data.length === 0 && (
+              <NoContent
+                message={`No forest cover for ${locationNames.current &&
+                  locationNames.current.label}`}
+                icon
               />
-              <WidgetPieChart className="cover-pie-chart" data={data} />
-            </div>
-          </div>
-        )}
+            )}
+          {!isLoading &&
+            data &&
+            data.length > 0 && (
+              <div>
+                <WidgetDynamicSentence sentence={getSentence()} />
+                <div className="pie-chart-container">
+                  <WidgetPieChartLegend
+                    className="pie-chart-legend"
+                    data={data}
+                    settings={{
+                      unit: '%',
+                      format: '.1f',
+                      key: 'percentage'
+                    }}
+                  />
+                  <WidgetPieChart className="cover-pie-chart" data={data} />
+                </div>
+              </div>
+            )}
+        </div>
       </div>
     );
   }
@@ -46,7 +69,10 @@ WidgetFAOForestGain.propTypes = {
   locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   data: PropTypes.array.isRequired,
-  getSentence: PropTypes.func.isRequired
+  getSentence: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  anchorLink: PropTypes.string.isRequired,
+  widget: PropTypes.string.isRequired
 };
 
 export default WidgetFAOForestGain;

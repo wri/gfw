@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
-import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import WidgetNumberedList from 'pages/country/widget/components/widget-numbered-list';
 import NoContent from 'components/no-content';
+import COLORS from 'pages/country/data/colors.json';
 
 import './widget-tree-located-styles.scss';
 
@@ -15,35 +15,36 @@ class WidgetTreeLocated extends PureComponent {
       locationNames,
       isLoading,
       data,
-      indicators,
-      units,
-      thresholds,
+      options,
       settings,
+      config,
       handlePageChange,
       setTreeLocatedSettingsIndicator,
       setTreeLocatedSettingsUnit,
-      setTreeLocatedSettingsThreshold
+      setTreeLocatedSettingsThreshold,
+      title,
+      anchorLink,
+      widget
     } = this.props;
     return (
       <div className="c-widget c-widget-tree-located">
         <WidgetHeader
-          title={`Where are the forest located in ${locationNames.current &&
-            locationNames.current.label}`}
-          widget={'treeLocated'}
-        >
-          <WidgetSettings
-            type="settings"
-            indicators={indicators}
-            units={units}
-            thresholds={thresholds}
-            settings={settings}
-            onIndicatorChange={setTreeLocatedSettingsIndicator}
-            onUnitChange={setTreeLocatedSettingsUnit}
-            onThresholdChange={setTreeLocatedSettingsThreshold}
-            isLoading={isLoading}
-            locationNames={locationNames}
-          />
-        </WidgetHeader>
+          widget={widget}
+          title={title}
+          anchorLink={anchorLink}
+          locationNames={locationNames}
+          settingsConfig={{
+            isLoading,
+            config,
+            settings,
+            options,
+            actions: {
+              onIndicatorChange: setTreeLocatedSettingsIndicator,
+              onUnitChange: setTreeLocatedSettingsUnit,
+              onThresholdChange: setTreeLocatedSettingsThreshold
+            }
+          }}
+        />
         <div className="container">
           {isLoading && <Loader />}
           {!isLoading &&
@@ -63,7 +64,7 @@ class WidgetTreeLocated extends PureComponent {
                 data={data}
                 settings={settings}
                 handlePageChange={handlePageChange}
-                colorRange={['#113002', '#e7e5a4']}
+                colorRange={[COLORS.darkGreen, COLORS.nonForest]}
               />
             )}
         </div>
@@ -76,14 +77,16 @@ WidgetTreeLocated.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   locationNames: PropTypes.object,
   data: PropTypes.array.isRequired,
-  indicators: PropTypes.array.isRequired,
+  options: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
-  units: PropTypes.array.isRequired,
-  thresholds: PropTypes.array.isRequired,
   handlePageChange: PropTypes.func.isRequired,
   setTreeLocatedSettingsIndicator: PropTypes.func.isRequired,
   setTreeLocatedSettingsUnit: PropTypes.func.isRequired,
-  setTreeLocatedSettingsThreshold: PropTypes.func.isRequired
+  setTreeLocatedSettingsThreshold: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  anchorLink: PropTypes.string.isRequired,
+  widget: PropTypes.string.isRequired
 };
 
 export default WidgetTreeLocated;

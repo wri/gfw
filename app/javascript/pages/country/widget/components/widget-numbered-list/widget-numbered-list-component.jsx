@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import { getColorPalette } from 'utils/data';
+import Link from 'redux-first-router-link';
 
 import WidgetPaginate from 'pages/country/widget/components/widget-paginate';
 
@@ -25,20 +26,22 @@ class WidgetNumberedList extends PureComponent {
         <ul className="list">
           {data.length > 0 &&
             pageData.map((item, index) => (
-              <li className="list-item" key={item.label}>
-                <div className="item-label">
-                  <div
-                    className="item-bubble"
-                    style={{ backgroundColor: COLORS[index] }}
-                  >
-                    {index + 1 + pageSize * page}
+              <li key={item.label}>
+                <Link className="list-item" to={item.path}>
+                  <div className="item-label">
+                    <div
+                      className="item-bubble"
+                      style={{ backgroundColor: COLORS[index] }}
+                    >
+                      {index + 1 + pageSize * page}
+                    </div>
+                    <div className="item-name">{item.label}</div>
                   </div>
-                  <div className="item-name">{item.label}</div>
-                </div>
-                <div className="item-value">
-                  {format('.3s')(item.value)}
-                  {unit}
-                </div>
+                  <div className="item-value">
+                    {format('.3s')(item.value)}
+                    {unit}
+                  </div>
+                </Link>
               </li>
             ))}
         </ul>

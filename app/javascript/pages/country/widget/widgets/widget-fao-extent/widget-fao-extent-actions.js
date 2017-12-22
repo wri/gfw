@@ -13,11 +13,11 @@ const getFAOExtentData = createThunkAction(
       dispatch(setFAOExtentIsLoading(true));
       getFAOExtent({ ...params })
         .then(response => {
-          const { name, rate } = response.data.rows[0];
+          const data = response.data.rows;
           dispatch(
             setFAOExtentData({
-              name,
-              rate
+              name: (data.length && data[0].name) || '',
+              rate: (data.length && data[0].rate) || 0
             })
           );
         })

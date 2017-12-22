@@ -26,8 +26,8 @@ const getTreeCoverGain = createThunkAction(
             const extent = extentResponse.data.data;
             dispatch(
               setTreeCoverGainData({
-                gain: (gain && gain[0].value) || 0,
-                extent: (extent && extent[0].value) || 0
+                gain: (gain.length && gain[0].value) || 0,
+                extent: (extent.length && extent[0].value) || 0
               })
             );
           })

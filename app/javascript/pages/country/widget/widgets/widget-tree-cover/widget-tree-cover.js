@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import {
   getIndicators,
-  getUnits,
   getThresholds,
   getActiveFilter
 } from 'pages/country/widget/widget-selectors';
@@ -17,34 +16,32 @@ export { initialState } from './widget-tree-cover-reducers';
 export { default as reducers } from './widget-tree-cover-reducers';
 export { default as actions } from './widget-tree-cover-actions';
 
-const INDICATORS_WHITELIST = [
-  'gadm28',
-  'wpda',
-  'ifl_2013',
-  'ifl_2013__wdpa',
-  'ifl_2013__mining'
-];
-
 const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
   const { totalArea, cover, plantations } = widgetTreeCover.data;
+  const { indicator } = widgetTreeCover.settings;
+  const { indicators } = widgetTreeCover.config;
 
   return {
+    title: widgetTreeCover.title,
+    anchorLink: widgetTreeCover.anchorLink,
     isLoading:
       widgetTreeCover.isLoading || isCountriesLoading || isRegionsLoading,
     location: location.payload,
     regions: countryData.regions,
-    data: getTreeCoverData({ totalArea, cover, plantations }) || [],
-    indicators:
-      getIndicators({
-        whitelist: INDICATORS_WHITELIST,
-        location: location.payload,
-        ...countryData
-      }) || [],
-    units: getUnits(),
-    thresholds: getThresholds(),
+    data: getTreeCoverData({ totalArea, cover, plantations, indicator }) || [],
+    options:
+      {
+        indicators:
+          getIndicators({
+            whitelist: indicators,
+            location: location.payload,
+            ...countryData
+          }) || [],
+        thresholds: getThresholds()
+      } || {},
     settings: widgetTreeCover.settings,
-    isMetaLoading: isCountriesLoading || isRegionsLoading
+    config: widgetTreeCover.config
   };
 };
 
@@ -73,16 +70,17 @@ class WidgetTreeCoverContainer extends PureComponent {
   }
 
   getSentence = () => {
-    const { locationNames, settings, indicators, thresholds } = this.props;
+    const { locationNames, settings } = this.props;
+    const { indicators, thresholds } = this.props.options;
     if (locationNames && indicators.length) {
       const activeThreshold = thresholds.find(
         t => t.value === settings.threshold
       );
       const indicator = getActiveFilter(settings, indicators, 'indicator');
-      return `Tree  cover for 
-        ${indicator.label} of 
+      return `Tree  cover for
+        ${indicator.label} of
         ${locationNames.current &&
-          locationNames.current.label} with a tree canopy of 
+          locationNames.current.label} with a tree canopy of
         ${activeThreshold.label}`;
     }
     return '';
@@ -101,8 +99,7 @@ WidgetTreeCoverContainer.propTypes = {
   location: PropTypes.object.isRequired,
   locationNames: PropTypes.object.isRequired,
   getTreeCover: PropTypes.func.isRequired,
-  indicators: PropTypes.array.isRequired,
-  thresholds: PropTypes.array.isRequired
+  options: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, actions)(WidgetTreeCoverContainer);

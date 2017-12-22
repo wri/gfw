@@ -22,17 +22,9 @@ export { initialState } from './widget-tree-loss-reducers';
 export { default as reducers } from './widget-tree-loss-reducers';
 export { default as actions } from './widget-tree-loss-actions';
 
-const INDICATORS_WHITELIST = [
-  'gadm28',
-  'gfw_plantations',
-  'gfw_managed_forests',
-  'wdpa',
-  'IFL_2000',
-  'IFL_2013',
-  'primary_forests'
-];
-
 const mapStateToProps = ({ widgetTreeLoss, location, countryData }) => ({
+  title: widgetTreeLoss.title,
+  anchorLink: widgetTreeLoss.anchorLink,
   isLoading: widgetTreeLoss.isLoading,
   location: location.payload,
   data:
@@ -41,24 +33,27 @@ const mapStateToProps = ({ widgetTreeLoss, location, countryData }) => ({
       ...widgetTreeLoss.settings
     }) || [],
   extent: widgetTreeLoss.data.extent,
-  startYears:
-    getStartYears({
-      data: widgetTreeLoss.data.loss,
-      ...widgetTreeLoss.settings
-    }) || [],
-  endYears:
-    getEndYears({
-      data: widgetTreeLoss.data.loss,
-      ...widgetTreeLoss.settings
-    }) || [],
-  indicators:
-    getIndicators({
-      whitelist: INDICATORS_WHITELIST,
-      location: location.payload,
-      ...countryData
-    }) || [],
-  thresholds: getThresholds(),
+  options: {
+    startYears:
+      getStartYears({
+        data: widgetTreeLoss.data.loss,
+        ...widgetTreeLoss.settings
+      }) || [],
+    endYears:
+      getEndYears({
+        data: widgetTreeLoss.data.loss,
+        ...widgetTreeLoss.settings
+      }) || [],
+    indicators:
+      getIndicators({
+        whitelist: widgetTreeLoss.config.indicators,
+        location: location.payload,
+        ...countryData
+      }) || [],
+    thresholds: getThresholds()
+  },
   settings: widgetTreeLoss.settings,
+  config: widgetTreeLoss.config,
   locationNames: getAdminsSelected({
     ...countryData,
     location: location.payload
@@ -84,27 +79,36 @@ class WidgetTreeLossContainer extends PureComponent {
   }
 
   getSentence = () => {
-    const { locationNames, indicators, settings, data, extent } = this.props;
+    const { locationNames, settings, data, extent } = this.props;
+    const { indicators } = this.props.options;
     const indicator = getActiveFilter(settings, indicators, 'indicator');
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
       (data && data.length && sumBy(data, 'emissions')) || 0;
-    const percentageLoss = extent / totalLoss * 100;
+    const percentageLoss =
+      (totalLoss && extent && totalLoss / extent * 100) || 0;
     const locationText = `${locationNames.current &&
       locationNames.current.label} (${indicator &&
-      indicator.label.toLowerCase()})`;
-    return `Between <b>${settings.startYear}</b> and <b>${
+      (settings.indicator === 'gadm28'
+        ? 'all regions'
+        : indicator.label.toLowerCase())})`;
+    return `Between <span>${settings.startYear}</span> and <span>${
       settings.endYear
-    }</b>, 
-      ${locationText} lost <b>${format('.3s')(totalLoss)}ha</b> of tree cover: 
+    }</span>, 
+      <span>${locationText}</span> lost <b>${format('.3s')(
+      totalLoss
+    )}ha</b> of tree cover${totalLoss ? '.' : ','} ${
+      totalLoss > 0
+        ? ` 
       This loss is equal to <b>${format('.1f')(
-      percentageLoss
-    )}%</b> of the total 
-      <b>${indicator &&
-        indicator.label.toLowerCase()}</b> tree cover extent in 2010, 
+          percentageLoss
+        )}%</b> of the regions tree cover extent in 2010, 
       and equivalent to <b>${format('.3s')(
           totalEmissions
-        )}tonnes</b> of CO\u2082 emissions.`;
+        )}tonnes</b> of CO\u2082 emissions`
+        : ''
+    }
+     with canopy density <span>> ${settings.threshold}%</span>.`;
   };
 
   viewOnMap = () => {
@@ -122,7 +126,7 @@ class WidgetTreeLossContainer extends PureComponent {
 
 WidgetTreeLossContainer.propTypes = {
   locationNames: PropTypes.object.isRequired,
-  indicators: PropTypes.array.isRequired,
+  options: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   getTreeLoss: PropTypes.func.isRequired,

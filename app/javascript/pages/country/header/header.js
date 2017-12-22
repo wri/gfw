@@ -126,16 +126,16 @@ class HeaderContainer extends PureComponent {
     const location = locationNames.current && locationNames.current.label;
     let firstSentence = '';
     let secondSentence = '';
-    if (extent) {
+    if (data.extent > 0) {
       firstSentence = `
         In 2010, <b>${location}</b> had <b>${extent}ha</b> of tree cover, extending over <b>${percentageCover}%</b> of its land area.
       `;
     } else {
       firstSentence = `
-        In 2010, <b>${location}</b> had <b>${extent}ha</b> of tree cover.
+        In 2010, <b>${location}</b> had no tree cover.
       `;
     }
-    if (data.totalLoss.area) {
+    if (data.extent > 0 && data.totalLoss.area) {
       secondSentence = `
         In ${
           data.totalLoss.year

@@ -12,6 +12,14 @@
     margin-bottom: rem(10px);
   }
 
+  a {
+    color: $slate;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   .item-label {
     display: flex;
     flex-direction: row;

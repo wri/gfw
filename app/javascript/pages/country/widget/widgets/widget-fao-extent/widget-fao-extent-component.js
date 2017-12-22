@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
-import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import './widget-fao-extent-styles.scss';
 
 class WidgetFAOExtent extends PureComponent {
@@ -12,24 +11,33 @@ class WidgetFAOExtent extends PureComponent {
     const {
       locationNames,
       isLoading,
-      periods,
+      options,
+      config,
       settings,
       getSentence,
-      setFAOExtentSettingsPeriod
+      setFAOExtentSettingsPeriod,
+      title,
+      anchorLink,
+      widget
     } = this.props;
 
     return (
       <div className="c-widget c-widget-fao-extent">
-        <WidgetHeader title={'FAO REFORESTATION'} widget={'faoExtent'}>
-          <WidgetSettings
-            type="settings"
-            periods={periods}
-            settings={settings}
-            onPeriodChange={setFAOExtentSettingsPeriod}
-            isLoading={isLoading}
-            locationNames={locationNames}
-          />
-        </WidgetHeader>
+        <WidgetHeader
+          widget={widget}
+          title={title}
+          anchorLink={anchorLink}
+          locationNames={locationNames}
+          settingsConfig={{
+            isLoading,
+            config,
+            settings,
+            options,
+            actions: {
+              onPeriodChange: setFAOExtentSettingsPeriod
+            }
+          }}
+        />
         {isLoading ? (
           <Loader />
         ) : (
@@ -45,10 +53,14 @@ class WidgetFAOExtent extends PureComponent {
 WidgetFAOExtent.propTypes = {
   locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  periods: PropTypes.array.isRequired,
+  options: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired,
   getSentence: PropTypes.func.isRequired,
-  setFAOExtentSettingsPeriod: PropTypes.func.isRequired
+  setFAOExtentSettingsPeriod: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  anchorLink: PropTypes.string.isRequired,
+  widget: PropTypes.string.isRequired
 };
 
 export default WidgetFAOExtent;

@@ -16,21 +16,16 @@ export { initialState } from './widget-tree-gain-reducers';
 export { default as reducers } from './widget-tree-gain-reducers';
 export { default as actions } from './widget-tree-gain-actions';
 
-const INDICATORS_WHITELIST = [
-  'gadm28',
-  'biodiversity_hot_spots',
-  'wdpa',
-  'plantations',
-  'primary_forest'
-];
-
 const mapStateToProps = ({ countryData, widgetTreeCoverGain, location }) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
     isSubRegionsLoading
   } = countryData;
+  const { indicators } = widgetTreeCoverGain.config;
   return {
+    title: widgetTreeCoverGain.title,
+    anchorLink: widgetTreeCoverGain.anchorLink,
     location: location.payload,
     isLoading:
       widgetTreeCoverGain.isLoading ||
@@ -39,14 +34,17 @@ const mapStateToProps = ({ countryData, widgetTreeCoverGain, location }) => {
       isSubRegionsLoading,
     gain: widgetTreeCoverGain.data.gain,
     extent: widgetTreeCoverGain.data.extent,
-    indicators:
-      getIndicators({
-        whitelist: INDICATORS_WHITELIST,
-        location: location.payload,
-        ...countryData
-      }) || [],
-    thresholds: getThresholds(),
-    settings: widgetTreeCoverGain.settings
+    options: {
+      indicators:
+        getIndicators({
+          whitelist: indicators,
+          location: location.payload,
+          ...countryData
+        }) || [],
+      thresholds: getThresholds()
+    },
+    settings: widgetTreeCoverGain.settings,
+    config: widgetTreeCoverGain.config
   };
 };
 
@@ -74,19 +72,20 @@ class WidgetTreeCoverGainContainer extends PureComponent {
   }
 
   getSentence = () => {
-    const { locationNames, gain, extent, indicators, settings } = this.props;
+    const { locationNames, gain, extent, settings } = this.props;
+    const { indicators } = this.props.options;
 
     const indicator = getActiveFilter(settings, indicators, 'indicator');
     const regionPhrase =
       settings.indicator === 'gadm28'
-        ? 'region-wide'
-        : `in ${indicator.label.toLowerCase()}`;
+        ? '<span>region-wide</span>'
+        : `in <span>${indicator.label.toLowerCase()}</span>`;
 
     const areaPercent = format('.1f')(100 * gain / extent);
-    const firstSentence = `From 2001 to 2012, ${locationNames.current &&
-      locationNames.current.label} gained <strong>${
+    const firstSentence = `From 2001 to 2012, <span>${locationNames.current &&
+      locationNames.current.label}</span> gained <strong>${
       gain ? format('.3s')(gain) : '0'
-    }ha</strong> of tree cover in ${regionPhrase}`;
+    }ha</strong> of tree cover ${regionPhrase}`;
     const secondSentence = gain
       ? `, equivalent to a <strong>${areaPercent}%</strong> increase relative to 2010 tree cover extent.`
       : '.';
@@ -106,7 +105,7 @@ WidgetTreeCoverGainContainer.propTypes = {
   locationNames: PropTypes.object.isRequired,
   gain: PropTypes.number.isRequired,
   extent: PropTypes.number.isRequired,
-  indicators: PropTypes.array.isRequired,
+  options: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   getTreeCoverGain: PropTypes.func.isRequired
