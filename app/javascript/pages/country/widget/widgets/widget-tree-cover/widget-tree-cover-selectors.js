@@ -10,7 +10,7 @@ const getPlantationsCover = state => state.plantations || null;
 export const getTreeCoverData = createSelector(
   [getTotalCover, getTotalArea, getPlantationsCover],
   (total, cover, plantations) => {
-    if (!total || !cover) return null;
+    if (!total) return null;
     return [
       {
         name: plantations ? 'Natural forest' : 'Tree cover',
@@ -25,7 +25,7 @@ export const getTreeCoverData = createSelector(
         percentage: plantations / total * 100
       },
       {
-        name: 'Non Forest',
+        name: 'Non-Forest',
         value: total - cover,
         color: COLORS.nonForest,
         percentage: (total - cover) / total * 100
