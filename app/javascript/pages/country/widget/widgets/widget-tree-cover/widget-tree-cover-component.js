@@ -47,14 +47,12 @@ class WidgetTreeCover extends PureComponent {
             data &&
             data.length === 0 && (
               <NoContent
-                message={`No tree cover for ${locationNames.current &&
+                message={`No data in selection for ${locationNames.current &&
                   locationNames.current.label}`}
-                icon
               />
             )}
           {!isLoading &&
-            data &&
-            data.length > 0 && (
+            data && (
               <div className="pie-chart-container">
                 <WidgetPieChartLegend data={data} settings={settings} />
                 <WidgetPieChart className="cover-pie-chart" data={data} />
