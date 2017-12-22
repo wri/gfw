@@ -126,7 +126,7 @@ class HeaderContainer extends PureComponent {
     const location = locationNames.current && locationNames.current.label;
     let firstSentence = '';
     let secondSentence = '';
-    if (extent > 0) {
+    if (data.extent > 0) {
       firstSentence = `
         In 2010, <b>${location}</b> had <b>${extent}ha</b> of tree cover, extending over <b>${percentageCover}%</b> of its land area.
       `;
@@ -135,7 +135,7 @@ class HeaderContainer extends PureComponent {
         In 2010, <b>${location}</b> had no tree cover.
       `;
     }
-    if (data.totalLoss.area) {
+    if (data.extent > 0 && data.totalLoss.area) {
       secondSentence = `
         In ${
           data.totalLoss.year
