@@ -11,8 +11,7 @@ import Stories from 'pages/country/stories';
 import Sticky from 'components/sticky';
 import CountryDataProvider from 'pages/country/providers/country-data-provider';
 import SubNavMenu from 'components/subnav-menu';
-
-import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
+import NoContent from 'components/no-content';
 
 import './root-styles.scss';
 
@@ -24,8 +23,8 @@ class Root extends PureComponent {
       links,
       isGeostoreLoading,
       setCategory,
-      category,
-      adminLevel
+      widgets,
+      category
     } = this.props;
 
     return (
@@ -45,24 +44,21 @@ class Root extends PureComponent {
             />
             <div className="widgets">
               <div className="row">
-                {Object.keys(WIDGETS_CONFIG).map(
-                  widget =>
-                    (WIDGETS_CONFIG[widget].config.categories.indexOf(category) >
-                      -1 &&
-                    WIDGETS_CONFIG[widget].config.admins.indexOf(adminLevel) >
-                      -1 ? (
-                        <div
-                          key={widget}
-                          className={`columns large-${
-                            WIDGETS_CONFIG[widget].gridWidth
-                          } small-12 widget`}
-                        >
-                          <Widget
-                            widget={widget}
-                            size={WIDGETS_CONFIG[widget].gridWidth}
-                          />
-                        </div>
-                      ) : null)
+                {widgets.length > 0 ? (
+                  widgets.map(widget => (
+                    <div
+                      key={widget.name}
+                      className={`columns large-${
+                        widget.gridWidth
+                      } small-12 widget`}
+                    >
+                      <Widget widget={widget.name} size={widget.gridWidth} />
+                    </div>
+                  ))
+                ) : (
+                  <div className="columns small-12">
+                    <NoContent message="No widgets available" icon />
+                  </div>
                 )}
               </div>
             </div>
@@ -112,7 +108,7 @@ Root.propTypes = {
   isGeostoreLoading: PropTypes.bool,
   setCategory: PropTypes.func,
   category: PropTypes.string,
-  adminLevel: PropTypes.string
+  widgets: PropTypes.array
 };
 
 export default Root;

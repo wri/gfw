@@ -13,7 +13,6 @@ class WidgetTreeLoss extends PureComponent {
   render() {
     const {
       isLoading,
-      viewOnMap,
       data,
       options,
       settings,
@@ -35,7 +34,6 @@ class WidgetTreeLoss extends PureComponent {
           title={title}
           anchorLink={anchorLink}
           locationNames={locationNames}
-          viewOnMapCallback={viewOnMap}
           size={size}
           settingsConfig={{
             isLoading,
@@ -102,7 +100,6 @@ WidgetTreeLoss.propTypes = {
   settings: PropTypes.object.isRequired,
   options: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
-  viewOnMap: PropTypes.func.isRequired,
   setTreeLossSettingsIndicator: PropTypes.func.isRequired,
   setTreeLossSettingsThreshold: PropTypes.func.isRequired,
   setTreeLossSettingsStartYear: PropTypes.func.isRequired,

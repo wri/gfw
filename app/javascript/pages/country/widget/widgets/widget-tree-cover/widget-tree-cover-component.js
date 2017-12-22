@@ -54,7 +54,15 @@ class WidgetTreeCover extends PureComponent {
           {!isLoading &&
             data && (
               <div className="pie-chart-container">
-                <WidgetPieChartLegend data={data} settings={settings} />
+                <WidgetPieChartLegend
+                  data={data}
+                  config={{
+                    ...settings,
+                    format: '.3s',
+                    unit: 'ha',
+                    key: 'value'
+                  }}
+                />
                 <WidgetPieChart className="cover-pie-chart" data={data} />
               </div>
             )}

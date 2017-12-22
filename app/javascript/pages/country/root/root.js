@@ -6,6 +6,7 @@ import { getActiveAdmin } from 'pages/country/widget/widget-selectors';
 import CATEGORIES from 'pages/country/data/categories.json';
 import RootComponent from './root-component';
 import actions from './root-actions';
+import { getWidgets } from './root-selectors';
 
 export { initialState } from './root-reducers';
 export { default as reducers } from './root-reducers';
@@ -18,7 +19,10 @@ const mapStateToProps = ({ root, countryData, location }) => ({
   links: CATEGORIES,
   isGeostoreLoading: countryData.isGeostoreLoading,
   category: root.category,
-  adminLevel: getActiveAdmin(location.payload)
+  widgets: getWidgets({
+    category: root.category,
+    adminLevel: getActiveAdmin(location.payload)
+  })
 });
 
 class RootContainer extends PureComponent {
