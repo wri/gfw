@@ -10,21 +10,18 @@ class WidgetPieChartLegend extends PureComponent {
 
     return (
       <ul className={`c-pie-chart-legend ${className}`}>
-        {data.map(
-          (item, index) =>
-            (item.value ? (
-              <li key={index.toString()}>
-                <div className="legend-title">
-                  <span style={{ backgroundColor: item.color }}>{}</span>
-                  {item.name}
-                </div>
-                <div className="legend-value" style={{ color: item.color }}>
-                  {format(config.format)(item[config.key])}
-                  {config.unit}
-                </div>
-              </li>
-            ) : null)
-        )}
+        {data.map((item, index) => (
+          <li key={index.toString()}>
+            <div className="legend-title">
+              <span style={{ backgroundColor: item.color }}>{}</span>
+              {item.name}
+            </div>
+            <div className="legend-value" style={{ color: item.color }}>
+              {format(config.format)(item[config.key])}
+              {config.unit}
+            </div>
+          </li>
+        ))}
       </ul>
     );
   }
@@ -38,7 +35,7 @@ WidgetPieChartLegend.propTypes = {
 
 WidgetPieChartLegend.defaultProps = {
   config: {
-    unit: 'ha',
+    unit: '',
     key: 'value',
     format: '.3s'
   }
