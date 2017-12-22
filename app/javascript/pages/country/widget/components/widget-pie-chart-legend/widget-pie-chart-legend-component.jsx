@@ -38,7 +38,7 @@ WidgetPieChartLegend.propTypes = {
 
 WidgetPieChartLegend.defaultProps = {
   config: {
-    unit: '',
+    unit: 'ha',
     key: 'value',
     format: '.3s'
   }
