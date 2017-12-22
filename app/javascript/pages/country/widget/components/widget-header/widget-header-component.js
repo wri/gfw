@@ -54,7 +54,7 @@ class WidgetHeader extends PureComponent {
               )}
             <Button
               className="theme-button-small theme-button-light square"
-              onClick={() => openShare()}
+              onClick={openShare}
             >
               <Icon icon={shareIcon} />
             </Button>
