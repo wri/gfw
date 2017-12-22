@@ -94,6 +94,8 @@ $black-tabs: #404040;
   .widgets {
     padding-top: rem(20px);
     padding-bottom: rem(30px);
+    position: relative;
+    min-height: rem(400px);
 
     @media screen and (min-width: $screen-l) {
       padding-top: rem(50px);
