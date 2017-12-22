@@ -19,6 +19,7 @@ export { default as actions } from './widget-tree-cover-actions';
 const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
   const { totalArea, cover, plantations } = widgetTreeCover.data;
+  const { indicator } = widgetTreeCover.settings;
   const { indicators } = widgetTreeCover.config;
 
   return {
@@ -28,7 +29,7 @@ const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
       widgetTreeCover.isLoading || isCountriesLoading || isRegionsLoading,
     location: location.payload,
     regions: countryData.regions,
-    data: getTreeCoverData({ totalArea, cover, plantations }) || [],
+    data: getTreeCoverData({ totalArea, cover, plantations, indicator }) || [],
     options:
       {
         indicators:
@@ -76,10 +77,10 @@ class WidgetTreeCoverContainer extends PureComponent {
         t => t.value === settings.threshold
       );
       const indicator = getActiveFilter(settings, indicators, 'indicator');
-      return `Tree  cover for 
-        ${indicator.label} of 
+      return `Tree  cover for
+        ${indicator.label} of
         ${locationNames.current &&
-          locationNames.current.label} with a tree canopy of 
+          locationNames.current.label} with a tree canopy of
         ${activeThreshold.label}`;
     }
     return '';
