@@ -18,7 +18,11 @@
     "anchorLink": "tree-located",
     "gridWidth": 6,
     "config": {
-      "indicators": ["gadm28", "plantations", "ifl_2013", "primary_forest"],
+      "indicators": ["gadm28", "ifl_2013",
+                      "ifl_2013__wdpa", "ifl_2013__mining",
+                      "primary_forest", "primary_forest__landmark",
+                      "plantations", "plantations__mining",
+                      "plantations__wdpa", "plantations__landmark"],
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region", "subRegion"]
     },
