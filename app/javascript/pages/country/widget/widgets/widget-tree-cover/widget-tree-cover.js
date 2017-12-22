@@ -19,6 +19,7 @@ export { default as actions } from './widget-tree-cover-actions';
 const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
   const { totalArea, cover, plantations } = widgetTreeCover.data;
+  const { indicator } = widgetTreeCover.settings;
   const { indicators } = widgetTreeCover.config;
   const { indicator } = widgetTreeCover.settings;
 
