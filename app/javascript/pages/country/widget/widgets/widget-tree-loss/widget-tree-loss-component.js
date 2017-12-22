@@ -22,7 +22,6 @@ class WidgetTreeLoss extends PureComponent {
       setTreeLossSettingsStartYear,
       setTreeLossSettingsEndYear,
       getSentence,
-      size,
       locationNames,
       title,
       anchorLink,
@@ -36,7 +35,6 @@ class WidgetTreeLoss extends PureComponent {
           title={title}
           anchorLink={anchorLink}
           locationNames={locationNames}
-          size={size}
           settingsConfig={{
             isLoading,
             config,
@@ -107,7 +105,6 @@ WidgetTreeLoss.propTypes = {
   setTreeLossSettingsStartYear: PropTypes.func.isRequired,
   setTreeLossSettingsEndYear: PropTypes.func.isRequired,
   getSentence: PropTypes.func.isRequired,
-  size: PropTypes.number,
   locationNames: PropTypes.object,
   title: PropTypes.string.isRequired,
   anchorLink: PropTypes.string.isRequired,
