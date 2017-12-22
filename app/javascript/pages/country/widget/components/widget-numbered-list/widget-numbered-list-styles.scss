@@ -12,6 +12,14 @@
     margin-bottom: rem(10px);
   }
 
+  a {
+    color: $slate;
+
+    &:hover {
+      color: darken($slate, 20%);
+    }
+  }
+
   .item-label {
     display: flex;
     flex-direction: row;

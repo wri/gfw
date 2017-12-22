@@ -5,19 +5,23 @@ import { sortByKey } from 'utils/data';
 // get list data
 const getData = state => state.data || null;
 const getUnit = state => state.unit || null;
+const getLocation = state => state.location || null;
 const getLocationsMeta = state => state.meta || null;
 
 export const getSortedData = createSelector(
-  [getData, getUnit, getLocationsMeta],
-  (data, unit, meta) => {
+  [getData, getUnit, getLocation, getLocationsMeta],
+  (data, unit, location, meta) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
     const dataMapped = [];
     data.forEach(d => {
-      const location = meta.find(l => d.id === l.value);
-      if (location) {
+      const region = meta.find(l => d.id === l.value);
+      if (region) {
         dataMapped.push({
-          label: (location && location.label) || '',
-          value: unit === 'ha' ? d.area : d.percentage
+          label: (region && region.label) || '',
+          value: unit === 'ha' ? d.area : d.percentage,
+          path: `/country/${location.country}/${
+            location.region ? `${location.region}/` : ''
+          }${d.id}`
         });
       }
     });

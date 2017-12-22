@@ -23,7 +23,8 @@ const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
   const data = {
     data: widgetTreeLocated.data.regions,
     unit: widgetTreeLocated.settings.unit,
-    meta: countryData[!location.payload.region ? 'regions' : 'subRegions']
+    meta: countryData[!location.payload.region ? 'regions' : 'subRegions'],
+    location: location.payload
   };
   return {
     title: widgetTreeLocated.title,
