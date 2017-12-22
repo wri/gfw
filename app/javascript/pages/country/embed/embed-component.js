@@ -1,0 +1,30 @@
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+
+import Widget from 'pages/country/widget';
+import Share from 'components/share';
+import CountryDataProvider from 'pages/country/providers/country-data-provider';
+
+import './embed-styles.scss';
+
+class Embed extends PureComponent {
+  render() {
+    const { widgetKey } = this.props;
+
+    return (
+      <div className="c-embed">
+        <div className="widget-wrapper">
+          <Widget widget={widgetKey} />
+        </div>
+        <Share />
+        <CountryDataProvider />
+      </div>
+    );
+  }
+}
+
+Embed.propTypes = {
+  widgetKey: PropTypes.string.isRequired
+};
+
+export default Embed;

@@ -52,7 +52,7 @@ class Root extends PureComponent {
                         widget.gridWidth
                       } small-12 widget`}
                     >
-                      <Widget widget={widget.name} size={widget.gridWidth} />
+                      <Widget widget={widget.name} />
                     </div>
                   ))
                 ) : (

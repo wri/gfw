@@ -6,7 +6,7 @@
       border: solid 1px #e5e5df;
       border-radius: 0;
 
-      .icon-angle-arrow-down {
+      .icon-arrow-down {
         width: rem(11px);
         height: rem(11px);
       }
@@ -14,7 +14,7 @@
 
     &.dd__opened {
       .dd__selectControl {
-        .icon-angle-arrow-down {
+        .icon-arrow-down {
           transform: rotate(180deg);
         }
       }

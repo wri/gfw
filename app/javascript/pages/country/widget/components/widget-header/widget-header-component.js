@@ -16,17 +16,16 @@ class WidgetHeader extends PureComponent {
       title,
       openShare,
       shareAnchor,
-      size,
       settingsConfig,
       locationNames
     } = this.props;
 
     return (
-      <div className="c-widget-header">
+      <div className="c-widget-header" id={shareAnchor}>
         <div className="title">{`${title} in ${
           locationNames.current ? locationNames.current.label : ''
         }`}</div>
-        <div className={`options size-${size}`}>
+        <div className="options">
           <div className="small-options">
             <Button className="theme-button-small square" disabled>
               <Icon icon={infoIcon} />
@@ -55,7 +54,7 @@ class WidgetHeader extends PureComponent {
               )}
             <Button
               className="theme-button-small theme-button-light square"
-              onClick={() => openShare(shareAnchor)}
+              onClick={openShare}
             >
               <Icon icon={shareIcon} />
             </Button>
@@ -70,7 +69,6 @@ WidgetHeader.propTypes = {
   title: PropTypes.string.isRequired,
   openShare: PropTypes.func.isRequired,
   shareAnchor: PropTypes.string,
-  size: PropTypes.number,
   settingsConfig: PropTypes.object,
   locationNames: PropTypes.object
 };

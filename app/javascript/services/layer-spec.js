@@ -10,7 +10,7 @@ const SQL_QUERIES = {
 export const fetchLayerSpec = () => {
   const url = `${REQUEST_URL}${SQL_QUERIES.layerSpec}`.replace(
     '{dataset}',
-    window.gfw.layer_spec
+    process.env.LAYER_SPEC
   );
   return axios.get(url);
 };

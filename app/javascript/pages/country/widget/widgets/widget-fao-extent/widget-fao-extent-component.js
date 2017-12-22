@@ -17,12 +17,14 @@ class WidgetFAOExtent extends PureComponent {
       getSentence,
       setFAOExtentSettingsPeriod,
       title,
-      anchorLink
+      anchorLink,
+      widget
     } = this.props;
 
     return (
       <div className="c-widget c-widget-fao-extent">
         <WidgetHeader
+          widget={widget}
           title={title}
           anchorLink={anchorLink}
           locationNames={locationNames}
@@ -57,7 +59,8 @@ WidgetFAOExtent.propTypes = {
   getSentence: PropTypes.func.isRequired,
   setFAOExtentSettingsPeriod: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  anchorLink: PropTypes.string.isRequired
+  anchorLink: PropTypes.string.isRequired,
+  widget: PropTypes.string.isRequired
 };
 
 export default WidgetFAOExtent;
