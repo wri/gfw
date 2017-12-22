@@ -1,29 +1,29 @@
 [
-  { 
+  {
     "label": "Summary",
-    "value": "summary" 
+    "value": "summary"
+  },
+  {
+    "label": "Land cover",
+    "value": "land-cover"
   },
   { 
     "label": "Forest change",
-    "value": "forest-change" 
+    "value": "forest-change"
   },
-  { 
-    "label": "Land cover",
-    "value": "land-cover" 
-  },
-  { 
+  {
     "label": "Land use",
-    "value": "land-use" 
+    "value": "land-use"
   },
-  { 
+  {
     "label": "Conservation",
-    "value": "conservation" 
+    "value": "conservation"
   },
-  { 
+  {
     "label": "People",
     "value": "people"
   },
-  { 
+  {
     "label": "Climate",
     "value": "climate"
   }
