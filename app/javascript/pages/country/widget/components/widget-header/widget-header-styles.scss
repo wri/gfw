@@ -33,20 +33,6 @@
         margin-left: rem(5px);
       }
     }
-
-    &.size-12 {
-      flex-direction: row-reverse;
-
-      .small-options {
-        border-left: solid 1px $border;
-        margin-left: rem(10px);
-        padding-left: rem(5px);
-      }
-    }
-
-    .view-on-map {
-      min-width: rem(100px);
-    }
   }
 
   .settings-icon {

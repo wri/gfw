@@ -20,6 +20,7 @@ const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
   const { totalArea, cover, plantations } = widgetTreeCover.data;
   const { indicators } = widgetTreeCover.config;
+  const { indicator } = widgetTreeCover.settings;
 
   return {
     title: widgetTreeCover.title,
@@ -28,7 +29,7 @@ const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
       widgetTreeCover.isLoading || isCountriesLoading || isRegionsLoading,
     location: location.payload,
     regions: countryData.regions,
-    data: getTreeCoverData({ totalArea, cover, plantations }) || [],
+    data: getTreeCoverData({ totalArea, cover, plantations, indicator }) || [],
     options:
       {
         indicators:

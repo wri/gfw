@@ -14,7 +14,6 @@ class WidgetHeader extends PureComponent {
   render() {
     const {
       title,
-      viewOnMapCallback,
       openShare,
       shareAnchor,
       size,
@@ -61,15 +60,6 @@ class WidgetHeader extends PureComponent {
               <Icon icon={shareIcon} />
             </Button>
           </div>
-          {viewOnMapCallback && (
-            <Button
-              className="theme-button-small view-on-map"
-              onClick={viewOnMapCallback}
-              disabled
-            >
-              VIEW ON MAP
-            </Button>
-          )}
         </div>
       </div>
     );
@@ -80,7 +70,6 @@ WidgetHeader.propTypes = {
   title: PropTypes.string.isRequired,
   openShare: PropTypes.func.isRequired,
   shareAnchor: PropTypes.string,
-  viewOnMapCallback: PropTypes.func,
   size: PropTypes.number,
   settingsConfig: PropTypes.object,
   locationNames: PropTypes.object

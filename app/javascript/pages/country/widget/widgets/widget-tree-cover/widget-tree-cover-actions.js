@@ -23,7 +23,6 @@ export const getTreeCover = createThunkAction(
           if (params.indicator !== 'gadm28') {
             dispatch(
               setTreeCoverData({
-                isLoading: false,
                 totalArea,
                 cover,
                 plantations: 0
@@ -35,7 +34,6 @@ export const getTreeCover = createThunkAction(
                 const plantations = plantationsResponse.data.data[0].value;
                 dispatch(
                   setTreeCoverData({
-                    isLoading: false,
                     totalArea,
                     cover,
                     plantations
