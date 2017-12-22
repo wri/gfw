@@ -21,7 +21,6 @@ const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
   const { totalArea, cover, plantations } = widgetTreeCover.data;
   const { indicator } = widgetTreeCover.settings;
   const { indicators } = widgetTreeCover.config;
-  const { indicator } = widgetTreeCover.settings;
 
   return {
     title: widgetTreeCover.title,
