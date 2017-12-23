@@ -8,54 +8,54 @@ import {
   getActiveFilter
 } from 'pages/country/widget/widget-selectors';
 
-import WidgetTreeCoverGainComponent from './widget-fao-extent-component';
-import actions from './widget-fao-extent-actions';
+import WidgetFAOReforestationComponent from './widget-fao-reforestation-component';
+import actions from './widget-fao-reforestation-actions';
 
-export { initialState } from './widget-fao-extent-reducers';
-export { default as reducers } from './widget-fao-extent-reducers';
-export { default as actions } from './widget-fao-extent-actions';
+export { initialState } from './widget-fao-reforestation-reducers';
+export { default as reducers } from './widget-fao-reforestation-reducers';
+export { default as actions } from './widget-fao-reforestation-actions';
 
-const mapStateToProps = ({ countryData, widgetFAOExtent, location }) => {
+const mapStateToProps = ({ countryData, widgetFAOReforestation, location }) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
     isSubRegionsLoading
   } = countryData;
   return {
-    title: widgetFAOExtent.title,
-    anchorLink: widgetFAOExtent.anchorLink,
+    title: widgetFAOReforestation.title,
+    anchorLink: widgetFAOReforestation.anchorLink,
     location: location.payload,
     isLoading:
-      widgetFAOExtent.isLoading ||
+      widgetFAOReforestation.isLoading ||
       isCountriesLoading ||
       isRegionsLoading ||
       isSubRegionsLoading,
-    data: widgetFAOExtent.data,
+    data: widgetFAOReforestation.data,
     options: {
       periods: getPeriods() || []
     },
-    settings: widgetFAOExtent.settings,
-    config: widgetFAOExtent.config
+    settings: widgetFAOReforestation.settings,
+    config: widgetFAOReforestation.config
   };
 };
 
-class WidgetFAOExtentContainer extends PureComponent {
+class WidgetFAOReforestationContainer extends PureComponent {
   componentWillMount() {
-    const { location, settings, getFAOExtentData } = this.props;
-    getFAOExtentData({
+    const { location, settings, getFAOReforestationData } = this.props;
+    getFAOReforestationData({
       ...location,
       ...settings
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { location, settings, getFAOExtentData } = nextProps;
+    const { location, settings, getFAOReforestationData } = nextProps;
 
     if (
       !isEqual(location, this.props.location) ||
       !isEqual(settings.period, this.props.settings.period)
     ) {
-      getFAOExtentData({
+      getFAOReforestationData({
         ...location,
         ...settings
       });
@@ -74,19 +74,21 @@ class WidgetFAOExtentContainer extends PureComponent {
   };
 
   render() {
-    return createElement(WidgetTreeCoverGainComponent, {
+    return createElement(WidgetFAOReforestationComponent, {
       ...this.props,
       getSentence: this.getSentence
     });
   }
 }
 
-WidgetFAOExtentContainer.propTypes = {
+WidgetFAOReforestationContainer.propTypes = {
   location: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
   options: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
-  getFAOExtentData: PropTypes.func.isRequired
+  getFAOReforestationData: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, actions)(WidgetFAOExtentContainer);
+export default connect(mapStateToProps, actions)(
+  WidgetFAOReforestationContainer
+);

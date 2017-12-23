@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
-import './widget-fao-extent-styles.scss';
+import './widget-fao-reforestation-styles.scss';
 
-class WidgetFAOExtent extends PureComponent {
+class WidgetFAOReforestation extends PureComponent {
   render() {
     const {
       locationNames,
@@ -15,13 +15,13 @@ class WidgetFAOExtent extends PureComponent {
       config,
       settings,
       getSentence,
-      setFAOExtentSettingsPeriod,
+      setFAOReforestationSettingsPeriod,
       title,
       anchorLink
     } = this.props;
 
     return (
-      <div className="c-widget c-widget-fao-extent">
+      <div className="c-widget c-widget-fao-reforestation">
         <WidgetHeader
           title={title}
           anchorLink={anchorLink}
@@ -32,7 +32,7 @@ class WidgetFAOExtent extends PureComponent {
             settings,
             options,
             actions: {
-              onPeriodChange: setFAOExtentSettingsPeriod
+              onPeriodChange: setFAOReforestationSettingsPeriod
             }
           }}
         />
@@ -48,16 +48,16 @@ class WidgetFAOExtent extends PureComponent {
   }
 }
 
-WidgetFAOExtent.propTypes = {
+WidgetFAOReforestation.propTypes = {
   locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   options: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
   getSentence: PropTypes.func.isRequired,
-  setFAOExtentSettingsPeriod: PropTypes.func.isRequired,
+  setFAOReforestationSettingsPeriod: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   anchorLink: PropTypes.string.isRequired
 };
 
-export default WidgetFAOExtent;
+export default WidgetFAOReforestation;

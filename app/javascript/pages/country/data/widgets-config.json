@@ -68,8 +68,8 @@
       "threshold": "0"
     }
   },
-  "faoExtent": {
-    "title": "FAO REFORESTATION",
+  "faoReforestation": {
+    "title": "FAO reforestation",
     "anchorLink": "fao-reforestation",
     "gridWidth": 6,
     "config": {
