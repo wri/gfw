@@ -10,7 +10,7 @@ import WidgetTotalAreaPlantations from 'pages/country/widget/widgets/widget-tota
 import WidgetTreeGain from 'pages/country/widget/widgets/widget-tree-gain';
 import WidgetPlantationArea from 'pages/country/widget/widgets/widget-plantation-area';
 import WidgetFaoForest from 'pages/country/widget/widgets/widget-fao-forest';
-import WidgetFaoExtent from 'pages/country/widget/widgets/widget-fao-extent';
+import WidgetFaoReforestation from 'pages/country/widget/widgets/widget-fao-reforestation';
 
 import './widget-styles.scss';
 import './widget-tooltip-styles.scss';
@@ -23,7 +23,7 @@ const widgets = {
   WidgetTotalAreaPlantations,
   WidgetPlantationArea,
   WidgetFaoForest,
-  WidgetFaoExtent
+  WidgetFaoReforestation
 };
 
 class Widget extends PureComponent {
