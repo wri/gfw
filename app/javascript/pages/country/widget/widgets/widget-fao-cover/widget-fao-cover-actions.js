@@ -5,13 +5,13 @@ import axios from 'axios';
 import { getFAO } from 'services/forest-data';
 import { getRanking } from 'services/country';
 
-const setFAOForestIsLoading = createAction('setFAOIsLoading');
-const setFAOForestData = createAction('setFAOData');
-const getFAOForest = createThunkAction(
-  'getFAOForest',
+const setFAOCoverIsLoading = createAction('setFAOIsLoading');
+const setFAOCoverData = createAction('setFAOData');
+const getFAOCover = createThunkAction(
+  'getFAOCover',
   params => (dispatch, state) => {
-    if (!state().widgetFAOForest.isLoading) {
-      dispatch(setFAOForestIsLoading(true));
+    if (!state().widgetFAOCover.isLoading) {
+      dispatch(setFAOCoverIsLoading(true));
       axios
         .all([getFAO({ ...params }), getRanking({ ...params })])
         .then(
@@ -26,19 +26,19 @@ const getFAOForest = createThunkAction(
               rank: ranking[0].rank || 0
             };
 
-            dispatch(setFAOForestData(values));
+            dispatch(setFAOCoverData(values));
           })
         )
         .catch(error => {
           console.info(error);
-          dispatch(setFAOForestIsLoading(false));
+          dispatch(setFAOCoverIsLoading(false));
         });
     }
   }
 );
 
 export default {
-  setFAOForestIsLoading,
-  setFAOForestData,
-  getFAOForest
+  setFAOCoverIsLoading,
+  setFAOCoverData,
+  getFAOCover
 };

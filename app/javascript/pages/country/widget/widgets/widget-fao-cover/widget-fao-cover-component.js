@@ -7,9 +7,9 @@ import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynami
 import WidgetPieChart from 'pages/country/widget/components/widget-pie-chart';
 import WidgetPieChartLegend from 'pages/country/widget/components/widget-pie-chart-legend';
 import NoContent from 'components/no-content';
-import './widget-fao-forest-styles.scss';
+import './widget-fao-cover-styles.scss';
 
-class WidgetFAOForestGain extends PureComponent {
+class WidgetFAOCover extends PureComponent {
   render() {
     const {
       locationNames,
@@ -21,7 +21,7 @@ class WidgetFAOForestGain extends PureComponent {
     } = this.props;
 
     return (
-      <div className="c-widget c-widget-fao-forest">
+      <div className="c-widget c-widget-fao-cover">
         <WidgetHeader
           title={title}
           anchorLink={anchorLink}
@@ -63,7 +63,7 @@ class WidgetFAOForestGain extends PureComponent {
   }
 }
 
-WidgetFAOForestGain.propTypes = {
+WidgetFAOCover.propTypes = {
   locationNames: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   data: PropTypes.array.isRequired,
@@ -72,4 +72,4 @@ WidgetFAOForestGain.propTypes = {
   anchorLink: PropTypes.string.isRequired
 };
 
-export default WidgetFAOForestGain;
+export default WidgetFAOCover;
