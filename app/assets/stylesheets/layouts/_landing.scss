@@ -1,5 +1,6 @@
 body {
   padding: 0;
+  height: 100%;
   margin: 0;
   font-family: $font-family-1;
   font-weight: normal;
@@ -9,25 +10,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.row {
-  max-width: 74rem;
+// .row {
+//   max-width: 74rem;
 
-  .row {
-    margin-left: -2.5rem;
-    margin-right: -2.5rem;
-  }
-}
+//   .row {
+//     margin-left: -2.5rem;
+//     margin-right: -2.5rem;
+//   }
+// }
 
-@media print, screen and (min-width: 40em) {
-  .row .row {
-    margin-right: -2.5rem;
-    margin-left: -2.5rem; } }
-@media print, screen and (min-width: 64em) {
-  .row .row {
-    margin-right: -2.5rem;
-    margin-left: -2.5rem; } }
+// @media print, screen and (min-width: 40em) {
+//   .row .row {
+//     margin-right: -2.5rem;
+//     margin-left: -2.5rem; } }
+// @media print, screen and (min-width: 64em) {
+//   .row .row {
+//     margin-right: -2.5rem;
+//     margin-left: -2.5rem; } }
 
-.column, .columns {
-  padding-left: 5rem;
-  padding-right: 5rem;
-}
+// .column, .columns {
+//   padding-left: 5rem;
+//   padding-right: 5rem;
+// }
