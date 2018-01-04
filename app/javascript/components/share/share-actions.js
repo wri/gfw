@@ -8,7 +8,7 @@ const setShare = createThunkAction('setShare', params => dispatch => {
     isOpen,
     haveEmbed,
     selectedType,
-    data: { title, embedSettings }
+    data: { title, subtitle, embedSettings }
   } = params;
   let { data: { url, embedUrl } } = params;
 
@@ -28,6 +28,7 @@ const setShare = createThunkAction('setShare', params => dispatch => {
         selectedType,
         data: {
           title,
+          subtitle,
           url,
           embedUrl,
           embedSettings
