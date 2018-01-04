@@ -2,8 +2,10 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select-me';
 import { deburrUpper } from 'utils/data';
-
+import Button from 'components/button';
 import Icon from 'components/icon';
+
+import infoIcon from 'assets/icons/info.svg';
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import './dropdown-styles.scss';
 import 'styles/themes/dropdown/dropdown-dark.scss'; // eslint-disable-line
@@ -31,10 +33,26 @@ class Dropdown extends PureComponent {
   };
 
   render() {
-    const { theme, label } = this.props;
+    const { theme, label, infoAction } = this.props;
     return (
       <div className={`c-dropdown ${theme || 'theme-select-light'}`}>
-        {label && <div className="label">{label}</div>}{' '}
+        {label && (
+          <div className="label">
+            {label}
+            {infoAction && (
+              <Button
+                disabled
+                className="theme-button-small square info-button"
+              >
+                <Icon
+                  icon={infoIcon}
+                  className="info-icon"
+                  onClick={infoAction}
+                />
+              </Button>
+            )}
+          </div>
+        )}
         <Select
           iconRenderer={() => (
             <Icon icon={arrowDownIcon} className="icon icon-arrow-down" />
@@ -51,7 +69,8 @@ class Dropdown extends PureComponent {
 Dropdown.propTypes = {
   label: PropTypes.string,
   theme: PropTypes.string,
-  options: PropTypes.array
+  options: PropTypes.array,
+  infoAction: PropTypes.func
 };
 
 export default Dropdown;

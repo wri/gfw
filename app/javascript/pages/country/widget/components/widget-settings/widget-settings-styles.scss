@@ -3,6 +3,11 @@
 .c-widget-settings {
   width: rem(250px);
   background-color: $white;
+  padding: rem(25px) rem(25px) rem(10px);
+
+  > div {
+    margin-bottom: 20px;
+  }
 
   .title {
     font-size: 14px;
@@ -14,6 +19,8 @@
       display: block;
       margin-bottom: rem(5px);
       text-align: left;
+      font-weight: 400;
+      font-size: rem(13px);
     }
 
     .select-container {
@@ -24,16 +31,13 @@
     }
   }
 
-  .body {
-    padding: rem(25px) rem(25px) rem(10px);
-
-    > div {
-      margin-bottom: 20px;
-    }
-  }
-
-  .footer {
-    padding: rem(15px) rem(25px);
+  .canopy-select {
     border-top: solid 1px $border;
+    padding-top: rem(15px);
+    margin-top: rem(10px);
+
+    .dd__wrapper {
+      max-width: rem(85px);
+    }
   }
 }
