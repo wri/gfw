@@ -22,8 +22,6 @@
   }
 
   .dd__list {
-    border: solid 1px #e5e5df;
-    border-radius: 0;
     padding: rem(5px) 0;
   }
 
@@ -47,23 +45,6 @@
   .dd__option {
     font-size: 13px;
     letter-spacing: 0.1px;
-  }
-
-  .dd__option {
-    color: rgba($slate, 0.6);
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
-
-    &:hover {
-      color: rgba($slate, 1);
-    }
-  }
-
-  .dd__selectedItem,
-  .dd__selectedOption {
-    color: rgba($slate, 1);
   }
 
   .dd__disabled {
