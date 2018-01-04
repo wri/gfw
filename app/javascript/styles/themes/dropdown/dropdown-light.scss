@@ -21,16 +21,23 @@
     }
   }
 
+  .dd__list {
+    padding: rem(5px) 0;
+  }
+
   .dd__openTobottom {
-    margin-top: rem(-1px);
-    border: solid 1px #e5e5df;
-    border-radius: 0;
+    margin-top: 0;
     border-top: 0;
+  }
+
+  .dd__openTotop {
+    margin-bottom: 0;
+    border-bottom: 0;
   }
 
   .dd__selectControl,
   .dd__option {
-    padding: rem(5px) rem(12px);
+    padding: rem(7px) rem(12px);
     background-color: transparent;
   }
 
@@ -38,15 +45,6 @@
   .dd__option {
     font-size: 13px;
     letter-spacing: 0.1px;
-  }
-
-  .dd__option {
-    color: #9e9e9e;
-  }
-
-  .dd__selectedItem,
-  .dd__selectedOption {
-    color: $slate;
   }
 
   .dd__disabled {

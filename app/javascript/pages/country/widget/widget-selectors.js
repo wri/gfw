@@ -42,7 +42,7 @@ export const getAdminsOptions = createSelector(
       null,
     subRegions:
       (subRegions &&
-        [{ label: 'All Juristictions', value: null }].concat(
+        [{ label: 'All Regions', value: null }].concat(
           sortByKey(subRegions, 'label')
         )) ||
       null
