@@ -46,11 +46,23 @@
     display: block;
     width: 100%;
     box-shadow: none;
+    border: solid 1px #e5e5df;
+    border-radius: 0;
   }
 
   .dd__option {
     white-space: normal;
     width: 100%;
+    color: rgba($slate, 0.6);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+
+    &:hover {
+      color: rgba($slate, 1);
+      background-color: $white;
+    }
 
     .info-button {
       margin-left: rem(10px);
@@ -64,5 +76,14 @@
         width: 7px;
       }
     }
+  }
+
+  .dd__selectedItem,
+  .dd__selectedOption {
+    color: rgba($slate, 1);
+  }
+
+  .dd__selectedOption {
+    background-color: $white;
   }
 }
