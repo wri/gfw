@@ -44,12 +44,12 @@ $item-padding-screen-m: rem(40px);
     display: none;
 
     &.-button-left {
-      left: rem(-50px);
+      left: rem(-60px);
       transform: rotate(90deg);      
     }
 
     &.-button-right {
-      right: rem(-50px);
+      right: rem(-60px);
       transform: rotate(-90deg);
     }
   }
