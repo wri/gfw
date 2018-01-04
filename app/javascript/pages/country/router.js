@@ -11,10 +11,7 @@ export const routes = {
     path: '/country/embed/:widget/:country/:region?/:subRegion?'
   },
   [COUNTRY]: {
-    path: '/country/:country/:region?/:subRegion?',
-    label: 'Summary',
-    submenu: true,
-    active: true
+    path: '/country/:country/:region?/:subRegion?'
   }
 };
 
