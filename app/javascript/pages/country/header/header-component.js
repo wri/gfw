@@ -31,6 +31,7 @@ class Header extends PureComponent {
                 <Dropdown
                   theme="theme-select-dark"
                   placeholder="Country"
+                  noItemsFound="No country found"
                   value={locationNames.country}
                   options={locationOptions.countries}
                   onChange={handleCountryChange}
@@ -45,6 +46,7 @@ class Header extends PureComponent {
                     <Dropdown
                       theme="theme-select-dark"
                       placeholder="Region"
+                      noItemsFound="No region found"
                       value={locationNames.region}
                       options={locationOptions.regions}
                       onChange={region =>
@@ -66,7 +68,8 @@ class Header extends PureComponent {
                     />
                     <Dropdown
                       theme="theme-select-dark"
-                      placeholder="Juristriction"
+                      placeholder="Region"
+                      noItemsFound="No region found"
                       value={locationNames.subRegion}
                       options={locationOptions.subRegions}
                       onChange={subRegion =>
