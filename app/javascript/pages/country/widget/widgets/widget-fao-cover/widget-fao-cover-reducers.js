@@ -6,15 +6,15 @@ export const initialState = {
     fao: {},
     rank: 0
   },
-  ...WIDGETS_CONFIG.faoForest
+  ...WIDGETS_CONFIG.faoCover
 };
 
-const setFAOForestIsLoading = (state, { payload }) => ({
+const setFAOCoverIsLoading = (state, { payload }) => ({
   ...state,
   isLoading: payload
 });
 
-const setFAOForestData = (state, { payload }) => ({
+const setFAOCoverData = (state, { payload }) => ({
   ...state,
   isLoading: false,
   data: {
@@ -23,6 +23,6 @@ const setFAOForestData = (state, { payload }) => ({
 });
 
 export default {
-  setFAOForestIsLoading,
-  setFAOForestData
+  setFAOCoverIsLoading,
+  setFAOCoverData
 };

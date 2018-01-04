@@ -5,54 +5,54 @@ import isEqual from 'lodash/isEqual';
 import { format } from 'd3-format';
 
 import { getAdminsSelected } from 'pages/country/widget/widget-selectors';
-import { getFAOForestData } from './widget-fao-forest-selectors';
+import { getFAOCoverData } from './widget-fao-cover-selectors';
 
-import WidgetFAOForestComponent from './widget-fao-forest-component';
-import actions from './widget-fao-forest-actions';
+import WidgetFAOCoverComponent from './widget-fao-cover-component';
+import actions from './widget-fao-cover-actions';
 
-export { initialState } from './widget-fao-forest-reducers';
-export { default as reducers } from './widget-fao-forest-reducers';
-export { default as actions } from './widget-fao-forest-actions';
+export { initialState } from './widget-fao-cover-reducers';
+export { default as reducers } from './widget-fao-cover-reducers';
+export { default as actions } from './widget-fao-cover-actions';
 
-const mapStateToProps = ({ countryData, widgetFAOForest, location }) => {
+const mapStateToProps = ({ countryData, widgetFAOCover, location }) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
     isSubRegionsLoading
   } = countryData;
-  const { fao, rank } = widgetFAOForest.data;
+  const { fao, rank } = widgetFAOCover.data;
   const locationNames = getAdminsSelected({
     ...countryData,
     location: location.payload,
-    config: widgetFAOForest.config
+    config: widgetFAOCover.config
   });
 
   return {
-    title: widgetFAOForest.title,
-    anchorLink: widgetFAOForest.anchorLink,
+    title: widgetFAOCover.title,
+    anchorLink: widgetFAOCover.anchorLink,
     location: location.payload,
     isLoading:
-      widgetFAOForest.isLoading ||
+      widgetFAOCover.isLoading ||
       isCountriesLoading ||
       isRegionsLoading ||
       isSubRegionsLoading,
     fao,
     rank,
-    data: getFAOForestData({ fao, rank, locationNames }) || {}
+    data: getFAOCoverData({ fao, rank, locationNames }) || {}
   };
 };
 
-class WidgetFAOForestContainer extends PureComponent {
+class WidgetFAOCoverContainer extends PureComponent {
   componentWillMount() {
-    const { location, getFAOForest } = this.props;
-    getFAOForest({ ...location });
+    const { location, getFAOCover } = this.props;
+    getFAOCover({ ...location });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { location, getFAOForest } = nextProps;
+    const { location, getFAOCover } = nextProps;
 
     if (!isEqual(location, this.props.location)) {
-      getFAOForest({ ...location });
+      getFAOCover({ ...location });
     }
   }
 
@@ -91,19 +91,19 @@ class WidgetFAOForestContainer extends PureComponent {
   };
 
   render() {
-    return createElement(WidgetFAOForestComponent, {
+    return createElement(WidgetFAOCoverComponent, {
       ...this.props,
       getSentence: this.getSentence
     });
   }
 }
 
-WidgetFAOForestContainer.propTypes = {
+WidgetFAOCoverContainer.propTypes = {
   location: PropTypes.object.isRequired,
   locationNames: PropTypes.object.isRequired,
   fao: PropTypes.object.isRequired,
   rank: PropTypes.number.isRequired,
-  getFAOForest: PropTypes.func.isRequired
+  getFAOCover: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, actions)(WidgetFAOForestContainer);
+export default connect(mapStateToProps, actions)(WidgetFAOCoverContainer);

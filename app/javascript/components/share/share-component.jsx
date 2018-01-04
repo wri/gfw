@@ -16,80 +16,82 @@ class Share extends PureComponent {
     const {
       haveEmbed,
       selectedType,
-      data: { title, url, embedUrl },
+      data: { title, subtitle, url, embedUrl },
       handleFocus,
       changeType,
       copyToClipboard
     } = this.props;
 
-    const subtitle =
-      selectedType === 'embed'
-        ? 'Click and paste HTML to embed in website.'
-        : 'Click and paste link in email or IM';
-
     const inputValue = selectedType === 'embed' ? embedUrl : url;
 
     return (
       <div className="c-share">
-        <div className="c-share__title">{title}</div>
-        <div className="c-share__subtitle">{subtitle}</div>
-        <div className="c-share__input-container">
-          <input
-            ref={input => {
-              this.textInput = input;
-            }}
-            type="text"
-            value={inputValue}
-            readOnly
-            onClick={handleFocus}
-            className="c-share__input"
-          />
-          <button
-            className="c-share__input-button"
-            onClick={() => copyToClipboard(this.textInput)}
-          >
-            COPY
-          </button>
-        </div>
-        {haveEmbed ? (
-          <div className="c-share__buttons-container">
-            <Button
-              className={`share-button ${
-                selectedType !== 'embed' ? 'theme-button-light-green' : ''
-              }`}
-              onClick={() => changeType('embed')}
+        <div className="title">{title}</div>
+        <div className="subtitle">{subtitle}</div>
+        <div className="actions">
+          <div className="input-container">
+            <p className="info">
+              {selectedType === 'embed'
+                ? 'Click and paste HTML to embed in website'
+                : 'Click and paste link in email or IM'}
+            </p>
+            <input
+              ref={input => {
+                this.textInput = input;
+              }}
+              type="text"
+              value={inputValue}
+              readOnly
+              onClick={handleFocus}
+              className="input"
+            />
+            <button
+              className="input-button"
+              onClick={() => copyToClipboard(this.textInput)}
             >
-              EMBED
-            </Button>
-            <Button
-              className={`share-button ${
-                selectedType === 'embed' ? 'theme-button-light-green' : ''
-              }`}
-              onClick={() => changeType('link')}
-            >
-              LINK
-            </Button>
+              COPY
+            </button>
           </div>
-        ) : null}
-        <div className="c-share__social-container">
+          {haveEmbed ? (
+            <div className="buttons-container">
+              <Button
+                className={`share-button ${
+                  selectedType !== 'embed' ? 'theme-button-light-green' : ''
+                }`}
+                onClick={() => changeType('embed')}
+              >
+                EMBED
+              </Button>
+              <Button
+                className={`share-button ${
+                  selectedType === 'embed' ? 'theme-button-light-green' : ''
+                }`}
+                onClick={() => changeType('link')}
+              >
+                LINK
+              </Button>
+            </div>
+          ) : null}
+        </div>
+        <div className="social-container">
           <a
             href={`https://plus.google.com/share?url=${url}`}
             target="_blank"
-            className="c-share__social-button -googleplus"
+            className="social-button -googleplus"
           >
             <Icon icon={googleplusIcon} className="googleplus-icon" />
           </a>
           <a
             href={`https://twitter.com/share?url=${url}`}
             target="_blank"
-            className="c-share__social-button -twitter"
+            className="social-button -twitter"
           >
             <Icon icon={twitterIcon} className="twitter-icon" />
           </a>
           <a
             href={`https://www.facebook.com/sharer.php?u=${url}`}
             target="_blank"
-            className="c-share__social-button -facebook"
+            className="social-button -facebook"
           >
             <Icon icon={facebookIcon} className="facebook-icon" />
           </a>
@@ -119,7 +121,6 @@ class Share extends PureComponent {
             left: 'auto',
             right: 'auto',
             bottom: 'auto',
-            width: '300px',
             padding: '0',
             border: 'none',
             borderRadius: 0

@@ -1,5 +1,6 @@
 import { connectRoutes } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
+import queryString from 'query-string';
 
 const history = createHistory();
 
@@ -11,11 +12,10 @@ export const routes = {
     path: '/country/embed/:widget/:country/:region?/:subRegion?'
   },
   [COUNTRY]: {
-    path: '/country/:country/:region?/:subRegion?',
-    label: 'Summary',
-    submenu: true,
-    active: true
+    path: '/country/:country/:region?/:subRegion?'
   }
 };
 
-export default connectRoutes(history, routes);
+export default connectRoutes(history, routes, {
+  querySerializer: queryString
+});

@@ -7,7 +7,7 @@ const getRank = state => state.rank || null;
 const getLocationNames = state => state.locationNames || null;
 
 // get lists selected
-export const getFAOForestData = createSelector(
+export const getFAOCoverData = createSelector(
   [getFAO, getRank, getLocationNames],
   (fao, rank, locationNames) => {
     if (!fao || !rank || !locationNames) {

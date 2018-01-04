@@ -9,8 +9,8 @@ import WidgetTreeLoss from 'pages/country/widget/widgets/widget-tree-loss';
 import WidgetTotalAreaPlantations from 'pages/country/widget/widgets/widget-total-area-plantations';
 import WidgetTreeGain from 'pages/country/widget/widgets/widget-tree-gain';
 import WidgetPlantationArea from 'pages/country/widget/widgets/widget-plantation-area';
-import WidgetFaoForest from 'pages/country/widget/widgets/widget-fao-forest';
-import WidgetFaoExtent from 'pages/country/widget/widgets/widget-fao-extent';
+import WidgetFaoCover from 'pages/country/widget/widgets/widget-fao-cover';
+import WidgetFaoReforestation from 'pages/country/widget/widgets/widget-fao-reforestation';
 
 import './widget-styles.scss';
 import './widget-tooltip-styles.scss';
@@ -22,8 +22,8 @@ const widgets = {
   WidgetTreeLoss,
   WidgetTotalAreaPlantations,
   WidgetPlantationArea,
-  WidgetFaoForest,
-  WidgetFaoExtent
+  WidgetFaoCover,
+  WidgetFaoReforestation
 };
 
 class Widget extends PureComponent {

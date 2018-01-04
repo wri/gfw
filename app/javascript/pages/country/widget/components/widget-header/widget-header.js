@@ -20,13 +20,16 @@ const mapStateToProps = (state, widgetHeader) => ({
 
 class WidgetHeaderContainer extends PureComponent {
   openShare = () => {
-    const { location, widget, setShareData } = this.props;
+    const { location, widget, setShareData, title, locationNames } = this.props;
 
     setShareData({
       isOpen: true,
       haveEmbed: true,
       data: {
         title: 'Share this widget',
+        subtitle: `${title} in ${
+          locationNames.current ? locationNames.current.label : ''
+        }`,
         url: window.location.href,
         embedUrl: EMBED_URL.replace('{widget}', widget).replace(
           '{location}',
@@ -53,7 +56,9 @@ class WidgetHeaderContainer extends PureComponent {
 WidgetHeaderContainer.propTypes = {
   location: PropTypes.object.isRequired,
   widget: PropTypes.string.isRequired,
-  setShareData: PropTypes.func.isRequired
+  setShareData: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  locationNames: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, actions)(WidgetHeaderContainer);

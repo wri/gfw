@@ -139,8 +139,8 @@ class HeaderContainer extends PureComponent {
       secondSentence = `
         In ${
           data.totalLoss.year
-        }, it lost <b>${lossWithOutPlantations}ha</b> of forest ${
-          data.plantationsLoss.area ? 'excluding tree plantations' : ''
+        }, it lost <b>${lossWithOutPlantations}ha</b> of forest${
+          data.plantationsLoss.area ? ' excluding tree plantations' : ''
         }, equivalent to <b>${emissionsWithoutPlantations}tonnes</b> of CO₂ of emissions.
       `;
     }

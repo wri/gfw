@@ -4,6 +4,7 @@ export const initialState = {
   selectedType: 'link',
   data: {
     title: '',
+    subtitle: '',
     url: '',
     embedUrl: '',
     embedSettings: { width: 0, height: 0 }
@@ -13,9 +14,8 @@ export const initialState = {
 const setShareData = (state, { payload }) => ({
   ...state,
   isOpen: payload.isOpen,
-  haveEmbed:
-    payload.haveEmbed !== undefined ? payload.haveEmbed : state.haveEmbed,
-  data: payload.data !== undefined ? payload.data : state.data
+  haveEmbed: payload.haveEmbed ? payload.haveEmbed : state.haveEmbed,
+  data: payload.data ? payload.data : state.data
 });
 
 const setShareType = (state, { payload }) => ({

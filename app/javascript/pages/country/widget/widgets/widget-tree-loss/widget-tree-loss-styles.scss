@@ -6,6 +6,10 @@
   }
 
   .data-container {
-    padding: rem(30px) rem(20px) 0;
+    padding: rem(15px) 0 0;
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(30px) rem(20px) 0;
+    }
   }
 }

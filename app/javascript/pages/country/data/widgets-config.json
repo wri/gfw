@@ -68,8 +68,8 @@
       "threshold": "0"
     }
   },
-  "faoExtent": {
-    "title": "FAO REFORESTATION",
+  "faoReforestation": {
+    "title": "FAO reforestation",
     "anchorLink": "fao-reforestation",
     "gridWidth": 6,
     "config": {
@@ -80,9 +80,9 @@
       "period": 1990
     }
   },
-  "faoForest": {
+  "faoCover": {
     "title": "Forest cover",
-    "anchorLink": "fao-forest",
+    "anchorLink": "fao-cover",
     "gridWidth": 6,
     "config": {
       "categories": ["land-cover"],
