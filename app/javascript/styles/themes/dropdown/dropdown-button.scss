@@ -1,15 +1,6 @@
 @import '~styles/settings.scss';
 
 .theme-select-button {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  .label {
-    margin-bottom: 0;
-  }
-
   .icon {
     display: none;
   }
@@ -17,9 +8,8 @@
   .dd__selectControl {
     height: rem(27px);
     padding: 0 rem(21px);
-    border: 0;
     border-radius: rem(19px);
-    background-color: $green-gfw;
+    border: solid 1px $green-gfw;
   }
 
   .dd__expandIcon {
@@ -29,7 +19,28 @@
   .dd__selectedItem {
     font-size: rem(13px);
     letter-spacing: 0.1px;
-    color: $white;
+    color: $green-gfw;
+  }
+
+  .dd__list {
+    border: 0;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+    text-align: center;
+    border-radius: 0;
+  }
+
+  .dd__option {
+    color: rgba($slate, 0.6);
+
+    &:hover {
+      background-color: $white;
+      color: rgba($slate, 1);
+    }
+  }
+
+  .dd__selectedOption {
+    color: rgba($slate, 1);
+    background-color: $white;
   }
 
   &.-transparent {

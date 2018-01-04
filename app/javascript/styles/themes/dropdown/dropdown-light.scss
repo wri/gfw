@@ -21,16 +21,25 @@
     }
   }
 
-  .dd__openTobottom {
-    margin-top: rem(-1px);
+  .dd__list {
     border: solid 1px #e5e5df;
     border-radius: 0;
+    padding: rem(5px) 0;
+  }
+
+  .dd__openTobottom {
+    margin-top: 0;
     border-top: 0;
+  }
+
+  .dd__openTotop {
+    margin-bottom: 0;
+    border-bottom: 0;
   }
 
   .dd__selectControl,
   .dd__option {
-    padding: rem(5px) rem(12px);
+    padding: rem(7px) rem(12px);
     background-color: transparent;
   }
 
@@ -41,12 +50,20 @@
   }
 
   .dd__option {
-    color: #9e9e9e;
+    color: rgba($slate, 0.6);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+
+    &:hover {
+      color: rgba($slate, 1);
+    }
   }
 
   .dd__selectedItem,
   .dd__selectedOption {
-    color: $slate;
+    color: rgba($slate, 1);
   }
 
   .dd__disabled {
