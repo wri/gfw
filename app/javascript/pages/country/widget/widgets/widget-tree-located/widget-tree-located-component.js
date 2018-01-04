@@ -49,7 +49,7 @@ class WidgetTreeLocated extends PureComponent {
             data &&
             data.length === 0 && (
               <NoContent
-                message={`No tree cover for ${locationNames.current &&
+                message={`No regions for ${locationNames.current &&
                   locationNames.current.label}`}
                 icon
               />
