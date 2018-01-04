@@ -1,5 +1,6 @@
 import { connectRoutes } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
+import queryString from 'query-string';
 
 const history = createHistory();
 
@@ -15,4 +16,6 @@ export const routes = {
   }
 };
 
-export default connectRoutes(history, routes);
+export default connectRoutes(history, routes, {
+  querySerializer: queryString
+});
