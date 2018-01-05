@@ -26,7 +26,7 @@ class WidgetSettings extends PureComponent {
       onThresholdChange,
       onIndicatorChange
     } = this.props.actions;
-
+    
     return (
       <div className="c-widget-settings">
         {indicators &&
@@ -37,7 +37,7 @@ class WidgetSettings extends PureComponent {
                 locationNames.current.label.toUpperCase()}`}
               value={settings.indicator}
               options={indicators}
-              onChange={option => onIndicatorChange(option.value)}
+              onChange={option => onIndicatorChange({ value: { indicator: option.value }, widget: 'TreeLoss' })}
               disabled={isLoading}
               optionRenderer={(option, selectedOptions) => (
                 <div
@@ -65,7 +65,7 @@ class WidgetSettings extends PureComponent {
               label="UNIT"
               value={settings.unit}
               options={units}
-              onChange={option => onUnitChange(option.value)}
+              onChange={option => onUnitChange({ value: { unit: option.value }, widget: 'TreeLoss' })}
             />
           )}
         {periods &&
@@ -110,7 +110,7 @@ class WidgetSettings extends PureComponent {
               label="CANOPY DENSITY"
               value={settings.threshold}
               options={thresholds}
-              onChange={option => onThresholdChange(option.value)}
+              onChange={option => onThresholdChange({ value: { threshold: option.value }, widget: 'TreeLoss' })}
               disabled={isLoading}
               infoAction={() => console.info('open modal')}
             />

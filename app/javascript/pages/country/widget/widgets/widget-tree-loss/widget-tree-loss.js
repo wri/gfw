@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import isEqual from 'lodash/isEqual';
 import sumBy from 'lodash/sumBy';
+import widgetActions from 'pages/country/widget/widget-actions';
+console.log(widgetActions)
 
 import {
   getThresholds,
@@ -16,7 +18,9 @@ import {
 import { filterData } from './widget-tree-loss-selectors';
 
 import WidgetTreeLossComponent from './widget-tree-loss-component';
-import actions from './widget-tree-loss-actions';
+import ownActions from './widget-tree-loss-actions';
+
+const actions = { ...widgetActions, ...ownActions };
 
 export { initialState } from './widget-tree-loss-reducers';
 export { default as reducers } from './widget-tree-loss-reducers';

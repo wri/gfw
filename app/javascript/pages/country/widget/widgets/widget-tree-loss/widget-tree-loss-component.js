@@ -17,7 +17,7 @@ class WidgetTreeLoss extends PureComponent {
       options,
       settings,
       config,
-      setTreeLossSettingsIndicator,
+      setWidgetConfigUrl,
       setTreeLossSettingsThreshold,
       setTreeLossSettingsStartYear,
       setTreeLossSettingsEndYear,
@@ -26,7 +26,7 @@ class WidgetTreeLoss extends PureComponent {
       title,
       anchorLink
     } = this.props;
-
+    
     return (
       <div className="c-widget c-widget-tree-loss">
         <WidgetHeader
@@ -39,8 +39,8 @@ class WidgetTreeLoss extends PureComponent {
             settings,
             options,
             actions: {
-              onIndicatorChange: setTreeLossSettingsIndicator,
-              onThresholdChange: setTreeLossSettingsThreshold,
+              onIndicatorChange: setWidgetConfigUrl,
+              onThresholdChange: setWidgetConfigUrl,
               onStartYearChange: setTreeLossSettingsStartYear,
               onEndYearChange: setTreeLossSettingsEndYear
             }
@@ -98,7 +98,6 @@ WidgetTreeLoss.propTypes = {
   settings: PropTypes.object.isRequired,
   options: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
-  setTreeLossSettingsIndicator: PropTypes.func.isRequired,
   setTreeLossSettingsThreshold: PropTypes.func.isRequired,
   setTreeLossSettingsStartYear: PropTypes.func.isRequired,
   setTreeLossSettingsEndYear: PropTypes.func.isRequired,
