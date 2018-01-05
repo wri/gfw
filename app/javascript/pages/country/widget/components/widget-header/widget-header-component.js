@@ -17,7 +17,8 @@ class WidgetHeader extends PureComponent {
       openShare,
       shareAnchor,
       settingsConfig,
-      locationNames
+      locationNames,
+      widget
     } = this.props;
 
     return (
@@ -43,6 +44,7 @@ class WidgetHeader extends PureComponent {
                   html={
                     <WidgetSettings
                       {...settingsConfig}
+                      widget={widget}
                       locationNames={locationNames}
                     />
                   }
@@ -69,6 +71,7 @@ WidgetHeader.propTypes = {
   title: PropTypes.string.isRequired,
   openShare: PropTypes.func.isRequired,
   shareAnchor: PropTypes.string,
+  widget: PropTypes.string,
   settingsConfig: PropTypes.object,
   locationNames: PropTypes.object
 };

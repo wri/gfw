@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import isEqual from 'lodash/isEqual';
 import sumBy from 'lodash/sumBy';
-import widgetActions from 'pages/country/widget/widget-actions';
-console.log(widgetActions)
+import { setWidgetSettingsUrl } from 'pages/country/widget/widget-actions';
 
 import {
   getThresholds,
@@ -20,7 +19,7 @@ import { filterData } from './widget-tree-loss-selectors';
 import WidgetTreeLossComponent from './widget-tree-loss-component';
 import ownActions from './widget-tree-loss-actions';
 
-const actions = { ...widgetActions, ...ownActions };
+const actions = { setWidgetSettingsUrl, ...ownActions };
 
 export { initialState } from './widget-tree-loss-reducers';
 export { default as reducers } from './widget-tree-loss-reducers';
@@ -29,7 +28,7 @@ export { default as actions } from './widget-tree-loss-actions';
 const mapStateToProps = ({ widgetTreeLoss, location, countryData }) => ({
   title: widgetTreeLoss.title,
   anchorLink: widgetTreeLoss.anchorLink,
-  isLoading: widgetTreeLoss.isLoading,
+  loading: widgetTreeLoss.loading,
   location: location.payload,
   data:
     filterData({
@@ -115,14 +114,9 @@ class WidgetTreeLossContainer extends PureComponent {
      with canopy density <span>> ${settings.threshold}%</span>.`;
   };
 
-  viewOnMap = () => {
-    this.props.setLayers(['loss']);
-  };
-
   render() {
     return createElement(WidgetTreeLossComponent, {
       ...this.props,
-      viewOnMap: this.viewOnMap,
       getSentence: this.getSentence
     });
   }
@@ -134,7 +128,6 @@ WidgetTreeLossContainer.propTypes = {
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   getTreeLoss: PropTypes.func.isRequired,
-  setLayers: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
   extent: PropTypes.number.isRequired
 };
