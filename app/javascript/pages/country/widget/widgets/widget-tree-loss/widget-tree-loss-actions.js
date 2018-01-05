@@ -6,33 +6,22 @@ import maxBy from 'lodash/maxBy';
 
 import { getExtent, getLoss } from 'services/forest-data';
 
-const setTreeLossIsLoading = createAction('setTreeLossIsLoading');
-
-const setTreeLossValues = createAction('setTreeLossValues');
-const setTreeLossSettings = createAction(
-  'setTreeLossSettings'
-);
-const setTreeLossSettingsThreshold = createAction(
-  'setTreeLossSettingsThreshold'
-);
-const setTreeLossSettingsStartYear = createAction(
-  'setTreeLossSettingsStartYear'
-);
-const setTreeLossSettingsEndYear = createAction('setTreeLossSettingsEndYear');
-const setLayers = createAction('setLayers');
+const setTreeLossLoading = createAction('setTreeLossLoading');
+const setTreeLossData = createAction('setTreeLossData');
+const setTreeLossSettings = createAction('setTreeLossSettings');
 
 const getTreeLoss = createThunkAction(
   'getTreeLoss',
   params => (dispatch, state) => {
     if (!state().widgetTreeLoss.isLoading) {
-      dispatch(setTreeLossIsLoading(true));
+      dispatch(setTreeLossLoading(true));
       axios
         .all([getLoss(params), getExtent(params)])
         .then(
           axios.spread((loss, extent) => {
             if (loss && extent) {
               dispatch(
-                setTreeLossValues({
+                setTreeLossData({
                   loss: loss.data.data,
                   startYear: minBy(loss.data.data, 'year').year,
                   endYear: maxBy(loss.data.data, 'year').year,
@@ -40,12 +29,12 @@ const getTreeLoss = createThunkAction(
                 })
               );
             } else {
-              dispatch(setTreeLossIsLoading(false));
+              dispatch(setTreeLossLoading(false));
             }
           })
         )
         .catch(error => {
-          dispatch(setTreeLossIsLoading(false));
+          dispatch(setTreeLossLoading(false));
           console.info(error);
         });
     }
@@ -53,13 +42,8 @@ const getTreeLoss = createThunkAction(
 );
 
 export default {
-  setWidgetConfigUrl,
-  setTreeLossValues,
+  setTreeLossData,
   setTreeLossSettings,
-  setTreeLossSettingsThreshold,
-  setTreeLossIsLoading,
-  setTreeLossSettingsStartYear,
-  setTreeLossSettingsEndYear,
-  setLayers,
+  setTreeLossLoading,
   getTreeLoss
 };

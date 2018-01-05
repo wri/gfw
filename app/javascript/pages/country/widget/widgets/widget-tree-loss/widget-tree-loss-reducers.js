@@ -1,7 +1,7 @@
 import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 
 export const initialState = {
-  isLoading: false,
+  loading: false,
   data: {
     loss: [],
     extent: 0
@@ -9,9 +9,9 @@ export const initialState = {
   ...WIDGETS_CONFIG.treeLoss
 };
 
-const setTreeLossValues = (state, { payload }) => ({
+const setTreeLossData = (state, { payload }) => ({
   ...state,
-  isLoading: false,
+  loading: false,
   data: {
     loss: payload.loss,
     extent: payload.extent
@@ -31,40 +31,13 @@ const setTreeLossSettings = (state, { payload }) => ({
   }
 });
 
-const setTreeLossSettingsThreshold = (state, { payload }) => ({
+const setTreeLossLoading = (state, { payload }) => ({
   ...state,
-  settings: {
-    ...state.settings,
-    threshold: payload
-  }
-});
-
-const setTreeLossIsLoading = (state, { payload }) => ({
-  ...state,
-  isLoading: payload
-});
-
-const setTreeLossSettingsStartYear = (state, { payload }) => ({
-  ...state,
-  settings: {
-    ...state.settings,
-    startYear: payload
-  }
-});
-
-const setTreeLossSettingsEndYear = (state, { payload }) => ({
-  ...state,
-  settings: {
-    ...state.settings,
-    endYear: payload
-  }
+  loading: payload
 });
 
 export default {
-  setTreeLossValues,
+  setTreeLossData,
   setTreeLossSettings,
-  setTreeLossSettingsThreshold,
-  setTreeLossIsLoading,
-  setTreeLossSettingsStartYear,
-  setTreeLossSettingsEndYear
+  setTreeLossLoading
 };

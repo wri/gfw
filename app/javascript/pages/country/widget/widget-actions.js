@@ -1,42 +1,37 @@
 import { createThunkAction } from 'utils/redux';
-import { actions as treeLossActions } from 'pages/country/widget/widgets/widget-tree-loss';
+import * as treeLossActions from 'pages/country/widget/widgets/widget-tree-loss/widget-tree-loss-actions';
+import upperFirst from 'lodash/upperFirst';
+import { encodeStateForUrl, decodeUrlForState } from 'utils/stateToUrl';
 
-const actions = { ...treeLossActions };
+const widgetActions = { ...treeLossActions.default };
 
-const setWidgetConfigUrl = createThunkAction(
-  'setWidgetConfigUrl',
-  ({ value, widget }) => (dispatch, getState) => {
-    const { location } = getState();
+export const setWidgetSettingsUrl = createThunkAction(
+  'setWidgetSettingsUrl',
+  ({ value, widget }) => (dispatch, state) => {
+    const { location } = state();
     let params = value;
     if (location.query && location.query[widget]) {
       params = {
-        ...location.query[widget],
+        ...decodeUrlForState(location.query[widget]),
         ...value
       };
     }
     dispatch({
       type: 'location/COUNTRY',
       payload: location.payload,
-      query: { [widget]: JSON.stringify(params) }
+      query: { [widget]: encodeStateForUrl(params) }
     });
   }
 );
 
-
-const setWidgetConfigStore = createThunkAction(
-  'setWidgetConfigStore',
-  (query) => (dispatch) => {
-    Object.keys(query).forEach((widgetKey) => {
-      const actionFunc = actions[`set${widgetKey}Settings`];
+export const setWidgetSettingsStore = createThunkAction(
+  'setWidgetSettingsStore',
+  query => dispatch => {
+    Object.keys(query).forEach(widgetKey => {
+      const actionFunc = widgetActions[`set${upperFirst(widgetKey)}Settings`];
       if (actionFunc) {
-        dispatch(actionFunc(JSON.parse(query[widgetKey])));
+        dispatch(actionFunc(decodeUrlForState(query[widgetKey])));
       }
     });
   }
 );
-
-
-export default {
-  setWidgetConfigUrl,
-  setWidgetConfigStore
-};

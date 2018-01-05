@@ -12,43 +12,37 @@ import './widget-tree-loss-styles.scss';
 class WidgetTreeLoss extends PureComponent {
   render() {
     const {
-      isLoading,
+      loading,
       data,
       options,
       settings,
       config,
-      setWidgetConfigUrl,
-      setTreeLossSettingsThreshold,
-      setTreeLossSettingsStartYear,
-      setTreeLossSettingsEndYear,
+      setWidgetSettingsUrl,
       getSentence,
       locationNames,
       title,
-      anchorLink
+      anchorLink,
+      widget
     } = this.props;
-    
+
     return (
       <div className="c-widget c-widget-tree-loss">
         <WidgetHeader
+          widget={widget}
           title={title}
           anchorLink={anchorLink}
           locationNames={locationNames}
           settingsConfig={{
-            isLoading,
+            loading,
             config,
             settings,
             options,
-            actions: {
-              onIndicatorChange: setWidgetConfigUrl,
-              onThresholdChange: setWidgetConfigUrl,
-              onStartYearChange: setTreeLossSettingsStartYear,
-              onEndYearChange: setTreeLossSettingsEndYear
-            }
+            onSettingsChange: setWidgetSettingsUrl
           }}
         />
         <div className="container">
-          {isLoading && <Loader />}
-          {!isLoading &&
+          {loading && <Loader />}
+          {!loading &&
             data &&
             data.length === 0 && (
               <NoContent
@@ -93,18 +87,17 @@ class WidgetTreeLoss extends PureComponent {
 }
 
 WidgetTreeLoss.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
   data: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   options: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
-  setTreeLossSettingsThreshold: PropTypes.func.isRequired,
-  setTreeLossSettingsStartYear: PropTypes.func.isRequired,
-  setTreeLossSettingsEndYear: PropTypes.func.isRequired,
   getSentence: PropTypes.func.isRequired,
   locationNames: PropTypes.object,
   title: PropTypes.string.isRequired,
-  anchorLink: PropTypes.string.isRequired
+  anchorLink: PropTypes.string.isRequired,
+  widget: PropTypes.string.isRequired,
+  setWidgetSettingsUrl: PropTypes.func.isRequired
 };
 
 export default WidgetTreeLoss;
