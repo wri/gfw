@@ -13,6 +13,7 @@ import { filterData } from './widget-tree-loss-selectors';
 import WidgetTreeLossComponent from './widget-tree-loss-component';
 
 const mapStateToProps = ({ widgetTreeLoss }) => ({
+  loading: widgetTreeLoss.loading,
   data:
     filterData({
       data: widgetTreeLoss.data,

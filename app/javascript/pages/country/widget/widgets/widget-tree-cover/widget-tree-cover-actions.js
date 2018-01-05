@@ -4,12 +4,7 @@ import { getExtent } from 'services/forest-data';
 
 const setTreeCoverLoading = createAction('setTreeCoverLoading');
 const setTreeCoverData = createAction('setTreeCoverData');
-const setTreeCoverSettingsIndicator = createAction(
-  'setTreeCoverSettingsIndicator'
-);
-const setTreeCoverSettingsThreshold = createAction(
-  'setTreeCoverSettingsThreshold'
-);
+const setTreeCoverSettings = createAction('setTreeCoverSettings');
 
 export const getTreeCover = createThunkAction(
   'getTreeCover',
@@ -55,6 +50,5 @@ export default {
   setTreeCoverLoading,
   setTreeCoverData,
   getTreeCover,
-  setTreeCoverSettingsIndicator,
-  setTreeCoverSettingsThreshold
+  setTreeCoverSettings
 };

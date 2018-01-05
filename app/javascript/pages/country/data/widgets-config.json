@@ -12,7 +12,7 @@
       "indicator": "gadm28",
       "threshold": 30
     },
-    "active": false
+    "active": true
   },
   "treeLocated": {
     "title": "WHERE ARE THE FOREST LOCATED",
@@ -55,7 +55,7 @@
       "startYear": 2001,
       "endYear": 2016
     },
-    "active": true
+    "active": false
   },
   "treeGain": {
     "title": "Tree cover gain",
