@@ -75,7 +75,7 @@ class WidgetSettings extends PureComponent {
             value={settings.period}
             options={periods}
             onChange={option =>
-              onSettingsChange({ value: { preiod: option.value }, widget })
+              onSettingsChange({ value: { period: option.value }, widget })
             }
           />
         )}
