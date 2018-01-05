@@ -32,7 +32,10 @@ export const setWidgetSettingsUrl = createThunkAction(
     dispatch({
       type: 'location/COUNTRY',
       payload: location.payload,
-      query: { [widget]: encodeStateForUrl(params) }
+      query: {
+        ...location.query,
+        [widget]: encodeStateForUrl(params)
+      }
     });
   }
 );
