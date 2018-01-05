@@ -50,6 +50,7 @@ const mapStateToProps = (state, ownProps) => {
       }
     });
   }
+
   return {
     isMetaLoading:
       isCountriesLoading || isRegionsLoading || isSubRegionsLoading,

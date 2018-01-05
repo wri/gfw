@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import Button from 'components/button';
 import Icon from 'components/icon';
+import isEmpty from 'lodash/isEmpty';
 
 import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import settingsIcon from 'assets/icons/settings.svg';
@@ -31,7 +32,7 @@ class WidgetHeader extends PureComponent {
               <Icon icon={infoIcon} />
             </Button>
             {settingsConfig &&
-              settingsConfig.options && (
+              !isEmpty(settingsConfig.options) && (
                 <Tooltip
                   theme="light"
                   position="bottom-right"

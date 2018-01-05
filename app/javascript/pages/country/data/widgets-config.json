@@ -83,15 +83,15 @@
     "settings": {
       "period": 1990
     },
-    "active": true
+    "active": false
   },
-  "faoCover": {
+  "FAOCover": {
     "title": "Forest cover",
     "gridWidth": 6,
     "config": {
       "categories": ["land-cover"],
       "admins": ["country"]
     },
-    "active": false
+    "active": true
   }
 }

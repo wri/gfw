@@ -1,28 +1,28 @@
 import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 
 export const initialState = {
-  isLoading: false,
+  loading: false,
   data: {
     fao: {},
     rank: 0
   },
-  ...WIDGETS_CONFIG.faoCover
+  ...WIDGETS_CONFIG.FAOCover
 };
 
-const setFAOCoverIsLoading = (state, { payload }) => ({
+const setFAOCoverLoading = (state, { payload }) => ({
   ...state,
-  isLoading: payload
+  loading: payload
 });
 
 const setFAOCoverData = (state, { payload }) => ({
   ...state,
-  isLoading: false,
+  loading: false,
   data: {
     ...payload
   }
 });
 
 export default {
-  setFAOCoverIsLoading,
+  setFAOCoverLoading,
   setFAOCoverData
 };
