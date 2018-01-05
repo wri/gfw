@@ -15,14 +15,13 @@ class WidgetHeader extends PureComponent {
     const {
       title,
       openShare,
-      shareAnchor,
       settingsConfig,
       locationNames,
       widget
     } = this.props;
 
     return (
-      <div className="c-widget-header" id={shareAnchor}>
+      <div className="c-widget-header" id={`#${widget}`}>
         <div className="title">{`${title} in ${
           locationNames.current ? locationNames.current.label : ''
         }`}</div>

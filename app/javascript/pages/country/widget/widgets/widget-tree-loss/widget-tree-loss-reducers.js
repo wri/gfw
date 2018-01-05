@@ -15,11 +15,6 @@ export const setTreeLossData = (state, { payload }) => ({
   data: {
     loss: payload.loss,
     extent: payload.extent
-  },
-  settings: {
-    ...state.settings,
-    startYear: payload.startYear,
-    endYear: payload.endYear
   }
 });
 
