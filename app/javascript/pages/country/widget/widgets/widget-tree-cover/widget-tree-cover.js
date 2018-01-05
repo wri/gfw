@@ -2,46 +2,22 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import {
-  getIndicators,
-  getThresholds,
-  getActiveFilter
-} from 'pages/country/widget/widget-selectors';
-import { getTreeCoverData } from './widget-tree-cover-selectors';
+import { getActiveFilter } from 'pages/country/widget/widget-selectors';
 
-import WidgetTreeCoverComponent from './widget-tree-cover-component';
 import actions from './widget-tree-cover-actions';
+import reducers, { initialState } from './widget-tree-cover-reducers';
+import { getTreeCoverData } from './widget-tree-cover-selectors';
+import WidgetTreeCoverComponent from './widget-tree-cover-component';
 
-export { initialState } from './widget-tree-cover-reducers';
-export { default as reducers } from './widget-tree-cover-reducers';
-export { default as actions } from './widget-tree-cover-actions';
-
-const mapStateToProps = ({ widgetTreeCover, countryData, location }) => {
+const mapStateToProps = ({ widgetTreeCover, countryData }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
   const { totalArea, cover, plantations } = widgetTreeCover.data;
   const { indicator } = widgetTreeCover.settings;
-  const { indicators } = widgetTreeCover.config;
 
   return {
-    title: widgetTreeCover.title,
-    anchorLink: widgetTreeCover.anchorLink,
-    isLoading:
-      widgetTreeCover.isLoading || isCountriesLoading || isRegionsLoading,
-    location: location.payload,
+    loading: widgetTreeCover.loading || isCountriesLoading || isRegionsLoading,
     regions: countryData.regions,
-    data: getTreeCoverData({ totalArea, cover, plantations, indicator }) || [],
-    options:
-      {
-        indicators:
-          getIndicators({
-            whitelist: indicators,
-            location: location.payload,
-            ...countryData
-          }) || [],
-        thresholds: getThresholds()
-      } || {},
-    settings: widgetTreeCover.settings,
-    config: widgetTreeCover.config
+    data: getTreeCoverData({ totalArea, cover, plantations, indicator }) || []
   };
 };
 
@@ -101,5 +77,7 @@ WidgetTreeCoverContainer.propTypes = {
   getTreeCover: PropTypes.func.isRequired,
   options: PropTypes.object.isRequired
 };
+
+export { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(WidgetTreeCoverContainer);
