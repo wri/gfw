@@ -15,14 +15,13 @@ class WidgetHeader extends PureComponent {
     const {
       title,
       openShare,
-      shareAnchor,
       settingsConfig,
       locationNames,
       widget
     } = this.props;
 
     return (
-      <div className="c-widget-header">
+      <div className="c-widget-header" id={`#${widget}`}>
         <div className="title">{`${title} in ${
           locationNames.current ? locationNames.current.label : ''
         }`}</div>
@@ -56,7 +55,7 @@ class WidgetHeader extends PureComponent {
               )}
             <Button
               className="theme-button-small theme-button-light square"
-              onClick={() => openShare(shareAnchor)}
+              onClick={openShare}
             >
               <Icon icon={shareIcon} />
             </Button>

@@ -1,8 +1,6 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
 import axios from 'axios';
-import minBy from 'lodash/minBy';
-import maxBy from 'lodash/maxBy';
 
 import { getExtent, getLoss } from 'services/forest-data';
 
@@ -23,8 +21,6 @@ const getTreeLoss = createThunkAction(
               dispatch(
                 setTreeLossData({
                   loss: loss.data.data,
-                  startYear: minBy(loss.data.data, 'year').year,
-                  endYear: maxBy(loss.data.data, 'year').year,
                   extent: extent.data.data[0].value
                 })
               );

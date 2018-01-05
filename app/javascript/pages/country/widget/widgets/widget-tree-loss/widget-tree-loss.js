@@ -5,56 +5,20 @@ import { format } from 'd3-format';
 import isEqual from 'lodash/isEqual';
 import sumBy from 'lodash/sumBy';
 
-import {
-  getThresholds,
-  getIndicators,
-  getStartYears,
-  getEndYears,
-  getAdminsSelected,
-  getActiveFilter
-} from 'pages/country/widget/widget-selectors';
+import { getActiveFilter } from 'pages/country/widget/widget-selectors';
 
 import actions from './widget-tree-loss-actions';
 import reducers, { initialState } from './widget-tree-loss-reducers';
 import { filterData } from './widget-tree-loss-selectors';
 import WidgetTreeLossComponent from './widget-tree-loss-component';
 
-const mapStateToProps = ({ widgetTreeLoss, location, countryData }) => ({
-  title: widgetTreeLoss.title,
-  anchorLink: widgetTreeLoss.anchorLink,
-  loading: widgetTreeLoss.loading,
-  location: location.payload,
+const mapStateToProps = ({ widgetTreeLoss }) => ({
   data:
     filterData({
       data: widgetTreeLoss.data,
       ...widgetTreeLoss.settings
     }) || [],
-  extent: widgetTreeLoss.data.extent,
-  options: {
-    startYears:
-      getStartYears({
-        data: widgetTreeLoss.data.loss,
-        ...widgetTreeLoss.settings
-      }) || [],
-    endYears:
-      getEndYears({
-        data: widgetTreeLoss.data.loss,
-        ...widgetTreeLoss.settings
-      }) || [],
-    indicators:
-      getIndicators({
-        whitelist: widgetTreeLoss.config.indicators,
-        location: location.payload,
-        ...countryData
-      }) || [],
-    thresholds: getThresholds()
-  },
-  settings: widgetTreeLoss.settings,
-  config: widgetTreeLoss.config,
-  locationNames: getAdminsSelected({
-    ...countryData,
-    location: location.payload
-  })
+  extent: widgetTreeLoss.data.extent
 });
 
 class WidgetTreeLossContainer extends PureComponent {
