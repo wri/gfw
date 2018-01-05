@@ -30,7 +30,7 @@ class WidgetHeaderContainer extends PureComponent {
         subtitle: `${title} in ${
           locationNames.current ? locationNames.current.label : ''
         }`,
-        url: window.location.href,
+        url: `${window.location.href}#${widget}`,
         embedUrl: EMBED_URL.replace('{widget}', widget).replace(
           '{location}',
           `${location.payload.country}${
@@ -38,7 +38,9 @@ class WidgetHeaderContainer extends PureComponent {
           }${
             location.payload.subRegion ? `/${location.payload.subRegion}` : ''
           }${
-            location.query[widget] ? `?${widget}=${location.query[widget]}` : ''
+            location.query && location.query[widget]
+              ? `?${widget}=${location.query[widget]}`
+              : ''
           }`
         ),
         embedSettings:
