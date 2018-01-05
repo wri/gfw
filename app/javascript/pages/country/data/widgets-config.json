@@ -12,7 +12,7 @@
       "indicator": "gadm28",
       "threshold": 30
     },
-    "active": false
+    "active": true
   },
   "treeLocated": {
     "title": "WHERE ARE THE FOREST LOCATED",
@@ -34,7 +34,7 @@
       "pageSize": 10,
       "page": 0
     },
-    "active": false
+    "active": true
   },
   "treeLoss": {
     "title": "Tree cover loss",
@@ -55,7 +55,7 @@
       "startYear": 2001,
       "endYear": 2016
     },
-    "active": false
+    "active": true
   },
   "treeGain": {
     "title": "Tree cover gain",
@@ -70,7 +70,7 @@
       "indicator": "gadm28",
       "threshold": "0"
     },
-    "active": false
+    "active": true
   },
   "FAOReforestation": {
     "title": "FAO reforestation",
@@ -83,7 +83,7 @@
     "settings": {
       "period": 1990
     },
-    "active": false
+    "active": true
   },
   "FAOCover": {
     "title": "Forest cover",
