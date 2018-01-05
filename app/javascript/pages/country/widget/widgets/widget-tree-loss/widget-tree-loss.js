@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import isEqual from 'lodash/isEqual';
 import sumBy from 'lodash/sumBy';
-import { setWidgetSettingsUrl } from 'pages/country/widget/widget-actions';
 
 import {
   getThresholds,
@@ -14,16 +13,11 @@ import {
   getAdminsSelected,
   getActiveFilter
 } from 'pages/country/widget/widget-selectors';
+
+import actions from './widget-tree-loss-actions';
+import reducers, { initialState } from './widget-tree-loss-reducers';
 import { filterData } from './widget-tree-loss-selectors';
-
 import WidgetTreeLossComponent from './widget-tree-loss-component';
-import ownActions from './widget-tree-loss-actions';
-
-const actions = { setWidgetSettingsUrl, ...ownActions };
-
-export { initialState } from './widget-tree-loss-reducers';
-export { default as reducers } from './widget-tree-loss-reducers';
-export { default as actions } from './widget-tree-loss-actions';
 
 const mapStateToProps = ({ widgetTreeLoss, location, countryData }) => ({
   title: widgetTreeLoss.title,
@@ -131,5 +125,7 @@ WidgetTreeLossContainer.propTypes = {
   data: PropTypes.array.isRequired,
   extent: PropTypes.number.isRequired
 };
+
+export { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(WidgetTreeLossContainer);

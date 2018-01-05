@@ -9,7 +9,7 @@ export const initialState = {
   ...WIDGETS_CONFIG.treeLoss
 };
 
-const setTreeLossData = (state, { payload }) => ({
+export const setTreeLossData = (state, { payload }) => ({
   ...state,
   loading: false,
   data: {
@@ -23,7 +23,7 @@ const setTreeLossData = (state, { payload }) => ({
   }
 });
 
-const setTreeLossSettings = (state, { payload }) => ({
+export const setTreeLossSettings = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
@@ -31,7 +31,7 @@ const setTreeLossSettings = (state, { payload }) => ({
   }
 });
 
-const setTreeLossLoading = (state, { payload }) => ({
+export const setTreeLossLoading = (state, { payload }) => ({
   ...state,
   loading: payload
 });
