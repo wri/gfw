@@ -70,9 +70,9 @@
       "indicator": "gadm28",
       "threshold": "0"
     },
-    "active": true
+    "active": false
   },
-  "faoReforestation": {
+  "FAOReforestation": {
     "title": "FAO reforestation",
     "gridWidth": 6,
     "config": {
@@ -83,7 +83,7 @@
     "settings": {
       "period": 1990
     },
-    "active": false
+    "active": true
   },
   "faoCover": {
     "title": "Forest cover",

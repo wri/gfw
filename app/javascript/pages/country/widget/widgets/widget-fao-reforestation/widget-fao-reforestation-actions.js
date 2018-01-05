@@ -3,18 +3,15 @@ import { createThunkAction } from 'utils/redux';
 
 import { getFAOExtent } from 'services/forest-data';
 
-const setFAOReforestationIsLoading = createAction(
-  'setFAOReforestationIsLoading'
-);
+const setFAOReforestationLoading = createAction('setFAOReforestationLoading');
 const setFAOReforestationData = createAction('setFAOReforestationData');
-const setFAOReforestationSettingsPeriod = createAction(
-  'setFAOReforestationSettingsPeriod'
-);
+const setFAOReforestationSettings = createAction('setFAOReforestationSettings');
+
 const getFAOReforestationData = createThunkAction(
   'getFAOReforestation',
   params => (dispatch, state) => {
-    if (!state().widgetFAOReforestation.isLoading) {
-      dispatch(setFAOReforestationIsLoading(true));
+    if (!state().widgetFAOReforestation.loading) {
+      dispatch(setFAOReforestationLoading(true));
       getFAOExtent({ ...params })
         .then(response => {
           const data = response.data.rows;
@@ -27,15 +24,15 @@ const getFAOReforestationData = createThunkAction(
         })
         .catch(error => {
           console.info(error);
-          dispatch(setFAOReforestationIsLoading(false));
+          dispatch(setFAOReforestationLoading(false));
         });
     }
   }
 );
 
 export default {
-  setFAOReforestationIsLoading,
+  setFAOReforestationLoading,
   setFAOReforestationData,
-  setFAOReforestationSettingsPeriod,
+  setFAOReforestationSettings,
   getFAOReforestationData
 };

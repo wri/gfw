@@ -6,12 +6,14 @@ import * as treeLossActions from 'pages/country/widget/widgets/widget-tree-loss/
 import * as treeCoverActions from 'pages/country/widget/widgets/widget-tree-cover/widget-tree-cover-actions';
 import * as treeLocatedActions from 'pages/country/widget/widgets/widget-tree-located/widget-tree-located-actions';
 import * as treeGainActions from 'pages/country/widget/widgets/widget-tree-gain/widget-tree-gain-actions';
+import * as FAOReforestationActions from 'pages/country/widget/widgets/widget-fao-reforestation/widget-fao-reforestation-actions';
 
 const widgetActions = {
   ...treeLossActions.default,
   ...treeCoverActions.default,
   ...treeLocatedActions.default,
-  ...treeGainActions.default
+  ...treeGainActions.default,
+  ...FAOReforestationActions.default
 };
 
 export const setWidgetSettingsUrl = createThunkAction(

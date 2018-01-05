@@ -3,41 +3,16 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { format } from 'd3-format';
-import {
-  getPeriods,
-  getActiveFilter
-} from 'pages/country/widget/widget-selectors';
+import { getActiveFilter } from 'pages/country/widget/widget-selectors';
 
-import WidgetFAOReforestationComponent from './widget-fao-reforestation-component';
 import actions from './widget-fao-reforestation-actions';
+import reducers, { initialState } from './widget-fao-reforestation-reducers';
+import WidgetFAOReforestationComponent from './widget-fao-reforestation-component';
 
-export { initialState } from './widget-fao-reforestation-reducers';
-export { default as reducers } from './widget-fao-reforestation-reducers';
-export { default as actions } from './widget-fao-reforestation-actions';
-
-const mapStateToProps = ({ countryData, widgetFAOReforestation, location }) => {
-  const {
-    isCountriesLoading,
-    isRegionsLoading,
-    isSubRegionsLoading
-  } = countryData;
-  return {
-    title: widgetFAOReforestation.title,
-    anchorLink: widgetFAOReforestation.anchorLink,
-    location: location.payload,
-    isLoading:
-      widgetFAOReforestation.isLoading ||
-      isCountriesLoading ||
-      isRegionsLoading ||
-      isSubRegionsLoading,
-    data: widgetFAOReforestation.data,
-    options: {
-      periods: getPeriods() || []
-    },
-    settings: widgetFAOReforestation.settings,
-    config: widgetFAOReforestation.config
-  };
-};
+const mapStateToProps = ({ widgetFAOReforestation }, ownProps) => ({
+  loading: widgetFAOReforestation.loading || ownProps.isMetaLoading,
+  data: widgetFAOReforestation.data
+});
 
 class WidgetFAOReforestationContainer extends PureComponent {
   componentWillMount() {
@@ -88,6 +63,8 @@ WidgetFAOReforestationContainer.propTypes = {
   settings: PropTypes.object.isRequired,
   getFAOReforestationData: PropTypes.func.isRequired
 };
+
+export { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(
   WidgetFAOReforestationContainer
