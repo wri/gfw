@@ -23,7 +23,7 @@ class WidgetHeader extends PureComponent {
     } = this.props;
 
     return (
-      <div className="c-widget-header" id={`#${widget}`}>
+      <div className="c-widget-header">
         <div className="title">{`${title} in ${
           locationNames.current ? locationNames.current.label : ''
         }`}</div>

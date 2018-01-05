@@ -40,7 +40,7 @@ class Widget extends PureComponent {
     } = this.props;
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
     return (
-      <div className="c-widget">
+      <div className="c-widget" id={widget}>
         <WidgetHeader
           widget={widget}
           title={title}
