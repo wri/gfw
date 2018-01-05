@@ -11,7 +11,7 @@ const setTreeLossSettings = createAction('setTreeLossSettings');
 const getTreeLoss = createThunkAction(
   'getTreeLoss',
   params => (dispatch, state) => {
-    if (!state().widgetTreeLoss.isLoading) {
+    if (!state().widgetTreeLoss.loading) {
       dispatch(setTreeLossLoading(true));
       axios
         .all([getLoss(params), getExtent(params)])
