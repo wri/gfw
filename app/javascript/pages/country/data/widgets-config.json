@@ -34,7 +34,7 @@
       "pageSize": 10,
       "page": 0
     },
-    "active": true
+    "active": false
   },
   "treeLoss": {
     "title": "Tree cover loss",
@@ -70,7 +70,7 @@
       "indicator": "gadm28",
       "threshold": "0"
     },
-    "active": false
+    "active": true
   },
   "faoReforestation": {
     "title": "FAO reforestation",

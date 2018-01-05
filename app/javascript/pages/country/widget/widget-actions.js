@@ -5,11 +5,13 @@ import { encodeStateForUrl, decodeUrlForState } from 'utils/stateToUrl';
 import * as treeLossActions from 'pages/country/widget/widgets/widget-tree-loss/widget-tree-loss-actions';
 import * as treeCoverActions from 'pages/country/widget/widgets/widget-tree-cover/widget-tree-cover-actions';
 import * as treeLocatedActions from 'pages/country/widget/widgets/widget-tree-located/widget-tree-located-actions';
+import * as treeGainActions from 'pages/country/widget/widgets/widget-tree-gain/widget-tree-gain-actions';
 
 const widgetActions = {
   ...treeLossActions.default,
   ...treeCoverActions.default,
-  ...treeLocatedActions.default
+  ...treeLocatedActions.default,
+  ...treeGainActions.default
 };
 
 export const setWidgetSettingsUrl = createThunkAction(

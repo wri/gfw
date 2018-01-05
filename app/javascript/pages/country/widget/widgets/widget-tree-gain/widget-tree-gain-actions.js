@@ -4,20 +4,15 @@ import axios from 'axios';
 
 import { getGain, getExtent } from 'services/forest-data';
 
-const setTreeCoverGainIsLoading = createAction('setTreeCoverGainIsLoading');
-const setTreeCoverGainData = createAction('setTreeCoverGainData');
-const setTreeCoverGainSettingsIndicator = createAction(
-  'setTreeCoverGainSettingsIndicator'
-);
-const setTreeCoverGainSettingsThreshold = createAction(
-  'setTreeCoverGainSettingsThreshold'
-);
+const setTreeGainLoading = createAction('setTreeGainLoading');
+const setTreeGainData = createAction('setTreeGainData');
+const setTreeGainSettings = createAction('setTreeGainSettings');
 
-const getTreeCoverGain = createThunkAction(
-  'getTreeCoverGain',
+const getTreeGain = createThunkAction(
+  'getTreeGain',
   params => (dispatch, state) => {
-    if (!state().widgetTreeCoverGain.isLoading) {
-      dispatch(setTreeCoverGainIsLoading(true));
+    if (!state().widgetTreeGain.loading) {
+      dispatch(setTreeGainLoading(true));
       axios
         .all([getGain({ ...params }), getExtent({ ...params })])
         .then(
@@ -25,7 +20,7 @@ const getTreeCoverGain = createThunkAction(
             const gain = gainResponse.data.data;
             const extent = extentResponse.data.data;
             dispatch(
-              setTreeCoverGainData({
+              setTreeGainData({
                 gain: (gain.length && gain[0].value) || 0,
                 extent: (extent.length && extent[0].value) || 0
               })
@@ -34,16 +29,15 @@ const getTreeCoverGain = createThunkAction(
         )
         .catch(error => {
           console.info(error);
-          dispatch(setTreeCoverGainIsLoading(false));
+          dispatch(setTreeGainLoading(false));
         });
     }
   }
 );
 
 export default {
-  setTreeCoverGainIsLoading,
-  setTreeCoverGainData,
-  setTreeCoverGainSettingsIndicator,
-  setTreeCoverGainSettingsThreshold,
-  getTreeCoverGain
+  setTreeGainLoading,
+  setTreeGainData,
+  setTreeGainSettings,
+  getTreeGain
 };
