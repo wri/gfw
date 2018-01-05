@@ -13,7 +13,8 @@ const mapStateToProps = state => ({
   isOpen: state.share.isOpen,
   haveEmbed: state.share.haveEmbed,
   selectedType: state.share.selectedType,
-  data: state.share.data
+  data: state.share.data,
+  location: state.location
 });
 
 class ShareContainer extends PureComponent {
@@ -52,7 +53,6 @@ class ShareContainer extends PureComponent {
   render() {
     return createElement(ShareComponent, {
       ...this.props,
-      componentWillUpdate: this.componentWillUpdate,
       changeType: this.changeType,
       copyToClipboard: this.copyToClipboard,
       handleFocus: this.handleFocus,

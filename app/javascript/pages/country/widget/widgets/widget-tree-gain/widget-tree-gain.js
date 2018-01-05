@@ -47,7 +47,7 @@ class WidgetTreeGainContainer extends PureComponent {
     const regionPhrase =
       settings.indicator === 'gadm28'
         ? '<span>region-wide</span>'
-        : `in <span>${indicator.label.toLowerCase()}</span>`;
+        : `in <span>${indicator && indicator.label.toLowerCase()}</span>`;
 
     const areaPercent = format('.1f')(100 * gain / extent);
     const firstSentence = `From 2001 to 2012, <span>${locationNames.current &&

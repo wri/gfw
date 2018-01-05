@@ -18,7 +18,8 @@ class WidgetHeader extends PureComponent {
       openShare,
       settingsConfig,
       locationNames,
-      widget
+      widget,
+      embed
     } = this.props;
 
     return (
@@ -31,7 +32,8 @@ class WidgetHeader extends PureComponent {
             <Button className="theme-button-small square" disabled>
               <Icon icon={infoIcon} />
             </Button>
-            {settingsConfig &&
+            {!embed &&
+              settingsConfig &&
               !isEmpty(settingsConfig.options) && (
                 <Tooltip
                   theme="light"
@@ -73,7 +75,8 @@ WidgetHeader.propTypes = {
   shareAnchor: PropTypes.string,
   widget: PropTypes.string,
   settingsConfig: PropTypes.object,
-  locationNames: PropTypes.object
+  locationNames: PropTypes.object,
+  embed: PropTypes.bool
 };
 
 export default WidgetHeader;

@@ -17,7 +17,8 @@ const syncWidgetSettings = (dispatch, getState) => {
 
 export const routes = {
   [EMBED]: {
-    path: '/country/embed/:widget/:country/:region?/:subRegion?'
+    path: '/country/embed/:widget/:country/:region?/:subRegion?',
+    thunk: syncWidgetSettings
   },
   [COUNTRY]: {
     path: '/country/:country/:region?/:subRegion?',

@@ -15,7 +15,8 @@ class WidgetNumberedList extends PureComponent {
       data,
       settings,
       handlePageChange,
-      colorRange
+      colorRange,
+      linksDisabled
     } = this.props;
     const { page, pageSize, unit } = settings;
     const pageData = data.slice(page * pageSize, (page + 1) * pageSize);
@@ -27,7 +28,10 @@ class WidgetNumberedList extends PureComponent {
           {data.length > 0 &&
             pageData.map((item, index) => (
               <li key={item.label}>
-                <Link className="list-item" to={item.path}>
+                <Link
+                  className={`list-item ${linksDisabled ? 'disabled' : ''}`}
+                  to={item.path}
+                >
                   <div className="item-label">
                     <div
                       className="item-bubble"
@@ -62,7 +66,8 @@ WidgetNumberedList.propTypes = {
   settings: PropTypes.object.isRequired,
   handlePageChange: PropTypes.func.isRequired,
   colorRange: PropTypes.array.isRequired,
-  className: PropTypes.string
+  className: PropTypes.string,
+  linksDisabled: PropTypes.bool
 };
 
 export default WidgetNumberedList;

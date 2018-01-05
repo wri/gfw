@@ -5,6 +5,12 @@
     display: none;
   }
 
+  .dd__selected {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+
   .dd__selectControl {
     height: rem(27px);
     padding: 0 rem(21px);
@@ -20,6 +26,7 @@
     font-size: rem(13px);
     letter-spacing: 0.1px;
     color: $green-gfw;
+    text-align: center;
   }
 
   .dd__list {
@@ -31,6 +38,9 @@
 
   .dd__option {
     color: rgba($slate, 0.6);
+    display: flex;
+    justify-content: center;
+    align-content: center;
 
     &:hover {
       background-color: $white;
