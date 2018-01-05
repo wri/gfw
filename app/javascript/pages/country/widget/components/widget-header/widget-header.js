@@ -14,7 +14,7 @@ export { default as actions } from './widget-header-actions';
 const EMBED_URL = `${process.env.GFW_URL}/country/embed/{widget}/{location}`;
 
 const mapStateToProps = (state, widgetHeader) => ({
-  location: state.location.payload,
+  location: state.location,
   widget: widgetHeader.widget
 });
 
@@ -33,8 +33,12 @@ class WidgetHeaderContainer extends PureComponent {
         url: window.location.href,
         embedUrl: EMBED_URL.replace('{widget}', widget).replace(
           '{location}',
-          `${location.country}${location.region ? `/${location.region}` : ''}${
-            location.subRegion ? `/${location.subRegion}` : ''
+          `${location.payload.country}${
+            location.payload.region ? `/${location.payload.region}` : ''
+          }${
+            location.payload.subRegion ? `/${location.payload.subRegion}` : ''
+          }${
+            location.query[widget] ? `?${widget}=${location.query[widget]}` : ''
           }`
         ),
         embedSettings:

@@ -14,7 +14,7 @@ class Embed extends PureComponent {
     return (
       <div className="c-embed">
         <div className="widget-wrapper">
-          <Widget widget={widgetKey} />
+          <Widget widget={widgetKey} embed />
         </div>
         <Share />
         <CountryDataProvider />

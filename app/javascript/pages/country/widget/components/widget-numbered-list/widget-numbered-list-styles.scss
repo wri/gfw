@@ -20,6 +20,15 @@
     }
   }
 
+  .disabled {
+    pointer-events: none;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
   .item-label {
     display: flex;
     flex-direction: row;

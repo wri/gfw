@@ -15,7 +15,8 @@ class WidgetTreeLocated extends PureComponent {
       loading,
       data,
       settings,
-      handlePageChange
+      handlePageChange,
+      embed
     } = this.props;
     return (
       <div className="c-widget-tree-located">
@@ -38,6 +39,7 @@ class WidgetTreeLocated extends PureComponent {
               settings={settings}
               handlePageChange={handlePageChange}
               colorRange={[COLORS.darkGreen, COLORS.nonForest]}
+              linksDisabled={embed}
             />
           )}
       </div>
@@ -50,7 +52,8 @@ WidgetTreeLocated.propTypes = {
   locationNames: PropTypes.object,
   data: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
-  handlePageChange: PropTypes.func.isRequired
+  handlePageChange: PropTypes.func.isRequired,
+  embed: PropTypes.bool
 };
 
 export default WidgetTreeLocated;

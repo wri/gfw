@@ -35,7 +35,8 @@ class Widget extends PureComponent {
       locationNames,
       title,
       settingsConfig,
-      setWidgetSettingsUrl
+      setWidgetSettingsUrl,
+      embed
     } = this.props;
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
     return (
@@ -48,6 +49,7 @@ class Widget extends PureComponent {
             ...settingsConfig,
             onSettingsChange: setWidgetSettingsUrl
           }}
+          embed={embed}
         />
         <div className="container">
           <WidgetComponent {...this.props} {...settingsConfig} />
@@ -62,7 +64,8 @@ Widget.propTypes = {
   title: PropTypes.string.isRequired,
   setWidgetSettingsUrl: PropTypes.func.isRequired,
   settingsConfig: PropTypes.object,
-  locationNames: PropTypes.object
+  locationNames: PropTypes.object,
+  embed: PropTypes.bool
 };
 
 export default Widget;
