@@ -23,11 +23,11 @@ const setTreeLossValues = (state, { payload }) => ({
   }
 });
 
-const setTreeLossSettingsIndicator = (state, { payload }) => ({
+const setTreeLossSettings = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    indicator: payload
+    ...payload
   }
 });
 
@@ -62,7 +62,7 @@ const setTreeLossSettingsEndYear = (state, { payload }) => ({
 
 export default {
   setTreeLossValues,
-  setTreeLossSettingsIndicator,
+  setTreeLossSettings,
   setTreeLossSettingsThreshold,
   setTreeLossIsLoading,
   setTreeLossSettingsStartYear,

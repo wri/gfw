@@ -9,8 +9,8 @@ import { getExtent, getLoss } from 'services/forest-data';
 const setTreeLossIsLoading = createAction('setTreeLossIsLoading');
 
 const setTreeLossValues = createAction('setTreeLossValues');
-const setTreeLossSettingsIndicator = createAction(
-  'setTreeLossSettingsIndicator'
+const setTreeLossSettings = createAction(
+  'setTreeLossSettings'
 );
 const setTreeLossSettingsThreshold = createAction(
   'setTreeLossSettingsThreshold'
@@ -53,8 +53,9 @@ const getTreeLoss = createThunkAction(
 );
 
 export default {
+  setWidgetConfigUrl,
   setTreeLossValues,
-  setTreeLossSettingsIndicator,
+  setTreeLossSettings,
   setTreeLossSettingsThreshold,
   setTreeLossIsLoading,
   setTreeLossSettingsStartYear,
