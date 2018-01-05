@@ -12,7 +12,7 @@
       "indicator": "gadm28",
       "threshold": 30
     },
-    "active": true
+    "active": false
   },
   "treeLocated": {
     "title": "WHERE ARE THE FOREST LOCATED",
@@ -34,7 +34,7 @@
       "pageSize": 10,
       "page": 0
     },
-    "active": false
+    "active": true
   },
   "treeLoss": {
     "title": "Tree cover loss",

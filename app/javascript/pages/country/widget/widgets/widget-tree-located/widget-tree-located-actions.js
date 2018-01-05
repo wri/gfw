@@ -5,20 +5,14 @@ import { getLocations } from 'services/forest-data';
 
 const setTreeLocatedData = createAction('setTreeLocatedData');
 const setTreeLocatedPage = createAction('setTreeLocatedPage');
-const setTreeLocatedSettingsIndicator = createAction(
-  'setTreeLocatedSettingsIndicator'
-);
-const setTreeLocatedSettingsUnit = createAction('setTreeLocatedSettingsUnit');
-const setTreeLocatedSettingsThreshold = createAction(
-  'setTreeLocatedSettingsThreshold'
-);
-const setTreeLocatedIsLoading = createAction('setTreeLocatedIsLoading');
+const setTreeLocatedSettings = createAction('setTreeLocatedSettings');
+const setTreeLocatedLoading = createAction('setTreeLocatedLoading');
 
 const getTreeLocated = createThunkAction(
   'getTreeLocated',
   params => (dispatch, state) => {
-    if (!state().widgetTreeLocated.isLoading) {
-      dispatch(setTreeLocatedIsLoading(true));
+    if (!state().widgetTreeLocated.loading) {
+      dispatch(setTreeLocatedLoading(true));
       getLocations(params)
         .then(response => {
           if (response.data.data.length) {
@@ -35,7 +29,7 @@ const getTreeLocated = createThunkAction(
         })
         .catch(error => {
           console.info(error);
-          dispatch(setTreeLocatedIsLoading(false));
+          dispatch(setTreeLocatedLoading(false));
         });
     }
   }
@@ -44,9 +38,7 @@ const getTreeLocated = createThunkAction(
 export default {
   setTreeLocatedData,
   setTreeLocatedPage,
-  setTreeLocatedSettingsIndicator,
-  setTreeLocatedSettingsUnit,
-  setTreeLocatedSettingsThreshold,
-  setTreeLocatedIsLoading,
+  setTreeLocatedSettings,
+  setTreeLocatedLoading,
   getTreeLocated
 };

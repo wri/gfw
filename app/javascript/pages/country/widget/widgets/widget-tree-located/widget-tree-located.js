@@ -3,23 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 
-import {
-  getThresholds,
-  getUnits,
-  getIndicators
-} from 'pages/country/widget/widget-selectors';
-import { getSortedData } from './widget-tree-located-selectors';
-
-import WidgetTreeLocatedComponent from './widget-tree-located-component';
 import actions from './widget-tree-located-actions';
-
-export { initialState } from './widget-tree-located-reducers';
-export { default as reducers } from './widget-tree-located-reducers';
-export { default as actions } from './widget-tree-located-actions';
+import reducers, { initialState } from './widget-tree-located-reducers';
+import { getSortedData } from './widget-tree-located-selectors';
+import WidgetTreeLocatedComponent from './widget-tree-located-component';
 
 const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
-  const { indicators } = widgetTreeLocated.config;
   const data = {
     data: widgetTreeLocated.data.regions,
     unit: widgetTreeLocated.settings.unit,
@@ -27,25 +17,10 @@ const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
     location: location.payload
   };
   return {
-    title: widgetTreeLocated.title,
-    anchorLink: widgetTreeLocated.anchorLink,
-    location: location.payload,
     regions: countryData.regions,
-    isLoading:
-      widgetTreeLocated.isLoading || isCountriesLoading || isRegionsLoading,
-    data: getSortedData(data) || [],
-    options: {
-      indicators:
-        getIndicators({
-          whitelist: indicators,
-          location: location.payload,
-          ...countryData
-        }) || [],
-      units: getUnits(),
-      thresholds: getThresholds()
-    },
-    settings: widgetTreeLocated.settings,
-    config: widgetTreeLocated.config
+    loading:
+      widgetTreeLocated.loading || isCountriesLoading || isRegionsLoading,
+    data: getSortedData(data) || []
   };
 };
 
@@ -93,5 +68,7 @@ WidgetTreeLocatedContainer.propTypes = {
   location: PropTypes.object.isRequired,
   getTreeLocated: PropTypes.func.isRequired
 };
+
+export { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(WidgetTreeLocatedContainer);

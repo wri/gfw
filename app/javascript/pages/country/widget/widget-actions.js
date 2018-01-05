@@ -1,12 +1,15 @@
 import { createThunkAction } from 'utils/redux';
-import * as treeLossActions from 'pages/country/widget/widgets/widget-tree-loss/widget-tree-loss-actions';
-import * as treeCoverActions from 'pages/country/widget/widgets/widget-tree-cover/widget-tree-cover-actions';
 import upperFirst from 'lodash/upperFirst';
 import { encodeStateForUrl, decodeUrlForState } from 'utils/stateToUrl';
 
+import * as treeLossActions from 'pages/country/widget/widgets/widget-tree-loss/widget-tree-loss-actions';
+import * as treeCoverActions from 'pages/country/widget/widgets/widget-tree-cover/widget-tree-cover-actions';
+import * as treeLocatedActions from 'pages/country/widget/widgets/widget-tree-located/widget-tree-located-actions';
+
 const widgetActions = {
   ...treeLossActions.default,
-  ...treeCoverActions.default
+  ...treeCoverActions.default,
+  ...treeLocatedActions.default
 };
 
 export const setWidgetSettingsUrl = createThunkAction(

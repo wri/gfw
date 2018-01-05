@@ -9,7 +9,7 @@ const setTreeCoverSettings = createAction('setTreeCoverSettings');
 export const getTreeCover = createThunkAction(
   'getTreeCover',
   params => (dispatch, state) => {
-    if (!state().widgetTreeCover.isLoading) {
+    if (!state().widgetTreeCover.loading) {
       dispatch(setTreeCoverLoading(true));
       getExtent(params)
         .then(response => {
