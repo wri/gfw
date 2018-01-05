@@ -5,6 +5,8 @@ import {
 } from 'pages/country/widget/widget-selectors';
 import Component from './widget-component';
 
+import actions from './widget-actions';
+
 const mapStateToProps = ({ location, countryData }) => {
   const {
     isCountriesLoading,
@@ -29,4 +31,4 @@ const mapStateToProps = ({ location, countryData }) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Component);
+export default connect(mapStateToProps, actions)(Component);

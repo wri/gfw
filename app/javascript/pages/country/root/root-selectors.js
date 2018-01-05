@@ -19,7 +19,8 @@ export const getWidgets = createSelector(
       .filter(
         widget =>
           widget.config.categories.indexOf(category) > -1 &&
-          widget.config.admins.indexOf(adminLevel) > -1
+          widget.config.admins.indexOf(adminLevel) > -1 &&
+          widget.active
       );
   }
 );

@@ -35,3 +35,8 @@ export const setWidgetSettingsStore = createThunkAction(
     });
   }
 );
+
+export default {
+  setWidgetSettingsUrl,
+  setWidgetSettingsStore
+};
