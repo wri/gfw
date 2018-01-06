@@ -43,7 +43,8 @@ class WidgetTreeLossContainer extends PureComponent {
   getSentence = () => {
     const { locationNames, settings, data, extent } = this.props;
     const { indicators } = this.props.options;
-    const indicator = getActiveFilter(settings, indicators, 'indicator');
+    const indicator =
+      indicators && getActiveFilter(settings, indicators, 'indicator');
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
       (data && data.length && sumBy(data, 'emissions')) || 0;

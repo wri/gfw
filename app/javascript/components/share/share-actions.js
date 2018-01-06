@@ -3,33 +3,28 @@ import { createThunkAction } from 'utils/redux';
 
 import { getShortenUrl } from 'services/bitly';
 
+const setShareData = createAction('setShareData');
+const setShareSelected = createAction('setShareSelected');
+const setShareOpen = createAction('setShareOpen');
+
 const setShare = createThunkAction('setShare', params => dispatch => {
-  const {
-    isOpen,
-    haveEmbed,
-    selectedType,
-    data: { title, subtitle, embedSettings }
-  } = params;
-  let { data: { url, embedUrl } } = params;
+  const { open, selected, data } = params;
+  const { title, subtitle, embedUrl, embedSettings } = data;
 
-  getShortenUrl(url).then(response => {
+  getShortenUrl(data.shareUrl).then(response => {
+    let shareUrl = '';
     if (response.data.status_code === 200) {
-      url = response.data.data.url;
+      shareUrl = response.data.data.url;
     }
-
-    embedUrl = `<iframe width="${embedSettings.width}" height="${
-      embedSettings.height
-    }" frameborder="0" src="${embedUrl || params.data.url}"></iframe>`;
 
     dispatch(
       setShareData({
-        isOpen,
-        haveEmbed,
-        selectedType,
+        open,
+        selected,
         data: {
           title,
           subtitle,
-          url,
+          shareUrl,
           embedUrl,
           embedSettings
         }
@@ -37,13 +32,10 @@ const setShare = createThunkAction('setShare', params => dispatch => {
     );
   });
 });
-const setShareData = createAction('setShareData');
-const setShareType = createAction('setShareType');
-const setIsOpen = createAction('setIsOpen');
 
 export default {
   setShare,
   setShareData,
-  setShareType,
-  setIsOpen
+  setShareSelected,
+  setShareOpen
 };

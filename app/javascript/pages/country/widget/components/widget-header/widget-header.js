@@ -1,70 +1,37 @@
-import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import compact from 'lodash/compact';
 
-import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
-
+import shareActions from 'components/share/share-actions';
 import WidgetHeaderComponent from './widget-header-component';
-import actions from './widget-header-actions';
 
-export { initialState } from './widget-header-reducers';
-export { default as reducers } from './widget-header-reducers';
-export { default as actions } from './widget-header-actions';
+const mapStateToProps = ({ location }, ownProps) => {
+  const { locationNames, widget, title, settingsConfig } = ownProps;
+  const locationUrl = compact(
+    Object.keys(location.payload).map(key => location.payload[key])
+  ).join('/');
+  const embedUrl = `${
+    window.location.origin
+  }/country/embed/${widget}/${locationUrl}${
+    location.query && location.query[widget]
+      ? `?${widget}=${location.query[widget]}`
+      : ''
+  }`;
 
-const EMBED_URL = `${process.env.GFW_URL}/country/embed/{widget}/{location}`;
-
-const mapStateToProps = (state, widgetHeader) => ({
-  location: state.location,
-  widget: widgetHeader.widget
-});
-
-class WidgetHeaderContainer extends PureComponent {
-  openShare = () => {
-    const { location, widget, setShareData, title, locationNames } = this.props;
-
-    setShareData({
-      isOpen: true,
-      haveEmbed: true,
-      data: {
-        title: 'Share this widget',
-        subtitle: `${title} in ${
-          locationNames.current ? locationNames.current.label : ''
-        }`,
-        url: `${window.location.href}#${widget}`,
-        embedUrl: EMBED_URL.replace('{widget}', widget).replace(
-          '{location}',
-          `${location.payload.country}${
-            location.payload.region ? `/${location.payload.region}` : ''
-          }${
-            location.payload.subRegion ? `/${location.payload.subRegion}` : ''
-          }${
-            location.query && location.query[widget]
-              ? `?${widget}=${location.query[widget]}`
-              : ''
-          }`
-        ),
-        embedSettings:
-          WIDGETS_CONFIG[widget].gridWidth === 6
-            ? { width: 315, height: 460 }
-            : { width: 670, height: 490 }
-      }
-    });
+  return {
+    location,
+    shareData: {
+      title: 'Share this widget',
+      subtitle: `${title} in ${
+        locationNames.current ? locationNames.current.label : ''
+      }`,
+      shareUrl: `${window.location.href}#${widget}`,
+      embedUrl,
+      embedSettings:
+        settingsConfig.config.gridWidth === 6
+          ? { width: 315, height: 460 }
+          : { width: 670, height: 490 }
+    }
   };
-
-  render() {
-    return createElement(WidgetHeaderComponent, {
-      ...this.props,
-      openShare: this.openShare
-    });
-  }
-}
-
-WidgetHeaderContainer.propTypes = {
-  location: PropTypes.object.isRequired,
-  widget: PropTypes.string.isRequired,
-  setShareData: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  locationNames: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps, actions)(WidgetHeaderContainer);
+export default connect(mapStateToProps, shareActions)(WidgetHeaderComponent);
