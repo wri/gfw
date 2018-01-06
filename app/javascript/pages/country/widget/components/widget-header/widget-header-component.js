@@ -15,11 +15,12 @@ class WidgetHeader extends PureComponent {
   render() {
     const {
       title,
-      openShare,
       settingsConfig,
       locationNames,
       widget,
-      embed
+      embed,
+      shareData,
+      setShareData
     } = this.props;
 
     return (
@@ -58,7 +59,7 @@ class WidgetHeader extends PureComponent {
               )}
             <Button
               className="theme-button-small theme-button-light square"
-              onClick={openShare}
+              onClick={() => setShareData(shareData)}
             >
               <Icon icon={shareIcon} />
             </Button>
@@ -70,13 +71,13 @@ class WidgetHeader extends PureComponent {
 }
 
 WidgetHeader.propTypes = {
-  title: PropTypes.string.isRequired,
-  openShare: PropTypes.func.isRequired,
-  shareAnchor: PropTypes.string,
   widget: PropTypes.string,
+  title: PropTypes.string.isRequired,
   settingsConfig: PropTypes.object,
   locationNames: PropTypes.object,
-  embed: PropTypes.bool
+  embed: PropTypes.bool,
+  setShareData: PropTypes.func.isRequired,
+  shareData: PropTypes.object.isRequired
 };
 
 export default WidgetHeader;

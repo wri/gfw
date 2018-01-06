@@ -49,7 +49,7 @@ class Root extends PureComponent {
                     <div
                       key={widget.name}
                       className={`columns large-${
-                        widget.gridWidth
+                        widget.config.gridWidth
                       } small-12 widget`}
                     >
                       <Widget widget={widget.name} />

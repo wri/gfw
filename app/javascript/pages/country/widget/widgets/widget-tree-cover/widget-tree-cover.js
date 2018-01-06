@@ -52,7 +52,8 @@ class WidgetTreeCoverContainer extends PureComponent {
       const activeThreshold = thresholds.find(
         t => t.value === settings.threshold
       );
-      const indicator = getActiveFilter(settings, indicators, 'indicator');
+      const indicator =
+        indicators && getActiveFilter(settings, indicators, 'indicator');
       return `Tree  cover for
         ${indicator.label} of
         ${locationNames.current &&
