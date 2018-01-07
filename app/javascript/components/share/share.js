@@ -24,7 +24,7 @@ class ShareContainer extends PureComponent {
       document.execCommand('copy');
       setShareCopied();
     } catch (err) {
-      alert('This browser does not support clipboard access');
+      alert('This browser does not support clipboard access'); // eslint-disable-line
     }
   };
 
