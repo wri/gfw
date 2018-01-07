@@ -2,6 +2,7 @@ export const initialState = {
   loading: false,
   open: false,
   selected: 'link',
+  copied: false,
   data: {
     title: '',
     subtitle: '',
@@ -24,7 +25,13 @@ const setShareData = (state, { payload }) => ({
 
 const setShareSelected = (state, { payload }) => ({
   ...state,
-  selected: payload
+  selected: payload,
+  copied: false
+});
+
+const setShareCopied = state => ({
+  ...state,
+  copied: true
 });
 
 const setShareUrl = (state, { payload }) => ({
@@ -38,12 +45,14 @@ const setShareUrl = (state, { payload }) => ({
 
 const setShareOpen = (state, { payload }) => ({
   ...state,
-  open: payload
+  open: payload,
+  copied: false
 });
 
 export default {
   setShareData,
   setShareSelected,
   setShareOpen,
-  setShareUrl
+  setShareUrl,
+  setShareCopied
 };

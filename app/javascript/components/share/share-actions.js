@@ -7,6 +7,7 @@ const setShareData = createAction('setShareData');
 const setShareUrl = createAction('setShareUrl');
 const setShareSelected = createAction('setShareSelected');
 const setShareOpen = createAction('setShareOpen');
+const setShareCopied = createAction('setShareCopied');
 
 const setShareModal = createThunkAction('setShare', params => dispatch => {
   const { title, subtitle, embedUrl, shareUrl, embedSettings } = params;
@@ -34,5 +35,6 @@ export default {
   setShareData,
   setShareSelected,
   setShareOpen,
-  setShareUrl
+  setShareUrl,
+  setShareCopied
 };

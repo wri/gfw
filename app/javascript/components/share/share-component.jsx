@@ -17,6 +17,7 @@ class Share extends PureComponent {
     const {
       selected,
       loading,
+      copied,
       data: { title, subtitle, shareUrl, embedUrl, embedSettings },
       handleFocus,
       setShareSelected,
@@ -56,7 +57,7 @@ class Share extends PureComponent {
               className="input-button"
               onClick={() => handleCopyToClipboard(this.textInput)}
             >
-              COPY
+              {copied ? 'COPIED!' : 'COPY'}
             </button>
           </div>
           {embedUrl ? (
@@ -144,6 +145,7 @@ class Share extends PureComponent {
 Share.propTypes = {
   open: PropTypes.bool,
   selected: PropTypes.string,
+  copied: PropTypes.bool,
   data: PropTypes.object,
   loading: PropTypes.bool,
   setShareOpen: PropTypes.func,
