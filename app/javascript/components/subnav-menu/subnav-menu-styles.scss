@@ -10,6 +10,7 @@ $subnav-height: rem(60px);
     flex-direction: row;
     justify-content: space-between;
     height: $subnav-height;
+    overflow-x: scroll;
 
     @media screen and (min-width: $screen-m) {
       justify-content: flex-start;
@@ -24,8 +25,7 @@ $subnav-height: rem(60px);
         max-width: rem(180px);
       }
 
-      > a,
-      button {
+      > a {
         position: relative;
         display: flex;
         justify-content: center;
@@ -34,6 +34,7 @@ $subnav-height: rem(60px);
         width: 100%;
         text-align: center;
         cursor: pointer;
+        white-space: nowrap;
 
         &.active {
           background-color: $white;
