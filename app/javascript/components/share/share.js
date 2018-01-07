@@ -9,6 +9,7 @@ const mapStateToProps = ({ share, location }) => ({
   open: share.open,
   selected: share.selected,
   data: share.data,
+  loading: share.loading,
   location
 });
 
