@@ -20,7 +20,7 @@ class WidgetHeader extends PureComponent {
       widget,
       embed,
       shareData,
-      setShareData
+      setShareModal
     } = this.props;
 
     return (
@@ -59,7 +59,7 @@ class WidgetHeader extends PureComponent {
               )}
             <Button
               className="theme-button-small theme-button-light square"
-              onClick={() => setShareData(shareData)}
+              onClick={() => setShareModal(shareData)}
             >
               <Icon icon={shareIcon} />
             </Button>
@@ -76,7 +76,7 @@ WidgetHeader.propTypes = {
   settingsConfig: PropTypes.object,
   locationNames: PropTypes.object,
   embed: PropTypes.bool,
-  setShareData: PropTypes.func.isRequired,
+  setShareModal: PropTypes.func.isRequired,
   shareData: PropTypes.object.isRequired
 };
 

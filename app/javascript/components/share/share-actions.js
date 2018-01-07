@@ -7,34 +7,28 @@ const setShareData = createAction('setShareData');
 const setShareSelected = createAction('setShareSelected');
 const setShareOpen = createAction('setShareOpen');
 
-const setShare = createThunkAction('setShare', params => dispatch => {
-  const { open, selected, data } = params;
-  const { title, subtitle, embedUrl, embedSettings } = data;
+const setShareModal = createThunkAction('setShare', params => dispatch => {
+  const { title, subtitle, embedUrl, shareUrl, embedSettings } = params;
 
-  getShortenUrl(data.shareUrl).then(response => {
-    let shareUrl = '';
+  getShortenUrl(shareUrl).then(response => {
+    let shortShareUrl = '';
     if (response.data.status_code === 200) {
-      shareUrl = response.data.data.url;
+      shortShareUrl = response.data.data.url;
     }
-
     dispatch(
       setShareData({
-        open,
-        selected,
-        data: {
-          title,
-          subtitle,
-          shareUrl,
-          embedUrl,
-          embedSettings
-        }
+        title,
+        subtitle,
+        shareUrl: shortShareUrl,
+        embedUrl,
+        embedSettings
       })
     );
   });
 });
 
 export default {
-  setShare,
+  setShareModal,
   setShareData,
   setShareSelected,
   setShareOpen
