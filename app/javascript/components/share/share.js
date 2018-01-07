@@ -1,4 +1,5 @@
 import { createElement, PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 
 import actions from './share-actions';
@@ -8,6 +9,7 @@ import ShareComponent from './share-component';
 const mapStateToProps = ({ share, location }) => ({
   open: share.open,
   selected: share.selected,
+  copied: share.copied,
   data: share.data,
   loading: share.loading,
   location
@@ -15,10 +17,12 @@ const mapStateToProps = ({ share, location }) => ({
 
 class ShareContainer extends PureComponent {
   handleCopyToClipboard = input => {
+    const { setShareCopied } = this.props;
     input.select();
 
     try {
       document.execCommand('copy');
+      setShareCopied();
     } catch (err) {
       alert('This browser does not support clipboard access');
     }
@@ -36,6 +40,10 @@ class ShareContainer extends PureComponent {
     });
   }
 }
+
+ShareContainer.propTypes = {
+  setShareCopied: PropTypes.func.isRequired
+};
 
 export { actions, reducers, initialState };
 
