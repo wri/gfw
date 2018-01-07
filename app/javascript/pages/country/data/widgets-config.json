@@ -15,7 +15,7 @@
     "active": true
   },
   "treeLocated": {
-    "title": "WHERE ARE THE FOREST LOCATED",
+    "title": "Where are the forests located",
     "config": {
       "gridWidth": 6,
       "indicators": ["gadm28", "ifl_2013", "wdpa",
