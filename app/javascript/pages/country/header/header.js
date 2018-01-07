@@ -45,6 +45,7 @@ const mapStateToProps = ({ countryData, location, header }) => {
     }),
     settings: header.settings,
     location: location.payload,
+    query: location.query,
     locationNames: getAdminsSelected({
       ...adminData,
       location: location.payload
@@ -54,16 +55,18 @@ const mapStateToProps = ({ countryData, location, header }) => {
   };
 };
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch, ownProps) =>
   bindActionCreators(
     {
       handleCountryChange: country => ({
         type: COUNTRY,
-        payload: { country: country.value }
+        payload: { country: country.value },
+        query: ownProps.location.query
       }),
       handleRegionChange: (country, region) => ({
         type: COUNTRY,
-        payload: { country: country.value, region: region.value }
+        payload: { country: country.value, region: region.value },
+        query: ownProps.location.query
       }),
       handleSubRegionChange: (country, region, subRegion) => ({
         type: COUNTRY,
@@ -71,7 +74,8 @@ const mapDispatchToProps = dispatch =>
           country: country.value,
           region: region.value,
           subRegion: subRegion.value
-        }
+        },
+        query: ownProps.location.query
       }),
       ...actions
     },

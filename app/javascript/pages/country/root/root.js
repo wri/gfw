@@ -21,6 +21,7 @@ const mapStateToProps = ({ root, countryData, location }) => {
     links: getLinks({ categories: CATEGORIES, location, category }),
     isGeostoreLoading: countryData.isGeostoreLoading,
     category,
+    location,
     widgets: getWidgets({
       category,
       adminLevel: getActiveAdmin(location.payload)

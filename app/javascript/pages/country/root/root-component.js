@@ -22,7 +22,8 @@ class Root extends PureComponent {
       handleShowMapMobile,
       links,
       isGeostoreLoading,
-      widgets
+      widgets,
+      location
     } = this.props;
 
     return (
@@ -32,7 +33,7 @@ class Root extends PureComponent {
         </button>
         <div className="panels">
           <div className="data-panel">
-            <Header className="header" />
+            <Header className="header" location={location} />
             <SubNavMenu
               links={links}
               className="subnav-tabs"
@@ -103,7 +104,8 @@ Root.propTypes = {
   handleShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
   isGeostoreLoading: PropTypes.bool,
-  widgets: PropTypes.array
+  widgets: PropTypes.array,
+  location: PropTypes.object
 };
 
 export default Root;
