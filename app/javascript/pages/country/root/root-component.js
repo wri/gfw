@@ -22,9 +22,7 @@ class Root extends PureComponent {
       handleShowMapMobile,
       links,
       isGeostoreLoading,
-      setCategory,
-      widgets,
-      category
+      widgets
     } = this.props;
 
     return (
@@ -37,10 +35,9 @@ class Root extends PureComponent {
             <Header className="header" />
             <SubNavMenu
               links={links}
-              activeLink={category}
               className="subnav-tabs"
               theme="theme-subnav-dark"
-              handleClick={setCategory}
+              checkActive
             />
             <div className="widgets">
               <div className="row">
@@ -106,8 +103,6 @@ Root.propTypes = {
   handleShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
   isGeostoreLoading: PropTypes.bool,
-  setCategory: PropTypes.func,
-  category: PropTypes.string,
   widgets: PropTypes.array
 };
 

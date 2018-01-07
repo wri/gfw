@@ -9,7 +9,8 @@ import 'styles/themes/subnav/subnav-dark.scss'; // eslint-disable-line
 class SubNavMenu extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { links, className, theme, handleClick, activeLink } = this.props;
+    const { links, className, theme, checkActive } = this.props;
+
     return (
       <div className={`c-subnav-menu ${theme || ''} ${className || ''}`}>
         <div className="row">
@@ -31,25 +32,14 @@ class SubNavMenu extends PureComponent {
                         {link.label}
                       </AnchorLink>
                     );
-                  } else if (link.value) {
-                    LinkComponent = (
-                      <button
-                        key={link.value}
-                        className={`text -paragraph-5 -color-8 ${
-                          activeLink === link.value ? 'active' : ''
-                        }`}
-                        onClick={() => handleClick(link.value)}
-                      >
-                        {link.label}
-                      </button>
-                    );
                   } else {
                     LinkComponent = (
                       <NavLink
-                        exact
-                        to={link.path}
                         className="text -paragraph-5 -color-8"
+                        to={link.path}
                         activeClassName="active"
+                        exact
+                        isActive={checkActive ? () => link.active : null}
                       >
                         {link.label}
                       </NavLink>
@@ -75,8 +65,7 @@ SubNavMenu.propTypes = {
   ),
   className: PropTypes.string,
   theme: PropTypes.string,
-  handleClick: PropTypes.func,
-  activeLink: PropTypes.string
+  checkActive: PropTypes.bool
 };
 
 export default SubNavMenu;
