@@ -4,6 +4,7 @@ import Modal from 'components/modal';
 
 import Button from 'components/button';
 import Icon from 'components/icon/icon';
+import Loader from 'components/loader';
 
 import googleplusIcon from 'assets/icons/googleplus.svg';
 import twitterIcon from 'assets/icons/twitter.svg';
@@ -15,6 +16,7 @@ class Share extends PureComponent {
   getContent() {
     const {
       selected,
+      loading,
       data: { title, subtitle, shareUrl, embedUrl, embedSettings },
       handleFocus,
       setShareSelected,
@@ -39,12 +41,13 @@ class Share extends PureComponent {
                 ? 'Click and paste HTML to embed in website'
                 : 'Click and paste link in email or IM'}
             </p>
+            {loading && <Loader className="input-loader" />}
             <input
               ref={input => {
                 this.textInput = input;
               }}
               type="text"
-              value={inputValue}
+              value={!loading ? inputValue : ''}
               readOnly
               onClick={handleFocus}
               className="input"
@@ -142,6 +145,7 @@ Share.propTypes = {
   open: PropTypes.bool,
   selected: PropTypes.string,
   data: PropTypes.object,
+  loading: PropTypes.bool,
   setShareOpen: PropTypes.func,
   setShareSelected: PropTypes.func,
   handleFocus: PropTypes.func,
