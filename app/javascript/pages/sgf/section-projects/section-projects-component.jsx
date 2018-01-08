@@ -59,7 +59,7 @@ class SectionProjects extends PureComponent {
           </div>
           <div className="row">
             <div className="column small-12 large-7">
-              <div className="row">
+              <div className="row project-cards">
                 {hasData ? (
                   data.map(d => (
                     <div key={d.id} className="column small-12 medium-6">
