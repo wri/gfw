@@ -17,8 +17,8 @@ const getFAOReforestationData = createThunkAction(
           const data = response.data.rows;
           dispatch(
             setFAOReforestationData({
-              name: (data.length && data[0].name) || '',
-              rate: (data.length && data[0].rate) || 0
+              name: (data && data.length > 0 && data[0].name) || '',
+              rate: (data && data.length > 0 && data[0].rate) || 0
             })
           );
         })
