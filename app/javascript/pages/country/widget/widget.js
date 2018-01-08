@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => {
     isCountriesLoading,
     isRegionsLoading,
     isSubRegionsLoading,
-    isWhitelistsLoading
+    isWhitelistLoading
   } = countryData;
   const adminData = {
     location: location.payload,
@@ -29,7 +29,8 @@ const mapStateToProps = (state, ownProps) => {
       switch (selector) {
         case 'indicators':
           options[selector] = selectorFunc({
-            whitelist: config.indicators,
+            widgetWhitelist: config.indicators,
+            locationWhitelist: countryData.whitelist,
             location: location.payload,
             ...countryData
           });
@@ -57,7 +58,7 @@ const mapStateToProps = (state, ownProps) => {
       isCountriesLoading ||
       isRegionsLoading ||
       isSubRegionsLoading ||
-      isWhitelistsLoading,
+      isWhitelistLoading,
     locationNames: widgetSelectors.getAdminsSelected(adminData),
     activeLocation: widgetSelectors.getActiveAdmin({
       location: location.payload

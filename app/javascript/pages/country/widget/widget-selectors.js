@@ -13,7 +13,8 @@ const getAdmins = state => state.location || null;
 const getCountries = state => state.countries || null;
 const getRegions = state => state.regions || null;
 const getSubRegions = state => state.subRegions || null;
-const getWhitelist = state => state.whitelist || null;
+const getWidgetWhitelist = state => state.widgetWhitelist || null;
+const getLocationWhitelist = state => state.locationWhitelist || null;
 const getData = state => state.data || null;
 const getStartYear = state => state.startYear || null;
 const getEndYear = state => state.endYear || null;
@@ -88,12 +89,17 @@ export const getAdminsSelected = createSelector(
 );
 
 export const getIndicators = createSelector(
-  [getWhitelist, getAdminsSelected],
-  (whitelist, locationNames) => {
+  [getWidgetWhitelist, getLocationWhitelist, getAdminsSelected],
+  (widgetWhitelist, locationWhitelist, locationNames) => {
     if (isEmpty(locationNames) || !locationNames.current) return null;
-    if (!whitelist) return INDICATORS;
+    if (!widgetWhitelist || !locationWhitelist) return INDICATORS;
     return sortByKey(
-      INDICATORS.filter(i => whitelist.indexOf(i.value) > -1).map(item => {
+      INDICATORS.filter(
+        i =>
+          (widgetWhitelist.indexOf(i.value) > -1 &&
+            locationWhitelist.indexOf(i.value) > -1) ||
+          i.value === 'gadm28'
+      ).map(item => {
         const indicator = item;
         if (indicator.value === 'gadm28') {
           indicator.label = `All of ${locationNames.current.label}`;
