@@ -34,17 +34,17 @@ const setGeostoreLoading = (state, { payload }) => ({
 
 const setCountries = (state, { payload }) => ({
   ...state,
-  countries: payload.map(d => ({ label: d.name, value: d.iso }))
+  countries: (payload || []).map(d => ({ label: d.name, value: d.iso }))
 });
 
 const setRegions = (state, { payload }) => ({
   ...state,
-  regions: payload.map(d => ({ label: d.name, value: d.id }))
+  regions: (payload || []).map(d => ({ label: d.name, value: d.id }))
 });
 
 const setSubRegions = (state, { payload }) => ({
   ...state,
-  subRegions: payload.map(d => ({ label: d.name, value: d.id }))
+  subRegions: (payload || []).map(d => ({ label: d.name, value: d.id }))
 });
 
 const setGeostore = (state, { payload }) => ({

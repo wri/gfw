@@ -14,7 +14,7 @@ const getLayerSpec = createThunkAction(
       fetchLayerSpec()
         .then(response => {
           const layerSpec = {};
-          response.data.rows.forEach(layer => {
+          (response.data.rows || []).forEach(layer => {
             layerSpec[layer.slug] = layer;
           });
           dispatch(setLayerSpec(layerSpec));

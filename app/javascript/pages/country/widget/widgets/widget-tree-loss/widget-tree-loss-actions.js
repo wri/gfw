@@ -17,11 +17,11 @@ const getTreeLoss = createThunkAction(
         .all([getLoss(params), getExtent(params)])
         .then(
           axios.spread((loss, extent) => {
-            if (loss && extent) {
+            if (loss && loss.data && extent && extent.data) {
               dispatch(
                 setTreeLossData({
                   loss: loss.data.data,
-                  extent: extent.data.data[0].value
+                  extent: (loss.data.data && extent.data.data[0].value) || 0
                 })
               );
             } else {
