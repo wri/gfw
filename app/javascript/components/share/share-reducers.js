@@ -34,6 +34,11 @@ const setShareCopied = state => ({
   copied: true
 });
 
+const setShareLoading = (state, { payload }) => ({
+  ...state,
+  loading: payload
+});
+
 const setShareUrl = (state, { payload }) => ({
   ...state,
   loading: false,
@@ -54,5 +59,6 @@ export default {
   setShareSelected,
   setShareOpen,
   setShareUrl,
-  setShareCopied
+  setShareCopied,
+  setShareLoading
 };

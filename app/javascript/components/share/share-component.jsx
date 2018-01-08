@@ -42,7 +42,8 @@ class Share extends PureComponent {
                 ? 'Click and paste HTML to embed in website'
                 : 'Click and paste link in email or IM'}
             </p>
-            {loading && <Loader className="input-loader" />}
+            {loading &&
+              selected !== 'embed' && <Loader className="input-loader" />}
             <input
               ref={input => {
                 this.textInput = input;
