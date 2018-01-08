@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import uniqBy from 'lodash/uniqBy';
 import { sortByKey } from 'utils/data';
 
 // get list data
@@ -25,6 +26,6 @@ export const getSortedData = createSelector(
         });
       }
     });
-    return sortByKey(dataMapped, 'value', true);
+    return sortByKey(uniqBy(dataMapped, 'label'), 'value', true);
   }
 );

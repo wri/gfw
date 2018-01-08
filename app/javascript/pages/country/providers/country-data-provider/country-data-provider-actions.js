@@ -4,7 +4,7 @@ import {
   getCountriesProvider,
   getRegionsProvider,
   getSubRegionsProvider,
-  getWhitelistsProvider
+  getWhitelistProvider
 } from 'services/country';
 import { getGeostoreProvider } from 'services/geostore';
 
@@ -12,13 +12,13 @@ export const setCountriesLoading = createAction('setCountriesLoading');
 export const setRegionsLoading = createAction('setRegionsLoading');
 export const setSubRegionsLoading = createAction('setSubRegionsLoading');
 export const setGeostoreLoading = createAction('setGeostoreLoading');
-export const setWhitelistsLoading = createAction('setWhitelistsLoading');
+export const setWhitelistLoading = createAction('setWhitelistLoading');
 
 export const setCountries = createAction('setCountries');
 export const setRegions = createAction('setRegions');
 export const setSubRegions = createAction('setSubRegions');
 export const setGeostore = createAction('setGeostore');
-export const setWhitelists = createAction('setWhitelists');
+export const setWhitelist = createAction('setWhitelist');
 
 export const getCountries = createThunkAction(
   'getCountries',
@@ -98,17 +98,17 @@ export const getGeostore = createThunkAction(
   }
 );
 
-export const getWhitelists = createThunkAction(
-  'getWhitelists',
+export const getWhitelist = createThunkAction(
+  'getWhitelist',
   country => (dispatch, state) => {
-    if (!state().countryData.isWhitelistsLoading) {
-      dispatch(setWhitelistsLoading(true));
-      getWhitelistsProvider(country)
+    if (!state().countryData.isWhitelistLoading) {
+      dispatch(setWhitelistLoading(true));
+      getWhitelistProvider(country)
         .then(response => {
-          dispatch(setWhitelists(response.data ? response.data.data : []));
+          dispatch(setWhitelist(response.data ? response.data.data : []));
         })
         .catch(error => {
-          dispatch(setWhitelistsLoading(false));
+          dispatch(setWhitelistLoading(false));
           console.info(error);
         });
     }
