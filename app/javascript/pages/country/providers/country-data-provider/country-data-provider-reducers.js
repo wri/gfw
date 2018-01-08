@@ -6,6 +6,7 @@ export const initialState = {
   countries: [],
   regions: [],
   subRegions: [],
+  whitelists: [],
   geostore: {
     areaHa: 0,
     bounds: []
@@ -47,6 +48,11 @@ const setSubRegions = (state, { payload }) => ({
   subRegions: payload.map(d => ({ label: d.name, value: d.id }))
 });
 
+const setWhitelists = (state, { payload }) => ({
+  ...state,
+  whitelists: payload
+});
+
 const setGeostore = (state, { payload }) => ({
   ...state,
   geostore: {
@@ -62,5 +68,6 @@ export default {
   setCountries,
   setRegions,
   setSubRegions,
-  setGeostore
+  setGeostore,
+  setWhitelists
 };
