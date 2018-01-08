@@ -12,6 +12,7 @@ export const setCountriesLoading = createAction('setCountriesLoading');
 export const setRegionsLoading = createAction('setRegionsLoading');
 export const setSubRegionsLoading = createAction('setSubRegionsLoading');
 export const setGeostoreLoading = createAction('setGeostoreLoading');
+export const setWhitelistsLoading = createAction('setWhitelistsLoading');
 
 export const setCountries = createAction('setCountries');
 export const setRegions = createAction('setRegions');
@@ -101,14 +102,13 @@ export const getWhitelists = createThunkAction(
   'getWhitelists',
   country => (dispatch, state) => {
     if (!state().countryData.isWhitelistsLoading) {
-      dispatch(setGeostoreLoading(true));
+      dispatch(setWhitelistsLoading(true));
       getWhitelistsProvider(country)
         .then(response => {
-          dispatch(setWhitelists(response));
-          dispatch(setGeostoreLoading(false));
+          dispatch(setWhitelists(response.data ? response.data.data : []));
         })
         .catch(error => {
-          dispatch(setGeostoreLoading(false));
+          dispatch(setWhitelistsLoading(false));
           console.info(error);
         });
     }

@@ -3,6 +3,7 @@ export const initialState = {
   isRegionsLoading: false,
   isSubRegionsLoading: false,
   isGeostoreLoading: false,
+  isWhitelistsLoading: false,
   countries: [],
   regions: [],
   subRegions: [],
@@ -33,6 +34,11 @@ const setGeostoreLoading = (state, { payload }) => ({
   isGeostoreLoading: payload
 });
 
+const setWhitelistsLoading = (state, { payload }) => ({
+  ...state,
+  isWhitelistsLoading: payload
+});
+
 const setCountries = (state, { payload }) => ({
   ...state,
   countries: (payload || []).map(d => ({ label: d.name, value: d.iso }))
@@ -50,7 +56,8 @@ const setSubRegions = (state, { payload }) => ({
 
 const setWhitelists = (state, { payload }) => ({
   ...state,
-  whitelists: payload
+  isWhitelistsLoading: false,
+  whitelists: payload.map(d => d.polyname)
 });
 
 const setGeostore = (state, { payload }) => ({
@@ -65,6 +72,7 @@ export default {
   setRegionsLoading,
   setSubRegionsLoading,
   setGeostoreLoading,
+  setWhitelistsLoading,
   setCountries,
   setRegions,
   setSubRegions,
