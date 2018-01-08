@@ -16,7 +16,8 @@ class CountryDataProvider extends PureComponent {
       getCountries,
       getRegions,
       getSubRegions,
-      getGeostore
+      getGeostore,
+      getWhitelists
     } = this.props;
     getCountries();
     getRegions(location.country);
@@ -24,6 +25,7 @@ class CountryDataProvider extends PureComponent {
       getSubRegions(location.country, location.region);
     }
     getGeostore(location.country, location.region, location.subRegion);
+    getWhitelists(location.country);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -58,7 +60,8 @@ CountryDataProvider.propTypes = {
   getCountries: PropTypes.func.isRequired,
   getRegions: PropTypes.func.isRequired,
   getSubRegions: PropTypes.func.isRequired,
-  getGeostore: PropTypes.func.isRequired
+  getGeostore: PropTypes.func.isRequired,
+  getWhitelists: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };

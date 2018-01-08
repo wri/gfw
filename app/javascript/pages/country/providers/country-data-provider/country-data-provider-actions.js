@@ -3,7 +3,8 @@ import { createThunkAction } from 'utils/redux';
 import {
   getCountriesProvider,
   getRegionsProvider,
-  getSubRegionsProvider
+  getSubRegionsProvider,
+  getWhitelistsProvider
 } from 'services/country';
 import { getGeostoreProvider } from 'services/geostore';
 
@@ -16,6 +17,7 @@ export const setCountries = createAction('setCountries');
 export const setRegions = createAction('setRegions');
 export const setSubRegions = createAction('setSubRegions');
 export const setGeostore = createAction('setGeostore');
+export const setWhitelists = createAction('setWhitelists');
 
 export const getCountries = createThunkAction(
   'getCountries',
@@ -85,6 +87,24 @@ export const getGeostore = createThunkAction(
               bounds: getBoxBounds(bbox)
             })
           );
+          dispatch(setGeostoreLoading(false));
+        })
+        .catch(error => {
+          dispatch(setGeostoreLoading(false));
+          console.info(error);
+        });
+    }
+  }
+);
+
+export const getWhitelists = createThunkAction(
+  'getWhitelists',
+  country => (dispatch, state) => {
+    if (!state().countryData.isWhitelistsLoading) {
+      dispatch(setGeostoreLoading(true));
+      getWhitelistsProvider(country)
+        .then(response => {
+          dispatch(setWhitelists(response));
           dispatch(setGeostoreLoading(false));
         })
         .catch(error => {
