@@ -27,7 +27,7 @@
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "units"],
-      "locationCheck": "regions"
+      "locationCheck": true
     },
     "settings": {
       "indicator": "gadm28",

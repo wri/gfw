@@ -40,8 +40,11 @@ export const getWidgets = createSelector(
           hasData = totalIndicators !== reducedIndicators;
         }
         if (widget.config.locationCheck) {
+          const adminCheck =
+            adminLevel === 'country' ? 'regions' : 'subRegions';
           hasLocations =
-            locationOptions[widget.config.locationCheck].length > 1;
+            locationOptions[adminCheck] &&
+            locationOptions[adminCheck].length > 1;
         }
 
         return (
