@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { COUNTRY } from 'pages/country/router';
 import isEqual from 'lodash/isEqual';
-
+import remove from 'lodash/remove';
+import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import {
   getAdminsOptions,
   getActiveAdmin,
@@ -55,18 +56,34 @@ const mapStateToProps = ({ countryData, location, header }) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) =>
-  bindActionCreators(
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { query } = ownProps.location;
+  const widgetQueries = {};
+  if (query) {
+    const widgetKeys = remove(Object.keys(query), d => d !== 'category');
+    widgetKeys.forEach(key => {
+      widgetQueries[key] = encodeStateForUrl({
+        ...decodeUrlForState(query[key]),
+        indicator: 'gadm28'
+      });
+    });
+  }
+  const newQuery = {
+    ...query,
+    ...widgetQueries
+  };
+
+  return bindActionCreators(
     {
       handleCountryChange: country => ({
         type: COUNTRY,
         payload: { country: country.value },
-        query: ownProps.location.query
+        query: newQuery
       }),
       handleRegionChange: (country, region) => ({
         type: COUNTRY,
         payload: { country: country.value, region: region.value },
-        query: ownProps.location.query
+        query: newQuery
       }),
       handleSubRegionChange: (country, region, subRegion) => ({
         type: COUNTRY,
@@ -75,12 +92,13 @@ const mapDispatchToProps = (dispatch, ownProps) =>
           region: region.value,
           subRegion: subRegion.value
         },
-        query: ownProps.location.query
+        query: newQuery
       }),
       ...actions
     },
     dispatch
   );
+};
 
 class HeaderContainer extends PureComponent {
   componentDidMount() {
