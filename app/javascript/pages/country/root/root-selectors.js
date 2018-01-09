@@ -1,5 +1,8 @@
 import { createSelector } from 'reselect';
 import compact from 'lodash/compact';
+import uniq from 'lodash/uniq';
+import concat from 'lodash/concat';
+import isEmpty from 'lodash/isEmpty';
 import qs from 'query-string';
 
 import WIDGETS from 'pages/country/data/widgets-config.json';
@@ -10,27 +13,45 @@ const getCategory = state => state.category || null;
 const getAdminLevel = state => state.adminLevel || null;
 const getLocation = state => state.location || null;
 const getLocationOptions = state => state.locationOptions || null;
+const getIndicatorWhitelist = state => state.indicatorWhitelist || null;
 
 // get lists selected
 export const getWidgets = createSelector(
-  [getCategory, getAdminLevel, getLocationOptions],
-  (category, adminLevel, locationOptions) => {
-    if (!locationOptions) return null;
+  [getCategory, getAdminLevel, getLocationOptions, getIndicatorWhitelist],
+  (category, adminLevel, locationOptions, indicatorWhitelist) => {
+    if (isEmpty(locationOptions) || isEmpty(indicatorWhitelist)) return null;
     const widgetKeys = Object.keys(WIDGETS);
     return widgetKeys
       .map(key => ({
         name: key,
         ...WIDGETS[key]
       }))
-      .filter(
-        widget =>
+      .filter(widget => {
+        let hasData = true;
+        let hasLocations = true;
+        if (widget.config.showIndicators && widget.config.indicators) {
+          const totalIndicators = concat(
+            widget.config.showIndicators,
+            indicatorWhitelist
+          ).length;
+          const reducedIndicators = uniq(
+            concat(widget.config.showIndicators, indicatorWhitelist)
+          ).length;
+          hasData = totalIndicators !== reducedIndicators;
+        }
+        if (widget.config.locationCheck) {
+          hasLocations =
+            locationOptions[widget.config.locationCheck].length > 1;
+        }
+
+        return (
           widget.config.categories.indexOf(category) > -1 &&
           widget.config.admins.indexOf(adminLevel) > -1 &&
-          (widget.config.renderCheck
-            ? locationOptions[widget.config.renderCheck].length > 1
-            : true) &&
+          hasLocations &&
+          hasData &&
           widget.active
-      );
+        );
+      });
   }
 );
 

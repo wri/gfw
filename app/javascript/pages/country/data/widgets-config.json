@@ -6,7 +6,8 @@
       "indicators": ["gadm28", "mining", "landmark", "wdpa", "plantations"],
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "thresholds"]
+      "selectors": ["indicators", "thresholds"],
+      "showIndicators": ["mining", "landmark", "wdpa", "plantations"]
     },
     "settings": {
       "indicator": "gadm28",
@@ -26,7 +27,7 @@
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "units"],
-      "renderCheck": "regions"
+      "locationCheck": "regions"
     },
     "settings": {
       "indicator": "gadm28",
