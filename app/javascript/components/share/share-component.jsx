@@ -4,6 +4,7 @@ import Modal from 'components/modal';
 
 import Button from 'components/button';
 import Icon from 'components/icon/icon';
+import Loader from 'components/loader';
 
 import googleplusIcon from 'assets/icons/googleplus.svg';
 import twitterIcon from 'assets/icons/twitter.svg';
@@ -14,15 +15,21 @@ import './share-styles.scss';
 class Share extends PureComponent {
   getContent() {
     const {
-      haveEmbed,
-      selectedType,
-      data: { title, subtitle, url, embedUrl },
+      selected,
+      loading,
+      copied,
+      data: { title, subtitle, shareUrl, embedUrl, embedSettings },
       handleFocus,
-      changeType,
-      copyToClipboard
+      setShareSelected,
+      handleCopyToClipboard
     } = this.props;
 
-    const inputValue = selectedType === 'embed' ? embedUrl : url;
+    const inputValue =
+      selected === 'embed'
+        ? `<iframe width="${embedSettings.width}" height="${
+          embedSettings.height
+        }" frameborder="0" src="${embedUrl}"></iframe>`
+        : shareUrl;
 
     return (
       <div className="c-share">
@@ -31,65 +38,67 @@ class Share extends PureComponent {
         <div className="actions">
           <div className="input-container">
             <p className="info">
-              {selectedType === 'embed'
+              {selected === 'embed'
                 ? 'Click and paste HTML to embed in website'
                 : 'Click and paste link in email or IM'}
             </p>
+            {loading &&
+              selected !== 'embed' && <Loader className="input-loader" />}
             <input
               ref={input => {
                 this.textInput = input;
               }}
               type="text"
-              value={inputValue}
+              value={!loading ? inputValue : ''}
               readOnly
               onClick={handleFocus}
               className="input"
             />
             <button
               className="input-button"
-              onClick={() => copyToClipboard(this.textInput)}
+              onClick={() => handleCopyToClipboard(this.textInput)}
             >
-              COPY
+              {copied ? 'COPIED!' : 'COPY'}
             </button>
           </div>
-          {haveEmbed ? (
+          {embedUrl ? (
             <div className="buttons-container">
               <Button
                 className={`share-button ${
-                  selectedType !== 'embed' ? 'theme-button-light-green' : ''
+                  selected === 'embed' ? 'theme-button-light-green' : ''
                 }`}
-                onClick={() => changeType('embed')}
+                onClick={() => setShareSelected('link')}
               >
-                EMBED
+                LINK
               </Button>
               <Button
                 className={`share-button ${
-                  selectedType === 'embed' ? 'theme-button-light-green' : ''
+                  selected !== 'embed' ? 'theme-button-light-green' : ''
                 }`}
-                onClick={() => changeType('link')}
+                onClick={() => setShareSelected('embed')}
               >
-                LINK
+                EMBED
               </Button>
             </div>
           ) : null}
         </div>
         <div className="social-container">
           <a
-            href={`https://plus.google.com/share?url=${url}`}
+            href={`https://plus.google.com/share?url=${shareUrl}`}
             target="_blank"
             className="social-button -googleplus"
           >
             <Icon icon={googleplusIcon} className="googleplus-icon" />
           </a>
           <a
-            href={`https://twitter.com/share?url=${url}`}
+            href={`https://twitter.com/share?shareUrl=${shareUrl}`}
             target="_blank"
             className="social-button -twitter"
           >
             <Icon icon={twitterIcon} className="twitter-icon" />
           </a>
           <a
-            href={`https://www.facebook.com/sharer.php?u=${url}`}
+            href={`https://www.facebook.com/sharer.php?u=${shareUrl}`}
             target="_blank"
             className="social-button -facebook"
           >
@@ -101,11 +110,11 @@ class Share extends PureComponent {
   }
 
   render() {
-    const { isOpen, handleClose } = this.props;
+    const { open, setShareOpen } = this.props;
     return (
       <Modal
-        isOpen={isOpen}
-        onRequestClose={handleClose}
+        isOpen={open}
+        onRequestClose={() => setShareOpen(false)}
         customStyles={{
           overlay: {
             zIndex: 20,
@@ -135,14 +144,15 @@ class Share extends PureComponent {
 }
 
 Share.propTypes = {
-  isOpen: PropTypes.bool,
-  haveEmbed: PropTypes.bool,
-  selectedType: PropTypes.string,
+  open: PropTypes.bool,
+  selected: PropTypes.string,
+  copied: PropTypes.bool,
   data: PropTypes.object,
-  handleClose: PropTypes.func,
+  loading: PropTypes.bool,
+  setShareOpen: PropTypes.func,
+  setShareSelected: PropTypes.func,
   handleFocus: PropTypes.func,
-  changeType: PropTypes.func,
-  copyToClipboard: PropTypes.func
+  handleCopyToClipboard: PropTypes.func
 };
 
 export default Share;

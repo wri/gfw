@@ -32,6 +32,7 @@ $input-button-width: rem(100px);
 
   .input-container {
     width: 100%;
+    position: relative;
 
     .input,
     .input-button {
@@ -67,6 +68,22 @@ $input-button-width: rem(100px);
       &:hover {
         border-color: darken($green-gfw, 10%);
         color: darken($slate, 10%);
+      }
+    }
+
+    .input-loader {
+      position: absolute;
+      left: rem(20px);
+      top: rem(50px);
+      width: rem(20px);
+      height: rem(20px);
+
+      .spinner {
+        &::before {
+          width: rem(20px);
+          height: rem(20px);
+          border-width: 2px;
+        }
       }
     }
   }

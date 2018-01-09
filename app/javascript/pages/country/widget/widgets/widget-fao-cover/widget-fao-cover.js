@@ -4,41 +4,20 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { format } from 'd3-format';
 
-import { getAdminsSelected } from 'pages/country/widget/widget-selectors';
-import { getFAOCoverData } from './widget-fao-cover-selectors';
-
-import WidgetFAOCoverComponent from './widget-fao-cover-component';
 import actions from './widget-fao-cover-actions';
+import reducers, { initialState } from './widget-fao-cover-reducers';
+import { getFAOCoverData } from './widget-fao-cover-selectors';
+import WidgetFAOCoverComponent from './widget-fao-cover-component';
 
-export { initialState } from './widget-fao-cover-reducers';
-export { default as reducers } from './widget-fao-cover-reducers';
-export { default as actions } from './widget-fao-cover-actions';
-
-const mapStateToProps = ({ countryData, widgetFAOCover, location }) => {
-  const {
-    isCountriesLoading,
-    isRegionsLoading,
-    isSubRegionsLoading
-  } = countryData;
+const mapStateToProps = ({ widgetFAOCover }, ownProps) => {
   const { fao, rank } = widgetFAOCover.data;
-  const locationNames = getAdminsSelected({
-    ...countryData,
-    location: location.payload,
-    config: widgetFAOCover.config
-  });
-
   return {
-    title: widgetFAOCover.title,
-    anchorLink: widgetFAOCover.anchorLink,
-    location: location.payload,
-    isLoading:
-      widgetFAOCover.isLoading ||
-      isCountriesLoading ||
-      isRegionsLoading ||
-      isSubRegionsLoading,
+    loading: widgetFAOCover.loading || ownProps.isMetaLoading,
     fao,
     rank,
-    data: getFAOCoverData({ fao, rank, locationNames }) || {}
+    data:
+      getFAOCoverData({ fao, rank, locationNames: ownProps.locationNames }) ||
+      {}
   };
 };
 
@@ -105,5 +84,7 @@ WidgetFAOCoverContainer.propTypes = {
   rank: PropTypes.number.isRequired,
   getFAOCover: PropTypes.func.isRequired
 };
+
+export { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(WidgetFAOCoverContainer);

@@ -2,69 +2,37 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
-import {
-  getIndicators,
-  getActiveFilter,
-  getThresholds
-} from 'pages/country/widget/widget-selectors';
 import isEqual from 'lodash/isEqual';
 
-import WidgetTreeCoverGainComponent from './widget-tree-gain-component';
+import { getActiveFilter } from 'pages/country/widget/widget-selectors';
+
 import actions from './widget-tree-gain-actions';
+import reducers, { initialState } from './widget-tree-gain-reducers';
+import WidgetTreeGainComponent from './widget-tree-gain-component';
 
-export { initialState } from './widget-tree-gain-reducers';
-export { default as reducers } from './widget-tree-gain-reducers';
-export { default as actions } from './widget-tree-gain-actions';
+const mapStateToProps = ({ widgetTreeGain }, ownProps) => ({
+  loading: widgetTreeGain.loading || ownProps.isMetaLoading,
+  gain: widgetTreeGain.data.gain,
+  extent: widgetTreeGain.data.extent
+});
 
-const mapStateToProps = ({ countryData, widgetTreeCoverGain, location }) => {
-  const {
-    isCountriesLoading,
-    isRegionsLoading,
-    isSubRegionsLoading
-  } = countryData;
-  const { indicators } = widgetTreeCoverGain.config;
-  return {
-    title: widgetTreeCoverGain.title,
-    anchorLink: widgetTreeCoverGain.anchorLink,
-    location: location.payload,
-    isLoading:
-      widgetTreeCoverGain.isLoading ||
-      isCountriesLoading ||
-      isRegionsLoading ||
-      isSubRegionsLoading,
-    gain: widgetTreeCoverGain.data.gain,
-    extent: widgetTreeCoverGain.data.extent,
-    options: {
-      indicators:
-        getIndicators({
-          whitelist: indicators,
-          location: location.payload,
-          ...countryData
-        }) || [],
-      thresholds: getThresholds()
-    },
-    settings: widgetTreeCoverGain.settings,
-    config: widgetTreeCoverGain.config
-  };
-};
-
-class WidgetTreeCoverGainContainer extends PureComponent {
+class WidgetTreeGainContainer extends PureComponent {
   componentWillMount() {
-    const { location, settings, getTreeCoverGain } = this.props;
-    getTreeCoverGain({
+    const { location, settings, getTreeGain } = this.props;
+    getTreeGain({
       ...location,
       ...settings
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { settings, location, getTreeCoverGain } = nextProps;
+    const { settings, location, getTreeGain } = nextProps;
 
     if (
       !isEqual(location, this.props.location) ||
       !isEqual(settings, this.props.settings)
     ) {
-      getTreeCoverGain({
+      getTreeGain({
         ...location,
         ...settings
       });
@@ -74,12 +42,12 @@ class WidgetTreeCoverGainContainer extends PureComponent {
   getSentence = () => {
     const { locationNames, gain, extent, settings } = this.props;
     const { indicators } = this.props.options;
-
-    const indicator = getActiveFilter(settings, indicators, 'indicator');
+    const indicator =
+      indicators && getActiveFilter(settings, indicators, 'indicator');
     const regionPhrase =
       settings.indicator === 'gadm28'
         ? '<span>region-wide</span>'
-        : `in <span>${indicator.label.toLowerCase()}</span>`;
+        : `in <span>${indicator && indicator.label.toLowerCase()}</span>`;
 
     const areaPercent = format('.1f')(100 * gain / extent);
     const firstSentence = `From 2001 to 2012, <span>${locationNames.current &&
@@ -94,21 +62,23 @@ class WidgetTreeCoverGainContainer extends PureComponent {
   };
 
   render() {
-    return createElement(WidgetTreeCoverGainComponent, {
+    return createElement(WidgetTreeGainComponent, {
       ...this.props,
       getSentence: this.getSentence
     });
   }
 }
 
-WidgetTreeCoverGainContainer.propTypes = {
+WidgetTreeGainContainer.propTypes = {
   locationNames: PropTypes.object.isRequired,
   gain: PropTypes.number.isRequired,
   extent: PropTypes.number.isRequired,
   options: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  getTreeCoverGain: PropTypes.func.isRequired
+  getTreeGain: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, actions)(WidgetTreeCoverGainContainer);
+export { actions, reducers, initialState };
+
+export default connect(mapStateToProps, actions)(WidgetTreeGainContainer);

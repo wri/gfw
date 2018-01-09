@@ -1,7 +1,7 @@
 import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 
 export const initialState = {
-  isLoading: false,
+  loading: false,
   data: {
     totalArea: 0,
     cover: 0,
@@ -12,36 +12,27 @@ export const initialState = {
 
 const setTreeCoverLoading = (state, { payload }) => ({
   ...state,
-  isLoading: payload
+  loading: payload
 });
 
 const setTreeCoverData = (state, { payload }) => ({
   ...state,
-  isLoading: false,
+  loading: false,
   data: {
     ...payload
   }
 });
 
-const setTreeCoverSettingsIndicator = (state, { payload }) => ({
+const setTreeCoverSettings = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    indicator: payload
-  }
-});
-
-const setTreeCoverSettingsThreshold = (state, { payload }) => ({
-  ...state,
-  settings: {
-    ...state.settings,
-    threshold: payload
+    ...payload
   }
 });
 
 export default {
   setTreeCoverLoading,
   setTreeCoverData,
-  setTreeCoverSettingsIndicator,
-  setTreeCoverSettingsThreshold
+  setTreeCoverSettings
 };

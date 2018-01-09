@@ -1,42 +1,30 @@
 import { createElement, PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
-import ShareComponent from './share-component';
 import actions from './share-actions';
+import reducers, { initialState } from './share-reducers';
+import ShareComponent from './share-component';
 
-export { initialState } from './share-reducers';
-export { default as reducers } from './share-reducers';
-export { default as actions } from './share-actions';
-
-const mapStateToProps = state => ({
-  isOpen: state.share.isOpen,
-  haveEmbed: state.share.haveEmbed,
-  selectedType: state.share.selectedType,
-  data: state.share.data
+const mapStateToProps = ({ share, location }) => ({
+  open: share.open,
+  selected: share.selected,
+  copied: share.copied,
+  data: share.data,
+  loading: share.loading,
+  location
 });
 
 class ShareContainer extends PureComponent {
-  componentWillUpdate(nextProps) {
-    const { isOpen, setShare } = nextProps;
-
-    if (isOpen && !this.props.isOpen) {
-      setShare(nextProps);
-    }
-  }
-
-  changeType = type => {
-    const { setShareType } = this.props;
-    setShareType(type);
-  };
-
-  copyToClipboard = input => {
+  handleCopyToClipboard = input => {
+    const { setShareCopied } = this.props;
     input.select();
 
     try {
       document.execCommand('copy');
+      setShareCopied();
     } catch (err) {
-      alert('This browser does not support clipboard access');
+      alert('This browser does not support clipboard access'); // eslint-disable-line
     }
   };
 
@@ -44,27 +32,19 @@ class ShareContainer extends PureComponent {
     event.target.select();
   };
 
-  handleClose = () => {
-    const { setIsOpen } = this.props;
-    setIsOpen(false);
-  };
-
   render() {
     return createElement(ShareComponent, {
       ...this.props,
-      componentWillUpdate: this.componentWillUpdate,
-      changeType: this.changeType,
-      copyToClipboard: this.copyToClipboard,
-      handleFocus: this.handleFocus,
-      handleClose: this.handleClose
+      handleCopyToClipboard: this.handleCopyToClipboard,
+      handleFocus: this.handleFocus
     });
   }
 }
 
 ShareContainer.propTypes = {
-  isOpen: PropTypes.bool,
-  setShareType: PropTypes.func,
-  setIsOpen: PropTypes.func
+  setShareCopied: PropTypes.func.isRequired
 };
+
+export { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(ShareContainer);

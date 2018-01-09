@@ -22,9 +22,8 @@ class Root extends PureComponent {
       handleShowMapMobile,
       links,
       isGeostoreLoading,
-      setCategory,
       widgets,
-      category
+      location
     } = this.props;
 
     return (
@@ -34,13 +33,12 @@ class Root extends PureComponent {
         </button>
         <div className="panels">
           <div className="data-panel">
-            <Header className="header" />
+            <Header className="header" location={location} />
             <SubNavMenu
               links={links}
-              activeLink={category}
               className="subnav-tabs"
               theme="theme-subnav-dark"
-              handleClick={setCategory}
+              checkActive
             />
             <div className="widgets">
               <div className="row">
@@ -49,7 +47,7 @@ class Root extends PureComponent {
                     <div
                       key={widget.name}
                       className={`columns large-${
-                        widget.gridWidth
+                        widget.config.gridWidth
                       } small-12 widget`}
                     >
                       <Widget widget={widget.name} />
@@ -106,9 +104,8 @@ Root.propTypes = {
   handleShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
   isGeostoreLoading: PropTypes.bool,
-  setCategory: PropTypes.func,
-  category: PropTypes.string,
-  widgets: PropTypes.array
+  widgets: PropTypes.array,
+  location: PropTypes.object
 };
 
 export default Root;

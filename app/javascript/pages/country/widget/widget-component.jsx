@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 
+import WidgetHeader from 'pages/country/widget/components/widget-header';
+
 import WidgetTreeCover from 'pages/country/widget/widgets/widget-tree-cover';
 import WidgetTreeLocated from 'pages/country/widget/widgets/widget-tree-located';
 import WidgetTreeLoss from 'pages/country/widget/widgets/widget-tree-loss';
@@ -28,15 +30,42 @@ const widgets = {
 
 class Widget extends PureComponent {
   render() {
-    const { widget } = this.props;
+    const {
+      widget,
+      locationNames,
+      title,
+      settingsConfig,
+      setWidgetSettingsUrl,
+      embed
+    } = this.props;
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
-    return <WidgetComponent {...this.props} />;
+    return (
+      <div className="c-widget" id={widget}>
+        <WidgetHeader
+          widget={widget}
+          title={title}
+          locationNames={locationNames}
+          settingsConfig={{
+            ...settingsConfig,
+            onSettingsChange: setWidgetSettingsUrl
+          }}
+          embed={embed}
+        />
+        <div className="container">
+          <WidgetComponent {...this.props} {...settingsConfig} />
+        </div>
+      </div>
+    );
   }
 }
 
 Widget.propTypes = {
   widget: PropTypes.string.isRequired,
-  locationNames: PropTypes.object
+  title: PropTypes.string.isRequired,
+  setWidgetSettingsUrl: PropTypes.func.isRequired,
+  settingsConfig: PropTypes.object,
+  locationNames: PropTypes.object,
+  embed: PropTypes.bool
 };
 
 export default Widget;

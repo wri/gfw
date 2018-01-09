@@ -5,59 +5,21 @@ import { format } from 'd3-format';
 import isEqual from 'lodash/isEqual';
 import sumBy from 'lodash/sumBy';
 
-import {
-  getThresholds,
-  getIndicators,
-  getStartYears,
-  getEndYears,
-  getAdminsSelected,
-  getActiveFilter
-} from 'pages/country/widget/widget-selectors';
-import { filterData } from './widget-tree-loss-selectors';
+import { getActiveFilter } from 'pages/country/widget/widget-selectors';
 
-import WidgetTreeLossComponent from './widget-tree-loss-component';
 import actions from './widget-tree-loss-actions';
+import reducers, { initialState } from './widget-tree-loss-reducers';
+import { filterData } from './widget-tree-loss-selectors';
+import WidgetTreeLossComponent from './widget-tree-loss-component';
 
-export { initialState } from './widget-tree-loss-reducers';
-export { default as reducers } from './widget-tree-loss-reducers';
-export { default as actions } from './widget-tree-loss-actions';
-
-const mapStateToProps = ({ widgetTreeLoss, location, countryData }) => ({
-  title: widgetTreeLoss.title,
-  anchorLink: widgetTreeLoss.anchorLink,
-  isLoading: widgetTreeLoss.isLoading,
-  location: location.payload,
+const mapStateToProps = ({ widgetTreeLoss }) => ({
+  loading: widgetTreeLoss.loading,
   data:
     filterData({
       data: widgetTreeLoss.data,
       ...widgetTreeLoss.settings
     }) || [],
-  extent: widgetTreeLoss.data.extent,
-  options: {
-    startYears:
-      getStartYears({
-        data: widgetTreeLoss.data.loss,
-        ...widgetTreeLoss.settings
-      }) || [],
-    endYears:
-      getEndYears({
-        data: widgetTreeLoss.data.loss,
-        ...widgetTreeLoss.settings
-      }) || [],
-    indicators:
-      getIndicators({
-        whitelist: widgetTreeLoss.config.indicators,
-        location: location.payload,
-        ...countryData
-      }) || [],
-    thresholds: getThresholds()
-  },
-  settings: widgetTreeLoss.settings,
-  config: widgetTreeLoss.config,
-  locationNames: getAdminsSelected({
-    ...countryData,
-    location: location.payload
-  })
+  extent: widgetTreeLoss.data.extent
 });
 
 class WidgetTreeLossContainer extends PureComponent {
@@ -81,7 +43,8 @@ class WidgetTreeLossContainer extends PureComponent {
   getSentence = () => {
     const { locationNames, settings, data, extent } = this.props;
     const { indicators } = this.props.options;
-    const indicator = getActiveFilter(settings, indicators, 'indicator');
+    const indicator =
+      indicators && getActiveFilter(settings, indicators, 'indicator');
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
       (data && data.length && sumBy(data, 'emissions')) || 0;
@@ -111,14 +74,9 @@ class WidgetTreeLossContainer extends PureComponent {
      with canopy density <span>> ${settings.threshold}%</span>.`;
   };
 
-  viewOnMap = () => {
-    this.props.setLayers(['loss']);
-  };
-
   render() {
     return createElement(WidgetTreeLossComponent, {
       ...this.props,
-      viewOnMap: this.viewOnMap,
       getSentence: this.getSentence
     });
   }
@@ -130,9 +88,10 @@ WidgetTreeLossContainer.propTypes = {
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   getTreeLoss: PropTypes.func.isRequired,
-  setLayers: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
   extent: PropTypes.number.isRequired
 };
+
+export { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(WidgetTreeLossContainer);

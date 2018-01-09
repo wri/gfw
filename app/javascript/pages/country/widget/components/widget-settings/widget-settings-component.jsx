@@ -9,7 +9,13 @@ import './widget-settings-styles.scss';
 
 class WidgetSettings extends PureComponent {
   render() {
-    const { settings, isLoading, locationNames } = this.props;
+    const {
+      settings,
+      loading,
+      locationNames,
+      onSettingsChange,
+      widget
+    } = this.props;
     const {
       units,
       indicators,
@@ -18,70 +24,63 @@ class WidgetSettings extends PureComponent {
       startYears,
       endYears
     } = this.props.options;
-    const {
-      onStartYearChange,
-      onEndYearChange,
-      onUnitChange,
-      onPeriodChange,
-      onThresholdChange,
-      onIndicatorChange
-    } = this.props.actions;
 
     return (
       <div className="c-widget-settings">
-        {indicators &&
-          onIndicatorChange && (
-            <Dropdown
-              theme="theme-select-light"
-              label={`REFINE LOCATION WITHIN ${locationNames.current &&
-                locationNames.current.label.toUpperCase()}`}
-              value={settings.indicator}
-              options={indicators}
-              onChange={option => onIndicatorChange(option.value)}
-              disabled={isLoading}
-              optionRenderer={(option, selectedOptions) => (
-                <div
-                  className={`dd__option ${
-                    selectedOptions[0].value === option.value
-                      ? 'dd__selectedOption'
-                      : ''
-                  }`}
+        {indicators && (
+          <Dropdown
+            theme="theme-select-light"
+            label={`REFINE LOCATION WITHIN ${locationNames.current &&
+              locationNames.current.label.toUpperCase()}`}
+            value={settings.indicator}
+            options={indicators}
+            onChange={option =>
+              onSettingsChange({ value: { indicator: option.value }, widget })
+            }
+            disabled={loading}
+            optionRenderer={(option, selectedOptions) => (
+              <div
+                className={`dd__option ${
+                  selectedOptions[0].value === option.value
+                    ? 'dd__selectedOption'
+                    : ''
+                }`}
+              >
+                {option.label}
+                <Button
+                  disabled
+                  className="theme-button-small square info-button"
                 >
-                  {option.label}
-                  <Button
-                    disabled
-                    className="theme-button-small square info-button"
-                  >
-                    <Icon icon={infoIcon} className="info-icon" />
-                  </Button>
-                </div>
-              )}
-            />
-          )}
-        {units &&
-          onUnitChange && (
-            <Dropdown
-              theme="theme-select-light"
-              label="UNIT"
-              value={settings.unit}
-              options={units}
-              onChange={option => onUnitChange(option.value)}
-            />
-          )}
-        {periods &&
-          onPeriodChange && (
-            <Dropdown
-              theme="theme-select-light"
-              label="PERIOD"
-              value={settings.period}
-              options={periods}
-              onChange={option => onPeriodChange(option.value)}
-            />
-          )}
+                  <Icon icon={infoIcon} className="info-icon" />
+                </Button>
+              </div>
+            )}
+          />
+        )}
+        {units && (
+          <Dropdown
+            theme="theme-select-light"
+            label="UNIT"
+            value={settings.unit}
+            options={units}
+            onChange={option =>
+              onSettingsChange({ value: { unit: option.value }, widget })
+            }
+          />
+        )}
+        {periods && (
+          <Dropdown
+            theme="theme-select-light"
+            label="PERIOD"
+            value={settings.period}
+            options={periods}
+            onChange={option =>
+              onSettingsChange({ value: { period: option.value }, widget })
+            }
+          />
+        )}
         {startYears &&
-          endYears &&
-          onStartYearChange &&
-          onEndYearChange && (
+          endYears && (
             <div className="years-select">
               <span className="label">YEARS</span>
               <div className="select-container">
@@ -89,32 +88,43 @@ class WidgetSettings extends PureComponent {
                   theme="theme-select-button -transparent"
                   value={settings.startYear}
                   options={startYears}
-                  onChange={option => onStartYearChange(option.value)}
-                  disabled={isLoading}
+                  onChange={option =>
+                    onSettingsChange({
+                      value: { startYear: option.value },
+                      widget
+                    })
+                  }
+                  disabled={loading}
                 />
                 <span className="text-date">to</span>
                 <Dropdown
                   theme="theme-select-button -transparent"
                   value={settings.endYear}
                   options={endYears}
-                  onChange={option => onEndYearChange(option.value)}
-                  disabled={isLoading}
+                  onChange={option =>
+                    onSettingsChange({
+                      value: { endYear: option.value },
+                      widget
+                    })
+                  }
+                  disabled={loading}
                 />
               </div>
             </div>
           )}
-        {thresholds &&
-          onThresholdChange && (
-            <Dropdown
-              theme="theme-select-button canopy-select"
-              label="CANOPY DENSITY"
-              value={settings.threshold}
-              options={thresholds}
-              onChange={option => onThresholdChange(option.value)}
-              disabled={isLoading}
-              infoAction={() => console.info('open modal')}
-            />
-          )}
+        {thresholds && (
+          <Dropdown
+            theme="theme-select-button canopy-select"
+            label="CANOPY DENSITY"
+            value={settings.threshold}
+            options={thresholds}
+            onChange={option =>
+              onSettingsChange({ value: { threshold: option.value }, widget })
+            }
+            disabled={loading}
+            infoAction={() => console.info('open modal')}
+          />
+        )}
       </div>
     );
   }
@@ -128,16 +138,11 @@ WidgetSettings.propTypes = {
   settings: PropTypes.object,
   startYears: PropTypes.array,
   endYears: PropTypes.array,
-  onIndicatorChange: PropTypes.func,
-  onThresholdChange: PropTypes.func,
-  onUnitChange: PropTypes.func,
-  onPeriodChange: PropTypes.func,
-  onStartYearChange: PropTypes.func,
-  onEndYearChange: PropTypes.func,
-  isLoading: PropTypes.bool,
+  loading: PropTypes.bool,
   locationNames: PropTypes.object,
   options: PropTypes.object,
-  actions: PropTypes.object
+  onSettingsChange: PropTypes.func,
+  widget: PropTypes.string
 };
 
 export default WidgetSettings;

@@ -1,34 +1,34 @@
 import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 
 export const initialState = {
-  isLoading: false,
+  loading: false,
   data: {},
-  ...WIDGETS_CONFIG.faoReforestation
+  ...WIDGETS_CONFIG.FAOReforestation
 };
 
-const setFAOReforestationIsLoading = (state, { payload }) => ({
+const setFAOReforestationLoading = (state, { payload }) => ({
   ...state,
-  isLoading: payload
+  loading: payload
 });
 
 const setFAOReforestationData = (state, { payload }) => ({
   ...state,
-  isLoading: false,
+  loading: false,
   data: {
     ...payload
   }
 });
 
-const setFAOReforestationSettingsPeriod = (state, { payload }) => ({
+const setFAOReforestationSettings = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    period: payload
+    ...payload
   }
 });
 
 export default {
-  setFAOReforestationIsLoading,
+  setFAOReforestationLoading,
   setFAOReforestationData,
-  setFAOReforestationSettingsPeriod
+  setFAOReforestationSettings
 };

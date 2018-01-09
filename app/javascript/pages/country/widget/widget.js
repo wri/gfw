@@ -1,16 +1,19 @@
 import { connect } from 'react-redux';
-import {
-  getAdminsSelected,
-  getActiveAdmin
-} from 'pages/country/widget/widget-selectors';
-import Component from './widget-component';
+import upperFirst from 'lodash/upperFirst';
 
-const mapStateToProps = ({ location, countryData }) => {
+import * as widgetSelectors from 'pages/country/widget/widget-selectors';
+import Component from './widget-component';
+import actions from './widget-actions';
+
+const mapStateToProps = (state, ownProps) => {
+  const { location, countryData } = state;
+  const { title, config, settings, loading, data } = state[
+    `widget${upperFirst(ownProps.widget)}`
+  ];
   const {
     isCountriesLoading,
     isRegionsLoading,
-    isSubRegionsLoading,
-    isGeostoreLoading
+    isSubRegionsLoading
   } = countryData;
   const adminData = {
     location: location.payload,
@@ -18,15 +21,52 @@ const mapStateToProps = ({ location, countryData }) => {
     regions: countryData.regions,
     subRegions: countryData.subRegions
   };
+  const options = {};
+  if (config.selectors) {
+    config.selectors.forEach(selector => {
+      const selectorFunc = widgetSelectors[`get${upperFirst(selector)}`];
+      switch (selector) {
+        case 'indicators':
+          options[selector] = selectorFunc({
+            whitelist: config.indicators,
+            location: location.payload,
+            ...countryData
+          });
+          break;
+        case 'startYears':
+          options[selector] = selectorFunc({
+            data: data.loss,
+            ...settings
+          });
+          break;
+        case 'endYears':
+          options[selector] = selectorFunc({
+            data: data.loss,
+            ...settings
+          });
+          break;
+        default:
+          options[selector] = selectorFunc();
+      }
+    });
+  }
+
   return {
     isMetaLoading:
-      isCountriesLoading ||
-      isRegionsLoading ||
-      isSubRegionsLoading ||
-      isGeostoreLoading,
-    locationNames: getAdminsSelected(adminData),
-    activeLocation: getActiveAdmin({ location: location.payload })
+      isCountriesLoading || isRegionsLoading || isSubRegionsLoading,
+    locationNames: widgetSelectors.getAdminsSelected(adminData),
+    activeLocation: widgetSelectors.getActiveAdmin({
+      location: location.payload
+    }),
+    location: location.payload,
+    title,
+    settingsConfig: {
+      config,
+      settings,
+      options,
+      loading
+    }
   };
 };
 
-export default connect(mapStateToProps, null)(Component);
+export default connect(mapStateToProps, actions)(Component);

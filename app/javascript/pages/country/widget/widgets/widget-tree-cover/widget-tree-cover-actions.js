@@ -4,22 +4,21 @@ import { getExtent } from 'services/forest-data';
 
 const setTreeCoverLoading = createAction('setTreeCoverLoading');
 const setTreeCoverData = createAction('setTreeCoverData');
-const setTreeCoverSettingsIndicator = createAction(
-  'setTreeCoverSettingsIndicator'
-);
-const setTreeCoverSettingsThreshold = createAction(
-  'setTreeCoverSettingsThreshold'
-);
+const setTreeCoverSettings = createAction('setTreeCoverSettings');
 
 export const getTreeCover = createThunkAction(
   'getTreeCover',
   params => (dispatch, state) => {
-    if (!state().widgetTreeCover.isLoading) {
+    if (!state().widgetTreeCover.loading) {
       dispatch(setTreeCoverLoading(true));
       getExtent(params)
         .then(response => {
-          const totalArea = response.data.data[0].total_area;
-          const cover = response.data.data[0].value;
+          const totalArea =
+            response.data &&
+            response.data.data &&
+            response.data.data[0].total_area;
+          const cover =
+            response.data && response.data.data && response.data.data[0].value;
           if (params.indicator !== 'gadm28') {
             dispatch(
               setTreeCoverData({
@@ -31,7 +30,10 @@ export const getTreeCover = createThunkAction(
           } else {
             getExtent({ ...params, indicator: 'plantations' }).then(
               plantationsResponse => {
-                const plantations = plantationsResponse.data.data[0].value;
+                const { data } = plantationsResponse.data;
+                const plantations =
+                  data && data.length > 0 ? data[0].value : '';
+
                 dispatch(
                   setTreeCoverData({
                     totalArea,
@@ -55,6 +57,5 @@ export default {
   setTreeCoverLoading,
   setTreeCoverData,
   getTreeCover,
-  setTreeCoverSettingsIndicator,
-  setTreeCoverSettingsThreshold
+  setTreeCoverSettings
 };

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import Button from 'components/button';
 import Icon from 'components/icon';
+import isEmpty from 'lodash/isEmpty';
 
 import WidgetSettings from 'pages/country/widget/components/widget-settings';
 import settingsIcon from 'assets/icons/settings.svg';
@@ -14,14 +15,16 @@ class WidgetHeader extends PureComponent {
   render() {
     const {
       title,
-      openShare,
-      shareAnchor,
       settingsConfig,
-      locationNames
+      locationNames,
+      widget,
+      embed,
+      shareData,
+      setShareModal
     } = this.props;
 
     return (
-      <div className="c-widget-header" id={shareAnchor}>
+      <div className="c-widget-header">
         <div className="title">{`${title} in ${
           locationNames.current ? locationNames.current.label : ''
         }`}</div>
@@ -30,8 +33,9 @@ class WidgetHeader extends PureComponent {
             <Button className="theme-button-small square" disabled>
               <Icon icon={infoIcon} />
             </Button>
-            {settingsConfig &&
-              settingsConfig.options && (
+            {!embed &&
+              settingsConfig &&
+              !isEmpty(settingsConfig.options) && (
                 <Tooltip
                   theme="light"
                   position="bottom-right"
@@ -43,6 +47,7 @@ class WidgetHeader extends PureComponent {
                   html={
                     <WidgetSettings
                       {...settingsConfig}
+                      widget={widget}
                       locationNames={locationNames}
                     />
                   }
@@ -54,7 +59,7 @@ class WidgetHeader extends PureComponent {
               )}
             <Button
               className="theme-button-small theme-button-light square"
-              onClick={openShare}
+              onClick={() => setShareModal(shareData)}
             >
               <Icon icon={shareIcon} />
             </Button>
@@ -66,11 +71,13 @@ class WidgetHeader extends PureComponent {
 }
 
 WidgetHeader.propTypes = {
+  widget: PropTypes.string,
   title: PropTypes.string.isRequired,
-  openShare: PropTypes.func.isRequired,
-  shareAnchor: PropTypes.string,
   settingsConfig: PropTypes.object,
-  locationNames: PropTypes.object
+  locationNames: PropTypes.object,
+  embed: PropTypes.bool,
+  setShareModal: PropTypes.func.isRequired,
+  shareData: PropTypes.object.isRequired
 };
 
 export default WidgetHeader;

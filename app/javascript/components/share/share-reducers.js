@@ -1,11 +1,12 @@
 export const initialState = {
-  isOpen: false,
-  haveEmbed: false,
-  selectedType: 'link',
+  loading: false,
+  open: false,
+  selected: 'link',
+  copied: false,
   data: {
     title: '',
     subtitle: '',
-    url: '',
+    shareUrl: '',
     embedUrl: '',
     embedSettings: { width: 0, height: 0 }
   }
@@ -13,23 +14,51 @@ export const initialState = {
 
 const setShareData = (state, { payload }) => ({
   ...state,
-  isOpen: payload.isOpen,
-  haveEmbed: payload.haveEmbed ? payload.haveEmbed : state.haveEmbed,
-  data: payload.data ? payload.data : state.data
+  open: true,
+  selected: 'link',
+  loading: true,
+  data: {
+    ...state.data,
+    ...payload
+  }
 });
 
-const setShareType = (state, { payload }) => ({
+const setShareSelected = (state, { payload }) => ({
   ...state,
-  selectedType: payload
+  selected: payload,
+  copied: false
 });
 
-const setIsOpen = (state, { payload }) => ({
+const setShareCopied = state => ({
   ...state,
-  isOpen: payload
+  copied: true
+});
+
+const setShareLoading = (state, { payload }) => ({
+  ...state,
+  loading: payload
+});
+
+const setShareUrl = (state, { payload }) => ({
+  ...state,
+  loading: false,
+  data: {
+    ...state.data,
+    shareUrl: payload
+  }
+});
+
+const setShareOpen = (state, { payload }) => ({
+  ...state,
+  open: payload,
+  copied: false
 });
 
 export default {
   setShareData,
-  setShareType,
-  setIsOpen
+  setShareSelected,
+  setShareOpen,
+  setShareUrl,
+  setShareCopied,
+  setShareLoading
 };

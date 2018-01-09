@@ -3,47 +3,43 @@ import { createThunkAction } from 'utils/redux';
 
 import { getShortenUrl } from 'services/bitly';
 
-const setShare = createThunkAction('setShare', params => dispatch => {
-  const {
-    isOpen,
-    haveEmbed,
-    selectedType,
-    data: { title, subtitle, embedSettings }
-  } = params;
-  let { data: { url, embedUrl } } = params;
+const setShareData = createAction('setShareData');
+const setShareUrl = createAction('setShareUrl');
+const setShareSelected = createAction('setShareSelected');
+const setShareOpen = createAction('setShareOpen');
+const setShareCopied = createAction('setShareCopied');
+const setShareLoading = createAction('setShareLoading');
 
-  getShortenUrl(url).then(response => {
+const setShareModal = createThunkAction('setShare', params => dispatch => {
+  const { title, subtitle, embedUrl, shareUrl, embedSettings } = params;
+
+  dispatch(
+    setShareData({
+      title,
+      subtitle,
+      embedUrl,
+      shareUrl,
+      embedSettings
+    })
+  );
+
+  getShortenUrl(shareUrl).then(response => {
+    let shortShareUrl = '';
     if (response.data.status_code === 200) {
-      url = response.data.data.url;
+      shortShareUrl = response.data.data.url;
+      dispatch(setShareUrl(shortShareUrl));
+    } else {
+      dispatch(setShareLoading(false));
     }
-
-    embedUrl = `<iframe width="${embedSettings.width}" height="${
-      embedSettings.height
-    }" frameborder="0" src="${embedUrl || params.data.url}"></iframe>`;
-
-    dispatch(
-      setShareData({
-        isOpen,
-        haveEmbed,
-        selectedType,
-        data: {
-          title,
-          subtitle,
-          url,
-          embedUrl,
-          embedSettings
-        }
-      })
-    );
   });
 });
-const setShareData = createAction('setShareData');
-const setShareType = createAction('setShareType');
-const setIsOpen = createAction('setIsOpen');
 
 export default {
-  setShare,
+  setShareModal,
   setShareData,
-  setShareType,
-  setIsOpen
+  setShareSelected,
+  setShareOpen,
+  setShareUrl,
+  setShareCopied,
+  setShareLoading
 };

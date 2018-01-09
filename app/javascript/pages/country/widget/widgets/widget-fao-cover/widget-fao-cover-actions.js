@@ -5,13 +5,14 @@ import axios from 'axios';
 import { getFAO } from 'services/forest-data';
 import { getRanking } from 'services/country';
 
-const setFAOCoverIsLoading = createAction('setFAOIsLoading');
-const setFAOCoverData = createAction('setFAOData');
+const setFAOCoverLoading = createAction('setFAOCoverLoading');
+const setFAOCoverData = createAction('setFAOCoverData');
+
 const getFAOCover = createThunkAction(
   'getFAOCover',
   params => (dispatch, state) => {
-    if (!state().widgetFAOCover.isLoading) {
-      dispatch(setFAOCoverIsLoading(true));
+    if (!state().widgetFAOCover.loading) {
+      dispatch(setFAOCoverLoading(true));
       axios
         .all([getFAO({ ...params }), getRanking({ ...params })])
         .then(
@@ -31,14 +32,14 @@ const getFAOCover = createThunkAction(
         )
         .catch(error => {
           console.info(error);
-          dispatch(setFAOCoverIsLoading(false));
+          dispatch(setFAOCoverLoading(false));
         });
     }
   }
 );
 
 export default {
-  setFAOCoverIsLoading,
+  setFAOCoverLoading,
   setFAOCoverData,
   getFAOCover
 };

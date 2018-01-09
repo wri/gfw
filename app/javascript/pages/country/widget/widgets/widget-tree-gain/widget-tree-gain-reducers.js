@@ -1,7 +1,7 @@
 import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 
 export const initialState = {
-  isLoading: false,
+  loading: false,
   data: {
     gain: 0,
     extent: 0
@@ -9,38 +9,29 @@ export const initialState = {
   ...WIDGETS_CONFIG.treeGain
 };
 
-const setTreeCoverGainIsLoading = (state, { payload }) => ({
+const setTreeGainLoading = (state, { payload }) => ({
   ...state,
-  isLoading: payload
+  loading: payload
 });
 
-const setTreeCoverGainData = (state, { payload }) => ({
+const setTreeGainData = (state, { payload }) => ({
   ...state,
-  isLoading: false,
+  loading: false,
   data: {
     ...payload
   }
 });
 
-const setTreeCoverGainSettingsIndicator = (state, { payload }) => ({
+const setTreeGainSettings = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    indicator: payload
-  }
-});
-
-const setTreeCoverGainSettingsThreshold = (state, { payload }) => ({
-  ...state,
-  settings: {
-    ...state.settings,
-    threshold: payload
+    ...payload
   }
 });
 
 export default {
-  setTreeCoverGainIsLoading,
-  setTreeCoverGainData,
-  setTreeCoverGainSettingsIndicator,
-  setTreeCoverGainSettingsThreshold
+  setTreeGainLoading,
+  setTreeGainData,
+  setTreeGainSettings
 };

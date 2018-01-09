@@ -1,7 +1,7 @@
 import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 
 export const initialState = {
-  isLoading: false,
+  loading: false,
   data: {
     regions: []
   },
@@ -10,7 +10,7 @@ export const initialState = {
 
 const setTreeLocatedData = (state, { payload }) => ({
   ...state,
-  isLoading: false,
+  loading: false,
   data: {
     regions: payload
   },
@@ -28,40 +28,22 @@ const setTreeLocatedPage = (state, { payload }) => ({
   }
 });
 
-const setTreeLocatedSettingsIndicator = (state, { payload }) => ({
+const setTreeLocatedSettings = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    indicator: payload
+    ...payload
   }
 });
 
-const setTreeLocatedSettingsUnit = (state, { payload }) => ({
+const setTreeLocatedLoading = (state, { payload }) => ({
   ...state,
-  settings: {
-    ...state.settings,
-    unit: payload
-  }
-});
-
-const setTreeLocatedSettingsThreshold = (state, { payload }) => ({
-  ...state,
-  settings: {
-    ...state.settings,
-    threshold: payload
-  }
-});
-
-const setTreeLocatedIsLoading = (state, { payload }) => ({
-  ...state,
-  isLoading: payload
+  loading: payload
 });
 
 export default {
   setTreeLocatedData,
   setTreeLocatedPage,
-  setTreeLocatedSettingsIndicator,
-  setTreeLocatedSettingsUnit,
-  setTreeLocatedSettingsThreshold,
-  setTreeLocatedIsLoading
+  setTreeLocatedSettings,
+  setTreeLocatedLoading
 };
