@@ -25,7 +25,8 @@
                       "plantations__wdpa", "plantations__landmark"],
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region"],
-      "selectors": ["indicators", "thresholds", "units"]      
+      "selectors": ["indicators", "thresholds", "units"],
+      "renderCheck": "regions"
     },
     "settings": {
       "indicator": "gadm28",

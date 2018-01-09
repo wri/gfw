@@ -9,11 +9,13 @@ const getCategories = state => state.categories || null;
 const getCategory = state => state.category || null;
 const getAdminLevel = state => state.adminLevel || null;
 const getLocation = state => state.location || null;
+const getLocationOptions = state => state.locationOptions || null;
 
 // get lists selected
 export const getWidgets = createSelector(
-  [getCategory, getAdminLevel],
-  (category, adminLevel) => {
+  [getCategory, getAdminLevel, getLocationOptions],
+  (category, adminLevel, locationOptions) => {
+    if (!locationOptions) return null;
     const widgetKeys = Object.keys(WIDGETS);
     return widgetKeys
       .map(key => ({
@@ -24,6 +26,9 @@ export const getWidgets = createSelector(
         widget =>
           widget.config.categories.indexOf(category) > -1 &&
           widget.config.admins.indexOf(adminLevel) > -1 &&
+          (widget.config.renderCheck
+            ? locationOptions[widget.config.renderCheck].length > 1
+            : true) &&
           widget.active
       );
   }
