@@ -1,5 +1,7 @@
 import { createThunkAction } from 'utils/redux';
 import upperFirst from 'lodash/upperFirst';
+import isEqual from 'lodash/isEqual';
+import pick from 'lodash/pick';
 import { encodeStateForUrl, decodeUrlForState } from 'utils/stateToUrl';
 
 import * as treeLossActions from 'pages/country/widget/widgets/widget-tree-loss/widget-tree-loss-actions';
@@ -40,13 +42,26 @@ export const setWidgetSettingsUrl = createThunkAction(
   }
 );
 
+function isObjectContained(contained, container) {
+  return isEqual(pick(container, Object.keys(contained)), contained);
+}
+
 export const setWidgetSettingsStore = createThunkAction(
   'setWidgetSettingsStore',
-  query => dispatch => {
+  query => (dispatch, getState) => {
     Object.keys(query).forEach(widgetKey => {
-      const actionFunc = widgetActions[`set${upperFirst(widgetKey)}Settings`];
-      if (actionFunc) {
-        dispatch(actionFunc(decodeUrlForState(query[widgetKey])));
+      if (widgetKey !== 'category') {
+        const widgetConfig = decodeUrlForState(query[widgetKey]);
+        const { settings } = getState()[`widget${upperFirst(widgetKey)}`];
+        // Check if the state needs and update checking the values of the new config
+        // with the existing in the url to avoid dispatch actions without changes
+        if (!isObjectContained(widgetConfig, settings)) {
+          const actionFunc =
+            widgetActions[`set${upperFirst(widgetKey)}Settings`];
+          if (actionFunc) {
+            dispatch(actionFunc(widgetConfig));
+          }
+        }
       }
     });
   }

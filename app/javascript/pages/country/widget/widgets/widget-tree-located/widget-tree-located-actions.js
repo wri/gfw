@@ -15,10 +15,11 @@ const getTreeLocated = createThunkAction(
       dispatch(setTreeLocatedLoading(true));
       getLocations(params)
         .then(response => {
-          if (response.data.data.length) {
+          const { data } = response.data;
+          if (data && data.length) {
             dispatch(
               setTreeLocatedData(
-                response.data.data.map(d => ({
+                data.map(d => ({
                   id: d[params.region ? 'adm2' : 'adm1'],
                   area: d.value || 0,
                   percentage: d.value / d.total_area * 100

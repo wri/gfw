@@ -21,13 +21,15 @@ export const getTotalExtent = createThunkAction(
       dispatch(setExtentLoading(true));
       getExtent(params)
         .then(response => {
-          const data = response.data.data;
-          dispatch(
-            setTotalExtent({
-              totalArea: (data[0] && data[0].total_area) || 0,
-              extent: (data[0] && data[0].value) || 0
-            })
-          );
+          const { data } = response.data;
+          if (data && data.length > 0) {
+            dispatch(
+              setTotalExtent({
+                totalArea: (data[0] && data[0].total_area) || 0,
+                extent: (data[0] && data[0].value) || 0
+              })
+            );
+          }
         })
         .catch(error => {
           dispatch(setExtentLoading(false));
@@ -44,10 +46,12 @@ export const getTotalLoss = createThunkAction(
       dispatch(setTotalLoss(true));
       getLoss(params)
         .then(response => {
-          const data = response.data.data.length
-            ? reverse(sortBy(response.data.data, 'year'))[0]
-            : {};
-          dispatch(setTotalLoss(data));
+          const { data } = response.data;
+          const dataParsed =
+            data && data.length
+              ? reverse(sortBy(response.data.data, 'year'))[0]
+              : {};
+          dispatch(setTotalLoss(dataParsed));
         })
         .catch(error => {
           dispatch(setTotalLoss(false));
@@ -64,10 +68,10 @@ export const getPlantationsLoss = createThunkAction(
       dispatch(setPlantationsLossLoading(true));
       getLoss(params)
         .then(response => {
-          const data = response.data.data.length
-            ? reverse(sortBy(response.data.data, 'year'))[0]
-            : {};
-          dispatch(setPlantationsLoss(data));
+          const { data } = response.data;
+          const dataParsed =
+            data && data.length ? reverse(sortBy(data, 'year'))[0] : {};
+          dispatch(setPlantationsLoss(dataParsed));
         })
         .catch(error => {
           dispatch(setPlantationsLossLoading(false));

@@ -21,8 +21,8 @@ const getTreeGain = createThunkAction(
             const extent = extentResponse.data.data;
             dispatch(
               setTreeGainData({
-                gain: (gain.length && gain[0].value) || 0,
-                extent: (extent.length && extent[0].value) || 0
+                gain: (gain && gain.length > 0 && gain[0].value) || 0,
+                extent: (gain && extent.length > 0 && extent[0].value) || 0
               })
             );
           })
