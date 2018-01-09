@@ -6,11 +6,6 @@ import { COUNTRY } from 'pages/country/router';
 import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
-import {
-  getAdminsOptions,
-  getActiveAdmin,
-  getAdminsSelected
-} from 'pages/country/widget/widget-selectors';
 import { format } from 'd3-format';
 
 import * as actions from './header-actions';
@@ -33,25 +28,11 @@ const mapStateToProps = ({ countryData, location, header }) => {
     isCountriesLoading || isRegionsLoading || isSubRegionsLoading;
   const headerDataLoading =
     isExtentLoading || isPlantationsLossLoading || isTotalLossLoading;
-  const adminData = {
-    countries: countryData.countries,
-    regions: countryData.regions,
-    subRegions: countryData.subRegions
-  };
   return {
     isLoading: countryDataLoading || headerDataLoading,
-    locationOptions: getAdminsOptions({
-      ...adminData,
-      location: location.payload
-    }),
     settings: header.settings,
     location: location.payload,
     query: location.query,
-    locationNames: getAdminsSelected({
-      ...adminData,
-      location: location.payload
-    }),
-    activeLocation: getActiveAdmin({ location: location.payload }),
     data: header.data
   };
 };
