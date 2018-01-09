@@ -25,6 +25,8 @@ class Root extends PureComponent {
       isGeostoreLoading,
       widgets,
       location,
+      currentLocation,
+      category,
       loading
     } = this.props;
 
@@ -46,7 +48,7 @@ class Root extends PureComponent {
               <div className="row">
                 {loading && (
                   <div className="columns small-12">
-                    <Loader />
+                    <Loader className="widgets-loader" />
                   </div>
                 )}
                 {!loading &&
@@ -65,7 +67,11 @@ class Root extends PureComponent {
                 {!loading &&
                   (!widgets || widgets.length === 0) && (
                     <div className="columns small-12">
-                      <NoContent message="No widgets available" icon />
+                      <NoContent
+                        className="no-widgets-message"
+                        message={`No ${category} data available for ${currentLocation}`}
+                        icon
+                      />
                     </div>
                   )}
               </div>
@@ -116,7 +122,9 @@ Root.propTypes = {
   isGeostoreLoading: PropTypes.bool,
   widgets: PropTypes.array,
   location: PropTypes.object,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  currentLocation: PropTypes.string,
+  category: PropTypes.string
 };
 
 export default Root;
