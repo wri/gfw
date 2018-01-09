@@ -10,14 +10,21 @@ import { getTreeCoverData } from './widget-tree-cover-selectors';
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
 
 const mapStateToProps = ({ widgetTreeCover, countryData }) => {
-  const { isCountriesLoading, isRegionsLoading } = countryData;
+  const { isCountriesLoading, isRegionsLoading, whitelist } = countryData;
   const { totalArea, cover, plantations } = widgetTreeCover.data;
   const { indicator } = widgetTreeCover.settings;
 
   return {
     loading: widgetTreeCover.loading || isCountriesLoading || isRegionsLoading,
     regions: countryData.regions,
-    data: getTreeCoverData({ totalArea, cover, plantations, indicator }) || []
+    data:
+      getTreeCoverData({
+        totalArea,
+        cover,
+        plantations,
+        indicator,
+        whitelist
+      }) || []
   };
 };
 
