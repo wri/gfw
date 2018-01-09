@@ -31,6 +31,7 @@ define([
             ['umd_as_it_happens', 'places_to_watch', 'uncurated_places_to_watch','forest2000','forest2010'],
             ['guyra', 'forest2000', 'forest2010'],
             ['forest2000', 'forest2000'],
+            ['mangrove_watch','umd_as_it_happens', 'places_to_watch', 'uncurated_places_to_watch'],
           ]
         },
         geographic_coverage: {}
