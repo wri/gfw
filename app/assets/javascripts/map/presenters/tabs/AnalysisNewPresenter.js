@@ -457,6 +457,19 @@ define([
         }
       },
       {
+        'Torque/date-range-change': function(date) {
+          var dateFormat = 'YYYY-MM-DD';
+          var date = date.map(function(date) {
+            return moment(date).format(dateFormat);
+          });
+
+          this.status.set({
+            begin: date[0],
+            end: date[1]
+          });
+        }
+      },
+      {
         'Timeline/start-playing': function() {
           this.status.set('enabledUpdating', false);
         }
