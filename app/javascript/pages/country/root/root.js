@@ -35,8 +35,10 @@ const mapStateToProps = ({ root, countryData, location }) => {
     widgets: getWidgets({
       category,
       adminLevel: getActiveAdmin(location.payload),
-      locationOptions
-    })
+      locationOptions,
+      indicatorWhitelist: countryData.whitelist
+    }),
+    loading: countryData.isWhitelistLoading
   };
 };
 
