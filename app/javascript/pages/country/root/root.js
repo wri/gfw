@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 
 import {
   getActiveAdmin,
-  getAdminsOptions
+  getAdminsOptions,
+  getAdminsSelected
 } from 'pages/country/widget/widget-selectors';
 import CATEGORIES from 'pages/country/data/categories.json';
 
@@ -18,12 +19,12 @@ const mapStateToProps = ({ root, countryData, location }) => {
   const adminData = {
     countries: countryData.countries,
     regions: countryData.regions,
-    subRegions: countryData.subRegions
-  };
-  const locationOptions = getAdminsOptions({
-    ...adminData,
+    subRegions: countryData.subRegions,
     location: location.payload
-  });
+  };
+  const locationOptions = getAdminsOptions(adminData);
+  const locationNames = getAdminsSelected(adminData);
+  const adminLevel = getActiveAdmin(location.payload);
   return {
     gfwHeaderHeight: root.gfwHeaderHeight,
     isMapFixed: root.isMapFixed,
@@ -32,9 +33,11 @@ const mapStateToProps = ({ root, countryData, location }) => {
     isGeostoreLoading: countryData.isGeostoreLoading,
     category,
     location,
+    currentLocation:
+      locationNames[adminLevel] && locationNames[adminLevel].label,
     widgets: getWidgets({
       category,
-      adminLevel: getActiveAdmin(location.payload),
+      adminLevel,
       locationOptions,
       indicatorWhitelist: countryData.whitelist
     }),
