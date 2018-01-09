@@ -33,6 +33,8 @@ const mapStateToProps = ({ root, countryData, location }) => {
     isGeostoreLoading: countryData.isGeostoreLoading,
     category,
     location,
+    locationOptions,
+    locationNames,
     currentLocation:
       locationNames[adminLevel] && locationNames[adminLevel].label,
     widgets: getWidgets({

@@ -26,6 +26,8 @@ class Root extends PureComponent {
       widgets,
       location,
       currentLocation,
+      locationOptions,
+      locationNames,
       category,
       loading
     } = this.props;
@@ -37,7 +39,12 @@ class Root extends PureComponent {
         </button>
         <div className="panels">
           <div className="data-panel">
-            <Header className="header" location={location} />
+            <Header
+              className="header"
+              location={location}
+              locationOptions={locationOptions}
+              locationNames={locationNames}
+            />
             <SubNavMenu
               links={links}
               className="subnav-tabs"
@@ -124,7 +131,9 @@ Root.propTypes = {
   location: PropTypes.object,
   loading: PropTypes.bool,
   currentLocation: PropTypes.string,
-  category: PropTypes.string
+  category: PropTypes.string,
+  locationOptions: PropTypes.object,
+  locationNames: PropTypes.object
 };
 
 export default Root;
