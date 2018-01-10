@@ -528,14 +528,6 @@
       line-opacity: 1;
   }
 
-  [layer='global_mangroves'] {
-      polygon-fill: #06ef9f;
-      polygon-opacity: 0.7;
-      line-color: #06ef9f;
-      line-width: 1;
-      line-opacity: 1;
-  }
-
   [layer='wdpa_protected_areas'] {
     polygon-fill: #2167AB;
     polygon-opacity: 0.5;
