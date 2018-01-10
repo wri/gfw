@@ -5,21 +5,11 @@
   line-height: 1.58;
   letter-spacing: 0.1px;
   font-size: 20px;
+  color: $slate;
 
   strong,
   b,
   span {
     font-weight: 500;
   }
-
-  // for later review
-  // span {
-  //   color: $green-gfw;
-  //   font-weight: 500;
-  //   cursor: pointer;
-
-  //   &:hover {
-  //     color: darken($green-gfw, 10%);
-  //   }
-  // }
 }
