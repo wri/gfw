@@ -16,45 +16,59 @@ const getLocationOptions = state => state.locationOptions || null;
 const getIndicatorWhitelist = state => state.indicatorWhitelist || null;
 
 // get lists selected
-export const getWidgets = createSelector(
-  [getCategory, getAdminLevel, getLocationOptions, getIndicatorWhitelist],
-  (category, adminLevel, locationOptions, indicatorWhitelist) => {
-    if (isEmpty(locationOptions) || isEmpty(indicatorWhitelist)) return null;
-    const widgetKeys = Object.keys(WIDGETS);
-    return widgetKeys
-      .map(key => ({
-        name: key,
-        ...WIDGETS[key]
-      }))
-      .filter(widget => {
-        let hasData = true;
-        let hasLocations = true;
-        if (widget.config.showIndicators && widget.config.indicators) {
-          const totalIndicators = concat(
-            widget.config.showIndicators,
-            indicatorWhitelist
-          ).length;
-          const reducedIndicators = uniq(
-            concat(widget.config.showIndicators, indicatorWhitelist)
-          ).length;
-          hasData = totalIndicators !== reducedIndicators;
-        }
-        if (widget.config.locationCheck) {
-          const adminCheck =
-            adminLevel === 'country' ? 'regions' : 'subRegions';
-          hasLocations =
-            locationOptions[adminCheck] &&
-            locationOptions[adminCheck].length > 1;
-        }
+export const getWidgets = createSelector([], () =>
+  Object.keys(WIDGETS).map(key => ({
+    name: key,
+    ...WIDGETS[key]
+  }))
+);
 
-        return (
-          widget.config.categories.indexOf(category) > -1 &&
-          widget.config.admins.indexOf(adminLevel) > -1 &&
-          hasLocations &&
-          hasData &&
-          widget.active
-        );
-      });
+export const filterWidgetsByCategory = createSelector(
+  [getWidgets, getCategory],
+  (widgets, category) =>
+    widgets.filter(w => w.active && w.config.categories.indexOf(category) > -1)
+);
+
+export const checkWidgetNeedsLocations = createSelector(
+  [filterWidgetsByCategory, getLocationOptions, getAdminLevel],
+  (widgets, locations, adminLevel) => {
+    if (isEmpty(locations)) return null;
+    const adminCheck = adminLevel === 'country' ? 'regions' : 'subRegions';
+    return widgets.filter(
+      w =>
+        w.config.admins.indexOf(adminLevel) > -1 &&
+        (!w.config.locationCheck || locations[adminCheck].length > 1)
+    );
+  }
+);
+
+export const filterWidgets = createSelector(
+  [checkWidgetNeedsLocations, getIndicatorWhitelist],
+  (widgets, whitelist) => {
+    if (isEmpty(whitelist)) return null;
+    const witelistKeys = Object.keys(whitelist);
+    return widgets.filter(widget => {
+      // filter by showIndicators
+      let showByIndicators = true;
+      if (widget.config.showIndicators && widget.config.indicators) {
+        const totalIndicators = concat(
+          widget.config.showIndicators,
+          witelistKeys
+        ).length;
+        const reducedIndicators = uniq(
+          concat(widget.config.showIndicators, witelistKeys)
+        ).length;
+        showByIndicators = totalIndicators !== reducedIndicators;
+      }
+      // Then check if widget has data for gadm28 (loss or gain)
+      const type = widget.config.type;
+      const hasData =
+        !type ||
+        type === 'extent' ||
+        (whitelist.gadm28 && whitelist.gadm28[type]);
+
+      return showByIndicators && hasData;
+    });
   }
 );
 

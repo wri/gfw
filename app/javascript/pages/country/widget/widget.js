@@ -29,8 +29,7 @@ const mapStateToProps = (state, ownProps) => {
       switch (selector) {
         case 'indicators':
           options[selector] = selectorFunc({
-            widgetWhitelist: config.indicators,
-            locationWhitelist: countryData.whitelist,
+            config,
             location: location.payload,
             ...countryData
           });

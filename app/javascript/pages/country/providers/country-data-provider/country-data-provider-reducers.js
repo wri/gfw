@@ -7,7 +7,7 @@ export const initialState = {
   countries: [],
   regions: [],
   subRegions: [],
-  whitelist: [],
+  whitelist: {},
   geostore: {
     areaHa: 0,
     bounds: []
@@ -70,7 +70,7 @@ const setSubRegions = (state, { payload }) => ({
 const setWhitelist = (state, { payload }) => ({
   ...state,
   isWhitelistLoading: false,
-  whitelist: payload.map(d => d.polyname)
+  whitelist: payload
 });
 
 const setGeostore = (state, { payload }) => ({

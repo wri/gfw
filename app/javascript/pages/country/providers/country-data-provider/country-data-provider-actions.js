@@ -100,12 +100,23 @@ export const getGeostore = createThunkAction(
 
 export const getWhitelist = createThunkAction(
   'getWhitelist',
-  country => (dispatch, state) => {
+  (country, region, subRegion) => (dispatch, state) => {
     if (!state().countryData.isWhitelistLoading) {
       dispatch(setWhitelistLoading(true));
-      getWhitelistProvider(country)
+      getWhitelistProvider(country, region, subRegion)
         .then(response => {
-          dispatch(setWhitelist(response.data ? response.data.data : []));
+          const data = {};
+          if (response.data && response.data.data.length) {
+            response.data.data.forEach(d => {
+              data[d.polyname] = {
+                extent_2000: d.total_extent_2000,
+                extent_2010: d.total_extent_2010,
+                loss: d.total_loss,
+                gain: d.total_gain
+              };
+            });
+          }
+          dispatch(setWhitelist(data));
         })
         .catch(error => {
           dispatch(setWhitelistLoading(false));
