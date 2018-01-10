@@ -64,6 +64,7 @@ const mapStateToProps = (state, ownProps) => {
     }),
     location: location.payload,
     title,
+    loading,
     settingsConfig: {
       config,
       settings,

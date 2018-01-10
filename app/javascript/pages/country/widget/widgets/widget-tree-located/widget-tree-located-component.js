@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Loader from 'components/loader/loader';
 import WidgetNumberedList from 'pages/country/widget/components/widget-numbered-list';
 import NoContent from 'components/no-content';
 import COLORS from 'pages/country/data/colors.json';
@@ -20,7 +19,6 @@ class WidgetTreeLocated extends PureComponent {
     } = this.props;
     return (
       <div className="c-widget-tree-located">
-        {loading && <Loader />}
         {!loading &&
           data &&
           data.length === 0 && (

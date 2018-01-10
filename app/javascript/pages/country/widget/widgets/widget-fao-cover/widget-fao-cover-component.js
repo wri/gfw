@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Loader from 'components/loader/loader';
 import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 import WidgetPieChart from 'pages/country/widget/components/widget-pie-chart';
 import WidgetPieChartLegend from 'pages/country/widget/components/widget-pie-chart-legend';
@@ -14,7 +13,6 @@ class WidgetFAOCover extends PureComponent {
 
     return (
       <div className="c-widget-fao-cover">
-        {loading && <Loader />}
         {!loading &&
           data &&
           data.length === 0 && (

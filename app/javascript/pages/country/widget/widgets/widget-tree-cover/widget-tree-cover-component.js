@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import WidgetPieChart from 'pages/country/widget/components/widget-pie-chart';
 import WidgetPieChartLegend from 'pages/country/widget/components/widget-pie-chart-legend';
-import Loader from 'components/loader/loader';
 import NoContent from 'components/no-content';
 
 import './widget-tree-cover-styles.scss';
@@ -14,7 +13,6 @@ class WidgetTreeCover extends PureComponent {
 
     return (
       <div className="c-widget-tree-cover">
-        {loading && <Loader />}
         {!loading &&
           data &&
           data.length === 0 && (

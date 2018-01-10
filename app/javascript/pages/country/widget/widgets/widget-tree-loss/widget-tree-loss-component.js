@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Loader from 'components/loader/loader';
 import NoContent from 'components/no-content';
 import WidgetBarChart from 'pages/country/widget/components/widget-bar-chart';
 import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
@@ -14,7 +13,6 @@ class WidgetTreeLoss extends PureComponent {
 
     return (
       <div className="c-widget-tree-loss">
-        {loading && <Loader />}
         {!loading &&
           data &&
           data.length === 0 && (
