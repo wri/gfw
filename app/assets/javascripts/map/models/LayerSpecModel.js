@@ -48,7 +48,7 @@ define([
       "idn_primary",
       "ifl_2013_deg",
       "ifl_2000",
-      "mangrove",
+      "mangrove_watch",
       "plantations_by_type",
       "plantations_by_species",
       "bra_plantations_by_type",
