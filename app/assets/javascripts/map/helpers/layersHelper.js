@@ -70,11 +70,7 @@ define([
   'map/views/layers/InfoamazoniaStoriesLayer',
   'map/views/layers/GrumpLayer',
   'map/views/layers/MangroveLayer',
-<<<<<<< HEAD
-=======
-  'map/views/layers/Mangrove2Layer',
   'map/views/layers/MangroveWatchLayer',
->>>>>>> 18655c3a2... Feat: Layer - Mangrove Watch (2010)
   'map/views/layers/WMSLayer',
   'map/views/layers/ConcesionesForestalesLayer',
   'map/views/layers/ConcesionesForestalesNotSupervisedLayer',
@@ -258,11 +254,7 @@ define([
   InfoamazoniaStoriesLayer,
   GrumpLayer,
   MangroveLayer,
-<<<<<<< HEAD
-=======
-  Mangrove2Layer,
   MangroveWatchLayer,
->>>>>>> 18655c3a2... Feat: Layer - Mangrove Watch (2010)
   WMSLayer,
   ConcesionesForestalesLayer,
   ConcesionesForestalesNotSupervisedLayer,
@@ -360,10 +352,7 @@ define([
   LbrDevExL,
   PakUserMangrovesLayer,
   SenUserProtectedAreasLayer,
-<<<<<<< HEAD
   HaitiWatershedLayer,
-=======
->>>>>>> 18655c3a2... Feat: Layer - Mangrove Watch (2010)
   EcuUserProtectedAreasLayer,
   BolUserFireFrequencyLayer,
   //highres layers
