@@ -12,41 +12,18 @@
   background: rgba($white, 0.5);
   z-index: 1;
 
-  .spinner::before {
-    content: '';
-    box-sizing: border-box;
-    position: absolute;
-    width: rem(40px);
-    height: rem(40px);
-    margin-top: -20px;
-    margin-left: -20px;
+  .spinner {
+    margin: 50px;
+    height: 38px;
+    width: 38px;
+    animation: rotate 1s infinite cubic-bezier(0.645, 0.045, 0.355, 1);
+    border: 5px solid transparent;
+    border-top-color: rgba($slate, 0.7);
     border-radius: 50%;
-    border-top: 5px solid rgba($slate, 0.7);
-    border-right: 5px solid transparent;
-    animation: load3 1.4s infinite linear;
   }
 }
 
-@-webkit-keyframes load3 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes load3 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
