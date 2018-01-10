@@ -7,7 +7,8 @@
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "thresholds"],
-      "showIndicators": ["mining", "landmark", "wdpa", "plantations"]
+      "showIndicators": ["mining", "landmark", "wdpa", "plantations"],
+      "showZeroIndicators": true
     },
     "settings": {
       "indicator": "gadm28",
@@ -66,7 +67,8 @@
       "indicators": ["gadm28", "wdpa", "primary_forests", "plantations", "ifl_2013"],
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "thresholds"]
+      "selectors": ["indicators", "thresholds"],
+      "showZeroIndicators": true
     },
     "settings": {
       "indicator": "gadm28",
