@@ -70,6 +70,7 @@ define([
   'map/views/layers/InfoamazoniaStoriesLayer',
   'map/views/layers/GrumpLayer',
   'map/views/layers/MangroveLayer',
+  'map/views/layers/MangroveWatchLayer',
   'map/views/layers/WMSLayer',
   'map/views/layers/ConcesionesForestalesLayer',
   'map/views/layers/ConcesionesForestalesNotSupervisedLayer',
@@ -253,6 +254,7 @@ define([
   InfoamazoniaStoriesLayer,
   GrumpLayer,
   MangroveLayer,
+  MangroveWatchLayer,
   WMSLayer,
   ConcesionesForestalesLayer,
   ConcesionesForestalesNotSupervisedLayer,
@@ -580,6 +582,9 @@ define([
     },
     mangrove :{
       view: MangroveLayer
+    },
+    mangrove_watch :{
+      view: MangroveWatchLayer,
     },
     WMSLayer :{
       view: WMSLayer
