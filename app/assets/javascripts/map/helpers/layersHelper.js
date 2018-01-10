@@ -69,7 +69,6 @@ define([
   'map/views/layers/MongabayStoriesLayer',
   'map/views/layers/InfoamazoniaStoriesLayer',
   'map/views/layers/GrumpLayer',
-  'map/views/layers/MangroveLayer',
   'map/views/layers/Mangrove2Layer',
   'map/views/layers/MangroveWatchLayer',
   'map/views/layers/WMSLayer',
@@ -256,7 +255,6 @@ define([
   MongabayStoriesLayer,
   InfoamazoniaStoriesLayer,
   GrumpLayer,
-  MangroveLayer,
   Mangrove2Layer,
   MangroveWatchLayer,
   WMSLayer,
@@ -585,9 +583,6 @@ define([
     },
     grump2000 :{
       view: GrumpLayer
-    },
-    mangrove :{
-      view: MangroveLayer
     },
     mangrove_2 :{
       view: Mangrove2Layer,
