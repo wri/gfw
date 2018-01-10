@@ -19,7 +19,7 @@ export const getTreeCoverData = createSelector(
   ],
   (total, cover, plantations, indicator, whitelist) => {
     if (!total) return null;
-    const hasPlantations = whitelist.indexOf('plantations') > -1;
+    const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
     const data = [
       {
         name:
@@ -37,7 +37,7 @@ export const getTreeCoverData = createSelector(
         percentage: (total - cover) / total * 100
       }
     ];
-    if (indicator === 'gadm28' && hasPlantations) {
+    if (indicator === 'gadm28') {
       data.splice(1, 0, {
         name: 'Tree plantations',
         value: plantations,

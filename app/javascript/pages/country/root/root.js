@@ -11,7 +11,7 @@ import CATEGORIES from 'pages/country/data/categories.json';
 
 import actions from './root-actions';
 import reducers, { initialState } from './root-reducers';
-import { getWidgets, getLinks } from './root-selectors';
+import { filterWidgets, getLinks } from './root-selectors';
 import RootComponent from './root-component';
 
 const mapStateToProps = ({ root, countryData, location }) => {
@@ -37,7 +37,7 @@ const mapStateToProps = ({ root, countryData, location }) => {
     locationNames,
     currentLocation:
       locationNames[adminLevel] && locationNames[adminLevel].label,
-    widgets: getWidgets({
+    widgets: filterWidgets({
       category,
       adminLevel,
       locationOptions,
