@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 
+import Loader from 'components/loader/loader';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 
 import WidgetTreeCover from 'pages/country/widget/widgets/widget-tree-cover';
@@ -36,7 +37,8 @@ class Widget extends PureComponent {
       title,
       settingsConfig,
       setWidgetSettingsUrl,
-      embed
+      embed,
+      loading
     } = this.props;
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
     return (
@@ -52,6 +54,7 @@ class Widget extends PureComponent {
           embed={embed}
         />
         <div className="container">
+          {loading && <Loader />}
           <WidgetComponent {...this.props} {...settingsConfig} />
         </div>
       </div>
@@ -65,7 +68,8 @@ Widget.propTypes = {
   setWidgetSettingsUrl: PropTypes.func.isRequired,
   settingsConfig: PropTypes.object,
   locationNames: PropTypes.object,
-  embed: PropTypes.bool
+  embed: PropTypes.bool,
+  loading: PropTypes.bool
 };
 
 export default Widget;
