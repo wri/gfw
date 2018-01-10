@@ -22,10 +22,10 @@ $button-height: rem(40px);
 
   &.disabled {
     cursor: not-allowed;
-    opacity: 0.5;
+    background-color: $grey-light;
 
     &:hover {
-      background-color: $green-gfw;
+      background-color: $grey-light;
     }
   }
 

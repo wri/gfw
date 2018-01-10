@@ -13,9 +13,9 @@
   z-index: 1;
 
   .spinner {
-    margin: 50px;
-    height: 38px;
-    width: 38px;
+    margin: rem(50px);
+    height: rem(38px);
+    width: rem(38px);
     animation: rotate 1s infinite cubic-bezier(0.645, 0.045, 0.355, 1);
     border: 5px solid transparent;
     border-top-color: rgba($slate, 0.7);
