@@ -12,8 +12,12 @@ import Sticky from 'components/sticky';
 import CountryDataProvider from 'pages/country/providers/country-data-provider';
 import SubNavMenu from 'components/subnav-menu';
 import NoContent from 'components/no-content';
-import Loader from 'components/loader/loader';
+import Loader from 'components/loader';
+import Button from 'components/button';
+import Icon from 'components/icon';
 
+import mapIcon from 'assets/icons/map-button.svg';
+import closeIcon from 'assets/icons/close.svg';
 import './root-styles.scss';
 
 class Root extends PureComponent {
@@ -34,9 +38,15 @@ class Root extends PureComponent {
 
     return (
       <div className="l-country">
-        <button className="open-map-mobile-tab" onClick={handleShowMapMobile}>
-          <span>{!showMapMobile ? 'show' : 'close'} map</span>
-        </button>
+        <Button
+          theme={`square ${showMapMobile ? 'theme-button-light' : ''}`}
+          className={`mobile-map-button ${
+            showMapMobile ? 'close-map' : 'open-map'
+          }`}
+          onClick={handleShowMapMobile}
+        >
+          <Icon icon={showMapMobile ? closeIcon : mapIcon} />
+        </Button>
         <div className="panels">
           <div className="data-panel">
             <Header
