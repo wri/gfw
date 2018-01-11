@@ -17,6 +17,10 @@
 
     &:hover {
       text-decoration: underline;
+
+      .item-bubble {
+        text-decoration: none;
+      }
     }
   }
 
