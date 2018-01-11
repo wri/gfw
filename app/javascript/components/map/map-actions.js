@@ -10,7 +10,7 @@ const getLayerSpec = createThunkAction(
   'getLayerSpec',
   () => (dispatch, state) => {
     if (!state().map.setLayersLoading) {
-      dispatch(setLayerSpecLoading(true));
+      dispatch(setLayerSpecLoading({ loading: true, error: false }));
       fetchLayerSpec()
         .then(response => {
           const layerSpec = {};
@@ -18,11 +18,10 @@ const getLayerSpec = createThunkAction(
             layerSpec[layer.slug] = layer;
           });
           dispatch(setLayerSpec(layerSpec));
-          dispatch(setLayerSpecLoading(false));
         })
         .catch(error => {
           console.info(error);
-          dispatch(setLayerSpecLoading(false));
+          dispatch(setLayerSpecLoading({ loading: false, error: true }));
         });
     }
   }
