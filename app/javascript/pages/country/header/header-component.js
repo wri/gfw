@@ -18,11 +18,12 @@ class Header extends PureComponent {
       handleRegionChange,
       handleSubRegionChange,
       getHeaderDescription,
-      isLoading
+      loading,
+      error
     } = this.props;
     return (
       <div className={`${className} c-header`}>
-        {isLoading && <Loader className="loader" theme="theme-loader-light" />}
+        {loading && <Loader className="loader" theme="theme-loader-light" />}
         <div className="row">
           <div className="columns small-12 large-6">
             <div className="select-container">
@@ -36,7 +37,7 @@ class Header extends PureComponent {
                   options={locationOptions.countries}
                   onChange={handleCountryChange}
                   searchable
-                  disabled={isLoading}
+                  disabled={loading}
                 />
               </div>
               {locationOptions.regions &&
@@ -53,7 +54,7 @@ class Header extends PureComponent {
                         handleRegionChange(locationNames.country, region)
                       }
                       searchable
-                      disabled={isLoading}
+                      disabled={loading}
                     />
                   </div>
                 )}
@@ -80,7 +81,7 @@ class Header extends PureComponent {
                         )
                       }
                       searchable
-                      disabled={isLoading}
+                      disabled={loading}
                     />
                   </div>
                 )}
@@ -88,9 +89,13 @@ class Header extends PureComponent {
           </div>
           <div className="columns large-6 medium-12 small-12">
             <div className="description text -title-xs">
-              {!isLoading && (
+              {!loading && (
                 <p
-                  dangerouslySetInnerHTML={{ __html: getHeaderDescription() }}
+                  dangerouslySetInnerHTML={{
+                    __html: error
+                      ? 'An error occured while fetching data. Please try again later.'
+                      : getHeaderDescription()
+                  }}
                 />
               )}
             </div>
@@ -103,7 +108,8 @@ class Header extends PureComponent {
 
 Header.propTypes = {
   className: PropTypes.string,
-  isLoading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.bool.isRequired,
   locationNames: PropTypes.object.isRequired,
   locationOptions: PropTypes.object.isRequired,
   handleCountryChange: PropTypes.func.isRequired,

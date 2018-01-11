@@ -12,11 +12,12 @@ export { initialState } from './map-reducers';
 export { default as reducers } from './map-reducers';
 export { default as actions } from './map-actions';
 
-const mapStateToProps = state => ({
-  isLoading: state.map.isLoading,
-  bounds: state.countryData.geostore.bounds,
-  layerSpec: state.map.layerSpec,
-  layers: state.map.layers
+const mapStateToProps = ({ map, countryData }, { isParentLoading }) => ({
+  loading: map.loading || isParentLoading,
+  error: map.error,
+  bounds: countryData.geostore.bounds,
+  layerSpec: map.layerSpec,
+  layers: map.layers
 });
 
 class MapContainer extends PureComponent {
