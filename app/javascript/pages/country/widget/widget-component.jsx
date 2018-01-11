@@ -4,6 +4,7 @@ import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 
 import Loader from 'components/loader/loader';
+import NoContent from 'components/no-content';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 
 import WidgetTreeCover from 'pages/country/widget/widgets/widget-tree-cover';
@@ -38,7 +39,8 @@ class Widget extends PureComponent {
       settingsConfig,
       setWidgetSettingsUrl,
       embed,
-      loading
+      loading,
+      error
     } = this.props;
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
     return (
@@ -55,7 +57,11 @@ class Widget extends PureComponent {
         />
         <div className="container">
           {loading && <Loader />}
-          <WidgetComponent {...this.props} {...settingsConfig} />
+          {!loading &&
+            error && (
+              <NoContent message="An error occured while fetching data. Please try again later." />
+            )}
+          {!error && <WidgetComponent {...this.props} {...settingsConfig} />}
         </div>
       </div>
     );
@@ -69,7 +75,8 @@ Widget.propTypes = {
   settingsConfig: PropTypes.object,
   locationNames: PropTypes.object,
   embed: PropTypes.bool,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  error: PropTypes.bool
 };
 
 export default Widget;

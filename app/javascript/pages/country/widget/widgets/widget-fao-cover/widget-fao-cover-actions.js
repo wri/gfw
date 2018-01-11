@@ -12,7 +12,7 @@ const getFAOCover = createThunkAction(
   'getFAOCover',
   params => (dispatch, state) => {
     if (!state().widgetFAOCover.loading) {
-      dispatch(setFAOCoverLoading(true));
+      dispatch(setFAOCoverLoading({ loading: true, error: false }));
       axios
         .all([getFAO({ ...params }), getRanking({ ...params })])
         .then(
@@ -26,13 +26,12 @@ const getFAOCover = createThunkAction(
               },
               rank: ranking[0].rank || 0
             };
-
             dispatch(setFAOCoverData(values));
           })
         )
         .catch(error => {
           console.info(error);
-          dispatch(setFAOCoverLoading(false));
+          dispatch(setFAOCoverLoading({ loading: false, error: true }));
         });
     }
   }

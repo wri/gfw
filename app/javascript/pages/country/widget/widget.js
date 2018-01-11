@@ -7,7 +7,7 @@ import actions from './widget-actions';
 
 const mapStateToProps = (state, ownProps) => {
   const { location, countryData } = state;
-  const { title, config, settings, loading, data } = state[
+  const { title, config, settings, loading, data, error } = state[
     `widget${upperFirst(ownProps.widget)}`
   ];
   const {
@@ -65,6 +65,7 @@ const mapStateToProps = (state, ownProps) => {
     location: location.payload,
     title,
     loading,
+    error,
     settingsConfig: {
       config,
       settings,
