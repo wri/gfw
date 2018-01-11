@@ -12,7 +12,7 @@ const getTreeGain = createThunkAction(
   'getTreeGain',
   params => (dispatch, state) => {
     if (!state().widgetTreeGain.loading) {
-      dispatch(setTreeGainLoading(true));
+      dispatch(setTreeGainLoading({ loading: true, error: false }));
       axios
         .all([getGain({ ...params }), getExtent({ ...params })])
         .then(
@@ -29,7 +29,7 @@ const getTreeGain = createThunkAction(
         )
         .catch(error => {
           console.info(error);
-          dispatch(setTreeGainLoading(false));
+          dispatch(setTreeGainLoading({ loading: false, error: true }));
         });
     }
   }

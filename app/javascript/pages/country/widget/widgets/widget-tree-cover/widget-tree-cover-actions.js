@@ -10,7 +10,7 @@ export const getTreeCover = createThunkAction(
   'getTreeCover',
   params => (dispatch, state) => {
     if (!state().widgetTreeCover.loading) {
-      dispatch(setTreeCoverLoading(true));
+      dispatch(setTreeCoverLoading({ loading: true, error: false }));
       getExtent(params)
         .then(response => {
           const totalArea =
@@ -46,7 +46,7 @@ export const getTreeCover = createThunkAction(
           }
         })
         .catch(error => {
-          dispatch(setTreeCoverLoading(false));
+          dispatch(setTreeCoverLoading({ loading: false, error: true }));
           console.info(error);
         });
     }
