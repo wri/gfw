@@ -85,7 +85,7 @@ class WidgetSettings extends PureComponent {
               <span className="label">YEARS</span>
               <div className="select-container">
                 <Dropdown
-                  theme="theme-select-button -transparent"
+                  theme="theme-select-button"
                   value={settings.startYear}
                   options={startYears}
                   onChange={option =>
@@ -98,7 +98,7 @@ class WidgetSettings extends PureComponent {
                 />
                 <span className="text-date">to</span>
                 <Dropdown
-                  theme="theme-select-button -transparent"
+                  theme="theme-select-button"
                   value={settings.endYear}
                   options={endYears}
                   onChange={option =>

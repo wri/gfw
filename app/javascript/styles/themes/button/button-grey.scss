@@ -1,0 +1,34 @@
+@import '~styles/settings';
+
+.theme-button-grey {
+  background-color: transparent;
+  color: $grey-dark;
+  border: solid 1px $grey-dark;
+
+  &:hover {
+    border-color: darken($grey-dark, 10%);
+    color: darken($grey-dark, 10%);
+    background-color: transparent;
+
+    svg {
+      fill: darken($grey-dark, 10%);
+    }
+  }
+
+  &.disabled {
+    border-color: $grey-light;
+
+    &:hover {
+      background-color: $grey-light;
+      border-color: $grey-light;
+    }
+
+    svg {
+      fill: $white;
+    }
+  }
+
+  svg {
+    fill: $grey-dark;
+  }
+}

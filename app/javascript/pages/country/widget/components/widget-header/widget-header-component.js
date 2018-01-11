@@ -58,7 +58,7 @@ class WidgetHeader extends PureComponent {
                 </Tooltip>
               )}
             <Button
-              className="theme-button-small theme-button-light square"
+              className="theme-button-small theme-button-grey square"
               onClick={() => setShareModal(shareData)}
             >
               <Icon icon={shareIcon} />

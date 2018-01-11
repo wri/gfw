@@ -18,7 +18,7 @@ class WidgetPaginate extends PureComponent {
       <div className="c-widget-paginate">
         {showPrev && (
           <Button
-            className="button-up square theme-button-small theme-button-light"
+            className="button-up square theme-button-small theme-button-grey"
             onClick={() => onClickChange(-1)}
           >
             <Icon icon={arrowDownIcon} className="icon" />
@@ -26,7 +26,7 @@ class WidgetPaginate extends PureComponent {
         )}
         {showNext && (
           <Button
-            className="button-down square theme-button-small theme-button-light"
+            className="button-down square theme-button-small theme-button-grey"
             onClick={() => onClickChange(1)}
           >
             <Icon icon={arrowDownIcon} className="icon" />
