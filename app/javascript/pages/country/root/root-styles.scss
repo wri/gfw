@@ -101,6 +101,14 @@ $black-tabs: #404040;
     &.close-map {
       top: rem(15px);
     }
+
+    &.open-map {
+      svg {
+        width: rem(40px);
+        height: rem(35px);
+        margin-top: rem(4px);
+      }
+    }
   }
 
   .subnav-tabs {
