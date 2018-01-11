@@ -3,13 +3,28 @@ export const initialState = {
   isRegionsLoading: false,
   isSubRegionsLoading: false,
   isGeostoreLoading: false,
+  isWhitelistLoading: false,
   countries: [],
   regions: [],
   subRegions: [],
+  whitelist: {},
   geostore: {
     areaHa: 0,
     bounds: []
   }
+};
+
+const mapLocations = locations => {
+  const locationsMapped = [];
+  locations.forEach(location => {
+    if (location.iso || location.id > 0) {
+      locationsMapped.push({
+        label: location.name,
+        value: location.iso || location.id
+      });
+    }
+  });
+  return locationsMapped;
 };
 
 const setCountriesLoading = (state, { payload }) => ({
@@ -32,19 +47,30 @@ const setGeostoreLoading = (state, { payload }) => ({
   isGeostoreLoading: payload
 });
 
+const setWhitelistLoading = (state, { payload }) => ({
+  ...state,
+  isWhitelistLoading: payload
+});
+
 const setCountries = (state, { payload }) => ({
   ...state,
-  countries: (payload || []).map(d => ({ label: d.name, value: d.iso }))
+  countries: mapLocations(payload)
 });
 
 const setRegions = (state, { payload }) => ({
   ...state,
-  regions: (payload || []).map(d => ({ label: d.name, value: d.id }))
+  regions: mapLocations(payload)
 });
 
 const setSubRegions = (state, { payload }) => ({
   ...state,
-  subRegions: (payload || []).map(d => ({ label: d.name, value: d.id }))
+  subRegions: mapLocations(payload)
+});
+
+const setWhitelist = (state, { payload }) => ({
+  ...state,
+  isWhitelistLoading: false,
+  whitelist: payload
 });
 
 const setGeostore = (state, { payload }) => ({
@@ -59,8 +85,10 @@ export default {
   setRegionsLoading,
   setSubRegionsLoading,
   setGeostoreLoading,
+  setWhitelistLoading,
   setCountries,
   setRegions,
   setSubRegions,
-  setGeostore
+  setGeostore,
+  setWhitelist
 };

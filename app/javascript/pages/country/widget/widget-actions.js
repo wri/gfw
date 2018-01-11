@@ -50,14 +50,17 @@ export const setWidgetSettingsStore = createThunkAction(
   'setWidgetSettingsStore',
   query => (dispatch, getState) => {
     Object.keys(query).forEach(widgetKey => {
-      const widgetConfig = decodeUrlForState(query[widgetKey]);
-      const { settings } = getState()[`widget${upperFirst(widgetKey)}`];
-      // Check if the state needs and update checking the values of the new config
-      // with the existing in the url to avoid dispatch actions without changes
-      if (!isObjectContained(widgetConfig, settings)) {
-        const actionFunc = widgetActions[`set${upperFirst(widgetKey)}Settings`];
-        if (actionFunc) {
-          dispatch(actionFunc(widgetConfig));
+      if (widgetKey !== 'category') {
+        const widgetConfig = decodeUrlForState(query[widgetKey]);
+        const { settings } = getState()[`widget${upperFirst(widgetKey)}`];
+        // Check if the state needs and update checking the values of the new config
+        // with the existing in the url to avoid dispatch actions without changes
+        if (!isObjectContained(widgetConfig, settings)) {
+          const actionFunc =
+            widgetActions[`set${upperFirst(widgetKey)}Settings`];
+          if (actionFunc) {
+            dispatch(actionFunc(widgetConfig));
+          }
         }
       }
     });

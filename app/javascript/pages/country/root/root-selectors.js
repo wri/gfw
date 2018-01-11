@@ -1,5 +1,8 @@
 import { createSelector } from 'reselect';
 import compact from 'lodash/compact';
+import uniq from 'lodash/uniq';
+import concat from 'lodash/concat';
+import isEmpty from 'lodash/isEmpty';
 import qs from 'query-string';
 
 import WIDGETS from 'pages/country/data/widgets-config.json';
@@ -9,23 +12,63 @@ const getCategories = state => state.categories || null;
 const getCategory = state => state.category || null;
 const getAdminLevel = state => state.adminLevel || null;
 const getLocation = state => state.location || null;
+const getLocationOptions = state => state.locationOptions || null;
+const getIndicatorWhitelist = state => state.indicatorWhitelist || null;
 
 // get lists selected
-export const getWidgets = createSelector(
-  [getCategory, getAdminLevel],
-  (category, adminLevel) => {
-    const widgetKeys = Object.keys(WIDGETS);
-    return widgetKeys
-      .map(key => ({
-        name: key,
-        ...WIDGETS[key]
-      }))
-      .filter(
-        widget =>
-          widget.config.categories.indexOf(category) > -1 &&
-          widget.config.admins.indexOf(adminLevel) > -1 &&
-          widget.active
-      );
+export const getWidgets = createSelector([], () =>
+  Object.keys(WIDGETS).map(key => ({
+    name: key,
+    ...WIDGETS[key]
+  }))
+);
+
+export const filterWidgetsByCategory = createSelector(
+  [getWidgets, getCategory],
+  (widgets, category) =>
+    widgets.filter(w => w.active && w.config.categories.indexOf(category) > -1)
+);
+
+export const checkWidgetNeedsLocations = createSelector(
+  [filterWidgetsByCategory, getLocationOptions, getAdminLevel],
+  (widgets, locations, adminLevel) => {
+    if (isEmpty(locations)) return null;
+    const adminCheck = adminLevel === 'country' ? 'regions' : 'subRegions';
+    return widgets.filter(
+      w =>
+        w.config.admins.indexOf(adminLevel) > -1 &&
+        (!w.config.locationCheck || locations[adminCheck].length > 1)
+    );
+  }
+);
+
+export const filterWidgets = createSelector(
+  [checkWidgetNeedsLocations, getIndicatorWhitelist],
+  (widgets, whitelist) => {
+    if (isEmpty(whitelist)) return null;
+    const witelistKeys = Object.keys(whitelist);
+    return widgets.filter(widget => {
+      // filter by showIndicators
+      let showByIndicators = true;
+      if (widget.config.showIndicators && widget.config.indicators) {
+        const totalIndicators = concat(
+          widget.config.showIndicators,
+          witelistKeys
+        ).length;
+        const reducedIndicators = uniq(
+          concat(widget.config.showIndicators, witelistKeys)
+        ).length;
+        showByIndicators = totalIndicators !== reducedIndicators;
+      }
+      // Then check if widget has data for gadm28 (loss or gain)
+      const type = widget.config.type;
+      const hasData =
+        !type ||
+        type === 'extent' ||
+        (whitelist.gadm28 && whitelist.gadm28[type]);
+
+      return showByIndicators && hasData;
+    });
   }
 );
 

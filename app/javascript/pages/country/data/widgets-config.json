@@ -6,7 +6,9 @@
       "indicators": ["gadm28", "mining", "landmark", "wdpa", "plantations"],
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "thresholds"]
+      "selectors": ["indicators", "thresholds"],
+      "showIndicators": ["mining", "landmark", "wdpa", "plantations"],
+      "type": "extent"
     },
     "settings": {
       "indicator": "gadm28",
@@ -25,7 +27,9 @@
                       "plantations__wdpa", "plantations__landmark"],
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region"],
-      "selectors": ["indicators", "thresholds", "units"]      
+      "selectors": ["indicators", "thresholds", "units"],
+      "locationCheck": true,
+      "type": "extent"
     },
     "settings": {
       "indicator": "gadm28",
@@ -47,7 +51,8 @@
                       "plantations__wdpa", "plantations__landmark"],
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "startYears", "endYears", "thresholds"]
+      "selectors": ["indicators", "startYears", "endYears", "thresholds"],
+      "type": "loss"
     },
     "settings": {
       "indicator": "gadm28",
@@ -64,7 +69,8 @@
       "indicators": ["gadm28", "wdpa", "primary_forests", "plantations", "ifl_2013"],
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "thresholds"]
+      "selectors": ["indicators", "thresholds"],
+      "type": "gain"
     },
     "settings": {
       "indicator": "gadm28",
@@ -76,9 +82,10 @@
     "title": "FAO reforestation",
     "config": {
       "gridWidth": 6,
-      "categories": ["summary","forest-change"],
+      "categories": ["summary", "forest-change"],
       "admins": ["country"],
-      "selectors": ["periods"]
+      "selectors": ["periods"],
+      "type": "gain"
     },
     "settings": {
       "period": 1990
@@ -90,7 +97,8 @@
     "config": {
       "gridWidth": 6,
       "categories": ["land-cover"],
-      "admins": ["country"]
+      "admins": ["country"],
+      "type": "extent"
     },
     "active": true
   }

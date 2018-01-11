@@ -16,7 +16,8 @@ class CountryDataProvider extends PureComponent {
       getCountries,
       getRegions,
       getSubRegions,
-      getGeostore
+      getGeostore,
+      getWhitelist
     } = this.props;
     getCountries();
     getRegions(location.country);
@@ -24,13 +25,15 @@ class CountryDataProvider extends PureComponent {
       getSubRegions(location.country, location.region);
     }
     getGeostore(location.country, location.region, location.subRegion);
+    getWhitelist(location.country, location.region, location.subRegion);
   }
 
   componentWillReceiveProps(nextProps) {
     const { country, region, subRegion } = nextProps.location;
-    const { getRegions, getSubRegions, getGeostore } = this.props;
+    const { getRegions, getSubRegions, getGeostore, getWhitelist } = this.props;
     const hasCountryChanged = country !== this.props.location.country;
     const hasRegionChanged = region !== this.props.location.region;
+    const hasSubRegionChanged = subRegion !== this.props.location.subRegion;
 
     if (hasCountryChanged) {
       getRegions(country);
@@ -38,6 +41,7 @@ class CountryDataProvider extends PureComponent {
         getSubRegions(country, region);
       }
       getGeostore(country, region, subRegion);
+      getWhitelist(country, region, subRegion);
     }
 
     if (hasRegionChanged) {
@@ -45,6 +49,11 @@ class CountryDataProvider extends PureComponent {
         getSubRegions(country, region);
       }
       getGeostore(country, region);
+      getWhitelist(country, region, subRegion);
+    }
+
+    if (hasSubRegionChanged) {
+      getWhitelist(country, region, subRegion);
     }
   }
 
@@ -58,7 +67,8 @@ CountryDataProvider.propTypes = {
   getCountries: PropTypes.func.isRequired,
   getRegions: PropTypes.func.isRequired,
   getSubRegions: PropTypes.func.isRequired,
-  getGeostore: PropTypes.func.isRequired
+  getGeostore: PropTypes.func.isRequired,
+  getWhitelist: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };

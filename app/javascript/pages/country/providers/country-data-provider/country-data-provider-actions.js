@@ -3,7 +3,8 @@ import { createThunkAction } from 'utils/redux';
 import {
   getCountriesProvider,
   getRegionsProvider,
-  getSubRegionsProvider
+  getSubRegionsProvider,
+  getWhitelistProvider
 } from 'services/country';
 import { getGeostoreProvider } from 'services/geostore';
 
@@ -11,11 +12,13 @@ export const setCountriesLoading = createAction('setCountriesLoading');
 export const setRegionsLoading = createAction('setRegionsLoading');
 export const setSubRegionsLoading = createAction('setSubRegionsLoading');
 export const setGeostoreLoading = createAction('setGeostoreLoading');
+export const setWhitelistLoading = createAction('setWhitelistLoading');
 
 export const setCountries = createAction('setCountries');
 export const setRegions = createAction('setRegions');
 export const setSubRegions = createAction('setSubRegions');
 export const setGeostore = createAction('setGeostore');
+export const setWhitelist = createAction('setWhitelist');
 
 export const getCountries = createThunkAction(
   'getCountries',
@@ -89,6 +92,34 @@ export const getGeostore = createThunkAction(
         })
         .catch(error => {
           dispatch(setGeostoreLoading(false));
+          console.info(error);
+        });
+    }
+  }
+);
+
+export const getWhitelist = createThunkAction(
+  'getWhitelist',
+  (country, region, subRegion) => (dispatch, state) => {
+    if (!state().countryData.isWhitelistLoading) {
+      dispatch(setWhitelistLoading(true));
+      getWhitelistProvider(country, region, subRegion)
+        .then(response => {
+          const data = {};
+          if (response.data && response.data.data.length) {
+            response.data.data.forEach(d => {
+              data[d.polyname] = {
+                extent_2000: d.total_extent_2000,
+                extent_2010: d.total_extent_2010,
+                loss: d.total_loss,
+                gain: d.total_gain
+              };
+            });
+          }
+          dispatch(setWhitelist(data));
+        })
+        .catch(error => {
+          dispatch(setWhitelistLoading(false));
           console.info(error);
         });
     }

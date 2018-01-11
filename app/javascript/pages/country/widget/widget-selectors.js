@@ -13,10 +13,11 @@ const getAdmins = state => state.location || null;
 const getCountries = state => state.countries || null;
 const getRegions = state => state.regions || null;
 const getSubRegions = state => state.subRegions || null;
-const getWhitelist = state => state.whitelist || null;
+const getLocationWhitelist = state => state.whitelist || null;
 const getData = state => state.data || null;
 const getStartYear = state => state.startYear || null;
 const getEndYear = state => state.endYear || null;
+const getConfig = state => state.config || null;
 
 // helper to get active key for location
 export const getActiveAdmin = location => {
@@ -88,12 +89,26 @@ export const getAdminsSelected = createSelector(
 );
 
 export const getIndicators = createSelector(
-  [getWhitelist, getAdminsSelected],
-  (whitelist, locationNames) => {
-    if (isEmpty(locationNames) || !locationNames.current) return null;
-    if (!whitelist) return INDICATORS;
+  [getLocationWhitelist, getAdminsSelected, getConfig],
+  (locationWhitelist, locationNames, config) => {
+    if (
+      isEmpty(locationNames) ||
+      !locationNames.current ||
+      isEmpty(locationWhitelist)
+    ) {
+      return null;
+    }
+    const whitelist = Object.keys(locationWhitelist);
     return sortByKey(
-      INDICATORS.filter(i => whitelist.indexOf(i.value) > -1).map(item => {
+      INDICATORS.filter(
+        i =>
+          config.indicators.indexOf(i.value) > -1 &&
+          whitelist.indexOf(i.value) > -1 &&
+          (!config.type ||
+            config.type === 'extent' ||
+            (locationWhitelist[i.value] &&
+              locationWhitelist[i.value][config.type]))
+      ).map(item => {
         const indicator = item;
         if (indicator.value === 'gadm28') {
           indicator.label = `All of ${locationNames.current.label}`;

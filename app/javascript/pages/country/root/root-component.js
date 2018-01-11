@@ -12,6 +12,7 @@ import Sticky from 'components/sticky';
 import CountryDataProvider from 'pages/country/providers/country-data-provider';
 import SubNavMenu from 'components/subnav-menu';
 import NoContent from 'components/no-content';
+import Loader from 'components/loader/loader';
 
 import './root-styles.scss';
 
@@ -23,7 +24,12 @@ class Root extends PureComponent {
       links,
       isGeostoreLoading,
       widgets,
-      location
+      location,
+      currentLocation,
+      locationOptions,
+      locationNames,
+      category,
+      loading
     } = this.props;
 
     return (
@@ -33,7 +39,12 @@ class Root extends PureComponent {
         </button>
         <div className="panels">
           <div className="data-panel">
-            <Header className="header" location={location} />
+            <Header
+              className="header"
+              location={location}
+              locationOptions={locationOptions}
+              locationNames={locationNames}
+            />
             <SubNavMenu
               links={links}
               className="subnav-tabs"
@@ -42,7 +53,14 @@ class Root extends PureComponent {
             />
             <div className="widgets">
               <div className="row">
-                {widgets.length > 0 ? (
+                {loading && (
+                  <div className="columns small-12">
+                    <Loader className="widgets-loader" />
+                  </div>
+                )}
+                {!loading &&
+                  widgets &&
+                  widgets.length > 0 &&
                   widgets.map(widget => (
                     <div
                       key={widget.name}
@@ -52,12 +70,17 @@ class Root extends PureComponent {
                     >
                       <Widget widget={widget.name} />
                     </div>
-                  ))
-                ) : (
-                  <div className="columns small-12">
-                    <NoContent message="No widgets available" icon />
-                  </div>
-                )}
+                  ))}
+                {!loading &&
+                  (!widgets || widgets.length === 0) && (
+                    <div className="columns small-12">
+                      <NoContent
+                        className="no-widgets-message"
+                        message={`No ${category} data available for ${currentLocation}`}
+                        icon
+                      />
+                    </div>
+                  )}
               </div>
             </div>
           </div>
@@ -105,7 +128,12 @@ Root.propTypes = {
   links: PropTypes.array.isRequired,
   isGeostoreLoading: PropTypes.bool,
   widgets: PropTypes.array,
-  location: PropTypes.object
+  location: PropTypes.object,
+  loading: PropTypes.bool,
+  currentLocation: PropTypes.string,
+  category: PropTypes.string,
+  locationOptions: PropTypes.object,
+  locationNames: PropTypes.object
 };
 
 export default Root;
