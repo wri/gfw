@@ -66,6 +66,7 @@ const mapStateToProps = (state, ownProps) => {
     title,
     loading,
     error,
+    data,
     settingsConfig: {
       config,
       settings,

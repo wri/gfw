@@ -13,7 +13,7 @@
     "settings": {
       "indicator": "gadm28",
       "threshold": 30,
-      "extentYear": "area_extent_2000"
+      "extentYear": 2000
     },
     "active": true
   },

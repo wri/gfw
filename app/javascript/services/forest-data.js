@@ -48,7 +48,10 @@ export const getExtent = ({
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
     .replace('{indicator}', indicator)
-    .replace('{extentYear}', extentYear);
+    .replace(
+      '{extentYear}',
+      `area_extent${extentYear === 2000 ? `_${extentYear}` : ''}`
+    );
   return axios.get(url);
 };
 
