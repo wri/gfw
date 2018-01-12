@@ -17,7 +17,8 @@ const mapStateToProps = ({ widgetTreeCover, countryData }) => {
   return {
     loading: widgetTreeCover.loading || isCountriesLoading || isRegionsLoading,
     regions: countryData.regions,
-    data:
+    data: widgetTreeCover.data,
+    parsedData:
       getTreeCoverData({
         totalArea,
         cover,
@@ -54,20 +55,18 @@ class WidgetTreeCoverContainer extends PureComponent {
 
   getSentence = () => {
     const { locationNames, settings } = this.props;
-    const { indicators, thresholds } = this.props.options;
-    if (locationNames && indicators.length) {
-      const activeThreshold = thresholds.find(
-        t => t.value === settings.threshold
-      );
-      const indicator =
-        indicators && getActiveFilter(settings, indicators, 'indicator');
-      return `Tree  cover for
-        ${indicator.label} of
-        ${locationNames.current &&
-          locationNames.current.label} with a tree canopy of
-        ${activeThreshold.label}`;
-    }
-    return '';
+    const { indicators } = this.props.options;
+    const { totalArea, cover } = this.props.data;
+    const indicator =
+      indicators && getActiveFilter(settings, indicators, 'indicator');
+    const coverStatus = cover / totalArea > 0.5 ? 'tree covered' : 'non-forest';
+    const first = `<b>${locationNames.current.label} (${indicator &&
+      indicator.label.toLowerCase()})</b> is mainly ${coverStatus}, `;
+    const second = `considering tree cover extent in <b>${
+      settings.year
+    }</b> where tree canopy is greater than <b>${settings.threshold}%</b>`;
+
+    return `${first} ${second}`;
   };
 
   render() {
@@ -83,7 +82,8 @@ WidgetTreeCoverContainer.propTypes = {
   location: PropTypes.object.isRequired,
   locationNames: PropTypes.object.isRequired,
   getTreeCover: PropTypes.func.isRequired,
-  options: PropTypes.object.isRequired
+  options: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired
 };
 
 export { actions, reducers, initialState };
