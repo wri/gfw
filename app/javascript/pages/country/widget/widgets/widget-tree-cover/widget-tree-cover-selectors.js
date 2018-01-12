@@ -11,7 +11,7 @@ const getIndicatorWhitelist = state => state.whitelist;
 export const getTreeCoverData = createSelector(
   [getData, getIndicator, getIndicatorWhitelist],
   (data, indicator, whitelist) => {
-    if (isEmpty(data)) return null;
+    if (isEmpty(data) || isEmpty(whitelist)) return null;
     const { totalArea, cover, plantations } = data;
     const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
     const parsedData = [

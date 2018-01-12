@@ -10,7 +10,11 @@ import { getTreeCoverData } from './widget-tree-cover-selectors';
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
 
 const mapStateToProps = ({ widgetTreeCover, countryData }) => {
-  const { isCountriesLoading, isRegionsLoading, whitelist } = countryData;
+  const {
+    isCountriesLoading,
+    isRegionsLoading,
+    countryWhitelist
+  } = countryData;
   const { data } = widgetTreeCover;
   const { indicator } = widgetTreeCover.settings;
 
@@ -21,7 +25,7 @@ const mapStateToProps = ({ widgetTreeCover, countryData }) => {
     parsedData: getTreeCoverData({
       data,
       indicator,
-      whitelist
+      whitelist: countryWhitelist
     })
   };
 };
