@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import isEqual from 'lodash/isEqual';
 import sumBy from 'lodash/sumBy';
-
-import { getActiveFilter } from 'pages/country/widget/widget-selectors';
+import { getLocationLabel } from 'pages/country/widget/widget-selectors';
 
 import actions from './widget-tree-loss-actions';
 import reducers, { initialState } from './widget-tree-loss-reducers';
@@ -33,6 +32,7 @@ class WidgetTreeLossContainer extends PureComponent {
     if (
       !isEqual(location, this.props.location) ||
       !isEqual(settings.indicator, this.props.settings.indicator) ||
+      !isEqual(settings.extentYear, this.props.settings.extentYear) ||
       !isEqual(settings.threshold, this.props.settings.threshold)
     ) {
       getTreeLoss({ ...location, ...settings });
@@ -42,22 +42,20 @@ class WidgetTreeLossContainer extends PureComponent {
   getSentence = () => {
     const { locationNames, settings, data, extent } = this.props;
     const { indicators } = this.props.options;
-    const indicator =
-      indicators && getActiveFilter(settings, indicators, 'indicator');
+    const locationLabel = getLocationLabel(
+      locationNames.current.label,
+      settings.indicator,
+      indicators
+    );
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
       (data && data.length && sumBy(data, 'emissions')) || 0;
     const percentageLoss =
       (totalLoss && extent && totalLoss / extent * 100) || 0;
-    const locationText = `${locationNames.current &&
-      locationNames.current.label} (${indicator &&
-      (settings.indicator === 'gadm28'
-        ? 'all regions'
-        : indicator.label.toLowerCase())})`;
     return `Between <span>${settings.startYear}</span> and <span>${
       settings.endYear
     }</span>, 
-      <span>${locationText}</span> lost <b>${format('.3s')(
+      <span>${locationLabel}</span> lost <b>${format('.3s')(
       totalLoss
     )}ha</b> of tree cover${totalLoss ? '.' : ','} ${
       totalLoss > 0
