@@ -2,7 +2,7 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import { getIndicatorLabel } from 'pages/country/widget/widget-selectors';
+import { getLocationLabel } from 'pages/country/widget/widget-selectors';
 
 import actions from './widget-tree-cover-actions';
 import reducers, { initialState } from './widget-tree-cover-reducers';
@@ -53,11 +53,15 @@ class WidgetTreeCoverContainer extends PureComponent {
     const { locationNames, settings } = this.props;
     const { indicators } = this.props.options;
     const { totalArea, cover } = this.props.data;
-    const indicator = getIndicatorLabel(settings.indicator, indicators);
+    const locationLabel = getLocationLabel(
+      locationNames.current.label,
+      settings.indicator,
+      indicators
+    );
     const coverStatus = cover / totalArea > 0.5 ? 'tree covered' : 'non-forest';
-    const first = `<b>${
-      locationNames.current.label
-    } (${indicator})</b> is mainly ${coverStatus}, `;
+    const first = `<b>${locationLabel}</b> ${
+      settings.indicator === 'gadm28' ? 'is' : 'are'
+    } mainly ${coverStatus}, `;
     const second = `considering tree cover extent in <b>${
       settings.extentYear
     }</b> where tree canopy is greater than <b>${settings.threshold}%</b>`;
