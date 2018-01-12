@@ -61,13 +61,14 @@ class WidgetSettings extends PureComponent {
         {extentYears && (
           <Dropdown
             theme="theme-select-light"
-            label="YEAR"
+            label="TREE COVER EXTENT"
             value={settings.extentYear}
             options={extentYears}
             disabled={loading}
             onChange={option =>
               onSettingsChange({ value: { extentYear: option.value }, widget })
             }
+            infoAction={() => console.info('open modal')}
           />
         )}
         {units && (

@@ -14,11 +14,12 @@ const getAdmins = state => state.location || null;
 const getCountries = state => state.countries || null;
 const getRegions = state => state.regions || null;
 const getSubRegions = state => state.subRegions || null;
-const getLocationWhitelist = state => state.whitelist || null;
 const getData = state => state.data || null;
 const getStartYear = state => state.startYear || null;
 const getEndYear = state => state.endYear || null;
 const getConfig = state => state.config || null;
+const getLocationWhitelist = state =>
+  (state.location.region ? state.regionWhitelist : state.countryWhitelist);
 
 // helper to get active key for location
 export const getActiveAdmin = location => {

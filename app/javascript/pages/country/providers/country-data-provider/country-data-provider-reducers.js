@@ -7,7 +7,8 @@ export const initialState = {
   countries: [],
   regions: [],
   subRegions: [],
-  whitelist: {},
+  countryWhitelist: {},
+  regionWhitelist: {},
   geostore: {
     areaHa: 0,
     bounds: []
@@ -47,9 +48,14 @@ const setGeostoreLoading = (state, { payload }) => ({
   isGeostoreLoading: payload
 });
 
-const setWhitelistLoading = (state, { payload }) => ({
+const setCountryWhitelistLoading = (state, { payload }) => ({
   ...state,
-  isWhitelistLoading: payload
+  isCountryWhitelistLoading: payload
+});
+
+const setRegionWhitelistLoading = (state, { payload }) => ({
+  ...state,
+  isRegionWhitelistLoading: payload
 });
 
 const setCountries = (state, { payload }) => ({
@@ -67,10 +73,16 @@ const setSubRegions = (state, { payload }) => ({
   subRegions: mapLocations(payload)
 });
 
-const setWhitelist = (state, { payload }) => ({
+const setCountryWhitelist = (state, { payload }) => ({
   ...state,
-  isWhitelistLoading: false,
-  whitelist: payload
+  isCountryWhitelistLoading: false,
+  countryWhitelist: payload
+});
+
+const setRegionWhitelist = (state, { payload }) => ({
+  ...state,
+  isRegionWhitelistLoading: false,
+  regionWhitelist: payload
 });
 
 const setGeostore = (state, { payload }) => ({
@@ -85,10 +97,12 @@ export default {
   setRegionsLoading,
   setSubRegionsLoading,
   setGeostoreLoading,
-  setWhitelistLoading,
+  setCountryWhitelistLoading,
+  setRegionWhitelistLoading,
   setCountries,
   setRegions,
   setSubRegions,
   setGeostore,
-  setWhitelist
+  setCountryWhitelist,
+  setRegionWhitelist
 };
