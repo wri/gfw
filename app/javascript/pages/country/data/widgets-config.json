@@ -52,14 +52,15 @@
                       "plantations__wdpa", "plantations__landmark"],
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "startYears", "endYears", "thresholds"],
+      "selectors": ["indicators", "startYears", "endYears", "thresholds", "extentYears"],
       "type": "loss"
     },
     "settings": {
       "indicator": "gadm28",
       "threshold": 30,
       "startYear": 2001,
-      "endYear": 2016
+      "endYear": 2016,
+      "extentYear": 2010
     },
     "active": true
   },

@@ -14,8 +14,8 @@ export const setTreeLossData = (state, { payload }) => ({
   ...state,
   loading: false,
   data: {
-    loss: payload.loss,
-    extent: payload.extent
+    ...state.data,
+    ...payload
   }
 });
 
