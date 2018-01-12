@@ -46,6 +46,7 @@ $black-tabs: #404040;
     @media screen and (min-width: $screen-m) {
       width: 30%;
       position: absolute;
+      margin-top: 0;
     }
 
     @media screen and (min-width: $screen-xl) {

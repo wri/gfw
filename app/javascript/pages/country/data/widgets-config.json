@@ -12,7 +12,8 @@
     },
     "settings": {
       "indicator": "gadm28",
-      "threshold": 30
+      "threshold": 30,
+      "year": 2000
     },
     "active": true
   },
