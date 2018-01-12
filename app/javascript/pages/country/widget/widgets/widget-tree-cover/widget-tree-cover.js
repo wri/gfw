@@ -2,7 +2,7 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import { getActiveFilter } from 'pages/country/widget/widget-selectors';
+import { getLocationLabel } from 'pages/country/widget/widget-selectors';
 
 import actions from './widget-tree-cover-actions';
 import reducers, { initialState } from './widget-tree-cover-reducers';
@@ -10,21 +10,23 @@ import { getTreeCoverData } from './widget-tree-cover-selectors';
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
 
 const mapStateToProps = ({ widgetTreeCover, countryData }) => {
-  const { isCountriesLoading, isRegionsLoading, whitelist } = countryData;
-  const { totalArea, cover, plantations } = widgetTreeCover.data;
+  const {
+    isCountriesLoading,
+    isRegionsLoading,
+    countryWhitelist
+  } = countryData;
+  const { data } = widgetTreeCover;
   const { indicator } = widgetTreeCover.settings;
 
   return {
     loading: widgetTreeCover.loading || isCountriesLoading || isRegionsLoading,
     regions: countryData.regions,
-    data:
-      getTreeCoverData({
-        totalArea,
-        cover,
-        plantations,
-        indicator,
-        whitelist
-      }) || []
+    data: widgetTreeCover.data,
+    parsedData: getTreeCoverData({
+      data,
+      indicator,
+      whitelist: countryWhitelist
+    })
   };
 };
 
@@ -42,8 +44,7 @@ class WidgetTreeCoverContainer extends PureComponent {
 
     if (
       !isEqual(location, this.props.location) ||
-      !isEqual(settings.indicator, this.props.settings.indicator) ||
-      !isEqual(settings.threshold, this.props.settings.threshold)
+      !isEqual(settings, this.props.settings)
     ) {
       getTreeCover({
         ...location,
@@ -54,20 +55,22 @@ class WidgetTreeCoverContainer extends PureComponent {
 
   getSentence = () => {
     const { locationNames, settings } = this.props;
-    const { indicators, thresholds } = this.props.options;
-    if (locationNames && indicators.length) {
-      const activeThreshold = thresholds.find(
-        t => t.value === settings.threshold
-      );
-      const indicator =
-        indicators && getActiveFilter(settings, indicators, 'indicator');
-      return `Tree  cover for
-        ${indicator.label} of
-        ${locationNames.current &&
-          locationNames.current.label} with a tree canopy of
-        ${activeThreshold.label}`;
-    }
-    return '';
+    const { indicators } = this.props.options;
+    const { totalArea, cover } = this.props.data;
+    const locationLabel = getLocationLabel(
+      locationNames.current.label,
+      settings.indicator,
+      indicators
+    );
+    const coverStatus = cover / totalArea > 0.5 ? 'tree covered' : 'non-forest';
+    const first = `<b>${locationLabel}</b> ${
+      settings.indicator === 'gadm28' ? 'is' : 'are'
+    } mainly ${coverStatus}, `;
+    const second = `considering tree cover extent in <b>${
+      settings.extentYear
+    }</b> where tree canopy is greater than <b>${settings.threshold}%</b>.`;
+
+    return `${first} ${second}`;
   };
 
   render() {
@@ -83,7 +86,8 @@ WidgetTreeCoverContainer.propTypes = {
   location: PropTypes.object.isRequired,
   locationNames: PropTypes.object.isRequired,
   getTreeCover: PropTypes.func.isRequired,
-  options: PropTypes.object.isRequired
+  options: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired
 };
 
 export { actions, reducers, initialState };

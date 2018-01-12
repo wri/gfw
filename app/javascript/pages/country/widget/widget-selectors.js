@@ -7,17 +7,19 @@ import INDICATORS from 'pages/country/data/indicators.json';
 import THRESHOLDS from 'pages/country/data/thresholds.json';
 import UNITS from 'pages/country/data/units.json';
 import PERIODS from 'pages/country/data/periods.json';
+import EXTENT_YEARS from 'pages/country/data/extent-years.json';
 
 // get list data
 const getAdmins = state => state.location || null;
 const getCountries = state => state.countries || null;
 const getRegions = state => state.regions || null;
 const getSubRegions = state => state.subRegions || null;
-const getLocationWhitelist = state => state.whitelist || null;
 const getData = state => state.data || null;
 const getStartYear = state => state.startYear || null;
 const getEndYear = state => state.endYear || null;
 const getConfig = state => state.config || null;
+const getLocationWhitelist = state =>
+  (state.location.region ? state.regionWhitelist : state.countryWhitelist);
 
 // helper to get active key for location
 export const getActiveAdmin = location => {
@@ -29,6 +31,14 @@ export const getActiveAdmin = location => {
 // helper to get active filter from state based on key
 export const getActiveFilter = (settings, filters, key) =>
   filters.find(i => i.value === settings[key]);
+
+export const getLocationLabel = (location, indicator, indicators) => {
+  if (!location || !indicators || !indicators.length) return '';
+  const activeIndicator = indicators.find(i => i.value === indicator);
+  return activeIndicator.value === 'gadm28'
+    ? location
+    : `${activeIndicator.label} in ${location}`;
+};
 
 // get lists selected
 export const getAdminsOptions = createSelector(
@@ -125,6 +135,8 @@ export const getThresholds = createSelector([], () =>
 );
 
 export const getUnits = createSelector([], () => sortByKey(UNITS, 'label'));
+
+export const getExtentYears = createSelector([], () => EXTENT_YEARS);
 
 export const getYears = createSelector([getData], data => {
   if (isEmpty(data) || !data.length) return null;

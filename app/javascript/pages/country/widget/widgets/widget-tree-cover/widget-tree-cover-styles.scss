@@ -1,6 +1,8 @@
 @import '~styles/settings.scss';
 
 .c-widget-tree-cover {
+  padding-top: rem(15px);
+
   .pie-chart-container {
     display: flex;
     flex-direction: row;

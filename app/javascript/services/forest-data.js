@@ -6,7 +6,7 @@ const CARTO_REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
 
 const SQL_QUERIES = {
   extent:
-    "SELECT SUM(area_extent) as value SUM(area_gadm28) as total_area, FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
+    "SELECT SUM({extentYear}) as value, SUM(area_gadm28) as total_area FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
   gain:
     "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = {threshold}",
   loss:
@@ -41,12 +41,17 @@ export const getExtent = ({
   region,
   subRegion,
   indicator,
-  threshold
+  threshold,
+  extentYear
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.extent}`
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
-    .replace('{indicator}', indicator);
+    .replace('{indicator}', indicator)
+    .replace(
+      '{extentYear}',
+      `area_extent${extentYear === 2000 ? `_${extentYear}` : ''}`
+    );
   return axios.get(url);
 };
 

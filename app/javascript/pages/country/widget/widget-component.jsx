@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
+import isEmpty from 'lodash/isEmpty';
 
 import Loader from 'components/loader/loader';
 import NoContent from 'components/no-content';
@@ -40,7 +41,8 @@ class Widget extends PureComponent {
       setWidgetSettingsUrl,
       embed,
       loading,
-      error
+      error,
+      data
     } = this.props;
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
     return (
@@ -56,6 +58,13 @@ class Widget extends PureComponent {
           embed={embed}
         />
         <div className="container">
+          {!loading &&
+            isEmpty(data) && (
+              <NoContent
+                message={`No data in selection for ${locationNames.current &&
+                  locationNames.current.label}`}
+              />
+            )}
           {loading && <Loader />}
           {!loading &&
             error && (
@@ -76,7 +85,8 @@ Widget.propTypes = {
   locationNames: PropTypes.object,
   embed: PropTypes.bool,
   loading: PropTypes.bool,
-  error: PropTypes.bool
+  error: PropTypes.bool,
+  data: PropTypes.object
 };
 
 export default Widget;

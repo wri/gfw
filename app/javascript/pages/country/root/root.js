@@ -25,6 +25,12 @@ const mapStateToProps = ({ root, countryData, location }) => {
   const locationOptions = getAdminsOptions(adminData);
   const locationNames = getAdminsSelected(adminData);
   const adminLevel = getActiveAdmin(location.payload);
+  const {
+    regionWhitelist,
+    countryWhitelist,
+    isCountryWhitelistLoading,
+    isRegionWhitelistLoading
+  } = countryData;
   return {
     gfwHeaderHeight: root.gfwHeaderHeight,
     isMapFixed: root.isMapFixed,
@@ -41,9 +47,11 @@ const mapStateToProps = ({ root, countryData, location }) => {
       category,
       adminLevel,
       locationOptions,
-      indicatorWhitelist: countryData.whitelist
+      indicatorWhitelist: location.payload.region
+        ? regionWhitelist
+        : countryWhitelist
     }),
-    loading: countryData.isWhitelistLoading
+    loading: isCountryWhitelistLoading || isRegionWhitelistLoading
   };
 };
 

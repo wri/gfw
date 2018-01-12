@@ -22,7 +22,8 @@ class WidgetSettings extends PureComponent {
       periods,
       thresholds,
       startYears,
-      endYears
+      endYears,
+      extentYears
     } = this.props.options;
 
     return (
@@ -55,6 +56,19 @@ class WidgetSettings extends PureComponent {
                 </Button>
               </div>
             )}
+          />
+        )}
+        {extentYears && (
+          <Dropdown
+            theme="theme-select-light"
+            label="TREE COVER EXTENT"
+            value={settings.extentYear}
+            options={extentYears}
+            disabled={loading}
+            onChange={option =>
+              onSettingsChange({ value: { extentYear: option.value }, widget })
+            }
+            infoAction={() => console.info('open modal')}
           />
         )}
         {units && (

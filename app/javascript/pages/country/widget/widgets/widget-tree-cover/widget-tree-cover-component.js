@@ -3,29 +3,22 @@ import PropTypes from 'prop-types';
 
 import WidgetPieChart from 'pages/country/widget/components/widget-pie-chart';
 import WidgetPieChartLegend from 'pages/country/widget/components/widget-pie-chart-legend';
-import NoContent from 'components/no-content';
+import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 
 import './widget-tree-cover-styles.scss';
 
 class WidgetTreeCover extends PureComponent {
   render() {
-    const { loading, data, settings, locationNames } = this.props;
+    const { parsedData, settings, getSentence } = this.props;
 
     return (
       <div className="c-widget-tree-cover">
-        {!loading &&
-          data &&
-          data.length === 0 && (
-            <NoContent
-              message={`No data in selection for ${locationNames.current &&
-                locationNames.current.label}`}
-            />
-          )}
-        {!loading &&
-          data && (
+        {parsedData && (
+          <div>
+            <WidgetDynamicSentence sentence={getSentence()} />
             <div className="pie-chart-container">
               <WidgetPieChartLegend
-                data={data}
+                data={parsedData}
                 config={{
                   ...settings,
                   format: '.3s',
@@ -33,19 +26,19 @@ class WidgetTreeCover extends PureComponent {
                   key: 'value'
                 }}
               />
-              <WidgetPieChart className="cover-pie-chart" data={data} />
+              <WidgetPieChart className="cover-pie-chart" data={parsedData} />
             </div>
-          )}
+          </div>
+        )}
       </div>
     );
   }
 }
 
 WidgetTreeCover.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  locationNames: PropTypes.object.isRequired,
-  data: PropTypes.array.isRequired,
-  settings: PropTypes.object.isRequired
+  parsedData: PropTypes.array,
+  settings: PropTypes.object.isRequired,
+  getSentence: PropTypes.func.isRequired
 };
 
 export default WidgetTreeCover;
