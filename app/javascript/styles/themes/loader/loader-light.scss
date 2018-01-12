@@ -1,9 +1,9 @@
 @import '~styles/settings.scss';
 
 .theme-loader-light {
+  background-color: rgba($slate-light, 0.5);
+
   .spinner {
-    &::before {
-      border-top-color: $white;
-    }
+    border-top-color: $white;
   }
 }

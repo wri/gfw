@@ -4,8 +4,8 @@ import Link from 'redux-first-router-link';
 
 import './button-styles.scss';
 import 'styles/themes/button/button-light.scss'; // eslint-disable-line
-import 'styles/themes/button/button-light-green.scss'; // eslint-disable-line
 import 'styles/themes/button/button-small.scss'; // eslint-disable-line
+import 'styles/themes/button/button-grey.scss'; // eslint-disable-line
 
 const Button = props => {
   const {

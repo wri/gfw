@@ -21,10 +21,6 @@
     }
   }
 
-  .dd__list {
-    padding: rem(5px) 0;
-  }
-
   .dd__openTobottom {
     margin-top: 0;
     border-top: 0;
@@ -37,7 +33,6 @@
 
   .dd__selectControl,
   .dd__option {
-    padding: rem(7px) rem(12px);
     background-color: transparent;
   }
 
@@ -45,10 +40,5 @@
   .dd__option {
     font-size: 13px;
     letter-spacing: 0.1px;
-  }
-
-  .dd__disabled {
-    opacity: 0.7;
-    background-color: $grey-light;
   }
 }

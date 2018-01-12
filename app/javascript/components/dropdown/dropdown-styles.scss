@@ -26,6 +26,18 @@
     }
   }
 
+  .dd__selectControl {
+    padding: 0;
+  }
+
+  .dd__selected {
+    padding: rem(5px) rem(5px) rem(5px) rem(10px);
+  }
+
+  .icon {
+    margin-right: rem(10px);
+  }
+
   .dd__selected,
   .dd__placeholder,
   .dd__selectedItem,
@@ -85,5 +97,13 @@
 
   .dd__selectedOption {
     background-color: $white;
+  }
+
+  .dd__disabled {
+    .dd__selectControl {
+      cursor: not-allowed;
+      background-color: $grey-light;
+      border-color: $grey-dark;
+    }
   }
 }

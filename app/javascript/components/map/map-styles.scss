@@ -10,27 +10,3 @@
   z-index: 10;
   background-color: rgba($slate, 0.2);
 }
-
-.open-map-mobile-tab {
-  display: block;
-  background: #ffd24d;
-  line-height: 1;
-  text-transform: uppercase;
-  color: #555;
-  text-decoration: none;
-  padding: rem(8px);
-  position: fixed;
-  top: calc(50% - 50px);
-  right: rem(-32px);
-  z-index: 999;
-  cursor: pointer;
-  transform: rotate(90deg) translate(50%);
-
-  @media screen and (min-width: $screen-m) {
-    display: none;
-  }
-
-  &:focus {
-    outline: none;
-  }
-}

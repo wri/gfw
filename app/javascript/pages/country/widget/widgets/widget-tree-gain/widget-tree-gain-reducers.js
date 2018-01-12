@@ -2,6 +2,7 @@ import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 
 export const initialState = {
   loading: false,
+  error: false,
   data: {
     gain: 0,
     extent: 0
@@ -11,7 +12,7 @@ export const initialState = {
 
 const setTreeGainLoading = (state, { payload }) => ({
   ...state,
-  loading: payload
+  ...payload
 });
 
 const setTreeGainData = (state, { payload }) => ({

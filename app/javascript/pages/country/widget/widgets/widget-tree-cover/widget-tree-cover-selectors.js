@@ -37,7 +37,7 @@ export const getTreeCoverData = createSelector(
         percentage: (total - cover) / total * 100
       }
     ];
-    if (indicator === 'gadm28') {
+    if (indicator === 'gadm28' && hasPlantations) {
       data.splice(1, 0, {
         name: 'Tree plantations',
         value: plantations,

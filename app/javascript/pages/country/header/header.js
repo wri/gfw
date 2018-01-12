@@ -19,17 +19,11 @@ const mapStateToProps = ({ countryData, location, header }) => {
     isRegionsLoading,
     isSubRegionsLoading
   } = countryData;
-  const {
-    isExtentLoading,
-    isPlantationsLossLoading,
-    isTotalLossLoading
-  } = header;
   const countryDataLoading =
     isCountriesLoading || isRegionsLoading || isSubRegionsLoading;
-  const headerDataLoading =
-    isExtentLoading || isPlantationsLossLoading || isTotalLossLoading;
   return {
-    isLoading: countryDataLoading || headerDataLoading,
+    loading: countryDataLoading || header.loading,
+    error: header.error,
     settings: header.settings,
     location: location.payload,
     query: location.query,
@@ -83,36 +77,22 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 class HeaderContainer extends PureComponent {
   componentDidMount() {
-    const {
-      location,
-      settings,
-      getTotalExtent,
-      getTotalLoss,
-      getPlantationsLoss
-    } = this.props;
-    getTotalExtent({ ...location, ...settings });
-    getTotalLoss({ ...location, ...settings });
-    getPlantationsLoss({ ...location, ...settings, indicator: 'plantations' });
+    const { location, settings, getHeaderData } = this.props;
+    getHeaderData({ ...location, ...settings });
     if (location.region) {
-      getTotalExtent({ ...location, ...settings });
+      getHeaderData({ ...location, ...settings });
     }
     if (location.subRegion) {
-      getTotalExtent({ ...location, ...settings });
+      getHeaderData({ ...location, ...settings });
     }
   }
 
   componentWillReceiveProps(nextProps) {
     const { location, settings } = nextProps;
-    const { getTotalExtent, getTotalLoss, getPlantationsLoss } = this.props;
+    const { getHeaderData } = this.props;
 
     if (!isEqual(location, this.props.location)) {
-      getTotalExtent({ ...nextProps.location, ...settings });
-      getTotalLoss({ ...nextProps.location, ...settings });
-      getPlantationsLoss({
-        ...nextProps.location,
-        ...settings,
-        indicator: 'plantations'
-      });
+      getHeaderData({ ...nextProps.location, ...settings });
     }
   }
 
@@ -161,9 +141,7 @@ class HeaderContainer extends PureComponent {
 HeaderContainer.propTypes = {
   location: PropTypes.object.isRequired,
   locationNames: PropTypes.object.isRequired,
-  getTotalExtent: PropTypes.func.isRequired,
-  getTotalLoss: PropTypes.func.isRequired,
-  getPlantationsLoss: PropTypes.func.isRequired,
+  getHeaderData: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired
 };

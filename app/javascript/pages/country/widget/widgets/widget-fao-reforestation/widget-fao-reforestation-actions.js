@@ -11,7 +11,7 @@ const getFAOReforestationData = createThunkAction(
   'getFAOReforestation',
   params => (dispatch, state) => {
     if (!state().widgetFAOReforestation.loading) {
-      dispatch(setFAOReforestationLoading(true));
+      dispatch(setFAOReforestationLoading({ loading: true, error: false }));
       getFAOExtent({ ...params })
         .then(response => {
           const data = response.data.rows;
@@ -24,7 +24,7 @@ const getFAOReforestationData = createThunkAction(
         })
         .catch(error => {
           console.info(error);
-          dispatch(setFAOReforestationLoading(false));
+          dispatch(setFAOReforestationLoading({ loading: false, error: true }));
         });
     }
   }

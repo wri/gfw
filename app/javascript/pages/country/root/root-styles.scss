@@ -37,13 +37,14 @@ $black-tabs: #404040;
   .map {
     right: -100%;
     width: 100%;
-    height: calc(100vh - #{$header-height});
+    height: 100vh;
+    margin-top: -58px;
     position: fixed;
     transition: right 0.5s linear;
+    z-index: 1001;
 
     @media screen and (min-width: $screen-m) {
       width: 30%;
-      height: 100vh;
       position: absolute;
     }
 
@@ -52,8 +53,7 @@ $black-tabs: #404040;
     }
 
     &.-open-mobile {
-      right: -$mobile-gutter;
-      z-index: 11;
+      right: 0;
     }
 
     &.-fixed {
@@ -75,6 +75,38 @@ $black-tabs: #404040;
 
       &.-open-mobile {
         right: 0;
+      }
+    }
+  }
+
+  .mobile-map-button {
+    position: fixed;
+    bottom: rem(15px);
+    right: rem(15px);
+    width: rem(60px);
+    height: rem(60px);
+    z-index: 1002;
+    cursor: pointer;
+    fill: $white;
+    border-radius: 50%;
+
+    @media screen and (min-width: $screen-m) {
+      display: none;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &.close-map {
+      top: rem(15px);
+    }
+
+    &.open-map {
+      svg {
+        width: rem(40px);
+        height: rem(35px);
+        margin-top: rem(4px);
       }
     }
   }

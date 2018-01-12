@@ -2,6 +2,7 @@ import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 
 export const initialState = {
   loading: false,
+  error: false,
   data: {
     totalArea: 0,
     cover: 0,
@@ -12,7 +13,7 @@ export const initialState = {
 
 const setTreeCoverLoading = (state, { payload }) => ({
   ...state,
-  loading: payload
+  ...payload
 });
 
 const setTreeCoverData = (state, { payload }) => ({

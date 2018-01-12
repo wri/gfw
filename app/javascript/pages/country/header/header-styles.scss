@@ -16,7 +16,6 @@
 
   .loader {
     z-index: 10;
-    background-color: rgba($slate-light, 0.5);
 
     @media screen and (min-width: $screen-xl) {
       padding-left: calc(100% - (#{$max-width} * 0.7) + #{$desktop-gutter});
@@ -38,6 +37,7 @@
       flex-direction: row;
       justify-content: flex-start;
       align-items: center;
+      margin-bottom: rem(20px);
 
       .icon {
         min-width: rem(12px);

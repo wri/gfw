@@ -42,30 +42,32 @@ class Share extends PureComponent {
                 ? 'Click and paste HTML to embed in website'
                 : 'Click and paste link in email or IM'}
             </p>
-            {loading &&
-              selected !== 'embed' && <Loader className="input-loader" />}
-            <input
-              ref={input => {
-                this.textInput = input;
-              }}
-              type="text"
-              value={!loading ? inputValue : ''}
-              readOnly
-              onClick={handleFocus}
-              className="input"
-            />
-            <button
+            <div className="input">
+              {loading &&
+                selected !== 'embed' && <Loader className="input-loader" />}
+              <input
+                ref={input => {
+                  this.textInput = input;
+                }}
+                type="text"
+                value={!loading ? inputValue : ''}
+                readOnly
+                onClick={handleFocus}
+              />
+            </div>
+            <Button
+              theme="theme-button-light"
               className="input-button"
               onClick={() => handleCopyToClipboard(this.textInput)}
             >
               {copied ? 'COPIED!' : 'COPY'}
-            </button>
+            </Button>
           </div>
           {embedUrl ? (
             <div className="buttons-container">
               <Button
                 className={`share-button ${
-                  selected === 'embed' ? 'theme-button-light-green' : ''
+                  selected === 'embed' ? 'theme-button-light' : ''
                 }`}
                 onClick={() => setShareSelected('link')}
               >
@@ -73,7 +75,7 @@ class Share extends PureComponent {
               </Button>
               <Button
                 className={`share-button ${
-                  selected !== 'embed' ? 'theme-button-light-green' : ''
+                  selected !== 'embed' ? 'theme-button-light' : ''
                 }`}
                 onClick={() => setShareSelected('embed')}
               >
