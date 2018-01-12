@@ -31,6 +31,14 @@ export const getActiveAdmin = location => {
 export const getActiveFilter = (settings, filters, key) =>
   filters.find(i => i.value === settings[key]);
 
+export const getIndicatorLabel = (indicator, indicators) => {
+  if (!indicators || !indicators.length) return '';
+  const activeIndicator = indicators.find(i => i.value === indicator);
+  return activeIndicator.value === 'gadm28'
+    ? 'all regions'
+    : activeIndicator.label;
+};
+
 // get lists selected
 export const getAdminsOptions = createSelector(
   [getCountries, getRegions, getSubRegions],

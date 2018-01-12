@@ -2,7 +2,7 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import { getActiveFilter } from 'pages/country/widget/widget-selectors';
+import { getIndicatorLabel } from 'pages/country/widget/widget-selectors';
 
 import actions from './widget-tree-cover-actions';
 import reducers, { initialState } from './widget-tree-cover-reducers';
@@ -11,21 +11,18 @@ import WidgetTreeCoverComponent from './widget-tree-cover-component';
 
 const mapStateToProps = ({ widgetTreeCover, countryData }) => {
   const { isCountriesLoading, isRegionsLoading, whitelist } = countryData;
-  const { totalArea, cover, plantations } = widgetTreeCover.data;
+  const { data } = widgetTreeCover;
   const { indicator } = widgetTreeCover.settings;
 
   return {
     loading: widgetTreeCover.loading || isCountriesLoading || isRegionsLoading,
     regions: countryData.regions,
     data: widgetTreeCover.data,
-    parsedData:
-      getTreeCoverData({
-        totalArea,
-        cover,
-        plantations,
-        indicator,
-        whitelist
-      }) || []
+    parsedData: getTreeCoverData({
+      data,
+      indicator,
+      whitelist
+    })
   };
 };
 
@@ -54,17 +51,15 @@ class WidgetTreeCoverContainer extends PureComponent {
 
   getSentence = () => {
     const { locationNames, settings } = this.props;
-    const { indicators, extentYears } = this.props.options;
+    const { indicators } = this.props.options;
     const { totalArea, cover } = this.props.data;
-    const indicator =
-      indicators && getActiveFilter(settings, indicators, 'indicator');
-    const extentYear =
-      extentYears && getActiveFilter(settings, extentYears, 'extentYear');
+    const indicator = getIndicatorLabel(settings.indicator, indicators);
     const coverStatus = cover / totalArea > 0.5 ? 'tree covered' : 'non-forest';
-    const first = `<b>${locationNames.current.label} (${indicator &&
-      indicator.label.toLowerCase()})</b> is mainly ${coverStatus}, `;
+    const first = `<b>${
+      locationNames.current.label
+    } (${indicator})</b> is mainly ${coverStatus}, `;
     const second = `considering tree cover extent in <b>${
-      extentYear.label
+      settings.extentYear
     }</b> where tree canopy is greater than <b>${settings.threshold}%</b>`;
 
     return `${first} ${second}`;

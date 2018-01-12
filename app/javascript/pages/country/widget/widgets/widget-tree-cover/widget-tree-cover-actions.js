@@ -13,34 +13,37 @@ export const getTreeCover = createThunkAction(
       dispatch(setTreeCoverLoading({ loading: true, error: false }));
       getExtent(params)
         .then(response => {
-          const totalArea =
-            response.data &&
-            response.data.data &&
-            response.data.data[0].total_area;
-          const cover =
-            response.data && response.data.data && response.data.data[0].value;
+          const extent = response.data && response.data.data;
+          let totalArea = 0;
+          let cover = 0;
+          let plantations = 0;
+          let data = {};
+          if (extent.length) {
+            totalArea = extent[0].total_area;
+            cover = extent[0].value;
+            data = {
+              totalArea,
+              cover,
+              plantations
+            };
+          }
           if (params.indicator !== 'gadm28') {
-            dispatch(
-              setTreeCoverData({
-                totalArea,
-                cover,
-                plantations: 0
-              })
-            );
+            dispatch(setTreeCoverData(data));
           } else {
             getExtent({ ...params, indicator: 'plantations' }).then(
               plantationsResponse => {
-                const { data } = plantationsResponse.data;
-                const plantations =
-                  data && data.length > 0 ? data[0].value : '';
-
-                dispatch(
-                  setTreeCoverData({
-                    totalArea,
-                    cover,
+                const plantationsData =
+                  plantationsResponse.data && plantationsResponse.data.data;
+                plantations = plantationsData.length
+                  ? plantationsData[0].value
+                  : 0;
+                if (extent.length) {
+                  data = {
+                    ...data,
                     plantations
-                  })
-                );
+                  };
+                }
+                dispatch(setTreeCoverData(data));
               }
             );
           }
