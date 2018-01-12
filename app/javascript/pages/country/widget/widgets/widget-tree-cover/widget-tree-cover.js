@@ -43,8 +43,7 @@ class WidgetTreeCoverContainer extends PureComponent {
 
     if (
       !isEqual(location, this.props.location) ||
-      !isEqual(settings.indicator, this.props.settings.indicator) ||
-      !isEqual(settings.threshold, this.props.settings.threshold)
+      !isEqual(settings, this.props.settings)
     ) {
       getTreeCover({
         ...location,
@@ -55,15 +54,17 @@ class WidgetTreeCoverContainer extends PureComponent {
 
   getSentence = () => {
     const { locationNames, settings } = this.props;
-    const { indicators } = this.props.options;
+    const { indicators, extentYears } = this.props.options;
     const { totalArea, cover } = this.props.data;
     const indicator =
       indicators && getActiveFilter(settings, indicators, 'indicator');
+    const extentYear =
+      extentYears && getActiveFilter(settings, extentYears, 'extentYear');
     const coverStatus = cover / totalArea > 0.5 ? 'tree covered' : 'non-forest';
     const first = `<b>${locationNames.current.label} (${indicator &&
       indicator.label.toLowerCase()})</b> is mainly ${coverStatus}, `;
     const second = `considering tree cover extent in <b>${
-      settings.year
+      extentYear.label
     }</b> where tree canopy is greater than <b>${settings.threshold}%</b>`;
 
     return `${first} ${second}`;

@@ -6,14 +6,14 @@
       "indicators": ["gadm28", "mining", "landmark", "wdpa", "plantations"],
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "thresholds"],
+      "selectors": ["indicators", "thresholds", "extentYears"],
       "showIndicators": ["mining", "landmark", "wdpa", "plantations"],
       "type": "extent"
     },
     "settings": {
       "indicator": "gadm28",
       "threshold": 30,
-      "year": 2000
+      "extentYear": "area_extent_2000"
     },
     "active": true
   },
