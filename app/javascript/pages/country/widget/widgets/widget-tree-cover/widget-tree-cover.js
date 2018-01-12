@@ -68,7 +68,7 @@ class WidgetTreeCoverContainer extends PureComponent {
     } mainly ${coverStatus}, `;
     const second = `considering tree cover extent in <b>${
       settings.extentYear
-    }</b> where tree canopy is greater than <b>${settings.threshold}%</b>`;
+    }</b> where tree canopy is greater than <b>${settings.threshold}%</b>.`;
 
     return `${first} ${second}`;
   };
