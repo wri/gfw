@@ -15,7 +15,7 @@
       "threshold": 30,
       "extentYear": 2000
     },
-    "active": true
+    "active": false
   },
   "treeLocated": {
     "title": "Where are the forests located",
@@ -63,7 +63,7 @@
       "endYear": 2016,
       "extentYear": 2010
     },
-    "active": true
+    "active": false
   },
   "treeGain": {
     "title": "Tree cover gain",

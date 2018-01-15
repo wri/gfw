@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import WidgetPieChart from 'pages/country/widget/components/widget-pie-chart';
 import WidgetNumberedList from 'pages/country/widget/components/widget-numbered-list';
+import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 import COLORS from 'pages/country/data/colors.json';
 
 import './widget-tree-located-styles.scss';
@@ -14,11 +15,13 @@ class WidgetTreeLocated extends PureComponent {
       chartData,
       settings,
       handlePageChange,
-      embed
+      embed,
+      getSentence
     } = this.props;
 
     return (
       <div className="c-widget-tree-located">
+        <WidgetDynamicSentence sentence={getSentence()} />
         {data && chartData &&
           data.length > 0 && (
             <div className="locations-container">
