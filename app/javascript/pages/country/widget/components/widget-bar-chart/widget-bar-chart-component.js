@@ -11,6 +11,7 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import { format } from 'd3-format';
+import moment from 'moment';
 
 import './widget-bar-chart-styles.scss';
 
@@ -31,6 +32,7 @@ class WidgetBarChart extends PureComponent {
               axisLine={false}
               tickLine={false}
               tick={{ dy: 8, fontSize: '12px' }}
+              tickFormatter={tick => moment(tick, 'YYYY').format('YY')}
             />
             <YAxis
               dataKey={yKey}
