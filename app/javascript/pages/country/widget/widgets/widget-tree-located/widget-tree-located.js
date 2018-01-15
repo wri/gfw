@@ -2,7 +2,7 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import { getLocationLabel } from 'pages/country/widget/widget-selectors';
+// import { getLocationLabel } from 'pages/country/widget/widget-selectors';
 import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-tree-located-actions';
@@ -44,6 +44,7 @@ class WidgetTreeLocatedContainer extends PureComponent {
       !isEqual(location.country, this.props.location.country) ||
       !isEqual(location.region, this.props.location.region) ||
       !isEqual(settings.indicator, this.props.settings.indicator) ||
+      !isEqual(settings.extentYear, this.props.settings.extentYear) ||
       !isEqual(settings.threshold, this.props.settings.threshold)
     ) {
       getTreeLocated({

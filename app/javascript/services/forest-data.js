@@ -12,26 +12,40 @@ const SQL_QUERIES = {
   loss:
     "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.emissions) as emissions FROM data WHERE polyname = '{indicator}' AND {location} AND thresh= {threshold} GROUP BY polyname, iso, nested(year_data.year)",
   locations:
-    "SELECT {location}, {extent} as value, {area} as total_area FROM data WHERE iso = '{iso}' AND thresh = {threshold} AND polyname = '{polyname}' {grouping}",
+    "SELECT {location} as region, {extentYear} as extent, {extent} as total FROM data WHERE iso = '{iso}' AND thresh = {threshold} AND polyname = '{indicator}' {grouping}",
   fao:
     "SELECT fao.iso, fao.name, forest_planted, forest_primary, forest_regenerated, fao.forest_primary, fao.extent, a.land as area_ha FROM gfw2_countries as fao INNER JOIN umd_nat_staging as a ON fao.iso = a.iso WHERE fao.forest_primary is not null AND fao.iso = '{country}' AND a.year = 2001 AND a.thresh = 30",
   faoExtent:
     "SELECT country AS iso, name, year, reforest AS rate, forest*1000 AS extent FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {period} AND fao.country = '{country}'"
 };
 
+const getExtentYear = year =>
+  (year === 2000 ? 'area_extent_2000' : 'area_extent');
+
 const getLocationQuery = (country, region, subRegion) =>
   `iso = '${country}'${region ? ` AND adm1 = ${region}` : ''}${
     subRegion ? ` AND adm2 = ${subRegion}` : ''
   }`;
 
-export const getLocations = ({ country, region, indicator, threshold }) => {
+export const getLocations = ({
+  country,
+  region,
+  indicator,
+  threshold,
+  extentYear
+}) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.locations}`
     .replace('{location}', region ? 'adm2' : 'adm1')
-    .replace('{extent}', region ? 'area_extent' : 'sum(area_extent)')
-    .replace('{area}', region ? 'area_gadm28' : 'sum(area_gadm28)')
+    .replace(
+      '{extentYear}',
+      `${!region ? 'sum(' : ''}${getExtentYear(extentYear)}${
+        !region ? ')' : ''
+      }`
+    )
+    .replace('{extent}', region ? 'area_gadm28' : 'sum(area_gadm28)')
     .replace('{iso}', country)
     .replace('{threshold}', threshold)
-    .replace('{polyname}', indicator)
+    .replace('{indicator}', indicator)
     .replace('{grouping}', region ? `AND adm1 = '${region}'` : 'GROUP BY adm1');
   return axios.get(url);
 };
