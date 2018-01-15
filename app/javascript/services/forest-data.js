@@ -9,6 +9,8 @@ const SQL_QUERIES = {
     "SELECT SUM({extentYear}) as value, SUM(area_gadm28) as total_area FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
   gain:
     "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = {threshold}",
+  gainRanking:
+    "SELECT {region} as region, SUM(area_gain) AS value, SUM({extentYear}) AS extent FROM data WHERE {location} AND polyname = '{polyname}' AND thresh = 0 GROUP BY region",
   loss:
     "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.emissions) as emissions FROM data WHERE polyname = '{indicator}' AND {location} AND thresh= {threshold} GROUP BY polyname, iso, nested(year_data.year)",
   locations:
@@ -22,6 +24,13 @@ const SQL_QUERIES = {
 const getLocationQuery = (country, region, subRegion) =>
   `iso = '${country}'${region ? ` AND adm1 = ${region}` : ''}${
     subRegion ? ` AND adm2 = ${subRegion}` : ''
+  }`;
+
+const getRankingLocationQuery = (country, region, subRegion) =>
+  `${
+    region
+      ? `iso = '${country}' ${subRegion ? `AND adm1 = ${region}` : ''}`
+      : '1 = 1'
   }`;
 
 export const getLocations = ({ country, region, indicator, threshold }) => {
@@ -96,5 +105,30 @@ export const getFAOExtent = ({ country, period }) => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.faoExtent}`
     .replace('{country}', country)
     .replace('{period}', period);
+  return axios.get(url);
+};
+
+export const getGainRanking = ({
+  country,
+  region,
+  subRegion,
+  indicator,
+  extentYear
+}) => {
+  let regionValue = 'iso';
+  if (subRegion) {
+    regionValue = 'adm2';
+  } else if (region) {
+    regionValue = 'adm1';
+  }
+
+  const url = `${REQUEST_URL}${SQL_QUERIES.gainRanking}`
+    .replace('{region}', regionValue)
+    .replace('{location}', getRankingLocationQuery(country, region, subRegion))
+    .replace(
+      '{extentYear}',
+      extentYear === 2000 ? 'area_extent_2000' : 'area_extent'
+    )
+    .replace('{polyname}', indicator);
   return axios.get(url);
 };
