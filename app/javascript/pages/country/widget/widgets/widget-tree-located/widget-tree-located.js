@@ -2,7 +2,9 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-// import { getLocationLabel } from 'pages/country/widget/widget-selectors';
+import sumBy from 'lodash/sumBy';
+import { format } from 'd3-format';
+import { getLocationLabel } from 'pages/country/widget/widget-selectors';
 import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-tree-located-actions';
@@ -54,21 +56,39 @@ class WidgetTreeLocatedContainer extends PureComponent {
     }
   }
 
-  // getSentence = () => {
-  //   const { locationNames, settings } = this.props;
-  //   const { indicators } = this.props.options;
-  //   const { totalArea, cover } = this.props.data;
-  //   const indicator = getLocationLabel(settings.indicator, indicators);
-  //   const coverStatus = cover / totalArea > 0.5 ? 'tree covered' : 'non-forest';
-  //   const first = `<b>${
-  //     locationNames.current.label
-  //   } (${indicator})</b> is mainly ${coverStatus}, `;
-  //   const second = `considering tree cover extent in <b>${
-  //     settings.extentYear
-  //   }</b> where tree canopy is greater than <b>${settings.threshold}%</b>`;
+  getSentence = () => {
+    // The top 11 sub-regions are responsible for 49% of England's regional tree cover 
+    // in 2000 where tree canopy is greater than 0%. North Yorkshire has 
+    // the largest relative tree cover in England, at 8% compared to an average of 0.9%.
 
-  //   return `${first} ${second}`;
-  // };
+    const { data, settings, options, location, locationNames } = this.props;
+    const { extentYear, indicator, threshold } = this.props.settings;
+    const { indicators } = this.props.options;
+
+    const totalExtent = sumBy(data, 'extent');
+    const currentLocation = locationNames && locationNames.current && locationNames.current.label;
+    const locationLabel = getLocationLabel(currentLocation, indicator, indicators);
+    const topRegion = data.length && data[0];
+    console.log(totalExtent, data.length);
+    const avgExtent = totalExtent / data.length;
+    let percentileExtent = 0;
+    let percentileLength = 0;
+    let first = '';
+    let second = '';
+
+    if (data.length > 10) {
+      while (percentileLength < data.length && percentileExtent / totalExtent < 0.5) {
+        percentileExtent += data[percentileLength].extent;
+        percentileLength += 1;
+      }
+      const topExtent = percentileExtent / totalExtent * 100;
+      first = `The top <b>${percentileLength}</b> regions are responsible for more than half <b>(${format('.0f')(topExtent)}%)</b> of <b>${locationLabel}'s</b> regional tree cover in <b>${extentYear}</b> where tree canopy is greater than <b>${threshold}%</b>.`;
+    }
+
+    second = `${!first ? `Within <b>${currentLocation}</b>,` : ''}<b> ${topRegion.label}</b> has the largest relative tree cover in ${currentLocation}, at <b>${format('.0f')(topRegion.percentage)}%</b> compared to an average of <b>${format('.0f')(avgExtent)}%</b>`;
+
+    return `${first} ${second}`;
+  };
 
   handlePageChange = change => {
     const { setTreeLocatedPage, settings } = this.props;
@@ -78,7 +98,8 @@ class WidgetTreeLocatedContainer extends PureComponent {
   render() {
     return createElement(WidgetTreeLocatedComponent, {
       ...this.props,
-      handlePageChange: this.handlePageChange
+      handlePageChange: this.handlePageChange,
+      getSentence: this.getSentence
     });
   }
 }
