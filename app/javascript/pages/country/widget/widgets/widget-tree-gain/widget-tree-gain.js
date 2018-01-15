@@ -27,7 +27,6 @@ class WidgetTreeGainContainer extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { settings, location, getTreeGain } = nextProps;
-
     if (
       !isEqual(location, this.props.location) ||
       !isEqual(settings, this.props.settings)
