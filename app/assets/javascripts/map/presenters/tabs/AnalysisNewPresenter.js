@@ -124,6 +124,9 @@ define([
         name: 'forest2000',
         slug: 'umd-loss-gain'
       },{
+        name: 'forest2010',
+        slug: 'umd-loss-gain'
+      },{
         name: 'forma_month_3',
         slug: 'forma250GFW',
         subscription: true

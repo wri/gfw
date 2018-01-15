@@ -48,6 +48,13 @@
       </li>
       {{/if}}
 
+      {{#if resource.baselayers.forest2010}}
+      <li>
+        <span class="stats-title">Tree cover (2010)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
+        <span class="stats-count" style="color: {{resource.baselayers.forest2010.title_color}};"><strong>{{resource.alerts.treeExtent2010}}</strong> ha</span>
+      </li>
+      {{/if}}
+
       <li>
         <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
       </li>
