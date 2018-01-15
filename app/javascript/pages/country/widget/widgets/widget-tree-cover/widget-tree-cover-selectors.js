@@ -16,7 +16,7 @@ export const getTreeCoverData = createSelector(
     const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
     const parsedData = [
       {
-        name:
+        label:
           hasPlantations && indicator === 'gadm28'
             ? 'Natural Forest'
             : 'Tree cover',
@@ -25,7 +25,7 @@ export const getTreeCoverData = createSelector(
         percentage: (cover - plantations) / totalArea * 100
       },
       {
-        name: 'Non-Forest',
+        label: 'Non-Forest',
         value: totalArea - cover,
         color: COLORS.nonForest,
         percentage: (totalArea - cover) / totalArea * 100
@@ -33,7 +33,7 @@ export const getTreeCoverData = createSelector(
     ];
     if (indicator === 'gadm28' && hasPlantations) {
       parsedData.splice(1, 0, {
-        name: 'Tree plantations',
+        label: 'Tree plantations',
         value: plantations,
         color: COLORS.mediumGreen,
         percentage: plantations / totalArea * 100
