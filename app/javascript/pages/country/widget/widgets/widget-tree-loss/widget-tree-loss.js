@@ -62,7 +62,9 @@ class WidgetTreeLossContainer extends PureComponent {
         ? ` 
       This loss is equal to <b>${format('.1f')(
           percentageLoss
-        )}%</b> of the regions tree cover extent in 2010, 
+        )}%</b> of the regions tree cover extent in <b>${
+          settings.extentYear
+        }</b>, 
       and equivalent to <b>${format('.3s')(
           totalEmissions
         )}tonnes</b> of CO\u2082 emissions`
