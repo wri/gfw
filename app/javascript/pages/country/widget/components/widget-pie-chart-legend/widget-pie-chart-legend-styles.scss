@@ -8,10 +8,11 @@
     font-size: rem(12px);
     line-height: 1;
     color: $slate;
+    position: relative;
 
     span {
-      position: relative;
-      top: rem(1px);
+      position: absolute;
+      top: 0;
       display: inline-block;
       width: rem(12px);
       min-width: rem(12px);
@@ -20,10 +21,17 @@
       margin-right: rem(7px);
       border-radius: 100%;
     }
+
+    p {
+      color: $slate;
+      font-size: rem(12px);
+      margin-left: rem(20px);
+      line-height: 1.4;
+    }
   }
 
   .legend-value {
-    padding: rem(7px) 0 0 rem(19px);
+    padding: rem(5px) 0 0 rem(20px);
     font-size: rem(28px);
     font-weight: 500;
     margin-bottom: rem(20px);

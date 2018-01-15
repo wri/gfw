@@ -9,7 +9,7 @@ class WidgetPieChart extends PureComponent {
   render() {
     const {
       data,
-      height,
+      maxSize,
       dataKey,
       innerRadius,
       outerRadius,
@@ -20,7 +20,7 @@ class WidgetPieChart extends PureComponent {
 
     return (
       <div className={`c-pie-chart ${className}`}>
-        <ResponsiveContainer width="100%" height={height}>
+        <ResponsiveContainer width="100%" height={maxSize}>
           <PieChart>
             <Pie
               data={data}
@@ -31,7 +31,11 @@ class WidgetPieChart extends PureComponent {
               endAngle={endAngle}
             >
               {data.map((item, index) => (
-                <Cell key={index.toString()} fill={item.color} strokeWidth={0} />
+                <Cell
+                  key={index.toString()}
+                  fill={item.color}
+                  strokeWidth={0}
+                />
               ))}
             </Pie>
             <Tooltip
@@ -56,20 +60,17 @@ class WidgetPieChart extends PureComponent {
 
 WidgetPieChart.propTypes = {
   data: PropTypes.array,
-  width: PropTypes.number,
-  height: PropTypes.number,
+  maxSize: PropTypes.number,
   dataKey: PropTypes.string,
-  cx: PropTypes.number,
-  cy: PropTypes.number,
-  innerRadius: PropTypes.number,
-  outerRadius: PropTypes.number,
+  innerRadius: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  outerRadius: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   startAngle: PropTypes.number,
   endAngle: PropTypes.number,
   className: PropTypes.string
 };
 
 WidgetPieChart.defaultProps = {
-  height: 300,
+  maxSize: 300,
   dataKey: 'value',
   innerRadius: '50%',
   outerRadius: '100%',

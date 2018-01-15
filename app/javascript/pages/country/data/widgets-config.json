@@ -28,13 +28,14 @@
                       "plantations__wdpa", "plantations__landmark"],
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region"],
-      "selectors": ["indicators", "thresholds", "units"],
+      "selectors": ["indicators", "thresholds", "units", "extentYears"],
       "locationCheck": true,
       "type": "extent"
     },
     "settings": {
       "indicator": "gadm28",
       "threshold": 30,
+      "extentYear": 2010,
       "unit": "ha",
       "pageSize": 10,
       "page": 0

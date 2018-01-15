@@ -12,7 +12,6 @@ import WidgetFAOCoverComponent from './widget-fao-cover-component';
 const mapStateToProps = ({ widgetFAOCover }, ownProps) => {
   const { fao, rank } = widgetFAOCover.data;
   return {
-    loading: widgetFAOCover.loading || ownProps.isMetaLoading,
     fao,
     rank,
     data:
