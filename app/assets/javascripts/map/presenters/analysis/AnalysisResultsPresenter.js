@@ -45,6 +45,7 @@ define([
       'prodes': 'prodes-loss',
       'guyra': 'guira-loss',
       'forest2000': 'umd-loss-gain',
+      'forest2010': 'umd-loss-gain',
       'umd_as_it_happens':'glad-alerts',
       'umd_as_it_happens_per':'glad-alerts',
       'umd_as_it_happens_cog':'glad-alerts',
@@ -297,7 +298,7 @@ define([
        *   - gainAlerts
        *   - extent
        */
-      if (layer.slug === 'loss' || layer.slug === 'forestgain' || layer.slug === 'forestgain' || layer.slug === 'forest2000') {
+      if (layer.slug === 'loss' || layer.slug === 'forestgain' || layer.slug === 'forestgain' || layer.slug === 'forest2000' || layer.slug === 'forest2010') {
         p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
         p.extent = p.gainAlerts = p.lossAlerts = 0;
         p.threshold  = results.params.thresh || 30;
