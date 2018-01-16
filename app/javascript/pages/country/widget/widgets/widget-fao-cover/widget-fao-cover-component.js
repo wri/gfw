@@ -4,26 +4,15 @@ import PropTypes from 'prop-types';
 import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 import WidgetPieChart from 'pages/country/widget/components/widget-pie-chart';
 import WidgetPieChartLegend from 'pages/country/widget/components/widget-pie-chart-legend';
-import NoContent from 'components/no-content';
 import './widget-fao-cover-styles.scss';
 
 class WidgetFAOCover extends PureComponent {
   render() {
-    const { locationNames, loading, data, getSentence } = this.props;
+    const { data, getSentence } = this.props;
 
     return (
       <div className="c-widget-fao-cover">
-        {!loading &&
-          data &&
-          data.length === 0 && (
-            <NoContent
-              message={`No forest cover for ${locationNames.current &&
-                locationNames.current.label}`}
-              icon
-            />
-          )}
-        {!loading &&
-          data &&
+        {data &&
           data.length > 0 && (
             <div>
               <WidgetDynamicSentence sentence={getSentence()} />
@@ -37,7 +26,11 @@ class WidgetFAOCover extends PureComponent {
                     key: 'percentage'
                   }}
                 />
-                <WidgetPieChart className="cover-pie-chart" data={data} />
+                <WidgetPieChart
+                  className="cover-pie-chart"
+                  data={data}
+                  maxSize={140}
+                />
               </div>
             </div>
           )}
@@ -47,8 +40,6 @@ class WidgetFAOCover extends PureComponent {
 }
 
 WidgetFAOCover.propTypes = {
-  locationNames: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired,
   data: PropTypes.array.isRequired,
   getSentence: PropTypes.func.isRequired
 };

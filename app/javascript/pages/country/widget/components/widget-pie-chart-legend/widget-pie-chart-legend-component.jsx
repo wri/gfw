@@ -14,7 +14,7 @@ class WidgetPieChartLegend extends PureComponent {
           <li key={index.toString()}>
             <div className="legend-title">
               <span style={{ backgroundColor: item.color }}>{}</span>
-              {item.name}
+              <p>{item.label}</p>
             </div>
             <div className="legend-value" style={{ color: item.color }}>
               {format(config.format)(item[config.key])}

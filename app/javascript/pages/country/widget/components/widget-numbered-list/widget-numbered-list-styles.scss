@@ -16,10 +16,9 @@
     color: $slate;
 
     &:hover {
-      text-decoration: underline;
-
-      .item-bubble {
-        text-decoration: none;
+      .item-name,
+      .item-value {
+        text-decoration: underline;
       }
     }
   }

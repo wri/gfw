@@ -30,7 +30,7 @@ export const getActiveAdmin = location => {
 
 // helper to get active filter from state based on key
 export const getActiveFilter = (settings, filters, key) =>
-  filters.find(i => i.value === settings[key]);
+  (filters ? filters.find(i => i.value === settings[key]) : null);
 
 export const getLocationLabel = (location, indicator, indicators) => {
   if (!location || !indicators || !indicators.length) return '';

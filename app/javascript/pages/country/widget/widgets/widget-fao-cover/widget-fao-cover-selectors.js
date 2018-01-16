@@ -31,25 +31,25 @@ export const getFAOCoverData = createSelector(
       naturallyRegenerated + primaryForest + plantedForest + area_ha;
     return [
       {
-        name: 'Naturally regenerated Forest',
+        label: 'Naturally regenerated Forest',
         value: naturallyRegenerated,
         percentage: naturallyRegenerated / total * 100,
         color: COLORS.darkGreen
       },
       {
-        name: 'Primary Forest',
+        label: 'Primary Forest',
         value: primaryForest,
         percentage: primaryForest / total * 100,
         color: COLORS.mediumGreen
       },
       {
-        name: 'Planted Forest',
+        label: 'Planted Forest',
         value: plantedForest,
         percentage: plantedForest / total * 100,
         color: COLORS.lightGreen
       },
       {
-        name: 'Non-Forest',
+        label: 'Non-Forest',
         value: nonForest,
         percentage: nonForest / total * 100,
         color: COLORS.nonForest

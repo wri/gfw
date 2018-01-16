@@ -59,6 +59,7 @@ class Widget extends PureComponent {
         />
         <div className="container">
           {!loading &&
+            !error &&
             isEmpty(data) && (
               <NoContent
                 message={`No data in selection for ${locationNames.current &&

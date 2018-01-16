@@ -19,9 +19,9 @@ const getTreeLocated = createThunkAction(
           let mappedData = [];
           if (data && data.length) {
             mappedData = data.map(d => ({
-              id: d[params.region ? 'adm2' : 'adm1'],
-              area: d.value || 0,
-              percentage: d.value ? d.value / d.total_area * 100 : 0
+              id: d.region,
+              extent: d.extent || 0,
+              percentage: d.extent ? d.extent / d.total * 100 : 0
             }));
           }
           dispatch(setTreeLocatedData(mappedData));
