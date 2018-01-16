@@ -95,7 +95,8 @@
       "type": "gain"
     },
     "settings": {
-      "period": 2010
+      "period": 2010,
+      "unit": "ha/year"
     },
     "active": true
   },

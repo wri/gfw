@@ -8,11 +8,11 @@ import './widget-fao-reforestation-styles.scss';
 
 class WidgetFAOReforestation extends PureComponent {
   render() {
-    const { getSentence, data, settings, colors, embed } = this.props;
+    const { sentence, data, settings, colors, embed } = this.props;
 
     return (
       <div className="c-widget-fao-reforestation">
-        {/* <WidgetDynamicSentence sentence={getSentence()} /> */}
+        {sentence && <WidgetDynamicSentence sentence={sentence} />}
         {data &&
           data.length > 0 && (
             <WidgetNumberedList
@@ -29,9 +29,9 @@ class WidgetFAOReforestation extends PureComponent {
 }
 
 WidgetFAOReforestation.propTypes = {
-  getSentence: PropTypes.func.isRequired,
+  sentence: PropTypes.string,
   data: PropTypes.array,
-  settings: PropTypes.object.isRequired,
+  settings: PropTypes.object,
   colors: PropTypes.object.isRequired,
   embed: PropTypes.bool
 };
