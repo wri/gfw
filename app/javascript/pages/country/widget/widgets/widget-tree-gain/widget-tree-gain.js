@@ -8,13 +8,35 @@ import { getActiveFilter } from 'pages/country/widget/widget-selectors';
 
 import actions from './widget-tree-gain-actions';
 import reducers, { initialState } from './widget-tree-gain-reducers';
+import { getSortedData } from './widget-tree-gain-selectors';
 import WidgetTreeGainComponent from './widget-tree-gain-component';
 
-const mapStateToProps = ({ widgetTreeGain }, ownProps) => ({
-  loading: widgetTreeGain.loading || ownProps.isMetaLoading,
-  gain: widgetTreeGain.data.gain,
-  extent: widgetTreeGain.data.extent
-});
+const mapStateToProps = ({ location, widgetTreeGain, countryData }) => {
+  const { isCountriesLoading, isRegionsLoading } = countryData;
+  let meta = [];
+  if (location.payload.subRegion) {
+    meta = countryData.subRegions;
+  } else if (location.payload.region) {
+    meta = countryData.regions;
+  } else {
+    meta = countryData.countries;
+  }
+
+  return {
+    loading: widgetTreeGain.loading || isCountriesLoading || isRegionsLoading,
+    data: {
+      gain: widgetTreeGain.data.gain,
+      extent: widgetTreeGain.data.extent,
+      ranking:
+        getSortedData({
+          ranking: widgetTreeGain.data.ranking,
+          unit: widgetTreeGain.settings.unit,
+          meta,
+          location: location.payload
+        }) || []
+    }
+  };
+};
 
 class WidgetTreeGainContainer extends PureComponent {
   componentWillMount() {
@@ -39,7 +61,7 @@ class WidgetTreeGainContainer extends PureComponent {
   }
 
   getSentence = () => {
-    const { locationNames, gain, extent, settings } = this.props;
+    const { locationNames, data: { gain, extent }, settings } = this.props;
     const { indicators } = this.props.options;
     const indicator =
       indicators && getActiveFilter(settings, indicators, 'indicator');
@@ -54,7 +76,9 @@ class WidgetTreeGainContainer extends PureComponent {
       gain ? format('.3s')(gain) : '0'
     }ha</strong> of tree cover ${regionPhrase}`;
     const secondSentence = gain
-      ? `, equivalent to a <strong>${areaPercent}%</strong> increase relative to 2010 tree cover extent.`
+      ? `, equivalent to a <strong>${areaPercent}%</strong> increase relative to <b>${
+        settings.extentYear
+      }</b> tree cover extent.`
       : '.';
 
     return `${firstSentence}${secondSentence}`;
@@ -70,8 +94,7 @@ class WidgetTreeGainContainer extends PureComponent {
 
 WidgetTreeGainContainer.propTypes = {
   locationNames: PropTypes.object.isRequired,
-  gain: PropTypes.number.isRequired,
-  extent: PropTypes.number.isRequired,
+  data: PropTypes.object.isRequired,
   options: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
