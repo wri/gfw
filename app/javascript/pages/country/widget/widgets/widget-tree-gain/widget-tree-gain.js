@@ -51,7 +51,9 @@ class WidgetTreeGainContainer extends PureComponent {
     const { settings, location, getTreeGain } = nextProps;
     if (
       !isEqual(location, this.props.location) ||
-      !isEqual(settings, this.props.settings)
+      !isEqual(settings.indicator, this.props.settings.indicator) ||
+      !isEqual(settings.threshold, this.props.settings.threshold) ||
+      !isEqual(settings.extent, this.props.settings.extent)
     ) {
       getTreeGain({
         ...location,
