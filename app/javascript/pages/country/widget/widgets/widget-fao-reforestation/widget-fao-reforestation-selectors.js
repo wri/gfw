@@ -24,7 +24,17 @@ export const getFilteredData = createSelector(
   (data, location, colors) => {
     if (!data || !data.length) return null;
     const locationIndex = findIndex(data, d => d.iso === location.country);
-    const dataTrimmed = data.slice(locationIndex - 2, locationIndex + 3);
+    let trimStart = locationIndex - 2;
+    let trimEnd = locationIndex + 3;
+    if (locationIndex < 2) {
+      trimStart = 0;
+      trimEnd = 5;
+    }
+    if (locationIndex > data.length - 3) {
+      trimStart = data.length - 5;
+      trimEnd = data.length;
+    }
+    const dataTrimmed = data.slice(trimStart, trimEnd);
     const colorRange = getColorPalette(
       [colors.darkGreen, colors.lightGreen],
       dataTrimmed.length
