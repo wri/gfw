@@ -78,7 +78,9 @@
       "indicator": "gadm28",
       "threshold": "0",
       "unit": "ha",
-      "extentYear": 2010
+      "extentYear": 2010,
+      "pageSize": 5,
+      "page": 0
     },
     "active": true
   },
