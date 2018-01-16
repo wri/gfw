@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { PieChart, Pie, Cell, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import WidgetChartToolTip from 'pages/country/widget/components/widget-chart-tooltip';
 
 import './widget-pie-chart-styles.scss';
@@ -9,11 +9,8 @@ class WidgetPieChart extends PureComponent {
   render() {
     const {
       data,
-      width,
-      height,
+      maxSize,
       dataKey,
-      cx,
-      cy,
       innerRadius,
       outerRadius,
       startAngle,
@@ -23,35 +20,40 @@ class WidgetPieChart extends PureComponent {
 
     return (
       <div className={`c-pie-chart ${className}`}>
-        <PieChart width={width} height={height}>
-          <Pie
-            data={data}
-            dataKey={dataKey}
-            cx={cx}
-            cy={cy}
-            innerRadius={innerRadius}
-            outerRadius={outerRadius}
-            startAngle={startAngle}
-            endAngle={endAngle}
-          >
-            {data.map((item, index) => (
-              <Cell key={index.toString()} fill={item.color} strokeWidth={0} />
-            ))}
-          </Pie>
-          <Tooltip
-            content={
-              <WidgetChartToolTip
-                settings={[
-                  {
-                    key: 'percentage',
-                    unit: '%',
-                    label: true
-                  }
-                ]}
-              />
-            }
-          />
-        </PieChart>
+        <ResponsiveContainer width="100%" height={maxSize}>
+          <PieChart>
+            <Pie
+              data={data}
+              dataKey={dataKey}
+              innerRadius={innerRadius}
+              outerRadius={outerRadius}
+              startAngle={startAngle}
+              endAngle={endAngle}
+            >
+              {data.map((item, index) => (
+                <Cell
+                  key={index.toString()}
+                  fill={item.color}
+                  // strokeWidth={0}
+                  stroke={item.color}
+                />
+              ))}
+            </Pie>
+            <Tooltip
+              content={
+                <WidgetChartToolTip
+                  settings={[
+                    {
+                      key: 'percentage',
+                      unit: '%',
+                      label: true
+                    }
+                  ]}
+                />
+              }
+            />
+          </PieChart>
+        </ResponsiveContainer>
       </div>
     );
   }
@@ -59,26 +61,20 @@ class WidgetPieChart extends PureComponent {
 
 WidgetPieChart.propTypes = {
   data: PropTypes.array,
-  width: PropTypes.number,
-  height: PropTypes.number,
+  maxSize: PropTypes.number,
   dataKey: PropTypes.string,
-  cx: PropTypes.number,
-  cy: PropTypes.number,
-  innerRadius: PropTypes.number,
-  outerRadius: PropTypes.number,
+  innerRadius: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  outerRadius: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   startAngle: PropTypes.number,
   endAngle: PropTypes.number,
   className: PropTypes.string
 };
 
 WidgetPieChart.defaultProps = {
-  width: 123,
-  height: 123,
+  maxSize: 300,
   dataKey: 'value',
-  cx: 56,
-  cy: 56,
-  innerRadius: 28,
-  outerRadius: 60,
+  innerRadius: '50%',
+  outerRadius: '100%',
   startAngle: 90,
   endAngle: 450
 };

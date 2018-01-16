@@ -18,6 +18,7 @@ class WidgetTreeCover extends PureComponent {
             <WidgetDynamicSentence sentence={getSentence()} />
             <div className="pie-chart-container">
               <WidgetPieChartLegend
+                className="cover-legend"
                 data={parsedData}
                 config={{
                   ...settings,
@@ -26,7 +27,11 @@ class WidgetTreeCover extends PureComponent {
                   key: 'value'
                 }}
               />
-              <WidgetPieChart className="cover-pie-chart" data={parsedData} />
+              <WidgetPieChart
+                className="cover-pie-chart"
+                data={parsedData}
+                maxSize={140}
+              />
             </div>
           </div>
         )}

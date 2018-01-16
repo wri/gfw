@@ -2,25 +2,41 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-tree-located-actions';
 import reducers, { initialState } from './widget-tree-located-reducers';
-import { getSortedData } from './widget-tree-located-selectors';
+import {
+  getSortedData,
+  getChartData,
+  getSentence
+} from './widget-tree-located-selectors';
 import WidgetTreeLocatedComponent from './widget-tree-located-component';
 
-const mapStateToProps = ({ location, widgetTreeLocated, countryData }) => {
+const mapStateToProps = (
+  { location, widgetTreeLocated, countryData },
+  ownProps
+) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
-  const data = {
-    data: widgetTreeLocated.data.regions,
-    unit: widgetTreeLocated.settings.unit,
-    meta: countryData[!location.payload.region ? 'regions' : 'subRegions'],
-    location: location.payload
+  const { settings, data, loading } = widgetTreeLocated;
+  const { settingsConfig, activeIndicator } = ownProps;
+  const { payload } = location;
+  const selectorData = {
+    data: data.regions,
+    settings,
+    options: settingsConfig.options,
+    meta: countryData[!payload.region ? 'regions' : 'subRegions'],
+    location: payload,
+    colors: COLORS,
+    indicator: activeIndicator,
+    locationNames: ownProps.locationNames
   };
   return {
     regions: countryData.regions,
-    loading:
-      widgetTreeLocated.loading || isCountriesLoading || isRegionsLoading,
-    data: getSortedData(data) || []
+    loading: loading || isCountriesLoading || isRegionsLoading,
+    data: getSortedData(selectorData),
+    chartData: getChartData(selectorData),
+    sentence: getSentence(selectorData)
   };
 };
 
@@ -40,6 +56,7 @@ class WidgetTreeLocatedContainer extends PureComponent {
       !isEqual(location.country, this.props.location.country) ||
       !isEqual(location.region, this.props.location.region) ||
       !isEqual(settings.indicator, this.props.settings.indicator) ||
+      !isEqual(settings.extentYear, this.props.settings.extentYear) ||
       !isEqual(settings.threshold, this.props.settings.threshold)
     ) {
       getTreeLocated({
