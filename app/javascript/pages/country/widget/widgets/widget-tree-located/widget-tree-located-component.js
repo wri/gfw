@@ -16,16 +16,21 @@ class WidgetTreeLocated extends PureComponent {
       settings,
       handlePageChange,
       embed,
-      getSentence
+      sentence
     } = this.props;
 
     return (
       <div className="c-widget-tree-located">
-        <WidgetDynamicSentence sentence={getSentence()} />
-        {data && chartData &&
+        <WidgetDynamicSentence sentence={sentence} />
+        {data &&
+          chartData &&
           data.length > 0 && (
             <div className="locations-container">
-              <WidgetPieChart className="locations-pie-chart" data={chartData} dataKey="percentage" />
+              <WidgetPieChart
+                className="locations-pie-chart"
+                data={chartData}
+                dataKey="percentage"
+              />
               <WidgetNumberedList
                 className="locations-list"
                 data={data}
@@ -46,7 +51,8 @@ WidgetTreeLocated.propTypes = {
   chartData: PropTypes.array,
   settings: PropTypes.object.isRequired,
   handlePageChange: PropTypes.func.isRequired,
-  embed: PropTypes.bool
+  embed: PropTypes.bool,
+  sentence: PropTypes.string
 };
 
 export default WidgetTreeLocated;
