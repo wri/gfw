@@ -23,12 +23,14 @@ const getTreeGain = createThunkAction(
           axios.spread((gainResponse, extentResponse, gainRankingResponse) => {
             const gain = gainResponse.data.data;
             const extent = extentResponse.data.data;
-            const gainRanking = gainRankingResponse.data.data;
+            const ranking = getProcessedRankingData(
+              gainRankingResponse.data.data
+            );
             dispatch(
               setTreeGainData({
                 gain: (gain && gain.length > 0 && gain[0].value) || 0,
                 extent: (gain && extent.length > 0 && extent[0].value) || 0,
-                gainRanking
+                ranking
               })
             );
           })
@@ -40,6 +42,19 @@ const getTreeGain = createThunkAction(
     }
   }
 );
+
+const getProcessedRankingData = rawData => {
+  const output = rawData.map(item => {
+    const gain = item.gain ? item.gain : 0;
+    return {
+      id: item.region,
+      gain,
+      relative: 100 * gain / item.extent
+    };
+  });
+
+  return output.slice(0, 5);
+};
 
 export default {
   setTreeGainLoading,

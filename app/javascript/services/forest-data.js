@@ -10,7 +10,7 @@ const SQL_QUERIES = {
   gain:
     "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = {threshold}",
   gainRanking:
-    "SELECT {region} as region, SUM(area_gain) AS value, SUM({extentYear}) AS extent FROM data WHERE {location} AND polyname = '{polyname}' AND thresh = 0 GROUP BY region",
+    "SELECT {region} as region, SUM(area_gain) AS gain, SUM({extentYear}) AS extent FROM data WHERE {location} AND polyname = '{polyname}' AND extent <> -9999 AND thresh = 0 GROUP BY region",
   loss:
     "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.emissions) as emissions FROM data WHERE polyname = '{indicator}' AND {location} AND thresh= {threshold} GROUP BY polyname, iso, nested(year_data.year)",
   locations:
