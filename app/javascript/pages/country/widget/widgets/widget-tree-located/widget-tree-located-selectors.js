@@ -84,7 +84,7 @@ export const getSentence = createSelector(
       locationNames && locationNames.current && locationNames.current.label;
     const topRegion = data.length && data[0];
     const avgExtentPercentage = sumBy(data, 'percentage') / data.length;
-    const avgExtent = sumBy(data, 'extent');
+    const avgExtent = sumBy(data, 'extent') / data.length;
     let percentileExtent = 0;
     let percentileLength = 0;
     let sentence = '';
@@ -128,9 +128,9 @@ export const getSentence = createSelector(
         avgExtentPercentage
       )}%</b>.`;
     } else {
-      sentence += `<b>${format('.2s')(
+      sentence += `<b>${format('.3s')(
         topRegion.extent
-      )}ha</b> compared to an average of <b>${format('.2s')(avgExtent)}ha</b>.`;
+      )}ha</b> compared to an average of <b>${format('.3s')(avgExtent)}ha</b>.`;
     }
 
     return sentence;
