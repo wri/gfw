@@ -16,9 +16,9 @@ const getTreeLocated = createThunkAction(
       getLocations(params)
         .then(response => {
           const { data } = response.data;
-          let mappedData = [];
+          const mappedData = {};
           if (data && data.length) {
-            mappedData = data.map(d => ({
+            mappedData.regions = data.map(d => ({
               id: d.region,
               extent: d.extent || 0,
               percentage: d.extent ? d.extent / d.total * 100 : 0

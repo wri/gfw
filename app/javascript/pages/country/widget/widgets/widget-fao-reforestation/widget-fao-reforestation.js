@@ -4,15 +4,28 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { format } from 'd3-format';
 import { getActiveFilter } from 'pages/country/widget/widget-selectors';
+import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-fao-reforestation-actions';
 import reducers, { initialState } from './widget-fao-reforestation-reducers';
 import WidgetFAOReforestationComponent from './widget-fao-reforestation-component';
+import {
+  getFilteredData,
+  getSentence
+} from './widget-fao-reforestation-selectors';
 
-const mapStateToProps = ({ widgetFAOReforestation }, ownProps) => ({
-  loading: widgetFAOReforestation.loading || ownProps.isMetaLoading,
-  data: widgetFAOReforestation.data
-});
+const mapStateToProps = ({ widgetFAOReforestation, location }, ownProps) => {
+  const { loading, data } = widgetFAOReforestation;
+  return {
+    loading: loading || ownProps.isMetaLoading,
+    data: getFilteredData({
+      data: data.countries,
+      location: location.payload,
+      colors: COLORS
+    }),
+    colors: COLORS
+  };
+};
 
 class WidgetFAOReforestationContainer extends PureComponent {
   componentWillMount() {
@@ -58,7 +71,7 @@ class WidgetFAOReforestationContainer extends PureComponent {
 
 WidgetFAOReforestationContainer.propTypes = {
   location: PropTypes.object.isRequired,
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array,
   options: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   getFAOReforestationData: PropTypes.func.isRequired
