@@ -53,7 +53,7 @@ class WidgetTreeGainContainer extends PureComponent {
       !isEqual(location, this.props.location) ||
       !isEqual(settings.indicator, this.props.settings.indicator) ||
       !isEqual(settings.threshold, this.props.settings.threshold) ||
-      !isEqual(settings.extent, this.props.settings.extent)
+      !isEqual(settings.extentYear, this.props.settings.extentYear)
     ) {
       getTreeGain({
         ...location,
