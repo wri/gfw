@@ -24,7 +24,8 @@ const getTreeGain = createThunkAction(
             const gain = gainResponse.data.data;
             const extent = extentResponse.data.data;
             const ranking = getProcessedRankingData(
-              gainRankingResponse.data.data
+              gainRankingResponse.data.data,
+              { ...params }
             );
             dispatch(
               setTreeGainData({
@@ -43,15 +44,24 @@ const getTreeGain = createThunkAction(
   }
 );
 
-const getProcessedRankingData = rawData => {
-  const output = rawData.map(item => {
-    const gain = item.gain ? item.gain : 0;
-    return {
-      id: item.region,
-      gain,
-      relative: 100 * gain / item.extent
-    };
-  });
+const getProcessedRankingData = (rawData, params) => {
+  const output = rawData
+    .map(item => {
+      const gain = item.gain ? item.gain : 0;
+      return {
+        id: item.region,
+        gain,
+        relative: 100 * gain / item.extent
+      };
+    })
+    .filter(item => {
+      if (params.subRegion) {
+        return item.id !== params.subRegion;
+      } else if (params.region) {
+        return item.id !== params.region;
+      }
+      return item.id !== params.country;
+    });
 
   return output.slice(0, 5);
 };
