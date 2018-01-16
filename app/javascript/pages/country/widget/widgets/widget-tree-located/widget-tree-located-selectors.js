@@ -20,14 +20,16 @@ export const getSortedData = createSelector(
   (data, settings, location, meta) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
     const dataMapped = [];
+    const totalExtent = sumBy(data, 'extent');
     data.forEach(d => {
       const region = meta.find(l => d.id === l.value);
       if (region) {
+        const percentage = d.extent / totalExtent * 100;
         dataMapped.push({
           label: (region && region.label) || '',
           extent: d.extent,
-          percentage: d.percentage,
-          value: settings.unit === 'ha' ? d.extent : d.percentage,
+          percentage,
+          value: settings.unit === 'ha' ? d.extent : percentage,
           path: `/country/${location.country}/${
             location.region ? `${location.region}/` : ''
           }${d.id}`
@@ -52,7 +54,6 @@ export const getChartData = createSelector(
     );
     const topChartData = topRegions.map((d, index) => ({
       ...d,
-      percentage: d.extent / totalExtent * 100,
       color: colorRange[index]
     }));
     const otherRegionsData = otherRegions.length
@@ -97,8 +98,9 @@ export const getSentence = createSelector(
       sentence += `In <b>${currentLocation}</b>, `;
     }
     while (
-      percentileLength < data.length &&
-      percentileExtent / totalExtent < 0.5
+      (percentileLength < data.length &&
+        percentileExtent / totalExtent < 0.5) ||
+      (percentileLength < 10 && data.length > 10)
     ) {
       percentileExtent += data[percentileLength].extent;
       percentileLength += 1;
@@ -118,9 +120,7 @@ export const getSentence = createSelector(
     sentence += `</b> of all tree cover in <b>${extentYear}</b> where tree canopy is greater than <b>${threshold}%</b>. `;
     sentence += `${
       percentileLength > 1 ? `<b>${topRegion.label}</b>` : 'This region'
-    } has the largest ${
-      settings.unit === '%' ? 'relative' : ''
-    } tree cover at `;
+    } has the largest tree cover at `;
     if (topRegion.percentage > 1 && settings.unit === '%') {
       sentence += `<b>${format('.0f')(
         topRegion.percentage
