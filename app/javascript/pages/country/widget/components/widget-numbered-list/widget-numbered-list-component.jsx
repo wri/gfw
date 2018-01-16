@@ -42,7 +42,7 @@ class WidgetNumberedList extends PureComponent {
                     <div className="item-name">{item.label}</div>
                   </div>
                   <div className="item-value">
-                    {format('.3s')(item.value)}
+                    {format(item.value < 1 ? '.2f' : '.3s')(item.value)}
                     {unit}
                   </div>
                 </Link>
