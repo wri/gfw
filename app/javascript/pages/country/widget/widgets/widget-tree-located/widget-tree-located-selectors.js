@@ -48,7 +48,7 @@ export const getChartData = createSelector(
     const othersExtent = otherRegions.length && sumBy(otherRegions, 'extent');
     const colorRange = getColorPalette(
       [colors.darkGreen, colors.nonForest],
-      topRegions.length
+      data.length > 10 ? topRegions.length + 1 : data.length
     );
     const topChartData = topRegions.map((d, index) => ({
       ...d,
@@ -59,7 +59,7 @@ export const getChartData = createSelector(
       ? {
         label: 'Other regions',
         percentage: othersExtent ? othersExtent / totalExtent * 100 : 0,
-        color: colors.grey
+        color: colorRange[topRegions.length]
       }
       : {};
 
@@ -96,37 +96,32 @@ export const getSentence = createSelector(
     } else {
       sentence += `In <b>${currentLocation}</b>, `;
     }
-
-    if (data.length > 10) {
-      while (
-        percentileLength < data.length &&
-        percentileExtent / totalExtent < 0.5
-      ) {
-        percentileExtent += data[percentileLength].extent;
-        percentileLength += 1;
-      }
-      const topExtent = percentileExtent / totalExtent * 100;
-
-      if (percentileLength > 1) {
-        sentence += `the top <b>${percentileLength}</b> regions represents <b>`;
-      } else {
-        sentence += `<b>${currentLocation}</b>, <b>${
-          topRegion.label
-        }</b> represents <b>`;
-      }
-      if (!location.region) {
-        sentence += `more than half (${format('.0f')(topExtent)}%)`;
-      } else {
-        sentence += `${format('.0f')(topExtent)}%`;
-      }
-      sentence += `</b> of all tree cover in <b>${extentYear}</b> where tree canopy is greater than <b>${threshold}%</b>. `;
+    while (
+      percentileLength < data.length &&
+      percentileExtent / totalExtent < 0.5
+    ) {
+      percentileExtent += data[percentileLength].extent;
+      percentileLength += 1;
     }
+    const topExtent = percentileExtent / totalExtent * 100;
+
+    if (percentileLength > 1) {
+      sentence += `the top <b>${percentileLength}</b> regions represents <b>`;
+    } else {
+      sentence += `<b>${topRegion.label}</b> represents <b>`;
+    }
+    if (!location.region) {
+      sentence += `more than half (${format('.0f')(topExtent)}%)`;
+    } else {
+      sentence += `${format('.0f')(topExtent)}%`;
+    }
+    sentence += `</b> of all tree cover in <b>${extentYear}</b> where tree canopy is greater than <b>${threshold}%</b>. `;
     sentence += `${
-      percentileLength > 1 || data.length < 10
-        ? `<b>${topRegion.label}</b>`
-        : 'This region'
-    } has the largest relative tree cover at `;
-    if (topRegion.percentage > 1) {
+      percentileLength > 1 ? `<b>${topRegion.label}</b>` : 'This region'
+    } has the largest ${
+      settings.unit === '%' ? 'relative' : ''
+    } tree cover at `;
+    if (topRegion.percentage > 1 && settings.unit === '%') {
       sentence += `<b>${format('.0f')(
         topRegion.percentage
       )}%</b> compared to an average of <b>${format('.0f')(
