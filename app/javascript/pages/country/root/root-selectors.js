@@ -45,12 +45,16 @@ export const checkWidgetNeedsLocations = createSelector(
 export const filterWidgets = createSelector(
   [checkWidgetNeedsLocations, getIndicatorWhitelist],
   (widgets, whitelist) => {
-    if (isEmpty(whitelist)) return null;
-    const witelistKeys = Object.keys(whitelist);
+    // if (isEmpty(whitelist)) return null;
+    const witelistKeys = !isEmpty(whitelist) ? Object.keys(whitelist) : null;
     return widgets.filter(widget => {
       // filter by showIndicators
       let showByIndicators = true;
-      if (widget.config.showIndicators && widget.config.indicators) {
+      if (
+        widget.config.showIndicators &&
+        widget.config.indicators &&
+        whitelist
+      ) {
         const totalIndicators = concat(
           widget.config.showIndicators,
           witelistKeys
@@ -62,10 +66,12 @@ export const filterWidgets = createSelector(
       }
       // Then check if widget has data for gadm28 (loss or gain)
       const type = widget.config.type;
+      // console.log(type);
       const hasData =
         !type ||
         type === 'extent' ||
-        (whitelist.gadm28 && whitelist.gadm28[type]);
+        type === 'fao' ||
+        (whitelist && whitelist.gadm28 && whitelist.gadm28[type]);
 
       return showByIndicators && hasData;
     });

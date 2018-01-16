@@ -92,7 +92,7 @@
       "categories": ["summary", "forest-change"],
       "admins": ["country"],
       "selectors": ["periods"],
-      "type": "gain"
+      "type": "fao"
     },
     "settings": {
       "period": 2010,
@@ -106,7 +106,7 @@
       "gridWidth": 6,
       "categories": ["land-cover"],
       "admins": ["country"],
-      "type": "extent"
+      "type": "fao"
     },
     "active": true
   }

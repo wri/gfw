@@ -3,10 +3,13 @@ import axios from 'axios';
 const REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
 const DATASET = process.env.COUNTRIES_PAGE_DATASET;
 const WHITELIST_URL = `${process.env.GFW_API_HOST_PROD}/query/${DATASET}?sql=`;
+const CARTO_REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
 
 const SQL_QUERIES = {
   getCountries:
     'SELECT iso, country as name FROM umd_nat_staging GROUP BY iso, name ORDER BY name',
+  getFAOCountries:
+    'SELECT DISTINCT country AS iso, name FROM table_1_forest_area_and_characteristics',
   getRegions:
     "SELECT id1 as id, region as name FROM umd_subnat_staging WHERE iso = '{iso}' and year = 2001 and thresh = 30 ORDER BY name ",
   getSubRegions:
@@ -26,6 +29,11 @@ const getLocationQuery = (country, region, subRegion) =>
 
 export const getCountriesProvider = () => {
   const url = `${REQUEST_URL}${SQL_QUERIES.getCountries}`;
+  return axios.get(url);
+};
+
+export const getFAOCountriesProvider = () => {
+  const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.getFAOCountries}`;
   return axios.get(url);
 };
 
