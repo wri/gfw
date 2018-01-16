@@ -3,9 +3,7 @@ import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 export const initialState = {
   loading: false,
   error: false,
-  data: {
-    regions: []
-  },
+  data: {},
   ...WIDGETS_CONFIG.treeLocated
 };
 
@@ -13,7 +11,8 @@ const setTreeLocatedData = (state, { payload }) => ({
   ...state,
   loading: false,
   data: {
-    regions: payload
+    ...state.data,
+    ...payload
   },
   settings: {
     ...state.settings,

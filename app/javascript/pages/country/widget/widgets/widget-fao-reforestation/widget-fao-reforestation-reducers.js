@@ -16,6 +16,7 @@ const setFAOReforestationData = (state, { payload }) => ({
   ...state,
   loading: false,
   data: {
+    ...state.data,
     ...payload
   }
 });
