@@ -22,7 +22,7 @@ export const getSortedData = createSelector(
       } else if (location.region) {
         path += `${location.country}/${d.id}`;
       } else {
-        path = d.id;
+        path += d.id;
       }
 
       if (region) {
