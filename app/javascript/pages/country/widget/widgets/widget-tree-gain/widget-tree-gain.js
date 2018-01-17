@@ -1,18 +1,20 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { format } from 'd3-format';
 import isEqual from 'lodash/isEqual';
-
-import { getActiveFilter } from 'pages/country/widget/widget-selectors';
 
 import actions from './widget-tree-gain-actions';
 import reducers, { initialState } from './widget-tree-gain-reducers';
-import { getSortedData } from './widget-tree-gain-selectors';
+import { getSortedData, getSentence } from './widget-tree-gain-selectors';
 import WidgetTreeGainComponent from './widget-tree-gain-component';
 
-const mapStateToProps = ({ location, widgetTreeGain, countryData }) => {
+const mapStateToProps = (
+  { location, widgetTreeGain, countryData },
+  ownProps
+) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
+  const { locationNames, activeIndicator } = ownProps;
+  const { data: { ranking, gain, extent }, settings } = widgetTreeGain;
   let meta = countryData.countries;
   if (location.payload.subRegion) {
     meta = countryData.subRegions;
@@ -20,19 +22,25 @@ const mapStateToProps = ({ location, widgetTreeGain, countryData }) => {
     meta = countryData.regions;
   }
 
+  const selectorData = {
+    ranking,
+    gain,
+    extent,
+    settings,
+    location: location.payload,
+    meta,
+    indicator: activeIndicator,
+    locationNames
+  };
+
   return {
     loading: widgetTreeGain.loading || isCountriesLoading || isRegionsLoading,
     data: {
       gain: widgetTreeGain.data.gain,
       extent: widgetTreeGain.data.extent,
-      ranking:
-        getSortedData({
-          ranking: widgetTreeGain.data.ranking,
-          unit: widgetTreeGain.settings.unit,
-          meta,
-          location: location.payload
-        }) || []
-    }
+      ranking: getSortedData(selectorData)
+    },
+    sentence: getSentence(selectorData)
   };
 };
 
@@ -60,30 +68,6 @@ class WidgetTreeGainContainer extends PureComponent {
     }
   }
 
-  getSentence = () => {
-    const { locationNames, data: { gain, extent }, settings } = this.props;
-    const { indicators } = this.props.options;
-    const indicator =
-      indicators && getActiveFilter(settings, indicators, 'indicator');
-    const regionPhrase =
-      settings.indicator === 'gadm28'
-        ? '<span>region-wide</span>'
-        : `in <span>${indicator && indicator.label.toLowerCase()}</span>`;
-
-    const areaPercent = format('.1f')(100 * gain / extent);
-    const firstSentence = `From 2001 to 2012, <span>${locationNames.current &&
-      locationNames.current.label}</span> gained <strong>${
-      gain ? format('.3s')(gain) : '0'
-    }ha</strong> of tree cover ${regionPhrase}`;
-    const secondSentence = gain
-      ? `, equivalent to a <strong>${areaPercent}%</strong> increase relative to <b>${
-        settings.extentYear
-      }</b> tree cover extent.`
-      : '.';
-
-    return `${firstSentence}${secondSentence}`;
-  };
-
   render() {
     return createElement(WidgetTreeGainComponent, {
       ...this.props,
@@ -93,9 +77,6 @@ class WidgetTreeGainContainer extends PureComponent {
 }
 
 WidgetTreeGainContainer.propTypes = {
-  locationNames: PropTypes.object.isRequired,
-  data: PropTypes.object.isRequired,
-  options: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   getTreeGain: PropTypes.func.isRequired

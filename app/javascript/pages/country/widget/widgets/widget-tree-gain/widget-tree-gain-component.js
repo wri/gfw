@@ -9,14 +9,14 @@ import './widget-tree-gain-styles.scss';
 
 class WidgetTreeCoverGain extends PureComponent {
   render() {
-    const { data, settings, getSentence } = this.props;
+    const { data, sentence, settings } = this.props;
 
     return (
       <div className="c-widget-tree-cover-gain">
         {data &&
           data.ranking.length > 0 && (
             <div className="gain-data">
-              <WidgetDynamicSentence sentence={getSentence()} />
+              <WidgetDynamicSentence sentence={sentence} />
               <WidgetNumberedList
                 className="ranking-list"
                 data={data.ranking}
@@ -34,7 +34,7 @@ class WidgetTreeCoverGain extends PureComponent {
 WidgetTreeCoverGain.propTypes = {
   data: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
-  getSentence: PropTypes.func.isRequired
+  sentence: PropTypes.string.isRequired
 };
 
 export default WidgetTreeCoverGain;
