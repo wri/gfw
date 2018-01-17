@@ -43,7 +43,7 @@ class WidgetIntactTreeCover extends PureComponent {
 WidgetIntactTreeCover.propTypes = {
   parsedData: PropTypes.array,
   settings: PropTypes.object.isRequired,
-  sentence: PropTypes.string.isRequired
+  sentence: PropTypes.string
 };
 
 export default WidgetIntactTreeCover;

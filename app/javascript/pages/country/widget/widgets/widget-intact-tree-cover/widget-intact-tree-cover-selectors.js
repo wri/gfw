@@ -27,11 +27,11 @@ export const getIntactTreeCoverData = createSelector(
         label: hasPlantations ? 'Degraded Forest' : 'Other Tree Cover',
         value: totalExtent - extent - plantations,
         color: COLORS.lightGreen,
-        percentage: (extent - plantations) / totalArea * 100
+        percentage: (totalExtent - extent - plantations) / totalArea * 100
       },
       {
         label: 'Non-Forest',
-        value: totalArea - extent,
+        value: totalArea - totalExtent,
         color: COLORS.nonForest,
         percentage: (totalArea - totalExtent) / totalArea * 100
       }
@@ -49,18 +49,19 @@ export const getIntactTreeCoverData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getData, getSettings, getLocationNames, getActiveIndicator],
+  [getIntactTreeCoverData, getSettings, getLocationNames, getActiveIndicator],
   (data, settings, locationNames, indicator) => {
-    if (!data) return null;
-    const { totalArea, cover } = data;
-    const coverStatus = cover / totalArea > 0.5 ? 'tree covered' : 'non-forest';
+    if (!data || !locationNames) return null;
+    const largestContrib = data.find(d => d.percentage >= 0.5);
     const locationLabel = locationNames.current && locationNames.current.label;
     const locationIntro = `${
       indicator.value !== 'gadm28'
-        ? `<b>${indicator.label}</b> in <b>${locationLabel}</b> are `
-        : `<b>${locationLabel}</b> is `
+        ? `For <b>${indicator.label}</b> in <b>${locationLabel}</b>,`
+        : `In <b>${locationLabel}</b>,`
     }`;
-    const first = `${locationIntro} mainly ${coverStatus}, `;
+    const first = `${locationIntro} the majority of tree cover is found in <b>${
+      largestContrib.label
+    }</b>, `;
     const second = `considering tree cover extent in <b>${
       settings.extentYear
     }</b> where tree canopy is greater than <b>${settings.threshold}%</b>.`;
