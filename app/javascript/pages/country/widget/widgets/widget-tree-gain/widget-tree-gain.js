@@ -2,10 +2,11 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-tree-gain-actions';
 import reducers, { initialState } from './widget-tree-gain-reducers';
-import { getSortedData, getSentence } from './widget-tree-gain-selectors';
+import { getFilteredData, getSentence } from './widget-tree-gain-selectors';
 import WidgetTreeGainComponent from './widget-tree-gain-component';
 
 const mapStateToProps = (
@@ -13,7 +14,7 @@ const mapStateToProps = (
   ownProps
 ) => {
   const { locationNames, activeIndicator } = ownProps;
-  const { data: { ranking, gain, extent }, settings } = widgetTreeGain;
+  const { data: { gain }, settings } = widgetTreeGain;
   let meta = countryData.countries;
   if (location.payload.subRegion) {
     meta = countryData.subRegions;
@@ -22,23 +23,18 @@ const mapStateToProps = (
   }
 
   const selectorData = {
-    ranking,
-    gain,
-    extent,
+    data: gain,
     settings,
     location: location.payload,
     meta,
+    colors: COLORS,
     indicator: activeIndicator,
     locationNames
   };
 
   return {
-    data: {
-      gain: widgetTreeGain.data.gain,
-      extent: widgetTreeGain.data.extent,
-      ranking: getSortedData(selectorData)
-    },
-    sentence: getSentence(selectorData)
+    data: getFilteredData(selectorData) || [],
+    sentence: getSentence(selectorData) || ''
   };
 };
 

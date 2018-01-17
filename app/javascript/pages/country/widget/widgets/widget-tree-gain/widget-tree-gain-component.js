@@ -14,12 +14,12 @@ class WidgetTreeCoverGain extends PureComponent {
     return (
       <div className="c-widget-tree-cover-gain">
         {data &&
-          data.ranking.length > 0 && (
+          data.length > 0 && (
             <div className="gain-data">
               <WidgetDynamicSentence sentence={sentence} />
               <WidgetNumberedList
                 className="ranking-list"
-                data={data.ranking}
+                data={data}
                 settings={settings}
                 colorRange={[COLORS.darkGreen, COLORS.nonForest]}
                 handlePageChange={() => {}}
@@ -32,7 +32,7 @@ class WidgetTreeCoverGain extends PureComponent {
 }
 
 WidgetTreeCoverGain.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   sentence: PropTypes.string.isRequired
 };

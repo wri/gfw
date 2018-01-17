@@ -1,26 +1,62 @@
 import { createSelector } from 'reselect';
-import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
-import { sortByKey } from 'utils/data';
+import findIndex from 'lodash/findIndex';
+import { sortByKey, getColorPalette } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
-const getRanking = state => state.ranking || null;
-const getGain = state => state.gain || null;
-const getExtent = state => state.extent || null;
+const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.location || null;
 const getLocationsMeta = state => state.meta || null;
+const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
 const getLocationNames = state => state.locationNames || null;
 
 export const getSortedData = createSelector(
-  [getRanking, getSettings, getLocation, getLocationsMeta],
-  (ranking, settings, location, meta) => {
-    if (!ranking || isEmpty(ranking) || !meta || isEmpty(meta)) return [];
-    const dataMapped = [];
-    ranking.forEach(d => {
-      const region = meta.find(l => d.id === l.value);
+  [getData, getSettings],
+  (data, settings) => {
+    if (!data || !data.length) return null;
+    return sortByKey(
+      uniqBy(data, 'id'),
+      settings.unit === 'ha' ? 'gain' : 'percentage',
+      true
+    );
+  }
+);
+
+export const getFilteredData = createSelector(
+  [
+    getSortedData,
+    getSettings,
+    getLocation,
+    getLocationNames,
+    getLocationsMeta,
+    getColors
+  ],
+  (data, settings, location, locationNames, meta, colors) => {
+    if (!data || !data.length) return null;
+    const locationIndex = findIndex(
+      data,
+      d => d.id === locationNames.current.value
+    );
+    let trimStart = locationIndex - 2;
+    let trimEnd = locationIndex + 3;
+    if (locationIndex < 2) {
+      trimStart = 0;
+      trimEnd = 5;
+    }
+    if (locationIndex > data.length - 3) {
+      trimStart = data.length - 5;
+      trimEnd = data.length;
+    }
+    const dataTrimmed = data.slice(trimStart, trimEnd);
+    const colorRange = getColorPalette(
+      [colors.darkGreen, colors.lightGreen],
+      dataTrimmed.length
+    );
+    return dataTrimmed.map((d, index) => {
+      const locationData = meta.find(l => d.id === l.value);
       let path = '/country/';
       if (location.subRegion) {
         path += `${location.country}/${location.region}/${d.id}`;
@@ -30,35 +66,33 @@ export const getSortedData = createSelector(
         path += d.id;
       }
 
-      if (region) {
-        dataMapped.push({
-          label: (region && region.label) || '',
-          value: settings.unit === 'ha' ? d.gain : d.relative,
-          path
-        });
-      }
+      return {
+        ...d,
+        label: (locationData && locationData.label) || '',
+        color: colorRange[index],
+        path,
+        value: settings.unit === 'ha' ? d.gain : d.percentage
+      };
     });
-    return sortByKey(uniqBy(dataMapped, 'label'), 'value', true);
   }
 );
 
 export const getSentence = createSelector(
-  [getGain, getExtent, getSettings, getIndicator, getLocationNames],
-  (gain, extent, settings, indicator, locationNames) => {
-    if (!gain || !extent || !settings || !indicator || !locationNames) {
-      return '';
-    }
+  [getData, getSettings, getIndicator, getLocationNames],
+  (data, settings, indicator, locationNames) => {
+    if (!data || !data.length) return null;
+    const locationData = data.find(l => l.id === locationNames.current.value);
     const regionPhrase =
       indicator.value === 'gadm28'
         ? '<span>region-wide</span>'
         : `in <span>${indicator && indicator.label.toLowerCase()}</span>`;
 
-    const areaPercent = format('.1f')(100 * gain / extent);
+    const areaPercent = format('.1f')(locationData.percentage);
     const firstSentence = `From 2001 to 2012, <span>${locationNames.current &&
       locationNames.current.label}</span> gained <strong>${
-      gain ? format('.3s')(gain) : '0'
+      locationData.gain ? format('.3s')(locationData.gain) : '0'
     }ha</strong> of tree cover ${regionPhrase}`;
-    const secondSentence = gain
+    const secondSentence = locationData.gain
       ? `, equivalent to a <strong>${areaPercent}%</strong> increase relative to <b>${
         settings.extentYear
       }</b> tree cover extent.`
