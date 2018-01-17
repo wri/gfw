@@ -19,8 +19,10 @@ class WidgetNumberedList extends PureComponent {
       linksDisabled
     } = this.props;
     const { page, pageSize, unit } = settings;
-    const pageData = data.slice(page * pageSize, (page + 1) * pageSize);
-    const COLORS = getColorPalette(colorRange, pageSize);
+    const pageData = pageSize
+      ? data.slice(page * pageSize, (page + 1) * pageSize)
+      : data;
+    const COLORS = getColorPalette(colorRange, pageSize || pageData.length);
 
     return (
       <div className={`c-widget-numbered-list ${className}`}>
@@ -49,13 +51,14 @@ class WidgetNumberedList extends PureComponent {
               </li>
             ))}
         </ul>
-        {data.length > settings.pageSize && (
-          <WidgetPaginate
-            settings={settings}
-            count={data.length}
-            onClickChange={handlePageChange}
-          />
-        )}
+        {handlePageChange &&
+          data.length > settings.pageSize && (
+            <WidgetPaginate
+              settings={settings}
+              count={data.length}
+              onClickChange={handlePageChange}
+            />
+          )}
       </div>
     );
   }
@@ -64,7 +67,7 @@ class WidgetNumberedList extends PureComponent {
 WidgetNumberedList.propTypes = {
   data: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
-  handlePageChange: PropTypes.func.isRequired,
+  handlePageChange: PropTypes.func,
   colorRange: PropTypes.array.isRequired,
   className: PropTypes.string,
   linksDisabled: PropTypes.bool
