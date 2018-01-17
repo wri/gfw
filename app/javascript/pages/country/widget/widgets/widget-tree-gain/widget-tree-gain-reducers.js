@@ -18,7 +18,7 @@ const setTreeGainData = (state, { payload }) => ({
   ...state,
   loading: false,
   data: {
-    gain: payload
+    ...payload
   }
 });
 

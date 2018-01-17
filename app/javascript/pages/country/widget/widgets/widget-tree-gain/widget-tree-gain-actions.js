@@ -26,7 +26,7 @@ const getTreeGain = createThunkAction(
               };
             });
           }
-          dispatch(setTreeGainData(mappedData));
+          dispatch(setTreeGainData({ gain: mappedData }));
         })
         .catch(error => {
           console.info(error);
