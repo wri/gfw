@@ -1,7 +1,11 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
+import axios from 'axios';
+import uniqBy from 'lodash/uniqBy';
+
 import {
   getCountriesProvider,
+  getFAOCountriesProvider,
   getRegionsProvider,
   getSubRegionsProvider,
   getCountryWhitelistProvider,
@@ -32,11 +36,18 @@ export const getCountries = createThunkAction(
   () => (dispatch, state) => {
     if (!state().countryData.isCountriesLoading) {
       dispatch(setCountriesLoading(true));
-      getCountriesProvider()
-        .then(response => {
-          dispatch(setCountries(response.data.rows));
-          dispatch(setCountriesLoading(false));
-        })
+      axios
+        .all([getCountriesProvider(), getFAOCountriesProvider()])
+        .then(
+          axios.spread((gadm28Countries, faoCountries) => {
+            const countries = uniqBy(
+              [...gadm28Countries.data.rows, ...faoCountries.data.rows],
+              'iso'
+            );
+            dispatch(setCountries(countries));
+            dispatch(setCountriesLoading(false));
+          })
+        )
         .catch(error => {
           dispatch(setCountriesLoading(false));
           console.info(error);
