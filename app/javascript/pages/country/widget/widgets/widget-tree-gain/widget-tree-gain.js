@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import isEqual from 'lodash/isEqual';
 
-import { getActiveFilter } from 'pages/country/widget/widget-selectors';
+import { getActiveIndicator } from 'pages/country/widget/widget-selectors';
 
 import actions from './widget-tree-gain-actions';
 import reducers, { initialState } from './widget-tree-gain-reducers';
@@ -41,9 +41,7 @@ class WidgetTreeGainContainer extends PureComponent {
 
   getSentence = () => {
     const { locationNames, gain, extent, settings } = this.props;
-    const { indicators } = this.props.options;
-    const indicator =
-      indicators && getActiveFilter(settings, indicators, 'indicator');
+    const indicator = getActiveIndicator(settings.indicator);
     const regionPhrase =
       settings.indicator === 'gadm28'
         ? '<span>region-wide</span>'
@@ -73,7 +71,6 @@ WidgetTreeGainContainer.propTypes = {
   locationNames: PropTypes.object.isRequired,
   gain: PropTypes.number.isRequired,
   extent: PropTypes.number.isRequired,
-  options: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   getTreeGain: PropTypes.func.isRequired
