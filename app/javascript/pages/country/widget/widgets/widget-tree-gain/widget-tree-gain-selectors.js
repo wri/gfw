@@ -90,7 +90,8 @@ export const getSentence = createSelector(
         ? '<span>region-wide</span>'
         : `in <span>${indicator && indicator.label.toLowerCase()}</span>`;
 
-    const areaPercent = format('.1f')(locationData.percentage);
+    const areaPercent =
+      (locationData && format('.1f')(locationData.percentage)) || 0;
     const firstSentence = `From 2001 to 2012, <span>${locationNames.current &&
       locationNames.current.label}</span> gained <strong>${
       locationData.gain ? format('.3s')(locationData.gain) : '0'

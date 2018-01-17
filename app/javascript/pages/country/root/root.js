@@ -44,8 +44,10 @@ const mapStateToProps = ({ root, countryData, location }) => {
     currentLocation:
       locationNames[adminLevel] && locationNames[adminLevel].label,
     widgets: filterWidgets({
+      faoCountries: countryData.faoCountries,
       category,
       adminLevel,
+      location,
       locationOptions,
       indicatorWhitelist: location.payload.region
         ? regionWhitelist

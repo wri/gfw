@@ -15,7 +15,14 @@ const getFAOReforestationData = createThunkAction(
       getFAOExtent({ ...params })
         .then(response => {
           const data = response.data.rows;
-          const mappedData = data.length ? { countries: data } : {};
+          let mappedData = {};
+          const hasCountryData =
+            (data.length &&
+              data.find(d => d.iso === state().location.payload.country)) ||
+            null;
+          if (hasCountryData) {
+            mappedData = { countries: data };
+          }
           dispatch(setFAOReforestationData(mappedData));
         })
         .catch(error => {
