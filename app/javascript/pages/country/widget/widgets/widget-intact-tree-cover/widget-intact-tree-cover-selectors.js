@@ -14,29 +14,31 @@ export const getIntactTreeCoverData = createSelector(
   [getData, getSettings, getIndicatorWhitelist],
   (data, settings, whitelist) => {
     if (isEmpty(data) || isEmpty(whitelist)) return null;
-    const { totalArea, cover, plantations } = data;
-    const { indicator } = settings;
+    const { totalArea, totalExtent, extent, plantations } = data;
     const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
     const parsedData = [
       {
-        label:
-          hasPlantations && indicator === 'gadm28'
-            ? 'Natural Forest'
-            : 'Tree cover',
-        value: cover - plantations,
+        label: 'Intact Forest',
+        value: extent,
         color: COLORS.darkGreen,
-        percentage: (cover - plantations) / totalArea * 100
+        percentage: extent / totalArea * 100
+      },
+      {
+        label: hasPlantations ? 'Degraded Forest' : 'Other Tree Cover',
+        value: totalExtent - extent - plantations,
+        color: COLORS.lightGreen,
+        percentage: (extent - plantations) / totalArea * 100
       },
       {
         label: 'Non-Forest',
-        value: totalArea - cover,
+        value: totalArea - extent,
         color: COLORS.nonForest,
-        percentage: (totalArea - cover) / totalArea * 100
+        percentage: (totalArea - totalExtent) / totalArea * 100
       }
     ];
-    if (indicator === 'gadm28' && hasPlantations) {
-      parsedData.splice(1, 0, {
-        label: 'Tree plantations',
+    if (hasPlantations) {
+      parsedData.splice(2, 0, {
+        label: 'Plantations',
         value: plantations,
         color: COLORS.mediumGreen,
         percentage: plantations / totalArea * 100
