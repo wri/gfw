@@ -22,6 +22,7 @@ import * as widgetPlantationAreaComponent from 'pages/country/widget/widgets/wid
 import * as widgetTotalAreaPlantationsComponent from 'pages/country/widget/widgets/widget-total-area-plantations';
 import * as widgetTreeCoverComponent from 'pages/country/widget/widgets/widget-tree-cover';
 import * as widgetIntactTreeCoverComponent from 'pages/country/widget/widgets/widget-intact-tree-cover';
+import * as widgetPrimaryTreeCoverComponent from 'pages/country/widget/widgets/widget-primary-tree-cover';
 import * as widgetTreeGainComponent from 'pages/country/widget/widgets/widget-tree-gain';
 import * as widgetTreeCoverLossAreasComponent from 'pages/country/widget/widgets/widget-tree-cover-loss-areas';
 import * as widgetTreeLocatedComponent from 'pages/country/widget/widgets/widget-tree-located';
@@ -44,6 +45,7 @@ const componentsReducers = {
   ),
   widgetTreeCover: handleActions(widgetTreeCoverComponent),
   widgetIntactTreeCover: handleActions(widgetIntactTreeCoverComponent),
+  widgetPrimaryTreeCover: handleActions(widgetPrimaryTreeCoverComponent),
   widgetTreeGain: handleActions(widgetTreeGainComponent),
   widgetTreeCoverLossAreas: handleActions(widgetTreeCoverLossAreasComponent),
   widgetTreeLocated: handleActions(widgetTreeLocatedComponent),
