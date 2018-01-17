@@ -35,7 +35,7 @@
     "active": true
   },
   "primaryTreeCover": {
-    "title": "Primary forests tree cover extent",
+    "title": "Primary forest extent",
     "config": {
       "gridWidth": 6,
       "indicators": ["primary_forest", "primary_forest__mining", "primary_forest__wdpa", "primary_forest__landmark"],
@@ -47,7 +47,7 @@
     "settings": {
       "indicator": "primary_forest",
       "threshold": 30,
-      "extentYear": 2000
+      "extentYear": 2010
     },
     "active": true
   },
