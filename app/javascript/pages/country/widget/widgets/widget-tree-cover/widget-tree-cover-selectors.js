@@ -4,15 +4,18 @@ import isEmpty from 'lodash/isEmpty';
 
 // get list data
 const getData = state => state.data;
-const getIndicator = state => state.indicator;
+const getSettings = state => state.settings;
+const getLocationNames = state => state.locationNames;
+const getActiveIndicator = state => state.activeIndicator;
 const getIndicatorWhitelist = state => state.whitelist;
 
 // get lists selected
 export const getTreeCoverData = createSelector(
-  [getData, getIndicator, getIndicatorWhitelist],
-  (data, indicator, whitelist) => {
+  [getData, getSettings, getIndicatorWhitelist],
+  (data, settings, whitelist) => {
     if (isEmpty(data) || isEmpty(whitelist)) return null;
     const { totalArea, cover, plantations } = data;
+    const { indicator } = settings;
     const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
     const parsedData = [
       {
@@ -40,5 +43,26 @@ export const getTreeCoverData = createSelector(
       });
     }
     return parsedData;
+  }
+);
+
+export const getSentence = createSelector(
+  [getData, getSettings, getLocationNames, getActiveIndicator],
+  (data, settings, locationNames, indicator) => {
+    if (!data) return null;
+    const { totalArea, cover } = data;
+    const coverStatus = cover / totalArea > 0.5 ? 'tree covered' : 'non-forest';
+    const locationLabel = locationNames.current && locationNames.current.label;
+    const locationIntro = `${
+      indicator.value !== 'gadm28'
+        ? `<b>${indicator.label}</b> in <b>${locationLabel}</b> are `
+        : `<b>${locationLabel}</b> is `
+    }`;
+    const first = `${locationIntro} mainly ${coverStatus}, `;
+    const second = `considering tree cover extent in <b>${
+      settings.extentYear
+    }</b> where tree canopy is greater than <b>${settings.threshold}%</b>.`;
+
+    return `${first} ${second}`;
   }
 );

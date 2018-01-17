@@ -29,7 +29,7 @@
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "units", "extentYears"],
-      "locationCheck": true,
+      "locationCheck": false,
       "type": "extent"
     },
     "settings": {
@@ -40,7 +40,7 @@
       "pageSize": 10,
       "page": 0
     },
-    "active": true
+    "active": false
   },
   "treeLoss": {
     "title": "Tree cover loss",
@@ -63,7 +63,7 @@
       "endYear": 2016,
       "extentYear": 2000
     },
-    "active": true
+    "active": false
   },
   "treeGain": {
     "title": "Tree cover gain",
@@ -79,7 +79,7 @@
       "indicator": "gadm28",
       "threshold": "0"
     },
-    "active": true
+    "active": false
   },
   "FAOReforestation": {
     "title": "FAO reforestation",
@@ -94,7 +94,7 @@
       "period": 2010,
       "unit": "ha/year"
     },
-    "active": true
+    "active": false
   },
   "FAOCover": {
     "title": "Forest cover",
@@ -104,6 +104,6 @@
       "admins": ["country"],
       "type": "fao"
     },
-    "active": true
+    "active": false
   }
 }
