@@ -47,6 +47,7 @@ $black-tabs: #404040;
       width: 30%;
       position: absolute;
       margin-top: 0;
+      z-index: 200;
     }
 
     @media screen and (min-width: $screen-xl) {
@@ -93,6 +94,7 @@ $black-tabs: #404040;
 
     @media screen and (min-width: $screen-m) {
       display: none;
+      z-index: 220;
     }
 
     &:focus {
@@ -100,6 +102,7 @@ $black-tabs: #404040;
     }
 
     &.close-map {
+      background-color: $white;
       top: rem(15px);
     }
 
