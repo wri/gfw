@@ -54,11 +54,9 @@ export const getSentence = createSelector(
     if (!data || !locationNames) return null;
     const largestContrib = data.find(d => d.percentage >= 0.5);
     const locationLabel = locationNames.current && locationNames.current.label;
-    const locationIntro = `${
-      indicator.value !== 'gadm28'
-        ? `For <b>${indicator.label}</b> in <b>${locationLabel}</b>,`
-        : `In <b>${locationLabel}</b>,`
-    }`;
+    const locationIntro = `For <b>${
+      indicator.label
+    }</b> in <b>${locationLabel}</b>,`;
     const first = `${locationIntro} the majority of tree cover is found in <b>${
       largestContrib.label
     }</b>, `;

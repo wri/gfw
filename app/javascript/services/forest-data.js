@@ -9,6 +9,8 @@ const SQL_QUERIES = {
     "SELECT SUM({extentYear}) as value, SUM(area_gadm28) as total_area FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
   gain:
     "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = {threshold}",
+  gainExtent:
+    "SELECT {region} as region, SUM(area_gain) AS gain, SUM({extentYear}) AS extent FROM data WHERE {location} AND polyname = '{polyname}' AND extent <> -9999 AND thresh = 0 GROUP BY region",
   loss:
     "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.emissions) as emissions FROM data WHERE polyname = '{indicator}' AND {location} AND thresh= {threshold} GROUP BY polyname, iso, nested(year_data.year)",
   locations:
@@ -111,5 +113,34 @@ export const getFAOExtent = ({ period }) => {
     '{period}',
     period
   );
+  return axios.get(url);
+};
+
+export const getGainExtent = ({
+  country,
+  region,
+  subRegion,
+  indicator,
+  extentYear
+}) => {
+  let regionValue = 'iso';
+  if (subRegion) {
+    regionValue = 'adm2';
+  } else if (region) {
+    regionValue = 'adm1';
+  }
+
+  const location = region
+    ? `iso = '${country}' ${subRegion ? `AND adm1 = ${region}` : ''}`
+    : '1 = 1';
+
+  const url = `${REQUEST_URL}${SQL_QUERIES.gainExtent}`
+    .replace('{region}', regionValue)
+    .replace('{location}', location)
+    .replace(
+      '{extentYear}',
+      extentYear === 2000 ? 'area_extent_2000' : 'area_extent'
+    )
+    .replace('{polyname}', indicator);
   return axios.get(url);
 };

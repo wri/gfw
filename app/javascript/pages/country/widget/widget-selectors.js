@@ -32,6 +32,9 @@ export const getActiveAdmin = location => {
 export const getActiveFilter = (settings, filters, key) =>
   (filters ? filters.find(i => i.value === settings[key]) : null);
 
+export const getActiveIndicator = indicator =>
+  INDICATORS.find(i => i.value === indicator);
+
 export const getLocationLabel = (location, indicator, indicators) => {
   if (!location || !indicators || !indicators.length) return '';
   const activeIndicator = indicators.find(i => i.value === indicator);

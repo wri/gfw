@@ -13,16 +13,15 @@
     "settings": {
       "indicator": "gadm28",
       "threshold": 30,
-      "extentYear": 2000
+      "extentYear": 2010
     },
     "active": true
   },
   "intactTreeCover": {
-    "title": "Intact forests tree cover extent",
+    "title": "Intact forest extent",
     "config": {
       "gridWidth": 6,
       "indicators": ["ifl_2013", "ifl_2013__wdpa", "ifl_2013__mining"],
-      "showIndicators": ["ifl_2013", "ifl_2013__wdpa", "ifl_2013__mining"],
       "categories": ["land-cover"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "thresholds", "extentYears"],
@@ -31,7 +30,7 @@
     "settings": {
       "indicator": "ifl_2013",
       "threshold": 30,
-      "extentYear": 2000
+      "extentYear": 2010
     },
     "active": true
   },
@@ -40,7 +39,6 @@
     "config": {
       "gridWidth": 6,
       "indicators": ["primary_forest", "primary_forest__mining", "primary_forest__wdpa", "primary_forest__landmark"],
-      "showIndicators": ["primary_forest", "primary_forest__mining", "primary_forest__wdpa", "primary_forest__landmark"],
       "categories": ["land-cover"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "thresholds", "extentYears"],
@@ -78,6 +76,31 @@
     },
     "active": true
   },
+  "relativeTreeCover": {
+    "title": "Which regions are the most forest-covered",
+    "config": {
+      "gridWidth": 6,
+      "indicators": ["gadm28", "ifl_2013", "wdpa",
+                      "ifl_2013__wdpa", "ifl_2013__mining",
+                      "primary_forest", "primary_forest__landmark",
+                      "plantations", "plantations__mining",
+                      "plantations__wdpa", "plantations__landmark"],
+      "categories": ["summary", "land-cover"],
+      "admins": ["country", "region"],
+      "selectors": ["indicators", "thresholds", "extentYears"],
+      "locationCheck": true,
+      "type": "extent"
+    },
+    "settings": {
+      "indicator": "gadm28",
+      "threshold": 30,
+      "extentYear": 2010,
+      "unit": "%",
+      "pageSize": 10,
+      "page": 0
+    },
+    "active": true
+  },
   "treeLoss": {
     "title": "Tree cover loss",
     "config": {
@@ -108,12 +131,14 @@
       "indicators": ["gadm28", "wdpa", "primary_forests", "plantations", "ifl_2013"],
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "thresholds"],
+      "selectors": ["indicators", "thresholds", "extentYears", "units"],
       "type": "gain"
     },
     "settings": {
       "indicator": "gadm28",
-      "threshold": "0"
+      "threshold": "0",
+      "unit": "ha",
+      "extentYear": 2010
     },
     "active": true
   },

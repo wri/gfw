@@ -4,8 +4,7 @@ export const initialState = {
   loading: false,
   error: false,
   data: {
-    gain: 0,
-    extent: 0
+    gain: []
   },
   ...WIDGETS_CONFIG.treeGain
 };

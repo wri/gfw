@@ -9,6 +9,7 @@ import * as treeCoverActions from 'pages/country/widget/widgets/widget-tree-cove
 import * as intactTreeCoverActions from 'pages/country/widget/widgets/widget-intact-tree-cover/widget-intact-tree-cover-actions';
 import * as primaryTreeCoverActions from 'pages/country/widget/widgets/widget-primary-tree-cover/widget-primary-tree-cover-actions';
 import * as treeLocatedActions from 'pages/country/widget/widgets/widget-tree-located/widget-tree-located-actions';
+import * as relativeTreeCoverActions from 'pages/country/widget/widgets/widget-relative-tree-cover/widget-relative-tree-cover-actions';
 import * as treeGainActions from 'pages/country/widget/widgets/widget-tree-gain/widget-tree-gain-actions';
 import * as FAOReforestationActions from 'pages/country/widget/widgets/widget-fao-reforestation/widget-fao-reforestation-actions';
 import * as FAOCoverActions from 'pages/country/widget/widgets/widget-fao-cover/widget-fao-cover-actions';
@@ -19,6 +20,7 @@ const widgetActions = {
   ...intactTreeCoverActions.default,
   ...primaryTreeCoverActions.default,
   ...treeLocatedActions.default,
+  ...relativeTreeCoverActions.default,
   ...treeGainActions.default,
   ...FAOReforestationActions.default,
   ...FAOCoverActions.default
