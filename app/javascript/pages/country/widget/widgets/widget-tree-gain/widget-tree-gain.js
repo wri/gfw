@@ -13,13 +13,11 @@ import WidgetTreeGainComponent from './widget-tree-gain-component';
 
 const mapStateToProps = ({ location, widgetTreeGain, countryData }) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
-  let meta = [];
+  let meta = countryData.countries;
   if (location.payload.subRegion) {
     meta = countryData.subRegions;
   } else if (location.payload.region) {
     meta = countryData.regions;
-  } else {
-    meta = countryData.countries;
   }
 
   return {
