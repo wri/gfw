@@ -32,8 +32,8 @@ const mapStateToProps = ({ widgetIntactTreeCover, countryData }, ownProps) => {
     loading: loading || isCountriesLoading || isRegionsLoading,
     regions,
     data,
-    parsedData: getIntactTreeCoverData(selectorData)
-    // sentence: getSentence(selectorData)
+    parsedData: getIntactTreeCoverData(selectorData),
+    sentence: getSentence(selectorData)
   };
 };
 
