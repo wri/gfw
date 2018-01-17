@@ -43,7 +43,7 @@
     "active": true
   },
   "relativeTreeCover": {
-    "title": "Which regions are proportionatley most forested",
+    "title": "Which regions are the most forest-covered",
     "config": {
       "gridWidth": 6,
       "indicators": ["gadm28", "ifl_2013", "wdpa",
