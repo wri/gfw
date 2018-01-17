@@ -45,7 +45,6 @@ export const checkWidgetNeedsLocations = createSelector(
 export const filterWidgets = createSelector(
   [checkWidgetNeedsLocations, getIndicatorWhitelist],
   (widgets, whitelist) => {
-    // if (isEmpty(whitelist)) return null;
     const witelistKeys = !isEmpty(whitelist) ? Object.keys(whitelist) : null;
     return widgets.filter(widget => {
       // filter by showIndicators
@@ -66,7 +65,6 @@ export const filterWidgets = createSelector(
       }
       // Then check if widget has data for gadm28 (loss or gain)
       const type = widget.config.type;
-      // console.log(type);
       const hasData =
         !type ||
         type === 'extent' ||
