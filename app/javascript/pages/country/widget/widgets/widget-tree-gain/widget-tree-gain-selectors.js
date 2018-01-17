@@ -83,7 +83,7 @@ export const getFilteredData = createSelector(
 export const getSentence = createSelector(
   [getData, getSettings, getIndicator, getLocationNames],
   (data, settings, indicator, locationNames) => {
-    if (!data || !data.length) return null;
+    if (!data || !data.length || !locationNames) return null;
     const locationData = data.find(l => l.id === locationNames.current.value);
     const regionPhrase =
       indicator.value === 'gadm28'
