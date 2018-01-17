@@ -14,6 +14,7 @@ const getAdminLevel = state => state.adminLevel || null;
 const getLocation = state => state.location || null;
 const getLocationOptions = state => state.locationOptions || null;
 const getIndicatorWhitelist = state => state.indicatorWhitelist || null;
+const getFAOCountries = state => state.faoCountries || null;
 
 // get lists selected
 export const getWidgets = createSelector([], () =>
@@ -30,14 +31,23 @@ export const filterWidgetsByCategory = createSelector(
 );
 
 export const checkWidgetNeedsLocations = createSelector(
-  [filterWidgetsByCategory, getLocationOptions, getAdminLevel],
-  (widgets, locations, adminLevel) => {
+  [
+    filterWidgetsByCategory,
+    getLocationOptions,
+    getAdminLevel,
+    getFAOCountries,
+    getLocation
+  ],
+  (widgets, locations, adminLevel, faoCountries, location) => {
     if (isEmpty(locations)) return null;
     const adminCheck = adminLevel === 'country' ? 'regions' : 'subRegions';
+    const isFaoCountry =
+      faoCountries.find(c => c.value === location.payload.country) || null;
     return widgets.filter(
       w =>
         w.config.admins.indexOf(adminLevel) > -1 &&
-        (!w.config.locationCheck || locations[adminCheck].length > 1)
+        (!w.config.locationCheck || locations[adminCheck].length > 1) &&
+        (w.config.type !== 'fao' || isFaoCountry)
     );
   }
 );

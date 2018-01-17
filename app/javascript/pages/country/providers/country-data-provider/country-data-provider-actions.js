@@ -25,6 +25,8 @@ export const setRegionWhitelistLoading = createAction(
 );
 
 export const setCountries = createAction('setCountries');
+export const setFAOCountries = createAction('setFAOCountries');
+export const setGadmCountries = createAction('setGadmCountries');
 export const setRegions = createAction('setRegions');
 export const setSubRegions = createAction('setSubRegions');
 export const setGeostore = createAction('setGeostore');
@@ -44,6 +46,8 @@ export const getCountries = createThunkAction(
               [...gadm28Countries.data.rows, ...faoCountries.data.rows],
               'iso'
             );
+            dispatch(setGadmCountries(gadm28Countries.data.rows));
+            dispatch(setFAOCountries(faoCountries.data.rows));
             dispatch(setCountries(countries));
             dispatch(setCountriesLoading(false));
           })
