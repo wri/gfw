@@ -15,10 +15,7 @@ const setTreeCoverLoading = (state, { payload }) => ({
 const setTreeCoverData = (state, { payload }) => ({
   ...state,
   loading: false,
-  data: {
-    ...state.data,
-    ...payload
-  }
+  data: payload
 });
 
 const setTreeCoverSettings = (state, { payload }) => ({

@@ -29,7 +29,7 @@
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "units", "extentYears"],
-      "locationCheck": true,
+      "locationCheck": false,
       "type": "extent"
     },
     "settings": {
@@ -40,7 +40,7 @@
       "pageSize": 10,
       "page": 0
     },
-    "active": true
+    "active": false
   },
   "treeLocatedRelative": {
     "title": "Which regions are proportionatley most forested",
@@ -88,7 +88,7 @@
       "endYear": 2016,
       "extentYear": 2000
     },
-    "active": true
+    "active": false
   },
   "treeGain": {
     "title": "Tree cover gain",
@@ -108,7 +108,7 @@
       "pageSize": 5,
       "page": 0
     },
-    "active": true
+    "active": false
   },
   "FAOReforestation": {
     "title": "FAO reforestation",
@@ -123,7 +123,7 @@
       "period": 2010,
       "unit": "ha/year"
     },
-    "active": true
+    "active": false
   },
   "FAOCover": {
     "title": "Forest cover",
@@ -133,6 +133,6 @@
       "admins": ["country"],
       "type": "fao"
     },
-    "active": true
+    "active": false
   }
 }
