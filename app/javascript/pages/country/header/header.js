@@ -7,6 +7,7 @@ import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import { format } from 'd3-format';
+import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 
 import * as actions from './header-actions';
 import reducers, { initialState } from './header-reducers';
@@ -39,7 +40,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     widgetKeys.forEach(key => {
       widgetQueries[key] = encodeStateForUrl({
         ...decodeUrlForState(query[key]),
-        indicator: 'gadm28'
+        indicator: WIDGETS_CONFIG[key].settings.indicator
       });
     });
   }
