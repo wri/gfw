@@ -45,9 +45,11 @@ export const getSortedData = createSelector(
 export const getSentence = createSelector(
   [getGain, getExtent, getSettings, getIndicator, getLocationNames],
   (gain, extent, settings, indicator, locationNames) => {
-    if (!gain || !extent || !settings || !indicator || !locationNames) { return ''; }
+    if (!gain || !extent || !settings || !indicator || !locationNames) {
+      return '';
+    }
     const regionPhrase =
-      indicator.indicator === 'gadm28'
+      indicator.value === 'gadm28'
         ? '<span>region-wide</span>'
         : `in <span>${indicator && indicator.label.toLowerCase()}</span>`;
 
