@@ -12,7 +12,6 @@ const mapStateToProps = (
   { location, widgetTreeGain, countryData },
   ownProps
 ) => {
-  const { isCountriesLoading, isRegionsLoading } = countryData;
   const { locationNames, activeIndicator } = ownProps;
   const { data: { ranking, gain, extent }, settings } = widgetTreeGain;
   let meta = countryData.countries;
@@ -34,7 +33,6 @@ const mapStateToProps = (
   };
 
   return {
-    loading: widgetTreeGain.loading || isCountriesLoading || isRegionsLoading,
     data: {
       gain: widgetTreeGain.data.gain,
       extent: widgetTreeGain.data.extent,
