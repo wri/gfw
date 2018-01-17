@@ -17,16 +17,16 @@ const getFAOCover = createThunkAction(
         .all([getFAO({ ...params }), getRanking({ ...params })])
         .then(
           axios.spread((getFAOResponse, getRankingResponse) => {
-            const data =
-              getFAOResponse.data.rows.length && getFAOResponse.data.rows[0];
+            let data = {};
+            const fao = getFAOResponse.data.rows;
             const ranking = getRankingResponse.data.rows;
-            const values = {
-              fao: {
-                ...data
-              },
-              rank: ranking[0].rank || 0
-            };
-            dispatch(setFAOCoverData(values));
+            if (fao.length && ranking.length) {
+              data = {
+                ...fao[0],
+                rank: ranking[0].rank || 0
+              };
+            }
+            dispatch(setFAOCoverData(data));
           })
         )
         .catch(error => {
