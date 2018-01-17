@@ -29,13 +29,6 @@ const getLocationQuery = (country, region, subRegion) =>
     subRegion ? ` AND adm2 = ${subRegion}` : ''
   }`;
 
-const getRankingLocationQuery = (country, region, subRegion) =>
-  `${
-    region
-      ? `iso = '${country}' ${subRegion ? `AND adm1 = ${region}` : ''}`
-      : '1 = 1'
-  }`;
-
 export const getLocations = ({
   country,
   region,
@@ -137,9 +130,13 @@ export const getGainExtent = ({
     regionValue = 'adm1';
   }
 
+  const location = region
+    ? `iso = '${country}' ${subRegion ? `AND adm1 = ${region}` : ''}`
+    : '1 = 1';
+
   const url = `${REQUEST_URL}${SQL_QUERIES.gainExtent}`
     .replace('{region}', regionValue)
-    .replace('{location}', getRankingLocationQuery(country, region, subRegion))
+    .replace('{location}', location)
     .replace(
       '{extentYear}',
       extentYear === 2000 ? 'area_extent_2000' : 'area_extent'
