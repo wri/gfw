@@ -2,13 +2,11 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-relative-tree-cover-actions';
 import reducers, { initialState } from './widget-relative-tree-cover-reducers';
 import {
   getSortedData,
-  getChartData,
   getSentence
 } from './widget-relative-tree-cover-selectors';
 import WidgetRelativeTreeCoverComponent from './widget-relative-tree-cover-component';
@@ -27,7 +25,6 @@ const mapStateToProps = (
     options: settingsConfig.options,
     meta: countryData[!payload.region ? 'regions' : 'subRegions'],
     location: payload,
-    colors: COLORS,
     indicator: activeIndicator,
     locationNames: ownProps.locationNames
   };
@@ -35,7 +32,6 @@ const mapStateToProps = (
     regions: countryData.regions,
     loading: loading || isCountriesLoading || isRegionsLoading,
     data: getSortedData(selectorData),
-    chartData: getChartData(selectorData),
     sentence: getSentence(selectorData)
   };
 };
