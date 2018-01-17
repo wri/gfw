@@ -10,6 +10,7 @@ import WidgetHeader from 'pages/country/widget/components/widget-header';
 
 import WidgetTreeCover from 'pages/country/widget/widgets/widget-tree-cover';
 import WidgetTreeLocated from 'pages/country/widget/widgets/widget-tree-located';
+import WidgetRelativeTreeCover from 'pages/country/widget/widgets/widget-relative-tree-cover';
 import WidgetTreeLoss from 'pages/country/widget/widgets/widget-tree-loss';
 import WidgetTotalAreaPlantations from 'pages/country/widget/widgets/widget-total-area-plantations';
 import WidgetTreeGain from 'pages/country/widget/widgets/widget-tree-gain';
@@ -24,6 +25,7 @@ const widgets = {
   WidgetTreeCover,
   WidgetTreeGain,
   WidgetTreeLocated,
+  WidgetRelativeTreeCover,
   WidgetTreeLoss,
   WidgetTotalAreaPlantations,
   WidgetPlantationArea,
