@@ -37,7 +37,7 @@ class WidgetNumberedList extends PureComponent {
                       className="item-bubble"
                       style={{ backgroundColor: COLORS[index] }}
                     >
-                      {index + 1 + pageSize * page}
+                      {item.rank || index + 1 + pageSize * page}
                     </div>
                     <div className="item-name">{item.label}</div>
                   </div>

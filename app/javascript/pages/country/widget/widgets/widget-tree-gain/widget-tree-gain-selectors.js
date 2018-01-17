@@ -21,7 +21,10 @@ export const getSortedData = createSelector(
       uniqBy(data, 'id'),
       settings.unit === 'ha' ? 'gain' : 'percentage',
       true
-    );
+    ).map((d, i) => ({
+      ...d,
+      rank: i + 1
+    }));
   }
 );
 
