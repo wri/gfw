@@ -72,12 +72,14 @@
       "indicators": ["gadm28", "wdpa", "primary_forests", "plantations", "ifl_2013"],
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "thresholds"],
+      "selectors": ["indicators", "thresholds", "extentYears", "units"],
       "type": "gain"
     },
     "settings": {
       "indicator": "gadm28",
-      "threshold": "0"
+      "threshold": "0",
+      "unit": "ha",
+      "extentYear": 2010
     },
     "active": true
   },
