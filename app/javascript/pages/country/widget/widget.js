@@ -64,11 +64,7 @@ const mapStateToProps = (state, ownProps) => {
     activeLocation: widgetSelectors.getActiveAdmin({
       location: location.payload
     }),
-    activeIndicator: widgetSelectors.getActiveFilter(
-      settings,
-      options.indicators,
-      'indicator'
-    ),
+    activeIndicator: widgetSelectors.getActiveIndicator(settings.indicator),
     location: location.payload,
     title,
     loading,

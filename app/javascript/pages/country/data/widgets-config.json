@@ -22,7 +22,6 @@
     "config": {
       "gridWidth": 6,
       "indicators": ["ifl_2013", "ifl_2013__wdpa", "ifl_2013__mining"],
-      "showIndicators": ["ifl_2013", "ifl_2013__wdpa", "ifl_2013__mining"],
       "categories": ["land-cover"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "thresholds", "extentYears"],
