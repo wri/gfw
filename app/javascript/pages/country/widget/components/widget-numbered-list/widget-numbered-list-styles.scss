@@ -43,13 +43,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: rem(20px);
-    min-width: rem(20px);
-    height: rem(20px);
-    min-height: rem(20px);
+    width: rem(24px);
+    min-width: rem(24px);
+    height: rem(24px);
+    min-height: rem(24px);
     color: $white;
     font-weight: 500;
-    border-radius: 100%;
+    border-radius: 50%;
     margin-right: rem(10px);
   }
 }
