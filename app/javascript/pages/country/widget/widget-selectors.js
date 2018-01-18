@@ -141,13 +141,18 @@ export const getUnits = createSelector([], () => sortByKey(UNITS, 'label'));
 
 export const getExtentYears = createSelector([], () => EXTENT_YEARS);
 
-export const getYears = createSelector([getData], data => {
-  if (isEmpty(data) || !data.length) return null;
-  return uniq(data.map(d => d.year)).map(d => ({
-    label: d,
-    value: d
-  }));
-});
+export const getYears = createSelector(
+  [getData, getStartYear, getEndYear],
+  (data, startYear, endYear) => {
+    if (isEmpty(data) || !data.length) return null;
+    return uniq(data.map(d => d.year))
+      .filter(d => d >= startYear && d <= endYear)
+      .map(d => ({
+        label: d,
+        value: d
+      }));
+  }
+);
 
 export const getStartYears = createSelector(
   [getYears, getEndYear],
