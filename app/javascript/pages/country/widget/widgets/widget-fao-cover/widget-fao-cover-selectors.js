@@ -1,26 +1,24 @@
 import { createSelector } from 'reselect';
 import COLORS from 'pages/country/data/colors.json';
+import isEmpty from 'lodash/isEmpty';
+import { format } from 'd3-format';
 
 // get list data
-const getFAO = state => state.fao || null;
-const getRank = state => state.rank || null;
+const getData = state => state.data || null;
 const getLocationNames = state => state.locationNames || null;
 
 // get lists selected
 export const getFAOCoverData = createSelector(
-  [getFAO, getRank, getLocationNames],
-  (fao, rank, locationNames) => {
-    if (!fao || !rank || !locationNames) {
-      return [];
-    }
-
+  [getData, getLocationNames],
+  (data, locationNames) => {
+    if (isEmpty(data) || !locationNames) return null;
     const {
       area_ha,
       extent,
       forest_planted,
       forest_primary,
       forest_regenerated
-    } = fao;
+    } = data;
 
     const naturallyRegenerated = extent / 100 * forest_regenerated;
     const primaryForest = extent / 100 * forest_primary;
@@ -55,5 +53,39 @@ export const getFAOCoverData = createSelector(
         color: COLORS.nonForest
       }
     ];
+  }
+);
+
+export const getSentence = createSelector(
+  [getData, getLocationNames],
+  (data, locationNames) => {
+    if (isEmpty(data) || !locationNames) return null;
+    const {
+      area_ha,
+      extent,
+      forest_planted,
+      forest_primary,
+      forest_regenerated,
+      rank
+    } = data;
+    const naturallyRegenerated = extent / 100 * forest_regenerated;
+    const primaryForest = extent / 100 * forest_primary;
+    const plantedForest = extent / 100 * forest_planted;
+    const nonForest =
+      area_ha - (naturallyRegenerated + primaryForest + plantedForest);
+
+    const sentence = `FAO data from 2015 shows that ${locationNames.current &&
+      locationNames.current.label} is ${
+      nonForest / area_ha > 0.5 ? 'mostly non-forest.' : 'mostly forest.'
+    }${
+      primaryForest > 0
+        ? ` Primary forest occupies <strong>${format('.1f')(
+          primaryForest / area_ha * 100
+        )}%</strong> of the country. This gives ${locationNames.current &&
+            locationNames.current
+              .label} a rank of <strong>${rank}th</strong> out of 110 countries in terms of its relative amount of primary forest.`
+        : ''
+    }`;
+    return sentence;
   }
 );

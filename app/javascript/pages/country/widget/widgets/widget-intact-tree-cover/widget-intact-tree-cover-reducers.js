@@ -4,21 +4,21 @@ export const initialState = {
   loading: false,
   error: false,
   data: {},
-  ...WIDGETS_CONFIG.treeCover
+  ...WIDGETS_CONFIG.intactTreeCover
 };
 
-const setTreeCoverLoading = (state, { payload }) => ({
+const setIntactTreeCoverLoading = (state, { payload }) => ({
   ...state,
   ...payload
 });
 
-const setTreeCoverData = (state, { payload }) => ({
+const setIntactTreeCoverData = (state, { payload }) => ({
   ...state,
   loading: false,
   data: payload
 });
 
-const setTreeCoverSettings = (state, { payload }) => ({
+const setIntactTreeCoverSettings = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
@@ -27,7 +27,7 @@ const setTreeCoverSettings = (state, { payload }) => ({
 });
 
 export default {
-  setTreeCoverLoading,
-  setTreeCoverData,
-  setTreeCoverSettings
+  setIntactTreeCoverLoading,
+  setIntactTreeCoverData,
+  setIntactTreeCoverSettings
 };

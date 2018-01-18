@@ -6,6 +6,7 @@ import { encodeStateForUrl, decodeUrlForState } from 'utils/stateToUrl';
 
 import * as treeLossActions from 'pages/country/widget/widgets/widget-tree-loss/widget-tree-loss-actions';
 import * as treeCoverActions from 'pages/country/widget/widgets/widget-tree-cover/widget-tree-cover-actions';
+import * as intactTreeCoverActions from 'pages/country/widget/widgets/widget-intact-tree-cover/widget-intact-tree-cover-actions';
 import * as treeLocatedActions from 'pages/country/widget/widgets/widget-tree-located/widget-tree-located-actions';
 import * as relativeTreeCoverActions from 'pages/country/widget/widgets/widget-relative-tree-cover/widget-relative-tree-cover-actions';
 import * as treeGainActions from 'pages/country/widget/widgets/widget-tree-gain/widget-tree-gain-actions';
@@ -15,6 +16,7 @@ import * as FAOCoverActions from 'pages/country/widget/widgets/widget-fao-cover/
 const widgetActions = {
   ...treeLossActions.default,
   ...treeCoverActions.default,
+  ...intactTreeCoverActions.default,
   ...treeLocatedActions.default,
   ...relativeTreeCoverActions.default,
   ...treeGainActions.default,

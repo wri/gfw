@@ -3,19 +3,22 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 
-import actions from './widget-tree-cover-actions';
-import reducers, { initialState } from './widget-tree-cover-reducers';
-import { getTreeCoverData, getSentence } from './widget-tree-cover-selectors';
-import WidgetTreeCoverComponent from './widget-tree-cover-component';
+import actions from './widget-intact-tree-cover-actions';
+import reducers, { initialState } from './widget-intact-tree-cover-reducers';
+import {
+  getIntactTreeCoverData,
+  getSentence
+} from './widget-intact-tree-cover-selectors';
+import WidgetIntactTreeCoverComponent from './widget-intact-tree-cover-component';
 
-const mapStateToProps = ({ widgetTreeCover, countryData }, ownProps) => {
+const mapStateToProps = ({ widgetIntactTreeCover, countryData }, ownProps) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
     countryWhitelist,
     regions
   } = countryData;
-  const { settings, loading, data } = widgetTreeCover;
+  const { settings, loading, data } = widgetIntactTreeCover;
   const { locationNames, activeIndicator } = ownProps;
   const selectorData = {
     data,
@@ -29,28 +32,28 @@ const mapStateToProps = ({ widgetTreeCover, countryData }, ownProps) => {
     loading: loading || isCountriesLoading || isRegionsLoading,
     regions,
     data,
-    parsedData: getTreeCoverData(selectorData),
+    parsedData: getIntactTreeCoverData(selectorData),
     sentence: getSentence(selectorData)
   };
 };
 
-class WidgetTreeCoverContainer extends PureComponent {
+class WidgetIntactTreeCoverContainer extends PureComponent {
   componentDidMount() {
-    const { location, settings, getTreeCover } = this.props;
-    getTreeCover({
+    const { location, settings, getIntactTreeCover } = this.props;
+    getIntactTreeCover({
       ...location,
       ...settings
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { settings, getTreeCover, location } = nextProps;
+    const { settings, getIntactTreeCover, location } = nextProps;
 
     if (
       !isEqual(location, this.props.location) ||
       !isEqual(settings, this.props.settings)
     ) {
-      getTreeCover({
+      getIntactTreeCover({
         ...location,
         ...settings
       });
@@ -58,18 +61,20 @@ class WidgetTreeCoverContainer extends PureComponent {
   }
 
   render() {
-    return createElement(WidgetTreeCoverComponent, {
+    return createElement(WidgetIntactTreeCoverComponent, {
       ...this.props
     });
   }
 }
 
-WidgetTreeCoverContainer.propTypes = {
+WidgetIntactTreeCoverContainer.propTypes = {
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  getTreeCover: PropTypes.func.isRequired
+  getIntactTreeCover: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };
 
-export default connect(mapStateToProps, actions)(WidgetTreeCoverContainer);
+export default connect(mapStateToProps, actions)(
+  WidgetIntactTreeCoverContainer
+);

@@ -5,14 +5,14 @@ import WidgetPieChart from 'pages/country/widget/components/widget-pie-chart';
 import WidgetPieChartLegend from 'pages/country/widget/components/widget-pie-chart-legend';
 import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 
-import './widget-tree-cover-styles.scss';
+import './widget-intact-tree-cover-styles.scss';
 
-class WidgetTreeCover extends PureComponent {
+class WidgetIntactTreeCover extends PureComponent {
   render() {
     const { parsedData, settings, sentence } = this.props;
 
     return (
-      <div className="c-widget-tree-cover">
+      <div className="c-widget-intact-tree-cover">
         {parsedData && (
           <div>
             <WidgetDynamicSentence sentence={sentence} />
@@ -40,10 +40,10 @@ class WidgetTreeCover extends PureComponent {
   }
 }
 
-WidgetTreeCover.propTypes = {
+WidgetIntactTreeCover.propTypes = {
   parsedData: PropTypes.array,
   settings: PropTypes.object.isRequired,
-  sentence: PropTypes.string.isRequired
+  sentence: PropTypes.string
 };
 
-export default WidgetTreeCover;
+export default WidgetIntactTreeCover;
