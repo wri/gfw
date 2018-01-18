@@ -37,12 +37,14 @@ const mapStateToProps = (state, ownProps) => {
           break;
         case 'startYears':
           options[selector] = selectorFunc({
+            config,
             data: data.loss,
             ...settings
           });
           break;
         case 'endYears':
           options[selector] = selectorFunc({
+            config,
             data: data.loss,
             ...settings
           });

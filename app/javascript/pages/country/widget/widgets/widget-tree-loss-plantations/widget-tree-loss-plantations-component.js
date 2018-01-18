@@ -34,12 +34,12 @@ class WidgetTreeLossPlantations extends PureComponent {
                   {
                     key: 'areaLoss',
                     unit: 'ha',
-                    label: true
+                    label: 'lossLabel'
                   },
                   {
                     key: 'outsideAreaLoss',
                     unit: 'ha',
-                    label: true
+                    label: 'outsideLossLabel'
                   }
                 ]
               }}

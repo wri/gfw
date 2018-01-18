@@ -24,6 +24,8 @@ export const filterData = createSelector(
       .filter(d => d.year >= startYear && d.year <= endYear)
       .map(d => ({
         ...d,
+        lossLabel: 'Plantation loss:',
+        outsideLossLabel: 'Loss outside plantations:',
         areaLoss: d.area || 0,
         co2Loss: d.emissions || 0,
         outsideAreaLoss: totalLossByYear[d.year][0].area - d.area,

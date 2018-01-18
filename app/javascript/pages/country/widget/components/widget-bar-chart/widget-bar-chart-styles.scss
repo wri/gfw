@@ -6,5 +6,10 @@
 
   tspan {
     font-family: $font-family-1;
+    background: $white;
+  }
+
+  .recharts-cartesian-axis-tick-line {
+    stroke: rgb(204, 204, 204);
   }
 }

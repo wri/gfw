@@ -11,9 +11,9 @@ import {
   Tooltip,
   ResponsiveContainer
 } from 'recharts';
-import { format } from 'd3-format';
 import moment from 'moment';
 
+import CustomTick from './custom-tick-component';
 import './widget-bar-chart-styles.scss';
 
 class WidgetBarChart extends PureComponent {
@@ -29,25 +29,23 @@ class WidgetBarChart extends PureComponent {
         <ResponsiveContainer>
           <BarChart
             data={data}
-            margin={{ top: 15, right: 0, left: -10, bottom: 0 }}
+            margin={{ top: 15, right: 0, left: 42, bottom: 0 }}
+            padding={{ left: 50 }}
           >
             <XAxis
               dataKey={xKey}
               axisLine={false}
               tickLine={false}
-              tick={{ dy: 8, fontSize: '12px' }}
+              tick={{ dy: 8, fontSize: '12px', fill: '#555555' }}
               tickFormatter={tick => moment(tick, 'YYYY').format('YY')}
             />
             <YAxis
               axisLine={false}
-              tickLine={false}
-              tickFormatter={tick => {
-                const formattedTick = tick ? format('.2s')(tick) : 0;
-                return tick >= dataMax
-                  ? `${formattedTick}${unit}`
-                  : formattedTick;
-              }}
-              tick={{ fontSize: '12px' }}
+              strokeDasharray="3 4"
+              tickSize={-42}
+              mirror
+              tickMargin={0}
+              tick={<CustomTick dataMax={dataMax} unit={unit} fill="#555555" />}
             />
             <CartesianGrid vertical={false} strokeDasharray="3 4" />
             <Tooltip content={<WidgetChartToolTip settings={tooltip} />} />

@@ -137,6 +137,7 @@
       "categories": ["forest-change", "land-cover", "conservation", "people", "land-use"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["startYears", "endYears", "thresholds", "extentYears"],
+      "yearRange": ["2013", "2016"],
       "type": "loss"
     },
     "settings": {
