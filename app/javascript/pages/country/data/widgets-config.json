@@ -133,15 +133,16 @@
                      "primary_forests","primary_forest__landmark",
                       "plantations", "plantations__mining",
                       "plantations__wdpa", "plantations__landmark"],
+      "showIndicators": ["plantations"],
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "startYears", "endYears", "thresholds", "extentYears"],
+      "selectors": ["startYears", "endYears", "thresholds", "extentYears"],
       "type": "loss"
     },
     "settings": {
-      "indicator": "gadm28",
+      "indicator": "plantations",
       "threshold": 30,
-      "startYear": 2001,
+      "startYear": 2013,
       "endYear": 2016,
       "extentYear": 2000
     },
