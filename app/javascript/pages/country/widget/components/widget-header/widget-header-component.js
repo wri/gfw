@@ -12,6 +12,13 @@ import infoIcon from 'assets/icons/info.svg';
 import './widget-header-styles.scss';
 
 class WidgetHeader extends PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      tooltipOpen: false
+    };
+  }
+
   render() {
     const {
       title,
@@ -20,8 +27,12 @@ class WidgetHeader extends PureComponent {
       widget,
       embed,
       shareData,
-      setShareModal
+      setShareModal,
+      setModalMeta,
+      modalOpen,
+      modalClosing
     } = this.props;
+    const { tooltipOpen } = this.state;
 
     return (
       <div className="c-widget-header">
@@ -30,7 +41,10 @@ class WidgetHeader extends PureComponent {
         }`}</div>
         <div className="options">
           <div className="small-options">
-            <Button className="theme-button-small square" disabled>
+            <Button
+              className="theme-button-small square"
+              onClick={() => setModalMeta(settingsConfig.config.metaKey)}
+            >
               <Icon icon={infoIcon} />
             </Button>
             {!embed &&
@@ -42,13 +56,21 @@ class WidgetHeader extends PureComponent {
                   offset={-95}
                   trigger="click"
                   interactive
+                  onRequestClose={() => {
+                    if (!modalClosing && !modalOpen) {
+                      this.setState({ tooltipOpen: false });
+                    }
+                  }}
+                  onShow={() => this.setState({ tooltipOpen: true })}
                   arrow
                   useContext
+                  open={tooltipOpen}
                   html={
                     <WidgetSettings
                       {...settingsConfig}
                       widget={widget}
                       locationNames={locationNames}
+                      setModalMeta={setModalMeta}
                     />
                   }
                 >
@@ -77,7 +99,10 @@ WidgetHeader.propTypes = {
   locationNames: PropTypes.object,
   embed: PropTypes.bool,
   setShareModal: PropTypes.func.isRequired,
-  shareData: PropTypes.object.isRequired
+  shareData: PropTypes.object.isRequired,
+  setModalMeta: PropTypes.func.isRequired,
+  modalOpen: PropTypes.bool,
+  modalClosing: PropTypes.bool
 };
 
 export default WidgetHeader;

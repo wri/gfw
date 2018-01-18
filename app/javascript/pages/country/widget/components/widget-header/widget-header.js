@@ -2,9 +2,12 @@ import { connect } from 'react-redux';
 import compact from 'lodash/compact';
 
 import shareActions from 'components/share/share-actions';
+import modalMetaActions from 'components/modal-meta/modal-meta-actions';
 import WidgetHeaderComponent from './widget-header-component';
 
-const mapStateToProps = ({ location }, ownProps) => {
+const actions = { ...shareActions, ...modalMetaActions };
+
+const mapStateToProps = ({ location, modalMeta }, ownProps) => {
   const { locationNames, widget, title, settingsConfig } = ownProps;
   const locationUrl = compact(
     Object.keys(location.payload).map(key => location.payload[key])
@@ -19,6 +22,8 @@ const mapStateToProps = ({ location }, ownProps) => {
 
   return {
     location,
+    modalOpen: modalMeta.open,
+    modalClosing: modalMeta.closing,
     shareData: {
       title: 'Share this widget',
       subtitle: `${title} in ${
@@ -34,4 +39,4 @@ const mapStateToProps = ({ location }, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, shareActions)(WidgetHeaderComponent);
+export default connect(mapStateToProps, actions)(WidgetHeaderComponent);

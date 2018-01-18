@@ -14,7 +14,8 @@ class WidgetSettings extends PureComponent {
       loading,
       locationNames,
       onSettingsChange,
-      widget
+      widget,
+      setModalMeta
     } = this.props;
     const {
       units,
@@ -49,8 +50,8 @@ class WidgetSettings extends PureComponent {
               >
                 {option.label}
                 <Button
-                  disabled
                   className="theme-button-small square info-button"
+                  onClick={() => setModalMeta(option.value)}
                 >
                   <Icon icon={infoIcon} className="info-icon" />
                 </Button>
@@ -68,7 +69,7 @@ class WidgetSettings extends PureComponent {
             onChange={option =>
               onSettingsChange({ value: { extentYear: option.value }, widget })
             }
-            infoAction={() => console.info('open modal')}
+            infoAction={() => setModalMeta('tree_cover_extent')}
           />
         )}
         {units && (
@@ -136,7 +137,7 @@ class WidgetSettings extends PureComponent {
               onSettingsChange({ value: { threshold: option.value }, widget })
             }
             disabled={loading}
-            infoAction={() => console.info('open modal')}
+            infoAction={() => setModalMeta('canopy_density')}
           />
         )}
       </div>
@@ -156,7 +157,8 @@ WidgetSettings.propTypes = {
   locationNames: PropTypes.object,
   options: PropTypes.object,
   onSettingsChange: PropTypes.func,
-  widget: PropTypes.string
+  widget: PropTypes.string,
+  setModalMeta: PropTypes.func
 };
 
 export default WidgetSettings;
