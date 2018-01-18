@@ -1,0 +1,60 @@
+import { createSelector } from 'reselect';
+import isEmpty from 'lodash/isEmpty';
+import sumBy from 'lodash/sumBy';
+import { format } from 'd3-format';
+
+// get list data
+const getLoss = state => state.loss || null;
+const getExtent = state => state.extent || null;
+const getSettings = state => state.settings || null;
+const getLocationNames = state => state.locationNames || null;
+const getActiveIndicator = state => state.activeIndicator || null;
+
+// get lists selected
+export const filterData = createSelector(
+  [getLoss, getSettings],
+  (data, settings) => {
+    if (!data || isEmpty(data)) return null;
+    const { startYear, endYear } = settings;
+
+    return data
+      .filter(d => d.year >= startYear && d.year <= endYear)
+      .map(d => ({
+        ...d,
+        area: d.area || 0,
+        emissions: d.emissions || 0,
+        percentage: (d.area && d.area && d.area / data.extent * 100) || 0
+      }));
+  }
+);
+
+export const getSentence = createSelector(
+  [filterData, getExtent, getSettings, getLocationNames, getActiveIndicator],
+  (data, extent, settings, locationNames, indicator) => {
+    if (!data) return null;
+    const { startYear, endYear, extentYear, threshold } = settings;
+    const locationLabel = locationNames.current && locationNames.current.label;
+    const locationIntro = `${
+      indicator.value !== 'gadm28'
+        ? `<b>${indicator.label}</b> in <b>${locationLabel}</b>`
+        : `<b>${locationLabel}</b>`
+    }`;
+    const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
+    const totalEmissions =
+      (data && data.length && sumBy(data, 'emissions')) || 0;
+    const percentageLoss =
+      (totalLoss && extent && totalLoss / extent * 100) || 0;
+
+    return `Between <span>${startYear}</span> and <span>${endYear}</span>, ${locationIntro} lost <b>${format(
+      '.3s'
+    )(totalLoss)}ha</b> of tree cover${totalLoss ? '.' : ','} ${
+      totalLoss > 0
+        ? ` This loss is equal to <b>${format('.1f')(percentageLoss)}
+      %</b> of the regions tree cover extent in <b>${extentYear}</b>, 
+      and equivalent to <b>${format('.3s')(totalEmissions)}
+      tonnes</b> of CO\u2082 emissions`
+        : ''
+    }
+     with canopy density <span>> ${threshold}%</span>.`;
+  }
+);
