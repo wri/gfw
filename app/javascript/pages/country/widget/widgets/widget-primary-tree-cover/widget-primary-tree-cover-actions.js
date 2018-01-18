@@ -46,12 +46,18 @@ export const getPrimaryTreeCover = createThunkAction(
               dispatch(setPrimaryTreeCoverData(data));
             } else {
               let polyname = 'plantations';
-              if (params.indicator === 'primary_forest__wdpa') {
-                polyname = 'plantations__wdpa';
-              } else if (params.indicator === 'primary_forest__mining') {
-                polyname = 'plantations__mining';
-              } else if (params.indicator === 'primary_forest__landmark') {
-                polyname = 'plantations__landmark';
+              switch (params.indicator) {
+                case 'primary_forest__wdpa':
+                  polyname = 'plantations__wdpa';
+                  break;
+                case 'primary_forest__mining':
+                  polyname = 'plantations__mining';
+                  break;
+                case 'primary_forest__landmark':
+                  polyname = 'plantations__landmark';
+                  break;
+                default:
+                  break;
               }
               getExtent({ ...params, indicator: polyname }).then(
                 plantationsResponse => {
