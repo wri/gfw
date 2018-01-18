@@ -39,7 +39,6 @@
     "config": {
       "gridWidth": 6,
       "indicators": ["primary_forest", "primary_forest__mining", "primary_forest__wdpa", "primary_forest__landmark"],
-      "showIndicators": ["primary_forest", "primary_forest__mining", "primary_forest__wdpa", "primary_forest__landmark"],
       "categories": ["land-cover"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "thresholds", "extentYears"],
@@ -104,29 +103,6 @@
   },
   "treeLoss": {
     "title": "Tree cover loss",
-    "config": {
-      "gridWidth": 12,
-      "indicators": ["gadm28", "wdpa", "ifl_2013",
-                     "ifl_2013__wdpa", "ifl_2013__mining",
-                     "primary_forests","primary_forest__landmark",
-                      "plantations", "plantations__mining",
-                      "plantations__wdpa", "plantations__landmark"],
-      "categories": ["summary", "forest-change"],
-      "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "startYears", "endYears", "thresholds", "extentYears"],
-      "type": "loss"
-    },
-    "settings": {
-      "indicator": "gadm28",
-      "threshold": 30,
-      "startYear": 2001,
-      "endYear": 2016,
-      "extentYear": 2000
-    },
-    "active": true
-  },
-  "treeLossPlantations": {
-    "title": "Tree cover loss for plantations",
     "config": {
       "gridWidth": 12,
       "indicators": ["gadm28", "wdpa", "ifl_2013",
