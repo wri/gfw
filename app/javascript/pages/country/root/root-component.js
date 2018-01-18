@@ -15,6 +15,7 @@ import NoContent from 'components/no-content';
 import Loader from 'components/loader';
 import Button from 'components/button';
 import Icon from 'components/icon';
+import ModalMeta from 'components/modal-meta';
 
 import mapIcon from 'assets/icons/map-button.svg';
 import closeIcon from 'assets/icons/close.svg';
@@ -126,6 +127,7 @@ class Root extends PureComponent {
         <Stories />
         <Footer />
         <Share />
+        <ModalMeta />
         <CountryDataProvider />
       </div>
     );
