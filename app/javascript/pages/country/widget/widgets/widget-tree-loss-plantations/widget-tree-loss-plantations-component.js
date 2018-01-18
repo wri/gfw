@@ -19,21 +19,27 @@ class WidgetTreeLossPlantations extends PureComponent {
               className="loss-chart"
               data={data}
               xKey="year"
-              yKey="area"
+              yKeys={['areaLoss', 'outsideAreaLoss']}
               config={{
-                color: '#fe6598',
+                colors: {
+                  areaLoss: '#fe6598',
+                  outsideAreaLoss: '#FFC2E4'
+                },
+                unit: 'ha',
                 tooltip: [
                   {
                     key: 'year',
                     unit: null
                   },
                   {
-                    key: 'area',
-                    unit: 'ha'
+                    key: 'areaLoss',
+                    unit: 'ha',
+                    label: true
                   },
                   {
-                    key: 'percentage',
-                    unit: '%'
+                    key: 'outsideAreaLoss',
+                    unit: 'ha',
+                    label: true
                   }
                 ]
               }}
