@@ -5,6 +5,7 @@ import pick from 'lodash/pick';
 import { encodeStateForUrl, decodeUrlForState } from 'utils/stateToUrl';
 
 import * as treeLossActions from 'pages/country/widget/widgets/widget-tree-loss/widget-tree-loss-actions';
+import * as treeLossPlantationsActions from 'pages/country/widget/widgets/widget-tree-loss-plantations/widget-tree-loss-plantations-actions';
 import * as treeCoverActions from 'pages/country/widget/widgets/widget-tree-cover/widget-tree-cover-actions';
 import * as intactTreeCoverActions from 'pages/country/widget/widgets/widget-intact-tree-cover/widget-intact-tree-cover-actions';
 import * as primaryTreeCoverActions from 'pages/country/widget/widgets/widget-primary-tree-cover/widget-primary-tree-cover-actions';
@@ -16,6 +17,7 @@ import * as FAOCoverActions from 'pages/country/widget/widgets/widget-fao-cover/
 
 const widgetActions = {
   ...treeLossActions.default,
+  ...treeLossPlantationsActions.default,
   ...treeCoverActions.default,
   ...intactTreeCoverActions.default,
   ...primaryTreeCoverActions.default,

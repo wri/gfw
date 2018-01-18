@@ -124,6 +124,26 @@
     },
     "active": true
   },
+  "treeLossPlantations": {
+    "title": "Tree cover loss for plantations",
+    "config": {
+      "gridWidth": 12,
+      "showIndicators": ["plantations"],
+      "categories": ["forest-change", "land-use"],
+      "admins": ["country", "region", "subRegion"],
+      "selectors": ["startYears", "endYears", "thresholds", "extentYears"],
+      "yearRange": ["2013", "2016"],
+      "type": "loss"
+    },
+    "settings": {
+      "indicator": "plantations",
+      "threshold": 30,
+      "startYear": 2013,
+      "endYear": 2016,
+      "extentYear": 2000
+    },
+    "active": true
+  },
   "treeGain": {
     "title": "Tree cover gain",
     "config": {

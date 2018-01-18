@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import WidgetBarChart from 'pages/country/widget/components/widget-bar-chart';
 import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 
-import './widget-tree-loss-styles.scss';
+import './widget-tree-loss-plantations-styles.scss';
 
-class WidgetTreeLoss extends PureComponent {
+class WidgetTreeLossPlantations extends PureComponent {
   render() {
     const { data, sentence } = this.props;
 
     return (
-      <div className="c-widget-tree-loss">
+      <div className="c-widget-tree-loss-plantations">
         {data && (
           <div className="data-container">
             {sentence && <WidgetDynamicSentence sentence={sentence} />}
@@ -19,10 +19,11 @@ class WidgetTreeLoss extends PureComponent {
               className="loss-chart"
               data={data}
               xKey="year"
-              yKeys={['area']}
+              yKeys={['areaLoss', 'outsideAreaLoss']}
               config={{
                 colors: {
-                  area: '#fe6598'
+                  areaLoss: '#fe6598',
+                  outsideAreaLoss: '#FFC2E4'
                 },
                 unit: 'ha',
                 tooltip: [
@@ -31,12 +32,14 @@ class WidgetTreeLoss extends PureComponent {
                     unit: null
                   },
                   {
-                    key: 'area',
-                    unit: 'ha'
+                    key: 'areaLoss',
+                    unit: 'ha',
+                    label: 'lossLabel'
                   },
                   {
-                    key: 'percentage',
-                    unit: '%'
+                    key: 'outsideAreaLoss',
+                    unit: 'ha',
+                    label: 'outsideLossLabel'
                   }
                 ]
               }}
@@ -48,9 +51,9 @@ class WidgetTreeLoss extends PureComponent {
   }
 }
 
-WidgetTreeLoss.propTypes = {
+WidgetTreeLossPlantations.propTypes = {
   data: PropTypes.array,
   sentence: PropTypes.string
 };
 
-export default WidgetTreeLoss;
+export default WidgetTreeLossPlantations;
