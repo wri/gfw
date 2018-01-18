@@ -119,7 +119,7 @@ class Share extends PureComponent {
         onRequestClose={() => setShareOpen(false)}
         customStyles={{
           overlay: {
-            zIndex: 20,
+            zIndex: 300,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',

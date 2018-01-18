@@ -8,7 +8,8 @@
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "thresholds", "extentYears"],
       "showIndicators": ["mining", "landmark", "wdpa", "plantations"],
-      "type": "extent"
+      "type": "extent",
+      "metaKey": "widget_tree_cover"
     },
     "settings": {
       "indicator": "gadm28",
@@ -25,7 +26,8 @@
       "categories": ["land-cover"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "thresholds", "extentYears"],
-      "type": "extent"
+      "type": "extent",
+      "metaKey": "widget_ifl"
     },
     "settings": {
       "indicator": "ifl_2013",
@@ -42,7 +44,8 @@
       "categories": ["land-cover"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "thresholds", "extentYears"],
-      "type": "extent"
+      "type": "extent",
+      "metaKey": "widget_primary_forest"
     },
     "settings": {
       "indicator": "primary_forest",
@@ -64,7 +67,8 @@
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "units", "extentYears"],
       "locationCheck": true,
-      "type": "extent"
+      "type": "extent",
+      "metaKey": "widget_forest_location"
     },
     "settings": {
       "indicator": "gadm28",
@@ -89,7 +93,8 @@
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "extentYears"],
       "locationCheck": true,
-      "type": "extent"
+      "type": "extent",
+      "metaKey": ""
     },
     "settings": {
       "indicator": "gadm28",
@@ -113,7 +118,8 @@
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "startYears", "endYears", "thresholds", "extentYears"],
-      "type": "loss"
+      "type": "loss",
+      "metaKey": "widget_tree_cover_loss"
     },
     "settings": {
       "indicator": "gadm28",
@@ -133,7 +139,8 @@
       "admins": ["country", "region", "subRegion"],
       "selectors": ["startYears", "endYears", "thresholds", "extentYears"],
       "yearRange": ["2013", "2016"],
-      "type": "loss"
+      "type": "loss",
+      "metaKey": ""
     },
     "settings": {
       "indicator": "plantations",
@@ -152,7 +159,8 @@
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "thresholds", "extentYears", "units"],
-      "type": "gain"
+      "type": "gain",
+      "metaKey": "widget_tree_cover_gain"
     },
     "settings": {
       "indicator": "gadm28",
@@ -169,7 +177,8 @@
       "categories": ["summary", "forest-change"],
       "admins": ["country"],
       "selectors": ["periods"],
-      "type": "fao"
+      "type": "fao",
+      "metaKey": "widget_rate_of_restoration_fao"
     },
     "settings": {
       "period": 2010,
@@ -183,7 +192,8 @@
       "gridWidth": 6,
       "categories": ["land-cover"],
       "admins": ["country"],
-      "type": "fao"
+      "type": "fao",
+      "metaKey": "widget_forest_cover_fao"
     },
     "active": true
   }

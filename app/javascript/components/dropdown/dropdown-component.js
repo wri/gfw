@@ -33,7 +33,7 @@ class Dropdown extends PureComponent {
   };
 
   render() {
-    const { theme, label, infoAction } = this.props;
+    const { theme, label, infoAction, modalOpen, modalClosing } = this.props;
     return (
       <div className={`c-dropdown ${theme || 'theme-select-light'}`}>
         {label && (
@@ -41,14 +41,10 @@ class Dropdown extends PureComponent {
             {label}
             {infoAction && (
               <Button
-                disabled
                 className="theme-button-small square info-button"
+                onClick={infoAction}
               >
-                <Icon
-                  icon={infoIcon}
-                  className="info-icon"
-                  onClick={infoAction}
-                />
+                <Icon icon={infoIcon} className="info-icon" />
               </Button>
             )}
           </div>
@@ -57,6 +53,12 @@ class Dropdown extends PureComponent {
           iconRenderer={() => (
             <Icon icon={arrowDownIcon} className="icon icon-arrow-down" />
           )}
+          beforeClose={() => {
+            if (modalOpen || modalClosing) {
+              return false;
+            }
+            return true;
+          }}
           onSearch={this.handleSearch}
           {...this.props}
           options={this.state.options}
@@ -70,7 +72,9 @@ Dropdown.propTypes = {
   label: PropTypes.string,
   theme: PropTypes.string,
   options: PropTypes.array,
-  infoAction: PropTypes.func
+  infoAction: PropTypes.func,
+  modalOpen: PropTypes.bool,
+  modalClosing: PropTypes.bool
 };
 
 export default Dropdown;
