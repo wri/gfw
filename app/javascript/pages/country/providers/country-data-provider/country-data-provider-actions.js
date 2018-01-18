@@ -98,10 +98,10 @@ export const getSubRegions = createThunkAction(
 
 export const getGeostore = createThunkAction(
   'getGeostore',
-  (country, region) => (dispatch, state) => {
+  (country, region, subRegion) => (dispatch, state) => {
     if (!state().countryData.isGeostoreLoading) {
       dispatch(setGeostoreLoading(true));
-      getGeostoreProvider(country, region)
+      getGeostoreProvider(country, region, subRegion)
         .then(response => {
           const { areaHa, bbox } = response.data.data.attributes;
           dispatch(
