@@ -34,6 +34,23 @@
     },
     "active": true
   },
+  "primaryTreeCover": {
+    "title": "Primary forest extent",
+    "config": {
+      "gridWidth": 6,
+      "indicators": ["primary_forest", "primary_forest__mining", "primary_forest__wdpa", "primary_forest__landmark"],
+      "categories": ["land-cover"],
+      "admins": ["country", "region", "subRegion"],
+      "selectors": ["indicators", "thresholds", "extentYears"],
+      "type": "extent"
+    },
+    "settings": {
+      "indicator": "primary_forest",
+      "threshold": 30,
+      "extentYear": 2010
+    },
+    "active": true
+  },
   "treeLocated": {
     "title": "Where are the forests located",
     "config": {

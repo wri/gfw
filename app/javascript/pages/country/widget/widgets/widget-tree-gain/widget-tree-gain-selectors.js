@@ -83,14 +83,15 @@ export const getFilteredData = createSelector(
 export const getSentence = createSelector(
   [getData, getSettings, getIndicator, getLocationNames],
   (data, settings, indicator, locationNames) => {
-    if (!data || !data.length) return null;
+    if (!data || !data.length || !locationNames) return null;
     const locationData = data.find(l => l.id === locationNames.current.value);
     const regionPhrase =
       indicator.value === 'gadm28'
         ? '<span>region-wide</span>'
         : `in <span>${indicator && indicator.label.toLowerCase()}</span>`;
 
-    const areaPercent = format('.1f')(locationData.percentage);
+    const areaPercent =
+      (locationData && format('.1f')(locationData.percentage)) || 0;
     const firstSentence = `From 2001 to 2012, <span>${locationNames.current &&
       locationNames.current.label}</span> gained <strong>${
       locationData.gain ? format('.3s')(locationData.gain) : '0'

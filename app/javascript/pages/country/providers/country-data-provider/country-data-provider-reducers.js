@@ -5,6 +5,8 @@ export const initialState = {
   isGeostoreLoading: false,
   isWhitelistLoading: false,
   countries: [],
+  gadmCountries: [],
+  faoCountries: [],
   regions: [],
   subRegions: [],
   countryWhitelist: {},
@@ -63,6 +65,16 @@ const setCountries = (state, { payload }) => ({
   countries: mapLocations(payload)
 });
 
+const setGadmCountries = (state, { payload }) => ({
+  ...state,
+  gadmCountries: mapLocations(payload)
+});
+
+const setFAOCountries = (state, { payload }) => ({
+  ...state,
+  faoCountries: mapLocations(payload)
+});
+
 const setRegions = (state, { payload }) => ({
   ...state,
   regions: mapLocations(payload)
@@ -100,6 +112,8 @@ export default {
   setCountryWhitelistLoading,
   setRegionWhitelistLoading,
   setCountries,
+  setFAOCountries,
+  setGadmCountries,
   setRegions,
   setSubRegions,
   setGeostore,
