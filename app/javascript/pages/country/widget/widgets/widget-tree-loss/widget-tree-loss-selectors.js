@@ -12,8 +12,8 @@ const getActiveIndicator = state => state.activeIndicator || null;
 
 // get lists selected
 export const filterData = createSelector(
-  [getLoss, getSettings],
-  (data, settings) => {
+  [getLoss, getExtent, getSettings],
+  (data, extent, settings) => {
     if (!data || isEmpty(data)) return null;
     const { startYear, endYear } = settings;
 
@@ -23,7 +23,7 @@ export const filterData = createSelector(
         ...d,
         area: d.area || 0,
         emissions: d.emissions || 0,
-        percentage: (d.area && d.area && d.area / data.extent * 100) || 0
+        percentage: (d.area && d.area && d.area / extent * 100) || 0
       }));
   }
 );
