@@ -135,7 +135,7 @@
     "config": {
       "gridWidth": 12,
       "showIndicators": ["plantations"],
-      "categories": ["forest-change", "land-cover", "conservation", "people", "land-use"],
+      "categories": ["forest-change", "land-use"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["startYears", "endYears", "thresholds", "extentYears"],
       "yearRange": ["2013", "2016"],
