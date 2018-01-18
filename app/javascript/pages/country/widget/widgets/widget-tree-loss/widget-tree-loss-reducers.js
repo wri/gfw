@@ -13,10 +13,7 @@ export const initialState = {
 export const setTreeLossData = (state, { payload }) => ({
   ...state,
   loading: false,
-  data: {
-    ...state.data,
-    ...payload
-  }
+  data: payload
 });
 
 export const setTreeLossSettings = (state, { payload }) => ({
