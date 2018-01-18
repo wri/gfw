@@ -8,47 +8,46 @@ import './widget-tree-loss-styles.scss';
 
 class WidgetTreeLoss extends PureComponent {
   render() {
-    const { data, getSentence } = this.props;
+    const { data, sentence } = this.props;
 
     return (
       <div className="c-widget-tree-loss">
-        {data &&
-          data.length > 0 && (
-            <div className="data-container">
-              <WidgetDynamicSentence sentence={getSentence()} />
-              <WidgetBarChart
-                className="loss-chart"
-                data={data}
-                xKey="year"
-                yKey="area"
-                config={{
-                  color: '#fe6598',
-                  tooltip: [
-                    {
-                      key: 'year',
-                      unit: null
-                    },
-                    {
-                      key: 'area',
-                      unit: 'ha'
-                    },
-                    {
-                      key: 'percentage',
-                      unit: '%'
-                    }
-                  ]
-                }}
-              />
-            </div>
-          )}
+        {data && (
+          <div className="data-container">
+            {sentence && <WidgetDynamicSentence sentence={sentence} />}
+            <WidgetBarChart
+              className="loss-chart"
+              data={data}
+              xKey="year"
+              yKey="area"
+              config={{
+                color: '#fe6598',
+                tooltip: [
+                  {
+                    key: 'year',
+                    unit: null
+                  },
+                  {
+                    key: 'area',
+                    unit: 'ha'
+                  },
+                  {
+                    key: 'percentage',
+                    unit: '%'
+                  }
+                ]
+              }}
+            />
+          </div>
+        )}
       </div>
     );
   }
 }
 
 WidgetTreeLoss.propTypes = {
-  data: PropTypes.array.isRequired,
-  getSentence: PropTypes.func.isRequired
+  data: PropTypes.array,
+  sentence: PropTypes.string
 };
 
 export default WidgetTreeLoss;
