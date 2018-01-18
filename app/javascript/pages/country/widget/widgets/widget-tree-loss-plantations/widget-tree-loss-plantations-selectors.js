@@ -45,7 +45,7 @@ export const getSentence = createSelector(
     const totalEmissions = sumBy(data, 'emissions') || 0;
     const lossPhrase = totalLoss > totalOutsideLoss ? 'inside' : 'outside';
 
-    return `The majority of tree cover loss from <span>${startYear}</span> to <span>${endYear}</span> in <b>${locationLabel}</b> occured <b>${lossPhrase}</b> of plantations, at a canopy density of  <b>${threshold}%</b>.
+    return `The majority of tree cover loss from <span>${startYear}</span> to <span>${endYear}</span> in <b>${locationLabel}</b> occured <b>${lossPhrase}</b> of plantations, considering tree cover with canopy density greater than <b>${threshold}%</b>.
     The total loss is roughly equivalent to <b>${format('.2s')(
     totalEmissions
   )}tonnes of CO<sub>2</sub></b> emissions.`;
