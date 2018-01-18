@@ -56,7 +56,6 @@ class WidgetBarChart extends PureComponent {
                 key={key}
                 dataKey={key}
                 stackId={1}
-                barSize={22}
                 fill={colors[key]}
                 background={false}
               />
