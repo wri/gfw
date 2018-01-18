@@ -18,14 +18,23 @@ const getTreeLossPlantations = createThunkAction(
     if (!state().widgetTreeLossPlantations.loading) {
       dispatch(setTreeLossPlantationsLoading({ loading: true, error: false }));
       axios
-        .all([getLoss(params), getExtent(params)])
+        .all([
+          getLoss(params),
+          getLoss({ ...params, indicator: 'gadm28' }),
+          getExtent(params)
+        ])
         .then(
-          axios.spread((loss, extent) => {
+          axios.spread((plantationsloss, gadmLoss, plantationsExtent) => {
             let data = {};
-            if (loss && loss.data && extent && extent.data) {
+            const loss = plantationsloss.data && plantationsloss.data.data;
+            const totalLoss = gadmLoss.data && gadmLoss.data.data;
+            const extent =
+              plantationsExtent.data && plantationsExtent.data.data;
+            if (loss.length && totalLoss.length && extent.length) {
               data = {
-                loss: loss.data.data,
-                extent: (loss.data.data && extent.data.data[0].value) || 0
+                loss,
+                totalLoss,
+                extent: extent[0].value || 0
               };
             }
             dispatch(setTreeLossPlantationsData(data));

@@ -1,10 +1,12 @@
 import { createSelector } from 'reselect';
-import isEmpty from 'lodash/isEmpty';
+// import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
+import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
 
 // get list data
 const getLoss = state => state.loss || null;
+const getTotalLoss = state => state.totalLoss || null;
 const getExtent = state => state.extent || null;
 const getSettings = state => state.settings || null;
 const getLocationNames = state => state.locationNames || null;
@@ -12,18 +14,21 @@ const getActiveIndicator = state => state.activeIndicator || null;
 
 // get lists selected
 export const filterData = createSelector(
-  [getLoss, getSettings],
-  (data, settings) => {
-    if (!data || isEmpty(data)) return null;
+  [getLoss, getTotalLoss, getExtent, getSettings],
+  (loss, totalLoss, extent, settings) => {
+    if (!loss || !totalLoss) return null;
     const { startYear, endYear } = settings;
+    const totalLossByYear = groupBy(totalLoss, 'year');
 
-    return data
+    return loss
       .filter(d => d.year >= startYear && d.year <= endYear)
       .map(d => ({
         ...d,
-        area: d.area || 0,
-        emissions: d.emissions || 0,
-        percentage: (d.area && d.area && d.area / data.extent * 100) || 0
+        areaLoss: d.area || 0,
+        co2Loss: d.emissions || 0,
+        outsideAreaLoss: totalLossByYear[d.year][0].area - d.area,
+        outsideCo2Loss: totalLossByYear[d.year][0].emissions - d.emissions,
+        percentage: totalLossByYear[d.year][0].area / extent * 100 || 0
       }));
   }
 );

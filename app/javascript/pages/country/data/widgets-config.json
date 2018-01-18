@@ -134,7 +134,7 @@
                       "plantations", "plantations__mining",
                       "plantations__wdpa", "plantations__landmark"],
       "showIndicators": ["plantations"],
-      "categories": ["summary", "forest-change"],
+      "categories": ["forest-change", "land-cover", "conservation", "people", "land-use"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["startYears", "endYears", "thresholds", "extentYears"],
       "type": "loss"
