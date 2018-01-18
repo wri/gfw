@@ -128,18 +128,31 @@ $black-tabs: #404040;
   }
 
   .widgets {
-    padding-top: rem(20px);
-    padding-bottom: rem(30px);
+    padding: rem(20px) $mobile-gutter rem(30px);
     position: relative;
     min-height: rem(400px);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 30px;
+    grid-auto-flow: dense;
+
+    @media screen and (min-width: $screen-m) {
+      padding-left: $desktop-gutter;
+      padding-right: $desktop-gutter;
+    }
 
     @media screen and (min-width: $screen-l) {
       padding-top: rem(50px);
       padding-right: rem(30px);
+      grid-template-columns: 1fr 1fr;
+
+      .large {
+        grid-column-end: span 2;
+      }
     }
 
     @media screen and (min-width: $screen-xl) {
-      padding-left: calc(100% - (#{$max-width} * 0.7));
+      padding-left: calc(100% - (#{$max-width} * 0.7) + #{$desktop-gutter});
     }
 
     .widget {
