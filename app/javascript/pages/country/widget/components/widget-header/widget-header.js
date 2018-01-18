@@ -32,7 +32,7 @@ const mapStateToProps = ({ location, modalMeta }, ownProps) => {
       shareUrl: `${window.location.href}#${widget}`,
       embedUrl,
       embedSettings:
-        settingsConfig.config.gridWidth === 6
+        settingsConfig.config.size === 'small'
           ? { width: 315, height: 460 }
           : { width: 670, height: 490 }
     }

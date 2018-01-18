@@ -63,36 +63,21 @@ class Root extends PureComponent {
               checkActive
             />
             <div className="widgets">
-              <div className="row">
-                {loading && (
-                  <div className="columns small-12">
-                    <Loader className="widgets-loader" />
-                  </div>
+              {loading && <Loader className="widgets-loader large" />}
+              {!loading &&
+                widgets &&
+                widgets.length > 0 &&
+                widgets.map(widget => (
+                  <Widget key={widget.name} widget={widget.name} />
+                ))}
+              {!loading &&
+                (!widgets || widgets.length === 0) && (
+                  <NoContent
+                    className="no-widgets-message large"
+                    message={`No ${category} data available for ${currentLocation}`}
+                    icon
+                  />
                 )}
-                {!loading &&
-                  widgets &&
-                  widgets.length > 0 &&
-                  widgets.map(widget => (
-                    <div
-                      key={widget.name}
-                      className={`columns large-${
-                        widget.config.gridWidth
-                      } small-12 widget`}
-                    >
-                      <Widget widget={widget.name} />
-                    </div>
-                  ))}
-                {!loading &&
-                  (!widgets || widgets.length === 0) && (
-                    <div className="columns small-12">
-                      <NoContent
-                        className="no-widgets-message"
-                        message={`No ${category} data available for ${currentLocation}`}
-                        icon
-                      />
-                    </div>
-                  )}
-              </div>
             </div>
           </div>
           <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>

@@ -2,7 +2,7 @@
   "treeCover": {
     "title": "Tree cover extent",
     "config": {
-      "gridWidth": 6,
+      "size": "small",
       "indicators": ["gadm28", "mining", "landmark", "wdpa", "plantations"],
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region", "subRegion"],
@@ -21,7 +21,7 @@
   "intactTreeCover": {
     "title": "Intact forest extent",
     "config": {
-      "gridWidth": 6,
+      "size": "small",
       "indicators": ["ifl_2013", "ifl_2013__wdpa", "ifl_2013__mining"],
       "categories": ["land-cover"],
       "admins": ["country", "region", "subRegion"],
@@ -39,7 +39,7 @@
   "primaryTreeCover": {
     "title": "Primary forest extent",
     "config": {
-      "gridWidth": 6,
+      "size": "small",
       "indicators": ["primary_forest", "primary_forest__mining", "primary_forest__wdpa", "primary_forest__landmark"],
       "categories": ["land-cover"],
       "admins": ["country", "region", "subRegion"],
@@ -57,7 +57,7 @@
   "treeLocated": {
     "title": "Where are the forests located",
     "config": {
-      "gridWidth": 12,
+      "size": "large",
       "indicators": ["gadm28", "ifl_2013", "wdpa",
                       "ifl_2013__wdpa", "ifl_2013__mining",
                       "primary_forest", "primary_forest__landmark",
@@ -83,7 +83,7 @@
   "relativeTreeCover": {
     "title": "Which regions are the most forest-covered",
     "config": {
-      "gridWidth": 6,
+      "size": "small",
       "indicators": ["gadm28", "ifl_2013", "wdpa",
                       "ifl_2013__wdpa", "ifl_2013__mining",
                       "primary_forest", "primary_forest__landmark",
@@ -109,7 +109,7 @@
   "treeLoss": {
     "title": "Tree cover loss",
     "config": {
-      "gridWidth": 12,
+      "size": "large",
       "indicators": ["gadm28", "wdpa", "ifl_2013",
                      "ifl_2013__wdpa", "ifl_2013__mining",
                      "primary_forests","primary_forest__landmark",
@@ -133,7 +133,7 @@
   "treeLossPlantations": {
     "title": "Tree cover loss for plantations",
     "config": {
-      "gridWidth": 12,
+      "size": "large",
       "showIndicators": ["plantations"],
       "categories": ["forest-change", "land-use"],
       "admins": ["country", "region", "subRegion"],
@@ -154,7 +154,7 @@
   "treeGain": {
     "title": "Tree cover gain",
     "config": {
-      "gridWidth": 6,
+      "size": "small",
       "indicators": ["gadm28", "wdpa", "primary_forests", "plantations", "ifl_2013"],
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
@@ -173,7 +173,7 @@
   "FAOReforestation": {
     "title": "FAO reforestation",
     "config": {
-      "gridWidth": 6,
+      "size": "small",
       "categories": ["summary", "forest-change"],
       "admins": ["country"],
       "selectors": ["periods"],
@@ -189,7 +189,7 @@
   "FAOCover": {
     "title": "Forest cover",
     "config": {
-      "gridWidth": 6,
+      "size": "small",
       "categories": ["land-cover"],
       "admins": ["country"],
       "type": "fao",
