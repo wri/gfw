@@ -10,7 +10,6 @@ const getTotalLoss = state => state.totalLoss || null;
 const getExtent = state => state.extent || null;
 const getSettings = state => state.settings || null;
 const getLocationNames = state => state.locationNames || null;
-const getActiveIndicator = state => state.activeIndicator || null;
 
 // get lists selected
 export const filterData = createSelector(
@@ -36,32 +35,19 @@ export const filterData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [filterData, getExtent, getSettings, getLocationNames, getActiveIndicator],
-  (data, extent, settings, locationNames, indicator) => {
+  [filterData, getExtent, getSettings, getLocationNames],
+  (data, extent, settings, locationNames) => {
     if (!data) return null;
-    const { startYear, endYear, extentYear, threshold } = settings;
+    const { startYear, endYear, threshold } = settings;
     const locationLabel = locationNames.current && locationNames.current.label;
-    const locationIntro = `${
-      indicator.value !== 'gadm28'
-        ? `<b>${indicator.label}</b> in <b>${locationLabel}</b>`
-        : `<b>${locationLabel}</b>`
-    }`;
-    const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
-    const totalEmissions =
-      (data && data.length && sumBy(data, 'emissions')) || 0;
-    const percentageLoss =
-      (totalLoss && extent && totalLoss / extent * 100) || 0;
+    const totalLoss = sumBy(data, 'areaLoss') || 0;
+    const totalOutsideLoss = sumBy(data, 'outsideAreaLoss') || 0;
+    const totalEmissions = sumBy(data, 'emissions') || 0;
+    const lossPhrase = totalLoss > totalOutsideLoss ? 'inside' : 'outside';
 
-    return `Between <span>${startYear}</span> and <span>${endYear}</span>, ${locationIntro} lost <b>${format(
-      '.3s'
-    )(totalLoss)}ha</b> of tree cover${totalLoss ? '.' : ','} ${
-      totalLoss > 0
-        ? ` This loss is equal to <b>${format('.1f')(percentageLoss)}
-      %</b> of the regions tree cover extent in <b>${extentYear}</b>, 
-      and equivalent to <b>${format('.3s')(totalEmissions)}
-      tonnes</b> of CO\u2082 emissions`
-        : ''
-    }
-     with canopy density <span>> ${threshold}%</span>.`;
+    return `The majority of tree cover loss from <span>${startYear}</span> to <span>${endYear}</span> in <b>${locationLabel}</b> occured <b>${lossPhrase}</b> of plantations, at a canopy density of  <b>${threshold}%</b>.
+    The total loss is roughly equivalent to <b>${format('.2s')(
+    totalEmissions
+  )}tonnes of CO<sub>2</sub></b> emissions.`;
   }
 );
