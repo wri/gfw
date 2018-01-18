@@ -14,6 +14,7 @@ import WidgetPrimaryTreeCover from 'pages/country/widget/widgets/widget-primary-
 import WidgetTreeLocated from 'pages/country/widget/widgets/widget-tree-located';
 import WidgetRelativeTreeCover from 'pages/country/widget/widgets/widget-relative-tree-cover';
 import WidgetTreeLoss from 'pages/country/widget/widgets/widget-tree-loss';
+import WidgetTreeLossPlantations from 'pages/country/widget/widgets/widget-tree-loss-plantations';
 import WidgetTotalAreaPlantations from 'pages/country/widget/widgets/widget-total-area-plantations';
 import WidgetTreeGain from 'pages/country/widget/widgets/widget-tree-gain';
 import WidgetPlantationArea from 'pages/country/widget/widgets/widget-plantation-area';
@@ -31,6 +32,7 @@ const widgets = {
   WidgetTreeLocated,
   WidgetRelativeTreeCover,
   WidgetTreeLoss,
+  WidgetTreeLossPlantations,
   WidgetTotalAreaPlantations,
   WidgetPlantationArea,
   WidgetFaoCover,
