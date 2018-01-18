@@ -46,7 +46,7 @@ class WidgetPieChart extends PureComponent {
                     {
                       key: 'percentage',
                       unit: '%',
-                      label: true
+                      label: 'label'
                     }
                   ]}
                 />
