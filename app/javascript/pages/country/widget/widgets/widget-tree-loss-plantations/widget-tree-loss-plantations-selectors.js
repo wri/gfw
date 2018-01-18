@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-// import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';

@@ -46,10 +46,15 @@ export const getIntactTreeCover = createThunkAction(
               dispatch(setIntactTreeCoverData(data));
             } else {
               let polyname = 'plantations';
-              if (params.indicator === 'ifl_2013__wdpa') {
-                polyname = 'plantations__wdpa';
-              } else if (params.indicator === 'ifl_2013__mining') {
-                polyname = 'plantations__mining';
+              switch (params.indicator) {
+                case 'ifl_2013__wdpa':
+                  polyname = 'plantations__wdpa';
+                  break;
+                case 'ifl_2013__mining':
+                  polyname = 'plantations__mining';
+                  break;
+                default:
+                  break;
               }
               getExtent({ ...params, indicator: polyname }).then(
                 plantationsResponse => {
