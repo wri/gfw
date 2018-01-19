@@ -9,12 +9,14 @@ import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import { format } from 'd3-format';
 import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 
-import * as actions from './header-actions';
+import shareActions from 'components/share/share-actions';
+import * as ownActions from './header-actions';
 import reducers, { initialState } from './header-reducers';
-
 import HeaderComponent from './header-component';
 
-const mapStateToProps = ({ countryData, location, header }) => {
+const actions = { ...ownActions, ...shareActions };
+
+const mapStateToProps = ({ countryData, location, header }, ownProps) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
@@ -22,13 +24,21 @@ const mapStateToProps = ({ countryData, location, header }) => {
   } = countryData;
   const countryDataLoading =
     isCountriesLoading || isRegionsLoading || isSubRegionsLoading;
+  const { locationNames } = ownProps;
   return {
     loading: countryDataLoading || header.loading,
     error: header.error,
     settings: header.settings,
     location: location.payload,
     query: location.query,
-    data: header.data
+    data: header.data,
+    shareData: {
+      title: 'Share this page',
+      subtitle: `Dashboard for ${
+        locationNames.current ? locationNames.current.label : ''
+      }`,
+      shareUrl: `${window.location.href}`
+    }
   };
 };
 

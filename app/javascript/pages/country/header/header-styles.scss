@@ -14,6 +14,16 @@
     padding-left: calc(100% - (#{$max-width} * 0.7));
   }
 
+  .share-buttons {
+    position: absolute;
+    right: rem(20px);
+    top: rem(20px);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+
   .loader {
     z-index: 10;
 
