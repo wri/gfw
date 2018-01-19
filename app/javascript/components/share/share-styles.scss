@@ -30,20 +30,22 @@ $input-button-width: rem(100px);
     }
   }
 
+  .info {
+    text-align: center;
+    font-size: rem(13px);
+    width: 100%;
+    margin-bottom: rem(10px);
+  }
+
   .input-container {
     width: 100%;
     position: relative;
+    display: flex;
+    align-items: center;
 
     .input,
     .input-button {
       height: rem(40px);
-    }
-
-    .info {
-      text-align: center;
-      font-size: rem(13px);
-      width: 100%;
-      margin-bottom: rem(10px);
     }
 
     .input {
