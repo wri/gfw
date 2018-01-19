@@ -5,7 +5,9 @@ import Dropdown from 'components/dropdown';
 import Loader from 'components/loader';
 import Icon from 'components/icon';
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
+import Button from 'components/button';
 
+import shareIcon from 'assets/icons/share.svg';
 import './header-styles.scss';
 
 class Header extends PureComponent {
@@ -19,11 +21,21 @@ class Header extends PureComponent {
       handleSubRegionChange,
       getHeaderDescription,
       loading,
-      error
+      error,
+      setShareModal,
+      shareData
     } = this.props;
     return (
       <div className={`${className} c-header`}>
         {loading && <Loader className="loader" theme="theme-loader-light" />}
+        <div className="share-buttons">
+          <Button
+            className="theme-button-small theme-button-grey square"
+            onClick={() => setShareModal(shareData)}
+          >
+            <Icon icon={shareIcon} />
+          </Button>
+        </div>
         <div className="row">
           <div className="columns small-12 large-6">
             <div className="select-container">
@@ -115,7 +127,9 @@ Header.propTypes = {
   handleCountryChange: PropTypes.func.isRequired,
   handleRegionChange: PropTypes.func.isRequired,
   handleSubRegionChange: PropTypes.func.isRequired,
-  getHeaderDescription: PropTypes.func.isRequired
+  getHeaderDescription: PropTypes.func.isRequired,
+  setShareModal: PropTypes.func.isRequired,
+  shareData: PropTypes.object.isRequired
 };
 
 export default Header;

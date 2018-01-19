@@ -10,7 +10,7 @@ const setShareOpen = createAction('setShareOpen');
 const setShareCopied = createAction('setShareCopied');
 const setShareLoading = createAction('setShareLoading');
 
-const setShareModal = createThunkAction('setShare', params => dispatch => {
+const setShareModal = createThunkAction('setShareModal', params => dispatch => {
   const { title, subtitle, embedUrl, shareUrl, embedSettings } = params;
 
   dispatch(
