@@ -115,7 +115,7 @@ class Root extends PureComponent {
         <Footer />
         <Share />
         <ModalMeta />
-        <ScrollTo target={widgetAnchor} />
+        {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CountryDataProvider />
       </div>
     );
@@ -134,7 +134,7 @@ Root.propTypes = {
   category: PropTypes.string,
   locationOptions: PropTypes.object,
   locationNames: PropTypes.object,
-  widgetAnchor: PropTypes.object
+  widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 };
 
 export default Root;
