@@ -48,6 +48,6 @@ export const getSentence = createSelector(
     return `The majority of tree cover loss from <span>${startYear}</span> to <span>${endYear}</span> in <b>${locationLabel}</b> occured <b>${lossPhrase}</b> of plantations, considering tree cover with canopy density greater than <b>${threshold}%</b>.
     The total loss is roughly equivalent to <b>${format('.2s')(
     totalEmissions
-  )}tonnes of CO<sub>2</sub></b> emissions.`;
+  )}t of CO<sub>2</sub></b> emissions.`;
   }
 );
