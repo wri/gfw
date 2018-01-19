@@ -29,7 +29,7 @@ class WidgetNumberedList extends PureComponent {
         <ul className="list">
           {data.length > 0 &&
             pageData.map((item, index) => (
-              <li key={item.label}>
+              <li key={`${item.label}-${item.id}`}>
                 <Link
                   className={`list-item ${linksDisabled ? 'disabled' : ''}`}
                   to={item.path}

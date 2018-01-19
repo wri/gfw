@@ -63,6 +63,7 @@ class CountryDataProvider extends PureComponent {
     }
 
     if (hasSubRegionChanged) {
+      getGeostore(country, region, subRegion);
       getRegionWhitelist(country, region, subRegion);
     }
   }

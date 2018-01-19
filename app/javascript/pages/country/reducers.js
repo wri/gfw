@@ -14,6 +14,7 @@ const countryReducers = {
 
 // Components
 import * as ShareComponent from 'components/share';
+import * as ModalMetaComponent from 'components/modal-meta';
 import * as mapComponent from 'components/map';
 import * as storiesComponent from 'pages/country/stories';
 import * as headerComponent from 'pages/country/header';
@@ -37,6 +38,7 @@ import * as countryDataProviderComponent from 'pages/country/providers/country-d
 
 const componentsReducers = {
   share: handleActions(ShareComponent),
+  modalMeta: handleActions(ModalMetaComponent),
   map: handleActions(mapComponent),
   stories: handleActions(storiesComponent),
   header: handleActions(headerComponent),

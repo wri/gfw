@@ -1,0 +1,111 @@
+@import '~styles/settings.scss';
+$modal-padding: rem(30px);
+
+.c-modal-meta {
+  padding: $modal-padding $modal-padding;
+  min-width: rem(320px);
+  min-height: rem(320px);
+  width: rem(600px);
+  color: $slate;
+
+  .title {
+    font-weight: 500;
+    font-size: rem(16px);
+    text-transform: uppercase;
+    color: $slate;
+    line-height: 1.25;
+  }
+
+  .tags {
+    margin-top: rem(5px);
+    font-size: rem(13px);
+    line-height: 1.2;
+    color: $warm-grey;
+    margin-bottom: $modal-padding;
+  }
+
+  .meta-table {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border-top: solid 1px $border;
+    margin: 0 rem(-30px);
+    width: auto;
+    margin-bottom: rem(30px);
+  }
+
+  .table-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: solid 1px $border;
+    width: 100%;
+
+    &:nth-child(even) {
+      background-color: $grey-light;
+    }
+
+    .title-column {
+      font-weight: 500;
+      font-size: rem(11px);
+      text-transform: uppercase;
+      padding: rem(15px) $modal-padding;
+      padding-right: rem(5px);
+      color: $slate;
+      width: rem(100px);
+    }
+
+    .description-column {
+      padding: rem(13px) $modal-padding;
+      font-weight: 300;
+      font-size: rem(13px);
+      line-height: 1.5;
+      color: $slate;
+      width: calc(100% - 100px);
+    }
+  }
+
+  .overview {
+    margin-bottom: rem(30px);
+
+    h4 {
+      font-size: rem(16px);
+      font-weight: 500;
+    }
+
+    p {
+      font-size: rem(13px);
+      font-weight: 300;
+    }
+  }
+
+  .citation {
+    h5 {
+      font-size: rem(12px);
+      font-weight: 500;
+    }
+
+    p {
+      font-size: rem(12px);
+      color: #aaa;
+      font-weight: 300;
+    }
+  }
+
+  a {
+    color: $green-gfw;
+
+    &:hover {
+      color: darken($green-gfw, 10%);
+    }
+  }
+}
+
+.c-modal-meta-close {
+  right: rem(13px);
+  top: rem(13px);
+  cursor: pointer;
+  z-index: 10;
+}

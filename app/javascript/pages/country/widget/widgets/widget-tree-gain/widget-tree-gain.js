@@ -33,8 +33,8 @@ const mapStateToProps = (
   };
 
   return {
-    data: getFilteredData(selectorData) || [],
-    sentence: getSentence(selectorData) || ''
+    data: getFilteredData(selectorData),
+    sentence: getSentence(selectorData)
   };
 };
 

@@ -15,6 +15,7 @@ import NoContent from 'components/no-content';
 import Loader from 'components/loader';
 import Button from 'components/button';
 import Icon from 'components/icon';
+import ModalMeta from 'components/modal-meta';
 
 import mapIcon from 'assets/icons/map-button.svg';
 import closeIcon from 'assets/icons/close.svg';
@@ -62,36 +63,21 @@ class Root extends PureComponent {
               checkActive
             />
             <div className="widgets">
-              <div className="row">
-                {loading && (
-                  <div className="columns small-12">
-                    <Loader className="widgets-loader" />
-                  </div>
+              {loading && <Loader className="widgets-loader large" />}
+              {!loading &&
+                widgets &&
+                widgets.length > 0 &&
+                widgets.map(widget => (
+                  <Widget key={widget.name} widget={widget.name} />
+                ))}
+              {!loading &&
+                (!widgets || widgets.length === 0) && (
+                  <NoContent
+                    className="no-widgets-message large"
+                    message={`No ${category} data available for ${currentLocation}`}
+                    icon
+                  />
                 )}
-                {!loading &&
-                  widgets &&
-                  widgets.length > 0 &&
-                  widgets.map(widget => (
-                    <div
-                      key={widget.name}
-                      className={`columns large-${
-                        widget.config.gridWidth
-                      } small-12 widget`}
-                    >
-                      <Widget widget={widget.name} />
-                    </div>
-                  ))}
-                {!loading &&
-                  (!widgets || widgets.length === 0) && (
-                    <div className="columns small-12">
-                      <NoContent
-                        className="no-widgets-message"
-                        message={`No ${category} data available for ${currentLocation}`}
-                        icon
-                      />
-                    </div>
-                  )}
-              </div>
             </div>
           </div>
           <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
@@ -126,6 +112,7 @@ class Root extends PureComponent {
         <Stories />
         <Footer />
         <Share />
+        <ModalMeta />
         <CountryDataProvider />
       </div>
     );
