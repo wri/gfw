@@ -6,14 +6,25 @@ import './widget-chart-tooltip-styles.scss';
 
 class WidgetChartTooltip extends PureComponent {
   render() {
-    const { payload, settings } = this.props;
+    const { payload, settings, colors } = this.props;
     const values = payload.length > 0 && payload[0].payload;
 
     return (
       <div className="c-widget-chart-tooltip">
         {settings.map(d => (
           <div key={d.key} className="data-line">
-            {d.label && <span className="label">{values[d.label]}</span>}
+            {d.label && (
+              <div className="data-label">
+                {colors &&
+                  colors[d.key] && (
+                    <div
+                      className="data-color"
+                      style={{ backgroundColor: colors[d.key] }}
+                    />
+                  )}
+                {<span>{values[d.label]}</span>}
+              </div>
+            )}
             {d.unit
               ? format(d.unit === '%' ? '.1f' : '.3s')(values[d.key])
               : values[d.key]}
@@ -27,7 +38,8 @@ class WidgetChartTooltip extends PureComponent {
 
 WidgetChartTooltip.propTypes = {
   payload: PropTypes.array,
-  settings: PropTypes.array
+  settings: PropTypes.array,
+  colors: PropTypes.object
 };
 
 export default WidgetChartTooltip;

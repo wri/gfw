@@ -19,7 +19,6 @@ const mapStateToProps = ({ widgetTreeLossPlantations }, ownProps) => {
   const selectorData = {
     loss: data.loss,
     totalLoss: data.totalLoss,
-    extent: data.extent,
     settings,
     locationNames,
     activeIndicator

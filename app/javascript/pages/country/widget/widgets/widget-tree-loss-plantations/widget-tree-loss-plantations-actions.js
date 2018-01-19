@@ -2,7 +2,7 @@ import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
 import axios from 'axios';
 
-import { getExtent, getLoss } from 'services/forest-data';
+import { getLoss } from 'services/forest-data';
 
 const setTreeLossPlantationsLoading = createAction(
   'setTreeLossPlantationsLoading'
@@ -18,23 +18,16 @@ const getTreeLossPlantations = createThunkAction(
     if (!state().widgetTreeLossPlantations.loading) {
       dispatch(setTreeLossPlantationsLoading({ loading: true, error: false }));
       axios
-        .all([
-          getLoss(params),
-          getLoss({ ...params, indicator: 'gadm28' }),
-          getExtent(params)
-        ])
+        .all([getLoss(params), getLoss({ ...params, indicator: 'gadm28' })])
         .then(
-          axios.spread((plantationsloss, gadmLoss, plantationsExtent) => {
+          axios.spread((plantationsloss, gadmLoss) => {
             let data = {};
             const loss = plantationsloss.data && plantationsloss.data.data;
             const totalLoss = gadmLoss.data && gadmLoss.data.data;
-            const extent =
-              plantationsExtent.data && plantationsExtent.data.data;
-            if (loss.length && totalLoss.length && extent.length) {
+            if (loss.length && totalLoss.length) {
               data = {
                 loss,
-                totalLoss,
-                extent: extent[0].value || 0
+                totalLoss
               };
             }
             dispatch(setTreeLossPlantationsData(data));
