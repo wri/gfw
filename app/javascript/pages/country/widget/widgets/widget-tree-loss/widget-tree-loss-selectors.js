@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
+import { biomassToCO2 } from 'utils/calculations';
 
 // get list data
 const getLoss = state => state.loss || null;
@@ -41,7 +42,7 @@ export const getSentence = createSelector(
     }`;
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
-      (data && data.length && sumBy(data, 'emissions')) || 0;
+      (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
     const percentageLoss =
       (totalLoss && extent && totalLoss / extent * 100) || 0;
 
@@ -51,8 +52,9 @@ export const getSentence = createSelector(
       totalLoss > 0
         ? ` This loss is equal to <b>${format('.1f')(percentageLoss)}
       %</b> of the regions tree cover extent in <b>${extentYear}</b>, 
-      and equivalent to <b>${format('.3s')(totalEmissions)}
-      tonnes</b> of CO\u2082 emissions`
+      and equivalent to <b>${format('.3s')(
+    totalEmissions
+  )}tonnes</b> of CO\u2082 emissions`
         : ''
     }
      with canopy density <span>> ${threshold}%</span>.`;

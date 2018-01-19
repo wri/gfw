@@ -55,21 +55,18 @@ export const checkWidgetNeedsLocations = createSelector(
 export const filterWidgets = createSelector(
   [checkWidgetNeedsLocations, getIndicatorWhitelist],
   (widgets, whitelist) => {
-    const witelistKeys = !isEmpty(whitelist) ? Object.keys(whitelist) : null;
+    const whitelistKeys = !isEmpty(whitelist) ? Object.keys(whitelist) : null;
+
     return widgets.filter(widget => {
       // filter by showIndicators
       let showByIndicators = true;
-      if (
-        widget.config.showIndicators &&
-        widget.config.indicators &&
-        whitelist
-      ) {
+      if (widget.config.showIndicators && whitelist) {
         const totalIndicators = concat(
           widget.config.showIndicators,
-          witelistKeys
+          whitelistKeys
         ).length;
         const reducedIndicators = uniq(
-          concat(widget.config.showIndicators, witelistKeys)
+          concat(widget.config.showIndicators, whitelistKeys)
         ).length;
         showByIndicators = totalIndicators !== reducedIndicators;
       }
