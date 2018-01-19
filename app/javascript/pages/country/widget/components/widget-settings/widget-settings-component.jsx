@@ -51,7 +51,7 @@ class WidgetSettings extends PureComponent {
                 {option.label}
                 <Button
                   className="theme-button-small square info-button"
-                  onClick={() => setModalMeta(option.value)}
+                  onClick={() => setModalMeta(option.metaKey)}
                 >
                   <Icon icon={infoIcon} className="info-icon" />
                 </Button>
@@ -69,7 +69,7 @@ class WidgetSettings extends PureComponent {
             onChange={option =>
               onSettingsChange({ value: { extentYear: option.value }, widget })
             }
-            infoAction={() => setModalMeta('tree_cover_extent')}
+            infoAction={() => setModalMeta('widget_tree_cover_extent')}
           />
         )}
         {units && (
@@ -137,7 +137,7 @@ class WidgetSettings extends PureComponent {
               onSettingsChange({ value: { threshold: option.value }, widget })
             }
             disabled={loading}
-            infoAction={() => setModalMeta('canopy_density')}
+            infoAction={() => setModalMeta('widget_canopy_density')}
           />
         )}
       </div>
