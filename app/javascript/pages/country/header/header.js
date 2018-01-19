@@ -16,7 +16,7 @@ import HeaderComponent from './header-component';
 
 const actions = { ...ownActions, ...shareActions };
 
-const mapStateToProps = ({ countryData, location, header }, ownProps) => {
+const mapStateToProps = ({ countryData, location, header }) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
@@ -24,7 +24,6 @@ const mapStateToProps = ({ countryData, location, header }, ownProps) => {
   } = countryData;
   const countryDataLoading =
     isCountriesLoading || isRegionsLoading || isSubRegionsLoading;
-  const { locationNames } = ownProps;
   return {
     loading: countryDataLoading || header.loading,
     error: header.error,
@@ -33,10 +32,7 @@ const mapStateToProps = ({ countryData, location, header }, ownProps) => {
     query: location.query,
     data: header.data,
     shareData: {
-      title: 'Share this page',
-      subtitle: `Dashboard for ${
-        locationNames.current ? locationNames.current.label : ''
-      }`,
+      title: 'Share this Dashboard',
       shareUrl: `${window.location.href}`
     }
   };
