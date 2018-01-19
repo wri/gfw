@@ -7,14 +7,13 @@ import { biomassToCO2 } from 'utils/calculations';
 // get list data
 const getLoss = state => state.loss || null;
 const getTotalLoss = state => state.totalLoss || null;
-const getExtent = state => state.extent || null;
 const getSettings = state => state.settings || null;
 const getLocationNames = state => state.locationNames || null;
 
 // get lists selected
 export const filterData = createSelector(
-  [getLoss, getTotalLoss, getExtent, getSettings],
-  (loss, totalLoss, extent, settings) => {
+  [getLoss, getTotalLoss, getSettings],
+  (loss, totalLoss, settings) => {
     if (!loss || !totalLoss) return null;
     const { startYear, endYear } = settings;
     const totalLossByYear = groupBy(totalLoss, 'year');
@@ -23,20 +22,19 @@ export const filterData = createSelector(
       .filter(d => d.year >= startYear && d.year <= endYear)
       .map(d => ({
         ...d,
-        lossLabel: 'Plantation loss:',
-        outsideLossLabel: 'Loss outside plantations:',
-        areaLoss: d.area || 0,
-        co2Loss: d.emissions || 0,
+        outsideLossLabel: 'Outside plantations',
+        lossLabel: 'Plantations',
         outsideAreaLoss: totalLossByYear[d.year][0].area - d.area,
+        areaLoss: d.area || 0,
         outsideCo2Loss: totalLossByYear[d.year][0].emissions - d.emissions,
-        percentage: totalLossByYear[d.year][0].area / extent * 100 || 0
+        co2Loss: d.emissions || 0
       }));
   }
 );
 
 export const getSentence = createSelector(
-  [filterData, getExtent, getSettings, getLocationNames],
-  (data, extent, settings, locationNames) => {
+  [filterData, getSettings, getLocationNames],
+  (data, settings, locationNames) => {
     if (!data) return null;
     const { startYear, endYear, threshold } = settings;
     const locationLabel = locationNames.current && locationNames.current.label;
@@ -48,6 +46,6 @@ export const getSentence = createSelector(
     return `The majority of tree cover loss from <span>${startYear}</span> to <span>${endYear}</span> in <b>${locationLabel}</b> occured <b>${lossPhrase}</b> of plantations, considering tree cover with canopy density greater than <b>${threshold}%</b>.
     The total loss is roughly equivalent to <b>${format('.2s')(
     totalEmissions
-  )}tonnes of CO<sub>2</sub></b> emissions.`;
+  )}t of CO<sub>2</sub></b> emissions.`;
   }
 );

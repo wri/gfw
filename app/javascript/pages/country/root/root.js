@@ -25,6 +25,9 @@ const mapStateToProps = ({ root, countryData, location }) => {
   const locationOptions = getAdminsOptions(adminData);
   const locationNames = getAdminsSelected(adminData);
   const adminLevel = getActiveAdmin(location.payload);
+  const widgetAnchor = window.location.hash
+    ? document.querySelectorAll(window.location.hash)
+    : null;
   const {
     regionWhitelist,
     countryWhitelist,
@@ -39,6 +42,7 @@ const mapStateToProps = ({ root, countryData, location }) => {
     isGeostoreLoading: countryData.isGeostoreLoading,
     category,
     location,
+    widgetAnchor: widgetAnchor && widgetAnchor[0],
     locationOptions,
     locationNames,
     currentLocation:

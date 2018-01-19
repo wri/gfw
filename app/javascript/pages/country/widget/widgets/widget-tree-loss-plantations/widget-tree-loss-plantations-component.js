@@ -28,18 +28,14 @@ class WidgetTreeLossPlantations extends PureComponent {
                 unit: 'ha',
                 tooltip: [
                   {
-                    key: 'year',
-                    unit: null
+                    key: 'outsideAreaLoss',
+                    unit: 'ha',
+                    label: 'outsideLossLabel'
                   },
                   {
                     key: 'areaLoss',
                     unit: 'ha',
                     label: 'lossLabel'
-                  },
-                  {
-                    key: 'outsideAreaLoss',
-                    unit: 'ha',
-                    label: 'outsideLossLabel'
                   }
                 ]
               }}
