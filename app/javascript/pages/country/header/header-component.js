@@ -8,6 +8,7 @@ import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import Button from 'components/button';
 
 import shareIcon from 'assets/icons/share.svg';
+import downloadIcon from 'assets/icons/download.svg';
 import './header-styles.scss';
 
 class Header extends PureComponent {
@@ -23,12 +24,21 @@ class Header extends PureComponent {
       loading,
       error,
       setShareModal,
-      shareData
+      shareData,
+      location
     } = this.props;
     return (
       <div className={`${className} c-header`}>
         {loading && <Loader className="loader" theme="theme-loader-light" />}
         <div className="share-buttons">
+          <Button
+            className="theme-button-small theme-button-grey square"
+            extLink={`http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/iso/tree_cover_stats_2016_${
+              location.country
+            }.xlsx`}
+          >
+            <Icon icon={downloadIcon} />
+          </Button>
           <Button
             className="theme-button-small theme-button-grey square"
             onClick={() => setShareModal(shareData)}
@@ -129,7 +139,8 @@ Header.propTypes = {
   handleSubRegionChange: PropTypes.func.isRequired,
   getHeaderDescription: PropTypes.func.isRequired,
   setShareModal: PropTypes.func.isRequired,
-  shareData: PropTypes.object.isRequired
+  shareData: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 };
 
 export default Header;
