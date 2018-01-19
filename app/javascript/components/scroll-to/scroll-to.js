@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 
 class ScrollTo extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.target !== this.props.target) {
-      setTimeout(this.handleScroll, 150);
-    }
+  componentDidMount() {
+    setTimeout(this.handleScroll, 150);
   }
 
   handleFadeOut = (el, intColor) => {
