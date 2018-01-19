@@ -54,7 +54,7 @@ export const getSentence = createSelector(
       %</b> of the regions tree cover extent in <b>${extentYear}</b>, 
       and equivalent to <b>${format('.3s')(
     totalEmissions
-  )}tonnes</b> of CO\u2082 emissions`
+  )}t</b> of CO\u2082 emissions`
         : ''
     }
      with canopy density <span>> ${threshold}%</span>.`;
