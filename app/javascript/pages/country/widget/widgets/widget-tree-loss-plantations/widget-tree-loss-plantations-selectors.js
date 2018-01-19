@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
+import { biomassToCO2 } from 'utils/calculations';
 
 // get list data
 const getLoss = state => state.loss || null;
@@ -41,7 +42,7 @@ export const getSentence = createSelector(
     const locationLabel = locationNames.current && locationNames.current.label;
     const totalLoss = sumBy(data, 'areaLoss') || 0;
     const totalOutsideLoss = sumBy(data, 'outsideAreaLoss') || 0;
-    const totalEmissions = sumBy(data, 'emissions') || 0;
+    const totalEmissions = biomassToCO2(sumBy(data, 'emissions')) || 0;
     const lossPhrase = totalLoss > totalOutsideLoss ? 'inside' : 'outside';
 
     return `The majority of tree cover loss from <span>${startYear}</span> to <span>${endYear}</span> in <b>${locationLabel}</b> occured <b>${lossPhrase}</b> of plantations, considering tree cover with canopy density greater than <b>${threshold}%</b>.

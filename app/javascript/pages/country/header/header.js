@@ -8,6 +8,7 @@ import remove from 'lodash/remove';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import { format } from 'd3-format';
 import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
+import { biomassToCO2 } from 'utils/calculations';
 
 import shareActions from 'components/share/share-actions';
 import * as ownActions from './header-actions';
@@ -111,7 +112,9 @@ class HeaderContainer extends PureComponent {
       data.totalLoss.area - (data.plantationsLoss.area || 0)
     );
     const emissionsWithoutPlantations = format('.2s')(
-      data.totalLoss.emissions - (data.plantationsLoss.emissions || 0)
+      biomassToCO2(
+        data.totalLoss.emissions - (data.plantationsLoss.emissions || 0)
+      )
     );
     const location = locationNames.current && locationNames.current.label;
     let firstSentence = '';
