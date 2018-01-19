@@ -3,6 +3,7 @@ import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
 import { sortByKey, getColorPalette } from 'utils/data';
 import { format } from 'd3-format';
+import { ordinalSuffixOf } from 'utils/calculations';
 
 // get list data
 const getData = state => state.data || null;
@@ -81,7 +82,7 @@ export const getFilteredData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getData, getSettings, getIndicator, getLocationNames],
+  [getFilteredData, getSettings, getIndicator, getLocationNames],
   (data, settings, indicator, locationNames) => {
     if (!data || !data.length || !locationNames) return null;
     const locationData =
@@ -105,6 +106,8 @@ export const getSentence = createSelector(
       }</b> tree cover extent.`
       : '.';
 
-    return `${firstSentence}${secondSentence}`;
+    return `${firstSentence}${secondSentence} In relation to other countries this was the <b>${ordinalSuffixOf(
+      locationData.rank
+    )}</b> largest change.`;
   }
 );
