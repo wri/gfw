@@ -18,6 +18,23 @@
     },
     "active": true
   },
+  "treeCoverPlantations": {
+    "title": "Plantations extent",
+    "config": {
+      "size": "small",
+      "categories": ["land-cover", "land-use"],
+      "admins": ["country", "region", "subRegion"],
+      "selectors": ["thresholds", "extentYears"],
+      "type": "extent",
+      "metaKey": "widget_plantations_cover"
+    },
+    "settings": {
+      "threshold": 30,
+      "extentYear": 2010,
+      "type": "species"
+    },
+    "active": true
+  },
   "intactTreeCover": {
     "title": "Intact forest extent",
     "config": {
