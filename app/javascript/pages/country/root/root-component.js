@@ -16,6 +16,7 @@ import Loader from 'components/loader';
 import Button from 'components/button';
 import Icon from 'components/icon';
 import ModalMeta from 'components/modal-meta';
+import ScrollTo from 'components/scroll-to';
 
 import mapIcon from 'assets/icons/map-button.svg';
 import closeIcon from 'assets/icons/close.svg';
@@ -34,7 +35,8 @@ class Root extends PureComponent {
       locationOptions,
       locationNames,
       category,
-      loading
+      loading,
+      widgetAnchor
     } = this.props;
 
     return (
@@ -113,6 +115,7 @@ class Root extends PureComponent {
         <Footer />
         <Share />
         <ModalMeta />
+        <ScrollTo target={widgetAnchor} />
         <CountryDataProvider />
       </div>
     );
@@ -130,7 +133,8 @@ Root.propTypes = {
   currentLocation: PropTypes.string,
   category: PropTypes.string,
   locationOptions: PropTypes.object,
-  locationNames: PropTypes.object
+  locationNames: PropTypes.object,
+  widgetAnchor: PropTypes.object
 };
 
 export default Root;
