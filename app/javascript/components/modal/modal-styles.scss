@@ -13,3 +13,8 @@ $close-position: 25px;
   border: none;
   outline: none;
 }
+
+html,
+body {
+  overflow-x: visible !important;
+}
