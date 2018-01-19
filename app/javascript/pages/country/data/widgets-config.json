@@ -7,7 +7,6 @@
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "thresholds", "extentYears"],
-      "showIndicators": ["mining", "landmark", "wdpa", "plantations"],
       "type": "extent",
       "metaKey": "widget_tree_cover"
     },
@@ -25,6 +24,7 @@
       "categories": ["land-cover", "land-use"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["thresholds", "extentYears"],
+      "showIndicators": ["plantations"],      
       "type": "extent",
       "metaKey": "widget_plantations_cover"
     },

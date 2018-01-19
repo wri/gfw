@@ -4,11 +4,19 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 
 import actions from './widget-tree-cover-plantations-actions';
-import reducers, { initialState } from './widget-tree-cover-plantations-reducers';
-import { getTreeCoverPlantationsData, getSentence } from './widget-tree-cover-plantations-selectors';
+import reducers, {
+  initialState
+} from './widget-tree-cover-plantations-reducers';
+import {
+  getTreeCoverPlantationsData,
+  getSentence
+} from './widget-tree-cover-plantations-selectors';
 import WidgetTreeCoverPlantationsComponent from './widget-tree-cover-plantations-component';
 
-const mapStateToProps = ({ widgetTreeCoverPlantations, countryData }, ownProps) => {
+const mapStateToProps = (
+  { widgetTreeCoverPlantations, countryData },
+  ownProps
+) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
@@ -29,7 +37,7 @@ const mapStateToProps = ({ widgetTreeCoverPlantations, countryData }, ownProps) 
     loading: loading || isCountriesLoading || isRegionsLoading,
     regions,
     data,
-    // parsedData: getTreeCoverPlantationsData(selectorData),
+    parsedData: getTreeCoverPlantationsData(selectorData)
     // sentence: getSentence(selectorData)
   };
 };
@@ -72,4 +80,6 @@ WidgetTreeCoverPlantationsContainer.propTypes = {
 
 export { actions, reducers, initialState };
 
-export default connect(mapStateToProps, actions)(WidgetTreeCoverPlantationsContainer);
+export default connect(mapStateToProps, actions)(
+  WidgetTreeCoverPlantationsContainer
+);

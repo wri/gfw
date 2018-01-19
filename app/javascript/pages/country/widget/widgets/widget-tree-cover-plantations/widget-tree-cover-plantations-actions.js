@@ -3,9 +3,13 @@ import { createThunkAction } from 'utils/redux';
 import { getExtent, getPlantationsExtent } from 'services/forest-data';
 import axios from 'axios';
 
-const setTreeCoverPlantationsLoading = createAction('setTreeCoverPlantationsLoading');
+const setTreeCoverPlantationsLoading = createAction(
+  'setTreeCoverPlantationsLoading'
+);
 const setTreeCoverPlantationsData = createAction('setTreeCoverPlantationsData');
-const setTreeCoverPlantationsSettings = createAction('setTreeCoverPlantationsSettings');
+const setTreeCoverPlantationsSettings = createAction(
+  'setTreeCoverPlantationsSettings'
+);
 
 export const getTreeCoverPlantations = createThunkAction(
   'getTreeCoverPlantations',
@@ -13,12 +17,15 @@ export const getTreeCoverPlantations = createThunkAction(
     if (!state().widgetTreeCoverPlantations.loading) {
       dispatch(setTreeCoverPlantationsLoading({ loading: true, error: false }));
       axios
-        .all([getExtent({ ...params, indicator: 'gadm28' }), getPlantationsExtent(params)])
+        .all([
+          getExtent({ ...params, indicator: 'gadm28' }),
+          getPlantationsExtent(params)
+        ])
         .then(
           axios.spread((gadmResponse, plantationsResponse) => {
-            console.log(plantationsResponse);
             const gadmExtent = gadmResponse.data && gadmResponse.data.data;
-            const plantationsExtent = plantationsResponse.data && plantationsResponse.data.data;
+            const plantationsExtent =
+              plantationsResponse.data && plantationsResponse.data.data;
             let data = {};
             if (gadmExtent.length && plantationsExtent.length) {
               const totalArea = gadmExtent[0].total_area;
@@ -33,7 +40,9 @@ export const getTreeCoverPlantations = createThunkAction(
           })
         )
         .catch(error => {
-          dispatch(setTreeCoverPlantationsLoading({ loading: false, error: true }));
+          dispatch(
+            setTreeCoverPlantationsLoading({ loading: false, error: true })
+          );
           console.info(error);
         });
     }

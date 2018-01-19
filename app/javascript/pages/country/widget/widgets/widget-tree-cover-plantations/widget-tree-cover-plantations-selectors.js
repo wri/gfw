@@ -1,6 +1,8 @@
 import { createSelector } from 'reselect';
 import COLORS from 'pages/country/data/colors.json';
 import isEmpty from 'lodash/isEmpty';
+import sumBy from 'lodash/sumBy';
+import { getColorPalette } from 'utils/data';
 
 // get list data
 const getData = state => state.data;
@@ -14,35 +16,18 @@ export const getTreeCoverPlantationsData = createSelector(
   [getData, getSettings, getIndicatorWhitelist],
   (data, settings, whitelist) => {
     if (isEmpty(data) || isEmpty(whitelist)) return null;
-    const { totalArea, cover, plantations } = data;
-    const { indicator } = settings;
-    const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
-    const parsedData = [
-      {
-        label:
-          hasPlantations && indicator === 'gadm28'
-            ? 'Natural Forest'
-            : 'Tree cover',
-        value: cover - plantations,
-        color: COLORS.darkGreen,
-        percentage: (cover - plantations) / totalArea * 100
-      },
-      {
-        label: 'Non-Forest',
-        value: totalArea - cover,
-        color: COLORS.nonForest,
-        percentage: (totalArea - cover) / totalArea * 100
-      }
-    ];
-    if (indicator === 'gadm28' && hasPlantations) {
-      parsedData.splice(1, 0, {
-        label: 'Tree plantations',
-        value: plantations,
-        color: COLORS.mediumGreen,
-        percentage: plantations / totalArea * 100
-      });
-    }
-    return parsedData;
+    const { plantations } = data;
+    const totalPlantations = sumBy(plantations, 'plantation_extent');
+    const colorRange = getColorPalette(
+      [COLORS.darkGreen, COLORS.nonForest],
+      plantations.length
+    );
+    return plantations.map((d, i) => ({
+      label: d.bound2,
+      value: d.plantation_extent,
+      color: colorRange[i],
+      percentage: d.plantation_extent / totalPlantations * 100
+    }));
   }
 );
 
