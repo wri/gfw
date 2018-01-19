@@ -36,12 +36,12 @@ class Share extends PureComponent {
         <div className="title">{title}</div>
         <div className="subtitle">{subtitle}</div>
         <div className="actions">
+          <p className="info">
+            {selected === 'embed'
+              ? 'Click and paste HTML to embed in website'
+              : 'Click and paste link in email or IM'}
+          </p>
           <div className="input-container">
-            <p className="info">
-              {selected === 'embed'
-                ? 'Click and paste HTML to embed in website'
-                : 'Click and paste link in email or IM'}
-            </p>
             <div className="input">
               {loading &&
                 selected !== 'embed' && <Loader className="input-loader" />}

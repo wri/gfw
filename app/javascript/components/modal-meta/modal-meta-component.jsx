@@ -21,7 +21,8 @@ class ModalMeta extends PureComponent {
       'frequency_of_updates',
       'date_of_content',
       'cautions',
-      'license'
+      'license',
+      'tags'
     ]);
 
     return (
@@ -42,8 +43,8 @@ class ModalMeta extends PureComponent {
             <div>
               <h3 className="title">{data.title}</h3>
               <p
-                className="tags"
-                dangerouslySetInnerHTML={{ __html: data.tags }}
+                className="subtitle"
+                dangerouslySetInnerHTML={{ __html: data.subtitle }}
               />
               <div className="meta-table">
                 {tableData &&
