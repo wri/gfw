@@ -9,6 +9,7 @@ import NoContent from 'components/no-content';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 
 import WidgetTreeCover from 'pages/country/widget/widgets/widget-tree-cover';
+import WidgetTreeCoverPlantations from 'pages/country/widget/widgets/widget-tree-cover-plantations';
 import WidgetIntactTreeCover from 'pages/country/widget/widgets/widget-intact-tree-cover';
 import WidgetPrimaryTreeCover from 'pages/country/widget/widgets/widget-primary-tree-cover';
 import WidgetTreeLocated from 'pages/country/widget/widgets/widget-tree-located';
@@ -26,6 +27,7 @@ import './widget-tooltip-styles.scss';
 
 const widgets = {
   WidgetTreeCover,
+  WidgetTreeCoverPlantations,
   WidgetIntactTreeCover,
   WidgetPrimaryTreeCover,
   WidgetTreeGain,

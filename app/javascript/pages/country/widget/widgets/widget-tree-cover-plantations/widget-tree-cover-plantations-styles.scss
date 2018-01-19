@@ -1,0 +1,16 @@
+@import '~styles/settings.scss';
+
+.c-widget-tree-cover-plantations {
+  padding-top: rem(15px);
+
+  .cover-legend {
+    min-width: 50%;
+  }
+
+  .pie-chart-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: rem(40px);
+  }
+}
