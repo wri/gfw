@@ -137,7 +137,7 @@
       "showIndicators": ["plantations"],
       "categories": ["forest-change", "land-use"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["startYears", "endYears", "thresholds", "extentYears"],
+      "selectors": ["startYears", "endYears", "thresholds"],
       "yearRange": ["2013", "2016"],
       "type": "loss",
       "metaKey": ""
@@ -146,8 +146,7 @@
       "indicator": "plantations",
       "threshold": 30,
       "startYear": 2013,
-      "endYear": 2016,
-      "extentYear": 2000
+      "endYear": 2016
     },
     "active": true
   },

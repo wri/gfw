@@ -48,7 +48,11 @@ class WidgetBarChart extends PureComponent {
               tick={<CustomTick dataMax={dataMax} unit={unit} fill="#555555" />}
             />
             <CartesianGrid vertical={false} strokeDasharray="3 4" />
-            <Tooltip content={<WidgetChartToolTip settings={tooltip} />} />
+            <Tooltip
+              content={
+                <WidgetChartToolTip settings={tooltip} colors={colors} />
+              }
+            />
             {yKeys.map(key => (
               <Bar
                 key={key}
