@@ -94,11 +94,14 @@ class ModalMeta extends PureComponent {
             alignItems: 'center',
             justifyContent: 'center',
             boxShadow: '0 5px 15px 0 rgba(71, 44, 184, 0.1)',
-            backgroundColor: 'rgba(17, 55, 80, 0.4)'
+            backgroundColor: 'rgba(17, 55, 80, 0.4)',
+            overflow: 'auto',
+            padding: '40px 0'
           },
           content: {
             position: 'relative',
             top: 'auto',
+            margin: 'auto',
             left: 'auto',
             right: 'auto',
             bottom: 'auto',
