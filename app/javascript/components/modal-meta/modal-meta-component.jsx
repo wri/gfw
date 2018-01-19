@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import pick from 'lodash/pick';
 import isEmpty from 'lodash/isEmpty';
+import lowerCase from 'lodash/lowerCase';
 
 import Modal from 'components/modal';
 import Loader from 'components/loader';
@@ -52,7 +53,7 @@ class ModalMeta extends PureComponent {
                         <div key={key} className="table-row">
                           <div
                             className="title-column"
-                            dangerouslySetInnerHTML={{ __html: key }}
+                            dangerouslySetInnerHTML={{ __html: lowerCase(key) }}
                           />
                           <div
                             className="description-column"
