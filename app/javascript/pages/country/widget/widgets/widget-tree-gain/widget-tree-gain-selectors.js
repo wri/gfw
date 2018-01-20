@@ -92,7 +92,6 @@ export const getSentence = createSelector(
       indicator && indicator.value === 'gadm28'
         ? '<span>region-wide</span>'
         : `in <span>${indicator && indicator.label.toLowerCase()}</span>`;
-
     const areaPercent =
       (locationData && format('.1f')(locationData.percentage)) || 0;
     const gain = locationData && locationData.gain;
@@ -105,9 +104,12 @@ export const getSentence = createSelector(
         settings.extentYear
       }</b> tree cover extent.`
       : '.';
+    const rankSentence =
+      locationData &&
+      `In relation to other countries this was the <b>${ordinalSuffixOf(
+        locationData.rank
+      )}</b> largest change.`;
 
-    return `${firstSentence}${secondSentence} In relation to other countries this was the <b>${ordinalSuffixOf(
-      locationData.rank
-    )}</b> largest change.`;
+    return `${firstSentence}${secondSentence} ${rankSentence}`;
   }
 );
