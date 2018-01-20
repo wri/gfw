@@ -5,8 +5,10 @@ $modal-padding: rem(30px);
   padding: $modal-padding $modal-padding;
   min-width: rem(320px);
   min-height: rem(320px);
-  width: rem(600px);
+  width: 100%;
+  max-width: rem(600px);
   color: $slate;
+  word-break: break-word;
 
   .title {
     font-weight: 500;
