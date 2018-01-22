@@ -12,6 +12,8 @@ $close-position: 25px;
   right: $close-position;
   border: none;
   outline: none;
+  cursor: pointer;
+  z-index: 10;
 }
 
 html,
