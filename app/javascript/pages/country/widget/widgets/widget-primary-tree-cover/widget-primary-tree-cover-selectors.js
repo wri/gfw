@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import COLORS from 'pages/country/data/colors.json';
 import isEmpty from 'lodash/isEmpty';
 
 // get list data
@@ -8,11 +7,12 @@ const getSettings = state => state.settings;
 const getLocationNames = state => state.locationNames;
 const getActiveIndicator = state => state.activeIndicator;
 const getIndicatorWhitelist = state => state.whitelist;
+const getColors = state => state.colors;
 
 // get lists selected
 export const getPrimaryTreeCoverData = createSelector(
-  [getData, getSettings, getIndicatorWhitelist],
-  (data, settings, whitelist) => {
+  [getData, getSettings, getIndicatorWhitelist, getColors],
+  (data, settings, whitelist, colors) => {
     if (isEmpty(data) || isEmpty(whitelist)) return null;
     const { totalArea, totalExtent, extent, plantations } = data;
     const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
@@ -20,19 +20,19 @@ export const getPrimaryTreeCoverData = createSelector(
       {
         label: 'Primary Forest',
         value: extent,
-        color: COLORS.darkGreen,
+        color: colors.darkGreen,
         percentage: extent / totalArea * 100
       },
       {
         label: hasPlantations ? 'Secondary Forest' : 'Other Tree Cover',
         value: totalExtent - extent - plantations,
-        color: COLORS.lightGreen,
+        color: colors.lightGreen,
         percentage: (totalExtent - extent - plantations) / totalArea * 100
       },
       {
         label: 'Non-Forest',
         value: totalArea - totalExtent,
-        color: COLORS.nonForest,
+        color: colors.nonForest,
         percentage: (totalArea - totalExtent) / totalArea * 100
       }
     ];
@@ -40,7 +40,7 @@ export const getPrimaryTreeCoverData = createSelector(
       parsedData.splice(2, 0, {
         label: 'Plantations',
         value: plantations,
-        color: COLORS.mediumGreen,
+        color: colors.mediumGreen,
         percentage: plantations / totalArea * 100
       });
     }

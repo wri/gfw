@@ -1,16 +1,16 @@
 import { createSelector } from 'reselect';
-import COLORS from 'pages/country/data/colors.json';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 
 // get list data
 const getData = state => state.data || null;
 const getLocationNames = state => state.locationNames || null;
+const getColors = state => state.colors || null;
 
 // get lists selected
 export const getFAOCoverData = createSelector(
-  [getData, getLocationNames],
-  (data, locationNames) => {
+  [getData, getLocationNames, getColors],
+  (data, locationNames, colors) => {
     if (isEmpty(data) || !locationNames) return null;
     const {
       area_ha,
@@ -32,25 +32,25 @@ export const getFAOCoverData = createSelector(
         label: 'Naturally regenerated Forest',
         value: naturallyRegenerated,
         percentage: naturallyRegenerated / total * 100,
-        color: COLORS.darkGreen
+        color: colors.darkGreen
       },
       {
         label: 'Primary Forest',
         value: primaryForest,
         percentage: primaryForest / total * 100,
-        color: COLORS.mediumGreen
+        color: colors.mediumGreen
       },
       {
         label: 'Planted Forest',
         value: plantedForest,
         percentage: plantedForest / total * 100,
-        color: COLORS.lightGreen
+        color: colors.lightGreen
       },
       {
         label: 'Non-Forest',
         value: nonForest,
         percentage: nonForest / total * 100,
-        color: COLORS.nonForest
+        color: colors.nonForest
       }
     ];
   }

@@ -2,6 +2,7 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-intact-tree-cover-actions';
 import reducers, { initialState } from './widget-intact-tree-cover-reducers';
@@ -25,7 +26,8 @@ const mapStateToProps = ({ widgetIntactTreeCover, countryData }, ownProps) => {
     settings,
     whitelist: countryWhitelist,
     locationNames,
-    activeIndicator
+    activeIndicator,
+    colors: { ...COLORS.extent, ...COLORS.global }
   };
 
   return {
