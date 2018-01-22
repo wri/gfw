@@ -8,6 +8,7 @@ import THRESHOLDS from 'pages/country/data/thresholds.json';
 import UNITS from 'pages/country/data/units.json';
 import PERIODS from 'pages/country/data/periods.json';
 import EXTENT_YEARS from 'pages/country/data/extent-years.json';
+import TYPES from 'pages/country/data/types.json';
 
 // get list data
 const getAdmins = state => state.location || null;
@@ -138,6 +139,8 @@ export const getThresholds = createSelector([], () =>
 );
 
 export const getUnits = createSelector([], () => sortByKey(UNITS, 'label'));
+
+export const getTypes = createSelector([], () => sortByKey(TYPES, 'label'));
 
 export const getExtentYears = createSelector([], () => EXTENT_YEARS);
 

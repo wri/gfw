@@ -84,10 +84,7 @@ export const getPlantationsExtent = ({
   const url = `${REQUEST_URL}${SQL_QUERIES.plantationsExtent}`
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
-    .replace(
-      '{type}',
-      type === 'species' ? 'bound2' : 'bound1'
-    )
+    .replace('{type}', type)
     .replace(
       '{extentYear}',
       `area_extent${extentYear === 2000 ? `_${extentYear}` : ''}`
