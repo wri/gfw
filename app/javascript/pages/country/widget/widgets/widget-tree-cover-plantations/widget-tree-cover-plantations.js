@@ -37,8 +37,8 @@ const mapStateToProps = (
     loading: loading || isCountriesLoading || isRegionsLoading,
     regions,
     data,
-    parsedData: getTreeCoverPlantationsData(selectorData)
-    // sentence: getSentence(selectorData)
+    parsedData: getTreeCoverPlantationsData(selectorData),
+    sentence: getSentence(selectorData)
   };
 };
 

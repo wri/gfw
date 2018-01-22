@@ -60,19 +60,6 @@ class WidgetSettings extends PureComponent {
             )}
           />
         )}
-        {extentYears && (
-          <Dropdown
-            theme="theme-select-light"
-            label="TREE COVER EXTENT"
-            value={settings.extentYear}
-            options={extentYears}
-            disabled={loading}
-            onChange={option =>
-              onSettingsChange({ value: { extentYear: option.value }, widget })
-            }
-            infoAction={() => setModalMeta('widget_tree_cover_extent')}
-          />
-        )}
         {types && (
           <Dropdown
             theme="theme-select-light"
@@ -82,6 +69,19 @@ class WidgetSettings extends PureComponent {
             disabled={loading}
             onChange={option =>
               onSettingsChange({ value: { type: option.value }, widget })
+            }
+            infoAction={() => setModalMeta('widget_tree_cover_extent')}
+          />
+        )}
+        {extentYears && (
+          <Dropdown
+            theme="theme-select-light"
+            label="TREE COVER EXTENT"
+            value={settings.extentYear}
+            options={extentYears}
+            disabled={loading}
+            onChange={option =>
+              onSettingsChange({ value: { extentYear: option.value }, widget })
             }
             infoAction={() => setModalMeta('widget_tree_cover_extent')}
           />

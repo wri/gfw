@@ -43,7 +43,7 @@ class WidgetTreeCoverPlantations extends PureComponent {
 WidgetTreeCoverPlantations.propTypes = {
   parsedData: PropTypes.array,
   settings: PropTypes.object.isRequired,
-  sentence: PropTypes.string.isRequired
+  sentence: PropTypes.string
 };
 
 export default WidgetTreeCoverPlantations;
