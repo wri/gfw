@@ -18,8 +18,8 @@ import './widget-bar-chart-styles.scss';
 
 class WidgetBarChart extends PureComponent {
   render() {
-    const { data, xKey, yKeys, className } = this.props;
-    const { tooltip, colors, unit } = this.props.config;
+    const { data, className } = this.props;
+    const { tooltip, colors, unit, xKey, yKeys } = this.props.config;
     const dataMax = maxBy(data, yKeys[yKeys.length - 1])[
       yKeys[yKeys.length - 1]
     ];

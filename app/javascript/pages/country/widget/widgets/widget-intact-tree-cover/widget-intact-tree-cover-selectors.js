@@ -17,19 +17,21 @@ export const getIntactTreeCoverData = createSelector(
     if (isEmpty(data) || isEmpty(whitelist)) return null;
     const { totalArea, totalExtent, extent, plantations } = data;
     const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
-    const colorRange = getColorPalette([colors.darkGreen, colors.lightGreen], 4);
-
+    const colorRange = getColorPalette(
+      [colors.darkGreen, colors.lightGreen],
+      hasPlantations ? 3 : 2
+    );
     const parsedData = [
       {
         label: 'Intact Forest',
         value: extent,
-        color: colorRange.darkGreen,
+        color: colorRange[0],
         percentage: extent / totalArea * 100
       },
       {
         label: hasPlantations ? 'Degraded Forest' : 'Other Tree Cover',
         value: totalExtent - extent - plantations,
-        color: colorRange.lightGreen,
+        color: hasPlantations ? colorRange[2] : colorRange[1],
         percentage: (totalExtent - extent - plantations) / totalArea * 100
       },
       {
@@ -43,7 +45,7 @@ export const getIntactTreeCoverData = createSelector(
       parsedData.splice(2, 0, {
         label: 'Plantations',
         value: plantations,
-        color: colorRange.mediumGreen,
+        color: colorRange[1],
         percentage: plantations / totalArea * 100
       });
     }

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 import WidgetNumberedList from 'pages/country/widget/components/widget-numbered-list';
-import COLORS from 'pages/country/data/colors.json';
 
 import './widget-tree-gain-styles.scss';
 
@@ -20,7 +19,6 @@ class WidgetTreeCoverGain extends PureComponent {
               className="ranking-list"
               data={data}
               settings={settings}
-              colorRange={[COLORS.darkGreen, COLORS.nonForest]}
               handlePageChange={() => {}}
             />
           </div>

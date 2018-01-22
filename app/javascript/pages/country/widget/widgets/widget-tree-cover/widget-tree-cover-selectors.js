@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import COLORS from 'pages/country/data/colors.json';
 import isEmpty from 'lodash/isEmpty';
 
 // get list data
@@ -8,11 +7,12 @@ const getSettings = state => state.settings;
 const getLocationNames = state => state.locationNames;
 const getActiveIndicator = state => state.activeIndicator;
 const getIndicatorWhitelist = state => state.whitelist;
+const getColors = state => state.colors;
 
 // get lists selected
 export const getTreeCoverData = createSelector(
-  [getData, getSettings, getIndicatorWhitelist],
-  (data, settings, whitelist) => {
+  [getData, getSettings, getIndicatorWhitelist, getColors],
+  (data, settings, whitelist, colors) => {
     if (isEmpty(data) || isEmpty(whitelist)) return null;
     const { totalArea, cover, plantations } = data;
     const { indicator } = settings;
@@ -24,13 +24,13 @@ export const getTreeCoverData = createSelector(
             ? 'Natural Forest'
             : 'Tree cover',
         value: cover - plantations,
-        color: COLORS.darkGreen,
+        color: colors.darkGreen,
         percentage: (cover - plantations) / totalArea * 100
       },
       {
         label: 'Non-Forest',
         value: totalArea - cover,
-        color: COLORS.nonForest,
+        color: colors.nonForest,
         percentage: (totalArea - cover) / totalArea * 100
       }
     ];
@@ -38,7 +38,7 @@ export const getTreeCoverData = createSelector(
       parsedData.splice(1, 0, {
         label: 'Tree plantations',
         value: plantations,
-        color: COLORS.mediumGreen,
+        color: colors.lightGreen,
         percentage: plantations / totalArea * 100
       });
     }

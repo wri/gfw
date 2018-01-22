@@ -21,9 +21,6 @@ export const getSortedData = createSelector(
   (data, settings, location, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
     const dataMapped = [];
-    const nonZeroData = remove(data, d => d.extent);
-    console.log(colors);
-    const colorRange = getColorPalette([colors.darkGreen, colors.lightGreen], nonZeroData.length);
     data.forEach(d => {
       const region = meta.find(l => d.id === l.value);
       if (region) {
@@ -38,10 +35,17 @@ export const getSortedData = createSelector(
         });
       }
     });
-    return sortByKey(uniqBy(dataMapped, 'label'), 'value', true).map((d, i) => ({
-      ...d,
-      color: d.value ? colorRange[i] : colors.nonForest
-    }));
+    const nonZeroData = remove([...dataMapped], d => d.extent);
+    const colorRange = getColorPalette(
+      [colors.darkGreen, colors.lightGreen],
+      nonZeroData.length
+    );
+    return sortByKey(uniqBy(dataMapped, 'label'), 'value', true).map(
+      (d, i) => ({
+        ...d,
+        color: d.value ? colorRange[i] : colors.nonForest
+      })
+    );
   }
 );
 
