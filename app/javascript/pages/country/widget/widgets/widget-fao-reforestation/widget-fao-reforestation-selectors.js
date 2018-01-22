@@ -37,7 +37,7 @@ export const getFilteredData = createSelector(
     }
     const dataTrimmed = data.slice(trimStart, trimEnd);
     const colorRange = getColorPalette(
-      [colors.darkGreen, colors.lightGreen],
+      [colors.darkBlue, colors.lightBlue],
       dataTrimmed.length
     );
     return dataTrimmed.map((d, index) => ({

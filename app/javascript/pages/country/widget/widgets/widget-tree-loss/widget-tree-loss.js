@@ -2,10 +2,15 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-tree-loss-actions';
 import reducers, { initialState } from './widget-tree-loss-reducers';
-import { filterData, getSentence } from './widget-tree-loss-selectors';
+import {
+  chartData,
+  chartConfig,
+  getSentence
+} from './widget-tree-loss-selectors';
 import WidgetTreeLossComponent from './widget-tree-loss-component';
 
 const mapStateToProps = ({ widgetTreeLoss }, ownProps) => {
@@ -16,10 +21,12 @@ const mapStateToProps = ({ widgetTreeLoss }, ownProps) => {
     extent: data.extent,
     settings,
     locationNames,
-    activeIndicator
+    activeIndicator,
+    colors: COLORS.loss
   };
   return {
-    data: filterData(selectorData),
+    data: chartData(selectorData),
+    config: chartConfig(selectorData),
     sentence: getSentence(selectorData)
   };
 };

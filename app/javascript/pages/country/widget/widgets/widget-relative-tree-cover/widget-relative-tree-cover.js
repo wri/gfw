@@ -30,7 +30,7 @@ const mapStateToProps = (
     locationNames: ownProps.locationNames,
     colors: { ...COLORS.extent, ...COLORS.global }
   };
-  console.log(selectorData);
+
   return {
     regions: countryData.regions,
     loading: loading || isCountriesLoading || isRegionsLoading,

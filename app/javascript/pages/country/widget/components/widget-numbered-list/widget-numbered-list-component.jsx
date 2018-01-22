@@ -65,7 +65,6 @@ WidgetNumberedList.propTypes = {
   data: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   handlePageChange: PropTypes.func,
-  colorRange: PropTypes.array.isRequired,
   className: PropTypes.string,
   linksDisabled: PropTypes.bool
 };

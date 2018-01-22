@@ -10,9 +10,10 @@ const getExtent = state => state.extent || null;
 const getSettings = state => state.settings || null;
 const getLocationNames = state => state.locationNames || null;
 const getActiveIndicator = state => state.activeIndicator || null;
+const getColors = state => state.colors || null;
 
 // get lists selected
-export const filterData = createSelector(
+export const chartData = createSelector(
   [getLoss, getExtent, getSettings],
   (data, extent, settings) => {
     if (!data || isEmpty(data)) return null;
@@ -29,8 +30,31 @@ export const filterData = createSelector(
   }
 );
 
+export const chartConfig = createSelector([getColors], colors => ({
+  xKey: 'year',
+  yKeys: ['area'],
+  colors: {
+    area: colors.darkPink
+  },
+  unit: 'ha',
+  tooltip: [
+    {
+      key: 'year',
+      unit: null
+    },
+    {
+      key: 'area',
+      unit: 'ha'
+    },
+    {
+      key: 'percentage',
+      unit: '%'
+    }
+  ]
+}));
+
 export const getSentence = createSelector(
-  [filterData, getExtent, getSettings, getLocationNames, getActiveIndicator],
+  [chartData, getExtent, getSettings, getLocationNames, getActiveIndicator],
   (data, extent, settings, locationNames, indicator) => {
     if (!data) return null;
     const { startYear, endYear, extentYear, threshold } = settings;
@@ -51,7 +75,7 @@ export const getSentence = createSelector(
     )(totalLoss)}ha</b> of tree cover${totalLoss ? '.' : ','} ${
       totalLoss > 0
         ? ` This loss is equal to <b>${format('.1f')(percentageLoss)}
-      %</b> of the regions tree cover extent in <b>${extentYear}</b>, 
+      %</b> of the regions tree cover extent in <b>${extentYear}</b>,
       and equivalent to <b>${format('.3s')(
     totalEmissions
   )}t</b> of CO\u2082 emissions`
