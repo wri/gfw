@@ -2,7 +2,8 @@ import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
-import { sortByKey } from 'utils/data';
+import remove from 'lodash/remove';
+import { sortByKey, getColorPalette } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
@@ -13,12 +14,16 @@ const getIndicator = state => state.indicator || null;
 const getLocation = state => state.location || null;
 const getLocationsMeta = state => state.meta || null;
 const getLocationNames = state => state.locationNames || null;
+const getColors = state => state.colors || null;
 
 export const getSortedData = createSelector(
-  [getData, getSettings, getLocation, getLocationsMeta],
-  (data, settings, location, meta) => {
+  [getData, getSettings, getLocation, getLocationsMeta, getColors],
+  (data, settings, location, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
     const dataMapped = [];
+    const nonZeroData = remove(data, d => d.extent);
+    console.log(colors);
+    const colorRange = getColorPalette([colors.darkGreen, colors.lightGreen], nonZeroData.length);
     data.forEach(d => {
       const region = meta.find(l => d.id === l.value);
       if (region) {
@@ -33,7 +38,10 @@ export const getSortedData = createSelector(
         });
       }
     });
-    return sortByKey(uniqBy(dataMapped, 'label'), 'value', true);
+    return sortByKey(uniqBy(dataMapped, 'label'), 'value', true).map((d, i) => ({
+      ...d,
+      color: d.value ? colorRange[i] : colors.nonForest
+    }));
   }
 );
 

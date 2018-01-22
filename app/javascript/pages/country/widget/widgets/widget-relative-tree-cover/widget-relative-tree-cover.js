@@ -2,6 +2,7 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-relative-tree-cover-actions';
 import reducers, { initialState } from './widget-relative-tree-cover-reducers';
@@ -26,8 +27,10 @@ const mapStateToProps = (
     meta: countryData[!payload.region ? 'regions' : 'subRegions'],
     location: payload,
     indicator: activeIndicator,
-    locationNames: ownProps.locationNames
+    locationNames: ownProps.locationNames,
+    colors: { ...COLORS.extent, ...COLORS.global }
   };
+  console.log(selectorData);
   return {
     regions: countryData.regions,
     loading: loading || isCountriesLoading || isRegionsLoading,
