@@ -23,7 +23,7 @@ export const getTreeCoverPlantationsData = createSelector(
       plantations.length
     );
     return plantations.map((d, i) => ({
-      label: d.bound2,
+      label: d[settings.type],
       value: d.plantation_extent,
       color: colorRange[i],
       percentage: d.plantation_extent / totalPlantations * 100
