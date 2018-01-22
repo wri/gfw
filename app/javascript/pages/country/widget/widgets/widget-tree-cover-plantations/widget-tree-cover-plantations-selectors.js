@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
-import { getColorPalette, sortByKey } from 'utils/data';
+import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
@@ -18,15 +18,12 @@ export const getTreeCoverPlantationsData = createSelector(
     if (isEmpty(data) || isEmpty(whitelist)) return null;
     const { plantations } = data;
     const totalPlantations = sumBy(plantations, 'plantation_extent');
-    const colorRange = getColorPalette(
-      [colors.darkGreen, colors.lightGreen],
-      plantations.length
-    );
+
     return sortByKey(
-      plantations.map((d, i) => ({
+      plantations.map(d => ({
         label: d[settings.type],
         value: d.plantation_extent,
-        color: colorRange[i],
+        color: colors[d[settings.type]],
         percentage: d.plantation_extent / totalPlantations * 100
       })),
       'value',

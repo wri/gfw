@@ -13,28 +13,28 @@
   },
   "gain": {
     "darkBlue": "#6D6DE5",
-    "lightBlue": "#6D6DE5"
+    "lightBlue": "#90B1F1"
   },
   "plantations": {
     "species": {
-      "Oil palm": "#f44c43",
-      "Wood fiber / timber": "#0F3B82",
-      "Rubber": "#11002F",
-      "Fruit": "#b2b300",
-      "Others": "#9ECC49",
-      "Wood fiber / timber mix": "#246ee6",
-      "Oil palm mix": "#f7837d",
-      "Rubber mix": "#0FF",
-      "Fruit mix": "#FF0",
-      "Other mix": "#c1df8b",
-      "Unknown": "#b5b0b0",
-      "Recently cleared": "#A53ED5"
+      "Oil palm": "#F9A19D",
+      "Wood fiber / timber": "#889ABB",
+      "Rubber": "#898094",
+      "Fruit": "#D4D580",
+      "Others": "#CAE2A0",
+      "Wood fiber / timber mix": "#90B1F1",
+      "Oil palm mix": "#FBBBB9",
+      "Rubber mix": "#80FFFF",
+      "Fruit mix": "#FFFF83",
+      "Other mix": "#DCEDC0",
+      "Unknown": "#D6D3D3",
+      "Recently cleared": "#99D7FF"
     },
     "types": {
-      "Large industrial plantation": "#F84F40",
-      "Mosaic of medium-sized plantations": "#A53ED5",
-      "Mosaic of small-sized plantations": "#33A02C",
-      "Clearing/ very young plantation": "#a7652a"
+      "Large industrial plantation": "#FBA29C",
+      "Mosaic of medium-sized plantations": "#99D7FF",
+      "Mosaic of small-sized plantations": "#CAE2A0",
+      "Clearing/ very young plantation": "#898094"
     }
   }
 }

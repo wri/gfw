@@ -32,7 +32,11 @@ const mapStateToProps = (
     whitelist: countryWhitelist,
     locationNames,
     activeIndicator,
-    colors: COLORS.extent
+    colors: {
+      ...COLORS.extent,
+      ...COLORS.plantations.types,
+      ...COLORS.plantations.species
+    }
   };
 
   return {
