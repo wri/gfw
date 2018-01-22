@@ -6,7 +6,7 @@ const CARTO_REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
 
 const SQL_QUERIES = {
   extent:
-    "SELECT SUM({extentYear}) as value, SUM(area_gadm28) as total_area FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
+    "SELECT {region} as region, SUM({extentYear}) as value, SUM(area_gadm28) as total_area FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}' {groupBy}",
   gain:
     "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = {threshold}",
   gainExtent:
@@ -28,6 +28,14 @@ const getLocationQuery = (country, region, subRegion) =>
   `iso = '${country}'${region ? ` AND adm1 = ${region}` : ''}${
     subRegion ? ` AND adm2 = ${subRegion}` : ''
   }`;
+const getRegionQuery = (region, subRegion) => {
+  if (subRegion) {
+    return 'adm2';
+  } else if (region) {
+    return 'adm1';
+  }
+  return 'iso';
+};
 
 export const getLocations = ({
   country,
@@ -58,16 +66,25 @@ export const getExtent = ({
   subRegion,
   indicator,
   threshold,
-  extentYear
+  extentYear,
+  groupBy
 }) => {
+  const regionValue = getRegionQuery(region, subRegion);
+
   const url = `${REQUEST_URL}${SQL_QUERIES.extent}`
+    .replace('{region}', regionValue)
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
     .replace('{indicator}', indicator)
     .replace(
       '{extentYear}',
       `area_extent${extentYear === 2000 ? `_${extentYear}` : ''}`
+    )
+    .replace(
+      '{groupBy}',
+      groupBy ? `GROUP BY ${regionValue} ORDER BY ${regionValue}` : ''
     );
+
   return axios.get(url);
 };
 
@@ -123,19 +140,12 @@ export const getGainExtent = ({
   indicator,
   extentYear
 }) => {
-  let regionValue = 'iso';
-  if (subRegion) {
-    regionValue = 'adm2';
-  } else if (region) {
-    regionValue = 'adm1';
-  }
-
   const location = region
     ? `iso = '${country}' ${subRegion ? `AND adm1 = ${region}` : ''}`
     : '1 = 1';
 
   const url = `${REQUEST_URL}${SQL_QUERIES.gainExtent}`
-    .replace('{region}', regionValue)
+    .replace('{region}', getRegionQuery(region, subRegion))
     .replace('{location}', location)
     .replace(
       '{extentYear}',
