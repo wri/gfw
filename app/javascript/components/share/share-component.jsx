@@ -114,31 +114,7 @@ class Share extends PureComponent {
   render() {
     const { open, setShareOpen } = this.props;
     return (
-      <Modal
-        isOpen={open}
-        onRequestClose={() => setShareOpen(false)}
-        customStyles={{
-          overlay: {
-            zIndex: 300,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 5px 15px 0 rgba(71, 44, 184, 0.1)',
-            backgroundColor: 'rgba(17, 55, 80, 0.4)'
-          },
-          content: {
-            position: 'relative',
-            top: 'auto',
-            left: 'auto',
-            right: 'auto',
-            bottom: 'auto',
-            padding: '0',
-            border: 'none',
-            borderRadius: 0
-          }
-        }}
-        closeClass="c-share-close"
-      >
+      <Modal isOpen={open} onRequestClose={() => setShareOpen(false)}>
         {this.getContent()}
       </Modal>
     );

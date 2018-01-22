@@ -1,14 +1,19 @@
 @import '~styles/settings.scss';
-$modal-padding: rem(30px);
+$mobile-padding: rem(30px);
+$desktop-padding: rem(50px);
 
 .c-modal-meta {
-  padding: $modal-padding $modal-padding;
+  padding: $mobile-padding $mobile-padding;
   min-width: rem(320px);
   min-height: rem(320px);
   width: 100%;
-  max-width: rem(600px);
+  max-width: rem(800px);
   color: $slate;
   word-break: break-word;
+
+  @media screen and (min-width: $screen-m) {
+    padding: $desktop-padding $desktop-padding;
+  }
 
   .title {
     font-weight: 500;
@@ -23,7 +28,7 @@ $modal-padding: rem(30px);
     font-size: rem(13px);
     line-height: 1.2;
     color: $warm-grey;
-    margin-bottom: $modal-padding;
+    margin-bottom: rem(30px);
   }
 
   .meta-table {
@@ -35,15 +40,24 @@ $modal-padding: rem(30px);
     margin: 0 rem(-30px);
     width: auto;
     margin-bottom: rem(30px);
+
+    @media screen and (min-width: $screen-m) {
+      margin: 0 rem(-50px);
+      margin-bottom: rem(30px);
+    }
   }
 
   .table-row {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     border-bottom: solid 1px $border;
     width: 100%;
+
+    @media screen and (min-width: $screen-m) {
+      flex-direction: row;
+    }
 
     &:nth-child(even) {
       background-color: $grey-light;
@@ -53,19 +67,28 @@ $modal-padding: rem(30px);
       font-weight: 500;
       font-size: rem(11px);
       text-transform: uppercase;
-      padding: rem(15px) $modal-padding;
-      padding-right: rem(5px);
+      padding: rem(15px) rem(5px) rem(2px) $mobile-padding;
       color: $slate;
-      width: rem(100px);
+      width: rem(150px);
+
+      @media screen and (min-width: $screen-m) {
+        padding: rem(15px) $desktop-padding;
+        padding-right: rem(5px);
+      }
     }
 
     .description-column {
-      padding: rem(13px) $modal-padding;
       font-weight: 300;
       font-size: rem(13px);
       line-height: 1.5;
       color: $slate;
       width: calc(100% - 100px);
+      width: 100%;
+      padding: 0 $mobile-padding rem(15px) $mobile-padding;
+
+      @media screen and (min-width: $screen-m) {
+        padding: rem(13px) $desktop-padding;
+      }
     }
   }
 
@@ -103,11 +126,4 @@ $modal-padding: rem(30px);
       color: darken($green-gfw, 10%);
     }
   }
-}
-
-.c-modal-meta-close {
-  right: rem(13px);
-  top: rem(13px);
-  cursor: pointer;
-  z-index: 10;
 }
