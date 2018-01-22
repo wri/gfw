@@ -6,7 +6,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  padding-bottom: rem(5px);
+  padding-bottom: rem(20px);
 
   .title {
     width: 100%;
@@ -27,7 +27,6 @@
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
-      margin-bottom: rem(20px);
 
       button {
         margin-left: rem(5px);
