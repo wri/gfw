@@ -29,7 +29,8 @@ export const getTreeCoverPlantationsData = createSelector(
         color: colorRange[i],
         percentage: d.plantation_extent / totalPlantations * 100
       })),
-      'value'
+      'value',
+      true
     );
   }
 );
