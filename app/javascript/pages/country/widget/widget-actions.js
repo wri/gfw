@@ -11,12 +11,11 @@ import * as treeCoverPlantationsActions from 'pages/country/widget/widgets/widge
 import * as intactTreeCoverActions from 'pages/country/widget/widgets/widget-intact-tree-cover/widget-intact-tree-cover-actions';
 import * as primaryTreeCoverActions from 'pages/country/widget/widgets/widget-primary-tree-cover/widget-primary-tree-cover-actions';
 import * as treeLocatedActions from 'pages/country/widget/widgets/widget-tree-located/widget-tree-located-actions';
-import * as lossLocatedActions from 'pages/country/widget/widgets/widget-loss-located/widget-loss-located-actions';
+import * as gainLocatedActions from 'pages/country/widget/widgets/widget-gain-located/widget-gain-located-actions';
 import * as relativeTreeCoverActions from 'pages/country/widget/widgets/widget-relative-tree-cover/widget-relative-tree-cover-actions';
 import * as treeGainActions from 'pages/country/widget/widgets/widget-tree-gain/widget-tree-gain-actions';
 import * as FAOReforestationActions from 'pages/country/widget/widgets/widget-fao-reforestation/widget-fao-reforestation-actions';
 import * as FAOCoverActions from 'pages/country/widget/widgets/widget-fao-cover/widget-fao-cover-actions';
-import * as rankedPlantationsActions from 'pages/country/widget/widgets/widget-ranked-plantations/widget-ranked-plantations-actions';
 
 const widgetActions = {
   ...treeLossActions.default,
@@ -26,12 +25,11 @@ const widgetActions = {
   ...intactTreeCoverActions.default,
   ...primaryTreeCoverActions.default,
   ...treeLocatedActions.default,
-  ...lossLocatedActions.default,
+  ...gainLocatedActions.default,
   ...relativeTreeCoverActions.default,
   ...treeGainActions.default,
   ...FAOReforestationActions.default,
-  ...FAOCoverActions.default,
-  ...rankedPlantationsActions.default
+  ...FAOCoverActions.default
 };
 
 export const setWidgetSettingsUrl = createThunkAction(
@@ -64,14 +62,17 @@ export const setWidgetSettingsStore = createThunkAction(
   'setWidgetSettingsStore',
   query => (dispatch, getState) => {
     Object.keys(query).forEach(widgetKey => {
-      const widgetConfig = decodeUrlForState(query[widgetKey]);
-      const { settings } = getState()[`widget${upperFirst(widgetKey)}`];
-      // Check if the state needs and update checking the values of the new config
-      // with the existing in the url to avoid dispatch actions without changes
-      if (!isObjectContained(widgetConfig, settings)) {
-        const actionFunc = widgetActions[`set${upperFirst(widgetKey)}Settings`];
-        if (actionFunc) {
-          dispatch(actionFunc(widgetConfig));
+      if (widgetKey !== 'category') {
+        const widgetConfig = decodeUrlForState(query[widgetKey]);
+        const { settings } = getState()[`widget${upperFirst(widgetKey)}`];
+        // Check if the state needs and update checking the values of the new config
+        // with the existing in the url to avoid dispatch actions without changes
+        if (!isObjectContained(widgetConfig, settings)) {
+          const actionFunc =
+            widgetActions[`set${upperFirst(widgetKey)}Settings`];
+          if (actionFunc) {
+            dispatch(actionFunc(widgetConfig));
+          }
         }
       }
     });

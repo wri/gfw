@@ -13,14 +13,13 @@ import WidgetTreeCoverPlantations from 'pages/country/widget/widgets/widget-tree
 import WidgetIntactTreeCover from 'pages/country/widget/widgets/widget-intact-tree-cover';
 import WidgetPrimaryTreeCover from 'pages/country/widget/widgets/widget-primary-tree-cover';
 import WidgetTreeLocated from 'pages/country/widget/widgets/widget-tree-located';
-import WidgetLossLocated from 'pages/country/widget/widgets/widget-loss-located';
+import WidgetGainLocated from 'pages/country/widget/widgets/widget-gain-located';
 import WidgetRelativeTreeCover from 'pages/country/widget/widgets/widget-relative-tree-cover';
 import WidgetTreeLoss from 'pages/country/widget/widgets/widget-tree-loss';
 import WidgetTreeLossPlantations from 'pages/country/widget/widgets/widget-tree-loss-plantations';
 import WidgetTreeGain from 'pages/country/widget/widgets/widget-tree-gain';
 import WidgetFaoCover from 'pages/country/widget/widgets/widget-fao-cover';
 import WidgetFaoReforestation from 'pages/country/widget/widgets/widget-fao-reforestation';
-import WidgetRankedPlantations from 'pages/country/widget/widgets/widget-ranked-plantations';
 
 import './widget-styles.scss';
 import './widget-tooltip-styles.scss';
@@ -32,13 +31,12 @@ const widgets = {
   WidgetPrimaryTreeCover,
   WidgetTreeGain,
   WidgetTreeLocated,
-  WidgetLossLocated,
+  WidgetGainLocated,
   WidgetRelativeTreeCover,
   WidgetTreeLoss,
   WidgetTreeLossPlantations,
   WidgetFaoCover,
-  WidgetFaoReforestation,
-  WidgetRankedPlantations
+  WidgetFaoReforestation
 };
 
 class Widget extends PureComponent {
