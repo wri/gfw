@@ -24,10 +24,11 @@ export const getSortedData = createSelector(
     const totalLoss = sum(data.map(t => sumBy(t.loss, 'area_loss')));
     const mappedData = data.map(d => {
       const region = meta.find(l => d.id === l.value);
-      const loss = sumBy(
-        d.loss.filter(l => l.year >= startYear && l.year <= endYear),
-        'area_loss'
-      );
+      const loss =
+        sumBy(
+          d.loss.filter(l => l.year >= startYear && l.year <= endYear),
+          'area_loss'
+        ) || 0;
       const percentage = loss / totalLoss * 100;
       return {
         label: (region && region.label) || '',
@@ -47,7 +48,7 @@ export const getSortedData = createSelector(
 
     return sortedData.map((o, i) => ({
       ...o,
-      color: o.loss ? colorRange[i] || colorRange[9] : colors.nonForest
+      color: o.loss ? colorRange[i] || colorRange[9] : colors.noLoss
     }));
   }
 );
