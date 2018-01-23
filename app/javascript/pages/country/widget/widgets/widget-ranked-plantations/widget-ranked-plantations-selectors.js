@@ -9,16 +9,19 @@ import PLANTATIONS_KEYS from 'pages/country/data/plantations-keys.json';
 
 const getExtent = state => state.extent || null;
 const getPlantations = state => state.plantations || null;
+const getDataKeys = () => PLANTATIONS_KEYS;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.location || null;
 const getLocationsMeta = state => state.meta || null;
 const getLocationNames = state => state.locationNames || null;
-const getDataKeys = () => PLANTATIONS_KEYS;
+const getColors = state => state.colors || null;
 
 const sortedData = createSelector(
   [getExtent, getPlantations, getLocation, getSettings],
   (extent, plantations, location, settings) => {
-    if (!extent || isEmpty(extent) || !plantations || isEmpty(plantations)) { return null; }
+    if (!extent || isEmpty(extent) || !plantations || isEmpty(plantations)) {
+      return null;
+    }
 
     const regionIds = plantations
       .map(item => (location.region ? item.adm2 : item.adm1))
@@ -62,40 +65,79 @@ export const chartData = createSelector(
     if (!data) return null;
 
     const limit = 5;
-    const filteredData = [];
+    let filteredData = [];
     for (let i = 0; i < limit; i++) {
-      filteredData.push(dataKeys[settings.type]);
+      filteredData.push(dataKeys[settings.type].map(item => ({ ...item })));
     }
-    const indexCount = dataKeys[settings.type];
+    const indexCount = dataKeys[settings.type].map(item => ({ ...item }));
+
     sortByKey(uniqBy(data, 'region'), 'percent', true).forEach(item => {
       item.plantations.forEach(plantation => {
         const key = plantation.name;
-        const currentIndex = findIndex(indexCount, d => d.key === key);
-
-        if (currentIndex !== -1 && indexCount[currentIndex].value < limit) {
+        const indexCountIndex = findIndex(indexCount, d => d.key === key);
+        if (
+          indexCountIndex !== -1 &&
+          indexCount[indexCountIndex].value < limit
+        ) {
+          const dataIndex = indexCount[indexCountIndex].value;
           const filteredDataIndex = findIndex(
-            filteredData[currentIndex],
+            filteredData[dataIndex],
             d => d.key === key
           );
-          filteredData[currentIndex][filteredDataIndex].value =
+          filteredData[dataIndex][filteredDataIndex].value =
             100 * plantation.extent / item.total;
-          indexCount[currentIndex].value += 1;
+          indexCount[indexCountIndex].value += 1;
         }
       });
+    });
+    filteredData = filteredData.map(d => {
+      const newObject = {};
+      d.forEach(item => {
+        newObject[item.key] = item.value;
+        newObject[`${item.key} label`] = item.label;
+      });
+      return newObject;
     });
     return filteredData;
   }
 );
 
+export const chartConfig = createSelector(
+  [getDataKeys, getColors, getSettings],
+  (dataKeys, colors, settings) => ({
+    colors: settings.type === 'bound1' ? colors.types : colors.species,
+    unit: 'ha',
+    tooltip: dataKeys[settings.type].map(item => ({
+      key: item.key,
+      unit: 'ha',
+      label: `${item.key} label`
+    }))
+  })
+);
+
 export const getSentence = createSelector(
-  [sortedData, getSettings, getLocationsMeta, getLocation, getLocationNames],
-  (data, settings, meta, location, locationNames) => {
+  [
+    sortedData,
+    getDataKeys,
+    getSettings,
+    getLocationsMeta,
+    getLocation,
+    getLocationNames
+  ],
+  (data, dataKeys, settings, meta, location, locationNames) => {
     if (!data || !meta || isEmpty(meta)) return null;
 
     const { type, extentYear, threshold } = settings;
     const region = meta.find(l => data[0].region === l.value);
     const currentLocation =
       locationNames && locationNames.current && locationNames.current.label;
+    const dataKeyIndex = findIndex(
+      dataKeys[settings.type],
+      d => d.key === data[0].plantations[0].name
+    );
+    const plantationName = dataKeys[settings.type][
+      dataKeyIndex
+    ].label.toLowerCase();
     let sentence = '';
     if (type === 'bound1') {
       sentence = `<b>${(region && region.label) ||
@@ -103,9 +145,7 @@ export const getSentence = createSelector(
         '.1f'
       )(data[0].percent)}%</b>) in <b>${currentLocation}</b>${
         location.region ? ` (<b>${extentYear})</b>` : ''
-      }, most of which is <b>${
-        data[0].plantations[0].name
-      }</b> plantations where tree canopy is greater than <b>${threshold}%</b>.`;
+      }, most of which is <b>${plantationName}</b> plantations where tree canopy is greater than <b>${threshold}%</b>.`;
     } else {
       sentence = `Within <b>${currentLocation}</b>, <b>${(region &&
         region.label) ||
@@ -113,9 +153,7 @@ export const getSentence = createSelector(
         location.region ? ' extent' : ''
       } in <b>${extentYear}</b> at <b>${format('.1f')(
         data[0].percent
-      )}%</b>, where tree canopy is greater than <b>${threshold}%</b>. The majority of this area is used for <b>${
-        data[0].plantations[0].name
-      }</b>.`;
+      )}%</b>, where tree canopy is greater than <b>${threshold}%</b>. The majority of this area is used for <b>${plantationName}</b>.`;
     }
     return sentence;
   }

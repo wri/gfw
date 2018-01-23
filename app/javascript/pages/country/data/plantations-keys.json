@@ -7,7 +7,7 @@
     },
     {
       "key": "Clearing/ very young plantation",
-      "label": "Clearing/ very young plantation",
+      "label": "Clearing and very young plantation",
       "value": 0
     },
     {
@@ -24,11 +24,11 @@
   "bound2":[
     {
       "key": "Wood fiber / timber",
-      "label": "Wood fiber / timber",
+      "label": "Wood fiber and timber",
       "value": 0
     },
     {
-      "key": "Wood Fibre and Timber mix",
+      "key": "Wood fiber / timber mix",
       "label": "Wood Fibre and Timber mix",
       "value": 0
     },
@@ -43,17 +43,17 @@
       "value": 0
     },
     {
-      "key": "Fruit Trees",
+      "key": "Fruit",
       "label": "Fruit Trees",
       "value": 0
     },
     {
-      "key": "Fruit Tree mix",
+      "key": "Fruit mix",
       "label": "Fruit Tree mix",
       "value": 0
     },
     {
-      "key": "Oil Palm",
+      "key": "Oil palm",
       "label": "Oil Palm",
       "value": 0
     },
@@ -68,7 +68,7 @@
       "value": 0
     },
     {
-      "key": "Rubber Trees",
+      "key": "Rubber",
       "label": "Rubber Trees",
       "value": 0
     }
