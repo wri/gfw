@@ -97,6 +97,31 @@
     },
     "active": true
   },
+  "gainLocated": {
+    "title": "Where is forest gain located",
+    "config": {
+      "size": "large",
+      "indicators": ["gadm28", "ifl_2013", "wdpa",
+                      "ifl_2013__wdpa", "ifl_2013__mining",
+                      "primary_forest", "primary_forest__landmark",
+                      "plantations", "plantations__mining",
+                      "plantations__wdpa", "plantations__landmark"],
+      "categories": ["summary", "land-cover", "forest-change"],
+      "admins": ["country", "region"],
+      "selectors": ["indicators", "thresholds", "units"],
+      "locationCheck": true,
+      "type": "gain",
+      "metaKey": "widget_gain_location"
+    },
+    "settings": {
+      "indicator": "gadm28",
+      "threshold": 30,
+      "unit": "ha",
+      "pageSize": 10,
+      "page": 0
+    },
+    "active": true
+  },
   "relativeTreeCover": {
     "title": "Which regions are the most forest-covered",
     "config": {

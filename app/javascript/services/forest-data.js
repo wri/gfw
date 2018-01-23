@@ -13,6 +13,8 @@ const SQL_QUERIES = {
     "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = {threshold}",
   gainExtent:
     "SELECT {region} as region, SUM(area_gain) AS gain, SUM({extentYear}) AS extent FROM data WHERE {location} AND polyname = '{polyname}' AND extent <> -9999 AND thresh = 0 GROUP BY region",
+  gainLocations:
+    "SELECT {admin} as region, {calc} as gain, FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}' {grouping} ",
   loss:
     "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.emissions) as emissions FROM data WHERE polyname = '{indicator}' AND {location} AND thresh= {threshold} GROUP BY polyname, iso, nested(year_data.year)",
   locations:
@@ -104,6 +106,17 @@ export const getGain = ({
     .replace('{threshold}', threshold)
     .replace('{calc}', region ? 'area_gain' : 'SUM(area_gain)')
     .replace('{indicator}', indicator);
+  return axios.get(url);
+};
+
+export const getGainLocations = ({ country, region, indicator, threshold }) => {
+  const url = `${REQUEST_URL}${SQL_QUERIES.gainLocations}`
+    .replace('{location}', getLocationQuery(country, region))
+    .replace('{threshold}', threshold)
+    .replace('{admin}', region ? 'adm2' : 'adm1')
+    .replace('{calc}', region ? 'area_gain' : 'SUM(area_gain)')
+    .replace('{indicator}', indicator)
+    .replace('{grouping}', !region ? 'GROUP BY adm1 ORDER BY adm1' : '');
   return axios.get(url);
 };
 
