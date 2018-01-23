@@ -20,7 +20,7 @@ class WidgetBarChart extends PureComponent {
   render() {
     const { data, className } = this.props;
     const { tooltip, colors } = this.props.config;
-    console.log(tooltip);
+
     return (
       <div className={`c-bar-chart ${className}`}>
         <ResponsiveContainer>
