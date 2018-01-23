@@ -7,6 +7,7 @@ import { encodeStateForUrl, decodeUrlForState } from 'utils/stateToUrl';
 import * as treeLossActions from 'pages/country/widget/widgets/widget-tree-loss/widget-tree-loss-actions';
 import * as treeLossPlantationsActions from 'pages/country/widget/widgets/widget-tree-loss-plantations/widget-tree-loss-plantations-actions';
 import * as treeCoverActions from 'pages/country/widget/widgets/widget-tree-cover/widget-tree-cover-actions';
+import * as treeCoverPlantationsActions from 'pages/country/widget/widgets/widget-tree-cover-plantations/widget-tree-cover-plantations-actions';
 import * as intactTreeCoverActions from 'pages/country/widget/widgets/widget-intact-tree-cover/widget-intact-tree-cover-actions';
 import * as primaryTreeCoverActions from 'pages/country/widget/widgets/widget-primary-tree-cover/widget-primary-tree-cover-actions';
 import * as treeLocatedActions from 'pages/country/widget/widgets/widget-tree-located/widget-tree-located-actions';
@@ -19,6 +20,7 @@ const widgetActions = {
   ...treeLossActions.default,
   ...treeLossPlantationsActions.default,
   ...treeCoverActions.default,
+  ...treeCoverPlantationsActions.default,
   ...intactTreeCoverActions.default,
   ...primaryTreeCoverActions.default,
   ...treeLocatedActions.default,

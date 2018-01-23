@@ -7,7 +7,6 @@
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "thresholds", "extentYears"],
-      "showIndicators": ["mining", "landmark", "wdpa", "plantations"],
       "type": "extent",
       "metaKey": "widget_tree_cover"
     },
@@ -15,6 +14,24 @@
       "indicator": "gadm28",
       "threshold": 30,
       "extentYear": 2010
+    },
+    "active": true
+  },
+  "treeCoverPlantations": {
+    "title": "Plantations extent",
+    "config": {
+      "size": "small",
+      "categories": ["land-cover", "land-use"],
+      "admins": ["country", "region", "subRegion"],
+      "selectors": ["thresholds", "extentYears", "types"],
+      "showIndicators": ["plantations"],
+      "type": "extent",
+      "metaKey": "widget_plantations_cover"
+    },
+    "settings": {
+      "threshold": 30,
+      "extentYear": 2010,
+      "type": "bound2"
     },
     "active": true
   },

@@ -9,7 +9,11 @@ class WidgetPieChartLegend extends PureComponent {
     const { data, config, className } = this.props;
 
     return (
-      <ul className={`c-pie-chart-legend ${className}`}>
+      <ul
+        className={`c-pie-chart-legend ${className} ${
+          data.length > 4 ? 'small' : ''
+        }`}
+      >
         {data.map((item, index) => (
           <li key={index.toString()}>
             <div className="legend-title">

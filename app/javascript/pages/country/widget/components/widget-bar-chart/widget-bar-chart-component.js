@@ -49,6 +49,7 @@ class WidgetBarChart extends PureComponent {
             />
             <CartesianGrid vertical={false} strokeDasharray="3 4" />
             <Tooltip
+              cursor={{ fill: '#d6d6d9' }}
               content={
                 <WidgetChartToolTip settings={tooltip} colors={colors} />
               }

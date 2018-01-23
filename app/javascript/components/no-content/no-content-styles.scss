@@ -14,6 +14,11 @@
 .message {
   opacity: 0.5;
   text-align: center;
+  padding: 0 $mobile-gutter;
+
+  @media screen and (min-width: $screen-m) {
+    padding: 0 $desktop-gutter;
+  }
 }
 
 .message-icon {

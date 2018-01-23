@@ -12,36 +12,34 @@ class WidgetTreeLoss extends PureComponent {
 
     return (
       <div className="c-widget-tree-loss">
+        {sentence && <WidgetDynamicSentence sentence={sentence} />}
         {data && (
-          <div className="data-container">
-            {sentence && <WidgetDynamicSentence sentence={sentence} />}
-            <WidgetBarChart
-              className="loss-chart"
-              data={data}
-              xKey="year"
-              yKeys={['area']}
-              config={{
-                colors: {
-                  area: '#fe6598'
+          <WidgetBarChart
+            className="loss-chart"
+            data={data}
+            xKey="year"
+            yKeys={['area']}
+            config={{
+              colors: {
+                area: '#fe6598'
+              },
+              unit: 'ha',
+              tooltip: [
+                {
+                  key: 'year',
+                  unit: null
                 },
-                unit: 'ha',
-                tooltip: [
-                  {
-                    key: 'year',
-                    unit: null
-                  },
-                  {
-                    key: 'area',
-                    unit: 'ha'
-                  },
-                  {
-                    key: 'percentage',
-                    unit: '%'
-                  }
-                ]
-              }}
-            />
-          </div>
+                {
+                  key: 'area',
+                  unit: 'ha'
+                },
+                {
+                  key: 'percentage',
+                  unit: '%'
+                }
+              ]
+            }}
+          />
         )}
       </div>
     );

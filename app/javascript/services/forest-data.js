@@ -7,6 +7,8 @@ const CARTO_REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
 const SQL_QUERIES = {
   extent:
     "SELECT SUM({extentYear}) as value, SUM(area_gadm28) as total_area FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
+  plantationsExtent:
+    "SELECT SUM({extentYear}) AS plantation_extent FROM data WHERE {location} AND thresh = {threshold} AND polyname = 'plantations' GROUP BY {type} ORDER BY plantation_extent DESC",
   gain:
     "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = {threshold}",
   gainExtent:
@@ -64,6 +66,25 @@ export const getExtent = ({
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
     .replace('{indicator}', indicator)
+    .replace(
+      '{extentYear}',
+      `area_extent${extentYear === 2000 ? `_${extentYear}` : ''}`
+    );
+  return axios.get(url);
+};
+
+export const getPlantationsExtent = ({
+  country,
+  region,
+  subRegion,
+  threshold,
+  extentYear,
+  type
+}) => {
+  const url = `${REQUEST_URL}${SQL_QUERIES.plantationsExtent}`
+    .replace('{location}', getLocationQuery(country, region, subRegion))
+    .replace('{threshold}', threshold)
+    .replace('{type}', type)
     .replace(
       '{extentYear}',
       `area_extent${extentYear === 2000 ? `_${extentYear}` : ''}`

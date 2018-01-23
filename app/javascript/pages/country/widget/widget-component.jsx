@@ -9,15 +9,14 @@ import NoContent from 'components/no-content';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 
 import WidgetTreeCover from 'pages/country/widget/widgets/widget-tree-cover';
+import WidgetTreeCoverPlantations from 'pages/country/widget/widgets/widget-tree-cover-plantations';
 import WidgetIntactTreeCover from 'pages/country/widget/widgets/widget-intact-tree-cover';
 import WidgetPrimaryTreeCover from 'pages/country/widget/widgets/widget-primary-tree-cover';
 import WidgetTreeLocated from 'pages/country/widget/widgets/widget-tree-located';
 import WidgetRelativeTreeCover from 'pages/country/widget/widgets/widget-relative-tree-cover';
 import WidgetTreeLoss from 'pages/country/widget/widgets/widget-tree-loss';
 import WidgetTreeLossPlantations from 'pages/country/widget/widgets/widget-tree-loss-plantations';
-import WidgetTotalAreaPlantations from 'pages/country/widget/widgets/widget-total-area-plantations';
 import WidgetTreeGain from 'pages/country/widget/widgets/widget-tree-gain';
-import WidgetPlantationArea from 'pages/country/widget/widgets/widget-plantation-area';
 import WidgetFaoCover from 'pages/country/widget/widgets/widget-fao-cover';
 import WidgetFaoReforestation from 'pages/country/widget/widgets/widget-fao-reforestation';
 
@@ -26,6 +25,7 @@ import './widget-tooltip-styles.scss';
 
 const widgets = {
   WidgetTreeCover,
+  WidgetTreeCoverPlantations,
   WidgetIntactTreeCover,
   WidgetPrimaryTreeCover,
   WidgetTreeGain,
@@ -33,8 +33,6 @@ const widgets = {
   WidgetRelativeTreeCover,
   WidgetTreeLoss,
   WidgetTreeLossPlantations,
-  WidgetTotalAreaPlantations,
-  WidgetPlantationArea,
   WidgetFaoCover,
   WidgetFaoReforestation
 };
