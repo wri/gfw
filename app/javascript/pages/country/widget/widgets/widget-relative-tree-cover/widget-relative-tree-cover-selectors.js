@@ -13,10 +13,11 @@ const getIndicator = state => state.indicator || null;
 const getLocation = state => state.location || null;
 const getLocationsMeta = state => state.meta || null;
 const getLocationNames = state => state.locationNames || null;
+const getColors = state => state.colors || null;
 
 export const getSortedData = createSelector(
-  [getData, getSettings, getLocation, getLocationsMeta],
-  (data, settings, location, meta) => {
+  [getData, getSettings, getLocation, getLocationsMeta, getColors],
+  (data, settings, location, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
     const dataMapped = [];
     data.forEach(d => {
@@ -29,7 +30,8 @@ export const getSortedData = createSelector(
           value: settings.unit === 'ha' ? d.extent : d.percentage,
           path: `/country/${location.country}/${
             location.region ? `${location.region}/` : ''
-          }${d.id}`
+          }${d.id}`,
+          color: d.extent ? colors.green : colors.nonForest
         });
       }
     });

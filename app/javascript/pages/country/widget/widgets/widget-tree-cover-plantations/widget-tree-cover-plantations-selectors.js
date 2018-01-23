@@ -1,8 +1,7 @@
 import { createSelector } from 'reselect';
-import COLORS from 'pages/country/data/colors.json';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
-import { getColorPalette, sortByKey } from 'utils/data';
+import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
@@ -10,23 +9,21 @@ const getData = state => state.data;
 const getSettings = state => state.settings;
 const getLocationNames = state => state.locationNames;
 const getIndicatorWhitelist = state => state.whitelist;
+const getColors = state => state.colors;
 
 // get lists selected
 export const getTreeCoverPlantationsData = createSelector(
-  [getData, getSettings, getIndicatorWhitelist],
-  (data, settings, whitelist) => {
+  [getData, getSettings, getIndicatorWhitelist, getColors],
+  (data, settings, whitelist, colors) => {
     if (isEmpty(data) || isEmpty(whitelist)) return null;
     const { plantations } = data;
     const totalPlantations = sumBy(plantations, 'plantation_extent');
-    const colorRange = getColorPalette(
-      [COLORS.darkGreen, COLORS.nonForest],
-      plantations.length
-    );
+
     return sortByKey(
-      plantations.map((d, i) => ({
+      plantations.map(d => ({
         label: d[settings.type],
         value: d.plantation_extent,
-        color: colorRange[i],
+        color: colors[d[settings.type]],
         percentage: d.plantation_extent / totalPlantations * 100
       })),
       'value',

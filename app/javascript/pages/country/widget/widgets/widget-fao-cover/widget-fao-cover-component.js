@@ -20,10 +20,10 @@ class WidgetFAOCover extends PureComponent {
               <WidgetPieChartLegend
                 className="pie-chart-legend"
                 data={data}
-                settings={{
-                  unit: '%',
-                  format: '.1f',
-                  key: 'percentage'
+                config={{
+                  unit: 'ha',
+                  format: '.3s',
+                  key: 'value'
                 }}
               />
               <WidgetPieChart

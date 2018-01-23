@@ -211,6 +211,9 @@
       "type": "fao",
       "metaKey": "widget_forest_cover_fao"
     },
+    "settings": {
+      "unit": "ha"
+    },
     "active": true
   }
 }

@@ -16,8 +16,8 @@ const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
 
 export const getSortedData = createSelector(
-  [getData, getSettings, getLocation, getLocationsMeta],
-  (data, settings, location, meta) => {
+  [getData, getSettings, getLocation, getLocationsMeta, getColors],
+  (data, settings, location, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
     const dataMapped = [];
     const totalExtent = sumBy(data, 'extent');
@@ -36,37 +36,34 @@ export const getSortedData = createSelector(
         });
       }
     });
-    return sortByKey(uniqBy(dataMapped, 'label'), 'value', true);
-  }
-);
-
-export const getChartData = createSelector(
-  [getSortedData, getColors],
-  (data, colors) => {
-    if (!data || !data.length) return null;
-    const topRegions = data.length > 10 ? data.slice(0, 10) : data;
-    const totalExtent = sumBy(data, 'extent');
-    const otherRegions = data.length > 10 ? data.slice(10) : [];
-    const othersExtent = otherRegions.length && sumBy(otherRegions, 'extent');
+    const sortedData = sortByKey(uniqBy(dataMapped, 'label'), 'value', true);
     const colorRange = getColorPalette(
-      [colors.darkGreen, colors.nonForest],
-      data.length > 10 ? topRegions.length + 1 : data.length
+      colors.ramp,
+      sortedData.length < 10 ? sortedData.length : 10
     );
-    const topChartData = topRegions.map((d, index) => ({
-      ...d,
-      color: colorRange[index]
+    return sortedData.map((o, i) => ({
+      ...o,
+      color: o.extent ? colorRange[i] || colorRange[9] : colors.nonForest
     }));
-    const otherRegionsData = otherRegions.length
-      ? {
-        label: 'Other regions',
-        percentage: othersExtent ? othersExtent / totalExtent * 100 : 0,
-        color: colorRange[topRegions.length]
-      }
-      : {};
-
-    return [...topChartData, otherRegionsData];
   }
 );
+
+export const getChartData = createSelector([getSortedData], data => {
+  if (!data || !data.length) return null;
+  const topRegions = data.length > 10 ? data.slice(0, 10) : data;
+  const totalExtent = sumBy(data, 'extent');
+  const otherRegions = data.length > 10 ? data.slice(10) : [];
+  const othersExtent = otherRegions.length && sumBy(otherRegions, 'extent');
+  const otherRegionsData = otherRegions.length
+    ? {
+      label: 'Other regions',
+      percentage: othersExtent ? othersExtent / totalExtent * 100 : 0,
+      color: otherRegions[0].color
+    }
+    : {};
+
+  return [...topRegions, otherRegionsData];
+});
 
 export const getSentence = createSelector(
   [

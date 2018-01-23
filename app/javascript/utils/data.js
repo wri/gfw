@@ -17,5 +17,10 @@ export const sortByKey = (array, key, isAsc) =>
     return 0;
   });
 
-export const getColorPalette = (colorRange, quantity) =>
-  chroma.scale(colorRange).colors(quantity);
+export const getColorPalette = (colorRange, quantity) => {
+  const trim = 0.5 / (quantity - 0.6);
+  return chroma
+    .scale(colorRange)
+    .padding(trim)
+    .colors(quantity);
+};

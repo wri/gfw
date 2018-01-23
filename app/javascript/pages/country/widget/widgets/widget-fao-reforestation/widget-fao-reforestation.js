@@ -17,7 +17,7 @@ const mapStateToProps = ({ widgetFAOReforestation, location }, ownProps) => {
   const selectorData = {
     data: data.countries,
     location: location.payload,
-    colors: COLORS,
+    colors: COLORS.gain,
     settings,
     options: ownProps.settingsConfig.options
   };
@@ -25,7 +25,7 @@ const mapStateToProps = ({ widgetFAOReforestation, location }, ownProps) => {
     loading: loading || ownProps.isMetaLoading,
     data: getFilteredData(selectorData),
     sentence: getSentence(selectorData),
-    colors: COLORS
+    colors: { ...COLORS.gain, ...COLORS.global }
   };
 };
 

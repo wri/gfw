@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import WidgetPieChart from 'pages/country/widget/components/widget-pie-chart';
 import WidgetNumberedList from 'pages/country/widget/components/widget-numbered-list';
 import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
-import COLORS from 'pages/country/data/colors.json';
 
 import './widget-tree-located-styles.scss';
 
@@ -36,7 +35,6 @@ class WidgetTreeLocated extends PureComponent {
                 data={data}
                 settings={settings}
                 handlePageChange={handlePageChange}
-                colorRange={[COLORS.darkGreen, COLORS.nonForest]}
                 linksDisabled={embed}
               />
             </div>

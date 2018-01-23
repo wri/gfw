@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
-import { getColorPalette } from 'utils/data';
 import Link from 'redux-first-router-link';
 
 import WidgetPaginate from 'pages/country/widget/components/widget-paginate';
@@ -15,14 +14,12 @@ class WidgetNumberedList extends PureComponent {
       data,
       settings,
       handlePageChange,
-      colorRange,
       linksDisabled
     } = this.props;
     const { page, pageSize, unit } = settings;
     const pageData = pageSize
       ? data.slice(page * pageSize, (page + 1) * pageSize)
       : data;
-    const COLORS = getColorPalette(colorRange, pageSize || pageData.length);
 
     return (
       <div className={`c-widget-numbered-list ${className}`}>
@@ -37,7 +34,7 @@ class WidgetNumberedList extends PureComponent {
                   <div className="item-label">
                     <div
                       className="item-bubble"
-                      style={{ backgroundColor: COLORS[index] }}
+                      style={{ backgroundColor: item.color }}
                     >
                       {item.rank || index + 1 + pageSize * page}
                     </div>
@@ -68,7 +65,6 @@ WidgetNumberedList.propTypes = {
   data: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   handlePageChange: PropTypes.func,
-  colorRange: PropTypes.array.isRequired,
   className: PropTypes.string,
   linksDisabled: PropTypes.bool
 };
