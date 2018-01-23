@@ -17,6 +17,8 @@ const SQL_QUERIES = {
     "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.emissions) as emissions FROM data WHERE polyname = '{indicator}' AND {location} AND thresh= {threshold} GROUP BY polyname, iso, nested(year_data.year)",
   locations:
     "SELECT {location} as region, {extentYear} as extent, {extent} as total FROM data WHERE iso = '{iso}' AND thresh = {threshold} AND polyname = '{indicator}' {grouping}",
+  locationsLoss:
+    "SELECT {select} AS region, year_data.year as year, SUM(year_data.area_loss) as area_loss, FROM data WHERE polyname = '{indicator}' AND iso = '{iso}' {region} AND thresh= {threshold} GROUP BY {group}, nested(year_data.year) ORDER BY {order}",
   fao:
     "SELECT fao.iso, fao.name, forest_planted, forest_primary, forest_regenerated, fao.forest_primary, fao.extent, a.land as area_ha FROM gfw2_countries as fao INNER JOIN umd_nat_staging as a ON fao.iso = a.iso WHERE fao.forest_primary is not null AND fao.iso = '{country}' AND a.year = 2001 AND a.thresh = 30",
   faoExtent:
@@ -51,6 +53,18 @@ export const getLocations = ({
     .replace('{threshold}', threshold)
     .replace('{indicator}', indicator)
     .replace('{grouping}', region ? `AND adm1 = '${region}'` : 'GROUP BY adm1');
+  return axios.get(url);
+};
+
+export const getLocationsLoss = ({ country, region, indicator, threshold }) => {
+  const url = `${REQUEST_URL}${SQL_QUERIES.locationsLoss}`
+    .replace('{select}', region ? 'adm2' : 'adm1')
+    .replace('{group}', region ? 'adm2' : 'adm1')
+    .replace('{order}', region ? 'adm2' : 'adm1')
+    .replace('{iso}', country)
+    .replace('{region}', region ? `AND adm1 = ${region} AS region` : '')
+    .replace('{threshold}', threshold)
+    .replace('{indicator}', indicator);
   return axios.get(url);
 };
 
