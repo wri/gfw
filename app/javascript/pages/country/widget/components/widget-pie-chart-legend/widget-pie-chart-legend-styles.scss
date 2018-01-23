@@ -45,4 +45,18 @@
       margin-bottom: rem(10px);
     }
   }
+
+  &.x-small {
+    .legend-item {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-start;
+      margin-bottom: rem(5px);
+    }
+
+    .legend-value {
+      display: none;
+    }
+  }
 }

@@ -18,7 +18,7 @@ export const sortByKey = (array, key, isAsc) =>
   });
 
 export const getColorPalette = (colorRange, quantity) => {
-  const trim = 0.5 / (quantity - 0.75);
+  const trim = 0.5 / (quantity - 0.6);
   return chroma
     .scale(colorRange)
     .padding(trim)
