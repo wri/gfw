@@ -10,10 +10,7 @@ export const initialState = {
 const setLossLocatedData = (state, { payload }) => ({
   ...state,
   loading: false,
-  data: {
-    ...state.data,
-    ...payload
-  },
+  data: payload,
   settings: {
     ...state.settings,
     page: 0

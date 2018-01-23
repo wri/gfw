@@ -56,7 +56,6 @@ class WidgetLossLocatedContainer extends PureComponent {
       !isEqual(location.country, this.props.location.country) ||
       !isEqual(location.region, this.props.location.region) ||
       !isEqual(settings.indicator, this.props.settings.indicator) ||
-      !isEqual(settings.extentYear, this.props.settings.extentYear) ||
       !isEqual(settings.threshold, this.props.settings.threshold)
     ) {
       getLossLocated({

@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
+import sum from 'lodash/sum';
 import { sortByKey, getColorPalette } from 'utils/data';
 import { format } from 'd3-format';
 
@@ -19,31 +20,34 @@ export const getSortedData = createSelector(
   [getData, getSettings, getLocation, getLocationsMeta, getColors],
   (data, settings, location, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
-    const dataMapped = [];
-    const totalExtent = sumBy(data, 'extent');
-    data.forEach(d => {
+    const { startYear, endYear } = settings;
+    const totalLoss = sum(data.map(t => sumBy(t.loss, 'area_loss')));
+    const mappedData = data.map(d => {
       const region = meta.find(l => d.id === l.value);
-      if (region) {
-        const percentage = d.extent / totalExtent * 100;
-        dataMapped.push({
-          label: (region && region.label) || '',
-          extent: d.extent,
-          percentage,
-          value: settings.unit === 'ha' ? d.extent : percentage,
-          path: `/country/${location.country}/${
-            location.region ? `${location.region}/` : ''
-          }${d.id}`
-        });
-      }
+      const loss = sumBy(
+        d.loss.filter(l => l.year >= startYear && l.year <= endYear),
+        'area_loss'
+      );
+      const percentage = loss / totalLoss * 100;
+      return {
+        label: (region && region.label) || '',
+        loss,
+        percentage,
+        value: settings.unit === 'ha' ? loss : percentage,
+        path: `/country/${location.country}/${
+          location.region ? `${location.region}/` : ''
+        }${d.id}`
+      };
     });
-    const sortedData = sortByKey(uniqBy(dataMapped, 'label'), 'value', true);
+    const sortedData = sortByKey(uniqBy(mappedData, 'label'), 'value', true);
     const colorRange = getColorPalette(
       colors.ramp,
       sortedData.length < 10 ? sortedData.length : 10
     );
+
     return sortedData.map((o, i) => ({
       ...o,
-      color: o.extent ? colorRange[i] || colorRange[9] : colors.nonForest
+      color: o.loss ? colorRange[i] || colorRange[9] : colors.nonForest
     }));
   }
 );
@@ -51,13 +55,13 @@ export const getSortedData = createSelector(
 export const getChartData = createSelector([getSortedData], data => {
   if (!data || !data.length) return null;
   const topRegions = data.length > 10 ? data.slice(0, 10) : data;
-  const totalExtent = sumBy(data, 'extent');
+  const totalLoss = sumBy(data, 'loss');
   const otherRegions = data.length > 10 ? data.slice(10) : [];
-  const othersExtent = otherRegions.length && sumBy(otherRegions, 'extent');
+  const othersLoss = otherRegions.length && sumBy(otherRegions, 'loss');
   const otherRegionsData = otherRegions.length
     ? {
       label: 'Other regions',
-      percentage: othersExtent ? othersExtent / totalExtent * 100 : 0,
+      percentage: othersLoss ? othersLoss / totalLoss * 100 : 0,
       color: otherRegions[0].color
     }
     : {};
@@ -76,14 +80,14 @@ export const getSentence = createSelector(
   ],
   (data, settings, options, location, indicator, locationNames) => {
     if (!data || !options || !indicator || !locationNames) return '';
-    const { extentYear, threshold } = settings;
-    const totalExtent = sumBy(data, 'extent');
+    const { startYear, endYear, threshold } = settings;
+    const totalLoss = sumBy(data, 'loss');
     const currentLocation =
       locationNames && locationNames.current && locationNames.current.label;
     const topRegion = data.length && data[0];
-    const avgExtentPercentage = sumBy(data, 'percentage') / data.length;
-    const avgExtent = sumBy(data, 'extent') / data.length;
-    let percentileExtent = 0;
+    const avgLossPercentage = sumBy(data, 'percentage') / data.length;
+    const avgLoss = sumBy(data, 'loss') / data.length;
+    let percentileLoss = 0;
     let percentileLength = 0;
     let sentence = '';
 
@@ -95,39 +99,38 @@ export const getSentence = createSelector(
       sentence += `In <b>${currentLocation}</b>, `;
     }
     while (
-      (percentileLength < data.length &&
-        percentileExtent / totalExtent < 0.5) ||
+      (percentileLength < data.length && percentileLoss / totalLoss < 0.5) ||
       (percentileLength < 10 && data.length > 10)
     ) {
-      percentileExtent += data[percentileLength].extent;
+      percentileLoss += data[percentileLength].loss;
       percentileLength += 1;
     }
-    const topExtent = percentileExtent / totalExtent * 100;
+    const topLoss = percentileLoss / totalLoss * 100;
 
     if (percentileLength > 1) {
-      sentence += `the top <b>${percentileLength}</b> regions represents <b>`;
+      sentence += `the top <b>${percentileLength}</b> regions were responsible for <b>`;
     } else {
-      sentence += `<b>${topRegion.label}</b> represents <b>`;
+      sentence += `<b>${topRegion.label}</b> was responsible for <b>`;
     }
     if (!location.region) {
-      sentence += `more than half (${format('.0f')(topExtent)}%)`;
+      sentence += `more than half (${format('.0f')(topLoss)}%)`;
     } else {
-      sentence += `${format('.0f')(topExtent)}%`;
+      sentence += `${format('.0f')(topLoss)}%`;
     }
-    sentence += `</b> of all tree cover in <b>${extentYear}</b> where tree canopy is greater than <b>${threshold}%</b>. `;
+    sentence += `</b> of all tree cover loss between <b>${startYear}</b> and <b>${endYear}</b> where tree canopy is greater than <b>${threshold}%</b>. `;
     sentence += `${
       percentileLength > 1 ? `<b>${topRegion.label}</b>` : 'This region'
-    } has the largest tree cover at `;
+    } had the largest tree cover loss at `;
     if (topRegion.percentage > 1 && settings.unit === '%') {
       sentence += `<b>${format('.0f')(
         topRegion.percentage
       )}%</b> compared to an average of <b>${format('.0f')(
-        avgExtentPercentage
+        avgLossPercentage
       )}%</b>.`;
     } else {
       sentence += `<b>${format('.3s')(
-        topRegion.extent
-      )}ha</b> compared to an average of <b>${format('.3s')(avgExtent)}ha</b>.`;
+        topRegion.loss
+      )}ha</b> compared to an average of <b>${format('.3s')(avgLoss)}ha</b>.`;
     }
 
     return sentence;
