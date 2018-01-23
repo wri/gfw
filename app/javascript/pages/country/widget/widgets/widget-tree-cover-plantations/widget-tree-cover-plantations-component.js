@@ -1,34 +1,35 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
 
-import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 import WidgetPieChart from 'pages/country/widget/components/widget-pie-chart';
 import WidgetPieChartLegend from 'pages/country/widget/components/widget-pie-chart-legend';
-import './widget-fao-cover-styles.scss';
+import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 
-class WidgetFAOCover extends PureComponent {
+import './widget-tree-cover-plantations-styles.scss';
+
+class WidgetTreeCoverPlantations extends PureComponent {
   render() {
-    const { data, sentence } = this.props;
+    const { parsedData, settings, sentence } = this.props;
 
     return (
-      <div className="c-widget-fao-cover">
-        {!isEmpty(data) && (
+      <div className="c-widget-tree-cover-plantations">
+        {parsedData && (
           <div>
-            {sentence && <WidgetDynamicSentence sentence={sentence} />}
+            <WidgetDynamicSentence sentence={sentence} />
             <div className="pie-chart-container">
               <WidgetPieChartLegend
-                className="pie-chart-legend"
-                data={data}
+                className="cover-legend"
+                data={parsedData}
                 config={{
-                  unit: 'ha',
+                  ...settings,
                   format: '.3s',
+                  unit: 'ha',
                   key: 'value'
                 }}
               />
               <WidgetPieChart
                 className="cover-pie-chart"
-                data={data}
+                data={parsedData}
                 maxSize={140}
               />
             </div>
@@ -39,9 +40,10 @@ class WidgetFAOCover extends PureComponent {
   }
 }
 
-WidgetFAOCover.propTypes = {
-  data: PropTypes.array,
+WidgetTreeCoverPlantations.propTypes = {
+  parsedData: PropTypes.array,
+  settings: PropTypes.object.isRequired,
   sentence: PropTypes.string
 };
 
-export default WidgetFAOCover;
+export default WidgetTreeCoverPlantations;

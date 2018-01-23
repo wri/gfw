@@ -8,7 +8,7 @@ import './widget-fao-reforestation-styles.scss';
 
 class WidgetFAOReforestation extends PureComponent {
   render() {
-    const { sentence, data, settings, colors, embed } = this.props;
+    const { sentence, data, settings, embed } = this.props;
 
     return (
       <div className="c-widget-fao-reforestation">
@@ -19,7 +19,6 @@ class WidgetFAOReforestation extends PureComponent {
               className="locations-list"
               data={data}
               settings={settings}
-              colorRange={[colors.darkGreen, colors.nonForest]}
               linksDisabled={embed}
             />
           )}
@@ -32,7 +31,6 @@ WidgetFAOReforestation.propTypes = {
   sentence: PropTypes.string,
   data: PropTypes.array,
   settings: PropTypes.object,
-  colors: PropTypes.object.isRequired,
   embed: PropTypes.bool
 };
 

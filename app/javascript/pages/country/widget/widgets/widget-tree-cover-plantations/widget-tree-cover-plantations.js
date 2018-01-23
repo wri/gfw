@@ -4,22 +4,27 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import COLORS from 'pages/country/data/colors.json';
 
-import actions from './widget-intact-tree-cover-actions';
-import reducers, { initialState } from './widget-intact-tree-cover-reducers';
+import actions from './widget-tree-cover-plantations-actions';
+import reducers, {
+  initialState
+} from './widget-tree-cover-plantations-reducers';
 import {
-  getIntactTreeCoverData,
+  getTreeCoverPlantationsData,
   getSentence
-} from './widget-intact-tree-cover-selectors';
-import WidgetIntactTreeCoverComponent from './widget-intact-tree-cover-component';
+} from './widget-tree-cover-plantations-selectors';
+import WidgetTreeCoverPlantationsComponent from './widget-tree-cover-plantations-component';
 
-const mapStateToProps = ({ widgetIntactTreeCover, countryData }, ownProps) => {
+const mapStateToProps = (
+  { widgetTreeCoverPlantations, countryData },
+  ownProps
+) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
     countryWhitelist,
     regions
   } = countryData;
-  const { settings, loading, data } = widgetIntactTreeCover;
+  const { settings, loading, data } = widgetTreeCoverPlantations;
   const { locationNames, activeIndicator } = ownProps;
   const selectorData = {
     data,
@@ -27,35 +32,38 @@ const mapStateToProps = ({ widgetIntactTreeCover, countryData }, ownProps) => {
     whitelist: countryWhitelist,
     locationNames,
     activeIndicator,
-    colors: COLORS.extent
+    colors: {
+      ...COLORS.plantations.types,
+      ...COLORS.plantations.species
+    }
   };
 
   return {
     loading: loading || isCountriesLoading || isRegionsLoading,
     regions,
     data,
-    parsedData: getIntactTreeCoverData(selectorData),
+    parsedData: getTreeCoverPlantationsData(selectorData),
     sentence: getSentence(selectorData)
   };
 };
 
-class WidgetIntactTreeCoverContainer extends PureComponent {
+class WidgetTreeCoverPlantationsContainer extends PureComponent {
   componentDidMount() {
-    const { location, settings, getIntactTreeCover } = this.props;
-    getIntactTreeCover({
+    const { location, settings, getTreeCoverPlantations } = this.props;
+    getTreeCoverPlantations({
       ...location,
       ...settings
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { settings, getIntactTreeCover, location } = nextProps;
+    const { settings, getTreeCoverPlantations, location } = nextProps;
 
     if (
       !isEqual(location, this.props.location) ||
       !isEqual(settings, this.props.settings)
     ) {
-      getIntactTreeCover({
+      getTreeCoverPlantations({
         ...location,
         ...settings
       });
@@ -63,20 +71,20 @@ class WidgetIntactTreeCoverContainer extends PureComponent {
   }
 
   render() {
-    return createElement(WidgetIntactTreeCoverComponent, {
+    return createElement(WidgetTreeCoverPlantationsComponent, {
       ...this.props
     });
   }
 }
 
-WidgetIntactTreeCoverContainer.propTypes = {
+WidgetTreeCoverPlantationsContainer.propTypes = {
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  getIntactTreeCover: PropTypes.func.isRequired
+  getTreeCoverPlantations: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(
-  WidgetIntactTreeCoverContainer
+  WidgetTreeCoverPlantationsContainer
 );

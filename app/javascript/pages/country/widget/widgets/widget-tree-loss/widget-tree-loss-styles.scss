@@ -2,14 +2,6 @@
 
 .c-widget-tree-loss {
   .loss-chart {
-    margin-top: rem(20px);
-  }
-
-  .data-container {
-    padding: rem(15px) 0 0;
-
-    @media screen and (min-width: $screen-m) {
-      padding: rem(30px) rem(20px) 0;
-    }
+    padding-top: rem(30px);
   }
 }

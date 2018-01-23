@@ -27,7 +27,7 @@ const mapStateToProps = (
     options: settingsConfig.options,
     meta: countryData[!payload.region ? 'regions' : 'subRegions'],
     location: payload,
-    colors: COLORS,
+    colors: COLORS.extent,
     indicator: activeIndicator,
     locationNames: ownProps.locationNames
   };

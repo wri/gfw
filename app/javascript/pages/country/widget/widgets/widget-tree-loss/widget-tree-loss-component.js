@@ -8,40 +8,13 @@ import './widget-tree-loss-styles.scss';
 
 class WidgetTreeLoss extends PureComponent {
   render() {
-    const { data, sentence } = this.props;
+    const { data, config, sentence } = this.props;
 
     return (
       <div className="c-widget-tree-loss">
+        {sentence && <WidgetDynamicSentence sentence={sentence} />}
         {data && (
-          <div className="data-container">
-            {sentence && <WidgetDynamicSentence sentence={sentence} />}
-            <WidgetBarChart
-              className="loss-chart"
-              data={data}
-              xKey="year"
-              yKeys={['area']}
-              config={{
-                colors: {
-                  area: '#fe6598'
-                },
-                unit: 'ha',
-                tooltip: [
-                  {
-                    key: 'year',
-                    unit: null
-                  },
-                  {
-                    key: 'area',
-                    unit: 'ha'
-                  },
-                  {
-                    key: 'percentage',
-                    unit: '%'
-                  }
-                ]
-              }}
-            />
-          </div>
+          <WidgetBarChart className="loss-chart" data={data} config={config} />
         )}
       </div>
     );
@@ -50,6 +23,7 @@ class WidgetTreeLoss extends PureComponent {
 
 WidgetTreeLoss.propTypes = {
   data: PropTypes.array,
+  config: PropTypes.object,
   sentence: PropTypes.string
 };
 

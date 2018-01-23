@@ -18,14 +18,11 @@ import * as ModalMetaComponent from 'components/modal-meta';
 import * as mapComponent from 'components/map';
 import * as storiesComponent from 'pages/country/stories';
 import * as headerComponent from 'pages/country/header';
-import * as widgetAreasMostCoverGainComponent from 'pages/country/widget/widgets/widget-areas-most-cover-gain';
-import * as widgetPlantationAreaComponent from 'pages/country/widget/widgets/widget-plantation-area';
-import * as widgetTotalAreaPlantationsComponent from 'pages/country/widget/widgets/widget-total-area-plantations';
 import * as widgetTreeCoverComponent from 'pages/country/widget/widgets/widget-tree-cover';
+import * as widgetTreeCoverPlantationsComponent from 'pages/country/widget/widgets/widget-tree-cover-plantations';
 import * as widgetIntactTreeCoverComponent from 'pages/country/widget/widgets/widget-intact-tree-cover';
 import * as widgetPrimaryTreeCoverComponent from 'pages/country/widget/widgets/widget-primary-tree-cover';
 import * as widgetTreeGainComponent from 'pages/country/widget/widgets/widget-tree-gain';
-import * as widgetTreeCoverLossAreasComponent from 'pages/country/widget/widgets/widget-tree-cover-loss-areas';
 import * as widgetTreeLocatedComponent from 'pages/country/widget/widgets/widget-tree-located';
 import * as widgetRelativeTreeCoverComponent from 'pages/country/widget/widgets/widget-relative-tree-cover';
 import * as widgetTreeLossComponent from 'pages/country/widget/widgets/widget-tree-loss';
@@ -43,16 +40,13 @@ const componentsReducers = {
   map: handleActions(mapComponent),
   stories: handleActions(storiesComponent),
   header: handleActions(headerComponent),
-  widgetAreasMostCoverGain: handleActions(widgetAreasMostCoverGainComponent),
-  widgetPlantationArea: handleActions(widgetPlantationAreaComponent),
-  widgetTotalAreaPlantations: handleActions(
-    widgetTotalAreaPlantationsComponent
-  ),
   widgetTreeCover: handleActions(widgetTreeCoverComponent),
+  widgetTreeCoverPlantations: handleActions(
+    widgetTreeCoverPlantationsComponent
+  ),
   widgetIntactTreeCover: handleActions(widgetIntactTreeCoverComponent),
   widgetPrimaryTreeCover: handleActions(widgetPrimaryTreeCoverComponent),
   widgetTreeGain: handleActions(widgetTreeGainComponent),
-  widgetTreeCoverLossAreas: handleActions(widgetTreeCoverLossAreasComponent),
   widgetTreeLocated: handleActions(widgetTreeLocatedComponent),
   widgetRelativeTreeCover: handleActions(widgetRelativeTreeCoverComponent),
   widgetTreeLoss: handleActions(widgetTreeLossComponent),

@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
-import { sortByKey, getColorPalette } from 'utils/data';
+import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 import { ordinalSuffixOf } from 'utils/calculations';
 
@@ -55,11 +55,7 @@ export const getFilteredData = createSelector(
       trimEnd = data.length;
     }
     const dataTrimmed = data.slice(trimStart, trimEnd);
-    const colorRange = getColorPalette(
-      [colors.darkGreen, colors.lightGreen],
-      dataTrimmed.length
-    );
-    return dataTrimmed.map((d, index) => {
+    return dataTrimmed.map(d => {
       const locationData = meta.find(l => d.id === l.value);
       let path = '/country/';
       if (location.subRegion) {
@@ -73,7 +69,7 @@ export const getFilteredData = createSelector(
       return {
         ...d,
         label: (locationData && locationData.label) || '',
-        color: colorRange[index],
+        color: colors.blue,
         path,
         value: settings.unit === 'ha' ? d.gain : d.percentage
       };
@@ -92,7 +88,6 @@ export const getSentence = createSelector(
       indicator && indicator.value === 'gadm28'
         ? '<span>region-wide</span>'
         : `in <span>${indicator && indicator.label.toLowerCase()}</span>`;
-
     const areaPercent =
       (locationData && format('.1f')(locationData.percentage)) || 0;
     const gain = locationData && locationData.gain;
@@ -105,9 +100,12 @@ export const getSentence = createSelector(
         settings.extentYear
       }</b> tree cover extent.`
       : '.';
+    const rankSentence =
+      locationData &&
+      `In relation to other countries this was the <b>${ordinalSuffixOf(
+        locationData.rank
+      )}</b> largest change.`;
 
-    return `${firstSentence}${secondSentence} In relation to other countries this was the <b>${ordinalSuffixOf(
-      locationData.rank
-    )}</b> largest change.`;
+    return `${firstSentence}${secondSentence} ${rankSentence}`;
   }
 );
