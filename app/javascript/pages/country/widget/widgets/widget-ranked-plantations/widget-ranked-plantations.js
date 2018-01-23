@@ -2,19 +2,23 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-ranked-plantations-actions';
 import reducers, { initialState } from './widget-ranked-plantations-reducers';
-import { chartData, getSentence } from './widget-ranked-plantations-selectors';
+import {
+  chartData,
+  chartConfig,
+  getSentence
+} from './widget-ranked-plantations-selectors';
 import WidgetRankedPlantationsComponent from './widget-ranked-plantations-component';
 
 const mapStateToProps = (
   { location, widgetRankedPlantations, countryData },
   ownProps
 ) => {
-  const { isCountriesLoading, isRegionsLoading } = countryData;
-  const { data, settings, loading } = widgetRankedPlantations;
-  const { locationNames, activeIndicator } = ownProps;
+  const { data, settings } = widgetRankedPlantations;
+  const { locationNames } = ownProps;
   const { payload } = location;
   const selectorData = {
     extent: data.extent,
@@ -23,11 +27,11 @@ const mapStateToProps = (
     settings,
     location: payload,
     locationNames,
-    activeIndicator
+    colors: COLORS.plantations
   };
   return {
-    loading: loading || isCountriesLoading || isRegionsLoading,
     data: chartData(selectorData),
+    config: chartConfig(selectorData),
     sentence: getSentence(selectorData)
   };
 };
