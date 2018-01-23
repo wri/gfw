@@ -7,6 +7,7 @@
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "thresholds", "extentYears"],
+      "showIndicators": ["mining", "landmark", "wdpa", "plantations"],
       "type": "extent",
       "metaKey": "widget_tree_cover"
     },
@@ -15,25 +16,7 @@
       "threshold": 30,
       "extentYear": 2010
     },
-    "active": true
-  },
-  "treeCoverPlantations": {
-    "title": "Plantations extent",
-    "config": {
-      "size": "small",
-      "categories": ["land-cover", "land-use"],
-      "admins": ["country", "region", "subRegion"],
-      "selectors": ["thresholds", "extentYears", "types"],
-      "showIndicators": ["plantations"],
-      "type": "extent",
-      "metaKey": "widget_plantations_cover"
-    },
-    "settings": {
-      "threshold": 30,
-      "extentYear": 2010,
-      "type": "bound2"
-    },
-    "active": true
+    "active": false
   },
   "intactTreeCover": {
     "title": "Intact forest extent",
@@ -51,7 +34,7 @@
       "threshold": 30,
       "extentYear": 2010
     },
-    "active": true
+    "active": false
   },
   "primaryTreeCover": {
     "title": "Primary forest extent",
@@ -69,7 +52,7 @@
       "threshold": 30,
       "extentYear": 2010
     },
-    "active": true
+    "active": false
   },
   "treeLocated": {
     "title": "Where are the forests located",
@@ -95,7 +78,7 @@
       "pageSize": 10,
       "page": 0
     },
-    "active": true
+    "active": false
   },
   "relativeTreeCover": {
     "title": "Which regions are the most forest-covered",
@@ -121,7 +104,7 @@
       "pageSize": 10,
       "page": 0
     },
-    "active": true
+    "active": false
   },
   "treeLoss": {
     "title": "Tree cover loss",
@@ -145,14 +128,14 @@
       "endYear": 2016,
       "extentYear": 2000
     },
-    "active": true
+    "active": false
   },
   "treeLossPlantations": {
     "title": "Tree cover loss for plantations",
     "config": {
       "size": "large",
       "showIndicators": ["plantations"],
-      "categories": ["forest-change", "land-use"],
+      "categories": ["summary", "forest-change", "land-use"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["startYears", "endYears", "thresholds"],
       "yearRange": ["2013", "2016"],
@@ -184,7 +167,7 @@
       "unit": "ha",
       "extentYear": 2010
     },
-    "active": true
+    "active": false
   },
   "FAOReforestation": {
     "title": "FAO reforestation",
@@ -200,7 +183,7 @@
       "period": 2010,
       "unit": "ha/year"
     },
-    "active": true
+    "active": false
   },
   "FAOCover": {
     "title": "Forest cover",
@@ -211,8 +194,24 @@
       "type": "fao",
       "metaKey": "widget_forest_cover_fao"
     },
+    "active": false
+  },
+  "rankedPlantations": {
+    "title": "Ranked plantations",
+    "config": {
+      "size": "large",
+      "indicators": ["gadm28", "plantations"],
+      "categories": ["summary", "land-cover", "land-use"],
+      "admins": ["country", "region"],
+      "selectors": ["indicators", "thresholds", "extentYears", "types"],
+      "type": "extent",
+      "metaKey": ""
+    },
     "settings": {
-      "unit": "ha"
+      "indicator": "gadm28",
+      "extentYear": 2010,
+      "threshold": 0,
+      "type": "bound2"
     },
     "active": true
   }

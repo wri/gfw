@@ -1,0 +1,76 @@
+{
+  "bound1": [
+    {
+      "key": "Large industrial plantation",
+      "label": "Large industrial plantation",
+      "value": 0
+    },
+    {
+      "key": "Clearing/ very young plantation",
+      "label": "Clearing/ very young plantation",
+      "value": 0
+    },
+    {
+      "key": "Mosaic of small-sized plantations",
+      "label": "Mosaic of small-sized plantations",
+      "value": 0
+    },
+    {
+      "key": "Mosaic of medium-sized plantations",
+      "label": "Mosaic of medium-sized plantations",
+      "value": 0
+    }
+  ],
+  "bound2":[
+    {
+      "key": "Wood fiber / timber",
+      "label": "Wood fiber / timber",
+      "value": 0
+    },
+    {
+      "key": "Wood Fibre and Timber mix",
+      "label": "Wood Fibre and Timber mix",
+      "value": 0
+    },
+    {
+      "key": "Recently cleared",
+      "label": "Recently cleared",
+      "value": 0
+    },
+    {
+      "key": "Unknown",
+      "label": "Unknown",
+      "value": 0
+    },
+    {
+      "key": "Fruit Trees",
+      "label": "Fruit Trees",
+      "value": 0
+    },
+    {
+      "key": "Fruit Tree mix",
+      "label": "Fruit Tree mix",
+      "value": 0
+    },
+    {
+      "key": "Oil Palm",
+      "label": "Oil Palm",
+      "value": 0
+    },
+    {
+      "key": "Other mix",
+      "label": "Other mix",
+      "value": 0
+    },
+    {
+      "key": "Other",
+      "label": "Other",
+      "value": 0
+    },
+    {
+      "key": "Rubber Trees",
+      "label": "Rubber Trees",
+      "value": 0
+    }
+  ]
+}
