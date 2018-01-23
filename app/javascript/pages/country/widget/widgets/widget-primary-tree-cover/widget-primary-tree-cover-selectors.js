@@ -17,10 +17,7 @@ export const getPrimaryTreeCoverData = createSelector(
     if (isEmpty(data) || isEmpty(whitelist)) return null;
     const { totalArea, totalExtent, extent, plantations } = data;
     const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
-    const colorRange = getColorPalette(
-      [colors.darkGreen, colors.lightGreen],
-      hasPlantations ? 3 : 2
-    );
+    const colorRange = getColorPalette(colors.ramp, hasPlantations ? 3 : 2);
     const parsedData = [
       {
         label: 'Primary Forest',
@@ -31,7 +28,7 @@ export const getPrimaryTreeCoverData = createSelector(
       {
         label: hasPlantations ? 'Secondary Forest' : 'Other Tree Cover',
         value: totalExtent - extent - plantations,
-        color: hasPlantations ? colorRange[2] : colorRange[1],
+        color: colorRange[1],
         percentage: (totalExtent - extent - plantations) / totalArea * 100
       },
       {
@@ -45,7 +42,7 @@ export const getPrimaryTreeCoverData = createSelector(
       parsedData.splice(2, 0, {
         label: 'Plantations',
         value: plantations,
-        color: colorRange[1],
+        color: colorRange[2],
         percentage: plantations / totalArea * 100
       });
     }

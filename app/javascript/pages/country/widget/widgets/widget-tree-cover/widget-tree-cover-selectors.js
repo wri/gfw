@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import { getColorPalette } from 'utils/data';
 
 // get list data
 const getData = state => state.data;
@@ -17,6 +18,7 @@ export const getTreeCoverData = createSelector(
     const { totalArea, cover, plantations } = data;
     const { indicator } = settings;
     const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
+    const colorRange = getColorPalette(colors.ramp, hasPlantations ? 2 : 1);
     const parsedData = [
       {
         label:
@@ -24,7 +26,7 @@ export const getTreeCoverData = createSelector(
             ? 'Natural Forest'
             : 'Tree cover',
         value: cover - plantations,
-        color: colors.darkGreen,
+        color: colorRange[0],
         percentage: (cover - plantations) / totalArea * 100
       },
       {
@@ -38,7 +40,7 @@ export const getTreeCoverData = createSelector(
       parsedData.splice(1, 0, {
         label: 'Tree plantations',
         value: plantations,
-        color: colors.lightGreen,
+        color: colorRange[1],
         percentage: plantations / totalArea * 100
       });
     }

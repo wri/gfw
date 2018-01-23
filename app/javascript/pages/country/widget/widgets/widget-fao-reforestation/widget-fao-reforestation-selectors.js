@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
-import { sortByKey, getColorPalette } from 'utils/data';
+import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 import { getActiveFilter } from 'pages/country/widget/widget-selectors';
 import { ordinalSuffixOf } from 'utils/calculations';
@@ -36,14 +36,10 @@ export const getFilteredData = createSelector(
       trimEnd = data.length;
     }
     const dataTrimmed = data.slice(trimStart, trimEnd);
-    const colorRange = getColorPalette(
-      [colors.darkBlue, colors.lightBlue],
-      dataTrimmed.length
-    );
-    return dataTrimmed.map((d, index) => ({
+    return dataTrimmed.map(d => ({
       ...d,
       label: d.name,
-      color: colorRange[index],
+      color: colors.blue,
       path: `/country/${d.iso}`,
       value: d.rate * 1000
     }));

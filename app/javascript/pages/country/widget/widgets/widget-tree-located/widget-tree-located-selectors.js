@@ -38,7 +38,7 @@ export const getSortedData = createSelector(
     });
     const sortedData = sortByKey(uniqBy(dataMapped, 'label'), 'value', true);
     const colorRange = getColorPalette(
-      [colors.darkGreen, colors.lightGreen],
+      colors.ramp,
       sortedData.length < 10 ? sortedData.length : 10
     );
     return sortedData.map((o, i) => ({

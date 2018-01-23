@@ -3,6 +3,7 @@ import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
 import { biomassToCO2 } from 'utils/calculations';
+import { getColorPalette } from 'utils/data';
 
 // get list data
 const getLoss = state => state.loss || null;
@@ -33,27 +34,30 @@ export const chartData = createSelector(
   }
 );
 
-export const chartConfig = createSelector([getColors], colors => ({
-  xKey: 'year',
-  yKeys: ['areaLoss', 'outsideAreaLoss'],
-  colors: {
-    areaLoss: colors.darkPink,
-    outsideAreaLoss: colors.lightPink
-  },
-  unit: 'ha',
-  tooltip: [
-    {
-      key: 'outsideAreaLoss',
-      unit: 'ha',
-      label: 'outsideLossLabel'
+export const chartConfig = createSelector([getColors], colors => {
+  const colorRange = getColorPalette(colors.ramp, 2);
+  return {
+    xKey: 'year',
+    yKeys: ['areaLoss', 'outsideAreaLoss'],
+    colors: {
+      areaLoss: colorRange[0],
+      outsideAreaLoss: colorRange[1]
     },
-    {
-      key: 'areaLoss',
-      unit: 'ha',
-      label: 'lossLabel'
-    }
-  ]
-}));
+    unit: 'ha',
+    tooltip: [
+      {
+        key: 'outsideAreaLoss',
+        unit: 'ha',
+        label: 'outsideLossLabel'
+      },
+      {
+        key: 'areaLoss',
+        unit: 'ha',
+        label: 'lossLabel'
+      }
+    ]
+  };
+});
 
 export const getSentence = createSelector(
   [chartData, getSettings, getLocationNames],

@@ -33,7 +33,6 @@ const mapStateToProps = (
     locationNames,
     activeIndicator,
     colors: {
-      ...COLORS.extent,
       ...COLORS.plantations.types,
       ...COLORS.plantations.species
     }

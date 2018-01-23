@@ -27,7 +27,7 @@ const mapStateToProps = ({ widgetPrimaryTreeCover, countryData }, ownProps) => {
     whitelist: countryWhitelist,
     locationNames,
     activeIndicator,
-    colors: { ...COLORS.extent, ...COLORS.global }
+    colors: COLORS.extent
   };
 
   return {

@@ -20,10 +20,7 @@ export const getFAOCoverData = createSelector(
       forest_primary,
       forest_regenerated
     } = data;
-    const colorRange = getColorPalette(
-      [colors.darkGreen, colors.lightGreen],
-      3
-    );
+    const colorRange = getColorPalette(colors.ramp, 3);
     const naturallyRegenerated = extent / 100 * forest_regenerated;
     const primaryForest = extent / 100 * forest_primary;
     const plantedForest = extent / 100 * forest_planted;

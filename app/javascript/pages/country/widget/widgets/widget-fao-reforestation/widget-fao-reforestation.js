@@ -17,7 +17,7 @@ const mapStateToProps = ({ widgetFAOReforestation, location }, ownProps) => {
   const selectorData = {
     data: data.countries,
     location: location.payload,
-    colors: { ...COLORS.gain, ...COLORS.global },
+    colors: COLORS.gain,
     settings,
     options: ownProps.settingsConfig.options
   };

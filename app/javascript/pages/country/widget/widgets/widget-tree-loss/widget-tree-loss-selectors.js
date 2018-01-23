@@ -34,7 +34,7 @@ export const chartConfig = createSelector([getColors], colors => ({
   xKey: 'year',
   yKeys: ['area'],
   colors: {
-    area: colors.darkPink
+    area: colors.pink
   },
   unit: 'ha',
   tooltip: [
