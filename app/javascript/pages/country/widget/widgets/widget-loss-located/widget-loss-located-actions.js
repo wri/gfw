@@ -1,7 +1,8 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
+import groupBy from 'lodash/groupBy';
 
-import { getLocations } from 'services/forest-data';
+import { getLocationsLoss } from 'services/forest-data';
 
 const setLossLocatedData = createAction('setLossLocatedData');
 const setLossLocatedPage = createAction('setLossLocatedPage');
@@ -13,16 +14,19 @@ const getLossLocated = createThunkAction(
   params => (dispatch, state) => {
     if (!state().widgetLossLocated.loading) {
       dispatch(setLossLocatedLoading({ loading: true, error: false }));
-      getLocations(params)
+      getLocationsLoss(params)
         .then(response => {
           const { data } = response.data;
           const mappedData = {};
           if (data && data.length) {
-            mappedData.regions = data.map(d => ({
-              id: d.region,
-              extent: d.extent || 0,
-              percentage: d.extent ? d.extent / d.total * 100 : 0
-            }));
+            const lossByRegion = groupBy(data, 'region');
+            mappedData.regions = Object.keys(lossByRegion).map(d => {
+              const regionLoss = lossByRegion[d];
+              return {
+                id: parseInt(d, 10),
+                loss: regionLoss
+              };
+            });
           }
           dispatch(setLossLocatedData(mappedData));
         })
