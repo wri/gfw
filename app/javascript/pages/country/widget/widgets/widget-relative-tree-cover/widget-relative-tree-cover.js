@@ -28,7 +28,7 @@ const mapStateToProps = (
     location: payload,
     indicator: activeIndicator,
     locationNames: ownProps.locationNames,
-    colors: { ...COLORS.extent, ...COLORS.global }
+    colors: COLORS.extent
   };
 
   return {

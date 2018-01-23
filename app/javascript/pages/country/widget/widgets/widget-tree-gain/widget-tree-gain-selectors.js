@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
-import { sortByKey, getColorPalette } from 'utils/data';
+import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 import { ordinalSuffixOf } from 'utils/calculations';
 
@@ -55,11 +55,7 @@ export const getFilteredData = createSelector(
       trimEnd = data.length;
     }
     const dataTrimmed = data.slice(trimStart, trimEnd);
-    const colorRange = getColorPalette(
-      [colors.darkBlue, colors.lightBlue],
-      dataTrimmed.length
-    );
-    return dataTrimmed.map((d, index) => {
+    return dataTrimmed.map(d => {
       const locationData = meta.find(l => d.id === l.value);
       let path = '/country/';
       if (location.subRegion) {
@@ -73,7 +69,7 @@ export const getFilteredData = createSelector(
       return {
         ...d,
         label: (locationData && locationData.label) || '',
-        color: colorRange[index],
+        color: colors.blue,
         path,
         value: settings.unit === 'ha' ? d.gain : d.percentage
       };

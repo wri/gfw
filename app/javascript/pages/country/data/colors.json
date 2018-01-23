@@ -1,40 +1,39 @@
 {
-  "global": {
-    "nonForest": "#E2CF96",
-    "grey": "#d9d9dc"
-  },
   "extent": {
-    "darkGreen": "#1e5a00",
-    "lightGreen": "#959a00"
+    "green": "#a0c746",
+    "ramp": ["#364a08", "#506917", "#6b8729", "#84a637", "#a0c746", "#bcdb72", "#d4ed9a", "#e3f7b2", "#effcd2"],
+    "nonForest": "#e7e5a4"
   },
   "loss": {
-    "darkPink": "#fe6598",
-    "lightPink": "#FFC2E4"
+    "pink": "#fe6598",
+    "ramp": ["#510626", "#7a1e41", "#a4355c", "#d04d7a", "#fe6598", "#ff84ac", "#ffa0c0", "#ffbad4", "#ffd4e9"],
+    "noLoss": "#e7e5a4"
   },
   "gain": {
-    "darkBlue": "#6D6DE5",
-    "lightBlue": "#90B1F1"
+    "blue": "#6d6de5",
+    "ramp": ["#070752", "#231f74", "#3c3898", "#5452be", "#6d6de5", "#8a86ec", "#a49ff3", "#bdb9f9", "#d4d4ff"],
+    "noGain": "#e7e5a4"
   },
   "plantations": {
     "species": {
-      "Oil palm": "#F9A19D",
-      "Wood fiber / timber": "#889ABB",
-      "Rubber": "#898094",
-      "Fruit": "#D4D580",
-      "Others": "#CAE2A0",
-      "Wood fiber / timber mix": "#90B1F1",
-      "Oil palm mix": "#FBBBB9",
-      "Rubber mix": "#80FFFF",
-      "Fruit mix": "#FFFF83",
-      "Other mix": "#DCEDC0",
-      "Unknown": "#D6D3D3",
-      "Recently cleared": "#99D7FF"
+      "Oil palm": "#fdada9",
+      "Wood fiber / timber": "#98a7c4",
+      "Rubber": "#9993a3",
+      "Fruit": "#dada95",
+      "Others": "#d1e6ab",
+      "Wood fiber / timber mix": "#9ebbf2",
+      "Oil palm mix": "#fcc4c1",
+      "Rubber mix": "#a4fdff",
+      "Fruit mix": "#fefe97",
+      "Other mix": "#e1efc8",
+      "Unknown": "#dcd9d9",
+      "Recently cleared": "#d5a6ea"
     },
     "types": {
-      "Large industrial plantation": "#FBA29C",
-      "Mosaic of medium-sized plantations": "#99D7FF",
-      "Mosaic of small-sized plantations": "#CAE2A0",
-      "Clearing/ very young plantation": "#898094"
+      "Large industrial plantation": "#fdada9",
+      "Mosaic of medium-sized plantations": "#d5a6ea",
+      "Mosaic of small-sized plantations": "#a6d19f",
+      "Clearing/ very young plantation": "#d5b7a0"
     }
   }
 }

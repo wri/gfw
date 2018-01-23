@@ -15,7 +15,7 @@ const mapStateToProps = ({ widgetFAOCover }, ownProps) => {
   const selectorData = {
     data,
     locationNames,
-    colors: { ...COLORS.extent, ...COLORS.global }
+    colors: COLORS.extent
   };
   return {
     data: getFAOCoverData(selectorData),
