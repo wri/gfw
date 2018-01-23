@@ -16,7 +16,7 @@
       "threshold": 30,
       "extentYear": 2010
     },
-    "active": true
+    "active": false
   },
   "intactTreeCover": {
     "title": "Intact forest extent",
@@ -34,7 +34,7 @@
       "threshold": 30,
       "extentYear": 2010
     },
-    "active": true
+    "active": false
   },
   "primaryTreeCover": {
     "title": "Primary forest extent",
@@ -52,7 +52,7 @@
       "threshold": 30,
       "extentYear": 2010
     },
-    "active": true
+    "active": false
   },
   "treeLocated": {
     "title": "Where are the forests located",
@@ -78,7 +78,7 @@
       "pageSize": 10,
       "page": 0
     },
-    "active": true
+    "active": false
   },
   "relativeTreeCover": {
     "title": "Which regions are the most forest-covered",
@@ -104,7 +104,7 @@
       "pageSize": 10,
       "page": 0
     },
-    "active": true
+    "active": false
   },
   "treeLoss": {
     "title": "Tree cover loss",
@@ -128,14 +128,14 @@
       "endYear": 2016,
       "extentYear": 2000
     },
-    "active": true
+    "active": false
   },
   "treeLossPlantations": {
     "title": "Tree cover loss for plantations",
     "config": {
       "size": "large",
       "showIndicators": ["plantations"],
-      "categories": ["forest-change", "land-use"],
+      "categories": ["summary", "forest-change", "land-use"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["startYears", "endYears", "thresholds"],
       "yearRange": ["2013", "2016"],
@@ -167,7 +167,7 @@
       "unit": "ha",
       "extentYear": 2010
     },
-    "active": true
+    "active": false
   },
   "FAOReforestation": {
     "title": "FAO reforestation",
@@ -183,7 +183,7 @@
       "period": 2010,
       "unit": "ha/year"
     },
-    "active": true
+    "active": false
   },
   "FAOCover": {
     "title": "Forest cover",
@@ -193,6 +193,25 @@
       "admins": ["country"],
       "type": "fao",
       "metaKey": "widget_forest_cover_fao"
+    },
+    "active": false
+  },
+  "rankedPlantations": {
+    "title": "Ranked plantations",
+    "config": {
+      "size": "large",
+      "indicators": ["gadm28", "plantations"],
+      "categories": ["summary", "land-cover", "land-use"],
+      "admins": ["country", "region"],
+      "selectors": ["indicators", "thresholds", "extentYears", "types"],
+      "type": "extent",
+      "metaKey": ""
+    },
+    "settings": {
+      "indicator": "gadm28",
+      "extentYear": 2010,
+      "threshold": 0,
+      "type": "bound2"
     },
     "active": true
   }

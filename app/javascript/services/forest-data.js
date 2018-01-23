@@ -6,7 +6,11 @@ const CARTO_REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
 
 const SQL_QUERIES = {
   extent:
-    "SELECT {region} as region, SUM({extentYear}) as value, SUM(area_gadm28) as total_area FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}' {groupBy}",
+    "SELECT SUM({extentYear}) as value, SUM(area_gadm28) as total_area FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
+  plantationsExtent:
+    "SELECT SUM({extentYear}) AS plantation_extent FROM data WHERE {location} AND thresh = {threshold} AND polyname = 'plantations' GROUP BY {type} ORDER BY plantation_extent DESC",
+  multiRegionExtent:
+    "SELECT {region} as region, SUM({extentYear}) as extent, SUM(area_gadm28) as total FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}' GROUP BY {region} ORDER BY {region}",
   gain:
     "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = {threshold}",
   gainExtent:
@@ -28,14 +32,6 @@ const getLocationQuery = (country, region, subRegion) =>
   `iso = '${country}'${region ? ` AND adm1 = ${region}` : ''}${
     subRegion ? ` AND adm2 = ${subRegion}` : ''
   }`;
-const getRegionQuery = (region, subRegion) => {
-  if (subRegion) {
-    return 'adm2';
-  } else if (region) {
-    return 'adm1';
-  }
-  return 'iso';
-};
 
 export const getLocations = ({
   country,
@@ -66,25 +62,46 @@ export const getExtent = ({
   subRegion,
   indicator,
   threshold,
-  extentYear,
-  groupBy
+  extentYear
 }) => {
-  const regionValue = getRegionQuery(region, subRegion);
-
   const url = `${REQUEST_URL}${SQL_QUERIES.extent}`
-    .replace('{region}', regionValue)
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
     .replace('{indicator}', indicator)
-    .replace(
-      '{extentYear}',
-      `area_extent${extentYear === 2000 ? `_${extentYear}` : ''}`
-    )
-    .replace(
-      '{groupBy}',
-      groupBy ? `GROUP BY ${regionValue} ORDER BY ${regionValue}` : ''
-    );
+    .replace('{extentYear}', getExtentYear(extentYear));
+  return axios.get(url);
+};
 
+export const getPlantationsExtent = ({
+  country,
+  region,
+  subRegion,
+  threshold,
+  extentYear,
+  type
+}) => {
+  const url = `${REQUEST_URL}${SQL_QUERIES.plantationsExtent}`
+    .replace('{location}', getLocationQuery(country, region, subRegion))
+    .replace('{threshold}', threshold)
+    .replace('{type}', `${region ? 'adm2' : 'adm1'}, ${type}`)
+    .replace('{extentYear}', getExtentYear(extentYear));
+  return axios.get(url);
+};
+
+export const getMultiRegionExtent = ({
+  country,
+  region,
+  subRegion,
+  indicator,
+  threshold,
+  extentYear
+}) => {
+  const url = `${REQUEST_URL}${SQL_QUERIES.multiRegionExtent}`
+    .replace(/{region}/g, region ? 'adm2' : 'adm1')
+    .replace('{location}', getLocationQuery(country, region, subRegion))
+    .replace('{threshold}', threshold)
+    .replace('{indicator}', indicator)
+    .replace('{extentYear}', getExtentYear(extentYear));
   return axios.get(url);
 };
 
@@ -140,17 +157,21 @@ export const getGainExtent = ({
   indicator,
   extentYear
 }) => {
+  let regionValue = 'iso';
+  if (subRegion) {
+    regionValue = 'adm2';
+  } else if (region) {
+    regionValue = 'adm1';
+  }
+
   const location = region
     ? `iso = '${country}' ${subRegion ? `AND adm1 = ${region}` : ''}`
     : '1 = 1';
 
   const url = `${REQUEST_URL}${SQL_QUERIES.gainExtent}`
-    .replace('{region}', getRegionQuery(region, subRegion))
+    .replace('{region}', regionValue)
     .replace('{location}', location)
-    .replace(
-      '{extentYear}',
-      extentYear === 2000 ? 'area_extent_2000' : 'area_extent'
-    )
+    .replace('{extentYear}', getExtentYear(extentYear))
     .replace('{polyname}', indicator);
   return axios.get(url);
 };

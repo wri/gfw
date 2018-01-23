@@ -24,7 +24,8 @@ class WidgetSettings extends PureComponent {
       thresholds,
       startYears,
       endYears,
-      extentYears
+      extentYears,
+      types
     } = this.props.options;
 
     return (
@@ -57,6 +58,19 @@ class WidgetSettings extends PureComponent {
                 </Button>
               </div>
             )}
+          />
+        )}
+        {types && (
+          <Dropdown
+            theme="theme-select-light"
+            label="PLANTATION TYPES"
+            value={settings.type}
+            options={types}
+            disabled={loading}
+            onChange={option =>
+              onSettingsChange({ value: { type: option.value }, widget })
+            }
+            infoAction={() => setModalMeta('widget_tree_cover_extent')}
           />
         )}
         {extentYears && (
