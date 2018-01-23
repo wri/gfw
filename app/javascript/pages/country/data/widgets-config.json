@@ -91,7 +91,7 @@
                       "plantations__wdpa", "plantations__landmark"],
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region"],
-      "selectors": ["indicators", "thresholds", "units", "extentYears"],
+      "selectors": ["indicators", "thresholds", "units", "startYears", "endYears"],
       "locationCheck": true,
       "type": "loss",
       "metaKey": "widget_loss_location"
@@ -99,10 +99,11 @@
     "settings": {
       "indicator": "gadm28",
       "threshold": 30,
-      "extentYear": 2010,
       "unit": "ha",
       "pageSize": 10,
-      "page": 0
+      "page": 0,
+      "startYear": 2001,
+      "endYear": 2016
     },
     "active": true
   },
