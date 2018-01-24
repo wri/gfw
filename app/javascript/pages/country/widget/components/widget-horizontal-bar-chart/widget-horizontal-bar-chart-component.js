@@ -1,19 +1,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import WidgetChartToolTip from 'pages/country/widget/components/widget-chart-tooltip';
-import maxBy from 'lodash/maxBy';
 import {
   BarChart,
   Bar,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer
 } from 'recharts';
-import moment from 'moment';
 
-import CustomTick from './custom-tick-component';
 import './widget-horizontal-bar-chart-styles.scss';
 
 class WidgetBarChart extends PureComponent {
@@ -26,28 +22,40 @@ class WidgetBarChart extends PureComponent {
         <ResponsiveContainer>
           <BarChart
             data={data}
-            margin={{ top: 15, right: 0, left: 0, bottom: 0 }}
-            padding={{ top: 0, right: 0, left: 0, bottom: 0 }}
+            margin={{ top: 15, right: 0, left: -45, bottom: 0 }}
             layout="vertical"
           >
-            <XAxis type="number" />
-            <YAxis type="category" />
-            <CartesianGrid vertical={false} strokeDasharray="3 4" />
+            <XAxis
+              type="number"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: '12px', fill: '#555555' }}
+            />
+            <YAxis
+              type="category"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: '12px', fill: '#555555' }}
+            />
             <Tooltip
               cursor={{ fill: '#d6d6d9' }}
               content={
                 <WidgetChartToolTip settings={tooltip} colors={colors} />
               }
             />
-            {Object.keys(data[0]).map(key => (
-              <Bar
-                key={key}
-                dataKey={key}
-                stackId={1}
-                fill={colors[key]}
-                background={false}
-              />
-            ))}
+            {Object.keys(data[0]).map(
+              (key, index) =>
+                (key.includes('label') ? null : (
+                  <Bar
+                    key={key}
+                    dataKey={key}
+                    stackId={1}
+                    barSize={10}
+                    fill={colors[key]}
+                    background={!index ? { fill: '#e9e9ea' } : false}
+                  />
+                ))
+            )}
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -57,8 +65,6 @@ class WidgetBarChart extends PureComponent {
 
 WidgetBarChart.propTypes = {
   data: PropTypes.array,
-  xKey: PropTypes.string,
-  yKeys: PropTypes.array,
   className: PropTypes.string,
   config: PropTypes.object
 };
