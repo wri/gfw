@@ -1,169 +1,121 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import findIndex from 'lodash/findIndex';
-import uniqBy from 'lodash/uniqBy';
+import maxBy from 'lodash/maxBy';
+import remove from 'lodash/remove';
+import groupBy from 'lodash/groupBy';
+import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import { sortByKey } from 'utils/data';
 
-import PLANTATIONS_KEYS from 'pages/country/data/plantations-keys.json';
-
-const getExtent = state => state.extent || null;
 const getPlantations = state => state.plantations || null;
-const getDataKeys = () => PLANTATIONS_KEYS;
+const getExtent = state => state.extent || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.location || null;
 const getLocationsMeta = state => state.meta || null;
 const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
 
-const sortedData = createSelector(
-  [getExtent, getPlantations, getLocation, getSettings],
-  (extent, plantations, location, settings) => {
-    if (!extent || isEmpty(extent) || !plantations || isEmpty(plantations)) {
-      return null;
-    }
-
-    const regionIds = plantations
-      .map(item => (location.region ? item.adm2 : item.adm1))
-      .filter((item, i, self) => self.indexOf(item) === i);
-    const data = [];
-    regionIds.forEach(region => {
-      const selectedPlantations = plantations.filter(
-        item => region === (location.region ? item.adm2 : item.adm1)
-      );
-      const regionPlantationsTotal =
-        selectedPlantations.length === 1
-          ? selectedPlantations[0].plantation_extent
-          : selectedPlantations.reduce(
-            (current, item) =>
-              (current.plantation_extent
-                ? current.plantation_extent + item.plantation_extent
-                : current + item.plantation_extent)
-          );
-      const regionExtent = extent.filter(item => region === item.region)[0]
-        .extent;
-      const regionPlantations = selectedPlantations.map(item => ({
-        name: item[settings.type],
-        extent: item.plantation_extent
-      }));
-
-      data.push({
-        region,
-        plantations: regionPlantations,
-        total: regionPlantationsTotal,
-        percent: 100 * regionPlantationsTotal / regionExtent,
-        extent: regionExtent
-      });
-    });
-    return sortByKey(uniqBy(data, 'region'), 'percent', true);
-  }
+const getPlanationKeys = createSelector(
+  [getPlantations],
+  plantations =>
+    (plantations ? Object.keys(groupBy(plantations, 'label')) : null)
 );
 
 export const chartData = createSelector(
-  [sortedData, getDataKeys, getSettings, getLocation, getLocationsMeta],
-  (data, dataKeys, settings, location, meta) => {
-    if (!data || !meta || isEmpty(meta)) return null;
-
-    const limit = 5;
-    let filteredData = [];
-    for (let i = 0; i < limit; i++) {
-      filteredData.push(
-        dataKeys[settings.type].map(item => ({ ...item, value: 0 }))
+  [getPlantations, getExtent, getPlanationKeys, getLocationsMeta, getLocation],
+  (plantations, extent, plantationKeys, meta, location) => {
+    if (isEmpty(plantations) || isEmpty(meta) || isEmpty(extent)) return null;
+    const groupedByRegion = groupBy(plantations, 'region');
+    const regionData = Object.keys(groupedByRegion).map(r => {
+      const yKeys = {};
+      const regionId = parseInt(r, 10);
+      const regionLabel =
+        meta && meta.find(region => region.value === regionId);
+      const totalRegionPlantations = sumBy(
+        groupedByRegion[regionId],
+        'plantation_extent'
       );
-    }
-
-    data.slice(0, limit).forEach((item, index) => {
-      const region = meta.find(l => item.region === l.value);
-      item.plantations.forEach(plantation => {
-        const key = plantation.name;
-        const dataIndex = findIndex(filteredData[index], d => d.key === key);
-        if (dataIndex !== -1) {
-          let path = '/country/';
-          if (location.region) {
-            path += `${location.country}/${location.region}/${item.region}`;
-          } else {
-            path += `${location.country}/${item.region}`;
-          }
-
-          filteredData[index][dataIndex] = {
-            ...filteredData[index][dataIndex],
-            value: 100 * plantation.extent / item.total,
-            region: (region && region.label) || '',
-            regionPath: path
-          };
-        }
+      const totalExtent = extent.find(e => e.region === regionId).extent;
+      plantationKeys.forEach(key => {
+        const labelFromKey = groupedByRegion[regionId].find(
+          p => p.label === key
+        );
+        const pExtent = labelFromKey && labelFromKey.plantation_extent;
+        const pPercentage = pExtent / totalRegionPlantations * 100;
+        yKeys[key] = pPercentage || 0;
+        yKeys[`${key} label`] = key;
       });
-    });
-    filteredData = filteredData.map(d => {
-      const newObject = {
-        region: d[0].region,
-        regionPath: d[0].regionPath
+      return {
+        region: regionLabel && regionLabel.label,
+        ...yKeys,
+        total: totalRegionPlantations / totalExtent * 100,
+        path: `/country/${location.payload.country}/${
+          location.payload.region ? `${location.payload.region}/` : ''
+        }${regionId}${location.search ? `?${location.search}` : ''}`
       };
-      d.forEach(item => {
-        newObject[item.key] = item.value;
-        newObject[`${item.key} label`] = item.label;
-      });
-      return newObject;
     });
-    return filteredData;
+    const dataParsed = sortByKey(regionData, 'total', true);
+
+    return dataParsed.slice(0, 5);
   }
 );
 
 export const chartConfig = createSelector(
-  [getDataKeys, getColors, getSettings],
-  (dataKeys, colors, settings) => ({
-    colors: settings.type === 'bound1' ? colors.types : colors.species,
-    unit: '%',
-    yKeys: dataKeys[settings.type].map(item => item.key),
-    yAxisDotFill: '#A0C744',
-    tooltip: dataKeys[settings.type].map(item => ({
-      key: item.key,
+  [getPlanationKeys, getColors, getSettings],
+  (dataKeys, colors, settings) => {
+    if (!dataKeys) return null;
+    return {
+      colors: settings.type === 'bound1' ? colors.types : colors.species,
       unit: '%',
-      unitFormat: '.2f',
-      label: `${item.key} label`
-    }))
-  })
+      xKey: 'region',
+      yKeys: dataKeys,
+      yAxisDotFill: '#A0C744',
+      tooltip: dataKeys.map(item => ({
+        key: item,
+        unit: '%',
+        unitFormat: '.2f',
+        label: `${item} label`
+      }))
+    };
+  }
 );
 
 export const getSentence = createSelector(
-  [
-    sortedData,
-    getDataKeys,
-    getSettings,
-    getLocationsMeta,
-    getLocation,
-    getLocationNames
-  ],
-  (data, dataKeys, settings, meta, location, locationNames) => {
-    if (!data || !meta || isEmpty(meta)) return null;
+  [chartData, getSettings, getLocation, getLocationNames],
+  (data, settings, location, locationNames) => {
+    if (!data) return null;
 
     const { type, extentYear, threshold } = settings;
-    const region = meta.find(l => data[0].region === l.value);
     const currentLocation =
       locationNames && locationNames.current && locationNames.current.label;
-    const dataKeyIndex = findIndex(
-      dataKeys[settings.type],
-      d => d.key === data[0].plantations[0].name
+    const topRegion = data[0];
+    const topPlantation = maxBy(
+      remove(
+        Object.keys(topRegion).map(k => ({
+          label: k,
+          value: topRegion[k] > 0 ? topRegion[k] : 0
+        })),
+        item => item.label !== 'total'
+      ),
+      'value'
     );
-    const plantationName = dataKeys[settings.type][dataKeyIndex]
-      ? dataKeys[settings.type][dataKeyIndex].label.toLowerCase()
-      : '';
     let sentence = '';
     if (type === 'bound1') {
-      sentence = `<b>${(region && region.label) ||
-        ''}</b> (<b>${extentYear}</b>) has the largest relative tree cover due to plantations (<b>${format(
+      sentence = `<b>${
+        topRegion.region
+      }</b> (<b>${extentYear}</b>) has the largest relative tree cover due to plantations (<b>${format(
         '.1f'
-      )(data[0].percent)}%</b>) in <b>${currentLocation}</b>${
-        location.region ? ` (<b>${extentYear})</b>` : ''
-      }, most of which is <b>${plantationName}</b> plantations where tree canopy is greater than <b>${threshold}%</b>.`;
+      )(data[0].total)}%</b>) in <b>${currentLocation}</b>${
+        location.payload.region ? ` (<b>${extentYear})</b>` : ''
+      }, most of which is <b>${topPlantation.label.toLowerCase()}</b> plantations where tree canopy is greater than <b>${threshold}%</b>.`;
     } else {
-      sentence = `Within <b>${currentLocation}</b>, <b>${(region &&
-        region.label) ||
+      sentence = `Within <b>${currentLocation}</b>, <b>${(topRegion.region &&
+        topRegion.region) ||
         ''}</b> has the largest relative area of plantation tree cover${
-        location.region ? ' extent' : ''
+        location.payload.region ? ' extent' : ''
       } in <b>${extentYear}</b> at <b>${format('.1f')(
-        data[0].percent
-      )}%</b>, where tree canopy is greater than <b>${threshold}%</b>. The majority of this area is used for <b>${plantationName}</b>.`;
+        topRegion.total
+      )}%</b>, where tree canopy is greater than <b>${threshold}%</b>. The majority of this area is used for <b>${topPlantation.label.toLowerCase()}</b>.`;
     }
     return sentence;
   }

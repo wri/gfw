@@ -3,16 +3,15 @@ import PropTypes from 'prop-types';
 
 const CustomTick = ({ x, y, index, yAxisDotFill, data }) => {
   const tick = index + 1;
-  const { region, regionPath } = data[index];
-
+  const { region, path } = data[index];
   return (
     <g transform={`translate(${x},${y})`}>
-      <circle cx="-12" cy="-18" r="8" fill={yAxisDotFill} />
-      <text x="-15" y="-14" fontSize="12px" fill="#FFFFFF">
+      <circle cx="-16" cy="-20" r="12" fill={yAxisDotFill} />
+      <text x="-19" y="-16" textAnchor="start" fontSize="12px" fill="#FFFFFF">
         {tick}
       </text>
-      <text x="8" y="-16" fontSize="12px">
-        <a href={regionPath}>{region}</a>
+      <text x="8" y="-16" textAnchor="start" fontSize="12px" fill="#555555">
+        <a href={path}>{region}</a>
       </text>
     </g>
   );

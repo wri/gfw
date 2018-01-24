@@ -7,7 +7,7 @@ import './widget-chart-tooltip-styles.scss';
 class WidgetChartTooltip extends PureComponent {
   render() {
     const { payload, settings, colors, hideZeros } = this.props;
-    const values = payload.length > 0 && payload[0].payload;
+    const values = payload && payload.length > 0 && payload[0].payload;
 
     return (
       <div className="c-widget-chart-tooltip">
@@ -28,13 +28,7 @@ class WidgetChartTooltip extends PureComponent {
                   </div>
                 )}
                 {d.unit
-                  ? format(
-                    d.unitFormat 
-                      ? d.unitFormat 
-                      : d.unit === '%'
-                        ? '.1f'
-                        : '.3s'
-                  )(values[d.key])
+                  ? format(d.unit === '%' ? '.1f' : '.3s')(values[d.key])
                   : values[d.key]}
                 {d.unit}
               </div>

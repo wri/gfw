@@ -20,10 +20,10 @@ export const getTreeCoverPlantationsData = createSelector(
     const totalPlantations = sumBy(plantations, 'plantation_extent');
 
     return sortByKey(
-      plantations.filter(d => d.plantation_extent).map(d => ({
-        label: d[settings.type],
+      plantations.map(d => ({
+        label: d.label,
         value: d.plantation_extent,
-        color: colors[d[settings.type]],
+        color: colors[d.label],
         percentage: d.plantation_extent / totalPlantations * 100
       })),
       'value',
@@ -42,16 +42,9 @@ export const getSentence = createSelector(
     let remainSentence = '';
     if (settings.type === 'bound2') {
       top = data.slice(0, 2);
-      if (top.length === 1) {
-        topTypesSentence = `<b>${
-          top[0].label
-        }</b> represent the largest plantation by <b>species</b>`;
-      } else {
-        topTypesSentence = `<b>${top[0].label}</b> and <b>${
-          top[1].label
-        }</b> represents the largest plantations by <b>species</b>`;
-      }
-
+      topTypesSentence = `<b>${top[0].label}</b> and <b>${
+        top[1].label
+      }</b> represents the largest plantations by <b>species</b>`;
       remainSentence = `The remaining <b>${format('.2s')(
         sumBy(data.slice(2), 'value')
       )}ha</b> of tree cover is distributed between <b>${data.length -

@@ -23,7 +23,7 @@ class WidgetBarChart extends PureComponent {
         <ResponsiveContainer>
           <BarChart
             data={data}
-            margin={{ top: 15, right: 0, left: -32, bottom: 0 }}
+            margin={{ top: 15, right: 0, left: -24, bottom: 0 }}
             layout="vertical"
           >
             <Tooltip
