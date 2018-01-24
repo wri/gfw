@@ -220,17 +220,16 @@
     "title": "Ranked plantations",
     "config": {
       "size": "large",
-      "indicators": ["gadm28", "plantations"],
       "categories": ["land-cover", "land-use"],
       "admins": ["country", "region"],
-      "selectors": ["indicators", "thresholds", "extentYears", "types"],
+      "selectors": ["thresholds", "extentYears", "types"],
       "type": "extent",
       "metaKey": ""
     },
     "settings": {
       "indicator": "gadm28",
       "extentYear": 2010,
-      "threshold": 0,
+      "threshold": "0",
       "type": "bound2"
     },
     "active": true
