@@ -15,7 +15,7 @@
       "threshold": 30,
       "extentYear": 2010
     },
-    "active": false
+    "active": true
   },
   "treeCoverPlantations": {
     "title": "Plantations extent",
@@ -33,7 +33,7 @@
       "extentYear": 2010,
       "type": "bound2"
     },
-    "active": false
+    "active": true
   },
   "intactTreeCover": {
     "title": "Intact forest extent",
@@ -51,7 +51,7 @@
       "threshold": 30,
       "extentYear": 2010
     },
-    "active": false
+    "active": true
   },
   "primaryTreeCover": {
     "title": "Primary forest extent",
@@ -69,7 +69,7 @@
       "threshold": 30,
       "extentYear": 2010
     },
-    "active": false
+    "active": true
   },
   "treeLocated": {
     "title": "Where are the forests located",
@@ -95,7 +95,7 @@
       "pageSize": 10,
       "page": 0
     },
-    "active": false
+    "active": true
   },
   "relativeTreeCover": {
     "title": "Which regions are the most forest-covered",
@@ -121,7 +121,7 @@
       "pageSize": 10,
       "page": 0
     },
-    "active": false
+    "active": true
   },
   "treeLoss": {
     "title": "Tree cover loss",
@@ -145,14 +145,14 @@
       "endYear": 2016,
       "extentYear": 2000
     },
-    "active": false
+    "active": true
   },
   "treeLossPlantations": {
     "title": "Tree cover loss for plantations",
     "config": {
       "size": "large",
       "showIndicators": ["plantations"],
-      "categories": ["summary", "forest-change", "land-use"],
+      "categories": ["forest-change", "land-use"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["startYears", "endYears", "thresholds"],
       "yearRange": ["2013", "2016"],
@@ -184,7 +184,7 @@
       "unit": "ha",
       "extentYear": 2010
     },
-    "active": false
+    "active": true
   },
   "FAOReforestation": {
     "title": "FAO reforestation",
@@ -200,7 +200,7 @@
       "period": 2010,
       "unit": "ha/year"
     },
-    "active": false
+    "active": true
   },
   "FAOCover": {
     "title": "Forest cover",
@@ -214,14 +214,14 @@
     "settings": {
       "unit": "ha"
     },
-    "active": false
+    "active": true
   },
   "rankedPlantations": {
     "title": "Ranked plantations",
     "config": {
       "size": "large",
       "indicators": ["gadm28", "plantations"],
-      "categories": ["summary", "land-cover", "land-use"],
+      "categories": ["land-cover", "land-use"],
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "extentYears", "types"],
       "type": "extent",
