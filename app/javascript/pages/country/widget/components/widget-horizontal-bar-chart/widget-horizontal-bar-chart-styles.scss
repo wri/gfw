@@ -1,15 +1,11 @@
 @import '~styles/settings.scss';
 
-.c-bar-chart {
+.c-horizontal-bar-chart {
   height: 250px;
   width: 100%;
 
   tspan {
     font-family: $font-family-1;
     background: $white;
-  }
-
-  .recharts-cartesian-axis-tick-line {
-    stroke: rgb(204, 204, 204);
   }
 }
