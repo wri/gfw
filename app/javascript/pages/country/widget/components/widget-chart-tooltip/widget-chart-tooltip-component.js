@@ -29,9 +29,11 @@ class WidgetChartTooltip extends PureComponent {
                 )}
                 {d.unit
                   ? format(
-                    d.unit === '%'
-                      ? d.unitFormat ? d.unitFormat : '.1f'
-                      : '.3s'
+                    d.unitFormat 
+                      ? d.unitFormat 
+                      : d.unit === '%'
+                        ? '.1f'
+                        : '.3s'
                   )(values[d.key])
                   : values[d.key]}
                 {d.unit}
