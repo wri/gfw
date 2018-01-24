@@ -9,6 +9,7 @@ import './widget-ranked-plantations-styles.scss';
 class WidgetRankedPlantations extends PureComponent {
   render() {
     const { data, config, sentence } = this.props;
+
     return (
       <div className="c-widget-ranked-plantations">
         {sentence && <WidgetDynamicSentence sentence={sentence} />}

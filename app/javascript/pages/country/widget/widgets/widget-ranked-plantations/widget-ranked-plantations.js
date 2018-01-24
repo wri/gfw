@@ -25,7 +25,7 @@ const mapStateToProps = (
     plantations: data.plantations,
     meta: countryData[!payload.region ? 'regions' : 'subRegions'],
     settings,
-    location: payload,
+    location,
     locationNames,
     colors: COLORS.plantations
   };
