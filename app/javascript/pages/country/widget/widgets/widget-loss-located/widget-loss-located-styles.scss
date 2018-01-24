@@ -1,0 +1,46 @@
+@import '~styles/settings.scss';
+
+.c-widget-loss-located {
+  .locations-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: rem(30px);
+    padding: 0 rem(15px);
+
+    .locations-list {
+      width: 100%;
+
+      @media screen and (min-width: $screen-m) {
+        width: 50%;
+      }
+
+      @media screen and (min-width: $screen-l) {
+        width: 40%;
+      }
+    }
+
+    .locations-pie-chart {
+      display: none;
+      width: 50%;
+      min-width: 50%;
+      justify-content: center;
+      align-items: center;
+
+      @media screen and (min-width: $screen-m) {
+        display: flex;
+        padding-right: rem(40px);
+      }
+
+      @media screen and (min-width: $screen-l) {
+        width: 60%;
+        min-width: 60%;
+      }
+
+      .recharts-responsive-container {
+        max-width: rem(230px);
+      }
+    }
+  }
+}
