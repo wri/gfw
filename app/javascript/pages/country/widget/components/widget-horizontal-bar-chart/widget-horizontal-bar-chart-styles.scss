@@ -6,6 +6,8 @@
 
   a {
     cursor: pointer;
+    color: $slate;
+
     &:hover {
       text-decoration: underline;
     }
