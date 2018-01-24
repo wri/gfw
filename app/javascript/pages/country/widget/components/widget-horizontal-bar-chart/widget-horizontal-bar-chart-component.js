@@ -10,42 +10,49 @@ import {
   ResponsiveContainer
 } from 'recharts';
 
+import CustomTick from './custom-tick-component';
 import './widget-horizontal-bar-chart-styles.scss';
 
 class WidgetBarChart extends PureComponent {
   render() {
     const { data, className } = this.props;
-    const { tooltip, colors } = this.props.config;
+    const { tooltip, colors, yKeys, yAxisDotFill } = this.props.config;
 
     return (
       <div className={`c-horizontal-bar-chart ${className}`}>
         <ResponsiveContainer>
           <BarChart
             data={data}
-            margin={{ top: 15, right: 0, left: -45, bottom: 0 }}
+            margin={{ top: 15, right: 0, left: -32, bottom: 0 }}
             layout="vertical"
           >
+            <Tooltip
+              cursor={{ fill: '#d6d6d9' }}
+              content={
+                <WidgetChartToolTip
+                  settings={tooltip}
+                  colors={colors}
+                  hideZeros
+                />
+              }
+            />
             <XAxis
               type="number"
+              domain={[0, 100]}
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: '12px', fill: '#555555' }}
+              ticks={[0, 25, 50, 75, 100]}
             />
             <YAxis
               type="category"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: '12px', fill: '#555555' }}
-            />
-            <Tooltip
-              cursor={{ fill: '#d6d6d9' }}
-              content={
-                <WidgetChartToolTip settings={tooltip} colors={colors} />
-              }
+              tick={<CustomTick data={data} yAxisDotFill={yAxisDotFill} />}
             />
             {Object.keys(data[0]).map(
               (key, index) =>
-                (key.includes('label') ? null : (
+                (yKeys.indexOf(key) === -1 ? null : (
                   <Bar
                     key={key}
                     dataKey={key}

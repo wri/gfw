@@ -1,11 +1,13 @@
 @import '~styles/settings.scss';
 
 .c-horizontal-bar-chart {
-  height: 250px;
+  height: 335px;
   width: 100%;
 
-  tspan {
-    font-family: $font-family-1;
-    background: $white;
+  a {
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
