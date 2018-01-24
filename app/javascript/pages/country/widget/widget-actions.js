@@ -11,6 +11,7 @@ import * as treeCoverPlantationsActions from 'pages/country/widget/widgets/widge
 import * as intactTreeCoverActions from 'pages/country/widget/widgets/widget-intact-tree-cover/widget-intact-tree-cover-actions';
 import * as primaryTreeCoverActions from 'pages/country/widget/widgets/widget-primary-tree-cover/widget-primary-tree-cover-actions';
 import * as treeLocatedActions from 'pages/country/widget/widgets/widget-tree-located/widget-tree-located-actions';
+import * as gainLocatedActions from 'pages/country/widget/widgets/widget-gain-located/widget-gain-located-actions';
 import * as lossLocatedActions from 'pages/country/widget/widgets/widget-loss-located/widget-loss-located-actions';
 import * as relativeTreeCoverActions from 'pages/country/widget/widgets/widget-relative-tree-cover/widget-relative-tree-cover-actions';
 import * as treeGainActions from 'pages/country/widget/widgets/widget-tree-gain/widget-tree-gain-actions';
@@ -25,6 +26,7 @@ const widgetActions = {
   ...intactTreeCoverActions.default,
   ...primaryTreeCoverActions.default,
   ...treeLocatedActions.default,
+  ...gainLocatedActions.default,
   ...lossLocatedActions.default,
   ...relativeTreeCoverActions.default,
   ...treeGainActions.default,

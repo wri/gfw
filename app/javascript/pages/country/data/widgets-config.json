@@ -21,7 +21,7 @@
     "title": "Plantations extent",
     "config": {
       "size": "small",
-      "categories": ["land-cover", "land-use"],
+      "categories": ["land-use"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["thresholds", "extentYears", "types"],
       "showIndicators": ["plantations"],
@@ -72,7 +72,7 @@
     "active": true
   },
   "treeLocated": {
-    "title": "Where are the forests located",
+    "title": "Where is tree cover located",
     "config": {
       "size": "large",
       "indicators": ["gadm28", "ifl_2013", "wdpa",
@@ -97,35 +97,8 @@
     },
     "active": true
   },
-  "lossLocated": {
-    "title": "Where is forest loss located",
-    "config": {
-      "size": "large",
-      "indicators": ["gadm28", "ifl_2013", "wdpa",
-                      "ifl_2013__wdpa", "ifl_2013__mining",
-                      "primary_forest", "primary_forest__landmark",
-                      "plantations", "plantations__mining",
-                      "plantations__wdpa", "plantations__landmark"],
-      "categories": ["summary", "land-cover", "forest-change"],
-      "admins": ["country", "region"],
-      "selectors": ["indicators", "thresholds", "units", "startYears", "endYears"],
-      "locationCheck": true,
-      "type": "loss",
-      "metaKey": "widget_loss_location"
-    },
-    "settings": {
-      "indicator": "gadm28",
-      "threshold": 30,
-      "unit": "ha",
-      "pageSize": 10,
-      "page": 0,
-      "startYear": 2001,
-      "endYear": 2016
-    },
-    "active": true
-  },
   "relativeTreeCover": {
-    "title": "Which regions are the most forest-covered",
+    "title": "Which regions are the most tree-covered",
     "config": {
       "size": "small",
       "indicators": ["gadm28", "ifl_2013", "wdpa",
@@ -179,7 +152,7 @@
     "config": {
       "size": "large",
       "showIndicators": ["plantations"],
-      "categories": ["forest-change", "land-use"],
+      "categories": ["forest-change"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["startYears", "endYears", "thresholds"],
       "yearRange": ["2013", "2016"],
@@ -190,6 +163,33 @@
       "indicator": "plantations",
       "threshold": 30,
       "startYear": 2013,
+      "endYear": 2016
+    },
+    "active": true
+  },
+  "lossLocated": {
+    "title": "Where did tree cover loss occur",
+    "config": {
+      "size": "large",
+      "indicators": ["gadm28", "ifl_2013", "wdpa",
+                      "ifl_2013__wdpa", "ifl_2013__mining",
+                      "primary_forest", "primary_forest__landmark",
+                      "plantations", "plantations__mining",
+                      "plantations__wdpa", "plantations__landmark"],
+      "categories": ["forest-change"],
+      "admins": ["country", "region"],
+      "selectors": ["indicators", "thresholds", "units", "startYears", "endYears"],
+      "locationCheck": true,
+      "type": "loss",
+      "metaKey": "widget_loss_location"
+    },
+    "settings": {
+      "indicator": "gadm28",
+      "threshold": 30,
+      "unit": "ha",
+      "pageSize": 10,
+      "page": 0,
+      "startYear": 2001,
       "endYear": 2016
     },
     "active": true
@@ -226,6 +226,31 @@
     "settings": {
       "period": 2010,
       "unit": "ha/year"
+    },
+    "active": true
+  },
+  "gainLocated": {
+    "title": "Where did tree cover gain occur",
+    "config": {
+      "size": "large",
+      "indicators": ["gadm28", "ifl_2013", "wdpa",
+                      "ifl_2013__wdpa", "ifl_2013__mining",
+                      "primary_forest", "primary_forest__landmark",
+                      "plantations", "plantations__mining",
+                      "plantations__wdpa", "plantations__landmark"],
+      "categories": ["forest-change"],
+      "admins": ["country", "region"],
+      "selectors": ["indicators", "thresholds", "units"],
+      "locationCheck": true,
+      "type": "gain",
+      "metaKey": "widget_gain_location"
+    },
+    "settings": {
+      "indicator": "gadm28",
+      "threshold": 30,
+      "unit": "ha",
+      "pageSize": 10,
+      "page": 0
     },
     "active": true
   },
