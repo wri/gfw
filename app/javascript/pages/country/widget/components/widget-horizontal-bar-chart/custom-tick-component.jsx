@@ -8,10 +8,10 @@ const CustomTick = ({ x, y, index, yAxisDotFill, data }) => {
   return (
     <g transform={`translate(${x},${y})`}>
       <circle cx="-12" cy="-18" r="8" fill={yAxisDotFill} />
-      <text x="-15" y="-14" textAnchor="start" fontSize="12px" fill="#FFFFFF">
+      <text x="-15" y="-14" fontSize="12px" fill="#FFFFFF">
         {tick}
       </text>
-      <text x="8" y="-16" textAnchor="start" fontSize="12px" fill="#555555">
+      <text x="8" y="-16" fontSize="12px">
         <a href={regionPath}>{region}</a>
       </text>
     </g>
