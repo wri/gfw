@@ -19,7 +19,10 @@ const getRankedPlantations = createThunkAction(
     if (!state().widgetRankedPlantations.loading) {
       dispatch(setRankedPlantationsLoading({ loading: true, error: false }));
       axios
-        .all([getMultiRegionExtent(params), getPlantationsExtent(params)])
+        .all([
+          getMultiRegionExtent(params),
+          getPlantationsExtent({ ...params, groupByRegion: true })
+        ])
         .then(
           axios.spread(
             (multiRegionExtentResponse, plantationsExtentResponse) => {
