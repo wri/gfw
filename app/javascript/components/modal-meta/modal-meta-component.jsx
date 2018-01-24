@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import pick from 'lodash/pick';
 import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
 
@@ -12,18 +11,7 @@ import './modal-meta-styles.scss';
 
 class ModalMeta extends PureComponent {
   getContent() {
-    const { data, loading, error } = this.props;
-    const tableData = pick(data, [
-      'function',
-      'resolution',
-      'geographic_coverage',
-      'source',
-      'frequency_of_updates',
-      'date_of_content',
-      'cautions',
-      'license',
-      'tags'
-    ]);
+    const { metaData, tableData, loading, error } = this.props;
 
     return (
       <div className="c-modal-meta">
@@ -33,18 +21,18 @@ class ModalMeta extends PureComponent {
             <NoContent message="There was a problem finding this info. Please try again later." />
           )}
         {!loading &&
-          isEmpty(data) &&
+          isEmpty(metaData) &&
           !error && (
             <NoContent message="Sorry, we cannot find what you are looking for." />
           )}
         {!loading &&
           !error &&
-          !isEmpty(data) && (
+          !isEmpty(metaData) && (
             <div>
-              <h3 className="title">{data.title}</h3>
+              <h3 className="title">{metaData.title}</h3>
               <p
                 className="subtitle"
-                dangerouslySetInnerHTML={{ __html: data.subtitle }}
+                dangerouslySetInnerHTML={{ __html: metaData.subtitle }}
               />
               <div className="meta-table">
                 {tableData &&
@@ -64,16 +52,16 @@ class ModalMeta extends PureComponent {
                       ) : null)
                   )}
               </div>
-              {data.overview && (
+              {metaData.overview && (
                 <div className="overview">
                   <h4>Overview</h4>
-                  <p dangerouslySetInnerHTML={{ __html: data.overview }} />
+                  <p dangerouslySetInnerHTML={{ __html: metaData.overview }} />
                 </div>
               )}
-              {data.citation && (
+              {metaData.citation && (
                 <div className="citation">
                   <h5>Citation</h5>
-                  <p dangerouslySetInnerHTML={{ __html: data.citation }} />
+                  <p dangerouslySetInnerHTML={{ __html: metaData.citation }} />
                 </div>
               )}
             </div>
@@ -95,7 +83,8 @@ class ModalMeta extends PureComponent {
 ModalMeta.propTypes = {
   open: PropTypes.bool,
   setModalMetaClosed: PropTypes.func,
-  data: PropTypes.object,
+  metaData: PropTypes.object,
+  tableData: PropTypes.object,
   loading: PropTypes.bool,
   error: PropTypes.bool
 };

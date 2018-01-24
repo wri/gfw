@@ -24,6 +24,8 @@ import * as widgetIntactTreeCoverComponent from 'pages/country/widget/widgets/wi
 import * as widgetPrimaryTreeCoverComponent from 'pages/country/widget/widgets/widget-primary-tree-cover';
 import * as widgetTreeGainComponent from 'pages/country/widget/widgets/widget-tree-gain';
 import * as widgetTreeLocatedComponent from 'pages/country/widget/widgets/widget-tree-located';
+import * as widgetGainLocatedComponent from 'pages/country/widget/widgets/widget-gain-located';
+import * as widgetLossLocatedComponent from 'pages/country/widget/widgets/widget-loss-located';
 import * as widgetRelativeTreeCoverComponent from 'pages/country/widget/widgets/widget-relative-tree-cover';
 import * as widgetTreeLossComponent from 'pages/country/widget/widgets/widget-tree-loss';
 import * as widgetTreeLossPlantationsComponent from 'pages/country/widget/widgets/widget-tree-loss-plantations';
@@ -48,6 +50,8 @@ const componentsReducers = {
   widgetPrimaryTreeCover: handleActions(widgetPrimaryTreeCoverComponent),
   widgetTreeGain: handleActions(widgetTreeGainComponent),
   widgetTreeLocated: handleActions(widgetTreeLocatedComponent),
+  widgetGainLocated: handleActions(widgetGainLocatedComponent),
+  widgetLossLocated: handleActions(widgetLossLocatedComponent),
   widgetRelativeTreeCover: handleActions(widgetRelativeTreeCoverComponent),
   widgetTreeLoss: handleActions(widgetTreeLossComponent),
   widgetTreeLossPlantations: handleActions(widgetTreeLossPlantationsComponent),
