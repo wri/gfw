@@ -2,75 +2,61 @@
   "bound1": [
     {
       "key": "Large industrial plantation",
-      "label": "Large industrial plantation",
-      "value": 0
+      "label": "Large industrial plantation"
     },
     {
       "key": "Clearing/ very young plantation",
-      "label": "Clearing and very young plantation",
-      "value": 0
+      "label": "Clearing and very young plantation"
     },
     {
       "key": "Mosaic of small-sized plantations",
-      "label": "Mosaic of small-sized plantations",
-      "value": 0
+      "label": "Mosaic of small-sized plantations"
     },
     {
       "key": "Mosaic of medium-sized plantations",
-      "label": "Mosaic of medium-sized plantations",
-      "value": 0
+      "label": "Mosaic of medium-sized plantations"
     }
   ],
   "bound2":[
     {
       "key": "Wood fiber / timber",
-      "label": "Wood fiber and timber",
-      "value": 0
+      "label": "Wood fiber and timber"
     },
     {
       "key": "Wood fiber / timber mix",
-      "label": "Wood fiber and timber mix",
-      "value": 0
+      "label": "Wood fiber and timber mix"
     },
     {
       "key": "Recently cleared",
-      "label": "Recently cleared",
-      "value": 0
+      "label": "Recently cleared"
     },
     {
       "key": "Unknown",
-      "label": "Unknown",
-      "value": 0
+      "label": "Unknown"
     },
     {
       "key": "Fruit",
-      "label": "Fruit trees",
-      "value": 0
+      "label": "Fruit trees"
     },
     {
       "key": "Fruit mix",
-      "label": "Fruit tree mix",
-      "value": 0
+      "label": "Fruit tree mix"
     },
     {
       "key": "Oil palm",
-      "label": "Oil palm",
-      "value": 0
+      "label": "Oil palm"
     },
     {
       "key": "Other mix",
-      "label": "Other mix",
-      "value": 0
+      "label": "Other mix"
     },
     {
       "key": "Other",
-      "label": "Other",
-      "value": 0
+      "label": "Other"
     },
     {
       "key": "Rubber",
-      "label": "Rubber trees",
-      "value": 0
+      "label": "Rubber trees"
     }
   ]
 }

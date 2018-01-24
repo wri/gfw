@@ -67,26 +67,18 @@ export const chartData = createSelector(
     const limit = 5;
     let filteredData = [];
     for (let i = 0; i < limit; i++) {
-      filteredData.push(dataKeys[settings.type].map(item => ({ ...item })));
+      filteredData.push(
+        dataKeys[settings.type].map(item => ({ ...item, value: 0 }))
+      );
     }
-    const indexCount = dataKeys[settings.type].map(item => ({ ...item }));
 
-    sortByKey(uniqBy(data, 'region'), 'percent', true).forEach(item => {
+    data.slice(0, limit).forEach((item, index) => {
       item.plantations.forEach(plantation => {
         const key = plantation.name;
-        const indexCountIndex = findIndex(indexCount, d => d.key === key);
-        if (
-          indexCountIndex !== -1 &&
-          indexCount[indexCountIndex].value < limit
-        ) {
-          const dataIndex = indexCount[indexCountIndex].value;
-          const filteredDataIndex = findIndex(
-            filteredData[dataIndex],
-            d => d.key === key
-          );
-          filteredData[dataIndex][filteredDataIndex].value =
+        const dataIndex = findIndex(filteredData[index], d => d.key === key);
+        if (dataIndex !== -1) {
+          filteredData[index][dataIndex].value =
             100 * plantation.extent / item.total;
-          indexCount[indexCountIndex].value += 1;
         }
       });
     });
@@ -106,10 +98,10 @@ export const chartConfig = createSelector(
   [getDataKeys, getColors, getSettings],
   (dataKeys, colors, settings) => ({
     colors: settings.type === 'bound1' ? colors.types : colors.species,
-    unit: 'ha',
+    unit: '%',
     tooltip: dataKeys[settings.type].map(item => ({
       key: item.key,
-      unit: 'ha',
+      unit: '%',
       label: `${item.key} label`
     }))
   })
@@ -135,9 +127,9 @@ export const getSentence = createSelector(
       dataKeys[settings.type],
       d => d.key === data[0].plantations[0].name
     );
-    const plantationName = dataKeys[settings.type][
-      dataKeyIndex
-    ].label.toLowerCase();
+    const plantationName = dataKeys[settings.type][dataKeyIndex]
+      ? dataKeys[settings.type][dataKeyIndex].label.toLowerCase()
+      : '';
     let sentence = '';
     if (type === 'bound1') {
       sentence = `<b>${(region && region.label) ||
