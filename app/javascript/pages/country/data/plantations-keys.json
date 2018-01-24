@@ -29,7 +29,7 @@
     },
     {
       "key": "Wood fiber / timber mix",
-      "label": "Wood Fibre and Timber mix",
+      "label": "Wood fiber and timber mix",
       "value": 0
     },
     {
@@ -44,17 +44,17 @@
     },
     {
       "key": "Fruit",
-      "label": "Fruit Trees",
+      "label": "Fruit trees",
       "value": 0
     },
     {
       "key": "Fruit mix",
-      "label": "Fruit Tree mix",
+      "label": "Fruit tree mix",
       "value": 0
     },
     {
       "key": "Oil palm",
-      "label": "Oil Palm",
+      "label": "Oil palm",
       "value": 0
     },
     {
@@ -69,7 +69,7 @@
     },
     {
       "key": "Rubber",
-      "label": "Rubber Trees",
+      "label": "Rubber trees",
       "value": 0
     }
   ]
