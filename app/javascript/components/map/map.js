@@ -1,9 +1,10 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Layers from 'map/layers';
-import grayscale from 'map/maptypes/grayscale';
 import isEqual from 'lodash/isEqual';
+
+import Layers from './assets/layers';
+import grayscale from './assets/maptypes/grayscale';
 
 import MapComponent from './map-component';
 import actions from './map-actions';
