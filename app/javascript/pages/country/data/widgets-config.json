@@ -217,10 +217,10 @@
     "active": true
   },
   "rankedPlantations": {
-    "title": "Ranked plantations",
+    "title": "Ranked plantation breakdown",
     "config": {
-      "size": "large",
-      "categories": ["land-cover", "land-use"],
+      "size": "small",
+      "categories": ["land-use"],
       "admins": ["country", "region"],
       "selectors": ["thresholds", "extentYears", "types"],
       "type": "extent",
@@ -229,7 +229,7 @@
     "settings": {
       "indicator": "gadm28",
       "extentYear": 2010,
-      "threshold": "0",
+      "threshold": 30,
       "type": "bound2"
     },
     "active": true
