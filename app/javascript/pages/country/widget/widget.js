@@ -38,14 +38,14 @@ const mapStateToProps = (state, ownProps) => {
         case 'startYears':
           options[selector] = selectorFunc({
             config,
-            data: data.loss,
+            data: data.loss || (data.regions && data.regions[0].loss),
             ...settings
           });
           break;
         case 'endYears':
           options[selector] = selectorFunc({
             config,
-            data: data.loss,
+            data: data.loss || (data.regions && data.regions[0].loss),
             ...settings
           });
           break;
