@@ -23,6 +23,7 @@ class WidgetBarChart extends PureComponent {
     const dataMax = maxBy(data, yKeys[yKeys.length - 1])[
       yKeys[yKeys.length - 1]
     ];
+
     return (
       <div className={`c-bar-chart ${className}`}>
         <ResponsiveContainer>
