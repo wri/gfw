@@ -28,7 +28,7 @@ class LandingController < ApplicationController
         "title" => "A suite of tools",
         "paragraph" => "Find out about the connections between deforestation and climate change, fires and haze, water security, and commodity supply chains with our specialized web applications.",
         "button" => "BROWSE OUR APPS",
-        "url" => "http://developers.globalforestwatch.org/gallery/",
+        "url" => "http://developers.globalforestwatch.org/",
         "background_orientation" => "right"
       },
       {
