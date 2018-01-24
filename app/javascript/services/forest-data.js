@@ -94,12 +94,16 @@ export const getPlantationsExtent = ({
   subRegion,
   threshold,
   extentYear,
-  type
+  type,
+  groupByRegion
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.plantationsExtent}`
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
-    .replace('{type}', `${region ? 'adm2' : 'adm1'}, ${type}`)
+    .replace(
+      '{type}',
+      groupByRegion ? `${region ? 'adm2' : 'adm1'}, ${type}` : type
+    )
     .replace('{extentYear}', getExtentYear(extentYear));
   return axios.get(url);
 };
