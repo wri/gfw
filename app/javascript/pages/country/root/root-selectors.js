@@ -76,6 +76,7 @@ export const filterWidgets = createSelector(
         !type ||
         type === 'extent' ||
         type === 'fao' ||
+        type === 'alerts' ||
         (whitelist && whitelist.gadm28 && whitelist.gadm28[type]);
 
       return showByIndicators && hasData;
