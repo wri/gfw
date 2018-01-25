@@ -21,9 +21,9 @@ export const getTreeCoverPlantationsData = createSelector(
 
     return sortByKey(
       plantations.filter(d => d.plantation_extent).map(d => ({
-        label: d[settings.type],
+        label: d.label,
         value: d.plantation_extent,
-        color: colors[d[settings.type]],
+        color: colors[d.label],
         percentage: d.plantation_extent / totalPlantations * 100
       })),
       'value',

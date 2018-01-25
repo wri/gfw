@@ -9,13 +9,13 @@ import './widget-paginate-styles.scss';
 
 class WidgetPaginate extends PureComponent {
   render() {
-    const { settings, count, onClickChange } = this.props;
+    const { settings, count, onClickChange, className } = this.props;
     const { page, pageSize } = settings;
     const showPrev = page > 0;
     const showNext = count > pageSize * (page + 1);
 
     return (
-      <div className="c-widget-paginate">
+      <div className={`c-widget-paginate ${className || ''}`}>
         {showPrev && (
           <Button
             className="button-up square theme-button-small theme-button-grey"
@@ -40,7 +40,8 @@ class WidgetPaginate extends PureComponent {
 WidgetPaginate.propTypes = {
   settings: PropTypes.object.isRequired,
   count: PropTypes.number.isRequired,
-  onClickChange: PropTypes.func.isRequired
+  onClickChange: PropTypes.func.isRequired,
+  className: PropTypes.string
 };
 
 export default WidgetPaginate;

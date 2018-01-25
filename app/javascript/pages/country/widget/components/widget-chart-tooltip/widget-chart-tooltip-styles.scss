@@ -11,14 +11,14 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .data-label {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     margin-right: rem(20px);
   }
 
@@ -29,5 +29,6 @@
     min-width: rem(12px);
     border-radius: 50%;
     margin-right: rem(5px);
+    margin-top: rem(5px);
   }
 }
