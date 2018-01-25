@@ -13,6 +13,7 @@ $desktop-padding: rem(50px);
 
   @media screen and (min-width: $screen-m) {
     padding: $desktop-padding $desktop-padding;
+    padding-top: rem(40px);
   }
 
   .title {

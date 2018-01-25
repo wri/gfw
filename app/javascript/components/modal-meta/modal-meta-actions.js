@@ -8,18 +8,20 @@ const setModalMetaClosing = createAction('setModalMetaClosing');
 
 const setModalMeta = createThunkAction(
   'setModalMeta',
-  params => (dispatch, state) => {
+  (metaKey, metaWhitelist, tableWhitelist) => (dispatch, state) => {
     if (!state().modalMeta.loading) {
       dispatch(
         setModalMetaLoading({ loading: true, error: false, open: true })
       );
-      getMeta(params)
+      getMeta(metaKey)
         .then(response => {
           let data = {};
           if (response && response.data && typeof response.data !== 'string') {
             data = response.data;
           }
-          dispatch(setModalMetaData(data));
+          dispatch(
+            setModalMetaData({ ...data, metaWhitelist, tableWhitelist })
+          );
         })
         .catch(error => {
           console.info(error);
