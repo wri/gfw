@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { format } from 'd3-format';
 
 const CustomTick = ({ x, y, index, yAxisDotFill, data, settings }) => {
-  const { region, path, rank } = data[index];
+  const { region, path, rank, total } = data[index];
   const { page, pageSize } = settings;
   const number = rank || index + 1 + pageSize * page;
   return (
@@ -18,7 +19,10 @@ const CustomTick = ({ x, y, index, yAxisDotFill, data, settings }) => {
         {number}
       </text>
       <text x="8" y="-16" textAnchor="start" fontSize="12px" fill="#555555">
-        <a href={path}>{region}</a>
+        <a href={path}>
+          {region} - {format('.1f')(total)}%{' '}
+          {index === 0 ? 'of total extent' : ''}
+        </a>
       </text>
     </g>
   );
