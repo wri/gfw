@@ -5,12 +5,28 @@ import actions from './modal-meta-actions';
 import reducers, { initialState } from './modal-meta-reducers';
 import ModalMetaComponent from './modal-meta-component';
 
-const MASTER_TABLE_FIELDS = ['function', 'source'];
+const MASTER_META_FIELDS = ['title', 'subtitle', 'citation', 'overview'];
+const MASTER_TABLE_FIELDS = [
+  'function',
+  'resolution',
+  'geographic_coverage',
+  'source',
+  'frequency_of_updates',
+  'date_of_content',
+  'cautions',
+  'license'
+];
 
 const mapStateToProps = ({ modalMeta }) => ({
   open: modalMeta.open,
-  metaData: pick(modalMeta.data, ['title', 'subtitle', 'citation', 'overview']),
-  tableData: pick(modalMeta.data, MASTER_TABLE_FIELDS),
+  metaData: pick(
+    modalMeta.data,
+    modalMeta.data.metaWhitelist || MASTER_META_FIELDS
+  ),
+  tableData: pick(
+    modalMeta.data,
+    modalMeta.data.tableWhitelist || MASTER_TABLE_FIELDS
+  ),
   loading: modalMeta.loading
 });
 
