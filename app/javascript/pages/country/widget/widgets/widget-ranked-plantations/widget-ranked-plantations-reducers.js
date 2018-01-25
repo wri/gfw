@@ -29,8 +29,17 @@ export const setRankedPlantationsLoading = (state, { payload }) => ({
   ...payload
 });
 
+const setRankedPlantationsPage = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    page: payload
+  }
+});
+
 export default {
   setRankedPlantationsData,
   setRankedPlantationsSettings,
-  setRankedPlantationsLoading
+  setRankedPlantationsLoading,
+  setRankedPlantationsPage
 };

@@ -1,23 +1,25 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import WidgetBarChart from 'pages/country/widget/components/widget-horizontal-bar-chart';
+import WidgetHorizontalBarChart from 'pages/country/widget/components/widget-horizontal-bar-chart';
 import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 
 import './widget-ranked-plantations-styles.scss';
 
 class WidgetRankedPlantations extends PureComponent {
   render() {
-    const { data, config, sentence } = this.props;
+    const { data, config, settings, sentence, handlePageChange } = this.props;
 
     return (
       <div className="c-widget-ranked-plantations">
         {sentence && <WidgetDynamicSentence sentence={sentence} />}
         {data && (
-          <WidgetBarChart
+          <WidgetHorizontalBarChart
             className="ranked-plantations-chart"
             data={data}
             config={config}
+            settings={settings}
+            handlePageChange={handlePageChange}
           />
         )}
       </div>
@@ -28,7 +30,9 @@ class WidgetRankedPlantations extends PureComponent {
 WidgetRankedPlantations.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
-  sentence: PropTypes.string
+  settings: PropTypes.object,
+  sentence: PropTypes.string,
+  handlePageChange: PropTypes.func
 };
 
 export default WidgetRankedPlantations;

@@ -7,6 +7,7 @@ import {
   getPlantationsExtent
 } from 'services/forest-data';
 
+const setRankedPlantationsPage = createAction('setRankedPlantationsPage');
 const setRankedPlantationsLoading = createAction('setRankedPlantationsLoading');
 const setRankedPlantationsData = createAction('setRankedPlantationsData');
 const setRankedPlantationsSettings = createAction(
@@ -54,6 +55,7 @@ const getRankedPlantations = createThunkAction(
 );
 
 export default {
+  setRankedPlantationsPage,
   setRankedPlantationsData,
   setRankedPlantationsSettings,
   setRankedPlantationsLoading,
