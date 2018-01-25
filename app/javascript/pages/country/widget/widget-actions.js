@@ -18,6 +18,7 @@ import * as treeGainActions from 'pages/country/widget/widgets/widget-tree-gain/
 import * as FAOReforestationActions from 'pages/country/widget/widgets/widget-fao-reforestation/widget-fao-reforestation-actions';
 import * as FAOCoverActions from 'pages/country/widget/widgets/widget-fao-cover/widget-fao-cover-actions';
 import * as gladAlertsActions from 'pages/country/widget/widgets/widget-glad-alerts/widget-glad-alerts-actions';
+import * as rankedPlantationsActions from 'pages/country/widget/widgets/widget-ranked-plantations/widget-ranked-plantations-actions';
 
 const widgetActions = {
   ...treeLossActions.default,
@@ -33,7 +34,8 @@ const widgetActions = {
   ...treeGainActions.default,
   ...FAOReforestationActions.default,
   ...FAOCoverActions.default,
-  ...gladAlertsActions.default
+  ...gladAlertsActions.default,
+  ...rankedPlantationsActions.default
 };
 
 export const setWidgetSettingsUrl = createThunkAction(

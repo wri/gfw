@@ -290,5 +290,25 @@
       "endYear": 2016
     },
     "active": true
+  },
+  "rankedPlantations": {
+    "title": "Ranked plantation breakdown",
+    "config": {
+      "size": "small",
+      "categories": ["land-use"],
+      "admins": ["country", "region"],
+      "selectors": ["thresholds", "extentYears", "types"],
+      "type": "extent",
+      "metaKey": ""
+    },
+    "settings": {
+      "indicator": "gadm28",
+      "extentYear": 2010,
+      "threshold": 30,
+      "type": "bound2",
+      "pageSize": 5,
+      "page": 0
+    },
+    "active": true
   }
 }
