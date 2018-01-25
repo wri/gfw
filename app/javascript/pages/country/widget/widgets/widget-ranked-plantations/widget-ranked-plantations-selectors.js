@@ -56,7 +56,7 @@ export const chartData = createSelector(
     });
     const dataParsed = sortByKey(regionData, 'total', true);
 
-    return dataParsed.slice(0, 5);
+    return dataParsed;
   }
 );
 
@@ -69,7 +69,7 @@ export const chartConfig = createSelector(
       unit: '%',
       xKey: 'region',
       yKeys: dataKeys,
-      yAxisDotFill: '#A0C744',
+      yAxisDotFill: '#d4d4d4',
       tooltip: dataKeys.map(item => ({
         key: item,
         unit: '%',
@@ -115,7 +115,7 @@ export const getSentence = createSelector(
         location.payload.region ? ' extent' : ''
       } in <b>${extentYear}</b> at <b>${format('.1f')(
         topRegion.total
-      )}%</b>, where tree canopy is greater than <b>${threshold}%</b>. The majority of this area is used for <b>${topPlantation.label.toLowerCase()}</b>.`;
+      )}%</b>, where tree canopy is greater than <b>${threshold}%</b>.`;
     }
     return sentence;
   }

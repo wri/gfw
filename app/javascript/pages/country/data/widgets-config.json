@@ -282,7 +282,9 @@
       "indicator": "gadm28",
       "extentYear": 2010,
       "threshold": 30,
-      "type": "bound2"
+      "type": "bound2",
+      "pageSize": 5,
+      "page": 0
     },
     "active": true
   }

@@ -44,19 +44,28 @@ class WidgetRankedPlantationsContainer extends PureComponent {
 
   componentWillUpdate(nextProps) {
     const { getRankedPlantations, location, settings } = nextProps;
+    const { type, extentYear, threshold } = settings;
 
     if (
       !isEqual(location, this.props.location) ||
-      !isEqual(settings, this.props.settings)
+      !isEqual(type, this.props.settings.type) ||
+      !isEqual(extentYear, this.props.settings.extentYear) ||
+      !isEqual(threshold, this.props.settings.threshold)
     ) {
       getRankedPlantations({ ...location, ...settings });
     }
   }
 
+  handlePageChange = change => {
+    const { setRankedPlantationsPage, settings } = this.props;
+    setRankedPlantationsPage(settings.page + change);
+  };
+
   render() {
     return createElement(WidgetRankedPlantationsComponent, {
       ...this.props,
-      getSentence: this.getSentence
+      getSentence: this.getSentence,
+      handlePageChange: this.handlePageChange
     });
   }
 }
@@ -64,7 +73,8 @@ class WidgetRankedPlantationsContainer extends PureComponent {
 WidgetRankedPlantationsContainer.propTypes = {
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  getRankedPlantations: PropTypes.func.isRequired
+  getRankedPlantations: PropTypes.func.isRequired,
+  setRankedPlantationsPage: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };
