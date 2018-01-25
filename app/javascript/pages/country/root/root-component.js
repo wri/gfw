@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { SCREEN_M } from 'utils/constants';
+import upperFirst from 'lodash/upperFirst';
 
 import Widget from 'pages/country/widget';
 import Share from 'components/share';
@@ -76,7 +77,9 @@ class Root extends PureComponent {
                 (!widgets || widgets.length === 0) && (
                   <NoContent
                     className="no-widgets-message large"
-                    message={`No ${category} data available for ${currentLocation}`}
+                    message={`${upperFirst(
+                      category
+                    )} data for ${currentLocation} coming soon`}
                     icon
                   />
                 )}
