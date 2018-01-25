@@ -269,25 +269,20 @@
     "active": false
   },
   "gladAlerts": {
-    "title": "GLAD Alerts",
+    "title": "Deforestation Alerts",
     "config": {
       "size": "large",
-      "indicators": ["gadm28", "wdpa", "ifl_2013",
-                     "ifl_2013__wdpa", "ifl_2013__mining",
-                     "primary_forests","primary_forest__landmark",
-                      "plantations", "plantations__mining",
-                      "plantations__wdpa", "plantations__landmark"],
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "startYears", "endYears", "thresholds"],
+      "selectors": ["periods"],
       "type": "alerts",
-      "metaKey": "widget_glad_alerts"
+      "metaKey": "widget_deforestation_alert_location",
+      "customLocationWhitelist": ["BRA", "COL", "ECU", "GUF", "GUY", "PER", "SUR", "BDI",
+        "CMR", "CAF", "GNQ", "GAB", "RWA", "UGA", "IDN", "MYS",
+        "PNG", "VEN", "DOC", "DOG", "TLS"]
     },
     "settings": {
-      "indicator": "gadm28",
-      "threshold": 30,
-      "startYear": 2001,
-      "endYear": 2016
+      "period": "week"
     },
     "active": true
   },

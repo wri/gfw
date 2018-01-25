@@ -7,7 +7,7 @@ import COLORS from 'pages/country/data/colors.json';
 import actions from './widget-glad-alerts-actions';
 import reducers, { initialState } from './widget-glad-alerts-reducers';
 import {
-  chartData,
+  getData,
   chartConfig,
   getSentence
 } from './widget-glad-alerts-selectors';
@@ -17,16 +17,16 @@ const mapStateToProps = ({ widgetGladAlerts }, ownProps) => {
   const { locationNames, activeIndicator } = ownProps;
   const { data, settings } = widgetGladAlerts;
   const selectorData = {
-    loss: data.loss,
-    extent: data.extent,
+    alerts: data.alerts,
+    period: data.period,
     settings,
     locationNames,
     activeIndicator,
     colors: COLORS.loss
   };
   return {
-    data: chartData(selectorData),
-    config: chartConfig(selectorData),
+    data: getData(selectorData),
+    config: chartConfig(selectorData)
     // sentence: getSentence(selectorData)
   };
 };

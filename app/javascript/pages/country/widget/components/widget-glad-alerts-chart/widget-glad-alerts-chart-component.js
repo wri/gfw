@@ -28,13 +28,9 @@ class WidgetGladAlertsChart extends PureComponent {
     const maxValues = [];
     Object.keys(yKeys).forEach(key => {
       const keys = yKeys[key];
-      maxValues.push(maxBy(data, keys[keys.length - 1])[
-        keys[keys.length - 1]
-      ]);
+      maxValues.push(maxBy(data, keys[keys.length - 1])[keys[keys.length - 1]]);
     });
-    console.log(maxValues);
     const dataMax = max(maxValues);
-    console.log(dataMax);
 
     return (
       <div className={`c-glad-alerts-chart ${className}`}>
@@ -49,7 +45,7 @@ class WidgetGladAlertsChart extends PureComponent {
               axisLine={false}
               tickLine={false}
               tick={{ dy: 8, fontSize: '12px', fill: '#555555' }}
-              tickFormatter={tick => moment(tick, 'YYYY').format('YY')}
+              // tickFormatter={tick => moment(tick, 'YYYY').format('YY')}
             />
             <YAxis
               axisLine={false}
@@ -66,34 +62,36 @@ class WidgetGladAlertsChart extends PureComponent {
                 <WidgetChartToolTip settings={tooltip} colors={colors} />
               }
             />
-            {areaKeys && areaKeys.map(key => (
-              <Area
-                key={key}
-                dataKey={key}
-                fill={colors[key]}
-                background={false}
-                dot={false}
-              />
-            ))}
-            {lineKeys && lineKeys.map(key => (
-              <Line
-                key={key}
-                dataKey={key}
-                stroke={colors[key]}
-                dot={false}
-                type="monotone"
-              />
-            ))}
-            {barKeys && barKeys.map(key => (
-              <Bar
-                key={key}
-                dataKey={key}
-                fill={colors[key]}
-                background={false}
-                dot={false}
-              />
-            ))}
-
+            {areaKeys &&
+              areaKeys.map(key => (
+                <Area
+                  key={key}
+                  dataKey={key}
+                  fill={colors[key]}
+                  background={false}
+                  dot={false}
+                />
+              ))}
+            {lineKeys &&
+              lineKeys.map(key => (
+                <Line
+                  key={key}
+                  dataKey={key}
+                  stroke={colors[key]}
+                  strokeWidth={2}
+                  dot={false}
+                />
+              ))}
+            {barKeys &&
+              barKeys.map(key => (
+                <Bar
+                  key={key}
+                  dataKey={key}
+                  fill={colors[key]}
+                  background={false}
+                  dot={false}
+                />
+              ))}
           </ComposedChart>
         </ResponsiveContainer>
       </div>

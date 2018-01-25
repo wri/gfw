@@ -9,12 +9,16 @@ import './widget-glad-alerts-styles.scss';
 class WidgetTreeLoss extends PureComponent {
   render() {
     const { data, config, sentence } = this.props;
-
+    console.log(data);
     return (
       <div className="c-widget-glad-alerts">
         {sentence && <WidgetDynamicSentence sentence={sentence} />}
         {data && (
-          <WidgetGladAlertsChart className="loss-chart" data={data} config={config} />
+          <WidgetGladAlertsChart
+            className="loss-chart"
+            data={data}
+            config={config}
+          />
         )}
       </div>
     );
