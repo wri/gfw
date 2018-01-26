@@ -254,7 +254,7 @@ export const getSentence = createSelector(
       status = 'low';
       statusColor = colorRange[3];
     }
-    const date = moment(lastDate.date).format('Do of MMMM');
+    const date = moment(lastDate.date).format('Do of MMMM YYYY');
 
     return `There were <b style="color: ${colors.pink}">${format(',')(
       lastDate.count
