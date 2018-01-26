@@ -69,7 +69,6 @@ class WidgetGladAlertsChart extends PureComponent {
             <CartesianGrid vertical={false} strokeDasharray="3 4" />
             <Tooltip
               cursor={{ fill: '#d6d6d9' }}
-              active
               content={
                 <WidgetChartToolTip settings={tooltip} colors={colors} />
               }
@@ -86,6 +85,7 @@ class WidgetGladAlertsChart extends PureComponent {
                   strokeWidth={0}
                   background={false}
                   dot={false}
+                  activeDot={false}
                 />
               ))}
             {lineKeys &&
