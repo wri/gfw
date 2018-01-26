@@ -13,6 +13,7 @@ import minBy from 'lodash/minBy';
 import concat from 'lodash/concat';
 import reverse from 'lodash/reverse';
 import moment from 'moment';
+import { getColorPalette } from 'utils/data';
 
 // get list data
 const getAlerts = state => state.alerts || null;
@@ -193,33 +194,31 @@ export const chartConfig = createSelector(
 );
 
 export const getSentence = createSelector(
-  [chartData, getExtent, getSettings, getLocationNames, getActiveIndicator],
-  (data, extent, settings, locationNames, indicator) => {
+  [getData, getColors],
+  (data, colors) => {
     if (!data) return null;
-    const { startYear, endYear, extentYear, threshold } = settings;
-    const locationLabel = locationNames.current && locationNames.current.label;
-    const locationIntro = `${
-      indicator.value !== 'gadm28'
-        ? `<b>${indicator.label}</b> in <b>${locationLabel}</b>`
-        : `<b>${locationLabel}</b>`
-    }`;
-    const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
-    const totalEmissions =
-      (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
-    const percentageLoss =
-      (totalLoss && extent && totalLoss / extent * 100) || 0;
-
-    return `Between <span>${startYear}</span> and <span>${endYear}</span>, ${locationIntro} lost <b>${format(
-      '.3s'
-    )(totalLoss)}ha</b> of tree cover${totalLoss ? '.' : ','} ${
-      totalLoss > 0
-        ? ` This loss is equal to <b>${format('.1f')(percentageLoss)}
-      %</b> of the regions tree cover extent in <b>${extentYear}</b>,
-      and equivalent to <b>${format('.3s')(
-    totalEmissions
-  )}t</b> of CO\u2082 emissions`
-        : ''
+    const colorRange = getColorPalette(
+      colors.ramp,
+      5
+    );
+    let statusColor = colorRange[4];
+    let status = 'unusually low';
+    const lastDate = data[data.length - 1];
+    if (lastDate.count > lastDate.twoPlusStdDev[1]) {
+      status = 'unusually high';
+      statusColor = colorRange[0];
+    } else if (lastDate.count <= lastDate.twoPlusStdDev[1] && lastDate.count > lastDate.twoPlusStdDev[0]) {
+      status = 'high';
+      statusColor = colorRange[1];
+    } else if (lastDate.count <= lastDate.plusStdDev[1] && lastDate.count > lastDate.minusStdDev[0]) {
+      status = 'normal';
+      statusColor = colorRange[2];
+    } else if (lastDate.count <= lastDate.twoMinusStdDev[0] && lastDate.count > lastDate.twoMinusStdDev[1]) {
+      status = 'low';
+      statusColor = colorRange[3];
     }
-     with canopy density <span>> ${threshold}%</span>.`;
+    const date = moment(lastDate.date).format('Do of MMMM');
+
+    return `There were <b style="color: ${colors.pink}">${format(',')(lastDate.count)}</b> GLAD alerts reported in the week of the <b>${date}</b>, <b style="color: ${statusColor}">${status}</b> compared to the same week in previous years.`;
   }
 );

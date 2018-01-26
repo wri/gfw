@@ -1,6 +1,5 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
-import axios from 'axios';
 
 import { fetchGladAlerts } from 'services/alerts';
 
