@@ -275,13 +275,15 @@
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
       "type": "alerts",
+      "selectors": ["months"],
       "metaKey": "widget_deforestation_alert_location",
       "customLocationWhitelist": ["BRA", "COL", "ECU", "GUF", "GUY", "PER", "SUR", "BDI",
         "CMR", "CAF", "GNQ", "GAB", "RWA", "UGA", "IDN", "MYS",
         "PNG", "VEN", "DOC", "DOG", "TLS"]
     },
     "settings": {
-      "period": "week"
+      "period": "week",
+      "months": 3
     },
     "active": true
   },

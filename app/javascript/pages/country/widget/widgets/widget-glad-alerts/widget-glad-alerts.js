@@ -13,15 +13,12 @@ import {
 } from './widget-glad-alerts-selectors';
 import WidgetGladAlertsComponent from './widget-glad-alerts-component';
 
-const mapStateToProps = ({ widgetGladAlerts }, ownProps) => {
-  const { locationNames, activeIndicator } = ownProps;
+const mapStateToProps = ({ widgetGladAlerts }) => {
   const { data, settings } = widgetGladAlerts;
   const selectorData = {
     alerts: data.alerts,
     period: data.period,
     settings,
-    locationNames,
-    activeIndicator,
     colors: COLORS.loss
   };
   return {
@@ -40,12 +37,7 @@ class WidgetGladAlertsContainer extends PureComponent {
   componentWillUpdate(nextProps) {
     const { getGladAlerts, location, settings } = nextProps;
 
-    if (
-      !isEqual(location, this.props.location) ||
-      !isEqual(settings.indicator, this.props.settings.indicator) ||
-      !isEqual(settings.extentYear, this.props.settings.extentYear) ||
-      !isEqual(settings.threshold, this.props.settings.threshold)
-    ) {
+    if (!isEqual(location, this.props.location)) {
       getGladAlerts({ ...location, ...settings });
     }
   }
