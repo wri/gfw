@@ -10,30 +10,34 @@ class WidgetChartTooltip extends PureComponent {
     const values = payload && payload.length > 0 && payload[0].payload;
 
     return (
-      <div className="c-widget-chart-tooltip">
-        {settings.map(
-          d =>
-            (hideZeros && !values[d.key] ? null : (
-              <div key={d.key} className="data-line">
-                {d.label && (
-                  <div className="data-label">
-                    {colors &&
-                      colors[d.key] && (
-                        <div
-                          className="data-color"
-                          style={{ backgroundColor: colors[d.key] }}
-                        />
-                      )}
-                    {<span>{values[d.label]}</span>}
+      <div>
+        {settings && settings.length &&
+          <div className="c-widget-chart-tooltip">
+            {settings.map(
+              d =>
+                (hideZeros && !values[d.key] ? null : (
+                  <div key={d.key} className="data-line">
+                    {d.label && (
+                      <div className="data-label">
+                        {colors &&
+                          colors[d.key] && (
+                            <div
+                              className="data-color"
+                              style={{ backgroundColor: colors[d.key] }}
+                            />
+                          )}
+                        {<span>{values[d.label]}</span>}
+                      </div>
+                    )}
+                    {d.unit
+                      ? format(d.unit === '%' ? '.1f' : '.3s')(values[d.key])
+                      : values[d.key]}
+                    {d.unit}
                   </div>
-                )}
-                {d.unit
-                  ? format(d.unit === '%' ? '.1f' : '.3s')(values[d.key])
-                  : values[d.key]}
-                {d.unit}
-              </div>
-            ))
-        )}
+                ))
+            )}
+          </div>
+        }
       </div>
     );
   }

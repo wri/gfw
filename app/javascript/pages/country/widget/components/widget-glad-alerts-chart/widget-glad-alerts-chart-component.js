@@ -23,7 +23,7 @@ import './widget-glad-alerts-chart-styles.scss';
 class WidgetGladAlertsChart extends PureComponent {
   render() {
     const { data, className } = this.props;
-    const { tooltip, colors, unit, xKey, yKeys } = this.props.config;
+    const { tooltip, colors, opacity, unit, xKey, yKeys, xAxisConfig, yAxisConfig } = this.props.config;
     const { lineKeys, barKeys, areaKeys } = yKeys;
     const maxValues = [];
     Object.keys(yKeys).forEach(key => {
@@ -44,20 +44,24 @@ class WidgetGladAlertsChart extends PureComponent {
               dataKey={xKey}
               axisLine={false}
               tickLine={false}
+              tickCount={12}
               tick={{ dy: 8, fontSize: '12px', fill: '#555555' }}
-              // tickFormatter={tick => moment(tick, 'YYYY').format('YY')}
             />
             <YAxis
+              type="number"
               axisLine={false}
               strokeDasharray="3 4"
               tickSize={-42}
+              domain={[0, 'auto']}
+              allowDataOverflow
               mirror
               tickMargin={0}
-              tick={<CustomTick dataMax={dataMax} unit={unit} fill="#555555" />}
+              tick={<CustomTick dataMax={dataMax} unit={unit || ''} fill="#555555" />}
             />
             <CartesianGrid vertical={false} strokeDasharray="3 4" />
             <Tooltip
               cursor={{ fill: '#d6d6d9' }}
+              active
               content={
                 <WidgetChartToolTip settings={tooltip} colors={colors} />
               }
@@ -65,9 +69,13 @@ class WidgetGladAlertsChart extends PureComponent {
             {areaKeys &&
               areaKeys.map(key => (
                 <Area
+                  type="monotone"
                   key={key}
                   dataKey={key}
                   fill={colors[key]}
+                  stroke={colors[key]}
+                  opacity={opacity[key]}
+                  strokeWidth={0}
                   background={false}
                   dot={false}
                 />
