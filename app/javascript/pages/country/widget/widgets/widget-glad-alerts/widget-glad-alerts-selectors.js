@@ -168,7 +168,7 @@ export const chartData = createSelector(
             .format('MMM')
         )
       }))
-      .slice(-settings.months * 4);
+      .slice(-settings.weeks);
   }
 );
 
