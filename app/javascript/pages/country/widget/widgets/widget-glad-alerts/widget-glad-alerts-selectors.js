@@ -16,6 +16,7 @@ import { getColorPalette } from 'utils/data';
 // get list data
 const getAlerts = state => state.alerts || null;
 const getPeriod = state => state.period || null;
+const getSettings = state => state.settings || null;
 const getColors = state => state.colors || null;
 
 const getYearsObj = (data, startSlice, endSlice) => {
@@ -149,23 +150,25 @@ export const getStdDev = createSelector(
 );
 
 export const chartData = createSelector(
-  [getStdDev, getPeriod],
-  (data, period) => {
+  [getStdDev, getPeriod, getSettings],
+  (data, period, settings) => {
     if (!data || !period) return null;
 
-    return data.map(d => ({
-      ...d,
-      date: moment()
-        .year(d.year)
-        .week(d.week)
-        .format('YYYY-MM-DD'),
-      month: upperCase(
-        moment()
+    return data
+      .map(d => ({
+        ...d,
+        date: moment()
           .year(d.year)
           .week(d.week)
-          .format('MMM')
-      )
-    }));
+          .format('YYYY-MM-DD'),
+        month: upperCase(
+          moment()
+            .year(d.year)
+            .week(d.week)
+            .format('MMM')
+        )
+      }))
+      .slice(-settings.months * 4);
   }
 );
 
