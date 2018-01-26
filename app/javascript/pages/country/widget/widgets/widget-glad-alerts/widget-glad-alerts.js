@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import COLORS from 'pages/country/data/colors.json';
+import debounce from 'lodash/debounce';
 
 import actions from './widget-glad-alerts-actions';
 import reducers, { initialState } from './widget-glad-alerts-reducers';
@@ -14,12 +15,13 @@ import {
 import WidgetGladAlertsComponent from './widget-glad-alerts-component';
 
 const mapStateToProps = ({ widgetGladAlerts }) => {
-  const { data, settings } = widgetGladAlerts;
+  const { data, settings, activeAlert } = widgetGladAlerts;
   const selectorData = {
     alerts: data.alerts,
     period: data.period,
     settings,
-    colors: COLORS.loss
+    colors: COLORS.loss,
+    activeData: activeAlert
   };
   return {
     data: chartData(selectorData),
@@ -42,10 +44,22 @@ class WidgetGladAlertsContainer extends PureComponent {
     }
   }
 
+  handleMouseMove = debounce(data => {
+    let activeData = {};
+    const { setActiveAlert } = this.props;
+    if (data) {
+      const { activePayload } = data && data;
+      activeData =
+        activePayload && activePayload.find(d => d.name === 'count').payload;
+    }
+    setActiveAlert(activeData);
+  }, 100);
+
   render() {
     return createElement(WidgetGladAlertsComponent, {
       ...this.props,
-      getSentence: this.getSentence
+      getSentence: this.getSentence,
+      handleMouseMove: this.handleMouseMove
     });
   }
 }
@@ -53,7 +67,8 @@ class WidgetGladAlertsContainer extends PureComponent {
 WidgetGladAlertsContainer.propTypes = {
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  getGladAlerts: PropTypes.func.isRequired
+  getGladAlerts: PropTypes.func.isRequired,
+  setActiveAlert: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };

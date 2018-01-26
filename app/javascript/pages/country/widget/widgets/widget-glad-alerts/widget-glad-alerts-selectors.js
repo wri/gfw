@@ -18,6 +18,7 @@ const getAlerts = state => state.alerts || null;
 const getPeriod = state => state.period || null;
 const getSettings = state => state.settings || null;
 const getColors = state => state.colors || null;
+const getActiveData = state => state.activeData || null;
 
 const getYearsObj = (data, startSlice, endSlice) => {
   const grouped = groupBy(data, 'year');
@@ -220,13 +221,17 @@ export const chartConfig = createSelector(
 );
 
 export const getSentence = createSelector(
-  [chartData, getColors],
-  (data, colors) => {
+  [chartData, getColors, getActiveData],
+  (data, colors, activeData) => {
     if (!data) return null;
+    let lastDate = data[data.length - 1];
+    if (!isEmpty(activeData)) {
+      lastDate = activeData;
+    }
     const colorRange = getColorPalette(colors.ramp, 5);
     let statusColor = colorRange[4];
     let status = 'unusually low';
-    const lastDate = data[data.length - 1];
+
     if (lastDate.count > lastDate.twoPlusStdDev[1]) {
       status = 'unusually high';
       statusColor = colorRange[0];
