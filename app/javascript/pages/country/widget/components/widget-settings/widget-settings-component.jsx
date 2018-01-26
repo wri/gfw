@@ -25,7 +25,8 @@ class WidgetSettings extends PureComponent {
       startYears,
       endYears,
       extentYears,
-      types
+      types,
+      weeks
     } = this.props.options;
 
     return (
@@ -71,6 +72,18 @@ class WidgetSettings extends PureComponent {
               onSettingsChange({ value: { type: option.value }, widget })
             }
             infoAction={() => setModalMeta('widget_tree_cover_extent')}
+          />
+        )}
+        {weeks && (
+          <Dropdown
+            theme="theme-select-light"
+            label="SHOW DATA FOR THE LAST"
+            value={settings.weeks}
+            options={weeks}
+            disabled={loading}
+            onChange={option =>
+              onSettingsChange({ value: { weeks: option.value }, widget })
+            }
           />
         )}
         {extentYears && (

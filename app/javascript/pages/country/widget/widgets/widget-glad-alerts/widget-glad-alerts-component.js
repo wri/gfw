@@ -8,7 +8,7 @@ import './widget-glad-alerts-styles.scss';
 
 class WidgetTreeLoss extends PureComponent {
   render() {
-    const { data, config, sentence } = this.props;
+    const { data, config, sentence, handleMouseMove } = this.props;
 
     return (
       <div className="c-widget-glad-alerts">
@@ -18,6 +18,7 @@ class WidgetTreeLoss extends PureComponent {
             className="loss-chart"
             data={data}
             config={config}
+            handleMouseMove={handleMouseMove}
           />
         )}
       </div>
@@ -28,7 +29,8 @@ class WidgetTreeLoss extends PureComponent {
 WidgetTreeLoss.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
-  sentence: PropTypes.string
+  sentence: PropTypes.string,
+  handleMouseMove: PropTypes.func
 };
 
 export default WidgetTreeLoss;

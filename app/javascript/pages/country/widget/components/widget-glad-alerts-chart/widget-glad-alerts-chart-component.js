@@ -22,7 +22,7 @@ import './widget-glad-alerts-chart-styles.scss';
 
 class WidgetGladAlertsChart extends PureComponent {
   render() {
-    const { data, className } = this.props;
+    const { data, className, handleMouseMove } = this.props;
     const { tooltip, colors, opacity, unit, xKey, yKeys } = this.props.config;
     const { lineKeys, barKeys, areaKeys } = yKeys;
     const maxValues = [];
@@ -39,6 +39,9 @@ class WidgetGladAlertsChart extends PureComponent {
             data={data}
             margin={{ top: 15, right: 0, left: 42, bottom: 0 }}
             padding={{ left: 50 }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={() => handleMouseMove(null)}
+            onMouseEnter={() => handleMouseMove(null)}
           >
             <XAxis
               dataKey={xKey}
@@ -69,7 +72,6 @@ class WidgetGladAlertsChart extends PureComponent {
             <CartesianGrid vertical={false} strokeDasharray="3 4" />
             <Tooltip
               cursor={{ fill: '#d6d6d9' }}
-              active
               content={
                 <WidgetChartToolTip settings={tooltip} colors={colors} />
               }
@@ -86,6 +88,7 @@ class WidgetGladAlertsChart extends PureComponent {
                   strokeWidth={0}
                   background={false}
                   dot={false}
+                  activeDot={false}
                 />
               ))}
             {lineKeys &&
@@ -120,7 +123,8 @@ WidgetGladAlertsChart.propTypes = {
   xKey: PropTypes.string,
   yKeys: PropTypes.array,
   className: PropTypes.string,
-  config: PropTypes.object
+  config: PropTypes.object,
+  handleMouseMove: PropTypes.func
 };
 
 WidgetGladAlertsChart.defaultProps = {
