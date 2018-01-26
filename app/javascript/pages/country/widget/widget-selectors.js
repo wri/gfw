@@ -9,7 +9,7 @@ import UNITS from 'pages/country/data/units.json';
 import PERIODS from 'pages/country/data/periods.json';
 import EXTENT_YEARS from 'pages/country/data/extent-years.json';
 import TYPES from 'pages/country/data/types.json';
-import MONTHS from 'pages/country/data/months.json';
+import WEEKS from 'pages/country/data/weeks.json';
 
 // get list data
 const getAdmins = state => state.location || null;
@@ -145,7 +145,7 @@ export const getTypes = createSelector([], () => sortByKey(TYPES, 'label'));
 
 export const getExtentYears = createSelector([], () => EXTENT_YEARS);
 
-export const getMonths = createSelector([], () => MONTHS);
+export const getWeeks = createSelector([], () => WEEKS);
 
 export const getYears = createSelector([getData, getConfig], (data, config) => {
   if (isEmpty(data) || !data.length) return null;
