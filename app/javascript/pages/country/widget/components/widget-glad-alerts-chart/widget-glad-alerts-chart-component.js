@@ -23,7 +23,7 @@ import './widget-glad-alerts-chart-styles.scss';
 class WidgetGladAlertsChart extends PureComponent {
   render() {
     const { data, className } = this.props;
-    const { tooltip, colors, opacity, unit, xKey, yKeys, xAxisConfig, yAxisConfig } = this.props.config;
+    const { tooltip, colors, opacity, unit, xKey, yKeys } = this.props.config;
     const { lineKeys, barKeys, areaKeys } = yKeys;
     const maxValues = [];
     Object.keys(yKeys).forEach(key => {
@@ -41,13 +41,13 @@ class WidgetGladAlertsChart extends PureComponent {
             padding={{ left: 50 }}
           >
             <XAxis
-              type="category"
               dataKey={xKey}
               axisLine={false}
               tickLine={false}
               tickCount={12}
+              interval={4}
               tick={{ dy: 8, fontSize: '12px', fill: '#555555' }}
-              ticks={['JAN', 'FEB']}
+              tickFormatter={t => moment(t).format('MMM')}
             />
             <YAxis
               type="number"
@@ -58,7 +58,13 @@ class WidgetGladAlertsChart extends PureComponent {
               allowDataOverflow
               mirror
               tickMargin={0}
-              tick={<CustomTick dataMax={dataMax} unit={unit || ''} fill="#555555" />}
+              tick={
+                <CustomTick
+                  dataMax={dataMax}
+                  unit={unit || ''}
+                  fill="#555555"
+                />
+              }
             />
             <CartesianGrid vertical={false} strokeDasharray="3 4" />
             <Tooltip

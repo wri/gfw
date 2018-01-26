@@ -1,8 +1,6 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
-import { biomassToCO2 } from 'utils/calculations';
 import meanBy from 'lodash/meanBy';
 import mean from 'lodash/mean';
 import groupBy from 'lodash/groupBy';
@@ -18,12 +16,7 @@ import { getColorPalette } from 'utils/data';
 // get list data
 const getAlerts = state => state.alerts || null;
 const getPeriod = state => state.period || null;
-const getExtent = state => state.extent || null;
-const getSettings = state => state.settings || null;
-const getLocationNames = state => state.locationNames || null;
-const getActiveIndicator = state => state.activeIndicator || null;
 const getColors = state => state.colors || null;
-
 
 const getYearsObj = (data, startSlice, endSlice) => {
   const grouped = groupBy(data, 'year');
@@ -37,7 +30,7 @@ const getYearsObj = (data, startSlice, endSlice) => {
   }));
 };
 
-const showMeTheMeansJerry = data => {
+const getMeans = data => {
   const means = [];
   data.forEach(w => {
     w.weeks.forEach((y, i) => {
@@ -58,7 +51,7 @@ const runningMean = (data, windowSize) => {
 };
 
 // get lists selected
-export const chartData = createSelector(
+export const getData = createSelector(
   [getAlerts, getPeriod],
   (data, period) => {
     if (!data || isEmpty(data)) return null;
@@ -72,21 +65,28 @@ export const chartData = createSelector(
       year: moment(period[0]).year()
     };
     years.forEach(y => {
-      const lastIsoWeek = lastWeek.year !== parseInt(y, 10) ? moment(`${y}-12-31`).isoWeek() : lastWeek.isoWeek;
+      const lastIsoWeek =
+        lastWeek.year !== parseInt(y, 10)
+          ? moment(`${y}-12-31`).isoWeek()
+          : lastWeek.isoWeek;
       yearLengths[y] = lastIsoWeek;
     });
     const zeroFilledData = [];
     years.forEach(d => {
       const yearDataByWeek = groupBy(groupedByYear[d], 'week');
       for (let i = 1; i <= yearLengths[d]; i += 1) {
-        zeroFilledData.push(yearDataByWeek[i] ? yearDataByWeek[i][0] : { count: 0, week: i, year: parseInt(d, 10) });
+        zeroFilledData.push(
+          yearDataByWeek[i]
+            ? yearDataByWeek[i][0]
+            : { count: 0, week: i, year: parseInt(d, 10) }
+        );
       }
     });
     return zeroFilledData;
   }
 );
 
-export const getGladStats = createSelector([chartData], data => {
+export const getGladStats = createSelector([getData], data => {
   if (!data) return null;
   const minYear = minBy(data, 'year').year;
   const maxYear = maxBy(data, 'year').year;
@@ -99,8 +99,8 @@ export const getGladStats = createSelector([chartData], data => {
 
   const leftYears = data.filter(d => d.year !== maxYear);
   const rightYears = data.filter(d => d.year !== minYear);
-  const leftMeans = showMeTheMeansJerry(getYearsObj(leftYears, -6));
-  const rightMeans = showMeTheMeansJerry(getYearsObj(rightYears, 0, 6));
+  const leftMeans = getMeans(getYearsObj(leftYears, -6));
+  const rightMeans = getMeans(getYearsObj(rightYears, 0, 6));
 
   const allMeans = concat(leftMeans, centralMeans, rightMeans);
   const smoothedMeans = runningMean(allMeans, 12);
@@ -117,7 +117,7 @@ export const getGladStats = createSelector([chartData], data => {
 });
 
 export const getStdDev = createSelector(
-  [getGladStats, chartData],
+  [getGladStats, getData],
   (meanedData, rawData) => {
     if (!meanedData) return null;
     const stdDevs = [];
@@ -148,25 +148,45 @@ export const getStdDev = createSelector(
   }
 );
 
-export const getData = createSelector(
+export const chartData = createSelector(
   [getStdDev, getPeriod],
   (data, period) => {
     if (!data || !period) return null;
 
     return data.map(d => ({
       ...d,
-      date: moment().year(d.year).week(d.week).format('YYYY-MM-DD'),
-      month: upperCase(moment().year(d.year).week(d.week).format('MMM'))
+      date: moment()
+        .year(d.year)
+        .week(d.week)
+        .format('YYYY-MM-DD'),
+      month: upperCase(
+        moment()
+          .year(d.year)
+          .week(d.week)
+          .format('MMM')
+      )
     }));
   }
 );
 
 export const chartConfig = createSelector(
-  [getColors, getData],
+  [getColors, chartData],
   (colors, data) => {
     if (!data) return null;
+    const lastDate = data[data.length - 1].date;
+    const ticks = [];
+    while (ticks.length < 12) {
+      ticks.push(
+        parseInt(
+          moment(lastDate)
+            .subtract(ticks.length, 'months')
+            .format('Mo'),
+          10
+        )
+      );
+    }
     return {
-      xKey: 'month',
+      xKey: 'date',
       yKeys: {
         lineKeys: ['count'],
         areaKeys: [
@@ -183,6 +203,9 @@ export const chartConfig = createSelector(
         twoPlusStdDev: '#555555',
         twoMinusStdDev: '#555555'
       },
+      xAxisConfig: {
+        ticks: reverse(ticks)
+      },
       opacity: {
         plusStdDev: 0.2,
         minusStdDev: 0.2,
@@ -194,31 +217,39 @@ export const chartConfig = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getData, getColors],
+  [chartData, getColors],
   (data, colors) => {
     if (!data) return null;
-    const colorRange = getColorPalette(
-      colors.ramp,
-      5
-    );
+    const colorRange = getColorPalette(colors.ramp, 5);
     let statusColor = colorRange[4];
     let status = 'unusually low';
     const lastDate = data[data.length - 1];
     if (lastDate.count > lastDate.twoPlusStdDev[1]) {
       status = 'unusually high';
       statusColor = colorRange[0];
-    } else if (lastDate.count <= lastDate.twoPlusStdDev[1] && lastDate.count > lastDate.twoPlusStdDev[0]) {
+    } else if (
+      lastDate.count <= lastDate.twoPlusStdDev[1] &&
+      lastDate.count > lastDate.twoPlusStdDev[0]
+    ) {
       status = 'high';
       statusColor = colorRange[1];
-    } else if (lastDate.count <= lastDate.plusStdDev[1] && lastDate.count > lastDate.minusStdDev[0]) {
+    } else if (
+      lastDate.count <= lastDate.plusStdDev[1] &&
+      lastDate.count > lastDate.minusStdDev[0]
+    ) {
       status = 'normal';
       statusColor = colorRange[2];
-    } else if (lastDate.count <= lastDate.twoMinusStdDev[0] && lastDate.count > lastDate.twoMinusStdDev[1]) {
+    } else if (
+      lastDate.count <= lastDate.twoMinusStdDev[0] &&
+      lastDate.count > lastDate.twoMinusStdDev[1]
+    ) {
       status = 'low';
       statusColor = colorRange[3];
     }
     const date = moment(lastDate.date).format('Do of MMMM');
 
-    return `There were <b style="color: ${colors.pink}">${format(',')(lastDate.count)}</b> GLAD alerts reported in the week of the <b>${date}</b>, <b style="color: ${statusColor}">${status}</b> compared to the same week in previous years.`;
+    return `There were <b style="color: ${colors.pink}">${format(',')(
+      lastDate.count
+    )}</b> GLAD alerts reported in the week of the <b>${date}</b>, <b style="color: ${statusColor}">${status}</b> compared to the same week in previous years.`;
   }
 );
