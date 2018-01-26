@@ -26,8 +26,8 @@ const mapStateToProps = ({ widgetGladAlerts }, ownProps) => {
   };
   return {
     data: getData(selectorData),
-    config: chartConfig(selectorData)
-    // sentence: getSentence(selectorData)
+    config: chartConfig(selectorData),
+    sentence: getSentence(selectorData)
   };
 };
 

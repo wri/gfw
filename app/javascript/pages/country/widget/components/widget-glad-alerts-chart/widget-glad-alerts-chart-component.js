@@ -41,11 +41,13 @@ class WidgetGladAlertsChart extends PureComponent {
             padding={{ left: 50 }}
           >
             <XAxis
+              type="category"
               dataKey={xKey}
               axisLine={false}
               tickLine={false}
               tickCount={12}
               tick={{ dy: 8, fontSize: '12px', fill: '#555555' }}
+              ticks={['JAN', 'FEB']}
             />
             <YAxis
               type="number"
