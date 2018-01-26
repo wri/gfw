@@ -7,7 +7,7 @@ import COLORS from 'pages/country/data/colors.json';
 import actions from './widget-glad-alerts-actions';
 import reducers, { initialState } from './widget-glad-alerts-reducers';
 import {
-  getData,
+  chartData,
   chartConfig,
   getSentence
 } from './widget-glad-alerts-selectors';
@@ -25,7 +25,7 @@ const mapStateToProps = ({ widgetGladAlerts }, ownProps) => {
     colors: COLORS.loss
   };
   return {
-    data: getData(selectorData),
+    data: chartData(selectorData),
     config: chartConfig(selectorData),
     sentence: getSentence(selectorData)
   };
