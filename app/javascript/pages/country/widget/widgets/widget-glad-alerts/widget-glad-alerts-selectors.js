@@ -3,15 +3,15 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import { biomassToCO2 } from 'utils/calculations';
-import { sortByKey } from 'utils/data';
 import meanBy from 'lodash/meanBy';
 import mean from 'lodash/mean';
 import groupBy from 'lodash/groupBy';
+import upperCase from 'lodash/upperCase';
 import maxBy from 'lodash/maxBy';
-import max from 'lodash/max';
 import compact from 'lodash/compact';
 import minBy from 'lodash/minBy';
 import concat from 'lodash/concat';
+import reverse from 'lodash/reverse';
 import moment from 'moment';
 
 // get list data
@@ -22,6 +22,7 @@ const getSettings = state => state.settings || null;
 const getLocationNames = state => state.locationNames || null;
 const getActiveIndicator = state => state.activeIndicator || null;
 const getColors = state => state.colors || null;
+
 
 const getYearsObj = (data, startSlice, endSlice) => {
   const grouped = groupBy(data, 'year');
@@ -56,16 +57,33 @@ const runningMean = (data, windowSize) => {
 };
 
 // get lists selected
-export const chartData = createSelector([getAlerts], data => {
-  if (!data || isEmpty(data)) return null;
-  return sortByKey(
-    sortByKey(data, 'year').map(d => ({
-      ...d,
-      areaCount: d.count * 1.2
-    })),
-    'week'
-  );
-});
+export const chartData = createSelector(
+  [getAlerts, getPeriod],
+  (data, period) => {
+    if (!data || isEmpty(data)) return null;
+    // fill zeros for data based on last date
+    const groupedByYear = groupBy(data, 'year');
+    // get size of each year
+    const years = Object.keys(groupedByYear);
+    const yearLengths = {};
+    const lastWeek = {
+      isoWeek: moment(period[0]).isoWeek(),
+      year: moment(period[0]).year()
+    };
+    years.forEach(y => {
+      const lastIsoWeek = lastWeek.year !== parseInt(y, 10) ? moment(`${y}-12-31`).isoWeek() : lastWeek.isoWeek;
+      yearLengths[y] = lastIsoWeek;
+    });
+    const zeroFilledData = [];
+    years.forEach(d => {
+      const yearDataByWeek = groupBy(groupedByYear[d], 'week');
+      for (let i = 1; i <= yearLengths[d]; i += 1) {
+        zeroFilledData.push(yearDataByWeek[i] ? yearDataByWeek[i][0] : { count: 0, week: i, year: parseInt(d, 10) });
+      }
+    });
+    return zeroFilledData;
+  }
+);
 
 export const getGladStats = createSelector([chartData], data => {
   if (!data) return null;
@@ -86,8 +104,10 @@ export const getGladStats = createSelector([chartData], data => {
   const allMeans = concat(leftMeans, centralMeans, rightMeans);
   const smoothedMeans = runningMean(allMeans, 12);
 
-  const thisYear = sortByKey(data.filter(d => d.year === maxYear), 'week');
-  const parsedData = thisYear.map((d, i) => ({
+  // get from now week back one year not just current year
+  const pastYear = data.slice(-52);
+
+  const parsedData = pastYear.map((d, i) => ({
     ...d,
     mean: smoothedMeans[i]
   }));
@@ -119,10 +139,10 @@ export const getStdDev = createSelector(
 
     return meanedData.map(d => ({
       ...d,
-      plusStdDev: d.mean + stdDev,
-      minusStdDev: d.mean - stdDev > 0 ? d.mean - stdDev : 0,
-      twoPlusStdDev: d.mean + stdDev * 2,
-      twoMinusStdDev: d.mean - stdDev * 2 > 0 ? d.mean - stdDev * 2 : 0
+      plusStdDev: [d.mean, d.mean + stdDev],
+      minusStdDev: [d.mean - stdDev, d.mean],
+      twoPlusStdDev: [d.mean + stdDev, d.mean + stdDev * 2],
+      twoMinusStdDev: [d.mean - stdDev * 2, d.mean - stdDev]
     }));
   }
 );
@@ -131,59 +151,46 @@ export const getData = createSelector(
   [getStdDev, getPeriod],
   (data, period) => {
     if (!data || !period) return null;
+
     return data.map(d => ({
       ...d,
-      isoWeek: moment(period[1])
-        .subtract(53 - d.week, 'week')
-        .format('MMM')
+      date: moment().year(d.year).week(d.week).format('YYYY-MM-DD'),
+      month: upperCase(moment().year(d.year).week(d.week).format('MMM'))
     }));
   }
 );
 
-export const chartConfig = createSelector([getColors], colors => ({
-  xKey: 'isoWeek',
-  yKeys: {
-    lineKeys: ['count'],
-    areaKeys: [
-      'mean',
-      'plusStdDev',
-      'minusStdDev',
-      'twoPlusStdDev',
-      'twoMinusStdDev'
-    ]
-  },
-  colors: {
-    count: colors.pink,
-    twoMinusStdDev: '#fff'
-  },
-  unit: 'counts',
-  tooltip: [
-    {
-      key: 'count',
-      unit: 'counts'
-    },
-    {
-      key: 'mean',
-      unit: 'counts'
-    },
-    {
-      key: 'plusStdDev',
-      unit: 'counts'
-    },
-    {
-      key: 'twoPlusStdDev',
-      unit: 'counts'
-    },
-    {
-      key: 'minusStdDev',
-      unit: 'counts'
-    },
-    {
-      key: 'twoMinusStdDev',
-      unit: 'counts'
-    }
-  ]
-}));
+export const chartConfig = createSelector(
+  [getColors, getData],
+  (colors, data) => {
+    if (!data) return null;
+    return {
+      xKey: 'month',
+      yKeys: {
+        lineKeys: ['count'],
+        areaKeys: [
+          'plusStdDev',
+          'minusStdDev',
+          'twoPlusStdDev',
+          'twoMinusStdDev'
+        ]
+      },
+      colors: {
+        count: colors.pink,
+        plusStdDev: '#555555',
+        minusStdDev: '#555555',
+        twoPlusStdDev: '#555555',
+        twoMinusStdDev: '#555555'
+      },
+      opacity: {
+        plusStdDev: 0.2,
+        minusStdDev: 0.2,
+        twoPlusStdDev: 0.1,
+        twoMinusStdDev: 0.1
+      }
+    };
+  }
+);
 
 export const getSentence = createSelector(
   [chartData, getExtent, getSettings, getLocationNames, getActiveIndicator],
