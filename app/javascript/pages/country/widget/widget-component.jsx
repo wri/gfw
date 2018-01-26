@@ -21,6 +21,7 @@ import WidgetTreeLossPlantations from 'pages/country/widget/widgets/widget-tree-
 import WidgetTreeGain from 'pages/country/widget/widgets/widget-tree-gain';
 import WidgetFaoCover from 'pages/country/widget/widgets/widget-fao-cover';
 import WidgetFaoReforestation from 'pages/country/widget/widgets/widget-fao-reforestation';
+import WidgetGladAlerts from 'pages/country/widget/widgets/widget-glad-alerts';
 import WidgetRankedPlantations from 'pages/country/widget/widgets/widget-ranked-plantations';
 
 import './widget-styles.scss';
@@ -40,6 +41,7 @@ const widgets = {
   WidgetTreeLossPlantations,
   WidgetFaoCover,
   WidgetFaoReforestation,
+  WidgetGladAlerts,
   WidgetRankedPlantations
 };
 
