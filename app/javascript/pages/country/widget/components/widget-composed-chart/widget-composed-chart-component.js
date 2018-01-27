@@ -1,0 +1,114 @@
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import WidgetChartToolTip from 'pages/country/widget/components/widget-chart-tooltip';
+import maxBy from 'lodash/maxBy';
+import max from 'lodash/max';
+
+import {
+  Line,
+  Bar,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  ComposedChart
+} from 'recharts';
+
+import CustomTick from './custom-tick-component';
+import './widget-composed-chart-styles.scss';
+
+class WidgetComposedChart extends PureComponent {
+  findMaxValue = (data, config) => {
+    const { yKeys } = config;
+    const maxValues = [];
+    Object.keys(yKeys).forEach(key => {
+      const keys = yKeys[key];
+      maxValues.push(maxBy(data, keys[keys.length - 1])[keys[keys.length - 1]]);
+    });
+    return max(maxValues);
+  };
+
+  render() {
+    const { className, data, config, handleMouseMove } = this.props;
+    const { xKey, yKeys, xAxis, yAxis, tooltip } = this.props.config;
+    const { lines, bars, areas } = yKeys;
+    const maxYValue = this.findMaxValue(data, config);
+
+    return (
+      <div className={`c-composed-chart ${className}`}>
+        <ResponsiveContainer>
+          <ComposedChart
+            data={data}
+            margin={{ top: 15, right: 0, left: 42, bottom: 0 }}
+            padding={{ left: 50 }}
+            onMouseMove={handleMouseMove}
+          >
+            <XAxis
+              dataKey={xKey}
+              axisLine={false}
+              tickLine={false}
+              tick={{ dy: 8, fontSize: '12px', fill: '#555555' }}
+              {...xAxis}
+            />
+            <YAxis
+              tick={
+                <CustomTick
+                  dataMax={maxYValue}
+                  unit={yAxis.unit || ''}
+                  fill="#555555"
+                />
+              }
+              type="number"
+              axisLine={false}
+              strokeDasharray="3 4"
+              tickSize={-42}
+              mirror
+              tickMargin={0}
+              {...yAxis}
+            />
+            <CartesianGrid vertical={false} strokeDasharray="3 4" />
+            <Tooltip
+              cursor={{ fill: '#d6d6d9' }}
+              content={<WidgetChartToolTip settings={tooltip} />}
+            />
+            {areas &&
+              Object.keys(areas).map(key => (
+                <Area key={key} dataKey={key} dot={false} {...areas[key]} />
+              ))}
+            {lines &&
+              Object.keys(lines).map(key => (
+                <Line
+                  key={key}
+                  dataKey={key}
+                  dot={false}
+                  strokeWidth={2}
+                  {...lines[key]}
+                />
+              ))}
+            {bars &&
+              Object.keys(bars).map(key => (
+                <Bar key={key} dataKey={key} dot={false} {...bars[key]} />
+              ))}
+          </ComposedChart>
+        </ResponsiveContainer>
+      </div>
+    );
+  }
+}
+
+WidgetComposedChart.propTypes = {
+  data: PropTypes.array,
+  config: PropTypes.object,
+  className: PropTypes.string,
+  handleMouseMove: PropTypes.func
+};
+
+WidgetComposedChart.defaultProps = {
+  config: {
+    tooltip: [{ key: 'value', unit: null }]
+  }
+};
+
+export default WidgetComposedChart;
