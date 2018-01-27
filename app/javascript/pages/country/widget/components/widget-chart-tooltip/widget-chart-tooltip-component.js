@@ -6,38 +6,38 @@ import './widget-chart-tooltip-styles.scss';
 
 class WidgetChartTooltip extends PureComponent {
   render() {
-    const { payload, settings, colors, hideZeros } = this.props;
+    const { payload, settings, hideZeros } = this.props;
     const values = payload && payload.length > 0 && payload[0].payload;
 
     return (
       <div>
-        {settings && settings.length &&
-          <div className="c-widget-chart-tooltip">
-            {settings.map(
-              d =>
-                (hideZeros && !values[d.key] ? null : (
-                  <div key={d.key} className="data-line">
-                    {d.label && (
-                      <div className="data-label">
-                        {colors &&
-                          colors[d.key] && (
+        {settings &&
+          settings.length && (
+            <div className="c-widget-chart-tooltip">
+              {settings.map(
+                d =>
+                  (hideZeros && !values[d.key] ? null : (
+                    <div key={d.key} className="data-line">
+                      {d.label && (
+                        <div className="data-label">
+                          {d.color && (
                             <div
                               className="data-color"
-                              style={{ backgroundColor: colors[d.key] }}
+                              style={{ backgroundColor: d.color }}
                             />
                           )}
-                        {<span>{values[d.label]}</span>}
-                      </div>
-                    )}
-                    {d.unit
-                      ? format(d.unit === '%' ? '.1f' : '.3s')(values[d.key])
-                      : values[d.key]}
-                    {d.unit}
-                  </div>
-                ))
-            )}
-          </div>
-        }
+                          {<span>{values[d.label] || d.label}</span>}
+                        </div>
+                      )}
+                      {d.unit
+                        ? format(d.unit === '%' ? '.1f' : '.3s')(values[d.key])
+                        : values[d.key]}
+                      {d.unit}
+                    </div>
+                  ))
+              )}
+            </div>
+          )}
       </div>
     );
   }
@@ -46,7 +46,6 @@ class WidgetChartTooltip extends PureComponent {
 WidgetChartTooltip.propTypes = {
   payload: PropTypes.array,
   settings: PropTypes.array,
-  colors: PropTypes.object,
   hideZeros: PropTypes.bool
 };
 

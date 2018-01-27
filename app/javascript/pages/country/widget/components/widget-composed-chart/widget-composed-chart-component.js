@@ -24,15 +24,16 @@ class WidgetComposedChart extends PureComponent {
     const { yKeys } = config;
     const maxValues = [];
     Object.keys(yKeys).forEach(key => {
-      const keys = yKeys[key];
-      maxValues.push(maxBy(data, keys[keys.length - 1])[keys[keys.length - 1]]);
+      Object.keys(yKeys[key]).forEach(subKey => {
+        maxValues.push(maxBy(data, subKey)[subKey]);
+      });
     });
     return max(maxValues);
   };
 
   render() {
     const { className, data, config, handleMouseMove } = this.props;
-    const { xKey, yKeys, xAxis, yAxis, tooltip } = this.props.config;
+    const { xKey, yKeys, xAxis, yAxis, tooltip, unit } = this.props.config;
     const { lines, bars, areas } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
 
@@ -53,19 +54,18 @@ class WidgetComposedChart extends PureComponent {
               {...xAxis}
             />
             <YAxis
-              tick={
-                <CustomTick
-                  dataMax={maxYValue}
-                  unit={yAxis.unit || ''}
-                  fill="#555555"
-                />
-              }
-              type="number"
               axisLine={false}
               strokeDasharray="3 4"
               tickSize={-42}
               mirror
               tickMargin={0}
+              tick={
+                <CustomTick
+                  dataMax={maxYValue}
+                  unit={unit || ''}
+                  fill="#555555"
+                />
+              }
               {...yAxis}
             />
             <CartesianGrid vertical={false} strokeDasharray="3 4" />
@@ -89,7 +89,13 @@ class WidgetComposedChart extends PureComponent {
               ))}
             {bars &&
               Object.keys(bars).map(key => (
-                <Bar key={key} dataKey={key} dot={false} {...bars[key]} />
+                <Bar
+                  key={key}
+                  dataKey={key}
+                  dot={false}
+                  stackId={1}
+                  {...bars[key]}
+                />
               ))}
           </ComposedChart>
         </ResponsiveContainer>
@@ -103,12 +109,6 @@ WidgetComposedChart.propTypes = {
   config: PropTypes.object,
   className: PropTypes.string,
   handleMouseMove: PropTypes.func
-};
-
-WidgetComposedChart.defaultProps = {
-  config: {
-    tooltip: [{ key: 'value', unit: null }]
-  }
 };
 
 export default WidgetComposedChart;
