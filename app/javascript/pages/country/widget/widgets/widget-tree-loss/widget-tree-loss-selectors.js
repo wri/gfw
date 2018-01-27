@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
+import moment from 'moment';
 import { biomassToCO2 } from 'utils/calculations';
 
 // get list data
@@ -32,15 +33,21 @@ export const chartData = createSelector(
 
 export const chartConfig = createSelector([getColors], colors => ({
   xKey: 'year',
-  yKeys: ['area'],
-  colors: {
-    area: colors.pink
+  yKeys: {
+    bars: {
+      area: {
+        fill: colors.pink,
+        background: false
+      }
+    }
+  },
+  xAxis: {
+    tickFormatter: tick => moment(tick, 'YYYY').format('YY')
   },
   unit: 'ha',
   tooltip: [
     {
-      key: 'year',
-      unit: null
+      key: 'year'
     },
     {
       key: 'area',
