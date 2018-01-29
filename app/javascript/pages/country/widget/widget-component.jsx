@@ -7,6 +7,7 @@ import isEmpty from 'lodash/isEmpty';
 import Loader from 'components/loader/loader';
 import NoContent from 'components/no-content';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
+import WidgetSettingsStatement from 'pages/country/widget/components/widget-settings-statement';
 
 import WidgetTreeCover from 'pages/country/widget/widgets/widget-tree-cover';
 import WidgetTreeCoverPlantations from 'pages/country/widget/widgets/widget-tree-cover-plantations';
@@ -90,6 +91,7 @@ class Widget extends PureComponent {
             )}
           {!error && <WidgetComponent {...this.props} {...settingsConfig} />}
         </div>
+        <WidgetSettingsStatement settings={settingsConfig.settings} />
       </div>
     );
   }
