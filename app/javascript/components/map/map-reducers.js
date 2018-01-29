@@ -2,7 +2,7 @@ export const initialState = {
   loading: false,
   error: false,
   layerSpec: {},
-  layers: ['forest2000']
+  layers: ['plantations_by_type']
 };
 
 const setLayerSpecLoading = (state, { payload }) => ({
