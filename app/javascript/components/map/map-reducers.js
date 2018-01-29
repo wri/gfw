@@ -2,7 +2,7 @@ export const initialState = {
   loading: false,
   error: false,
   layerSpec: {},
-  layers: ['umd_as_it_happens']
+  layers: ['plantations_by_species']
 };
 
 const setLayerSpecLoading = (state, { payload }) => ({
