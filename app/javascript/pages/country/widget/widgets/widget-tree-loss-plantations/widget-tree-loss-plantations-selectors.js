@@ -24,8 +24,6 @@ export const chartData = createSelector(
       .filter(d => d.year >= startYear && d.year <= endYear)
       .map(d => ({
         ...d,
-        outsideLossLabel: 'Outside plantations',
-        lossLabel: 'Plantations',
         outsideAreaLoss: totalLossByYear[d.year][0].area - d.area,
         areaLoss: d.area || 0,
         outsideCo2Loss: totalLossByYear[d.year][0].emissions - d.emissions,
@@ -38,22 +36,29 @@ export const chartConfig = createSelector([getColors], colors => {
   const colorRange = getColorPalette(colors.ramp, 2);
   return {
     xKey: 'year',
-    yKeys: ['areaLoss', 'outsideAreaLoss'],
-    colors: {
-      areaLoss: colorRange[0],
-      outsideAreaLoss: colorRange[1]
+    yKeys: {
+      bars: {
+        areaLoss: {
+          fill: colorRange[0]
+        },
+        outsideAreaLoss: {
+          fill: colorRange[1]
+        }
+      }
     },
     unit: 'ha',
     tooltip: [
       {
         key: 'outsideAreaLoss',
         unit: 'ha',
-        label: 'outsideLossLabel'
+        label: 'Outside plantations',
+        color: colorRange[1]
       },
       {
         key: 'areaLoss',
         unit: 'ha',
-        label: 'lossLabel'
+        label: 'Inside plantations',
+        color: colorRange[0]
       }
     ]
   };
