@@ -5,10 +5,10 @@ const OPTIONS = {
   threshold: 30,
   dataMaxZoom: 12,
   urlTemplate:
-    'http://earthengine.google.org/static/hansen_2014/gfw_loss_tree_year_{threshold}_2014/{z}/{x}/{y}.png'
+    'https://storage.googleapis.com/wri-public/treecover/2010/{threshold}/{z}/{x}/{y}.png'
 };
 
-class Forest2000 extends Canvas {
+class Forest2010 extends Canvas {
   constructor(map, options) {
     super(map, OPTIONS);
     this.options = Object.assign({}, this.options, options);
@@ -53,4 +53,4 @@ class Forest2000 extends Canvas {
   }
 }
 
-export default Forest2000;
+export default Forest2010;
