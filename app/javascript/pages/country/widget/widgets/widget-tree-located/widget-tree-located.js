@@ -6,11 +6,7 @@ import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-tree-located-actions';
 import reducers, { initialState } from './widget-tree-located-reducers';
-import {
-  getSortedData,
-  getChartData,
-  getSentence
-} from './widget-tree-located-selectors';
+import { getSortedData, getSentence } from './widget-tree-located-selectors';
 import WidgetTreeLocatedComponent from './widget-tree-located-component';
 
 const mapStateToProps = (
@@ -35,7 +31,6 @@ const mapStateToProps = (
     regions: countryData.regions,
     loading: loading || isCountriesLoading || isRegionsLoading,
     data: getSortedData(selectorData),
-    chartData: getChartData(selectorData),
     sentence: getSentence(selectorData)
   };
 };
