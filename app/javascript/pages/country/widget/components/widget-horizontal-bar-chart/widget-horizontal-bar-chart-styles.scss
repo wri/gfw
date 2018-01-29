@@ -1,0 +1,21 @@
+@import '~styles/settings.scss';
+
+.c-horizontal-bar-chart {
+  height: 335px;
+  width: 100%;
+  margin-bottom: 40px;
+
+  a {
+    cursor: pointer;
+    color: $slate;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .horizontal-pagintation {
+    margin-top: 0;
+    margin-bottom: rem(30px);
+  }
+}

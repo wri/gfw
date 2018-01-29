@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { SCREEN_M } from 'utils/constants';
+import upperFirst from 'lodash/upperFirst';
 
 import Widget from 'pages/country/widget';
 import Share from 'components/share';
 import Header from 'pages/country/header';
 import Footer from 'pages/country/footer';
 import Map from 'components/map';
-import Stories from 'pages/country/stories';
 import Sticky from 'components/sticky';
 import CountryDataProvider from 'pages/country/providers/country-data-provider';
 import SubNavMenu from 'components/subnav-menu';
@@ -76,7 +76,9 @@ class Root extends PureComponent {
                 (!widgets || widgets.length === 0) && (
                   <NoContent
                     className="no-widgets-message large"
-                    message={`No ${category} data available for ${currentLocation}`}
+                    message={`${upperFirst(
+                      category
+                    )} data for ${currentLocation} coming soon`}
                     icon
                   />
                 )}
@@ -85,7 +87,7 @@ class Root extends PureComponent {
           <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
             <Sticky
               className={`map ${showMapMobile ? '-open-mobile' : ''}`}
-              limitElement="c-stories"
+              limitElement="c-footer"
               enabled={window.innerWidth >= SCREEN_M}
             >
               <Map
@@ -111,7 +113,6 @@ class Root extends PureComponent {
             </Sticky>
           </div>
         </div>
-        <Stories />
         <Footer />
         <Share />
         <ModalMeta />

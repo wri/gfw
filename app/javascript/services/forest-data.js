@@ -8,7 +8,9 @@ const SQL_QUERIES = {
   extent:
     "SELECT SUM({extentYear}) as value, SUM(area_gadm28) as total_area FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
   plantationsExtent:
-    "SELECT SUM({extentYear}) AS plantation_extent FROM data WHERE {location} AND thresh = {threshold} AND polyname = 'plantations' GROUP BY {type} ORDER BY plantation_extent DESC",
+    "SELECT SUM({extentYear}) AS plantation_extent, {admin} AS region, {bound} AS label FROM data WHERE {location} AND thresh = {threshold} AND polyname = 'plantations' GROUP BY {type} ORDER BY plantation_extent DESC",
+  multiRegionExtent:
+    "SELECT {region} as region, SUM({extentYear}) as extent, SUM(area_gadm28) as total FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}' GROUP BY {region} ORDER BY {region}",
   gain:
     "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = {threshold}",
   gainExtent:
@@ -82,10 +84,7 @@ export const getExtent = ({
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
     .replace('{indicator}', indicator)
-    .replace(
-      '{extentYear}',
-      `area_extent${extentYear === 2000 ? `_${extentYear}` : ''}`
-    );
+    .replace('{extentYear}', getExtentYear(extentYear));
   return axios.get(url);
 };
 
@@ -95,16 +94,36 @@ export const getPlantationsExtent = ({
   subRegion,
   threshold,
   extentYear,
-  type
+  type,
+  groupByRegion
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.plantationsExtent}`
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
-    .replace('{type}', type)
+    .replace('{admin}', region ? 'adm2' : 'adm1')
+    .replace('{bound}', type)
     .replace(
-      '{extentYear}',
-      `area_extent${extentYear === 2000 ? `_${extentYear}` : ''}`
-    );
+      '{type}',
+      groupByRegion ? `${region ? 'adm2' : 'adm1'}, ${type}` : type
+    )
+    .replace('{extentYear}', getExtentYear(extentYear));
+  return axios.get(url);
+};
+
+export const getMultiRegionExtent = ({
+  country,
+  region,
+  subRegion,
+  indicator,
+  threshold,
+  extentYear
+}) => {
+  const url = `${REQUEST_URL}${SQL_QUERIES.multiRegionExtent}`
+    .replace(/{region}/g, region ? 'adm2' : 'adm1')
+    .replace('{location}', getLocationQuery(country, region, subRegion))
+    .replace('{threshold}', threshold)
+    .replace('{indicator}', indicator)
+    .replace('{extentYear}', getExtentYear(extentYear));
   return axios.get(url);
 };
 
@@ -185,10 +204,7 @@ export const getGainExtent = ({
   const url = `${REQUEST_URL}${SQL_QUERIES.gainExtent}`
     .replace('{region}', regionValue)
     .replace('{location}', location)
-    .replace(
-      '{extentYear}',
-      extentYear === 2000 ? 'area_extent_2000' : 'area_extent'
-    )
+    .replace('{extentYear}', getExtentYear(extentYear))
     .replace('{polyname}', indicator);
   return axios.get(url);
 };

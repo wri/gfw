@@ -267,5 +267,44 @@
       "unit": "ha"
     },
     "active": true
+  },
+  "gladAlerts": {
+    "title": "Deforestation Alerts",
+    "config": {
+      "size": "large",
+      "categories": ["summary", "forest-change"],
+      "admins": ["country", "region", "subRegion"],
+      "type": "alerts",
+      "selectors": ["weeks"],
+      "metaKey": "widget_deforestation_alert_location",
+      "customLocationWhitelist": ["BRA", "COL", "ECU", "GUF", "GUY", "PER", "SUR", "BDI",
+        "CMR", "CAF", "GNQ", "GAB", "RWA", "UGA", "IDN", "MYS",
+        "PNG", "VEN", "DOC", "DOG", "TLS"]
+    },
+    "settings": {
+      "period": "week",
+      "weeks": 13
+    },
+    "active": true
+  },
+  "rankedPlantations": {
+    "title": "Ranked plantation breakdown",
+    "config": {
+      "size": "small",
+      "categories": ["land-use"],
+      "admins": ["country", "region"],
+      "selectors": ["thresholds", "extentYears", "types"],
+      "type": "extent",
+      "metaKey": ""
+    },
+    "settings": {
+      "indicator": "gadm28",
+      "extentYear": 2010,
+      "threshold": 30,
+      "type": "bound2",
+      "pageSize": 5,
+      "page": 0
+    },
+    "active": true
   }
 }

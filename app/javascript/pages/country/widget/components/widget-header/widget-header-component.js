@@ -43,7 +43,13 @@ class WidgetHeader extends PureComponent {
           <div className="small-options">
             <Button
               className="theme-button-small square"
-              onClick={() => setModalMeta(settingsConfig.config.metaKey)}
+              onClick={() =>
+                setModalMeta(
+                  settingsConfig.config.metaKey,
+                  ['title', 'citation'],
+                  ['function', 'source']
+                )
+              }
             >
               <Icon icon={infoIcon} />
             </Button>

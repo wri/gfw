@@ -47,7 +47,10 @@ export const checkWidgetNeedsLocations = createSelector(
       w =>
         w.config.admins.indexOf(adminLevel) > -1 &&
         (!w.config.locationCheck || locations[adminCheck].length > 1) &&
-        (w.config.type !== 'fao' || isFaoCountry)
+        (w.config.type !== 'fao' || isFaoCountry) &&
+        (!w.config.customLocationWhitelist ||
+          w.config.customLocationWhitelist.indexOf(location.payload.country) >
+            -1)
     );
   }
 );
@@ -76,6 +79,7 @@ export const filterWidgets = createSelector(
         !type ||
         type === 'extent' ||
         type === 'fao' ||
+        type === 'alerts' ||
         (whitelist && whitelist.gadm28 && whitelist.gadm28[type]);
 
       return showByIndicators && hasData;
