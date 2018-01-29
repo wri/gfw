@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { getColorPalette } from 'utils/data';
+import { format } from 'd3-format';
 
 // get list data
 const getData = state => state.data;
@@ -52,22 +53,42 @@ export const getPrimaryTreeCoverData = createSelector(
 
 export const getSentence = createSelector(
   [getPrimaryTreeCoverData, getSettings, getLocationNames, getActiveIndicator],
-  (data, settings, locationNames, indicator) => {
-    if (!data || !locationNames) return null;
-    const largestContrib = data.find(d => d.percentage >= 0.5);
+  (parsedData, settings, locationNames, indicator) => {
+    if (!parsedData || !locationNames) return null;
+    const primaryPercentage = parsedData.find(d => d.label === 'Primary Forest')
+      .percentage;
     const locationLabel = locationNames.current && locationNames.current.label;
-    const locationIntro = `${
-      indicator.value !== 'gadm28'
-        ? `For <b>${indicator.label}</b> in <b>${locationLabel}</b>,`
-        : `In <b>${locationLabel}</b>,`
-    }`;
-    const first = `${locationIntro} the majority of tree cover is found in <b>${
-      largestContrib.label
-    }</b>, `;
-    const second = `considering tree cover extent in <b>${
-      settings.extentYear
-    }</b> where tree canopy is greater than <b>${settings.threshold}%</b>.`;
+    let sentenceLocation;
 
-    return `${first} ${second}`;
+    switch (indicator.value) {
+      case 'primary_forest__mining':
+        sentenceLocation = '<b>Mining areas</b>';
+        break;
+
+      case 'primary_forest__landmark':
+        sentenceLocation = '<b>Indigenous lands</b>';
+        break;
+
+      case 'primary_forest__wdpa':
+        sentenceLocation = '<b>Protected areas</b>';
+        break;
+
+      default:
+        sentenceLocation = '<b>Primary forests</b>';
+    }
+
+    const sentence = `${
+      indicator.value === 'primary_forest'
+        ? `In <b>${locationLabel}</b>, <strong>${format('.1f')(
+          primaryPercentage
+        )}%</strong> of tree cover is <b>${sentenceLocation}</b>.`
+        : `Within <b>${sentenceLocation}</b> in <b>${locationLabel}</b>, <strong>${format(
+          '.1f'
+        )(
+          primaryPercentage
+        )}%</strong> of tree cover is <b>Primary forest</b>.`
+    }`;
+
+    return sentence;
   }
 );
