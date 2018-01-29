@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
-import { sortByKey, getColorPalette } from 'utils/data';
+import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
@@ -32,19 +32,12 @@ export const getSortedData = createSelector(
           value: settings.unit === 'ha' ? d.extent : percentage,
           path: `/country/${location.country}/${
             location.region ? `${location.region}/` : ''
-          }${d.id}`
+          }${d.id}`,
+          color: colors.green
         });
       }
     });
-    const sortedData = sortByKey(uniqBy(dataMapped, 'label'), 'value', true);
-    const colorRange = getColorPalette(
-      colors.ramp,
-      sortedData.length < 10 ? sortedData.length : 10
-    );
-    return sortedData.map((o, i) => ({
-      ...o,
-      color: o.extent ? colorRange[i] || colorRange[9] : colors.nonForest
-    }));
+    return sortByKey(uniqBy(dataMapped, 'label'), 'value', true);
   }
 );
 
