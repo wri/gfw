@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import WidgetGladAlertsChart from 'pages/country/widget/components/widget-glad-alerts-chart';
+import WidgetComposedChart from 'pages/country/widget/components/widget-composed-chart';
 import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 
 import './widget-glad-alerts-styles.scss';
@@ -14,7 +14,7 @@ class WidgetTreeLoss extends PureComponent {
       <div className="c-widget-glad-alerts">
         {sentence && <WidgetDynamicSentence sentence={sentence} />}
         {data && (
-          <WidgetGladAlertsChart
+          <WidgetComposedChart
             className="loss-chart"
             data={data}
             config={config}
