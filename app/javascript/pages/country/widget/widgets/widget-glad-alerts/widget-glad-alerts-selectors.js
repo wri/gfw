@@ -99,8 +99,6 @@ export const getMeans = createSelector([getData], data => {
     return meanBy(weekData, 'count');
   });
   const leftYears = data.filter(d => d.year !== maxYear);
-  // console.log(data);
-  // console.log(leftYears)
   const rightYears = data.filter(d => d.year !== minYear);
   const leftMeans = meanData(getYearsObj(leftYears, -6));
   const rightMeans = meanData(getYearsObj(rightYears, 0, 6));
