@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { getColorPalette } from 'utils/data';
+import { format } from 'd3-format';
 
 // get list data
 const getData = state => state.data;
@@ -52,20 +53,36 @@ export const getIntactTreeCoverData = createSelector(
 
 export const getSentence = createSelector(
   [getIntactTreeCoverData, getSettings, getLocationNames, getActiveIndicator],
-  (data, settings, locationNames, indicator) => {
-    if (!data || !locationNames) return null;
-    const largestContrib = data.find(d => d.percentage >= 0.5);
+  (parsedData, settings, locationNames, indicator) => {
+    if (!parsedData || !locationNames) return null;
+    const intactPercentage = parsedData.find(d => d.label === 'Intact Forest')
+      .percentage;
     const locationLabel = locationNames.current && locationNames.current.label;
-    const locationIntro = `For <b>${
-      indicator.label
-    }</b> in <b>${locationLabel}</b>,`;
-    const first = `${locationIntro} the majority of tree cover is found in <b>${
-      largestContrib.label
-    }</b>, `;
-    const second = `considering tree cover extent in <b>${
-      settings.extentYear
-    }</b> where tree canopy is greater than <b>${settings.threshold}%</b>.`;
+    let sentenceLocation;
 
-    return `${first} ${second}`;
+    switch (indicator.value) {
+      case 'ifl_2013__mining':
+        sentenceLocation = '<b>Mining areas</b>';
+        break;
+
+      case 'ifl_2013__wdpa':
+        sentenceLocation = '<b>Protected areas</b>';
+        break;
+
+      default:
+        sentenceLocation = '<b>Intact forest</b>';
+    }
+
+    const sentence = `${
+      indicator.value === 'ifl_2013'
+        ? `In <b>${locationLabel}</b>, <strong>${format('.1f')(
+          intactPercentage
+        )}%</strong> of tree cover is <b>${sentenceLocation}</b>.`
+        : `Within <b>${sentenceLocation}</b> in <b>${locationLabel}</b>, <strong>${format(
+          '.1f'
+        )(intactPercentage)}%</strong> of tree cover is <b>Intact forest</b>.`
+    }`;
+
+    return sentence;
   }
 );
