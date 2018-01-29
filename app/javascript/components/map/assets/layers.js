@@ -3,8 +3,8 @@ import Forest2010 from './layers/forest2010';
 import ForestGain from './layers/forestGain';
 import IntactForest from './layers/intact-forest';
 import Loss from './layers/loss';
-import PlantationsBySpecies from './layers/plantations-by-species';
-import Viirs from './layers/viirs';
+import plantationsByType from './layers/plantationsByType';
+import Glad from './layers/glad';
 
 const layersMap = {
   forest2000: Forest2000,
@@ -12,8 +12,8 @@ const layersMap = {
   forestGain: ForestGain,
   ifl_2013_deg: IntactForest,
   loss: Loss,
-  plantations_by_species: PlantationsBySpecies,
-  viirs_fires_alerts: Viirs
+  plantations_by_type: plantationsByType,
+  umd_as_it_happens: Glad
 };
 
 export default layersMap;
