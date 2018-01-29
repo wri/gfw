@@ -11,6 +11,8 @@ import concat from 'lodash/concat';
 import moment from 'moment';
 import { getColorPalette } from 'utils/data';
 
+const MIN_YEAR = 2015;
+
 // get list data
 const getAlerts = state => state.alerts || null;
 const getPeriod = state => state.period || null;
@@ -55,7 +57,11 @@ export const getData = createSelector(
   (data, period) => {
     if (!data || isEmpty(data)) return null;
     const groupedByYear = groupBy(data, 'year');
-    const years = Object.keys(groupedByYear);
+    const years = [];
+    const maxYear = maxBy(data, 'year').year;
+    for (let i = MIN_YEAR; i <= maxYear; i += 1) {
+      years.push(i);
+    }
     const yearLengths = {};
     const lastWeek = {
       isoWeek: moment(period[1]).isoWeek(),
@@ -93,6 +99,8 @@ export const getMeans = createSelector([getData], data => {
     return meanBy(weekData, 'count');
   });
   const leftYears = data.filter(d => d.year !== maxYear);
+  // console.log(data);
+  // console.log(leftYears)
   const rightYears = data.filter(d => d.year !== minYear);
   const leftMeans = meanData(getYearsObj(leftYears, -6));
   const rightMeans = meanData(getYearsObj(rightYears, 0, 6));
@@ -181,7 +189,7 @@ export const chartConfig = createSelector(
       );
     }
     return {
-      xKey: 'week',
+      xKey: 'date',
       yKeys: {
         lines: {
           count: {
@@ -225,8 +233,8 @@ export const chartConfig = createSelector(
       },
       xAxis: {
         tickCount: 12,
-        interval: 4
-        // tickFormatter: t => moment(t).format('MMM')
+        interval: 4,
+        tickFormatter: t => moment(t).format('MMM')
       },
       yAxis: {
         domain: [0, 'auto'],
