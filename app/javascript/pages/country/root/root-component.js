@@ -87,7 +87,7 @@ class Root extends PureComponent {
           <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
             <Sticky
               className={`map ${showMapMobile ? '-open-mobile' : ''}`}
-              limitElement="c-stories"
+              limitElement="c-footer"
               enabled={window.innerWidth >= SCREEN_M}
             >
               <Map
