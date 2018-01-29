@@ -4,6 +4,7 @@ import ForestGain from './layers/forestGain';
 import IntactForest from './layers/intact-forest';
 import Loss from './layers/loss';
 import PlantationsBySpecies from './layers/plantations-by-species';
+import Viirs from './layers/viirs';
 
 const layersMap = {
   forest2000: Forest2000,
@@ -11,7 +12,8 @@ const layersMap = {
   forestGain: ForestGain,
   ifl_2013_deg: IntactForest,
   loss: Loss,
-  plantations_by_species: PlantationsBySpecies
+  plantations_by_species: PlantationsBySpecies,
+  viirs_fires_alerts: Viirs
 };
 
 export default layersMap;
