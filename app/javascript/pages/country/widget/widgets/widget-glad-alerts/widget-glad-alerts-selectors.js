@@ -6,7 +6,6 @@ import mean from 'lodash/mean';
 import groupBy from 'lodash/groupBy';
 import upperCase from 'lodash/upperCase';
 import maxBy from 'lodash/maxBy';
-import compact from 'lodash/compact';
 import minBy from 'lodash/minBy';
 import concat from 'lodash/concat';
 import moment from 'moment';
@@ -25,7 +24,7 @@ const getYearsObj = (data, startSlice, endSlice) => {
     year: key,
     weeks: grouped[key].slice(
       startSlice < 0 ? grouped[key].length + startSlice : startSlice,
-      startSlice < 0 ? grouped[key].length : endSlice
+      endSlice < 0 ? grouped[key].length : endSlice
     )
   }));
 };
@@ -44,7 +43,9 @@ const runningMean = (data, windowSize) => {
   const smoothedMean = [];
   data.forEach((d, i) => {
     const slice = data.slice(i, i + windowSize);
-    smoothedMean.push(mean(slice));
+    if (i < data.length - windowSize + 1) {
+      smoothedMean.push(mean(slice));
+    }
   });
   return smoothedMean;
 };
@@ -57,8 +58,8 @@ export const getData = createSelector(
     const years = Object.keys(groupedByYear);
     const yearLengths = {};
     const lastWeek = {
-      isoWeek: moment(period[0]).isoWeek(),
-      year: moment(period[0]).year()
+      isoWeek: moment(period[1]).isoWeek(),
+      year: moment(period[1]).year()
     };
     years.forEach(y => {
       const lastIsoWeek =
@@ -102,7 +103,6 @@ export const getMeans = createSelector([getData], data => {
     ...d,
     mean: smoothedMeans[i]
   }));
-
   return parsedData;
 });
 
@@ -124,7 +124,7 @@ export const getStdDev = createSelector(
         stdDevs[i] = stdDevs[i] ? [...stdDevs[i], some] : [some];
       });
     }
-    const stdDev = mean(stdDevs.map(s => mean(compact(s)) ** 0.5));
+    const stdDev = mean(stdDevs.map(s => mean(s) ** 0.5));
 
     return data.map(d => ({
       ...d,
@@ -181,7 +181,7 @@ export const chartConfig = createSelector(
       );
     }
     return {
-      xKey: 'date',
+      xKey: 'week',
       yKeys: {
         lines: {
           count: {
@@ -225,8 +225,8 @@ export const chartConfig = createSelector(
       },
       xAxis: {
         tickCount: 12,
-        interval: 4,
-        tickFormatter: t => moment(t).format('MMM')
+        interval: 4
+        // tickFormatter: t => moment(t).format('MMM')
       },
       yAxis: {
         domain: [0, 'auto'],
