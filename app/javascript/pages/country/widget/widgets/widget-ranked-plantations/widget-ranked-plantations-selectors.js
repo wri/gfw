@@ -64,8 +64,10 @@ export const chartConfig = createSelector(
   [getPlanationKeys, getColors, getSettings],
   (dataKeys, colors, settings) => {
     if (!dataKeys) return null;
+    const colorsByType =
+      settings.type === 'bound1' ? colors.types : colors.species;
     return {
-      colors: settings.type === 'bound1' ? colors.types : colors.species,
+      colors: colorsByType,
       unit: '%',
       xKey: 'region',
       yKeys: dataKeys,
@@ -74,7 +76,8 @@ export const chartConfig = createSelector(
         key: item,
         unit: '%',
         unitFormat: '.2f',
-        label: `${item} label`
+        label: `${item} label`,
+        color: colorsByType[item]
       }))
     };
   }

@@ -34,7 +34,6 @@ class WidgetPieChart extends PureComponent {
                 <Cell
                   key={index.toString()}
                   fill={item.color}
-                  // strokeWidth={0}
                   stroke={item.color}
                 />
               ))}

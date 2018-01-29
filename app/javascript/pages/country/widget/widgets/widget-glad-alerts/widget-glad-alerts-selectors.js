@@ -9,7 +9,6 @@ import maxBy from 'lodash/maxBy';
 import compact from 'lodash/compact';
 import minBy from 'lodash/minBy';
 import concat from 'lodash/concat';
-import reverse from 'lodash/reverse';
 import moment from 'moment';
 import { getColorPalette } from 'utils/data';
 
@@ -22,7 +21,6 @@ const getActiveData = state => state.activeData || null;
 
 const getYearsObj = (data, startSlice, endSlice) => {
   const grouped = groupBy(data, 'year');
-
   return Object.keys(grouped).map(key => ({
     year: key,
     weeks: grouped[key].slice(
@@ -32,14 +30,13 @@ const getYearsObj = (data, startSlice, endSlice) => {
   }));
 };
 
-const getMeans = data => {
+const meanData = data => {
   const means = [];
   data.forEach(w => {
     w.weeks.forEach((y, i) => {
       means[i] = means[i] ? [...means[i], y.count] : [y.count];
     });
   });
-
   return means.map(w => mean(w));
 };
 
@@ -52,14 +49,11 @@ const runningMean = (data, windowSize) => {
   return smoothedMean;
 };
 
-// get lists selected
 export const getData = createSelector(
   [getAlerts, getPeriod],
   (data, period) => {
     if (!data || isEmpty(data)) return null;
-    // fill zeros for data based on last date
     const groupedByYear = groupBy(data, 'year');
-    // get size of each year
     const years = Object.keys(groupedByYear);
     const yearLengths = {};
     const lastWeek = {
@@ -88,28 +82,22 @@ export const getData = createSelector(
   }
 );
 
-export const getGladStats = createSelector([getData], data => {
+export const getMeans = createSelector([getData], data => {
   if (!data) return null;
   const minYear = minBy(data, 'year').year;
   const maxYear = maxBy(data, 'year').year;
   const grouped = groupBy(data, 'week');
-
   const centralMeans = Object.keys(grouped).map(d => {
     const weekData = grouped[d];
     return meanBy(weekData, 'count');
   });
-
   const leftYears = data.filter(d => d.year !== maxYear);
   const rightYears = data.filter(d => d.year !== minYear);
-  const leftMeans = getMeans(getYearsObj(leftYears, -6));
-  const rightMeans = getMeans(getYearsObj(rightYears, 0, 6));
-
+  const leftMeans = meanData(getYearsObj(leftYears, -6));
+  const rightMeans = meanData(getYearsObj(rightYears, 0, 6));
   const allMeans = concat(leftMeans, centralMeans, rightMeans);
   const smoothedMeans = runningMean(allMeans, 12);
-
-  // get from now week back one year not just current year
   const pastYear = data.slice(-52);
-
   const parsedData = pastYear.map((d, i) => ({
     ...d,
     mean: smoothedMeans[i]
@@ -119,16 +107,15 @@ export const getGladStats = createSelector([getData], data => {
 });
 
 export const getStdDev = createSelector(
-  [getGladStats, getData],
-  (meanedData, rawData) => {
-    if (!meanedData) return null;
+  [getMeans, getData],
+  (data, rawData) => {
+    if (!data) return null;
     const stdDevs = [];
-    const centralMeans = meanedData.map(d => d.mean);
+    const centralMeans = data.map(d => d.mean);
     const groupedByYear = groupBy(rawData, 'year');
     const meansFromGroup = Object.keys(groupedByYear).map(key =>
       groupedByYear[key].map(d => d.count)
     );
-
     for (let i = 0; i < centralMeans.length; i += 1) {
       meansFromGroup.forEach(m => {
         const value = m[i] || 0;
@@ -137,10 +124,9 @@ export const getStdDev = createSelector(
         stdDevs[i] = stdDevs[i] ? [...stdDevs[i], some] : [some];
       });
     }
-
     const stdDev = mean(stdDevs.map(s => mean(compact(s)) ** 0.5));
 
-    return meanedData.map(d => ({
+    return data.map(d => ({
       ...d,
       plusStdDev: [d.mean, d.mean + stdDev],
       minusStdDev: [d.mean - stdDev, d.mean],
@@ -150,26 +136,31 @@ export const getStdDev = createSelector(
   }
 );
 
-export const chartData = createSelector(
-  [getStdDev, getPeriod, getSettings],
-  (data, period, settings) => {
+export const getDates = createSelector(
+  [getStdDev, getPeriod],
+  (data, period) => {
     if (!data || !period) return null;
-
-    return data
-      .map(d => ({
-        ...d,
-        date: moment()
+    return data.map(d => ({
+      ...d,
+      date: moment()
+        .year(d.year)
+        .week(d.week)
+        .format('YYYY-MM-DD'),
+      month: upperCase(
+        moment()
           .year(d.year)
           .week(d.week)
-          .format('YYYY-MM-DD'),
-        month: upperCase(
-          moment()
-            .year(d.year)
-            .week(d.week)
-            .format('MMM')
-        )
-      }))
-      .slice(-settings.weeks);
+          .format('MMM')
+      )
+    }));
+  }
+);
+
+export const chartData = createSelector(
+  [getDates, getSettings],
+  (data, settings) => {
+    if (!data) return null;
+    return data.slice(-settings.weeks);
   }
 );
 
@@ -192,29 +183,54 @@ export const chartConfig = createSelector(
     return {
       xKey: 'date',
       yKeys: {
-        lineKeys: ['count'],
-        areaKeys: [
-          'plusStdDev',
-          'minusStdDev',
-          'twoPlusStdDev',
-          'twoMinusStdDev'
-        ]
+        lines: {
+          count: {
+            stroke: colors.pink
+          }
+        },
+        areas: {
+          plusStdDev: {
+            fill: '#555555',
+            stroke: '#555555',
+            opacity: 0.1,
+            strokeWidth: 0,
+            background: false,
+            activeDot: false
+          },
+          minusStdDev: {
+            fill: '#555555',
+            stroke: '#555555',
+            opacity: 0.1,
+            strokeWidth: 0,
+            background: false,
+            activeDot: false
+          },
+          twoPlusStdDev: {
+            fill: '#555555',
+            stroke: '#555555',
+            opacity: 0.2,
+            strokeWidth: 0,
+            background: false,
+            activeDot: false
+          },
+          twoMinusStdDev: {
+            fill: '#555555',
+            stroke: '#555555',
+            opacity: 0.2,
+            strokeWidth: 0,
+            background: false,
+            activeDot: false
+          }
+        }
       },
-      colors: {
-        count: colors.pink,
-        plusStdDev: '#555555',
-        minusStdDev: '#555555',
-        twoPlusStdDev: '#555555',
-        twoMinusStdDev: '#555555'
+      xAxis: {
+        tickCount: 12,
+        interval: 4,
+        tickFormatter: t => moment(t).format('MMM')
       },
-      xAxisConfig: {
-        ticks: reverse(ticks)
-      },
-      opacity: {
-        plusStdDev: 0.2,
-        minusStdDev: 0.2,
-        twoPlusStdDev: 0.1,
-        twoMinusStdDev: 0.1
+      yAxis: {
+        domain: [0, 'auto'],
+        allowDataOverflow: true
       }
     };
   }
@@ -248,8 +264,8 @@ export const getSentence = createSelector(
       status = 'normal';
       statusColor = colorRange[2];
     } else if (
-      lastDate.count <= lastDate.twoMinusStdDev[0] &&
-      lastDate.count > lastDate.twoMinusStdDev[1]
+      lastDate.count >= lastDate.twoMinusStdDev[0] &&
+      lastDate.count < lastDate.twoMinusStdDev[1]
     ) {
       status = 'low';
       statusColor = colorRange[3];
@@ -258,6 +274,7 @@ export const getSentence = createSelector(
 
     return `There were <b style="color: ${colors.pink}">${format(',')(
       lastDate.count
-    )}</b> GLAD alerts reported in the week of the <b>${date}</b>, <b style="color: ${statusColor}">${status}</b> compared to the same week in previous years.`;
+    )}</b> GLAD alerts reported in the week of the <b>${date}</b>,
+    <b style="color: ${statusColor}">${status}</b> compared to the same week in previous years.`;
   }
 );
