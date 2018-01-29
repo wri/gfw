@@ -57,7 +57,7 @@ export const chartConfig = createSelector([getColors], colors => {
       {
         key: 'areaLoss',
         unit: 'ha',
-        label: 'Inside plantations',
+        label: 'Within plantations',
         color: colorRange[0]
       }
     ]
@@ -68,14 +68,15 @@ export const getSentence = createSelector(
   [chartData, getSettings, getLocationNames],
   (data, settings, locationNames) => {
     if (!data) return null;
-    const { startYear, endYear, threshold } = settings;
+    const { startYear, endYear } = settings;
     const locationLabel = locationNames.current && locationNames.current.label;
     const totalLoss = sumBy(data, 'areaLoss') || 0;
     const totalOutsideLoss = sumBy(data, 'outsideAreaLoss') || 0;
     const totalEmissions = biomassToCO2(sumBy(data, 'emissions')) || 0;
-    const lossPhrase = totalLoss > totalOutsideLoss ? 'inside' : 'outside';
+    const lossPhrase = totalLoss > totalOutsideLoss ? 'within' : 'outside';
 
-    return `The majority of tree cover loss from <span>${startYear}</span> to <span>${endYear}</span> in <b>${locationLabel}</b> occured <b>${lossPhrase}</b> of plantations, considering tree cover with canopy density greater than <b>${threshold}%</b>.
+    return `The majority of tree cover loss in <b>${locationLabel}</b> from <span>${startYear}</span> 
+    to <span>${endYear}</span> occured <b>${lossPhrase}</b> of plantations.
     The total loss is roughly equivalent to <b>${format('.2s')(
     totalEmissions
   )}t of CO<sub>2</sub></b> emissions.`;
