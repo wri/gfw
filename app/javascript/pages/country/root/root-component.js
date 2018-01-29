@@ -8,7 +8,6 @@ import Share from 'components/share';
 import Header from 'pages/country/header';
 import Footer from 'pages/country/footer';
 import Map from 'components/map';
-import Stories from 'pages/country/stories';
 import Sticky from 'components/sticky';
 import CountryDataProvider from 'pages/country/providers/country-data-provider';
 import SubNavMenu from 'components/subnav-menu';
@@ -88,7 +87,7 @@ class Root extends PureComponent {
           <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
             <Sticky
               className={`map ${showMapMobile ? '-open-mobile' : ''}`}
-              limitElement="c-stories"
+              limitElement="c-footer"
               enabled={window.innerWidth >= SCREEN_M}
             >
               <Map
@@ -114,7 +113,6 @@ class Root extends PureComponent {
             </Sticky>
           </div>
         </div>
-        <Stories />
         <Footer />
         <Share />
         <ModalMeta />

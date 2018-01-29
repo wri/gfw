@@ -4,7 +4,7 @@ import Button from 'components/button';
 import './footer-styles.scss';
 
 const Footer = () => (
-  <div className="c-footer">
+  <div id="c-footer" className="c-footer">
     <div className="row">
       <div className="small-12 medium-6 large-3 columns">
         <div className="alert">
