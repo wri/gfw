@@ -2,7 +2,7 @@ export const initialState = {
   loading: false,
   error: false,
   layerSpec: {},
-  layers: ['forestGain']
+  layers: ['forest2000']
 };
 
 const setLayerSpecLoading = (state, { payload }) => ({
