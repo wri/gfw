@@ -1,5 +1,5 @@
 import CartoDB from './abstract/cartoDB';
-import PlantationsByTypeCartoCSS from '../cartocss/plantations_by_type.cartocss';
+import PlantationsByTypeCartoCSS from '../cartocss/plantations-by-type.cartocss';
 
 const OPTIONS = {
   sql:

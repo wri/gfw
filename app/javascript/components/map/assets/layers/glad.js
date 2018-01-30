@@ -20,7 +20,7 @@ const padNumber = number => {
 class Glad extends Canvas {
   constructor(map, options) {
     super(map, OPTIONS);
-    this.options = Object.assign({}, this.options, options);
+    this.options = { ...this.options, ...options };
     this.tiles = {};
   }
 
