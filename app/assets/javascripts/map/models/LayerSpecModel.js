@@ -51,6 +51,7 @@ define([
       "mangrove_watch",
       "plantations_by_type",
       "plantations_by_species",
+      "map_biomas",
       "bra_plantations_by_type",
       "bra_plantations_by_species",
       "per_plantations_by_type",

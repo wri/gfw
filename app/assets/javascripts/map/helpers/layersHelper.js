@@ -97,6 +97,7 @@ define([
   'map/views/layers/RaisgLayer',
   'map/views/layers/PlantationsLayerByType',
   'map/views/layers/PlantationsLayerBySpecies',
+  'map/views/layers/BRA_mapBiomas',
   'map/views/layers/BraPlantationsLayerByType',
   'map/views/layers/BraPlantationsLayerBySpecies',
   'map/views/layers/PerPlantationsLayerByType',
@@ -282,6 +283,7 @@ define([
   PerPermForestLayer,
   RaisgLayer,
   PlantationsLayerByType,
+  BraMapBiomassLayer,
   PlantationsLayerBySpecies,
   BraPlantationsLayerByType,
   BraPlantationsLayerBySpecies,
@@ -673,6 +675,9 @@ define([
     },
     plantations_by_species: {
       view: PlantationsLayerBySpecies
+    },
+    map_biomas:{
+      BRA_mapBiomas
     },
     bra_plantations_type: {
       view: BraPlantationsLayerByType
