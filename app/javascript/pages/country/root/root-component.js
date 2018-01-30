@@ -17,6 +17,7 @@ import Button from 'components/button';
 import Icon from 'components/icon';
 import ModalMeta from 'components/modal-meta';
 import ScrollTo from 'components/scroll-to';
+import Meta from 'pages/country/meta';
 
 import mapIcon from 'assets/icons/map-button.svg';
 import closeIcon from 'assets/icons/close.svg';
@@ -120,6 +121,7 @@ class Root extends PureComponent {
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CountryDataProvider />
+        <Meta page={currentLocation} />
       </div>
     );
   }
