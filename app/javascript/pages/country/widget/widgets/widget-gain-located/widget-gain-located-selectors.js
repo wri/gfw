@@ -76,7 +76,6 @@ export const getSentence = createSelector(
   ],
   (data, settings, options, location, indicator, locationNames) => {
     if (!data || !options || !indicator || !locationNames) return '';
-    const { threshold } = settings;
     const totalGain = sumBy(data, 'gain');
     const currentLocation =
       locationNames && locationNames.current && locationNames.current.label;
@@ -113,7 +112,7 @@ export const getSentence = createSelector(
     } else {
       sentence += `${format('.0f')(topGain)}%`;
     }
-    sentence += `</b> of all region tree cover gain where tree canopy is greater than <b>${threshold}%</b>. `;
+    sentence += '</b> of all region tree cover gain. ';
     sentence += `${
       percentileLength > 1 ? `<b>${topRegion.label}</b>` : 'This region'
     } has the largest tree cover gain at `;

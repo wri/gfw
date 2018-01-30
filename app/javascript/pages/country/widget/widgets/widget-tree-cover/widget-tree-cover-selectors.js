@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { getColorPalette } from 'utils/data';
+import { format } from 'd3-format';
 
 // get list data
 const getData = state => state.data;
@@ -60,10 +61,10 @@ export const getSentence = createSelector(
         ? `<b>${indicator.label}</b> in <b>${locationLabel}</b> are `
         : `<b>${locationLabel}</b> is `
     }`;
-    const first = `${locationIntro} mainly ${coverStatus}, `;
-    const second = `considering tree cover extent in <b>${
+    const first = `As of <b>${
       settings.extentYear
-    }</b> where tree canopy is greater than <b>${settings.threshold}%</b>.`;
+    }</b>, ${locationIntro} mainly ${coverStatus}, `;
+    const second = `with <b>${format('.3s')(cover)}Ha</b> of tree cover.`;
 
     return `${first} ${second}`;
   }

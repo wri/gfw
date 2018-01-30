@@ -3,7 +3,6 @@ import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
-import { ordinalSuffixOf } from 'utils/calculations';
 
 // get list data
 const getData = state => state.data || null;
@@ -100,12 +99,7 @@ export const getSentence = createSelector(
         settings.extentYear
       }</b> tree cover extent.`
       : '.';
-    const rankSentence =
-      locationData &&
-      `In relation to other countries this was the <b>${ordinalSuffixOf(
-        locationData.rank
-      )}</b> largest change.`;
 
-    return `${firstSentence}${secondSentence} ${rankSentence}`;
+    return `${firstSentence}${secondSentence}`;
   }
 );
