@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
+import ReactHtmlParser from 'react-html-parser';
 
 import Modal from 'components/modal';
 import Loader from 'components/loader';
@@ -32,7 +33,7 @@ class ModalMeta extends PureComponent {
               <h3 className="title">{metaData.title}</h3>
               <p
                 className="subtitle"
-                dangerouslySetInnerHTML={{ __html: metaData.subtitle }}
+                dangerouslySetInnerHTML={{ __html: metaData.subtitle }} // eslint-disable-line
               />
               <div className="meta-table">
                 {tableData &&
@@ -42,12 +43,11 @@ class ModalMeta extends PureComponent {
                         <div key={key} className="table-row">
                           <div
                             className="title-column"
-                            dangerouslySetInnerHTML={{ __html: lowerCase(key) }}
+                            dangerouslySetInnerHTML={{ __html: lowerCase(key) }} // eslint-disable-line
                           />
-                          <div
-                            className="description-column"
-                            dangerouslySetInnerHTML={{ __html: tableData[key] }}
-                          />
+                          <div className="description-column">
+                            {this.parseContent(tableData[key])}
+                          </div>
                         </div>
                       ) : null)
                   )}
@@ -55,17 +55,44 @@ class ModalMeta extends PureComponent {
               {metaData.overview && (
                 <div className="overview">
                   <h4>Overview</h4>
-                  <p dangerouslySetInnerHTML={{ __html: metaData.overview }} />
+                  <div className="body">
+                    {this.parseContent(metaData.overview)}
+                  </div>
                 </div>
               )}
               {metaData.citation && (
                 <div className="citation">
                   <h5>Citation</h5>
-                  <p dangerouslySetInnerHTML={{ __html: metaData.citation }} />
+                  <div className="body">
+                    {this.parseContent(metaData.citation)}
+                  </div>
                 </div>
               )}
             </div>
           )}
+      </div>
+    );
+  }
+
+  parseContent(html) {
+    return (
+      <div>
+        {ReactHtmlParser(html, {
+          transform: node => { // eslint-disable-line
+            if (node.name === 'a') {
+              return (
+                <a
+                  key={node.attribs.href}
+                  href={node.attribs.href}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {node.children[0].data}
+                </a>
+              );
+            }
+          }
+        })}
       </div>
     );
   }
