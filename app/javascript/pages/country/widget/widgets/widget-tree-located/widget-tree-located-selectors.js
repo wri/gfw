@@ -50,7 +50,7 @@ export const getSentence = createSelector(
   ],
   (data, settings, options, location, indicator, locationNames) => {
     if (!data || !options || !indicator || !locationNames) return '';
-    const { extentYear, threshold, unit } = settings;
+    const { unit } = settings;
 
     let sentence = '';
     const topRegion = data.length && data[0];
@@ -62,7 +62,7 @@ export const getSentence = createSelector(
         topRegion.percentage
       )}%</b>, compared to a regional average of <b>${format('.0f')(
         avgExtentPercentage
-      )}%</b>, considering tree cover extent in <b>${extentYear}</b> with a canopy cover of greater than <b>${threshold}%</b>.`;
+      )}%</b>.`;
     } else {
       const totalExtent = sumBy(data, 'extent');
       const currentLocation =
@@ -89,16 +89,16 @@ export const getSentence = createSelector(
       const topExtent = percentileExtent / totalExtent * 100;
 
       if (percentileLength > 1) {
-        sentence += `the top <b>${percentileLength}</b> regions represents <b>`;
+        sentence += `the top <b>${percentileLength}</b> regions represent <b>`;
       } else {
         sentence += `<b>${topRegion.label}</b> represents <b>`;
       }
       if (!location.region) {
-        sentence += `more than half (${format('.0f')(topExtent)}%)`;
+        sentence += `${format('.0f')(topExtent)}%`;
       } else {
         sentence += `${format('.0f')(topExtent)}%`;
       }
-      sentence += `</b> of all tree cover in <b>${extentYear}</b> where tree canopy is greater than <b>${threshold}%</b>. `;
+      sentence += '</b> of all tree cover. ';
       sentence += `${
         percentileLength > 1 ? `<b>${topRegion.label}</b>` : 'This region'
       } has the largest tree cover at `;

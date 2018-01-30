@@ -6,6 +6,7 @@ import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import { sortByKey } from 'utils/data';
+import endsWith from 'lodash/endsWith';
 
 const getPlantations = state => state.plantations || null;
 const getExtent = state => state.extent || null;
@@ -88,7 +89,7 @@ export const getSentence = createSelector(
   (data, settings, location, locationNames) => {
     if (!data) return null;
 
-    const { type, extentYear, threshold } = settings;
+    const { type } = settings;
     const currentLocation =
       locationNames && locationNames.current && locationNames.current.label;
     const topRegion = data[0];
@@ -102,23 +103,25 @@ export const getSentence = createSelector(
       ),
       'value'
     );
+    const plantationLabel = topPlantation.label;
+    const isPlural = endsWith(plantationLabel, 's');
     let sentence = '';
     if (type === 'bound1') {
       sentence = `<b>${
         topRegion.region
-      }</b> (<b>${extentYear}</b>) has the largest relative tree cover due to plantations (<b>${format(
-        '.1f'
-      )(data[0].total)}%</b>) in <b>${currentLocation}</b>${
-        location.payload.region ? ` (<b>${extentYear})</b>` : ''
-      }, most of which is <b>${topPlantation.label.toLowerCase()}</b> plantations where tree canopy is greater than <b>${threshold}%</b>.`;
+      }</b> has the largest relative tree cover due to plantations in <b>${currentLocation}</b>${
+        location.payload.region ? ' ' : ''
+      } at <b>${format('.1f')(
+        data[0].total
+      )}%</b>, most of which is in <b>${plantationLabel}${
+        isPlural ? '' : 's'
+      }</b>.`;
     } else {
       sentence = `Within <b>${currentLocation}</b>, <b>${(topRegion.region &&
         topRegion.region) ||
         ''}</b> has the largest relative area of plantation tree cover${
         location.payload.region ? ' extent' : ''
-      } in <b>${extentYear}</b> at <b>${format('.1f')(
-        topRegion.total
-      )}%</b>, where tree canopy is greater than <b>${threshold}%</b>.`;
+      } at <b>${format('.1f')(topRegion.total)}%</b>.`;
     }
     return sentence;
   }

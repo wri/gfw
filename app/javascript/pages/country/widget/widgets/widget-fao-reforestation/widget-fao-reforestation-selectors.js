@@ -4,7 +4,6 @@ import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 import { getActiveFilter } from 'pages/country/widget/widget-selectors';
-import { ordinalSuffixOf } from 'utils/calculations';
 
 const getData = state => state.data || null;
 const getLocation = state => state.location || null;
@@ -60,9 +59,7 @@ export const getSentence = createSelector(
         countryData.label
       }</b> was <strong>${format('.3s')(
         countryData.value * 1000
-      )}ha/year</strong>. In relation to other countries this was the <b>${ordinalSuffixOf(
-        countryData.rank
-      )}</b> largest change.`
+      )}ha/year</strong>.`
       : '';
   }
 );
