@@ -18,7 +18,7 @@ class Share extends PureComponent {
       selected,
       loading,
       copied,
-      data: { title, subtitle, shareUrl, embedUrl, embedSettings },
+      data: { title, subtitle, shareUrl, embedUrl, embedSettings, socialText },
       handleFocus,
       setShareSelected,
       handleCopyToClipboard
@@ -93,7 +93,7 @@ class Share extends PureComponent {
             <Icon icon={googleplusIcon} className="googleplus-icon" />
           </a>
           <a
-            href={`https://twitter.com/share?shareUrl=${shareUrl}`}
+            href={`https://twitter.com/intent/tweet?text=${socialText}&via=globalforests&url=${shareUrl}`}
             target="_blank"
             className="social-button -twitter"
           >

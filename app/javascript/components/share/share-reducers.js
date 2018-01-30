@@ -8,7 +8,8 @@ export const initialState = {
     subtitle: '',
     shareUrl: '',
     embedUrl: '',
-    embedSettings: { width: 0, height: 0 }
+    embedSettings: { width: 0, height: 0 },
+    socialText: ''
   }
 };
 
