@@ -306,5 +306,17 @@
       "page": 0
     },
     "active": true
+  },
+  "emissions": {
+    "title": "Emissions",
+    "config": {
+      "size": "small",
+      "categories": ["land-use"],
+      "admins": ["country"],
+      "selectors": [],
+      "metaKey": "widget_emissions",
+      "type": "loss"
+    },
+    "active": true
   }
 }
