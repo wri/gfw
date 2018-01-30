@@ -57,6 +57,7 @@ const mapStateToProps = ({ root, countryData, location }) => {
         ? regionWhitelist
         : countryWhitelist
     }),
+    locationGeoJson: countryData.geostore && countryData.geostore.geojson,
     loading: isCountryWhitelistLoading || isRegionWhitelistLoading
   };
 };

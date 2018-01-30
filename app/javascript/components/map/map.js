@@ -31,6 +31,7 @@ class MapContainer extends PureComponent {
     const { isParentLoading, bounds, layers, layerSpec } = nextProps;
     if (isParentLoading !== this.props.isParentLoading && bounds) {
       this.boundMap(nextProps.bounds);
+      this.setAreaHighlight();
     }
 
     if (!isEqual(layerSpec, this.props.layerSpec) && layers.length) {
@@ -44,6 +45,19 @@ class MapContainer extends PureComponent {
       layer.getLayer().then(res => {
         this.map.overlayMapTypes.setAt(index, res);
       });
+    });
+  }
+
+  setAreaHighlight() {
+    this.map.data.forEach(feature => {
+      this.map.data.remove(feature);
+    });
+    const { areaHighlight } = this.props;
+    this.map.data.addGeoJson(areaHighlight);
+    this.map.data.setStyle({
+      strokeWeight: 1.5,
+      stroke: '#333',
+      fillColor: 'transparent'
     });
   }
 
@@ -88,7 +102,8 @@ MapContainer.propTypes = {
   bounds: PropTypes.array.isRequired,
   layers: PropTypes.array.isRequired,
   mapOptions: PropTypes.object.isRequired,
-  getLayerSpec: PropTypes.func.isRequired
+  getLayerSpec: PropTypes.func.isRequired,
+  areaHighlight: PropTypes.object
 };
 
 export default connect(mapStateToProps, actions)(MapContainer);
