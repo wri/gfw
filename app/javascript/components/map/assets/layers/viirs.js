@@ -21,7 +21,7 @@ class Viirs extends CartoDB {
     );
   }
 
-  _getQuery() {
+  getQuery() {
     return this.options.sql
       .replace(/{tableName}/g, this.options.layerSpec.table_name)
       .replace('{year}', moment(this.currentDate[0]).year())
