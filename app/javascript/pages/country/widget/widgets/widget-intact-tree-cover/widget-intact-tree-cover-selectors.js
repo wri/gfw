@@ -62,7 +62,7 @@ export const getSentence = createSelector(
 
     switch (indicator.value) {
       case 'ifl_2013__mining':
-        sentenceLocation = '<b>Mining areas</b>';
+        sentenceLocation = '<b>Mining concessions</b>';
         break;
 
       case 'ifl_2013__wdpa':
