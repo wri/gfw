@@ -19,7 +19,7 @@ const padNumber = number => {
 class Glad extends AnimatedCanvas {
   constructor(map, options) {
     super(map, OPTIONS);
-    this.options = Object.assign({}, this.options, options);
+    this.options = { ...this.options, ...options };
     this.tiles = {};
     this.setupAnimation();
     this.currentDate = [
