@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Modified from the Forest2010 layer
  *  https://storage.googleapis.com/wri-public/mapbiomass/tiles/v4{/YYYY}{/z}{/x}{/y}.png
@@ -17,7 +18,7 @@ define([
       options: {
         threshold: 30,
         dataMaxZoom: 12,
-        urlTemplate: 'https://storage.googleapis.com/wri-public/treecover/2010{/threshold}{/z}{/x}{/y}.png'
+        urlTemplate: 'https://storage.googleapis.com/wri-public/mapbiomass/tiles/v4/2000{/z}{/x}{/y}.png'
       },
 
       init: function(layer, options, map) {
