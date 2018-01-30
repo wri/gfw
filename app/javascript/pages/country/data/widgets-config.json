@@ -92,7 +92,7 @@
       "threshold": 30,
       "extentYear": 2010,
       "unit": "ha",
-      "pageSize": 5,
+      "pageSize": 8,
       "page": 0
     },
     "active": true
@@ -187,7 +187,7 @@
       "indicator": "gadm28",
       "threshold": 30,
       "unit": "ha",
-      "pageSize": 5,
+      "pageSize": 8,
       "page": 0,
       "startYear": 2001,
       "endYear": 2016
@@ -249,7 +249,7 @@
       "indicator": "gadm28",
       "threshold": 30,
       "unit": "ha",
-      "pageSize": 5,
+      "pageSize": 8,
       "page": 0
     },
     "active": true

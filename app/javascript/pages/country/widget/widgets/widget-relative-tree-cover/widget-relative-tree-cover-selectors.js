@@ -50,7 +50,6 @@ export const getSentence = createSelector(
   ],
   (data, settings, options, location, indicator, locationNames) => {
     if (!data || !options || !indicator || !locationNames) return '';
-    const { extentYear, threshold } = settings;
     const topRegion = data.length && data[0];
     const avgExtentPercentage = sumBy(data, 'percentage') / data.length;
     const sentence = `<b>${
@@ -59,7 +58,7 @@ export const getSentence = createSelector(
       topRegion.percentage
     )}%</b>, compared to a regional average of <b>${format('.0f')(
       avgExtentPercentage
-    )}%</b>, considering tree cover extent in <b>${extentYear}</b> with a canopy cover of greater than <b>${threshold}%</b>.`;
+    )}%</b>.`;
 
     return sentence;
   }

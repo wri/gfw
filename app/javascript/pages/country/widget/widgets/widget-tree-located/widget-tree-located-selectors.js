@@ -76,7 +76,6 @@ export const getSentence = createSelector(
   ],
   (data, settings, options, location, indicator, locationNames) => {
     if (!data || !options || !indicator || !locationNames) return '';
-    const { extentYear, threshold } = settings;
     const totalExtent = sumBy(data, 'extent');
     const currentLocation =
       locationNames && locationNames.current && locationNames.current.label;
@@ -114,7 +113,7 @@ export const getSentence = createSelector(
     } else {
       sentence += `${format('.0f')(topExtent)}%`;
     }
-    sentence += `</b> of all tree cover in <b>${extentYear}</b> where tree canopy is greater than <b>${threshold}%</b>. `;
+    sentence += '</b> of all tree cover. ';
     sentence += `${
       percentileLength > 1 ? `<b>${topRegion.label}</b>` : 'This region'
     } has the largest tree cover at `;
