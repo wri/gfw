@@ -207,6 +207,7 @@ define([
       'change .js-tree-plantation' : 'togglePlantation',
       'change .js-tree-plantation-country' : 'togglePlantationCountry',
       'change .js-toggle-concessions' : 'toggleConcessions',
+      'change .js-map-biomas-year' : 'toggleMapBiomasYear',
       'click .js-toggle-legend' : 'toogleLegend',
       'click .js-toggle-embed-legend' : 'toogleEmbedLegend',
       'click .js-select-layer': 'selectLayer',
@@ -545,6 +546,12 @@ define([
       var layerSlugRemove = '';
       this.presenter.toggleLayer('forest2000');
       this.presenter.toggleLayer('forest2010');
+    },
+
+    //map biomas year
+    toggleMapBiomasYear: function(e){
+      var year = $(e.currentTarget).val();
+      mps.publish('Year/update', [year]);
     },
 
     // legend
