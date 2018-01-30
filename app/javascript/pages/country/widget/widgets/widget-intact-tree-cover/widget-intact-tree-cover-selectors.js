@@ -73,14 +73,15 @@ export const getSentence = createSelector(
         sentenceLocation = '<b>Intact forest</b>';
     }
 
+    const lessThanCheck =
+      intactPercentage < 0.01
+        ? 'less than <b>0.1%</b> '
+        : `<strong>${format('.1f')(intactPercentage)}%</strong> `;
+
     const sentence = `${
       indicator.value === 'ifl_2013'
-        ? `In <b>${locationLabel}</b>, <strong>${format('.1f')(
-          intactPercentage
-        )}%</strong> of tree cover is <b>${sentenceLocation}</b>.`
-        : `Within <b>${sentenceLocation}</b> in <b>${locationLabel}</b>, <strong>${format(
-          '.1f'
-        )(intactPercentage)}%</strong> of tree cover is <b>Intact forest</b>.`
+        ? `In <b>${locationLabel}</b>, ${lessThanCheck} of tree cover is <b>${sentenceLocation}</b>.`
+        : `Within <b>${sentenceLocation}</b> in <b>${locationLabel}</b>, ${lessThanCheck} of tree cover is <b>Primary forest</b>.`
     }`;
 
     return sentence;
