@@ -90,18 +90,23 @@ class Canvas extends Overlay {
   }
 
   getImage(url, callback) {
-    return axios.get(url, { responseType: 'blob' }).then(response => {
-      const image = new Image();
-      const imageUrl = URL.createObjectURL(response.data);
-      image.onload = () => {
-        image.crossOrigin = '';
-        callback(image);
-        URL.revokeObjectURL(url);
-      };
-      image.src = imageUrl;
+    return axios
+      .get(url, { responseType: 'blob' })
+      .then(response => {
+        const image = new Image();
+        const imageUrl = URL.createObjectURL(response.data);
+        image.onload = () => {
+          image.crossOrigin = '';
+          callback(image);
+          URL.revokeObjectURL(url);
+        };
+        image.src = imageUrl;
 
-      return image;
-    });
+        return image;
+      })
+      .catch(error => {
+        console.warn(error);
+      });
   }
 
   cacheTile(canvasData) {
