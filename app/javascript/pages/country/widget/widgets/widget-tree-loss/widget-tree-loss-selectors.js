@@ -64,7 +64,7 @@ export const getSentence = createSelector(
   [chartData, getExtent, getSettings, getLocationNames, getActiveIndicator],
   (data, extent, settings, locationNames, indicator) => {
     if (!data) return null;
-    const { startYear, endYear, extentYear, threshold } = settings;
+    const { startYear, endYear, extentYear } = settings;
     const locationLabel = locationNames.current && locationNames.current.label;
     const locationIntro = `${
       indicator.value !== 'gadm28'
@@ -87,7 +87,6 @@ export const getSentence = createSelector(
     totalEmissions
   )}t</b> of CO\u2082 emissions`
         : ''
-    }
-     with canopy density <span>> ${threshold}%</span>.`;
+    }.`;
   }
 );

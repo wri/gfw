@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
+import endsWith from 'lodash/endsWith';
 
 // get list data
 const getData = state => state.data;
@@ -20,7 +21,7 @@ export const getTreeCoverPlantationsData = createSelector(
     const totalPlantations = sumBy(plantations, 'plantation_extent');
 
     return sortByKey(
-      plantations.map(d => ({
+      plantations.filter(d => d.plantation_extent).map(d => ({
         label: d.label,
         value: d.plantation_extent,
         color: colors[d.label],
@@ -42,26 +43,29 @@ export const getSentence = createSelector(
     let remainSentence = '';
     if (settings.type === 'bound2') {
       top = data.slice(0, 2);
-      topTypesSentence = `<b>${top[0].label}</b> and <b>${
-        top[1].label
-      }</b> represents the largest plantations by <b>species</b>`;
+      if (top.length === 1) {
+        topTypesSentence = `<b>${
+          top[0].label
+        }</b> represent the largest plantation by <b>species</b>`;
+      } else {
+        topTypesSentence = `<b>${top[0].label}</b> and <b>${
+          top[1].label
+        }</b> represent the largest plantations by <b>species</b>`;
+      }
+
       remainSentence = `The remaining <b>${format('.2s')(
         sumBy(data.slice(2), 'value')
       )}ha</b> of tree cover is distributed between <b>${data.length -
         top.length}</b> other plantation species.`;
     } else {
       top = data.slice(0, 1);
-      topTypesSentence = `the largest plantation type by area is <b>${
+      topTypesSentence = `the largest plantation type by area are <b>${
         top[0].label
-      }</b>`;
+      }${endsWith(top[0].label, 's') ? '' : 's'}</b>`;
     }
 
-    return `In <b>${locationLabel}</b>, ${topTypesSentence} in <b>${
-      settings.extentYear
-    }</b>, spanning <b>${format('.2s')(
-      sumBy(top, 'value')
-    )}ha</b> where the canopy cover is greater than <b>${
-      settings.threshold
-    }%</b>. ${remainSentence}`;
+    return `In <b>${locationLabel}</b>, ${topTypesSentence}, spanning <b>${format(
+      '.2s'
+    )(sumBy(top, 'value'))}ha</b>. ${remainSentence}`;
   }
 );
