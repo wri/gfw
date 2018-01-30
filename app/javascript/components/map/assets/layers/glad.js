@@ -2,7 +2,7 @@ import { fetchGLADDates } from 'services/glad';
 import moment from 'moment';
 import pickBy from 'lodash/pickBy';
 import groupBy from 'lodash/groupBy';
-import AnimatedCanvas from './abstract/animatedCanvas';
+import AnimatedCanvas from './abstract/animated-canvas';
 
 const OPTIONS = {
   dataMaxZoom: 12,
