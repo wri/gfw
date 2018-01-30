@@ -1,4 +1,4 @@
-import ImageLayer from './abstract/image-layer';
+import ImageLayer from './abstract/imageLayer';
 
 const OPTIONS = {
   dataMaxZoom: 12,
@@ -9,7 +9,7 @@ const OPTIONS = {
 class ForestGain extends ImageLayer {
   constructor(map, options) {
     super(map, OPTIONS);
-    this.options = { ...this.options, ...options };
+    this.options = { ...OPTIONS, ...options };
   }
 }
 

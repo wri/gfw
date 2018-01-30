@@ -1,5 +1,5 @@
 import CartoDB from './abstract/cartoDB';
-import PlantationsByTypeCartoCSS from '../cartocss/plantations-by-type.cartocss';
+import PlantationsByTypeCartoCSS from '../cartocss/plantations_by_type.cartocss';
 
 const OPTIONS = {
   sql:
@@ -14,7 +14,7 @@ const OPTIONS = {
 class PlantationsByType extends CartoDB {
   constructor(map, options) {
     super(map, OPTIONS);
-    this.options = { ...this.options, ...options };
+    this.options = { ...OPTIONS, ...options };
   }
 }
 

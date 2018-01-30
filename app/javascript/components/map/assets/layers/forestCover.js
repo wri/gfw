@@ -5,14 +5,13 @@ const OPTIONS = {
   threshold: 30,
   dataMaxZoom: 12,
   urlTemplate:
-    'https://storage.googleapis.com/wri-public/treecover/2010/{threshold}/{z}/{x}/{y}.png'
+    'http://earthengine.google.org/static/hansen_2014/gfw_loss_tree_year_{threshold}_2014/{z}/{x}/{y}.png'
 };
 
-class Forest2010 extends Canvas {
+class ForestCover extends Canvas {
   constructor(map, options) {
     super(map, OPTIONS);
-    this.options = { ...this.options, ...options };
-    this.threshold = this.options.threshold;
+    this.options = { ...OPTIONS, ...options };
   }
 
   filterCanvasImgdata(imgdata, w, h) {
@@ -30,11 +29,11 @@ class Forest2010 extends Canvas {
         const pixelPos = (j * w + i) * components;
         const intensity = imgdata[pixelPos + 1];
 
-        imgdata[pixelPos] = 151;
-        imgdata[pixelPos + 1] = 189;
-        imgdata[pixelPos + 2] = 61;
+        imgdata[pixelPos] = 151; // eslint-disable-line
+        imgdata[pixelPos + 1] = 189; // eslint-disable-line
+        imgdata[pixelPos + 2] = 61; // eslint-disable-line
 
-        imgdata[pixelPos + 3] =
+        imgdata[pixelPos + 3] = // eslint-disable-line
           zoom < 13 ? myscale(intensity) * 0.8 : intensity * 0.8;
       }
     }
@@ -44,13 +43,13 @@ class Forest2010 extends Canvas {
     this.threshold = threshold;
   }
 
-  _getUrl(x, y, z) {
+  getUrl(x, y, z) {
     return this.options.urlTemplate
       .replace('{x}', x)
       .replace('{y}', y)
       .replace('{z}', z)
-      .replace('{threshold}', this.threshold);
+      .replace('{threshold}', this.options.threshold);
   }
 }
 
-export default Forest2010;
+export default ForestCover;

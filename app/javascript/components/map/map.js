@@ -40,7 +40,7 @@ class MapContainer extends PureComponent {
 
   setLayers(layers, layerSpec) {
     layers.forEach((slug, index) => {
-      const layer = new Layers[slug](this.map, { layerSpec: layerSpec[slug] });
+      const layer = new Layers[slug](this.map, layerSpec[slug]);
       layer.getLayer().then(res => {
         this.map.overlayMapTypes.setAt(index, res);
       });

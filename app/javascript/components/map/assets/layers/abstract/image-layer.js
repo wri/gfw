@@ -7,7 +7,7 @@ const OPTIONS = {
 class ImageLayer extends Overlay {
   constructor(map, options) {
     super(map, OPTIONS);
-    this.options = { ...this.options, ...options };
+    this.options = { ...OPTIONS, ...options };
     this.tiles = {};
   }
 

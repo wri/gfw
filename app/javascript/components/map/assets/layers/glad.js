@@ -1,14 +1,15 @@
 import { fetchGLADDates } from 'services/glad';
+import { sortByKey } from 'utils/data';
 import moment from 'moment';
-import pickBy from 'lodash/pickBy';
 import groupBy from 'lodash/groupBy';
-import AnimatedCanvas from './abstract/animated-canvas';
+import maxBy from 'lodash/maxBy';
+import minBy from 'lodash/minBy';
+import Canvas from './abstract/canvas';
 
 const OPTIONS = {
   dataMaxZoom: 12,
   urlTemplate:
-    'http://wri-tiles.s3.amazonaws.com/glad_staging/tiles/{z}/{x}/{y}.png',
-  startDate: '2015-01-01'
+    'http://wri-tiles.s3.amazonaws.com/glad_staging/tiles/{z}/{x}/{y}.png'
 };
 
 const padNumber = number => {
@@ -16,56 +17,38 @@ const padNumber = number => {
   return s.substr(s.length - 3);
 };
 
-class Glad extends AnimatedCanvas {
+class Glad extends Canvas {
   constructor(map, options) {
     super(map, OPTIONS);
-    this.options = { ...this.options, ...options };
+    this.options = Object.assign({}, this.options, options);
     this.tiles = {};
-    this.setupAnimation();
-    this.currentDate = [
-      !!options.currentDate && !!options.currentDate[0]
-        ? moment.utc(options.currentDate[0])
-        : moment.utc(this.options.startDate),
-      !!options.currentDate && !!options.currentDate[1]
-        ? moment.utc(options.currentDate[1])
-        : moment.utc()
-    ];
-    this.maxDate = this.currentDate[1];
   }
 
   getLayer() {
     return fetchGLADDates()
       .then(result => {
-        const data = result && result.data ? result.data : [];
-        const dates = {
-          counts: null,
-          minDate: null,
-          maxDate: null
-        };
+        const { data } = result.data;
+        if (!data || !data.length) return this;
 
-        if (data.length > 0) {
-          const groupedDates = groupBy(data, 'year');
-          const years = Object.keys(groupedDates);
-          const dataByYear = [];
-          const startDay = groupedDates[years[1]];
-          const startDate = moment
-            .utc()
-            .year(years[0])
-            .dayOfYear(startDay[0].julian_day);
-          const endDay = groupedDates[years[years.length - 1]];
-          const endDate = moment
-            .utc()
-            .year(years[years.length - 1])
-            .dayOfYear(endDay[endDay.length - 1].julian_day);
-          years.forEach(year => {
-            dataByYear[year] = pickBy(data, 'julian_day');
-          });
+        const maxYear = maxBy(data, 'year').year;
+        const maxYearData = sortByKey(
+          groupBy(data, 'year')[maxYear],
+          'julian_day'
+        );
+        const minYear = minBy(data, 'year').year;
+        const minYearData =
+          maxYear !== minYear
+            ? sortByKey(groupBy(data, 'year')[minYear], 'julian_day')
+            : maxYearData;
+        this.startDate = moment()
+          .year(minYear)
+          .dayOfYear(minYearData[0].julian_day)
+          .format('YYYY-MM-DD');
+        this.endDate = moment()
+          .year(maxYear)
+          .dayOfYear(maxYearData[maxYearData.length - 1].julian_day)
+          .format('YYYY-MM-DD');
 
-          dates.counts = dataByYear;
-          dates.minDate = startDate.format('YYYY-MM-DD');
-          dates.maxDate = endDate.format('YYYY-MM-DD');
-        }
-        this.checkMaxDate(dates);
         return this;
       })
       .catch(error => {
@@ -80,52 +63,23 @@ class Glad extends AnimatedCanvas {
       .replace('{z}', z);
   }
 
-  checkMaxDate(response) {
-    this.maxDataDate = moment.utc(response.maxDate);
-    if (this.maxDate.isAfter(this.maxDataDate)) {
-      this.maxDate = this.maxDataDate;
-      this.currentDate[1] = this.maxDate;
-    }
-  }
-
   filterCanvasImgdata(imgdata, w, h) {
     const imageData = imgdata;
-    if (this.timelineExtent === undefined) {
-      this.timelineExtent = [
-        moment.utc(this.currentDate[0]),
-        moment.utc(this.currentDate[1])
-      ];
-    }
-
-    const startYear = this.timelineExtent[0].year();
-    const endYear = this.timelineExtent[1].year();
-    const startDay =
-      this.timelineExtent[0].dayOfYear() + (startYear - 2015) * 365;
-    const endDay = this.timelineExtent[1].dayOfYear() + (endYear - 2015) * 365;
-
-    const recentRangeStart = this.maxDataDate.clone().subtract(7, 'days');
-    const recentRangeStartYear = recentRangeStart.year();
-    const recentRangeEnd = this.maxDataDate.clone();
-    const recentRangeEndYear = recentRangeEnd.year();
-    const recentRangeStartDay =
-      recentRangeStart.dayOfYear() + (recentRangeStartYear - 2015) * 365;
-    const recentRangeEndDay =
-      recentRangeEnd.dayOfYear() + (recentRangeEndYear - 2015) * 365;
+    const startDate = moment(this.startDate);
+    const endDate = moment(this.endDate);
+    const numberOfDays = endDate.diff(startDate, 'days');
 
     const confidenceValue = -1;
-
     const pixelComponents = 4; // RGBA
+
     let pixelPos = 0;
     for (let i = 0; i < w; ++i) {
       for (let j = 0; j < h; ++j) {
         pixelPos = (j * w + i) * pixelComponents;
-
-        // find the total days of the pixel by
-        // multiplying the red band by 255 and adding
-        // the green band to that
+        // day 0 is 2015-01-01 until current day
         const day = imageData[pixelPos] * 255 + imageData[pixelPos + 1];
 
-        if (day >= startDay && day <= endDay) {
+        if (day >= 0 && day <= numberOfDays) {
           const band3_str = padNumber(imageData[pixelPos + 2].toString());
 
           // Grab confidence (the first value) from this string
@@ -142,7 +96,7 @@ class Glad extends AnimatedCanvas {
               intensity = 255;
             }
 
-            if (day >= recentRangeStartDay && day <= recentRangeEndDay) {
+            if (day >= numberOfDays - 7 && day <= numberOfDays) {
               imageData[pixelPos] = 219;
               imageData[pixelPos + 1] = 168;
               imageData[pixelPos + 2] = 0;
@@ -153,7 +107,7 @@ class Glad extends AnimatedCanvas {
               imageData[pixelPos + 2] = 153;
               imageData[pixelPos + 3] = intensity;
             }
-            continue;
+            continue; // eslint-disable-line
           }
         }
 
