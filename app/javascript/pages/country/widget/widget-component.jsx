@@ -15,6 +15,7 @@ import WidgetIntactTreeCover from 'pages/country/widget/widgets/widget-intact-tr
 import WidgetPrimaryTreeCover from 'pages/country/widget/widgets/widget-primary-tree-cover';
 import WidgetTreeLocated from 'pages/country/widget/widgets/widget-tree-located';
 import WidgetGainLocated from 'pages/country/widget/widgets/widget-gain-located';
+import WidgetLossLocated from 'pages/country/widget/widgets/widget-loss-located';
 import WidgetRelativeTreeCover from 'pages/country/widget/widgets/widget-relative-tree-cover';
 import WidgetTreeLoss from 'pages/country/widget/widgets/widget-tree-loss';
 import WidgetTreeLossPlantations from 'pages/country/widget/widgets/widget-tree-loss-plantations';
@@ -22,6 +23,8 @@ import WidgetTreeGain from 'pages/country/widget/widgets/widget-tree-gain';
 import WidgetFaoCover from 'pages/country/widget/widgets/widget-fao-cover';
 import WidgetFaoReforestation from 'pages/country/widget/widgets/widget-fao-reforestation';
 import WidgetGladAlerts from 'pages/country/widget/widgets/widget-glad-alerts';
+import WidgetRankedPlantations from 'pages/country/widget/widgets/widget-ranked-plantations';
+import WidgetEmissions from 'pages/country/widget/widgets/widget-emissions';
 
 import './widget-styles.scss';
 import './widget-tooltip-styles.scss';
@@ -34,12 +37,15 @@ const widgets = {
   WidgetTreeGain,
   WidgetTreeLocated,
   WidgetGainLocated,
+  WidgetLossLocated,
   WidgetRelativeTreeCover,
   WidgetTreeLoss,
   WidgetTreeLossPlantations,
   WidgetFaoCover,
   WidgetFaoReforestation,
-  WidgetGladAlerts
+  WidgetGladAlerts,
+  WidgetRankedPlantations,
+  WidgetEmissions
 };
 
 class Widget extends PureComponent {
