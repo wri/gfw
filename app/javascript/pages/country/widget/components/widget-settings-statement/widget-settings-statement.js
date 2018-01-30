@@ -1,8 +1,7 @@
-import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 
 import { getStatement } from './widget-settings-statement-selectors';
-import WidgetSettingsStatementComponent from './widget-settings-statement-component';
+import Component from './widget-settings-statement-component';
 
 const mapStateToProps = (state, ownProps) => {
   const { settings } = ownProps;
@@ -12,12 +11,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-class WidgetSettingsStatementContainer extends PureComponent {
-  render() {
-    return createElement(WidgetSettingsStatementComponent, {
-      ...this.props
-    });
-  }
-}
-
-export default connect(mapStateToProps)(WidgetSettingsStatementContainer);
+export default connect(mapStateToProps)(Component);
