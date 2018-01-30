@@ -1,6 +1,6 @@
-import Canvas from './abstract/canvas';
 import { scalePow } from 'd3-scale';
 import moment from 'moment';
+import Canvas from './abstract/canvas';
 
 const OPTIONS = {
   threshold: 30,
@@ -14,7 +14,7 @@ const OPTIONS = {
 class Loss extends Canvas {
   constructor(map, options) {
     super(map, OPTIONS);
-    this.options = Object.assign({}, this.options, options);
+    this.options = { ...this.options, ...options };
     this.threshold = this.options.threshold;
     this.currentDate = this.options.currentDate || [
       moment(this.options.minDate),

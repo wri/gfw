@@ -11,7 +11,7 @@ const OPTIONS = {
 class Forest2010 extends Canvas {
   constructor(map, options) {
     super(map, OPTIONS);
-    this.options = Object.assign({}, this.options, options);
+    this.options = { ...this.options, ...options };
     this.threshold = this.options.threshold;
   }
 

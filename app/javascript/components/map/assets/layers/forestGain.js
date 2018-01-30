@@ -9,7 +9,7 @@ const OPTIONS = {
 class ForestGain extends ImageLayer {
   constructor(map, options) {
     super(map, OPTIONS);
-    this.options = Object.assign({}, this.options, options);
+    this.options = { ...this.options, ...options };
   }
 }
 
