@@ -8,6 +8,7 @@ import PlantationsBySpecies from './layers/plantations-by-species';
 import Glad from './layers/glad';
 import Viirs from './layers/viirs';
 import Mining from './layers/mining';
+import ProtectedAreas from './layers/protected-areas';
 
 const layersMap = {
   forest2000: Forest2000,
@@ -19,7 +20,8 @@ const layersMap = {
   plantations_by_species: PlantationsBySpecies,
   umd_as_it_happens: Glad,
   viirs_fires_alerts: Viirs,
-  mining: Mining
+  mining: Mining,
+  protected_areasCDB: ProtectedAreas
 };
 
 export default layersMap;
