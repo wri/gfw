@@ -77,16 +77,15 @@ export const getSentence = createSelector(
         sentenceLocation = '<b>Primary forests</b>';
     }
 
+    const lessThanCheck =
+      primaryPercentage < 0.01
+        ? 'less than <b>0.1%</b> '
+        : `<strong>${format('.1f')(primaryPercentage)}%</strong> `;
+
     const sentence = `${
       indicator.value === 'primary_forest'
-        ? `In <b>${locationLabel}</b>, <strong>${format('.1f')(
-          primaryPercentage
-        )}%</strong> of tree cover is <b>${sentenceLocation}</b>.`
-        : `Within <b>${sentenceLocation}</b> in <b>${locationLabel}</b>, <strong>${format(
-          '.1f'
-        )(
-          primaryPercentage
-        )}%</strong> of tree cover is <b>Primary forest</b>.`
+        ? `In <b>${locationLabel}</b>, ${lessThanCheck} of tree cover is <b>${sentenceLocation}</b>.`
+        : `Within <b>${sentenceLocation}</b> in <b>${locationLabel}</b>, ${lessThanCheck} of tree cover is <b>Primary forest</b>.`
     }`;
 
     return sentence;
