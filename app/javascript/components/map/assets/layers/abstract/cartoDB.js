@@ -19,7 +19,7 @@ const OPTIONS = {
 class CartoDB extends Overlay {
   constructor(map, options) {
     super(map, OPTIONS);
-    this.options = Object.assign({}, this.options, options);
+    this.options = { ...OPTIONS, options };
   }
 
   getLayer() {
@@ -29,7 +29,7 @@ class CartoDB extends Overlay {
       user_name: this.options.user_name,
       sublayers: [
         {
-          sql: this._getQuery(),
+          sql: this.getQuery(),
           cartocss: this.options.cartocss,
           interactivity: this.options.interactivity,
           raster: this.options.raster,
@@ -47,7 +47,7 @@ class CartoDB extends Overlay {
     });
   }
 
-  _getQuery() {
+  getQuery() {
     const query = (this.options.sql || this.options.queryTemplate)
       .replace(/{tableName}/g, this.options.layerSpec.table_name)
       .replace('{analysis}', this.options.analysis);

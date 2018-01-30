@@ -2,7 +2,7 @@ export const initialState = {
   loading: false,
   error: false,
   layerSpec: {},
-  layers: ['plantations_by_species']
+  layers: ['loss']
 };
 
 const setLayerSpecLoading = (state, { payload }) => ({

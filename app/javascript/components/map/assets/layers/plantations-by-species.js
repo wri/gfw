@@ -14,7 +14,7 @@ const OPTIONS = {
 class PlantationsBySpecies extends CartoDB {
   constructor(map, options) {
     super(map, OPTIONS);
-    this.options = { ...this.options, ...options };
+    this.options = { ...OPTIONS, ...options };
   }
 }
 

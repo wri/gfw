@@ -1,14 +1,12 @@
-const OPTIONS = {};
-
 class Overlay {
   constructor(map, options) {
     this.map = map;
-    this.tileSize = new google.maps.Size(256, 256);
-    this.options = Object.assign({}, OPTIONS, options);
+    this.tileSize = new google.maps.Size(256, 256); // eslint-disable-line
+    this.options = { ...options };
   }
 
   getLayer() {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       resolve(this);
     });
   }

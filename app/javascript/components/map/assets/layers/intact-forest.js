@@ -10,7 +10,7 @@ const OPTIONS = {
 class IntactForest extends CartoDB {
   constructor(map, options) {
     super(map, OPTIONS);
-    this.options = Object.assign({}, this.options, options);
+    this.options = { ...OPTIONS, ...options };
   }
 }
 
