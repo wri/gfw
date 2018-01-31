@@ -9,7 +9,7 @@
       "selectors": ["indicators", "thresholds", "extentYears"],
       "type": "extent",
       "metaKey": "widget_tree_cover",
-      "sortOrder": 0
+      "sortOrder": 10
     },
     "settings": {
       "indicator": "gadm28",
@@ -28,7 +28,7 @@
       "showIndicators": ["plantations"],
       "type": "extent",
       "metaKey": "widget_plantations_cover",
-      "sortOrder": 1
+      "sortOrder": 40
     },
     "settings": {
       "threshold": 30,
@@ -47,7 +47,7 @@
       "selectors": ["indicators", "thresholds", "extentYears"],
       "type": "extent",
       "metaKey": "widget_ifl",
-      "sortOrder": 2
+      "sortOrder": 22
     },
     "settings": {
       "indicator": "ifl_2013",
@@ -66,7 +66,7 @@
       "selectors": ["indicators", "thresholds", "extentYears"],
       "type": "extent",
       "metaKey": "widget_primary_forest",
-      "sortOrder": 3
+      "sortOrder": 23
     },
     "settings": {
       "indicator": "primary_forest",
@@ -90,7 +90,7 @@
       "locationCheck": true,
       "type": "extent",
       "metaKey": "widget_forest_location",
-      "sortOrder": 4
+      "sortOrder": 11
     },
     "settings": {
       "indicator": "gadm28",
@@ -116,7 +116,7 @@
       "selectors": ["indicators", "startYears", "endYears", "thresholds", "extentYears"],
       "type": "loss",
       "metaKey": "widget_tree_cover_loss",
-      "sortOrder": 5
+      "sortOrder": 12
     },
     "settings": {
       "indicator": "gadm28",
@@ -138,7 +138,7 @@
       "yearRange": ["2013", "2016"],
       "type": "loss",
       "metaKey": "",
-      "sortOrder": 6
+      "sortOrder": 36
     },
     "settings": {
       "indicator": "plantations",
@@ -157,13 +157,13 @@
                       "primary_forest", "primary_forest__landmark",
                       "plantations", "plantations__mining",
                       "plantations__wdpa", "plantations__landmark"],
-      "categories": ["forest-change"],
+      "categories": ["summary", "forest-change"],
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "units", "startYears", "endYears"],
       "locationCheck": true,
       "type": "loss",
       "metaKey": "widget_loss_location",
-      "sortOrder": 7
+      "sortOrder": 13
     },
     "settings": {
       "indicator": "gadm28",
@@ -186,11 +186,11 @@
       "selectors": ["indicators", "thresholds", "extentYears", "units"],
       "type": "gain",
       "metaKey": "widget_tree_cover_gain",
-      "sortOrder": 8
+      "sortOrder": 14
     },
     "settings": {
       "indicator": "gadm28",
-      "threshold": "0",
+      "threshold": "30",
       "unit": "ha",
       "extentYear": 2010
     },
@@ -200,12 +200,12 @@
     "title": "FAO reforestation",
     "config": {
       "size": "small",
-      "categories": ["summary", "forest-change"],
+      "categories": ["forest-change"],
       "admins": ["country"],
       "selectors": ["periods"],
       "type": "fao",
       "metaKey": "widget_rate_of_restoration_fao",
-      "sortOrder": 9
+      "sortOrder": 39
     },
     "settings": {
       "period": 2010,
@@ -228,7 +228,7 @@
       "locationCheck": true,
       "type": "gain",
       "metaKey": "widget_gain_location",
-      "sortOrder": 10
+      "sortOrder": 30
     },
     "settings": {
       "indicator": "gadm28",
@@ -247,7 +247,7 @@
       "admins": ["country"],
       "type": "fao",
       "metaKey": "widget_forest_cover_fao",
-      "sortOrder": 11
+      "sortOrder": 25
     },
     "settings": {
       "unit": "ha"
@@ -266,7 +266,7 @@
       "customLocationWhitelist": ["BRA", "COL", "ECU", "GUF", "GUY", "PER", "SUR", "BDI",
         "CMR", "CAF", "GNQ", "GAB", "RWA", "UGA", "IDN", "MYS",
         "PNG", "VEN", "DOC", "DOG", "TLS"],
-      "sortOrder": 12
+      "sortOrder": 15
     },
     "settings": {
       "period": "week",
@@ -283,7 +283,7 @@
       "selectors": ["thresholds", "extentYears", "types"],
       "type": "extent",
       "metaKey": "",
-      "sortOrder": 13
+      "sortOrder": 41
     },
     "settings": {
       "indicator": "gadm28",
