@@ -68,7 +68,7 @@ export const setWidgetSettingsStore = createThunkAction(
   'setWidgetSettingsStore',
   query => (dispatch, getState) => {
     Object.keys(query).forEach(widgetKey => {
-      if (widgetKey !== 'category') {
+      if (widgetKey !== 'category' && widgetKey !== 'widget') {
         const widgetConfig = decodeUrlForState(query[widgetKey]);
         const { settings } = getState()[`widget${upperFirst(widgetKey)}`];
         // Check if the state needs and update checking the values of the new config

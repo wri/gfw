@@ -16,6 +16,14 @@
     padding: rem(25px) rem(20px);
   }
 
+  &.highlighted {
+    background: #fefedc;
+
+    .c-loader {
+      background-color: rgba(#fefedc, 0.5);
+    }
+  }
+
   .container {
     position: relative;
     height: 100%;

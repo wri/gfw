@@ -9,12 +9,13 @@
       "selectors": ["indicators", "thresholds", "extentYears"],
       "type": "extent",
       "metaKey": "widget_tree_cover",
-      "sortOrder": 10
+      "sortOrder": 0
     },
     "settings": {
       "indicator": "gadm28",
       "threshold": 30,
-      "extentYear": 2010
+      "extentYear": 2010,
+      "layers": ["forest2010"]
     },
     "active": true
   },
@@ -28,7 +29,7 @@
       "showIndicators": ["plantations"],
       "type": "extent",
       "metaKey": "widget_plantations_cover",
-      "sortOrder": 40
+      "sortOrder": 1
     },
     "settings": {
       "threshold": 30,
@@ -47,7 +48,7 @@
       "selectors": ["indicators", "thresholds", "extentYears"],
       "type": "extent",
       "metaKey": "widget_ifl",
-      "sortOrder": 22
+      "sortOrder": 2
     },
     "settings": {
       "indicator": "ifl_2013",
@@ -66,7 +67,7 @@
       "selectors": ["indicators", "thresholds", "extentYears"],
       "type": "extent",
       "metaKey": "widget_primary_forest",
-      "sortOrder": 23
+      "sortOrder": 3
     },
     "settings": {
       "indicator": "primary_forest",
@@ -90,7 +91,7 @@
       "locationCheck": true,
       "type": "extent",
       "metaKey": "widget_forest_location",
-      "sortOrder": 11
+      "sortOrder": 4
     },
     "settings": {
       "indicator": "gadm28",
@@ -116,14 +117,15 @@
       "selectors": ["indicators", "startYears", "endYears", "thresholds", "extentYears"],
       "type": "loss",
       "metaKey": "widget_tree_cover_loss",
-      "sortOrder": 12
+      "sortOrder": 5
     },
     "settings": {
       "indicator": "gadm28",
       "threshold": 30,
       "startYear": 2001,
       "endYear": 2016,
-      "extentYear": 2000
+      "extentYear": 2000,
+      "layers": ["loss"]
     },
     "active": true
   },
@@ -138,7 +140,7 @@
       "yearRange": ["2013", "2016"],
       "type": "loss",
       "metaKey": "",
-      "sortOrder": 36
+      "sortOrder": 6
     },
     "settings": {
       "indicator": "plantations",
@@ -157,13 +159,13 @@
                       "primary_forest", "primary_forest__landmark",
                       "plantations", "plantations__mining",
                       "plantations__wdpa", "plantations__landmark"],
-      "categories": ["summary", "forest-change"],
+      "categories": ["forest-change"],
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "units", "startYears", "endYears"],
       "locationCheck": true,
       "type": "loss",
       "metaKey": "widget_loss_location",
-      "sortOrder": 13
+      "sortOrder": 7
     },
     "settings": {
       "indicator": "gadm28",
@@ -186,11 +188,11 @@
       "selectors": ["indicators", "thresholds", "extentYears", "units"],
       "type": "gain",
       "metaKey": "widget_tree_cover_gain",
-      "sortOrder": 14
+      "sortOrder": 8
     },
     "settings": {
       "indicator": "gadm28",
-      "threshold": "30",
+      "threshold": "0",
       "unit": "ha",
       "extentYear": 2010
     },
@@ -200,12 +202,12 @@
     "title": "FAO reforestation",
     "config": {
       "size": "small",
-      "categories": ["forest-change"],
+      "categories": ["summary", "forest-change"],
       "admins": ["country"],
       "selectors": ["periods"],
       "type": "fao",
       "metaKey": "widget_rate_of_restoration_fao",
-      "sortOrder": 39
+      "sortOrder": 9
     },
     "settings": {
       "period": 2010,
@@ -228,7 +230,7 @@
       "locationCheck": true,
       "type": "gain",
       "metaKey": "widget_gain_location",
-      "sortOrder": 30
+      "sortOrder": 10
     },
     "settings": {
       "indicator": "gadm28",
@@ -247,7 +249,7 @@
       "admins": ["country"],
       "type": "fao",
       "metaKey": "widget_forest_cover_fao",
-      "sortOrder": 25
+      "sortOrder": 11
     },
     "settings": {
       "unit": "ha"
@@ -266,7 +268,8 @@
       "customLocationWhitelist": ["BRA", "COL", "ECU", "GUF", "GUY", "PER", "SUR", "BDI",
         "CMR", "CAF", "GNQ", "GAB", "RWA", "UGA", "IDN", "MYS",
         "PNG", "VEN", "DOC", "DOG", "TLS"],
-      "sortOrder": 15
+      "layers": ["umd_as_it_happens"],
+      "sortOrder": 12
     },
     "settings": {
       "period": "week",
@@ -283,7 +286,7 @@
       "selectors": ["thresholds", "extentYears", "types"],
       "type": "extent",
       "metaKey": "",
-      "sortOrder": 41
+      "sortOrder": 13
     },
     "settings": {
       "indicator": "gadm28",

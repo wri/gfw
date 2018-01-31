@@ -38,9 +38,9 @@ class Root extends PureComponent {
       category,
       loading,
       widgetAnchor,
+      activeWidget,
       locationGeoJson
     } = this.props;
-
     return (
       <div className="l-country">
         <Button
@@ -72,7 +72,14 @@ class Root extends PureComponent {
                 widgets &&
                 widgets.length > 0 &&
                 widgets.map(widget => (
-                  <Widget key={widget.name} widget={widget.name} />
+                  <Widget
+                    key={widget.name}
+                    widget={widget.name}
+                    active={activeWidget.name === widget.name}
+                    backgroundColor={
+                      activeWidget === widget.name ? '#fefedc' : ''
+                    }
+                  />
                 ))}
               {!loading &&
                 (!widgets || widgets.length === 0) && (
@@ -112,6 +119,9 @@ class Root extends PureComponent {
                 }}
                 areaHighlight={locationGeoJson}
                 isParentLoading={isGeostoreLoading}
+                parentLayersKey={
+                  activeWidget && `widget${upperFirst(activeWidget.name)}`
+                }
               />
             </Sticky>
           </div>
@@ -140,7 +150,8 @@ Root.propTypes = {
   locationOptions: PropTypes.object,
   locationNames: PropTypes.object,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  locationGeoJson: PropTypes.object
+  locationGeoJson: PropTypes.object,
+  activeWidget: PropTypes.object
 };
 
 export default Root;

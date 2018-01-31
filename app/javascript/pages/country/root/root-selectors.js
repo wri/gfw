@@ -5,6 +5,7 @@ import concat from 'lodash/concat';
 import isEmpty from 'lodash/isEmpty';
 import qs from 'query-string';
 import sortBy from 'lodash/sortBy';
+import replace from 'lodash/replace';
 
 import WIDGETS from 'pages/country/data/widgets-config.json';
 
@@ -16,6 +17,7 @@ const getLocation = state => state.location || null;
 const getLocationOptions = state => state.locationOptions || null;
 const getIndicatorWhitelist = state => state.indicatorWhitelist || null;
 const getFAOCountries = state => state.faoCountries || null;
+const getWidgetQuery = state => state.activeWidget || null;
 
 // get lists selected
 export const getWidgets = createSelector([], () =>
@@ -91,6 +93,15 @@ export const filterWidgets = createSelector(
   }
 );
 
+export const getActiveWidget = createSelector(
+  [filterWidgets, getWidgetQuery],
+  (widgets, locationHash) => {
+    if (!widgets || !widgets.length) return null;
+    if (!locationHash) return widgets[0];
+    return widgets.find(w => w.name === replace(locationHash), '#', '');
+  }
+);
+
 export const getLinks = createSelector(
   [getCategories, getCategory, getLocation],
   (categories, activeCategory, location) =>
@@ -100,7 +111,8 @@ export const getLinks = createSelector(
       ).join('/');
       const newQuery = {
         ...location.query,
-        category: category.value
+        category: category.value,
+        widget: undefined
       };
       return {
         label: category.label,
