@@ -308,7 +308,7 @@
     "active": true
   },
   "emissions": {
-    "title": "Emissions",
+    "title": "Historical emissions",
     "config": {
       "size": "small",
       "categories": ["land-use"],

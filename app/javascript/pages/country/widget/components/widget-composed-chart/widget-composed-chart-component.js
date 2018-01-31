@@ -75,7 +75,13 @@ class WidgetComposedChart extends PureComponent {
             />
             {areas &&
               Object.keys(areas).map(key => (
-                <Area key={key} dataKey={key} dot={false} {...areas[key]} />
+                <Area
+                  key={key}
+                  dataKey={key}
+                  dot={false}
+                  stackId={1}
+                  {...areas[key]}
+                />
               ))}
             {lines &&
               Object.keys(lines).map(key => (

@@ -6,20 +6,25 @@ import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-emissions-actions';
 import reducers, { initialState } from './widget-emissions-reducers';
-import { getSentence, getChartData } from './widget-emissions-selectors';
+import {
+  getChartData,
+  chartConfig,
+  getSentence
+} from './widget-emissions-selectors';
 import WidgetEmissionsComponent from './widget-emissions-component';
 
-const mapStateToProps = ({ location, widgetEmissions }) => {
+const mapStateToProps = ({ widgetEmissions }, ownProps) => {
   const { settings, data } = widgetEmissions;
-  const { payload } = location;
+  const { locationNames } = ownProps;
   const selectorData = {
     data,
     settings,
-    location: payload,
-    colors: COLORS.extent
+    locationNames,
+    colors: COLORS.emissions
   };
   return {
     chartData: getChartData(selectorData),
+    chartConfig: chartConfig(selectorData),
     sentence: getSentence(selectorData)
   };
 };
