@@ -37,7 +37,8 @@ class Root extends PureComponent {
       locationNames,
       category,
       loading,
-      widgetAnchor
+      widgetAnchor,
+      locationGeoJson
     } = this.props;
 
     return (
@@ -109,6 +110,7 @@ class Root extends PureComponent {
                   center: { lat: -34.397, lng: 150.644 },
                   zoom: 8
                 }}
+                areaHighlight={locationGeoJson}
                 isParentLoading={isGeostoreLoading}
               />
             </Sticky>
@@ -137,7 +139,8 @@ Root.propTypes = {
   category: PropTypes.string,
   locationOptions: PropTypes.object,
   locationNames: PropTypes.object,
-  widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+  widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  locationGeoJson: PropTypes.object
 };
 
 export default Root;
