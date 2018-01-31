@@ -98,6 +98,7 @@ define([
       "birdlife",
       "tigers",
       "bra_biomes",
+      "map_biomas",
       "biodiversity_hotspots",
       "protected_areasCDB",
       "khm_pa",
