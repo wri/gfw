@@ -55,58 +55,58 @@ define(
             //Natural Forest
             if (imgdata[pixelPos] >= 3 && imgdata[pixelPos] <= 5) {
               imgdata[pixelPos] = 22;
-              imgdata[pixelPos + 1] = 99;
-              imgdata[pixelPos + 2] = 61;
+              imgdata[pixelPos + 1] = 119;
+              imgdata[pixelPos + 2] = 100;
             } else if (imgdata[pixelPos] === 9) {
               //Planted Forest
-              imgdata[pixelPos] = 219;
-              imgdata[pixelPos + 1] = 132;
-              imgdata[pixelPos + 2] = 215;
+              imgdata[pixelPos] = 232;
+              imgdata[pixelPos + 1] = 163;
+              imgdata[pixelPos + 2] = 229;
             } else if (imgdata[pixelPos] === 11) {
               //Non-forest Wetlands
-              imgdata[pixelPos] = 41;
-              imgdata[pixelPos + 1] = 210;
-              imgdata[pixelPos + 2] = 171;
+              imgdata[pixelPos] = 39;
+              imgdata[pixelPos + 1] = 137;
+              imgdata[pixelPos + 2] = 212;
             } else if (imgdata[pixelPos] === 12) {
               //Grassland
-              imgdata[pixelPos] = 195;
-              imgdata[pixelPos + 1] = 237;
-              imgdata[pixelPos + 2] = 97;
+              imgdata[pixelPos] = 204;
+              imgdata[pixelPos + 1] = 219;
+              imgdata[pixelPos + 2] = 152;
             } else if (imgdata[pixelPos] === 13) {
               //Other Non-forest Vegetation
-              imgdata[pixelPos] = 110;
-              imgdata[pixelPos + 1] = 162;
-              imgdata[pixelPos + 2] = 36;
+              imgdata[pixelPos] = 89;
+              imgdata[pixelPos + 1] = 107;
+              imgdata[pixelPos + 2] = 44;
             } else if (imgdata[pixelPos] === 15) {
               //Pasture
-              imgdata[pixelPos] = 205;
-              imgdata[pixelPos + 1] = 125;
-              imgdata[pixelPos + 2] = 40;
+              imgdata[pixelPos] = 255;
+              imgdata[pixelPos + 1] = 184;
+              imgdata[pixelPos + 2] = 126;
             } else if (imgdata[pixelPos] === 18) {
               //Agriculture
-              imgdata[pixelPos] = 251;
-              imgdata[pixelPos + 1] = 240;
-              imgdata[pixelPos + 2] = 171;
+              imgdata[pixelPos] = 210;
+              imgdata[pixelPos + 1] = 169;
+              imgdata[pixelPos + 2] = 101;
             } else if (imgdata[pixelPos] === 21) {
               //Pasture or Agriculture
-              imgdata[pixelPos] = 244;
-              imgdata[pixelPos + 1] = 214;
-              imgdata[pixelPos + 2] = 52;
+              imgdata[pixelPos] = 232;
+              imgdata[pixelPos + 1] = 176;
+              imgdata[pixelPos + 2] = 113;
             } else if (imgdata[pixelPos] >= 22 && imgdata[pixelPos] <= 25) {
               //Non-vegetated Area
-              imgdata[pixelPos] = 209;
-              imgdata[pixelPos + 1] = 211;
-              imgdata[pixelPos + 2] = 211;
+              imgdata[pixelPos] = 246;
+              imgdata[pixelPos + 1] = 240;
+              imgdata[pixelPos + 2] = 234;
             } else if (imgdata[pixelPos] === 26) {
-              //ater Bodies
-              imgdata[pixelPos] = 39;
-              imgdata[pixelPos + 1] = 132;
-              imgdata[pixelPos + 2] = 188;
+              //Water Bodies
+              imgdata[pixelPos] = 163;
+              imgdata[pixelPos + 1] = 220;
+              imgdata[pixelPos + 2] = 254;
             } else if (imgdata[pixelPos] === 27) {
               //Unobserved
-              imgdata[pixelPos] = 92;
-              imgdata[pixelPos + 1] = 96;
-              imgdata[pixelPos + 2] = 96;
+              imgdata[pixelPos] = 235;
+              imgdata[pixelPos + 1] = 236;
+              imgdata[pixelPos + 2] = 236;
               imgdata[pixelPos + 3] = 0;
             } else if (
               imgdata[pixelPos] === 1 ||
