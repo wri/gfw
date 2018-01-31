@@ -4,6 +4,7 @@ import uniq from 'lodash/uniq';
 import concat from 'lodash/concat';
 import isEmpty from 'lodash/isEmpty';
 import qs from 'query-string';
+import sortBy from 'lodash/sortBy';
 
 import WIDGETS from 'pages/country/data/widgets-config.json';
 
@@ -18,10 +19,13 @@ const getFAOCountries = state => state.faoCountries || null;
 
 // get lists selected
 export const getWidgets = createSelector([], () =>
-  Object.keys(WIDGETS).map(key => ({
-    name: key,
-    ...WIDGETS[key]
-  }))
+  sortBy(
+    Object.keys(WIDGETS).map(key => ({
+      name: key,
+      ...WIDGETS[key]
+    })),
+    'config.sortOrder'
+  )
 );
 
 export const filterWidgetsByCategory = createSelector(
