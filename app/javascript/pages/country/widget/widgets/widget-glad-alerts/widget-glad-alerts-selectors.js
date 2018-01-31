@@ -6,11 +6,12 @@ import mean from 'lodash/mean';
 import groupBy from 'lodash/groupBy';
 import upperCase from 'lodash/upperCase';
 import maxBy from 'lodash/maxBy';
-import compact from 'lodash/compact';
 import minBy from 'lodash/minBy';
 import concat from 'lodash/concat';
 import moment from 'moment';
 import { getColorPalette } from 'utils/data';
+
+const MIN_YEAR = 2015;
 
 // get list data
 const getAlerts = state => state.alerts || null;
@@ -25,7 +26,7 @@ const getYearsObj = (data, startSlice, endSlice) => {
     year: key,
     weeks: grouped[key].slice(
       startSlice < 0 ? grouped[key].length + startSlice : startSlice,
-      startSlice < 0 ? grouped[key].length : endSlice
+      endSlice < 0 ? grouped[key].length : endSlice
     )
   }));
 };
@@ -44,7 +45,9 @@ const runningMean = (data, windowSize) => {
   const smoothedMean = [];
   data.forEach((d, i) => {
     const slice = data.slice(i, i + windowSize);
-    smoothedMean.push(mean(slice));
+    if (i < data.length - windowSize + 1) {
+      smoothedMean.push(mean(slice));
+    }
   });
   return smoothedMean;
 };
@@ -54,11 +57,15 @@ export const getData = createSelector(
   (data, period) => {
     if (!data || isEmpty(data)) return null;
     const groupedByYear = groupBy(data, 'year');
-    const years = Object.keys(groupedByYear);
+    const years = [];
+    const maxYear = maxBy(data, 'year').year;
+    for (let i = MIN_YEAR; i <= maxYear; i += 1) {
+      years.push(i);
+    }
     const yearLengths = {};
     const lastWeek = {
-      isoWeek: moment(period[0]).isoWeek(),
-      year: moment(period[0]).year()
+      isoWeek: moment(period[1]).isoWeek(),
+      year: moment(period[1]).year()
     };
     years.forEach(y => {
       const lastIsoWeek =
@@ -102,7 +109,6 @@ export const getMeans = createSelector([getData], data => {
     ...d,
     mean: smoothedMeans[i]
   }));
-
   return parsedData;
 });
 
@@ -124,7 +130,7 @@ export const getStdDev = createSelector(
         stdDevs[i] = stdDevs[i] ? [...stdDevs[i], some] : [some];
       });
     }
-    const stdDev = mean(stdDevs.map(s => mean(compact(s)) ** 0.5));
+    const stdDev = mean(stdDevs.map(s => mean(s) ** 0.5));
 
     return data.map(d => ({
       ...d,

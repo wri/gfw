@@ -81,7 +81,7 @@ export const getSentence = createSelector(
   ],
   (data, settings, options, location, indicator, locationNames) => {
     if (!data || !options || !indicator || !locationNames) return '';
-    const { startYear, endYear, threshold } = settings;
+    const { startYear, endYear } = settings;
     const totalLoss = sumBy(data, 'loss');
     const currentLocation =
       locationNames && locationNames.current && locationNames.current.label;
@@ -118,7 +118,7 @@ export const getSentence = createSelector(
     } else {
       sentence += `${format('.0f')(topLoss)}%`;
     }
-    sentence += `</b> of all tree cover loss between <b>${startYear}</b> and <b>${endYear}</b> where tree canopy is greater than <b>${threshold}%</b>. `;
+    sentence += `</b> of all tree cover loss between <b>${startYear}</b> and <b>${endYear}</b>. `;
     sentence += `${
       percentileLength > 1 ? `<b>${topRegion.label}</b>` : 'This region'
     } had the largest tree cover loss at `;

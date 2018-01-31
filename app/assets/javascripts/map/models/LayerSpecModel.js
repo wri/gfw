@@ -91,6 +91,7 @@ define(['underscore', 'backbone'], (_, Backbone) => {
       'birdlife',
       'tigers',
       'bra_biomes',
+      'map_biomas',
       'biodiversity_hotspots',
       'protected_areasCDB',
       'khm_pa',
@@ -202,7 +203,10 @@ define(['underscore', 'backbone'], (_, Backbone) => {
      * @return {object} layers
      */
     positionizer(layers) {
-      const layerOrder = _.intersection(this.layerOrder, _.pluck(layers, 'slug'));
+      const layerOrder = _.intersection(
+        this.layerOrder,
+        _.pluck(layers, 'slug')
+      );
       _.each(
         layerOrder,
         _.bind(function (slug, i) {
@@ -230,7 +234,7 @@ define(['underscore', 'backbone'], (_, Backbone) => {
     getLayers() {
       const layers = {};
 
-      _.each(this.toJSON(), (category) => {
+      _.each(this.toJSON(), category => {
         _.extend(layers, category);
       });
 
@@ -264,7 +268,7 @@ define(['underscore', 'backbone'], (_, Backbone) => {
     getSublayers() {
       let layers = {};
 
-      _.each(_.omit(this.toJSON(), 'forest_clearing'), (results) => {
+      _.each(_.omit(this.toJSON(), 'forest_clearing'), results => {
         layers = _.extend(layers, results);
       });
 
@@ -285,7 +289,10 @@ define(['underscore', 'backbone'], (_, Backbone) => {
           const category = this.get(categoryName);
           if (category) {
             categories.push(
-              _.sortBy(this.positionizer(category), (layer) => layer.position).reverse()
+              _.sortBy(
+                this.positionizer(category),
+                layer => layer.position
+              ).reverse()
             );
           }
         }, this)

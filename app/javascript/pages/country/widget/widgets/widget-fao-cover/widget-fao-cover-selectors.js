@@ -61,30 +61,17 @@ export const getSentence = createSelector(
   [getData, getLocationNames],
   (data, locationNames) => {
     if (isEmpty(data) || !locationNames) return null;
-    const {
-      area_ha,
-      extent,
-      forest_planted,
-      forest_primary,
-      forest_regenerated,
-      rank
-    } = data;
-    const naturallyRegenerated = extent / 100 * forest_regenerated;
+    const { area_ha, extent, forest_primary } = data;
     const primaryForest = extent / 100 * forest_primary;
-    const plantedForest = extent / 100 * forest_planted;
-    const nonForest =
-      area_ha - (naturallyRegenerated + primaryForest + plantedForest);
-
-    const sentence = `FAO data from 2015 shows that ${locationNames.current &&
-      locationNames.current.label} is ${
-      nonForest / area_ha > 0.5 ? 'mostly non-forest.' : 'mostly forest.'
-    }${
+    const sentence = `FAO data from 2015 shows that <strong>${locationNames.current &&
+      locationNames.current.label}</strong> contains ${
       primaryForest > 0
-        ? ` Primary forest occupies <strong>${format('.1f')(
-          primaryForest / area_ha * 100
-        )}%</strong> of the country. This gives ${locationNames.current &&
-            locationNames.current
-              .label} a rank of <strong>${rank}th</strong> out of 110 countries in terms of its relative amount of primary forest.`
+        ? ` <strong>${format('.3s')(
+          extent
+        )}Ha</strong> of forest, with Primary forest occupying 
+        <strong>${format('.1f')(
+    primaryForest / area_ha * 100
+  )}%</strong> of the country.`
         : ''
     }`;
     return sentence;

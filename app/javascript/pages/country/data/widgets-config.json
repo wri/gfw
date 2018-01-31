@@ -74,7 +74,7 @@
   "treeLocated": {
     "title": "Where is tree cover located",
     "config": {
-      "size": "large",
+      "size": "small",
       "indicators": ["gadm28", "ifl_2013", "wdpa",
                       "ifl_2013__wdpa", "ifl_2013__mining",
                       "primary_forest", "primary_forest__landmark",
@@ -92,33 +92,7 @@
       "threshold": 30,
       "extentYear": 2010,
       "unit": "ha",
-      "pageSize": 10,
-      "page": 0
-    },
-    "active": true
-  },
-  "relativeTreeCover": {
-    "title": "Which regions are the most tree-covered",
-    "config": {
-      "size": "small",
-      "indicators": ["gadm28", "ifl_2013", "wdpa",
-                      "ifl_2013__wdpa", "ifl_2013__mining",
-                      "primary_forest", "primary_forest__landmark",
-                      "plantations", "plantations__mining",
-                      "plantations__wdpa", "plantations__landmark"],
-      "categories": ["summary", "land-cover"],
-      "admins": ["country", "region"],
-      "selectors": ["indicators", "thresholds", "extentYears"],
-      "locationCheck": true,
-      "type": "extent",
-      "metaKey": ""
-    },
-    "settings": {
-      "indicator": "gadm28",
-      "threshold": 30,
-      "extentYear": 2010,
-      "unit": "%",
-      "pageSize": 10,
+      "pageSize": 5,
       "page": 0
     },
     "active": true
@@ -187,7 +161,7 @@
       "indicator": "gadm28",
       "threshold": 30,
       "unit": "ha",
-      "pageSize": 10,
+      "pageSize": 8,
       "page": 0,
       "startYear": 2001,
       "endYear": 2016
@@ -249,7 +223,7 @@
       "indicator": "gadm28",
       "threshold": 30,
       "unit": "ha",
-      "pageSize": 10,
+      "pageSize": 8,
       "page": 0
     },
     "active": true

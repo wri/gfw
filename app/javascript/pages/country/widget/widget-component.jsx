@@ -7,6 +7,7 @@ import isEmpty from 'lodash/isEmpty';
 import Loader from 'components/loader/loader';
 import NoContent from 'components/no-content';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
+import WidgetSettingsStatement from 'pages/country/widget/components/widget-settings-statement';
 
 import WidgetTreeCover from 'pages/country/widget/widgets/widget-tree-cover';
 import WidgetTreeCoverPlantations from 'pages/country/widget/widgets/widget-tree-cover-plantations';
@@ -15,7 +16,6 @@ import WidgetPrimaryTreeCover from 'pages/country/widget/widgets/widget-primary-
 import WidgetTreeLocated from 'pages/country/widget/widgets/widget-tree-located';
 import WidgetGainLocated from 'pages/country/widget/widgets/widget-gain-located';
 import WidgetLossLocated from 'pages/country/widget/widgets/widget-loss-located';
-import WidgetRelativeTreeCover from 'pages/country/widget/widgets/widget-relative-tree-cover';
 import WidgetTreeLoss from 'pages/country/widget/widgets/widget-tree-loss';
 import WidgetTreeLossPlantations from 'pages/country/widget/widgets/widget-tree-loss-plantations';
 import WidgetTreeGain from 'pages/country/widget/widgets/widget-tree-gain';
@@ -36,7 +36,6 @@ const widgets = {
   WidgetTreeLocated,
   WidgetGainLocated,
   WidgetLossLocated,
-  WidgetRelativeTreeCover,
   WidgetTreeLoss,
   WidgetTreeLossPlantations,
   WidgetFaoCover,
@@ -90,6 +89,7 @@ class Widget extends PureComponent {
             )}
           {!error && <WidgetComponent {...this.props} {...settingsConfig} />}
         </div>
+        <WidgetSettingsStatement settings={settingsConfig.settings} />
       </div>
     );
   }
