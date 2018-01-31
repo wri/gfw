@@ -1,4 +1,4 @@
-import ForestCover from './forestCover';
+import ForestCover from './forest-cover';
 
 const OPTIONS = {
   threshold: 30,
