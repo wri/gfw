@@ -87,7 +87,7 @@ export const chartConfig = createSelector(
 export const getSentence = createSelector(
   [chartData, getSettings, getLocation, getLocationNames],
   (data, settings, location, locationNames) => {
-    if (!data) return null;
+    if (!data || !data.length) return null;
 
     const { type } = settings;
     const currentLocation =
@@ -116,6 +116,14 @@ export const getSentence = createSelector(
       )}%</b>, most of which is in <b>${plantationLabel}${
         isPlural ? '' : 's'
       }</b>.`;
+    } else if (type === 'bound2') {
+      sentence = `<b>${
+        topRegion.region
+      }</b> has the largest relative tree cover due to plantations in <b>${currentLocation}</b>${
+        location.payload.region ? ' ' : ''
+      } at <b>${format('.1f')(data[0].total)}%</b>, most of which is in <b>${
+        topPlantation.label
+      } plantations</b>.`;
     } else {
       sentence = `Within <b>${currentLocation}</b>, <b>${(topRegion.region &&
         topRegion.region) ||
