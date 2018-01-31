@@ -162,7 +162,6 @@ define([
   'map/views/layers/MexForestProdLayer',
   'map/views/layers/MexForestRestLayer',
   'map/views/layers/UgaPALayer',
-  'map/views/layers/BraLandCoverLayer',
   'map/views/layers/CanProtectedAreasLayer',
   'map/views/layers/LbrMinExL',
   'map/views/layers/LbrMinDevAg',
@@ -349,7 +348,6 @@ define([
   MexForestProdLayer,
   MexForestRestLayer,
   UgaPALayer,
-  BraLandCoverLayer,
   CanProtectedAreasLayer,
   LbrMinExL,
   LbrMinDevAg,
@@ -872,9 +870,6 @@ define([
     },
     uga_protected_areas: {
       view:  UgaPALayer
-    },
-    bra_land_cover: {
-      view:  BraLandCoverLayer
     },
     can_protected_areas: {
       view:  CanProtectedAreasLayer
