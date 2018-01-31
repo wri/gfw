@@ -1,14 +1,14 @@
-import ForestCover from './layers/forestCover';
-import ForestCover2010 from './layers/forestCover2010';
-import ForestGain from './layers/forestGain';
-import IntactForest from './layers/intactForest';
+import ForestCover from './layers/forest-cover';
+import ForestCover2010 from './layers/forest-cover-2010';
+import ForestGain from './layers/forest-gain';
+import IntactForest from './layers/intact-forest';
 import Loss from './layers/loss';
-import PlantationsByType from './layers/plantationsByType';
-import PlantationsBySpecies from './layers/plantationsBySpecies';
+import PlantationsByType from './layers/plantations-by-type';
+import PlantationsBySpecies from './layers/plantations-by-species';
 import Glad from './layers/glad';
 import Viirs from './layers/viirs';
 import Mining from './layers/mining';
-import ProtectedAreas from './layers/protectedAreas';
+import ProtectedAreas from './layers/protected-areas';
 
 const layersMap = {
   forest2000: ForestCover,
