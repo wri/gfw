@@ -87,7 +87,7 @@ export const chartConfig = createSelector(
 export const getSentence = createSelector(
   [chartData, getSettings, getLocation, getLocationNames],
   (data, settings, location, locationNames) => {
-    if (!data) return null;
+    if (!data || !data.length) return null;
 
     const { type } = settings;
     const currentLocation =
