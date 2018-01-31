@@ -32,7 +32,13 @@ class WidgetComposedChart extends PureComponent {
   };
 
   render() {
-    const { className, data, config, handleMouseMove } = this.props;
+    const {
+      className,
+      data,
+      config,
+      handleMouseMove,
+      backgroundColor
+    } = this.props;
     const { xKey, yKeys, xAxis, yAxis, tooltip, unit } = this.props.config;
     const { lines, bars, areas } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
@@ -64,6 +70,7 @@ class WidgetComposedChart extends PureComponent {
                   dataMax={maxYValue}
                   unit={unit || ''}
                   fill="#555555"
+                  backgroundColor={backgroundColor}
                 />
               }
               {...yAxis}
@@ -108,7 +115,8 @@ WidgetComposedChart.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
   className: PropTypes.string,
-  handleMouseMove: PropTypes.func
+  handleMouseMove: PropTypes.func,
+  backgroundColor: PropTypes.string
 };
 
 export default WidgetComposedChart;

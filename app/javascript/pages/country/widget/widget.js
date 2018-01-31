@@ -71,6 +71,7 @@ const mapStateToProps = (state, ownProps) => {
       settings.indicator &&
       widgetSelectors.getActiveIndicator(settings.indicator),
     location: location.payload,
+    query: location.query,
     title,
     loading,
     error,

@@ -2,7 +2,8 @@ export const initialState = {
   loading: false,
   error: false,
   layerSpec: {},
-  layers: ['forest2000']
+  layers: [],
+  settings: {}
 };
 
 const setLayerSpecLoading = (state, { payload }) => ({
@@ -18,7 +19,8 @@ const setLayerSpec = (state, { payload }) => ({
 
 const setLayers = (state, { payload }) => ({
   ...state,
-  layers: payload
+  layers: payload.clear ? payload.layers : [...state.layers, ...payload.layers],
+  settings: payload.settings
 });
 
 export default {

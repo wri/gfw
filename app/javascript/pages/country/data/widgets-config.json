@@ -14,7 +14,8 @@
     "settings": {
       "indicator": "gadm28",
       "threshold": 30,
-      "extentYear": 2010
+      "extentYear": 2010,
+      "layers": ["forest2010"]
     },
     "active": true
   },
@@ -123,7 +124,8 @@
       "threshold": 30,
       "startYear": 2001,
       "endYear": 2016,
-      "extentYear": 2000
+      "extentYear": 2000,
+      "layers": ["loss"]
     },
     "active": true
   },
@@ -266,6 +268,7 @@
       "customLocationWhitelist": ["BRA", "COL", "ECU", "GUF", "GUY", "PER", "SUR", "BDI",
         "CMR", "CAF", "GNQ", "GAB", "RWA", "UGA", "IDN", "MYS",
         "PNG", "VEN", "DOC", "DOG", "TLS"],
+      "layers": ["umd_as_it_happens"],
       "sortOrder": 12
     },
     "settings": {

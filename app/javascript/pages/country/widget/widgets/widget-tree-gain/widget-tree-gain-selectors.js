@@ -41,7 +41,7 @@ export const getFilteredData = createSelector(
     if (!data || !data.length) return null;
     const locationIndex = findIndex(
       data,
-      d => d.id === locationNames.current.value
+      d => d.id === locationNames.current && locationNames.current.value
     );
     let trimStart = locationIndex - 2;
     let trimEnd = locationIndex + 3;
