@@ -132,10 +132,10 @@ define([
       if (p.slug === 'umd-loss-gain') {
         var results = (type == 'country') ? results.total : results;
         p.areaHa = this.roundNumber(results.areaHa || 0);
-
         p.alerts.totalAlerts = this.roundNumber(results.loss || 0);
         p.alerts.gainAlerts = this.roundNumber(results.gain || 0);
         p.alerts.treeExtent = this.roundNumber(results.treeExtent || 0);
+        p.alerts.treeExtent2010 = this.roundNumber(results.treeExtent2010 || 0);
 
         // Dates
         p.dates.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
@@ -190,11 +190,10 @@ define([
         return (value < 10 && value % 1 != 0) ? value.toFixed(2).toLocaleString() : (~~value).toLocaleString();
       }
       return 0;
-    },
+    }
 
 
   });
 
   return AnalysisResultsPresenter;
-
 });
