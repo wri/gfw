@@ -103,9 +103,10 @@ export const getGeostore = createThunkAction(
       dispatch(setGeostoreLoading(true));
       getGeostoreProvider(country, region, subRegion)
         .then(response => {
-          const { areaHa, bbox } = response.data.data.attributes;
+          const { hash, areaHa, bbox } = response.data.data.attributes;
           dispatch(
             setGeostore({
+              hash,
               areaHa,
               bounds: getBoxBounds(bbox)
             })
