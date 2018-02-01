@@ -25,8 +25,10 @@ class Header extends PureComponent {
       error,
       setShareModal,
       shareData,
-      location
+      location,
+      forestAtlasLink
     } = this.props;
+
     return (
       <div className={`${className} c-header`}>
         {loading && <Loader className="loader" theme="theme-loader-light" />}
@@ -112,13 +114,23 @@ class Header extends PureComponent {
           <div className="columns large-6 medium-12 small-12">
             <div className="description text -title-xs">
               {!loading && (
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: error
-                      ? 'An error occured while fetching data. Please try again later.'
-                      : getHeaderDescription()
-                  }}
-                />
+                <div>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: error
+                        ? 'An error occured while fetching data. Please try again later.'
+                        : getHeaderDescription()
+                    }}
+                  />
+                  {forestAtlasLink && (
+                    <Button
+                      className="forest-atlas-btn"
+                      extLink={forestAtlasLink.url}
+                    >
+                      EXPLORE FOREST ATLAS
+                    </Button>
+                  )}
+                </div>
               )}
             </div>
           </div>
@@ -140,7 +152,8 @@ Header.propTypes = {
   getHeaderDescription: PropTypes.func.isRequired,
   setShareModal: PropTypes.func.isRequired,
   shareData: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  forestAtlasLink: PropTypes.array
 };
 
 export default Header;

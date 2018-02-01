@@ -27,7 +27,7 @@
       margin-right: rem(15px);
       position: relative;
 
-      &:after {
+      &::after {
         content: '';
         position: absolute;
         right: rem(-11px);
