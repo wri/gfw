@@ -29,7 +29,7 @@
       "selectors": ["thresholds", "extentYears", "types"],
       "showIndicators": ["plantations"],
       "type": "extent",
-      "metaKey": "widget_plantations_cover",
+      "metaKey": "widget_natural_vs_planted",
       "sortOrder": {  "land-use": 100
       }
     },
@@ -171,7 +171,7 @@
       "selectors": ["indicators", "thresholds", "units", "startYears", "endYears"],
       "locationCheck": true,
       "type": "loss",
-      "metaKey": "widget_loss_location",
+      "metaKey": "widget_tree_cover_loss_ranking",
       "sortOrder": {  "summary": 4,
                       "forest-change": 2 
       }
@@ -241,7 +241,7 @@
       "selectors": ["indicators", "thresholds", "units"],
       "locationCheck": true,
       "type": "gain",
-      "metaKey": "widget_gain_location",
+      "metaKey": "widget_tree_cover_gain_ranking",
       "sortOrder": {  "forest-change": 100
       }
     },
