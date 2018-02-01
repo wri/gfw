@@ -84,8 +84,8 @@ export const getSentence = createSelector(
 
     const sentence = `${
       indicator.value === 'primary_forest'
-        ? `In <b>${locationLabel}</b>, ${lessThanCheck} of tree cover is <b>${sentenceLocation}</b>.`
-        : `Within <b>${sentenceLocation}</b> in <b>${locationLabel}</b>, ${lessThanCheck} of tree cover is <b>Primary forest</b>.`
+        ? `In <b>${locationLabel}</b>, ${lessThanCheck} of tree cover is <b>primary forest</b>.`
+        : `Within <b>${sentenceLocation}</b> in <b>${locationLabel}</b>, ${lessThanCheck} of tree cover is <b>primary forest</b>.`
     }`;
 
     return sentence;
