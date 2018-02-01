@@ -13,13 +13,14 @@ class WidgetFires extends PureComponent {
     return (
       <div className="c-widget-fires">
         {sentence && <WidgetDynamicSentence sentence={sentence} />}
-        {chartData && (
-          <WidgetComposedChart
-            className="fires-chart"
-            data={chartData}
-            config={chartConfig}
-          />
-        )}
+        {chartData &&
+          chartData.length > 1 && (
+            <WidgetComposedChart
+              className="fires-chart"
+              data={chartData}
+              config={chartConfig}
+            />
+          )}
       </div>
     );
   }

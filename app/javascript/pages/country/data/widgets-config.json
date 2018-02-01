@@ -311,7 +311,7 @@
     "config": {
       "size": "small",
       "categories": ["forest-change"],
-      "admins": ["country"],
+      "admins": ["country", "region", "subRegion"],
       "metaKey": "widget_fires",
       "type": "loss"
     },
