@@ -305,5 +305,21 @@
       "type": "loss"
     },
     "active": true
+  },
+  "emissionsDeforestation": {
+    "title": "Emissions deforestation",
+    "config": {
+      "size": "small",
+      "indicators": ["gadm28", "bra_biomes", "mining", "wdpa", "primary_forest", "ifl_2013"],
+      "categories": ["climate"],
+      "admins": ["country"],
+      "selectors": ["indicators", "thresholds", "units"],
+      "metaKey": "widget_emissions_deforestation",
+      "type": "loss"
+    },
+    "settings": {
+      "indicator": "gadm28"
+    },
+    "active": true
   }
 }
