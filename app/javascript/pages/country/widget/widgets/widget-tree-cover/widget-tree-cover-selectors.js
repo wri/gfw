@@ -53,19 +53,19 @@ export const getSentence = createSelector(
   [getData, getSettings, getLocationNames, getActiveIndicator],
   (data, settings, locationNames, indicator) => {
     if (!data) return null;
-    const { totalArea, cover } = data;
-    const coverStatus = cover / totalArea > 0.5 ? 'tree covered' : 'non-forest';
+    const { cover } = data;
     const locationLabel = locationNames.current && locationNames.current.label;
     const locationIntro = `${
       indicator.value !== 'gadm28'
         ? `<b>${indicator.label}</b> in <b>${locationLabel}</b> are `
         : `<b>${locationLabel}</b> is `
     }`;
-    const first = `As of <b>${
+    const sentence = `As of <b>${
       settings.extentYear
-    }</b>, ${locationIntro} mainly ${coverStatus}, `;
-    const second = `with <b>${format('.3s')(cover)}Ha</b> of tree cover.`;
+    }</b>, ${locationIntro} had <b>${format('.3s')(
+      cover
+    )}Ha</b> of tree cover.`;
 
-    return `${first} ${second}`;
+    return sentence;
   }
 );
