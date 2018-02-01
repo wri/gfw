@@ -3,9 +3,10 @@
 .theme-button-small {
   height: rem(20px);
   border-radius: rem(10px);
-  padding: 0 rem(5px);
+  padding: 0 rem(10px);
   font-size: rem(12px);
   line-height: 0.8em;
+  white-space: nowrap;
 
   &.square {
     width: rem(20px);

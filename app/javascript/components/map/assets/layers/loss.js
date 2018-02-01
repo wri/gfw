@@ -12,7 +12,7 @@ const OPTIONS = {
 
 class Loss extends Canvas {
   constructor(map, options) {
-    super(map, OPTIONS);
+    super(map, options);
     this.options = { ...OPTIONS, ...options };
   }
 

@@ -31,7 +31,7 @@ export const getSortedData = createSelector(
           path: `/country/${location.country}/${
             location.region ? `${location.region}/` : ''
           }${d.id}`,
-          color: colors.green
+          color: colors.main
         });
       }
     });

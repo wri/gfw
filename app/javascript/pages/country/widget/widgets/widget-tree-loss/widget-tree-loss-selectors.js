@@ -36,7 +36,7 @@ export const chartConfig = createSelector([getColors], colors => ({
   yKeys: {
     bars: {
       area: {
-        fill: colors.pink,
+        fill: colors.main,
         background: false
       }
     }
