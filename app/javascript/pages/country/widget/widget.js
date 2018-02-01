@@ -15,7 +15,8 @@ const mapStateToProps = (state, ownProps) => {
     isRegionsLoading,
     isSubRegionsLoading,
     isCountryWhitelistLoading,
-    isRegionWhitelistLoading
+    isRegionWhitelistLoading,
+    isGeostoreLoading
   } = countryData;
   const adminData = {
     location: location.payload,
@@ -62,6 +63,7 @@ const mapStateToProps = (state, ownProps) => {
       isSubRegionsLoading ||
       isCountryWhitelistLoading ||
       isRegionWhitelistLoading,
+    isGeostoreLoading,
     locationNames: widgetSelectors.getAdminsSelected(adminData),
     activeLocation: widgetSelectors.getActiveAdmin({
       location: location.payload
