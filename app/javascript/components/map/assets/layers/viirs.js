@@ -22,13 +22,13 @@ class Viirs extends CartoDB {
     super(map, options);
     this.options = { ...OPTIONS, ...options };
     this.currentDate = getRangeForDates(
-      options.currentDate || [moment().subtract(24, 'hours'), moment()]
+      options.currentDate || [moment().subtract(8, 'days'), moment()]
     );
   }
 
   getQuery() {
     return this.options.sql
-      .replace(/{tableName}/g, this.options.layerSpec.table_name)
+      .replace(/{tableName}/g, this.options.table_name)
       .replace('{year}', moment(this.currentDate[0]).year())
       .replace('{month}', moment(this.currentDate[0]).format('MM'))
       .replace('{day}', moment(this.currentDate[0]).format('DD'));
