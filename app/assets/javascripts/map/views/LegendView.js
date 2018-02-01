@@ -81,7 +81,7 @@ define([
     global_land_coverTPL, formaTPL, forma_month_TPL, bra_mapBiomasTpl, bra_biomesTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, oil_palmTpl,
     gtm_forest_changeTpl,gtm_forest_coverTpl,gtm_forest_densityTpl,khm_eco_land_concTpl,usa_forest_ownershipTpl,guyra_deforestationTpl,logging_roadsTpl,
     rus_hrvTpl, raisg_land_rightsTpl, mysPATpl, idn_peatTpl, IdnForestAreaTpl,idnSuitabilityTpl, mys_peatTpl,raisg_miningTpl, per_miningTpl, gladTpl, highresTpl,mex_forest_catTpl,mex_forest_subcatTpl,
-    paTpl, places2watchTPL, mex_landrightsTpl, mexPATpl, perPATpl,mex_land_coverTpl,mex_forest_conservTPL,mex_forest_prodTPL,mex_forest_restTPL, bra_landcoverTPL, bra_rtrs, pry_rtrs, lbr_miningTPL,
+    paTpl, places2watchTPL, mex_landrightsTpl, mexPATpl, perPATpl,mex_land_coverTpl,mex_forest_conservTPL,mex_forest_prodTPL,mex_forest_restTPL, bra_rtrs, pry_rtrs, lbr_miningTPL,
     lbr_forestTpl,lbr_communityTpl, mangrove2Tpl, bol_user_fire_frequencyTpl, sentinel_tilesTpl) {
 
   'use strict';
@@ -179,7 +179,6 @@ define([
       mexican_pa:Handlebars.compile(mexPATpl),
       per_protected_areas:Handlebars.compile(perPATpl),
       mex_land_cover:Handlebars.compile(mex_land_coverTpl),
-      bra_land_cover:Handlebars.compile(bra_landcoverTPL),
       bra_rtrs:Handlebars.compile(bra_rtrs),
       pry_rtrs:Handlebars.compile(pry_rtrs),
       lbr_logging:Handlebars.compile(lbr_forestTpl),

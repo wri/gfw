@@ -35,7 +35,6 @@ define([
       "us_land_cover",
       "mex_land_cover",
       "gtm_forest_cover",
-      "bra_land_cover",
       "bra_rtrs",
       "pry_rtrs",
       "gtm_forest_density",
