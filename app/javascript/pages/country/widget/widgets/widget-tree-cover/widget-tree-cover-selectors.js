@@ -57,8 +57,8 @@ export const getSentence = createSelector(
     const locationLabel = locationNames.current && locationNames.current.label;
     const locationIntro = `${
       indicator.value !== 'gadm28'
-        ? `<b>${indicator.label}</b> in <b>${locationLabel}</b> are `
-        : `<b>${locationLabel}</b> is `
+        ? `<b>${indicator.label}</b> in <b>${locationLabel}</b> `
+        : `<b>${locationLabel}</b> `
     }`;
     const sentence = `As of <b>${
       settings.extentYear
