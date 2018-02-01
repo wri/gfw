@@ -47,12 +47,12 @@ export const chartConfig = createSelector(
           stops: [
             {
               offset: '0%',
-              stopColor: colors.red,
+              stopColor: colors.main,
               stopOpacity: '0'
             },
             {
               offset: '100%',
-              stopColor: colors.red
+              stopColor: colors.main
             }
           ]
         }

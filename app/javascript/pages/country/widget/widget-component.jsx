@@ -53,29 +53,44 @@ class Widget extends PureComponent {
     const {
       widget,
       locationNames,
+      location,
       title,
       settingsConfig,
       setWidgetSettingsUrl,
       embed,
       loading,
       error,
-      data
+      data,
+      active,
+      query,
+      colors
     } = this.props;
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
+
     return (
       <div
         className={`c-widget ${settingsConfig.config.size || ''}`}
+        style={
+          active
+            ? {
+              borderColor: colors.main || colors.extent.main
+            }
+            : {}
+        }
         id={widget}
       >
         <WidgetHeader
           widget={widget}
           title={title}
+          location={location}
+          query={query}
           locationNames={locationNames}
           settingsConfig={{
             ...settingsConfig,
             onSettingsChange: setWidgetSettingsUrl
           }}
           embed={embed}
+          active={active}
         />
         <div className="container">
           {!loading &&
@@ -105,10 +120,14 @@ Widget.propTypes = {
   setWidgetSettingsUrl: PropTypes.func.isRequired,
   settingsConfig: PropTypes.object,
   locationNames: PropTypes.object,
+  location: PropTypes.object,
+  query: PropTypes.object,
   embed: PropTypes.bool,
   loading: PropTypes.bool,
   error: PropTypes.bool,
-  data: PropTypes.object
+  data: PropTypes.object,
+  active: PropTypes.bool,
+  colors: PropTypes.object
 };
 
 export default Widget;

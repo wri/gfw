@@ -32,7 +32,6 @@ class WidgetComposedChart extends PureComponent {
   };
 
   render() {
-    const { className, data, config, handleMouseMove } = this.props;
     const {
       xKey,
       yKeys,
@@ -42,8 +41,10 @@ class WidgetComposedChart extends PureComponent {
       tooltip,
       unit
     } = this.props.config;
+    const { className, data, config, handleMouseMove } = this.props;
     const { lines, bars, areas } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
+
     return (
       <div className={`c-composed-chart ${className}`}>
         <ResponsiveContainer>
@@ -132,7 +133,8 @@ WidgetComposedChart.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
   className: PropTypes.string,
-  handleMouseMove: PropTypes.func
+  handleMouseMove: PropTypes.func,
+  backgroundColor: PropTypes.string
 };
 
 export default WidgetComposedChart;

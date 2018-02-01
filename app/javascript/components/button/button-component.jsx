@@ -47,7 +47,7 @@ const Button = props => {
 Button.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  link: PropTypes.string,
+  link: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   theme: PropTypes.string,
   disabled: PropTypes.bool,
   onClick: PropTypes.func,

@@ -191,7 +191,7 @@ export const chartConfig = createSelector(
       yKeys: {
         lines: {
           count: {
-            stroke: colors.pink
+            stroke: colors.main
           }
         },
         areas: {
@@ -278,7 +278,7 @@ export const getSentence = createSelector(
     }
     const date = moment(lastDate.date).format('Do of MMMM YYYY');
 
-    return `There were <b style="color: ${colors.pink}">${format(',')(
+    return `There were <b style="color: ${colors.main}">${format(',')(
       lastDate.count
     )}</b> GLAD alerts reported in the week of the <b>${date}</b>. This was
     <b style="color: ${statusColor}">${status}</b> compared to the same week in previous years.`;

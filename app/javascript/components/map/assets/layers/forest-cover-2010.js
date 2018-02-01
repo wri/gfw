@@ -9,7 +9,7 @@ const OPTIONS = {
 
 class ForestCover2010 extends ForestCover {
   constructor(map, options) {
-    super(map, OPTIONS);
+    super(map, options);
     this.options = { ...OPTIONS, ...options };
     this.threshold = this.options.threshold;
   }

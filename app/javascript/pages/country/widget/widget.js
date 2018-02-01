@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import upperFirst from 'lodash/upperFirst';
+import COLORS from 'pages/country/data/colors.json';
 
 import * as widgetSelectors from 'pages/country/widget/widget-selectors';
 import Component from './widget-component';
@@ -73,10 +74,12 @@ const mapStateToProps = (state, ownProps) => {
       settings.indicator &&
       widgetSelectors.getActiveIndicator(settings.indicator),
     location: location.payload,
+    query: location.query,
     title,
     loading,
     error,
     data,
+    colors: COLORS[config.type] || COLORS,
     settingsConfig: {
       config,
       settings,
