@@ -12,11 +12,11 @@ const SQL_QUERIES = {
   multiRegionExtent:
     "SELECT {region} as region, SUM({extentYear}) as extent, SUM(area_gadm28) as total FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}' GROUP BY {region} ORDER BY {region}",
   gain:
-    "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = {threshold}",
-  gainExtent:
-    "SELECT {region} as region, SUM(area_gain) AS gain, SUM({extentYear}) AS extent FROM data WHERE {location} AND polyname = '{polyname}' AND extent <> -9999 AND thresh = 0 GROUP BY region",
+    "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = 0",
+  gainRanked:
+    "SELECT {region} as region, SUM(area_gain) AS gain, FROM data WHERE {location} AND polyname = '{polyname}' AND thresh = 0 GROUP BY region",
   gainLocations:
-    "SELECT {admin} as region, {calc} as gain, FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}' {grouping} ",
+    "SELECT {admin} as region, {calc} as gain, FROM data WHERE {location} AND thresh = 0 AND polyname = '{indicator}' {grouping} ",
   loss:
     "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.emissions) as emissions FROM data WHERE polyname = '{indicator}' AND {location} AND thresh= {threshold} GROUP BY polyname, iso, nested(year_data.year)",
   locations:
@@ -127,25 +127,17 @@ export const getMultiRegionExtent = ({
   return axios.get(url);
 };
 
-export const getGain = ({
-  country,
-  region,
-  subRegion,
-  indicator,
-  threshold
-}) => {
+export const getGain = ({ country, region, subRegion, indicator }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.gain}`
     .replace('{location}', getLocationQuery(country, region, subRegion))
-    .replace('{threshold}', threshold)
     .replace('{calc}', region ? 'area_gain' : 'SUM(area_gain)')
     .replace('{indicator}', indicator);
   return axios.get(url);
 };
 
-export const getGainLocations = ({ country, region, indicator, threshold }) => {
+export const getGainLocations = ({ country, region, indicator }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.gainLocations}`
     .replace('{location}', getLocationQuery(country, region))
-    .replace('{threshold}', threshold)
     .replace('{admin}', region ? 'adm2' : 'adm1')
     .replace('{calc}', region ? 'area_gain' : 'SUM(area_gain)')
     .replace('{indicator}', indicator)
@@ -183,7 +175,7 @@ export const getFAOExtent = ({ period }) => {
   return axios.get(url);
 };
 
-export const getGainExtent = ({
+export const getGainRanked = ({
   country,
   region,
   subRegion,
@@ -201,7 +193,7 @@ export const getGainExtent = ({
     ? `iso = '${country}' ${subRegion ? `AND adm1 = ${region}` : ''}`
     : '1 = 1';
 
-  const url = `${REQUEST_URL}${SQL_QUERIES.gainExtent}`
+  const url = `${REQUEST_URL}${SQL_QUERIES.gainRanked}`
     .replace('{region}', regionValue)
     .replace('{location}', location)
     .replace('{extentYear}', getExtentYear(extentYear))
