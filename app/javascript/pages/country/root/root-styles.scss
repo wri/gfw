@@ -2,6 +2,8 @@
 $black-tabs: #404040;
 
 .l-country {
+  border-bottom: solid 1px $border;
+
   .panels {
     display: flex;
     flex-direction: row;

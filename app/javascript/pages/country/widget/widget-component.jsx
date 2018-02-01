@@ -73,8 +73,7 @@ class Widget extends PureComponent {
         style={
           active
             ? {
-              borderColor: colors.main || colors.extent.main,
-              borderWidth: '2px'
+              borderColor: colors.main || colors.extent.main
             }
             : {}
         }
