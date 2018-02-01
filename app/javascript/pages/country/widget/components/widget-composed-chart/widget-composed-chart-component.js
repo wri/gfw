@@ -33,7 +33,15 @@ class WidgetComposedChart extends PureComponent {
 
   render() {
     const { className, data, config, handleMouseMove } = this.props;
-    const { xKey, yKeys, xAxis, yAxis, tooltip, unit } = this.props.config;
+    const {
+      xKey,
+      yKeys,
+      xAxis,
+      yAxis,
+      gradients,
+      tooltip,
+      unit
+    } = this.props.config;
     const { lines, bars, areas } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
 
@@ -46,6 +54,23 @@ class WidgetComposedChart extends PureComponent {
             padding={{ left: 50 }}
             onMouseMove={handleMouseMove}
           >
+            <defs>
+              {gradients &&
+                Object.keys(gradients).map(key => (
+                  <linearGradient
+                    key={`lg_${key}`}
+                    {...gradients[key].attributes}
+                  >
+                    {gradients[key].stops &&
+                      Object.keys(gradients[key].stops).map(sKey => (
+                        <stop
+                          key={`st_${sKey}`}
+                          {...gradients[key].stops[sKey]}
+                        />
+                      ))}
+                  </linearGradient>
+                ))}
+            </defs>
             <XAxis
               dataKey={xKey}
               axisLine={false}
