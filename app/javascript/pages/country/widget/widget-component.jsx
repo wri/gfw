@@ -25,6 +25,7 @@ import WidgetFaoReforestation from 'pages/country/widget/widgets/widget-fao-refo
 import WidgetGladAlerts from 'pages/country/widget/widgets/widget-glad-alerts';
 import WidgetRankedPlantations from 'pages/country/widget/widgets/widget-ranked-plantations';
 import WidgetEmissions from 'pages/country/widget/widgets/widget-emissions';
+import WidgetFires from 'pages/country/widget/widgets/widget-fires';
 
 import './widget-styles.scss';
 import './widget-tooltip-styles.scss';
@@ -45,7 +46,8 @@ const widgets = {
   WidgetFaoReforestation,
   WidgetGladAlerts,
   WidgetRankedPlantations,
-  WidgetEmissions
+  WidgetEmissions,
+  WidgetFires
 };
 
 class Widget extends PureComponent {
