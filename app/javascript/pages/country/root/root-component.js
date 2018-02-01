@@ -17,6 +17,7 @@ import Button from 'components/button';
 import Icon from 'components/icon';
 import ModalMeta from 'components/modal-meta';
 import ScrollTo from 'components/scroll-to';
+import Meta from 'pages/country/meta';
 
 import mapIcon from 'assets/icons/map-button.svg';
 import closeIcon from 'assets/icons/close.svg';
@@ -36,7 +37,8 @@ class Root extends PureComponent {
       locationNames,
       category,
       loading,
-      widgetAnchor
+      widgetAnchor,
+      locationGeoJson
     } = this.props;
 
     return (
@@ -108,6 +110,7 @@ class Root extends PureComponent {
                   center: { lat: -34.397, lng: 150.644 },
                   zoom: 8
                 }}
+                areaHighlight={locationGeoJson}
                 isParentLoading={isGeostoreLoading}
               />
             </Sticky>
@@ -118,6 +121,7 @@ class Root extends PureComponent {
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CountryDataProvider />
+        <Meta page={currentLocation} />
       </div>
     );
   }
@@ -135,7 +139,8 @@ Root.propTypes = {
   category: PropTypes.string,
   locationOptions: PropTypes.object,
   locationNames: PropTypes.object,
-  widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+  widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  locationGeoJson: PropTypes.object
 };
 
 export default Root;

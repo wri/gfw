@@ -136,6 +136,10 @@ define(
           slug: 'umd-loss-gain'
         },
         {
+          name: 'forest2010',
+          slug: 'umd-loss-gain'
+        },
+        {
           name: 'forma_month_3',
           slug: 'forma250GFW',
           subscription: true
@@ -203,12 +207,9 @@ define(
 
       listeners() {
         // dev
-        this.status.on(
-          'change',
-          () => {
-            mps.publish('Place/update', [{ go: false }]);
-          }
-        );
+        this.status.on('change', () => {
+          mps.publish('Place/update', [{ go: false }]);
+        });
 
         // Baselayers
         this.status.on('change:baselayers', this.changeBaselayers.bind(this));
@@ -389,14 +390,12 @@ define(
           'Analysis/geojson': function (geojson) {
             if (geojson) {
               this.status.set('spinner', true);
-              GeostoreService.save(geojson).then(
-                (geostoreId) => {
-                  if (geostoreId === this.status.get('geostore')) {
-                    this.status.set('spinner', false);
-                  }
-                  this.status.set('geostore', geostoreId);
+              GeostoreService.save(geojson).then(geostoreId => {
+                if (geostoreId === this.status.get('geostore')) {
+                  this.status.set('spinner', false);
                 }
-              );
+                this.status.set('geostore', geostoreId);
+              });
             } else {
               this.status.set('geostore', null);
             }
@@ -450,24 +449,22 @@ define(
                 type: 'carto'
               };
 
-              GeostoreService.use(provider).then(
-                (useGeostoreId) => {
-                  subscritionObj = {
-                    iso: {
-                      country: null,
-                      region: null
-                    },
-                    geostore: useGeostoreId,
-                    useid: null,
-                    use: null,
-                    wdpaid: null
-                  };
+              GeostoreService.use(provider).then(useGeostoreId => {
+                subscritionObj = {
+                  iso: {
+                    country: null,
+                    region: null
+                  },
+                  geostore: useGeostoreId,
+                  useid: null,
+                  use: null,
+                  wdpaid: null
+                };
 
-                  this.publishSubscribtion(
-                    _.extend({}, this.status.toJSON(), subscritionObj)
-                  );
-                }
-              );
+                this.publishSubscribtion(
+                  _.extend({}, this.status.toJSON(), subscritionObj)
+                );
+              });
             } else {
               subscritionObj = {
                 iso: {
@@ -496,7 +493,7 @@ define(
         {
           'Timeline/date-change': function (layerSlug, date) {
             const dateFormat = 'YYYY-MM-DD';
-            var date = date.map((date) => moment(date).format(dateFormat));
+            var date = date.map(date => moment(date).format(dateFormat));
 
             this.status.set({
               begin: date[0],
@@ -507,7 +504,7 @@ define(
         {
           'Torque/date-range-change': function (date) {
             const dateFormat = 'YYYY-MM-DD';
-            var date = date.map((date) => moment(date).format(dateFormat));
+            var date = date.map(date => moment(date).format(dateFormat));
 
             this.status.set({
               begin: date[0],
@@ -730,12 +727,10 @@ define(
               type: 'carto'
             };
 
-            GeostoreService.use(provider).then(
-              (useGeostoreId) => {
-                this.status.set('useGeostore', useGeostoreId);
-                this.setAnalysis('use');
-              }
-            );
+            GeostoreService.use(provider).then(useGeostoreId => {
+              this.status.set('useGeostore', useGeostoreId);
+              this.setAnalysis('use');
+            });
           }
         }
       },
@@ -748,9 +743,8 @@ define(
       setDataset() {
         const dataset = _.uniq(
           _.pluck(
-            _.filter(
-              this.datasets,
-              (dataset) => _.contains(this.status.get('baselayers'), dataset.name)
+            _.filter(this.datasets, dataset =>
+              _.contains(this.status.get('baselayers'), dataset.name)
             ),
             'slug'
           )
@@ -804,35 +798,29 @@ define(
           // Send request to the Analysis Service
           AnalysisService.get(this.status.toJSON())
 
-            .then(
-              (response, xhr) => {
-                this.status.set('spinner', false);
+            .then((response, xhr) => {
+              this.status.set('spinner', false);
 
-                const statusWithResults = _.extend({}, this.status.toJSON(), {
-                  results: response.data.attributes
-                });
-                mps.publish('Analysis/results', [statusWithResults]);
-              }
-            )
+              const statusWithResults = _.extend({}, this.status.toJSON(), {
+                results: response.data.attributes
+              });
+              mps.publish('Analysis/results', [statusWithResults]);
+            })
 
-            .catch(
-              (errors) => {
-                this.status.set('spinner', false);
+            .catch(errors => {
+              this.status.set('spinner', false);
 
-                const statusWithErrors = _.extend(
-                  {},
-                  this.status.toJSON(),
-                  errors
-                );
-                mps.publish('Analysis/results-error', [statusWithErrors]);
-              }
-            )
+              const statusWithErrors = _.extend(
+                {},
+                this.status.toJSON(),
+                errors
+              );
+              mps.publish('Analysis/results-error', [statusWithErrors]);
+            })
 
-            .finally(
-              () => {
-                this.status.set('spinner', false);
-              }
-            );
+            .finally(() => {
+              this.status.set('spinner', false);
+            });
         }
       },
 
@@ -878,38 +866,32 @@ define(
       deleteAnalysis(options) {
         const type = options ? options.type : null;
         const statusFiltered = type
-          ? _.filter(
-            this.types,
-            (v) => v.type != type
-          )
+          ? _.filter(this.types, v => v.type != type)
           : this.types;
 
         // If type exists delete all stuff related
         // to other analysis
         // 'iso' and 'isoDisabled' need a different treatment
-        _.each(
-          statusFiltered,
-          (v) => {
-            switch (v.name) {
-              case 'iso':
-                this.status.set(
-                  'iso',
-                  {
-                    country: null,
-                    region: null
-                  },
-                  options
-                );
-                break;
-              case 'isoDisabled':
-                this.status.set('isoDisabled', true);
-                break;
-              default:
-                this.status.set(v.name, null, options);
-                break;
-            }
+        _.each(statusFiltered, v => {
+          switch (v.name) {
+            case 'iso':
+              this.status.set(
+                'iso',
+                {
+                  country: null,
+                  region: null
+                },
+                options
+              );
+              break;
+            case 'isoDisabled':
+              this.status.set('isoDisabled', true);
+              break;
+            default:
+              this.status.set(v.name, null, options);
+              break;
           }
-        );
+        });
 
         // If type doesn't exist remove type, active and enabledUpdating
         if (!type) {

@@ -64,7 +64,7 @@ export const getSentence = createSelector(
   [chartData, getExtent, getSettings, getLocationNames, getActiveIndicator],
   (data, extent, settings, locationNames, indicator) => {
     if (!data) return null;
-    const { startYear, endYear, extentYear, threshold } = settings;
+    const { startYear, endYear, extentYear } = settings;
     const locationLabel = locationNames.current && locationNames.current.label;
     const locationIntro = `${
       indicator.value !== 'gadm28'
@@ -82,12 +82,11 @@ export const getSentence = createSelector(
     )(totalLoss)}ha</b> of tree cover${totalLoss ? '.' : ','} ${
       totalLoss > 0
         ? ` This loss is equal to <b>${format('.1f')(percentageLoss)}
-      %</b> of the regions tree cover extent in <b>${extentYear}</b>,
+      %</b> of the area's tree cover extent in <b>${extentYear}</b>,
       and equivalent to <b>${format('.3s')(
     totalEmissions
   )}t</b> of CO\u2082 emissions`
         : ''
-    }
-     with canopy density <span>> ${threshold}%</span>.`;
+    }.`;
   }
 );

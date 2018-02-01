@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
+import endsWith from 'lodash/endsWith';
 
 // get list data
 const getData = state => state.data;
@@ -49,26 +50,25 @@ export const getSentence = createSelector(
       } else {
         topTypesSentence = `<b>${top[0].label}</b> and <b>${
           top[1].label
-        }</b> represents the largest plantations by <b>species</b>`;
+        }</b> represent the largest plantations by <b>species</b>`;
       }
 
-      remainSentence = `The remaining <b>${format('.2s')(
-        sumBy(data.slice(2), 'value')
-      )}ha</b> of tree cover is distributed between <b>${data.length -
-        top.length}</b> other plantation species.`;
+      remainSentence =
+        data.length > top.length
+          ? `The remaining <b>${format('.2s')(
+            sumBy(data.slice(2), 'value')
+          )}ha</b> of tree cover is distributed between <b>${data.length -
+              top.length}</b> other plantation species.`
+          : '';
     } else {
       top = data.slice(0, 1);
-      topTypesSentence = `the largest plantation type by area is <b>${
+      topTypesSentence = `the largest plantation type by area are <b>${
         top[0].label
-      }</b>`;
+      }${endsWith(top[0].label, 's') ? '' : 's'}</b>`;
     }
 
-    return `In <b>${locationLabel}</b>, ${topTypesSentence} in <b>${
-      settings.extentYear
-    }</b>, spanning <b>${format('.2s')(
-      sumBy(top, 'value')
-    )}ha</b> where the canopy cover is greater than <b>${
-      settings.threshold
-    }%</b>. ${remainSentence}`;
+    return `In <b>${locationLabel}</b>, ${topTypesSentence}, spanning <b>${format(
+      '.2s'
+    )(sumBy(top, 'value'))}ha</b>. ${remainSentence}`;
   }
 );
