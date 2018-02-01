@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/button';
 import Icon from 'components/icon';
 
-import linkIcon from 'assets/icons/flechita.svg';
+import linkIcon from 'assets/icons/link.svg';
 import './mini-legend-styles.scss';
 
 class MiniLegend extends PureComponent {

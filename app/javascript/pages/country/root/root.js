@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import replace from 'lodash/replace';
 
 import {
   getActiveAdmin,
@@ -25,9 +26,9 @@ const mapStateToProps = ({ root, countryData, location }) => {
   const locationOptions = getAdminsOptions(adminData);
   const locationNames = getAdminsSelected(adminData);
   const adminLevel = getActiveAdmin(location.payload);
-  const widgetAnchor = location.query && location.query.widget
-    ? document.getElementById(location.query.widget)
-    : null;
+  const widgetHash =
+    window.location.hash && replace(window.location.hash, '#', '');
+  const widgetAnchor = document.getElementById(widgetHash);
   const {
     regionWhitelist,
     countryWhitelist,
@@ -40,7 +41,9 @@ const mapStateToProps = ({ root, countryData, location }) => {
     adminLevel,
     location,
     locationOptions,
-    activeWidget: location.query && location.query.widget,
+    activeWidget:
+      replace(window.location.hash, '#', '') ||
+      (location.query && location.query.widget),
     indicatorWhitelist: location.payload.region
       ? regionWhitelist
       : countryWhitelist

@@ -19,14 +19,17 @@ const mapStateToProps = (
   { isParentLoading, settings, layers, parentLayersKey }
 ) => {
   const { map, countryData } = state;
+  const parentSettings =
+    state[parentLayersKey] && state[parentLayersKey].settings;
   const activeLayers =
-    layers || (parentLayersKey && state[parentLayersKey].settings.layers) || map.layers;
+    layers || (parentSettings && parentSettings.layers) || map.layers;
+  const activeSettings = settings || parentSettings || map.settings;
   return {
     loading: map.loading || isParentLoading,
     error: map.error,
     bounds: countryData.geostore.bounds,
     layerSpec: map.layerSpec,
-    settings: settings || {},
+    settings: activeSettings,
     layers: getLayers({ layers: activeLayers, layerSpec: map.layerSpec }),
     layersKeys: activeLayers
   };
@@ -39,38 +42,34 @@ class MapContainer extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const {
-      isParentLoading,
-      bounds,
-      layersKeys,
-      layerSpec,
-      settings
-    } = nextProps;
+    const { isParentLoading, bounds, layersKeys, settings } = nextProps;
     if (isParentLoading !== this.props.isParentLoading && bounds) {
       this.boundMap(nextProps.bounds);
       this.setAreaHighlight();
     }
 
     if (
-      !isEqual(layerSpec, this.props.layerSpec) &&
+      !isEqual(settings, this.props.settings) &&
       layersKeys &&
       layersKeys.length
     ) {
-      this.updateLayers(layersKeys, layerSpec);
+      this.updateLayers(layersKeys, settings);
     }
 
     if (
       !isEqual(layersKeys, this.props.layersKeys) ||
       !isEqual(settings, this.props.settings)
     ) {
-      this.updateLayers(layersKeys, layerSpec);
+      this.updateLayers(layersKeys, settings);
     }
   }
 
-  setLayers = (layers, layerSpec) => {
+  setLayers = (layers, settings) => {
+    const { layerSpec } = this.props;
     if (layers && layers.length) {
       layers.forEach((slug, index) => {
-        const layer = new Layers[slug](this.map, layerSpec[slug]);
+        const layerSettings = { ...layerSpec[slug], ...settings };
+        const layer = new Layers[slug](this.map, layerSettings);
         layer.getLayer().then(res => {
           this.map.overlayMapTypes.setAt(index, res);
         });

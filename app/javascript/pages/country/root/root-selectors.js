@@ -5,7 +5,6 @@ import concat from 'lodash/concat';
 import isEmpty from 'lodash/isEmpty';
 import qs from 'query-string';
 import sortBy from 'lodash/sortBy';
-import replace from 'lodash/replace';
 
 import WIDGETS from 'pages/country/data/widgets-config.json';
 
@@ -33,7 +32,7 @@ export const getWidgets = createSelector([], () =>
 export const filterWidgetsByCategory = createSelector(
   [getWidgets, getCategory],
   (widgets, category) =>
-    widgets.filter(w => w.active && w.config.categories.indexOf(category) > -1)
+    widgets.filter(w => w.enabled && w.config.categories.indexOf(category) > -1)
 );
 
 export const checkWidgetNeedsLocations = createSelector(
@@ -95,10 +94,10 @@ export const filterWidgets = createSelector(
 
 export const getActiveWidget = createSelector(
   [filterWidgets, getWidgetQuery],
-  (widgets, locationHash) => {
-    if (!widgets || !widgets.length) return null;
-    if (!locationHash) return widgets[0];
-    return widgets.find(w => w.name === replace(locationHash), '#', '');
+  (widgets, widgetQuery) => {
+    if (!widgets || !widgets.length || widgetQuery === 'none') return null;
+    if (!widgetQuery) return widgets[0];
+    return widgets.find(w => w.name === widgetQuery);
   }
 );
 

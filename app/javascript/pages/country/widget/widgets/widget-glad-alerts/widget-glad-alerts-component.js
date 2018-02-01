@@ -6,9 +6,9 @@ import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynami
 
 import './widget-glad-alerts-styles.scss';
 
-class WidgetTreeLoss extends PureComponent {
+class WidgetGladAlerts extends PureComponent {
   render() {
-    const { data, config, sentence, handleMouseMove } = this.props;
+    const { data, config, sentence, handleMouseMove, active } = this.props;
 
     return (
       <div className="c-widget-glad-alerts">
@@ -19,6 +19,7 @@ class WidgetTreeLoss extends PureComponent {
             data={data}
             config={config}
             handleMouseMove={handleMouseMove}
+            backgroundColor={active ? '#fefedc' : ''}
           />
         )}
       </div>
@@ -26,11 +27,12 @@ class WidgetTreeLoss extends PureComponent {
   }
 }
 
-WidgetTreeLoss.propTypes = {
+WidgetGladAlerts.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
   sentence: PropTypes.string,
-  handleMouseMove: PropTypes.func
+  handleMouseMove: PropTypes.func,
+  active: PropTypes.bool
 };
 
-export default WidgetTreeLoss;
+export default WidgetGladAlerts;

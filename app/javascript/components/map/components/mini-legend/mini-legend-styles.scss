@@ -1,7 +1,6 @@
 @import '~styles/settings.scss';
 
 .c-mini-legend {
-  position: relative;
   background-color: $white;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
   padding: rem(10px);
@@ -9,7 +8,7 @@
   position: absolute;
   left: rem(15px);
   right: rem(15px);
-  bottom: rem(20px);
+  bottom: rem(30px);
   max-width: rem(400px);
 
   ul {

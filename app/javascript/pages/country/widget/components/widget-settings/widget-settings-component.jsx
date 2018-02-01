@@ -93,9 +93,22 @@ class WidgetSettings extends PureComponent {
             value={settings.extentYear}
             options={extentYears}
             disabled={loading}
-            onChange={option =>
-              onSettingsChange({ value: { extentYear: option.value }, widget })
-            }
+            onChange={option => {
+              const layers = [...settings.layers];
+              if (layers.length) {
+                const activeIndex = settings.layers.indexOf(
+                  `forest${settings.extentYear}`
+                );
+                layers[activeIndex] = `forest${option.value}`;
+              }
+              onSettingsChange({
+                value: {
+                  extentYear: option.value,
+                  layers
+                },
+                widget
+              });
+            }}
             infoAction={() => setModalMeta('widget_tree_cover_extent')}
           />
         )}

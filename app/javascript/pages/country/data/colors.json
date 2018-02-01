@@ -1,16 +1,16 @@
 {
   "extent": {
-    "green": "#a0c746",
+    "main": "#a0c746",
     "ramp": ["#364a08", "#506917", "#6b8729", "#84a637", "#a0c746", "#bcdb72", "#d4ed9a", "#e3f7b2", "#effcd2"],
     "nonForest": "#e7e5a4"
   },
   "loss": {
-    "pink": "#fe6598",
+    "main": "#fe6598",
     "ramp": ["#510626", "#7a1e41", "#a4355c", "#d04d7a", "#fe6598", "#ff84ac", "#ffa0c0", "#ffbad4", "#ffd4e9"],
     "noLoss": "#e7e5a4"
   },
   "gain": {
-    "blue": "#6d6de5",
+    "main": "#6d6de5",
     "ramp": ["#070752", "#231f74", "#3c3898", "#5452be", "#6d6de5", "#8a86ec", "#a49ff3", "#bdb9f9", "#d4d4ff"],
     "noGain": "#e7e5a4"
   },

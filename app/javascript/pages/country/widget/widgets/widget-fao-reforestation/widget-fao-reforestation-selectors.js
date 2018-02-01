@@ -38,7 +38,7 @@ export const getFilteredData = createSelector(
     return dataTrimmed.map(d => ({
       ...d,
       label: d.name,
-      color: colors.blue,
+      color: colors.main,
       path: `/country/${d.iso}`,
       value: d.rate * 1000
     }));

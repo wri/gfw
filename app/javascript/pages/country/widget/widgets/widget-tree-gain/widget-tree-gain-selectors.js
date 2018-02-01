@@ -68,7 +68,7 @@ export const getFilteredData = createSelector(
       return {
         ...d,
         label: (locationData && locationData.label) || '',
-        color: colors.blue,
+        color: colors.main,
         path,
         value: settings.unit === 'ha' ? d.gain : d.percentage
       };
