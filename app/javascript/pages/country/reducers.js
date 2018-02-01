@@ -32,6 +32,7 @@ import * as widgetFAOCoverComponent from 'pages/country/widget/widgets/widget-fa
 import * as widgetFAOReforestationComponent from 'pages/country/widget/widgets/widget-fao-reforestation';
 import * as widgetGladAlertsComponent from 'pages/country/widget/widgets/widget-glad-alerts';
 import * as widgetRankedPlantationsComponent from 'pages/country/widget/widgets/widget-ranked-plantations';
+import * as widgetEmissionsComponent from 'pages/country/widget/widgets/widget-emissions';
 
 // Providers
 import * as countryDataProviderComponent from 'pages/country/providers/country-data-provider';
@@ -57,7 +58,8 @@ const componentsReducers = {
   widgetFAOCover: handleActions(widgetFAOCoverComponent),
   widgetFAOReforestation: handleActions(widgetFAOReforestationComponent),
   widgetGladAlerts: handleActions(widgetGladAlertsComponent),
-  widgetRankedPlantations: handleActions(widgetRankedPlantationsComponent)
+  widgetRankedPlantations: handleActions(widgetRankedPlantationsComponent),
+  widgetEmissions: handleActions(widgetEmissionsComponent)
 };
 
 const providersReducers = {

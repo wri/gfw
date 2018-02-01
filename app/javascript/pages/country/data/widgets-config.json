@@ -294,5 +294,16 @@
       "page": 0
     },
     "active": true
+  },
+  "emissions": {
+    "title": "Historical emissions",
+    "config": {
+      "size": "small",
+      "categories": ["land-use"],
+      "admins": ["country"],
+      "metaKey": "widget_emissions",
+      "type": "loss"
+    },
+    "active": true
   }
 }
