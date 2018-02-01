@@ -41,10 +41,10 @@ export const getChartData = createSelector([getSortedData], sortedData => {
   data[0].emissions.forEach((item, i) => {
     chartData.push({
       year: item.year,
-      e1_value: item.value,
-      e1_percentage: item.value / total.emissions[i].value * 100,
-      e2_value: data[1].emissions[i].value,
-      e2_percentage: data[1].emissions[i].value / total.emissions[i].value * 100
+      e1Value: item.value,
+      e1Percentage: item.value / total.emissions[i].value * 100,
+      e2Value: data[1].emissions[i].value,
+      e2Percentage: data[1].emissions[i].value / total.emissions[i].value * 100
     });
   });
   return chartData;
@@ -60,7 +60,7 @@ export const chartConfig = createSelector(
       xKey: 'year',
       yKeys: {
         areas: {
-          e1_value: {
+          e1Value: {
             fill: colorRange[0],
             stroke: colorRange[0],
             opacity: 1,
@@ -68,7 +68,7 @@ export const chartConfig = createSelector(
             background: false,
             activeDot: false
           },
-          e2_value: {
+          e2Value: {
             fill: colorRange[1],
             stroke: colorRange[1],
             opacity: 1,
@@ -80,13 +80,13 @@ export const chartConfig = createSelector(
       },
       tooltip: [
         {
-          key: 'e1_percentage',
+          key: 'e1Percentage',
           unit: '%',
           label: 'Agriculture',
           color: colorRange[0]
         },
         {
-          key: 'e2_percentage',
+          key: 'e2Percentage',
           unit: '%',
           label: 'Land-Use Change and Forestry',
           color: colorRange[1]
