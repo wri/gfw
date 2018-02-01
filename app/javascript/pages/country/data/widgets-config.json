@@ -10,7 +10,10 @@
       "type": "extent",
       "metaKey": "widget_tree_cover",
       "layers": ["forest2000", "forest2010"],
-      "sortOrder": 0
+      "sortOrder": {
+        "summary": 1,
+        "land-cover": 100
+      }
     },
     "settings": {
       "indicator": "gadm28",
@@ -29,9 +32,11 @@
       "selectors": ["thresholds", "extentYears", "types"],
       "showIndicators": ["plantations"],
       "type": "extent",
-      "metaKey": "widget_plantations_cover",
       "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
-      "sortOrder": 1
+      "metaKey": "widget_natural_vs_planted",
+      "sortOrder": {
+        "land-use": 100
+      }
     },
     "settings": {
       "threshold": 30,
@@ -52,7 +57,9 @@
       "type": "extent",
       "metaKey": "widget_ifl",
       "layers": ["forest2000", "forest2010", "ifl_2013_deg"],
-      "sortOrder": 2
+      "sortOrder": {
+        "land-cover": 2
+      }
     },
     "settings": {
       "indicator": "ifl_2013",
@@ -73,7 +80,9 @@
       "type": "extent",
       "metaKey": "widget_primary_forest",
       "layers": ["forest2000", "forest2010"],
-      "sortOrder": 3
+      "sortOrder": {
+        "land-cover": 3
+      }
     },
     "settings": {
       "indicator": "primary_forest",
@@ -99,7 +108,10 @@
       "type": "extent",
       "metaKey": "widget_forest_location",
       "layers": ["forest2000", "forest2010"],
-      "sortOrder": 4
+      "sortOrder": {
+        "summary": 2,
+        "land-cover": 100
+      }
     },
     "settings": {
       "indicator": "gadm28",
@@ -127,7 +139,10 @@
       "type": "loss",
       "metaKey": "widget_tree_cover_loss",
       "layers": ["loss"],
-      "sortOrder": 5
+      "sortOrder": {
+        "summary": 3,
+        "forest-change": 1
+      }
     },
     "settings": {
       "indicator": "gadm28",
@@ -151,7 +166,9 @@
       "type": "loss",
       "metaKey": "",
       "layers": ["loss", "plantations_by_type"],
-      "sortOrder": 6
+      "sortOrder": {
+        "summary": 7
+      }
     },
     "settings": {
       "indicator": "plantations",
@@ -171,14 +188,17 @@
                       "primary_forest", "primary_forest__landmark",
                       "plantations", "plantations__mining",
                       "plantations__wdpa", "plantations__landmark"],
-      "categories": ["forest-change"],
+      "categories": ["summary", "forest-change"],
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "units", "startYears", "endYears"],
       "locationCheck": true,
       "type": "loss",
-      "metaKey": "widget_loss_location",
       "layers": ["loss"],
-      "sortOrder": 7
+      "metaKey": "widget_tree_cover_loss_ranking",
+      "sortOrder": {
+        "summary": 4,
+        "forest-change": 2
+      }
     },
     "settings": {
       "indicator": "gadm28",
@@ -203,11 +223,14 @@
       "type": "gain",
       "metaKey": "widget_tree_cover_gain",
       "layers": ["forestgain"],
-      "sortOrder": 8
+      "sortOrder": {
+        "summary": 5,
+        "forest-change": 3
+      }
     },
     "settings": {
       "indicator": "gadm28",
-      "threshold": "0",
+      "threshold": 30,
       "unit": "ha",
       "extentYear": 2010,
       "layers": ["forestgain"]
@@ -218,12 +241,14 @@
     "title": "FAO reforestation",
     "config": {
       "size": "small",
-      "categories": ["summary", "forest-change"],
+      "categories": ["forest-change"],
       "admins": ["country"],
       "selectors": ["periods"],
       "type": "fao",
       "metaKey": "widget_rate_of_restoration_fao",
-      "sortOrder": 9
+      "sortOrder": {
+        "forest-change": 6
+      }
     },
     "settings": {
       "period": 2010,
@@ -245,9 +270,11 @@
       "selectors": ["indicators", "thresholds", "units"],
       "locationCheck": true,
       "type": "gain",
-      "metaKey": "widget_gain_location",
       "layers": ["forestgain"],
-      "sortOrder": 10
+      "metaKey": "widget_tree_cover_gain_ranking",
+      "sortOrder": {
+        "forest-change": 100
+      }
     },
     "settings": {
       "indicator": "gadm28",
@@ -267,7 +294,9 @@
       "admins": ["country"],
       "type": "fao",
       "metaKey": "widget_forest_cover_fao",
-      "sortOrder": 11
+      "sortOrder": {
+        "land-cover": 5
+      }
     },
     "settings": {
       "unit": "ha"
@@ -287,7 +316,10 @@
         "CMR", "CAF", "GNQ", "GAB", "RWA", "UGA", "IDN", "MYS",
         "PNG", "VEN", "DOC", "DOG", "TLS"],
       "layers": ["umd_as_it_happens"],
-      "sortOrder": 12
+      "sortOrder": {
+        "summary": 6,
+        "forest-change": 4
+      }
     },
     "settings": {
       "period": "week",
@@ -306,7 +338,9 @@
       "type": "extent",
       "metaKey": "",
       "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
-      "sortOrder": 13
+      "sortOrder": {
+        "land-use": 1
+      }
     },
     "settings": {
       "indicator": "gadm28",
