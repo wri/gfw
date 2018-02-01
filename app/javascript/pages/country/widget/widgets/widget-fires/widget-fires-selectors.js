@@ -11,13 +11,28 @@ const getColors = state => state.colors || null;
 
 export const getSortedData = createSelector([getData], data => {
   if (!data || isEmpty(data)) return null;
-  return sortByKey(data.fires.map(item => item.attributes), 'day', false);
+
+  let sortedData = [];
+  if (Array.isArray(data.fires)) {
+    sortedData = isEmpty(data.fires)
+      ? [{ value: 0 }]
+      : sortByKey(
+        data.fires
+          .filter(item => item.attributes.day !== null)
+          .map(item => item.attributes),
+        'day',
+        false
+      );
+  } else {
+    sortedData = [{ value: data.fires.attributes.value }];
+  }
+  return sortedData;
 });
 
 export const chartConfig = createSelector(
   [getSortedData, getColors],
   (data, colors) => {
-    if (!data) return null;
+    if (!data || !data.length) return null;
 
     return {
       gradients: [
@@ -53,7 +68,7 @@ export const chartConfig = createSelector(
       },
       xAxis: {
         tickCount: 2,
-        interval: 5,
+        interval: data.length - 2,
         tickFormatter: t => moment(t).format('Do MMM')
       },
       tooltip: [
@@ -74,10 +89,8 @@ export const getSentence = createSelector(
       locationNames && locationNames.current && locationNames.current.label;
     const firesCount =
       data.map(item => item.value).reduce((sum, item) => sum + item) || 'no';
-    const sentence = `In <b>${currentLocation}</b> there were <b>${format(',')(
-      firesCount
-    )}</b> active fires detected in the last 7 days.`;
-
-    return sentence;
+    return `In <b>${currentLocation}</b> there were <b>${
+      Number.isInteger(firesCount) ? format(',')(firesCount) : firesCount
+    }</b> active fires detected in the last 7 days.`;
   }
 );

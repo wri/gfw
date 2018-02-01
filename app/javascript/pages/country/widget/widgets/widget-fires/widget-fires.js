@@ -13,8 +13,9 @@ import {
 } from './widget-fires-selectors';
 import WidgetFiresComponent from './widget-fires-component';
 
-const mapStateToProps = ({ widgetFires }, ownProps) => {
+const mapStateToProps = ({ widgetFires, countryData }, ownProps) => {
   const { data } = widgetFires;
+  const { geostore } = countryData;
   const { locationNames } = ownProps;
   const selectorData = {
     data,
@@ -25,20 +26,26 @@ const mapStateToProps = ({ widgetFires }, ownProps) => {
   return {
     chartData: getSortedData(selectorData),
     chartConfig: chartConfig(selectorData),
-    sentence: getSentence(selectorData)
+    sentence: getSentence(selectorData),
+    geostore: geostore.hash
   };
 };
 
 class WidgetFiresContainer extends PureComponent {
   componentWillMount() {
-    const { location, settings, getFiresData } = this.props;
-    getFiresData({ ...location, ...settings });
+    const { location, settings, geostore, getFiresData } = this.props;
+    if (geostore !== '') {
+      getFiresData({ ...location, ...settings, geostore });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { location, settings, getFiresData } = nextProps;
-    if (!isEqual(location.country, this.props.location.country)) {
-      getFiresData({ ...location, ...settings });
+    const { location, settings, geostore, getFiresData } = nextProps;
+    if (
+      !isEqual(location.country, this.props.location.country) ||
+      geostore !== this.props.geostore
+    ) {
+      getFiresData({ ...location, ...settings, geostore });
     }
   }
 
@@ -52,6 +59,7 @@ class WidgetFiresContainer extends PureComponent {
 WidgetFiresContainer.propTypes = {
   location: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
+  geostore: PropTypes.string.isRequired,
   getFiresData: PropTypes.func.isRequired
 };
 
