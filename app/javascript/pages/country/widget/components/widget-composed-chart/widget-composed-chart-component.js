@@ -44,7 +44,6 @@ class WidgetComposedChart extends PureComponent {
     } = this.props.config;
     const { lines, bars, areas } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
-
     return (
       <div className={`c-composed-chart ${className}`}>
         <ResponsiveContainer>
@@ -100,13 +99,7 @@ class WidgetComposedChart extends PureComponent {
             />
             {areas &&
               Object.keys(areas).map(key => (
-                <Area
-                  key={key}
-                  dataKey={key}
-                  dot={false}
-                  stackId={1}
-                  {...areas[key]}
-                />
+                <Area key={key} dataKey={key} dot={false} {...areas[key]} />
               ))}
             {lines &&
               Object.keys(lines).map(key => (
