@@ -32,6 +32,11 @@ const mapStateToProps = ({ widgetFires, countryData }, ownProps) => {
 };
 
 class WidgetFiresContainer extends PureComponent {
+  componentWillMount() {
+    const { location, settings, geostore, getFiresData } = this.props;
+    getFiresData({ ...location, ...settings, geostore });
+  }
+
   componentWillReceiveProps(nextProps) {
     const { location, settings, geostore, getFiresData } = nextProps;
     if (
