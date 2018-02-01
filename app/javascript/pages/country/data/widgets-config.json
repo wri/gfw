@@ -339,5 +339,20 @@
       "type": "loss"
     },
     "active": true
+  },
+  "fires": {
+    "title": "Fires",
+    "config": {
+      "size": "small",
+      "categories": ["forest-change"],
+      "admins": ["country", "region", "subRegion"],
+      "metaKey": "widget_fires",
+      "type": "loss"
+    },
+    "settings": {
+      "period": "week",
+      "periodValue": 1
+    },
+    "active": true
   }
 }

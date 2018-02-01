@@ -66,7 +66,8 @@ export const chartConfig = createSelector(
             opacity: 1,
             strokeWidth: 0,
             background: false,
-            activeDot: false
+            activeDot: false,
+            stackId: 1
           },
           e2Value: {
             fill: colorRange[1],
@@ -74,7 +75,8 @@ export const chartConfig = createSelector(
             opacity: 1,
             strokeWidth: 0,
             background: false,
-            activeDot: false
+            activeDot: false,
+            stackId: 1
           }
         }
       },
