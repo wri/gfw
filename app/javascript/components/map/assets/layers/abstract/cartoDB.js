@@ -19,7 +19,7 @@ const OPTIONS = {
 class CartoDB extends Overlay {
   constructor(map, options) {
     super(map, OPTIONS);
-    this.options = { ...options, ...OPTIONS };
+    this.options = { ...OPTIONS, ...options };
   }
 
   getLayer() {

@@ -46,8 +46,10 @@ class WidgetHeader extends PureComponent {
           locationNames.current ? locationNames.current.label : ''
         }`}</div>
         <div className="options">
-          {settingsConfig.settings.layers &&
-            settingsConfig.settings.layers.length && (
+          {settingsConfig.settings &&
+            settingsConfig.settings.layers &&
+            settingsConfig.settings.layers.length &&
+            !embed && (
               <Button
                 className="map-button"
                 theme={`theme-button-small ${
@@ -65,7 +67,8 @@ class WidgetHeader extends PureComponent {
                 {widgetSize === 'small' && (
                   <Icon icon={mapIcon} className="map-icon" />
                 )}
-                {widgetSize !== 'small' && 'VIEW ON MAP'}
+                {widgetSize !== 'small' &&
+                  (active ? 'HIDE ON MAP' : 'VIEW ON MAP')}
               </Button>
             )}
           <div className="small-options">

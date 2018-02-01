@@ -302,5 +302,16 @@
       "layers": ["plantations_by_species"]
     },
     "enabled": true
+  },
+  "emissions": {
+    "title": "Historical emissions",
+    "config": {
+      "size": "small",
+      "categories": ["land-use", "climate"],
+      "admins": ["country"],
+      "metaKey": "widget_emissions",
+      "type": "loss"
+    },
+    "enabled": true
   }
 }
