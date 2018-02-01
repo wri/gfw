@@ -58,15 +58,22 @@ class Widget extends PureComponent {
       error,
       data,
       active,
-      query
+      query,
+      colors
     } = this.props;
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
 
     return (
       <div
-        className={`c-widget ${settingsConfig.config.size || ''} ${
-          active ? 'highlighted' : ''
-        }`}
+        className={`c-widget ${settingsConfig.config.size || ''}`}
+        style={
+          active
+            ? {
+              borderColor: colors.main || colors.extent.main,
+              borderWidth: '2px'
+            }
+            : {}
+        }
         id={widget}
       >
         <WidgetHeader
@@ -91,7 +98,7 @@ class Widget extends PureComponent {
                   locationNames.current.label}`}
               />
             )}
-          {loading && <Loader className={`${active ? 'highlighted' : ''}`} />}
+          {loading && <Loader />}
           {!loading &&
             error && (
               <NoContent message="An error occured while fetching data. Please try again later." />
@@ -116,7 +123,8 @@ Widget.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.bool,
   data: PropTypes.object,
-  active: PropTypes.bool
+  active: PropTypes.bool,
+  colors: PropTypes.object
 };
 
 export default Widget;

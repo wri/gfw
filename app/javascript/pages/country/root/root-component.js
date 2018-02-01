@@ -41,6 +41,7 @@ class Root extends PureComponent {
       activeWidget,
       locationGeoJson
     } = this.props;
+
     return (
       <div className="l-country">
         <Button
@@ -75,10 +76,7 @@ class Root extends PureComponent {
                   <Widget
                     key={widget.name}
                     widget={widget.name}
-                    active={activeWidget.name === widget.name}
-                    backgroundColor={
-                      activeWidget === widget.name ? '#fefedc' : ''
-                    }
+                    active={activeWidget && activeWidget.name === widget.name}
                   />
                 ))}
               {!loading &&

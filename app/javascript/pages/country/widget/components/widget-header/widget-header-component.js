@@ -35,7 +35,7 @@ class WidgetHeader extends PureComponent {
       setModalMeta,
       modalOpen,
       modalClosing,
-      onMap
+      active
     } = this.props;
     const { tooltipOpen } = this.state;
     const widgetSize = settingsConfig.config.size;
@@ -58,10 +58,9 @@ class WidgetHeader extends PureComponent {
                   payload: { ...location.payload },
                   query: {
                     ...query,
-                    widget
+                    widget: active ? 'none' : widget
                   }
                 }}
-                disabled={onMap}
               >
                 {widgetSize === 'small' && (
                   <Icon icon={mapIcon} className="map-icon" />
@@ -140,8 +139,7 @@ WidgetHeader.propTypes = {
   setModalMeta: PropTypes.func.isRequired,
   modalOpen: PropTypes.bool,
   modalClosing: PropTypes.bool,
-  handleWidgetToMap: PropTypes.func.isRequired,
-  onMap: PropTypes.bool
+  active: PropTypes.bool
 };
 
 export default WidgetHeader;

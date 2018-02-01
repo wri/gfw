@@ -17,7 +17,7 @@
       "extentYear": 2010,
       "layers": ["forest2010"]
     },
-    "active": true
+    "enabled": true
   },
   "treeCoverPlantations": {
     "title": "Plantations extent",
@@ -29,14 +29,16 @@
       "showIndicators": ["plantations"],
       "type": "extent",
       "metaKey": "widget_plantations_cover",
+      "layers": ["forest2010", "plantations_by_type", "plantations_by_species"],
       "sortOrder": 1
     },
     "settings": {
       "threshold": 30,
       "extentYear": 2010,
-      "type": "bound2"
+      "type": "bound2",
+      "layers": ["forest2010", "plantations_by_species"]
     },
-    "active": true
+    "enabled": true
   },
   "intactTreeCover": {
     "title": "Intact forest extent",
@@ -53,9 +55,10 @@
     "settings": {
       "indicator": "ifl_2013",
       "threshold": 30,
-      "extentYear": 2010
+      "extentYear": 2010,
+      "layers": ["ifl_2013_deg"]
     },
-    "active": true
+    "enabled": true
   },
   "primaryTreeCover": {
     "title": "Primary forest extent",
@@ -74,7 +77,7 @@
       "threshold": 30,
       "extentYear": 2010
     },
-    "active": true
+    "enabled": true
   },
   "treeLocated": {
     "title": "Where is tree cover located",
@@ -101,7 +104,7 @@
       "pageSize": 5,
       "page": 0
     },
-    "active": true
+    "enabled": true
   },
   "treeLoss": {
     "title": "Tree cover loss",
@@ -127,7 +130,7 @@
       "extentYear": 2000,
       "layers": ["loss"]
     },
-    "active": true
+    "enabled": true
   },
   "treeLossPlantations": {
     "title": "Tree cover loss for plantations",
@@ -148,7 +151,7 @@
       "startYear": 2013,
       "endYear": 2016
     },
-    "active": true
+    "enabled": true
   },
   "lossLocated": {
     "title": "Where did tree cover loss occur",
@@ -176,7 +179,7 @@
       "startYear": 2001,
       "endYear": 2016
     },
-    "active": true
+    "enabled": true
   },
   "treeGain": {
     "title": "Tree cover gain",
@@ -196,7 +199,7 @@
       "unit": "ha",
       "extentYear": 2010
     },
-    "active": true
+    "enabled": true
   },
   "FAOReforestation": {
     "title": "FAO reforestation",
@@ -213,7 +216,7 @@
       "period": 2010,
       "unit": "ha/year"
     },
-    "active": true
+    "enabled": true
   },
   "gainLocated": {
     "title": "Where did tree cover gain occur",
@@ -239,7 +242,7 @@
       "pageSize": 8,
       "page": 0
     },
-    "active": true
+    "enabled": true
   },
   "FAOCover": {
     "title": "Forest cover",
@@ -254,7 +257,7 @@
     "settings": {
       "unit": "ha"
     },
-    "active": true
+    "enabled": true
   },
   "gladAlerts": {
     "title": "Deforestation Alerts",
@@ -275,7 +278,7 @@
       "period": "week",
       "weeks": 13
     },
-    "active": true
+    "enabled": true
   },
   "rankedPlantations": {
     "title": "Ranked plantation breakdown",
@@ -286,7 +289,8 @@
       "selectors": ["thresholds", "extentYears", "types"],
       "type": "extent",
       "metaKey": "",
-      "sortOrder": 13
+      "sortOrder": 13,
+      "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"]
     },
     "settings": {
       "indicator": "gadm28",
@@ -294,8 +298,9 @@
       "threshold": 30,
       "type": "bound2",
       "pageSize": 5,
-      "page": 0
+      "page": 0,
+      "layers": ["plantations_by_species"]
     },
-    "active": true
+    "enabled": true
   }
 }
