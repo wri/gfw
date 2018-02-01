@@ -107,7 +107,7 @@ export const getGeostore = createThunkAction(
           dispatch(
             setGeostore({
               hash,
-              geojson
+              geojson,
               areaHa,
               bounds: getBoxBounds(bbox)
             })
