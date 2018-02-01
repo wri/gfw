@@ -12,7 +12,6 @@ export const initialState = {
   countryWhitelist: {},
   regionWhitelist: {},
   geostore: {
-    hash: '',
     areaHa: 0,
     bounds: []
   }
