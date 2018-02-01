@@ -267,7 +267,7 @@
                       "plantations__wdpa", "plantations__landmark"],
       "categories": ["forest-change"],
       "admins": ["country", "region"],
-      "selectors": ["indicators", "thresholds", "units"],
+      "selectors": ["indicators", "units"],
       "locationCheck": true,
       "type": "gain",
       "layers": ["forestgain"],
@@ -278,7 +278,6 @@
     },
     "settings": {
       "indicator": "gadm28",
-      "threshold": 30,
       "unit": "ha",
       "pageSize": 8,
       "page": 0,
