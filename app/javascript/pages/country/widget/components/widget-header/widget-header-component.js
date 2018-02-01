@@ -35,6 +35,7 @@ class WidgetHeader extends PureComponent {
       setModalMeta,
       modalOpen,
       modalClosing,
+      citation,
       active
     } = this.props;
     const { tooltipOpen } = this.state;
@@ -78,7 +79,8 @@ class WidgetHeader extends PureComponent {
                 setModalMeta(
                   settingsConfig.config.metaKey,
                   ['title', 'citation'],
-                  ['function', 'source']
+                  ['function', 'source'],
+                  citation
                 )
               }
             >
@@ -142,7 +144,8 @@ WidgetHeader.propTypes = {
   setModalMeta: PropTypes.func.isRequired,
   modalOpen: PropTypes.bool,
   modalClosing: PropTypes.bool,
-  active: PropTypes.bool
+  active: PropTypes.bool,
+  citation: PropTypes.string
 };
 
 export default WidgetHeader;

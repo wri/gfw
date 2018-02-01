@@ -368,14 +368,16 @@
     "title": "Fires",
     "config": {
       "size": "small",
-      "categories": ["forest-change"],
+      "categories": ["forest-change", "summary"],
       "admins": ["country", "region", "subRegion"],
       "metaKey": "widget_fires",
+      "layers": ["viirs_fires_alerts"],
       "type": "loss"
     },
     "settings": {
       "period": "week",
-      "periodValue": 1
+      "periodValue": 1,
+      "layers": ["viirs_fires_alerts"]
     },
     "enabled": true
   }
