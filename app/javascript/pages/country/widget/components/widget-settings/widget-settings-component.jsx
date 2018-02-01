@@ -68,9 +68,24 @@ class WidgetSettings extends PureComponent {
             value={settings.type}
             options={types}
             disabled={loading}
-            onChange={option =>
-              onSettingsChange({ value: { type: option.value }, widget })
-            }
+            onChange={option => {
+              const layers = [...settings.layers];
+              if (layers.length) {
+                const type = settings.type === 'bound2' ? 'species' : 'type';
+                const newType = option.value === 'bound2' ? 'species' : 'type';
+                const activeIndex = settings.layers.indexOf(
+                  `plantations_by_${type}`
+                );
+                layers[activeIndex] = `plantations_by_${newType}`;
+              }
+              onSettingsChange({
+                value: {
+                  type: option.value,
+                  layers
+                },
+                widget
+              });
+            }}
             infoAction={() => setModalMeta('widget_tree_cover_extent')}
           />
         )}

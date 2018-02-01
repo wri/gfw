@@ -18,8 +18,8 @@ const OPTIONS = {
 
 class CartoDB extends Overlay {
   constructor(map, options) {
-    super(map, OPTIONS);
-    this.options = { ...OPTIONS, ...options };
+    super(map, options);
+    this.options = { ...options, ...OPTIONS };
   }
 
   getLayer() {
@@ -51,7 +51,6 @@ class CartoDB extends Overlay {
     const query = (this.options.sql || this.options.queryTemplate)
       .replace(/{tableName}/g, this.options.table_name)
       .replace('{analysis}', this.options.analysis);
-
     return query;
   }
 }

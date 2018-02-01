@@ -4,12 +4,12 @@
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: rem(460px);
-  padding: rem(20px) rem(15px);
+  border: solid 2px rgba($medium-grey, 0.2);
   border-radius: 4px;
-  border: solid 1px rgba($medium-grey, 0.2);
+  min-height: rem(460px);
   display: flex;
   flex-direction: column;
+  padding: rem(20px) rem(15px);
   justify-content: flex-start;
 
   @media screen and (min-width: $screen-m) {

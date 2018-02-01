@@ -6,7 +6,6 @@ import upperFirst from 'lodash/upperFirst';
 import Widget from 'pages/country/widget';
 import Share from 'components/share';
 import Header from 'pages/country/header';
-import Footer from 'pages/country/footer';
 import Map from 'components/map';
 import Sticky from 'components/sticky';
 import CountryDataProvider from 'pages/country/providers/country-data-provider';
@@ -94,7 +93,7 @@ class Root extends PureComponent {
           <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
             <Sticky
               className={`map ${showMapMobile ? '-open-mobile' : ''}`}
-              limitElement="c-footer"
+              limitElement="footerGfw"
               enabled={window.innerWidth >= SCREEN_M}
             >
               <Map
@@ -124,7 +123,6 @@ class Root extends PureComponent {
             </Sticky>
           </div>
         </div>
-        <Footer />
         <Share />
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}

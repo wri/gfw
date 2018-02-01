@@ -9,6 +9,7 @@
       "selectors": ["indicators", "thresholds", "extentYears"],
       "type": "extent",
       "metaKey": "widget_tree_cover",
+      "layers": ["forest2000", "forest2010"],
       "sortOrder": 0
     },
     "settings": {
@@ -29,7 +30,7 @@
       "showIndicators": ["plantations"],
       "type": "extent",
       "metaKey": "widget_plantations_cover",
-      "layers": ["forest2010", "plantations_by_type", "plantations_by_species"],
+      "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
       "sortOrder": 1
     },
     "settings": {
@@ -50,13 +51,14 @@
       "selectors": ["indicators", "thresholds", "extentYears"],
       "type": "extent",
       "metaKey": "widget_ifl",
+      "layers": ["forest2000", "forest2010", "ifl_2013_deg"],
       "sortOrder": 2
     },
     "settings": {
       "indicator": "ifl_2013",
       "threshold": 30,
       "extentYear": 2010,
-      "layers": ["ifl_2013_deg"]
+      "layers": ["forest2010", "ifl_2013_deg"]
     },
     "enabled": true
   },
@@ -70,12 +72,14 @@
       "selectors": ["indicators", "thresholds", "extentYears"],
       "type": "extent",
       "metaKey": "widget_primary_forest",
+      "layers": ["forest2000", "forest2010"],
       "sortOrder": 3
     },
     "settings": {
       "indicator": "primary_forest",
       "threshold": 30,
-      "extentYear": 2010
+      "extentYear": 2010,
+      "layers": ["forest2010"]
     },
     "enabled": true
   },
@@ -94,12 +98,14 @@
       "locationCheck": true,
       "type": "extent",
       "metaKey": "widget_forest_location",
+      "layers": ["forest2000", "forest2010"],
       "sortOrder": 4
     },
     "settings": {
       "indicator": "gadm28",
       "threshold": 30,
       "extentYear": 2010,
+      "layers": ["forest2010"],
       "unit": "ha",
       "pageSize": 5,
       "page": 0
@@ -120,6 +126,7 @@
       "selectors": ["indicators", "startYears", "endYears", "thresholds", "extentYears"],
       "type": "loss",
       "metaKey": "widget_tree_cover_loss",
+      "layers": ["loss"],
       "sortOrder": 5
     },
     "settings": {
@@ -143,13 +150,15 @@
       "yearRange": ["2013", "2016"],
       "type": "loss",
       "metaKey": "",
+      "layers": ["loss", "plantations_by_type"],
       "sortOrder": 6
     },
     "settings": {
       "indicator": "plantations",
       "threshold": 30,
       "startYear": 2013,
-      "endYear": 2016
+      "endYear": 2016,
+      "layers": ["loss", "plantations_by_type"]
     },
     "enabled": true
   },
@@ -168,6 +177,7 @@
       "locationCheck": true,
       "type": "loss",
       "metaKey": "widget_loss_location",
+      "layers": ["loss"],
       "sortOrder": 7
     },
     "settings": {
@@ -177,7 +187,8 @@
       "pageSize": 8,
       "page": 0,
       "startYear": 2001,
-      "endYear": 2016
+      "endYear": 2016,
+      "layers": ["loss"]
     },
     "enabled": true
   },
@@ -191,13 +202,15 @@
       "selectors": ["indicators", "thresholds", "extentYears", "units"],
       "type": "gain",
       "metaKey": "widget_tree_cover_gain",
+      "layers": ["forestgain"],
       "sortOrder": 8
     },
     "settings": {
       "indicator": "gadm28",
       "threshold": "0",
       "unit": "ha",
-      "extentYear": 2010
+      "extentYear": 2010,
+      "layers": ["forestgain"]
     },
     "enabled": true
   },
@@ -233,6 +246,7 @@
       "locationCheck": true,
       "type": "gain",
       "metaKey": "widget_gain_location",
+      "layers": ["forestgain"],
       "sortOrder": 10
     },
     "settings": {
@@ -240,7 +254,8 @@
       "threshold": 30,
       "unit": "ha",
       "pageSize": 8,
-      "page": 0
+      "page": 0,
+      "layers": ["forestgain"]
     },
     "enabled": true
   },
@@ -265,7 +280,7 @@
       "size": "large",
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
-      "type": "alerts",
+      "type": "loss",
       "selectors": ["weeks"],
       "metaKey": "widget_deforestation_alert_location",
       "customLocationWhitelist": ["BRA", "COL", "ECU", "GUF", "GUY", "PER", "SUR", "BDI",
@@ -276,7 +291,8 @@
     },
     "settings": {
       "period": "week",
-      "weeks": 13
+      "weeks": 13,
+      "layers": ["umd_as_it_happens"]
     },
     "enabled": true
   },
@@ -289,8 +305,8 @@
       "selectors": ["thresholds", "extentYears", "types"],
       "type": "extent",
       "metaKey": "",
-      "sortOrder": 13,
-      "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"]
+      "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
+      "sortOrder": 13
     },
     "settings": {
       "indicator": "gadm28",
@@ -299,7 +315,7 @@
       "type": "bound2",
       "pageSize": 5,
       "page": 0,
-      "layers": ["plantations_by_species"]
+      "layers": ["forest2010", "plantations_by_species"]
     },
     "enabled": true
   },
@@ -310,7 +326,7 @@
       "categories": ["land-use", "climate"],
       "admins": ["country"],
       "metaKey": "widget_emissions",
-      "type": "loss"
+      "type": "emissions"
     },
     "enabled": true
   }
