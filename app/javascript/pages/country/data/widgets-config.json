@@ -31,7 +31,7 @@
       "admins": ["country", "region", "subRegion"],
       "selectors": ["thresholds", "extentYears", "types"],
       "showIndicators": ["plantations"],
-      "type": "extent",
+      "type": "plantations",
       "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
       "metaKey": "widget_natural_vs_planted",
       "sortOrder": {
@@ -334,7 +334,7 @@
       "categories": ["land-use"],
       "admins": ["country", "region"],
       "selectors": ["thresholds", "extentYears", "types"],
-      "type": "extent",
+      "type": "plantations",
       "metaKey": "",
       "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
       "sortOrder": {

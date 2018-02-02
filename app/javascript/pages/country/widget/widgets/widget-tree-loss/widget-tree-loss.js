@@ -2,7 +2,6 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-tree-loss-actions';
 import reducers, { initialState } from './widget-tree-loss-reducers';
@@ -22,7 +21,7 @@ const mapStateToProps = ({ widgetTreeLoss }, ownProps) => {
     settings,
     locationNames,
     activeIndicator,
-    colors: COLORS.loss
+    colors: ownProps.colors
   };
   return {
     data: chartData(selectorData),

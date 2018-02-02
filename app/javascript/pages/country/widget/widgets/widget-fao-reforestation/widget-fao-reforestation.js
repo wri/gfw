@@ -2,7 +2,6 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-fao-reforestation-actions';
 import reducers, { initialState } from './widget-fao-reforestation-reducers';
@@ -17,7 +16,7 @@ const mapStateToProps = ({ widgetFAOReforestation, location }, ownProps) => {
   const selectorData = {
     data: data.countries,
     location: location.payload,
-    colors: COLORS.gain,
+    colors: ownProps.colors.gain,
     settings,
     options: ownProps.settingsConfig.options
   };
@@ -25,7 +24,7 @@ const mapStateToProps = ({ widgetFAOReforestation, location }, ownProps) => {
     loading: loading || ownProps.isMetaLoading,
     data: getFilteredData(selectorData),
     sentence: getSentence(selectorData),
-    colors: { ...COLORS.gain, ...COLORS.global }
+    colors: ownProps.colors.gain
   };
 };
 

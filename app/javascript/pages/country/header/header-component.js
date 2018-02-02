@@ -153,7 +153,7 @@ Header.propTypes = {
   setShareModal: PropTypes.func.isRequired,
   shareData: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  forestAtlasLink: PropTypes.array
+  forestAtlasLink: PropTypes.object
 };
 
 export default Header;
