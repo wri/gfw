@@ -2,7 +2,6 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-tree-located-actions';
 import reducers, { initialState } from './widget-tree-located-reducers';
@@ -23,7 +22,7 @@ const mapStateToProps = (
     options: settingsConfig.options,
     meta: countryData[!payload.region ? 'regions' : 'subRegions'],
     location: payload,
-    colors: COLORS.extent,
+    colors: ownProps.colors,
     indicator: activeIndicator,
     locationNames: ownProps.locationNames
   };

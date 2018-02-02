@@ -85,6 +85,7 @@ export const filterWidgets = createSelector(
         type === 'extent' ||
         type === 'fao' ||
         type === 'emissions' ||
+        type === 'plantations' ||
         (whitelist && whitelist.gadm28 && whitelist.gadm28[type]);
 
       return showByIndicators && hasData;

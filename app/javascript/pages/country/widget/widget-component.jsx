@@ -24,7 +24,7 @@ import WidgetFaoReforestation from 'pages/country/widget/widgets/widget-fao-refo
 import WidgetGladAlerts from 'pages/country/widget/widgets/widget-glad-alerts';
 import WidgetRankedPlantations from 'pages/country/widget/widgets/widget-ranked-plantations';
 import WidgetEmissions from 'pages/country/widget/widgets/widget-emissions';
-import WidgetEmissionsDeforestation from 'pages/country/widget/widgets/widget-emissions-deforestation';
+import WidgetFires from 'pages/country/widget/widgets/widget-fires';
 
 import './widget-styles.scss';
 import './widget-tooltip-styles.scss';
@@ -45,7 +45,7 @@ const widgets = {
   WidgetGladAlerts,
   WidgetRankedPlantations,
   WidgetEmissions,
-  WidgetEmissionsDeforestation
+  WidgetFires
 };
 
 class Widget extends PureComponent {
@@ -53,29 +53,47 @@ class Widget extends PureComponent {
     const {
       widget,
       locationNames,
+      location,
       title,
       settingsConfig,
       setWidgetSettingsUrl,
       embed,
       loading,
       error,
-      data
+      data,
+      active,
+      query,
+      colors
     } = this.props;
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
+
     return (
       <div
         className={`c-widget ${settingsConfig.config.size || ''}`}
+        style={
+          active
+            ? {
+              borderColor:
+                  colors.main ||
+                  (colors.extent && colors.extent.main) ||
+                  '#a0c746'
+            }
+            : {}
+        }
         id={widget}
       >
         <WidgetHeader
           widget={widget}
           title={title}
+          location={location}
+          query={query}
           locationNames={locationNames}
           settingsConfig={{
             ...settingsConfig,
             onSettingsChange: setWidgetSettingsUrl
           }}
           embed={embed}
+          active={active}
         />
         <div className="container">
           {!loading &&
@@ -105,10 +123,14 @@ Widget.propTypes = {
   setWidgetSettingsUrl: PropTypes.func.isRequired,
   settingsConfig: PropTypes.object,
   locationNames: PropTypes.object,
+  location: PropTypes.object,
+  query: PropTypes.object,
   embed: PropTypes.bool,
   loading: PropTypes.bool,
   error: PropTypes.bool,
-  data: PropTypes.object
+  data: PropTypes.object,
+  active: PropTypes.bool,
+  colors: PropTypes.object
 };
 
 export default Widget;

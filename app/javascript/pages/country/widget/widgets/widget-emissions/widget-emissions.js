@@ -2,7 +2,6 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-emissions-actions';
 import reducers, { initialState } from './widget-emissions-reducers';
@@ -20,7 +19,7 @@ const mapStateToProps = ({ widgetEmissions }, ownProps) => {
     data,
     settings,
     locationNames,
-    colors: COLORS.emissions
+    colors: ownProps.colors
   };
   return {
     chartData: getChartData(selectorData),
