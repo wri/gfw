@@ -2,7 +2,6 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-ranked-plantations-actions';
 import reducers, { initialState } from './widget-ranked-plantations-reducers';
@@ -27,7 +26,7 @@ const mapStateToProps = (
     settings,
     location,
     locationNames,
-    colors: COLORS.plantations
+    colors: ownProps.colors
   };
   return {
     data: chartData(selectorData),
