@@ -16,14 +16,14 @@ const mapStateToProps = ({ widgetTreeCover, countryData }, ownProps) => {
     regions
   } = countryData;
   const { settings, loading, data } = widgetTreeCover;
-  const { locationNames, activeIndicator } = ownProps;
+  const { colors, locationNames, activeIndicator } = ownProps;
   const selectorData = {
     data,
     settings,
     whitelist: countryWhitelist,
     locationNames,
     activeIndicator,
-    colors: ownProps.colors
+    colors
   };
 
   return {

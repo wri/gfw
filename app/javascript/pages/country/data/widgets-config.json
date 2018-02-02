@@ -35,7 +35,7 @@
       "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
       "metaKey": "widget_natural_vs_planted",
       "sortOrder": {
-        "land-use": 100
+        "land-use": 1
       }
     },
     "settings": {
@@ -338,7 +338,7 @@
       "metaKey": "",
       "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
       "sortOrder": {
-        "land-use": 1
+        "land-use": 2
       }
     },
     "settings": {
@@ -360,6 +360,27 @@
       "admins": ["country"],
       "metaKey": "widget_emissions",
       "type": "emissions"
+    },
+    "enabled": true
+  },
+  "emissionsDeforestation": {
+    "title": "Emissions from biomass loss",
+    "config": {
+      "size": "small",
+      "indicators": ["gadm28", "bra_biomes", "mining", "wdpa", "primary_forest", "ifl_2013"],
+      "categories": ["climate"],
+      "admins": ["country", "region", "subRegion"],
+      "selectors": ["indicators", "startYears", "endYears", "metrics"],
+      "yearRange": ["2001", "2016"],
+      "metaKey": "widget_emissions_deforestation",
+      "type": "emissions"
+    },
+    "settings": {
+      "indicator": "gadm28",
+      "metric": "biomassCarbon",
+      "threshold": 30,
+      "startYear": 2001,
+      "endYear": 2016
     },
     "enabled": true
   },

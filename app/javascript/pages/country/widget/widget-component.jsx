@@ -24,6 +24,7 @@ import WidgetFaoReforestation from 'pages/country/widget/widgets/widget-fao-refo
 import WidgetGladAlerts from 'pages/country/widget/widgets/widget-glad-alerts';
 import WidgetRankedPlantations from 'pages/country/widget/widgets/widget-ranked-plantations';
 import WidgetEmissions from 'pages/country/widget/widgets/widget-emissions';
+import WidgetEmissionsDeforestation from 'pages/country/widget/widgets/widget-emissions-deforestation';
 import WidgetFires from 'pages/country/widget/widgets/widget-fires';
 
 import './widget-styles.scss';
@@ -45,6 +46,7 @@ const widgets = {
   WidgetGladAlerts,
   WidgetRankedPlantations,
   WidgetEmissions,
+  WidgetEmissionsDeforestation,
   WidgetFires
 };
 
