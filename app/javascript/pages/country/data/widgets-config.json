@@ -256,6 +256,23 @@
     },
     "enabled": true
   },
+  "FAODeforestation": {
+    "title": "FAO deforestation",
+    "config": {
+      "size": "small",
+      "categories": ["forest-change"],
+      "admins": ["country"],
+      "type": "fao",
+      "metaKey": "widget_deforestation_fao",
+      "sortOrder": {
+        "forest-change": 7
+      }
+    },
+    "settings": {
+      "unit": "ha/year"
+    },
+    "enabled": true
+  },
   "gainLocated": {
     "title": "Where did tree cover gain occur",
     "config": {
