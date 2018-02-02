@@ -1,0 +1,10 @@
+[
+  {
+    "label": "Biomass carbon",
+    "value": "biomassCarbon"
+  },
+  {
+    "label": "CO2 Emissions",
+    "value": "co2Emissions"
+  }
+]

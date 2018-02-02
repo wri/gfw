@@ -313,12 +313,16 @@
       "indicators": ["gadm28", "bra_biomes", "mining", "wdpa", "primary_forest", "ifl_2013"],
       "categories": ["climate"],
       "admins": ["country"],
-      "selectors": ["indicators", "thresholds", "units"],
+      "selectors": ["indicators", "thresholds", "metrics"],
       "metaKey": "widget_emissions_deforestation",
       "type": "loss"
     },
     "settings": {
-      "indicator": "gadm28"
+      "indicator": "gadm28",
+      "metric": "biomassCarbon",
+      "threshold": 30,
+      "startYear": 2001,
+      "endYear": 2016
     },
     "active": true
   }
