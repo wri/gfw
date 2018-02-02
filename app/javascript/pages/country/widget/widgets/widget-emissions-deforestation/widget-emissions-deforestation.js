@@ -2,7 +2,6 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-emissions-deforestation-actions';
 import reducers, {
@@ -17,12 +16,12 @@ import WidgetEmissionsDeforestationComponent from './widget-emissions-deforestat
 
 const mapStateToProps = ({ widgetEmissionsDeforestation }, ownProps) => {
   const { settings, data } = widgetEmissionsDeforestation;
-  const { activeIndicator } = ownProps;
+  const { activeIndicator, colors } = ownProps;
   const selectorData = {
     data: data.loss,
     settings,
     indicator: activeIndicator,
-    colors: COLORS.emissions
+    colors
   };
   return {
     chartData: chartData(selectorData),
