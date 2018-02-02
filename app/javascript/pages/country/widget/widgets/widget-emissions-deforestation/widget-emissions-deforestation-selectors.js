@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
 import { biomassToCO2, biomassToC } from 'utils/calculations';
 import { getColorPalette } from 'utils/data';
@@ -66,7 +67,10 @@ export const getSentence = createSelector(
     } else if (indicator.value !== 'gadm28') {
       indicatorText = ` in ${indicator.label.toLowerCase()}`;
     }
-    return `Between <b>${startYear}</b> and <b>${endYear}</b>, <b>${totalEmissions /
-      1000000}</b> million tons of <b>${emissionType}</b> were released into the atmosphere as a result of forest loss${indicatorText} where tree canopy is greater than <b>${threshold}%</b>.`;
+    return `Between <b>${startYear}</b> and <b>${endYear}</b>, <b>${format(
+      '.3s'
+    )(
+      totalEmissions
+    )}t</b> of <b>${emissionType}</b> were released into the atmosphere as a result of forest loss${indicatorText} where tree canopy is greater than <b>${threshold}%</b>.`;
   }
 );
