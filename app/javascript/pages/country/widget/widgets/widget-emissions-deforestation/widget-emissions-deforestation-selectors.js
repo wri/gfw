@@ -71,6 +71,6 @@ export const getSentence = createSelector(
       '.3s'
     )(
       totalEmissions
-    )}t</b> of <b>${emissionType}</b> were released into the atmosphere as a result of forest loss${indicatorText} where tree canopy is greater than <b>${threshold}%</b>.`;
+    )}t</b> of <b>${emissionType}</b> was released into the atmosphere as a result of forest loss${indicatorText}</b>.`;
   }
 );

@@ -369,7 +369,7 @@
       "size": "small",
       "indicators": ["gadm28", "bra_biomes", "mining", "wdpa", "primary_forest", "ifl_2013"],
       "categories": ["climate"],
-      "admins": ["country"],
+      "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "startYears", "endYears", "metrics"],
       "yearRange": ["2001", "2016"],
       "metaKey": "widget_emissions_deforestation",
