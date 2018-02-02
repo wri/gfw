@@ -9,6 +9,7 @@ import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import { format } from 'd3-format';
 import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 import { biomassToCO2 } from 'utils/calculations';
+import { deburrUpper } from 'utils/data';
 
 import shareActions from 'components/share/share-actions';
 import * as ownActions from './header-actions';
@@ -25,6 +26,15 @@ const mapStateToProps = ({ countryData, location, header }) => {
   } = countryData;
   const countryDataLoading =
     isCountriesLoading || isRegionsLoading || isSubRegionsLoading;
+  const externalLinks =
+    countryData.countryLinks &&
+    countryData.countryLinks[location.payload.country];
+  const forestAtlasLink =
+    externalLinks &&
+    externalLinks.find(l =>
+      deburrUpper(l.title).indexOf(deburrUpper('forest atlas'))
+    );
+
   return {
     loading: countryDataLoading || header.loading,
     error: header.error,
@@ -32,6 +42,8 @@ const mapStateToProps = ({ countryData, location, header }) => {
     location: location.payload,
     query: location.query,
     data: header.data,
+    forestAtlasLink,
+    externalLinks,
     shareData: {
       title: 'Share this Dashboard',
       shareUrl: `${window.location.href}`
@@ -43,7 +55,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const { query } = ownProps.location;
   const widgetQueries = {};
   if (query) {
-    const widgetKeys = remove(Object.keys(query), d => d !== 'category');
+    const widgetKeys = remove(
+      Object.keys(query),
+      d => d !== 'category' && d !== 'widget'
+    );
     widgetKeys.forEach(key => {
       widgetQueries[key] = encodeStateForUrl({
         ...decodeUrlForState(query[key]),

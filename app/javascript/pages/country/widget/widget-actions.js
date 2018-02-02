@@ -20,6 +20,7 @@ import * as gladAlertsActions from 'pages/country/widget/widgets/widget-glad-ale
 import * as rankedPlantationsActions from 'pages/country/widget/widgets/widget-ranked-plantations/widget-ranked-plantations-actions';
 import * as emissionsActions from 'pages/country/widget/widgets/widget-emissions/widget-emissions-actions';
 import * as emissionsDeforestationActions from 'pages/country/widget/widgets/widget-emissions-deforestation/widget-emissions-deforestation-actions';
+import * as firesActions from 'pages/country/widget/widgets/widget-fires/widget-fires-actions';
 
 const widgetActions = {
   ...treeLossActions.default,
@@ -37,7 +38,8 @@ const widgetActions = {
   ...gladAlertsActions.default,
   ...rankedPlantationsActions.default,
   ...emissionsActions.default,
-  ...emissionsDeforestationActions.default
+  ...emissionsDeforestationActions.default,
+  ...firesActions.default
 };
 
 export const setWidgetSettingsUrl = createThunkAction(
@@ -70,7 +72,7 @@ export const setWidgetSettingsStore = createThunkAction(
   'setWidgetSettingsStore',
   query => (dispatch, getState) => {
     Object.keys(query).forEach(widgetKey => {
-      if (widgetKey !== 'category') {
+      if (widgetKey !== 'category' && widgetKey !== 'widget') {
         const widgetConfig = decodeUrlForState(query[widgetKey]);
         const { settings } = getState()[`widget${upperFirst(widgetKey)}`];
         // Check if the state needs and update checking the values of the new config

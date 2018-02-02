@@ -9,14 +9,19 @@
       "selectors": ["indicators", "thresholds", "extentYears"],
       "type": "extent",
       "metaKey": "widget_tree_cover",
-      "sortOrder": 0
+      "layers": ["forest2000", "forest2010"],
+      "sortOrder": {
+        "summary": 1,
+        "land-cover": 100
+      }
     },
     "settings": {
       "indicator": "gadm28",
       "threshold": 30,
-      "extentYear": 2010
+      "extentYear": 2010,
+      "layers": ["forest2010"]
     },
-    "active": true
+    "enabled": true
   },
   "treeCoverPlantations": {
     "title": "Plantations extent",
@@ -26,16 +31,20 @@
       "admins": ["country", "region", "subRegion"],
       "selectors": ["thresholds", "extentYears", "types"],
       "showIndicators": ["plantations"],
-      "type": "extent",
-      "metaKey": "widget_plantations_cover",
-      "sortOrder": 1
+      "type": "plantations",
+      "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
+      "metaKey": "widget_natural_vs_planted",
+      "sortOrder": {
+        "land-use": 100
+      }
     },
     "settings": {
       "threshold": 30,
       "extentYear": 2010,
-      "type": "bound2"
+      "type": "bound2",
+      "layers": ["forest2010", "plantations_by_species"]
     },
-    "active": true
+    "enabled": true
   },
   "intactTreeCover": {
     "title": "Intact forest extent",
@@ -47,14 +56,18 @@
       "selectors": ["indicators", "thresholds", "extentYears"],
       "type": "extent",
       "metaKey": "widget_ifl",
-      "sortOrder": 2
+      "layers": ["forest2000", "forest2010", "ifl_2013_deg"],
+      "sortOrder": {
+        "land-cover": 2
+      }
     },
     "settings": {
       "indicator": "ifl_2013",
       "threshold": 30,
-      "extentYear": 2010
+      "extentYear": 2010,
+      "layers": ["forest2010", "ifl_2013_deg"]
     },
-    "active": true
+    "enabled": true
   },
   "primaryTreeCover": {
     "title": "Primary forest extent",
@@ -66,14 +79,18 @@
       "selectors": ["indicators", "thresholds", "extentYears"],
       "type": "extent",
       "metaKey": "widget_primary_forest",
-      "sortOrder": 3
+      "layers": ["forest2000", "forest2010"],
+      "sortOrder": {
+        "land-cover": 3
+      }
     },
     "settings": {
       "indicator": "primary_forest",
       "threshold": 30,
-      "extentYear": 2010
+      "extentYear": 2010,
+      "layers": ["forest2010"]
     },
-    "active": true
+    "enabled": true
   },
   "treeLocated": {
     "title": "Where is tree cover located",
@@ -90,17 +107,22 @@
       "locationCheck": true,
       "type": "extent",
       "metaKey": "widget_forest_location",
-      "sortOrder": 4
+      "layers": ["forest2000", "forest2010"],
+      "sortOrder": {
+        "summary": 2,
+        "land-cover": 100
+      }
     },
     "settings": {
       "indicator": "gadm28",
       "threshold": 30,
       "extentYear": 2010,
+      "layers": ["forest2010"],
       "unit": "ha",
       "pageSize": 5,
       "page": 0
     },
-    "active": true
+    "enabled": true
   },
   "treeLoss": {
     "title": "Tree cover loss",
@@ -116,16 +138,21 @@
       "selectors": ["indicators", "startYears", "endYears", "thresholds", "extentYears"],
       "type": "loss",
       "metaKey": "widget_tree_cover_loss",
-      "sortOrder": 5
+      "layers": ["loss"],
+      "sortOrder": {
+        "summary": 3,
+        "forest-change": 1
+      }
     },
     "settings": {
       "indicator": "gadm28",
       "threshold": 30,
       "startYear": 2001,
       "endYear": 2016,
-      "extentYear": 2000
+      "extentYear": 2000,
+      "layers": ["loss"]
     },
-    "active": true
+    "enabled": true
   },
   "treeLossPlantations": {
     "title": "Tree cover loss for plantations",
@@ -138,15 +165,19 @@
       "yearRange": ["2013", "2016"],
       "type": "loss",
       "metaKey": "",
-      "sortOrder": 6
+      "layers": ["loss", "plantations_by_type"],
+      "sortOrder": {
+        "summary": 7
+      }
     },
     "settings": {
       "indicator": "plantations",
       "threshold": 30,
       "startYear": 2013,
-      "endYear": 2016
+      "endYear": 2016,
+      "layers": ["loss", "plantations_by_type"]
     },
-    "active": true
+    "enabled": true
   },
   "lossLocated": {
     "title": "Where did tree cover loss occur",
@@ -157,13 +188,17 @@
                       "primary_forest", "primary_forest__landmark",
                       "plantations", "plantations__mining",
                       "plantations__wdpa", "plantations__landmark"],
-      "categories": ["forest-change"],
+      "categories": ["summary", "forest-change"],
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "units", "startYears", "endYears"],
       "locationCheck": true,
       "type": "loss",
-      "metaKey": "widget_loss_location",
-      "sortOrder": 7
+      "layers": ["loss"],
+      "metaKey": "widget_tree_cover_loss_ranking",
+      "sortOrder": {
+        "summary": 4,
+        "forest-change": 2
+      }
     },
     "settings": {
       "indicator": "gadm28",
@@ -172,9 +207,10 @@
       "pageSize": 8,
       "page": 0,
       "startYear": 2001,
-      "endYear": 2016
+      "endYear": 2016,
+      "layers": ["loss"]
     },
-    "active": true
+    "enabled": true
   },
   "treeGain": {
     "title": "Tree cover gain",
@@ -186,32 +222,39 @@
       "selectors": ["indicators", "thresholds", "extentYears", "units"],
       "type": "gain",
       "metaKey": "widget_tree_cover_gain",
-      "sortOrder": 8
+      "layers": ["forestgain"],
+      "sortOrder": {
+        "summary": 5,
+        "forest-change": 3
+      }
     },
     "settings": {
       "indicator": "gadm28",
-      "threshold": "0",
+      "threshold": 30,
       "unit": "ha",
-      "extentYear": 2010
+      "extentYear": 2010,
+      "layers": ["forestgain"]
     },
-    "active": true
+    "enabled": true
   },
   "FAOReforestation": {
     "title": "FAO reforestation",
     "config": {
       "size": "small",
-      "categories": ["summary", "forest-change"],
+      "categories": ["forest-change"],
       "admins": ["country"],
       "selectors": ["periods"],
       "type": "fao",
       "metaKey": "widget_rate_of_restoration_fao",
-      "sortOrder": 9
+      "sortOrder": {
+        "forest-change": 6
+      }
     },
     "settings": {
       "period": 2010,
       "unit": "ha/year"
     },
-    "active": true
+    "enabled": true
   },
   "gainLocated": {
     "title": "Where did tree cover gain occur",
@@ -224,20 +267,23 @@
                       "plantations__wdpa", "plantations__landmark"],
       "categories": ["forest-change"],
       "admins": ["country", "region"],
-      "selectors": ["indicators", "thresholds", "units"],
+      "selectors": ["indicators", "units"],
       "locationCheck": true,
       "type": "gain",
-      "metaKey": "widget_gain_location",
-      "sortOrder": 10
+      "layers": ["forestgain"],
+      "metaKey": "widget_tree_cover_gain_ranking",
+      "sortOrder": {
+        "forest-change": 100
+      }
     },
     "settings": {
       "indicator": "gadm28",
-      "threshold": 30,
       "unit": "ha",
       "pageSize": 8,
-      "page": 0
+      "page": 0,
+      "layers": ["forestgain"]
     },
-    "active": true
+    "enabled": true
   },
   "FAOCover": {
     "title": "Forest cover",
@@ -247,12 +293,14 @@
       "admins": ["country"],
       "type": "fao",
       "metaKey": "widget_forest_cover_fao",
-      "sortOrder": 11
+      "sortOrder": {
+        "land-cover": 5
+      }
     },
     "settings": {
       "unit": "ha"
     },
-    "active": true
+    "enabled": true
   },
   "gladAlerts": {
     "title": "Deforestation Alerts",
@@ -260,19 +308,24 @@
       "size": "large",
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
-      "type": "alerts",
+      "type": "loss",
       "selectors": ["weeks"],
       "metaKey": "widget_deforestation_alert_location",
       "customLocationWhitelist": ["BRA", "COL", "ECU", "GUF", "GUY", "PER", "SUR", "BDI",
         "CMR", "CAF", "GNQ", "GAB", "RWA", "UGA", "IDN", "MYS",
         "PNG", "VEN", "DOC", "DOG", "TLS"],
-      "sortOrder": 12
+      "layers": ["umd_as_it_happens"],
+      "sortOrder": {
+        "summary": 6,
+        "forest-change": 4
+      }
     },
     "settings": {
       "period": "week",
-      "weeks": 13
+      "weeks": 13,
+      "layers": ["umd_as_it_happens"]
     },
-    "active": true
+    "enabled": true
   },
   "rankedPlantations": {
     "title": "Ranked plantation breakdown",
@@ -281,9 +334,12 @@
       "categories": ["land-use"],
       "admins": ["country", "region"],
       "selectors": ["thresholds", "extentYears", "types"],
-      "type": "extent",
+      "type": "plantations",
       "metaKey": "",
-      "sortOrder": 13
+      "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
+      "sortOrder": {
+        "land-use": 1
+      }
     },
     "settings": {
       "indicator": "gadm28",
@@ -291,20 +347,21 @@
       "threshold": 30,
       "type": "bound2",
       "pageSize": 5,
-      "page": 0
+      "page": 0,
+      "layers": ["forest2010", "plantations_by_species"]
     },
-    "active": true
+    "enabled": true
   },
   "emissions": {
     "title": "Historical emissions",
     "config": {
       "size": "small",
-      "categories": ["land-use"],
+      "categories": ["land-use", "climate"],
       "admins": ["country"],
       "metaKey": "widget_emissions",
-      "type": "loss"
+      "type": "emissions"
     },
-    "active": true
+    "enabled": true
   },
   "emissionsDeforestation": {
     "title": "Emissions deforestation",
@@ -326,5 +383,21 @@
       "endYear": 2016
     },
     "active": true
+  },
+  "fires": {
+    "title": "Fires",
+    "config": {
+      "size": "small",
+      "categories": ["forest-change", "summary"],
+      "admins": ["country", "region", "subRegion"],
+      "metaKey": "widget_fires",
+      "layers": ["viirs_fires_alerts"],
+      "type": "loss"
+    },
+    "settings": {
+      "period": "week",
+      "periodValue": 1,
+      "layers": ["viirs_fires_alerts"]
+    },
+    "enabled": true
   }
-}

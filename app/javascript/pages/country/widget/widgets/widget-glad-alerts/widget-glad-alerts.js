@@ -2,7 +2,6 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import COLORS from 'pages/country/data/colors.json';
 import debounce from 'lodash/debounce';
 
 import actions from './widget-glad-alerts-actions';
@@ -14,13 +13,13 @@ import {
 } from './widget-glad-alerts-selectors';
 import WidgetGladAlertsComponent from './widget-glad-alerts-component';
 
-const mapStateToProps = ({ widgetGladAlerts }) => {
+const mapStateToProps = ({ widgetGladAlerts }, ownProps) => {
   const { data, settings, activeAlert } = widgetGladAlerts;
   const selectorData = {
     alerts: data.alerts,
     period: data.period,
     settings,
-    colors: COLORS.loss,
+    colors: ownProps.colors,
     activeData: activeAlert
   };
   return {

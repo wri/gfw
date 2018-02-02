@@ -1,12 +1,20 @@
 import { connect } from 'react-redux';
 import compact from 'lodash/compact';
 import replace from 'lodash/replace';
+import moment from 'moment';
 
 import shareActions from 'components/share/share-actions';
 import modalMetaActions from 'components/modal-meta/modal-meta-actions';
+import countryRootActions from 'pages/country/root/root-actions';
+import mapActions from 'components/map/map-actions';
 import WidgetHeaderComponent from './widget-header-component';
 
-const actions = { ...shareActions, ...modalMetaActions };
+const actions = {
+  ...shareActions,
+  ...modalMetaActions,
+  ...mapActions,
+  ...countryRootActions
+};
 
 const mapStateToProps = ({ location, modalMeta }, ownProps) => {
   const { locationNames, widget, title, settingsConfig } = ownProps;
@@ -25,6 +33,11 @@ const mapStateToProps = ({ location, modalMeta }, ownProps) => {
     location,
     modalOpen: modalMeta.open,
     modalClosing: modalMeta.closing,
+    citation: `Global Forest Watch. “${title} in ${locationNames &&
+      locationNames.current &&
+      locationNames.current.label}”. Accessed on ${moment().format(
+      'MMMM Do YYYY'
+    )} from www.globalforestwatch.org.`,
     shareData: {
       title: 'Share this widget',
       subtitle: `${title} in ${

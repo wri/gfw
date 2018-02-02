@@ -9,7 +9,8 @@ import {
   getRegionsProvider,
   getSubRegionsProvider,
   getCountryWhitelistProvider,
-  getRegionWhitelistProvider
+  getRegionWhitelistProvider,
+  getCountryLinksProvider
 } from 'services/country';
 import { getGeostoreProvider } from 'services/geostore';
 
@@ -17,6 +18,7 @@ export const setCountriesLoading = createAction('setCountriesLoading');
 export const setRegionsLoading = createAction('setRegionsLoading');
 export const setSubRegionsLoading = createAction('setSubRegionsLoading');
 export const setGeostoreLoading = createAction('setGeostoreLoading');
+export const setCountryLinksLoading = createAction('setCountryLinksLoading');
 export const setCountryWhitelistLoading = createAction(
   'setCountryWhitelistLoading'
 );
@@ -31,6 +33,7 @@ export const setRegions = createAction('setRegions');
 export const setSubRegions = createAction('setSubRegions');
 export const setGeostore = createAction('setGeostore');
 export const setCountryWhitelist = createAction('setCountryWhitelist');
+export const setCountryLinks = createAction('setCountryLinks');
 export const setRegionWhitelist = createAction('setRegionWhitelist');
 
 export const getCountries = createThunkAction(
@@ -103,9 +106,10 @@ export const getGeostore = createThunkAction(
       dispatch(setGeostoreLoading(true));
       getGeostoreProvider(country, region, subRegion)
         .then(response => {
-          const { areaHa, bbox, geojson } = response.data.data.attributes;
+          const { hash, areaHa, bbox, geojson } = response.data.data.attributes;
           dispatch(
             setGeostore({
+              hash,
               geojson,
               areaHa,
               bounds: getBoxBounds(bbox)
@@ -171,6 +175,29 @@ export const getRegionWhitelist = createThunkAction(
         })
         .catch(error => {
           dispatch(setRegionWhitelistLoading(false));
+          console.info(error);
+        });
+    }
+  }
+);
+
+export const getCountryLinks = createThunkAction(
+  'getCountryLinks',
+  () => (dispatch, state) => {
+    if (!state().countryData.isCountryLinksLoading) {
+      dispatch(setCountryLinksLoading(true));
+      getCountryLinksProvider()
+        .then(response => {
+          const data = {};
+          if (response.data && response.data.rows.length) {
+            response.data.rows.forEach(d => {
+              data[d.iso] = JSON.parse(d.external_links);
+            });
+          }
+          dispatch(setCountryLinks(data));
+        })
+        .catch(error => {
+          dispatch(setCountryLinksLoading(false));
           console.info(error);
         });
     }

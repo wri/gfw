@@ -13,7 +13,7 @@ import ProtectedAreas from './layers/protected-areas';
 const layersMap = {
   forest2000: ForestCover,
   forest2010: ForestCover2010,
-  forestGain: ForestGain,
+  forestgain: ForestGain,
   ifl_2013_deg: IntactForest,
   loss: Loss,
   plantations_by_type: PlantationsByType,

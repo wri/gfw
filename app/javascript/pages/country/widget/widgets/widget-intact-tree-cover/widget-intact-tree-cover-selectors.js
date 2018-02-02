@@ -80,8 +80,8 @@ export const getSentence = createSelector(
 
     const sentence = `${
       indicator.value === 'ifl_2013'
-        ? `In <b>${locationLabel}</b>, ${lessThanCheck} of tree cover is <b>${sentenceLocation}</b>.`
-        : `Within <b>${sentenceLocation}</b> in <b>${locationLabel}</b>, ${lessThanCheck} of tree cover is <b>Primary forest</b>.`
+        ? `In <b>${locationLabel}</b>, ${lessThanCheck} of tree cover is <b>intact forest</b>.`
+        : `Within <b>${sentenceLocation}</b> in <b>${locationLabel}</b>, ${lessThanCheck} of tree cover is <b>intact forest</b>.`
     }`;
 
     return sentence;

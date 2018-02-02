@@ -16,22 +16,25 @@ const getLocation = state => state.location || null;
 const getLocationOptions = state => state.locationOptions || null;
 const getIndicatorWhitelist = state => state.indicatorWhitelist || null;
 const getFAOCountries = state => state.faoCountries || null;
+const getWidgetQuery = state => state.activeWidget || null;
 
 // get lists selected
 export const getWidgets = createSelector([], () =>
-  sortBy(
-    Object.keys(WIDGETS).map(key => ({
-      name: key,
-      ...WIDGETS[key]
-    })),
-    'config.sortOrder'
-  )
+  Object.keys(WIDGETS).map(key => ({
+    name: key,
+    ...WIDGETS[key]
+  }))
 );
 
 export const filterWidgetsByCategory = createSelector(
   [getWidgets, getCategory],
   (widgets, category) =>
-    widgets.filter(w => w.active && w.config.categories.indexOf(category) > -1)
+    sortBy(
+      widgets.filter(
+        w => w.enabled && w.config.categories.indexOf(category) > -1
+      ),
+      `config.sortOrder[${category}]`
+    )
 );
 
 export const checkWidgetNeedsLocations = createSelector(
@@ -83,11 +86,21 @@ export const filterWidgets = createSelector(
         !type ||
         type === 'extent' ||
         type === 'fao' ||
-        type === 'alerts' ||
+        type === 'emissions' ||
+        type === 'plantations' ||
         (whitelist && whitelist.gadm28 && whitelist.gadm28[type]);
 
       return showByIndicators && hasData;
     });
+  }
+);
+
+export const getActiveWidget = createSelector(
+  [filterWidgets, getWidgetQuery],
+  (widgets, widgetQuery) => {
+    if (!widgets || !widgets.length || widgetQuery === 'none') return null;
+    if (!widgetQuery) return widgets[0];
+    return widgets.find(w => w.name === widgetQuery);
   }
 );
 
@@ -100,7 +113,8 @@ export const getLinks = createSelector(
       ).join('/');
       const newQuery = {
         ...location.query,
-        category: category.value
+        category: category.value,
+        widget: undefined
       };
       return {
         label: category.label,

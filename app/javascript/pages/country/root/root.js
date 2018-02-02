@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import replace from 'lodash/replace';
 
 import {
   getActiveAdmin,
@@ -11,7 +12,7 @@ import CATEGORIES from 'pages/country/data/categories.json';
 
 import actions from './root-actions';
 import reducers, { initialState } from './root-reducers';
-import { filterWidgets, getLinks } from './root-selectors';
+import { filterWidgets, getLinks, getActiveWidget } from './root-selectors';
 import RootComponent from './root-component';
 
 const mapStateToProps = ({ root, countryData, location }) => {
@@ -25,15 +26,28 @@ const mapStateToProps = ({ root, countryData, location }) => {
   const locationOptions = getAdminsOptions(adminData);
   const locationNames = getAdminsSelected(adminData);
   const adminLevel = getActiveAdmin(location.payload);
-  const widgetAnchor = window.location.hash
-    ? document.querySelectorAll(window.location.hash)
-    : null;
+  const widgetHash =
+    window.location.hash && replace(window.location.hash, '#', '');
+  const widgetAnchor = document.getElementById(widgetHash);
   const {
     regionWhitelist,
     countryWhitelist,
     isCountryWhitelistLoading,
     isRegionWhitelistLoading
   } = countryData;
+  const widgetData = {
+    faoCountries: countryData.faoCountries,
+    category,
+    adminLevel,
+    location,
+    locationOptions,
+    activeWidget:
+      replace(window.location.hash, '#', '') ||
+      (location.query && location.query.widget),
+    indicatorWhitelist: location.payload.region
+      ? regionWhitelist
+      : countryWhitelist
+  };
   return {
     gfwHeaderHeight: root.gfwHeaderHeight,
     isMapFixed: root.isMapFixed,
@@ -42,23 +56,15 @@ const mapStateToProps = ({ root, countryData, location }) => {
     isGeostoreLoading: countryData.isGeostoreLoading,
     category,
     location,
-    widgetAnchor: widgetAnchor && widgetAnchor[0],
+    widgetAnchor,
     locationOptions,
     locationNames,
     currentLocation:
       locationNames[adminLevel] && locationNames[adminLevel].label,
-    widgets: filterWidgets({
-      faoCountries: countryData.faoCountries,
-      category,
-      adminLevel,
-      location,
-      locationOptions,
-      indicatorWhitelist: location.payload.region
-        ? regionWhitelist
-        : countryWhitelist
-    }),
+    widgets: filterWidgets(widgetData),
     locationGeoJson: countryData.geostore && countryData.geostore.geojson,
-    loading: isCountryWhitelistLoading || isRegionWhitelistLoading
+    loading: isCountryWhitelistLoading || isRegionWhitelistLoading,
+    activeWidget: getActiveWidget(widgetData)
   };
 };
 

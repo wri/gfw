@@ -11,7 +11,9 @@ export const initialState = {
   subRegions: [],
   countryWhitelist: {},
   regionWhitelist: {},
+  countryLinks: {},
   geostore: {
+    hash: '',
     areaHa: 0,
     bounds: []
   }
@@ -97,6 +99,12 @@ const setRegionWhitelist = (state, { payload }) => ({
   regionWhitelist: payload
 });
 
+const setCountryLinks = (state, { payload }) => ({
+  ...state,
+  isCountryLinksLoading: false,
+  countryLinks: payload
+});
+
 const setGeostore = (state, { payload }) => ({
   ...state,
   geostore: {
@@ -118,5 +126,6 @@ export default {
   setSubRegions,
   setGeostore,
   setCountryWhitelist,
-  setRegionWhitelist
+  setRegionWhitelist,
+  setCountryLinks
 };

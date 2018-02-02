@@ -19,8 +19,8 @@ const padNumber = number => {
 
 class Glad extends Canvas {
   constructor(map, options) {
-    super(map, OPTIONS);
-    this.options = { ...this.options, ...options };
+    super(map, options);
+    this.options = { ...OPTIONS, ...options };
     this.tiles = {};
   }
 
@@ -67,7 +67,9 @@ class Glad extends Canvas {
     const imageData = imgdata;
     const startDate = moment(this.startDate);
     const endDate = moment(this.endDate);
+    const customRangeDays = this.options.weeks && this.options.weeks * 7;
     const numberOfDays = endDate.diff(startDate, 'days');
+    const customRangeStartDate = numberOfDays - customRangeDays;
 
     const confidenceValue = -1;
     const pixelComponents = 4; // RGBA
@@ -79,7 +81,7 @@ class Glad extends Canvas {
         // day 0 is 2015-01-01 until current day
         const day = imageData[pixelPos] * 255 + imageData[pixelPos + 1];
 
-        if (day >= 0 && day <= numberOfDays) {
+        if (day >= customRangeStartDate || (0 && day <= numberOfDays)) {
           const band3_str = padNumber(imageData[pixelPos + 2].toString());
 
           // Grab confidence (the first value) from this string

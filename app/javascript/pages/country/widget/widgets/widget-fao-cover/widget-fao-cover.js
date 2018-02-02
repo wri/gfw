@@ -2,7 +2,6 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import COLORS from 'pages/country/data/colors.json';
 
 import actions from './widget-fao-cover-actions';
 import reducers, { initialState } from './widget-fao-cover-reducers';
@@ -15,7 +14,7 @@ const mapStateToProps = ({ widgetFAOCover }, ownProps) => {
   const selectorData = {
     data,
     locationNames,
-    colors: COLORS.extent
+    colors: ownProps.colors.extent
   };
   return {
     data: getFAOCoverData(selectorData),

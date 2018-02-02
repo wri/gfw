@@ -6,7 +6,6 @@ import upperFirst from 'lodash/upperFirst';
 import Widget from 'pages/country/widget';
 import Share from 'components/share';
 import Header from 'pages/country/header';
-import Footer from 'pages/country/footer';
 import Map from 'components/map';
 import Sticky from 'components/sticky';
 import CountryDataProvider from 'pages/country/providers/country-data-provider';
@@ -38,6 +37,7 @@ class Root extends PureComponent {
       category,
       loading,
       widgetAnchor,
+      activeWidget,
       locationGeoJson
     } = this.props;
 
@@ -72,7 +72,11 @@ class Root extends PureComponent {
                 widgets &&
                 widgets.length > 0 &&
                 widgets.map(widget => (
-                  <Widget key={widget.name} widget={widget.name} />
+                  <Widget
+                    key={widget.name}
+                    widget={widget.name}
+                    active={activeWidget && activeWidget.name === widget.name}
+                  />
                 ))}
               {!loading &&
                 (!widgets || widgets.length === 0) && (
@@ -89,7 +93,7 @@ class Root extends PureComponent {
           <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
             <Sticky
               className={`map ${showMapMobile ? '-open-mobile' : ''}`}
-              limitElement="c-footer"
+              limitElement="footerGfw"
               enabled={window.innerWidth >= SCREEN_M}
             >
               <Map
@@ -112,11 +116,13 @@ class Root extends PureComponent {
                 }}
                 areaHighlight={locationGeoJson}
                 isParentLoading={isGeostoreLoading}
+                parentLayersKey={
+                  activeWidget && `widget${upperFirst(activeWidget.name)}`
+                }
               />
             </Sticky>
           </div>
         </div>
-        <Footer />
         <Share />
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
@@ -140,7 +146,8 @@ Root.propTypes = {
   locationOptions: PropTypes.object,
   locationNames: PropTypes.object,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  locationGeoJson: PropTypes.object
+  locationGeoJson: PropTypes.object,
+  activeWidget: PropTypes.object
 };
 
 export default Root;
