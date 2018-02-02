@@ -13,18 +13,19 @@ import {
 
 const mapStateToProps = ({ widgetFAOReforestation, location }, ownProps) => {
   const { loading, data, settings } = widgetFAOReforestation;
+  const { colors, settingsConfig, isMetaLoading } = ownProps;
   const selectorData = {
     data: data.countries,
     location: location.payload,
-    colors: ownProps.colors.gain,
+    colors: colors.gain,
     settings,
-    options: ownProps.settingsConfig.options
+    options: settingsConfig.options
   };
   return {
-    loading: loading || ownProps.isMetaLoading,
+    loading: loading || isMetaLoading,
     data: getFilteredData(selectorData),
     sentence: getSentence(selectorData),
-    colors: ownProps.colors.gain
+    colors: colors.gain
   };
 };
 

@@ -15,11 +15,11 @@ import WidgetFiresComponent from './widget-fires-component';
 const mapStateToProps = ({ widgetFires, countryData }, ownProps) => {
   const { data } = widgetFires;
   const { geostore } = countryData;
-  const { locationNames } = ownProps;
+  const { locationNames, colors } = ownProps;
   const selectorData = {
     data,
     locationNames,
-    colors: ownProps.colors
+    colors
   };
 
   return {

@@ -10,11 +10,11 @@ import WidgetFAOCoverComponent from './widget-fao-cover-component';
 
 const mapStateToProps = ({ widgetFAOCover }, ownProps) => {
   const { data } = widgetFAOCover;
-  const { locationNames } = ownProps;
+  const { locationNames, colors } = ownProps;
   const selectorData = {
     data,
     locationNames,
-    colors: ownProps.colors.extent
+    colors: colors.extent
   };
   return {
     data: getFAOCoverData(selectorData),

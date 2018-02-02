@@ -24,7 +24,7 @@ const mapStateToProps = (
     regions
   } = countryData;
   const { settings, loading, data } = widgetTreeCoverPlantations;
-  const { locationNames, activeIndicator } = ownProps;
+  const { colors, locationNames, activeIndicator } = ownProps;
   const selectorData = {
     data,
     settings,
@@ -32,8 +32,8 @@ const mapStateToProps = (
     locationNames,
     activeIndicator,
     colors: {
-      ...ownProps.colors.types,
-      ...ownProps.colors.species
+      ...colors.types,
+      ...colors.species
     }
   };
 
