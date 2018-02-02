@@ -31,7 +31,7 @@ const getEmissions = createThunkAction(
                 console.error(error);
               });
           } else {
-            dispatch(setEmissionsLoading({}));
+            dispatch(setEmissionsData({}));
           }
         })
         .catch(error => {
