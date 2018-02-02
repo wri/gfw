@@ -40,7 +40,11 @@ class WidgetEmissionsDeforestationContainer extends PureComponent {
   componentWillReceiveProps(nextProps) {
     const { location, settings, getEmissionsDeforestationData } = nextProps;
 
-    if (!isEqual(location.country, this.props.location.country)) {
+    if (
+      !isEqual(location, this.props.location) ||
+      !isEqual(settings.indicator, this.props.settings.indicator) ||
+      !isEqual(settings.extentYear, this.props.settings.extentYear)
+    ) {
       getEmissionsDeforestationData({ ...location, ...settings });
     }
   }
