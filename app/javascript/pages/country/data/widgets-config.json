@@ -35,7 +35,7 @@
       "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
       "metaKey": "widget_natural_vs_planted",
       "sortOrder": {
-        "land-use": 100
+        "land-use": 1
       }
     },
     "settings": {
@@ -338,7 +338,7 @@
       "metaKey": "",
       "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
       "sortOrder": {
-        "land-use": 1
+        "land-use": 2
       }
     },
     "settings": {
@@ -364,7 +364,7 @@
     "enabled": true
   },
   "emissionsDeforestation": {
-    "title": "Emissions deforestation",
+    "title": "Emissions from biomass loss",
     "config": {
       "size": "small",
       "indicators": ["gadm28", "bra_biomes", "mining", "wdpa", "primary_forest", "ifl_2013"],
