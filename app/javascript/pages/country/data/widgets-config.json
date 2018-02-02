@@ -382,7 +382,7 @@
       "startYear": 2001,
       "endYear": 2016
     },
-    "active": true
+    "enabled": true
   },
   "fires": {
     "title": "Fires",
@@ -401,3 +401,4 @@
     },
     "enabled": true
   }
+}
