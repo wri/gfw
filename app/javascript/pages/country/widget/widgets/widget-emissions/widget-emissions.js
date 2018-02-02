@@ -30,15 +30,15 @@ const mapStateToProps = ({ widgetEmissions }, ownProps) => {
 
 class WidgetEmissionsContainer extends PureComponent {
   componentWillMount() {
-    const { location, getEmissionsData } = this.props;
-    getEmissionsData({ ...location });
+    const { location, getEmissions } = this.props;
+    getEmissions({ ...location });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { location, getEmissionsData } = nextProps;
+    const { location, getEmissions } = nextProps;
 
     if (!isEqual(location.country, this.props.location.country)) {
-      getEmissionsData({ ...location });
+      getEmissions({ ...location });
     }
   }
 
@@ -51,7 +51,7 @@ class WidgetEmissionsContainer extends PureComponent {
 
 WidgetEmissionsContainer.propTypes = {
   location: PropTypes.object.isRequired,
-  getEmissionsData: PropTypes.func.isRequired
+  getEmissions: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };
