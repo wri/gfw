@@ -9,7 +9,7 @@ import reducers, {
   initialState
 } from './widget-emissions-deforestation-reducers';
 import {
-  getChartData,
+  chartData,
   chartConfig,
   getSentence
 } from './widget-emissions-deforestation-selectors';
@@ -17,15 +17,15 @@ import WidgetEmissionsDeforestationComponent from './widget-emissions-deforestat
 
 const mapStateToProps = ({ widgetEmissionsDeforestation }, ownProps) => {
   const { settings, data } = widgetEmissionsDeforestation;
-  const { locationNames } = ownProps;
+  const { activeIndicator } = ownProps;
   const selectorData = {
-    data,
+    data: data.loss,
     settings,
-    locationNames,
+    indicator: activeIndicator,
     colors: COLORS.emissions
   };
   return {
-    chartData: getChartData(selectorData),
+    chartData: chartData(selectorData),
     chartConfig: chartConfig(selectorData),
     sentence: getSentence(selectorData)
   };
@@ -33,15 +33,15 @@ const mapStateToProps = ({ widgetEmissionsDeforestation }, ownProps) => {
 
 class WidgetEmissionsDeforestationContainer extends PureComponent {
   componentWillMount() {
-    const { location, getEmissionsDeforestationData } = this.props;
-    getEmissionsDeforestationData({ ...location });
+    const { location, settings, getEmissionsDeforestationData } = this.props;
+    getEmissionsDeforestationData({ ...location, ...settings });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { location, getEmissionsDeforestationData } = nextProps;
+    const { location, settings, getEmissionsDeforestationData } = nextProps;
 
     if (!isEqual(location.country, this.props.location.country)) {
-      getEmissionsDeforestationData({ ...location });
+      getEmissionsDeforestationData({ ...location, ...settings });
     }
   }
 
@@ -53,6 +53,7 @@ class WidgetEmissionsDeforestationContainer extends PureComponent {
 }
 
 WidgetEmissionsDeforestationContainer.propTypes = {
+  settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   getEmissionsDeforestationData: PropTypes.func.isRequired
 };
