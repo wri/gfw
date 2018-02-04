@@ -26,7 +26,9 @@ const SQL_QUERIES = {
   fao:
     "SELECT fao.iso, fao.name, forest_planted, forest_primary, forest_regenerated, fao.forest_primary, fao.extent, a.land as area_ha FROM gfw2_countries as fao INNER JOIN umd_nat_staging as a ON fao.iso = a.iso WHERE fao.forest_primary is not null AND fao.iso = '{country}' AND a.year = 2001 AND a.thresh = 30",
   faoExtent:
-    'SELECT country AS iso, name, year, reforest AS rate, forest*1000 AS extent FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {period} AND reforest > 0 ORDER BY rate DESC'
+    'SELECT country AS iso, name, year, reforest AS rate, forest*1000 AS extent FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {period} AND reforest > 0 ORDER BY rate DESC',
+  faoEcoLive:
+    'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999'
 };
 
 const getExtentYear = year =>
@@ -172,6 +174,11 @@ export const getFAOExtent = ({ period }) => {
     '{period}',
     period
   );
+  return axios.get(url);
+};
+
+export const getFAOEcoLive = () => {
+  const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.faoEcoLive}`;
   return axios.get(url);
 };
 
