@@ -6,5 +6,13 @@
   {
     "label": "Percent Area - %",
     "value": "%"
+  },
+  {
+    "label": "Net contribution in USD",
+    "value": "net_usd"
+  },
+  {
+    "label": "% of the country's GDP",
+    "value": "net_perc"
   }
 ]

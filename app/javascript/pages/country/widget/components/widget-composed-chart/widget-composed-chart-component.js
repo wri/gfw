@@ -72,7 +72,7 @@ class WidgetComposedChart extends PureComponent {
                 ))}
             </defs>
             <XAxis
-              dataKey={xKey}
+              dataKey={xKey || ''}
               axisLine={false}
               tickLine={false}
               tick={{ dy: 8, fontSize: '12px', fill: '#555555' }}
@@ -114,13 +114,7 @@ class WidgetComposedChart extends PureComponent {
               ))}
             {bars &&
               Object.keys(bars).map(key => (
-                <Bar
-                  key={key}
-                  dataKey={key}
-                  dot={false}
-                  stackId={1}
-                  {...bars[key]}
-                />
+                <Bar key={key} dataKey={key} dot={false} {...bars[key]} />
               ))}
           </ComposedChart>
         </ResponsiveContainer>

@@ -39,10 +39,12 @@ export const chartConfig = createSelector([getColors], colors => {
     yKeys: {
       bars: {
         areaLoss: {
-          fill: colorRange[0]
+          fill: colorRange[0],
+          stackId: 1
         },
         outsideAreaLoss: {
-          fill: colorRange[1]
+          fill: colorRange[1],
+          stackId: 1
         }
       }
     },

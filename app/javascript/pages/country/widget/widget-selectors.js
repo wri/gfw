@@ -140,7 +140,10 @@ export const getThresholds = createSelector([], () =>
   sortByKey(THRESHOLDS, 'value')
 );
 
-export const getUnits = createSelector([], () => sortByKey(UNITS, 'label'));
+export const getUnits = createSelector([getConfig], config => {
+  const units = UNITS.filter(item => config.units.includes(item.value));
+  return sortByKey(units, 'label');
+});
 
 export const getTypes = createSelector([], () => sortByKey(TYPES, 'label'));
 
