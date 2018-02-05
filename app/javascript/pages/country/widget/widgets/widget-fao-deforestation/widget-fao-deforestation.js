@@ -18,7 +18,7 @@ const mapStateToProps = ({ widgetFAODeforestation, location }, ownProps) => {
     data,
     location: location.payload,
     locationNames,
-    colors: colors.gain
+    colors: colors.loss
   };
   return {
     loading: loading || ownProps.isMetaLoading,
