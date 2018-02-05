@@ -262,6 +262,7 @@
       "size": "small",
       "categories": ["forest-change"],
       "admins": ["country"],
+      "selectors": ["periods"],
       "type": "fao",
       "metaKey": "widget_deforestation_fao",
       "sortOrder": {
@@ -269,6 +270,7 @@
       }
     },
     "settings": {
+      "period": 2010,
       "unit": "ha/year"
     },
     "enabled": true
