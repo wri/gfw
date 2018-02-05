@@ -11,6 +11,7 @@ $subnav-height: rem(60px);
     justify-content: space-between;
     height: $subnav-height;
     overflow-x: scroll;
+    -ms-overflow-style: none;
 
     @media screen and (min-width: $screen-m) {
       justify-content: flex-start;
