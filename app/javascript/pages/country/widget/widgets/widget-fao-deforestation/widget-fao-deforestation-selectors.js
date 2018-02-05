@@ -43,9 +43,6 @@ export const getSentence = createSelector(
     const topFao = data.fao[0];
     const currentLocation =
       locationNames && locationNames.current && locationNames.current.label;
-    const currentRank = data.rank.filter(
-      item => item.iso === locationNames.current.value
-    );
     return `From <b>${topFao.year}–${
       data.fao[data.fao.length - 1].year
     }</b>, the rate of deforestation in <b>${currentLocation}</b> was <b>${format(
