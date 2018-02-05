@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { getColorPalette } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
@@ -41,18 +40,17 @@ export const charData = createSelector(
     if (!female) return null;
 
     const total = male + female;
-    const colorRange = getColorPalette(colors.ramp, 2);
     const formatedData = [
       {
         label: 'Male',
         value: male,
-        color: colorRange[0],
+        color: colors.male,
         percentage: male / total * 100
       },
       {
         label: 'Female',
         value: female,
-        color: colorRange[1],
+        color: colors.female,
         percentage: female / total * 100
       }
     ];
