@@ -405,7 +405,7 @@
     "title": "Forestry Employment by Gender",
     "config": {
       "size": "small",
-      "categories": ["forest-change"],
+      "categories": ["people"],
       "admins": ["country"],
       "selectors": ["years"],
       "years": [2000, 2005, 2010],
