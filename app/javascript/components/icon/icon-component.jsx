@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import './icon-styles.scss';
 
 const Icon = ({ icon, className }) => (
-  <svg className={`c-icon ${className}`} viewBox={icon.viewBox}>
-    <use xlinkHref={`#${icon.id}`} />
+  <svg className={`c-icon ${className}`} viewBox={icon.viewBox || '0 0 32 32'}>
+    <use xlinkHref={`#${icon.id || icon}`} />
   </svg>
 );
 
 Icon.propTypes = {
-  icon: PropTypes.object,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   className: PropTypes.string
 };
 

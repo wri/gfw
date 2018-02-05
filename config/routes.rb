@@ -116,9 +116,9 @@ Gfw::Application.routes.draw do
 
   # countries
   get '/countries' => 'countries#index'
-  get '/country/:id' => 'countries#show', :as => 'country'
-  get '/country/:id/:area_id' => 'countries#show', :as => 'country_area'
   get '/countries/overview' => 'countries#overview'
+  get '/country/embed/:widget/:iso(/:region)(/:sub_region)' => 'country#embed'
+  get '/country/:iso(/:region)(/:sub_region)' => 'country#index', as: :country
   get '/country_info/:id/:box',to: redirect('/country/%{id}#%{box}')
 
 

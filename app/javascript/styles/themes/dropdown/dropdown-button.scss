@@ -1,0 +1,62 @@
+@import '~styles/settings.scss';
+
+.theme-select-button {
+  .icon {
+    display: none;
+  }
+
+  .dd__selected {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+
+  .dd__selectControl {
+    height: rem(27px);
+    border-radius: rem(19px);
+    border: solid 1px $green-gfw;
+
+    &:hover {
+      background-color: $grey-light;
+    }
+  }
+
+  .dd__selected {
+    padding: 0 rem(21px);
+  }
+
+  .dd__expandIcon {
+    display: none;
+  }
+
+  .dd__selectedItem {
+    font-size: rem(13px);
+    letter-spacing: 0.1px;
+    color: $slate;
+    text-align: center;
+  }
+
+  .dd__list {
+    border: 0;
+    box-shadow: 1px 1px 10px 0 rgba(85, 85, 85, 0.25);
+    text-align: center;
+    border-radius: 0;
+  }
+
+  .dd__option {
+    color: rgba($slate, 0.6);
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    &:hover {
+      background-color: $white;
+      color: rgba($slate, 1);
+    }
+  }
+
+  .dd__selectedOption {
+    color: rgba($slate, 1);
+    background-color: $white;
+  }
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import 'styles/styles.scss';
 import reducers from './reducers';
 
 import AboutCover from './components/AboutCover/AboutCover';

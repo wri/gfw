@@ -40,17 +40,17 @@ $item-padding-screen-m: rem(40px);
     top: rem(-10px);
     bottom: 0;
     margin: auto;
-    width: rem(60px);
-    height: rem(60px);
     z-index: 1;
     display: none;
 
-    &.-left {
-      left: rem(-70px);
+    &.-button-left {
+      left: rem(-60px);
+      transform: rotate(90deg);      
     }
 
-    &.-right {
-      right: rem(-70px);
+    &.-button-right {
+      right: rem(-60px);
+      transform: rotate(-90deg);
     }
   }
 
@@ -156,6 +156,7 @@ $item-padding-screen-m: rem(40px);
     font-size: 16px;
     position: relative;
     z-index: 2;
+    margin-top: 15px;
   }
 
   .c-about-impacts-item__button {

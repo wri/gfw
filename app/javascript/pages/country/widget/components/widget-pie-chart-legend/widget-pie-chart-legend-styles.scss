@@ -1,0 +1,62 @@
+@import '~styles/settings.scss';
+
+.c-pie-chart-legend {
+  display: inline-block;
+  width: 100%;
+
+  .legend-title {
+    font-size: rem(12px);
+    line-height: 1;
+    color: $slate;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    span {
+      display: inline-block;
+      width: rem(12px);
+      min-width: rem(12px);
+      min-height: rem(12px);
+      height: rem(12px);
+      margin-right: rem(7px);
+      border-radius: 100%;
+      align-self: flex-start;
+      margin-top: 1px;
+    }
+
+    p {
+      color: $slate;
+      font-size: rem(12px);
+      line-height: 1.4;
+    }
+  }
+
+  .legend-value {
+    padding: rem(5px) 0 0 rem(20px);
+    font-size: rem(28px);
+    font-weight: 500;
+    margin-bottom: rem(20px);
+  }
+
+  &.small {
+    .legend-value {
+      padding: 0 0 0 rem(20px);
+      font-size: rem(22px);
+      margin-bottom: rem(10px);
+    }
+  }
+
+  &.x-small {
+    .legend-item {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-start;
+      margin-bottom: rem(5px);
+    }
+
+    .legend-value {
+      display: none;
+    }
+  }
+}

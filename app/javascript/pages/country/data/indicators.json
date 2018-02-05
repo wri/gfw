@@ -1,0 +1,82 @@
+[
+  {
+    "label": "All of {location}",
+    "value": "gadm28",
+    "metaKey": ""
+  },
+  {
+    "label": "Biomes",
+    "value": "bra_biomes",
+    "metaKey": ""
+  },
+  {
+    "label": "Mining concessions",
+    "value": "mining",
+    "metaKey": "gfw_mining"
+  },
+  {
+    "label": "Protected Areas",
+    "value": "wdpa",
+    "metaKey": "wdpa_protected_areas"
+  },
+  {
+    "label": "Primary Forests",
+    "value": "primary_forest",
+    "metaKey": ""
+  },
+  {
+    "label": "Mining concessions in Primary Forests",
+    "value": "primary_forest__mining",
+    "metaKey": ""
+  },
+  {
+    "label": "Protected Areas in Primary Forests",
+    "value": "primary_forest__wdpa",
+    "metaKey": ""
+  },
+  {
+    "label": "Intact Forest Landscapes",
+    "value": "ifl_2013",
+    "metaKey": "intact_forest_landscapes_change"
+  },
+  {
+    "label": "Protected Areas in Intact Forest Landscapes",
+    "value": "ifl_2013__wdpa",
+    "metaKey": ""
+  },
+  {
+    "label": "Mining concessions in Intact Forest Landscapes",
+    "value": "ifl_2013__mining",
+    "metaKey": ""
+  },
+  {
+    "label": "Indigenous Lands",
+    "value": "landmark",
+    "metaKey": "gfw_land_rights"
+  },
+  {
+    "label": "Indigenous Lands in Primary Forests",
+    "value": "primary_forest__landmark",
+    "metaKey": ""
+  },
+  {
+    "label": "Plantations",
+    "value": "plantations",
+    "metaKey": "gfw_plantations"
+  },
+  {
+    "label": "Mining concessions in Plantation Areas",
+    "value": "plantations__mining",
+    "metaKey": ""
+  },
+  {
+    "label": "Protected areas in Plantations",
+    "value": "plantations__wdpa",
+    "metaKey": ""
+  },
+  {
+    "label": "Indigenous Lands in Plantations",
+    "value": "plantations__landmark",
+    "metaKey": ""
+  }
+]

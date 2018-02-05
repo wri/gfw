@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Cover from 'components/cover';
+import Button from 'components/button';
 
 import bgImage from './header-bg';
 import './about-cover-styles.scss';
@@ -46,11 +47,11 @@ class AboutCover extends Component {
         bgImage={bgImage}
       >
         <div className="c-cover__play-button">
-          <button className="c-play-button" onClick={this.showVideo}>
+          <Button className="square" onClick={this.showVideo}>
             <svg className="icon">
               <use xlinkHref="#icon-play" />
             </svg>
-          </button>
+          </Button>
           <span className="text -paragraph-4 -italic -color-7">
             GFW in 2 minutes
           </span>

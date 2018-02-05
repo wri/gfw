@@ -16,6 +16,7 @@ class CustomModal extends PureComponent {
       onRequestClose,
       customStyles,
       contentLabel,
+      closeClass,
       children
     } = this.props;
     return (
@@ -25,7 +26,10 @@ class CustomModal extends PureComponent {
         style={customStyles}
         contentLabel={contentLabel}
       >
-        <button onClick={onRequestClose} className="c-modal-close">
+        <button
+          onClick={onRequestClose}
+          className={`c-modal-close ${closeClass}`}
+        >
           <Icon icon={closeIcon} />
         </button>
         {children}
@@ -39,6 +43,7 @@ CustomModal.propTypes = {
   onRequestClose: PropTypes.func.isRequired,
   contentLabel: PropTypes.string,
   customStyles: PropTypes.object,
+  closeClass: PropTypes.string,
   children: PropTypes.node
 };
 
@@ -46,11 +51,14 @@ CustomModal.defaultProps = {
   contentLabel: 'Modal content',
   customStyles: {
     overlay: {
-      zIndex: 1000,
+      zIndex: 10000,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       boxShadow: '0 5px 15px 0 rgba(71, 44, 184, 0.1)',
       backgroundColor: 'rgba(17, 55, 80, 0.4)',
       overflow: 'auto',
-      padding: '40px 0'
+      padding: window.innerWidth > 600 ? '40px 0' : '0'
     },
     content: {
       position: 'relative',
@@ -59,7 +67,6 @@ CustomModal.defaultProps = {
       left: 'auto',
       right: 'auto',
       bottom: 'auto',
-      width: '1080px',
       padding: '0',
       border: 'none',
       borderRadius: 0

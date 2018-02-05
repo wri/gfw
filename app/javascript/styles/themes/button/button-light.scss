@@ -1,0 +1,28 @@
+@import '~styles/settings';
+
+.theme-button-light {
+  background-color: transparent;
+  color: $slate;
+  border: solid 1px $green-gfw;
+
+  &:hover {
+    background-color: $grey-light;
+  }
+
+  &.disabled {
+    border-color: $grey-light;
+
+    &:hover {
+      background-color: $grey-light;
+      border-color: $grey-light;
+    }
+
+    svg {
+      fill: $white;
+    }
+  }
+
+  svg {
+    fill: $grey-dark;
+  }
+}

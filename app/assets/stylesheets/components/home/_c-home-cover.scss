@@ -5,27 +5,24 @@ $home-cover-padding-top-screen-m: rem(93px);
 
 .c-home-cover {
   position: relative;
-  height: $home-cover-height;
-  padding-top: $home-cover-padding-top;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   background-image: url('/assets/home/header-bg.jpg');
+  padding: rem(130px) 0 rem(60px);
 
-  .row {
-    height: 100%;
+  @media screen and (min-width: $screen-m) {
+    padding: rem(230px) 0 rem(200px);
   }
 
   .c-home-cover-texts {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: calc(#{$home-cover-height} - #{$home-cover-padding-top});
 
     h1 {
       position: relative;
-      width: 95%;
-      margin-bottom: rem(6px);
+      margin-bottom: rem(10px);
       z-index: 3;
     }
 
@@ -49,6 +46,10 @@ $home-cover-padding-top-screen-m: rem(93px);
     height: rem(60px);
     display: none;
     z-index: 3;
+
+    @media screen and (min-width: $screen-m) {
+      display: block;
+    }
   }
 
   .c-home-cover__video {
@@ -61,9 +62,14 @@ $home-cover-padding-top-screen-m: rem(93px);
     transition: opacity 1s;
     overflow: hidden;
     z-index: 1;
+    display: none;
 
     &.active {
       opacity: 1;
+    }
+
+    @media screen and (min-width: $screen-m) {
+      display: block;
     }
   }
 
@@ -83,6 +89,7 @@ $home-cover-padding-top-screen-m: rem(93px);
     color: $white;
     text-transform: uppercase;
     font-size: 14px;
+    display: none;
 
     &.-visible {
       display: flex;
@@ -94,6 +101,10 @@ $home-cover-padding-top-screen-m: rem(93px);
       fill: #FFFFFF;
       opacity: 0.8;
     }
+
+    @media screen and (min-width: $screen-m) {
+      display: block;
+    }
   }
 
   .c-home-cover__video-case {
@@ -103,38 +114,5 @@ $home-cover-padding-top-screen-m: rem(93px);
     width: 100%;
     height: 100%;
     z-index: 2;
-  }
-
-  @media screen and (max-width: 414px) {
-
-    .c-home-cover__video {
-      display: none;
-    }
-  }
-
-  @media screen and (min-width: $screen-m) {
-    height: $home-cover-height-screen-m;
-    padding-top: $home-cover-padding-top-screen-m;
-
-    .c-home-cover-texts {
-      height: calc(#{$home-cover-height-screen-m} - #{$home-cover-padding-top-screen-m});
-
-      h1 {
-        width: rem(550px);
-        margin-bottom: rem(9px);
-      }
-
-      .c-home-cover__description {
-        width: 65%;
-      }
-    }
-
-    .c-home-cover__arrow-button {
-      display: block;
-    }
-  }
-
-  @media screen and (min-width: $screen-m) and (max-width: 849px) {
-    padding-top: rem(58px);
   }
 }

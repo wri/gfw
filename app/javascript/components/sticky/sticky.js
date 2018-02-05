@@ -12,12 +12,25 @@ class StickyContainer extends PureComponent {
       top: 0,
       stickyDivPos: {
         top: 0
-      }
+      },
+      scrollPos: 0,
+      el: null
     };
+  }
+
+  componentDidMount() {
+    this.handleScrollCallback();
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+    this.state.el.removeEventListener('scroll', this.handleScrollCallback);
   }
 
   getStickyDiv = el => {
     if (el) {
+      this.setState({ el });
       const pos = el.getBoundingClientRect();
       this.setState({
         stickyDivPos: {
@@ -30,33 +43,37 @@ class StickyContainer extends PureComponent {
     }
   };
 
+  handleResize = () => {
+    const { el } = this.state;
+    this.getStickyDiv(el);
+    this.handleScrollCallback();
+  };
+
   handleScrollCallback = () => {
-    const { isFixed, fixedLimit, stickyDivPos } = this.state;
+    const { isFixed, fixedLimit, stickyDivPos, scrollPos } = this.state;
     const { offSet, limitElement } = this.props;
-    const currentPos = window.pageYOffset;
     const stickyPos = offSet ? stickyDivPos.top + offSet : stickyDivPos.top;
+    this.setState({ scrollPos: window.pageYOffset });
 
     // find limit element y pos
-    if (!fixedLimit) {
-      this.setState({
-        fixedLimit: limitElement
-          ? document.getElementById(limitElement).offsetTop - window.innerHeight
-          : document.body.scrollHeight
-      });
-    }
+    this.setState({
+      fixedLimit: limitElement
+        ? document.getElementById(limitElement).offsetTop - window.innerHeight
+        : document.body.scrollHeight
+    });
 
     // not fixed when less than container div
-    if (isFixed && currentPos < stickyPos) {
+    if (isFixed && scrollPos < stickyPos) {
       this.setState({ isFixed: false, top: 0 });
     }
 
     // fixed between div at top (+ offset) and limitEl
-    if (!isFixed && currentPos >= stickyPos && currentPos < fixedLimit) {
+    if (!isFixed && scrollPos >= stickyPos && scrollPos < fixedLimit) {
       this.setState({ isFixed: true, top: 0 });
     }
 
     // greater than limitEl
-    if (isFixed && currentPos >= fixedLimit) {
+    if (isFixed && scrollPos >= fixedLimit) {
       this.setState({ isFixed: false, top: fixedLimit - stickyPos });
     }
   };

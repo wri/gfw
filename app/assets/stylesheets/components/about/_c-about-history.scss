@@ -48,6 +48,27 @@ $arrow-button-size: rem(60px);
     }
   }
 
+  .nav-left,
+  .nav-right {
+    display: none;
+    top: calc(50% - 20px);
+    position: absolute;    
+    
+    @media screen and (min-width: $screen-l) {
+      display: block;
+    }
+  }
+
+  .nav-left {
+    transform: rotate(90deg);
+    left: rem(-60px);
+  }
+
+  .nav-right {
+    transform: rotate(-90deg);
+    right: rem(-60px);
+  }
+
   .c-about-history__arrow-button {
     position: absolute;
     top: ($item-image-size-screen-s / 2) - ($arrow-button-size / 2);

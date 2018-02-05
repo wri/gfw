@@ -4,17 +4,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 0;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0 $mobile-gutter;
+
+  @media screen and (min-width: $screen-m) {
+    padding: 0 $desktop-gutter;
+  }
 }
 
 .message {
   opacity: 0.5;
-  margin-right: 10px;
+  text-align: center;
 }
 
-.img {
-  width: 30px;
-  height: 30px;
+.message-icon {
+  width: rem(25px);
+  height: rem(25px);
+  margin-left: rem(5px);
 }

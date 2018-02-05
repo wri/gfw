@@ -4,12 +4,16 @@
 $font-family-1: 'Fira Sans', sans-serif;
 
 /* SCREENS */
-$screen-xs: 320px;
-$screen-s: 540px;
-$screen-m: 850px;
-$screen-l: 1024px;
-$screen-xl: 1280px;
-$screen-xxl: 2000px;
+$screen-s: 20rem;
+$screen-m: 40rem;
+$screen-l: 64rem;
+$screen-xl: 70rem;
+
+/* GRID SETTINGS */
+$max-width: 70rem;
+$desktop-gutter: 1.25rem;
+$mobile-gutter: 1rem;
+$header-height: 58px;
 
 /* COLORS */
 $white: #fff;
@@ -22,7 +26,10 @@ $slate: #555;
 $slate-dark: #444;
 $slate-light: #333;
 $warm-grey: #999;
-
+$medium-grey: #676867;
+$googleplus: #da4735;
+$twitter: #598dca;
+$facebook: #3a589b;
 $border: #e5e5df;
 
 /* FONT COLORS */

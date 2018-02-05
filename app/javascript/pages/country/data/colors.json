@@ -1,0 +1,46 @@
+{
+  "extent": {
+    "main": "#a0c746",
+    "ramp": ["#364a08", "#506917", "#6b8729", "#84a637", "#a0c746", "#b8d86d", "#c7e67c", "#d2f189", "#dff7a6"],
+    "nonForest": "#e7e5a4"
+  },
+  "loss": {
+    "main": "#fe6598",
+    "ramp": ["#510626", "#7a1e41", "#a4355c", "#d04d7a", "#fe6598", "#ff84ac", "#ffa0c0", "#ffbad4", "#ffd4e9"],
+    "noLoss": "#e7e5a4"
+  },
+  "gain": {
+    "main": "#6d6de5",
+    "ramp": ["#070752", "#231f74", "#3c3898", "#5452be", "#6d6de5", "#8a86ec", "#a49ff3", "#bdb9f9", "#d4d4ff"],
+    "noGain": "#e7e5a4"
+  },
+  "plantations": {
+    "species": {
+      "Oil palm": "#fdada9",
+      "Wood fiber / timber": "#98a7c4",
+      "Rubber": "#9993a3",
+      "Fruit": "#dada95",
+      "Other": "#d1e6ab",
+      "Wood fiber / timber mix": "#9ebbf2",
+      "Oil palm mix": "#fcc4c1",
+      "Rubber mix": "#a4fdff",
+      "Fruit mix": "#fefe97",
+      "Other mix": "#e1efc8",
+      "Unknown": "#dcd9d9",
+      "Recently cleared": "#d5a6ea"
+    },
+    "types": {
+      "Large industrial plantation": "#fdada9",
+      "Mosaic of medium-sized plantations": "#d5a6ea",
+      "Mosaic of small-sized plantations": "#a6d19f",
+      "Clearing/ very young plantation": "#d5b7a0"
+    }
+  },
+  "emissions": {
+    "main": "#5b80a0",
+    "ramp": ["#073452", "#204665", "#345978", "#476c8c", "#5b80a0", "#799ab7", "#97b4cf", "#b5cfe7", "#d4ebff"]
+  },
+  "fires": {
+    "main": "#f14600"
+  }
+}

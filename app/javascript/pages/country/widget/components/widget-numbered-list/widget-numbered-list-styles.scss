@@ -1,0 +1,55 @@
+@import '~styles/settings.scss';
+
+.c-widget-numbered-list {
+  font-size: rem(12px);
+  color: $slate;
+
+  .list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: rem(10px);
+  }
+
+  a {
+    color: $slate;
+
+    &:hover {
+      .item-name,
+      .item-value {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .disabled {
+    pointer-events: none;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .item-label {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .item-bubble {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: rem(24px);
+    min-width: rem(24px);
+    height: rem(24px);
+    min-height: rem(24px);
+    color: $white;
+    font-weight: 500;
+    border-radius: 50%;
+    margin-right: rem(10px);
+  }
+}
