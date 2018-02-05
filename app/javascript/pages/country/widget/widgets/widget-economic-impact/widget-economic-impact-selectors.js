@@ -130,14 +130,17 @@ export const chartConfig = createSelector([getColors], colors => {
       {
         key: 'exp',
         label: 'Expenditure',
-        color: colorRange[0]
+        color: colorRange[0],
+        unit: 'net_usd'
       },
       {
         key: 'rev',
         label: 'Revenue',
-        color: colorRange[1]
+        color: colorRange[1],
+        unit: 'net_usd'
       }
-    ]
+    ],
+    unit: 'net_usd'
   };
 });
 
@@ -153,7 +156,8 @@ export const getSentence = createSelector(
       item => item.iso === locationNames.current.value
     );
     return `According to the FAO the forestry sector contributed a net <b>${formatCurrency(
-      selectedFAO[0].net_usd
+      selectedFAO[0].net_usd,
+      false
     )} USD</b> to the economy in <b>${year}</b>, which is approximately <b>${format(
       '.2f'
     )(selectedFAO[0].net_perc)}%</b> of <b>${currentLocation}'s</b> GDP.`;

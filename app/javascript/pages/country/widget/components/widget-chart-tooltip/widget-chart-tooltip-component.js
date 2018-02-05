@@ -1,10 +1,28 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
+import { formatCurrency } from 'utils/format';
 
 import './widget-chart-tooltip-styles.scss';
 
 class WidgetChartTooltip extends PureComponent {
+  getFormatUnit = (value, unit) => {
+    let formatUnit = '';
+    switch (unit) {
+      case '%':
+      case 'net_perc':
+        formatUnit = `${format('.1f')(value)}%`;
+        break;
+      case 'net_usd':
+        formatUnit = `${formatCurrency(value, false)} USD`;
+        break;
+      default:
+        formatUnit = format('.3s')(value) + unit;
+        break;
+    }
+    return formatUnit;
+  };
+
   render() {
     const { payload, settings, hideZeros } = this.props;
     const values = payload && payload.length > 0 && payload[0].payload;
@@ -30,9 +48,8 @@ class WidgetChartTooltip extends PureComponent {
                         </div>
                       )}
                       {d.unit
-                        ? format(d.unit === '%' ? '.1f' : '.3s')(values[d.key])
+                        ? this.getFormatUnit(values[d.key], d.unit)
                         : values[d.key]}
-                      {d.unit}
                     </div>
                   ))
               )}
