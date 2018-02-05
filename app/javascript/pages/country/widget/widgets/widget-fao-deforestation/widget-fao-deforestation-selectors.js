@@ -56,8 +56,6 @@ export const getSentence = createSelector(
           topFao.humdef
         )}ha/yr</b> was due to human activity`
         : ''
-    }. In relation to other countries this was the <b>${
-      currentRank[0].rank
-    }th</b> largest change.`;
+    }.`;
   }
 );
