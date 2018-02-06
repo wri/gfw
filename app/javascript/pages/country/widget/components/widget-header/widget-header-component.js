@@ -66,6 +66,16 @@ class WidgetHeader extends PureComponent {
                     widget: active ? 'none' : widget
                   }
                 }}
+                tooltip={
+                  widgetSize === 'small'
+                    ? {
+                      theme: 'light',
+                      position: 'top',
+                      arrow: true,
+                      html: <Tip text="View on map" />
+                    }
+                    : null
+                }
               >
                 {widgetSize === 'small' && (
                   <Icon icon={mapIcon} className="map-icon" />
