@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import findIndex from 'lodash/findIndex';
 import { format } from 'd3-format';
-import { sortByKey, getColorPalette } from 'utils/data';
+import { sortByKey } from 'utils/data';
 import { formatCurrency } from 'utils/format';
 
 // get list data
@@ -111,7 +111,7 @@ export const rankData = createSelector(
 );
 
 export const chartConfig = createSelector([getColors], colors => {
-  const colorRange = getColorPalette(colors.ramp, 2);
+  const colorRange = [colors.male, colors.female];
   return {
     yKeys: {
       bars: {
