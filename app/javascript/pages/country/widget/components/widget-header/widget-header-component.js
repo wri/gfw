@@ -1,12 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
-import Button from 'components/button';
-import Icon from 'components/icon';
 import isEmpty from 'lodash/isEmpty';
 import { COUNTRY } from 'pages/country/router';
 
+import Button from 'components/button';
+import Icon from 'components/icon';
+import Tip from 'components/tip';
 import WidgetSettings from 'pages/country/widget/components/widget-settings';
+
 import settingsIcon from 'assets/icons/settings.svg';
 import shareIcon from 'assets/icons/share.svg';
 import infoIcon from 'assets/icons/info.svg';
@@ -80,6 +82,12 @@ class WidgetHeader extends PureComponent {
                   citation
                 )
               }
+              tooltip={{
+                theme: 'light',
+                position: 'top',
+                arrow: true,
+                html: <Tip text="Learn more about the data" />
+              }}
             >
               <Icon icon={infoIcon} />
             </Button>
@@ -110,7 +118,17 @@ class WidgetHeader extends PureComponent {
                     />
                   }
                 >
-                  <Button className="theme-button-small square">
+                  <Button
+                    className="theme-button-small square"
+                    tooltip={{
+                      theme: 'light',
+                      position: 'top',
+                      arrow: true,
+                      html: (
+                        <Tip text="Filter and customize the data you want to see" />
+                      )
+                    }}
+                  >
                     <Icon icon={settingsIcon} className="settings-icon" />
                   </Button>
                 </Tooltip>
@@ -118,6 +136,12 @@ class WidgetHeader extends PureComponent {
             <Button
               className="theme-button-small theme-button-grey square"
               onClick={() => setShareModal(shareData)}
+              tooltip={{
+                theme: 'light',
+                position: 'top',
+                arrow: true,
+                html: <Tip text="Share or embed a widget" />
+              }}
             >
               <Icon icon={shareIcon} />
             </Button>
