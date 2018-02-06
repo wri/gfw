@@ -12,13 +12,15 @@ import {
 } from './widget-fao-deforestation-selectors';
 
 const mapStateToProps = ({ widgetFAODeforestation, location }, ownProps) => {
-  const { loading, data } = widgetFAODeforestation;
-  const { colors, locationNames } = ownProps;
+  const { loading, data, settings } = widgetFAODeforestation;
+  const { colors, locationNames, settingsConfig: { options } } = ownProps;
   const selectorData = {
     data,
     location: location.payload,
     locationNames,
-    colors: colors.loss
+    colors: colors.loss,
+    settings,
+    options
   };
   return {
     loading: loading || ownProps.isMetaLoading,

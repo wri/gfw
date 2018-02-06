@@ -186,10 +186,10 @@ export const getFAODeforest = ({ country }) => {
   );
   return axios.get(url);
 };
-export const getFAODeforestRank = year => {
+export const getFAODeforestRank = ({ period }) => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.faoDeforestRank}`.replace(
     '{year}',
-    year
+    period
   );
   return axios.get(url);
 };

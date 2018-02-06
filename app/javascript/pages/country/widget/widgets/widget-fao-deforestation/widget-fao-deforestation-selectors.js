@@ -1,11 +1,14 @@
 import { createSelector } from 'reselect';
 import findIndex from 'lodash/findIndex';
 import { format } from 'd3-format';
+import { getActiveFilter } from 'pages/country/widget/widget-selectors';
 
 const getData = state => state.data || null;
 const getLocation = state => state.location || null;
 const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
+const getSettings = state => state.settings || null;
+const getOptions = state => state.options || null;
 
 export const getFilteredData = createSelector(
   [getData, getLocation, getColors],
@@ -36,23 +39,29 @@ export const getFilteredData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getData, getLocation, getLocationNames],
-  (data, location, locationNames) => {
+  [getData, getLocation, getLocationNames, getSettings, getOptions],
+  (data, location, locationNames, settings, options) => {
     if (!data || !data.fao.length) return '';
 
-    const topFao = data.fao[0];
+    const topFao = data.fao.filter(d => d.year === settings.period);
+    const { deforest, humdef } = topFao[0];
     const currentLocation =
       locationNames && locationNames.current && locationNames.current.label;
-    return `From <b>${topFao.year}–${
-      data.fao[data.fao.length - 1].year
-    }</b>, the rate of deforestation in <b>${currentLocation}</b> was <b>${format(
-      '.3s'
-    )(topFao.deforest)}ha/yr</b>${
-      topFao.humdef
-        ? `, of which <b>${format('.3s')(
-          topFao.humdef
-        )}ha/yr</b> was due to human activity`
-        : ''
-    }.`;
+    const periods = options && options.periods;
+    const period = getActiveFilter(settings, periods, 'period');
+
+    if (deforest) {
+      return `From <b>${period &&
+        period.label}</b>, the rate of deforestation in <b>${currentLocation}</b> was <b>${format(
+        '.3s'
+      )(deforest)}ha/yr</b>${
+        humdef
+          ? `, of which <b>${format('.3s')(
+            humdef
+          )}ha/yr</b> was due to human activity`
+          : ''
+      }.`;
+    }
+    return `No deforestation data in <b>${currentLocation}</b>.`;
   }
 );
