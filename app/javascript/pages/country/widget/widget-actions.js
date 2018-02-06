@@ -20,7 +20,9 @@ import * as FAOCoverActions from 'pages/country/widget/widgets/widget-fao-cover/
 import * as gladAlertsActions from 'pages/country/widget/widgets/widget-glad-alerts/widget-glad-alerts-actions';
 import * as rankedPlantationsActions from 'pages/country/widget/widgets/widget-ranked-plantations/widget-ranked-plantations-actions';
 import * as emissionsActions from 'pages/country/widget/widgets/widget-emissions/widget-emissions-actions';
+import * as emissionsDeforestationActions from 'pages/country/widget/widgets/widget-emissions-deforestation/widget-emissions-deforestation-actions';
 import * as firesActions from 'pages/country/widget/widgets/widget-fires/widget-fires-actions';
+import * as forestryEmploymentActions from 'pages/country/widget/widgets/widget-forestry-employment/widget-forestry-employment-actions';
 
 const widgetActions = {
   ...treeLossActions.default,
@@ -39,7 +41,9 @@ const widgetActions = {
   ...gladAlertsActions.default,
   ...rankedPlantationsActions.default,
   ...emissionsActions.default,
-  ...firesActions.default
+  ...emissionsDeforestationActions.default,
+  ...firesActions.default,
+  ...forestryEmploymentActions.default
 };
 
 export const setWidgetSettingsUrl = createThunkAction(

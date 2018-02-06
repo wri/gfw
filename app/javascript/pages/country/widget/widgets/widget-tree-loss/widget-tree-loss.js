@@ -13,7 +13,7 @@ import {
 import WidgetTreeLossComponent from './widget-tree-loss-component';
 
 const mapStateToProps = ({ widgetTreeLoss }, ownProps) => {
-  const { locationNames, activeIndicator } = ownProps;
+  const { colors, locationNames, activeIndicator } = ownProps;
   const { data, settings } = widgetTreeLoss;
   const selectorData = {
     loss: data.loss,
@@ -21,7 +21,7 @@ const mapStateToProps = ({ widgetTreeLoss }, ownProps) => {
     settings,
     locationNames,
     activeIndicator,
-    colors: ownProps.colors
+    colors
   };
   return {
     data: chartData(selectorData),

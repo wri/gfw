@@ -17,7 +17,7 @@ const mapStateToProps = (
   ownProps
 ) => {
   const { data, settings } = widgetRankedPlantations;
-  const { locationNames } = ownProps;
+  const { colors, locationNames } = ownProps;
   const { payload } = location;
   const selectorData = {
     extent: data.extent,
@@ -26,7 +26,7 @@ const mapStateToProps = (
     settings,
     location,
     locationNames,
-    colors: ownProps.colors
+    colors
   };
   return {
     data: chartData(selectorData),

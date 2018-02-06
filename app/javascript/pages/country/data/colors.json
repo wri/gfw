@@ -42,5 +42,9 @@
   },
   "fires": {
     "main": "#f14600"
+  },
+  "employment": {
+    "male": "#A878F3",
+    "female": "#7C38C5"
   }
 }

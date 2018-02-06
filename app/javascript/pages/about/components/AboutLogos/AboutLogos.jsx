@@ -374,6 +374,11 @@ class AboutLogos extends Component {
         title: 'IDB'
       },
       {
+        img: '/assets/logos/idbinvesthover.png',
+        link: 'http://www.idbinvest.org/',
+        title: 'IDB | Invest'
+      },
+      {
         img: '/assets/logos/macarthurhover.png',
         link: 'https://www.macfound.org/',
         title: 'MacArthur Foundation'

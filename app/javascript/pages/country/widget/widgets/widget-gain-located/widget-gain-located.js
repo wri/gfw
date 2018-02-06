@@ -18,7 +18,7 @@ const mapStateToProps = (
 ) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
   const { settings, data, loading } = widgetGainLocated;
-  const { settingsConfig, activeIndicator } = ownProps;
+  const { colors, locationNames, settingsConfig, activeIndicator } = ownProps;
   const { payload } = location;
   const selectorData = {
     data: data.regions,
@@ -26,9 +26,9 @@ const mapStateToProps = (
     options: settingsConfig.options,
     meta: countryData[!payload.region ? 'regions' : 'subRegions'],
     location: payload,
-    colors: ownProps.colors,
+    colors,
     indicator: activeIndicator,
-    locationNames: ownProps.locationNames
+    locationNames
   };
   return {
     regions: countryData.regions,

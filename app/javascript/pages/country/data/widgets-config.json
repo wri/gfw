@@ -35,7 +35,7 @@
       "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
       "metaKey": "widget_natural_vs_planted",
       "sortOrder": {
-        "land-use": 100
+        "land-use": 1
       }
     },
     "settings": {
@@ -332,7 +332,7 @@
       "metaKey": "widget_deforestation_alert_location",
       "customLocationWhitelist": ["BRA", "COL", "ECU", "GUF", "GUY", "PER", "SUR", "BDI",
         "CMR", "CAF", "GNQ", "GAB", "RWA", "UGA", "IDN", "MYS",
-        "PNG", "VEN", "DOC", "DOG", "TLS"],
+        "PNG", "VEN", "DOC", "DOG", "TLS", "COD","COG"],
       "layers": ["umd_as_it_happens"],
       "sortOrder": {
         "summary": 6,
@@ -357,7 +357,7 @@
       "metaKey": "",
       "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
       "sortOrder": {
-        "land-use": 1
+        "land-use": 2
       }
     },
     "settings": {
@@ -382,6 +382,27 @@
     },
     "enabled": true
   },
+  "emissionsDeforestation": {
+    "title": "Emissions from biomass loss",
+    "config": {
+      "size": "small",
+      "indicators": ["gadm28", "bra_biomes", "mining", "wdpa", "primary_forest", "ifl_2013"],
+      "categories": ["climate"],
+      "admins": ["country", "region", "subRegion"],
+      "selectors": ["indicators", "startYears", "endYears", "metrics"],
+      "yearRange": ["2001", "2016"],
+      "metaKey": "widget_emissions_deforestation",
+      "type": "emissions"
+    },
+    "settings": {
+      "indicator": "gadm28",
+      "metric": "biomassCarbon",
+      "threshold": 30,
+      "startYear": 2001,
+      "endYear": 2016
+    },
+    "enabled": true
+  },
   "fires": {
     "title": "Fires",
     "config": {
@@ -396,6 +417,25 @@
       "period": "week",
       "periodValue": 1,
       "layers": ["viirs_fires_alerts"]
+    },
+    "enabled": true
+  },
+  "forestryEmployment": {
+    "title": "Forestry Employment by Gender",
+    "config": {
+      "size": "small",
+      "categories": ["people"],
+      "admins": ["country"],
+      "selectors": ["years"],
+      "years": [2000, 2005, 2010],
+      "type": "fao",
+      "metaKey": "widget_forestry_employment",
+      "sortOrder": {
+        "forest-change": 1
+      }
+    },
+    "settings": {
+      "year": 2000
     },
     "enabled": true
   }

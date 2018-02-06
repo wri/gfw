@@ -25,7 +25,9 @@ import WidgetFaoDeforestation from 'pages/country/widget/widgets/widget-fao-defo
 import WidgetGladAlerts from 'pages/country/widget/widgets/widget-glad-alerts';
 import WidgetRankedPlantations from 'pages/country/widget/widgets/widget-ranked-plantations';
 import WidgetEmissions from 'pages/country/widget/widgets/widget-emissions';
+import WidgetEmissionsDeforestation from 'pages/country/widget/widgets/widget-emissions-deforestation';
 import WidgetFires from 'pages/country/widget/widgets/widget-fires';
+import WidgetForestryEmployment from 'pages/country/widget/widgets/widget-forestry-employment';
 
 import './widget-styles.scss';
 import './widget-tooltip-styles.scss';
@@ -47,7 +49,9 @@ const widgets = {
   WidgetGladAlerts,
   WidgetRankedPlantations,
   WidgetEmissions,
-  WidgetFires
+  WidgetEmissionsDeforestation,
+  WidgetFires,
+  WidgetForestryEmployment
 };
 
 class Widget extends PureComponent {

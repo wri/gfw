@@ -15,11 +15,12 @@ import WidgetGladAlertsComponent from './widget-glad-alerts-component';
 
 const mapStateToProps = ({ widgetGladAlerts }, ownProps) => {
   const { data, settings, activeAlert } = widgetGladAlerts;
+  const { colors } = ownProps;
   const selectorData = {
     alerts: data.alerts,
     period: data.period,
     settings,
-    colors: ownProps.colors,
+    colors,
     activeData: activeAlert
   };
   return {
