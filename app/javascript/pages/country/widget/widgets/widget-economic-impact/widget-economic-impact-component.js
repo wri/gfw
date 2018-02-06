@@ -27,7 +27,7 @@ class WidgetEconomicImpact extends PureComponent {
               data={rankData}
               settings={{
                 ...settings,
-                unit: settings.unit === 'net_perc' ? '%' : ''
+                unit: settings.unit === 'net_perc' ? '%' : settings.unit
               }}
             />
           )}
