@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'redux-first-router-link';
 
+import { Tooltip } from 'react-tippy';
+
 import './button-styles.scss';
 import 'styles/themes/button/button-light.scss'; // eslint-disable-line
 import 'styles/themes/button/button-small.scss'; // eslint-disable-line
@@ -15,7 +17,8 @@ const Button = props => {
     className,
     theme,
     disabled,
-    onClick
+    onClick,
+    tooltip
   } = props;
   const classNames = `c-button ${theme || ''} ${className || ''} ${
     disabled ? 'disabled' : ''
@@ -33,7 +36,7 @@ const Button = props => {
       </a>
     );
   }
-  return link ? (
+  const button = link ? (
     <Link className={classNames} to={link} disabled={disabled}>
       {children}
     </Link>
@@ -42,6 +45,11 @@ const Button = props => {
       {children}
     </button>
   );
+
+  if (tooltip) {
+    return <Tooltip {...tooltip}>{button}</Tooltip>;
+  }
+  return button;
 };
 
 Button.propTypes = {
@@ -51,7 +59,8 @@ Button.propTypes = {
   theme: PropTypes.string,
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
-  extLink: PropTypes.string
+  extLink: PropTypes.string,
+  tooltip: PropTypes.object
 };
 
 export default Button;
