@@ -69,11 +69,28 @@ export const getSortedData = createSelector(
 );
 
 export const chartData = createSelector(
-  [getFilteredData, getSettings, getLocationNames],
-  (data, settings, locationNames) => {
-    if (!data || !data.length) return null;
+  [getFilteredData, getSettings, getLocationNames, getColors],
+  (filteredData, settings, locationNames, colors) => {
+    if (!filteredData || !filteredData.length) return null;
 
-    return data.filter(item => item.iso === locationNames.current.value);
+    const data = filteredData.filter(
+      item => item.iso === locationNames.current.value
+    );
+    const colorRange = [colors.male, colors.female];
+    return [
+      {
+        ...data[0],
+        name: 'Expenditure',
+        value: data[0].exp,
+        color: colorRange[0]
+      },
+      {
+        ...data[0],
+        name: 'Revenue',
+        value: data[0].rev,
+        color: colorRange[1]
+      }
+    ];
   }
 );
 
@@ -110,39 +127,23 @@ export const rankData = createSelector(
   }
 );
 
-export const chartConfig = createSelector([getColors], colors => {
-  const colorRange = [colors.male, colors.female];
-  return {
-    yKeys: {
-      bars: {
-        exp: {
-          fill: colorRange[0]
-        },
-        rev: {
-          fill: colorRange[1]
-        }
+export const chartConfig = createSelector([], () => ({
+  yKeys: {
+    bars: {
+      value: {
+        itemColor: true
       }
-    },
-    xAxis: {
-      tickFormatter: () => 'Expenditure - Revenue'
-    },
-    tooltip: [
-      {
-        key: 'exp',
-        label: 'Expenditure',
-        color: colorRange[0],
-        unit: 'net_usd'
-      },
-      {
-        key: 'rev',
-        label: 'Revenue',
-        color: colorRange[1],
-        unit: 'net_usd'
-      }
-    ],
-    unit: 'net_usd'
-  };
-});
+    }
+  },
+  xKey: 'name',
+  tooltip: [
+    {
+      key: 'value',
+      unit: 'net_usd'
+    }
+  ],
+  unit: 'net_usd'
+}));
 
 export const getSentence = createSelector(
   [getFilteredData, getSettings, getLocationNames],

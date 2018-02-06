@@ -7,6 +7,7 @@ import max from 'lodash/max';
 import {
   Line,
   Bar,
+  Cell,
   Area,
   XAxis,
   YAxis,
@@ -114,7 +115,12 @@ class WidgetComposedChart extends PureComponent {
               ))}
             {bars &&
               Object.keys(bars).map(key => (
-                <Bar key={key} dataKey={key} dot={false} {...bars[key]} />
+                <Bar key={key} dataKey={key} dot={false} {...bars[key]}>
+                  {bars[key].itemColor &&
+                    data.map(item => (
+                      <Cell key={`c_${item.color}`} fill={item.color} />
+                    ))}
+                </Bar>
               ))}
           </ComposedChart>
         </ResponsiveContainer>

@@ -10,6 +10,7 @@ import './widget-economic-impact-styles.scss';
 class WidgetEconomicImpact extends PureComponent {
   render() {
     const { chartData, chartConfig, rankData, sentence, settings } = this.props;
+
     return (
       <div className="c-widget-economic-impact">
         {sentence && <WidgetDynamicSentence sentence={sentence} />}
