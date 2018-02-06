@@ -12,7 +12,7 @@
       "layers": ["forest2000", "forest2010"],
       "sortOrder": {
         "summary": 1,
-        "land-cover": 100
+        "land-cover": 1
       }
     },
     "settings": {
@@ -33,7 +33,7 @@
       "showIndicators": ["plantations"],
       "type": "plantations",
       "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
-      "metaKey": "widget_natural_vs_planted",
+      "metaKey": "widget_plantation_extent",
       "sortOrder": {
         "land-use": 1
       }
@@ -58,7 +58,7 @@
       "metaKey": "widget_ifl",
       "layers": ["forest2000", "forest2010", "ifl_2013_deg"],
       "sortOrder": {
-        "land-cover": 2
+        "land-cover": 3
       }
     },
     "settings": {
@@ -81,7 +81,7 @@
       "metaKey": "widget_primary_forest",
       "layers": ["forest2000", "forest2010"],
       "sortOrder": {
-        "land-cover": 3
+        "land-cover": 4
       }
     },
     "settings": {
@@ -110,7 +110,7 @@
       "layers": ["forest2000", "forest2010"],
       "sortOrder": {
         "summary": 2,
-        "land-cover": 100
+        "land-cover": 2
       }
     },
     "settings": {
@@ -164,7 +164,7 @@
       "selectors": ["startYears", "endYears", "thresholds"],
       "yearRange": ["2013", "2016"],
       "type": "loss",
-      "metaKey": "",
+      "metaKey": "widget_plantations_tree_cover_loss",
       "layers": ["loss", "plantations_by_type"],
       "sortOrder": {
         "summary": 7
@@ -194,7 +194,7 @@
       "locationCheck": true,
       "type": "loss",
       "layers": ["loss"],
-      "metaKey": "widget_tree_cover_loss_ranking",
+      "metaKey": "widget_tree_cover_loss_location",
       "sortOrder": {
         "summary": 4,
         "forest-change": 2
@@ -290,7 +290,7 @@
       "locationCheck": true,
       "type": "gain",
       "layers": ["forestgain"],
-      "metaKey": "widget_tree_cover_gain_ranking",
+      "metaKey": "widget_tree_cover_gain_location",
       "sortOrder": {
         "forest-change": 100
       }
@@ -354,7 +354,7 @@
       "admins": ["country", "region"],
       "selectors": ["thresholds", "extentYears", "types"],
       "type": "plantations",
-      "metaKey": "",
+      "metaKey": "widget_plantations_ranked",
       "layers": ["forest2000", "forest2010", "plantations_by_type", "plantations_by_species"],
       "sortOrder": {
         "land-use": 2
@@ -375,7 +375,7 @@
     "title": "Historical emissions",
     "config": {
       "size": "small",
-      "categories": ["land-use", "climate"],
+      "categories": ["climate"],
       "admins": ["country"],
       "metaKey": "widget_emissions",
       "type": "emissions"
@@ -391,7 +391,7 @@
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "startYears", "endYears", "metrics"],
       "yearRange": ["2001", "2016"],
-      "metaKey": "widget_emissions_deforestation",
+      "metaKey": "widget_carbon_emissions_tree_cover_loss",
       "type": "emissions"
     },
     "settings": {
@@ -409,7 +409,7 @@
       "size": "small",
       "categories": ["forest-change", "summary"],
       "admins": ["country", "region", "subRegion"],
-      "metaKey": "widget_fires",
+      "metaKey": "widget_fire_alert_location",
       "layers": ["viirs_fires_alerts"],
       "type": "loss"
     },
@@ -429,7 +429,7 @@
       "selectors": ["years"],
       "years": [2000, 2005, 2010],
       "type": "fao",
-      "metaKey": "widget_forestry_employment",
+      "metaKey": "",
       "sortOrder": {
         "forest-change": 1
       }
