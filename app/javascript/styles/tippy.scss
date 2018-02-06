@@ -1,0 +1,20 @@
+@import '~styles/settings.scss';
+
+body .tippy-popper[x-placement^=top] .tippy-tooltip.light-theme [x-arrow] {
+  border-top-color: $white;
+  border-left-color: $white;
+  border-right: none;
+  transform-origin: 0 0;
+  transform: rotate(-45deg);
+  box-shadow: -2px 2px 2px 0 rgba($black, 0.1);
+}
+
+body .tippy-popper[x-placement^=bottom] .tippy-tooltip.light-theme [x-arrow] {
+  top: 0;
+  border-top-color: $white;
+  border-left-color: $white;
+  border-right: none;
+  transform-origin: 0 0;
+  transform: rotate(-45deg);
+  box-shadow: 1px -2px 3px 0 rgba($black, 0.1);
+}
