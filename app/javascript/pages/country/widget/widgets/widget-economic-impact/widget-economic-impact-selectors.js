@@ -155,7 +155,7 @@ export const getSentence = createSelector(
     const selectedFAO = data.filter(
       item => item.iso === locationNames.current.value
     );
-    return `According to the FAO the forestry sector contributed a net <b>${formatCurrency(
+    return `According to the FAO, the forestry sector contributed a net <b>${formatCurrency(
       selectedFAO[0].net_usd,
       false
     )} USD</b> to the economy in <b>${year}</b>, which is approximately <b>${format(
