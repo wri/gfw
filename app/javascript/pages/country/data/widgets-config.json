@@ -400,5 +400,24 @@
       "layers": ["viirs_fires_alerts"]
     },
     "enabled": true
+  },
+  "forestryEmployment": {
+    "title": "Forestry Employment by Gender",
+    "config": {
+      "size": "small",
+      "categories": ["people"],
+      "admins": ["country"],
+      "selectors": ["years"],
+      "years": [2000, 2005, 2010],
+      "type": "fao",
+      "metaKey": "widget_forestry_employment",
+      "sortOrder": {
+        "forest-change": 1
+      }
+    },
+    "settings": {
+      "year": 2000
+    },
+    "enabled": true
   }
 }

@@ -22,6 +22,7 @@ class WidgetSettings extends PureComponent {
       indicators,
       periods,
       thresholds,
+      years,
       startYears,
       endYears,
       extentYears,
@@ -162,6 +163,17 @@ class WidgetSettings extends PureComponent {
             }
           />
         )}
+        {years && (
+          <Dropdown
+            theme="theme-select-light"
+            label="YEAR"
+            value={settings.year}
+            options={years}
+            onChange={option =>
+              onSettingsChange({ value: { year: option.value }, widget })
+            }
+          />
+        )}
         {startYears &&
           endYears && (
             <div className="years-select">
@@ -218,6 +230,7 @@ WidgetSettings.propTypes = {
   thresholds: PropTypes.array,
   units: PropTypes.array,
   periods: PropTypes.array,
+  years: PropTypes.array,
   settings: PropTypes.object,
   startYears: PropTypes.array,
   endYears: PropTypes.array,
