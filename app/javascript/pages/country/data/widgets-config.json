@@ -317,7 +317,7 @@
       "metaKey": "widget_deforestation_alert_location",
       "customLocationWhitelist": ["BRA", "COL", "ECU", "GUF", "GUY", "PER", "SUR", "BDI",
         "CMR", "CAF", "GNQ", "GAB", "RWA", "UGA", "IDN", "MYS",
-        "PNG", "VEN", "DOC", "DOG", "TLS"],
+        "PNG", "VEN", "DOC", "DOG", "TLS", "COD","COG"],
       "layers": ["umd_as_it_happens"],
       "sortOrder": {
         "summary": 6,
@@ -409,7 +409,7 @@
     "title": "Forestry Employment by Gender",
     "config": {
       "size": "small",
-      "categories": ["forest-change"],
+      "categories": ["people"],
       "admins": ["country"],
       "selectors": ["years"],
       "years": [2000, 2005, 2010],

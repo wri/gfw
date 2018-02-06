@@ -15,7 +15,7 @@ const mapStateToProps = ({ widgetForestryEmployment }, ownProps) => {
     data,
     settings,
     locationNames,
-    colors: colors.extent
+    colors: colors.employment
   };
 
   return {
