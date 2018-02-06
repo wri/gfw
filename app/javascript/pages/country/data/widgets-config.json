@@ -428,7 +428,7 @@
     "title": "Economic Impact",
     "config": {
       "size": "large",
-      "categories": ["forest-change"],
+      "categories": ["people"],
       "admins": ["country"],
       "selectors": ["years", "units"],
       "years": [2000, 2005, 2010],

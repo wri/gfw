@@ -21,7 +21,7 @@ const mapStateToProps = ({ widgetEconomicImpact, countryData }, ownProps) => {
     meta: countryData.countries,
     settings,
     locationNames,
-    colors: colors.extent
+    colors: colors.employment
   };
 
   return {
