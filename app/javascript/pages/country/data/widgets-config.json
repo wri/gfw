@@ -416,7 +416,7 @@
       "type": "fao",
       "metaKey": "widget_forestry_employment",
       "sortOrder": {
-        "forest-change": 1
+        "people": 2
       }
     },
     "settings": {
@@ -436,7 +436,7 @@
       "type": "fao",
       "metaKey": "widget_economic_impact",
       "sortOrder": {
-        "forest-change": 1
+        "people": 1
       }
     },
     "settings": {
