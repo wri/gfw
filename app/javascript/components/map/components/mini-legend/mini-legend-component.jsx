@@ -32,7 +32,7 @@ class MiniLegend extends PureComponent {
               theme: 'light',
               position: 'top',
               arrow: true,
-              html: <Tip text="Explore the data on the GFW Map" />
+              html: <Tip text="Explore these data on the global map" />
             }}
           >
             <Icon icon={linkIcon} className="info-icon" />

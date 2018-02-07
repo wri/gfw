@@ -70,7 +70,7 @@ class WidgetHeader extends PureComponent {
                       theme: 'light',
                       position: 'top',
                       arrow: true,
-                      html: <Tip text="View on map" />
+                      html: <Tip text="Show on map" />
                     }
                     : null
                 }
@@ -96,7 +96,7 @@ class WidgetHeader extends PureComponent {
                 theme: 'light',
                 position: 'top',
                 arrow: true,
-                html: <Tip text="Learn more about the data" />
+                html: <Tip text="Learn more about these data" />
               }}
             >
               <Icon icon={infoIcon} />
@@ -134,9 +134,7 @@ class WidgetHeader extends PureComponent {
                       theme: 'light',
                       position: 'top',
                       arrow: true,
-                      html: (
-                        <Tip text="Filter and customize the data you want to see" />
-                      )
+                      html: <Tip text="Filter and customize these data" />
                     }}
                   >
                     <Icon icon={settingsIcon} className="settings-icon" />
@@ -150,7 +148,7 @@ class WidgetHeader extends PureComponent {
                 theme: 'light',
                 position: 'top',
                 arrow: true,
-                html: <Tip text="Share or embed a widget" />
+                html: <Tip text="Share or embed this widget" />
               }}
             >
               <Icon icon={shareIcon} />
