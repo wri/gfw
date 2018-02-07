@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Button from 'components/button';
 import Icon from 'components/icon';
+import Tip from 'components/tip';
 
 import linkIcon from 'assets/icons/link.svg';
 import './mini-legend-styles.scss';
@@ -23,13 +24,20 @@ class MiniLegend extends PureComponent {
             </li>
           ))}
         </ul>
-        <Button
-          className="link-to-map"
-          theme="theme-button-small square"
-          extLink={`/map/3/15.00/27.00/ALL/grayscale/${layersKeys}`}
-        >
-          <Icon icon={linkIcon} className="info-icon" />
-        </Button>
+        <div className="link-to-map">
+          <Button
+            theme="theme-button-small square"
+            extLink={`/map/3/15.00/27.00/ALL/grayscale/${layersKeys}`}
+            tooltip={{
+              theme: 'light',
+              position: 'top',
+              arrow: true,
+              html: <Tip text="Explore the data on the GFW Map" />
+            }}
+          >
+            <Icon icon={linkIcon} className="info-icon" />
+          </Button>
+        </div>
       </div>
     );
   }
