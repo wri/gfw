@@ -22,6 +22,7 @@ class WidgetSettings extends PureComponent {
       indicators,
       periods,
       thresholds,
+      years,
       startYears,
       endYears,
       extentYears,
@@ -117,7 +118,7 @@ class WidgetSettings extends PureComponent {
         {extentYears && (
           <Dropdown
             theme="theme-select-light"
-            label="TREE COVER EXTENT"
+            label="EXTENT YEAR"
             value={settings.extentYear}
             options={extentYears}
             disabled={loading}
@@ -137,7 +138,6 @@ class WidgetSettings extends PureComponent {
                 widget
               });
             }}
-            infoAction={() => setModalMeta('widget_tree_cover_extent')}
           />
         )}
         {units && (
@@ -159,6 +159,17 @@ class WidgetSettings extends PureComponent {
             options={periods}
             onChange={option =>
               onSettingsChange({ value: { period: option.value }, widget })
+            }
+          />
+        )}
+        {years && (
+          <Dropdown
+            theme="theme-select-light"
+            label="YEAR"
+            value={settings.year}
+            options={years}
+            onChange={option =>
+              onSettingsChange({ value: { year: option.value }, widget })
             }
           />
         )}
@@ -218,6 +229,7 @@ WidgetSettings.propTypes = {
   thresholds: PropTypes.array,
   units: PropTypes.array,
   periods: PropTypes.array,
+  years: PropTypes.array,
   settings: PropTypes.object,
   startYears: PropTypes.array,
   endYears: PropTypes.array,

@@ -37,6 +37,12 @@ const mapStateToProps = (state, ownProps) => {
             ...countryData
           });
           break;
+        case 'years':
+          options[selector] = selectorFunc({
+            config,
+            ...settings
+          });
+          break;
         case 'startYears':
           options[selector] = selectorFunc({
             config,

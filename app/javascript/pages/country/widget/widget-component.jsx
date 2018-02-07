@@ -21,11 +21,13 @@ import WidgetTreeLossPlantations from 'pages/country/widget/widgets/widget-tree-
 import WidgetTreeGain from 'pages/country/widget/widgets/widget-tree-gain';
 import WidgetFaoCover from 'pages/country/widget/widgets/widget-fao-cover';
 import WidgetFaoReforestation from 'pages/country/widget/widgets/widget-fao-reforestation';
+import WidgetFaoDeforestation from 'pages/country/widget/widgets/widget-fao-deforestation';
 import WidgetGladAlerts from 'pages/country/widget/widgets/widget-glad-alerts';
 import WidgetRankedPlantations from 'pages/country/widget/widgets/widget-ranked-plantations';
 import WidgetEmissions from 'pages/country/widget/widgets/widget-emissions';
 import WidgetEmissionsDeforestation from 'pages/country/widget/widgets/widget-emissions-deforestation';
 import WidgetFires from 'pages/country/widget/widgets/widget-fires';
+import WidgetForestryEmployment from 'pages/country/widget/widgets/widget-forestry-employment';
 
 import './widget-styles.scss';
 import './widget-tooltip-styles.scss';
@@ -43,11 +45,13 @@ const widgets = {
   WidgetTreeLossPlantations,
   WidgetFaoCover,
   WidgetFaoReforestation,
+  WidgetFaoDeforestation,
   WidgetGladAlerts,
   WidgetRankedPlantations,
   WidgetEmissions,
   WidgetEmissionsDeforestation,
-  WidgetFires
+  WidgetFires,
+  WidgetForestryEmployment
 };
 
 class Widget extends PureComponent {
@@ -68,6 +72,8 @@ class Widget extends PureComponent {
       colors
     } = this.props;
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
+    const highlightColor =
+      colors.main || (colors.extent && colors.extent.main) || '#a0c746';
 
     return (
       <div
@@ -75,10 +81,8 @@ class Widget extends PureComponent {
         style={
           active
             ? {
-              borderColor:
-                  colors.main ||
-                  (colors.extent && colors.extent.main) ||
-                  '#a0c746'
+              borderColor: highlightColor,
+              boxShadow: `0 0px 0px 1px ${highlightColor}`
             }
             : {}
         }

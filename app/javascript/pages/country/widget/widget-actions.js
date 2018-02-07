@@ -15,12 +15,14 @@ import * as gainLocatedActions from 'pages/country/widget/widgets/widget-gain-lo
 import * as lossLocatedActions from 'pages/country/widget/widgets/widget-loss-located/widget-loss-located-actions';
 import * as treeGainActions from 'pages/country/widget/widgets/widget-tree-gain/widget-tree-gain-actions';
 import * as FAOReforestationActions from 'pages/country/widget/widgets/widget-fao-reforestation/widget-fao-reforestation-actions';
+import * as FAODeforestationActions from 'pages/country/widget/widgets/widget-fao-deforestation/widget-fao-deforestation-actions';
 import * as FAOCoverActions from 'pages/country/widget/widgets/widget-fao-cover/widget-fao-cover-actions';
 import * as gladAlertsActions from 'pages/country/widget/widgets/widget-glad-alerts/widget-glad-alerts-actions';
 import * as rankedPlantationsActions from 'pages/country/widget/widgets/widget-ranked-plantations/widget-ranked-plantations-actions';
 import * as emissionsActions from 'pages/country/widget/widgets/widget-emissions/widget-emissions-actions';
 import * as emissionsDeforestationActions from 'pages/country/widget/widgets/widget-emissions-deforestation/widget-emissions-deforestation-actions';
 import * as firesActions from 'pages/country/widget/widgets/widget-fires/widget-fires-actions';
+import * as forestryEmploymentActions from 'pages/country/widget/widgets/widget-forestry-employment/widget-forestry-employment-actions';
 
 const widgetActions = {
   ...treeLossActions.default,
@@ -34,12 +36,14 @@ const widgetActions = {
   ...lossLocatedActions.default,
   ...treeGainActions.default,
   ...FAOReforestationActions.default,
+  ...FAODeforestationActions.default,
   ...FAOCoverActions.default,
   ...gladAlertsActions.default,
   ...rankedPlantationsActions.default,
   ...emissionsActions.default,
   ...emissionsDeforestationActions.default,
-  ...firesActions.default
+  ...firesActions.default,
+  ...forestryEmploymentActions.default
 };
 
 export const setWidgetSettingsUrl = createThunkAction(

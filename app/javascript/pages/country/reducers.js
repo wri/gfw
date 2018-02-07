@@ -30,11 +30,13 @@ import * as widgetTreeLossComponent from 'pages/country/widget/widgets/widget-tr
 import * as widgetTreeLossPlantationsComponent from 'pages/country/widget/widgets/widget-tree-loss-plantations';
 import * as widgetFAOCoverComponent from 'pages/country/widget/widgets/widget-fao-cover';
 import * as widgetFAOReforestationComponent from 'pages/country/widget/widgets/widget-fao-reforestation';
+import * as widgetFAODeforestationComponent from 'pages/country/widget/widgets/widget-fao-deforestation';
 import * as widgetGladAlertsComponent from 'pages/country/widget/widgets/widget-glad-alerts';
 import * as widgetRankedPlantationsComponent from 'pages/country/widget/widgets/widget-ranked-plantations';
 import * as widgetEmissionsComponent from 'pages/country/widget/widgets/widget-emissions';
 import * as widgetEmissionsDeforestationComponent from 'pages/country/widget/widgets/widget-emissions-deforestation';
 import * as widgetFiresComponent from 'pages/country/widget/widgets/widget-fires';
+import * as widgetForestryEmploymentComponent from 'pages/country/widget/widgets/widget-forestry-employment';
 
 // Providers
 import * as countryDataProviderComponent from 'pages/country/providers/country-data-provider';
@@ -59,13 +61,15 @@ const componentsReducers = {
   widgetTreeLossPlantations: handleActions(widgetTreeLossPlantationsComponent),
   widgetFAOCover: handleActions(widgetFAOCoverComponent),
   widgetFAOReforestation: handleActions(widgetFAOReforestationComponent),
+  widgetFAODeforestation: handleActions(widgetFAODeforestationComponent),
   widgetGladAlerts: handleActions(widgetGladAlertsComponent),
   widgetRankedPlantations: handleActions(widgetRankedPlantationsComponent),
   widgetEmissions: handleActions(widgetEmissionsComponent),
   widgetEmissionsDeforestation: handleActions(
     widgetEmissionsDeforestationComponent
   ),
-  widgetFires: handleActions(widgetFiresComponent)
+  widgetFires: handleActions(widgetFiresComponent),
+  widgetForestryEmployment: handleActions(widgetForestryEmploymentComponent)
 };
 
 const providersReducers = {

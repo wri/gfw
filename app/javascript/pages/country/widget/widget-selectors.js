@@ -150,23 +150,26 @@ export const getExtentYears = createSelector([], () => EXTENT_YEARS);
 
 export const getWeeks = createSelector([], () => WEEKS);
 
-export const getYears = createSelector([getData, getConfig], (data, config) => {
-  if (isEmpty(data) || !data.length) return null;
+export const getRangeYears = createSelector(
+  [getData, getConfig],
+  (data, config) => {
+    if (isEmpty(data) || !data.length) return null;
 
-  return uniq(data.map(d => d.year))
-    .filter(
-      d =>
-        !config.yearRange ||
-        (d >= config.yearRange[0] && d <= config.yearRange[1])
-    )
-    .map(d => ({
-      label: d,
-      value: d
-    }));
-});
+    return uniq(data.map(d => d.year))
+      .filter(
+        d =>
+          !config.yearRange ||
+          (d >= config.yearRange[0] && d <= config.yearRange[1])
+      )
+      .map(d => ({
+        label: d,
+        value: d
+      }));
+  }
+);
 
 export const getStartYears = createSelector(
-  [getYears, getEndYear],
+  [getRangeYears, getEndYear],
   (years, endYear) => {
     if (isEmpty(years) || !endYear) return null;
     return years.filter(y => y.value <= endYear);
@@ -174,7 +177,7 @@ export const getStartYears = createSelector(
 );
 
 export const getEndYears = createSelector(
-  [getYears, getStartYear],
+  [getRangeYears, getStartYear],
   (years, startYear) => {
     if (isEmpty(years) || !startYear) return null;
     return years.filter(y => y.value >= startYear);
@@ -182,3 +185,10 @@ export const getEndYears = createSelector(
 );
 
 export const getPeriods = createSelector([], () => PERIODS);
+
+export const getYears = createSelector([getConfig], config =>
+  config.years.map(d => ({
+    label: d,
+    value: d
+  }))
+);
