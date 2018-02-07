@@ -23,8 +23,9 @@ const Button = props => {
   const classNames = `c-button ${theme || ''} ${className || ''} ${
     disabled ? 'disabled' : ''
   }`;
+  let button = null;
   if (extLink) {
-    return (
+    button = (
       <a
         className={classNames}
         href={extLink}
@@ -35,16 +36,19 @@ const Button = props => {
         {children}
       </a>
     );
+  } else if (link) {
+    button = (
+      <Link className={classNames} to={link} disabled={disabled}>
+        {children}
+      </Link>
+    );
+  } else {
+    button = (
+      <button className={classNames} onClick={onClick} disabled={disabled}>
+        {children}
+      </button>
+    );
   }
-  const button = link ? (
-    <Link className={classNames} to={link} disabled={disabled}>
-      {children}
-    </Link>
-  ) : (
-    <button className={classNames} onClick={onClick} disabled={disabled}>
-      {children}
-    </button>
-  );
 
   if (tooltip) {
     return <Tooltip {...tooltip}>{button}</Tooltip>;
