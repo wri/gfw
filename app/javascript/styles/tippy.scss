@@ -2,15 +2,16 @@
 @import '~styles/settings.scss';
 
 @mixin tippy-arrow($color, $orientation) {
-  border-top-color: $color;
   border-left-color: $color;
   border-right: none;
   transform-origin: 0 0;
   transform: rotate(-45deg);
   @if $orientation == 'top' {
+    border-top-color: $color;
     box-shadow: -2px 2px 2px 0 rgba($slate, 0.1);
   } @else if $orientation == 'bottom' {
     top: 0;
+    border-bottom-color: $color;
     box-shadow: 1px -2px 3px 0 rgba($slate, 0.1);
   }
 }
