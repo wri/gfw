@@ -76,16 +76,16 @@ class Header extends PureComponent {
         </div>
         <div className="row">
           <div className="columns small-12 large-6">
-            <div className="select-container">
-              <Tooltip
-                theme="tip"
-                position="top"
-                arrow
-                disabled={isDeviceTouch}
-                html={
-                  <Tip text="Choose the country and region you want to explore" />
-                }
-              >
+            <Tooltip
+              theme="tip"
+              position="top"
+              arrow
+              disabled={isDeviceTouch}
+              html={
+                <Tip text="Choose the country and region you want to explore" />
+              }
+            >
+              <div className="select-container">
                 <div className="select">
                   <Icon icon={arrowDownIcon} className="icon" />
                   <Dropdown
@@ -99,53 +99,53 @@ class Header extends PureComponent {
                     disabled={loading}
                   />
                 </div>
-              </Tooltip>
-              {locationOptions.regions &&
-                locationOptions.regions.length > 1 && (
-                  <div className="select">
-                    <Icon icon={arrowDownIcon} className="icon" />
-                    <Dropdown
-                      theme="theme-select-dark"
-                      placeholder="Region"
-                      noItemsFound="No region found"
-                      value={locationNames.region}
-                      options={locationOptions.regions}
-                      onChange={region =>
-                        handleRegionChange(locationNames.country, region)
-                      }
-                      searchable
-                      disabled={loading}
-                    />
-                  </div>
-                )}
-              {locationNames.region &&
-                locationNames.region.value &&
-                locationOptions.subRegions &&
-                locationOptions.subRegions.length > 1 && (
-                  <div className="select">
-                    <Icon
-                      icon={arrowDownIcon}
-                      className="icon c-header__select-arrow"
-                    />
-                    <Dropdown
-                      theme="theme-select-dark"
-                      placeholder="Region"
-                      noItemsFound="No region found"
-                      value={locationNames.subRegion}
-                      options={locationOptions.subRegions}
-                      onChange={subRegion =>
-                        handleSubRegionChange(
-                          locationNames.country,
-                          locationNames.region,
-                          subRegion
-                        )
-                      }
-                      searchable
-                      disabled={loading}
-                    />
-                  </div>
-                )}
-            </div>
+                {locationOptions.regions &&
+                  locationOptions.regions.length > 1 && (
+                    <div className="select">
+                      <Icon icon={arrowDownIcon} className="icon" />
+                      <Dropdown
+                        theme="theme-select-dark"
+                        placeholder="Region"
+                        noItemsFound="No region found"
+                        value={locationNames.region}
+                        options={locationOptions.regions}
+                        onChange={region =>
+                          handleRegionChange(locationNames.country, region)
+                        }
+                        searchable
+                        disabled={loading}
+                      />
+                    </div>
+                  )}
+                {locationNames.region &&
+                  locationNames.region.value &&
+                  locationOptions.subRegions &&
+                  locationOptions.subRegions.length > 1 && (
+                    <div className="select">
+                      <Icon
+                        icon={arrowDownIcon}
+                        className="icon c-header__select-arrow"
+                      />
+                      <Dropdown
+                        theme="theme-select-dark"
+                        placeholder="Region"
+                        noItemsFound="No region found"
+                        value={locationNames.subRegion}
+                        options={locationOptions.subRegions}
+                        onChange={subRegion =>
+                          handleSubRegionChange(
+                            locationNames.country,
+                            locationNames.region,
+                            subRegion
+                          )
+                        }
+                        searchable
+                        disabled={loading}
+                      />
+                    </div>
+                  )}
+              </div>
+            </Tooltip>
           </div>
           <div className="columns large-6 medium-12 small-12">
             <div className="description text -title-xs">
