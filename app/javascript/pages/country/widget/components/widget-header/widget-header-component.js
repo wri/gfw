@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import isEmpty from 'lodash/isEmpty';
 import { COUNTRY } from 'pages/country/router';
+import { isTouch } from 'utils/browser';
 
 import Button from 'components/button';
 import Icon from 'components/icon';
@@ -35,13 +36,12 @@ class WidgetHeader extends PureComponent {
       shareData,
       setShareModal,
       setModalMeta,
-      modalOpen,
-      modalClosing,
       citation,
       active
     } = this.props;
     const { tooltipOpen } = this.state;
     const widgetSize = settingsConfig.config.size;
+    const isDeviceTouch = isTouch();
 
     return (
       <div className="c-widget-header">
@@ -72,6 +72,7 @@ class WidgetHeader extends PureComponent {
                       theme: 'tip',
                       position: 'top',
                       arrow: true,
+                      disabled: isDeviceTouch,
                       html: <Tip text="Show on map" />
                     }
                     : null
@@ -94,9 +95,7 @@ class WidgetHeader extends PureComponent {
                 trigger="click"
                 interactive
                 onRequestClose={() => {
-                  if (!modalClosing && !modalOpen) {
-                    this.setState({ tooltipOpen: false });
-                  }
+                  this.setState({ tooltipOpen: false });
                 }}
                 onShow={() => this.setState({ tooltipOpen: true })}
                 arrow
@@ -117,6 +116,7 @@ class WidgetHeader extends PureComponent {
                     theme: 'tip',
                     position: 'top',
                     arrow: true,
+                    disabled: isDeviceTouch,
                     html: <Tip text="Filter and customize these data" />
                   }}
                 >
@@ -140,6 +140,7 @@ class WidgetHeader extends PureComponent {
                 theme: 'tip',
                 position: 'top',
                 arrow: true,
+                disabled: isDeviceTouch,
                 html: <Tip text="Learn more about these data" />
               }}
             >
@@ -152,6 +153,7 @@ class WidgetHeader extends PureComponent {
                 theme: 'tip',
                 position: 'top',
                 arrow: true,
+                disabled: isDeviceTouch,
                 html: <Tip text="Share or embed this widget" />
               }}
             >

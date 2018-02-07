@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { isTouch } from 'utils/browser';
 
 import { Tooltip } from 'react-tippy';
 import Dropdown from 'components/dropdown';
@@ -30,6 +31,7 @@ class Header extends PureComponent {
       location,
       forestAtlasLink
     } = this.props;
+    const isDeviceTouch = isTouch();
 
     return (
       <div className={`${className} c-header`}>
@@ -44,6 +46,7 @@ class Header extends PureComponent {
               theme: 'tip',
               position: 'bottom',
               arrow: true,
+              disabled: isDeviceTouch,
               html: (
                 <Tip
                   text={`Download the country data${
@@ -64,6 +67,7 @@ class Header extends PureComponent {
               theme: 'tip',
               position: 'bottom',
               arrow: true,
+              disabled: isDeviceTouch,
               html: <Tip text="Share or embed this page" />
             }}
           >
@@ -77,6 +81,7 @@ class Header extends PureComponent {
                 theme="tip"
                 position="top"
                 arrow
+                disabled={isDeviceTouch}
                 html={
                   <Tip text="Choose the country and region you want to explore" />
                 }

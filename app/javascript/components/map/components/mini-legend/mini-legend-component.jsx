@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { isTouch } from 'utils/browser';
 
 import Button from 'components/button';
 import Icon from 'components/icon';
@@ -14,6 +15,7 @@ class MiniLegend extends PureComponent {
     const { layers } = this.props;
     const layersKeys =
       layers && layers.length && layers.map(l => l.slug).join(',');
+    const isDeviceTouch = isTouch();
     return (
       <div className="c-mini-legend">
         <ul>
@@ -32,6 +34,7 @@ class MiniLegend extends PureComponent {
               theme: 'tip',
               position: 'top',
               arrow: true,
+              disabled: isDeviceTouch,
               html: <Tip text="Explore these data on the global map" />
             }}
           >
