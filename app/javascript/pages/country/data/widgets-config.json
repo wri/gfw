@@ -411,7 +411,7 @@
       "admins": ["country", "region", "subRegion"],
       "metaKey": "widget_fire_alert_location",
       "layers": ["viirs_fires_alerts"],
-      "type": "loss"
+      "type": "fires"
     },
     "settings": {
       "period": "week",
