@@ -72,6 +72,8 @@ class Widget extends PureComponent {
       colors
     } = this.props;
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
+    const highlightColor =
+      colors.main || (colors.extent && colors.extent.main) || '#a0c746';
 
     return (
       <div
@@ -79,10 +81,8 @@ class Widget extends PureComponent {
         style={
           active
             ? {
-              borderColor:
-                  colors.main ||
-                  (colors.extent && colors.extent.main) ||
-                  '#a0c746'
+              borderColor: highlightColor,
+              boxShadow: `0 0px 0px 1px ${highlightColor}`
             }
             : {}
         }
