@@ -73,12 +73,13 @@ export const getSentence = createSelector(
     const totalLoss = sumBy(data, 'areaLoss') || 0;
     const totalOutsideLoss = sumBy(data, 'outsideAreaLoss') || 0;
     const totalEmissions = biomassToCO2(sumBy(data, 'emissions')) || 0;
-    const lossPhrase = totalLoss > totalOutsideLoss ? 'plantations' : 'natural forest';
+    const lossPhrase =
+      totalLoss > totalOutsideLoss ? 'plantations' : 'natural forest';
 
     return `The majority of tree cover loss in <b>${locationLabel}</b> from <span>${startYear}</span>
     to <span>${endYear}</span> occured within <b>${lossPhrase}</b>.
     The total loss within natural forest was equivalent to <b>${format('.2s')(
-     totalOutsideLoss
+    totalOutsideLoss
   )}t of CO<sub>2</sub></b> emissions.`;
   }
 );
