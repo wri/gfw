@@ -69,7 +69,7 @@ class WidgetHeader extends PureComponent {
                 tooltip={
                   widgetSize === 'small'
                     ? {
-                      theme: 'light',
+                      theme: 'tip',
                       position: 'top',
                       arrow: true,
                       html: <Tip text="Show on map" />
@@ -114,7 +114,7 @@ class WidgetHeader extends PureComponent {
                 <Button
                   className="theme-button-small square"
                   tooltip={{
-                    theme: 'light',
+                    theme: 'tip',
                     position: 'top',
                     arrow: true,
                     html: <Tip text="Filter and customize these data" />
@@ -137,7 +137,7 @@ class WidgetHeader extends PureComponent {
                 )
               }
               tooltip={{
-                theme: 'light',
+                theme: 'tip',
                 position: 'top',
                 arrow: true,
                 html: <Tip text="Learn more about these data" />
@@ -149,7 +149,7 @@ class WidgetHeader extends PureComponent {
               className="theme-button-small square"
               onClick={() => setShareModal(shareData)}
               tooltip={{
-                theme: 'light',
+                theme: 'tip',
                 position: 'top',
                 arrow: true,
                 html: <Tip text="Share or embed this widget" />

@@ -29,7 +29,7 @@ class MiniLegend extends PureComponent {
             theme="theme-button-small square"
             extLink={`/map/3/15.00/27.00/ALL/grayscale/${layersKeys}`}
             tooltip={{
-              theme: 'light',
+              theme: 'tip',
               position: 'top',
               arrow: true,
               html: <Tip text="Explore these data on the global map" />
