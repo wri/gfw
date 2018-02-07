@@ -44,7 +44,15 @@ class Header extends PureComponent {
               theme: 'tip',
               position: 'bottom',
               arrow: true,
-              html: <Tip text="Download" />
+              html: (
+                <Tip
+                  text={`Download the country data${
+                    locationNames.country
+                      ? ` for ${locationNames.country.label}`
+                      : ''
+                  }`}
+                />
+              )
             }}
           >
             <Icon icon={downloadIcon} />
