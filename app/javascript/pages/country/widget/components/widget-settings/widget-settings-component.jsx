@@ -118,7 +118,7 @@ class WidgetSettings extends PureComponent {
         {extentYears && (
           <Dropdown
             theme="theme-select-light"
-            label="TREE COVER EXTENT"
+            label="EXTENT YEAR"
             value={settings.extentYear}
             options={extentYears}
             disabled={loading}
@@ -138,7 +138,6 @@ class WidgetSettings extends PureComponent {
                 widget
               });
             }}
-            infoAction={() => setModalMeta('widget_tree_cover_extent')}
           />
         )}
         {units && (
