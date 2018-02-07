@@ -1,12 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import { Tooltip } from 'react-tippy';
 import Dropdown from 'components/dropdown';
 import Loader from 'components/loader';
 import Icon from 'components/icon';
-import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import Button from 'components/button';
+import Tip from 'components/tip';
 
+import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import shareIcon from 'assets/icons/share.svg';
 import downloadIcon from 'assets/icons/download.svg';
 import './header-styles.scss';
@@ -38,12 +40,24 @@ class Header extends PureComponent {
             extLink={`http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/iso/tree_cover_stats_2016_${
               location.country
             }.xlsx`}
+            tooltip={{
+              theme: 'tip',
+              position: 'bottom',
+              arrow: true,
+              html: <Tip text="Download" />
+            }}
           >
             <Icon icon={downloadIcon} />
           </Button>
           <Button
             className="theme-button-small theme-button-grey square"
             onClick={() => setShareModal(shareData)}
+            tooltip={{
+              theme: 'tip',
+              position: 'bottom',
+              arrow: true,
+              html: <Tip text="Share or embed this page" />
+            }}
           >
             <Icon icon={shareIcon} />
           </Button>
@@ -51,19 +65,28 @@ class Header extends PureComponent {
         <div className="row">
           <div className="columns small-12 large-6">
             <div className="select-container">
-              <div className="select">
-                <Icon icon={arrowDownIcon} className="icon" />
-                <Dropdown
-                  theme="theme-select-dark"
-                  placeholder="Country"
-                  noItemsFound="No country found"
-                  value={locationNames.country}
-                  options={locationOptions.countries}
-                  onChange={handleCountryChange}
-                  searchable
-                  disabled={loading}
-                />
-              </div>
+              <Tooltip
+                theme="tip"
+                position="top"
+                arrow
+                html={
+                  <Tip text="Choose the country and region you want to explore" />
+                }
+              >
+                <div className="select">
+                  <Icon icon={arrowDownIcon} className="icon" />
+                  <Dropdown
+                    theme="theme-select-dark"
+                    placeholder="Country"
+                    noItemsFound="No country found"
+                    value={locationNames.country}
+                    options={locationOptions.countries}
+                    onChange={handleCountryChange}
+                    searchable
+                    disabled={loading}
+                  />
+                </div>
+              </Tooltip>
               {locationOptions.regions &&
                 locationOptions.regions.length > 1 && (
                   <div className="select">
