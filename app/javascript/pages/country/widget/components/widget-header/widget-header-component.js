@@ -49,8 +49,10 @@ class WidgetHeader extends PureComponent {
           locationNames.current ? locationNames.current.label : ''
         }`}</div>
         <div className="options">
-          {settingsConfig.settings.layers &&
-            settingsConfig.settings.layers.length && (
+          {settingsConfig.settings &&
+            settingsConfig.settings.layers &&
+            settingsConfig.settings.layers.length &&
+            !embed && (
               <Button
                 className="map-button"
                 theme={`theme-button-small ${
@@ -78,9 +80,51 @@ class WidgetHeader extends PureComponent {
                 {widgetSize === 'small' && (
                   <Icon icon={mapIcon} className="map-icon" />
                 )}
-                {widgetSize !== 'small' && 'VIEW ON MAP'}
+                {widgetSize !== 'small' &&
+                  (active ? 'HIDE ON MAP' : 'SHOW ON MAP')}
               </Button>
             )}
+          {!embed &&
+            settingsConfig &&
+            !isEmpty(settingsConfig.options) && (
+              <Tooltip
+                theme="light"
+                position="bottom-right"
+                offset={-95}
+                trigger="click"
+                interactive
+                onRequestClose={() => {
+                  if (!modalClosing && !modalOpen) {
+                    this.setState({ tooltipOpen: false });
+                  }
+                }}
+                onShow={() => this.setState({ tooltipOpen: true })}
+                arrow
+                useContext
+                open={tooltipOpen}
+                html={
+                  <WidgetSettings
+                    {...settingsConfig}
+                    widget={widget}
+                    locationNames={locationNames}
+                    setModalMeta={setModalMeta}
+                  />
+                }
+              >
+                <Button
+                  className="theme-button-small square"
+                  tooltip={{
+                    theme: 'light',
+                    position: 'top',
+                    arrow: true,
+                    html: <Tip text="Filter and customize these data" />
+                  }}
+                >
+                  <Icon icon={settingsIcon} className="settings-icon" />
+                </Button>
+              </Tooltip>
+            )}
+          <div className="separator" />
           <div className="small-options">
             <Button
               className="theme-button-small square"
@@ -101,48 +145,8 @@ class WidgetHeader extends PureComponent {
             >
               <Icon icon={infoIcon} />
             </Button>
-            {!embed &&
-              settingsConfig &&
-              !isEmpty(settingsConfig.options) && (
-                <Tooltip
-                  theme="light"
-                  position="bottom-right"
-                  offset={-95}
-                  trigger="click"
-                  interactive
-                  onRequestClose={() => {
-                    if (!modalClosing && !modalOpen) {
-                      this.setState({ tooltipOpen: false });
-                    }
-                  }}
-                  onShow={() => this.setState({ tooltipOpen: true })}
-                  arrow
-                  useContext
-                  open={tooltipOpen}
-                  html={
-                    <WidgetSettings
-                      {...settingsConfig}
-                      widget={widget}
-                      locationNames={locationNames}
-                      setModalMeta={setModalMeta}
-                    />
-                  }
-                >
-                  <Button
-                    className="theme-button-small square"
-                    tooltip={{
-                      theme: 'light',
-                      position: 'top',
-                      arrow: true,
-                      html: <Tip text="Filter and customize these data" />
-                    }}
-                  >
-                    <Icon icon={settingsIcon} className="settings-icon" />
-                  </Button>
-                </Tooltip>
-              )}
             <Button
-              className="theme-button-small theme-button-grey square"
+              className="theme-button-small square"
               onClick={() => setShareModal(shareData)}
               tooltip={{
                 theme: 'light',

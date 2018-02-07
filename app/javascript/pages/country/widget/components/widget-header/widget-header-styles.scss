@@ -24,17 +24,7 @@
     justify-content: flex-end;
 
     .map-button {
-      margin-right: rem(15px);
       position: relative;
-
-      &:after {
-        content: '';
-        position: absolute;
-        right: rem(-11px);
-        top: rem(3px);
-        border-right: solid 1px $border;
-        height: rem(15px);
-      }
 
       .map-icon {
         width: rem(20px);
@@ -47,15 +37,23 @@
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
+    }
 
-      button {
-        margin-left: rem(5px);
-      }
+    .separator {
+      position: relative;
+      top: rem(3px);
+      border-right: solid 1px $border;
+      height: rem(15px);
+      margin-left: 5px;
     }
   }
 
   .settings-icon {
     width: rem(12px);
     height: rem(12px);
+  }
+
+  button {
+    margin-left: rem(5px);
   }
 }
