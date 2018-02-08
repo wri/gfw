@@ -1,8 +1,9 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
+import axios from 'axios';
 import groupBy from 'lodash/groupBy';
 
-import { getLocationsLoss } from 'services/forest-data';
+import { getLocations, getLocationsLoss } from 'services/forest-data';
 
 const setLossLocatedData = createAction('setLossLocatedData');
 const setLossLocatedPage = createAction('setLossLocatedPage');
@@ -14,25 +15,44 @@ const getLossLocated = createThunkAction(
   params => (dispatch, state) => {
     if (!state().widgetLossLocated.loading) {
       dispatch(setLossLocatedLoading({ loading: true, error: false }));
-      getLocationsLoss(params)
-        .then(response => {
-          const { data } = response.data;
-          const mappedData = {};
-          if (data && data.length) {
-            const lossByRegion = groupBy(data, 'region');
-            mappedData.regions = Object.keys(lossByRegion).map(d => {
-              const regionLoss = lossByRegion[d];
-              return {
-                id: parseInt(d, 10),
-                loss: regionLoss
-              };
-            });
-          }
-          dispatch(setLossLocatedData(mappedData));
-        })
+
+      axios
+        .all([getLocations({ ...params }), getLocationsLoss({ ...params })])
+        .then(
+          axios.spread((getLocationsResponse, getLocationsLossResponse) => {
+            const extentData = getLocationsResponse.data.data;
+            const extentMappedData = {};
+            if (extentData && extentData.length) {
+              extentMappedData.regions = extentData.map(d => ({
+                id: d.region,
+                extent: d.extent || 0,
+                percentage: d.extent ? d.extent / d.total * 100 : 0
+              }));
+            }
+
+            const lossData = getLocationsLossResponse.data.data;
+            const lossMappedData = {};
+            if (lossData && lossData.length) {
+              const lossByRegion = groupBy(lossData, 'region');
+              lossMappedData.regions = Object.keys(lossByRegion).map(d => {
+                const regionLoss = lossByRegion[d];
+                return {
+                  id: parseInt(d, 10),
+                  loss: regionLoss
+                };
+              });
+            }
+            dispatch(
+              setLossLocatedData({
+                loss: lossMappedData,
+                extent: extentMappedData
+              })
+            );
+          })
+        )
         .catch(error => {
+          console.info(error);
           dispatch(setLossLocatedLoading({ loading: false, error: true }));
-          console.error(error);
         });
     }
   }
