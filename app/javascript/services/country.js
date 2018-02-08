@@ -11,7 +11,7 @@ const SQL_QUERIES = {
   getFAOCountries:
     'SELECT DISTINCT country AS iso, name FROM table_1_forest_area_and_characteristics',
   getRegions:
-    "SELECT id1 as id, region as name FROM umd_subnat_staging WHERE iso = '{iso}' and year = 2001 and thresh = 30 ORDER BY name ",
+    "SELECT id_1 as id, name_1 as name FROM gadm28_adm1 WHERE iso = '{iso}' ORDER BY name ",
   getSubRegions:
     "SELECT id_2 as id, name_2 as name FROM gadm28_adm2 WHERE iso = '{iso}' AND id_1 = '{admin1}' ORDER BY name",
   getCountryWhitelist:
