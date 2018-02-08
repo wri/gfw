@@ -7,6 +7,8 @@ const setIntactTreeCoverLoading = createAction('setIntactTreeCoverLoading');
 const setIntactTreeCoverData = createAction('setIntactTreeCoverData');
 const setIntactTreeCoverSettings = createAction('setIntactTreeCoverSettings');
 
+const hardCodedPlantations = ['BRA', 'IDN', 'PER', 'LBR', 'COL', 'MYS', 'KHM'];
+
 export const getIntactTreeCover = createThunkAction(
   'getIntactTreeCover',
   params => (dispatch, state) => {
@@ -42,7 +44,10 @@ export const getIntactTreeCover = createThunkAction(
                 plantations
               };
             }
-            if (whitelist.indexOf('plantations') === -1) {
+            if (
+              whitelist.indexOf('plantations') === -1 &&
+              !hardCodedPlantations.includes(params.country)
+            ) {
               dispatch(setIntactTreeCoverData(data));
             } else {
               let polyname = 'plantations';
