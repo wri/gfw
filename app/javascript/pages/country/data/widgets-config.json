@@ -76,10 +76,11 @@
       "indicators": ["primary_forest", "primary_forest__mining", "primary_forest__wdpa", "primary_forest__landmark"],
       "categories": ["land-cover"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "thresholds", "extentYears"],
+      "customLocationWhitelist": ["IDN", "DRC"],
+      "selectors": ["indicators", "thresholds"],
       "type": "extent",
       "metaKey": "widget_primary_forest",
-      "layers": ["forest2000", "forest2010"],
+      "layers": ["forest2000"],
       "sortOrder": {
         "land-cover": 4
       }
@@ -87,8 +88,8 @@
     "settings": {
       "indicator": "primary_forest",
       "threshold": 30,
-      "extentYear": 2010,
-      "layers": ["forest2010"]
+      "extentYear": 2000,
+      "layers": ["forest2000"]
     },
     "enabled": true
   },
