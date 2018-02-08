@@ -55,8 +55,14 @@ export const getSentence = createSelector(
   [getIntactTreeCoverData, getSettings, getLocationNames, getActiveIndicator],
   (parsedData, settings, locationNames, indicator) => {
     if (!parsedData || !locationNames) return null;
-    const intactPercentage = parsedData.find(d => d.label === 'Intact Forest')
-      .percentage;
+    const totalExtent = parsedData
+      .filter(d => d.label !== 'Non-Forest')
+      .map(d => d.value)
+      .reduce((sum, d) => sum + d);
+    const intactPercentage =
+      parsedData.find(d => d.label === 'Intact Forest').value /
+      totalExtent *
+      100;
     const locationLabel = locationNames.current && locationNames.current.label;
     let sentenceLocation;
 
