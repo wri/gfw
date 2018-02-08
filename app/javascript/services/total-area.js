@@ -6,7 +6,7 @@ const SQL_QUERIES = {
   getCountryArea:
     "SELECT land as value FROM umd_nat_staging WHERE iso = '{adm0}' AND year = 2001 and thresh = 30",
   getRegionArea:
-    "SELECT land as value FROM umd_subnat_staging WHERE iso = '{adm0}' AND id1 = {adm1} AND year = 2001 and thresh = 30",
+    "SELECT area_ha as value FROM gadm28_adm1 WHERE iso = '{adm0}' AND id_1 = {adm1}",
   getSubRegionArea:
     "SELECT ROUND(ST_AREA(the_geom::geography) * 0.0001) as value FROM gadm28_adm2 WHERE iso = '{adm0}' AND id_1 = {adm1} AND id_2 = {adm2}"
 };
