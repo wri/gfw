@@ -381,7 +381,7 @@
       "size": "small",
       "categories": ["climate"],
       "admins": ["country"],
-      "metaKey": "widget_emissions",
+      "metaKey": "widget_historical_emissions",
       "type": "emissions"
     },
     "enabled": true
@@ -433,7 +433,7 @@
       "selectors": ["years"],
       "years": [2000, 2005, 2010],
       "type": "fao",
-      "metaKey": "",
+      "metaKey": "widget_forestry_employment",
       "sortOrder": {
         "forest-change": 1
       }
