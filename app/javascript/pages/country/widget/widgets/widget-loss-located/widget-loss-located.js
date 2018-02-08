@@ -5,11 +5,7 @@ import isEqual from 'lodash/isEqual';
 
 import actions from './widget-loss-located-actions';
 import reducers, { initialState } from './widget-loss-located-reducers';
-import {
-  getSortedData,
-  getChartData,
-  getSentence
-} from './widget-loss-located-selectors';
+import { getSortedData, getSentence } from './widget-loss-located-selectors';
 import WidgetLossLocatedComponent from './widget-loss-located-component';
 
 const mapStateToProps = (
@@ -21,7 +17,8 @@ const mapStateToProps = (
   const { colors, locationNames, settingsConfig, activeIndicator } = ownProps;
   const { payload } = location;
   const selectorData = {
-    data: data.regions,
+    loss: data.loss.regions,
+    extent: data.extent.regions,
     settings,
     options: settingsConfig.options,
     meta: countryData[!payload.region ? 'regions' : 'subRegions'],
@@ -34,7 +31,6 @@ const mapStateToProps = (
     regions: countryData.regions,
     loading: loading || isCountriesLoading || isRegionsLoading,
     data: getSortedData(selectorData),
-    chartData: getChartData(selectorData),
     sentence: getSentence(selectorData)
   };
 };
@@ -55,7 +51,8 @@ class WidgetLossLocatedContainer extends PureComponent {
       !isEqual(location.country, this.props.location.country) ||
       !isEqual(location.region, this.props.location.region) ||
       !isEqual(settings.indicator, this.props.settings.indicator) ||
-      !isEqual(settings.threshold, this.props.settings.threshold)
+      !isEqual(settings.threshold, this.props.settings.threshold) ||
+      !isEqual(settings.extentYear, this.props.settings.extentYear)
     ) {
       getLossLocated({
         ...location,
