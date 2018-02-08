@@ -41,7 +41,7 @@ export const getFilteredData = createSelector(
     if (!data || !data.length) return null;
     const locationIndex = findIndex(
       data,
-      d => d.id === locationNames.current && locationNames.current.value
+      d => d.id === (locationNames.current && locationNames.current.value)
     );
     let trimStart = locationIndex - 2;
     let trimEnd = locationIndex + 3;
@@ -77,7 +77,7 @@ export const getFilteredData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getFilteredData, getSettings, getIndicator, getLocationNames],
+  [getSortedData, getSettings, getIndicator, getLocationNames],
   (data, settings, indicator, locationNames) => {
     if (!data || !data.length || !locationNames) return null;
     const locationData =
