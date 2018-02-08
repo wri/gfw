@@ -5,11 +5,7 @@ import isEqual from 'lodash/isEqual';
 
 import actions from './widget-gain-located-actions';
 import reducers, { initialState } from './widget-gain-located-reducers';
-import {
-  getSortedData,
-  getChartData,
-  getSentence
-} from './widget-gain-located-selectors';
+import { getSortedData, getSentence } from './widget-gain-located-selectors';
 import WidgetGainLocatedComponent from './widget-gain-located-component';
 
 const mapStateToProps = (
@@ -21,7 +17,8 @@ const mapStateToProps = (
   const { colors, locationNames, settingsConfig, activeIndicator } = ownProps;
   const { payload } = location;
   const selectorData = {
-    data: data.regions,
+    gain: data.gain.regions,
+    extent: data.extent.regions,
     settings,
     options: settingsConfig.options,
     meta: countryData[!payload.region ? 'regions' : 'subRegions'],
@@ -34,7 +31,6 @@ const mapStateToProps = (
     regions: countryData.regions,
     loading: loading || isCountriesLoading || isRegionsLoading,
     data: getSortedData(selectorData),
-    chartData: getChartData(selectorData),
     sentence: getSentence(selectorData)
   };
 };

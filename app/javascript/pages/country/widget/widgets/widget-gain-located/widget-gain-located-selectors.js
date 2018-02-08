@@ -6,7 +6,8 @@ import { sortByKey, getColorPalette } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
-const getData = state => state.data || null;
+const getGain = state => state.gain || null;
+const getExtent = state => state.extent || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
@@ -16,15 +17,15 @@ const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
 
 export const getSortedData = createSelector(
-  [getData, getSettings, getLocation, getLocationsMeta, getColors],
-  (data, settings, location, meta, colors) => {
+  [getGain, getExtent, getSettings, getLocation, getLocationsMeta, getColors],
+  (data, extent, settings, location, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
     const dataMapped = [];
-    const totalGain = sumBy(data, 'gain');
     data.forEach(d => {
       const region = meta.find(l => d.id === l.value);
       if (region) {
-        const percentage = d.gain / totalGain * 100;
+        const locationExtent = extent.filter(l => l.id === d.id);
+        const percentage = d.gain / locationExtent[0].extent * 100;
         dataMapped.push({
           label: (region && region.label) || '',
           gain: d.gain,
