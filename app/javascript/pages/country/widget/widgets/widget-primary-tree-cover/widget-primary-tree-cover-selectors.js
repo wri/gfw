@@ -19,6 +19,10 @@ export const getPrimaryTreeCoverData = createSelector(
     const { totalArea, totalExtent, extent, plantations } = data;
     const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
     const colorRange = getColorPalette(colors.ramp, hasPlantations ? 3 : 2);
+    const secondaryExtent =
+      totalExtent - extent - plantations < 0
+        ? 0
+        : totalExtent - extent - plantations;
     const parsedData = [
       {
         label: 'Primary Forest',
@@ -28,9 +32,9 @@ export const getPrimaryTreeCoverData = createSelector(
       },
       {
         label: hasPlantations ? 'Secondary Forest' : 'Other Tree Cover',
-        value: totalExtent - extent - plantations,
+        value: secondaryExtent,
         color: colorRange[1],
-        percentage: (totalExtent - extent - plantations) / totalArea * 100
+        percentage: secondaryExtent / totalArea * 100
       },
       {
         label: 'Non-Forest',
@@ -55,8 +59,14 @@ export const getSentence = createSelector(
   [getPrimaryTreeCoverData, getSettings, getLocationNames, getActiveIndicator],
   (parsedData, settings, locationNames, indicator) => {
     if (!parsedData || !locationNames) return null;
-    const primaryPercentage = parsedData.find(d => d.label === 'Primary Forest')
-      .percentage;
+    const totalExtent = parsedData
+      .filter(d => d.label !== 'Non-Forest')
+      .map(d => d.value)
+      .reduce((sum, d) => sum + d);
+    const primaryPercentage =
+      parsedData.find(d => d.label === 'Primary Forest').value /
+      totalExtent *
+      100;
     const locationLabel = locationNames.current && locationNames.current.label;
     let sentenceLocation;
 
@@ -85,7 +95,7 @@ export const getSentence = createSelector(
     const sentence = `${
       indicator.value === 'primary_forest'
         ? `In <b>${locationLabel}</b>, ${lessThanCheck} of tree cover is <b>primary forest</b>.`
-        : `Within <b>${sentenceLocation}</b> in <b>${locationLabel}</b>, ${lessThanCheck} of tree cover is <b>primary forest</b>.`
+        : `Within <b>${sentenceLocation.toLowerCase()}</b> in <b>${locationLabel}</b>, ${lessThanCheck} of tree cover is <b>primary forest</b>.`
     }`;
 
     return sentence;
