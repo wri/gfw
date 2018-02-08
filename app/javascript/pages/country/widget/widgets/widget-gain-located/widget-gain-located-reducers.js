@@ -3,7 +3,10 @@ import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 export const initialState = {
   loading: false,
   error: false,
-  data: {},
+  data: {
+    gain: [],
+    extent: []
+  },
   ...WIDGETS_CONFIG.gainLocated
 };
 
