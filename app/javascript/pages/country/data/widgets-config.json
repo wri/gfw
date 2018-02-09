@@ -76,7 +76,7 @@
       "indicators": ["primary_forest", "primary_forest__mining", "primary_forest__wdpa", "primary_forest__landmark"],
       "categories": ["land-cover"],
       "admins": ["country", "region", "subRegion"],
-      "customLocationWhitelist": ["IDN", "DRC"],
+      "customLocationWhitelist": ["IDN", "COD"],
       "selectors": ["indicators", "thresholds"],
       "type": "extent",
       "metaKey": "widget_primary_forest",
