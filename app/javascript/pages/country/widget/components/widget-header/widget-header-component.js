@@ -117,7 +117,7 @@ class WidgetHeader extends PureComponent {
                     position: 'top',
                     arrow: true,
                     disabled: isDeviceTouch,
-                    html: <Tip text="Filter and customize these data" />
+                    html: <Tip text="Filter and customize the data" />
                   }}
                 >
                   <Icon icon={settingsIcon} className="settings-icon" />
@@ -141,7 +141,7 @@ class WidgetHeader extends PureComponent {
                 position: 'top',
                 arrow: true,
                 disabled: isDeviceTouch,
-                html: <Tip text="Learn more about these data" />
+                html: <Tip text="Learn more about the data" />
               }}
             >
               <Icon icon={infoIcon} />

@@ -35,7 +35,7 @@ class MiniLegend extends PureComponent {
               position: 'top',
               arrow: true,
               disabled: isDeviceTouch,
-              html: <Tip text="Explore these data on the global map" />
+              html: <Tip text="Explore the data on the global map" />
             }}
           >
             <Icon icon={linkIcon} className="info-icon" />
