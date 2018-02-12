@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
-import { sortByKey, getColorPalette } from 'utils/data';
+import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
@@ -41,14 +41,10 @@ export const getSortedData = createSelector(
       };
     });
     const sortedData = sortByKey(uniqBy(mappedData, 'label'), 'value', true);
-    const colorRange = getColorPalette(
-      colors.ramp,
-      sortedData.length < 10 ? sortedData.length : 10
-    );
 
-    return sortedData.map((o, i) => ({
+    return sortedData.map(o => ({
       ...o,
-      color: o.loss ? colorRange[i] || colorRange[9] : colors.noLoss
+      color: colors.main
     }));
   }
 );
