@@ -115,6 +115,7 @@ export const getIndicators = createSelector(
       return null;
     }
     const whitelist = Object.keys(locationWhitelist);
+
     return sortByKey(
       sortByKey(
         INDICATORS.filter(

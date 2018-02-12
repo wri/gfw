@@ -85,7 +85,7 @@ const mapStateToProps = (state, ownProps) => {
     loading,
     error,
     data,
-    colors: COLORS[config.type] || COLORS,
+    colors: COLORS[config.colors || config.type] || COLORS,
     settingsConfig: {
       config,
       settings,
