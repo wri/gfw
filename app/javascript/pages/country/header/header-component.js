@@ -68,7 +68,7 @@ class Header extends PureComponent {
               position: 'bottom',
               arrow: true,
               disabled: isDeviceTouch,
-              html: <Tip text="Share or embed this page" />
+              html: <Tip text="Share this page" />
             }}
           >
             <Icon icon={shareIcon} />
