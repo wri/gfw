@@ -36,12 +36,17 @@ class WidgetHeader extends PureComponent {
       shareData,
       setShareModal,
       setModalMeta,
+      setShowMapMobile,
       citation,
       active
     } = this.props;
     const { tooltipOpen } = this.state;
     const widgetSize = settingsConfig.config.size;
     const isDeviceTouch = isTouch();
+    const haveMapLayers =
+      settingsConfig.settings &&
+      settingsConfig.settings.layers &&
+      settingsConfig.settings.layers.length;
 
     return (
       <div className="c-widget-header">
@@ -49,23 +54,22 @@ class WidgetHeader extends PureComponent {
           locationNames.current ? locationNames.current.label : ''
         }`}</div>
         <div className="options">
-          {settingsConfig.settings &&
-            settingsConfig.settings.layers &&
-            settingsConfig.settings.layers.length &&
-            !embed && (
+          {!embed &&
+            haveMapLayers && (
               <Button
                 className="map-button"
                 theme={`theme-button-small ${
-                  widgetSize === 'small' ? 'square' : ''
+                  widgetSize === 'small' || isDeviceTouch ? 'square' : ''
                 }`}
                 link={{
                   type: COUNTRY,
                   payload: { ...location.payload },
                   query: {
                     ...query,
-                    widget: active ? 'none' : widget
+                    widget
                   }
                 }}
+                onClick={() => setShowMapMobile(true)}
                 tooltip={
                   widgetSize === 'small'
                     ? {
@@ -73,16 +77,21 @@ class WidgetHeader extends PureComponent {
                       position: 'top',
                       arrow: true,
                       disabled: isDeviceTouch,
-                      html: <Tip text="Show on map" />
+                      html: (
+                        <Tip
+                          text={
+                            active ? 'Currently displayed' : 'Show on map'
+                          }
+                        />
+                      )
                     }
                     : null
                 }
               >
-                {widgetSize === 'small' && (
+                {(widgetSize === 'small' || isDeviceTouch) && (
                   <Icon icon={mapIcon} className="map-icon" />
                 )}
-                {widgetSize !== 'small' &&
-                  (active ? 'HIDE ON MAP' : 'SHOW ON MAP')}
+                {widgetSize !== 'small' && !isDeviceTouch && 'SHOW ON MAP'}
               </Button>
             )}
           {!embed &&
@@ -124,7 +133,10 @@ class WidgetHeader extends PureComponent {
                 </Button>
               </Tooltip>
             )}
-          <div className="separator" />
+          {!embed &&
+            (!isEmpty(settingsConfig.options) || haveMapLayers) && (
+              <div className="separator" />
+            )}
           <div className="small-options">
             <Button
               className="theme-button-small square"
@@ -177,6 +189,7 @@ WidgetHeader.propTypes = {
   setShareModal: PropTypes.func.isRequired,
   shareData: PropTypes.object.isRequired,
   setModalMeta: PropTypes.func.isRequired,
+  setShowMapMobile: PropTypes.func.isRequired,
   modalOpen: PropTypes.bool,
   modalClosing: PropTypes.bool,
   active: PropTypes.bool,

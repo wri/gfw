@@ -43,15 +43,17 @@ class Root extends PureComponent {
 
     return (
       <div className="l-country">
-        <Button
-          theme={`square ${showMapMobile ? 'theme-button-light' : ''}`}
-          className={`mobile-map-button ${
-            showMapMobile ? 'close-map' : 'open-map'
-          }`}
-          onClick={handleShowMapMobile}
-        >
-          <Icon icon={showMapMobile ? closeIcon : mapIcon} />
-        </Button>
+        {showMapMobile && (
+          <Button
+            theme={`square ${showMapMobile ? 'theme-button-light' : ''}`}
+            className={`mobile-map-button ${
+              showMapMobile ? 'close-map' : 'open-map'
+            }`}
+            onClick={handleShowMapMobile}
+          >
+            <Icon icon={showMapMobile ? closeIcon : mapIcon} />
+          </Button>
+        )}
         <div className="panels">
           <div className="data-panel">
             <Header
@@ -100,7 +102,7 @@ class Root extends PureComponent {
                 maxZoom={14}
                 minZoom={3}
                 mapOptions={{
-                  mapTypeId: 'grayscale',
+                  mapTypeId: 'GFWdefault',
                   backgroundColor: '#99b3cc',
                   disableDefaultUI: true,
                   panControl: false,
