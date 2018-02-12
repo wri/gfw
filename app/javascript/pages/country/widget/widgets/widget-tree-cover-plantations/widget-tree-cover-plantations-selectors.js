@@ -46,23 +46,23 @@ export const getSentence = createSelector(
       if (top.length === 1) {
         topTypesSentence = `<b>${
           top[0].label
-        }</b> represent the largest plantation by <b>species</b>`;
+        }</b> represent the largest plantation area by <b>species</b>`;
       } else {
         topTypesSentence = `<b>${top[0].label}</b> and <b>${
           top[1].label
-        }</b> represent the largest plantations by <b>species</b>`;
+        }</b> represent the largest plantation area by <b>species</b>`;
       }
 
       remainSentence =
         data.length > top.length
           ? `The remaining <b>${format('.2s')(
             sumBy(data.slice(2), 'value')
-          )}ha</b> of tree cover is distributed between <b>${data.length -
+          )}ha</b> is distributed between <b>${data.length -
               top.length}</b> other plantation species.`
           : '';
     } else {
       top = data.slice(0, 1);
-      topTypesSentence = `the largest plantation type by area are <b>${
+      topTypesSentence = `the largest plantation area by type are <b>${
         top[0].label
       }${endsWith(top[0].label, 's') ? '' : 's'}</b>`;
     }
