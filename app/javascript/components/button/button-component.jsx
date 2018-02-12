@@ -38,7 +38,12 @@ const Button = props => {
     );
   } else if (link) {
     button = (
-      <Link className={classNames} to={link} disabled={disabled}>
+      <Link
+        className={classNames}
+        to={link}
+        disabled={disabled}
+        onClick={onClick}
+      >
         {children}
       </Link>
     );
