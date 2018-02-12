@@ -74,12 +74,16 @@ class Widget extends PureComponent {
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
     const highlightColor =
       colors.main || (colors.extent && colors.extent.main) || '#a0c746';
+    const haveMapLayers =
+      settingsConfig.settings &&
+      settingsConfig.settings.layers &&
+      settingsConfig.settings.layers.length;
 
     return (
       <div
         className={`c-widget ${settingsConfig.config.size || ''}`}
         style={
-          active
+          active && haveMapLayers
             ? {
               borderColor: highlightColor,
               boxShadow: `0 0px 0px 1px ${highlightColor}`
