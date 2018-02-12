@@ -98,11 +98,13 @@ export const getPlantationsExtent = ({
   country,
   region,
   subRegion,
+  threshold,
   type,
   groupByRegion
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.plantationsExtent}`
     .replace('{location}', getLocationQuery(country, region, subRegion))
+    .replace('{threshold}', threshold)
     .replace('{admin}', region ? 'adm2' : 'adm1')
     .replace('{bound}', type)
     .replace(
