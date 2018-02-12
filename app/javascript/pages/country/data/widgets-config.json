@@ -39,6 +39,7 @@
       }
     },
     "settings": {
+      "threshold": 0,
       "type": "bound2",
       "layers": ["plantations_by_species"]
     },
@@ -363,6 +364,7 @@
     },
     "settings": {
       "indicator": "gadm28",
+      "threshold": 0,
       "type": "bound2",
       "pageSize": 5,
       "page": 0,
