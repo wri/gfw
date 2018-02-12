@@ -379,7 +379,8 @@
       "categories": ["climate"],
       "admins": ["country"],
       "metaKey": "widget_historical_emissions",
-      "type": "emissions"
+      "type": "loss",
+      "colors": "emissions"
     },
     "enabled": true
   },
@@ -393,7 +394,8 @@
       "selectors": ["indicators", "startYears", "endYears", "metrics"],
       "yearRange": ["2001", "2016"],
       "metaKey": "widget_carbon_emissions_tree_cover_loss",
-      "type": "emissions"
+      "type": "loss",
+      "colors": "emissions"
     },
     "settings": {
       "indicator": "gadm28",
