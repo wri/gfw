@@ -17,8 +17,7 @@ const mapStateToProps = ({ widgetGladAlerts }, ownProps) => {
   const { data, settings, activeAlert } = widgetGladAlerts;
   const { colors } = ownProps;
   const selectorData = {
-    alerts: data.alerts,
-    period: data.period,
+    ...data,
     settings,
     colors,
     activeData: activeAlert
