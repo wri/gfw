@@ -43,6 +43,10 @@ class WidgetHeader extends PureComponent {
     const { tooltipOpen } = this.state;
     const widgetSize = settingsConfig.config.size;
     const isDeviceTouch = isTouch();
+    const haveMapLayers =
+      settingsConfig.settings &&
+      settingsConfig.settings.layers &&
+      settingsConfig.settings.layers.length;
 
     return (
       <div className="c-widget-header">
@@ -50,10 +54,8 @@ class WidgetHeader extends PureComponent {
           locationNames.current ? locationNames.current.label : ''
         }`}</div>
         <div className="options">
-          {settingsConfig.settings &&
-            settingsConfig.settings.layers &&
-            settingsConfig.settings.layers.length &&
-            !embed && (
+          {!embed &&
+            haveMapLayers && (
               <Button
                 className="map-button"
                 theme={`theme-button-small ${
@@ -131,7 +133,10 @@ class WidgetHeader extends PureComponent {
                 </Button>
               </Tooltip>
             )}
-          <div className="separator" />
+          {!embed &&
+            (!isEmpty(settingsConfig.options) || haveMapLayers) && (
+              <div className="separator" />
+            )}
           <div className="small-options">
             <Button
               className="theme-button-small square"
