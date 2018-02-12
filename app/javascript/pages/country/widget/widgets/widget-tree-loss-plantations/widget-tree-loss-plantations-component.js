@@ -8,7 +8,7 @@ import './widget-tree-loss-plantations-styles.scss';
 
 class WidgetTreeLossPlantations extends PureComponent {
   render() {
-    const { data, config, sentence, active } = this.props;
+    const { data, config, sentence } = this.props;
 
     return (
       <div className="c-widget-tree-loss-plantations">
@@ -18,7 +18,6 @@ class WidgetTreeLossPlantations extends PureComponent {
             className="loss-chart"
             data={data}
             config={config}
-            backgroundColor={active ? '#fefedc' : '#fff'}
           />
         )}
       </div>
@@ -29,8 +28,7 @@ class WidgetTreeLossPlantations extends PureComponent {
 WidgetTreeLossPlantations.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
-  sentence: PropTypes.string,
-  active: PropTypes.bool
+  sentence: PropTypes.string
 };
 
 export default WidgetTreeLossPlantations;

@@ -55,7 +55,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const { query } = ownProps.location;
   const widgetQueries = {};
   if (query) {
-    const widgetKeys = remove(Object.keys(query), d => d !== 'category' && d !== 'widget');
+    const widgetKeys = remove(
+      Object.keys(query),
+      d => d !== 'category' && d !== 'widget'
+    );
     widgetKeys.forEach(key => {
       widgetQueries[key] = encodeStateForUrl({
         ...decodeUrlForState(query[key]),

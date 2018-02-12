@@ -66,7 +66,7 @@ class WidgetSettings extends PureComponent {
         {types && (
           <Dropdown
             theme="theme-select-light"
-            label="PLANTATION TYPES"
+            label="DISPLAY TREES BY"
             value={settings.type}
             options={types}
             disabled={loading}

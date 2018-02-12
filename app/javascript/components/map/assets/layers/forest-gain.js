@@ -1,4 +1,4 @@
-import ImageLayer from './abstract/imageLayer';
+import ImageLayer from './abstract/image-layer';
 
 const OPTIONS = {
   dataMaxZoom: 12,

@@ -20,19 +20,21 @@ const getWidgetQuery = state => state.activeWidget || null;
 
 // get lists selected
 export const getWidgets = createSelector([], () =>
-  sortBy(
-    Object.keys(WIDGETS).map(key => ({
-      name: key,
-      ...WIDGETS[key]
-    })),
-    'config.sortOrder'
-  )
+  Object.keys(WIDGETS).map(key => ({
+    name: key,
+    ...WIDGETS[key]
+  }))
 );
 
 export const filterWidgetsByCategory = createSelector(
   [getWidgets, getCategory],
   (widgets, category) =>
-    widgets.filter(w => w.enabled && w.config.categories.indexOf(category) > -1)
+    sortBy(
+      widgets.filter(
+        w => w.enabled && w.config.categories.indexOf(category) > -1
+      ),
+      `config.sortOrder[${category}]`
+    )
 );
 
 export const checkWidgetNeedsLocations = createSelector(
