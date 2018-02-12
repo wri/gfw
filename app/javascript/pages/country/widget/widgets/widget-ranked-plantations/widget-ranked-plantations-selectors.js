@@ -109,7 +109,7 @@ export const getSentence = createSelector(
     if (type === 'bound1') {
       sentence = `<b>${
         topRegion.region
-      }</b> has the largest relative tree cover due to plantations in <b>${currentLocation}</b>${
+      }</b> has the largest relative area due to plantations in <b>${currentLocation}</b>${
         location.payload.region ? ' ' : ''
       } at <b>${format('.1f')(
         data[0].total
@@ -119,7 +119,7 @@ export const getSentence = createSelector(
     } else if (type === 'bound2') {
       sentence = `<b>${
         topRegion.region
-      }</b> has the largest relative tree cover due to plantations in <b>${currentLocation}</b>${
+      }</b> has the largest relative area due to plantations in <b>${currentLocation}</b>${
         location.payload.region ? ' ' : ''
       } at <b>${format('.1f')(data[0].total)}%</b>, most of which is in <b>${
         topPlantation.label
@@ -127,7 +127,7 @@ export const getSentence = createSelector(
     } else {
       sentence = `Within <b>${currentLocation}</b>, <b>${(topRegion.region &&
         topRegion.region) ||
-        ''}</b> has the largest relative area of plantation tree cover${
+        ''}</b> has the largest relative area of plantations${
         location.payload.region ? ' extent' : ''
       } at <b>${format('.1f')(topRegion.total)}%</b>.`;
     }
