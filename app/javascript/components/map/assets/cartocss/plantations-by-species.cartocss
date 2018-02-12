@@ -1,0 +1,377 @@
+#gfw_plantations {
+   polygon-opacity: 0.5;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 0;
+   polygon-fill: transparent;
+}
+#gfw_plantations[spec_simp="Fruit"] {
+  polygon-fill: #b2b300;
+}
+#gfw_plantations[spec_simp="Fruit mix"] {
+  polygon-fill: #FF0;
+}
+#gfw_plantations[spec_simp="Hevea (rubber)"] {
+  polygon-fill: #00bdbd;
+}
+#gfw_plantations[spec_simp="Oil palm"] {
+  polygon-fill: #f44c43;
+}
+#gfw_plantations[spec_simp="Oil palm mix"] {
+  polygon-fill: #f7837d;
+}
+#gfw_plantations[spec_simp="Other"] {
+  polygon-fill: #9ECC49;
+}
+#gfw_plantations[spec_simp="Other mix"] {
+  polygon-fill: #c1df8b;
+}
+#gfw_plantations[spec_simp="Recently cleared"] {
+  polygon-fill: #A53ED5;
+}
+#gfw_plantations[spec_simp="Rubber"] {
+  polygon-fill: #11002F;
+}
+#gfw_plantations[spec_simp="Rubber mix"] {
+  polygon-fill: #0FF;
+}
+#gfw_plantations[spec_simp="Unknown"] {
+  polygon-fill: #b5b0b0;
+}
+#gfw_plantations[spec_simp="Wood fiber / timber"] {
+  polygon-fill: #0F3B82;
+}
+#gfw_plantations[spec_simp="Wood fiber / timber mix"] {
+  polygon-fill: #246ee6;
+}
+
+
+#bra_plantations {
+   polygon-opacity: 0.5;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 0;
+   polygon-fill: transparent;
+}
+#bra_plantations[spec_simp="Fruit"] {
+  polygon-fill: #b2b300;
+}
+#bra_plantations[spec_simp="Fruit mix"] {
+  polygon-fill: #FF0;
+}
+#bra_plantations[spec_simp="Hevea (rubber)"] {
+  polygon-fill: #00bdbd;
+}
+#bra_plantations[spec_simp="Oil palm"] {
+  polygon-fill: #f44c43;
+}
+#bra_plantations[spec_simp="Oil palm mix"] {
+  polygon-fill: #f7837d;
+}
+#bra_plantations[spec_simp="Other"] {
+  polygon-fill: #9ECC49;
+}
+#bra_plantations[spec_simp="Other mix"] {
+  polygon-fill: #c1df8b;
+}
+#bra_plantations[spec_simp="Recently cleared"] {
+  polygon-fill: #A53ED5;
+}
+#bra_plantations[spec_simp="Rubber"] {
+  polygon-fill: #11002F;
+}
+#bra_plantations[spec_simp="Rubber mix"] {
+  polygon-fill: #0FF;
+}
+#bra_plantations[spec_simp="Unknown"] {
+  polygon-fill: #b5b0b0;
+}
+#bra_plantations[spec_simp="Wood fiber / timber"] {
+  polygon-fill: #0F3B82;
+}
+#bra_plantations[spec_simp="Wood fiber / timber mix"] {
+  polygon-fill: #246ee6;
+}
+
+#per_plantations {
+   polygon-opacity: 0.5;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 0;
+   polygon-fill: transparent;
+}
+#per_plantations[spec_simp="Fruit"] {
+  polygon-fill: #b2b300;
+}
+#per_plantations[spec_simp="Fruit mix"] {
+  polygon-fill: #FF0;
+}
+#per_plantations[spec_simp="Hevea (rubber)"] {
+  polygon-fill: #00bdbd;
+}
+#per_plantations[spec_simp="Oil palm"] {
+  polygon-fill: #f44c43;
+}
+#per_plantations[spec_simp="Oil palm mix"] {
+  polygon-fill: #f7837d;
+}
+#per_plantations[spec_simp="Other"] {
+  polygon-fill: #9ECC49;
+}
+#per_plantations[spec_simp="Other mix"] {
+  polygon-fill: #c1df8b;
+}
+#per_plantations[spec_simp="Recently cleared"] {
+  polygon-fill: #A53ED5;
+}
+#per_plantations[spec_simp="Rubber"] {
+  polygon-fill: #11002F;
+}
+#per_plantations[spec_simp="Rubber mix"] {
+  polygon-fill: #0FF;
+}
+#per_plantations[spec_simp="Unknown"] {
+  polygon-fill: #b5b0b0;
+}
+#per_plantations[spec_simp="Wood fiber / timber"] {
+  polygon-fill: #0F3B82;
+}
+#per_plantations[spec_simp="Wood fiber / timber mix"] {
+  polygon-fill: #246ee6;
+}
+
+
+#lbr_plantations {
+   polygon-opacity: 0.5;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 0;
+   polygon-fill: transparent;
+}
+#lbr_plantations[spec_simp="Fruit"] {
+  polygon-fill: #b2b300;
+}
+#lbr_plantations[spec_simp="Fruit mix"] {
+  polygon-fill: #FF0;
+}
+#lbr_plantations[spec_simp="Hevea (rubber)"] {
+  polygon-fill: #00bdbd;
+}
+#lbr_plantations[spec_simp="Oil palm"] {
+  polygon-fill: #f44c43;
+}
+#lbr_plantations[spec_simp="Oil palm mix"] {
+  polygon-fill: #f7837d;
+}
+#lbr_plantations[spec_simp="Other"] {
+  polygon-fill: #9ECC49;
+}
+#lbr_plantations[spec_simp="Other mix"] {
+  polygon-fill: #c1df8b;
+}
+#lbr_plantations[spec_simp="Recently cleared"] {
+  polygon-fill: #A53ED5;
+}
+#lbr_plantations[spec_simp="Rubber"] {
+  polygon-fill: #11002F;
+}
+#lbr_plantations[spec_simp="Rubber mix"] {
+  polygon-fill: #0FF;
+}
+#lbr_plantations[spec_simp="Unknown"] {
+  polygon-fill: #b5b0b0;
+}
+#lbr_plantations[spec_simp="Wood fiber / timber"] {
+  polygon-fill: #0F3B82;
+}
+#lbr_plantations[spec_simp="Wood fiber / timber mix"] {
+  polygon-fill: #246ee6;
+}
+
+#col_plantations {
+   polygon-opacity: 0.5;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 0;
+   polygon-fill: transparent;
+}
+#col_plantations[spec_simp="Fruit"] {
+  polygon-fill: #b2b300;
+}
+#col_plantations[spec_simp="Fruit mix"] {
+  polygon-fill: #FF0;
+}
+#col_plantations[spec_simp="Hevea (rubber)"] {
+  polygon-fill: #00bdbd;
+}
+#col_plantations[spec_simp="Oil palm"] {
+  polygon-fill: #f44c43;
+}
+#col_plantations[spec_simp="Oil palm mix"] {
+  polygon-fill: #f7837d;
+}
+#col_plantations[spec_simp="Other"] {
+  polygon-fill: #9ECC49;
+}
+#col_plantations[spec_simp="Other mix"] {
+  polygon-fill: #c1df8b;
+}
+#col_plantations[spec_simp="Recently cleared"] {
+  polygon-fill: #A53ED5;
+}
+#col_plantations[spec_simp="Rubber"] {
+  polygon-fill: #11002F;
+}
+#col_plantations[spec_simp="Rubber mix"] {
+  polygon-fill: #0FF;
+}
+#col_plantations[spec_simp="Unknown"] {
+  polygon-fill: #b5b0b0;
+}
+#col_plantations[spec_simp="Wood fiber / timber"] {
+  polygon-fill: #0F3B82;
+}
+#col_plantations[spec_simp="Wood fiber / timber mix"] {
+  polygon-fill: #246ee6;
+}
+
+#khm_plantations {
+   polygon-opacity: 0.5;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 0;
+   polygon-fill: transparent;
+}
+#khm_plantations[spec_simp="Fruit"] {
+  polygon-fill: #b2b300;
+}
+#khm_plantations[spec_simp="Fruit mix"] {
+  polygon-fill: #FF0;
+}
+#khm_plantations[spec_simp="Hevea (rubber)"] {
+  polygon-fill: #00bdbd;
+}
+#khm_plantations[spec_simp="Oil palm"] {
+  polygon-fill: #f44c43;
+}
+#khm_plantations[spec_simp="Oil palm mix"] {
+  polygon-fill: #f7837d;
+}
+#khm_plantations[spec_simp="Other"] {
+  polygon-fill: #9ECC49;
+}
+#khm_plantations[spec_simp="Other mix"] {
+  polygon-fill: #c1df8b;
+}
+#khm_plantations[spec_simp="Recently cleared"] {
+  polygon-fill: #A53ED5;
+}
+#khm_plantations[spec_simp="Rubber"] {
+  polygon-fill: #11002F;
+}
+#khm_plantations[spec_simp="Rubber mix"] {
+  polygon-fill: #0FF;
+}
+#khm_plantations[spec_simp="Unknown"] {
+  polygon-fill: #b5b0b0;
+}
+#khm_plantations[spec_simp="Wood fiber / timber"] {
+  polygon-fill: #0F3B82;
+}
+#khm_plantations[spec_simp="Wood fiber / timber mix"] {
+  polygon-fill: #246ee6;
+}
+
+#idn_plantations {
+   polygon-opacity: 0.5;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 0;
+   polygon-fill: transparent;
+}
+#idn_plantations[spec_simp="Fruit"] {
+  polygon-fill: #b2b300;
+}
+#idn_plantations[spec_simp="Fruit mix"] {
+  polygon-fill: #FF0;
+}
+#idn_plantations[spec_simp="Hevea (rubber)"] {
+  polygon-fill: #00bdbd;
+}
+#idn_plantations[spec_simp="Oil palm"] {
+  polygon-fill: #f44c43;
+}
+#idn_plantations[spec_simp="Oil palm mix"] {
+  polygon-fill: #f7837d;
+}
+#idn_plantations[spec_simp="Other"] {
+  polygon-fill: #9ECC49;
+}
+#idn_plantations[spec_simp="Other mix"] {
+  polygon-fill: #c1df8b;
+}
+#idn_plantations[spec_simp="Recently cleared"] {
+  polygon-fill: #A53ED5;
+}
+#idn_plantations[spec_simp="Rubber"] {
+  polygon-fill: #11002F;
+}
+#idn_plantations[spec_simp="Rubber mix"] {
+  polygon-fill: #0FF;
+}
+#idn_plantations[spec_simp="Unknown"] {
+  polygon-fill: #b5b0b0;
+}
+#idn_plantations[spec_simp="Wood fiber / timber"] {
+  polygon-fill: #0F3B82;
+}
+#idn_plantations[spec_simp="Wood fiber / timber mix"] {
+  polygon-fill: #246ee6;
+}
+
+#mys_plantations {
+   polygon-opacity: 0.5;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 0;
+   polygon-fill: transparent;
+}
+#mys_plantations[spec_simp="Fruit"] {
+  polygon-fill: #b2b300;
+}
+#mys_plantations[spec_simp="Fruit mix"] {
+  polygon-fill: #FF0;
+}
+#mys_plantations[spec_simp="Hevea (rubber)"] {
+  polygon-fill: #00bdbd;
+}
+#mys_plantations[spec_simp="Oil palm"] {
+  polygon-fill: #f44c43;
+}
+#mys_plantations[spec_simp="Oil palm mix"] {
+  polygon-fill: #f7837d;
+}
+#mys_plantations[spec_simp="Other"] {
+  polygon-fill: #9ECC49;
+}
+#mys_plantations[spec_simp="Other mix"] {
+  polygon-fill: #c1df8b;
+}
+#mys_plantations[spec_simp="Recently cleared"] {
+  polygon-fill: #A53ED5;
+}
+#mys_plantations[spec_simp="Rubber"] {
+  polygon-fill: #11002F;
+}
+#mys_plantations[spec_simp="Rubber mix"] {
+  polygon-fill: #0FF;
+}
+#mys_plantations[spec_simp="Unknown"] {
+  polygon-fill: #b5b0b0;
+}
+#mys_plantations[spec_simp="Wood fiber / timber"] {
+  polygon-fill: #0F3B82;
+}
+#mys_plantations[spec_simp="Wood fiber / timber mix"] {
+  polygon-fill: #246ee6;
+}

@@ -107,8 +107,8 @@ define([
     /**
      * ACTIONS
      * - publishDeleteAnalysis
+     * - publishNotification
      * - deleteAnalysis
-     * - getBaselayer
      * @return {void}
      */
     publishDeleteAnalysis: function() {
@@ -128,9 +128,6 @@ define([
       this.view.deleteDrawing();
     },
 
-    notificate: function(id){
-      mps.publish('Notification/open', [id]);
-    },
 
 
   });

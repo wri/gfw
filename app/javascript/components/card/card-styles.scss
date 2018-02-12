@@ -1,0 +1,59 @@
+@import '~styles/settings.scss';
+
+.c-card {
+  position: relative;
+  width: 100%;
+  background-color: $grey-light;
+  border: solid 1px $border;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .image {
+    width: 100%;
+    height: rem(220px);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+
+    &.-action {
+      cursor: pointer;
+    }
+
+    span {
+      display: block;
+      font-size: 12px;
+      position: absolute;
+      bottom: rem(10px);
+      right: rem(10px);
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  .body {
+    padding: rem(15px);
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(25px);
+    }
+
+    .header {
+      margin-bottom: rem(15px);
+    }
+
+    .paragraph {
+      font-size: rem(16px);
+      margin-bottom: rem(15px);
+    }
+
+    .meta {
+      margin-bottom: rem(10px);
+    }
+
+    .card-button {
+      max-width: rem(150px);
+      margin-top: rem(20px);
+    }
+  }
+}

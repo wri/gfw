@@ -24,6 +24,9 @@ Gfw::Application.configure do
   # number of complex assets.
   config.assets.debug = false
 
+  # Suppress logger output for asset requests.
+  config.assets.quiet = true
+
   config.action_dispatch.default_headers = {
     'X-Frame-Options' => 'ALLOWALL'
   }

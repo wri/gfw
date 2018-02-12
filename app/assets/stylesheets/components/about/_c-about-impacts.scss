@@ -40,17 +40,17 @@ $item-padding-screen-m: rem(40px);
     top: rem(-10px);
     bottom: 0;
     margin: auto;
-    width: rem(60px);
-    height: rem(60px);
     z-index: 1;
     display: none;
 
-    &.-left {
-      left: rem(-70px);
+    &.-button-left {
+      left: rem(-60px);
+      transform: rotate(90deg);      
     }
 
-    &.-right {
-      right: rem(-70px);
+    &.-button-right {
+      right: rem(-60px);
+      transform: rotate(-90deg);
     }
   }
 
@@ -122,6 +122,20 @@ $item-padding-screen-m: rem(40px);
     border: solid rem(1px) $grey-dark;
   }
 
+  .c-about-impacts-item__credit {
+    position: absolute;
+    background-color: rgba($slate, .4);
+    bottom: 0;
+    right: 0;
+    height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 0 5px;
+    z-index: 999999;
+  }
+
   .c-about-impacts-item__image {
     position: absolute;
     top: 0;
@@ -133,12 +147,7 @@ $item-padding-screen-m: rem(40px);
     background-position: center;
 
     span {
-      display: block;
-      z-index: 999999;
       font-size: 12px;
-      position: absolute;
-      bottom: 8px;
-      right: 5px;
       color: rgba(255, 255, 255, 0.8);
     }
   }

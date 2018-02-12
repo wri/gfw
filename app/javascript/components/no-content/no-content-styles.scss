@@ -1,0 +1,28 @@
+@import '~styles/settings';
+
+.c-no-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0 $mobile-gutter;
+
+  @media screen and (min-width: $screen-m) {
+    padding: 0 $desktop-gutter;
+  }
+}
+
+.message {
+  opacity: 0.5;
+  text-align: center;
+}
+
+.message-icon {
+  width: rem(25px);
+  height: rem(25px);
+  margin-left: rem(5px);
+}

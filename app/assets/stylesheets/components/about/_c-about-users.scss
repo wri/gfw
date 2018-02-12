@@ -3,7 +3,7 @@ $about-users-height-screen-l: rem(640px);
 .c-about-users {
   position: relative;
   background-color: $white;
-  padding: rem(49px) 0;
+  padding: rem(40px) 0 rem(50px);
 
   .c-about-users__globe-container {
     display: none;
@@ -60,6 +60,7 @@ $about-users-height-screen-l: rem(640px);
   }
 
   .c-about-users__button {
+    max-width: rem(240px);
     margin-top: rem(20px);
 
     .c-regular-button {

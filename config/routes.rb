@@ -116,9 +116,9 @@ Gfw::Application.routes.draw do
 
   # countries
   get '/countries' => 'countries#index'
-  get '/country/:id' => 'countries#show', :as => 'country'
-  get '/country/:id/:area_id' => 'countries#show', :as => 'country_area'
   get '/countries/overview' => 'countries#overview'
+  get '/country/embed/:widget/:iso(/:region)(/:sub_region)' => 'country#embed'
+  get '/country/:iso(/:region)(/:sub_region)' => 'country#index', as: :country
   get '/country_info/:id/:box',to: redirect('/country/%{id}#%{box}')
 
 
@@ -154,6 +154,7 @@ Gfw::Application.routes.draw do
 
   # Small Grunts Fund
   get '/small-grants-fund' => 'small_grants_fund#index'
+  get '/small-grants-fund/*all' => 'small_grants_fund#index'
 
   # robots
   get '/robots', to: redirect('/robots.txt'), format: false

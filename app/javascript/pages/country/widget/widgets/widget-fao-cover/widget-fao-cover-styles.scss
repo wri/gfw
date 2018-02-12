@@ -1,0 +1,12 @@
+@import '~styles/settings.scss';
+
+.c-widget-fao-cover {
+  .pie-chart-container {
+    display: flex;
+    padding-top: rem(30px);
+  }
+
+  .pie-chart-legend {
+    min-width: 50%;
+  }
+}

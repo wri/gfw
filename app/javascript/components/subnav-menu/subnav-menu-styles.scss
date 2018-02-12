@@ -1,0 +1,50 @@
+@import '~styles/settings.scss';
+$subnav-height: rem(60px);
+
+.c-subnav-menu {
+  background-color: $grey-light;
+  height: $subnav-height;
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: $subnav-height;
+    overflow-x: scroll;
+    -ms-overflow-style: none;
+
+    @media screen and (min-width: $screen-m) {
+      justify-content: flex-start;
+    }
+
+    li {
+      width: 100%;
+      cursor: pointer;
+      border-right: 1px solid rgba($slate, 0.2);
+
+      @media screen and (min-width: $screen-m) {
+        max-width: rem(180px);
+      }
+
+      > a {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        cursor: pointer;
+        white-space: nowrap;
+
+        &.active {
+          background-color: $white;
+        }
+      }
+
+      &:first-child {
+        border-left: 1px solid rgba($slate, 0.2);
+      }
+    }
+  }
+}

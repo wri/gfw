@@ -1,0 +1,17 @@
+#layer {
+   polygon-opacity: 0.7;
+   polygon-fill:transparent;
+   line-color: transparent;
+   line-width: 0;
+   line-opacity: 1;
+}
+
+#layer[change="Gain"] {
+   polygon-fill: #195ab5;
+}
+#layer[change="Loss"] {
+   polygon-fill: #ff00d3;
+}
+#layer[change="Cover"] {
+   polygon-fill: #05ffaa;
+}

@@ -12,6 +12,10 @@
   &.checked span {
     transform: translate(7px,0%);
   }
+
+  &.-right {
+    float: right;
+  }
 }
 
 .onoffswitch span {

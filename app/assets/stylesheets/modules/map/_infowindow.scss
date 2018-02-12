@@ -27,8 +27,6 @@
     opacity: 0;
   }
 
-
-
   .cartodb-popup {
     position: relative;
     width: 250px;
@@ -89,9 +87,6 @@
           max-height: 130px;
           background-size: cover;
           background-repeat: no-repeat;
-          > img {
-            max-width: 100%;
-          }
         }
 
         .image-legend {
@@ -100,10 +95,6 @@
           display: block;
           color: #AAA;
           word-wrap: break-word;
-        }
-
-        .thumb-mask > img {
-          max-width: 100%;
         }
       }
 

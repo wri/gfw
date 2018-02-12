@@ -1,0 +1,158 @@
+@import '~styles/settings.scss';
+$input-button-width: rem(100px);
+
+.c-share {
+  padding: rem(20px) rem(20px);
+
+  @media screen and (min-width: $screen-m) {
+    width: rem(430px);
+  }
+
+  .title {
+    padding: rem(5px) 0;
+    font-size: 21px;
+    font-weight: 300;
+    text-align: center;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    text-align: center;
+    border-bottom: solid 1px $border;
+    padding-bottom: rem(15px);
+    margin-bottom: rem(20px);
+    opacity: 0.5;
+  }
+
+  .actions {
+    @media screen and (min-width: $screen-m) {
+      padding: 0 rem(40px);
+    }
+  }
+
+  .info {
+    text-align: center;
+    font-size: rem(13px);
+    width: 100%;
+    margin-bottom: rem(10px);
+  }
+
+  .input-container {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .input,
+    .input-button {
+      height: rem(40px);
+    }
+
+    .input {
+      width: calc(100% - #{$input-button-width});
+      padding: 0 rem(10px);
+      border: 1px solid $border;
+      border-right: 0;
+      font-size: rem(13px);
+      position: relative;
+      display: inline-block;
+
+      > input {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        padding: 0;
+      }
+    }
+
+    .input-button {
+      border-radius: 0;
+      width: $input-button-width;
+      display: inline-block;
+    }
+
+    .input-loader {
+      justify-content: flex-start;
+
+      .spinner {
+        width: rem(20px);
+        height: rem(20px);
+        border-width: 2px;
+        margin-left: rem(10px);
+      }
+    }
+  }
+
+  .buttons-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: rem(15px);
+  }
+
+  .share-button {
+    margin: 0 rem(8px);
+  }
+
+  .button {
+    width: rem(125px);
+    height: rem(36px);
+    font-size: 14px;
+    font-weight: 500;
+    color: $slate;
+
+    &.-selected {
+      background-color: $green-gfw;
+      border: 0;
+      color: $white;
+
+      &:hover {
+        background-color: darken($green-gfw, 10%);
+      }
+    }
+  }
+
+  .social-container {
+    display: flex;
+    justify-content: center;
+    margin-top: rem(25px);
+  }
+
+  .social-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: rem(44px);
+    height: rem(44px);
+    margin: 0 rem(8px);
+
+    .c-icon {
+      width: rem(20px);
+      height: rem(20px);
+      fill: $white;
+    }
+
+    &.-googleplus {
+      background-color: $googleplus;
+
+      &:hover {
+        background-color: darken($googleplus, 10%);
+      }
+    }
+
+    &.-twitter {
+      background-color: $twitter;
+
+      &:hover {
+        background-color: darken($twitter, 10%);
+      }
+    }
+
+    &.-facebook {
+      background-color: $facebook;
+
+      &:hover {
+        background-color: darken($facebook, 10%);
+      }
+    }
+  }
+}

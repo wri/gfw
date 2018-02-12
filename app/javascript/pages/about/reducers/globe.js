@@ -17,7 +17,7 @@ const globe = (state = {}, action = null) => {
         isVisible: false
       });
     default:
-      return state
+      return state;
   }
 };
 

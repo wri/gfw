@@ -12,6 +12,14 @@ This repository contains the GFW web app.
 
 The GFW web app rides on [Ruby on Rails](http://rubyonrails.org).
 
+## Docker
+
+Place required environment settings in the `dev.env` file, and then run:
+
+`./gfw.sh develop`
+
+GFW should then be accessible at [localhost:5000/map](http://localhost:5000/map), note, it may take around 2 mins to load due to large number of requests.
+
 ## OS X Yosemite (10.10) Setup
 
 First make sure you have [Xcode](https://developer.apple.com/xcode) and

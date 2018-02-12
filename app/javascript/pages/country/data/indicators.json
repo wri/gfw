@@ -1,0 +1,98 @@
+[
+  {
+    "label": "All of {location}",
+    "value": "gadm28",
+    "metaKey": "",
+    "category": "general"
+  },
+  {
+    "label": "Biomes",
+    "value": "bra_biomes",
+    "metaKey": "",
+    "category": "general"
+  },
+  {
+    "label": "Mining concessions",
+    "value": "mining",
+    "metaKey": "gfw_mining",
+    "category": "general"
+  },
+  {
+    "label": "Protected Areas",
+    "value": "wdpa",
+    "metaKey": "wdpa_protected_areas",
+    "category": "general"
+  },
+  {
+    "label": "Primary Forests",
+    "value": "primary_forest",
+    "metaKey": "",
+    "category": "general"
+  },
+  {
+    "label": "Mining concessions in Primary Forests",
+    "value": "primary_forest__mining",
+    "metaKey": "",
+    "category": "intersection"
+  },
+  {
+    "label": "Protected Areas in Primary Forests",
+    "value": "primary_forest__wdpa",
+    "metaKey": "",
+    "category": "intersection"
+  },
+  {
+    "label": "Intact Forest Landscapes",
+    "value": "ifl_2013",
+    "metaKey": "intact_forest_landscapes_change",
+    "category": "general"
+  },
+  {
+    "label": "Protected Areas in Intact Forest Landscapes",
+    "value": "ifl_2013__wdpa",
+    "metaKey": "",
+    "category": "intersection"
+  },
+  {
+    "label": "Mining concessions in Intact Forest Landscapes",
+    "value": "ifl_2013__mining",
+    "metaKey": "",
+    "category": "intersection"
+  },
+  {
+    "label": "Indigenous Lands",
+    "value": "landmark",
+    "metaKey": "gfw_land_rights",
+    "category": "general"
+  },
+  {
+    "label": "Indigenous Lands in Primary Forests",
+    "value": "primary_forest__landmark",
+    "metaKey": "",
+    "category": "intersection"
+  },
+  {
+    "label": "Plantations",
+    "value": "plantations",
+    "metaKey": "gfw_plantations",
+    "category": "general"
+  },
+  {
+    "label": "Mining concessions in Plantation Areas",
+    "value": "plantations__mining",
+    "metaKey": "",
+    "category": "intersection"
+  },
+  {
+    "label": "Protected areas in Plantations",
+    "value": "plantations__wdpa",
+    "metaKey": "",
+    "category": "intersection"
+  },
+  {
+    "label": "Indigenous Lands in Plantations",
+    "value": "plantations__landmark",
+    "metaKey": "",
+    "category": "intersection"
+  }
+]
