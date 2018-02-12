@@ -57,7 +57,7 @@ export const getSentence = createSelector(
         data.length > top.length
           ? `The remaining <b>${format('.2s')(
             sumBy(data.slice(2), 'value')
-          )}ha</b> of tree cover is distributed between <b>${data.length -
+          )}ha</b> is distributed between <b>${data.length -
               top.length}</b> other plantation species.`
           : '';
     } else {

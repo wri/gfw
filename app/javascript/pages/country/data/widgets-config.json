@@ -29,7 +29,7 @@
       "size": "small",
       "categories": ["land-use"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["thresholds", "extentYears", "types"],
+      "selectors": ["types"],
       "showIndicators": ["plantations"],
       "type": "plantations",
       "layers": ["plantations_by_type", "plantations_by_species"],
@@ -39,8 +39,6 @@
       }
     },
     "settings": {
-      "threshold": 30,
-      "extentYear": 2010,
       "type": "bound2",
       "layers": ["plantations_by_species"]
     },
@@ -355,7 +353,7 @@
       "size": "small",
       "categories": ["land-use"],
       "admins": ["country", "region"],
-      "selectors": ["thresholds", "extentYears", "types"],
+      "selectors": ["types"],
       "type": "plantations",
       "metaKey": "widget_plantations_ranked",
       "layers": ["plantations_by_type", "plantations_by_species"],
@@ -365,8 +363,6 @@
     },
     "settings": {
       "indicator": "gadm28",
-      "extentYear": 2010,
-      "threshold": 30,
       "type": "bound2",
       "pageSize": 5,
       "page": 0,
