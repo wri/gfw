@@ -15,7 +15,7 @@ const MIN_YEAR = 2015;
 
 // get list data
 const getAlerts = state => state.alerts || null;
-const getPeriod = state => state.period || null;
+const getLatestDates = state => state.latest || null;
 const getSettings = state => state.settings || null;
 const getColors = state => state.colors || null;
 const getActiveData = state => state.activeData || null;
@@ -53,20 +53,20 @@ const runningMean = (data, windowSize) => {
 };
 
 export const getData = createSelector(
-  [getAlerts, getPeriod],
-  (data, period) => {
+  [getAlerts, getLatestDates],
+  (data, latest) => {
     if (!data || isEmpty(data)) return null;
     const groupedByYear = groupBy(data, 'year');
     const years = [];
-    const maxYear = maxBy(data, 'year').year;
-    for (let i = MIN_YEAR; i <= maxYear; i += 1) {
+    const latestFullWeek = moment(latest).subtract('weeks', 1);
+    const lastWeek = {
+      isoWeek: latestFullWeek.isoWeek(),
+      year: latestFullWeek.year()
+    };
+    for (let i = MIN_YEAR; i <= lastWeek.year; i += 1) {
       years.push(i);
     }
     const yearLengths = {};
-    const lastWeek = {
-      isoWeek: moment(period[1]).isoWeek(),
-      year: moment(period[1]).year()
-    };
     years.forEach(y => {
       const lastIsoWeek =
         lastWeek.year !== parseInt(y, 10)
@@ -142,25 +142,22 @@ export const getStdDev = createSelector(
   }
 );
 
-export const getDates = createSelector(
-  [getStdDev, getPeriod],
-  (data, period) => {
-    if (!data || !period) return null;
-    return data.map(d => ({
-      ...d,
-      date: moment()
+export const getDates = createSelector([getStdDev], data => {
+  if (!data) return null;
+  return data.map(d => ({
+    ...d,
+    date: moment()
+      .year(d.year)
+      .week(d.week)
+      .format('YYYY-MM-DD'),
+    month: upperCase(
+      moment()
         .year(d.year)
         .week(d.week)
-        .format('YYYY-MM-DD'),
-      month: upperCase(
-        moment()
-          .year(d.year)
-          .week(d.week)
-          .format('MMM')
-      )
-    }));
-  }
-);
+        .format('MMM')
+    )
+  }));
+});
 
 export const chartData = createSelector(
   [getDates, getSettings],

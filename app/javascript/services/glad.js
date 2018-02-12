@@ -9,3 +9,8 @@ export const fetchGLADDates = () => {
   const url = `${REQUEST_URL}/${QUERY}`.replace('{dataset}', DATASET);
   return axios.get(url);
 };
+
+export const fetchGLADLatest = () => {
+  const url = `${REQUEST_URL}/glad-alerts/latest`;
+  return axios.get(url);
+};
