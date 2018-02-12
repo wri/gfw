@@ -21,7 +21,7 @@ const CustomTick = ({ x, y, index, yAxisDotFill, data, settings }) => {
       <text x="8" y="-16" textAnchor="start" fontSize="12px" fill="#555555">
         <a href={path}>
           {region} - {format('.1f')(total)}%{' '}
-          {index === 0 ? 'of total extent' : ''}
+          {index === 0 ? 'are plantations' : ''}
         </a>
       </text>
     </g>
