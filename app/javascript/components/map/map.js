@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 
 import Layers from './assets/layers';
-import grayscale from './assets/maptypes/grayscale';
+import GFWdefault from './assets/maptypes/GFWdefault';
 
 import MapComponent from './map-component';
 import actions from './map-actions';
@@ -100,7 +100,7 @@ class MapContainer extends PureComponent {
   buildMap() {
     const { mapOptions } = this.props;
     this.map = new google.maps.Map(document.getElementById('map'), mapOptions); // eslint-disable-line
-    this.map.mapTypes.set('grayscale', grayscale());
+    this.map.mapTypes.set('GFWdefault', GFWdefault());
     this.map.setMapTypeId(mapOptions.mapTypeId);
   }
 

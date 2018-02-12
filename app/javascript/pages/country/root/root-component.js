@@ -102,7 +102,7 @@ class Root extends PureComponent {
                 maxZoom={14}
                 minZoom={3}
                 mapOptions={{
-                  mapTypeId: 'grayscale',
+                  mapTypeId: 'GFWdefault',
                   backgroundColor: '#99b3cc',
                   disableDefaultUI: true,
                   panControl: false,
