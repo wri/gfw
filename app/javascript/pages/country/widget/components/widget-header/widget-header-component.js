@@ -36,6 +36,7 @@ class WidgetHeader extends PureComponent {
       shareData,
       setShareModal,
       setModalMeta,
+      handleShowMapMobile,
       citation,
       active
     } = this.props;
@@ -56,16 +57,17 @@ class WidgetHeader extends PureComponent {
               <Button
                 className="map-button"
                 theme={`theme-button-small ${
-                  widgetSize === 'small' ? 'square' : ''
+                  widgetSize === 'small' || isDeviceTouch ? 'square' : ''
                 }`}
                 link={{
                   type: COUNTRY,
                   payload: { ...location.payload },
                   query: {
                     ...query,
-                    widget: active ? 'none' : widget
+                    widget
                   }
                 }}
+                onClick={handleShowMapMobile}
                 tooltip={
                   widgetSize === 'small'
                     ? {
@@ -73,16 +75,21 @@ class WidgetHeader extends PureComponent {
                       position: 'top',
                       arrow: true,
                       disabled: isDeviceTouch,
-                      html: <Tip text="Show on map" />
+                      html: (
+                        <Tip
+                          text={
+                            active ? 'Currently displayed' : 'Show on map'
+                          }
+                        />
+                      )
                     }
                     : null
                 }
               >
-                {widgetSize === 'small' && (
+                {(widgetSize === 'small' || isDeviceTouch) && (
                   <Icon icon={mapIcon} className="map-icon" />
                 )}
-                {widgetSize !== 'small' &&
-                  (active ? 'HIDE ON MAP' : 'SHOW ON MAP')}
+                {widgetSize !== 'small' && !isDeviceTouch && 'SHOW ON MAP'}
               </Button>
             )}
           {!embed &&
@@ -177,6 +184,7 @@ WidgetHeader.propTypes = {
   setShareModal: PropTypes.func.isRequired,
   shareData: PropTypes.object.isRequired,
   setModalMeta: PropTypes.func.isRequired,
+  handleShowMapMobile: PropTypes.func.isRequired,
   modalOpen: PropTypes.bool,
   modalClosing: PropTypes.bool,
   active: PropTypes.bool,
