@@ -8,7 +8,7 @@ const SQL_QUERIES = {
   extent:
     "SELECT SUM({extentYear}) as value, SUM(area_gadm28) as total_area FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
   plantationsExtent:
-    "SELECT SUM({extentYear}) AS plantation_extent, {admin} AS region, {bound} AS label FROM data WHERE {location} AND thresh = {threshold} AND polyname = 'plantations' GROUP BY {type} ORDER BY plantation_extent DESC",
+    "SELECT SUM(area_poly_aoi) AS plantation_extent, {admin} AS region, {bound} AS label FROM data WHERE {location} AND thresh = {threshold} AND polyname = 'plantations' GROUP BY {type} ORDER BY plantation_extent DESC",
   multiRegionExtent:
     "SELECT {region} as region, SUM({extentYear}) as extent, SUM(area_gadm28) as total FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}' GROUP BY {region} ORDER BY {region}",
   gain:
@@ -99,7 +99,6 @@ export const getPlantationsExtent = ({
   region,
   subRegion,
   threshold,
-  extentYear,
   type,
   groupByRegion
 }) => {
@@ -111,8 +110,7 @@ export const getPlantationsExtent = ({
     .replace(
       '{type}',
       groupByRegion ? `${region ? 'adm2' : 'adm1'}, ${type}` : type
-    )
-    .replace('{extentYear}', getExtentYear(extentYear));
+    );
   return axios.get(url);
 };
 
