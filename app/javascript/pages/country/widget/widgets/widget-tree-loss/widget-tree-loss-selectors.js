@@ -42,7 +42,13 @@ export const chartConfig = createSelector([getColors], colors => ({
     }
   },
   xAxis: {
-    tickFormatter: tick => moment(tick, 'YYYY').format('YY')
+    tickFormatter: tick => {
+      const year = moment(tick, 'YYYY');
+      if ([2001, 2016].includes(tick)) {
+        return year.format('YYYY');
+      }
+      return year.format('YY');
+    }
   },
   unit: 'ha',
   tooltip: [
