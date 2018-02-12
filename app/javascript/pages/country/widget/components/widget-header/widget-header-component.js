@@ -36,7 +36,7 @@ class WidgetHeader extends PureComponent {
       shareData,
       setShareModal,
       setModalMeta,
-      handleShowMapMobile,
+      setShowMapMobile,
       citation,
       active
     } = this.props;
@@ -69,7 +69,7 @@ class WidgetHeader extends PureComponent {
                     widget
                   }
                 }}
-                onClick={handleShowMapMobile}
+                onClick={() => setShowMapMobile(true)}
                 tooltip={
                   widgetSize === 'small'
                     ? {
@@ -189,7 +189,7 @@ WidgetHeader.propTypes = {
   setShareModal: PropTypes.func.isRequired,
   shareData: PropTypes.object.isRequired,
   setModalMeta: PropTypes.func.isRequired,
-  handleShowMapMobile: PropTypes.func.isRequired,
+  setShowMapMobile: PropTypes.func.isRequired,
   modalOpen: PropTypes.bool,
   modalClosing: PropTypes.bool,
   active: PropTypes.bool,

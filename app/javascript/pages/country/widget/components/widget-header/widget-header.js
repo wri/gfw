@@ -1,8 +1,6 @@
-import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import replace from 'lodash/replace';
 import compact from 'lodash/compact';
+import replace from 'lodash/replace';
 import moment from 'moment';
 
 import shareActions from 'components/share/share-actions';
@@ -62,21 +60,4 @@ const mapStateToProps = ({ location, modalMeta }, ownProps) => {
   };
 };
 
-class WidgetHeaderContainer extends PureComponent {
-  handleShowMapMobile = () => {
-    this.props.setShowMapMobile(true);
-  };
-
-  render() {
-    return createElement(WidgetHeaderComponent, {
-      ...this.props,
-      handleShowMapMobile: this.handleShowMapMobile
-    });
-  }
-}
-
-WidgetHeaderContainer.propTypes = {
-  setShowMapMobile: PropTypes.func
-};
-
-export default connect(mapStateToProps, actions)(WidgetHeaderContainer);
+export default connect(mapStateToProps, actions)(WidgetHeaderComponent);
