@@ -159,7 +159,6 @@ define([
                 source: data.features[0].attributes['tis.fuente'],
                 company: data.features[0].attributes['cia'],
                 substance: data.features[0].attributes['tipo_minerio'],
-
               }
             }
             this.infowindow = new CustomInfowindow(this.location.latlng, this.map, infoWindowOptions);

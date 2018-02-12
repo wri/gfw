@@ -12,7 +12,6 @@ require([
   StoriesRouter) {
 
   'use strict';
-
   handlebarsHelpers.register();
   new StoriesRouter();
   Backbone.history.start({pushState: true});

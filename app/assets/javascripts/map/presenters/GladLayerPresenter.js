@@ -1,7 +1,6 @@
 define([
   'mps', 'backbone', 'map/presenters/PresenterClass'
 ], function(mps, Backbone, PresenterClass) {
-
   'use strict';
 
 

@@ -69,7 +69,6 @@ define([
   'map/views/layers/MongabayStoriesLayer',
   'map/views/layers/InfoamazoniaStoriesLayer',
   'map/views/layers/GrumpLayer',
-  'map/views/layers/Mangrove2Layer',
   'map/views/layers/MangroveWatchLayer',
   'map/views/layers/WMSLayer',
   'map/views/layers/ConcesionesForestalesLayer',
@@ -97,7 +96,6 @@ define([
   'map/views/layers/RaisgLayer',
   'map/views/layers/PlantationsLayerByType',
   'map/views/layers/PlantationsLayerBySpecies',
-  'map/views/layers/BraMapBiomasLayer',
   'map/views/layers/BraPlantationsLayerByType',
   'map/views/layers/BraPlantationsLayerBySpecies',
   'map/views/layers/PerPlantationsLayerByType',
@@ -162,6 +160,7 @@ define([
   'map/views/layers/MexForestProdLayer',
   'map/views/layers/MexForestRestLayer',
   'map/views/layers/UgaPALayer',
+  'map/views/layers/BraLandCoverLayer',
   'map/views/layers/CanProtectedAreasLayer',
   'map/views/layers/LbrMinExL',
   'map/views/layers/LbrMinDevAg',
@@ -173,7 +172,6 @@ define([
   'map/views/layers/BolUserFireFrequencyLayer',
   // high resolution maps
   'map/views/layers/SentinelLayer',
-  'map/views/layers/SentinelTilesLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -185,8 +183,7 @@ define([
   'map/views/timeline/TerraiTimeline',
   'map/views/timeline/ProdesTimeline',
   'map/views/timeline/GuyraTimeline',
-  'map/views/timeline/GladTimeline',
-  'map/views/timeline/MangroveTimeline'
+  'map/views/timeline/GladTimeline'
 ], function(
   // Layer Views
   LossLayer,
@@ -255,7 +252,6 @@ define([
   MongabayStoriesLayer,
   InfoamazoniaStoriesLayer,
   GrumpLayer,
-  Mangrove2Layer,
   MangroveWatchLayer,
   WMSLayer,
   ConcesionesForestalesLayer,
@@ -283,7 +279,6 @@ define([
   RaisgLayer,
   PlantationsLayerByType,
   PlantationsLayerBySpecies,
-  BraMapBiomasLayer,
   BraPlantationsLayerByType,
   BraPlantationsLayerBySpecies,
   PerPlantationsLayerByType,
@@ -348,6 +343,7 @@ define([
   MexForestProdLayer,
   MexForestRestLayer,
   UgaPALayer,
+  BraLandCoverLayer,
   CanProtectedAreasLayer,
   LbrMinExL,
   LbrMinDevAg,
@@ -359,7 +355,6 @@ define([
   BolUserFireFrequencyLayer,
   //highres layers
   SentinelLayer,
-  SentinelTilesLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -371,8 +366,7 @@ define([
   TerraiTimeline,
   ProdesTimeline,
   GuyraTimeline,
-  GladTimeline,
-  MangroveTimeline
+  GladTimeline
 ) {
 
   'use strict';
@@ -584,10 +578,6 @@ define([
     grump2000 :{
       view: GrumpLayer
     },
-    mangrove_2 :{
-      view: Mangrove2Layer,
-      timelineView: MangroveTimeline
-    },
     mangrove_watch :{
       view: MangroveWatchLayer,
     },
@@ -673,9 +663,6 @@ define([
     },
     plantations_by_species: {
       view: PlantationsLayerBySpecies
-    },
-    map_biomas: {
-      view: BraMapBiomasLayer
     },
     bra_plantations_type: {
       view: BraPlantationsLayerByType
@@ -767,9 +754,6 @@ define([
     },
     highres: {
       view: SentinelLayer
-    },
-    sentinel_tiles: {
-      view: SentinelTilesLayer
     },
     guyra: {
       view: GuyraLayer,
@@ -870,6 +854,9 @@ define([
     },
     uga_protected_areas: {
       view:  UgaPALayer
+    },
+    bra_land_cover: {
+      view:  BraLandCoverLayer
     },
     can_protected_areas: {
       view:  CanProtectedAreasLayer

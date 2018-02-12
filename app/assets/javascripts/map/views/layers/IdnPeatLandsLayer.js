@@ -20,7 +20,6 @@ define([
       cartocss: idn_peatCartoCSS,
       analysis: true
     }
-
   
   });
 

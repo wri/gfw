@@ -18,7 +18,6 @@ define([
     layerOrder: [
       //high resolution maps
       "highres",
-      "sentinel_tiles",
       //-
       "grump2000",
       "mex_forest_zoning_cat",
@@ -35,6 +34,7 @@ define([
       "us_land_cover",
       "mex_land_cover",
       "gtm_forest_cover",
+      "bra_land_cover",
       "bra_rtrs",
       "pry_rtrs",
       "gtm_forest_density",
@@ -97,7 +97,6 @@ define([
       "birdlife",
       "tigers",
       "bra_biomes",
-      "map_biomas",
       "biodiversity_hotspots",
       "protected_areasCDB",
       "khm_pa",
@@ -168,7 +167,6 @@ define([
       "gran_chaco_extent",
       // FOREST CHANGE
       "per_minam_loss",
-      "mangrove_2",
       "guyra",
       "terrailoss",
       "viirs_fires_alerts",
@@ -186,10 +184,9 @@ define([
       "umd_as_it_happens_per",
       "umd_as_it_happens_idn",
       "umd_as_it_happens_cog",
-      "uncurated_places_to_watch",
       "places_to_watch",
       'forma_month_3',
-      'forma_activity',
+      'forma_activity'
     ],
 
     categoryOrder: [

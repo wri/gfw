@@ -1,0 +1,22 @@
+#bra_land_cover {raster-opacity:1;
+  raster-scaling:near;
+  raster-colorizer-default-mode: exact;
+  raster-colorizer-default-color: transparent;
+  raster-colorizer-epsilon:0.41;
+  raster-colorizer-stops:
+ stop(1, #FCF0A8)
+ stop(2, #CCDC94)
+ stop(3, #9A180F) 
+ stop(4, #0A633C)
+ stop(5, #8050DD) 
+ stop(6, #F6D61C)
+ stop(7, #F4B225)
+ stop(8, #B1E61E)
+ stop(9, #D07E1B)
+ stop(10, #FF3728) 
+ stop(11, #149C61) 
+ stop(12, #D1D3D3) 
+ stop(13, #8F5003) 
+ stop(14, #DD86D8) 
+ stop(15, #1284BE)
+ stop(16, #6DA217)}

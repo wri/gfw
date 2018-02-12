@@ -43,7 +43,6 @@ define([
 
     listeners: function() {
       this.status.on('change:iso', this.countryAtlas.bind(this));
-      // this.status.on('change:iso', this.countryBounds.bind(this));
     },
 
     /**
@@ -112,7 +111,6 @@ define([
             }
           });
         }
-
       }
     },{
       'Analysis/enabled': function(boolean) {

@@ -7,7 +7,6 @@
           <h2>{{content.data.name}}</h2>
         {{/if}}
 
-        {{!-- <div class="thumb-mask" style="background-image: url({{content.data.image}})"> --}}
           <div class="thumb-mask" style="background-image: url({{content.data.image}})"></div>
           {{#if content.data.image_source}}
             <span class="image-legend">{{ content.data.image_source }}</span>
@@ -426,6 +425,10 @@
           <h4>Area HA:</h4>
           <p>{{content.data.area_ha}}</p>
         {{/if}}
+        {{#if content.data.area}}
+          <h4>Area:</h4>
+          <p>{{content.data.area}}</p>
+        {{/if}}
         {{#if content.data.acquired}}
           <h4>Acquisition date:</h4>
           <p>{{content.data.acquired}}</p>
@@ -501,7 +504,7 @@
         {{#if content.data.certification_status}}
           <h4>Certification status:</h4>
           <p>{{content.data.certification_status}}</p>
-        {{/if}}        
+        {{/if}}
         {{#if content.data.license_no}}
           <h4>License No:</h4>
           <p>{{content.data.license_no}}</p>

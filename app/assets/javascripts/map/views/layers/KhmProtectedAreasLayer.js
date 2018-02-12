@@ -17,7 +17,7 @@ define([
       interactivity: 'cartodb_id, tablename, name, category, date_create, area_ha, analysis',
       analysis: true
     }
-    
+
 
 
   });

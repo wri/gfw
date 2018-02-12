@@ -1,6 +1,7 @@
 define([], function() {
 
   var guideTexts = {
+
     default: {
       intro:            '<p>Welcome to the Global Forest Watch Interactive Map. This quick guide will introduce you to the map’s main features and tools.</p>' +
                         '<p>Already familiar with GFW? <a href="/map" class="js-skip-tour">Skip the walk through</a>.</p>',

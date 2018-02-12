@@ -1,6 +1,7 @@
 #mys_peat_lands {
-  polygon-opacity: 0.7;
-   line-color: #FFF;
-   line-width: 0;
-   line-opacity: 1;
-   polygon-fill: #253494;}
+	polygon-opacity: 0.7;
+	line-color: #FFF;
+	line-width: 0;
+	line-opacity: 1;
+	polygon-fill: #253494;
+}

@@ -11,7 +11,7 @@ define([
   'moment',
   'map/presenters/PresenterClass',
   'map/services/LayerSpecService',
-  'services/CountryService',
+  'services/CountryService'
 ], function(_, Backbone, Promise, mps, moment, PresenterClass, layerSpecService, CountryService) {
 
   'use strict';
@@ -56,7 +56,6 @@ define([
         this.status.set('threshold', place.params.threshold);
         this.status.set('hresolution', place.params.hresolution);
         this.status.set('layerOptions', place.params.layer_options);
-        this.status.set('startYear', moment.utc(place.params.begin).year());
 
         if(!!place.params.iso.country && place.params.iso.country !== 'ALL'){
           this.status.set('iso', place.params.iso);
@@ -77,22 +76,6 @@ define([
         this.updateLegend();
         // Toggle sublayers
         this.toggleSelected();
-      }
-    }, {
-      'LayerOptions/update': function(options) {
-        this.status.set({
-          layerOptions: options
-        });
-        this.toggleLayerOptions();
-      }
-    }, {
-      'LayerOptions/delete': function() {
-        this.status.set({
-          layerOptions: []
-        });
-        this.toggleLayerOptions({
-          reset: true
-        });
       }
     }, {
       'AnalysisTool/stop-drawing': function() {
@@ -153,8 +136,7 @@ define([
         var categories = [],
           options = {
             threshold: this.status.get('threshold'),
-            hresolution: this.getHresolutionParams(),
-            startYear: this.status.get('startYear')
+            hresolution: this.getHresolutionParams()
           },
           geographic = null,
           iso = this.status.get('iso'),
@@ -174,12 +156,10 @@ define([
       mps.publish('Place/update', [{go: false}]);
     },
 
-    toggleLayerOptions: function(opts) {
-      if (this.status.get('layerOptions') || (opts && opts.reset)) {
-        mps.publish('LayerNav/changeLayerOptions',
-          [this.status.get('layerOptions')]);
-        this.view.toggleLayerOptions(this.status.get('layerOptions') || []);
-      }
+    toggleLayerOptions: function() {
+      mps.publish('LayerNav/changeLayerOptions',
+        [this.status.get('layerOptions')]);
+      this.view.toggleLayerOptions(this.status.get('layerOptions') || []);
     },
 
     /**

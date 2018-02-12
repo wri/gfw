@@ -12,6 +12,13 @@ define([
 
   'use strict';
 
+  var StatusModel = Backbone.Model.extend({
+    defaults: {
+      iso: null
+    }
+  });
+
+
   var NavMobilePresenter = PresenterClass.extend({
 
     status: new (Backbone.Model.extend({
