@@ -2,7 +2,6 @@ export const initialState = {
   loading: false,
   error: false,
   layerSpec: {},
-  layers: [],
   settings: {}
 };
 
@@ -17,14 +16,7 @@ const setLayerSpec = (state, { payload }) => ({
   loading: false
 });
 
-const setLayers = (state, { payload }) => ({
-  ...state,
-  layers: payload.clear ? payload.layers : [...state.layers, ...payload.layers],
-  settings: payload.settings
-});
-
 export default {
   setLayerSpecLoading,
-  setLayerSpec,
-  setLayers
+  setLayerSpec
 };
