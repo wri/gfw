@@ -8,6 +8,10 @@
   border: solid 1px rgba($medium-grey, 0.2);
   border-radius: 0;
 
+  &:hover {
+    background-color: $grey-light;
+  }
+
   svg {
     fill: $slate;
   }
