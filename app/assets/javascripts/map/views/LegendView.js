@@ -403,6 +403,14 @@ define(
             $(selectOption).removeClass('js-tree-plantation');
             $(selectOption).addClass('js-tree-plantation-country');
           }
+          layer.detailsTpl = this.detailsTemplates[layer.slug]({
+            threshold: options.threshold || 30,
+            hresolution: options.hresolution,
+            startYear: options.startYear,
+            layerTitle: layer.title,
+            layerSlug: layer.slug,
+            staging: window.gfw.config.FEATURE_ENV === 'staging'
+          });
         }
 
         this.presenter.toggleSelected();
