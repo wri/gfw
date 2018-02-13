@@ -1,0 +1,14 @@
+@import '~styles/settings';
+
+.theme-button-map-control {
+  width: rem(38px);
+  height: rem(38px);
+  padding: 0;
+  background-color: $white;
+  border: solid 1px rgba($medium-grey, 0.2);
+  border-radius: 0;
+
+  svg {
+    fill: $slate;
+  }
+}
