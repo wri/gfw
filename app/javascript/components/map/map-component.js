@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
 
-import MiniLegend from 'components/map/components/mini-legend';
 import Loader from 'components/loader';
 import NoContent from 'components/no-content';
+import MapControls from 'components/map/components/map-controls';
+import MiniLegend from 'components/map/components/mini-legend';
 
 import './map-styles.scss';
 
@@ -20,6 +21,7 @@ class Map extends PureComponent {
             <NoContent message="An error occured. Please try again later." />
           )}
         <div id="map" className="c-map" />
+        {!loading && <MapControls />}
         {!loading && layers && layers.length && <MiniLegend layers={layers} />}
       </div>
     );

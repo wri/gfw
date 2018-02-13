@@ -1,0 +1,23 @@
+@import '~styles/settings.scss';
+
+.c-map-controls {
+  position: absolute;
+  top: rem(15px);
+  right: rem(15px);
+
+  &__zoom {
+    :first-child {
+      border-bottom: 0;
+    }
+  }
+
+  .plus-icon {
+    width: rem(13px);
+    height: rem(13px);
+  }
+
+  .minus-icon {
+    width: rem(13px);
+    height: rem(3px);
+  }
+}
