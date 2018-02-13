@@ -1,0 +1,24 @@
+conservation_area:
+   staging:  http://staging.globalforestwatch.org/map/
+   production: http://globalforestwatch.org/map/
+   local: localhost:5000/map/
+   url_analysis: 11/42.94/-4.56/ALL/grayscale/loss,forestgain/{data_id}?tab=analysis-tab&wdpaid=555549019&begin={start_date}&end={end_date}&threshold={threshold}&dont_analyze=true&tour=default
+   staging_local_data_id: 612
+   production_data_id: 612
+   start_date: 2001-01-01
+   end_date: 2016-01-01
+   threshold: 30
+   total:  78212
+   loss:  3078
+   gain:  556
+prodes_brazil_matogrosso:
+  staging: http://staging.globalforestwatch.org/map/
+  production: http://globalforestwatch.org/map/
+  local: localhost:5000/map/
+  url_analysis: 6/-10.49/-51.66/BRA-12/grayscale/{data_id}?tab=analysis-tab&begin={start_date}&end={end_date}
+  production_data_id: prodes
+  staging_local_data_id: prodes
+  start_date: 2001-01-01
+  end_date: 2016-12-31
+  total: 90460162
+  loss: 6233558

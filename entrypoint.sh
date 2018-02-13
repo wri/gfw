@@ -11,11 +11,9 @@ case "$1" in
         exec foreman start
         ;;
     test)
-        echo "Running Test"
+        echo "Running automated tests"
         bundle exec rake db:exists RAILS_ENV=test
-
         export SECRET_KEY_BASE=$(rake secret)
-
         exec rspec
         ;;
     start)
