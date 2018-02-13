@@ -23,9 +23,9 @@ define([
     label: 'past week',
     duration: 168
   }, {
-    start: moment().subtract(3, 'days').utc(),
+    start: moment().subtract(2, 'days').utc(),
     end: moment().utc(),
-    label: 'past 2 days',
+    label: 'past 48 hours',
     duration: 48
   }];
 

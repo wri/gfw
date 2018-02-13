@@ -163,12 +163,10 @@
         color: $dark;
         background-color: $white;
         border: 1px solid $border1;
-        
         .chosen-default {
           color: $dark;
         }
-
-        abbr {
+        abbr{
           display: block;
         }
       }

@@ -34,7 +34,7 @@ define([
       'my_gfw/login': 'loginPage',
       'my_gfw/stories': 'storiesPage',
       'my_gfw/subscriptions': 'subscriptionsPage',
-      'my_gfw/subscriptions/new(?*query)': 'subscriptionsNewPage'
+      'my_gfw/subscriptions/new(?*query)': 'subscriptionsNewPage',
     },
 
     routeViews: {

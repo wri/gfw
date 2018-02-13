@@ -35,6 +35,8 @@ node_modules
 public/assets
 vendor/assets/bower_components
 jstest/SpecRunner.html
+yarn.lock
+package-lock.json
 
 # Ignore Vagrant
 .vagrant
@@ -56,4 +58,3 @@ todo.todo
 /public/packs-test
 /node_modules
 package-lock.json
-yarn.lock
