@@ -158,6 +158,15 @@ run with Grunt:
 grunt test
 ```
 
+## Changelog
+
+### v3.0
+- sync map layers menu, legend, and side bar with master features
+- allow features to be shown on staging and not on production within map (env variable FEATURE_ENV)
+- Small css fixes to the map
+- Recovered all missing commits from previous cherry picks
+
+
 # License
 
 The MIT License (MIT)
