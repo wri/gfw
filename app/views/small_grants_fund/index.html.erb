@@ -1,3 +1,225 @@
-<%= render 'shared/js_config' %>
-<%= render 'shared/gfw_assets' %>
-<%= render 'sgf' %>
+<% if ENV['FEATURE_ENV'] == 'staging' %>
+  <%= render 'shared/js_config' %>
+  <%= render 'shared/gfw_assets' %>
+  <%= render 'sgf' %>
+<% else %>
+  <% content_for :header do %>
+    <h1>
+      <a href="/small-grants-fund">
+        Global Forest Watch
+        <span class="ribbon">
+          <span class="-mobile">SGF</span>
+          <span class="-desktop">Small Grants Fund</span>
+        </span>
+      </a>
+    </h1>
+  <% end %>
+
+
+  <div id="small-grunts-fund" class="static-page">
+    <header class="m-cover">
+      <div class="l-inner">
+        <h2 class="m-cover__title">Small Grants Fund</h2>
+      </div>
+      <div class="cover-background" style="background-image: url('/assets/static-pages/small-grants-fund/SGF_headermap.jpg')"></div>
+    </header>
+
+    <section class="m-section -padding">
+      <div class="l-inner">
+        <div class="introduction">
+          <p class="_light">The Small Grants Fund seeks to promote uptake of Global Forest Watch by civil society
+          organizations to use in their research, advocacy, and fieldwork. The fund provides grants
+          between US$10,000 and US$40,000 and technical support to civil society organizations
+          for project implementation. Additionally, grant recipients have the opportunity to
+          form part of a unique network of environmental organizations, working around the
+          globe towards objectives like increasing women’s participation in land use decision-making
+          in Indonesia, protecting jaguars in Nicaragua, mapping mangroves in Madagascar, monitoring
+          the impact of mega-dam projects in Brazil, and more.</p>
+
+          <div class="logo-container">
+            <div class="logo-img small-grants-fund"></div>
+          </div>
+
+        </div>
+
+
+      </div>
+    </section>
+
+    <section class="m-section -big-padding" style="background-image: url('/assets/static-pages/small-grants-fund/SGF_slider01.png')">
+      <div class="l-inner">
+        <header>
+          <h2 class="section-title _light _color-white _text-center">Small Grants Fund projects include:</h2>
+        </header>
+        <div id="SFGSliderView" class="m-lory-slider">
+          <div class="slider js_slider">
+            <div class="frame js_frame">
+              <ul class="slides js_slides">
+                <li class="js_slide">
+                  <div class="m-card -big-padding">
+                    <h3 class="card-title">Forest management, monitoring and law enforcement</h3>
+                    <p class="card-description">Use GFW’s near real-time alerts to monitor deforestation, notify authorities,
+                      target ranger patrols, or guide legal investigations.</p>
+                  </div>
+                </li>
+                <li class="js_slide">
+                  <div class="m-card -big-padding">
+                    <h3 class="card-title">Advocacy / Campaigning</h3>
+                    <p class="card-description">Use GFW data to generate evidence to campaign against illegal
+                      deforestation, land grabbing, and enviromental injustice.</p>
+                  </div>
+                </li>
+                <li class="js_slide">
+                  <div class="m-card -big-padding">
+                    <h3 class="card-title">Journalism and Storytelling</h3>
+                    <p class="card-description">Raise public awareness about the threats to forest-dependent
+                      communities by publishing stories or training local journalist
+                      using GFW data.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="slider-arrows js_slide_navigation">
+            <ul>
+              <li class="item -arrow -left" data-direction="left"><svg><use xlink:href="#icon-arrowleft"></use></svg></li>
+              <li class="item -arrow -right" data-direction="right"><svg><use xlink:href="#icon-arrowright"></use></svg></li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="copyright _color-white"><strong>Photo credit:</strong> African Conservation Foundation</p>
+      </div>
+    </section>
+
+    <section class="m-section -padding">
+      <div class="l-inner">
+        <header>
+          <h2 class="section-title _light">How to apply</h2>
+        </header>
+        <p>
+          The Small Grants Fund application period is now closed. For questions about the Small Grants Fund, or to sign up to be notified when the application period opens, please write to <a href="mailto:gfwfund@wri.org">gfwfund@wri.org</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="m-section -big-padding" style="background-image: url('/assets/static-pages/small-grants-fund/SGF_slider02.png')">
+
+      <div class="l-inner">
+        <header>
+          <h2 class="section-title _light _color-white _text-center">Meet the Grantees</h2>
+        </header>
+
+        <p class="section-description _light _color-white _text-center">To date, there have been over 30 projects in almost as many countries!</p>
+
+
+        <div id="GrantesForestSliderView" class="m-lory-slider">
+          <div class="slider js_slider">
+            <div class="frame js_frame">
+              <ul class="slides js_slides">
+                <li class="js_slide">
+                  <div class="m-card _align-vertically-flex">
+                    <a href="http://blog.globalforestwatch.org/gfw-community/announcing-the-2016-recipients-of-the-small-grants-fund.html">
+                      <h3 class="card-title">Announcing the 2016 Recipients</h3>
+                    </a>
+                  </div>
+                </li>
+                <li class="js_slide">
+                  <div class="m-card _align-vertically-flex">
+                    <a targe="_blank" target="_blank" href="https://gfw.maps.arcgis.com/apps/MapJournal/index.html?appid=4c3a290ba73e46139fcc40d387a8d17d">
+                      <h3 class="card-title">Visit the story map of 2015 projects</h3>
+                    </a>
+                  </div>
+                </li>
+                <li class="js_slide">
+                  <div class="m-card _align-vertically-flex">
+                    <a target="_blank" target="_blank" href="https://gfw.maps.arcgis.com/apps/MapJournal/index.html?appid=0a56f3905f88466b93ed5696ef6fde81">
+                      <h3 class="card-title">Visit the story map of 2014 projects</h3>
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="slider-arrows js_slide_navigation">
+            <ul>
+              <li class="item -arrow -left" data-direction="left"><svg><use xlink:href="#icon-arrowleft"></use></svg></li>
+              <li class="item -arrow -right" data-direction="right"><svg><use xlink:href="#icon-arrowright"></use></svg></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="m-section -padding">
+      <div class="l-inner">
+        <div class="m-card">
+          <h2 class="card-title">Resources and support</h2>
+
+          <ul class="link-list">
+            <li><a target="_blank" href="https://www.youtube.com/watch?v=RtcrS7dmhcI">How to apply</a></li>
+            <li><a target="_blank" href="https://www.youtube.com/watch?v=uHt1FqaSPwQ">Stories from the Field: 2015 projects</a></li>
+          </ul>
+
+          <hr>
+
+          <a href="/howto" class="card-title-subtitle _bold _uppercase">how to portal</a>
+          <p class="card-description">Visit the How To page for video tutorials and step by step instructions
+            for how to visualize global and country data, analyze forest change, subscribe
+            to alerts, submit stories and more.
+          </p>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="m-section -padding -no-border">
+      <div class="l-inner">
+        <header>
+          <h2 class="section-title _light">You may find this interesting</h2>
+        </header>
+      </div>
+
+      <div class="l-inner">
+        <div class="m-grid -no-padding">
+          <div class="m-card -interesting -three-column">
+            <div class="card-image">
+              <a href="/developers-corner/">
+                <div class="background" style="background-image: url('/assets/static-pages/small-grants-fund/home-slider-1.png')"></div>
+              </a>
+            </div>
+            <h3 class="card-title">
+              <a href="/developers-corner/">Map Builder</a>
+            </h3>
+            <p class="card-description">Create your own version of Global Forest Watch, featuring a
+              specific location or type of data</p>
+          </div>
+          <div class="m-card -interesting -three-column">
+            <div class="card-image">
+              <a href="/stories/new">
+                <div class="background" style="background-image: url('/assets/static-pages//small-grants-fund/gfw-interactive-map.png')"></div>
+              </a>
+            </div>
+            <h3 class="card-title">
+              <a href="/stories/new">Submit a Story</a>
+            </h3>
+            <p class="card-description">Share your story about issues affecting forests, forest communities,
+              and how you use GFW to monitor and protect forests with the GFW community</p>
+          </div>
+          <div class="m-card -interesting -three-column">
+            <div class="card-image">
+              <a href="/contribute-data/">
+                <div class="background" style="background-image: url('/assets/static-pages/small-grants-fund/contribute-data.png')"></div>
+              </a>
+            </div>
+            <h3 class="card-title">
+              <a href="/contribute-data/">Contribute data</a>
+            </h3>
+            <p class="card-description">Share your data with the GFW community by adding it to the GFW Interactive Map</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+<% end %>
