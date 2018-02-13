@@ -58,7 +58,7 @@
         <select class="default" name="language">
           <option disabled selected>Choose your language</option>
           {{#each languages}}
-            <option value="{{@key}}">{{this}}</option>
+            <option value="{{key}}" {{selected}}>{{name}}</option>
           {{/each}}
         </select>
       </label>

@@ -87,20 +87,16 @@ require([
       // we shouldn't create any view.
       countryService
         .getCountries()
-        .then(
-          (results) => {
-            this.countries = results;
-            this._initViews();
-          }
-        )
-        .catch(
-          (e) => {
-            console.warn(e);
-            // Fallback when request is timing out
-            this.countries = FallbackDataHelper.getCountryNames();
-            this._initViews();
-          }
-        );
+        .then(results => {
+          this.countries = results;
+          this._initViews();
+        })
+        .catch(e => {
+          console.warn(e);
+          // Fallback when request is timing out
+          this.countries = FallbackDataHelper.getCountryNames();
+          this._initViews();
+        });
     },
     /**
      * Initialize Application Views.
@@ -141,7 +137,9 @@ require([
     },
 
     _handlebarsPlugins() {
-      Handlebars.registerHelper('firstLetter', (text) => text.charAt(0).toUpperCase());
+      Handlebars.registerHelper('firstLetter', text =>
+        text.charAt(0).toUpperCase()
+      );
 
       Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
         switch (operator) {

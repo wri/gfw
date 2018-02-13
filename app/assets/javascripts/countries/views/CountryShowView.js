@@ -488,7 +488,7 @@ define([
         return null;
       }));
 
-      if (! !!json || !json.length) {
+      if (!json.length) {
         $comingSoon.show(0);
         return;
       }

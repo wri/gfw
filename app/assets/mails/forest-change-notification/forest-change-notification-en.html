@@ -371,14 +371,15 @@
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">
 											<tr>
 												<td align="center">
+
 													<table width="224" border="0" cellspacing="0" cellpadding="0" bgcolor="#9bbf19" style="border-radius: 16px;">
 														<tr>
 															<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="13"></td>
 															<td>
 																<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="8" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
-																<div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif; font-size:14px; line-height:18px; text-align:center; text-transform:uppercase; font-weight:bold">
-																	<a href="{{{alert_link}}}" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">View and Download All</span></a>
+                                <div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif; font-size:14px; line-height:18px; text-align:center; text-transform:uppercase; font-weight:bold">
+																	<a href="{{{alert_link}}}" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">View</span></a>
 																</div>
 																<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="8" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
@@ -386,6 +387,42 @@
 															<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="13"></td>
 														</tr>
 													</table>
+
+                          {{ if layerSlug == "glad-alerts"}}
+                            {{ if downloadUrls }}
+                              <table width="224" border="0" cellspacing="0" cellpadding="0" bgcolor="#9bbf19" style="border-radius: 16px;margin-top:20px;">
+    														<tr>
+    															<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="13"></td>
+    															<td>
+    																<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="8" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+                                    <div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif; font-size:14px; line-height:18px; text-align:center; text-transform:uppercase; font-weight:bold">
+    																	<a href="{{{downloadUrls.csv}}}" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">Download CSV</span></a>
+    																</div>
+    																<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="8" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+    															</td>
+    															<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="13"></td>
+    														</tr>
+    													</table>
+
+                              <table width="224" border="0" cellspacing="0" cellpadding="0" bgcolor="#9bbf19" style="border-radius: 16px;margin-top:20px;">
+                                <tr>
+                                  <td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="13"></td>
+                                  <td>
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="8" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+                                    <div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif; font-size:14px; line-height:18px; text-align:center; text-transform:uppercase; font-weight:bold">
+                                      <a href="{{{downloadUrls.json}}}" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">Download JSON</span></a>
+                                    </div>
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="8" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+                                  </td>
+                                  <td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="13"></td>
+                                </tr>
+                              </table>
+                            {{ end }}
+                          {{ end }}
 												</td>
 											</tr>
 										</table>

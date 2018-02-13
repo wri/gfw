@@ -166,7 +166,6 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     }
     &.country{
       background: rgba($country-color, 0.25);
-
       @media (max-width: $br-mobileMap - 1){
         background: $white;
         color: $country-color;
@@ -263,7 +262,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         text-transform: uppercase;
         overflow: hidden;
         text-overflow: ellipsis;
-        white-space: nowrap;        
+        white-space: nowrap;
         @media (min-width: $br-mobileMap){
           display: block;
         }

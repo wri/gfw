@@ -33,6 +33,7 @@ define([
         this.status.set('layerSpec', place.layerSpec);
         this.status.set('hresolution', place.params.hresolution);
         var is_highres = !!this.status.get('layerSpec').getLayer({ slug: 'highres' })
+        var is_sentinel = !!this.status.get('layerSpec').getLayer({ slug: 'sentinel_tiles' });
         if (is_highres || !!this.status.get('hresolution')) {
           var params = JSON.parse(atob(place.params.hresolution));
           this.view.switchToggle(is_highres);
@@ -42,13 +43,21 @@ define([
             this.notificate('notification-zoom-not-reached');
           }
         }
+        if (is_sentinel) {
+          this.view.switchSentinelToggle(is_sentinel);
+        }
       }
     },{
       'LayerNav/change': function(layerSpec) {
         this.status.set('layerSpec', layerSpec);
-        var is_highres = !!this.status.get('layerSpec').getLayer({ slug: 'highres' })
+        var is_highres = !!this.status.get('layerSpec').getLayer({ slug: 'highres' });
+        var is_sentinel = !!this.status.get('layerSpec').getLayer({ slug: 'sentinel_tiles' });
+
         this.setHres((is_highres) ? this.view._getParams() : null);
+        this.setSentinel((is_sentinel) ? this.view._getParams() : null);
+
         this.view.switchToggle(is_highres);
+        this.view.switchSentinelToggle(is_sentinel);
       }
     }],
 
@@ -70,12 +79,25 @@ define([
       this._publishHres();
     },
 
+    setSentinel: function(value) {
+      if (!!value) {
+        value = btoa(JSON.stringify(value));
+      }
+
+      this.status.set('sentinel_tiles', value);
+      this._publishSentinel();
+    },
+
     /**
      * call 'Place/update' to update the url.
      */
     _publishHres: function() {
       mps.publish('Hresolution/update', [this.status.get('hresolution')]);
       mps.publish('Place/update', [{go: false}]);
+    },
+
+    _publishSentinel: function() {
+      mps.publish('SentinelTiles/update', [this.status.get('sentinel_tiles')]);
     },
 
     /**
@@ -85,7 +107,8 @@ define([
      */
     getPlaceParams: function() {
       return {
-        hresolution: this.status.get('hresolution')
+        hresolution: this.status.get('hresolution'),
+        sentinel_tiles: this.status.get('sentinel_tiles')
       };
     },
 

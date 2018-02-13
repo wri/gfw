@@ -84,8 +84,7 @@ define([
       .style('cursor', 'col-resize');
 
     handle = slider.append('g')
-      .attr('class', 'handle')
-      .attr('transform', 'translate(' + (width-8) + ',0)');
+      .attr('class', 'handle');
 
     handle.append('svg:image')
       .attr('width', 16)
@@ -93,6 +92,8 @@ define([
       .attr('xlink:href', '/assets/svg/dragger2.svg')
       .attr('x', 0)
       .attr('y', (height / 2) - 8);
+
+    slider.call(brush.event);
   };
 
   TorqueTimelineSlider.prototype.setupDomain = function() {
@@ -100,7 +101,7 @@ define([
       .insert('svg:line', ':first-child')
       .attr('class', 'played_domain')
       .attr('x1', 0)
-      .attr('x2', width)
+      .attr('x2', 0)
       .attr('y1', height / 2)
       .attr('y2', height / 2);
 

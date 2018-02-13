@@ -119,6 +119,8 @@ define([
           this.$tabsContent.removeClass('selected');
         }
       }
+
+
     },
 
     toggleTabs: function(e){

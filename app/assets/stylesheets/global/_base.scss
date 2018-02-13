@@ -32,6 +32,8 @@ body {
       height: calc(100% - 45px);
 
       @media (min-width:$br-mobile){
+        margin-top: 36px;
+        height: calc(100% - 36px);
         top: 0;
       }
     }

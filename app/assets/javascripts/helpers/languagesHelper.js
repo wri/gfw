@@ -11,8 +11,8 @@ define([], function() {
     zh: '中文',
     fr: 'Français',
     id: 'Bahasa Indonesia',
-    pt_BR: 'Português (Brasil)',
-    es_MX: 'Español (Mexico)'
+    pt_BR: 'Português',
+    es_MX: 'Español'
   };
 
   var languagesHelper = {
