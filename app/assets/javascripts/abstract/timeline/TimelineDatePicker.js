@@ -93,13 +93,15 @@ define([
               var endDate = context.selectedDates.get('endDate');
               var startDate = context.selectedDates.get('startDate');
 
-              if (id === 'startDate') {
-                if (!date.isAfter(endDate)) {
-                  $el.addClass('picker__has_data');
-                }
-              } else if (id === 'endDate') {
-                if (!date.isBefore(startDate)) {
-                  $el.addClass('picker__has_data');
+              if (context.layer.slug !== 'umd_as_it_happens') {
+                if (id === 'startDate') {
+                  if (!date.isAfter(endDate)) {
+                    $el.addClass('picker__has_data');
+                  }
+                } else if (id === 'endDate') {
+                  if (!date.isBefore(startDate)) {
+                    $el.addClass('picker__has_data');
+                  }
                 }
               }
             }
