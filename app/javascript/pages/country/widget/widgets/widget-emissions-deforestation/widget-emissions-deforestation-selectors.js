@@ -58,8 +58,10 @@ export const getSentence = createSelector(
   (data, settings, indicator) => {
     if (!data || isEmpty(data) || !indicator) return null;
 
-    const { startYear, endYear, metric, threshold } = settings;
-    const totalEmissions = data.map(d => d[metric]).reduce((sum, d) => sum + d);
+    const { startYear, endYear, metric } = settings;
+    const totalEmissions = data
+      .map(d => d[metric])
+      .reduce((sum, d) => (d ? sum + d : sum));
     const emissionType = metric === 'biomassCarbon' ? 'carbon' : 'CO2';
     let indicatorText = '';
     if (indicator.value === 'mining') {
