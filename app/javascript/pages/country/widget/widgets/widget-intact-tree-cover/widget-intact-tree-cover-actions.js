@@ -13,7 +13,7 @@ export const getIntactTreeCover = createThunkAction(
   'getIntactTreeCover',
   params => (dispatch, state) => {
     if (!state().widgetIntactTreeCover.loading) {
-      const { countryWhitelist, regionWhitelist } = state().countryData;
+      const { countryWhitelist, regionWhitelist } = state().whitelists;
       const { region } = state().location.payload;
       const whitelist = Object.keys(
         region ? regionWhitelist : countryWhitelist

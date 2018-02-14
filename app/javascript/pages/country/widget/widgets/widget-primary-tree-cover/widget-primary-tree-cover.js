@@ -11,19 +11,17 @@ import {
 } from './widget-primary-tree-cover-selectors';
 import WidgetPrimaryTreeCoverComponent from './widget-primary-tree-cover-component';
 
-const mapStateToProps = ({ widgetPrimaryTreeCover, countryData }, ownProps) => {
-  const {
-    isCountriesLoading,
-    isRegionsLoading,
-    countryWhitelist,
-    regions
-  } = countryData;
+const mapStateToProps = (
+  { widgetPrimaryTreeCover, countryData, whitelists },
+  ownProps
+) => {
+  const { isCountriesLoading, isRegionsLoading, regions } = countryData;
   const { settings, loading, data } = widgetPrimaryTreeCover;
   const { colors, locationNames, activeIndicator } = ownProps;
   const selectorData = {
     data,
     settings,
-    whitelist: countryWhitelist,
+    whitelist: whitelists.countryWhitelist,
     locationNames,
     activeIndicator,
     colors

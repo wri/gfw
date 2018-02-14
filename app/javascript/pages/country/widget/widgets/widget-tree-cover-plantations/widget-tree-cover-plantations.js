@@ -14,21 +14,16 @@ import {
 import WidgetTreeCoverPlantationsComponent from './widget-tree-cover-plantations-component';
 
 const mapStateToProps = (
-  { widgetTreeCoverPlantations, countryData },
+  { widgetTreeCoverPlantations, countryData, whitelists },
   ownProps
 ) => {
-  const {
-    isCountriesLoading,
-    isRegionsLoading,
-    countryWhitelist,
-    regions
-  } = countryData;
+  const { isCountriesLoading, isRegionsLoading, regions } = countryData;
   const { settings, loading, data } = widgetTreeCoverPlantations;
   const { colors, locationNames, activeIndicator } = ownProps;
   const selectorData = {
     data,
     settings,
-    whitelist: countryWhitelist,
+    whitelist: whitelists.countryWhitelist,
     locationNames,
     activeIndicator,
     colors: {

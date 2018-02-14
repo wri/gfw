@@ -13,7 +13,7 @@ export const getPrimaryTreeCover = createThunkAction(
   'getPrimaryTreeCover',
   params => (dispatch, state) => {
     if (!state().widgetPrimaryTreeCover.loading) {
-      const { countryWhitelist, regionWhitelist } = state().countryData;
+      const { countryWhitelist, regionWhitelist } = state().whitelists;
       const { region } = state().location.payload;
       const whitelist = Object.keys(
         region ? regionWhitelist : countryWhitelist
