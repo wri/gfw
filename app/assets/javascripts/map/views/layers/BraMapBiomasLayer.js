@@ -52,11 +52,21 @@ define(
             imgdata[pixelPos + 3] =
               zoom < 13 ? myscale(intensity) * 256 : intensity * 256;
 
-            //Natural Forest
-            if (imgdata[pixelPos] >= 3 && imgdata[pixelPos] <= 5) {
-              imgdata[pixelPos] = 22;
-              imgdata[pixelPos + 1] = 119;
-              imgdata[pixelPos + 2] = 100;
+            //Forest Formations
+            if (imgdata[pixelPos] === 3) {
+              imgdata[pixelPos] = 0;
+              imgdata[pixelPos + 1] = 100;
+              imgdata[pixelPos + 2] = 0;
+            } else if (imgdata[pixelPos] === 4) {
+              //Savannah Formations
+              imgdata[pixelPos] = 141;
+              imgdata[pixelPos + 1] = 144;
+              imgdata[pixelPos + 2] = 35;
+            } else if (imgdata[pixelPos] === 5) {
+              //Mangroves
+              imgdata[pixelPos] = 138;
+              imgdata[pixelPos + 1] = 168;
+              imgdata[pixelPos + 2] = 29;
             } else if (imgdata[pixelPos] === 9) {
               //Planted Forest
               imgdata[pixelPos] = 232;
@@ -74,9 +84,9 @@ define(
               imgdata[pixelPos + 2] = 152;
             } else if (imgdata[pixelPos] === 13) {
               //Other Non-forest Vegetation
-              imgdata[pixelPos] = 89;
-              imgdata[pixelPos + 1] = 107;
-              imgdata[pixelPos + 2] = 44;
+              imgdata[pixelPos] = 138;
+              imgdata[pixelPos + 1] = 184;
+              imgdata[pixelPos + 2] = 75;
             } else if (imgdata[pixelPos] === 15) {
               //Pasture
               imgdata[pixelPos] = 255;
@@ -92,11 +102,21 @@ define(
               imgdata[pixelPos] = 232;
               imgdata[pixelPos + 1] = 176;
               imgdata[pixelPos + 2] = 113;
-            } else if (imgdata[pixelPos] >= 22 && imgdata[pixelPos] <= 25) {
-              //Non-vegetated Area
-              imgdata[pixelPos] = 246;
-              imgdata[pixelPos + 1] = 240;
-              imgdata[pixelPos + 2] = 234;
+            } else if (imgdata[pixelPos] === 23) {
+              //Beaches and Dunes
+              imgdata[pixelPos] = 221;
+              imgdata[pixelPos + 1] = 126;
+              imgdata[pixelPos + 2] = 107;
+            } else if (imgdata[pixelPos] === 24) {
+              //Urban Infrastructure
+              imgdata[pixelPos] = 233;
+              imgdata[pixelPos + 1] = 70;
+              imgdata[pixelPos + 2] = 43;
+            } else if (imgdata[pixelPos] === 25) {
+              //Other Non-vegetated Area
+              imgdata[pixelPos] = 255;
+              imgdata[pixelPos + 1] = 153;
+              imgdata[pixelPos + 2] = 255;
             } else if (imgdata[pixelPos] === 26) {
               //Water Bodies
               imgdata[pixelPos] = 163;
