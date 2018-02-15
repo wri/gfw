@@ -1,0 +1,7 @@
+{
+  "setShareData": {
+    "name": "test",
+    "description": "rest",
+    "sendPayload": true
+  }
+}
