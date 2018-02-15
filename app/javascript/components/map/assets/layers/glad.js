@@ -1,15 +1,12 @@
-import { fetchGLADDates } from 'services/glad';
-import { sortByKey } from 'utils/data';
+import { fetchGLADLatest } from 'services/alerts';
 import moment from 'moment';
-import groupBy from 'lodash/groupBy';
-import maxBy from 'lodash/maxBy';
-import minBy from 'lodash/minBy';
 import Canvas from './abstract/canvas';
 
 const OPTIONS = {
   dataMaxZoom: 12,
   urlTemplate:
-    'http://wri-tiles.s3.amazonaws.com/glad_staging/tiles/{z}/{x}/{y}.png'
+    'http://wri-tiles.s3.amazonaws.com/glad_staging/tiles/{z}/{x}/{y}.png',
+  startDate: '2015-01-01'
 };
 
 const padNumber = number => {
@@ -25,29 +22,11 @@ class Glad extends Canvas {
   }
 
   getLayer() {
-    return fetchGLADDates()
+    return fetchGLADLatest()
       .then(result => {
-        const { data } = result.data;
-        if (!data || !data.length) return this;
-
-        const maxYear = maxBy(data, 'year').year;
-        const maxYearData = sortByKey(
-          groupBy(data, 'year')[maxYear],
-          'julian_day'
-        );
-        const minYear = minBy(data, 'year').year;
-        const minYearData =
-          maxYear !== minYear
-            ? sortByKey(groupBy(data, 'year')[minYear], 'julian_day')
-            : maxYearData;
-        this.startDate = moment()
-          .year(minYear)
-          .dayOfYear(minYearData[0].julian_day)
-          .format('YYYY-MM-DD');
-        this.endDate = moment()
-          .year(maxYear)
-          .dayOfYear(maxYearData[maxYearData.length - 1].julian_day)
-          .format('YYYY-MM-DD');
+        const { attributes } = result.data.data;
+        if (!attributes || !attributes.length) return this;
+        this.endDate = attributes[0].date;
 
         return this;
       })
@@ -65,7 +44,7 @@ class Glad extends Canvas {
 
   filterCanvasImgdata(imgdata, w, h) {
     const imageData = imgdata;
-    const startDate = moment(this.startDate);
+    const startDate = this.options.startDate;
     const endDate = moment(this.endDate);
     const customRangeDays = this.options.weeks && this.options.weeks * 7;
     const numberOfDays = endDate.diff(startDate, 'days');

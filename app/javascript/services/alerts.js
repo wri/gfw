@@ -18,6 +18,11 @@ export const fetchGladAlerts = ({ country, region, subRegion, period }) => {
   return axios.get(url);
 };
 
+export const fetchGLADLatest = () => {
+  const url = `${REQUEST_URL}/glad-alerts/latest`;
+  return axios.get(url);
+};
+
 export const fetchViirsAlerts = ({
   country,
   region,

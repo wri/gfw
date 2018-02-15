@@ -2,8 +2,7 @@ import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
 import axios from 'axios';
 
-import { fetchGLADLatest } from 'services/glad';
-import { fetchGladAlerts } from 'services/alerts';
+import { fetchGladAlerts, fetchGLADLatest } from 'services/alerts';
 
 const setGladAlertsLoading = createAction('setGladAlertsLoading');
 const setGladAlertsData = createAction('setGladAlertsData');
