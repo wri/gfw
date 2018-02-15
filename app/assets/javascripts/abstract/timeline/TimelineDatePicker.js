@@ -83,7 +83,7 @@ define([
           var date = moment($el.data('pick'));
           var day = date.dayOfYear();
 
-          var histogram = context.histograms[date.year()];
+          var histogram = context.histograms && context.histograms[date.year()];
           if (histogram) {
             if (histogram[day - 1] > 0) {
 
