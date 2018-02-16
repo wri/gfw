@@ -17,12 +17,12 @@ const mapStateToProps = ({ share, location }) => ({
 
 class ShareContainer extends PureComponent {
   handleCopyToClipboard = input => {
-    const { setShareCopied } = this.props;
+    const { setShareCopied, data } = this.props;
     input.select();
 
     try {
       document.execCommand('copy');
-      setShareCopied();
+      setShareCopied(data);
     } catch (err) {
       alert('This browser does not support clipboard access'); // eslint-disable-line
     }

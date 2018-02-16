@@ -1,5 +1,6 @@
-import ReactGA from 'react-ga';
-import CUSTOM_GA_EVENTS from 'pages/country/data/analytics.json';
+import ReactGA, { event } from 'react-ga';
+import { ANALYTICS_EVENTS } from 'pages/country/data/analytics';
+import get from 'lodash/get';
 
 const { ANALYTICS_PROPERTY_ID } = process.env;
 let gaInitialized = false;
@@ -21,16 +22,38 @@ export const handlePageTrack = location => {
   }
 };
 
-export const handleActionTrack = () => nextDispatch => action => {
+export const handleActionTrack = state => nextDispatch => action => {
   initGA();
   if (gaInitialized) {
-    const GAPayload = CUSTOM_GA_EVENTS[action.type];
-    if (GAPayload) {
-      const GAData = {
-        ...GAPayload,
-        ...(!!GAPayload.sendPayload && { ...action.payload })
+    // get all events that match action key
+    const GAEvents = ANALYTICS_EVENTS.filter(g => g.actionKey === action.type);
+
+    // get the payload of the action
+    const actionPayload = {
+      ...state.getState().location.payload,
+      ...action.query,
+      ...action.payload,
+      ...action.meta
+    };
+
+    // use comparison to find correct action
+    let event = GAEvents.find(e => !e.comparison);
+    GAEvents.forEach(e => {
+      if (e.comparison && e.comparison(actionPayload)) {
+        event = e
+      }
+    });
+
+    if (event) {
+      const eventPayload = {
+        category: event.category,
+        action: event.action,
+        label: event.label || get(actionPayload, event.payloadKey)
       };
-      ReactGA.event(GAData);
+      if (eventPayload.label) {
+        console.log(eventPayload);
+        ReactGA.event(eventPayload);
+      }
     }
   }
   nextDispatch(action);
