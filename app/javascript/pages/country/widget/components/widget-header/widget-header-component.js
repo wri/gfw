@@ -69,6 +69,12 @@ class WidgetHeader extends PureComponent {
                     widget
                   }
                 }}
+                data={{
+                  title: 'map-button',
+                  widget: `${title} in ${
+                    locationNames.current ? locationNames.current.label : ''
+                  }`
+                }}
                 onClick={() => setShowMapMobile(true)}
                 tooltip={
                   widgetSize === 'small'

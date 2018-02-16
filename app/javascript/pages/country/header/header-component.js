@@ -42,6 +42,10 @@ class Header extends PureComponent {
             extLink={`http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/iso/tree_cover_stats_2016_${
               location.country
             }.xlsx`}
+            data={{
+              title: 'download',
+              ...location
+            }}
             tooltip={{
               theme: 'tip',
               position: 'bottom',

@@ -1,4 +1,4 @@
-import ReactGA, { event } from 'react-ga';
+import ReactGA from 'react-ga';
 import { ANALYTICS_EVENTS } from 'pages/country/data/analytics';
 import get from 'lodash/get';
 
@@ -26,7 +26,9 @@ export const handleActionTrack = state => nextDispatch => action => {
   initGA();
   if (gaInitialized) {
     // get all events that match action key
-    const GAEvents = ANALYTICS_EVENTS.filter(g => g.actionKey === action.type);
+    const GAEvents = ANALYTICS_EVENTS.filter(
+      g => g.name && g.name === action.type
+    );
 
     // get the payload of the action
     const actionPayload = {
@@ -40,18 +42,21 @@ export const handleActionTrack = state => nextDispatch => action => {
     let event = GAEvents.find(e => !e.comparison);
     GAEvents.forEach(e => {
       if (e.comparison && e.comparison(actionPayload)) {
-        event = e
+        event = e;
       }
     });
 
+    // process event if available
     if (event) {
       const eventPayload = {
         category: event.category,
-        action: event.action,
+        action:
+          typeof event.action === 'string'
+            ? event.action
+            : event.action(actionPayload),
         label: event.label || get(actionPayload, event.payloadKey)
       };
       if (eventPayload.label) {
-        console.log(eventPayload);
         ReactGA.event(eventPayload);
       }
     }
