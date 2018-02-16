@@ -33,7 +33,7 @@ gem 'webpacker', '~> 3.0'
 # http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#responders
 gem 'responders', '~> 2.0'
 
-gem 'nokogiri', '~> 1.7.0.1'
+gem 'nokogiri', '~> 1.8.2'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5.2'

@@ -293,7 +293,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_magick (4.8.0)
     mini_mime (0.1.3)
-    mini_portile2 (2.1.0)
+    mini_portile2 (2.3.0)
     minitest (5.10.3)
     multi_json (1.12.1)
     multi_xml (0.6.0)
@@ -302,8 +302,8 @@ GEM
     net-ssh (4.1.0)
     newrelic_rpm (4.3.0.335)
     nio4r (2.1.0)
-    nokogiri (1.7.0.1)
-      mini_portile2 (~> 2.1.0)
+    nokogiri (1.8.2)
+      mini_portile2 (~> 2.3.0)
     public_suffix (2.0.5)
     puma (3.9.1)
     rack (2.0.3)
@@ -460,7 +460,7 @@ DEPENDENCIES
   jquery-rails
   mini_magick
   newrelic_rpm
-  nokogiri (~> 1.7.0.1)
+  nokogiri (~> 1.8.2)
   puma
   rack-reverse-proxy (~> 0.11.0)
   rails (= 5.1.3)
