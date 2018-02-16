@@ -3,19 +3,21 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <title>Global Forest Watch</title>
-    <meta name="description" content="<%= @desc %>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- SEO -->
+    <title><%= title(@actual_path) %></title>
     <meta name="keywords" content="<%= @keywords %>">
     <meta name="author" content="World Resources Institute">
-
-    <meta name="DC.title" content="Global Forest Watch">
-    <meta property="og:title" content="Global Forest Watch">
-    <meta property="og:description" content="<%= @desc %>">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="<%= request.original_url %>">
-    <meta property="og:image" content="http://www.globalforestwatch.org/assets/backgrounds/home-slider/bg_slide1.png" />
+    <meta name="description" content='<%= description(@actual_path) %>' />
+    <meta name="twitter:creator" content="@globalforests" />
+    <meta name="twitter:description" content='<%= description(@actual_path) %>' />
+    <meta name="twitter:image:src" content='<%= image_src(@actual_path) %>' />
+    <meta property="og:description" content='<%= description(@actual_path) %>' />
+    <meta property="og:title" content='<%= title(@actual_path) %>' />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content='<%= image_src(@actual_path) %>'>
+    <meta property="og:url" content='<%= asset_url(@actual_path) %>' />
 
     <link rel="canonical" href="<%= request.original_url %>" />
 
