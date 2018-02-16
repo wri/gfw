@@ -349,21 +349,23 @@ define(
 
               layer.sublayers = layers.filter(l => l.parent_layer === layer.slug);
 
-              layer.detailsTpl = this.detailsTemplates[layer.slug]({
+              const subLayers = layer.sublayers.length &&
+                layer.sublayers.reduce((state, l) => (
+                  Object.assign(state, {
+                    [l.slug]: {
+                      color: l.category_color,
+                      checked: 'checked'
+                    }
+                  })), {})
+
+              layer.detailsTpl = this.detailsTemplates[layer.slug](Object.assign({
                 threshold: options.threshold || 30,
                 hresolution: options.hresolution,
                 startYear: options.startYear,
                 layerTitle: layer.title,
                 layerSlug: layer.slug,
-                ...!!layer.sublayers.length && layer.sublayers.reduce((state, l) => ({
-                  ...state,
-                  [l.slug]: {
-                    color: l.category_color,
-                    checked: 'checked'
-                  }
-                }), {}),
                 staging: window.gfw.config.FEATURE_ENV === 'staging'
-              });
+              }, subLayers));
             }
 
             if (layer.iso) {
