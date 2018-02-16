@@ -3,60 +3,60 @@ export const ANALYTICS_EVENTS = [
     name: 'setShareData',
     category: 'Country Page',
     action: 'Share page',
-    payloadKey: 'country',
-    comparison: payload => payload.title === 'Share this Dashboard'
+    label: payload => payload.country,
+    condition: payload => payload.title === 'Share this Dashboard'
   },
   {
     name: 'location/COUNTRY',
     category: 'Country Page',
     action: 'View',
-    payloadKey: 'query.category'
+    label: payload => payload && payload.query && payload.query.category
   },
   {
     name: 'buttonClicked',
     category: 'Country Page',
     action: 'User views a widget on the map',
-    payloadKey: 'widget',
-    comparison: payload => payload.widget
+    label: payload => payload.widget,
+    condition: payload => payload.widget
   },
   {
     name: 'setModalMetaData',
     category: 'Country Page',
     action: 'Info',
-    payloadKey: 'title'
+    label: payload => payload.title
   },
   {
     name: 'setShareData',
     category: 'Country Page',
     action: 'Share Widget',
-    payloadKey: 'subtitle',
-    comparison: payload => payload.title === 'Share this widget'
+    label: payload => payload.subtitle,
+    condition: payload => payload.title === 'Share this widget'
   },
   {
     name: 'buttonClicked',
     category: 'Country Page',
     action: 'Download page',
-    payloadKey: 'country',
-    comparison: payload => payload.title === 'download'
+    label: payload => payload.country,
+    condition: payload => payload.title === 'download'
   },
   {
     name: 'buttonClicked',
     category: 'Country Page',
     action: 'User clicks through to main map',
-    payloadKey: 'layers',
-    comparison: payload => payload.title === 'view-full-map'
+    label: payload => payload.layers,
+    condition: payload => payload.title === 'view-full-map'
   },
   {
     name: 'buttonClicked',
     category: 'Country Page',
     action: payload => `Share on ${payload.socialNetwork}`,
-    payloadKey: 'socialText',
-    comparison: payload => payload.socialNetwork
+    label: payload => payload.socialText,
+    condition: payload => payload.socialNetwork
   },
   {
     name: 'setShareCopied',
     category: 'Country Page',
     action: 'Copies embed code',
-    payloadKey: 'subtitle'
+    label: payload => payload.subtitle
   }
 ];

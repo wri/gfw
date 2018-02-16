@@ -1,6 +1,5 @@
 import ReactGA from 'react-ga';
 import { ANALYTICS_EVENTS } from 'pages/country/data/analytics';
-import get from 'lodash/get';
 
 const { ANALYTICS_PROPERTY_ID } = process.env;
 let gaInitialized = false;
@@ -8,7 +7,7 @@ let gaInitialized = false;
 const initGA = () => {
   if (ANALYTICS_PROPERTY_ID) {
     if (!gaInitialized) {
-      ReactGA.initialize(ANALYTICS_PROPERTY_ID);
+      ReactGA.initialize(ANALYTICS_PROPERTY_ID, { debug: true });
       gaInitialized = true;
     }
   }
@@ -31,17 +30,17 @@ export const handleActionTrack = state => nextDispatch => action => {
     );
 
     // get the payload of the action
-    const actionPayload = {
+    const payload = {
       ...state.getState().location.payload,
-      ...action.query,
       ...action.payload,
+      ...action.query,
       ...action.meta
     };
 
-    // use comparison to find correct action
-    let event = GAEvents.find(e => !e.comparison);
+    // use condition to find correct action
+    let event = GAEvents.find(e => !e.condition);
     GAEvents.forEach(e => {
-      if (e.comparison && e.comparison(actionPayload)) {
+      if (e.condition && e.condition(payload)) {
         event = e;
       }
     });
@@ -49,12 +48,22 @@ export const handleActionTrack = state => nextDispatch => action => {
     // process event if available
     if (event) {
       const eventPayload = {
-        category: event.category,
+        category:
+          event.category && typeof event.category === 'string'
+            ? event.category
+            : event.category(payload),
         action:
-          typeof event.action === 'string'
+          event.action && typeof event.action === 'string'
             ? event.action
-            : event.action(actionPayload),
-        label: event.label || get(actionPayload, event.payloadKey)
+            : event.action(payload),
+        label:
+          event.label && typeof event.label === 'string'
+            ? event.label
+            : event.label(payload),
+        ...(!!event.value && {
+          value:
+            typeof event.value === 'string' ? event.value : event.value(payload)
+        })
       };
       if (eventPayload.label) {
         ReactGA.event(eventPayload);
