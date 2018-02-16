@@ -59,7 +59,6 @@ define(
     'text!map/templates/legend/mex_forest_cat.handlebars',
     'text!map/templates/legend/mex_forest_subcat.handlebars',
     'text!map/templates/legend/pa.handlebars',
-    'text!map/templates/legend/places2watch.handlebars',
     'text!map/templates/legend/mex_landrights.handlebars',
     'text!map/templates/legend/mexPA.handlebars',
     'text!map/templates/legend/perPA.handlebars',
@@ -131,7 +130,6 @@ define(
     mex_forest_catTpl,
     mex_forest_subcatTpl,
     paTpl,
-    places2watchTPL,
     mex_landrightsTpl,
     mexPATpl,
     perPATpl,
@@ -235,7 +233,6 @@ define(
         mex_forest_zoning_rest: Handlebars.compile(mex_forest_restTPL),
         highres: Handlebars.compile(highresTpl),
         protected_areasCDB: Handlebars.compile(paTpl),
-        places_to_watch: Handlebars.compile(places2watchTPL),
         mex_land_rights: Handlebars.compile(mex_landrightsTpl),
         mexican_pa: Handlebars.compile(mexPATpl),
         per_protected_areas: Handlebars.compile(perPATpl),
@@ -349,13 +346,26 @@ define(
               ) {
                 layer.title = 'Tree plantations';
               }
-              layer.detailsTpl = this.detailsTemplates[layer.slug]({
+
+              layer.sublayers = layers.filter(l => l.parent_layer === layer.slug);
+
+              const subLayers = layer.sublayers.length &&
+                layer.sublayers.reduce((state, l) => (
+                  Object.assign(state, {
+                    [l.slug]: {
+                      color: l.category_color,
+                      checked: 'checked'
+                    }
+                  })), {})
+
+              layer.detailsTpl = this.detailsTemplates[layer.slug](Object.assign({
                 threshold: options.threshold || 30,
                 hresolution: options.hresolution,
                 startYear: options.startYear,
                 layerTitle: layer.title,
-                layerSlug: layer.slug
-              });
+                layerSlug: layer.slug,
+                staging: window.gfw.config.FEATURE_ENV === 'staging'
+              }, subLayers));
             }
 
             if (layer.iso) {
@@ -701,7 +711,6 @@ define(
             const $div = $(div);
             const $toggle = $div.find('.onoffswitch');
             const layer = layers[$div.data('sublayer')];
-
             if (layer) {
               const color = layer.parent_layer
                 ? layer.title_color
