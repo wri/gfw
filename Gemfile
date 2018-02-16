@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.4.0'
 
-gem 'rails', '5.1.3'
+gem 'rails', '5.1.5'
 gem 'jquery-rails'
 gem 'autoprefixer-rails', '~> 7.1.2.3'
 gem 'sass-rails', '~> 5.0.6'
