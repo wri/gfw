@@ -29,6 +29,7 @@ const mapStateToProps = (
     error: map.error,
     bounds: countryData.geostore.bounds,
     layerSpec: map.layerSpec,
+    options: map.options,
     settings: activeSettings,
     layers: getLayers({ layers: activeLayers, layerSpec: map.layerSpec }),
     layersKeys: activeLayers
@@ -37,16 +38,25 @@ const mapStateToProps = (
 
 class MapContainer extends PureComponent {
   componentDidMount() {
-    this.buildMap(this.props);
-    this.props.getLayerSpec();
+    const { mapOptions, getLayerSpec, setMapOptions } = this.props;
+    this.buildMap();
+    getLayerSpec();
+    setMapOptions(mapOptions);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isParentLoading, bounds, layersKeys, settings } = nextProps;
+    const {
+      isParentLoading,
+      bounds,
+      layersKeys,
+      settings,
+      options
+    } = nextProps;
     if (isParentLoading !== this.props.isParentLoading && bounds) {
       this.boundMap(nextProps.bounds);
       this.setAreaHighlight();
       this.updateLayers(layersKeys, settings);
+      this.setEvents();
     }
 
     if (
@@ -54,6 +64,10 @@ class MapContainer extends PureComponent {
       !isEqual(settings, this.props.settings)
     ) {
       this.updateLayers(layersKeys, settings);
+    }
+
+    if (this.props.options.zoom && this.props.options.zoom !== options.zoom) {
+      this.updateZoom(options.zoom);
     }
   }
 
@@ -71,6 +85,8 @@ class MapContainer extends PureComponent {
   };
 
   setAreaHighlight() {
+    const { setMapZoom } = this.props;
+
     this.map.data.forEach(feature => {
       this.map.data.remove(feature);
     });
@@ -80,6 +96,14 @@ class MapContainer extends PureComponent {
       strokeWeight: 1.5,
       stroke: '#333',
       fillColor: 'transparent'
+    });
+    setMapZoom(this.map.getZoom());
+  }
+
+  setEvents() {
+    this.map.addListener('zoom_changed', () => {
+      const { setMapZoom } = this.props;
+      setMapZoom(this.map.getZoom());
     });
   }
 
@@ -95,6 +119,10 @@ class MapContainer extends PureComponent {
   updateLayers(layers, layerSpec) {
     this.removeLayers();
     this.setLayers(layers, layerSpec);
+  }
+
+  updateZoom(zoom) {
+    this.map.setZoom(zoom);
   }
 
   buildMap() {
@@ -127,8 +155,11 @@ MapContainer.propTypes = {
   layers: PropTypes.array,
   layersKeys: PropTypes.array,
   settings: PropTypes.object,
+  options: PropTypes.object,
   mapOptions: PropTypes.object.isRequired,
   getLayerSpec: PropTypes.func.isRequired,
+  setMapZoom: PropTypes.func.isRequired,
+  setMapOptions: PropTypes.func.isRequired,
   areaHighlight: PropTypes.object
 };
 
