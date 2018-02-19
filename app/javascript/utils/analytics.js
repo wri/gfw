@@ -7,7 +7,7 @@ let gaInitialized = false;
 const initGA = () => {
   if (ANALYTICS_PROPERTY_ID) {
     if (!gaInitialized) {
-      ReactGA.initialize(ANALYTICS_PROPERTY_ID, { debug: true });
+      ReactGA.initialize(ANALYTICS_PROPERTY_ID);
       gaInitialized = true;
     }
   }
@@ -47,23 +47,14 @@ export const handleActionTrack = state => nextDispatch => action => {
 
     // process event if available
     if (event) {
+      const evalProp = prop =>
+        (typeof prop === 'string' ? prop : prop(payload));
       const eventPayload = {
-        category:
-          event.category && typeof event.category === 'string'
-            ? event.category
-            : event.category(payload),
-        action:
-          event.action && typeof event.action === 'string'
-            ? event.action
-            : event.action(payload),
-        label:
-          event.label && typeof event.label === 'string'
-            ? event.label
-            : event.label(payload),
-        ...(!!event.value && {
-          value:
-            typeof event.value === 'string' ? event.value : event.value(payload)
-        })
+        ...['category', 'action', 'label'].reduce(
+          (val, prop) => ({ ...val, [prop]: evalProp(event[prop]) }),
+          {}
+        ),
+        ...(!!event.value && { value: evalProp(event.value) })
       };
       if (eventPayload.label) {
         ReactGA.event(eventPayload);
