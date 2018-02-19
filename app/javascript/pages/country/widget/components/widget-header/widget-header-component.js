@@ -38,7 +38,8 @@ class WidgetHeader extends PureComponent {
       setModalMeta,
       setShowMapMobile,
       citation,
-      active
+      active,
+      whitelist
     } = this.props;
     const { tooltipOpen } = this.state;
     const widgetSize = settingsConfig.config.size;
@@ -47,6 +48,10 @@ class WidgetHeader extends PureComponent {
       settingsConfig.settings &&
       settingsConfig.settings.layers &&
       settingsConfig.settings.layers.length;
+    const widgetMetaKey =
+      widget === 'treeCover' && whitelist.plantations
+        ? 'widget_natural_vs_planted'
+        : settingsConfig.config.metaKey;
 
     return (
       <div className="c-widget-header">
@@ -142,7 +147,7 @@ class WidgetHeader extends PureComponent {
               className="theme-button-small square"
               onClick={() =>
                 setModalMeta(
-                  settingsConfig.config.metaKey,
+                  widgetMetaKey,
                   ['title', 'citation'],
                   ['function', 'source'],
                   citation
@@ -193,7 +198,8 @@ WidgetHeader.propTypes = {
   modalOpen: PropTypes.bool,
   modalClosing: PropTypes.bool,
   active: PropTypes.bool,
-  citation: PropTypes.string
+  citation: PropTypes.string,
+  whitelist: PropTypes.object
 };
 
 export default WidgetHeader;
