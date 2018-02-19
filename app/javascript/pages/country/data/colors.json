@@ -15,6 +15,7 @@
     "noGain": "#e7e5a4"
   },
   "plantations": {
+    "main": "#d67828",
     "species": {
       "Oil palm": "#fdada9",
       "Wood fiber / timber": "#98a7c4",

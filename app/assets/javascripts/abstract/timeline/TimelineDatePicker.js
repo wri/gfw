@@ -83,7 +83,7 @@ define([
           var date = moment($el.data('pick'));
           var day = date.dayOfYear();
 
-          var histogram = context.histograms[date.year()];
+          var histogram = context.histograms && context.histograms[date.year()];
           if (histogram) {
             if (histogram[day - 1] > 0) {
 
@@ -93,13 +93,15 @@ define([
               var endDate = context.selectedDates.get('endDate');
               var startDate = context.selectedDates.get('startDate');
 
-              if (id === 'startDate') {
-                if (!date.isAfter(endDate)) {
-                  $el.addClass('picker__has_data');
-                }
-              } else if (id === 'endDate') {
-                if (!date.isBefore(startDate)) {
-                  $el.addClass('picker__has_data');
+              if (context.layer.slug !== 'umd_as_it_happens') {
+                if (id === 'startDate') {
+                  if (!date.isAfter(endDate)) {
+                    $el.addClass('picker__has_data');
+                  }
+                } else if (id === 'endDate') {
+                  if (!date.isBefore(startDate)) {
+                    $el.addClass('picker__has_data');
+                  }
                 }
               }
             }

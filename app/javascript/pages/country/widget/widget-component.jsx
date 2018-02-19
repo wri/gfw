@@ -21,6 +21,7 @@ import WidgetTreeLossPlantations from 'pages/country/widget/widgets/widget-tree-
 import WidgetTreeGain from 'pages/country/widget/widgets/widget-tree-gain';
 import WidgetFaoCover from 'pages/country/widget/widgets/widget-fao-cover';
 import WidgetFaoReforestation from 'pages/country/widget/widgets/widget-fao-reforestation';
+import WidgetFaoDeforestation from 'pages/country/widget/widgets/widget-fao-deforestation';
 import WidgetGladAlerts from 'pages/country/widget/widgets/widget-glad-alerts';
 import WidgetRankedPlantations from 'pages/country/widget/widgets/widget-ranked-plantations';
 import WidgetEmissions from 'pages/country/widget/widgets/widget-emissions';
@@ -45,6 +46,7 @@ const widgets = {
   WidgetTreeLossPlantations,
   WidgetFaoCover,
   WidgetFaoReforestation,
+  WidgetFaoDeforestation,
   WidgetGladAlerts,
   WidgetRankedPlantations,
   WidgetEmissions,
@@ -72,17 +74,21 @@ class Widget extends PureComponent {
       colors
     } = this.props;
     const WidgetComponent = widgets[`Widget${upperFirst(camelCase(widget))}`];
+    const highlightColor =
+      colors.main || (colors.extent && colors.extent.main) || '#a0c746';
+    const haveMapLayers =
+      settingsConfig.settings &&
+      settingsConfig.settings.layers &&
+      settingsConfig.settings.layers.length;
 
     return (
       <div
         className={`c-widget ${settingsConfig.config.size || ''}`}
         style={
-          active
+          active && haveMapLayers
             ? {
-              borderColor:
-                  colors.main ||
-                  (colors.extent && colors.extent.main) ||
-                  '#a0c746'
+              borderColor: highlightColor,
+              boxShadow: `0 0px 0px 1px ${highlightColor}`
             }
             : {}
         }

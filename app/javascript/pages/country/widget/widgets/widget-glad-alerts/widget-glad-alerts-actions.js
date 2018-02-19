@@ -1,7 +1,8 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
+import axios from 'axios';
 
-import { fetchGladAlerts } from 'services/alerts';
+import { fetchGladAlerts, fetchGLADLatest } from 'services/alerts';
 
 const setGladAlertsLoading = createAction('setGladAlertsLoading');
 const setGladAlertsData = createAction('setGladAlertsData');
@@ -13,18 +14,22 @@ const getGladAlerts = createThunkAction(
   params => (dispatch, state) => {
     if (!state().widgetGladAlerts.loading) {
       dispatch(setGladAlertsLoading({ loading: true, error: false }));
-      fetchGladAlerts(params)
-        .then(alerts => {
-          let data = {};
-          if (alerts && alerts.data) {
-            const response = alerts.data.data;
-            data = {
-              alerts: response.attributes.value,
-              period: response.period.split(',')
-            };
-          }
-          dispatch(setGladAlertsData(data));
-        })
+      axios
+        .all([fetchGladAlerts(params), fetchGLADLatest()])
+        .then(
+          axios.spread((alerts, latest) => {
+            let data = {};
+            if (alerts && alerts.data && latest && latest.data) {
+              const alertsData = alerts.data.data;
+              const latestData = latest.data.data;
+              data = {
+                alerts: alertsData.attributes.value,
+                latest: latestData[0].attributes.date
+              };
+            }
+            dispatch(setGladAlertsData(data));
+          })
+        )
         .catch(error => {
           dispatch(setGladAlertsLoading({ loading: false, error: true }));
           console.info(error);

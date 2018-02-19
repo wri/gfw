@@ -115,23 +115,27 @@ export const getIndicators = createSelector(
       return null;
     }
     const whitelist = Object.keys(locationWhitelist);
+
     return sortByKey(
-      INDICATORS.filter(
-        i =>
-          config.indicators.indexOf(i.value) > -1 &&
-          whitelist.indexOf(i.value) > -1 &&
-          (!config.type ||
-            config.type === 'extent' ||
-            (locationWhitelist[i.value] &&
-              locationWhitelist[i.value][config.type]))
-      ).map(item => {
-        const indicator = item;
-        if (indicator.value === 'gadm28') {
-          indicator.label = `All of ${locationNames.current.label}`;
-        }
-        return indicator;
-      }),
-      'label'
+      sortByKey(
+        INDICATORS.filter(
+          i =>
+            config.indicators.indexOf(i.value) > -1 &&
+            whitelist.indexOf(i.value) > -1 &&
+            (!config.type ||
+              config.type === 'extent' ||
+              (locationWhitelist[i.value] &&
+                locationWhitelist[i.value][config.type]))
+        ).map(item => {
+          const indicator = item;
+          if (indicator.value === 'gadm28') {
+            indicator.label = `All of ${locationNames.current.label}`;
+          }
+          return indicator;
+        }),
+        'label'
+      ),
+      'category'
     );
   }
 );

@@ -2,12 +2,12 @@ import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
-import sum from 'lodash/sum';
-import { sortByKey, getColorPalette } from 'utils/data';
+import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
-const getData = state => state.data || null;
+const getLoss = state => state.loss || null;
+const getExtent = state => state.extent || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
@@ -17,11 +17,10 @@ const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
 
 export const getSortedData = createSelector(
-  [getData, getSettings, getLocation, getLocationsMeta, getColors],
-  (data, settings, location, meta, colors) => {
+  [getLoss, getExtent, getSettings, getLocation, getLocationsMeta, getColors],
+  (data, extent, settings, location, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
     const { startYear, endYear } = settings;
-    const totalLoss = sum(data.map(t => sumBy(t.loss, 'area_loss')));
     const mappedData = data.map(d => {
       const region = meta.find(l => d.id === l.value);
       const loss =
@@ -29,7 +28,8 @@ export const getSortedData = createSelector(
           d.loss.filter(l => l.year >= startYear && l.year <= endYear),
           'area_loss'
         ) || 0;
-      const percentage = loss / totalLoss * 100;
+      const locationExtent = extent.filter(l => l.id === d.id);
+      const percentage = loss / locationExtent[0].extent * 100;
       return {
         label: (region && region.label) || '',
         loss,
@@ -41,34 +41,13 @@ export const getSortedData = createSelector(
       };
     });
     const sortedData = sortByKey(uniqBy(mappedData, 'label'), 'value', true);
-    const colorRange = getColorPalette(
-      colors.ramp,
-      sortedData.length < 10 ? sortedData.length : 10
-    );
 
-    return sortedData.map((o, i) => ({
+    return sortedData.map(o => ({
       ...o,
-      color: o.loss ? colorRange[i] || colorRange[9] : colors.noLoss
+      color: colors.main
     }));
   }
 );
-
-export const getChartData = createSelector([getSortedData], data => {
-  if (!data || !data.length) return null;
-  const topRegions = data.length > 10 ? data.slice(0, 10) : data;
-  const totalLoss = sumBy(data, 'loss');
-  const otherRegions = data.length > 10 ? data.slice(10) : [];
-  const othersLoss = otherRegions.length && sumBy(otherRegions, 'loss');
-  const otherRegionsData = otherRegions.length
-    ? {
-      label: 'Other regions',
-      percentage: othersLoss ? othersLoss / totalLoss * 100 : 0,
-      color: otherRegions[0].color
-    }
-    : {};
-
-  return [...topRegions, otherRegionsData];
-});
 
 export const getSentence = createSelector(
   [
@@ -121,7 +100,9 @@ export const getSentence = createSelector(
     sentence += `</b> of all tree cover loss between <b>${startYear}</b> and <b>${endYear}</b>. `;
     sentence += `${
       percentileLength > 1 ? `<b>${topRegion.label}</b>` : 'This region'
-    } had the largest tree cover loss at `;
+    } had the largest${
+      settings.unit === '%' ? ' relative' : ''
+    } tree cover loss at `;
     if (topRegion.percentage > 1 && settings.unit === '%') {
       sentence += `<b>${format('.0f')(
         topRegion.percentage

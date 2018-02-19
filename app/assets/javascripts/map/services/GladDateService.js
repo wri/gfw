@@ -7,9 +7,7 @@ define([
 
   var REQUEST_ID = 'GladDateService:fetchDates';
 
-  var API = window.gfw.config.ENV_VERSION === 'production' ? window.gfw.config.GFW_API_HOST_PROD : window.gfw.config.GFW_API_HOST_NEW_API;
-  var DATASET = window.gfw.config.ENV_VERSION === 'production' ? 'db34c2d9-77b8-43ee-b101-f499e39d1597' : '274b4818-be18-4890-9d10-eae56d2a82e5';
-  var QUERY = '/query?sql=SELECT count(*) as alerts FROM {dataset} GROUP BY julian_day, year ORDER BY year, julian_day';
+  var API = window.gfw.config.GFW_API_HOST_PROD;
 
   var GladDateService = Class.extend({
 
@@ -19,9 +17,7 @@ define([
     },
 
     _defineRequests: function() {
-      var url = API + new UriTemplate(QUERY).fillFromObject({
-        dataset: DATASET
-      });
+      var url = API + '/glad-alerts/latest';
 
       var config = {
         cache: {type: 'persist', duration: 1, unit: 'days'},
@@ -36,35 +32,15 @@ define([
       var deferred = new $.Deferred();
 
       var onSuccess = function(result) {
-        var data = result && result.data ? result.data : [];
+        var date = result && result.data && result.data[0] ? result.data[0].attributes.date : [];
         var dates = {
           counts: null,
           minDate: null,
           maxDate: null
         };
-
-        if (data.length > 0) {
-          var groupedDates = _.groupBy(data, 'year');
-          var years = _.keys(groupedDates);
-          var dataByYear = [];
-
-          var startDay = groupedDates[years[1]];
-          var startDate = moment.utc()
-            .year(years[0])
-            .dayOfYear(startDay[0].julian_day);
-
-          var endDay = groupedDates[years[years.length - 1]];
-          var endDate = moment.utc()
-            .year(years[years.length - 1])
-            .dayOfYear(endDay[endDay.length - 1].julian_day);
-
-          _.each(groupedDates, function(data, year) {
-            dataByYear[year] = _.pluck(data, 'julian_day');
-          });
-
-          dates.counts = dataByYear;
-          dates.minDate = startDate.format('YYYY-MM-DD');
-          dates.maxDate = endDate.format('YYYY-MM-DD');
+        if (date) {
+          dates.minDate = '2015-01-01';
+          dates.maxDate = date;
         }
 
         deferred.resolve(dates);

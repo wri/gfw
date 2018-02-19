@@ -50,7 +50,9 @@ define([
     },
 
     render: function() {
-      this.$el.html('').append(this.template());
+      this.$el.html('').append(this.template({
+        staging: window.gfw.config.FEATURE_ENV === 'staging'
+      }));
       this.cache();
       this.fixLegibility();
       // Initialize Country dropdown layers
