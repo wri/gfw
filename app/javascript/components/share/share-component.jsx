@@ -89,7 +89,7 @@ class Share extends PureComponent {
           <Button
             extLink={`https://plus.google.com/share?url=${shareUrl}`}
             className="social-button -googleplus"
-            data={{
+            trackingData={{
               ...data,
               socialNetwork: 'googleplus'
             }}
@@ -99,7 +99,7 @@ class Share extends PureComponent {
           <Button
             extLink={`https://twitter.com/intent/tweet?text=${socialText}&via=globalforests&url=${shareUrl}`}
             className="social-button -twitter"
-            data={{
+            trackingData={{
               ...data,
               socialNetwork: 'twitter'
             }}
@@ -109,7 +109,7 @@ class Share extends PureComponent {
           <Button
             extLink={`https://www.facebook.com/sharer.php?u=${shareUrl}`}
             className="social-button -facebook"
-            data={{
+            trackingData={{
               ...data,
               socialNetwork: 'facebook'
             }}
