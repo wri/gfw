@@ -22,15 +22,14 @@ const routeChangeThunk = (dispatch, getState) => {
 
 export const routes = {
   [EMBED]: {
-    path: '/country/embed/:widget/:country/:region?/:subRegion?',
-    thunk: routeChangeThunk
+    path: '/country/embed/:widget/:country/:region?/:subRegion?'
   },
   [COUNTRY]: {
-    path: '/country/:country/:region?/:subRegion?',
-    thunk: routeChangeThunk
+    path: '/country/:country/:region?/:subRegion?'
   }
 };
 
 export default connectRoutes(history, routes, {
-  querySerializer: queryString
+  querySerializer: queryString,
+  onAfterChange: routeChangeThunk
 });
