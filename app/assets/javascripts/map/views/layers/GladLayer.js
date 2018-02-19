@@ -71,8 +71,8 @@ define([
 
     filterCanvasImgdata: function(imgdata, w, h, z) {
       const imageData = imgdata;
-      const startDate = START_DATE;
-      const endDate = this.maxDate;
+      const startDate = this.currentDate[0];
+      const endDate = this.currentDate[1];
       const numberOfDays = endDate.diff(startDate, 'days');
       const customRangeStartDate = numberOfDays - 7;
 
@@ -80,6 +80,9 @@ define([
         this.timelineExtent = [moment.utc(this.currentDate[0]),
           moment.utc(this.currentDate[1])];
       }
+
+      const timeLinesStartDay = startDate.diff(this.timelineExtent[0], 'days');
+      const timeLinesEndDay = numberOfDays - endDate.diff(this.timelineExtent[1], 'days');
 
       var confidenceValue = -1;
       if (this.presenter.status.get('hideUnconfirmed') === true) {
@@ -97,7 +100,7 @@ define([
           // the green band to that
           var day = imgdata[pixelPos] * 255 + imgdata[pixelPos+1];
 
-          if (day >= 0 && day <= numberOfDays) {
+          if (day >= timeLinesStartDay && day <= timeLinesEndDay) {
             var band3_str = padNumber(imgdata[pixelPos+2].toString());
 
             // Grab confidence (the first value) from this string
