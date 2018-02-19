@@ -53,12 +53,14 @@ class WidgetSettings extends PureComponent {
                 }`}
               >
                 {option.label}
-                <Button
-                  className="theme-button-small square info-button"
-                  onClick={() => setModalMeta(option.metaKey)}
-                >
-                  <Icon icon={infoIcon} className="info-icon" />
-                </Button>
+                {option.metaKey && (
+                  <Button
+                    className="theme-button-small square info-button"
+                    onClick={() => setModalMeta(option.metaKey)}
+                  >
+                    <Icon icon={infoIcon} className="info-icon" />
+                  </Button>
+                )}
               </div>
             )}
           />
