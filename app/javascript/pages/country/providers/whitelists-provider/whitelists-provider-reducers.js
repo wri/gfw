@@ -1,7 +1,7 @@
 export const initialState = {
   countryWhitelistLoading: false,
   regionWhitelistLoading: false,
-  waterBodiesWhitelistLoading: false,
+  waterBodiesWhitelistLoading: true,
   countryWhitelist: {},
   regionWhitelist: {},
   waterBodiesWhitelist: {}

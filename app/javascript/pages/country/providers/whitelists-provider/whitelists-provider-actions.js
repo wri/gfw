@@ -80,21 +80,18 @@ export const getRegionWhitelist = createThunkAction(
 
 export const getWaterBodiesWhitelist = createThunkAction(
   'getWaterBodiesWhitelist',
-  () => (dispatch, state) => {
-    if (!state().whitelists.waterBodiesWhitelistLoading) {
-      dispatch(setWaterBodiesWhitelistLoading(true));
-      getWaterBodiesBlacklistProvider()
-        .then(response => {
-          let data = [];
-          if (response.data && response.data.rows.length) {
-            data = groupBy(response.data.rows, 'iso');
-          }
-          dispatch(setWaterBodiesWhitelist(data));
-        })
-        .catch(error => {
-          dispatch(setWaterBodiesWhitelistLoading(false));
-          console.info(error);
-        });
-    }
+  () => dispatch => {
+    getWaterBodiesBlacklistProvider()
+      .then(response => {
+        let data = [];
+        if (response.data && response.data.rows.length) {
+          data = groupBy(response.data.rows, 'iso');
+        }
+        dispatch(setWaterBodiesWhitelist(data));
+      })
+      .catch(error => {
+        dispatch(setWaterBodiesWhitelistLoading(false));
+        console.info(error);
+      });
   }
 );

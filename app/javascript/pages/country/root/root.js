@@ -51,6 +51,7 @@ const mapStateToProps = ({ root, countryData, whitelists, location }) => {
       ? regionWhitelist
       : countryWhitelist
   };
+
   return {
     gfwHeaderHeight: root.gfwHeaderHeight,
     isMapFixed: root.isMapFixed,
