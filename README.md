@@ -158,6 +158,10 @@ run with Grunt:
 grunt test
 ```
 
+### BrowserStack
+
+We use [BrowserStack](https://www.browserstack.com) to find and fix cross-browser issues.
+
 # License
 
 The MIT License (MIT)
