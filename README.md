@@ -167,6 +167,10 @@ We use [BrowserStack](https://www.browserstack.com) to find and fix cross-browse
 
 ## Changelog
 
+### v3.1
+- Country pages whitelist provider
+- BrowserStack attribution
+
 ### v3.0
 - sync map layers menu, legend, and side bar with master features
 - allow features to be shown on staging and not on production within map (env variable FEATURE_ENV)
