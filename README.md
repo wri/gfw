@@ -161,7 +161,7 @@ grunt test
 ### BrowserStack
 
 We use [BrowserStack](https://www.browserstack.com) to find and fix cross-browser issues.
-[![BrowserStack](https://www.browserstack.com/images/layout/browserstack-logo-600x315.png){:height="70px" style="margin:0"}](https://www.browserstack.com)
+<a href="https://www.browserstack.com"><img src="https://www.browserstack.com/images/layout/browserstack-logo-600x315.png" height="70" style="margin:0"/></a>
 
 # License
 
