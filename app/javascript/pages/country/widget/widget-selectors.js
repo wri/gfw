@@ -61,7 +61,10 @@ export const getAdminsOptions = createSelector(
       activeWaterBodies && activeWaterBodies.map(w => w.adm2);
 
     return {
-      countries: (countries && sortByKey(countries, 'label')) || null,
+      countries:
+        (countries &&
+          sortByKey(countries.filter(c => c.value !== 'XCA'), 'label')) ||
+        null,
       regions:
         (regions &&
           [{ label: 'All Regions', value: null }].concat(
