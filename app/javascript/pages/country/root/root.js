@@ -15,12 +15,21 @@ import reducers, { initialState } from './root-reducers';
 import { filterWidgets, getLinks, getActiveWidget } from './root-selectors';
 import RootComponent from './root-component';
 
-const mapStateToProps = ({ root, countryData, location }) => {
+const mapStateToProps = ({ root, countryData, whitelists, location }) => {
   const category = (location.query && location.query.category) || 'summary';
+  const {
+    countryWhitelist,
+    regionWhitelist,
+    waterBodiesWhitelist,
+    countryWhitelistLoading,
+    regionWhitelistLoading,
+    waterBodiesWhitelistLoading
+  } = whitelists;
   const adminData = {
     countries: countryData.countries,
     regions: countryData.regions,
     subRegions: countryData.subRegions,
+    waterBodies: waterBodiesWhitelist,
     location: location.payload
   };
   const locationOptions = getAdminsOptions(adminData);
@@ -29,12 +38,6 @@ const mapStateToProps = ({ root, countryData, location }) => {
   const widgetHash =
     window.location.hash && replace(window.location.hash, '#', '');
   const widgetAnchor = document.getElementById(widgetHash);
-  const {
-    regionWhitelist,
-    countryWhitelist,
-    isCountryWhitelistLoading,
-    isRegionWhitelistLoading
-  } = countryData;
   const widgetData = {
     faoCountries: countryData.faoCountries,
     category,
@@ -48,6 +51,7 @@ const mapStateToProps = ({ root, countryData, location }) => {
       ? regionWhitelist
       : countryWhitelist
   };
+
   return {
     gfwHeaderHeight: root.gfwHeaderHeight,
     isMapFixed: root.isMapFixed,
@@ -63,7 +67,10 @@ const mapStateToProps = ({ root, countryData, location }) => {
       locationNames[adminLevel] && locationNames[adminLevel].label,
     widgets: filterWidgets(widgetData),
     locationGeoJson: countryData.geostore && countryData.geostore.geojson,
-    loading: isCountryWhitelistLoading || isRegionWhitelistLoading,
+    loading:
+      countryWhitelistLoading ||
+      regionWhitelistLoading ||
+      waterBodiesWhitelistLoading,
     activeWidget: getActiveWidget(widgetData)
   };
 };

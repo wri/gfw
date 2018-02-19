@@ -8,8 +8,6 @@ import {
   getFAOCountriesProvider,
   getRegionsProvider,
   getSubRegionsProvider,
-  getCountryWhitelistProvider,
-  getRegionWhitelistProvider,
   getCountryLinksProvider
 } from 'services/country';
 import { getGeostoreProvider } from 'services/geostore';
@@ -19,12 +17,6 @@ export const setRegionsLoading = createAction('setRegionsLoading');
 export const setSubRegionsLoading = createAction('setSubRegionsLoading');
 export const setGeostoreLoading = createAction('setGeostoreLoading');
 export const setCountryLinksLoading = createAction('setCountryLinksLoading');
-export const setCountryWhitelistLoading = createAction(
-  'setCountryWhitelistLoading'
-);
-export const setRegionWhitelistLoading = createAction(
-  'setRegionWhitelistLoading'
-);
 
 export const setCountries = createAction('setCountries');
 export const setFAOCountries = createAction('setFAOCountries');
@@ -32,9 +24,7 @@ export const setGadmCountries = createAction('setGadmCountries');
 export const setRegions = createAction('setRegions');
 export const setSubRegions = createAction('setSubRegions');
 export const setGeostore = createAction('setGeostore');
-export const setCountryWhitelist = createAction('setCountryWhitelist');
 export const setCountryLinks = createAction('setCountryLinks');
-export const setRegionWhitelist = createAction('setRegionWhitelist');
 
 export const getCountries = createThunkAction(
   'getCountries',
@@ -119,62 +109,6 @@ export const getGeostore = createThunkAction(
         })
         .catch(error => {
           dispatch(setGeostoreLoading(false));
-          console.info(error);
-        });
-    }
-  }
-);
-
-export const getCountryWhitelist = createThunkAction(
-  'getCountryWhitelist',
-  country => (dispatch, state) => {
-    if (!state().countryData.isRegionWhitelistLoading) {
-      dispatch(setCountryWhitelistLoading(true));
-      getCountryWhitelistProvider(country)
-        .then(response => {
-          const data = {};
-          if (response.data && response.data.data.length) {
-            response.data.data.forEach(d => {
-              data[d.polyname] = {
-                extent_2000: d.total_extent_2000,
-                extent_2010: d.total_extent_2010,
-                loss: d.total_loss,
-                gain: d.total_gain
-              };
-            });
-          }
-          dispatch(setCountryWhitelist(data));
-        })
-        .catch(error => {
-          dispatch(setCountryWhitelistLoading(false));
-          console.info(error);
-        });
-    }
-  }
-);
-
-export const getRegionWhitelist = createThunkAction(
-  'getRegionWhitelist',
-  (country, region, subRegion) => (dispatch, state) => {
-    if (!state().countryData.isRegionWhitelistLoading) {
-      dispatch(setRegionWhitelistLoading(true));
-      getRegionWhitelistProvider(country, region, subRegion)
-        .then(response => {
-          const data = {};
-          if (response.data && response.data.data.length) {
-            response.data.data.forEach(d => {
-              data[d.polyname] = {
-                extent_2000: d.total_extent_2000,
-                extent_2010: d.total_extent_2010,
-                loss: d.total_loss,
-                gain: d.total_gain
-              };
-            });
-          }
-          dispatch(setRegionWhitelist(data));
-        })
-        .catch(error => {
-          dispatch(setRegionWhitelistLoading(false));
           console.info(error);
         });
     }

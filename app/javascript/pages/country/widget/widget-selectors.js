@@ -21,6 +21,7 @@ const getData = state => state.data || null;
 const getStartYear = state => state.startYear || null;
 const getEndYear = state => state.endYear || null;
 const getConfig = state => state.config || null;
+const getWaterBodies = state => state.waterBodies || null;
 const getLocationWhitelist = state =>
   (state.location.region ? state.regionWhitelist : state.countryWhitelist);
 
@@ -48,22 +49,41 @@ export const getLocationLabel = (location, indicator, indicators) => {
 
 // get lists selected
 export const getAdminsOptions = createSelector(
-  [getCountries, getRegions, getSubRegions],
-  (countries, regions, subRegions) => ({
-    countries: (countries && sortByKey(countries, 'label')) || null,
-    regions:
-      (regions &&
-        [{ label: 'All Regions', value: null }].concat(
-          sortByKey(regions, 'label')
-        )) ||
-      null,
-    subRegions:
-      (subRegions &&
-        [{ label: 'All Regions', value: null }].concat(
-          sortByKey(subRegions, 'label')
-        )) ||
-      null
-  })
+  [getAdmins, getCountries, getRegions, getSubRegions, getWaterBodies],
+  (location, countries, regions, subRegions, waterBodies) => {
+    const activeWaterBodies =
+      waterBodies &&
+      waterBodies[location.country] &&
+      waterBodies[location.country].filter(
+        w => w.adm1 === parseInt(location.region, 10)
+      );
+    const waterBodiesIds =
+      activeWaterBodies && activeWaterBodies.map(w => w.adm2);
+
+    return {
+      countries:
+        (countries &&
+          sortByKey(countries.filter(c => c.value !== 'XCA'), 'label')) ||
+        null,
+      regions:
+        (regions &&
+          [{ label: 'All Regions', value: null }].concat(
+            sortByKey(regions, 'label')
+          )) ||
+        null,
+      subRegions:
+        (subRegions &&
+          [{ label: 'All Regions', value: null }].concat(
+            sortByKey(
+              waterBodiesIds
+                ? subRegions.filter(s => waterBodiesIds.indexOf(s.value) === -1)
+                : subRegions,
+              'label'
+            )
+          )) ||
+        null
+    };
+  }
 );
 
 // get lists selected

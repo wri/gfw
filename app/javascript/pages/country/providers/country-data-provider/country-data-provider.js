@@ -17,8 +17,6 @@ class CountryDataProvider extends PureComponent {
       getRegions,
       getSubRegions,
       getGeostore,
-      getCountryWhitelist,
-      getRegionWhitelist,
       getCountryLinks
     } = this.props;
     getCountries();
@@ -27,22 +25,12 @@ class CountryDataProvider extends PureComponent {
       getSubRegions(location.country, location.region);
     }
     getGeostore(location.country, location.region, location.subRegion);
-    getCountryWhitelist(location.country);
-    if (location.region) {
-      getRegionWhitelist(location.country, location.region, location.subRegion);
-    }
     getCountryLinks();
   }
 
   componentWillReceiveProps(nextProps) {
     const { country, region, subRegion } = nextProps.location;
-    const {
-      getRegions,
-      getSubRegions,
-      getGeostore,
-      getCountryWhitelist,
-      getRegionWhitelist
-    } = this.props;
+    const { getRegions, getSubRegions, getGeostore } = this.props;
     const hasCountryChanged = country !== this.props.location.country;
     const hasRegionChanged = region !== this.props.location.region;
     const hasSubRegionChanged = subRegion !== this.props.location.subRegion;
@@ -53,7 +41,6 @@ class CountryDataProvider extends PureComponent {
         getSubRegions(country, region);
       }
       getGeostore(country, region, subRegion);
-      getCountryWhitelist(country);
     }
 
     if (hasRegionChanged) {
@@ -61,12 +48,10 @@ class CountryDataProvider extends PureComponent {
         getSubRegions(country, region);
       }
       getGeostore(country, region);
-      getRegionWhitelist(country, region, subRegion);
     }
 
     if (hasSubRegionChanged) {
       getGeostore(country, region, subRegion);
-      getRegionWhitelist(country, region, subRegion);
     }
   }
 
@@ -81,8 +66,6 @@ CountryDataProvider.propTypes = {
   getRegions: PropTypes.func.isRequired,
   getSubRegions: PropTypes.func.isRequired,
   getGeostore: PropTypes.func.isRequired,
-  getCountryWhitelist: PropTypes.func.isRequired,
-  getRegionWhitelist: PropTypes.func.isRequired,
   getCountryLinks: PropTypes.func.isRequired
 };
 
