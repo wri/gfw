@@ -158,7 +158,18 @@ run with Grunt:
 grunt test
 ```
 
+### BrowserStack
+
+We use [BrowserStack](https://www.browserstack.com) to find and fix cross-browser issues.
+
+<a href="https://www.browserstack.com"><img src="https://www.browserstack.com/images/layout/browserstack-logo-600x315.png" height="70" /></a>
+
+
 ## Changelog
+
+### v3.1
+- Country pages whitelist provider
+- BrowserStack attribution
 
 ### v3.0
 - sync map layers menu, legend, and side bar with master features

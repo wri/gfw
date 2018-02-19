@@ -7,7 +7,7 @@ import Component from './widget-component';
 import actions from './widget-actions';
 
 const mapStateToProps = (state, ownProps) => {
-  const { location, countryData } = state;
+  const { location, countryData, whitelists } = state;
   const { title, config, settings, loading, data, error } = state[
     `widget${upperFirst(ownProps.widget)}`
   ];
@@ -15,10 +15,13 @@ const mapStateToProps = (state, ownProps) => {
     isCountriesLoading,
     isRegionsLoading,
     isSubRegionsLoading,
-    isCountryWhitelistLoading,
-    isRegionWhitelistLoading,
     isGeostoreLoading
   } = countryData;
+  const {
+    countryWhitelistLoading,
+    regionWhitelistLoading,
+    waterBodiesLoading
+  } = whitelists;
   const adminData = {
     location: location.payload,
     countries: countryData.countries,
@@ -34,7 +37,8 @@ const mapStateToProps = (state, ownProps) => {
           options[selector] = selectorFunc({
             config,
             location: location.payload,
-            ...countryData
+            ...countryData,
+            ...whitelists
           });
           break;
         case 'years':
@@ -68,8 +72,9 @@ const mapStateToProps = (state, ownProps) => {
       isCountriesLoading ||
       isRegionsLoading ||
       isSubRegionsLoading ||
-      isCountryWhitelistLoading ||
-      isRegionWhitelistLoading,
+      countryWhitelistLoading ||
+      regionWhitelistLoading ||
+      waterBodiesLoading,
     isGeostoreLoading,
     locationNames: widgetSelectors.getAdminsSelected(adminData),
     activeLocation: widgetSelectors.getActiveAdmin({

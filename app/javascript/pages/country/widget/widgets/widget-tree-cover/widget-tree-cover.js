@@ -8,19 +8,17 @@ import reducers, { initialState } from './widget-tree-cover-reducers';
 import { getTreeCoverData, getSentence } from './widget-tree-cover-selectors';
 import WidgetTreeCoverComponent from './widget-tree-cover-component';
 
-const mapStateToProps = ({ widgetTreeCover, countryData }, ownProps) => {
-  const {
-    isCountriesLoading,
-    isRegionsLoading,
-    countryWhitelist,
-    regions
-  } = countryData;
+const mapStateToProps = (
+  { widgetTreeCover, countryData, whitelists },
+  ownProps
+) => {
+  const { isCountriesLoading, isRegionsLoading, regions } = countryData;
   const { settings, loading, data } = widgetTreeCover;
   const { colors, locationNames, activeIndicator } = ownProps;
   const selectorData = {
     data,
     settings,
-    whitelist: countryWhitelist,
+    whitelist: whitelists.countryWhitelist,
     locationNames,
     activeIndicator,
     colors

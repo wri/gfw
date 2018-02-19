@@ -40,7 +40,9 @@ import * as widgetForestryEmploymentComponent from 'pages/country/widget/widgets
 
 // Providers
 import * as countryDataProviderComponent from 'pages/country/providers/country-data-provider';
+import * as whitelistsProviderComponent from 'pages/country/providers/whitelists-provider';
 
+// Component Reducers
 const componentsReducers = {
   share: handleActions(ShareComponent),
   modalMeta: handleActions(ModalMetaComponent),
@@ -72,8 +74,10 @@ const componentsReducers = {
   widgetForestryEmployment: handleActions(widgetForestryEmploymentComponent)
 };
 
+// Provider Reducers
 const providersReducers = {
-  countryData: handleActions(countryDataProviderComponent)
+  countryData: handleActions(countryDataProviderComponent),
+  whitelists: handleActions(whitelistsProviderComponent)
 };
 
 export default combineReducers({

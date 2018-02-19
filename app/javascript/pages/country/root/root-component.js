@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 import { SCREEN_M } from 'utils/constants';
 import upperFirst from 'lodash/upperFirst';
 
+import CountryDataProvider from 'pages/country/providers/country-data-provider';
+import WhitelistsProvider from 'pages/country/providers/whitelists-provider';
+
 import Widget from 'pages/country/widget';
-import Share from 'components/share';
+import Meta from 'pages/country/meta';
 import Header from 'pages/country/header';
+
+import Share from 'components/share';
 import Map from 'components/map';
 import Sticky from 'components/sticky';
-import CountryDataProvider from 'pages/country/providers/country-data-provider';
 import SubNavMenu from 'components/subnav-menu';
 import NoContent from 'components/no-content';
 import Loader from 'components/loader';
@@ -16,7 +20,6 @@ import Button from 'components/button';
 import Icon from 'components/icon';
 import ModalMeta from 'components/modal-meta';
 import ScrollTo from 'components/scroll-to';
-import Meta from 'pages/country/meta';
 
 import mapIcon from 'assets/icons/map-button.svg';
 import closeIcon from 'assets/icons/close.svg';
@@ -129,6 +132,7 @@ class Root extends PureComponent {
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CountryDataProvider />
+        <WhitelistsProvider />
         <Meta page={currentLocation} />
       </div>
     );
