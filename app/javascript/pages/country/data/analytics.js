@@ -1,60 +1,74 @@
+import shareActions from 'components/share/share-actions';
+import modalActions from 'components/modal-meta/modal-meta-actions';
+import buttonActions from 'components/button/button-actions';
+import { COUNTRY } from 'pages/country/router';
+
+const allActions = { ...shareActions, ...buttonActions, ...modalActions };
+const actions = Object.keys(allActions).reduce(
+  (state, action) => ({
+    ...state,
+    [action]: allActions[action].toString()
+  }),
+  {}
+);
+
 export const ANALYTICS_EVENTS = [
   {
-    name: 'setShareData',
+    name: actions.setShareData,
     category: 'Country Page',
     action: 'Share page',
     label: payload => payload.country,
     condition: payload => payload.title === 'Share this Dashboard'
   },
   {
-    name: 'location/COUNTRY',
+    name: COUNTRY,
     category: 'Country Page',
     action: 'View',
     label: payload => payload && payload.query && payload.query.category
   },
   {
-    name: 'buttonClicked',
+    name: actions.buttonClicked,
     category: 'Country Page',
     action: 'User views a widget on the map',
     label: payload => payload.widget,
     condition: payload => payload.widget
   },
   {
-    name: 'setModalMetaData',
+    name: actions.setModalMetaData,
     category: 'Country Page',
     action: 'Info',
     label: payload => payload.title
   },
   {
-    name: 'setShareData',
+    name: actions.setShareData,
     category: 'Country Page',
     action: 'Share Widget',
     label: payload => payload.subtitle,
     condition: payload => payload.title === 'Share this widget'
   },
   {
-    name: 'buttonClicked',
+    name: actions.buttonClicked,
     category: 'Country Page',
     action: 'Download page',
     label: payload => payload.country,
     condition: payload => payload.title === 'download'
   },
   {
-    name: 'buttonClicked',
+    name: actions.buttonClicked,
     category: 'Country Page',
     action: 'User clicks through to main map',
     label: payload => payload.layers,
     condition: payload => payload.title === 'view-full-map'
   },
   {
-    name: 'buttonClicked',
+    name: actions.buttonClicked,
     category: 'Country Page',
     action: payload => `Share on ${payload.socialNetwork}`,
     label: payload => payload.socialText,
     condition: payload => payload.socialNetwork
   },
   {
-    name: 'setShareCopied',
+    name: actions.setShareCopied,
     category: 'Country Page',
     action: 'Copies embed code',
     label: payload => payload.subtitle

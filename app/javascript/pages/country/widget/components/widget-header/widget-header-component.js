@@ -69,7 +69,7 @@ class WidgetHeader extends PureComponent {
                     widget
                   }
                 }}
-                data={{
+                trackingData={{
                   title: 'map-button',
                   widget: `${title} in ${
                     locationNames.current ? locationNames.current.label : ''

@@ -19,7 +19,7 @@ const Button = props => {
     disabled,
     onClick,
     tooltip,
-    data,
+    trackingData,
     buttonClicked
   } = props;
   const classNames = `c-button ${theme || ''} ${className || ''} ${
@@ -29,8 +29,8 @@ const Button = props => {
     if (onClick) {
       onClick();
     }
-    if (data) {
-      buttonClicked(data);
+    if (trackingData) {
+      buttonClicked(trackingData);
     }
   };
   let button = null;
@@ -81,7 +81,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   extLink: PropTypes.string,
   tooltip: PropTypes.object,
-  data: PropTypes.object,
+  trackingData: PropTypes.object,
   buttonClicked: PropTypes.func
 };
 
