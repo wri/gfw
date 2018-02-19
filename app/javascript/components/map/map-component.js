@@ -10,7 +10,7 @@ import './map-styles.scss';
 
 class Map extends PureComponent {
   render() {
-    const { loading, error, layers, mapZoomIn, mapZoomOut } = this.props;
+    const { loading, error, layers, setMapZoom } = this.props;
     return (
       <div className="c-map">
         {loading && (
@@ -23,8 +23,8 @@ class Map extends PureComponent {
         <div id="map" className="c-map" />
         {!loading && (
           <MapControls
-            handleZoomIn={() => mapZoomIn()}
-            handleZoomOut={() => mapZoomOut()}
+            handleZoomIn={() => setMapZoom({ value: 1, sum: true })}
+            handleZoomOut={() => setMapZoom({ value: -1, sum: true })}
           />
         )}
         {!loading && layers && layers.length && <MiniLegend layers={layers} />}
@@ -37,8 +37,7 @@ Map.propTypes = {
   loading: Proptypes.bool.isRequired,
   error: Proptypes.bool.isRequired,
   layers: Proptypes.array,
-  mapZoomIn: Proptypes.func,
-  mapZoomOut: Proptypes.func
+  setMapZoom: Proptypes.func
 };
 
 export default Map;
