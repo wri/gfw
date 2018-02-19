@@ -406,22 +406,23 @@ define(
         );
 
         // Change selector countries action name.
-        if ($('.categories').filter('.-country')) {
-          const accordionCountry = $('.categories').filter('.-country');
-          if ($(accordionCountry).find('.js-tree-plantation')) {
-            const selectOption = $(accordionCountry).find('.js-tree-plantation');
-            $(selectOption).removeClass('js-tree-plantation');
-            $(selectOption).addClass('js-tree-plantation-country');
-          }
-          layer.detailsTpl = this.detailsTemplates[layer.slug]({
-            threshold: options.threshold || 30,
-            hresolution: options.hresolution,
-            startYear: options.startYear,
-            layerTitle: layer.title,
-            layerSlug: layer.slug,
-            staging: window.gfw.config.FEATURE_ENV === 'staging'
-          });
-        }
+        // if ($('.categories').filter('.-country')) {
+        //   const accordionCountry = $('.categories').filter('.-country');
+        //   if ($(accordionCountry).find('.js-tree-plantation')) {
+        //     const selectOption = $(accordionCountry).find('.js-tree-plantation');
+        //     $(selectOption).removeClass('js-tree-plantation');
+        //     $(selectOption).addClass('js-tree-plantation-country');
+        //   }
+        //   debugger
+        //   layer.detailsTpl = this.detailsTemplates[layer.slug]({
+        //     threshold: options.threshold || 30,
+        //     hresolution: options.hresolution,
+        //     startYear: options.startYear,
+        //     layerTitle: layer.title,
+        //     layerSlug: layer.slug,
+        //     staging: window.gfw.config.FEATURE_ENV === 'staging'
+        //   });
+        // }
 
         this.presenter.toggleSelected();
         this.presenter.toggleLayerOptions();
