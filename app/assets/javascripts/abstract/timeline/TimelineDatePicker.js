@@ -169,7 +169,7 @@ define(
             .toDate();
 
         this.$('.timeline-date-picker').pickadate({
-          today: 'Jump to Today',
+          today: context.layer.slug !== 'umd_as_it_happens' ? 'Jump to Today' : '',
           min: minDate,
           max: maxDate,
           selectYears: 20,
