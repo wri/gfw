@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import lowerCase from 'lodash/lowerCase';
+
 import Dropdown from 'components/dropdown';
 import Button from 'components/button';
 import Icon from 'components/icon';
@@ -53,12 +55,22 @@ class WidgetSettings extends PureComponent {
                 }`}
               >
                 {option.label}
-                <Button
-                  className="theme-button-small square info-button"
-                  onClick={() => setModalMeta(option.metaKey)}
-                >
-                  <Icon icon={infoIcon} className="info-icon" />
-                </Button>
+                {option.metaKey && (
+                  <Button
+                    className="theme-button-small square info-button"
+                    onClick={() =>
+                      setModalMeta(
+                        option.metaKey === 'primary_forests'
+                          ? `${lowerCase(locationNames.country.value)}_${
+                            option.metaKey
+                          }`
+                          : option.metaKey
+                      )
+                    }
+                  >
+                    <Icon icon={infoIcon} className="info-icon" />
+                  </Button>
+                )}
               </div>
             )}
           />

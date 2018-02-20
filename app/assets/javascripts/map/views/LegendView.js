@@ -347,25 +347,36 @@ define(
                 layer.title = 'Tree plantations';
               }
 
-              layer.sublayers = layers.filter(l => l.parent_layer === layer.slug);
+              layer.sublayers = layers.filter(
+                l => l.parent_layer === layer.slug
+              );
 
-              const subLayers = layer.sublayers.length &&
-                layer.sublayers.reduce((state, l) => (
-                  Object.assign(state, {
-                    [l.slug]: {
-                      color: l.category_color,
-                      checked: 'checked'
-                    }
-                  })), {})
+              const subLayers =
+                layer.sublayers.length &&
+                layer.sublayers.reduce(
+                  (state, l) =>
+                    Object.assign(state, {
+                      [l.slug]: {
+                        color: l.category_color,
+                        checked: 'checked'
+                      }
+                    }),
+                  {}
+                );
 
-              layer.detailsTpl = this.detailsTemplates[layer.slug](Object.assign({
-                threshold: options.threshold || 30,
-                hresolution: options.hresolution,
-                startYear: options.startYear,
-                layerTitle: layer.title,
-                layerSlug: layer.slug,
-                staging: window.gfw.config.FEATURE_ENV === 'staging'
-              }, subLayers));
+              layer.detailsTpl = this.detailsTemplates[layer.slug](
+                Object.assign(
+                  {
+                    threshold: options.threshold || 30,
+                    hresolution: options.hresolution,
+                    startYear: options.startYear,
+                    layerTitle: layer.title,
+                    layerSlug: layer.slug,
+                    staging: window.gfw.config.FEATURE_ENV === 'staging'
+                  },
+                  subLayers
+                )
+              );
             }
 
             if (layer.iso) {
@@ -409,18 +420,12 @@ define(
         if ($('.categories').filter('.-country')) {
           const accordionCountry = $('.categories').filter('.-country');
           if ($(accordionCountry).find('.js-tree-plantation')) {
-            const selectOption = $(accordionCountry).find('.js-tree-plantation');
+            const selectOption = $(accordionCountry).find(
+              '.js-tree-plantation'
+            );
             $(selectOption).removeClass('js-tree-plantation');
             $(selectOption).addClass('js-tree-plantation-country');
           }
-          layer.detailsTpl = this.detailsTemplates[layer.slug]({
-            threshold: options.threshold || 30,
-            hresolution: options.hresolution,
-            startYear: options.startYear,
-            layerTitle: layer.title,
-            layerSlug: layer.slug,
-            staging: window.gfw.config.FEATURE_ENV === 'staging'
-          });
         }
 
         this.presenter.toggleSelected();
@@ -429,8 +434,8 @@ define(
 
       getLayersByCategory(layers) {
         const subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
-        const filteredLayers = _.filter(layers, (layer) => !layer.parent_layer);
-        return _.groupBy(filteredLayers, (layer) => {
+        const filteredLayers = _.filter(layers, layer => !layer.parent_layer);
+        return _.groupBy(filteredLayers, layer => {
           layer.allowSubscription =
             layer && subscriptionsAllowed.indexOf(layer.slug) > -1;
 
@@ -438,7 +443,9 @@ define(
           if (
             layer.category_slug === 'forest_clearing' &&
             !layer.is_forest_clearing
-          ) { return 'forest_cover'; }
+          ) {
+            return 'forest_cover';
+          }
           return layer.category_slug;
         });
       },
@@ -448,7 +455,7 @@ define(
         const categories_status = this.model.get('categories_status');
         _.each(
           array,
-          (category) => {
+          category => {
             for (let i = 0; i < category.length; i++) {
               // Mantain categories closed in rendering
               category.closed =
@@ -552,10 +559,11 @@ define(
       toggleLayerOptions(layerOptions) {
         _.each(
           this.$el.find('.layer-option'),
-          (div) => {
+          div => {
             const $div = $(div);
             const $toggle = $div.find('.onoffswitch');
-            const optionSelected = layerOptions.indexOf($div.data('option')) > -1;
+            const optionSelected =
+              layerOptions.indexOf($div.data('option')) > -1;
             const color = $toggle.data('color') || '#F69';
 
             if (optionSelected) {
@@ -621,13 +629,7 @@ define(
         const dataSource = $(e.target).attr('data-source');
         if (text != '') {
           $('body').append(
-            `<div class="tooltip-info-legend" id="tooltip-info-legend" style="top:${
-              top
-            }px; left:${
-              left
-            }px;"><div class="triangle"><span>${
-              text
-            }</span><p>Click to see more</p></div></div>`
+            `<div class="tooltip-info-legend" id="tooltip-info-legend" style="top:${top}px; left:${left}px;"><div class="triangle"><span>${text}</span><p>Click to see more</p></div></div>`
           );
         }
         $('.tooltip-info-legend').css(
@@ -707,7 +709,7 @@ define(
       toggleSelected(layers) {
         _.each(
           this.$el.find('.layer-sublayer'),
-          (div) => {
+          div => {
             const $div = $(div);
             const $toggle = $div.find('.onoffswitch');
             const layer = layers[$div.data('sublayer')];
@@ -764,19 +766,19 @@ define(
       showLayer(e) {
         const layer = $(e.target).attr('data-slug-show');
 
-        _.each(this.$el.find('.layer-info-container'), (li) => {
+        _.each(this.$el.find('.layer-info-container'), li => {
           if (layer === $(li).attr('data-slug')) {
             $(li).removeClass('-desactivate');
           }
         });
 
-        _.each(this.$el.find('.-js-hidden-layer'), (li) => {
+        _.each(this.$el.find('.-js-hidden-layer'), li => {
           if (layer === $(li).attr('data-slug-hidden')) {
             $(li).css('display', 'block');
           }
         });
 
-        _.each(this.$el.find('.-js-show-layer'), (li) => {
+        _.each(this.$el.find('.-js-show-layer'), li => {
           if (layer === $(li).attr('data-slug-show')) {
             $(li).css('display', 'none');
           }
@@ -795,34 +797,31 @@ define(
           const layerArray = this.model.get('layers_status');
           const mapLayer = this.map.overlayMapTypes.getAt(index);
 
-          _.map(
-            layerArray,
-            (l, i) => {
-              if (l.name === layer) {
-                this.map.overlayMapTypes.setAt(l.index, l.layerInformation);
-              }
-              iCount += 1;
+          _.map(layerArray, (l, i) => {
+            if (l.name === layer) {
+              this.map.overlayMapTypes.setAt(l.index, l.layerInformation);
             }
-          );
+            iCount += 1;
+          });
         }
       },
 
       hiddenLayer(e) {
         const layer = $(e.target).attr('data-slug-hidden');
 
-        _.each(this.$el.find('.layer-info-container'), (li) => {
+        _.each(this.$el.find('.layer-info-container'), li => {
           if (layer === $(li).attr('data-slug')) {
             $(li).addClass('-desactivate');
           }
         });
 
-        _.each(this.$el.find('.-js-hidden-layer'), (li) => {
+        _.each(this.$el.find('.-js-hidden-layer'), li => {
           if (layer === $(li).attr('data-slug-hidden')) {
             $(li).css('display', 'none');
           }
         });
 
-        _.each(this.$el.find('.-js-show-layer'), (li) => {
+        _.each(this.$el.find('.-js-show-layer'), li => {
           if (layer === $(li).attr('data-slug-show')) {
             $(li).css('display', 'block');
           }
@@ -841,7 +840,7 @@ define(
           layerP.setOpacity(0);
         } else if (
           typeof this.map.overlayMapTypes.getAt(index) !== 'undefined' ||
-            this.map.overlayMapTypes.getAt(index) != null
+          this.map.overlayMapTypes.getAt(index) != null
         ) {
           const layerArray = this.model.get('layers_status');
           const mapLayer = this.map.overlayMapTypes.getAt(index);

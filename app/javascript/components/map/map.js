@@ -16,20 +16,19 @@ export { default as actions } from './map-actions';
 
 const mapStateToProps = (
   state,
-  { isParentLoading, settings, layers, parentLayersKey }
+  { isParentLoading, layers, parentLayersKey }
 ) => {
   const { map, countryData } = state;
   const parentSettings =
     state[parentLayersKey] && state[parentLayersKey].settings;
   const activeLayers =
     layers || (parentSettings && parentSettings.layers) || map.layers;
-  const activeSettings = settings || parentSettings || map.settings;
   return {
     loading: map.loading || isParentLoading,
     error: map.error,
     bounds: countryData.geostore.bounds,
     layerSpec: map.layerSpec,
-    settings: activeSettings,
+    settings: map.settings,
     layers: getLayers({ layers: activeLayers, layerSpec: map.layerSpec }),
     layersKeys: activeLayers
   };
@@ -37,8 +36,10 @@ const mapStateToProps = (
 
 class MapContainer extends PureComponent {
   componentDidMount() {
-    this.buildMap(this.props);
-    this.props.getLayerSpec();
+    const { mapOptions, getLayerSpec, setMapSettings } = this.props;
+    this.buildMap();
+    getLayerSpec();
+    setMapSettings(mapOptions);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -46,14 +47,19 @@ class MapContainer extends PureComponent {
     if (isParentLoading !== this.props.isParentLoading && bounds) {
       this.boundMap(nextProps.bounds);
       this.setAreaHighlight();
-      this.updateLayers(layersKeys, settings);
+      this.updateLayers(layersKeys);
+      this.setEvents();
+    }
+
+    if (!isEqual(layersKeys, this.props.layersKeys)) {
+      this.updateLayers(layersKeys);
     }
 
     if (
-      !isEqual(layersKeys, this.props.layersKeys) ||
-      !isEqual(settings, this.props.settings)
+      this.props.settings.zoom &&
+      this.props.settings.zoom !== settings.zoom
     ) {
-      this.updateLayers(layersKeys, settings);
+      this.updateZoom(settings.zoom);
     }
   }
 
@@ -71,6 +77,8 @@ class MapContainer extends PureComponent {
   };
 
   setAreaHighlight() {
+    const { setMapZoom } = this.props;
+
     this.map.data.forEach(feature => {
       this.map.data.remove(feature);
     });
@@ -80,6 +88,20 @@ class MapContainer extends PureComponent {
       strokeWeight: 1.5,
       stroke: '#333',
       fillColor: 'transparent'
+    });
+    setMapZoom({
+      value: this.map.getZoom(),
+      sum: false
+    });
+  }
+
+  setEvents() {
+    this.map.addListener('zoom_changed', () => {
+      const { setMapZoom } = this.props;
+      setMapZoom({
+        value: this.map.getZoom(),
+        sum: false
+      });
     });
   }
 
@@ -95,6 +117,10 @@ class MapContainer extends PureComponent {
   updateLayers(layers, layerSpec) {
     this.removeLayers();
     this.setLayers(layers, layerSpec);
+  }
+
+  updateZoom(zoom) {
+    this.map.setZoom(zoom);
   }
 
   buildMap() {
@@ -129,6 +155,8 @@ MapContainer.propTypes = {
   settings: PropTypes.object,
   mapOptions: PropTypes.object.isRequired,
   getLayerSpec: PropTypes.func.isRequired,
+  setMapZoom: PropTypes.func.isRequired,
+  setMapSettings: PropTypes.func.isRequired,
   areaHighlight: PropTypes.object
 };
 
