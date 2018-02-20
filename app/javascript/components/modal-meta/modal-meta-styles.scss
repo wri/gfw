@@ -90,6 +90,10 @@ $desktop-padding: rem(50px);
       @media screen and (min-width: $screen-m) {
         padding: rem(13px) $desktop-padding;
       }
+
+      p {
+        margin-bottom: rem(10px);
+      }
     }
   }
 

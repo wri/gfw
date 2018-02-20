@@ -64,6 +64,7 @@ class Widget extends PureComponent {
       settingsConfig,
       setWidgetSettingsUrl,
       embed,
+      whitelist,
       loading,
       error,
       data,
@@ -98,6 +99,7 @@ class Widget extends PureComponent {
           location={location}
           query={query}
           locationNames={locationNames}
+          whitelist={whitelist}
           settingsConfig={{
             ...settingsConfig,
             onSettingsChange: setWidgetSettingsUrl
@@ -140,7 +142,8 @@ Widget.propTypes = {
   error: PropTypes.bool,
   data: PropTypes.object,
   active: PropTypes.bool,
-  colors: PropTypes.object
+  colors: PropTypes.object,
+  whitelist: PropTypes.object
 };
 
 export default Widget;
