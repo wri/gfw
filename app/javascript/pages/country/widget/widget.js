@@ -43,7 +43,8 @@ const mapStateToProps = (state, ownProps) => {
               ...config,
               years: config.years || data.years || []
             },
-            ...settings
+            ...settings,
+            year: settings.year || (data.years ? data.years[0] : 0)
           });
           break;
         case 'units':

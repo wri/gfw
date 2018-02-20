@@ -17,7 +17,7 @@ export const getFilteredData = createSelector(
   (data, settings) => {
     if (!data || !data.fao) return null;
 
-    const { year } = settings;
+    const year = settings.year || data.years[0];
     const gdps = data.fao.filter(
       item =>
         item.gdpusd2012 &&
@@ -76,6 +76,8 @@ export const chartData = createSelector(
     const data = filteredData.filter(
       item => item.iso === locationNames.current.value
     );
+    if (!data.length) return null;
+
     const colorRange = [colors.male, colors.female];
     return [
       {
@@ -146,16 +148,18 @@ export const chartConfig = createSelector([], () => ({
 }));
 
 export const getSentence = createSelector(
-  [getFilteredData, getSettings, getLocationNames],
-  (data, settings, locationNames) => {
+  [getFilteredData, getData, getSettings, getLocationNames],
+  (data, rawData, settings, locationNames) => {
     if (!data) return '';
 
-    const { year } = settings;
-    const currentLocation =
-      locationNames && locationNames.current && locationNames.current.label;
     const selectedFAO = data.filter(
       item => item.iso === locationNames.current.value
     );
+    if (!selectedFAO.length) return '';
+
+    const year = settings.year || rawData.years[0];
+    const currentLocation =
+      locationNames && locationNames.current && locationNames.current.label;
     return `According to the FAO, the forestry sector contributed a net <b>${formatCurrency(
       selectedFAO[0].net_usd,
       false
