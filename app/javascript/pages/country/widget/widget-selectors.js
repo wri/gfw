@@ -193,9 +193,10 @@ export const getEndYears = createSelector(
 
 export const getPeriods = createSelector([], () => PERIODS);
 
-export const getYears = createSelector([getConfig], config =>
-  config.years.map(d => ({
+export const getYears = createSelector([getConfig], config => {
+  if (!config.years) return null;
+  return config.years.map(d => ({
     label: d,
     value: d
-  }))
-);
+  }));
+});

@@ -166,7 +166,7 @@ class WidgetSettings extends PureComponent {
           <Dropdown
             theme="theme-select-light"
             label="YEAR"
-            value={settings.year || years[0]}
+            value={settings.year}
             options={years}
             onChange={option =>
               onSettingsChange({ value: { year: option.value }, widget })

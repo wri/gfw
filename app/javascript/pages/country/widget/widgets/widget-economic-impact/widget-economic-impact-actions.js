@@ -16,23 +16,26 @@ export const getEconomicImpact = createThunkAction(
       dispatch(setEconomicImpactLoading({ loading: true, error: false }));
       getFAOEcoLive()
         .then(response => {
+          const { country, year } = params;
+          const years = sortBy(
+            uniq(
+              response.data.rows
+                .filter(
+                  d =>
+                    d.country === country &&
+                    d.year !== 9999 &&
+                    d.usdrev !== null &&
+                    d.usdexp !== null &&
+                    d.usdexp !== ''
+                )
+                .map(d => d.year)
+            )
+          );
           dispatch(
             setEconomicImpactData({
-              fao: response.data.rows,
-              years: sortBy(
-                uniq(
-                  response.data.rows
-                    .filter(
-                      d =>
-                        d.country === params.country &&
-                        d.year !== 9999 &&
-                        d.usdrev !== null &&
-                        d.usdexp !== null &&
-                        d.usdexp !== ''
-                    )
-                    .map(d => d.year)
-                )
-              )
+              data: { fao: response.data.rows },
+              years,
+              year: years.includes(year) ? year : years[0]
             })
           );
         })
