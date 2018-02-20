@@ -38,6 +38,14 @@ const mapStateToProps = (state, ownProps) => {
           });
           break;
         case 'years':
+          options[selector] = selectorFunc({
+            config: {
+              ...config,
+              years: config.years || data.years || []
+            },
+            ...settings
+          });
+          break;
         case 'units':
           options[selector] = selectorFunc({
             config,

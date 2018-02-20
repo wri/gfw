@@ -453,7 +453,6 @@
       "categories": ["people"],
       "admins": ["country"],
       "selectors": ["years", "units"],
-      "years": [2000, 2005, 2010],
       "units": ["net_usd", "net_perc"],
       "type": "fao",
       "metaKey": "widget_economic_impact",
