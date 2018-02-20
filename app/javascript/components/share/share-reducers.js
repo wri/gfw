@@ -19,7 +19,6 @@ const setShareData = (state, { payload }) => ({
   selected: 'link',
   loading: true,
   data: {
-    ...state.data,
     ...payload
   }
 });

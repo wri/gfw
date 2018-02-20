@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { COUNTRY } from 'pages/country/router';
 import isEqual from 'lodash/isEqual';
-import remove from 'lodash/remove';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import { format } from 'd3-format';
 import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
@@ -55,15 +54,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const { query } = ownProps.location;
   const widgetQueries = {};
   if (query) {
-    const widgetKeys = remove(
-      Object.keys(query),
-      d => d !== 'category' && d !== 'widget'
-    );
-    widgetKeys.forEach(key => {
-      widgetQueries[key] = encodeStateForUrl({
-        ...decodeUrlForState(query[key]),
-        indicator: WIDGETS_CONFIG[key].settings.indicator
-      });
+    Object.keys(query).forEach(key => {
+      if (Object.keys(WIDGETS_CONFIG).indexOf(key) > -1) {
+        widgetQueries[key] = encodeStateForUrl({
+          ...decodeUrlForState(query[key]),
+          indicator: WIDGETS_CONFIG[key].settings.indicator
+        });
+      }
     });
   }
   const newQuery = {

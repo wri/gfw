@@ -18,6 +18,7 @@ class Share extends PureComponent {
       selected,
       loading,
       copied,
+      data,
       data: { title, subtitle, shareUrl, embedUrl, embedSettings, socialText },
       handleFocus,
       setShareSelected,
@@ -85,27 +86,36 @@ class Share extends PureComponent {
           ) : null}
         </div>
         <div className="social-container">
-          <a
-            href={`https://plus.google.com/share?url=${shareUrl}`}
-            target="_blank"
+          <Button
+            extLink={`https://plus.google.com/share?url=${shareUrl}`}
             className="social-button -googleplus"
+            trackingData={{
+              ...data,
+              socialNetwork: 'googleplus'
+            }}
           >
             <Icon icon={googleplusIcon} className="googleplus-icon" />
-          </a>
-          <a
-            href={`https://twitter.com/intent/tweet?text=${socialText}&via=globalforests&url=${shareUrl}`}
-            target="_blank"
+          </Button>
+          <Button
+            extLink={`https://twitter.com/intent/tweet?text=${socialText}&via=globalforests&url=${shareUrl}`}
             className="social-button -twitter"
+            trackingData={{
+              ...data,
+              socialNetwork: 'twitter'
+            }}
           >
             <Icon icon={twitterIcon} className="twitter-icon" />
-          </a>
-          <a
-            href={`https://www.facebook.com/sharer.php?u=${shareUrl}`}
-            target="_blank"
+          </Button>
+          <Button
+            extLink={`https://www.facebook.com/sharer.php?u=${shareUrl}`}
             className="social-button -facebook"
+            trackingData={{
+              ...data,
+              socialNetwork: 'facebook'
+            }}
           >
             <Icon icon={facebookIcon} className="facebook-icon" />
-          </a>
+          </Button>
         </div>
       </div>
     );

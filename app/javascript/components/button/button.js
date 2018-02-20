@@ -1,3 +1,6 @@
-import Component from './button-component';
+import { connect } from 'react-redux';
 
-export default Component;
+import Component from './button-component';
+import actions from './button-actions';
+
+export default connect(null, actions)(Component);

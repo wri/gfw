@@ -8,6 +8,7 @@ import './button-styles.scss';
 import 'styles/themes/button/button-light.scss'; // eslint-disable-line
 import 'styles/themes/button/button-small.scss'; // eslint-disable-line
 import 'styles/themes/button/button-grey.scss'; // eslint-disable-line
+import 'styles/themes/button/button-map-control.scss'; // eslint-disable-line
 
 const Button = props => {
   const {
@@ -18,11 +19,21 @@ const Button = props => {
     theme,
     disabled,
     onClick,
-    tooltip
+    tooltip,
+    trackingData,
+    buttonClicked
   } = props;
   const classNames = `c-button ${theme || ''} ${className || ''} ${
     disabled ? 'disabled' : ''
   }`;
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+    if (trackingData) {
+      buttonClicked(trackingData);
+    }
+  };
   let button = null;
   if (extLink) {
     button = (
@@ -31,6 +42,7 @@ const Button = props => {
         href={extLink}
         target="_blank"
         rel="noopener"
+        onClick={handleClick}
         disabled={disabled}
       >
         {children}
@@ -42,14 +54,14 @@ const Button = props => {
         className={classNames}
         to={link}
         disabled={disabled}
-        onClick={onClick}
+        onClick={handleClick}
       >
         {children}
       </Link>
     );
   } else {
     button = (
-      <button className={classNames} onClick={onClick} disabled={disabled}>
+      <button className={classNames} onClick={handleClick} disabled={disabled}>
         {children}
       </button>
     );
@@ -69,7 +81,9 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
   extLink: PropTypes.string,
-  tooltip: PropTypes.object
+  tooltip: PropTypes.object,
+  trackingData: PropTypes.object,
+  buttonClicked: PropTypes.func
 };
 
 export default Button;

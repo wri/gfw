@@ -11,19 +11,17 @@ import {
 } from './widget-intact-tree-cover-selectors';
 import WidgetIntactTreeCoverComponent from './widget-intact-tree-cover-component';
 
-const mapStateToProps = ({ widgetIntactTreeCover, countryData }, ownProps) => {
-  const {
-    isCountriesLoading,
-    isRegionsLoading,
-    countryWhitelist,
-    regions
-  } = countryData;
+const mapStateToProps = (
+  { widgetIntactTreeCover, countryData, whitelists },
+  ownProps
+) => {
+  const { isCountriesLoading, isRegionsLoading, regions } = countryData;
   const { settings, loading, data } = widgetIntactTreeCover;
   const { colors, locationNames, activeIndicator } = ownProps;
   const selectorData = {
     data,
     settings,
-    whitelist: countryWhitelist,
+    whitelist: whitelists.countryWhitelist,
     locationNames,
     activeIndicator,
     colors

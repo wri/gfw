@@ -3,8 +3,13 @@ class CountryController < ApplicationController
   layout 'country'
 
   def index
-    @desc = 'Data about forest change, tenure, forest related employment and land use'
     @actual_path = request.original_fullpath
+    @iso = params[:iso]
+    @desc = 'Data about forest change, tenure, forest related employment and land use'
+    @path = {
+      path: @actual_path,
+      iso: params[:iso]
+    }
     @is_contained = @actual_path.include?('contained')
   end
 
