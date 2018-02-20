@@ -139,6 +139,12 @@ class WidgetHeader extends PureComponent {
                     disabled: isDeviceTouch,
                     html: <Tip text="Filter and customize the data" />
                   }}
+                  trackingData={{
+                    event: 'open-settings',
+                    label: `${title} in ${
+                      locationNames.current ? locationNames.current.label : ''
+                    }`
+                  }}
                 >
                   <Icon icon={settingsIcon} className="settings-icon" />
                 </Button>
