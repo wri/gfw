@@ -9,7 +9,6 @@ import UNITS from 'pages/country/data/units.json';
 import PERIODS from 'pages/country/data/periods.json';
 import EXTENT_YEARS from 'pages/country/data/extent-years.json';
 import TYPES from 'pages/country/data/types.json';
-import METRICS from 'pages/country/data/metrics.json';
 import WEEKS from 'pages/country/data/weeks.json';
 
 // get list data
@@ -150,8 +149,6 @@ export const getUnits = createSelector([getConfig], config => {
 });
 
 export const getTypes = createSelector([], () => sortByKey(TYPES, 'label'));
-
-export const getMetrics = createSelector([], () => sortByKey(METRICS, 'label'));
 
 export const getExtentYears = createSelector([], () => EXTENT_YEARS);
 

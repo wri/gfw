@@ -30,12 +30,12 @@ export const chartConfig = createSelector(
   [getSettings, getColors],
   (settings, colors) => {
     const colorRange = getColorPalette(colors.ramp, 2);
-    const { metric } = settings;
+    const { unit } = settings;
     return {
       xKey: 'year',
       yKeys: {
         areas: {
-          [metric]: {
+          [unit]: {
             fill: colorRange[0],
             background: false,
             activeDot: true
@@ -45,7 +45,7 @@ export const chartConfig = createSelector(
       unit: 't',
       tooltip: [
         {
-          key: [metric],
+          key: [unit],
           unit: 't'
         }
       ]
@@ -58,11 +58,11 @@ export const getSentence = createSelector(
   (data, settings, indicator) => {
     if (!data || isEmpty(data) || !indicator) return null;
 
-    const { startYear, endYear, metric } = settings;
+    const { startYear, endYear, unit } = settings;
     const totalEmissions = data
-      .map(d => d[metric])
+      .map(d => d[unit])
       .reduce((sum, d) => (d ? sum + d : sum));
-    const emissionType = metric === 'biomassCarbon' ? 'carbon' : 'CO2';
+    const emissionType = unit === 'biomassCarbon' ? 'carbon' : 'CO2';
     let indicatorText = '';
     if (indicator.value === 'mining') {
       indicatorText = ` in ${indicator.label.toLowerCase()} regions`;

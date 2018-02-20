@@ -395,7 +395,8 @@
       "indicators": ["gadm28", "bra_biomes", "mining", "wdpa", "primary_forest", "ifl_2013"],
       "categories": ["climate"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "startYears", "endYears", "metrics"],
+      "selectors": ["indicators", "startYears", "endYears", "units"],
+      "units": ["biomassCarbon", "co2Emissions"],
       "yearRange": ["2001", "2016"],
       "metaKey": "widget_carbon_emissions_tree_cover_loss",
       "type": "loss",
@@ -403,7 +404,7 @@
     },
     "settings": {
       "indicator": "gadm28",
-      "metric": "biomassCarbon",
+      "unit": "biomassCarbon",
       "threshold": 30,
       "startYear": 2001,
       "endYear": 2016
