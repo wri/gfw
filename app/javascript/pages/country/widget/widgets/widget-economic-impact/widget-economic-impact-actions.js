@@ -11,7 +11,7 @@ const setEconomicImpactSettings = createAction('setEconomicImpactSettings');
 
 export const getEconomicImpact = createThunkAction(
   'getEconomicImpact',
-  () => (dispatch, state) => {
+  params => (dispatch, state) => {
     if (!state().widgetEconomicImpact.loading) {
       dispatch(setEconomicImpactLoading({ loading: true, error: false }));
       getFAOEcoLive()
@@ -22,7 +22,14 @@ export const getEconomicImpact = createThunkAction(
               years: sortBy(
                 uniq(
                   response.data.rows
-                    .filter(d => d.year !== 9999)
+                    .filter(
+                      d =>
+                        d.country === params.country &&
+                        d.year !== 9999 &&
+                        d.usdrev !== null &&
+                        d.usdexp !== null &&
+                        d.usdexp !== ''
+                    )
                     .map(d => d.year)
                 )
               )
