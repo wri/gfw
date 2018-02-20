@@ -86,6 +86,9 @@ const mapStateToProps = (state, ownProps) => {
       widgetSelectors.getActiveIndicator(settings.indicator),
     location: location.payload,
     query: location.query,
+    whitelist: location.payload.region
+      ? whitelists.regionWhitelist
+      : whitelists.countryWhitelist,
     title,
     loading,
     error,
