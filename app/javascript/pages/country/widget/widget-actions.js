@@ -3,6 +3,7 @@ import upperFirst from 'lodash/upperFirst';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
 import { encodeStateForUrl, decodeUrlForState } from 'utils/stateToUrl';
+import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 
 import * as treeLossActions from 'pages/country/widget/widgets/widget-tree-loss/widget-tree-loss-actions';
 import * as treeLossPlantationsActions from 'pages/country/widget/widgets/widget-tree-loss-plantations/widget-tree-loss-plantations-actions';
@@ -76,7 +77,7 @@ export const setWidgetSettingsStore = createThunkAction(
   'setWidgetSettingsStore',
   query => (dispatch, getState) => {
     Object.keys(query).forEach(widgetKey => {
-      if (widgetKey !== 'category' && widgetKey !== 'widget') {
+      if (Object.keys(WIDGETS_CONFIG).indexOf(widgetKey) > -1) {
         const widgetConfig = decodeUrlForState(query[widgetKey]);
         const { settings } = getState()[`widget${upperFirst(widgetKey)}`];
         // Check if the state needs and update checking the values of the new config
