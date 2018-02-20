@@ -109,7 +109,9 @@ define([
         });
 
         var $footer = this.$root.find('.picker__footer');
-        $footer.prepend(context.legendTemplate());
+        if (context.layer.slug !== 'umd_as_it_happens') {
+          $footer.prepend(context.legendTemplate());
+        }
       };
 
       var onPickerOpen = function() {
