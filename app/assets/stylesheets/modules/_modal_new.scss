@@ -66,9 +66,7 @@ $height: auto;
   max-width: 800px;
 
   @media (min-width: $br-mobile){
-    padding: 50px;
-    padding-top: 40px;
-    padding-bottom: 30px;
+    padding: 40px 50px 30px 50px;
   }
 
   .modal-close {
@@ -393,18 +391,14 @@ $height: auto;
       }
 
       dd {
-        padding: 10px;
         font-size: 13px;
-        padding-right: 30px;
-        padding-left: 30px;
+        padding: 10px 30px;
 
         @media (min-width: $br-mobile){
           display: table-cell;
-          padding: 10px 10px 10px 15px;
           border-left: 1px solid $border;
           border-bottom: 1px solid $border;
-          padding-right: 50px;
-          padding-left: 10px;
+          padding: 10px 50px 10px 10px;
         }
 
         a {
@@ -627,7 +621,6 @@ $height: auto;
         .img-max {
           max-width: 100%;
         }
-        // margin: 0 0 15px;
       }
     }
 
