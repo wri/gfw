@@ -71,7 +71,7 @@ define([
 
     filterCanvasImgdata: function(imgdata, w, h, z) {
       const imageData = imgdata;
-      const startDate = this.currentDate[0];
+      const startDate = moment(START_DATE);
       const endDate = this.currentDate[1];
       const numberOfDays = endDate.diff(startDate, 'days');
       const customRangeStartDate = numberOfDays - 7;
@@ -81,7 +81,7 @@ define([
           moment.utc(this.currentDate[1])];
       }
 
-      const timeLinesStartDay = startDate.diff(this.timelineExtent[0], 'days');
+      const timeLinesStartDay = this.timelineExtent[0].diff(startDate, 'days');
       const timeLinesEndDay = numberOfDays - endDate.diff(this.timelineExtent[1], 'days');
 
       var confidenceValue = -1;
