@@ -1,12 +1,12 @@
 class CountriesController < ApplicationController
-  before_action :check_country_iso, only: :show
+  before_action :set_country, only: :show
 
   include ActionView::Helpers::NumberHelper
 
   layout 'countries'
 
   def index
-    @countries = find_countries
+    @countries = Country.find_all
     @title = 'Country Profiles'
     @desc = 'Explore country-specific statistics and graphs to see the how forests change and contribute to various sectors.'
     @keywords = 'GFW, list, forest data, visualization, data, national, country, analysis, statistic, tree cover loss, tree cover gain, climate domain, boreal, tropical, subtropical, temperate, deforestation, overview'
@@ -44,53 +44,8 @@ class CountriesController < ApplicationController
   end
 
   private
-    def find_countries
-      response = Typhoeus.get("#{ENV['GFW_API_HOST']}/countries", headers: {"Accept" => "application/json"})
-      if response.success?
-        Rails.cache.fetch 'countries', expires_in: 1.day do
-          JSON.parse(response.body)['countries']
-        end
-      else
-        nil
-      end
-    end
 
-    def find_by_iso(iso)
-      unless iso.blank?
-        # CACHE: &bust=true if you want to flush the cache
-        iso = iso.downcase
-        response = Typhoeus.get(
-            "#{ENV['GFW_API_HOST']}/countries/#{iso}?thresh=30",
-            headers: {"Accept" => "application/json"}
-        )
-        if response.success? and (response.body.length > 0)
-          JSON.parse(response.body)
-        else
-          nil
-        end
-      end
-    end
-
-    def find_by_name(country_name)
-      country_name, *_ = country_name.split(/_/)
-      country_name = country_name.capitalize
-      response = Typhoeus.get("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20gfw2_countries%20where%20name%20like%20'#{country_name}%25'",
-        headers: {"Accept" => "application/json"}
-        )
-      if response.success?
-        JSON.parse(response.body)['rows'][0]
-      else
-        nil
-      end
-    end
-
-    def check_country_iso
-      @country = find_by_iso(params[:id])
-      unless @country.nil?
-        @country
-      else
-        @country = find_by_name(params[:id])
-      end
-        @country
+    def set_country
+      @country = Country.find_by_iso_or_name(params[:id])
     end
 end
