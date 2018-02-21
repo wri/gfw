@@ -3,6 +3,7 @@ $button-height: rem(40px);
 
 .c-button {
   height: $button-height;
+  font-family: $font-family-1;
   border-radius: rem(20px);
   width: 100%;
   padding: 0 rem(15px);

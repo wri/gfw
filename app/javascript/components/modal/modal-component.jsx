@@ -28,7 +28,7 @@ class CustomModal extends PureComponent {
       >
         <button
           onClick={onRequestClose}
-          className={`c-modal-close ${closeClass}`}
+          className={`modal-close ${closeClass}`}
         >
           <Icon icon={closeIcon} />
         </button>
