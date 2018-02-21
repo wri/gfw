@@ -4,14 +4,17 @@ class CountryController < ApplicationController
   before_action :set_country, only: [:show]
 
   def show
-    @iso = @country["iso"]
     @title = @country["name"]
-    @desc = "Data about forest change, tenure, forest related employment and land use #{@title}"
+    @widget = params[:widget]
+    @desc = "Data about forest change, tenure, forest related employment and land use in #{@title}"
+    if @widget
+      @img = "widgets/#{@widget}.png"
+    end
   end
 
   def embed
-    @title = 'Widget Embed'
-    @desc = "Data about forest change, tenure, forest related employment and land use #{@title}"
+    @title = @country["name"]
+    @desc = "Data about forest change, tenure, forest related employment and land use in #{@title}"
     render layout: 'application_react_embed'
   end
 

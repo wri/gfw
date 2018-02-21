@@ -7,14 +7,22 @@
 <meta name="keywords" content="<%= @keywords %>">
 <meta name="author" content="World Resources Institute">
 <meta name="description" content='<%= @desc %>' />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@globalforests" />
 <meta name="twitter:description" content='<%= @desc %>' />
-<meta name="twitter:image:src" content='<%= @img %>' />
+
+<!-- Open graph -->
+<meta property="og:title" content='<%= @title %> | Global Forest Watch' />
 <meta property="og:description" content='<%= @desc %>' />
-<meta property="og:title" content='<%= @title %>' />
 <meta property="og:type" content="website" />
-<meta property="og:image" content='<%= @img %>'>
-<meta property="og:url" content='<%= @img_url %>' />
+<meta property="og:image" content='<%= @img ? image_url(@img) : 'http://www.globalforestwatch.org/assets/backgrounds/home-slider/bg_slide1.png' %>'>
+<meta property="og:url" content='<%= request.original_url %>' />
+
+<!-- Google verification -->
 <meta name="google-translate-customization" content="95a31ce28e08eaf2-a31ff49177f3ed6f-g9553d70b9ef10300-15"></meta>
 <meta name="google-site-verification" content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak" />
+
+<!-- keys -->
 <%= csrf_meta_tags %>

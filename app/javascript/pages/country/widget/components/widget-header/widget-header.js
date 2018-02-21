@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import compact from 'lodash/compact';
-import replace from 'lodash/replace';
 import moment from 'moment';
 
 import shareActions from 'components/share/share-actions';
@@ -43,11 +42,9 @@ const mapStateToProps = ({ location, modalMeta }, ownProps) => {
       subtitle: `${title} in ${
         locationNames.current ? locationNames.current.label : ''
       }`,
-      shareUrl: `${replace(
-        window.location.href,
-        window.location.hash,
-        ''
-      )}#${widget}`,
+      shareUrl: `http://${window.location.host}${window.location.pathname}?${
+        location.query.category ? `category=${location.query.category}&` : ''
+      }${`widget=${widget}`}#${widget}`,
       embedUrl,
       embedSettings:
         settingsConfig.config.size === 'small'

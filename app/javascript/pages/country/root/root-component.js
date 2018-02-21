@@ -133,7 +133,13 @@ class Root extends PureComponent {
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CountryDataProvider />
         <WhitelistsProvider />
-        {/* <Meta page={currentLocation} /> */}
+        <Meta
+          page={
+            locationNames &&
+            locationNames.country &&
+            locationNames.country.label
+          }
+        />
       </div>
     );
   }
