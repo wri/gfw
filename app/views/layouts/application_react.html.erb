@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render 'shared/meta' %>
+
+    <!-- render react app pack -->
+    <%= javascript_pack_tag controller_name %>
+    <%= stylesheet_pack_tag controller_name %>
+
+    <!-- custom -->
+    <link rel="canonical" href="<%= request.original_url %>" />
+    <script src="https://cdn.optimizely.com/js/7988050790.js"></script>
+    <%= render 'shared/gfw_assets' %>
+
+    <%= yield :head %>
+  </head>
+  <body>
+    <div id="headerGfw"></div>
+    <%= yield %>
+    <div id="footerGfw"></div>
+  </body>
+</html>
