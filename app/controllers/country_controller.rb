@@ -1,19 +1,18 @@
 class CountryController < ApplicationController
 
-  layout 'country'
+  layout 'application_react'
   before_action :set_country, only: [:show]
 
   def show
-    @actual_path = request.original_fullpath
     @iso = @country["iso"]
     @title = @country["name"]
-    @desc = 'Data about forest change, tenure, forest related employment and land use'
-    @is_contained = @actual_path.include?('contained')
+    @desc = "Data about forest change, tenure, forest related employment and land use #{@title}"
   end
 
   def embed
-    @desc = 'Data about forest change, tenure, forest related employment and land use'
-    render layout: 'country_embed'
+    @title = 'Widget Embed'
+    @desc = "Data about forest change, tenure, forest related employment and land use #{@title}"
+    render layout: 'application_react_embed'
   end
 
   private
