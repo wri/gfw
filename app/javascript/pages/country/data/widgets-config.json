@@ -100,6 +100,7 @@
                       "primary_forest", "ifl_2013__mining","primary_forest__landmark",
                       "plantations__mining",
                       "plantations__wdpa", "plantations__landmark"],
+      "units": ["ha", "%"],
       "categories": ["summary", "land-cover"],
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "units", "extentYears"],
@@ -187,6 +188,7 @@
                       "primary_forest", "primary_forest__landmark",
                       "plantations", "plantations__mining",
                       "plantations__wdpa", "plantations__landmark"],
+      "units": ["ha", "%"],
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "units", "startYears", "endYears", "extentYears"],
@@ -217,6 +219,7 @@
     "config": {
       "size": "small",
       "indicators": ["gadm28", "wdpa", "primary_forests", "plantations", "ifl_2013"],
+      "units": ["ha", "%"],
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "thresholds", "extentYears", "units"],
@@ -284,6 +287,7 @@
                       "primary_forest", "primary_forest__landmark",
                       "plantations", "plantations__mining",
                       "plantations__wdpa", "plantations__landmark"],
+      "units": ["ha", "%"],
       "categories": ["forest-change"],
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "units", "extentYears"],
@@ -391,7 +395,8 @@
       "indicators": ["gadm28", "bra_biomes", "mining", "wdpa", "primary_forest", "ifl_2013"],
       "categories": ["climate"],
       "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "startYears", "endYears", "metrics"],
+      "selectors": ["indicators", "startYears", "endYears", "units"],
+      "units": ["biomassCarbon", "co2Emissions"],
       "yearRange": ["2001", "2016"],
       "metaKey": "widget_carbon_emissions_tree_cover_loss",
       "type": "loss",
@@ -399,7 +404,7 @@
     },
     "settings": {
       "indicator": "gadm28",
-      "metric": "biomassCarbon",
+      "unit": "biomassCarbon",
       "threshold": 30,
       "startYear": 2001,
       "endYear": 2016
@@ -434,11 +439,30 @@
       "type": "fao",
       "metaKey": "widget_forestry_employment",
       "sortOrder": {
-        "forest-change": 1
+        "people": 2
       }
     },
     "settings": {
       "year": 2000
+    },
+    "enabled": true
+  },
+  "economicImpact": {
+    "title": "Economic Impact",
+    "config": {
+      "size": "large",
+      "categories": ["people"],
+      "admins": ["country"],
+      "selectors": ["years", "units"],
+      "units": ["net_usd", "net_perc"],
+      "type": "fao",
+      "metaKey": "widget_economic_impact",
+      "sortOrder": {
+        "people": 1
+      }
+    },
+    "settings": {
+      "unit": "net_usd"
     },
     "enabled": true
   }

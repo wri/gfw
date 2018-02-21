@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'd3-format';
 
 import './widget-chart-tooltip-styles.scss';
 
@@ -29,10 +28,9 @@ class WidgetChartTooltip extends PureComponent {
                           {<span>{values[d.label] || d.label}</span>}
                         </div>
                       )}
-                      {d.unit
-                        ? format(d.unit === '%' ? '.1f' : '.3s')(values[d.key])
+                      {d.unit && d.unitFormat
+                        ? `${d.unitFormat(values[d.key])}${d.unit}`
                         : values[d.key]}
-                      {d.unit}
                     </div>
                   ))
               )}

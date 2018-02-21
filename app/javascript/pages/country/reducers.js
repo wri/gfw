@@ -37,6 +37,7 @@ import * as widgetEmissionsComponent from 'pages/country/widget/widgets/widget-e
 import * as widgetEmissionsDeforestationComponent from 'pages/country/widget/widgets/widget-emissions-deforestation';
 import * as widgetFiresComponent from 'pages/country/widget/widgets/widget-fires';
 import * as widgetForestryEmploymentComponent from 'pages/country/widget/widgets/widget-forestry-employment';
+import * as widgetEconomicImpactComponent from 'pages/country/widget/widgets/widget-economic-impact';
 
 // Providers
 import * as countryDataProviderComponent from 'pages/country/providers/country-data-provider';
@@ -71,7 +72,8 @@ const componentsReducers = {
     widgetEmissionsDeforestationComponent
   ),
   widgetFires: handleActions(widgetFiresComponent),
-  widgetForestryEmployment: handleActions(widgetForestryEmploymentComponent)
+  widgetForestryEmployment: handleActions(widgetForestryEmploymentComponent),
+  widgetEconomicImpact: handleActions(widgetEconomicImpactComponent)
 };
 
 // Provider Reducers

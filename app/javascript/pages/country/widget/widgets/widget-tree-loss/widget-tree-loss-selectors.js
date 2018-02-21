@@ -57,11 +57,13 @@ export const chartConfig = createSelector([getColors], colors => ({
     },
     {
       key: 'area',
-      unit: 'ha'
+      unit: 'ha',
+      unitFormat: value => format('.3s')(value)
     },
     {
       key: 'percentage',
-      unit: '%'
+      unit: '%',
+      unitFormat: value => format('.1f')(value)
     }
   ]
 }));
