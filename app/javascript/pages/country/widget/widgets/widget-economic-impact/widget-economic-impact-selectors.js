@@ -78,19 +78,18 @@ export const chartData = createSelector(
     );
     if (!data.length) return null;
 
-    const colorRange = [colors.male, colors.female];
     return [
       {
         ...data[0],
         name: 'Expenditure',
         value: data[0].exp,
-        color: colorRange[0]
+        color: colors.male
       },
       {
         ...data[0],
         name: 'Revenue',
         value: data[0].rev,
-        color: colorRange[1]
+        color: colors.female
       }
     ];
   }
