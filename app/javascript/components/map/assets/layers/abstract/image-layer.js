@@ -65,8 +65,8 @@ class ImageLayer extends Overlay {
     let tileY = y;
     let tileZ = z;
     if (z > this.options.dataMaxZoom) {
-      tileX = Math.floor(x / (2 ** z - this.options.dataMaxZoom));
-      tileY = Math.floor(y / (2 ** z - this.options.dataMaxZoom));
+      tileX = Math.floor(x / 2 ** (z - this.options.dataMaxZoom));
+      tileY = Math.floor(y / 2 ** (z - this.options.dataMaxZoom));
       tileZ = this.options.dataMaxZoom;
     } else {
       tileY = y > 2 ** z ? y % 2 ** z : y;
