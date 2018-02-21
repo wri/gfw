@@ -83,15 +83,17 @@ export const chartConfig = createSelector(
       tooltip: [
         {
           key: 'e1Percentage',
-          unit: '%',
           label: 'Agriculture',
-          color: colorRange[0]
+          color: colorRange[0],
+          unit: '%',
+          unitFormat: value => format('.1f')(value)
         },
         {
           key: 'e2Percentage',
-          unit: '%',
           label: 'Land-Use Change and Forestry',
-          color: colorRange[1]
+          color: colorRange[1],
+          unit: '%',
+          unitFormat: value => format('.1f')(value)
         }
       ]
     };

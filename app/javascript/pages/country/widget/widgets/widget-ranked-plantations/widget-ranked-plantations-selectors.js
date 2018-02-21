@@ -75,10 +75,10 @@ export const chartConfig = createSelector(
       yAxisDotFill: '#d4d4d4',
       tooltip: dataKeys.map(item => ({
         key: item,
-        unit: '%',
-        unitFormat: '.2f',
         label: `${item} label`,
-        color: colorsByType[item]
+        color: colorsByType[item],
+        unit: '%',
+        unitFormat: value => format('.1f')(value)
       }))
     };
   }

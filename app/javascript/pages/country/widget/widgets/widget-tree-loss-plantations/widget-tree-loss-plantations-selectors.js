@@ -2,7 +2,6 @@ import { createSelector } from 'reselect';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
-import { biomassToCO2 } from 'utils/calculations';
 import { getColorPalette } from 'utils/data';
 
 // get list data
@@ -52,15 +51,17 @@ export const chartConfig = createSelector([getColors], colors => {
     tooltip: [
       {
         key: 'outsideAreaLoss',
-        unit: 'ha',
         label: 'Natural forest',
-        color: colorRange[1]
+        color: colorRange[1],
+        unit: 'ha',
+        unitFormat: value => format('.3s')(value)
       },
       {
         key: 'areaLoss',
-        unit: 'ha',
         label: 'Plantations',
-        color: colorRange[0]
+        color: colorRange[0],
+        unit: 'ha',
+        unitFormat: value => format('.3s')(value)
       }
     ]
   };
@@ -74,7 +75,6 @@ export const getSentence = createSelector(
     const locationLabel = locationNames.current && locationNames.current.label;
     const totalLoss = sumBy(data, 'areaLoss') || 0;
     const totalOutsideLoss = sumBy(data, 'outsideAreaLoss') || 0;
-    const totalEmissions = biomassToCO2(sumBy(data, 'emissions')) || 0;
     const lossPhrase =
       totalLoss > totalOutsideLoss ? 'plantations' : 'natural forest';
 
