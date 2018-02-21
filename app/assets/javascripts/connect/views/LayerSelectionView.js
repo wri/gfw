@@ -68,7 +68,7 @@ define([
       // Load countries
       CountryService.getCountries()
         .then(function(results) {
-          this.countries = results;
+          this.countries = _.sortBy(results, 'name');
           this.renderCountries();
           this.renderCountryLayers();
 

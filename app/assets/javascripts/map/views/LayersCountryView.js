@@ -43,7 +43,7 @@ define([
       // Init presenter
       this.presenter = new Presenter(this);
       this.map = map;
-      this.countries = countries;
+      this.countries = _.sortBy(countries, 'name');
 
       this.render();
       this.listeners();

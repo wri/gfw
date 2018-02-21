@@ -169,7 +169,8 @@ define(
             .toDate();
 
         this.$('.timeline-date-picker').pickadate({
-          today: context.layer.slug !== 'umd_as_it_happens' ? 'Jump to Today' : '',
+          today:
+            context.layer.slug !== 'umd_as_it_happens' ? 'Jump to Today' : '',
           min: minDate,
           max: maxDate,
           selectYears: 20,
@@ -225,13 +226,11 @@ define(
         const dateService = new this.dataService();
         this.histograms = [];
 
-        dateService.fetchDates().then(
-          (response) => {
-            this.histograms = response.counts;
-            this.renderPickers();
-            this.setMinMaxDate(response);
-          }
-        );
+        dateService.fetchDates().then(response => {
+          this.histograms = response.counts;
+          this.renderPickers();
+          this.setMinMaxDate(response);
+        });
       }
     });
 
