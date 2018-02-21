@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import findIndex from 'lodash/findIndex';
 import { format } from 'd3-format';
 import { sortByKey } from 'utils/data';
-import { formatCurrency } from 'utils/format';
+import { formatUSD } from 'utils/format';
 
 // get list data
 const getData = state => state.data;
@@ -141,10 +141,11 @@ export const chartConfig = createSelector([], () => ({
     {
       key: 'value',
       unit: ' USD',
-      unitFormat: value => formatCurrency(value, false)
+      unitFormat: value => formatUSD(value, false)
     }
   ],
-  unit: 'net_usd'
+  unit: ' $',
+  unitFormat: value => formatUSD(value)
 }));
 
 export const getSentence = createSelector(
@@ -160,7 +161,7 @@ export const getSentence = createSelector(
     const { year } = settings;
     const currentLocation =
       locationNames && locationNames.current && locationNames.current.label;
-    return `According to the FAO, the forestry sector contributed a net <b>${formatCurrency(
+    return `According to the FAO, the forestry sector contributed a net <b>${formatUSD(
       selectedFAO[0].net_usd,
       false
     )} USD</b> to the economy in <b>${year}</b>, which is approximately <b>${format(

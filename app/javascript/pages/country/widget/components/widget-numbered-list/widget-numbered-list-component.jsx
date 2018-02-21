@@ -2,26 +2,12 @@ import React, { PureComponent } from 'react';
 import Link from 'redux-first-router-link';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
-import { formatCurrency } from 'utils/format';
 
 import WidgetPaginate from 'pages/country/widget/components/widget-paginate';
 
 import './widget-numbered-list-styles.scss';
 
 class WidgetNumberedList extends PureComponent {
-  getUnitValue = (value, unit) => {
-    let unitValue = '';
-    switch (unit) {
-      case 'net_usd':
-        unitValue = `${formatCurrency(value)} $`;
-        break;
-      default:
-        unitValue = format(value < 1 ? '.2f' : '.3s')(value) + unit;
-        break;
-    }
-    return unitValue;
-  };
-
   render() {
     const {
       className,
@@ -30,7 +16,7 @@ class WidgetNumberedList extends PureComponent {
       handlePageChange,
       linksDisabled
     } = this.props;
-    const { page, pageSize, unit } = settings;
+    const { page, pageSize, unit, unitFormat } = settings;
     const pageData = pageSize
       ? data.slice(page * pageSize, (page + 1) * pageSize)
       : data;
@@ -55,7 +41,10 @@ class WidgetNumberedList extends PureComponent {
                     <div className="item-name">{item.label}</div>
                   </div>
                   <div className="item-value">
-                    {this.getUnitValue(item.value, unit)}
+                    {unitFormat
+                      ? unitFormat(item.value)
+                      : format(item.value < 1 ? '.2f' : '.3s')(item.value)}
+                    {unit}
                   </div>
                 </Link>
               </li>

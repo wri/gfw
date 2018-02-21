@@ -42,14 +42,15 @@ export const chartConfig = createSelector(
           }
         }
       },
-      unit: 't',
       tooltip: [
         {
           key: [unit],
           unit: 't',
           unitFormat: value => format('.3s')(value)
         }
-      ]
+      ],
+      unit: 't',
+      unitFormat: value => format('.2s')(value)
     };
   }
 );

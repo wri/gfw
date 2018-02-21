@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'd3-format';
-import { formatCurrency } from 'utils/format';
 
 const CustomTick = ({
   x,
@@ -9,23 +7,13 @@ const CustomTick = ({
   payload,
   dataMax,
   unit,
+  unitFormat,
   fill,
   backgroundColor
 }) => {
   const tickValue = payload && payload.value;
-  let formattedTick = 0;
-  let tick = '';
-
-  switch (unit) {
-    case 'net_usd':
-      formattedTick = tickValue ? formatCurrency(tickValue) : 0;
-      tick = tickValue >= dataMax ? `${formattedTick} $` : formattedTick;
-      break;
-    default:
-      formattedTick = tickValue ? format('.2s')(tickValue) : 0;
-      tick = tickValue >= dataMax ? `${formattedTick}${unit}` : formattedTick;
-      break;
-  }
+  const formattedTick = tickValue ? unitFormat(tickValue) : 0;
+  const tick = tickValue >= dataMax ? `${formattedTick}${unit}` : formattedTick;
 
   return (
     <g transform={`translate(${x},${y})`}>
@@ -55,6 +43,7 @@ CustomTick.propTypes = {
   payload: PropTypes.object,
   dataMax: PropTypes.number,
   unit: PropTypes.string,
+  unitFormat: PropTypes.func,
   fill: PropTypes.string,
   backgroundColor: PropTypes.string
 };
