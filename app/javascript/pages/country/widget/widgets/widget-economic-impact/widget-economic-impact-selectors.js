@@ -149,7 +149,7 @@ export const chartConfig = createSelector([], () => ({
 export const getSentence = createSelector(
   [getFilteredData, getData, getSettings, getLocationNames],
   (data, rawData, settings, locationNames) => {
-    if (!data) return '';
+    if (!data || !rawData.years || !rawData.length) return '';
 
     const selectedFAO = data.filter(
       item => item.iso === locationNames.current.value
