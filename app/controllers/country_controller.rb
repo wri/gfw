@@ -1,9 +1,9 @@
 class CountryController < ApplicationController
 
   layout 'country'
-  before_action :set_country, only: [:index]
+  before_action :set_country, only: [:show]
 
-  def index
+  def show
     @actual_path = request.original_fullpath
     @iso = @country["iso"]
     @title = @country["name"]
