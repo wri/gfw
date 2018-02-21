@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'd3-format';
 
 const CustomTick = ({
   x,
@@ -8,11 +7,12 @@ const CustomTick = ({
   payload,
   dataMax,
   unit,
+  unitFormat,
   fill,
   backgroundColor
 }) => {
   const tickValue = payload && payload.value;
-  const formattedTick = tickValue ? format('.2s')(tickValue) : 0;
+  const formattedTick = tickValue ? unitFormat(tickValue) : 0;
   const tick = tickValue >= dataMax ? `${formattedTick}${unit}` : formattedTick;
 
   return (
@@ -43,6 +43,7 @@ CustomTick.propTypes = {
   payload: PropTypes.object,
   dataMax: PropTypes.number,
   unit: PropTypes.string,
+  unitFormat: PropTypes.func,
   fill: PropTypes.string,
   backgroundColor: PropTypes.string
 };

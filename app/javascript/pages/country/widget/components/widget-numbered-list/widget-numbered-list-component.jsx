@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
+import Link from 'redux-first-router-link';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
-import Link from 'redux-first-router-link';
 
 import WidgetPaginate from 'pages/country/widget/components/widget-paginate';
 
@@ -16,7 +16,7 @@ class WidgetNumberedList extends PureComponent {
       handlePageChange,
       linksDisabled
     } = this.props;
-    const { page, pageSize, unit } = settings;
+    const { page, pageSize, unit, unitFormat } = settings;
     const pageData = pageSize
       ? data.slice(page * pageSize, (page + 1) * pageSize)
       : data;
@@ -41,7 +41,9 @@ class WidgetNumberedList extends PureComponent {
                     <div className="item-name">{item.label}</div>
                   </div>
                   <div className="item-value">
-                    {format(item.value < 1 ? '.2f' : '.3s')(item.value)}
+                    {unitFormat
+                      ? unitFormat(item.value)
+                      : format(item.value < 1 ? '.2f' : '.3s')(item.value)}
                     {unit}
                   </div>
                 </Link>

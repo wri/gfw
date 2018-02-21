@@ -200,7 +200,11 @@ define(
 
       setMinMaxDate(data) {
         const tzOffset = new Date().getTimezoneOffset() + 60;
-        this.minDate = moment.utc(data.minDate).endOf('day');
+        if (this.layer.slug === 'umd_as_it_happens') {
+          this.minDate = moment.utc(data.minDate);
+        } else {
+          this.minDate = moment.utc(data.minDate).endOf('day');
+        }
         this.maxDate = moment.utc(data.maxDate);
         const minDate = this.minDate
           .clone()
