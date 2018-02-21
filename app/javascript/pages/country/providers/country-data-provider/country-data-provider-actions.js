@@ -11,6 +11,7 @@ import {
   getCountryLinksProvider
 } from 'services/country';
 import { getGeostoreProvider } from 'services/geostore';
+import BOUNDS from 'pages/country/data/bounds.json';
 
 export const setCountriesLoading = createAction('setCountriesLoading');
 export const setRegionsLoading = createAction('setRegionsLoading');
@@ -102,7 +103,7 @@ export const getGeostore = createThunkAction(
               hash,
               geojson,
               areaHa,
-              bounds: getBoxBounds(bbox)
+              bounds: getBoxBounds(bbox, country, region)
             })
           );
           dispatch(setGeostoreLoading(false));
@@ -138,10 +139,15 @@ export const getCountryLinks = createThunkAction(
   }
 );
 
-const getBoxBounds = cornerBounds => [
-  [cornerBounds[0], cornerBounds[1]],
-  [cornerBounds[0], cornerBounds[3]],
-  [cornerBounds[2], cornerBounds[3]],
-  [cornerBounds[2], cornerBounds[1]],
-  [cornerBounds[0], cornerBounds[1]]
-];
+const getBoxBounds = (cornerBounds, country, region) => {
+  if (!region && Object.keys(BOUNDS).includes(country)) {
+    return BOUNDS[country];
+  }
+  return [
+    [cornerBounds[0], cornerBounds[1]],
+    [cornerBounds[0], cornerBounds[3]],
+    [cornerBounds[2], cornerBounds[3]],
+    [cornerBounds[2], cornerBounds[1]],
+    [cornerBounds[0], cornerBounds[1]]
+  ];
+};
