@@ -28,6 +28,7 @@ import WidgetEmissions from 'pages/country/widget/widgets/widget-emissions';
 import WidgetEmissionsDeforestation from 'pages/country/widget/widgets/widget-emissions-deforestation';
 import WidgetFires from 'pages/country/widget/widgets/widget-fires';
 import WidgetForestryEmployment from 'pages/country/widget/widgets/widget-forestry-employment';
+import WidgetEconomicImpact from 'pages/country/widget/widgets/widget-economic-impact';
 
 import './widget-styles.scss';
 import './widget-tooltip-styles.scss';
@@ -51,7 +52,8 @@ const widgets = {
   WidgetEmissions,
   WidgetEmissionsDeforestation,
   WidgetFires,
-  WidgetForestryEmployment
+  WidgetForestryEmployment,
+  WidgetEconomicImpact
 };
 
 class Widget extends PureComponent {

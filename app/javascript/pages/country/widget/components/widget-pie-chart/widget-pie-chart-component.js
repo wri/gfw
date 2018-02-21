@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { format } from 'd3-format';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import WidgetChartToolTip from 'pages/country/widget/components/widget-chart-tooltip';
 
@@ -44,8 +45,9 @@ class WidgetPieChart extends PureComponent {
                   settings={[
                     {
                       key: 'percentage',
+                      label: 'label',
                       unit: '%',
-                      label: 'label'
+                      unitFormat: value => format('.1f')(value)
                     }
                   ]}
                 />

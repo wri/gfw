@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import WidgetChartToolTip from 'pages/country/widget/components/widget-chart-tooltip';
+import { format } from 'd3-format';
 import maxBy from 'lodash/maxBy';
 import max from 'lodash/max';
-
 import {
   Line,
   Bar,
+  Cell,
   Area,
   XAxis,
   YAxis,
@@ -16,6 +16,7 @@ import {
   ComposedChart
 } from 'recharts';
 
+import WidgetChartToolTip from 'pages/country/widget/components/widget-chart-tooltip';
 import CustomTick from './custom-tick-component';
 import './widget-composed-chart-styles.scss';
 
@@ -39,7 +40,8 @@ class WidgetComposedChart extends PureComponent {
       yAxis,
       gradients,
       tooltip,
-      unit
+      unit,
+      unitFormat
     } = this.props.config;
     const { className, data, config, handleMouseMove } = this.props;
     const { lines, bars, areas } = yKeys;
@@ -72,7 +74,7 @@ class WidgetComposedChart extends PureComponent {
                 ))}
             </defs>
             <XAxis
-              dataKey={xKey}
+              dataKey={xKey || ''}
               axisLine={false}
               tickLine={false}
               tick={{ dy: 8, fontSize: '12px', fill: '#555555' }}
@@ -88,6 +90,7 @@ class WidgetComposedChart extends PureComponent {
                 <CustomTick
                   dataMax={maxYValue}
                   unit={unit || ''}
+                  unitFormat={unitFormat || (value => format('.2s')(value))}
                   fill="#555555"
                 />
               }
@@ -114,13 +117,12 @@ class WidgetComposedChart extends PureComponent {
               ))}
             {bars &&
               Object.keys(bars).map(key => (
-                <Bar
-                  key={key}
-                  dataKey={key}
-                  dot={false}
-                  stackId={1}
-                  {...bars[key]}
-                />
+                <Bar key={key} dataKey={key} dot={false} {...bars[key]}>
+                  {bars[key].itemColor &&
+                    data.map(item => (
+                      <Cell key={`c_${item.color}`} fill={item.color} />
+                    ))}
+                </Bar>
               ))}
           </ComposedChart>
         </ResponsiveContainer>
