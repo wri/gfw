@@ -101,7 +101,7 @@ We are using github releases to record changes to the app. To help us manage thi
 
 #### Managing commits for a release
 
-When developing, you can append onto your commits `(major/minor/patch)` and this commit title will automatically be grouped into the correct section for the release. Otherwise you will be prompted during the release to assign (or ignore) each of your commits. You will have to do this for every commit so don't forget to squash!
+When developing, you can tag your commits as follows: `fix some excellent bug (patch)` where `patch` can be `(major/minor/patch/ignore)`. This commit title will automatically be grouped into the correct section for the release. Otherwise you will be prompted during the release to assign (or ignore) each of your commits. You will have to do this for every commit so don't forget to squash!
 
 So how do you make a release on GFW?
 
