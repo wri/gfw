@@ -8,7 +8,7 @@ everywhere to better manage forests. This repository contains the GFW web app.
 
 # Developing
 
-The GFW web app rides on [Ruby on Rails](http://rubyonrails.org), [Backbone](http://backbonejs.org/) and [React](https://reactjs.org/). 
+The GFW web app rides on [Ruby on Rails](http://rubyonrails.org), [Backbone](http://backbonejs.org/) and [React](https://reactjs.org/) with [Redux](https://redux.js.org/).
 
 ## Installing the app
 
@@ -67,6 +67,12 @@ install all the gem depenencies for the app:
 
 ```bash
 $ bundle install
+```
+
+It is possible if you are using OS Sierra or greater you will experience errors when running `bundle install` and `rmagick`. There is a fix for this forcing symlinks with `imagemagick`. You need to run the following command. Details can be found on [this thread](https://stackoverflow.com/questions/9050419/cant-install-rmagick-2-13-1-cant-find-magickwand-h).
+
+```bash
+$ brew install imagemagick@6 --force && brew link imagemagick@6 --force
 ```
 
 Installing front end dependencies:
