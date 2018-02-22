@@ -1,0 +1,17 @@
+@import '~styles/settings.scss';
+
+.l-section-apply {
+  color: $slate;
+  font-weight: 300;
+  font-size: rem(18px);
+  line-height: 1.67;
+  margin-bottom: rem(30px);
+
+  p {
+    margin-bottom: rem(20px);
+  }
+
+  .list {
+    margin-bottom: rem(40px);
+  }
+}

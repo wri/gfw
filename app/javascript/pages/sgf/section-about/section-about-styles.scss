@@ -35,7 +35,11 @@
 
   .icon-list {
     text-align: center;
-    margin-bottom: rem(80px);
+    margin-bottom: rem(40px);
+
+    li {
+      margin-bottom: rem(30px);
+    }
   }
 }
 
