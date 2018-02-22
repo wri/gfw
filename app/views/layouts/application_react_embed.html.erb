@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render 'shared/meta' %>
+
+    <!-- render react app pack -->
+    <%= javascript_pack_tag controller_name %>
+    <%= stylesheet_pack_tag controller_name %>
+
+    <%= yield :head %>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>

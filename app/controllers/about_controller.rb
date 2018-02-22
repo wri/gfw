@@ -1,5 +1,5 @@
 class AboutController < ApplicationController
-  layout 'about'
+  layout 'application_react'
 
   def index
     @title = 'About'
