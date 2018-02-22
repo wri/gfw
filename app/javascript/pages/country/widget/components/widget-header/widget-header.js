@@ -43,7 +43,9 @@ const mapStateToProps = ({ location, modalMeta }, ownProps) => {
         locationNames.current ? locationNames.current.label : ''
       }`,
       shareUrl: `http://${window.location.host}${window.location.pathname}?${
-        location.query.category ? `category=${location.query.category}&` : ''
+        location && location.category && location.query.category
+          ? `category=${location.query.category}&`
+          : ''
       }${`widget=${widget}`}#${widget}`,
       embedUrl,
       embedSettings:
