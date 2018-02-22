@@ -26,20 +26,20 @@ First make sure you have [Xcode](https://developer.apple.com/xcode) and
 [Command Line Tools](https://developer.apple.com/downloads/index.action)
 installed.
 
-Next install [Homebrew](http://brew.sh), the OS X package manager:
+Next install [Homebrew](http://brew.sh), the OS X package manager, and imagemagick:
 
 ```bash
 $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+$ brew update
+$ brew install imagemagick@6
 ```
 
 We recommend managing your Ruby installation through
-[rbenv](https://github.com/sstephenson/rbenv). It's just an easy way to
+[rvm](https://github.com/rvm/rvm). It's just an easy way to
 run multiple Ruby versions for different applications:
 
 ```bash
-$ brew update
-$ brew upgrade rbenv ruby-build
-$ brew install imagemagick@6
+$ \curl -sSL https://get.rvm.io | bash -s stable
 ```
 
 Next clone the gfw repo:
@@ -52,8 +52,8 @@ Using rbenv, install and set Ruby 2.4.0 in the main app directory:
 
 ```bash
 $ cd gfw
-$ rbenv install 2.4.0
-$ rbenv local 2.4.0
+$ rvm install 2.4.0
+$ rvm use 2.4.0
 ```
 
 Now let's install Ruby on Rails:
@@ -81,53 +81,36 @@ Installing front end dependencies:
 $ npm install
 ```
 
-Almost there! Final steps are to update your `.env` file:
-
-```bash
-RACK_ENV=development
-GFW_API_HOST_NEW_API=https://staging-api.globalforestwatch.org/v1
-GFW_API_HOST_PROD=https://production-api.globalforestwatch.org/v1
-GFW_API_AUTH=https://production-api.globalforestwatch.org
-GFW_API_HOST=http://api.globalforestwatch.org/
-AWS_HOST=/uploads
-LAYER_SPEC=layerspec
-TERMS_COOKIE=true
-S3_BUCKET_NAME=
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-S3_DATA_BUCKET_NAME=
-S3_DATA_BUCKET_REGION=
-ANALYTICS_PROPERTY_ID='UA-XXXXX-X'
-FEEDBACK_MAIL=example@gfw.com
-CACHE_VERSION=54
-GFW_ASSETS_URL=http://gfw-assets.s3.amazonaws.com/static/gfw-assets.nightly.js
-HOWTO_URL=http://vizzuality.github.io/gfw-howto
-DEVELOPERS_URL=http://vizzuality.github.io/gfw-atlas
-BLOG_HOST=http://blog.globalforestwatch.org
-GOOGLE_MAPS_API_KEY=xxx
-CARTO_API_URL=https://wri-01.carto.com/api/v2
-COUNTRIES_PAGE_DATASET=499682b1-3174-493f-ba1a-368b4636708e
-RESOURCE_WATCH_API_URL=https://api.resourcewatch.org/v1
-CLIMATE_WATCH_API_URL=https://climate-watch.vizzuality.com/api/v1
-FEATURE_ENV=staging
-```
-
-Last step. For real. Start the app server and access it at
-[http://0.0.0.0:5000](http://0.0.0.0:5000):
+Almost there! Final steps are to copy the `.env.sample` to `.env`, and start the server:
 
 ```bash
 $ ./bin/server
 ```
+The app should now be accessible on [http://0.0.0.0:5000](http://0.0.0.0:5000).
+
 
 ## Deployment
 
-We follow a [Gitflow Worklow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) for development and deployment. Our `master` branch goes to production, `develop` goes to `master`. We also have a staging branch which is detached from the workflow that can be used to merge multiple branches for deployment to the [staging site](http://staging.globalforestwatch.org). Additionally you can deploy `develop` or feature branches to staging if desired.
+We follow a [Gitflow Worklow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) for development and deployment. Our `master` branch goes to production, `develop` goes to `master`. We also have a staging branch which is detached from the workflow that can be used to merge multiple branches for deployment to the staging site. Additionally you can deploy `develop` or feature branches to staging if desired.
 
 ![gitflow workflow](https://www.atlassian.com/dam/jcr:b5259cce-6245-49f2-b89b-9871f9ee3fa4/03%20(2).svg)
 
 ## Releases
 
-We are using github releases to maintain updates to the app. We recommend using [Zeit Releases](https://github.com/zeit/release) a global npm package for handling github releases and tagging commits. Releases are made from `master` before deploying to production.
+We are using github releases to record changes to the app. To help us manage this we are using [Zeit Releases](https://github.com/zeit/release), an npm package for handling github releases, tagging commits (major, minor, patch), and automating semantic release logs. For a more detailed explantion of semantic changelogs see [this post](https://semver.org/).
+
+#### Managing commits for a release
+
+When developing, you can append onto your commits `(major/minor/patch)` and this commit title will automatically be grouped into the correct section for the release. Otherwise you will be prompted during the release to assign (or ignore) each of your commits. You will have to do this for every commit so don't forget to squash!
+
+So how do you make a release on GFW?
+
+1. Checkout master and merge in develop (not compulsory but advised for consistency).
+2. Run `npx release [type]` where type can be `major`, `minor`, `patch`, or `pre` (see [zeit docs](https://github.com/zeit/release) for more details).
+3. Follow the prompts to manage commits.
+4. You will be taken to github draft release editor with all your commits grouped and ready to go.
+5. Enter your title and include any extra info you want. 
+6. Publish!
 
 ## Layers
 
