@@ -2,17 +2,17 @@
 
 [Global Forest Watch](http://www.globalforestwatch.org/) (GFW) is a
 dynamic online forest monitoring and alert system that empowers people
-everywhere to better manage forests.
+everywhere to better manage forests. This repository contains the GFW web app.
 
-This repository contains the GFW web app.
-
-![](http://f.cl.ly/items/1F3S083Z0n3D3l3x293Q/Captura%20de%20pantalla%202015-01-20%20a%20las%2016.52.42.png)
+![Global forest watch map](app/assets/images/map-page.png?raw=true "Title")
 
 # Developing
 
-The GFW web app rides on [Ruby on Rails](http://rubyonrails.org).
+The GFW web app rides on [Ruby on Rails](http://rubyonrails.org), [Backbone](http://backbonejs.org/) and [React](https://reactjs.org/). 
 
-## Docker
+## Installing the app
+
+### Docker
 
 Place required environment settings in the `dev.env` file, and then run:
 
@@ -20,7 +20,7 @@ Place required environment settings in the `dev.env` file, and then run:
 
 GFW should then be accessible at [localhost:5000/map](http://localhost:5000/map), note, it may take around 2 mins to load due to large number of requests.
 
-## OS X Yosemite (10.10) Setup
+### Local setup (>= OS X Yosemite 10.10)
 
 First make sure you have [Xcode](https://developer.apple.com/xcode) and
 [Command Line Tools](https://developer.apple.com/downloads/index.action)
@@ -72,14 +72,14 @@ $ bundle install
 Installing front end dependencies:
 
 ```bash
-$ yarn install
+$ npm install
 ```
 
 Almost there! Final steps are to update your `.env` file:
 
 ```bash
 RACK_ENV=development
-GFW_API_HOST_NEW_API=https://production-api.globalforestwatch.org/v1
+GFW_API_HOST_NEW_API=https://staging-api.globalforestwatch.org/v1
 GFW_API_HOST_PROD=https://production-api.globalforestwatch.org/v1
 GFW_API_AUTH=https://production-api.globalforestwatch.org
 GFW_API_HOST=http://api.globalforestwatch.org/
@@ -94,30 +94,34 @@ S3_DATA_BUCKET_REGION=
 ANALYTICS_PROPERTY_ID='UA-XXXXX-X'
 FEEDBACK_MAIL=example@gfw.com
 CACHE_VERSION=54
-GFW_ASSETS_URL=http://gfw-assets.s3.amazonaws.com/static/gfw-assets.latest.js
+GFW_ASSETS_URL=http://gfw-assets.s3.amazonaws.com/static/gfw-assets.nightly.js
 HOWTO_URL=http://vizzuality.github.io/gfw-howto
 DEVELOPERS_URL=http://vizzuality.github.io/gfw-atlas
 BLOG_HOST=http://blog.globalforestwatch.org
 GOOGLE_MAPS_API_KEY=xxx
+CARTO_API_URL=https://wri-01.carto.com/api/v2
+COUNTRIES_PAGE_DATASET=499682b1-3174-493f-ba1a-368b4636708e
+RESOURCE_WATCH_API_URL=https://api.resourcewatch.org/v1
+CLIMATE_WATCH_API_URL=https://climate-watch.vizzuality.com/api/v1
+FEATURE_ENV=staging
 ```
 
 Last step. For real. Start the app server and access it at
 [http://0.0.0.0:5000](http://0.0.0.0:5000):
 
 ```bash
-$ foreman start
-```
-
-If you are working on pages with react support, the command to execute would be:
-
-```bash
 $ ./bin/server
 ```
 
-Oh, and you should probably launch the
-[gfw-api](https://github.com/wri/gfw-api)
-[dev_apperver.py](https://github.com/wri/gfw-api#developing) before you
-try to visit the site on your local machine.
+## Deployment
+
+We follow a [Gitflow Worklow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) for development and deployment. Our `master` branch goes to production, `develop` goes to `master`. We also have a staging branch which is detached from the workflow that can be used to merge multiple branches for deployment to the [staging site](http://staging.globalforestwatch.org). Additionally you can deploy `develop` or feature branches to staging if desired.
+
+![gitflow workflow](https://www.atlassian.com/dam/jcr:b5259cce-6245-49f2-b89b-9871f9ee3fa4/03%20(2).svg)
+
+## Releases
+
+We are using github releases to maintain updates to the app. We recommend using [Zeit Releases](https://github.com/zeit/release) a global npm package for handling github releases and tagging commits. Releases are made from `master` before deploying to production.
 
 ## Layers
 
@@ -127,7 +131,7 @@ out the [layer documentation](docs/layers) for more information. If the
 component you're working on isn't in there, please write some
 documentation when you're done! 💞
 
-## Google Custm Search API
+## Google Custom Search API
 
 Global Forest Watch uses the Google Custom Search API to power it's site-wide
 search.
@@ -146,7 +150,6 @@ and the custom search context is owned by Alyssa Barrett on the Google Custom
 Search Engine control panel.
 
 
-
 ## Tests
 
 ### Front-end
@@ -163,19 +166,6 @@ grunt test
 We use [BrowserStack](https://www.browserstack.com) to find and fix cross-browser issues.
 
 <a href="https://www.browserstack.com"><img src="https://www.browserstack.com/images/layout/browserstack-logo-600x315.png" height="70" /></a>
-
-
-## Changelog
-
-### v3.1
-- Country pages whitelist provider
-- BrowserStack attribution
-
-### v3.0
-- sync map layers menu, legend, and side bar with master features
-- allow features to be shown on staging and not on production within map (env variable FEATURE_ENV)
-- Small css fixes to the map
-- Recovered all missing commits from previous cherry picks
 
 
 # License
