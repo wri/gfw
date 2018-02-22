@@ -14,7 +14,7 @@
 <meta name="twitter:description" content='<%= @desc %>' />
 
 <!-- Open graph -->
-<meta property="og:title" content='<%= @title %> | Global Forest Watch' />
+<meta property="og:title" content='<%= @og_title || @title %> | Global Forest Watch' />
 <meta property="og:description" content='<%= @desc %>' />
 <meta property="og:type" content="website" />
 <meta property="og:image" content='<%= @img ? image_url(@img) : 'http://www.globalforestwatch.org/assets/backgrounds/home-slider/bg_slide1.png' %>'>
