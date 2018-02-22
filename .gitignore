@@ -58,3 +58,6 @@ todo.todo
 /public/packs-test
 /node_modules
 package-lock.json
+
+# Ignore release files
+release.md
