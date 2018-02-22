@@ -2,17 +2,17 @@
 
 [Global Forest Watch](http://www.globalforestwatch.org/) (GFW) is a
 dynamic online forest monitoring and alert system that empowers people
-everywhere to better manage forests.
+everywhere to better manage forests. This repository contains the GFW web app.
 
-This repository contains the GFW web app.
-
-![](http://f.cl.ly/items/1F3S083Z0n3D3l3x293Q/Captura%20de%20pantalla%202015-01-20%20a%20las%2016.52.42.png)
+![Global forest watch map](app/assets/images/map-page.png?raw=true "Title")
 
 # Developing
 
-The GFW web app rides on [Ruby on Rails](http://rubyonrails.org).
+The GFW web app rides on [Ruby on Rails](http://rubyonrails.org), [Backbone](http://backbonejs.org/) and [React](https://reactjs.org/) with [Redux](https://redux.js.org/).
 
-## Docker
+## Installing the app
+
+### Docker
 
 Place required environment settings in the `dev.env` file, and then run:
 
@@ -20,26 +20,26 @@ Place required environment settings in the `dev.env` file, and then run:
 
 GFW should then be accessible at [localhost:5000/map](http://localhost:5000/map), note, it may take around 2 mins to load due to large number of requests.
 
-## OS X Yosemite (10.10) Setup
+### Local setup (>= OS X Yosemite 10.10)
 
 First make sure you have [Xcode](https://developer.apple.com/xcode) and
 [Command Line Tools](https://developer.apple.com/downloads/index.action)
 installed.
 
-Next install [Homebrew](http://brew.sh), the OS X package manager:
+Next install [Homebrew](http://brew.sh), the OS X package manager, and imagemagick:
 
 ```bash
 $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+$ brew update
+$ brew install imagemagick@6
 ```
 
 We recommend managing your Ruby installation through
-[rbenv](https://github.com/sstephenson/rbenv). It's just an easy way to
+[rvm](https://github.com/rvm/rvm). It's just an easy way to
 run multiple Ruby versions for different applications:
 
 ```bash
-$ brew update
-$ brew upgrade rbenv ruby-build
-$ brew install imagemagick@6
+$ \curl -sSL https://get.rvm.io | bash -s stable
 ```
 
 Next clone the gfw repo:
@@ -52,8 +52,8 @@ Using rbenv, install and set Ruby 2.4.0 in the main app directory:
 
 ```bash
 $ cd gfw
-$ rbenv install 2.4.0
-$ rbenv local 2.4.0
+$ rvm install 2.4.0
+$ rvm use 2.4.0
 ```
 
 Now let's install Ruby on Rails:
@@ -69,55 +69,48 @@ install all the gem depenencies for the app:
 $ bundle install
 ```
 
+It is possible if you are using OS Sierra or greater you will experience errors when running `bundle install` and `rmagick`. There is a fix for this forcing symlinks with `imagemagick`. You need to run the following command. Details can be found on [this thread](https://stackoverflow.com/questions/9050419/cant-install-rmagick-2-13-1-cant-find-magickwand-h).
+
+```bash
+$ brew install imagemagick@6 --force && brew link imagemagick@6 --force
+```
+
 Installing front end dependencies:
 
 ```bash
-$ yarn install
+$ npm install
 ```
 
-Almost there! Final steps are to update your `.env` file:
-
-```bash
-RACK_ENV=development
-GFW_API_HOST_NEW_API=https://production-api.globalforestwatch.org/v1
-GFW_API_HOST_PROD=https://production-api.globalforestwatch.org/v1
-GFW_API_AUTH=https://production-api.globalforestwatch.org
-GFW_API_HOST=http://api.globalforestwatch.org/
-AWS_HOST=/uploads
-LAYER_SPEC=layerspec
-TERMS_COOKIE=true
-S3_BUCKET_NAME=
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-S3_DATA_BUCKET_NAME=
-S3_DATA_BUCKET_REGION=
-ANALYTICS_PROPERTY_ID='UA-XXXXX-X'
-FEEDBACK_MAIL=example@gfw.com
-CACHE_VERSION=54
-GFW_ASSETS_URL=http://gfw-assets.s3.amazonaws.com/static/gfw-assets.latest.js
-HOWTO_URL=http://vizzuality.github.io/gfw-howto
-DEVELOPERS_URL=http://vizzuality.github.io/gfw-atlas
-BLOG_HOST=http://blog.globalforestwatch.org
-GOOGLE_MAPS_API_KEY=xxx
-```
-
-Last step. For real. Start the app server and access it at
-[http://0.0.0.0:5000](http://0.0.0.0:5000):
-
-```bash
-$ foreman start
-```
-
-If you are working on pages with react support, the command to execute would be:
+Almost there! Final steps are to copy the `.env.sample` to `.env`, and start the server:
 
 ```bash
 $ ./bin/server
 ```
+The app should now be accessible on [http://0.0.0.0:5000](http://0.0.0.0:5000).
 
-Oh, and you should probably launch the
-[gfw-api](https://github.com/wri/gfw-api)
-[dev_apperver.py](https://github.com/wri/gfw-api#developing) before you
-try to visit the site on your local machine.
+
+## Deployment
+
+We follow a [Gitflow Worklow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) for development and deployment. Our `master` branch goes to production, `develop` goes to `master`. We also have a staging branch which is detached from the workflow that can be used to merge multiple branches for deployment to the staging site. Additionally you can deploy `develop` or feature branches to staging if desired.
+
+![gitflow workflow](https://www.atlassian.com/dam/jcr:b5259cce-6245-49f2-b89b-9871f9ee3fa4/03%20(2).svg)
+
+## Releases
+
+We are using github releases to record changes to the app. To help us manage this we are using [Zeit Releases](https://github.com/zeit/release), an npm package for handling github releases, tagging commits (major, minor, patch), and automating semantic release logs. For a more detailed explantion of semantic changelogs see [this post](https://semver.org/).
+
+#### Managing commits for a release
+
+When developing, you can tag your commits as follows: `fix some excellent bug (patch)` where `patch` can be `(major/minor/patch/ignore)`. This commit title will automatically be grouped into the correct section for the release. Otherwise you will be prompted during the release to assign (or ignore) each of your commits. You will have to do this for every commit so don't forget to squash!
+
+So how do you make a release on GFW?
+
+1. Checkout master and merge in develop (not compulsory but advised for consistency).
+2. Run `npx release [type]` where type can be `major`, `minor`, `patch`, or `pre` (see [zeit docs](https://github.com/zeit/release) for more details).
+3. Follow the prompts to manage commits.
+4. You will be taken to github draft release editor with all your commits grouped and ready to go.
+5. Enter your title and include any extra info you want. 
+6. Publish!
 
 ## Layers
 
@@ -127,7 +120,7 @@ out the [layer documentation](docs/layers) for more information. If the
 component you're working on isn't in there, please write some
 documentation when you're done! 💞
 
-## Google Custm Search API
+## Google Custom Search API
 
 Global Forest Watch uses the Google Custom Search API to power it's site-wide
 search.
@@ -146,7 +139,6 @@ and the custom search context is owned by Alyssa Barrett on the Google Custom
 Search Engine control panel.
 
 
-
 ## Tests
 
 ### Front-end
@@ -163,19 +155,6 @@ grunt test
 We use [BrowserStack](https://www.browserstack.com) to find and fix cross-browser issues.
 
 <a href="https://www.browserstack.com"><img src="https://www.browserstack.com/images/layout/browserstack-logo-600x315.png" height="70" /></a>
-
-
-## Changelog
-
-### v3.1
-- Country pages whitelist provider
-- BrowserStack attribution
-
-### v3.0
-- sync map layers menu, legend, and side bar with master features
-- allow features to be shown on staging and not on production within map (env variable FEATURE_ENV)
-- Small css fixes to the map
-- Recovered all missing commits from previous cherry picks
 
 
 # License
