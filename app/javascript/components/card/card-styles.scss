@@ -7,7 +7,7 @@
   border: solid 1px $border;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
 
   .image {
     width: 100%;

@@ -11,10 +11,8 @@ class SectionProjectsModal extends PureComponent {
     return (
       <div className="c-projects-modal">
         <div className="header">
-          {data.title && (
-            <h1 className="text -title-big -color-2 -light">{data.title}</h1>
-          )}
-          <h2 className="text -title-xxs -color-2-o">
+          {data.title && <h1>{data.title}</h1>}
+          <h2>
             {data.legend} - {data.city}
           </h2>
         </div>
@@ -25,14 +23,8 @@ class SectionProjectsModal extends PureComponent {
           </div>
         )}
         <div className="content">
-          {data.outcome && (
-            <p className="text -paragraph -color-2 -light">{data.outcome}</p>
-          )}
-        </div>
-        <div className="footer">
-          {data.category && (
-            <p className="text -paragraph-5 -color-4">{data.category}</p>
-          )}
+          {data.outcome && <p className="short-description">{data.outcome}</p>}
+          {data.category && <p className="category">{data.category}</p>}
         </div>
       </div>
     );
