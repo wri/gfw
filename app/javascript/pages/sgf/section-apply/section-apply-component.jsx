@@ -22,7 +22,6 @@ class SectionAbout extends PureComponent {
                 <li>- Community empowerment</li>
                 <li>- Forest monitoring and enforcement</li>
                 <li>- Journalism</li>
-                <li>or a combination of these.</li>
               </ul>
               <p>
                 For more information about eligibility requirements and how to
