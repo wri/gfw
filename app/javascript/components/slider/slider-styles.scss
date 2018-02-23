@@ -1,0 +1,56 @@
+@import "./slick.scss";
+@import '~styles/settings.scss';
+
+.c-slider {
+  margin: rem(30px) 0;
+
+  .slick-slide {
+    padding: 0 rem(20px);
+  }
+
+  .slick-arrow {
+    display: none;
+    position: absolute;
+    top: calc(50% - 40px);
+    z-index: 10;
+
+    @media screen and (min-width: $screen-xl) {
+      display: inline-block;
+    }
+  }
+
+  .slick-next {
+    transform: rotate(-90deg);
+    right: calc(50vw - 600px);
+  }
+
+  .slick-prev {
+    transform: rotate(90deg);
+    left: calc(50vw - 600px);
+  }
+
+  .slick-dots {
+    text-align: center;
+    margin: rem(25px);
+
+    li {
+      margin: 0 rem(10px);
+      display: inline-block;
+      width: rem(15px);
+      height: rem(15px);
+      background-color: $grey-dark;
+      border-radius: 50%;
+      cursor: pointer;
+
+      button {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+
+      &.slick-active {
+        background-color: $green-gfw;
+      }
+    }
+  }
+}

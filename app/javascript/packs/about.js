@@ -8,7 +8,7 @@
 // layout file, like app/views/layouts/application.html.erb
 import React from 'react';
 import ReactDOM from 'react-dom';
-import About from 'pages/about/About';
+import About from 'pages/about';
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(<About />,

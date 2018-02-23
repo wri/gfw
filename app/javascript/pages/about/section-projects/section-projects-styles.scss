@@ -1,0 +1,36 @@
+@import '~styles/settings.scss';
+
+.l-section-projects {
+  .project-header {
+    display: none;
+
+    @media screen and (min-width: $screen-l) {
+      display: block;
+    }
+  }
+
+  .project-search {
+    margin-bottom: rem(30px);
+
+    @media screen and (min-width: $screen-l) {
+      margin: rem(50px) 0 rem(40px) rem(20px);
+    }
+  }
+
+  .project-list {
+    margin-bottom: rem(30px);
+  }
+
+  .project-cards {
+    position: relative;
+    min-height: rem(100px);
+  }
+
+  .project-card {
+    margin-bottom: rem(20px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(40px);
+    }
+  }
+}
