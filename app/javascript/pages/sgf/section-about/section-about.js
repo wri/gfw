@@ -1,5 +1,8 @@
 import { createElement } from 'react';
-import icon from 'assets/icons/info.svg';
+
+import Earth from './img/earth.svg';
+import Map from './img/map.svg';
+import People from './img/people.svg';
 
 import Component from './section-about-component';
 
@@ -11,15 +14,15 @@ const benefits = [
 
 const results = [
   {
-    icon,
+    icon: Earth,
     label: '<b>44 projects</b> from <b>30 countries</b>'
   },
   {
-    icon,
+    icon: Map,
     label: 'Over <b>1.8 billion hectares</b> of forests monitored using GFW'
   },
   {
-    icon,
+    icon: People,
     label: 'Over <b>1,800</b> people trained in using GFW'
   }
 ];
