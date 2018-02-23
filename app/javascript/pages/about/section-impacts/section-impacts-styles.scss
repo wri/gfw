@@ -1,4 +1,12 @@
 @import '~styles/settings.scss';
 
 .l-section-impacts {
+  padding: rem(40px) 0;
+
+  h3 {
+    font-family: $font-family-1;
+    font-size: rem(18px);
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
 }

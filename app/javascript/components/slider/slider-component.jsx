@@ -10,7 +10,8 @@ import { SCREEN_M, SCREEN_XL } from 'utils/constants';
 
 import './slider-styles.scss';
 
-class Slider extends PureComponent { // eslint-disable-line react/prefer-stateless-function
+class Slider extends PureComponent {
+  // eslint-disable-line react/prefer-stateless-function
   render() {
     const settings = {
       dots: true,
@@ -19,7 +20,11 @@ class Slider extends PureComponent { // eslint-disable-line react/prefer-statele
       slidesToShow: 2,
       slidesToScroll: 1,
       centerMode: true,
-      centerPadding: `${window.innerWidth > SCREEN_XL ? ((window.innerWidth - SCREEN_XL) / 2) - 20 : '0'}px`,
+      centerPadding: `${
+        window.innerWidth > SCREEN_XL
+          ? (window.innerWidth - SCREEN_XL) / 2 - 20
+          : '0'
+      }px`,
       customPaging: () => <button />,
       nextArrow: (
         <Button theme="square">
@@ -44,11 +49,12 @@ class Slider extends PureComponent { // eslint-disable-line react/prefer-statele
     return (
       <div className="c-slider">
         <SlickSlider {...settings}>
-          {cards && cards.map(c => (
-            <div key={c.title}>
-              <Card key={c.title} data={c} />
-            </div>
-          ))}
+          {cards &&
+            cards.map(c => (
+              <div key={c.id}>
+                <Card key={c.title} data={c} />
+              </div>
+            ))}
         </SlickSlider>
       </div>
     );

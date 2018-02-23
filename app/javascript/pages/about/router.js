@@ -3,7 +3,7 @@ import createHistory from 'history/createBrowserHistory';
 import Projects from 'pages/about/section-projects';
 import Impacts from 'pages/about/section-impacts';
 
-import { fetchProjects } from 'pages/about/section-projects/section-projects-actions';
+import { fetchImpactProjects } from 'pages/about/section-impacts/section-impacts-actions';
 
 const history = createHistory();
 
@@ -12,7 +12,7 @@ export const ABOUT = 'location/ABOUT';
 export const routes = {
   [ABOUT]: {
     path: '/about',
-    thunk: fetchProjects(),
+    thunk: fetchImpactProjects(),
     sections: [
       {
         label: 'GFW in Action',

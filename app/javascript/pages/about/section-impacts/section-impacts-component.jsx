@@ -4,38 +4,25 @@ import Slider from 'components/slider';
 
 import './section-impacts-styles.scss';
 
-const cards = [
-  {
-    title: 'testy',
-    image: 'test.png',
-    outcome: 'test'
-  },
-  {
-    title: 'testr',
-    image: 'test.png',
-    outcome: 'test'
-  },
-  {
-    title: 'test',
-    image: 'test.png',
-    outcome: 'test'
-  }
-];
-
 class SectionImpacts extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
+    const { data } = this.props;
     return (
       <section className="l-section-impacts">
-        <h3>Impacts</h3>
-        <Slider cards={cards} />
+        <div className="row">
+          <div className="column small-12">
+            <h3>Impacts</h3>
+          </div>
+        </div>
+        <Slider cards={data} />
       </section>
     );
   }
 }
 
-// SectionImpacts.propTypes = {
-//   cards: PropTypes.array.isRequired
-// };
+SectionImpacts.propTypes = {
+  data: PropTypes.array.isRequired
+};
 
 export default SectionImpacts;
