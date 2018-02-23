@@ -1,14 +1,29 @@
 class CountryController < ApplicationController
 
-  layout 'country'
+  layout 'application_react'
+  before_action :set_country, only: [:show]
 
-  def index
-    @desc = 'Data about forest change, tenure, forest related employment and land use'
+  def show
+    @title = @country["name"]
+    @desc = "Data about forest change, tenure, forest related employment and land use in #{@title}"
+    if params[:widget]
+      widgets_config = JSON.parse(File.read(Rails.root.join('app', 'javascript', 'pages', 'country', 'data', 'widgets-config.json')))
+      widget_data = widgets_config[params[:widget]]
+      @og_title = "#{widget_data["title"]} in #{@country["name"]}"
+      # for dynamic widget image when the feature is ready
+      # @img = "widgets/#{@widget}.png"
+    end
   end
 
   def embed
-    @desc = 'Data about forest change, tenure, forest related employment and land use'
-    render layout: 'country_embed'
+    @title = @country["name"]
+    @desc = "Data about forest change, tenure, forest related employment and land use in #{@title}"
+    render layout: 'application_react_embed'
   end
 
+  private
+
+  def set_country
+    @country = Country.find_by_iso(params[:iso])
+  end
 end

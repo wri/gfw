@@ -58,7 +58,7 @@ export const getData = createSelector(
     if (!data || isEmpty(data)) return null;
     const groupedByYear = groupBy(data, 'year');
     const years = [];
-    const latestFullWeek = moment(latest).subtract('weeks', 1);
+    const latestFullWeek = moment(latest).subtract(1, 'weeks');
     const lastWeek = {
       isoWeek: latestFullWeek.isoWeek(),
       year: latestFullWeek.year()
