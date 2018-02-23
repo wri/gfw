@@ -44,9 +44,7 @@
   }
 
   .content {
-    max-width: rem(600px);
-    padding: rem(30px) rem(40px) rem(40px);
-    margin: auto;
+    padding: rem(30px) calc(50% - 260px) rem(40px);
 
     .short-description {
       margin-bottom: rem(20px);

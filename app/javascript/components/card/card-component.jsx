@@ -8,15 +8,14 @@ import './card-styles.scss';
 class Card extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { data, readMoreText, className, target } = this.props;
-    const onClick = this.props.onClick || false;
+    const { className, data, readMoreText, onClick } = this.props;
     return (
       <div className={`c-card ${className}`}>
         {data.image && (
           <div
             className={`image ${onClick ? '-action' : ''}`}
             style={{ backgroundImage: `url(${data.image})` }}
-            onClick={() => onClick && onClick(data)}
+            onClick={onClick}
             role="button"
             tabIndex={0}
           >
@@ -38,7 +37,17 @@ class Card extends PureComponent {
             <p className="meta text -paragraph-5 -color-2-o ">{data.legend}</p>
           )}
           {data.link && (
-            <Button className="card-button" extLink={data.link} target={target}>
+            <Button className="card-button" extLink={data.link}>
+              {readMoreText}
+            </Button>
+          )}
+          {data.extLink && (
+            <Button className="card-button" extLink={data.extLink}>
+              {readMoreText}
+            </Button>
+          )}
+          {onClick && (
+            <Button className="card-button" onClick={onClick}>
               {readMoreText}
             </Button>
           )}
@@ -49,18 +58,10 @@ class Card extends PureComponent {
 }
 
 Card.propTypes = {
-  data: PropTypes.shape({
-    image: PropTypes.string.isRequired,
-    image_credit: PropTypes.string,
-    title: PropTypes.string,
-    outcome: PropTypes.string,
-    link: PropTypes.string,
-    legend: PropTypes.string
-  }),
+  data: PropTypes.object,
   className: PropTypes.string,
   onClick: PropTypes.func,
-  readMoreText: PropTypes.string.isRequired,
-  target: PropTypes.string
+  readMoreText: PropTypes.string.isRequired
 };
 
 Card.defaultProps = {

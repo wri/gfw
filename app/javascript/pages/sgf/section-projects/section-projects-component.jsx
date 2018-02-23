@@ -17,7 +17,8 @@ class SectionProjects extends PureComponent {
       setCategorySelected,
       categorySelected,
       search,
-      setSearch
+      setSearch,
+      handleCardClick
     } = this.props;
     const hasData = data && !!data.length;
     const hasCategories = categories && !!categories.length;
@@ -61,7 +62,7 @@ class SectionProjects extends PureComponent {
                   <Card
                     className="project-card"
                     data={d}
-                    onClick={this.handleCardClick}
+                    onClick={() => handleCardClick(d)}
                   />
                 </div>
               ))
@@ -82,7 +83,8 @@ SectionProjects.propTypes = {
   categorySelected: PropTypes.string.isRequired,
   setCategorySelected: PropTypes.func.isRequired,
   search: PropTypes.string.isRequired,
-  setSearch: PropTypes.func.isRequired
+  setSearch: PropTypes.func.isRequired,
+  handleCardClick: PropTypes.func
 };
 
 export default SectionProjects;
