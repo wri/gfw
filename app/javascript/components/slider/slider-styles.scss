@@ -42,8 +42,8 @@
     li {
       margin: 0 rem(10px);
       display: inline-block;
-      width: rem(15px);
-      height: rem(15px);
+      width: rem(10px);
+      height: rem(10px);
       background-color: $grey-dark;
       border-radius: 50%;
       cursor: pointer;
@@ -56,6 +56,8 @@
 
       &.slick-active {
         background-color: $green-gfw;
+        width: rem(15px);
+        height: rem(15px);
       }
     }
   }

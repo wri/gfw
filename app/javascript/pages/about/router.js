@@ -1,6 +1,6 @@
 import { connectRoutes } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
-import Projects from 'pages/about/section-projects';
+import History from 'pages/about/section-history';
 import Impacts from 'pages/about/section-impacts';
 
 import { fetchImpactProjects } from 'pages/about/section-impacts/section-impacts-actions';
@@ -27,7 +27,7 @@ export const routes = {
       {
         label: 'History',
         anchor: 'history',
-        component: ''
+        component: History
       },
       {
         label: 'Contact Us',

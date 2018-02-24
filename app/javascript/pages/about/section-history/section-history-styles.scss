@@ -1,0 +1,43 @@
+@import '~styles/settings.scss';
+
+.l-section-history {
+  padding: rem(60px) 0;
+  background-color: $grey-light;
+
+  h3 {
+    font-family: $font-family-1;
+    font-size: rem(18px);
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  .year-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .image {
+      min-width: 50%;
+      height: 450px;
+      border-radius: 50%;
+    }
+  }
+
+  .timeline {
+    .slick-dots {
+      @media screen and (min-width: $screen-xl) {
+        visibility: hidden;
+      }
+    }
+
+    .slick-prev {
+      background-color: transparent;
+      border: $green-gfw 1px solid;
+
+      svg {
+        fill: $slate;
+      }
+    }
+  }
+}

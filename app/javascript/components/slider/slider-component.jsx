@@ -45,14 +45,14 @@ const defaultSettings = {
 class Slider extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { children, settings } = this.props;
+    const { className, children, settings } = this.props;
     const sliderSettings = {
       ...defaultSettings,
       ...settings
     };
 
     return (
-      <div className="c-slider">
+      <div className={`c-slider ${className || ''}`}>
         <SlickSlider {...sliderSettings}>{children}</SlickSlider>
       </div>
     );
@@ -61,7 +61,8 @@ class Slider extends PureComponent {
 
 Slider.propTypes = {
   children: PropTypes.node.isRequired,
-  settings: PropTypes.object
+  settings: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default Slider;
