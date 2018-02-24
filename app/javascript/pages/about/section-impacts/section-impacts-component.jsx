@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+
 import Slider from 'components/slider';
+import Card from 'components/card';
 
 import './section-impacts-styles.scss';
 
@@ -15,7 +17,14 @@ class SectionImpacts extends PureComponent {
             <h3>Impacts</h3>
           </div>
         </div>
-        <Slider cards={data} />
+        <Slider>
+          {data &&
+            data.map(c => (
+              <div key={c.id}>
+                <Card key={c.title} data={c} />
+              </div>
+            ))}
+        </Slider>
       </section>
     );
   }

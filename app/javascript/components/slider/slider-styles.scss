@@ -6,6 +6,12 @@
 
   .slick-slide {
     padding: 0 rem(20px);
+    opacity: 0.5;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .slick-active {
+    opacity: 1;
   }
 
   .slick-arrow {
