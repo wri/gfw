@@ -8,6 +8,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  font-family: $font-family-1;
+  font-size: rem(18px);
+  line-height: 1.67;
+  color: $slate;
 
   .image {
     width: 100%;
@@ -16,10 +20,6 @@
     background-repeat: no-repeat;
     background-position: center;
     position: relative;
-
-    &.-action {
-      cursor: pointer;
-    }
 
     span {
       display: block;
@@ -42,7 +42,8 @@
       margin-bottom: rem(15px);
     }
 
-    .paragraph {
+    .summary {
+      height: rem(120px);
       font-size: rem(16px);
       margin-bottom: rem(15px);
     }
@@ -51,7 +52,7 @@
       margin-bottom: rem(10px);
     }
 
-    .card-button {
+    .read-more {
       max-width: rem(150px);
       margin-top: rem(20px);
     }

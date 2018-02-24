@@ -19,13 +19,11 @@ export const fetchImpactProjects = createThunkAction(
           const dataParsed = rows.map(d => ({
             id: d.cartodb_id,
             title: d.organization,
-            outcome: d.outcome,
-            city: d.city,
-            image:
-              d.image ||
-              'https://image.ibb.co/hDJdDR/african_wildlife_foundation.jpg',
-            image_credit: d.image_credit,
-            link: d.link
+            summary: d.outcome,
+            meta: d.city,
+            image: d.image,
+            imageCredit: d.image_credit,
+            extLink: d.link
           }));
           dispatch(setImpactsProjectsData(dataParsed));
         })
