@@ -9,4 +9,17 @@
     text-transform: uppercase;
     opacity: 0.5;
   }
+
+  .awards {
+    h3 {
+      margin-bottom: rem(30px);
+    }
+
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: rem(60px);
+    }
+  }
 }
