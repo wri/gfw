@@ -3,6 +3,7 @@ import createHistory from 'history/createBrowserHistory';
 import History from 'pages/about/section-history';
 import Impacts from 'pages/about/section-impacts';
 import Partners from 'pages/about/section-partners';
+import How from 'pages/about/section-how';
 
 import { fetchImpactProjects } from 'pages/about/section-impacts/section-impacts-actions';
 
@@ -18,7 +19,7 @@ export const routes = {
       {
         label: 'GFW in Action',
         anchor: 'gfw-in-action',
-        component: ''
+        component: How
       },
       {
         label: 'Impacts',
