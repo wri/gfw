@@ -1,8 +1,12 @@
 @import '~styles/settings.scss';
 
 .l-section-history {
-  padding: rem(60px) 0;
+  padding: rem(30px) 0 rem(30px);
   background-color: $grey-light;
+
+  @media screen and (min-width: $screen-l) {
+    padding: rem(60px) 0;
+  }
 
   h3 {
     font-family: $font-family-1;
@@ -12,20 +16,28 @@
   }
 
   .year-card {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
     .image {
-      min-width: 50%;
-      height: 450px;
       border-radius: 50%;
+    }
+
+    .description {
+      margin-top: rem(30px);
+
+      @media screen and (min-width: $screen-l) {
+        margin-top: calc(50% - 15px);
+      }
+
+      h4 {
+        font-size: rem(30px);
+        margin-bottom: rem(10px);
+      }
     }
   }
 
   .timeline {
     .slick-dots {
+      margin-top: rem(50px);
+
       @media screen and (min-width: $screen-xl) {
         visibility: hidden;
       }
