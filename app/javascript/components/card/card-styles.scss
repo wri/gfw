@@ -7,11 +7,7 @@
   border: solid 1px $border;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  font-family: $font-family-1;
-  font-size: rem(18px);
-  line-height: 1.67;
-  color: $slate;
+  justify-content: flex-start;
 
   .image {
     width: 100%;

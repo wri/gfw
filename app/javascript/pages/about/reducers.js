@@ -7,20 +7,22 @@ import router from './router';
 
 // Sections
 import * as impacts from 'pages/about/section-impacts';
+import * as projects from 'pages/about/section-projects';
 
 const sectionsReducers = {
-  impacts: handleActions(impacts)
+  impacts: handleActions(impacts),
+  projects: handleActions(projects)
 };
 
 // Components
-// import * as projectsModal from 'pages/about/section-projects/section-projects-modal';
+import * as projectsModal from 'pages/about/section-projects/section-projects-modal';
 
-// const componentsReducers = {
-//   projectsModal: handleActions(projectsModal)
-// };
+const componentsReducers = {
+  projectsModal: handleActions(projectsModal)
+};
 
 export default combineReducers({
   ...sectionsReducers,
-  // ...componentsReducers,
+  ...componentsReducers,
   location: router.reducer
 });

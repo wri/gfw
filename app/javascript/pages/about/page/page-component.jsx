@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
+import Projects from 'pages/about/section-projects';
 
 import bgImage from './header-bg';
 import './page-styles.scss';
@@ -21,11 +22,10 @@ class Page extends PureComponent {
         />
         <SubnavMenu links={sections} />
         <div className="l-main">
+          <Projects />
           {sections.map(s => (
             <div id={s.anchor} className={s.anchor} key={s.anchor}>
-              {s.component &&
-                <s.component />
-              }
+              {s.component && <s.component />}
             </div>
           ))}
         </div>

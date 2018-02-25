@@ -6,15 +6,21 @@ import Partners from 'pages/about/section-partners';
 import How from 'pages/about/section-how';
 
 import { fetchImpactProjects } from 'pages/about/section-impacts/section-impacts-actions';
+import { fetchProjects } from 'pages/about/section-projects/section-projects-actions';
 
 const history = createHistory();
+
+const fetchData = dispatch => {
+  dispatch(fetchProjects());
+  dispatch(fetchImpactProjects());
+};
 
 export const ABOUT = 'location/ABOUT';
 
 export const routes = {
   [ABOUT]: {
     path: '/about',
-    thunk: fetchImpactProjects(),
+    thunk: fetchData,
     sections: [
       {
         label: 'GFW in Action',

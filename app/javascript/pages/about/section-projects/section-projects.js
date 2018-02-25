@@ -18,15 +18,13 @@ const actions = { ...sectionActions, ...modalActions };
 const mapStateToProps = ({ projects }) => {
   const projectData = {
     data: projects.data,
-    search: projects.search,
     categorySelected: projects.categorySelected
   };
 
   return {
     data: getProjectsSelected(projectData),
     categories: getCategoriesList(projects),
-    categorySelected: getCategorySelected(projects),
-    search: projects.search
+    categorySelected: getCategorySelected(projects)
   };
 };
 

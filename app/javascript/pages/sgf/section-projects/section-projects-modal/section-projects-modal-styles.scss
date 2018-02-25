@@ -1,18 +1,30 @@
 @import '~styles/settings.scss';
 
-%modalContent {
-  margin: 0 auto;
-  max-width: rem(590px);
-}
-
 .c-projects-modal {
-  .header {
-    @extend %modalContent;
+  max-width: calc(#{$max-width} - 2 * #{$desktop-gutter});
+  width: 100%;
+  color: $slate;
+  font-weight: 300;
+  font-size: rem(18px);
+  line-height: 1.67;
 
-    padding: rem(50px) 0 rem(40px);
+  .header {
+    max-width: rem(600px);
+    padding: rem(40px);
+    padding-top: rem(30px);
+    margin: auto;
 
     > h1 {
-      margin-bottom: 5px;
+      font-size: rem(35px);
+      margin-bottom: 0;
+      line-height: 1.2;
+    }
+
+    > h2 {
+      font-size: rem(14px);
+      text-transform: uppercase;
+      font-weight: 400;
+      opacity: 0.5;
     }
   }
 
@@ -32,14 +44,16 @@
   }
 
   .content {
-    @extend %modalContent;
+    padding: rem(30px) calc(50% - 260px) rem(40px);
 
-    padding: rem(20px) 0;
-  }
+    .short-description {
+      margin-bottom: rem(20px);
+    }
 
-  .footer {
-    @extend %modalContent;
-
-    padding: rem(20px) 0 rem(40px);
+    .category {
+      color: $green-gfw;
+      font-weight: 500;
+      font-size: rem(14px);
+    }
   }
 }
