@@ -1,0 +1,18 @@
+@import '~styles/settings.scss';
+
+.l-section-partners {
+  .logo-section {
+    border-bottom: solid 1px $border;
+  }
+
+  h3 {
+    margin: rem(40px) 0 rem(60px);
+  }
+
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: rem(60px);
+  }
+}

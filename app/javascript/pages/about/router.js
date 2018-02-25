@@ -2,6 +2,7 @@ import { connectRoutes } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
 import History from 'pages/about/section-history';
 import Impacts from 'pages/about/section-impacts';
+import Partners from 'pages/about/section-partners';
 
 import { fetchImpactProjects } from 'pages/about/section-impacts/section-impacts-actions';
 
@@ -37,7 +38,7 @@ export const routes = {
       {
         label: 'Partnership',
         anchor: 'partnership',
-        component: ''
+        component: Partners
       }
     ]
   }

@@ -2,8 +2,11 @@
 
 .l-main {
   border-bottom: solid 1px $grey-dark;
-}
 
-.l-section {
-  position: relative;
+  h3 {
+    font-family: $font-family-1;
+    font-size: rem(18px);
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
 }
