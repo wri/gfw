@@ -1,42 +1,36 @@
 import { createSelector } from 'reselect';
 import groupBy from 'lodash/groupBy';
-import uniq from 'lodash/uniq';
-
-export const allProjectsCategory = 'All';
 
 const getProjects = state => state.data || null;
 const getCategory = state => state.categorySelected || null;
 
-export const getProjectList = createSelector(getProjects, projects => projects);
-export const getCategoriesList = createSelector(getProjectList, projects => {
-  const categoriesList = uniq(projects.map(c => c.category));
-  return [allProjectsCategory, ...categoriesList];
+export const getProjectsByCategory = createSelector(getProjects, projects => {
+  if (!projects) return null;
+  return groupBy(projects, 'category');
 });
 
-export const getProjectsByCategory = createSelector(
-  getProjectList,
+export const getCategoriesList = createSelector(
+  getProjectsByCategory,
   projects => {
     if (!projects) return null;
-    const grouped = groupBy(projects, 'category');
-    grouped[allProjectsCategory] = projects;
-    return grouped;
+    const categories = Object.keys(projects).map(c => ({
+      label: c,
+      count: projects[c].length
+    }));
+    return [{ label: 'All', count: projects.length }, ...categories];
   }
 );
 
-export const getCategorySelected = createSelector(
-  getCategory,
-  category => category || allProjectsCategory
-);
-
 export const getProjectsSelected = createSelector(
-  [getProjectsByCategory, getCategorySelected],
-  (projects, category) => {
-    if (!projects || !category) return null;
-    return projects[category];
+  [getProjects, getProjectsByCategory, getCategory],
+  (allProjects, groupedProjects, category) => {
+    if (!allProjects || !category) return null;
+    if (category === 'All') return allProjects;
+    return groupedProjects[category];
   }
 );
 
 export default {
-  getProjectList,
-  getProjectsByCategory
+  getProjectsSelected,
+  getCategoriesList
 };

@@ -1,6 +1,8 @@
 @import '~styles/settings.scss';
 
 .l-section-projects {
+  padding: rem(40px) 0;
+
   .project-header {
     display: none;
 
@@ -11,5 +13,37 @@
 
   .project-list {
     margin-bottom: rem(30px);
+  }
+
+  .project-globe {
+    position: relative;
+  }
+
+  .project-side {
+    padding: rem(20px);
+
+    h3 {
+      margin-bottom: rem(20px);
+    }
+
+    p {
+      margin-bottom: rem(30px);
+    }
+
+    .how-to-btn {
+      width: rem(250px);
+    }
+  }
+
+  .visitors {
+    padding: rem(120px) 0 rem(80px);
+
+    h4 {
+      font-weight: 300;
+      font-size: rem(30px);
+      max-width: rem(600px);
+      margin: auto;
+      text-align: center;
+    }
   }
 }

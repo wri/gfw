@@ -1,7 +1,5 @@
 <% if ENV['FEATURE_ENV'] == 'staging' %>
-  <%= render 'shared/js_config' %>
-  <%= render 'shared/gfw_assets' %>
-  <%= render 'sgf' %>
+  <div id="sgf-page"></div>
 <% else %>
   <% content_for :header do %>
     <h1>

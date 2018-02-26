@@ -1,45 +1,28 @@
 @import '~styles/settings.scss';
 
-%modalContent {
-  margin: 0 auto;
-  max-width: rem(590px);
-}
-
 .c-projects-modal {
-  .header {
-    @extend %modalContent;
+  padding: rem(40px);
+  max-width: rem(540px);
 
-    padding: rem(50px) 0 rem(40px);
-
-    > h1 {
-      margin-bottom: 5px;
-    }
+  h3 {
+    font-size: rem(30px);
+    font-weight: 400;
+    margin-bottom: rem(10px);
   }
 
-  .image {
-    width: 100%;
-    position: relative;
-
-    > img {
-      width: 100%;
-    }
-
-    > span {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-    }
+  p {
+    opacity: 0.5;
+    margin-bottom: rem(20px);
   }
 
-  .content {
-    @extend %modalContent;
+  .links {
+    display: flex;
+    flex-direction: row;
 
-    padding: rem(20px) 0;
-  }
-
-  .footer {
-    @extend %modalContent;
-
-    padding: rem(20px) 0 rem(40px);
+    > div,
+    a {
+      margin-right: rem(10px);
+      max-width: rem(140px);
+    }
   }
 }

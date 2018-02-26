@@ -9,8 +9,7 @@ import reducers, { initialState } from './section-projects-reducers';
 import SectionProjectsComponent from './section-projects-component';
 import {
   getCategoriesList,
-  getProjectsSelected,
-  getCategorySelected
+  getProjectsSelected
 } from './section-projects-selectors';
 
 const actions = { ...sectionActions, ...modalActions };
@@ -25,7 +24,7 @@ const mapStateToProps = ({ projects }) => {
   return {
     data: getProjectsSelected(projectData),
     categories: getCategoriesList(projects),
-    categorySelected: getCategorySelected(projects),
+    categorySelected: projects.categorySelected,
     search: projects.search
   };
 };

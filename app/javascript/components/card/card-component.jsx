@@ -39,7 +39,7 @@ class Card extends PureComponent {
             </Button>
           )}
           {onClick && (
-            <Button className="read-more" extLink={onClick}>
+            <Button className="read-more" onClick={onClick}>
               READ MORE
             </Button>
           )}

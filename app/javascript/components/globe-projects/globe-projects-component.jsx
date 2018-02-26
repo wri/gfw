@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Globe from 'components/globe';
 
-import './section-projects-globe-styles.scss';
+import './globe-projects-styles.scss';
 
-class SectionProjectsGlobe extends PureComponent {
+class GlobeProjects extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,7 +22,7 @@ class SectionProjectsGlobe extends PureComponent {
   }
 
   handleClick = d => {
-    this.props.setSectionProjectsModal({
+    this.props.setModal({
       isOpen: true,
       data: d
     });
@@ -32,7 +32,7 @@ class SectionProjectsGlobe extends PureComponent {
     const { globeSize } = this.state;
     const globe =
       globeSize > 0 ? (
-        <div className="c-projects-globe" style={{ height: globeSize }}>
+        <div className="c-globe-projects" style={{ height: globeSize }}>
           <Globe
             width={globeSize}
             height={globeSize}
@@ -54,9 +54,9 @@ class SectionProjectsGlobe extends PureComponent {
   }
 }
 
-SectionProjectsGlobe.propTypes = {
+GlobeProjects.propTypes = {
   data: PropTypes.array,
-  setSectionProjectsModal: PropTypes.func.isRequired
+  setModal: PropTypes.func.isRequired
 };
 
-export default SectionProjectsGlobe;
+export default GlobeProjects;

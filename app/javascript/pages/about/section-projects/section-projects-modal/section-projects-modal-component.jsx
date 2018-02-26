@@ -1,38 +1,35 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/modal';
+import Button from 'components/button';
 
+// import dollarIcon from 'assets/icons/info.svg';
 import './section-projects-modal-styles.scss';
 
 class SectionProjectsModal extends PureComponent {
   getContent() {
     const { data } = this.props;
     if (!data) return null;
+
     return (
       <div className="c-projects-modal">
-        <div className="header">
-          {data.title && (
-            <h1 className="text -title-big -color-2 -light">{data.title}</h1>
+        <h3>{data.title}</h3>
+        <p>{data.description}</p>
+        <div className="links">
+          {data.sgf && (
+            <Button
+              theme="theme-button-light square"
+              extLink="/small-grants-fund"
+              tooltip={{
+                title: 'SMALL GRANTS FUND',
+                position: 'top',
+                trigger: 'mouseenter'
+              }}
+            >
+              &#36;
+            </Button>
           )}
-          <h2 className="text -title-xxs -color-2-o">
-            {data.legend} - {data.city}
-          </h2>
-        </div>
-        {data.image && (
-          <div className="image">
-            <img src={data.image} alt="SGF project detail" />
-            <span>{data.image_credit}</span>
-          </div>
-        )}
-        <div className="content">
-          {data.outcome && (
-            <p className="text -paragraph -color-2 -light">{data.outcome}</p>
-          )}
-        </div>
-        <div className="footer">
-          {data.category && (
-            <p className="text -paragraph-5 -color-4">{data.category}</p>
-          )}
+          {data.link && <Button extLink={data.link}>LEARN MORE</Button>}
         </div>
       </div>
     );
