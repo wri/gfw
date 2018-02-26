@@ -1,5 +1,5 @@
 export const initialState = {
-  showConfirm: true,
+  showConfirm: false,
   submitting: false,
   error: false
 };

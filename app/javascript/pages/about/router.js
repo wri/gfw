@@ -5,6 +5,7 @@ import Impacts from 'pages/about/section-impacts';
 import Partners from 'pages/about/section-partners';
 import How from 'pages/about/section-how';
 import Contact from 'pages/about/section-contact';
+import queryString from 'query-string';
 
 import { fetchImpactProjects } from 'pages/about/section-impacts/section-impacts-actions';
 import { fetchProjects } from 'pages/about/section-projects/section-projects-actions';
@@ -40,7 +41,7 @@ export const routes = {
       },
       {
         label: 'Contact Us',
-        anchor: 'contact-us',
+        anchor: 'contact',
         component: Contact
       },
       {
@@ -52,4 +53,6 @@ export const routes = {
   }
 };
 
-export default connectRoutes(history, routes);
+export default connectRoutes(history, routes, {
+  querySerializer: queryString
+});

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
 import Projects from 'pages/about/section-projects';
+import Join from 'pages/about/section-join';
 import Button from 'components/button';
 import Icon from 'components/icon';
 import ModalVideo from 'components/modal-video';
@@ -50,6 +51,7 @@ class Page extends PureComponent {
             {s.component && <s.component />}
           </div>
         ))}
+        <Join />
         <ModalVideo />
       </div>
     );

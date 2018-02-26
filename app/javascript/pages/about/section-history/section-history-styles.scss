@@ -3,6 +3,7 @@
 .l-section-history {
   padding: rem(30px) 0 rem(30px);
   background-color: $grey-light;
+  border-bottom: solid 1px $border;
 
   @media screen and (min-width: $screen-l) {
     padding: rem(60px) 0;

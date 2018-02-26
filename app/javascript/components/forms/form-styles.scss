@@ -40,6 +40,13 @@
     height: rem(110px);
     padding: rem(9px) rem(8px);
     resize: none;
+    font-size: rem(15px);
+    line-height: 1.5;
+
+    &::placeholder {
+      font-size: rem(15px);
+      line-height: 1.5;
+    }
   }
 
   button {
