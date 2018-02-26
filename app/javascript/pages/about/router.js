@@ -4,6 +4,7 @@ import History from 'pages/about/section-history';
 import Impacts from 'pages/about/section-impacts';
 import Partners from 'pages/about/section-partners';
 import How from 'pages/about/section-how';
+import Contact from 'pages/about/section-contact';
 
 import { fetchImpactProjects } from 'pages/about/section-impacts/section-impacts-actions';
 import { fetchProjects } from 'pages/about/section-projects/section-projects-actions';
@@ -40,7 +41,7 @@ export const routes = {
       {
         label: 'Contact Us',
         anchor: 'contact-us',
-        component: ''
+        component: Contact
       },
       {
         label: 'Partnership',

@@ -1,0 +1,81 @@
+@import '~styles/settings.scss';
+
+.l-section-contact {
+  padding: rem(60px);
+  border-bottom: solid 1px $border;
+  position: relative;
+
+  .desc {
+    h3 {
+      margin-bottom: rem(10px);
+    }
+
+    .intro {
+      margin-bottom: rem(20px);
+      border-bottom: solid 1px $border;
+      padding-bottom: rem(20px);
+    }
+
+    a {
+      color: $green-gfw;
+      display: block;
+      margin-top: rem(10px);
+      font-size: rem(16px);
+    }
+  }
+
+  .feedback-message {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    background-color: $white;
+    max-width: $max-width;
+    padding: $mobile-gutter;
+    margin: auto;
+
+    h3 {
+      font-size: rem(35px);
+      margin-bottom: rem(20px);
+      text-transform: none;
+      opacity: 1;
+    }
+
+    p {
+      margin-bottom: rem(20px);
+    }
+
+    button,
+    a {
+      margin-bottom: rem(10px);
+      margin-right: rem(10px);
+      width: 100%;
+
+      @media screen and (min-width: $screen-m) {
+        width: rem(240px);
+      }
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+
+      @media screen and (min-width: $screen-m) {
+        flex-direction: row;
+      }
+    }
+
+    .close-button {
+      background-color: #ed1846;
+    }
+
+    @media screen and (min-width: $screen-m) {
+      padding: $desktop-gutter;
+    }
+  }
+}
