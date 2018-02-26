@@ -5,6 +5,7 @@ import ProjectsModal from 'pages/about/section-projects/section-projects-modal';
 import ItemsList from 'components/items-list';
 import Button from 'components/button';
 
+import growth from 'pages/about/section-projects/images/growth-graphic.png';
 import './section-projects-styles.scss';
 
 class SectionProjects extends PureComponent {
@@ -47,7 +48,7 @@ class SectionProjects extends PureComponent {
             </Button>
           </div>
         </div>
-        <div className="visitors">
+        <div className="visitors" style={{ backgroundImage: `url(${growth})` }}>
           <h4>
             Since launching in 2014, over 1.5 million people have visited Global
             Forest Watch from every single country in the world.

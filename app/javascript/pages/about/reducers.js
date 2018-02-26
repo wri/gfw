@@ -16,9 +16,11 @@ const sectionsReducers = {
 
 // Components
 import * as projectsModal from 'pages/about/section-projects/section-projects-modal';
+import * as modalVideo from 'components/modal-video';
 
 const componentsReducers = {
-  projectsModal: handleActions(projectsModal)
+  projectsModal: handleActions(projectsModal),
+  modalVideo: handleActions(modalVideo)
 };
 
 export default combineReducers({

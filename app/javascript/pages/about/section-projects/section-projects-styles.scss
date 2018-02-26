@@ -3,6 +3,10 @@
 .l-section-projects {
   padding: rem(40px) 0;
 
+  @media screen and (min-width: $screen-m) {
+    padding-bottom: 0;
+  }
+
   .project-header {
     display: none;
 
@@ -45,6 +49,9 @@
   .visitors {
     padding: rem(120px) 0 rem(80px);
     display: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 
     @media screen and (min-width: $screen-l) {
       display: block;
