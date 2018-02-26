@@ -50,9 +50,9 @@
   .visitors {
     padding: rem(100px) 0 rem(130px);
     display: none;
-    background-position: center;
+    background-position: bottom;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
 
     @media screen and (min-width: $screen-l) {
       display: block;
