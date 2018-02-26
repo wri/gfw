@@ -9,4 +9,12 @@
     text-transform: uppercase;
     opacity: 0.5;
   }
+
+  .about-links {
+    display: none;
+
+    @media screen and (min-width: $screen-m) {
+      display: block;
+    }
+  }
 }

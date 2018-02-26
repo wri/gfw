@@ -38,26 +38,27 @@
   .slick-dots {
     text-align: center;
     margin: rem(25px);
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
 
     li {
       margin: 0 rem(10px);
-      display: inline-block;
-      width: rem(10px);
-      height: rem(10px);
-      background-color: $grey-dark;
-      border-radius: 50%;
-      cursor: pointer;
+      display: flex;
 
       button {
-        width: 100%;
-        height: 100%;
+        width: rem(10px);
+        height: rem(10px);
         cursor: pointer;
+        background-color: $grey-dark;
+        border-radius: 50%;
       }
 
-      &.slick-active {
+      &.slick-active button {
         background-color: $green-gfw;
         width: rem(15px);
         height: rem(15px);
+        max-height: rem(15px);
       }
     }
   }

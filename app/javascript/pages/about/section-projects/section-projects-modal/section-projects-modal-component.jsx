@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/modal';
 import Button from 'components/button';
+import Tip from 'components/tip';
 
 // import dollarIcon from 'assets/icons/info.svg';
 import './section-projects-modal-styles.scss';
@@ -21,12 +22,13 @@ class SectionProjectsModal extends PureComponent {
               theme="theme-button-light square"
               extLink="/small-grants-fund"
               tooltip={{
-                title: 'SMALL GRANTS FUND',
+                theme: 'tip',
                 position: 'top',
-                trigger: 'mouseenter'
+                arrow: true,
+                html: <Tip text="SMALL GRANTS FUND" />
               }}
             >
-              &#36;
+              $
             </Button>
           )}
           {data.link && <Button extLink={data.link}>LEARN MORE</Button>}

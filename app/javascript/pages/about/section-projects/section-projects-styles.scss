@@ -13,6 +13,11 @@
 
   .project-list {
     margin-bottom: rem(30px);
+    display: none;
+
+    @media screen and (min-width: $screen-l) {
+      display: block;
+    }
   }
 
   .project-globe {
@@ -20,7 +25,9 @@
   }
 
   .project-side {
-    padding: rem(20px);
+    @media screen and (min-width: $screen-m) {
+      padding: rem(20px);
+    }
 
     h3 {
       margin-bottom: rem(20px);
@@ -37,6 +44,11 @@
 
   .visitors {
     padding: rem(120px) 0 rem(80px);
+    display: none;
+
+    @media screen and (min-width: $screen-l) {
+      display: block;
+    }
 
     h4 {
       font-weight: 300;

@@ -14,21 +14,19 @@ class Page extends PureComponent {
   render() {
     const { sections } = this.props;
     return (
-      <div>
+      <div className="l-main">
         <Cover
           title="About"
           description="Global Forest Watch (GFW) is an online platform that provides data and tools for monitoring forests. By harnessing cutting-edge technology, GFW allows anyone to access near real-time information about where and how forests are changing around the world."
           bgImage={bgImage}
         />
-        <SubnavMenu links={sections} />
-        <div className="l-main">
-          <Projects />
-          {sections.map(s => (
-            <div id={s.anchor} className={s.anchor} key={s.anchor}>
-              {s.component && <s.component />}
-            </div>
-          ))}
-        </div>
+        <SubnavMenu className="about-links" links={sections} />
+        <Projects />
+        {sections.map(s => (
+          <div id={s.anchor} className={s.anchor} key={s.anchor}>
+            {s.component && <s.component />}
+          </div>
+        ))}
       </div>
     );
   }
