@@ -52,6 +52,8 @@
     <script src="//www.google-analytics.com/cx/api.js"></script>
 
     <%= requirejs_include_tag "map" %>
+    <%= javascript_pack_tag controller_name %>
+    <%= stylesheet_pack_tag controller_name %>
     <%= render "shared/js_footer" %>
   </body>
 </html>
