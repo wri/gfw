@@ -28,7 +28,8 @@ const mapStateToProps = (
     error: map.error,
     bounds: countryData.geostore.bounds,
     layerSpec: map.layerSpec,
-    settings: map.settings,
+    settings: { ...map.settings, ...parentSettings },
+    options: map.options,
     layers: getLayers({ layers: activeLayers, layerSpec: map.layerSpec }),
     layersKeys: activeLayers
   };
@@ -43,23 +44,29 @@ class MapContainer extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isParentLoading, bounds, layersKeys, settings } = nextProps;
+    const {
+      isParentLoading,
+      bounds,
+      layersKeys,
+      settings,
+      options
+    } = nextProps;
     if (isParentLoading !== this.props.isParentLoading && bounds) {
       this.boundMap(nextProps.bounds);
       this.setAreaHighlight();
-      this.updateLayers(layersKeys);
+      this.updateLayers(layersKeys, settings);
       this.setEvents();
     }
 
-    if (!isEqual(layersKeys, this.props.layersKeys)) {
-      this.updateLayers(layersKeys);
+    if (
+      !isEqual(layersKeys, this.props.layersKeys) ||
+      !isEqual(settings, this.props.settings)
+    ) {
+      this.updateLayers(layersKeys, settings);
     }
 
-    if (
-      this.props.settings.zoom &&
-      this.props.settings.zoom !== settings.zoom
-    ) {
-      this.updateZoom(settings.zoom);
+    if (this.props.options.zoom && this.props.options.zoom !== options.zoom) {
+      this.updateZoom(options.zoom);
     }
   }
 
@@ -114,9 +121,9 @@ class MapContainer extends PureComponent {
     }
   }
 
-  updateLayers(layers, layerSpec) {
+  updateLayers(layers, settings) {
     this.removeLayers();
-    this.setLayers(layers, layerSpec);
+    this.setLayers(layers, settings);
   }
 
   updateZoom(zoom) {
@@ -153,6 +160,7 @@ MapContainer.propTypes = {
   layers: PropTypes.array,
   layersKeys: PropTypes.array,
   settings: PropTypes.object,
+  options: PropTypes.object,
   mapOptions: PropTypes.object.isRequired,
   getLayerSpec: PropTypes.func.isRequired,
   setMapZoom: PropTypes.func.isRequired,
