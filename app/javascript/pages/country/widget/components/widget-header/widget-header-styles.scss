@@ -26,6 +26,14 @@
     .map-button {
       position: relative;
 
+      &.-active {
+        cursor: default;
+
+        &:hover {
+          background-color: $green-gfw;
+        }
+      }
+
       .map-icon {
         width: rem(20px);
         height: rem(20px);

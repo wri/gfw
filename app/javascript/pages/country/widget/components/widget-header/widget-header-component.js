@@ -63,7 +63,7 @@ class WidgetHeader extends PureComponent {
           {!embed &&
             haveMapLayers && (
               <Button
-                className="map-button"
+                className={`map-button ${active ? '-active' : ''}`}
                 theme={`theme-button-small ${
                   widgetSize === 'small' || isDeviceTouch ? 'square' : ''
                 }`}
