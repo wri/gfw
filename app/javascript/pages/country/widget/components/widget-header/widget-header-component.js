@@ -30,6 +30,7 @@ class WidgetHeader extends PureComponent {
       title,
       settingsConfig,
       locationNames,
+      modalClosing,
       widget,
       location,
       query,
@@ -116,7 +117,9 @@ class WidgetHeader extends PureComponent {
                 trigger="click"
                 interactive
                 onRequestClose={() => {
-                  this.setState({ tooltipOpen: false });
+                  if (!modalClosing) {
+                    this.setState({ tooltipOpen: false });
+                  }
                 }}
                 onShow={() => this.setState({ tooltipOpen: true })}
                 arrow
