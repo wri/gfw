@@ -1,7 +1,7 @@
 class CountryController < ApplicationController
 
   layout 'application_react'
-  before_action :set_country, only: [:show]
+  before_action :set_country, only: [:show, :embed]
 
   def show
     @title = @country["name"]
