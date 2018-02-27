@@ -4,6 +4,7 @@ import { Tooltip } from 'react-tippy';
 import isEmpty from 'lodash/isEmpty';
 import { COUNTRY } from 'pages/country/router';
 import { isTouch } from 'utils/browser';
+import { SCREEN_L } from 'utils/constants';
 
 import Button from 'components/button';
 import Icon from 'components/icon';
@@ -43,7 +44,7 @@ class WidgetHeader extends PureComponent {
     } = this.props;
     const { tooltipOpen } = this.state;
     const widgetSize = settingsConfig.config.size;
-    const isDeviceTouch = isTouch();
+    const isDeviceTouch = isTouch() || window.innerWidth < SCREEN_L;
     const haveMapLayers =
       settingsConfig.settings &&
       settingsConfig.settings.layers &&
