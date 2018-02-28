@@ -86,6 +86,7 @@ class RecentImageryContainer extends PureComponent {
 
   addBoundsPolygon(bounds) {
     const { map } = this.middleView;
+    let clickTimeout = null;
 
     if (this.boundsPolygon !== null) {
       this.removeBoundsPolygon();
@@ -118,7 +119,12 @@ class RecentImageryContainer extends PureComponent {
       });
     });
     google.maps.event.addListener(this.boundsPolygon, 'click', (e) => { // eslint-disable-line
-      console.log(e); // eslint-disable-line
+      clickTimeout = setTimeout(() => {
+        console.log(e); // eslint-disable-line
+      }, 200);
+    });
+    google.maps.event.addListener(this.boundsPolygon, 'dblclick', (e) => { // eslint-disable-line
+      clearTimeout(clickTimeout);
     });
     this.boundsPolygon.setMap(map);
   }
