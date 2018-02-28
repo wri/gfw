@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Application entry point.
  */
@@ -29,6 +30,7 @@ require([
   'map/views/NavMobileView',
   'map/views/GuideView',
   'map/views/controls/GuideButtonView',
+  'map/views/ReactMapMiddleView',
   'views/HeaderView',
   'views/FooterView',
   'views/NotificationsView',
@@ -56,6 +58,7 @@ require([
   NavMobileView,
   GuideView,
   GuideButtonView,
+  ReactMapMiddleView,
   HeaderView,
   FooterView,
   NotificationsView,
@@ -65,6 +68,9 @@ require([
     $el: $('body'),
 
     init() {
+      window.App = {
+        Views: {}
+      };
       const router = new Router(this);
       this._cartodbHack();
       this._handlebarsPlugins();
@@ -80,6 +86,9 @@ require([
       if (!Backbone.History.started) {
         Backbone.history.start({ pushState: true });
       }
+
+      var mapEvent = new Event('mapLoaded');
+      window.dispatchEvent(mapEvent);
     },
 
     _fetchData() {
@@ -122,6 +131,10 @@ require([
       new NotificationsView(this.map, this.countries);
       new GuideView(this.map, this.countries);
       new GuideButtonView(this.map, this.countries);
+      window.App.Views.ReactMapMiddleView = new ReactMapMiddleView(
+        this.map,
+        this.countries
+      );
 
       this._initApp();
     },
@@ -141,7 +154,7 @@ require([
         text.charAt(0).toUpperCase()
       );
 
-      Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+      Handlebars.registerHelper('ifCond', function(v1, operator, v2, options) {
         switch (operator) {
           case '==':
             return v1 == v2 ? options.fn(this) : options.inverse(this);
@@ -169,7 +182,7 @@ require([
 
     _googleMapsHelper() {
       if (!google.maps.Polygon.prototype.getBounds) {
-        google.maps.Polygon.prototype.getBounds = function () {
+        google.maps.Polygon.prototype.getBounds = function() {
           const bounds = new google.maps.LatLngBounds();
           const paths = this.getPaths();
           let path;
