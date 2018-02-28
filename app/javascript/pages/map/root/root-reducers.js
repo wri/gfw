@@ -1,3 +1,13 @@
-export const initialState = {};
+export const initialState = {
+  loading: true,
+  middleView: null
+};
 
-export default {};
+const setRootLoading = (state, { payload }) => ({
+  ...state,
+  loading: payload
+});
+
+export default {
+  setRootLoading
+};
