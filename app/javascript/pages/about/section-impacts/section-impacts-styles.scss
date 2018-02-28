@@ -1,0 +1,26 @@
+@import '~styles/settings.scss';
+
+.l-section-impacts {
+  padding: rem(40px) 0;
+  border-bottom: solid 1px $border;
+
+  h3 {
+    font-family: $font-family-1;
+    font-size: rem(18px);
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  .awards {
+    h3 {
+      margin-bottom: rem(30px);
+    }
+
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: rem(60px);
+    }
+  }
+}

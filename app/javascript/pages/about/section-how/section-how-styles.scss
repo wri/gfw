@@ -1,0 +1,90 @@
+@import '~styles/settings.scss';
+
+.l-section-how {
+  background-color: $grey-light;
+  width: 100%;
+  border-bottom: solid 1px $border;
+
+  @media screen and (min-width: $screen-l) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  h3 {
+    margin-bottom: rem(30px);
+  }
+
+  .panel {
+    width: 100%;
+
+    @media screen and (min-width: $screen-l) {
+      width: 50%;
+      min-width: 50%;
+    }
+  }
+
+  .left-panel {
+    padding: rem(30px) 0;
+    padding-left: $mobile-gutter;
+
+    @media screen and (min-width: $screen-m) {
+      padding-left: $desktop-gutter;
+    }
+
+    @media screen and (min-width: $screen-xl) {
+      padding-left: calc(50% - (#{$max-width} * 0.5) + #{$desktop-gutter});
+    }
+
+    .list-item {
+      padding-left: rem(3px);
+      margin-bottom: rem(25px);
+      padding-right: rem(40px);
+      line-height: 1.67;
+      opacity: 0.7;
+
+      span {
+        width: rem(10px);
+        height: rem(10px);
+        background-color: $grey-dark;
+        display: inline-block;
+        border-radius: 50%;
+        margin-right: rem(13px);
+        margin-left: rem(3px);
+      }
+
+      button {
+        margin-bottom: rem(20px);
+        cursor: pointer;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+
+      &.selected {
+        padding-left: 0;
+
+        span {
+          border: 0;
+          width: rem(15px);
+          height: rem(15px);
+          margin-right: rem(10px);
+          background-color: $green-gfw;
+        }
+      }
+    }
+  }
+
+  .right-panel {
+    min-height: rem(600px);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: none;
+
+    @media screen and (min-width: $screen-l) {
+      display: block;
+    }
+  }
+}

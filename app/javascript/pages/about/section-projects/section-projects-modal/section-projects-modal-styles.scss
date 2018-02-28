@@ -1,0 +1,29 @@
+@import '~styles/settings.scss';
+
+.c-projects-modal {
+  padding: rem(40px);
+  max-width: rem(540px);
+
+  h3 {
+    font-size: rem(30px);
+    font-weight: 400;
+    margin-bottom: rem(10px);
+  }
+
+  p {
+    opacity: 0.5;
+    margin-bottom: rem(20px);
+  }
+
+  .links {
+    display: flex;
+    flex-direction: row;
+
+    > div,
+    a {
+      font-size: rem(16px);
+      margin-right: rem(10px);
+      max-width: rem(140px);
+    }
+  }
+}

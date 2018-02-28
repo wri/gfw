@@ -1,0 +1,65 @@
+@import "./slick.scss";
+@import '~styles/settings.scss';
+
+.c-slider {
+  margin: rem(30px) 0;
+
+  .slick-slide {
+    padding: 0 rem(20px);
+    opacity: 0.5;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .slick-active {
+    opacity: 1;
+  }
+
+  .slick-arrow {
+    display: none;
+    position: absolute;
+    top: calc(50% - 40px);
+    z-index: 10;
+
+    @media screen and (min-width: $screen-xl) {
+      display: inline-block;
+    }
+  }
+
+  .slick-next {
+    transform: rotate(-90deg);
+    right: calc(50vw - 600px);
+  }
+
+  .slick-prev {
+    transform: rotate(90deg);
+    left: calc(50vw - 600px);
+  }
+
+  .slick-dots {
+    text-align: center;
+    margin: rem(25px);
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+
+    li {
+      margin: 0 rem(10px);
+      display: flex;
+
+      button {
+        width: rem(10px);
+        height: rem(10px);
+        cursor: pointer;
+        background-color: $grey-dark;
+        border-radius: 50%;
+      }
+
+      &.slick-active button {
+        background-color: $green-gfw;
+        width: rem(15px);
+        height: rem(15px);
+        max-height: rem(15px);
+      }
+    }
+  }
+}
