@@ -1,6 +1,7 @@
 export const initialState = {
   loading: false,
   error: false,
+  options: {},
   layerSpec: {},
   settings: {}
 };
@@ -18,11 +19,11 @@ const setLayerSpec = (state, { payload }) => ({
 
 const setMapSettings = (state, { payload }) => ({
   ...state,
-  settings: payload
+  options: payload
 });
 
 const setMapZoom = (state, { payload }) => {
-  let zoom = !payload.sum ? payload.value : state.settings.zoom + payload.value;
+  let zoom = !payload.sum ? payload.value : state.options.zoom + payload.value;
   if (zoom > 20) {
     zoom = 20;
   } else if (zoom < 1) {
@@ -31,8 +32,8 @@ const setMapZoom = (state, { payload }) => {
 
   return {
     ...state,
-    settings: {
-      ...state.settings,
+    options: {
+      ...state.options,
       zoom
     }
   };

@@ -7,7 +7,9 @@ class WidgetSettingsStatement extends PureComponent {
   render() {
     const { statement } = this.props;
 
-    return <div className="c-widget-settings-statement">{statement}</div>;
+    return statement ? (
+      <div className="c-widget-settings-statement">{statement}</div>
+    ) : null;
   }
 }
 

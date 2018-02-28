@@ -1,7 +1,7 @@
 import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 
 export const initialState = {
-  loading: false,
+  loading: true,
   error: false,
   data: {},
   ...WIDGETS_CONFIG.fires

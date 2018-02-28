@@ -59,9 +59,11 @@ class WidgetSettings extends PureComponent {
                     className="theme-button-small square info-button"
                     onClick={() =>
                       setModalMeta(
-                        option.metaKey === 'primary_forests'
+                        option.metaKey === 'primary_forest'
                           ? `${lowerCase(locationNames.country.value)}_${
                             option.metaKey
+                          }${
+                            locationNames.country.value === 'DRC' ? 's' : ''
                           }`
                           : option.metaKey
                       )
