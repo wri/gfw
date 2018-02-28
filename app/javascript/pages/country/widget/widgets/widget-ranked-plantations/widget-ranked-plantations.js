@@ -26,7 +26,8 @@ const mapStateToProps = (
     settings,
     location,
     locationNames,
-    colors
+    colors,
+    embed: ownProps.embed
   };
   return {
     data: chartData(selectorData),

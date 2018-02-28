@@ -14,7 +14,8 @@ class WidgetNumberedList extends PureComponent {
       data,
       settings,
       handlePageChange,
-      linksDisabled
+      linksDisabled,
+      linksExt
     } = this.props;
     const { page, pageSize, unit, unitFormat } = settings;
     const pageData = pageSize
@@ -25,12 +26,9 @@ class WidgetNumberedList extends PureComponent {
       <div className={`c-widget-numbered-list ${className}`}>
         <ul className="list">
           {data.length > 0 &&
-            pageData.map((item, index) => (
-              <li key={`${item.label}-${item.id}`}>
-                <Link
-                  className={`list-item ${linksDisabled ? 'disabled' : ''}`}
-                  to={item.path}
-                >
+            pageData.map((item, index) => {
+              const linkContent = (
+                <div className="list-item">
                   <div className="item-label">
                     <div
                       className="item-bubble"
@@ -46,9 +44,29 @@ class WidgetNumberedList extends PureComponent {
                       : format(item.value < 1 ? '.2f' : '.3s')(item.value)}
                     {unit}
                   </div>
-                </Link>
-              </li>
-            ))}
+                </div>
+              );
+              return (
+                <li key={`${item.label}-${item.id}`}>
+                  {linksExt ? (
+                    <a
+                      href={`http://${window.location.host}${item.path}`}
+                      target="_blank"
+                      rel="noopener nofollower"
+                    >
+                      {linkContent}
+                    </a>
+                  ) : (
+                    <Link
+                      className={`${linksDisabled ? 'disabled' : ''}`}
+                      to={item.path}
+                    >
+                      {linkContent}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
         </ul>
         {handlePageChange &&
           data.length > settings.pageSize && (
@@ -68,7 +86,8 @@ WidgetNumberedList.propTypes = {
   settings: PropTypes.object.isRequired,
   handlePageChange: PropTypes.func,
   className: PropTypes.string,
-  linksDisabled: PropTypes.bool
+  linksDisabled: PropTypes.bool,
+  linksExt: PropTypes.bool
 };
 
 export default WidgetNumberedList;

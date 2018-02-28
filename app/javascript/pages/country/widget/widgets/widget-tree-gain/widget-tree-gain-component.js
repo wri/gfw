@@ -8,7 +8,7 @@ import './widget-tree-gain-styles.scss';
 
 class WidgetTreeCoverGain extends PureComponent {
   render() {
-    const { data, sentence, settings } = this.props;
+    const { data, sentence, settings, embed } = this.props;
 
     return (
       <div className="c-widget-tree-cover-gain">
@@ -19,7 +19,7 @@ class WidgetTreeCoverGain extends PureComponent {
               className="ranking-list"
               data={data}
               settings={settings}
-              handlePageChange={() => {}}
+              linksExt={embed}
             />
           </div>
         )}
@@ -31,7 +31,8 @@ class WidgetTreeCoverGain extends PureComponent {
 WidgetTreeCoverGain.propTypes = {
   data: PropTypes.array,
   settings: PropTypes.object.isRequired,
-  sentence: PropTypes.string
+  sentence: PropTypes.string,
+  embed: PropTypes.bool
 };
 
 export default WidgetTreeCoverGain;
