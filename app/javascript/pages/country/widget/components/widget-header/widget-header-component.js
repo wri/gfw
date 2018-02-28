@@ -105,8 +105,7 @@ class WidgetHeader extends PureComponent {
                 {widgetSize !== 'small' && !isDeviceTouch && 'SHOW ON MAP'}
               </Button>
             )}
-          {!embed &&
-            settingsConfig &&
+          {settingsConfig &&
             !isEmpty(settingsConfig.options) && (
               <Tooltip
                 theme="light"
