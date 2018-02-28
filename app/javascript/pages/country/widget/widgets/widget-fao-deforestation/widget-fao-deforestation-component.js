@@ -19,7 +19,7 @@ class WidgetFAODeforestation extends PureComponent {
               className="locations-list"
               data={data}
               settings={settings}
-              linksDisabled={embed}
+              linksExt={embed}
             />
           )}
       </div>

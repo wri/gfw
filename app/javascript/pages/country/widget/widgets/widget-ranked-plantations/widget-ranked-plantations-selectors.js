@@ -15,6 +15,7 @@ const getLocation = state => state.location || null;
 const getLocationsMeta = state => state.meta || null;
 const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
+const getEmbed = state => state.embed || null;
 
 const getPlanationKeys = createSelector(
   [getPlantations],
@@ -23,8 +24,15 @@ const getPlanationKeys = createSelector(
 );
 
 export const chartData = createSelector(
-  [getPlantations, getExtent, getPlanationKeys, getLocationsMeta, getLocation],
-  (plantations, extent, plantationKeys, meta, location) => {
+  [
+    getPlantations,
+    getExtent,
+    getPlanationKeys,
+    getLocationsMeta,
+    getLocation,
+    getEmbed
+  ],
+  (plantations, extent, plantationKeys, meta, location, embed) => {
     if (isEmpty(plantations) || isEmpty(meta) || isEmpty(extent)) return null;
     const groupedByRegion = groupBy(plantations, 'region');
     const regionData = Object.keys(groupedByRegion).map(r => {
@@ -46,13 +54,17 @@ export const chartData = createSelector(
         yKeys[key] = pPercentage || 0;
         yKeys[`${key} label`] = key;
       });
+
       return {
         region: regionLabel && regionLabel.label,
         ...yKeys,
         total: totalRegionPlantations / totalArea * 100,
-        path: `/country/${location.payload.country}/${
+        path: `${embed ? `http://${window.location.host}` : ''}/country/${
+          location.payload.country
+        }/${
           location.payload.region ? `${location.payload.region}/` : ''
-        }${regionId}${location.search ? `?${location.search}` : ''}`
+        }${regionId}${location.search ? `?${location.search}` : ''}`,
+        extLink: embed
       };
     });
     const dataParsed = sortByKey(regionData, 'total', true);

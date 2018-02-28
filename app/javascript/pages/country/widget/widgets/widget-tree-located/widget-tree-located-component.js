@@ -21,7 +21,7 @@ class WidgetTreeLocated extends PureComponent {
                 data={data}
                 settings={settings}
                 handlePageChange={handlePageChange}
-                linksDisabled={embed}
+                linksExt={embed}
               />
             </div>
           )}

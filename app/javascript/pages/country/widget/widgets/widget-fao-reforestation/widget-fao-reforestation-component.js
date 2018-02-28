@@ -19,7 +19,7 @@ class WidgetFAOReforestation extends PureComponent {
               className="locations-list"
               data={data}
               settings={settings}
-              linksDisabled={embed}
+              linkExt={embed}
             />
           )}
       </div>
