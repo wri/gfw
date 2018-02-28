@@ -1,19 +1,26 @@
 export const initialState = {
   enabled: false,
-  eventsEnabled: false
+  needEvents: false,
+  data: {}
 };
+
+const setRecentImageryData = (state, { payload }) => ({
+  ...state,
+  data: payload
+});
 
 const toogleRecentImagery = state => ({
   ...state,
   enabled: !state.enabled
 });
 
-const setRecentImageryEventsEnabled = (state, { payload }) => ({
+const setRecentImageryEvents = (state, { payload }) => ({
   ...state,
-  eventsEnabled: payload
+  needEvents: payload
 });
 
 export default {
+  setRecentImageryData,
   toogleRecentImagery,
-  setRecentImageryEventsEnabled
+  setRecentImageryEvents
 };

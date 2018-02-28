@@ -8,9 +8,10 @@ import reducers, { initialState } from './recent-imagery-reducers';
 import RecentImageryComponent from './recent-imagery-component';
 
 const mapStateToProps = ({ recentImagery }) => {
-  const { enabled } = recentImagery;
+  const { enabled, needEvents } = recentImagery;
   return {
-    enabled
+    enabled,
+    needEvents
   };
 };
 
@@ -20,9 +21,8 @@ class RecentImageryContainer extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { enabled, eventsEnabled, setLayer } = nextProps;
+    const { enabled, needEvents, setLayer, setEvents } = nextProps;
     const { map } = this.middleView;
-
     if (enabled && !isEqual(enabled, this.props.enabled)) {
       setLayer({
         middleView: this.middleView,
@@ -32,40 +32,11 @@ class RecentImageryContainer extends PureComponent {
         end: '2016-09-01'
       });
     }
-    if (!enabled && !isEqual(enabled, this.props.enabled)) {
-      this.removeEvents();
-    }
-    if (enabled && !eventsEnabled) {
-      this.setEvents();
-    }
-  }
-
-  setEvents() {
-    console.log('setEvents'); // eslint-disable-line
-    const { updateLayer, setRecentImageryEventsEnabled } = this.props;
-    const { map } = this.middleView;
-
-    map.addListener('dragend', () => {
-      updateLayer({
-        middleView: this.middleView,
-        latitude: map.getCenter().lng(),
-        longitude: map.getCenter().lat(),
-        start: '2016-01-01',
-        end: '2016-09-01'
+    if (needEvents && !isEqual(needEvents, this.props.setEvents)) {
+      setEvents({
+        middleView: this.middleView
       });
-    });
-    map.addListener('click', e => {
-      console.log(e); // eslint-disable-line
-    });
-    setRecentImageryEventsEnabled(true);
-  }
-
-  removeEvents() {
-    const { setRecentImageryEventsEnabled } = this.props;
-    const { map } = this.middleView;
-    google.maps.event.clearListeners(map, 'dragend'); // eslint-disable-line
-    google.maps.event.clearListeners(map, 'click'); // eslint-disable-line
-    setRecentImageryEventsEnabled(false);
+    }
   }
 
   render() {
@@ -77,12 +48,10 @@ class RecentImageryContainer extends PureComponent {
 
 RecentImageryContainer.propTypes = {
   enabled: PropTypes.bool,
-  eventsEnabled: PropTypes.bool,
+  needEvents: PropTypes.bool,
   setLayer: PropTypes.func,
-  updateLayer: PropTypes.func,
-  setRecentImageryEventsEnabled: PropTypes.func
+  setEvents: PropTypes.func
 };
 
 export { actions, reducers, initialState };
-
 export default connect(mapStateToProps, actions)(RecentImageryContainer);
