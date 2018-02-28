@@ -1,7 +1,9 @@
 export const initialState = {
   enabled: false,
-  needEvents: false,
-  data: {}
+  data: {
+    url: '',
+    bounds: []
+  }
 };
 
 const setRecentImageryData = (state, { payload }) => ({
@@ -14,13 +16,7 @@ const toogleRecentImagery = state => ({
   enabled: !state.enabled
 });
 
-const setRecentImageryEvents = (state, { payload }) => ({
-  ...state,
-  needEvents: payload
-});
-
 export default {
   setRecentImageryData,
-  toogleRecentImagery,
-  setRecentImageryEvents
+  toogleRecentImagery
 };
