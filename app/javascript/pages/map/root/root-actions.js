@@ -1,3 +1,7 @@
-// import { createAction } from 'redux-actions';
+import { createAction } from 'redux-actions';
 
-export default {};
+const setRootLoading = createAction('setRootLoading');
+
+export default {
+  setRootLoading
+};
