@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import groupBy from 'lodash/groupBy';
+import uniq from 'lodash/uniq';
 import deburr from 'lodash/deburr';
 import toUpper from 'lodash/toUpper';
 
@@ -14,18 +15,9 @@ const getCategory = state => state.categorySelected || null;
 const getSearch = state => state.search || null;
 
 export const getProjectList = createSelector(getProjects, projects => projects);
-
 export const getCategoriesList = createSelector(getProjectList, projects => {
-  if (!projects || !projects.length) return null;
-  const groupedByCat = groupBy(projects, 'category');
-  const categories = Object.keys(groupedByCat).map(c => ({
-    label: c,
-    count: groupedByCat[c].length
-  }));
-  return [
-    { label: allProjectsCategory, count: projects.length },
-    ...categories
-  ];
+  const categoriesList = uniq(projects.map(c => c.category));
+  return [allProjectsCategory, ...categoriesList];
 });
 
 export const getProjectsByCategory = createSelector(

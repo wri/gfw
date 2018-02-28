@@ -1,46 +1,30 @@
 import { createElement } from 'react';
+
+import Earth from './img/earth.svg';
+import Map from './img/map.svg';
+import People from './img/people.svg';
+
 import Component from './section-about-component';
 
-const benefits = {
-  title: 'BENEFITS',
-  items: [
-    { label: '· Grant awards between $10K - $40K.' },
-    { label: '· Individualized training and support.' },
-    { label: '· Form part of the GFW partnership.' }
-  ]
-};
+const benefits = [
+  'Grant awards between $10K - $40K.',
+  'Individualized training and support.',
+  'Form part of the GFW partnership.'
+];
 
-const results = {
-  title: 'RESULTS',
-  items: [
-    { label: '· 44 projects from 30 countries' },
-    { label: '· Over 1.8 billion hectares of forests monitored using GFW' },
-    { label: '· Over 1,800 people trained in using GFW' }
-  ]
-};
+const results = [
+  {
+    icon: Earth,
+    label: '<b>44 projects</b> from <b>30 countries</b>'
+  },
+  {
+    icon: Map,
+    label: 'Over <b>1.8 billion hectares</b> of forests monitored using GFW'
+  },
+  {
+    icon: People,
+    label: 'Over <b>1,800</b> people trained in using GFW'
+  }
+];
 
-const projectTypes = {
-  title: 'PROJECT TYPES',
-  items: [
-    {
-      label: '· Forest management, monitoring and law enforcement'
-    },
-    {
-      label: '· Community empowerment'
-    },
-    {
-      label: '· Advocacy/policy change',
-      tooltip:
-        'Use GFW data as evidence to advocate for increased protected status or community land rights.'
-    },
-    {
-      label: '· Journalism/storytelling',
-      tooltip:
-        'Raise public awareness about the threats to forest-dependent communities by publishing stories or training local journalist using GFW data.'
-    }
-  ]
-};
-
-const cards = [benefits, results, projectTypes];
-
-export default () => createElement(Component, { cards });
+export default () => createElement(Component, { benefits, results });

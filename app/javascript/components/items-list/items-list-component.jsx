@@ -12,9 +12,13 @@ class ItemsList extends PureComponent {
     return (
       <ul className={`c-items-list text -paragraph -color-2 ${className}`}>
         {data.map(d => (
-          <li key={d} className={d === itemSelected ? '-selected' : ''}>
-            <button onClick={() => onClick && onClick(d)}>
-              <Icon icon={arrowIcon} className="icon" /> {d}
+          <li
+            key={d.label}
+            className={d.label === itemSelected ? '-selected' : ''}
+          >
+            <button onClick={() => onClick && onClick(d.label)}>
+              <Icon icon={arrowIcon} className="icon" /> {d.label}{' '}
+              {d.count && `(${d.count})`}
             </button>
           </li>
         ))}

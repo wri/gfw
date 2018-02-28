@@ -1,6 +1,12 @@
 @import '~styles/settings.scss';
 
 .l-section-projects {
+  h2 {
+    opacity: 0.5;
+    font-size: rem(18px);
+    text-transform: uppercase;
+  }
+
   .project-header {
     display: none;
 
@@ -24,13 +30,13 @@
   .project-cards {
     position: relative;
     min-height: rem(100px);
+
+    .card-container {
+      margin-bottom: rem(30px);
+    }
   }
 
   .project-card {
-    margin-bottom: rem(20px);
-
-    @media screen and (min-width: $screen-m) {
-      margin-bottom: rem(40px);
-    }
+    height: 100%;
   }
 }

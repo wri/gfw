@@ -1,15 +1,16 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Card from 'pages/sgf/section-about/section-about-card';
+import Icon from 'components/icon';
+
 import sgfLogo from './img/GFW_SGF_logo.png';
-import sfgBg1 from './img/sgf-about-bg.png';
+
 import './section-about-styles.scss';
 
 class SectionAbout extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { cards } = this.props;
+    const { results, benefits } = this.props;
     return (
       <div className="l-section-about">
         <section className="intro">
@@ -37,42 +38,44 @@ class SectionAbout extends PureComponent {
             </div>
           </div>
         </section>
-        <section
-          className="about-cards"
-          style={{ backgroundImage: `url(${sfgBg1})` }}
-        >
-          <div className="row cards">
+        <section className="program">
+          <div className="row">
             <div className="column small-12">
-              {cards &&
-                cards.length && (
-                  <ul className="row">
-                    {this.props.cards.map(card => (
-                      <li
-                        className="column small-12 medium-6 large-4"
-                        key={card.title}
-                      >
-                        <Card
-                          data={card}
-                          className="about-card -big-padding -min-h"
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              <p className="copyright-section">
-                <strong>Photo credit:</strong> African Conservation Foundation
+              <h2 className="section-title">Program Benefits</h2>
+              <ul className="list">
+                {benefits && benefits.map(item => <li key={item}>- {item}</li>)}
+              </ul>
+              <p>
+                Small Grants Fund projects have used GFW to strengthen community
+                land rights, by providing evidence of the benefits of
+                community-monitored forests; alert authorities to illegal
+                deforestation, resulting in fines for the perpetrators; and
+                create campaigns, to raise awareness of deforestation drivers
+                and hold those responsible to account.
               </p>
+            </div>
+          </div>
+        </section>
+        <section className="results">
+          <div className="row">
+            <div className="column small-12">
+              <h2 className="section-title">Results</h2>
+              <div className="row icon-list">
+                {results &&
+                  results.map(item => (
+                    <div key={item.label} className="column small-12 medium-4">
+                      <Icon icon={item.icon} />
+                      <p dangerouslySetInnerHTML={{ __html: item.label }} />
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
         </section>
         <section className="support">
           <div className="row">
             <div className="column small-12 medium-9">
-              <div className="section-header">
-                <h2 className="text -color-2 -title-big -light">
-                  Support the Small Grants Fund
-                </h2>
-              </div>
+              <h2 className="section-title">Support the Small Grants Fund</h2>
               <p className="text -paragraph -color-2 -light -spaced">
                 If you would like to contribute to supporting communities and
                 civil society organizations in using GFW to protect and
@@ -93,7 +96,8 @@ class SectionAbout extends PureComponent {
 }
 
 SectionAbout.propTypes = {
-  cards: PropTypes.array.isRequired
+  results: PropTypes.array.isRequired,
+  benefits: PropTypes.array.isRequired
 };
 
 export default SectionAbout;

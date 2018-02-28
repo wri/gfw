@@ -2,12 +2,6 @@
 
 .l-section-about {
   .intro {
-    margin-bottom: rem(30px);
-
-    @media screen and (min-width: $screen-m) {
-      margin-bottom: rem(60px);
-    }
-
     .logo {
       margin-top: 30px;
 
@@ -18,38 +12,40 @@
     }
   }
 
-  .about-cards {
-    background-repeat: none;
-    background-position: center;
-    background-size: cover;
-  }
-
-  .cards {
-    position: relative;
-    padding: rem(60px) 0 rem(30px);
+  section {
+    color: $slate;
+    font-weight: 300;
+    font-size: rem(18px);
+    line-height: 1.67;
+    margin-bottom: rem(40px);
 
     @media screen and (min-width: $screen-m) {
-      padding: rem(150px) 0;
-    }
-
-    .about-card {
-      margin-bottom: 30px;
-    }
-
-    .copyright-section {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      font-size: 11px;
-      color: $white;
+      margin-bottom: rem(60px);
     }
   }
 
-  .support {
-    padding: rem(30px) 0 0;
+  .section-title {
+    margin-bottom: rem(10px);
+    font-size: rem(35px);
+  }
 
-    @media screen and (min-width: $screen-m) {
-      padding: rem(50px) 0 0;
+  .list {
+    margin-bottom: rem(20px);
+  }
+
+  .icon-list {
+    text-align: center;
+    margin-bottom: rem(40px);
+
+    svg {
+      width: 60%;
+      height: 60%;
+      margin-top: rem(20px);
+      margin-bottom: rem(40px);
+    }
+
+    li {
+      margin-bottom: rem(30px);
     }
   }
 }
