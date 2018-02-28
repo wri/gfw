@@ -1,5 +1,6 @@
 export const initialState = {
-  enabled: false
+  enabled: false,
+  eventsEnabled: false
 };
 
 const toogleRecentImagery = state => ({
@@ -7,6 +8,12 @@ const toogleRecentImagery = state => ({
   enabled: !state.enabled
 });
 
+const setRecentImageryEventsEnabled = (state, { payload }) => ({
+  ...state,
+  eventsEnabled: payload
+});
+
 export default {
-  toogleRecentImagery
+  toogleRecentImagery,
+  setRecentImageryEventsEnabled
 };
