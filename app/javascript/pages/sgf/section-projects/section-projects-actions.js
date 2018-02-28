@@ -31,7 +31,7 @@ export const fetchProjects = createThunkAction(
               d.image ||
               'https://image.ibb.co/hDJdDR/african_wildlife_foundation.jpg',
             image_credit: d.image_credit,
-            link: d.link,
+            extLink: d.link,
             latitude: d.latitude_average,
             longitude: d.longitude_average,
             legend: `${d.year.toString()} - ${d.city}`,

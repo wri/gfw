@@ -69,6 +69,7 @@ export const chartConfig = createSelector(
       xAxis: {
         tickCount: 2,
         interval: data.length - 2,
+        padding: { right: 8 },
         tickFormatter: t => moment(t).format('Do MMM')
       },
       tooltip: [

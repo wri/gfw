@@ -5,9 +5,7 @@ import ProjectsModal from 'pages/sgf/section-projects/section-projects-modal';
 import Card from 'components/card';
 import ItemsList from 'components/items-list';
 import Search from 'components/search';
-import Sticky from 'components/sticky';
 import NoContent from 'components/no-content';
-import { SCREEN_L } from 'utils/constants';
 
 import './section-projects-styles.scss';
 
@@ -19,7 +17,8 @@ class SectionProjects extends PureComponent {
       setCategorySelected,
       categorySelected,
       search,
-      setSearch
+      setSearch,
+      handleCardClick
     } = this.props;
     const hasData = data && !!data.length;
     const hasCategories = categories && !!categories.length;
@@ -29,9 +28,7 @@ class SectionProjects extends PureComponent {
         <div className="l-section-projects">
           <div className="row project-header">
             <div className="column small-12">
-              <h2 className="text -color-2 -title-xs -half-opacity">
-                SMALL GRANTS FUND RECIPIENTS
-              </h2>
+              <h2>SMALL GRANTS FUND RECIPIENTS</h2>
             </div>
           </div>
           <div className="row">
@@ -39,42 +36,39 @@ class SectionProjects extends PureComponent {
               <ProjectsGLobe data={data} />
             </div>
             <div className="column small-12 large-5">
-              <Sticky offSet={-50} enabled={window.innerWidth >= SCREEN_L}>
-                <Search
-                  className="project-search"
-                  placeholder="Search"
-                  input={search}
-                  onChange={setSearch}
+              <Search
+                className="project-search"
+                placeholder="Search"
+                input={search}
+                onChange={setSearch}
+              />
+              {hasCategories && (
+                <ItemsList
+                  className="project-list"
+                  data={categories}
+                  itemSelected={categorySelected}
+                  onClick={setCategorySelected}
                 />
-                {hasCategories && (
-                  <ItemsList
-                    className="project-list"
-                    data={categories}
-                    itemSelected={categorySelected}
-                    onClick={setCategorySelected}
-                  />
-                )}
-              </Sticky>
+              )}
             </div>
           </div>
-          <div className="row">
-            <div className="column small-12 large-7">
-              <div className="row project-cards">
-                {hasData ? (
-                  data.map(d => (
-                    <div key={d.id} className="column small-12 medium-6">
-                      <Card
-                        className="project-card"
-                        data={d}
-                        onClick={this.handleCardClick}
-                      />
-                    </div>
-                  ))
-                ) : (
-                  <NoContent message="No projects for that search" />
-                )}
-              </div>
-            </div>
+          <div className="row project-cards">
+            {hasData ? (
+              data.map(d => (
+                <div
+                  key={d.id}
+                  className="column small-12 medium-4 card-container"
+                >
+                  <Card
+                    className="project-card"
+                    data={d}
+                    onClick={() => handleCardClick(d)}
+                  />
+                </div>
+              ))
+            ) : (
+              <NoContent message="No projects for that search" />
+            )}
           </div>
         </div>
         <ProjectsModal />
@@ -85,11 +79,12 @@ class SectionProjects extends PureComponent {
 
 SectionProjects.propTypes = {
   data: PropTypes.array,
-  categories: PropTypes.array.isRequired,
+  categories: PropTypes.array,
   categorySelected: PropTypes.string.isRequired,
   setCategorySelected: PropTypes.func.isRequired,
   search: PropTypes.string.isRequired,
-  setSearch: PropTypes.func.isRequired
+  setSearch: PropTypes.func.isRequired,
+  handleCardClick: PropTypes.func
 };
 
 export default SectionProjects;

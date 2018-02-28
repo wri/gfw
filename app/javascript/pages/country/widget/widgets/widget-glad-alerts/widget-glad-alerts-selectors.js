@@ -234,7 +234,8 @@ export const chartConfig = createSelector(
       yAxis: {
         domain: [0, 'auto'],
         allowDataOverflow: true
-      }
+      },
+      height: '280px'
     };
   }
 );
