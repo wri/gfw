@@ -1,9 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select-me';
 import { deburrUpper } from 'utils/data';
+import { isTouch } from 'utils/browser';
+
+import Select from 'react-select-me';
 import Button from 'components/button';
 import Icon from 'components/icon';
+import { Tooltip } from 'react-tippy';
+import Tip from 'components/tip';
 
 import infoIcon from 'assets/icons/info.svg';
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
@@ -33,8 +37,16 @@ class Dropdown extends PureComponent {
   };
 
   render() {
-    const { theme, label, infoAction, modalOpen, modalClosing } = this.props;
-    return (
+    const {
+      theme,
+      label,
+      infoAction,
+      modalOpen,
+      modalClosing,
+      tooltip
+    } = this.props;
+    const isDeviceTouch = isTouch();
+    const dropdown = (
       <div className={`c-dropdown ${theme || 'theme-select-light'}`}>
         {label && (
           <div className="label">
@@ -65,6 +77,22 @@ class Dropdown extends PureComponent {
         />
       </div>
     );
+
+    if (tooltip) {
+      return (
+        <Tooltip
+          theme="tip"
+          position="top"
+          arrow
+          disabled={isDeviceTouch}
+          html={<Tip text={tooltip.text} />}
+          {...tooltip}
+        >
+          {dropdown}
+        </Tooltip>
+      );
+    }
+    return dropdown;
   }
 }
 
@@ -74,7 +102,8 @@ Dropdown.propTypes = {
   options: PropTypes.array,
   infoAction: PropTypes.func,
   modalOpen: PropTypes.bool,
-  modalClosing: PropTypes.bool
+  modalClosing: PropTypes.bool,
+  tooltip: PropTypes.object
 };
 
 export default Dropdown;
