@@ -2,6 +2,18 @@
 
 .c-widget-glad-alerts {
   .loss-chart {
-    padding-top: rem(40px);
+    padding-top: rem(20px);
+  }
+
+  .sentence {
+    height: rem(180px);
+
+    @media screen and (min-width: $screen-m) {
+      height: rem(140px);
+    }
+
+    @media screen and (min-width: $screen-l) {
+      height: rem(90px);
+    }
   }
 }
