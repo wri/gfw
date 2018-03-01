@@ -11,7 +11,5 @@ import ReactDOM from 'react-dom';
 import About from 'pages/about';
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<About />,
-    document.getElementById('about-page')
-  );
+  ReactDOM.render(<About />, document.getElementById('about-page'));
 });

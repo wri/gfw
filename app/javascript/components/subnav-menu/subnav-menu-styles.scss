@@ -4,6 +4,7 @@ $subnav-height: rem(60px);
 .c-subnav-menu {
   background-color: $grey-light;
   height: $subnav-height;
+  width: 100%;
 
   .buttons {
     display: flex;

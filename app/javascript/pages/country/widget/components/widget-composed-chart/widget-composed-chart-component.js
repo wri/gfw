@@ -50,7 +50,7 @@ class WidgetComposedChart extends PureComponent {
 
     return (
       <div className={`c-composed-chart ${className}`} style={{ height }}>
-        <ResponsiveContainer>
+        <ResponsiveContainer width="99%">
           <ComposedChart
             data={data}
             margin={{ top: 15, right: 0, left: 42, bottom: 0 }}

@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { SCREEN_M } from 'utils/constants';
 import upperFirst from 'lodash/upperFirst';
+import Sticky from 'react-stickynode';
+import { SCREEN_M } from 'utils/constants';
 
 import CountryDataProvider from 'pages/country/providers/country-data-provider';
 import WhitelistsProvider from 'pages/country/providers/whitelists-provider';
@@ -12,7 +13,7 @@ import Header from 'pages/country/header';
 
 import Share from 'components/share';
 import Map from 'components/map';
-import Sticky from 'components/sticky';
+import MapControls from 'components/map/components/map-controls';
 import SubNavMenu from 'components/subnav-menu';
 import NoContent from 'components/no-content';
 import Loader from 'components/loader';
@@ -21,7 +22,6 @@ import Icon from 'components/icon';
 import ModalMeta from 'components/modal-meta';
 import ScrollTo from 'components/scroll-to';
 
-import mapIcon from 'assets/icons/map-button.svg';
 import closeIcon from 'assets/icons/close.svg';
 import './root-styles.scss';
 
@@ -41,66 +41,64 @@ class Root extends PureComponent {
       loading,
       widgetAnchor,
       activeWidget,
-      locationGeoJson
+      locationGeoJson,
+      setMapZoom
     } = this.props;
 
     return (
       <div className="l-country">
         {showMapMobile && (
           <Button
-            theme={`square ${showMapMobile ? 'theme-button-light' : ''}`}
-            className={`mobile-map-button ${
-              showMapMobile ? 'close-map' : 'open-map'
-            }`}
+            theme="square theme-button-light"
+            className="close-map-button"
             onClick={handleShowMapMobile}
           >
-            <Icon icon={showMapMobile ? closeIcon : mapIcon} />
+            <Icon icon={closeIcon} />
           </Button>
         )}
-        <div className="panels">
-          <div className="data-panel">
-            <Header
-              className="header"
-              location={location}
-              locationOptions={locationOptions}
-              locationNames={locationNames}
-            />
-            <SubNavMenu
-              links={links}
-              className="subnav-tabs"
-              theme="theme-subnav-dark"
-              checkActive
-            />
-            <div className="widgets">
-              {loading && <Loader className="widgets-loader large" />}
-              {!loading &&
-                widgets &&
-                widgets.length > 0 &&
-                widgets.map(widget => (
-                  <Widget
-                    key={widget.name}
-                    widget={widget.name}
-                    active={activeWidget && activeWidget.name === widget.name}
-                  />
-                ))}
-              {!loading &&
-                (!widgets || widgets.length === 0) && (
-                  <NoContent
-                    className="no-widgets-message large"
-                    message={`${upperFirst(
-                      category
-                    )} data for ${currentLocation} coming soon`}
-                    icon
-                  />
-                )}
-            </div>
+        <div className="content-panel">
+          <Header
+            className="header"
+            location={location}
+            locationOptions={locationOptions}
+            locationNames={locationNames}
+          />
+          <SubNavMenu
+            className="nav"
+            theme="theme-subnav-dark"
+            links={links}
+            checkActive
+          />
+          <div className="widgets">
+            {loading && <Loader className="widgets-loader large" />}
+            {!loading &&
+              widgets &&
+              widgets.length > 0 &&
+              widgets.map(widget => (
+                <Widget
+                  key={widget.name}
+                  widget={widget.name}
+                  active={activeWidget && activeWidget.name === widget.name}
+                />
+              ))}
+            {!loading &&
+              (!widgets || widgets.length === 0) && (
+                <NoContent
+                  className="no-widgets-message large"
+                  message={`${upperFirst(
+                    category
+                  )} data for ${currentLocation} coming soon`}
+                  icon
+                />
+              )}
           </div>
-          <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
-            <Sticky
-              className={`map ${showMapMobile ? '-open-mobile' : ''}`}
-              limitElement="footerGfw"
-              enabled={window.innerWidth >= SCREEN_M}
-            >
+        </div>
+        <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
+          <Sticky
+            enabled={window.innerWidth > SCREEN_M}
+            bottomBoundary=".l-country"
+          >
+            <div className="map-container">
               <Map
                 maxZoom={14}
                 minZoom={3}
@@ -125,9 +123,17 @@ class Root extends PureComponent {
                   activeWidget && `widget${upperFirst(activeWidget.name)}`
                 }
               />
-            </Sticky>
-          </div>
+            </div>
+          </Sticky>
         </div>
+        {!isGeostoreLoading && (
+          <MapControls
+            className="map-controls"
+            stickyOptions={{ enabled: true, top: 15 }}
+            handleZoomIn={() => setMapZoom({ value: 1, sum: true })}
+            handleZoomOut={() => setMapZoom({ value: -1, sum: true })}
+          />
+        )}
         <Share />
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
@@ -159,7 +165,8 @@ Root.propTypes = {
   locationNames: PropTypes.object,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   locationGeoJson: PropTypes.object,
-  activeWidget: PropTypes.object
+  activeWidget: PropTypes.object,
+  setMapZoom: PropTypes.func
 };
 
 export default Root;
