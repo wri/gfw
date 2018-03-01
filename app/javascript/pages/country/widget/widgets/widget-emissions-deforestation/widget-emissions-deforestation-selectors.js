@@ -44,6 +44,9 @@ export const chartConfig = createSelector(
       },
       tooltip: [
         {
+          key: 'year'
+        },
+        {
           key: [unit],
           unit: 't',
           unitFormat: value => format('.3s')(value)
