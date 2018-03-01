@@ -22,7 +22,7 @@ export const getFAOCoverData = createSelector(
     } = data;
     const colorRange = getColorPalette(colors.ramp, 3);
     const naturallyRegenerated = extent / 100 * forest_regenerated;
-    const primaryForest = extent / 100 * forest_primary;
+    const primaryForest = forest_primary ? extent / 100 * forest_primary : 0;
     const plantedForest = extent / 100 * forest_planted;
     const nonForest =
       area_ha - (naturallyRegenerated + primaryForest + plantedForest);
@@ -64,15 +64,18 @@ export const getSentence = createSelector(
     const { area_ha, extent, forest_primary } = data;
     const primaryForest = extent / 100 * forest_primary;
     const sentence = `FAO data from 2015 shows that <strong>${locationNames.current &&
-      locationNames.current.label}</strong> contains ${
+      locationNames.current.label}</strong> contains <strong>${format('.3s')(
+      extent
+    )}Ha</strong> of forest, ${
       primaryForest > 0
-        ? ` <strong>${format('.3s')(
-          extent
-        )}Ha</strong> of forest, with Primary forest occupying 
+        ? ` with Primary forest occupying 
         <strong>${format('.1f')(
     primaryForest / area_ha * 100
   )}%</strong> of the country.`
-        : ''
+        : ` which occupies 
+        <strong>${format('.1f')(
+    extent / area_ha * 100
+  )}%</strong> of the country.`
     }`;
     return sentence;
   }
