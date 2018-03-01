@@ -1,18 +1,18 @@
-const name = 'GFWdefault';
-const baseStyle = [
-  {
-    elementType: 'labels',
-    stylers: [
-      {
-        visibility: 'off'
-      }
-    ]
-  },
+const labelStyle = [
   {
     featureType: 'administrative',
     stylers: [
       {
         saturation: '-100'
+      }
+    ]
+  },
+  {
+    featureType: 'administrative',
+    elementType: 'geometry.fill',
+    stylers: [
+      {
+        visibility: 'simplified'
       }
     ]
   },
@@ -40,6 +40,15 @@ const baseStyle = [
       },
       {
         lightness: '90'
+      }
+    ]
+  },
+  {
+    featureType: 'landscape',
+    elementType: 'geometry.fill',
+    stylers: [
+      {
+        visibility: 'off'
       }
     ]
   },
@@ -73,28 +82,13 @@ const baseStyle = [
     ]
   },
   {
-    featureType: 'poi.park',
-    elementType: 'geometry',
-    stylers: [
-      {
-        visibility: 'off'
-      }
-    ]
-  },
-  {
-    featureType: 'poi.park',
-    elementType: 'labels',
-    stylers: [
-      {
-        visibility: 'off'
-      }
-    ]
-  },
-  {
     featureType: 'road',
     stylers: [
       {
-        saturation: '-100'
+        saturation: -100
+      },
+      {
+        visibility: 'off'
       }
     ]
   },
@@ -102,20 +96,24 @@ const baseStyle = [
     featureType: 'transit',
     stylers: [
       {
-        saturation: '-100'
+        saturation: -100
+      },
+      {
+        visibility: 'off'
       }
     ]
   },
   {
     featureType: 'water',
+    elementType: 'geometry.fill',
     stylers: [
       {
-        hue: '#B3E2FF'
+        visibility: 'simplified'
       }
     ]
   }
 ];
 
-const GFWdefault = () => new google.maps.StyledMapType(baseStyle, { name }); // eslint-disable-line
+const GFWLabels = () => new google.maps.StyledMapType(labelStyle, { name }); // eslint-disable-line
 
-export default GFWdefault;
+export default GFWLabels;
