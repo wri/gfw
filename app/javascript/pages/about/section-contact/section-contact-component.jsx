@@ -2,15 +2,23 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/button';
 import Contact from 'components/forms/contact';
+import Loader from 'components/loader';
 
 import './section-contact-styles.scss';
 
 class SectionContact extends PureComponent {
   render() {
-    const { handleSubmit, showConfirm, setShowConfirm, error } = this.props;
+    const {
+      handleSubmit,
+      showConfirm,
+      setShowConfirm,
+      error,
+      submitting
+    } = this.props;
     return (
       <div className="l-section-contact">
         <div className="row">
+          {submitting && <Loader />}
           <div className="column small-12 large-6 desc">
             <h3>Contact us</h3>
             <p className="intro">
@@ -27,6 +35,7 @@ class SectionContact extends PureComponent {
             >
               Explore the team
             </a>
+            <br />
             <a
               href="https://jobs.jobvite.com/wri/jobs/"
               target="_blank"
@@ -74,7 +83,8 @@ SectionContact.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   showConfirm: PropTypes.bool,
   setShowConfirm: PropTypes.func,
-  error: PropTypes.bool
+  error: PropTypes.bool,
+  submitting: PropTypes.bool
 };
 
 export default SectionContact;

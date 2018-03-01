@@ -7,9 +7,9 @@ export const setFormSubmitting = createAction('setFormSubmitting');
 
 export const sendContactForm = createThunkAction(
   'sendContactForm',
-  () => dispatch => {
+  data => dispatch => {
     dispatch(setFormSubmitting({ submitting: true, error: false }));
-    submitContactForm()
+    submitContactForm(data)
       .then(() => {
         dispatch(setShowConfirm(true));
       })
