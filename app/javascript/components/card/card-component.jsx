@@ -8,47 +8,39 @@ import './card-styles.scss';
 class Card extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { className, data, readMoreText, onClick } = this.props;
+    const { className, data, onClick } = this.props;
+
     return (
-      <div className={`c-card ${className}`}>
+      <div className={`c-card ${className || ''}`}>
         {data.image && (
           <div
-            className={`image ${onClick ? '-action' : ''}`}
+            className="image"
             style={{ backgroundImage: `url(${data.image})` }}
-            onClick={onClick}
-            role="button"
-            tabIndex={0}
           >
-            <span>{data.image_credit}</span>
+            <span>{data.imageCredit}</span>
           </div>
         )}
         <div className="body">
-          {data.title && (
-            <h3 className="header text -title-m -color-2 -light">
-              {data.title}
-            </h3>
-          )}
-          {data.outcome && (
-            <div className="paragraph text -paragraph-7 -color-2">
-              <Dotdotdot clamp={4}>{data.outcome}</Dotdotdot>
+          {data.title && <h3 className="title">{data.title}</h3>}
+          {data.summary && (
+            <div className="summary">
+              <Dotdotdot clamp={4}>{data.summary}</Dotdotdot>
             </div>
           )}
-          {data.legend && (
-            <p className="meta text -paragraph-5 -color-2-o ">{data.legend}</p>
-          )}
-          {data.link && (
-            <Button className="card-button" extLink={data.link}>
-              {readMoreText}
+          {data.meta && <p className="meta">{data.meta}</p>}
+          {data.extLink && (
+            <Button className="read-more" extLink={data.extLink}>
+              READ MORE
             </Button>
           )}
-          {data.extLink && (
-            <Button className="card-button" extLink={data.extLink}>
-              {readMoreText}
+          {data.link && (
+            <Button className="read-more" extLink={data.link}>
+              READ MORE
             </Button>
           )}
           {onClick && (
-            <Button className="card-button" onClick={onClick}>
-              {readMoreText}
+            <Button className="read-more" onClick={onClick}>
+              READ MORE
             </Button>
           )}
         </div>
@@ -60,12 +52,7 @@ class Card extends PureComponent {
 Card.propTypes = {
   data: PropTypes.object,
   className: PropTypes.string,
-  onClick: PropTypes.func,
-  readMoreText: PropTypes.string.isRequired
-};
-
-Card.defaultProps = {
-  readMoreText: 'READ MORE'
+  onClick: PropTypes.func
 };
 
 export default Card;

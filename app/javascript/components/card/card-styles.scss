@@ -17,10 +17,6 @@
     background-position: center;
     position: relative;
 
-    &.-action {
-      cursor: pointer;
-    }
-
     span {
       display: block;
       font-size: 12px;
@@ -42,7 +38,8 @@
       margin-bottom: rem(15px);
     }
 
-    .paragraph {
+    .summary {
+      height: rem(120px);
       font-size: rem(16px);
       margin-bottom: rem(15px);
     }
@@ -51,7 +48,7 @@
       margin-bottom: rem(10px);
     }
 
-    .card-button {
+    .read-more {
       max-width: rem(150px);
       margin-top: rem(20px);
     }
