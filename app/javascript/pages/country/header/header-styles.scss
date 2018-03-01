@@ -7,7 +7,7 @@
   padding: rem(50px) 0 rem(30px);
 
   @media screen and(min-width: $screen-l) {
-    padding: rem(70px) 0 rem(80px) 0;
+    padding: rem(70px) rem(30px) rem(80px) 0;
   }
 
   .share-buttons {

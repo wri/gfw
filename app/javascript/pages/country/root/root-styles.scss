@@ -32,6 +32,7 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
       margin-right: 0;
       position: unset;
       z-index: 200;
+      margin-top: -58px;
     }
 
     .map-container {
@@ -40,6 +41,18 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
 
     &.-open-mobile {
       right: 0;
+    }
+  }
+
+  .map-controls {
+    display: none;
+    position: absolute;
+    top: rem(73px);
+    right: rem(15px);
+    z-index: 1002;
+
+    @media screen and (min-width: $screen-m) {
+      display: block;
     }
   }
 

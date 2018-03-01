@@ -10,10 +10,13 @@ import {
 } from 'pages/country/widget/widget-selectors';
 import CATEGORIES from 'pages/country/data/categories.json';
 
-import actions from './root-actions';
+import mapActions from 'components/map/map-actions';
+import ownActions from './root-actions';
 import reducers, { initialState } from './root-reducers';
 import { filterWidgets, getLinks, getActiveWidget } from './root-selectors';
 import RootComponent from './root-component';
+
+const actions = { ...ownActions, ...mapActions };
 
 const mapStateToProps = ({ root, countryData, whitelists, location }) => {
   const category = (location.query && location.query.category) || 'summary';

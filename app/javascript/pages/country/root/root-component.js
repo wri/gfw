@@ -13,6 +13,7 @@ import Header from 'pages/country/header';
 
 import Share from 'components/share';
 import Map from 'components/map';
+import MapControls from 'components/map/components/map-controls';
 import SubNavMenu from 'components/subnav-menu';
 import NoContent from 'components/no-content';
 import Loader from 'components/loader';
@@ -40,7 +41,8 @@ class Root extends PureComponent {
       loading,
       widgetAnchor,
       activeWidget,
-      locationGeoJson
+      locationGeoJson,
+      setMapZoom
     } = this.props;
 
     return (
@@ -124,6 +126,14 @@ class Root extends PureComponent {
             </div>
           </Sticky>
         </div>
+        {!isGeostoreLoading && (
+          <MapControls
+            className="map-controls"
+            stickyOptions={{ enabled: true, top: 15 }}
+            handleZoomIn={() => setMapZoom({ value: 1, sum: true })}
+            handleZoomOut={() => setMapZoom({ value: -1, sum: true })}
+          />
+        )}
         <Share />
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
@@ -155,7 +165,8 @@ Root.propTypes = {
   locationNames: PropTypes.object,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   locationGeoJson: PropTypes.object,
-  activeWidget: PropTypes.object
+  activeWidget: PropTypes.object,
+  setMapZoom: PropTypes.func
 };
 
 export default Root;
