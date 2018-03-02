@@ -1,0 +1,20 @@
+@import '~styles/settings.scss';
+
+.l-section-join {
+  padding: rem(40px) 0 rem(40px);
+  max-width: $max-width;
+  margin: auto;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .anchor {
+    width: rem(200px);
+    margin-top: rem(15px);
+  }
+}

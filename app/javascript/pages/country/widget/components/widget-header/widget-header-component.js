@@ -4,6 +4,7 @@ import { Tooltip } from 'react-tippy';
 import isEmpty from 'lodash/isEmpty';
 import { COUNTRY } from 'pages/country/router';
 import { isTouch } from 'utils/browser';
+import { SCREEN_L } from 'utils/constants';
 
 import Button from 'components/button';
 import Icon from 'components/icon';
@@ -29,6 +30,7 @@ class WidgetHeader extends PureComponent {
       title,
       settingsConfig,
       locationNames,
+      modalClosing,
       widget,
       location,
       query,
@@ -43,7 +45,7 @@ class WidgetHeader extends PureComponent {
     } = this.props;
     const { tooltipOpen } = this.state;
     const widgetSize = settingsConfig.config.size;
-    const isDeviceTouch = isTouch();
+    const isDeviceTouch = isTouch() || window.innerWidth < SCREEN_L;
     const haveMapLayers =
       settingsConfig.settings &&
       settingsConfig.settings.layers &&
@@ -62,7 +64,7 @@ class WidgetHeader extends PureComponent {
           {!embed &&
             haveMapLayers && (
               <Button
-                className="map-button"
+                className={`map-button ${active ? '-active' : ''}`}
                 theme={`theme-button-small ${
                   widgetSize === 'small' || isDeviceTouch ? 'square' : ''
                 }`}
@@ -105,8 +107,7 @@ class WidgetHeader extends PureComponent {
                 {widgetSize !== 'small' && !isDeviceTouch && 'SHOW ON MAP'}
               </Button>
             )}
-          {!embed &&
-            settingsConfig &&
+          {settingsConfig &&
             !isEmpty(settingsConfig.options) && (
               <Tooltip
                 theme="light"
@@ -115,7 +116,9 @@ class WidgetHeader extends PureComponent {
                 trigger="click"
                 interactive
                 onRequestClose={() => {
-                  this.setState({ tooltipOpen: false });
+                  if (!modalClosing) {
+                    this.setState({ tooltipOpen: false });
+                  }
                 }}
                 onShow={() => this.setState({ tooltipOpen: true })}
                 arrow

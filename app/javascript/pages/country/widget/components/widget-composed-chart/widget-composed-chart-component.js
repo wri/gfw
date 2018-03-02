@@ -41,15 +41,16 @@ class WidgetComposedChart extends PureComponent {
       gradients,
       tooltip,
       unit,
-      unitFormat
+      unitFormat,
+      height
     } = this.props.config;
     const { className, data, config, handleMouseMove } = this.props;
     const { lines, bars, areas } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
 
     return (
-      <div className={`c-composed-chart ${className}`}>
-        <ResponsiveContainer>
+      <div className={`c-composed-chart ${className}`} style={{ height }}>
+        <ResponsiveContainer width="99%">
           <ComposedChart
             data={data}
             margin={{ top: 15, right: 0, left: 42, bottom: 0 }}

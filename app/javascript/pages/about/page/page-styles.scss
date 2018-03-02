@@ -1,0 +1,31 @@
+@import '~styles/settings.scss';
+
+.l-main {
+  border-bottom: solid 1px $grey-dark;
+
+  .video-btn {
+    margin-top: rem(15px);
+    display: inline-block;
+    margin-right: rem(10px);
+  }
+
+  .video-msg {
+    color: $white;
+    display: inline-block;
+  }
+
+  h3 {
+    font-family: $font-family-1;
+    font-size: rem(18px);
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  .about-links {
+    display: none;
+
+    @media screen and (min-width: $screen-m) {
+      display: block;
+    }
+  }
+}

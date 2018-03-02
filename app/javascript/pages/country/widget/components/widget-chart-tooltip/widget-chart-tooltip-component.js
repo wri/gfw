@@ -16,7 +16,10 @@ class WidgetChartTooltip extends PureComponent {
               {settings.map(
                 d =>
                   (hideZeros && !values[d.key] ? null : (
-                    <div key={d.key} className="data-line">
+                    <div
+                      key={d.key}
+                      className={`data-line ${d.position || ''}`}
+                    >
                       {d.label && (
                         <div className="data-label">
                           {d.color && (

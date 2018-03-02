@@ -1,0 +1,69 @@
+@import '~styles/settings.scss';
+
+.l-section-projects {
+  padding: rem(40px) 0;
+  border-top: solid 1px $border;
+
+  @media screen and (min-width: $screen-l) {
+    padding: rem(40px) 0 0;
+  }
+
+  .project-header {
+    display: none;
+
+    @media screen and (min-width: $screen-l) {
+      display: block;
+    }
+  }
+
+  .project-list {
+    margin-bottom: rem(30px);
+    display: none;
+
+    @media screen and (min-width: $screen-l) {
+      display: block;
+    }
+  }
+
+  .project-globe {
+    position: relative;
+  }
+
+  .project-side {
+    @media screen and (min-width: $screen-m) {
+      padding: rem(20px);
+    }
+
+    h3 {
+      margin-bottom: rem(20px);
+    }
+
+    p {
+      margin-bottom: rem(30px);
+    }
+
+    .how-to-btn {
+      width: rem(250px);
+    }
+  }
+
+  .visitors {
+    padding: rem(100px) 0 rem(130px);
+    display: none;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    @media screen and (min-width: $screen-l) {
+      display: block;
+    }
+
+    h4 {
+      font-weight: 300;
+      font-size: rem(30px);
+      max-width: rem(600px);
+      margin: auto;
+      text-align: center;
+    }
+  }
+}

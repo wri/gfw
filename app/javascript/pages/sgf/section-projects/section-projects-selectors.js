@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 import groupBy from 'lodash/groupBy';
-import uniq from 'lodash/uniq';
 import deburr from 'lodash/deburr';
 import toUpper from 'lodash/toUpper';
 
@@ -8,46 +7,42 @@ export function deburrUpper(string) {
   return toUpper(deburr(string));
 }
 
-export const allProjectsCategory = 'All';
-
 const getProjects = state => state.data || null;
 const getCategory = state => state.categorySelected || null;
 const getSearch = state => state.search || null;
 
-export const getProjectList = createSelector(getProjects, projects => projects);
-export const getCategoriesList = createSelector(getProjectList, projects => {
-  const categoriesList = uniq(projects.map(c => c.category));
-  return [allProjectsCategory, ...categoriesList];
+export const getProjectsByCategory = createSelector(getProjects, projects => {
+  if (!projects) return null;
+  return groupBy(projects, 'category');
 });
 
-export const getProjectsByCategory = createSelector(
-  getProjectList,
+export const getCategoriesList = createSelector(
+  getProjectsByCategory,
   projects => {
     if (!projects) return null;
-    const grouped = groupBy(projects, 'category');
-    grouped[allProjectsCategory] = projects;
-    return grouped;
+    const categories = Object.keys(projects).map(c => ({
+      label: c,
+      count: projects[c].length
+    }));
+    return [{ label: 'All', count: projects.length }, ...categories];
   }
 );
 
-export const getCategorySelected = createSelector(
-  getCategory,
-  category => category || allProjectsCategory
-);
-
 export const getProjectsSelected = createSelector(
-  [getProjectsByCategory, getCategorySelected, getSearch],
-  (projects, category, search) => {
-    if (!projects || !category) return null;
-    if (!search) return projects[category];
-    return projects[category].filter(
+  [getProjects, getProjectsByCategory, getCategory, getSearch],
+  (allProjects, groupedProjects, category, search) => {
+    if (!allProjects || !category) return null;
+    const projects =
+      category === 'All' ? allProjects : groupedProjects[category];
+    if (!search) return projects;
+    return projects.filter(
       p => deburrUpper(p.title).indexOf(deburrUpper(search)) > -1
     );
   }
 );
 
 export default {
-  getProjectList,
-  getProjectsByCategory,
+  getProjectsSelected,
+  getCategoriesList,
   getSearch
 };

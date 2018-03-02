@@ -4,6 +4,7 @@ $subnav-height: rem(60px);
 .c-subnav-menu {
   background-color: $grey-light;
   height: $subnav-height;
+  width: 100%;
 
   .buttons {
     display: flex;
@@ -12,9 +13,13 @@ $subnav-height: rem(60px);
     height: $subnav-height;
     overflow-x: scroll;
     -ms-overflow-style: none;
+    padding: 0 $mobile-gutter;
+    max-width: $max-width;
+    margin: auto;
 
     @media screen and (min-width: $screen-m) {
       justify-content: flex-start;
+      padding: 0 $desktop-gutter;
     }
 
     li {

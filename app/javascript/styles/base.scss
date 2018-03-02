@@ -4,6 +4,8 @@ body {
   font-family: $font-family-1;
   font-weight: normal;
   line-height: 1.5;
+  font-size: rem(18px);
+  color: $slate;
   background: $white;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

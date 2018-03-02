@@ -6,8 +6,10 @@ import './no-content-styles.scss';
 
 const NoContent = ({ className, message, icon }) => (
   <div className={`c-no-content ${className}`}>
-    <p className="message">{message}</p>
-    {icon && <img className="message-icon" src={tree} alt="tree" />}
+    <p className="message">
+      {message}
+      {icon && <img className="message-icon" src={tree} alt="tree" />}
+    </p>
   </div>
 );
 

@@ -13,43 +13,39 @@ class SubNavMenu extends PureComponent {
 
     return (
       <div className={`c-subnav-menu ${theme || ''} ${className || ''}`}>
-        <div className="row">
-          <div className="small-12 columns">
-            <ul className="buttons">
-              {links &&
-                links.length &&
-                links.map(link => {
-                  let LinkComponent = '';
-                  if (link.anchor) {
-                    LinkComponent = (
-                      <AnchorLink
-                        className="text -paragraph-5 -color-8"
-                        to={link.anchor}
-                        spy
-                        smooth
-                        duration={500}
-                      >
-                        {link.label}
-                      </AnchorLink>
-                    );
-                  } else {
-                    LinkComponent = (
-                      <NavLink
-                        className="text -paragraph-5 -color-8"
-                        to={link.path}
-                        activeClassName="active"
-                        exact
-                        isActive={checkActive ? () => link.active : null}
-                      >
-                        {link.label}
-                      </NavLink>
-                    );
-                  }
-                  return <li key={link.label}>{LinkComponent}</li>;
-                })}
-            </ul>
-          </div>
-        </div>
+        <ul className="buttons">
+          {links &&
+            links.length &&
+            links.map(link => {
+              let LinkComponent = '';
+              if (link.anchor) {
+                LinkComponent = (
+                  <AnchorLink
+                    className="text -paragraph-5 -color-8"
+                    to={link.anchor}
+                    spy
+                    smooth
+                    duration={500}
+                  >
+                    {link.label}
+                  </AnchorLink>
+                );
+              } else {
+                LinkComponent = (
+                  <NavLink
+                    className="text -paragraph-5 -color-8"
+                    to={link.path}
+                    activeClassName="active"
+                    exact
+                    isActive={checkActive ? () => link.active : null}
+                  >
+                    {link.label}
+                  </NavLink>
+                );
+              }
+              return <li key={link.label}>{LinkComponent}</li>;
+            })}
+        </ul>
       </div>
     );
   }

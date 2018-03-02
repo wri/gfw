@@ -21,7 +21,7 @@ class WidgetPieChart extends PureComponent {
 
     return (
       <div className={`c-pie-chart ${className}`}>
-        <ResponsiveContainer width="100%" height={maxSize}>
+        <ResponsiveContainer width="99%" height={maxSize}>
           <PieChart>
             <Pie
               data={data}
@@ -76,8 +76,8 @@ WidgetPieChart.defaultProps = {
   dataKey: 'value',
   innerRadius: '50%',
   outerRadius: '100%',
-  startAngle: 90,
-  endAngle: 450
+  startAngle: -270,
+  endAngle: -630
 };
 
 export default WidgetPieChart;

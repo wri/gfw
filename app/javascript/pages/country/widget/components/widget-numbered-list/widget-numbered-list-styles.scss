@@ -16,8 +16,7 @@
     color: $slate;
 
     &:hover {
-      .item-name,
-      .item-value {
+      .item-name {
         text-decoration: underline;
       }
     }

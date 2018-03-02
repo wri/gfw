@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import compact from 'lodash/compact';
 import moment from 'moment';
 
 import shareActions from 'components/share/share-actions';
@@ -17,9 +16,10 @@ const actions = {
 
 const mapStateToProps = ({ location, modalMeta }, ownProps) => {
   const { locationNames, widget, title, settingsConfig } = ownProps;
-  const locationUrl = compact(
-    Object.keys(location.payload).map(key => location.payload[key])
-  ).join('/');
+  const locationUrl = `${location.payload.country}${
+    location.payload.region ? `/${location.payload.region}` : ''
+  }${location.payload.subRegion ? `/${location.payload.subRegion}` : ''}`;
+
   const embedUrl = `${
     window.location.origin
   }/country/embed/${widget}/${locationUrl}${
@@ -42,11 +42,13 @@ const mapStateToProps = ({ location, modalMeta }, ownProps) => {
       subtitle: `${title} in ${
         locationNames.current ? locationNames.current.label : ''
       }`,
-      shareUrl: `http://${window.location.host}${window.location.pathname}?${
-        location && location.category && location.query.category
-          ? `category=${location.query.category}&`
+      shareUrl: `http://${
+        window.location.host
+      }/country/${locationUrl}?widget=${widget}${
+        location.query && location.query[widget]
+          ? `&${widget}=${location.query[widget]}`
           : ''
-      }${`widget=${widget}`}#${widget}`,
+      }#${widget}`,
       embedUrl,
       embedSettings:
         settingsConfig.config.size === 'small'

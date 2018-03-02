@@ -2,9 +2,11 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import difference from 'lodash/difference';
 
 import Layers from './assets/layers';
 import GFWdefault from './assets/maptypes/GFWdefault';
+import GFWLabels from './assets/maptypes/GFWLabels';
 
 import MapComponent from './map-component';
 import actions from './map-actions';
@@ -28,7 +30,8 @@ const mapStateToProps = (
     error: map.error,
     bounds: countryData.geostore.bounds,
     layerSpec: map.layerSpec,
-    settings: map.settings,
+    settings: { ...map.settings, ...parentSettings },
+    options: map.options,
     layers: getLayers({ layers: activeLayers, layerSpec: map.layerSpec }),
     layersKeys: activeLayers
   };
@@ -43,38 +46,31 @@ class MapContainer extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isParentLoading, bounds, layersKeys, settings } = nextProps;
+    const {
+      isParentLoading,
+      bounds,
+      layersKeys,
+      settings,
+      options
+    } = nextProps;
     if (isParentLoading !== this.props.isParentLoading && bounds) {
       this.boundMap(nextProps.bounds);
       this.setAreaHighlight();
-      this.updateLayers(layersKeys);
+      this.updateLayers(layersKeys, settings);
       this.setEvents();
     }
 
-    if (!isEqual(layersKeys, this.props.layersKeys)) {
-      this.updateLayers(layersKeys);
+    if (
+      !isEqual(layersKeys, this.props.layersKeys) ||
+      !isEqual(settings, this.props.settings)
+    ) {
+      this.updateLayers(layersKeys, this.props.layersKeys, settings);
     }
 
-    if (
-      this.props.settings.zoom &&
-      this.props.settings.zoom !== settings.zoom
-    ) {
-      this.updateZoom(settings.zoom);
+    if (this.props.options.zoom && this.props.options.zoom !== options.zoom) {
+      this.updateZoom(options.zoom);
     }
   }
-
-  setLayers = (layers, settings) => {
-    const { layerSpec } = this.props;
-    if (layers && layers.length) {
-      layers.forEach((slug, index) => {
-        const layerSettings = { ...layerSpec[slug], ...settings };
-        const layer = new Layers[slug](this.map, layerSettings);
-        layer.getLayer().then(res => {
-          this.map.overlayMapTypes.setAt(index, res);
-        });
-      });
-    }
-  };
 
   setAreaHighlight() {
     const { setMapZoom } = this.props;
@@ -105,19 +101,34 @@ class MapContainer extends PureComponent {
     });
   }
 
-  removeLayers() {
-    const { layers } = this.props;
-    if (layers && layers.length) {
-      layers.forEach((slug, index) => {
-        this.map.overlayMapTypes.setAt(index, null);
-      });
+  updateLayers(newLayers, oldLayers, settings) {
+    const layersToRemove = difference(oldLayers, newLayers);
+    if (layersToRemove && layersToRemove.length) {
+      this.removeLayers(layersToRemove);
     }
+    this.setLayers(newLayers, settings);
   }
 
-  updateLayers(layers, layerSpec) {
-    this.removeLayers();
-    this.setLayers(layers, layerSpec);
+  removeLayers(layers) {
+    this.map.overlayMapTypes.forEach((l, index) => {
+      if (l && l.options && layers.indexOf(l.options.slug)) {
+        this.map.overlayMapTypes.removeAt(index);
+      }
+    });
   }
+
+  setLayers = (layers, settings) => {
+    const { layerSpec } = this.props;
+    if (layers && layers.length) {
+      layers.forEach((slug, index) => {
+        const layerSettings = { ...layerSpec[slug], ...settings };
+        const layer = new Layers[slug](this.map, layerSettings);
+        layer.getLayer().then(res => {
+          this.map.overlayMapTypes.setAt(index, res);
+        });
+      });
+    }
+  };
 
   updateZoom(zoom) {
     this.map.setZoom(zoom);
@@ -128,6 +139,7 @@ class MapContainer extends PureComponent {
     this.map = new google.maps.Map(document.getElementById('map'), mapOptions); // eslint-disable-line
     this.map.mapTypes.set('GFWdefault', GFWdefault());
     this.map.setMapTypeId(mapOptions.mapTypeId);
+    this.map.overlayMapTypes.setAt(10, GFWLabels());
   }
 
   boundMap() {
@@ -150,9 +162,9 @@ MapContainer.propTypes = {
   isParentLoading: PropTypes.bool,
   layerSpec: PropTypes.object.isRequired,
   bounds: PropTypes.array.isRequired,
-  layers: PropTypes.array,
   layersKeys: PropTypes.array,
   settings: PropTypes.object,
+  options: PropTypes.object,
   mapOptions: PropTypes.object.isRequired,
   getLayerSpec: PropTypes.func.isRequired,
   setMapZoom: PropTypes.func.isRequired,

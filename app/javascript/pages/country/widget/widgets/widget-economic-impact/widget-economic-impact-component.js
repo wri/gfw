@@ -10,7 +10,14 @@ import './widget-economic-impact-styles.scss';
 
 class WidgetEconomicImpact extends PureComponent {
   render() {
-    const { chartData, chartConfig, rankData, sentence, settings } = this.props;
+    const {
+      chartData,
+      chartConfig,
+      rankData,
+      sentence,
+      settings,
+      embed
+    } = this.props;
 
     return (
       <div className="c-widget-economic-impact">
@@ -35,6 +42,7 @@ class WidgetEconomicImpact extends PureComponent {
                     ? value => formatUSD(value)
                     : null
               }}
+              linkExt={embed}
             />
           )}
         </div>
@@ -48,7 +56,8 @@ WidgetEconomicImpact.propTypes = {
   chartConfig: PropTypes.object,
   rankData: PropTypes.array,
   sentence: PropTypes.string,
-  settings: PropTypes.object
+  settings: PropTypes.object,
+  embed: PropTypes.bool
 };
 
 export default WidgetEconomicImpact;

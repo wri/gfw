@@ -6,6 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 
 import Loader from 'components/loader/loader';
 import NoContent from 'components/no-content';
+import Button from 'components/button';
 import WidgetHeader from 'pages/country/widget/components/widget-header';
 import WidgetSettingsStatement from 'pages/country/widget/components/widget-settings-statement';
 
@@ -81,18 +82,20 @@ class Widget extends PureComponent {
       settingsConfig.settings &&
       settingsConfig.settings.layers &&
       settingsConfig.settings.layers.length;
-
+    const onMap = active && haveMapLayers;
     return (
       <div
         className={`c-widget ${settingsConfig.config.size || ''}`}
-        style={
-          active && haveMapLayers
-            ? {
-              borderColor: highlightColor,
-              boxShadow: `0 0px 0px 1px ${highlightColor}`
-            }
-            : {}
-        }
+        style={{
+          ...(!!onMap && {
+            borderColor: highlightColor,
+            boxShadow: `0 0px 0px 1px ${highlightColor}`
+          }),
+          ...(!!embed && {
+            border: 0,
+            borderRadius: 0
+          })
+        }}
         id={widget}
       >
         <WidgetHeader
@@ -126,6 +129,24 @@ class Widget extends PureComponent {
           {!error && <WidgetComponent {...this.props} {...settingsConfig} />}
         </div>
         <WidgetSettingsStatement settings={settingsConfig.settings} />
+        {embed &&
+          (!query || (query && !query.hideGfw)) && (
+            <div className="embed-footer">
+              <p>For more info</p>
+              <Button
+                className="embed-btn"
+                extLink={`http://globalforestwatch.org/country/${
+                  location.country
+                }${location.region ? `/${location.region}` : ''}${
+                  location.subRegion ? `/${location.subRegion}` : ''
+                }?widget=${widget}${
+                  query && query[widget] ? `&${widget}=${query[widget]}` : ''
+                }#${widget}`}
+              >
+                EXPLORE ON GFW
+              </Button>
+            </div>
+          )}
       </div>
     );
   }

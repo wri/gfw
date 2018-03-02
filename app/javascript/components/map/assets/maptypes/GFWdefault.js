@@ -1,10 +1,18 @@
 const name = 'GFWdefault';
-const style = [
+const baseStyle = [
+  {
+    elementType: 'labels',
+    stylers: [
+      {
+        visibility: 'off'
+      }
+    ]
+  },
   {
     featureType: 'administrative',
     stylers: [
       {
-        saturation: -100
+        saturation: '-100'
       }
     ]
   },
@@ -28,19 +36,31 @@ const style = [
     featureType: 'landscape',
     stylers: [
       {
-        saturation: -100
+        saturation: '-100'
       },
       {
-        lightness: 90
+        lightness: '90'
       }
     ]
   },
   {
     featureType: 'landscape',
-    elementType: 'geometry',
+    elementType: 'labels',
     stylers: [
       {
-        color: '#ffffff'
+        color: '#333333'
+      },
+      {
+        saturation: '50'
+      },
+      {
+        invert_lightness: true
+      },
+      {
+        lightness: '50'
+      },
+      {
+        weight: '0.3'
       }
     ]
   },
@@ -53,13 +73,28 @@ const style = [
     ]
   },
   {
+    featureType: 'poi.park',
+    elementType: 'geometry',
+    stylers: [
+      {
+        visibility: 'off'
+      }
+    ]
+  },
+  {
+    featureType: 'poi.park',
+    elementType: 'labels',
+    stylers: [
+      {
+        visibility: 'off'
+      }
+    ]
+  },
+  {
     featureType: 'road',
     stylers: [
       {
-        saturation: -100
-      },
-      {
-        visibility: 'off'
+        saturation: '-100'
       }
     ]
   },
@@ -67,10 +102,7 @@ const style = [
     featureType: 'transit',
     stylers: [
       {
-        saturation: -100
-      },
-      {
-        visibility: 'off'
+        saturation: '-100'
       }
     ]
   },
@@ -78,14 +110,12 @@ const style = [
     featureType: 'water',
     stylers: [
       {
-        hue: '#b3e2ff'
+        hue: '#B3E2FF'
       }
     ]
   }
 ];
 
-const GFWdefault = function () {
-  return new google.maps.StyledMapType(style, { name }); // eslint-disable-line
-};
+const GFWdefault = () => new google.maps.StyledMapType(baseStyle, { name }); // eslint-disable-line
 
 export default GFWdefault;

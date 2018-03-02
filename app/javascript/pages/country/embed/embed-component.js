@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Widget from 'pages/country/widget';
 import Share from 'components/share';
 import CountryDataProvider from 'pages/country/providers/country-data-provider';
+import WhitelistsProvider from 'pages/country/providers/whitelists-provider';
 import ModalMeta from 'components/modal-meta';
 
 import './embed-styles.scss';
@@ -20,6 +21,7 @@ class Embed extends PureComponent {
         <Share />
         <ModalMeta />
         <CountryDataProvider />
+        <WhitelistsProvider />
       </div>
     );
   }

@@ -12,7 +12,9 @@ class WidgetGladAlerts extends PureComponent {
 
     return (
       <div className="c-widget-glad-alerts">
-        {sentence && <WidgetDynamicSentence sentence={sentence} />}
+        {sentence && (
+          <WidgetDynamicSentence className="sentence" sentence={sentence} />
+        )}
         {data && (
           <WidgetComposedChart
             className="loss-chart"
