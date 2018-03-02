@@ -82,6 +82,10 @@ export const chartConfig = createSelector(
       },
       tooltip: [
         {
+          key: 'year',
+          position: 'right'
+        },
+        {
           key: 'e1Percentage',
           label: 'Agriculture',
           color: colorRange[0],

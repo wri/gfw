@@ -76,8 +76,8 @@ WidgetPieChart.defaultProps = {
   dataKey: 'value',
   innerRadius: '50%',
   outerRadius: '100%',
-  startAngle: 90,
-  endAngle: 450
+  startAngle: -270,
+  endAngle: -630
 };
 
 export default WidgetPieChart;

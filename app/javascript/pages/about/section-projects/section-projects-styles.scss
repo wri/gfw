@@ -4,8 +4,8 @@
   padding: rem(40px) 0;
   border-top: solid 1px $border;
 
-  @media screen and (min-width: $screen-m) {
-    padding-bottom: 0;
+  @media screen and (min-width: $screen-l) {
+    padding: rem(40px) 0 0;
   }
 
   .project-header {
