@@ -51,7 +51,7 @@ CustomModal.defaultProps = {
   contentLabel: 'Modal content',
   customStyles: {
     overlay: {
-      zIndex: 9999,
+      zIndex: 10000,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
