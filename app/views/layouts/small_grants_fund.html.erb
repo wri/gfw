@@ -33,7 +33,7 @@
       <%= controller_stylesheet_link_tag %>
       <%= yield :js %>
       <%= csrf_meta_tags %>
-      <%= render 'small_grants_fund/gfw_assets' %>
+      <%= render 'shared/gfw_assets' %>
     </head>
     <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
       <%= render 'shared/icons/svg_icons' %>
