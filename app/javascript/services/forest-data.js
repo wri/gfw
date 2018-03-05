@@ -72,7 +72,7 @@ export const getLocationsLoss = ({ country, region, indicator, threshold }) => {
     .replace('{group}', region ? 'adm2' : 'adm1')
     .replace('{order}', region ? 'adm2' : 'adm1')
     .replace('{iso}', country)
-    .replace('{region}', region ? `AND adm1 = ${region} AS region` : '')
+    .replace('{region}', region ? `AND adm1 = ${region}` : '')
     .replace('{threshold}', threshold)
     .replace('{indicator}', indicator);
   return axios.get(url);
