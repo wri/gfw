@@ -86,9 +86,7 @@ require([
       if (!Backbone.History.started) {
         Backbone.history.start({ pushState: true });
       }
-
-      var mapEvent = new Event('mapLoaded');
-      window.dispatchEvent(mapEvent);
+      window.dispatchEvent(new Event('mapLoaded'));
     },
 
     _fetchData() {
