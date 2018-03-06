@@ -66,7 +66,7 @@ define([
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?tab,fit_to_geom,geojson,geostore,wdpaid,begin,end,threshold,dont_analyze,hresolution,tour,subscribe,use,useid,layer_options,lang}',
+    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?tab,fit_to_geom,geojson,geostore,wdpaid,begin,end,threshold,dont_analyze,hresolution,recentImagery,tour,subscribe,use,useid,layer_options,lang}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -181,6 +181,7 @@ define([
       p.subscribe_alerts = (p.subscribe_alerts === 'subscribe') ? true : null;
       p.referral = p.referral;
       p.hresolution = p.hresolution;
+      p.recentImagery = p.recentImagery;
       p.tour = p.tour;
 
       if (p.layer_options) {
@@ -214,6 +215,7 @@ define([
       p.threshold = p.threshold ? String(p.threshold) : null;
       p.dont_analyze = p.dont_analyze ? p.dont_analyze : null;
       p.hresolution = p.hresolution;
+      p.recentImagery = p.recentImagery;
       p.tour = p.tour;
 
       if (p.layer_options) {

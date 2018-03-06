@@ -12,7 +12,7 @@ define(
     var StatusModel = Backbone.Model.extend({
       defaults: {
         layers: [],
-        hresolution: null
+        recentImagery: null
       }
     });
 
@@ -26,51 +26,38 @@ define(
 
       _subscriptions: [
         {
-          'LayerNav/change': function(layerSpec) {
-            this.status.set('layerSpec', layerSpec);
-            var is_sentinel = !!this.status
+          'Place/go': function(place) {
+            this.status.set('layerSpec', place.layerSpec);
+            this.status.set('recentImagery', place.params.recentImagery);
+            var isRecentImageryActivated = !!this.status
               .get('layerSpec')
               .getLayer({ slug: 'sentinel_tiles' });
-            this.setSentinel(is_sentinel ? this.view._getParams() : null);
+            if (isRecentImageryActivated && !!this.status.get('recentImagery')) {
+              this.view.fillParams(JSON.parse(atob(place.params.recentImagery)));
+            }
+          }
+        },
+        {
+          'LayerNav/change': function(layerSpec) {
+            this.status.set('layerSpec', layerSpec);
+            var isRecentImageryActivated = !!this.status
+              .get('layerSpec')
+              .getLayer({ slug: 'sentinel_tiles' });
+
+            if (isRecentImageryActivated) {
+              this.setSentinel(this.view.getParams());
+            }
+          }
+        },
+        {
+          'Layer/add': function(slug) {
+            if (slug === 'sentinel_tiles') {
+              window.dispatchEvent(new Event('isRecentImageryActivated'));
+            }
           }
         }
       ],
 
-      updateLayer: function(name, params) {
-        this.setSentinel(this.view._getParams());
-        mps.publish('Layer/update', [name]);
-      },
-
-      setSentinel: function(value) {
-        if (!!value) {
-          value = btoa(JSON.stringify(value));
-        }
-
-        this.status.set('hresolution', value);
-        this._publishSentinel();
-      },
-
-      _publishSentinel: function() {
-        mps.publish('Place/update', [{ go: false }]);
-      },
-
-      /**
-       * Used by PlaceService to get the current hresolution value.
-       *
-       * @return {Object} high-resolution
-       */
-      getPlaceParams: function() {
-        return {
-          hresolution: this.status.get('hresolution'),
-          sentinel_tiles: this.status.get('sentinel_tiles')
-        };
-      },
-
-      /**
-       * Publish a a Map/toggle-layer.
-       *
-       * @param  {string} layerSlug
-       */
       toggleLayer: function(layerSlug) {
         var where = [{ slug: layerSlug }];
         layerSpecService.toggle(
@@ -82,12 +69,28 @@ define(
         );
       },
 
-      notificate: function(id) {
-        mps.publish('Notification/open', [id]);
+      updateLayer: function(name, params) {
+        this.setSentinel(this.view.getParams());
+        mps.publish('Layer/update', [name]);
       },
 
-      notificateClose: function(id) {
-        mps.publish('Notification/close');
+      setSentinel: function(value) {
+        if (!!value) {
+          value = btoa(JSON.stringify(value));
+        }
+
+        this.status.set('recentImagery', value);
+        this.publishSentinel();
+      },
+
+      publishSentinel: function() {
+        mps.publish('Place/update', [{ go: false }]);
+      },
+
+      getPlaceParams: function() {
+        return {
+          recentImagery: this.status.get('recentImagery')
+        };
       }
     });
 
