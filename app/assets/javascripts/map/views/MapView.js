@@ -285,6 +285,7 @@ define(
           ].view(layer, options, this.map));
 
           layerView.addLayer(layer.position, _addNext);
+          mps.publish('Layer/add', [layer.slug]);
         }
       },
 

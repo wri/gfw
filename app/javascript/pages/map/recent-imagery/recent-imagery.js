@@ -8,9 +8,10 @@ import reducers, { initialState } from './recent-imagery-reducers';
 import RecentImageryComponent from './recent-imagery-component';
 
 const mapStateToProps = ({ recentImagery }) => {
-  const { enabled, data } = recentImagery;
+  const { activated, activatedFromUrl, data } = recentImagery;
   return {
-    enabled,
+    activated,
+    activatedFromUrl,
     data
   };
 };
@@ -19,12 +20,20 @@ class RecentImageryContainer extends PureComponent {
   componentDidMount() {
     this.middleView = window.App.Views.ReactMapMiddleView;
     this.boundsPolygon = null;
+    window.addEventListener('isRecentImageryActivated', () => {
+      const { activated, toogleRecentImagery } = this.props;
+      if (!activated) {
+        toogleRecentImagery({
+          activatedFromUrl: true
+        });
+      }
+    });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { enabled, data, getTiles } = nextProps;
+    const { activated, activatedFromUrl, data, getTiles } = nextProps;
     const { map } = this.middleView;
-    if (enabled && enabled !== this.props.enabled) {
+    if (activated && activated !== this.props.activated) {
       getTiles({
         latitude: map.getCenter().lng(),
         longitude: map.getCenter().lat(),
@@ -32,12 +41,15 @@ class RecentImageryContainer extends PureComponent {
         end: '2016-09-01'
       });
     }
-    if (!enabled && enabled !== this.props.enabled) {
+    if (!activated && activated !== this.props.activated) {
       this.removeEvents();
       this.removeBoundsPolygon();
     }
     if (!isEqual(data, this.props.data)) {
-      if (this.props.data.url === '') {
+      if (activatedFromUrl && this.props.data.url === '') {
+        this.updateLayer(data.url);
+        this.setEvents();
+      } else if (this.props.data.url === '') {
         this.showLayer(data.url);
         this.setEvents();
       } else {
@@ -50,9 +62,9 @@ class RecentImageryContainer extends PureComponent {
   setEvents() {
     const { getTiles } = this.props;
     const { map } = this.middleView;
-    map.addListener('dragend', () => {
-      const needNewTile = !google.maps.geometry.poly.containsLocation(
-        // eslint-disable-line
+
+    const loadNewTile = () => {
+      const needNewTile = !google.maps.geometry.poly.containsLocation( // eslint-disable-line
         map.getCenter(),
         this.boundsPolygon
       );
@@ -64,12 +76,15 @@ class RecentImageryContainer extends PureComponent {
           end: '2016-09-01'
         });
       }
-    });
+    };
+    map.addListener('dragend', loadNewTile);
+    map.addListener('zoom_changed', loadNewTile);
   }
 
   removeEvents() {
     const { map } = this.middleView;
     google.maps.event.clearListeners(map, 'dragend'); // eslint-disable-line
+    google.maps.event.clearListeners(map, 'zoom_changed'); // eslint-disable-line
   }
 
   showLayer(url) {
@@ -141,8 +156,10 @@ class RecentImageryContainer extends PureComponent {
 }
 
 RecentImageryContainer.propTypes = {
-  enabled: PropTypes.bool,
+  activated: PropTypes.bool,
+  activatedFromUrl: PropTypes.bool,
   data: PropTypes.object,
+  toogleRecentImagery: PropTypes.func,
   getTiles: PropTypes.func
 };
 

@@ -39,10 +39,10 @@ define(
       _getParams: function() {
         var params = {};
         if (
-          window.location.search.contains('hresolution=') &&
+          window.location.search.contains('recentImagery=') &&
           window.location.search.indexOf(
             '=',
-            window.location.search.indexOf('hresolution=') + 11
+            window.location.search.indexOf('recentImagery=') + 11
           ) !== -1
         ) {
           var params_new_url = {};
@@ -52,18 +52,21 @@ define(
             if (!nv[0]) continue;
             params_new_url[nv[0]] = nv[1] || true;
           }
-          params = JSON.parse(atob(params_new_url.hresolution));
+          params = JSON.parse(atob(params_new_url.recentImagery));
         }
 
         return params;
       },
 
       _getUrl: function(x, y, z, params) {
-        return new UriTemplate(params.urlTemplate).fillFromObject({
-          x: x,
-          y: y,
-          z: z
-        });
+        if (params.urlTemplate) {
+          return new UriTemplate(params.urlTemplate).fillFromObject({
+            x: x,
+            y: y,
+            z: z
+          });
+        }
+        return null;
       },
 
       setCurrentDate: function(date) {
