@@ -3,6 +3,7 @@
 .c-dropdown {
   text-align: left;
   color: $slate;
+  width: 100%;
 
   .label {
     margin-bottom: rem(10px);
@@ -26,84 +27,45 @@
     }
   }
 
-  .dd__selectControl {
-    padding: 0;
-  }
-
-  .dd__selected {
-    padding: rem(5px) rem(5px) rem(5px) rem(10px);
-  }
-
-  .icon {
-    margin-right: rem(10px);
-  }
-
-  .dd__selected,
-  .dd__placeholder,
-  .dd__selectedItem,
-  .dd__list {
-    > div {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      height: 100%;
-    }
-  }
-
-  .dd__search {
-    text-overflow: initial !important;
-  }
-
-  .dd__list {
-    display: block;
-    width: 100%;
-    box-shadow: none;
-    border: solid 1px #e5e5df;
-    border-radius: 0;
-  }
-
-  .dd__option {
-    white-space: normal;
-    width: 100%;
-    color: rgba($slate, 0.6);
+  .container {
     display: flex;
     justify-content: space-between;
-    flex-direction: row;
     align-items: center;
+    position: relative;
+    border: solid 1px $border;
 
-    &:hover {
-      color: rgba($slate, 1);
-      background-color: $white;
+    .value {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      z-index: 0;
     }
 
-    .info-button {
-      margin-left: rem(10px);
-      height: 15px;
-      width: 15px;
-      min-width: 15px;
-      border-radius: 50%;
+    input {
+      z-index: 1;
+      background-color: transparent;
+      width: 100%;
+      height: 100%;
+      border: 0;
 
-      .info-icon {
-        height: 8px;
-        width: 7px;
+      &:focus {
+        outline: none;
       }
     }
+
+    .arrow {
+      max-width: rem(15px);
+    }
   }
 
-  .dd__selectedItem,
-  .dd__selectedOption {
-    color: rgba($slate, 1);
-  }
-
-  .dd__selectedOption {
-    background-color: $white;
-  }
-
-  .dd__disabled {
-    .dd__selectControl {
-      cursor: not-allowed;
-      background-color: $grey-light;
-      border-color: $grey-dark;
+  .menu {
+    .highlight {
+      color: red;
     }
   }
 }

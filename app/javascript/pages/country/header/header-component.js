@@ -69,7 +69,7 @@ class Header extends PureComponent {
           <div className="columns small-12 large-6">
             <div className="select-container">
               <div className="select">
-                <Icon icon={arrowDownIcon} className="icon" />
+                {/* <Icon icon={arrowDownIcon} className="icon" /> */}
                 <DropdownNew
                   theme="theme-select-dark"
                   placeholder="Country"
