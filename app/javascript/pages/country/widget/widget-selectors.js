@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniq from 'lodash/uniq';
+import lowerCase from 'lodash/lowerCase';
 import { sortByKey } from 'utils/data';
 
 import INDICATORS from 'pages/country/data/indicators.json';
@@ -149,6 +150,11 @@ export const getIndicators = createSelector(
           const indicator = item;
           if (indicator.value === 'gadm28') {
             indicator.label = `All of ${locationNames.current.label}`;
+          }
+          if (indicator.metaKey === 'primary_forest') {
+            indicator.metaKey = `${lowerCase(locationNames.country.value)}_${
+              indicator.metaKey
+            }${locationNames.country.value === 'IDN' ? 's' : ''}`;
           }
           return indicator;
         }),

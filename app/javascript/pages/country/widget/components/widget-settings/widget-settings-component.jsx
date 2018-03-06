@@ -1,12 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import lowerCase from 'lodash/lowerCase';
 
-import Dropdown from 'components/dropdown';
-import Button from 'components/button';
-import Icon from 'components/icon';
+import Dropdown from 'components/dropdown-new';
 
-import infoIcon from 'assets/icons/info.svg';
 import './widget-settings-styles.scss';
 
 class WidgetSettings extends PureComponent {
@@ -45,35 +41,8 @@ class WidgetSettings extends PureComponent {
               onSettingsChange({ value: { indicator: option.value }, widget })
             }
             disabled={loading}
-            optionRenderer={(option, selectedOptions) => (
-              <div
-                className={`dd__option ${
-                  selectedOptions[0].value === option.value
-                    ? 'dd__selectedOption'
-                    : ''
-                }`}
-              >
-                {option.label}
-                {option.metaKey && (
-                  <Button
-                    className="theme-button-small square info-button"
-                    onClick={() =>
-                      setModalMeta(
-                        option.metaKey === 'primary_forest'
-                          ? `${lowerCase(locationNames.country.value)}_${
-                            option.metaKey
-                          }${
-                            locationNames.country.value === 'DRC' ? 's' : ''
-                          }`
-                          : option.metaKey
-                      )
-                    }
-                  >
-                    <Icon icon={infoIcon} className="info-icon" />
-                  </Button>
-                )}
-              </div>
-            )}
+            optionsAction={setModalMeta}
+            optionsActionKey="metaKey"
           />
         )}
         {types && (

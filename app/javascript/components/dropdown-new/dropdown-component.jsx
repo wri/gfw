@@ -4,7 +4,6 @@ import { deburrUpper } from 'utils/data';
 import { isTouch } from 'utils/browser';
 
 import Downshift from 'downshift';
-import Select from 'react-select-me';
 import Button from 'components/button';
 import Icon from 'components/icon';
 import { Tooltip } from 'react-tippy';
@@ -39,42 +38,26 @@ class Dropdown extends PureComponent {
   handleStateChange = (changes, downshiftStateAndHelpers) => {
     if (!downshiftStateAndHelpers.isOpen) {
       this.setState({ inputValue: '' });
-    } else if (changes && changes.inputValue) {
+    } else if ((changes && changes.inputValue) || changes.inputValue === '') {
       this.setState({ inputValue: changes.inputValue });
     }
-    console.log(changes);
   };
 
   render() {
     const {
-      theme,
       label,
       infoAction,
-      modalOpen,
-      modalClosing,
       tooltip,
       value,
       placeholder,
-      searchable
+      searchable,
+      noItemsFound,
+      optionsAction,
+      optionsActionKey
     } = this.props;
-    // const isDeviceTouch = isTouch();
-    // const dropdown = (
-    //   <Select
-    //     iconRenderer={() => (
-    //       <Icon icon={arrowDownIcon} className="icon icon-arrow-down" />
-    //     )}
-    //     beforeClose={() => {
-    //       if (modalOpen || modalClosing) {
-    //         return false;
-    //       }
-    //       return true;
-    //     }}
-    //     {...this.props}
-    //     options={this.state.options}
-    //   />
-    // );
+    const isDeviceTouch = isTouch();
 
-    return (
+    const dropdown = (
       <Downshift
         itemToString={i => i && i.label}
         onChange={this.handleChange}
@@ -90,43 +73,80 @@ class Dropdown extends PureComponent {
           isOpen,
           selectedItem,
           highlightedIndex,
-          openMenu
+          openMenu,
+          closeMenu
         }) => {
           const { inputValue, options } = this.state;
 
           const onInputClick = () => {
-            openMenu();
+            if (!searchable && isOpen) {
+              closeMenu();
+            } else {
+              openMenu();
+            }
           };
 
           const inputProps = getInputProps({
-            placeholder: isOpen ? placeholder : '',
+            placeholder: isOpen && searchable ? placeholder : '',
             onClick: onInputClick,
             readOnly: !isOpen || !searchable
           });
 
           const newItems = inputValue
-            ? options.filter(item =>
-              item.label.toLowerCase().includes(inputValue.toLowerCase())
+            ? options.filter(
+              item =>
+                deburrUpper(item.label).indexOf(deburrUpper(inputValue)) > -1
             )
             : options;
 
-          return (
-            <div className={`c-dropdown ${theme || 'theme-select-light'}`}>
-              {label && (
-                <div className="label">
-                  {label}
-                  {infoAction && (
-                    <Button
-                      className="theme-button-small square info-button"
-                      onClick={infoAction}
+          const activeValue =
+            typeof selectedItem === 'string' || typeof selectedItem === 'number'
+              ? options.find(o => o.value === selectedItem)
+              : selectedItem;
+          const activeLabel = activeValue && activeValue.label;
+
+          const menu = !isOpen ? null : (
+            <div className="menu">
+              {newItems && newItems.length ? (
+                newItems.map((item, index) => (
+                  <div key={item.value} className="item-wrapper">
+                    <div
+                      {...getItemProps({
+                        item,
+                        index,
+                        className:
+                          highlightedIndex === index ||
+                          selectedItem.value === item.value
+                            ? 'item highlight'
+                            : 'item'
+                      })}
                     >
-                      <Icon icon={infoIcon} className="info-icon" />
-                    </Button>
-                  )}
+                      {item.label}
+                    </div>
+                    {item.metaKey && (
+                      <Button
+                        className="theme-button-small square info-button"
+                        onClick={() => optionsAction(item[optionsActionKey])}
+                      >
+                        <Icon icon={infoIcon} className="info-icon" />
+                      </Button>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <div className="item not-found">
+                  {noItemsFound || 'No results found'}
                 </div>
               )}
-              <div className="container">
-                {!isOpen && <div className="value">{value && value.label}</div>}
+            </div>
+          );
+
+          const selector = (
+            <div className={`container ${isOpen ? 'is-open' : ''}`}>
+              <div className="selector">
+                <span className="value">
+                  {(isOpen && !searchable) || !isOpen ? activeLabel : ''}
+                </span>
                 <input {...inputProps} />
                 <Icon
                   {...getButtonProps()}
@@ -134,63 +154,46 @@ class Dropdown extends PureComponent {
                   icon={arrowDownIcon}
                 />
               </div>
-              {!isOpen ? null : (
-                <div className="menu">
-                  {newItems.map((item, index) => (
-                    <div
-                      key={item.value}
-                      {...getItemProps({
-                        item,
-                        index,
-                        className:
-                          highlightedIndex === index ||
-                          selectedItem.value === item.value
-                            ? 'highlight'
-                            : ''
-                        // isActive: highlightedIndex === index,
-                        // isSelected: selectedItem.value === item.value,
-                        // onMouseDown: this.onItemMouseDown, // Fixes the issue
-                      })}
-                    >
-                      {item.label}
-                    </div>
-                  ))}
-                </div>
-              )}
+              {menu}
             </div>
           );
+
+          return selector;
         }}
       </Downshift>
+    );
 
-      // <div className={`c-dropdown ${theme || 'theme-select-light'}`}>
-      //   {label && (
-      //     <div className="label">
-      //       {label}
-      //       {infoAction && (
-      //         <Button
-      //           className="theme-button-small square info-button"
-      //           onClick={infoAction}
-      //         >
-      //           <Icon icon={infoIcon} className="info-icon" />
-      //         </Button>
-      //       )}
-      //     </div>
-      //   )}
-      //   {tooltip ? (
-      //     <Tooltip
-      //       theme="tip"
-      //       position="top"
-      //       arrow
-      //       disabled={isDeviceTouch}
-      //       html={<Tip text={tooltip.text} />}
-      //       {...tooltip}
-      //     >
-      //       {dropdown}
-      //     </Tooltip>
-      //   ) : (
-      //     dropdown
-      //   )}
-      // </div>
+    return (
+      <div className="c-dropdown">
+        {label && (
+          <div className="label">
+            {label}
+            {infoAction && (
+              <Button
+                className="theme-button-small square info-button"
+                onClick={infoAction}
+              >
+                <Icon icon={infoIcon} className="info-icon" />
+              </Button>
+            )}
+          </div>
+        )}
+        {tooltip ? (
+          <Tooltip
+            theme="tip"
+            position="top"
+            arrow
+            disabled={isDeviceTouch}
+            hideOnClick
+            html={<Tip text={tooltip.text} />}
+            {...tooltip}
+          >
+            {dropdown}
+          </Tooltip>
+        ) : (
+          dropdown
+        )}
+      </div>
     );
   }
 }
@@ -202,7 +205,17 @@ Dropdown.propTypes = {
   infoAction: PropTypes.func,
   modalOpen: PropTypes.bool,
   modalClosing: PropTypes.bool,
-  tooltip: PropTypes.object
+  tooltip: PropTypes.object,
+  value: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  placeholder: PropTypes.string,
+  searchable: PropTypes.bool,
+  noItemsFound: PropTypes.string,
+  optionsAction: PropTypes.func,
+  optionsActionKey: PropTypes.string
 };
 
 export default Dropdown;
