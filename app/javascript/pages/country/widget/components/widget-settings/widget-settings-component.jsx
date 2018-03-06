@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Dropdown from 'components/dropdown-new';
+import Dropdown from 'components/dropdown';
 
 import './widget-settings-styles.scss';
 
@@ -149,7 +149,8 @@ class WidgetSettings extends PureComponent {
               <span className="label">YEARS</span>
               <div className="select-container">
                 <Dropdown
-                  theme="theme-select-button"
+                  className="years-dropdown"
+                  theme="theme-dropdown-button"
                   value={settings.startYear}
                   options={startYears}
                   onChange={option =>
@@ -162,7 +163,7 @@ class WidgetSettings extends PureComponent {
                 />
                 <span className="text-date">to</span>
                 <Dropdown
-                  theme="theme-select-button"
+                  theme="theme-dropdown-button"
                   value={settings.endYear}
                   options={endYears}
                   onChange={option =>
@@ -178,7 +179,7 @@ class WidgetSettings extends PureComponent {
           )}
         {thresholds && (
           <Dropdown
-            theme="theme-select-button canopy-select"
+            theme="theme-dropdown-button canopy-select"
             label="CANOPY DENSITY"
             value={settings.threshold}
             options={thresholds}

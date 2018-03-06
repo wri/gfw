@@ -1,8 +1,12 @@
 @import '~styles/settings.scss';
 
+$dd-height: rem(35px);
+$dd-font-size: rem(13px);
+
 .c-dropdown {
-  text-align: left;
   color: $slate;
+  width: auto;
+  text-align: left;
 
   .label {
     margin-bottom: rem(10px);
@@ -10,7 +14,7 @@
     justify-content: flex-start;
     align-items: center;
     font-weight: 400;
-    font-size: rem(13px);
+    font-size: $dd-font-size;
 
     .info-button {
       margin-left: rem(7px);
@@ -26,84 +30,114 @@
     }
   }
 
-  .dd__selectControl {
-    padding: 0;
+  .container {
+    position: relative;
   }
 
-  .dd__selected {
-    padding: rem(5px) rem(5px) rem(5px) rem(10px);
-  }
+  .selector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    border: solid 1px $border;
+    height: $dd-height;
+    padding: 0 rem(10px);
+    cursor: pointer;
+    color: $slate;
+    z-index: 0;
 
-  .icon {
-    margin-right: rem(10px);
-  }
+    &.align-left {
+      justify-content: flex-start;
 
-  .dd__selected,
-  .dd__placeholder,
-  .dd__selectedItem,
-  .dd__list {
-    > div {
+      .value {
+        padding-left: rem(18px);
+        padding-right: 0;
+      }
+    }
+
+    .value {
+      position: absolute;
+      top: calc(50% - 10px);
+      bottom: 0;
+      left: rem(10px);
+      right: rem(10px);
+      padding-right: rem(18px);
+      z-index: 0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      display: inline-block;
+      font-size: $dd-font-size;
+    }
+
+    input {
+      z-index: 1;
+      background-color: transparent;
+      width: 100%;
       height: 100%;
+      border: 0;
+      cursor: pointer;
+      color: $slate;
+      font-size: $dd-font-size;
+
+      &:focus {
+        outline: none;
+      }
+
+      &::placeholder {
+        color: rgba($slate, 0.5);
+      }
+    }
+
+    .arrow {
+      max-width: rem(12px);
+      fill: $slate;
     }
   }
 
-  .dd__search {
-    text-overflow: initial !important;
-  }
-
-  .dd__list {
-    display: block;
+  .menu {
+    border: solid 1px $border;
+    margin-top: -1px;
+    z-index: 1;
+    max-height: rem(400px);
+    overflow-y: scroll;
+    cursor: pointer;
+    color: rgba($slate, 0.5);
+    font-size: $dd-font-size;
+    position: absolute;
+    top: $dd-height;
     width: 100%;
-    box-shadow: none;
-    border: solid 1px #e5e5df;
-    border-radius: 0;
-  }
+    background-color: $white;
+    padding: rem(5px) 0;
 
-  .dd__option {
-    white-space: normal;
-    width: 100%;
-    color: rgba($slate, 0.6);
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
+    .item-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-    &:hover {
-      color: rgba($slate, 1);
-      background-color: $white;
+    .item {
+      width: 100%;
+      padding: rem(8px) rem(10px);
     }
 
     .info-button {
-      margin-left: rem(10px);
-      height: 15px;
-      width: 15px;
-      min-width: 15px;
-      border-radius: 50%;
+      margin-right: rem(10px);
+      width: rem(16px);
+      max-width: rem(16px);
+      min-width: rem(16px);
+      height: rem(16px);
+      max-height: rem(16px);
+    }
 
-      .info-icon {
-        height: 8px;
-        width: 7px;
-      }
+    .highlight {
+      color: $slate;
     }
   }
 
-  .dd__selectedItem,
-  .dd__selectedOption {
-    color: rgba($slate, 1);
-  }
-
-  .dd__selectedOption {
-    background-color: $white;
-  }
-
-  .dd__disabled {
-    .dd__selectControl {
-      cursor: not-allowed;
-      background-color: $grey-light;
-      border-color: $grey-dark;
+  .is-open {
+    .arrow {
+      transform: rotate(180deg);
     }
   }
 }
