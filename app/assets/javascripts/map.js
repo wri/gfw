@@ -129,10 +129,7 @@ require([
       new NotificationsView(this.map, this.countries);
       new GuideView(this.map, this.countries);
       new GuideButtonView(this.map, this.countries);
-      window.App.Views.ReactMapMiddleView = new ReactMapMiddleView(
-        this.map,
-        this.countries
-      );
+      window.App.Views.ReactMapMiddleView = new ReactMapMiddleView(this.map);
 
       this._initApp();
     },
