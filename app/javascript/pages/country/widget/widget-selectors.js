@@ -128,15 +128,13 @@ export const getIndicators = createSelector(
           i =>
             config.indicators.indexOf(i.value) > -1 &&
             whitelist.indexOf(i.value) > -1 &&
+            i.value !== 'gadm28' &&
             (!config.type ||
               config.type === 'extent' ||
               (locationWhitelist[i.value] &&
                 locationWhitelist[i.value][config.type]))
         ).map(item => {
           const indicator = item;
-          if (indicator.value === 'gadm28') {
-            indicator.label = `All of ${locationNames.current.label}`;
-          }
           if (indicator.metaKey === 'primary_forest') {
             indicator.metaKey = `${lowerCase(locationNames.country.value)}_${
               indicator.metaKey

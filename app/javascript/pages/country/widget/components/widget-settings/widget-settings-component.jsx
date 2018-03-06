@@ -38,11 +38,17 @@ class WidgetSettings extends PureComponent {
             value={settings.indicator}
             options={indicators}
             onChange={option =>
-              onSettingsChange({ value: { indicator: option.value }, widget })
+              onSettingsChange({
+                value: { indicator: (option && option.value) || 'gadm28' },
+                widget
+              })
             }
             disabled={loading}
             optionsAction={setModalMeta}
             optionsActionKey="metaKey"
+            clearable
+            noSelectedValue={`All of ${locationNames &&
+              locationNames.current.label}`}
           />
         )}
         {types && (

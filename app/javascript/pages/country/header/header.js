@@ -77,7 +77,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       }),
       handleRegionChange: (country, region) => ({
         type: COUNTRY,
-        payload: { country: country.value, region: region.value },
+        payload: {
+          country: country.value,
+          ...(!!region && region.value && { region: region.value })
+        },
         query: newQuery
       }),
       handleSubRegionChange: (country, region, subRegion) => ({
@@ -85,7 +88,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         payload: {
           country: country.value,
           region: region.value,
-          subRegion: subRegion.value
+          ...(!!subRegion && subRegion.value && { subRegion: subRegion.value })
         },
         query: newQuery
       }),

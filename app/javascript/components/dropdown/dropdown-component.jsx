@@ -11,6 +11,8 @@ import Tip from 'components/tip';
 
 import infoIcon from 'assets/icons/info.svg';
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
+import closeIcon from 'assets/icons/close.svg';
+
 import './dropdown-styles.scss';
 import './themes/dropdown-dark.scss';
 import './themes/dropdown-button.scss';
@@ -52,6 +54,7 @@ class Dropdown extends PureComponent {
       value,
       placeholder,
       searchable,
+      clearable,
       noItemsFound,
       optionsAction,
       optionsActionKey,
@@ -76,7 +79,8 @@ class Dropdown extends PureComponent {
           selectedItem,
           highlightedIndex,
           openMenu,
-          closeMenu
+          closeMenu,
+          clearSelection
         }) => {
           const { inputValue, options } = this.state;
 
@@ -154,6 +158,12 @@ class Dropdown extends PureComponent {
                   {(isOpen && !searchable) || !isOpen ? activeLabel : ''}
                 </span>
                 <input {...inputProps} />
+                {clearable &&
+                  activeValue && (
+                    <button className="clear-btn" onClick={clearSelection}>
+                      <Icon icon={closeIcon} className="clear-icon" />
+                    </button>
+                  )}
                 {arrowPosition !== 'left' && (
                   <Icon className="arrow" icon={arrowDownIcon} />
                 )}
@@ -223,7 +233,8 @@ Dropdown.propTypes = {
   optionsAction: PropTypes.func,
   optionsActionKey: PropTypes.string,
   arrowPosition: PropTypes.string,
-  noSelectedValue: PropTypes.string
+  noSelectedValue: PropTypes.string,
+  clearable: PropTypes.bool
 };
 
 export default Dropdown;

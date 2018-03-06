@@ -68,10 +68,6 @@ $dd-font-size: rem(13px);
       text-overflow: ellipsis;
       display: inline-block;
       font-size: $dd-font-size;
-
-      &.no-value {
-        color: rgba($slate, 0.5);
-      }
     }
 
     input {
@@ -96,6 +92,17 @@ $dd-font-size: rem(13px);
     .arrow {
       max-width: rem(12px);
       fill: $slate;
+    }
+
+    .clear-btn {
+      z-index: 3;
+      cursor: pointer;
+
+      .clear-icon {
+        max-width: rem(8px);
+        max-height: rem(8px);
+        margin-right: rem(5px);
+      }
     }
   }
 
