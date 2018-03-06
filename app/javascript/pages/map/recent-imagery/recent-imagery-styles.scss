@@ -6,3 +6,10 @@
   right: 0;
   z-index: 20;
 }
+
+.recent-imagery-infowindow {
+  font-family: $font-family-1;
+  color: $white;
+  font-size: 10px;
+  text-shadow: 0 0 3px $slate-light;
+}

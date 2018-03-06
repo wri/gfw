@@ -14,7 +14,10 @@ const getTiles = createThunkAction('getTiles', params => dispatch => {
         dispatch(
           setRecentImageryData({
             url: data.tile_url,
-            bounds: data.bbox.geometry.coordinates
+            bounds: data.bbox.geometry.coordinates,
+            cloudScore: data.cloud_score,
+            dateTime: data.date_time,
+            instrument: data.instrument
           })
         );
       }

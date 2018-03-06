@@ -2,7 +2,10 @@ export const initialState = {
   activated: false,
   data: {
     url: '',
-    bounds: []
+    bounds: [],
+    cloudScore: 0,
+    dateTime: '',
+    instrument: ''
   }
 };
 

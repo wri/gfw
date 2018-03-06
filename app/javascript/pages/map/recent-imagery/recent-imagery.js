@@ -2,6 +2,8 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import moment from 'moment';
+import { getPolygonCenter } from 'utils/map';
 
 import actions from './recent-imagery-actions';
 import reducers, { initialState } from './recent-imagery-reducers';
@@ -23,6 +25,7 @@ class RecentImageryContainer extends PureComponent {
   componentDidMount() {
     this.middleView = window.App.Views.ReactMapMiddleView;
     this.boundsPolygon = null;
+    this.boundsPolygonInfowindow = null;
     this.activatedFromUrl = false;
     window.addEventListener('isRecentImageryActivated', () => {
       const { activated, toogleRecentImagery } = this.props;
@@ -59,7 +62,7 @@ class RecentImageryContainer extends PureComponent {
       } else {
         this.updateLayer(data.url);
       }
-      this.addBoundsPolygon(data.bounds);
+      this.addBoundsPolygon(data);
     }
   }
 
@@ -102,8 +105,7 @@ class RecentImageryContainer extends PureComponent {
     this.middleView.toggleLayer(LAYER_SLUG);
     this.activatedFromUrl = false;
     setRecentImageryData({
-      url: '',
-      bounds: []
+      url: ''
     });
   }
 
@@ -113,9 +115,9 @@ class RecentImageryContainer extends PureComponent {
     });
   }
 
-  addBoundsPolygon(bounds) {
+  addBoundsPolygon(data) {
     const { map } = this.middleView;
-    let clickTimeout = null;
+    const { bounds, cloudScore, dateTime, instrument } = data;
 
     if (this.boundsPolygon !== null) {
       this.removeBoundsPolygon();
@@ -127,35 +129,59 @@ class RecentImageryContainer extends PureComponent {
         lng: item[0]
       });
     });
+
     this.boundsPolygon = new google.maps.Polygon({ // eslint-disable-line
       paths: coords,
       fillColor: 'transparent',
       strokeWeight: 0
     });
-    google.maps.event.addListener(this.boundsPolygon, 'mouseover', function () { // eslint-disable-line
-      this.setOptions({
+    const polygonCenter = getPolygonCenter(this.boundsPolygon);
+
+    this.addBoundsPolygonEvents();
+    this.boundsPolygon.setMap(map);
+
+    if (this.boundsPolygonInfowindow !== null) {
+      this.boundsPolygonInfowindow.close();
+    }
+    this.boundsPolygonInfowindow = new google.maps.InfoWindow({ // eslint-disable-line
+      content: `<div class="recent-imagery-infowindow">
+        ${moment(dateTime)
+    .format('DD MMM YYYY')
+    .toUpperCase()} - ${cloudScore}% cloud coverage - ${instrument}
+      </div>`,
+      position: polygonCenter.top
+    });
+  }
+
+  addBoundsPolygonEvents() {
+    const { map } = this.middleView;
+    let clickTimeout = null;
+
+    google.maps.event.addListener(this.boundsPolygon, 'mouseover', () => { // eslint-disable-line
+      this.boundsPolygon.setOptions({
         fillColor: '#000000',
         fillOpacity: 0.1,
         strokeColor: '#000000',
         strokeOpacity: 0.5,
         strokeWeight: 1
       });
+      this.boundsPolygonInfowindow.open(map);
     });
-    google.maps.event.addListener(this.boundsPolygon, 'mouseout', function () { // eslint-disable-line
-      this.setOptions({
+    google.maps.event.addListener(this.boundsPolygon, 'mouseout', () => { // eslint-disable-line
+      this.boundsPolygon.setOptions({
         fillColor: 'transparent',
         strokeWeight: 0
       });
+      this.boundsPolygonInfowindow.close();
     });
-    google.maps.event.addListener(this.boundsPolygon, 'click', (e) => { // eslint-disable-line
+    google.maps.event.addListener(this.boundsPolygon, 'click', e => { // eslint-disable-line
       clickTimeout = setTimeout(() => {
         console.log(e); // eslint-disable-line
       }, 200);
     });
-    google.maps.event.addListener(this.boundsPolygon, 'dblclick', (e) => { // eslint-disable-line
+    google.maps.event.addListener(this.boundsPolygon, 'dblclick', () => { // eslint-disable-line
       clearTimeout(clickTimeout);
     });
-    this.boundsPolygon.setMap(map);
   }
 
   removeBoundsPolygon() {
