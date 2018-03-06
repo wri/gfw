@@ -55,7 +55,8 @@ class Dropdown extends PureComponent {
       noItemsFound,
       optionsAction,
       optionsActionKey,
-      arrowPosition
+      arrowPosition,
+      noSelectedValue
     } = this.props;
     const isDeviceTouch = isTouch();
 
@@ -104,7 +105,8 @@ class Dropdown extends PureComponent {
             typeof selectedItem === 'string' || typeof selectedItem === 'number'
               ? options.find(o => o.value === selectedItem)
               : selectedItem;
-          const activeLabel = activeValue && activeValue.label;
+          const activeLabel =
+            (activeValue && activeValue.label) || noSelectedValue;
 
           const menu = !isOpen ? null : (
             <div className="menu">
@@ -148,7 +150,7 @@ class Dropdown extends PureComponent {
                 {arrowPosition === 'left' && (
                   <Icon className="arrow" icon={arrowDownIcon} />
                 )}
-                <span className="value">
+                <span className={`value ${!activeValue ? 'no-value' : ''}`}>
                   {(isOpen && !searchable) || !isOpen ? activeLabel : ''}
                 </span>
                 <input {...inputProps} />
@@ -220,7 +222,8 @@ Dropdown.propTypes = {
   noItemsFound: PropTypes.string,
   optionsAction: PropTypes.func,
   optionsActionKey: PropTypes.string,
-  arrowPosition: PropTypes.string
+  arrowPosition: PropTypes.string,
+  noSelectedValue: PropTypes.string
 };
 
 export default Dropdown;

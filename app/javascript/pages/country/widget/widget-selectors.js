@@ -65,23 +65,15 @@ export const getAdminsOptions = createSelector(
         (countries &&
           sortByKey(countries.filter(c => c.value !== 'XCA'), 'label')) ||
         null,
-      regions:
-        (regions &&
-          [{ label: 'All Regions', value: null }].concat(
-            sortByKey(regions, 'label')
-          )) ||
-        null,
+      regions: regions && sortByKey(regions, 'label'),
       subRegions:
-        (subRegions &&
-          [{ label: 'All Regions', value: null }].concat(
-            sortByKey(
-              waterBodiesIds
-                ? subRegions.filter(s => waterBodiesIds.indexOf(s.value) === -1)
-                : subRegions,
-              'label'
-            )
-          )) ||
-        null
+        subRegions &&
+        sortByKey(
+          waterBodiesIds
+            ? subRegions.filter(s => waterBodiesIds.indexOf(s.value) === -1)
+            : subRegions,
+          'label'
+        )
     };
   }
 );
@@ -96,17 +88,11 @@ export const getAdminsSelected = createSelector(
       null;
     const region =
       (options.regions &&
-        options.regions.find(i => {
-          if (!adminsSelected.region) return options.regions[0];
-          return i.value === adminsSelected.region;
-        })) ||
+        options.regions.find(i => i.value === adminsSelected.region)) ||
       null;
     const subRegion =
       (options.subRegions &&
-        options.subRegions.find(i => {
-          if (!adminsSelected.subRegion) return options.subRegions[0];
-          return i.value === adminsSelected.subRegion;
-        })) ||
+        options.subRegions.find(i => i.value === adminsSelected.subRegion)) ||
       null;
     let current = country;
     if (adminsSelected.subRegion) {

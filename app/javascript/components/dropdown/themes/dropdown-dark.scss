@@ -25,6 +25,10 @@ $dd-dark-font-size: rem(47px);
       left: 0;
       right: 0;
       padding-right: 0;
+
+      &.no-value {
+        color: rgba($white, 0.5);
+      }
     }
 
     input {

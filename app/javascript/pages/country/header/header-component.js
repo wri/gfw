@@ -87,6 +87,7 @@ class Header extends PureComponent {
                     theme="theme-dropdown-dark"
                     placeholder="Region"
                     noItemsFound="No region found"
+                    noSelectedValue="All Regions"
                     value={locationNames.region}
                     options={locationOptions.regions}
                     onChange={region =>
@@ -99,6 +100,7 @@ class Header extends PureComponent {
                       delay: 1000
                     }}
                     arrowPosition="left"
+                    clearable
                   />
                 )}
               {locationNames.region &&
@@ -109,6 +111,7 @@ class Header extends PureComponent {
                     theme="theme-dropdown-dark"
                     placeholder="Region"
                     noItemsFound="No region found"
+                    noSelectedValue="All Regions"
                     value={locationNames.subRegion}
                     options={locationOptions.subRegions}
                     onChange={subRegion =>
@@ -125,6 +128,7 @@ class Header extends PureComponent {
                       delay: 1000
                     }}
                     arrowPosition="left"
+                    clearable
                   />
                 )}
             </div>
