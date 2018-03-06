@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Dropdown from 'components/dropdown';
+import DropdownNew from 'components/dropdown-new';
 import Loader from 'components/loader';
 import Icon from 'components/icon';
 import Button from 'components/button';
@@ -12,13 +13,6 @@ import downloadIcon from 'assets/icons/download.svg';
 import './header-styles.scss';
 
 class Header extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      disableTooltips: false
-    };
-  }
-
   render() {
     const {
       className,
@@ -35,7 +29,6 @@ class Header extends PureComponent {
       location,
       forestAtlasLink
     } = this.props;
-    const { disableTooltips } = this.state;
 
     return (
       <div className={`${className} c-header`}>
@@ -77,7 +70,7 @@ class Header extends PureComponent {
             <div className="select-container">
               <div className="select">
                 <Icon icon={arrowDownIcon} className="icon" />
-                <Dropdown
+                <DropdownNew
                   theme="theme-select-dark"
                   placeholder="Country"
                   noItemsFound="No country found"
@@ -88,14 +81,7 @@ class Header extends PureComponent {
                   disabled={loading}
                   tooltip={{
                     text: 'Choose the country you want to explore',
-                    delay: 1000,
-                    disabled: disableTooltips
-                  }}
-                  onOpen={() => {
-                    this.setState({ disableTooltips: true });
-                  }}
-                  onClose={() => {
-                    this.setState({ disableTooltips: false });
+                    delay: 1000
                   }}
                 />
               </div>
@@ -116,14 +102,7 @@ class Header extends PureComponent {
                       disabled={loading}
                       tooltip={{
                         text: 'Choose the region you want to explore',
-                        delay: 1000,
-                        disabled: disableTooltips
-                      }}
-                      onOpen={() => {
-                        this.setState({ disableTooltips: true });
-                      }}
-                      onClose={() => {
-                        this.setState({ disableTooltips: false });
+                        delay: 1000
                       }}
                     />
                   </div>
@@ -154,14 +133,7 @@ class Header extends PureComponent {
                       disabled={loading}
                       tooltip={{
                         text: 'Choose the region you want to explore',
-                        delay: 1000,
-                        disabled: disableTooltips
-                      }}
-                      onOpen={() => {
-                        this.setState({ disableTooltips: true });
-                      }}
-                      onClose={() => {
-                        this.setState({ disableTooltips: false });
+                        delay: 1000
                       }}
                     />
                   </div>

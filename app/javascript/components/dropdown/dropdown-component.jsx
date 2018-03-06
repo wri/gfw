@@ -86,6 +86,7 @@ class Dropdown extends PureComponent {
           arrow
           disabled={isDeviceTouch}
           html={<Tip text={tooltip.text} />}
+          hideOnClick
           {...tooltip}
         >
           {dropdown}
