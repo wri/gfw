@@ -12,7 +12,7 @@
     "postinstall": "./node_modules/bower/bin/bower install",
     "webpack": "./bin/webpack",
     "foreman": "foreman start",
-    "start": "npm-run-all -p -r foreman webpack",
+    "start": "./bin/server",
     "server": "./bin/webpack-dev-server",
     "lint": "eslint --ext js --ext jsx .",
     "precommit": "lint-staged",
