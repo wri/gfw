@@ -1,6 +1,5 @@
 export const initialState = {
-  loading: true,
-  middleView: null
+  loading: true
 };
 
 const setRootLoading = (state, { payload }) => ({
