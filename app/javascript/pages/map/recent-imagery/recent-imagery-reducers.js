@@ -1,5 +1,6 @@
 export const initialState = {
   active: false,
+  showSettings: false,
   data: {
     url: '',
     bounds: [],
@@ -34,8 +35,14 @@ const setRecentImagerySettingsStyles = (state, { payload }) => ({
   }
 });
 
+const setRecentImageryShowSettings = (state, { payload }) => ({
+  ...state,
+  showSettings: payload
+});
+
 export default {
   setRecentImageryData,
   toogleRecentImagery,
-  setRecentImagerySettingsStyles
+  setRecentImagerySettingsStyles,
+  setRecentImageryShowSettings
 };

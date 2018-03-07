@@ -14,9 +14,10 @@ import RecentImageryComponent from './recent-imagery-component';
 const LAYER_SLUG = 'sentinel_tiles';
 
 const mapStateToProps = ({ recentImagery }) => {
-  const { active, data, settings } = recentImagery;
+  const { active, showSettings, data, settings } = recentImagery;
   return {
     active,
+    showSettings,
     data,
     settings,
     dates: getDates()
@@ -156,6 +157,7 @@ class RecentImageryContainer extends PureComponent {
   }
 
   addBoundsPolygonEvents() {
+    const { setRecentImageryShowSettings } = this.props;
     const { map } = this.middleView;
     let clickTimeout = null;
 
@@ -176,9 +178,9 @@ class RecentImageryContainer extends PureComponent {
       });
       this.boundsPolygonInfowindow.close();
     });
-    google.maps.event.addListener(this.boundsPolygon, 'click', e => { // eslint-disable-line
+    google.maps.event.addListener(this.boundsPolygon, 'click', () => { // eslint-disable-line
       clickTimeout = setTimeout(() => {
-        console.log(e); // eslint-disable-line
+        setRecentImageryShowSettings(true);
       }, 200);
     });
     google.maps.event.addListener(this.boundsPolygon, 'dblclick', () => { // eslint-disable-line
@@ -203,6 +205,7 @@ RecentImageryContainer.propTypes = {
   dates: PropTypes.object,
   toogleRecentImagery: PropTypes.func,
   setRecentImageryData: PropTypes.func,
+  setRecentImageryShowSettings: PropTypes.func,
   getTiles: PropTypes.func
 };
 

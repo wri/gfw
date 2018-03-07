@@ -8,6 +8,9 @@ const toogleRecentImagery = createAction('toogleRecentImagery');
 const setRecentImagerySettingsStyles = createAction(
   'setRecentImagerySettingsStyles'
 );
+const setRecentImageryShowSettings = createAction(
+  'setRecentImageryShowSettings'
+);
 
 const getTiles = createThunkAction('getTiles', params => dispatch => {
   getRecentTiles(params)
@@ -41,5 +44,6 @@ export default {
   setRecentImageryData,
   toogleRecentImagery,
   setRecentImagerySettingsStyles,
+  setRecentImageryShowSettings,
   getTiles
 };
