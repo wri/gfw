@@ -8,15 +8,17 @@ import { getPolygonCenter } from 'utils/map';
 import actions from './recent-imagery-actions';
 import reducers, { initialState } from './recent-imagery-reducers';
 import { getDates } from './recent-imagery-selectors';
+import RecentImageryDrag from './recent-imagery-drag';
 import RecentImageryComponent from './recent-imagery-component';
 
 const LAYER_SLUG = 'sentinel_tiles';
 
 const mapStateToProps = ({ recentImagery }) => {
-  const { activated, data } = recentImagery;
+  const { activated, data, settings } = recentImagery;
   return {
     activated,
     data,
+    settings,
     dates: getDates()
   };
 };
@@ -205,4 +207,6 @@ RecentImageryContainer.propTypes = {
 };
 
 export { actions, reducers, initialState };
-export default connect(mapStateToProps, actions)(RecentImageryContainer);
+export default connect(mapStateToProps, actions)(
+  RecentImageryDrag(RecentImageryContainer)
+);

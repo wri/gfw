@@ -6,6 +6,12 @@ export const initialState = {
     cloudScore: 0,
     dateTime: '',
     instrument: ''
+  },
+  settings: {
+    styles: {
+      top: 50,
+      left: '50%'
+    }
   }
 };
 
@@ -19,7 +25,16 @@ const toogleRecentImagery = state => ({
   activated: !state.activated
 });
 
+const setRecentImagerySettingsStyles = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    styles: payload
+  }
+});
+
 export default {
   setRecentImageryData,
-  toogleRecentImagery
+  toogleRecentImagery,
+  setRecentImagerySettingsStyles
 };

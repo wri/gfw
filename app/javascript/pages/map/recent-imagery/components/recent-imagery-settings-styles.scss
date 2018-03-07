@@ -1,0 +1,21 @@
+@import '~styles/settings.scss';
+
+.c-recent-imagery-settings {
+  position: absolute;
+  width: 600px;
+  height: 300px;
+  transform: translateX(-50%);
+  background-color: $white;
+  
+  .dragger-icon {
+    fill: $slate;
+    width: rem(6px);
+    height: rem(10px);
+  }
+
+  &__title {
+    font-size: 13px;
+    color: $slate;
+    line-height: 21px;
+  }
+}
