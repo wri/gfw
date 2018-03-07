@@ -1,5 +1,5 @@
 export const initialState = {
-  activated: false,
+  active: false,
   data: {
     url: '',
     bounds: [],
@@ -23,7 +23,7 @@ const setRecentImageryData = (state, { payload }) => ({
 
 const toogleRecentImagery = state => ({
   ...state,
-  activated: !state.activated
+  active: !state.active
 });
 
 const setRecentImagerySettingsStyles = (state, { payload }) => ({
