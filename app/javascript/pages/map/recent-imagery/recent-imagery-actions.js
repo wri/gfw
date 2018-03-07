@@ -14,13 +14,20 @@ const getTiles = createThunkAction('getTiles', params => dispatch => {
     .then(response => {
       if (response.data.data.length) {
         const data = response.data.data[0].attributes;
+        const sources = [];
+        response.data.data.forEach((item, i) => {
+          if (i !== 0) {
+            sources.push(item.attributes.source);
+          }
+        });
         dispatch(
           setRecentImageryData({
             url: data.tile_url,
             bounds: data.bbox.geometry.coordinates,
             cloudScore: data.cloud_score,
             dateTime: data.date_time,
-            instrument: data.instrument
+            instrument: data.instrument,
+            sources
           })
         );
       }

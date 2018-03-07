@@ -5,7 +5,8 @@ export const initialState = {
     bounds: [],
     cloudScore: 0,
     dateTime: '',
-    instrument: ''
+    instrument: '',
+    sources: []
   },
   settings: {
     styles: {
