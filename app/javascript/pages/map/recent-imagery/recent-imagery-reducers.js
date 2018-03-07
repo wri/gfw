@@ -1,19 +1,13 @@
 export const initialState = {
   active: false,
-  showSettings: false,
-  data: {
-    url: '',
-    bounds: [],
-    cloudScore: 0,
-    dateTime: '',
-    instrument: '',
-    sources: []
-  },
+  showSettings: true,
+  data: {},
   settings: {
     styles: {
       top: 50,
       left: '50%'
-    }
+    },
+    tileIndex: 0
   }
 };
 
