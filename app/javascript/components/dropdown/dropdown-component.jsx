@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { deburrUpper } from 'utils/data';
 import { isTouch } from 'utils/browser';
+import groupBy from 'lodash/groupBy';
+import remove from 'lodash/remove';
 
 import Downshift from 'downshift';
 import Button from 'components/button';
@@ -23,7 +25,8 @@ class Dropdown extends PureComponent {
     this.state = {
       options: props.options,
       inputValue: '',
-      isOpen: false
+      isOpen: false,
+      showGroup: ''
     };
   }
 
@@ -95,11 +98,11 @@ class Dropdown extends PureComponent {
           highlightedIndex,
           clearSelection
         }) => {
-          const { inputValue, options } = this.state;
+          const { inputValue, options, showGroup } = this.state;
 
           const onInputClick = () => {
             if (!searchable && isOpen) {
-              this.setState({ isOpen: false });
+              this.setState({ isOpen: false, showGroup: '' });
             } else {
               this.setState({ isOpen: true, inputValue: '' });
             }
@@ -109,18 +112,16 @@ class Dropdown extends PureComponent {
             this.setState({ isOpen: !isOpen, inputValue: '' });
           };
 
-          const inputProps = getInputProps({
-            placeholder: isOpen && searchable ? placeholder : '',
-            onClick: onInputClick,
-            readOnly: !isOpen || !searchable
-          });
-
-          const newItems = inputValue
-            ? options.filter(
-              item =>
-                deburrUpper(item.label).indexOf(deburrUpper(inputValue)) > -1
-            )
-            : options;
+          const newItems = groupBy(
+            inputValue
+              ? options.filter(
+                item =>
+                  deburrUpper(item.label).indexOf(deburrUpper(inputValue)) >
+                    -1
+              )
+              : options,
+            'category'
+          );
 
           const activeValue =
             typeof selectedItem === 'string' || typeof selectedItem === 'number'
@@ -129,21 +130,78 @@ class Dropdown extends PureComponent {
           const activeLabel =
             (activeValue && activeValue.label) || noSelectedValue;
 
+          const groups = remove(Object.keys(newItems), r => r !== 'undefined');
+          const list = newItems.undefined || [];
+          const listWithGroups = list.concat(
+            groups.map(g => ({ label: g, value: g, group: g }))
+          );
+          let listWithGroupsAndItems = listWithGroups;
+          groups.forEach(g => {
+            listWithGroupsAndItems = listWithGroupsAndItems.concat(newItems[g]);
+          });
+
+          const inputProps = getInputProps({
+            placeholder: isOpen && searchable ? placeholder : '',
+            onClick: onInputClick,
+            readOnly: !isOpen || !searchable,
+            onKeyDown: e => {
+              if (e.key === 'Enter') {
+                const selectedIndex = parseInt(e.target.id.split('-')[1], 10);
+                const selected = listWithGroupsAndItems[selectedIndex];
+                if (selected && selected.group) {
+                  e.preventDownshiftDefault = true;
+                  this.setState({
+                    showGroup:
+                      showGroup === selected.group ? '' : selected.group,
+                    highlightedIndex: selectedIndex + 1
+                  });
+                }
+              }
+            }
+          });
+
           const menu = !isOpen ? null : (
             <div className="menu">
-              {newItems && newItems.length ? (
-                newItems.map((item, index) => (
-                  <div key={item.value} className="item-wrapper">
+              {listWithGroupsAndItems && listWithGroupsAndItems.length ? (
+                listWithGroupsAndItems.map((item, index) => (
+                  <div
+                    key={item.value}
+                    className={`item-wrapper
+                    ${item.group ? 'group' : ''} ${
+                    item.category ? 'category' : ''
+                  }
+                    ${
+                  (!showGroup && !item.category) ||
+                      (item.category === showGroup || item.group === showGroup)
+                    ? 'show'
+                    : ''
+                  }`}
+                  >
                     <div
                       {...getItemProps({
                         item,
                         index,
-                        className:
-                          highlightedIndex === index ||
-                          activeLabel === item.label
-                            ? 'item highlight'
-                            : 'item'
+                        className: `item
+                        ${
+                  highlightedIndex === index ||
+                          activeLabel === item.label ||
+                          (item.group && item.group === showGroup) ||
+                          (item.group &&
+                            activeValue &&
+                            item.group === activeValue.category)
+                    ? 'highlight'
+                    : ''
+                  }`
                       })}
+                      {...!!item.group && {
+                        onClick: () => {
+                          this.setState({
+                            showGroup:
+                              item.group === showGroup ? '' : item.group,
+                            isOpen: true
+                          });
+                        }
+                      }}
                     >
                       {item.label}
                     </div>
@@ -154,6 +212,14 @@ class Dropdown extends PureComponent {
                       >
                         <Icon icon={infoIcon} className="info-icon" />
                       </Button>
+                    )}
+                    {item.group && (
+                      <Icon
+                        icon={arrowDownIcon}
+                        className={`group-icon ${
+                          showGroup === item.group ? 'selected' : ''
+                        }`}
+                      />
                     )}
                   </div>
                 ))
@@ -173,7 +239,11 @@ class Dropdown extends PureComponent {
                     <Icon className="arrow" icon={arrowDownIcon} />
                   </button>
                 )}
-                <span className={`value ${!activeValue ? 'no-value' : ''}`}>
+                <span
+                  className={`value ${!activeValue ? 'no-value' : ''} ${
+                    clearable && activeValue ? 'clearable' : ''
+                  }`}
+                >
                   {(isOpen && !searchable) || !isOpen ? activeLabel : ''}
                 </span>
                 <input {...inputProps} />
