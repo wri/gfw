@@ -1,10 +1,18 @@
 @import '~styles/settings.scss';
 
 .c-recent-imagery {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: 20;
+  &__button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 20;
+  }
+
+  &--dragging {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - #{rem(36px)});
+  }
 }
 
 .recent-imagery-infowindow {
