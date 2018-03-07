@@ -124,6 +124,11 @@ class Dropdown extends PureComponent {
             groupKey || 'group'
           );
 
+          const handleClearSelection = () => {
+            clearSelection();
+            this.setState({ isOpen: false });
+          };
+
           const activeValue =
             typeof selectedItem === 'string' || typeof selectedItem === 'number'
               ? options.find(o => o.value === selectedItem)
@@ -251,7 +256,10 @@ class Dropdown extends PureComponent {
                 <input {...inputProps} />
                 {clearable &&
                   activeValue && (
-                    <button className="clear-btn" onClick={clearSelection}>
+                    <button
+                      className="clear-btn"
+                      onClick={handleClearSelection}
+                    >
                       <Icon icon={closeIcon} className="clear-icon" />
                     </button>
                   )}
