@@ -70,6 +70,7 @@ class Dropdown extends PureComponent {
         onStateChange={this.handleStateChange}
         inputValue={this.state.inputValue}
         selectedItem={value}
+        defaultHighlightedIndex={0}
         {...this.props}
       >
         {({
