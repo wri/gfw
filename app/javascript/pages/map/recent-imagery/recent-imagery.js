@@ -7,7 +7,12 @@ import { getPolygonCenter } from 'utils/map';
 
 import actions from './recent-imagery-actions';
 import reducers, { initialState } from './recent-imagery-reducers';
-import { getDates } from './recent-imagery-selectors';
+import {
+  getTile,
+  getBounds,
+  getSources,
+  getDates
+} from './recent-imagery-selectors';
 import RecentImageryDrag from './recent-imagery-drag';
 import RecentImageryComponent from './recent-imagery-component';
 
@@ -15,12 +20,18 @@ const LAYER_SLUG = 'sentinel_tiles';
 
 const mapStateToProps = ({ recentImagery }) => {
   const { active, showSettings, data, settings } = recentImagery;
+  const selectorData = {
+    data,
+    settings
+  };
   return {
     active,
     showSettings,
-    data,
-    settings,
-    dates: getDates()
+    tile: getTile(selectorData),
+    bounds: getBounds(selectorData),
+    tilesSources: getSources(selectorData),
+    dates: getDates(selectorData),
+    settings
   };
 };
 
@@ -40,10 +51,10 @@ class RecentImageryContainer extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { active, data, dates, getTiles } = nextProps;
+    const { active, tile, bounds, dates, getData } = nextProps;
     const { map } = this.middleView;
     if (active && active !== this.props.active) {
-      getTiles({
+      getData({
         latitude: map.getCenter().lng(),
         longitude: map.getCenter().lat(),
         start: dates.start,
@@ -55,22 +66,22 @@ class RecentImageryContainer extends PureComponent {
       this.removeEvents();
       this.removeBoundsPolygon();
     }
-    if (data.url !== '' && !isEqual(data, this.props.data)) {
-      if (this.activatedFromUrl && this.props.data.url === '') {
-        this.updateLayer(data.url);
+    if (tile && !isEqual(tile, this.props.tile)) {
+      if (this.activatedFromUrl && !this.props.tile) {
+        this.updateLayer(tile.url);
         this.setEvents();
-      } else if (this.props.data.url === '') {
-        this.showLayer(data.url);
+      } else if (!this.props.tile) {
+        this.showLayer(tile.url);
         this.setEvents();
       } else {
-        this.updateLayer(data.url);
+        this.updateLayer(tile.url);
       }
-      this.addBoundsPolygon(data);
+      this.addBoundsPolygon(bounds, tile);
     }
   }
 
   setEvents() {
-    const { dates, getTiles } = this.props;
+    const { dates, getData } = this.props;
     const { map } = this.middleView;
 
     const loadNewTile = () => {
@@ -79,7 +90,7 @@ class RecentImageryContainer extends PureComponent {
         this.boundsPolygon
       );
       if (needNewTile) {
-        getTiles({
+        getData({
           latitude: map.getCenter().lng(),
           longitude: map.getCenter().lat(),
           start: dates.start,
@@ -118,9 +129,9 @@ class RecentImageryContainer extends PureComponent {
     });
   }
 
-  addBoundsPolygon(data) {
+  addBoundsPolygon(bounds, tile) {
     const { map } = this.middleView;
-    const { bounds, cloudScore, dateTime, instrument } = data;
+    const { cloudScore, dateTime, instrument } = tile;
 
     if (this.boundsPolygon !== null) {
       this.removeBoundsPolygon();
@@ -201,12 +212,13 @@ class RecentImageryContainer extends PureComponent {
 
 RecentImageryContainer.propTypes = {
   active: PropTypes.bool,
-  data: PropTypes.object,
+  tile: PropTypes.object,
+  bounds: PropTypes.array,
   dates: PropTypes.object,
   toogleRecentImagery: PropTypes.func,
   setRecentImageryData: PropTypes.func,
   setRecentImageryShowSettings: PropTypes.func,
-  getTiles: PropTypes.func
+  getData: PropTypes.func
 };
 
 export { actions, reducers, initialState };
