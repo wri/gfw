@@ -14,9 +14,9 @@ import RecentImageryComponent from './recent-imagery-component';
 const LAYER_SLUG = 'sentinel_tiles';
 
 const mapStateToProps = ({ recentImagery }) => {
-  const { activated, data, settings } = recentImagery;
+  const { active, data, settings } = recentImagery;
   return {
-    activated,
+    active,
     data,
     settings,
     dates: getDates()
@@ -30,8 +30,8 @@ class RecentImageryContainer extends PureComponent {
     this.boundsPolygonInfowindow = null;
     this.activatedFromUrl = false;
     window.addEventListener('isRecentImageryActivated', () => {
-      const { activated, toogleRecentImagery } = this.props;
-      if (!activated) {
+      const { active, toogleRecentImagery } = this.props;
+      if (!active) {
         this.activatedFromUrl = true;
         toogleRecentImagery();
       }
@@ -39,9 +39,9 @@ class RecentImageryContainer extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { activated, data, dates, getTiles } = nextProps;
+    const { active, data, dates, getTiles } = nextProps;
     const { map } = this.middleView;
-    if (activated && activated !== this.props.activated) {
+    if (active && active !== this.props.active) {
       getTiles({
         latitude: map.getCenter().lng(),
         longitude: map.getCenter().lat(),
@@ -49,7 +49,7 @@ class RecentImageryContainer extends PureComponent {
         end: dates.end
       });
     }
-    if (!activated && activated !== this.props.activated) {
+    if (!active && active !== this.props.active) {
       this.removeLayer();
       this.removeEvents();
       this.removeBoundsPolygon();
@@ -198,7 +198,7 @@ class RecentImageryContainer extends PureComponent {
 }
 
 RecentImageryContainer.propTypes = {
-  activated: PropTypes.bool,
+  active: PropTypes.bool,
   data: PropTypes.object,
   dates: PropTypes.object,
   toogleRecentImagery: PropTypes.func,
