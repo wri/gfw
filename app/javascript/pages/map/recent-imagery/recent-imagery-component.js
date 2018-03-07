@@ -9,6 +9,7 @@ import './recent-imagery-styles.scss';
 class RecentImagery extends PureComponent {
   render() {
     const {
+      showSettings,
       settings,
       canDrop,
       connectDropTarget,
@@ -27,13 +28,14 @@ class RecentImagery extends PureComponent {
         >
           Recent Imagery
         </Button>
-        <RecentImagerySettings settings={settings} />
+        {showSettings && <RecentImagerySettings settings={settings} />}
       </div>
     );
   }
 }
 
 RecentImagery.propTypes = {
+  showSettings: PropTypes.bool.isRequired,
   settings: PropTypes.object.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   canDrop: PropTypes.bool.isRequired,
