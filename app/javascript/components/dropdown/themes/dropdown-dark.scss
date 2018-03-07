@@ -42,8 +42,16 @@ $dd-dark-font-size: rem(47px);
       }
     }
 
-    .arrow {
-      fill: $white;
+    .arrow-btn {
+      .arrow {
+        fill: $white;
+      }
+    }
+
+    .clear-btn {
+      .clear-icon {
+        fill: $white;
+      }
     }
   }
 

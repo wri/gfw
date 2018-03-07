@@ -22,7 +22,8 @@ class Dropdown extends PureComponent {
     super(props);
     this.state = {
       options: props.options,
-      inputValue: ''
+      inputValue: '',
+      isOpen: false
     };
   }
 
@@ -42,6 +43,9 @@ class Dropdown extends PureComponent {
     } else if ((changes && changes.inputValue) || changes.inputValue === '') {
       this.setState({ inputValue: changes.inputValue });
     }
+    if (changes && changes.selectedItem) {
+      this.setState({ isOpen: false, inputValue: '' });
+    }
   };
 
   render() {
@@ -59,9 +63,17 @@ class Dropdown extends PureComponent {
       optionsAction,
       optionsActionKey,
       arrowPosition,
-      noSelectedValue
+      noSelectedValue,
+      modalOpen,
+      modalClosing
     } = this.props;
     const isDeviceTouch = isTouch();
+
+    const checkModalCloing = () => {
+      if (!modalOpen && !modalClosing) {
+        this.setState({ isOpen: false });
+      }
+    };
 
     const dropdown = (
       <Downshift
@@ -71,6 +83,8 @@ class Dropdown extends PureComponent {
         inputValue={this.state.inputValue}
         selectedItem={value}
         defaultHighlightedIndex={0}
+        onOuterClick={checkModalCloing}
+        isOpen={this.state.isOpen}
         {...this.props}
       >
         {({
@@ -79,18 +93,20 @@ class Dropdown extends PureComponent {
           isOpen,
           selectedItem,
           highlightedIndex,
-          openMenu,
-          closeMenu,
           clearSelection
         }) => {
           const { inputValue, options } = this.state;
 
           const onInputClick = () => {
             if (!searchable && isOpen) {
-              closeMenu();
+              this.setState({ isOpen: false });
             } else {
-              openMenu();
+              this.setState({ isOpen: true, inputValue: '' });
             }
+          };
+
+          const onSelectorClick = () => {
+            this.setState({ isOpen: !isOpen, inputValue: '' });
           };
 
           const inputProps = getInputProps({
@@ -153,7 +169,9 @@ class Dropdown extends PureComponent {
             <div className={`container ${isOpen ? 'is-open' : ''}`}>
               <div className={`selector ${arrowPosition ? 'align-left' : ''}`}>
                 {arrowPosition === 'left' && (
-                  <Icon className="arrow" icon={arrowDownIcon} />
+                  <button className="arrow-btn" onClick={onSelectorClick}>
+                    <Icon className="arrow" icon={arrowDownIcon} />
+                  </button>
                 )}
                 <span className={`value ${!activeValue ? 'no-value' : ''}`}>
                   {(isOpen && !searchable) || !isOpen ? activeLabel : ''}
@@ -166,7 +184,9 @@ class Dropdown extends PureComponent {
                     </button>
                   )}
                 {arrowPosition !== 'left' && (
-                  <Icon className="arrow" icon={arrowDownIcon} />
+                  <button className="arrow-btn" onClick={onSelectorClick}>
+                    <Icon className="arrow" icon={arrowDownIcon} />
+                  </button>
                 )}
               </div>
               <div className="menu-arrow" />
@@ -199,10 +219,10 @@ class Dropdown extends PureComponent {
             theme="tip"
             position="top"
             arrow
-            disabled={isDeviceTouch}
             hideOnClick
             html={<Tip text={tooltip.text} />}
             {...tooltip}
+            disabled={isDeviceTouch || tooltip.disabled}
           >
             {dropdown}
           </Tooltip>
