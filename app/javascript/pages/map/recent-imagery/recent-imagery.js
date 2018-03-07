@@ -118,9 +118,7 @@ class RecentImageryContainer extends PureComponent {
     const { setRecentImageryData } = this.props;
     this.middleView.toggleLayer(LAYER_SLUG);
     this.activatedFromUrl = false;
-    setRecentImageryData({
-      url: ''
-    });
+    setRecentImageryData({});
   }
 
   updateLayer(url) {
