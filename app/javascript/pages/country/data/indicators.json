@@ -28,13 +28,13 @@
     "label": "Mining concessions in Primary Forests",
     "value": "primary_forest__mining",
     "metaKey": "",
-    "category": "Intersections"
+    "group": "Intersections"
   },
   {
     "label": "Protected Areas in Primary Forests",
     "value": "primary_forest__wdpa",
     "metaKey": "",
-    "category": "Intersections"
+    "group": "Intersections"
   },
   {
     "label": "Intact Forest Landscapes",
@@ -45,13 +45,13 @@
     "label": "Protected Areas in Intact Forest Landscapes",
     "value": "ifl_2013__wdpa",
     "metaKey": "",
-    "category": "Intersections"
+    "group": "Intersections"
   },
   {
     "label": "Mining concessions in Intact Forest Landscapes",
     "value": "ifl_2013__mining",
     "metaKey": "",
-    "category": "Intersections"
+    "group": "Intersections"
   },
   {
     "label": "Indigenous Lands",
@@ -62,7 +62,7 @@
     "label": "Indigenous Lands in Primary Forests",
     "value": "primary_forest__landmark",
     "metaKey": "",
-    "category": "Intersections"
+    "group": "Intersections"
   },
   {
     "label": "Plantations",
@@ -73,18 +73,18 @@
     "label": "Mining concessions in Plantation Areas",
     "value": "plantations__mining",
     "metaKey": "",
-    "category": "Intersections"
+    "group": "Intersections"
   },
   {
     "label": "Protected areas in Plantations",
     "value": "plantations__wdpa",
     "metaKey": "",
-    "category": "Intersections"
+    "group": "Intersections"
   },
   {
     "label": "Indigenous Lands in Plantations",
     "value": "plantations__landmark",
     "metaKey": "",
-    "category": "Intersections"
+    "group": "Intersections"
   }
 ]

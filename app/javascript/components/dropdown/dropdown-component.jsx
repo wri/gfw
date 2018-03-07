@@ -68,7 +68,8 @@ class Dropdown extends PureComponent {
       arrowPosition,
       noSelectedValue,
       modalOpen,
-      modalClosing
+      modalClosing,
+      groupKey
     } = this.props;
     const isDeviceTouch = isTouch();
 
@@ -120,7 +121,7 @@ class Dropdown extends PureComponent {
                     -1
               )
               : options,
-            'category'
+            groupKey || 'group'
           );
 
           const activeValue =
@@ -133,7 +134,7 @@ class Dropdown extends PureComponent {
           const groups = remove(Object.keys(newItems), r => r !== 'undefined');
           const list = newItems.undefined || [];
           const listWithGroups = list.concat(
-            groups.map(g => ({ label: g, value: g, group: g }))
+            groups.map(g => ({ label: g, value: g, groupParent: g }))
           );
           let listWithGroupsAndItems = listWithGroups;
           groups.forEach(g => {
@@ -146,14 +147,14 @@ class Dropdown extends PureComponent {
             readOnly: !isOpen || !searchable,
             onKeyDown: e => {
               if (e.key === 'Enter') {
-                const selectedIndex = parseInt(e.target.id.split('-')[1], 10);
-                const selected = listWithGroupsAndItems[selectedIndex];
-                if (selected && selected.group) {
+                const selected = listWithGroupsAndItems[highlightedIndex];
+                if (selected && selected.groupParent) {
                   e.preventDownshiftDefault = true;
                   this.setState({
                     showGroup:
-                      showGroup === selected.group ? '' : selected.group,
-                    highlightedIndex: selectedIndex + 1
+                      showGroup === selected.groupParent
+                        ? ''
+                        : selected.groupParent
                   });
                 }
               }
@@ -167,12 +168,10 @@ class Dropdown extends PureComponent {
                   <div
                     key={item.value}
                     className={`item-wrapper
-                    ${item.group ? 'group' : ''} ${
-                    item.category ? 'category' : ''
-                  }
                     ${
-                  (!showGroup && !item.category) ||
-                      (item.category === showGroup || item.group === showGroup)
+                  (!showGroup && !item.group) ||
+                      (item.group === showGroup ||
+                        item.groupParent === showGroup)
                     ? 'show'
                     : ''
                   }`}
@@ -185,19 +184,22 @@ class Dropdown extends PureComponent {
                         ${
                   highlightedIndex === index ||
                           activeLabel === item.label ||
-                          (item.group && item.group === showGroup) ||
-                          (item.group &&
+                          (item.groupParent &&
+                            item.groupParent === showGroup) ||
+                          (item.groupParent &&
                             activeValue &&
-                            item.group === activeValue.category)
+                            item.groupParent === activeValue.group)
                     ? 'highlight'
                     : ''
                   }`
                       })}
-                      {...!!item.group && {
+                      {...!!item.groupParent && {
                         onClick: () => {
                           this.setState({
                             showGroup:
-                              item.group === showGroup ? '' : item.group,
+                              item.groupParent === showGroup
+                                ? ''
+                                : item.groupParent,
                             isOpen: true
                           });
                         }
@@ -213,11 +215,11 @@ class Dropdown extends PureComponent {
                         <Icon icon={infoIcon} className="info-icon" />
                       </Button>
                     )}
-                    {item.group && (
+                    {item.groupParent && (
                       <Icon
                         icon={arrowDownIcon}
                         className={`group-icon ${
-                          showGroup === item.group ? 'selected' : ''
+                          showGroup === item.groupParent ? 'selected' : ''
                         }`}
                       />
                     )}
@@ -325,7 +327,8 @@ Dropdown.propTypes = {
   optionsActionKey: PropTypes.string,
   arrowPosition: PropTypes.string,
   noSelectedValue: PropTypes.string,
-  clearable: PropTypes.bool
+  clearable: PropTypes.bool,
+  groupKey: PropTypes.string
 };
 
 export default Dropdown;
