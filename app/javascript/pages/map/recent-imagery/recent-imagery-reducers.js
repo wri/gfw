@@ -1,6 +1,6 @@
 export const initialState = {
   active: false,
-  showSettings: true,
+  showSettings: false,
   haveAllData: false,
   data: {},
   settings: {
