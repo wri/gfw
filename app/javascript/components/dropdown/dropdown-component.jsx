@@ -1,9 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { deburrUpper } from 'utils/data';
-import { isTouch } from 'utils/browser';
-import groupBy from 'lodash/groupBy';
-import remove from 'lodash/remove';
 
 import Downshift from 'downshift';
 import Button from 'components/button';
@@ -12,45 +8,15 @@ import { Tooltip } from 'react-tippy';
 import Tip from 'components/tip';
 
 import infoIcon from 'assets/icons/info.svg';
-import arrowDownIcon from 'assets/icons/arrow-down.svg';
-import closeIcon from 'assets/icons/close.svg';
+
+import Selector from './components/selector';
+import Menu from './components/menu';
 
 import './dropdown-styles.scss';
 import './themes/dropdown-dark.scss';
 import './themes/dropdown-button.scss';
 
 class Dropdown extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      options: props.options,
-      inputValue: '',
-      isOpen: false,
-      showGroup: ''
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.options !== this.props.options) {
-      this.setState({ options: nextProps.options });
-    }
-  }
-
-  handleChange = () => {
-    this.setState({ inputValue: '' });
-  };
-
-  handleStateChange = (changes, downshiftStateAndHelpers) => {
-    if (!downshiftStateAndHelpers.isOpen) {
-      this.setState({ inputValue: '' });
-    } else if ((changes && changes.inputValue) || changes.inputValue === '') {
-      this.setState({ inputValue: changes.inputValue });
-    }
-    if (changes && changes.selectedItem) {
-      this.setState({ isOpen: false, inputValue: '' });
-    }
-  };
-
   render() {
     const {
       className,
@@ -58,235 +24,62 @@ class Dropdown extends PureComponent {
       label,
       infoAction,
       tooltip,
-      value,
-      placeholder,
       searchable,
       clearable,
       noItemsFound,
       optionsAction,
       optionsActionKey,
       arrowPosition,
-      noSelectedValue,
-      modalOpen,
-      modalClosing,
-      groupKey
+      checkModalClosing,
+      handleStateChange,
+      handleClearSelection,
+      handleSelectGroup,
+      buildInputProps,
+      onSelectorClick,
+      isDeviceTouch,
+      isOpen,
+      showGroup,
+      items,
+      activeValue,
+      activeLabel,
+      highlightedIndex
     } = this.props;
-    const isDeviceTouch = isTouch();
-
-    const checkModalCloing = () => {
-      if (!modalOpen && !modalClosing) {
-        this.setState({ isOpen: false });
-      }
-    };
 
     const dropdown = (
       <Downshift
         itemToString={i => i && i.label}
-        onChange={this.handleChange}
-        onStateChange={this.handleStateChange}
-        inputValue={this.state.inputValue}
-        selectedItem={value}
-        defaultHighlightedIndex={0}
-        onOuterClick={checkModalCloing}
-        isOpen={this.state.isOpen}
+        onStateChange={handleStateChange}
+        onOuterClick={checkModalClosing}
         {...this.props}
       >
-        {({
-          getInputProps,
-          getItemProps,
-          isOpen,
-          selectedItem,
-          highlightedIndex,
-          clearSelection
-        }) => {
-          const { inputValue, options, showGroup } = this.state;
-
-          const onInputClick = () => {
-            if (!searchable && isOpen) {
-              this.setState({ isOpen: false, showGroup: '' });
-            } else {
-              this.setState({ isOpen: true, inputValue: '' });
-            }
-          };
-
-          const onSelectorClick = () => {
-            this.setState({ isOpen: !isOpen, inputValue: '' });
-          };
-
-          const newItems = groupBy(
-            inputValue
-              ? options.filter(
-                item =>
-                  deburrUpper(item.label).indexOf(deburrUpper(inputValue)) >
-                    -1
-              )
-              : options,
-            groupKey || 'group'
-          );
-
-          const handleClearSelection = () => {
-            clearSelection();
-            this.setState({ isOpen: false });
-          };
-
-          const activeValue =
-            typeof selectedItem === 'string' || typeof selectedItem === 'number'
-              ? options.find(o => o.value === selectedItem)
-              : selectedItem;
-          const activeLabel =
-            (activeValue && activeValue.label) || noSelectedValue;
-
-          const groups = remove(Object.keys(newItems), r => r !== 'undefined');
-          const list = newItems.undefined || [];
-          const listWithGroups = list.concat(
-            groups.map(g => ({ label: g, value: g, groupParent: g }))
-          );
-          let listWithGroupsAndItems = listWithGroups;
-          groups.forEach(g => {
-            listWithGroupsAndItems = listWithGroupsAndItems.concat(newItems[g]);
-          });
-
-          const inputProps = getInputProps({
-            placeholder: isOpen && searchable ? placeholder : '',
-            onClick: onInputClick,
-            readOnly: !isOpen || !searchable,
-            onKeyDown: e => {
-              if (e.key === 'Enter') {
-                const selected = listWithGroupsAndItems[highlightedIndex];
-                if (selected && selected.groupParent) {
-                  e.preventDownshiftDefault = true;
-                  this.setState({
-                    showGroup:
-                      showGroup === selected.groupParent
-                        ? ''
-                        : selected.groupParent
-                  });
-                }
-              }
-            }
-          });
-
-          const menu = !isOpen ? null : (
-            <div className="menu">
-              {listWithGroupsAndItems && listWithGroupsAndItems.length ? (
-                listWithGroupsAndItems.map((item, index) => (
-                  <div
-                    key={item.value}
-                    className={`item-wrapper
-                    ${
-                  (!showGroup && !item.group) ||
-                      (item.group === showGroup ||
-                        item.groupParent === showGroup)
-                    ? 'show'
-                    : ''
-                  } ${!item.group ? 'base' : ''}
-                  `}
-                  >
-                    {item.groupParent &&
-                      showGroup === item.groupParent && (
-                        <Icon
-                          icon={arrowDownIcon}
-                          className={`group-icon ${
-                            showGroup === item.groupParent ? 'selected' : ''
-                          }`}
-                        />
-                      )}
-                    <div
-                      {...getItemProps({
-                        item,
-                        index,
-                        className: `item
-                        ${
-                  highlightedIndex === index ||
-                          activeLabel === item.label ||
-                          (item.groupParent &&
-                            item.groupParent === showGroup) ||
-                          (item.groupParent &&
-                            activeValue &&
-                            item.groupParent === activeValue.group)
-                    ? 'highlight'
-                    : ''
-                  }`
-                      })}
-                      {...!!item.groupParent && {
-                        onClick: () => {
-                          this.setState({
-                            showGroup:
-                              item.groupParent === showGroup
-                                ? ''
-                                : item.groupParent,
-                            isOpen: true
-                          });
-                        }
-                      }}
-                    >
-                      {item.label}
-                    </div>
-                    {item.metaKey && (
-                      <Button
-                        className="theme-button-small square info-button"
-                        onClick={() => optionsAction(item[optionsActionKey])}
-                      >
-                        <Icon icon={infoIcon} className="info-icon" />
-                      </Button>
-                    )}
-                    {item.groupParent &&
-                      showGroup !== item.groupParent && (
-                        <Icon
-                          icon={arrowDownIcon}
-                          className={`group-icon ${
-                            showGroup === item.groupParent ? 'selected' : ''
-                          }`}
-                        />
-                      )}
-                  </div>
-                ))
-              ) : (
-                <div className="item not-found">
-                  {noItemsFound || 'No results found'}
-                </div>
-              )}
-            </div>
-          );
-
-          const selector = (
-            <div className={`container ${isOpen ? 'is-open' : ''}`}>
-              <div className={`selector ${arrowPosition ? 'align-left' : ''}`}>
-                {arrowPosition === 'left' && (
-                  <button className="arrow-btn" onClick={onSelectorClick}>
-                    <Icon className="arrow" icon={arrowDownIcon} />
-                  </button>
-                )}
-                <span
-                  className={`value ${!activeValue ? 'no-value' : ''} ${
-                    clearable && activeValue ? 'clearable' : ''
-                  }`}
-                >
-                  {(isOpen && !searchable) || !isOpen ? activeLabel : ''}
-                </span>
-                <input {...inputProps} />
-                {clearable &&
-                  activeValue && (
-                    <button
-                      className="clear-btn"
-                      onClick={handleClearSelection}
-                    >
-                      <Icon icon={closeIcon} className="clear-icon" />
-                    </button>
-                  )}
-                {arrowPosition !== 'left' && (
-                  <button className="arrow-btn" onClick={onSelectorClick}>
-                    <Icon className="arrow" icon={arrowDownIcon} />
-                  </button>
-                )}
-              </div>
-              <div className="menu-arrow" />
-              {menu}
-            </div>
-          );
-
-          return selector;
-        }}
+        {({ getInputProps, getItemProps, getRootProps, clearSelection }) => (
+          <Selector
+            isOpen={isOpen}
+            arrowPosition={arrowPosition}
+            onSelectorClick={onSelectorClick}
+            clearable={clearable}
+            activeValue={activeValue}
+            activeLabel={activeLabel}
+            searchable={searchable}
+            inputProps={() => buildInputProps(getInputProps)}
+            handleClearSelection={() => handleClearSelection(clearSelection)}
+            {...getRootProps({ refKey: 'innerRef' })}
+          >
+            <Menu
+              isOpen={isOpen}
+              activeValue={activeValue}
+              activeLabel={activeLabel}
+              items={items}
+              showGroup={showGroup}
+              getItemProps={getItemProps}
+              highlightedIndex={highlightedIndex}
+              optionsAction={optionsAction}
+              optionsActionKey={optionsActionKey}
+              noItemsFound={noItemsFound}
+              handleSelectGroup={handleSelectGroup}
+            />
+          </Selector>
+        )}
       </Downshift>
     );
 
@@ -347,7 +140,23 @@ Dropdown.propTypes = {
   arrowPosition: PropTypes.string,
   noSelectedValue: PropTypes.string,
   clearable: PropTypes.bool,
-  groupKey: PropTypes.string
+  groupKey: PropTypes.string,
+  checkModalCloing: PropTypes.func,
+  handleStateChange: PropTypes.func,
+  handleClearSelection: PropTypes.func,
+  onInputClick: PropTypes.func,
+  onSelectorClick: PropTypes.func,
+  isDeviceTouch: PropTypes.bool,
+  inputValue: PropTypes.string,
+  isOpen: PropTypes.bool,
+  showGroup: PropTypes.string,
+  handleSelectGroup: PropTypes.func,
+  buildInputProps: PropTypes.func,
+  checkModalClosing: PropTypes.func,
+  items: PropTypes.array,
+  activeValue: PropTypes.object,
+  activeLabel: PropTypes.string,
+  highlightedIndex: PropTypes.number
 };
 
 export default Dropdown;
