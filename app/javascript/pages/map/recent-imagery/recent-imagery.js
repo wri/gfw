@@ -52,7 +52,17 @@ class RecentImageryContainer extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { active, tile, bounds, dates, getData } = nextProps;
+    const {
+      active,
+      showSettings,
+      haveAllData,
+      tile,
+      bounds,
+      sources,
+      dates,
+      getData,
+      getMoreTiles
+    } = nextProps;
     const { map } = this.middleView;
     if (active && active !== this.props.active) {
       getData({
@@ -79,13 +89,20 @@ class RecentImageryContainer extends PureComponent {
       }
       this.addBoundsPolygon(bounds, tile);
     }
+    if (
+      !haveAllData &&
+      showSettings &&
+      showSettings !== this.props.showSettings
+    ) {
+      getMoreTiles(sources);
+    }
   }
 
   setEvents() {
-    const { dates, getData } = this.props;
     const { map } = this.middleView;
 
     const loadNewTile = () => {
+      const { dates, getData } = this.props;
       const needNewTile = !google.maps.geometry.poly.containsLocation( // eslint-disable-line
         map.getCenter(),
         this.boundsPolygon
@@ -167,6 +184,7 @@ class RecentImageryContainer extends PureComponent {
   }
 
   addBoundsPolygonEvents() {
+    const { setRecentImageryShowSettings } = this.props;
     const { map } = this.middleView;
     let clickTimeout = null;
 
@@ -188,12 +206,8 @@ class RecentImageryContainer extends PureComponent {
       this.boundsPolygonInfowindow.close();
     });
     google.maps.event.addListener(this.boundsPolygon, 'click', () => { // eslint-disable-line
-      const { haveAllData, sources, setRecentImageryShowSettings, getMoreTiles } = this.props;
       clickTimeout = setTimeout(() => {
         setRecentImageryShowSettings(true);
-        if (!haveAllData) {
-          getMoreTiles(sources);
-        }
       }, 200);
     });
     google.maps.event.addListener(this.boundsPolygon, 'dblclick', () => { // eslint-disable-line
@@ -214,6 +228,7 @@ class RecentImageryContainer extends PureComponent {
 
 RecentImageryContainer.propTypes = {
   active: PropTypes.bool,
+  showSettings: PropTypes.bool,
   haveAllData: PropTypes.bool,
   tile: PropTypes.object,
   bounds: PropTypes.array,
