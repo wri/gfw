@@ -4,7 +4,6 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { handleActionTrack } from 'utils/analytics';
 
-import 'react-select-me/lib/ReactSelectMe.css';
 import 'react-tippy/dist/tippy.css';
 import 'styles/styles.scss';
 

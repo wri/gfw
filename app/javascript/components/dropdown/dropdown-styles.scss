@@ -139,10 +139,25 @@ $dd-font-size: rem(13px);
     .item-wrapper {
       justify-content: space-between;
       align-items: center;
-      display: none;
+      display: flex;
+      height: 0;
+      flex: 0;
+      margin-left: 100%;
+      width: 100%;
+      transition: none;
+      overflow: hidden;
+
+      &.base {
+        margin-left: -100%;
+        transition: margin-right 0.2s ease-in-out;
+      }
 
       &.show {
-        display: flex;
+        height: auto;
+        margin-left: 0;
+        flex: 1;
+        overflow: initial;
+        transition: margin-left 0.2s ease-in-out;
       }
     }
 
@@ -162,15 +177,13 @@ $dd-font-size: rem(13px);
 
     .group-icon {
       margin-right: rem(10px);
-      width: rem(16px);
-      max-width: rem(16px);
-      min-width: rem(16px);
-      height: rem(16px);
-      max-height: rem(16px);
       transform: rotate(-90deg);
+      fill: $slate;
 
       &.selected {
         transform: rotate(90deg);
+        margin-right: 0;
+        margin-left: rem(10px);
       }
     }
 

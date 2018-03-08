@@ -179,8 +179,18 @@ class Dropdown extends PureComponent {
                         item.groupParent === showGroup)
                     ? 'show'
                     : ''
-                  }`}
+                  } ${!item.group ? 'base' : ''}
+                  `}
                   >
+                    {item.groupParent &&
+                      showGroup === item.groupParent && (
+                        <Icon
+                          icon={arrowDownIcon}
+                          className={`group-icon ${
+                            showGroup === item.groupParent ? 'selected' : ''
+                          }`}
+                        />
+                      )}
                     <div
                       {...getItemProps({
                         item,
@@ -220,14 +230,15 @@ class Dropdown extends PureComponent {
                         <Icon icon={infoIcon} className="info-icon" />
                       </Button>
                     )}
-                    {item.groupParent && (
-                      <Icon
-                        icon={arrowDownIcon}
-                        className={`group-icon ${
-                          showGroup === item.groupParent ? 'selected' : ''
-                        }`}
-                      />
-                    )}
+                    {item.groupParent &&
+                      showGroup !== item.groupParent && (
+                        <Icon
+                          icon={arrowDownIcon}
+                          className={`group-icon ${
+                            showGroup === item.groupParent ? 'selected' : ''
+                          }`}
+                        />
+                      )}
                   </div>
                 ))
               ) : (
