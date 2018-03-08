@@ -1,6 +1,7 @@
 export const initialState = {
   active: false,
   showSettings: true,
+  haveAllData: false,
   data: {},
   settings: {
     styles: {
@@ -13,7 +14,8 @@ export const initialState = {
 
 const setRecentImageryData = (state, { payload }) => ({
   ...state,
-  data: payload
+  data: payload.data,
+  haveAllData: payload.haveAllData || false
 });
 
 const toogleRecentImagery = state => ({

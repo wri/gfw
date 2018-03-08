@@ -19,7 +19,7 @@ import RecentImageryComponent from './recent-imagery-component';
 const LAYER_SLUG = 'sentinel_tiles';
 
 const mapStateToProps = ({ recentImagery }) => {
-  const { active, showSettings, data, settings } = recentImagery;
+  const { active, showSettings, haveAllData, data, settings } = recentImagery;
   const selectorData = {
     data,
     settings
@@ -27,9 +27,10 @@ const mapStateToProps = ({ recentImagery }) => {
   return {
     active,
     showSettings,
+    haveAllData,
     tile: getTile(selectorData),
     bounds: getBounds(selectorData),
-    tilesSources: getSources(selectorData),
+    sources: getSources(selectorData),
     dates: getDates(selectorData),
     settings
   };
@@ -118,7 +119,7 @@ class RecentImageryContainer extends PureComponent {
     const { setRecentImageryData } = this.props;
     this.middleView.toggleLayer(LAYER_SLUG);
     this.activatedFromUrl = false;
-    setRecentImageryData({});
+    setRecentImageryData({ data: {} });
   }
 
   updateLayer(url) {
@@ -166,7 +167,6 @@ class RecentImageryContainer extends PureComponent {
   }
 
   addBoundsPolygonEvents() {
-    const { setRecentImageryShowSettings } = this.props;
     const { map } = this.middleView;
     let clickTimeout = null;
 
@@ -188,8 +188,12 @@ class RecentImageryContainer extends PureComponent {
       this.boundsPolygonInfowindow.close();
     });
     google.maps.event.addListener(this.boundsPolygon, 'click', () => { // eslint-disable-line
+      const { haveAllData, sources, setRecentImageryShowSettings, getMoreTiles } = this.props;
       clickTimeout = setTimeout(() => {
         setRecentImageryShowSettings(true);
+        if (!haveAllData) {
+          getMoreTiles(sources);
+        }
       }, 200);
     });
     google.maps.event.addListener(this.boundsPolygon, 'dblclick', () => { // eslint-disable-line
@@ -210,13 +214,16 @@ class RecentImageryContainer extends PureComponent {
 
 RecentImageryContainer.propTypes = {
   active: PropTypes.bool,
+  haveAllData: PropTypes.bool,
   tile: PropTypes.object,
   bounds: PropTypes.array,
+  sources: PropTypes.array,
   dates: PropTypes.object,
   toogleRecentImagery: PropTypes.func,
   setRecentImageryData: PropTypes.func,
   setRecentImageryShowSettings: PropTypes.func,
-  getData: PropTypes.func
+  getData: PropTypes.func,
+  getMoreTiles: PropTypes.func
 };
 
 export { actions, reducers, initialState };

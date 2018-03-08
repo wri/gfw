@@ -31,7 +31,7 @@ export const getSources = createSelector([getData], data => {
 
   const sources = [];
   data.forEach(item => {
-    sources.push(item.attributes.source);
+    sources.push({ source: item.attributes.source });
   });
   return sources;
 });
