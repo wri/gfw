@@ -8,7 +8,7 @@ export const initialState = {
       top: 50,
       left: '50%'
     },
-    tileIndex: 0
+    selectedTileIndex: 0
   }
 };
 
@@ -23,11 +23,11 @@ const toogleRecentImagery = state => ({
   active: !state.active
 });
 
-const setRecentImagerySettingsStyles = (state, { payload }) => ({
+const setRecentImagerySettings = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    styles: payload
+    ...payload
   }
 });
 
@@ -39,6 +39,6 @@ const setRecentImageryShowSettings = (state, { payload }) => ({
 export default {
   setRecentImageryData,
   toogleRecentImagery,
-  setRecentImagerySettingsStyles,
+  setRecentImagerySettings,
   setRecentImageryShowSettings
 };

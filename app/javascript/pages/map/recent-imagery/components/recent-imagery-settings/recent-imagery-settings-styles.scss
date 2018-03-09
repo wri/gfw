@@ -2,8 +2,7 @@
 
 .c-recent-imagery-settings {
   position: absolute;
-  width: 600px;
-  height: 300px;
+  width: rem(600px);
   transform: translateX(-50%);
   background-color: $white;
   box-shadow: 0 1px 3px 0 rgba($black, 0.25);
@@ -18,5 +17,19 @@
     font-size: 13px;
     color: $slate;
     line-height: 21px;
+  }
+
+  &__thumbnails {
+    .c-slider {
+      margin: 0;
+
+      .slick-slide {
+        padding: 0 rem(5.5px);
+      }
+
+      .slick-arrow {
+        top: calc(50% - #{rem(20px)});
+      }
+    }
   }
 }

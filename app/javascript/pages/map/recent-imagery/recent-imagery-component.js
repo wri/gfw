@@ -10,10 +10,12 @@ class RecentImagery extends PureComponent {
   render() {
     const {
       showSettings,
+      allTiles,
       settings,
       canDrop,
       connectDropTarget,
-      toogleRecentImagery
+      toogleRecentImagery,
+      setRecentImagerySettings
     } = this.props;
 
     return connectDropTarget(
@@ -28,7 +30,13 @@ class RecentImagery extends PureComponent {
         >
           Recent Imagery
         </Button>
-        {showSettings && <RecentImagerySettings settings={settings} />}
+        {showSettings && (
+          <RecentImagerySettings
+            tiles={allTiles}
+            settings={settings}
+            setRecentImagerySettings={setRecentImagerySettings}
+          />
+        )}
       </div>
     );
   }
@@ -36,10 +44,12 @@ class RecentImagery extends PureComponent {
 
 RecentImagery.propTypes = {
   showSettings: PropTypes.bool.isRequired,
+  allTiles: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   canDrop: PropTypes.bool.isRequired,
-  toogleRecentImagery: PropTypes.func.isRequired
+  toogleRecentImagery: PropTypes.func.isRequired,
+  setRecentImagerySettings: PropTypes.func.isRequired
 };
 
 export default RecentImagery;

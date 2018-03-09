@@ -1,13 +1,15 @@
+/* eslint-disable no-undef */
+
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import isEqual from 'lodash/isEqual';
 import moment from 'moment';
 import { getPolygonCenter } from 'utils/map';
 
 import actions from './recent-imagery-actions';
 import reducers, { initialState } from './recent-imagery-reducers';
 import {
+  getAllTiles,
   getTile,
   getBounds,
   getSources,
@@ -28,6 +30,7 @@ const mapStateToProps = ({ recentImagery }) => {
     active,
     showSettings,
     haveAllData,
+    allTiles: getAllTiles(selectorData),
     tile: getTile(selectorData),
     bounds: getBounds(selectorData),
     sources: getSources(selectorData),
@@ -77,7 +80,7 @@ class RecentImageryContainer extends PureComponent {
       this.removeEvents();
       this.removeBoundsPolygon();
     }
-    if (tile && !isEqual(tile, this.props.tile)) {
+    if (tile && (!this.props.tile || tile.url !== this.props.tile.url)) {
       if (this.activatedFromUrl && !this.props.tile) {
         this.updateLayer(tile.url);
         this.setEvents();
@@ -103,7 +106,7 @@ class RecentImageryContainer extends PureComponent {
 
     const loadNewTile = () => {
       const { dates, getData } = this.props;
-      const needNewTile = !google.maps.geometry.poly.containsLocation( // eslint-disable-line
+      const needNewTile = !google.maps.geometry.poly.containsLocation(
         map.getCenter(),
         this.boundsPolygon
       );
@@ -122,8 +125,8 @@ class RecentImageryContainer extends PureComponent {
 
   removeEvents() {
     const { map } = this.middleView;
-    google.maps.event.clearListeners(map, 'dragend'); // eslint-disable-line
-    google.maps.event.clearListeners(map, 'zoom_changed'); // eslint-disable-line
+    google.maps.event.clearListeners(map, 'dragend');
+    google.maps.event.clearListeners(map, 'zoom_changed');
   }
 
   showLayer(url) {
@@ -160,7 +163,7 @@ class RecentImageryContainer extends PureComponent {
       });
     });
 
-    this.boundsPolygon = new google.maps.Polygon({ // eslint-disable-line
+    this.boundsPolygon = new google.maps.Polygon({
       paths: coords,
       fillColor: 'transparent',
       strokeWeight: 0
@@ -173,7 +176,7 @@ class RecentImageryContainer extends PureComponent {
     if (this.boundsPolygonInfowindow !== null) {
       this.boundsPolygonInfowindow.close();
     }
-    this.boundsPolygonInfowindow = new google.maps.InfoWindow({ // eslint-disable-line
+    this.boundsPolygonInfowindow = new google.maps.InfoWindow({
       content: `<div class="recent-imagery-infowindow">
         ${moment(dateTime)
     .format('DD MMM YYYY')
@@ -188,7 +191,7 @@ class RecentImageryContainer extends PureComponent {
     const { map } = this.middleView;
     let clickTimeout = null;
 
-    google.maps.event.addListener(this.boundsPolygon, 'mouseover', () => { // eslint-disable-line
+    google.maps.event.addListener(this.boundsPolygon, 'mouseover', () => {
       this.boundsPolygon.setOptions({
         fillColor: '#000000',
         fillOpacity: 0.1,
@@ -198,19 +201,19 @@ class RecentImageryContainer extends PureComponent {
       });
       this.boundsPolygonInfowindow.open(map);
     });
-    google.maps.event.addListener(this.boundsPolygon, 'mouseout', () => { // eslint-disable-line
+    google.maps.event.addListener(this.boundsPolygon, 'mouseout', () => {
       this.boundsPolygon.setOptions({
         fillColor: 'transparent',
         strokeWeight: 0
       });
       this.boundsPolygonInfowindow.close();
     });
-    google.maps.event.addListener(this.boundsPolygon, 'click', () => { // eslint-disable-line
+    google.maps.event.addListener(this.boundsPolygon, 'click', () => {
       clickTimeout = setTimeout(() => {
         setRecentImageryShowSettings(true);
       }, 200);
     });
-    google.maps.event.addListener(this.boundsPolygon, 'dblclick', () => { // eslint-disable-line
+    google.maps.event.addListener(this.boundsPolygon, 'dblclick', () => {
       clearTimeout(clickTimeout);
     });
   }
