@@ -37,14 +37,15 @@ const Item = props => {
       className={`item-wrapper
         ${isActive ? 'show' : ''}
         ${!group ? 'base' : ''}
+        ${isGroupParentActive ? 'selected' : ''}
+        ${groupParent ? 'group-parent' : ''}
       `}
     >
       {isGroupParentActive && (
         <Icon
           icon={arrowDownIcon}
-          className={`group-icon ${
-            showGroup === groupParent ? 'selected' : ''
-          }`}
+          className="group-icon selected"
+          onClick={() => handleSelectGroup(item)}
         />
       )}
       <div
