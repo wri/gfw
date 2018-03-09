@@ -105,7 +105,7 @@ class DropdownContainer extends PureComponent {
 
   handleClearSelection = clearSelection => {
     clearSelection();
-    this.setState({ isOpen: false });
+    this.setState({ isOpen: false, showGroup: '' });
   };
 
   handleSelectGroup = item => {
