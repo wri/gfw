@@ -10,6 +10,7 @@ class RecentImagery extends PureComponent {
   render() {
     const {
       showSettings,
+      tile,
       allTiles,
       settings,
       canDrop,
@@ -32,6 +33,7 @@ class RecentImagery extends PureComponent {
         </Button>
         {showSettings && (
           <RecentImagerySettings
+            selectedTile={tile}
             tiles={allTiles}
             settings={settings}
             setRecentImagerySettings={setRecentImagerySettings}
@@ -44,6 +46,7 @@ class RecentImagery extends PureComponent {
 
 RecentImagery.propTypes = {
   showSettings: PropTypes.bool.isRequired,
+  tile: PropTypes.object,
   allTiles: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   connectDropTarget: PropTypes.func.isRequired,

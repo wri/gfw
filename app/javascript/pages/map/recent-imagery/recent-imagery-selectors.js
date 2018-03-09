@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import moment from 'moment';
 
 const getData = state => state.data || null;
 const getBbox = state => state.bbox || null;
@@ -14,7 +15,12 @@ export const getAllTiles = createSelector([getData], data => {
     thumbnail: item.attributes.thumbnail_url,
     cloudScore: item.attributes.cloud_score,
     dateTime: item.attributes.date_time,
-    instrument: item.attributes.instrument
+    instrument: item.attributes.instrument,
+    description: `${moment(item.attributes.date_time)
+      .format('DD MMM YYYY')
+      .toUpperCase()} - ${item.attributes.cloud_score}% cloud coverage - ${
+      item.attributes.instrument
+    }`
   }));
 });
 
@@ -29,7 +35,12 @@ export const getTile = createSelector(
       url: selectedTile.tile_url,
       cloudScore: selectedTile.cloud_score,
       dateTime: selectedTile.date_time,
-      instrument: selectedTile.instrument
+      instrument: selectedTile.instrument,
+      description: `${moment(selectedTile.date_time)
+        .format('DD MMM YYYY')
+        .toUpperCase()} - ${selectedTile.cloud_score}% cloud coverage - ${
+        selectedTile.instrument
+      }`
     };
   }
 );

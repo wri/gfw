@@ -3,7 +3,6 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import { getPolygonCenter } from 'utils/map';
 
 import actions from './recent-imagery-actions';
@@ -151,7 +150,7 @@ class RecentImageryContainer extends PureComponent {
 
   addBoundsPolygon(bounds, tile) {
     const { map } = this.middleView;
-    const { cloudScore, dateTime, instrument } = tile;
+    const { description } = tile;
 
     if (this.boundsPolygon !== null) {
       this.removeBoundsPolygon();
@@ -178,11 +177,7 @@ class RecentImageryContainer extends PureComponent {
       this.boundsPolygonInfowindow.close();
     }
     this.boundsPolygonInfowindow = new google.maps.InfoWindow({
-      content: `<div class="recent-imagery-infowindow">
-        ${moment(dateTime)
-    .format('DD MMM YYYY')
-    .toUpperCase()} - ${cloudScore}% cloud coverage - ${instrument}
-      </div>`,
+      content: `<div class="recent-imagery-infowindow">${description}</div>`,
       position: polygonCenter.top
     });
   }

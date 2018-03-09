@@ -12,6 +12,7 @@ import './recent-imagery-settings-styles.scss';
 class RecentImagerySettings extends PureComponent {
   render() {
     const {
+      selectedTile,
       tiles,
       settings,
       isDragging,
@@ -34,6 +35,9 @@ class RecentImagerySettings extends PureComponent {
           RECENT HI-RES SATELLITE IMAGERY
         </div>
         <div className="c-recent-imagery-settings__thumbnails">
+          <div className="c-recent-imagery-settings__thumbnails__description">
+            {selectedTile.description}
+          </div>
           <Slider
             settings={{
               dots: false,
@@ -61,6 +65,7 @@ class RecentImagerySettings extends PureComponent {
 }
 
 RecentImagerySettings.propTypes = {
+  selectedTile: PropTypes.object.isRequired,
   tiles: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   isDragging: PropTypes.bool.isRequired,
