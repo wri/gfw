@@ -20,6 +20,9 @@
   }
 
   &__thumbnails {
+    position: relative;
+    width: 100%;
+
     .c-slider {
       margin: 0;
 
@@ -29,6 +32,14 @@
 
       .slick-arrow {
         top: calc(50% - #{rem(20px)});
+      }
+
+      .slick-prev {
+        left: rem(20px);
+      }
+
+      .slick-next {
+        right: rem(20px);
       }
     }
   }
