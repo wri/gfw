@@ -78,6 +78,7 @@ const Button = props => {
         arrow
         disabled={isDeviceTouch}
         html={<Tip text={tooltip.text} />}
+        hideOnClick
         {...tooltip}
       >
         {button}
