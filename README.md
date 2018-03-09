@@ -84,7 +84,7 @@ $ npm install
 Almost there! Final steps are to copy the `.env.sample` to `.env`, and start the server:
 
 ```bash
-$ ./bin/server
+$ npm start
 ```
 The app should now be accessible on [http://0.0.0.0:5000](http://0.0.0.0:5000).
 
