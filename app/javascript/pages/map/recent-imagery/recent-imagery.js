@@ -23,7 +23,8 @@ const LAYER_SLUG = 'sentinel_tiles';
 const mapStateToProps = ({ recentImagery }) => {
   const { active, showSettings, haveAllData, data, settings } = recentImagery;
   const selectorData = {
-    data,
+    data: data.tiles,
+    bbox: data.bbox,
     settings
   };
   return {

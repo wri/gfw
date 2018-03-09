@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 
 const getData = state => state.data || null;
+const getBbox = state => state.bbox || null;
 const getSettings = state => state.settings || null;
 
 export const getAllTiles = createSelector([getData], data => {
@@ -33,10 +34,10 @@ export const getTile = createSelector(
   }
 );
 
-export const getBounds = createSelector([getData], data => {
-  if (!data || isEmpty(data)) return null;
+export const getBounds = createSelector([getBbox], bbox => {
+  if (!bbox || isEmpty(bbox)) return null;
 
-  return data[0].attributes.bbox.geometry.coordinates;
+  return bbox.geometry.coordinates;
 });
 
 export const getSources = createSelector([getData], data => {

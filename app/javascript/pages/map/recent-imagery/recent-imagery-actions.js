@@ -14,7 +14,7 @@ const setRecentImageryShowSettings = createAction(
 const getData = createThunkAction('getData', params => dispatch => {
   getRecentTiles(params)
     .then(response => {
-      if (response.data.data.length) {
+      if (response.data.data.tiles) {
         dispatch(setRecentImageryData({ data: response.data.data }));
         dispatch(setRecentImagerySettings({ selectedTileIndex: 0 }));
       }
@@ -35,22 +35,23 @@ const getMoreTiles = createThunkAction(
               getTilesResponse.data.data.attributes.length &&
               getThumbsResponse.data.data.attributes.length
             ) {
-              const data = state().recentImagery.data.slice();
+              const stateData = state().recentImagery.data;
+              const data = { ...stateData, tiles: stateData.tiles.slice() };
               getTilesResponse.data.data.attributes.forEach((item, i) => {
                 if (i > 0) {
                   const index = findIndex(
-                    data,
+                    data.tiles,
                     d => d.attributes.source === item.source_id
                   );
-                  data[index].attributes.tile_url = item.tile_url;
+                  data.tiles[index].attributes.tile_url = item.tile_url;
                 }
               });
               getThumbsResponse.data.data.attributes.forEach(item => {
                 const index = findIndex(
-                  data,
+                  data.tiles,
                   d => d.attributes.source === item.source
                 );
-                data[index].attributes.thumbnail_url = item.thumbnail_url;
+                data.tiles[index].attributes.thumbnail_url = item.thumbnail_url;
               });
               dispatch(
                 setRecentImageryData({
