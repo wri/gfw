@@ -67,6 +67,9 @@ class RecentImageryContainer extends PureComponent {
       getMoreTiles
     } = nextProps;
     const { map } = this.middleView;
+    const isNewTile =
+      tile && (!this.props.tile || tile.url !== this.props.tile.url);
+
     if (active && active !== this.props.active) {
       getData({
         latitude: map.getCenter().lng(),
@@ -80,7 +83,7 @@ class RecentImageryContainer extends PureComponent {
       this.removeEvents();
       this.removeBoundsPolygon();
     }
-    if (tile && (!this.props.tile || tile.url !== this.props.tile.url)) {
+    if (isNewTile) {
       if (this.activatedFromUrl && !this.props.tile) {
         this.updateLayer(tile.url);
         this.setEvents();
@@ -95,7 +98,7 @@ class RecentImageryContainer extends PureComponent {
     if (
       !haveAllData &&
       showSettings &&
-      showSettings !== this.props.showSettings
+      (showSettings !== this.props.showSettings || isNewTile)
     ) {
       getMoreTiles(sources);
     }
