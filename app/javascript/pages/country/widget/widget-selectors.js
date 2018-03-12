@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniq from 'lodash/uniq';
+import lowerCase from 'lodash/lowerCase';
 import { sortByKey } from 'utils/data';
 
 import INDICATORS from 'pages/country/data/indicators.json';
@@ -64,23 +65,15 @@ export const getAdminsOptions = createSelector(
         (countries &&
           sortByKey(countries.filter(c => c.value !== 'XCA'), 'label')) ||
         null,
-      regions:
-        (regions &&
-          [{ label: 'All Regions', value: null }].concat(
-            sortByKey(regions, 'label')
-          )) ||
-        null,
+      regions: regions && sortByKey(regions, 'label'),
       subRegions:
-        (subRegions &&
-          [{ label: 'All Regions', value: null }].concat(
-            sortByKey(
-              waterBodiesIds
-                ? subRegions.filter(s => waterBodiesIds.indexOf(s.value) === -1)
-                : subRegions,
-              'label'
-            )
-          )) ||
-        null
+        subRegions &&
+        sortByKey(
+          waterBodiesIds
+            ? subRegions.filter(s => waterBodiesIds.indexOf(s.value) === -1)
+            : subRegions,
+          'label'
+        )
     };
   }
 );
@@ -95,17 +88,11 @@ export const getAdminsSelected = createSelector(
       null;
     const region =
       (options.regions &&
-        options.regions.find(i => {
-          if (!adminsSelected.region) return options.regions[0];
-          return i.value === adminsSelected.region;
-        })) ||
+        options.regions.find(i => i.value === adminsSelected.region)) ||
       null;
     const subRegion =
       (options.subRegions &&
-        options.subRegions.find(i => {
-          if (!adminsSelected.subRegion) return options.subRegions[0];
-          return i.value === adminsSelected.subRegion;
-        })) ||
+        options.subRegions.find(i => i.value === adminsSelected.subRegion)) ||
       null;
     let current = country;
     if (adminsSelected.subRegion) {
@@ -141,14 +128,17 @@ export const getIndicators = createSelector(
           i =>
             config.indicators.indexOf(i.value) > -1 &&
             whitelist.indexOf(i.value) > -1 &&
+            i.value !== 'gadm28' &&
             (!config.type ||
               config.type === 'extent' ||
               (locationWhitelist[i.value] &&
                 locationWhitelist[i.value][config.type]))
         ).map(item => {
           const indicator = item;
-          if (indicator.value === 'gadm28') {
-            indicator.label = `All of ${locationNames.current.label}`;
+          if (indicator.metaKey === 'primary_forest') {
+            indicator.metaKey = `${lowerCase(locationNames.country.value)}_${
+              indicator.metaKey
+            }${locationNames.country.value === 'IDN' ? 's' : ''}`;
           }
           return indicator;
         }),
