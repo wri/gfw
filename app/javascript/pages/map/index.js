@@ -5,7 +5,6 @@ import thunk from 'redux-thunk';
 import { handleActionTrack } from 'utils/analytics';
 
 import 'react-tippy/dist/tippy.css';
-import 'react-dates/lib/css/_datepicker.css';
 import 'styles/styles.scss';
 
 import reducers from './reducers';
