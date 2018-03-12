@@ -6,19 +6,11 @@ import Loader from 'components/loader';
 import Icon from 'components/icon';
 import Button from 'components/button';
 
-import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import shareIcon from 'assets/icons/share.svg';
 import downloadIcon from 'assets/icons/download.svg';
 import './header-styles.scss';
 
 class Header extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      disableTooltips: false
-    };
-  }
-
   render() {
     const {
       className,
@@ -35,7 +27,6 @@ class Header extends PureComponent {
       location,
       forestAtlasLink
     } = this.props;
-    const { disableTooltips } = this.state;
 
     return (
       <div className={`${className} c-header`}>
@@ -75,96 +66,70 @@ class Header extends PureComponent {
         <div className="row">
           <div className="columns small-12 large-6">
             <div className="select-container">
-              <div className="select">
-                <Icon icon={arrowDownIcon} className="icon" />
-                <Dropdown
-                  theme="theme-select-dark"
-                  placeholder="Country"
-                  noItemsFound="No country found"
-                  value={locationNames.country}
-                  options={locationOptions.countries}
-                  onChange={handleCountryChange}
-                  searchable
-                  disabled={loading}
-                  tooltip={{
-                    text: 'Choose the country you want to explore',
-                    delay: 1000,
-                    disabled: disableTooltips
-                  }}
-                  onOpen={() => {
-                    this.setState({ disableTooltips: true });
-                  }}
-                  onClose={() => {
-                    this.setState({ disableTooltips: false });
-                  }}
-                />
-              </div>
+              <Dropdown
+                theme="theme-dropdown-dark"
+                placeholder="Country"
+                noItemsFound="No country found"
+                value={locationNames.country}
+                options={locationOptions.countries}
+                onChange={handleCountryChange}
+                searchable
+                disabled={loading}
+                tooltip={{
+                  text: 'Choose the country you want to explore',
+                  delay: 1000
+                }}
+                arrowPosition="left"
+              />
               {locationOptions.regions &&
                 locationOptions.regions.length > 1 && (
-                  <div className="select">
-                    <Icon icon={arrowDownIcon} className="icon" />
-                    <Dropdown
-                      theme="theme-select-dark"
-                      placeholder="Region"
-                      noItemsFound="No region found"
-                      value={locationNames.region}
-                      options={locationOptions.regions}
-                      onChange={region =>
-                        handleRegionChange(locationNames.country, region)
-                      }
-                      searchable
-                      disabled={loading}
-                      tooltip={{
-                        text: 'Choose the region you want to explore',
-                        delay: 1000,
-                        disabled: disableTooltips
-                      }}
-                      onOpen={() => {
-                        this.setState({ disableTooltips: true });
-                      }}
-                      onClose={() => {
-                        this.setState({ disableTooltips: false });
-                      }}
-                    />
-                  </div>
+                  <Dropdown
+                    theme="theme-dropdown-dark"
+                    placeholder="Region"
+                    noItemsFound="No region found"
+                    noSelectedValue="All Regions"
+                    value={locationNames.region}
+                    options={locationOptions.regions}
+                    onChange={region =>
+                      handleRegionChange(locationNames.country, region)
+                    }
+                    searchable
+                    disabled={loading}
+                    tooltip={{
+                      text: 'Choose the region you want to explore',
+                      delay: 1000
+                    }}
+                    arrowPosition="left"
+                    clearable
+                  />
                 )}
               {locationNames.region &&
                 locationNames.region.value &&
                 locationOptions.subRegions &&
                 locationOptions.subRegions.length > 1 && (
-                  <div className="select">
-                    <Icon
-                      icon={arrowDownIcon}
-                      className="icon c-header__select-arrow"
-                    />
-                    <Dropdown
-                      theme="theme-select-dark"
-                      placeholder="Region"
-                      noItemsFound="No region found"
-                      value={locationNames.subRegion}
-                      options={locationOptions.subRegions}
-                      onChange={subRegion =>
-                        handleSubRegionChange(
-                          locationNames.country,
-                          locationNames.region,
-                          subRegion
-                        )
-                      }
-                      searchable
-                      disabled={loading}
-                      tooltip={{
-                        text: 'Choose the region you want to explore',
-                        delay: 1000,
-                        disabled: disableTooltips
-                      }}
-                      onOpen={() => {
-                        this.setState({ disableTooltips: true });
-                      }}
-                      onClose={() => {
-                        this.setState({ disableTooltips: false });
-                      }}
-                    />
-                  </div>
+                  <Dropdown
+                    theme="theme-dropdown-dark"
+                    placeholder="Region"
+                    noItemsFound="No region found"
+                    noSelectedValue="All Regions"
+                    value={locationNames.subRegion}
+                    options={locationOptions.subRegions}
+                    onChange={subRegion =>
+                      handleSubRegionChange(
+                        locationNames.country,
+                        locationNames.region,
+                        subRegion
+                      )
+                    }
+                    searchable
+                    disabled={loading}
+                    tooltip={{
+                      text: 'Choose the region you want to explore',
+                      delay: 1000
+                    }}
+                    arrowPosition="left"
+                    clearable
+                  />
                 )}
             </div>
           </div>
