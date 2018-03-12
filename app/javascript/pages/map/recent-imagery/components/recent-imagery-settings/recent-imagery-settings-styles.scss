@@ -20,11 +20,18 @@
     line-height: 21px;
   }
 
+  &__dates {
+    position: relative;
+    width: 50%;
+    z-index: 2;
+  }
+
   &__thumbnails {
     position: relative;
     width: 100%;
     padding-top: rem(14px);
     border-top: 1px solid rgba(#9e9e9e, 0.3);
+    z-index: 1;
 
     &__description {
       padding-left: rem(22px);
