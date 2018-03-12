@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 
 import Icon from 'components/icon';
 import Slider from 'components/slider';
+import Dropdown from 'components/dropdown';
 import RecentImageryThumbnail from 'pages/map/recent-imagery/components/recent-imagery-thumbnail';
 
+import WEEKS from 'pages/map/data/weeks.json';
 import draggerIcon from 'assets/icons/dragger.svg';
 import RecentImageryDrag from './recent-imagery-settings-drag';
 import './recent-imagery-settings-styles.scss';
@@ -33,6 +35,17 @@ class RecentImagerySettings extends PureComponent {
         <Icon icon={draggerIcon} className="dragger-icon" />
         <div className="c-recent-imagery-settings__title">
           RECENT HI-RES SATELLITE IMAGERY
+        </div>
+        <div className="c-recent-imagery-settings__dates">
+          <div>ACQUISITION DATE</div>
+          <Dropdown
+            theme="theme-dropdown-button"
+            value={settings.period}
+            options={WEEKS}
+            onChange={option =>
+              setRecentImagerySettings({ period: option.value })
+            }
+          />
         </div>
         <div className="c-recent-imagery-settings__thumbnails">
           <div className="c-recent-imagery-settings__thumbnails__description">

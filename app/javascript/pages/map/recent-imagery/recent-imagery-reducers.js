@@ -8,7 +8,8 @@ export const initialState = {
       top: 50,
       left: '50%'
     },
-    selectedTileIndex: 0
+    selectedTileIndex: 0,
+    weeks: 13
   }
 };
 
