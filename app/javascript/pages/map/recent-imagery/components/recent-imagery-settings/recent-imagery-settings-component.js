@@ -40,10 +40,10 @@ class RecentImagerySettings extends PureComponent {
           <div>ACQUISITION DATE</div>
           <Dropdown
             theme="theme-dropdown-button"
-            value={settings.period}
+            value={settings.weeks}
             options={WEEKS}
             onChange={option =>
-              setRecentImagerySettings({ period: option.value })
+              setRecentImagerySettings({ weeks: option.value })
             }
           />
         </div>
