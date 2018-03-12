@@ -76,7 +76,10 @@ class DropdownContainer extends PureComponent {
     if (changes && changes.selectedItem) {
       this.setState({ isOpen: false, inputValue: '' });
     }
-    if (changes && changes.highlightedIndex) {
+    if (
+      (changes && changes.highlightedIndex) ||
+      changes.highlightedIndex === 0
+    ) {
       this.setState({ highlightedIndex: changes.highlightedIndex });
     }
   };
