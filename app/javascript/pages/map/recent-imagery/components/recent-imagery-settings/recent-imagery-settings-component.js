@@ -81,7 +81,8 @@ class RecentImagerySettings extends PureComponent {
           <Slider
             settings={{
               dots: false,
-              slidesToShow: 5
+              slidesToShow: 5,
+              centerPadding: '20px'
             }}
           >
             {tiles.length &&
