@@ -1,5 +1,6 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
+import { CancelToken } from 'axios';
 import findIndex from 'lodash/findIndex';
 
 import { getRecentTiles, getTiles, getThumbs } from 'services/recent-imagery';
@@ -12,7 +13,12 @@ const setRecentImageryShowSettings = createAction(
 );
 
 const getData = createThunkAction('getData', params => dispatch => {
-  getRecentTiles(params)
+  if (this.getDataSource) {
+    this.getDataSource.cancel();
+  }
+  this.getDataSource = CancelToken.source();
+
+  getRecentTiles({ ...params, token: this.getDataSource.token })
     .then(response => {
       if (response.data.data.tiles) {
         dispatch(setRecentImageryData({ data: response.data.data }));
@@ -27,12 +33,19 @@ const getData = createThunkAction('getData', params => dispatch => {
 const getMoreTiles = createThunkAction(
   'getMoreTiles',
   params => (dispatch, state) => {
-    getTiles(params)
+    if (this.getMoreTilesSource) {
+      this.getMoreTilesSource.cancel();
+    }
+    this.getMoreTilesSource = CancelToken.source();
+
+    getTiles({ ...params, token: this.getMoreTilesSource.token })
       .then(getTilesResponse => {
-        getThumbs(params)
+        getThumbs({ ...params, token: this.getMoreTilesSource.token })
           .then(getThumbsResponse => {
             if (
+              getTilesResponse.data.data &&
               getTilesResponse.data.data.attributes.length &&
+              getThumbsResponse.data.data &&
               getThumbsResponse.data.data.attributes.length
             ) {
               const stateData = state().recentImagery.data;

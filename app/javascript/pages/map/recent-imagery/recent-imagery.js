@@ -106,7 +106,7 @@ class RecentImageryContainer extends PureComponent {
       showSettings &&
       (showSettings !== this.props.showSettings || isNewTile)
     ) {
-      getMoreTiles(sources);
+      getMoreTiles({ sources });
     }
   }
 
