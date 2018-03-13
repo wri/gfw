@@ -7,6 +7,7 @@
   transform: translateX(-50%);
   background-color: $white;
   box-shadow: 0 1px 3px 0 rgba($black, 0.25);
+  z-index: 102;
 
   .dragger-icon {
     position: absolute;
