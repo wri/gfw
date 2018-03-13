@@ -6,7 +6,7 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import './datepicker-styles.scss';
 
-class Dropdown extends PureComponent {
+class Datepicker extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,11 +32,11 @@ class Dropdown extends PureComponent {
   }
 }
 
-Dropdown.propTypes = {
+Datepicker.propTypes = {
   className: PropTypes.string,
-  date: PropTypes.object.isRequired,
+  date: PropTypes.object,
   handleOnDateChange: PropTypes.func.isRequired,
   settings: PropTypes.object
 };
 
-export default Dropdown;
+export default Datepicker;
