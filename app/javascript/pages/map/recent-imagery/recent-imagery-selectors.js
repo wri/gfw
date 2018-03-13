@@ -61,7 +61,12 @@ export const getSources = createSelector([getData], data => {
   return sources;
 });
 
-export const getDates = createSelector([], () => ({
-  start: '2016-01-01',
-  end: '2016-09-01'
-}));
+export const getDates = createSelector([getSettings], settings => {
+  const { date, weeks } = settings;
+  const currentDate = date ? moment(date) : moment();
+
+  return {
+    end: currentDate.format('YYYY-MM-DD'),
+    start: currentDate.subtract(weeks, 'weeks').format('YYYY-MM-DD')
+  };
+});

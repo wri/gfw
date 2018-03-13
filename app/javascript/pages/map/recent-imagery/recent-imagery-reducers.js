@@ -9,6 +9,7 @@ export const initialState = {
       left: '50%'
     },
     selectedTileIndex: 0,
+    date: null,
     weeks: 13
   }
 };

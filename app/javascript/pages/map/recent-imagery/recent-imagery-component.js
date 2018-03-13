@@ -16,7 +16,8 @@ class RecentImagery extends PureComponent {
       canDrop,
       connectDropTarget,
       toogleRecentImagery,
-      setRecentImagerySettings
+      setRecentImagerySettings,
+      setRecentImageryShowSettings
     } = this.props;
 
     return connectDropTarget(
@@ -37,6 +38,7 @@ class RecentImagery extends PureComponent {
             tiles={allTiles}
             settings={settings}
             setRecentImagerySettings={setRecentImagerySettings}
+            setRecentImageryShowSettings={setRecentImageryShowSettings}
           />
         )}
       </div>
@@ -52,7 +54,8 @@ RecentImagery.propTypes = {
   connectDropTarget: PropTypes.func.isRequired,
   canDrop: PropTypes.bool.isRequired,
   toogleRecentImagery: PropTypes.func.isRequired,
-  setRecentImagerySettings: PropTypes.func.isRequired
+  setRecentImagerySettings: PropTypes.func.isRequired,
+  setRecentImageryShowSettings: PropTypes.func.isRequired
 };
 
 export default RecentImagery;

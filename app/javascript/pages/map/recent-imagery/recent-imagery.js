@@ -3,6 +3,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import isEqual from 'lodash/isEqual';
 import { getPolygonCenter } from 'utils/map';
 
 import actions from './recent-imagery-actions';
@@ -63,6 +64,7 @@ class RecentImageryContainer extends PureComponent {
       bounds,
       sources,
       dates,
+      settings,
       getData,
       getMoreTiles
     } = nextProps;
@@ -70,7 +72,11 @@ class RecentImageryContainer extends PureComponent {
     const isNewTile =
       tile && (!this.props.tile || tile.url !== this.props.tile.url);
 
-    if (active && active !== this.props.active) {
+    if (
+      (active && active !== this.props.active) ||
+      !isEqual(settings.date, this.props.settings.date) ||
+      !isEqual(settings.weeks, this.props.settings.weeks)
+    ) {
       getData({
         latitude: map.getCenter().lng(),
         longitude: map.getCenter().lat(),
@@ -236,6 +242,7 @@ RecentImageryContainer.propTypes = {
   bounds: PropTypes.array,
   sources: PropTypes.array,
   dates: PropTypes.object,
+  settings: PropTypes.object,
   toogleRecentImagery: PropTypes.func,
   setRecentImageryData: PropTypes.func,
   setRecentImageryShowSettings: PropTypes.func,
