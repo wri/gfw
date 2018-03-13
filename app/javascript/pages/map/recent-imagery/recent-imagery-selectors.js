@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
+import { format } from 'd3-format';
 
 const getData = state => state.data || null;
 const getBbox = state => state.bbox || null;
@@ -38,9 +39,9 @@ export const getTile = createSelector(
       instrument: selectedTile.instrument,
       description: `${moment(selectedTile.date_time)
         .format('DD MMM YYYY')
-        .toUpperCase()} - ${selectedTile.cloud_score}% cloud coverage - ${
-        selectedTile.instrument
-      }`
+        .toUpperCase()} - ${format('.0f')(
+        selectedTile.cloud_score
+      )}% cloud coverage - ${selectedTile.instrument}`
     };
   }
 );
