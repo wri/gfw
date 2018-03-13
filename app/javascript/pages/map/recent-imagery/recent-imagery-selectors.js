@@ -7,7 +7,17 @@ const getData = state => state.data || null;
 const getBbox = state => state.bbox || null;
 const getSettings = state => state.settings || null;
 
-export const getAllTiles = createSelector([getData], data => {
+const getFilteredData = createSelector(
+  [getData, getSettings],
+  (data, settings) => {
+    if (!data || isEmpty(data)) return null;
+
+    const { clouds } = settings;
+    return data.filter(item => item.attributes.cloud_score <= clouds);
+  }
+);
+
+export const getAllTiles = createSelector([getFilteredData], data => {
   if (!data || isEmpty(data)) return [];
 
   return data.map(item => ({
@@ -26,7 +36,7 @@ export const getAllTiles = createSelector([getData], data => {
 });
 
 export const getTile = createSelector(
-  [getData, getSettings],
+  [getFilteredData, getSettings],
   (data, settings) => {
     if (!data || isEmpty(data)) return null;
 
