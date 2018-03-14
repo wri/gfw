@@ -3,6 +3,11 @@ export const initialState = {
   showSettings: false,
   haveAllData: false,
   data: {},
+  dataStatus: {
+    tilesPerRequest: 12,
+    haveAllData: false,
+    requestedTiles: 0
+  },
   settings: {
     styles: {
       top: 50,
@@ -10,20 +15,32 @@ export const initialState = {
     },
     selectedTileIndex: 0,
     date: null,
-    weeks: 13,
+    weeks: 4,
     clouds: 50
   }
 };
 
-const setRecentImageryData = (state, { payload }) => ({
-  ...state,
-  data: payload.data,
-  haveAllData: payload.haveAllData || false
-});
-
 const toogleRecentImagery = state => ({
   ...state,
   active: !state.active
+});
+
+const setRecentImageryData = (state, { payload }) => ({
+  ...state,
+  data: payload.data,
+  dataStatus: {
+    ...state.dataStatus,
+    ...payload.dataStatus
+  },
+  haveAllData: payload.haveAllData || false
+});
+
+const setRecentImageryDataStatus = (state, { payload }) => ({
+  ...state,
+  dataStatus: {
+    ...state.dataStatus,
+    ...payload
+  }
 });
 
 const setRecentImagerySettings = (state, { payload }) => ({
@@ -40,8 +57,9 @@ const setRecentImageryShowSettings = (state, { payload }) => ({
 });
 
 export default {
-  setRecentImageryData,
   toogleRecentImagery,
+  setRecentImageryData,
+  setRecentImageryDataStatus,
   setRecentImagerySettings,
   setRecentImageryShowSettings
 };

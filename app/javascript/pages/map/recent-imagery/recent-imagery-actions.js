@@ -5,8 +5,9 @@ import findIndex from 'lodash/findIndex';
 
 import { getRecentTiles, getTiles, getThumbs } from 'services/recent-imagery';
 
-const setRecentImageryData = createAction('setRecentImageryData');
 const toogleRecentImagery = createAction('toogleRecentImagery');
+const setRecentImageryData = createAction('setRecentImageryData');
+const setRecentImageryDataStatus = createAction('setRecentImageryDataStatus');
 const setRecentImagerySettings = createAction('setRecentImagerySettings');
 const setRecentImageryShowSettings = createAction(
   'setRecentImageryShowSettings'
@@ -84,11 +85,25 @@ const getMoreTiles = createThunkAction(
   }
 );
 
+const resetData = createThunkAction('resetData', () => dispatch => {
+  dispatch(
+    setRecentImageryData({
+      data: {},
+      dataStatus: {
+        haveAllData: false,
+        requestedTiles: 0
+      }
+    })
+  );
+});
+
 export default {
-  setRecentImageryData,
   toogleRecentImagery,
+  setRecentImageryData,
+  setRecentImageryDataStatus,
   setRecentImagerySettings,
   setRecentImageryShowSettings,
   getData,
-  getMoreTiles
+  getMoreTiles,
+  resetData
 };

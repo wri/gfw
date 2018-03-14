@@ -145,10 +145,10 @@ class RecentImageryContainer extends PureComponent {
   }
 
   removeLayer() {
-    const { setRecentImageryData } = this.props;
+    const { resetData } = this.props;
     this.middleView.toggleLayer(LAYER_SLUG);
     this.activatedFromUrl = false;
-    setRecentImageryData({ data: {} });
+    resetData();
   }
 
   updateLayer(url) {
@@ -244,10 +244,10 @@ RecentImageryContainer.propTypes = {
   dates: PropTypes.object,
   settings: PropTypes.object,
   toogleRecentImagery: PropTypes.func,
-  setRecentImageryData: PropTypes.func,
   setRecentImageryShowSettings: PropTypes.func,
   getData: PropTypes.func,
-  getMoreTiles: PropTypes.func
+  getMoreTiles: PropTypes.func,
+  resetData: PropTypes.func
 };
 
 export { actions, reducers, initialState };
