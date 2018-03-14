@@ -1,7 +1,6 @@
 export const initialState = {
   active: false,
   showSettings: false,
-  haveAllData: false,
   data: {},
   dataStatus: {
     tilesPerRequest: 12,
@@ -31,8 +30,7 @@ const setRecentImageryData = (state, { payload }) => ({
   dataStatus: {
     ...state.dataStatus,
     ...payload.dataStatus
-  },
-  haveAllData: payload.haveAllData || false
+  }
 });
 
 const setRecentImageryDataStatus = (state, { payload }) => ({

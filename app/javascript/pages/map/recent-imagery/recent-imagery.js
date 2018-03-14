@@ -21,7 +21,7 @@ import RecentImageryComponent from './recent-imagery-component';
 const LAYER_SLUG = 'sentinel_tiles';
 
 const mapStateToProps = ({ recentImagery }) => {
-  const { active, showSettings, haveAllData, data, settings } = recentImagery;
+  const { active, showSettings, data, dataStatus, settings } = recentImagery;
   const selectorData = {
     data: data.tiles,
     bbox: data.bbox,
@@ -30,7 +30,7 @@ const mapStateToProps = ({ recentImagery }) => {
   return {
     active,
     showSettings,
-    haveAllData,
+    dataStatus,
     allTiles: getAllTiles(selectorData),
     tile: getTile(selectorData),
     bounds: getBounds(selectorData),
@@ -59,7 +59,7 @@ class RecentImageryContainer extends PureComponent {
     const {
       active,
       showSettings,
-      haveAllData,
+      dataStatus,
       tile,
       bounds,
       sources,
@@ -102,7 +102,7 @@ class RecentImageryContainer extends PureComponent {
       this.addBoundsPolygon(bounds, tile);
     }
     if (
-      !haveAllData &&
+      !dataStatus.haveAllData &&
       showSettings &&
       (showSettings !== this.props.showSettings || isNewTile)
     ) {
@@ -237,7 +237,7 @@ class RecentImageryContainer extends PureComponent {
 RecentImageryContainer.propTypes = {
   active: PropTypes.bool,
   showSettings: PropTypes.bool,
-  haveAllData: PropTypes.bool,
+  dataStatus: PropTypes.object,
   tile: PropTypes.object,
   bounds: PropTypes.array,
   sources: PropTypes.array,

@@ -70,7 +70,9 @@ const getMoreTiles = createThunkAction(
               dispatch(
                 setRecentImageryData({
                   data,
-                  haveAllData: true
+                  dataStatus: {
+                    haveAllData: true
+                  }
                 })
               );
             }
