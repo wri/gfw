@@ -1,17 +1,34 @@
 @import '~styles/settings.scss';
 
 .c-recent-imagery {
+  display: none;
+
   &__button {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: rem(50px);
+    right: rem(35px);
+    width: rem(76px);
     z-index: 20;
+
+    .satellite-icon {
+      width: rem(20px);
+      height: rem(20px);
+      margin-right: rem(5px);
+    }
+
+    span {
+      text-align: left;
+    }
   }
 
   &--dragging {
     position: relative;
     width: 100%;
     height: calc(100vh - #{rem(36px)});
+  }
+
+  @media screen and (min-width: 62.5rem) {
+    display: block;
   }
 }
 

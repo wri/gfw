@@ -1,0 +1,30 @@
+@import '~styles/settings.scss';
+
+.c-datepicker {
+  td {
+    vertical-align: middle;
+  }
+
+  .SingleDatePickerInput {
+    .DateInput_input {
+      padding: 0;
+      height: 28px;
+      border: 1px solid $green-gfw;
+      border-radius: rem(25px);
+      font-size: 13px;
+      font-weight: normal;
+      text-align: center;
+      text-transform: uppercase;
+      color: $slate;
+      cursor: pointer;
+    }
+  }
+
+  .CalendarDay__selected,
+  .CalendarDay__selected:active,
+  .CalendarDay__selected:hover {
+    background: $green-gfw;
+    border: 1px solid $green-gfw;
+    color: $white;
+  }
+}
