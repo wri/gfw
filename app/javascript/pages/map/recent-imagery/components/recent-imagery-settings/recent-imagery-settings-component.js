@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import Icon from 'components/icon';
-import Slider from 'components/slider';
+import Carousel from 'components/carousel';
 import Dropdown from 'components/dropdown';
 import Datepicker from 'components/datepicker';
 import RecentImageryThumbnail from 'pages/map/recent-imagery/components/recent-imagery-thumbnail';
@@ -78,7 +78,7 @@ class RecentImagerySettings extends PureComponent {
           <div className="c-recent-imagery-settings__thumbnails__description">
             {selectedTile.description}
           </div>
-          <Slider
+          <Carousel
             settings={{
               dots: false,
               slidesToShow: 5,
@@ -98,7 +98,7 @@ class RecentImagerySettings extends PureComponent {
                   />
                 </div>
               ))}
-          </Slider>
+          </Carousel>
         </div>
       </div>
     );
