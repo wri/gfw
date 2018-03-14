@@ -19,8 +19,8 @@ const mapStateToProps = (
   const activeLabel = (activeValue && activeValue.label) || noSelectedValue;
 
   return {
-    modalOpen: modalMeta.open,
-    modalClosing: modalMeta.closing,
+    modalOpen: modalMeta ? modalMeta.open : false,
+    modalClosing: modalMeta ? modalMeta.closing : false,
     isDeviceTouch: isTouch(),
     activeValue,
     activeLabel
@@ -76,7 +76,10 @@ class DropdownContainer extends PureComponent {
     if (changes && changes.selectedItem) {
       this.setState({ isOpen: false, inputValue: '' });
     }
-    if (changes && changes.highlightedIndex) {
+    if (
+      (changes && changes.highlightedIndex) ||
+      changes.highlightedIndex === 0
+    ) {
       this.setState({ highlightedIndex: changes.highlightedIndex });
     }
   };
