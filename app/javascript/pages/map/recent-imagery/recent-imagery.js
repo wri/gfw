@@ -25,6 +25,7 @@ const mapStateToProps = ({ recentImagery }) => {
   const selectorData = {
     data: data.tiles,
     bbox: data.bbox,
+    dataStatus,
     settings
   };
   return {
@@ -104,9 +105,12 @@ class RecentImageryContainer extends PureComponent {
     if (
       !dataStatus.haveAllData &&
       showSettings &&
-      (showSettings !== this.props.showSettings || isNewTile)
+      (showSettings !== this.props.showSettings ||
+        dataStatus.requestedTiles !== this.props.dataStatus.requestedTiles ||
+        dataStatus.requestFails !== this.props.dataStatus.requestFails ||
+        isNewTile)
     ) {
-      getMoreTiles({ sources });
+      getMoreTiles({ sources, dataStatus });
     }
   }
 

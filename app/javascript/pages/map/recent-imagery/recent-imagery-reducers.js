@@ -3,9 +3,10 @@ export const initialState = {
   showSettings: false,
   data: {},
   dataStatus: {
-    tilesPerRequest: 12,
+    tilesPerRequest: 6,
     haveAllData: false,
-    requestedTiles: 0
+    requestedTiles: 0,
+    requestFails: 0
   },
   settings: {
     styles: {
@@ -15,7 +16,7 @@ export const initialState = {
     selectedTileIndex: 0,
     date: null,
     weeks: 4,
-    clouds: 50
+    clouds: 25
   }
 };
 
@@ -26,7 +27,7 @@ const toogleRecentImagery = state => ({
 
 const setRecentImageryData = (state, { payload }) => ({
   ...state,
-  data: payload.data,
+  data: payload.data ? payload.data : state.data,
   dataStatus: {
     ...state.dataStatus,
     ...payload.dataStatus
