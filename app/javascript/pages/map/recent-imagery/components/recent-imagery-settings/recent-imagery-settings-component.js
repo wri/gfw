@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
+import Slider from 'rc-slider/lib/Slider';
 import Icon from 'components/icon';
 import Carousel from 'components/carousel';
 import Dropdown from 'components/dropdown';
@@ -73,6 +74,12 @@ class RecentImagerySettings extends PureComponent {
               }}
             />
           </div>
+        </div>
+        <div className="c-recent-imagery-settings__clouds">
+          <div className="c-recent-imagery-settings__clouds__title">
+            MAXIMUM CLOUD COVER PERCENTAGE
+          </div>
+          <Slider />
         </div>
         <div className="c-recent-imagery-settings__thumbnails">
           <div className="c-recent-imagery-settings__thumbnails__description">
