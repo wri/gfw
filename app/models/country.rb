@@ -1,11 +1,11 @@
 class Country
   class << self
     def base_path
-      ENV['GFW_API_HOST']
+      "#{ENV['CARTO_API_URL']}/sql?q="
     end
 
     def find_all
-      url = "#{base_path}/countries"
+      url = "#{base_path}SELECT iso, country as name FROM umd_nat_staging GROUP BY iso, name ORDER BY name"
       response = Typhoeus.get(url, headers: {"Accept" => "application/json"})
       if response.success?
         Rails.cache.fetch 'countries', expires_in: 1.day do
@@ -22,12 +22,11 @@ class Country
 
     def find_by_iso(iso)
       return nil unless iso
-      url = "#{base_path}/countries/#{iso.downcase}?thresh=30"
+      url = "#{base_path}SELECT%20iso,%20name_0%20as%20name%20FROM%20gadm28_adm2%20WHERE%20iso%20=%20'#{iso}'%20LIMIT%201"
       # CACHE: &bust=true if you want to flush the cache
       response = Typhoeus.get(url, headers: {"Accept" => "application/json"})
-
       if response.success? and (response.body.length > 0)
-        JSON.parse(response.body)
+        p JSON.parse(response.body)["rows"][0]
       else
         nil
       end
@@ -36,7 +35,7 @@ class Country
     def find_by_name(country_name)
       country_name, *_ = country_name.split(/_/)
       country_name = country_name.capitalize
-      url = "https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20gfw2_countries%20where%20name%20like%20'#{country_name}%25'"
+      url = "#{base_path}SELECT iso, name_0 as name FROM gadm28_adm2 WHERE name like '#{country_name}' LIMIT 1"
       response = Typhoeus.get(url, headers: {"Accept" => "application/json"})
 
       if response.success?
