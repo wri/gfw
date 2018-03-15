@@ -16,7 +16,7 @@
 
     > h1 {
       font-size: rem(35px);
-      margin-bottom: 0;
+      margin-bottom: rem(5px);
       line-height: 1.2;
     }
 
@@ -46,14 +46,17 @@
   .content {
     padding: rem(30px) calc(50% - 260px) rem(40px);
 
-    .short-description {
+    .description {
       margin-bottom: rem(20px);
+      font-size: rem(19px);
+      line-height: 1.7;
     }
 
-    .category {
+    .links {
       color: $green-gfw;
       font-weight: 500;
       font-size: rem(14px);
+      margin-bottom: rem(10px);
     }
   }
 }

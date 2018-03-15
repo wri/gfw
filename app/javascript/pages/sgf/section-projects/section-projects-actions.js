@@ -19,17 +19,19 @@ export const fetchProjects = createThunkAction(
           const dataParsed = rows.map(d => ({
             id: d.cartodb_id,
             title: d.organization,
-            outcome: d.story,
-            city: d.city,
-            image:
-              d.image ||
-              'https://image.ibb.co/hDJdDR/african_wildlife_foundation.jpg',
-            image_credit: d.image_credit,
-            blog_link: d.link,
+            sector: d.sector,
+            summary: d.short_description,
+            description: d.long_description,
+            descriptionLink: d.hyperlinks_for_long_description,
+            meta: `${d.year} - ${d.country_iso_code}`,
+            year: d.year,
+            country: d.city,
+            image: d.image,
+            blogSentence: d.blog_sentence,
+            blogLink: d.hyperlinks_for_blog_sentence,
             latitude: d.latitude_average,
             longitude: d.longitude_average,
-            legend: `${d.year.toString()} - ${d.city}`,
-            category: d.use_case_type_how_to_portal
+            categories: [d.project_type_1, d.project_type_2]
           }));
           dispatch(setProjectsData(dataParsed));
         })

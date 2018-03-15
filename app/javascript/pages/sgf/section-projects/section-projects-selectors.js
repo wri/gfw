@@ -1,7 +1,9 @@
 import { createSelector } from 'reselect';
-import groupBy from 'lodash/groupBy';
 import deburr from 'lodash/deburr';
 import toUpper from 'lodash/toUpper';
+import uniq from 'lodash/uniq';
+import flatten from 'lodash/flatten';
+import sortBy from 'lodash/sortBy';
 
 export function deburrUpper(string) {
   return toUpper(deburr(string));
@@ -11,10 +13,24 @@ const getProjects = state => state.data || null;
 const getCategory = state => state.categorySelected || null;
 const getSearch = state => state.search || null;
 
-export const getProjectsByCategory = createSelector(getProjects, projects => {
+export const getCategories = createSelector(getProjects, projects => {
   if (!projects) return null;
-  return groupBy(projects, 'category');
+  return sortBy(uniq(flatten(projects.map(p => p.categories))).filter(i => i));
 });
+
+export const getProjectsByCategory = createSelector(
+  [getProjects, getCategories],
+  (projects, categories) => {
+    if (!projects || !categories) return null;
+    const projectsByCategory = {};
+    categories.forEach(c => {
+      projectsByCategory[c] = projects.filter(
+        p => p.categories.indexOf(c) > -1
+      );
+    });
+    return projectsByCategory;
+  }
+);
 
 export const getCategoriesList = createSelector(
   getProjectsByCategory,

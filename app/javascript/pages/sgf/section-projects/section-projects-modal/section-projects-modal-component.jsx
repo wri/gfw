@@ -12,19 +12,25 @@ class SectionProjectsModal extends PureComponent {
       <div className="c-projects-modal">
         <div className="header">
           {data.title && <h1>{data.title}</h1>}
-          <h2>
-            {data.legend} - {data.city}
-          </h2>
+          <h2>{data.meta}</h2>
         </div>
         {data.image && (
           <div className="image">
             <img src={data.image} alt="SGF project detail" />
-            <span>{data.image_credit}</span>
           </div>
         )}
         <div className="content">
-          {data.outcome && <p className="short-description">{data.outcome}</p>}
-          {data.category && <p className="category">{data.category}</p>}
+          {data.description && (
+            <p className="description">{data.description}</p>
+          )}
+          {data.descriptionLink && (
+            <p className="links">{data.descriptionLink}</p>
+          )}
+          {data.blogSentence && <p className="links">{data.blogSentence}</p>}
+          {data.blogLink && <p className="links">{data.blogLink}</p>}
+          {data.categories && (
+            <p className="links">{data.categories.filter(i => i).join(', ')}</p>
+          )}
         </div>
       </div>
     );
