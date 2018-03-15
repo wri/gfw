@@ -26,7 +26,7 @@ class Country
       # CACHE: &bust=true if you want to flush the cache
       response = Typhoeus.get(url, headers: {"Accept" => "application/json"})
       if response.success? and (response.body.length > 0)
-        p JSON.parse(response.body)["rows"][0]
+        JSON.parse(response.body)["rows"][0]
       else
         nil
       end
