@@ -5,12 +5,10 @@ class Country
     end
 
     def find_all
-      url = "#{base_path}SELECT iso, country as name FROM umd_nat_staging GROUP BY iso, name ORDER BY name"
+      url = "#{ENV['GFW_API_HOST']}/countries"
       response = Typhoeus.get(url, headers: {"Accept" => "application/json"})
       if response.success?
-        Rails.cache.fetch 'countries', expires_in: 1.day do
-          JSON.parse(response.body)['countries']
-        end
+        JSON.parse(response.body)['countries']
       else
         nil
       end
