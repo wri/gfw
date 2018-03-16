@@ -19,8 +19,8 @@ const mapStateToProps = (
   const activeLabel = (activeValue && activeValue.label) || noSelectedValue;
 
   return {
-    modalOpen: modalMeta.open,
-    modalClosing: modalMeta.closing,
+    modalOpen: modalMeta ? modalMeta.open : false,
+    modalClosing: modalMeta ? modalMeta.closing : false,
     isDeviceTouch: isTouch(),
     activeValue,
     activeLabel
