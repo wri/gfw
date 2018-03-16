@@ -3,6 +3,7 @@ import deburr from 'lodash/deburr';
 import toUpper from 'lodash/toUpper';
 import uniq from 'lodash/uniq';
 import flatten from 'lodash/flatten';
+import groupBy from 'lodash/groupBy';
 import sortBy from 'lodash/sortBy';
 
 export function deburrUpper(string) {
@@ -118,6 +119,21 @@ export const getGlobeProjectsSelected = createSelector(
     return projects.filter(
       p => deburrUpper(p.title).indexOf(deburrUpper(search)) > -1
     );
+  }
+);
+
+export const getGlobeClusters = createSelector(
+  [getGlobeProjectsSelected],
+  projects => {
+    if (!projects) return null;
+    const groupedByLocation = groupBy(projects, 'iso');
+    const mapPoints = Object.keys(groupedByLocation).map(iso => ({
+      iso,
+      latitude: groupedByLocation[iso][0].latitude,
+      longitude: groupedByLocation[iso][0].longitude,
+      cluster: groupedByLocation[iso].length
+    }));
+    return mapPoints;
   }
 );
 

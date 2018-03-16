@@ -10,7 +10,7 @@ import SectionProjectsComponent from './section-projects-component';
 import {
   getCategoriesList,
   getProjectsSelected,
-  getGlobeProjectsSelected
+  getGlobeClusters
 } from './section-projects-selectors';
 
 const actions = { ...sectionActions, ...modalActions };
@@ -25,7 +25,7 @@ const mapStateToProps = ({ projects }) => {
 
   return {
     data: getProjectsSelected(projectData),
-    globeData: getGlobeProjectsSelected(projectData),
+    globeData: getGlobeClusters(projectData),
     categories: getCategoriesList(projectData),
     categorySelected: projects.categorySelected,
     search: projects.search
