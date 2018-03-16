@@ -13,6 +13,7 @@ class SectionProjects extends PureComponent {
   render() {
     const {
       data,
+      globeData,
       categories,
       setCategorySelected,
       categorySelected,
@@ -33,7 +34,10 @@ class SectionProjects extends PureComponent {
           </div>
           <div className="row">
             <div className="column small-12 large-7 project-globe">
-              <ProjectsGLobe data={data} setModal={setSectionProjectsModal} />
+              <ProjectsGLobe
+                data={globeData}
+                setModal={setSectionProjectsModal}
+              />
             </div>
             <div className="column small-12 large-5">
               <Search
@@ -84,6 +88,7 @@ class SectionProjects extends PureComponent {
 
 SectionProjects.propTypes = {
   data: PropTypes.array,
+  globeData: PropTypes.array,
   categories: PropTypes.array,
   categorySelected: PropTypes.string.isRequired,
   setCategorySelected: PropTypes.func.isRequired,

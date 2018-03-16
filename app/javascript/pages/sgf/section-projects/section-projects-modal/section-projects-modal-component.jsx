@@ -1,10 +1,34 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/modal';
+import ReactHtmlParser from 'react-html-parser';
 
 import './section-projects-modal-styles.scss';
 
 class SectionProjectsModal extends PureComponent {
+  parseContent(html, className) {
+    return (
+      <div className={className}>
+        {ReactHtmlParser(html, {
+          transform: node => { // eslint-disable-line
+            if (node.name === 'a') {
+              return (
+                <a
+                  key={node.attribs.href}
+                  href={node.attribs.href}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {node.children[0].data}
+                </a>
+              );
+            }
+          }
+        })}
+      </div>
+    );
+  }
+
   getContent() {
     const { data } = this.props;
     if (!data) return null;
@@ -20,14 +44,19 @@ class SectionProjectsModal extends PureComponent {
           </div>
         )}
         <div className="content">
-          {data.description && (
-            <p className="description">{data.description}</p>
-          )}
-          {data.descriptionLink && (
-            <p className="links">{data.descriptionLink}</p>
-          )}
-          {data.blogSentence && <p className="links">{data.blogSentence}</p>}
-          {data.blogLink && <p className="links">{data.blogLink}</p>}
+          {data.description &&
+            this.parseContent(data.description, 'description')}
+          {data.blogSentence &&
+            data.blogLink && (
+              <a
+                className="links"
+                href={data.blogLink}
+                target="_blank"
+                rel="noopener nofollower"
+              >
+                {data.blogSentence}
+              </a>
+            )}
           {data.categories && (
             <p className="links">{data.categories.filter(i => i).join(', ')}</p>
           )}

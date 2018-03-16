@@ -2,7 +2,8 @@ export const initialState = {
   loading: false,
   error: false,
   data: [],
-  categorySelected: 'All'
+  categorySelected: 'All',
+  countries: []
 };
 
 const setProjectsLoading = (state, { payload }) => ({

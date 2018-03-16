@@ -50,13 +50,18 @@
       margin-bottom: rem(20px);
       font-size: rem(19px);
       line-height: 1.7;
+
+      a {
+        color: $green-gfw;
+      }
     }
 
     .links {
       color: $green-gfw;
       font-weight: 500;
       font-size: rem(14px);
-      margin-bottom: rem(10px);
+      margin-bottom: rem(15px);
+      display: block;
     }
   }
 }
