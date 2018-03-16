@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
-const CARTO_REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
 
 const SQL_QUERIES = {
   getCountries:
@@ -24,7 +23,7 @@ export const getCountriesProvider = () => {
 };
 
 export const getFAOCountriesProvider = () => {
-  const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.getFAOCountries}`;
+  const url = `${REQUEST_URL}${SQL_QUERIES.getFAOCountries}`;
   return axios.get(url);
 };
 
@@ -44,7 +43,7 @@ export const getSubRegionsProvider = (admin0, admin1) => {
 };
 
 export const getCountryLinksProvider = () => {
-  const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.getCountryLinks}`;
+  const url = `${REQUEST_URL}${SQL_QUERIES.getCountryLinks}`;
   return axios.get(url);
 };
 
