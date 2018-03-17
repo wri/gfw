@@ -10,5 +10,9 @@
   {
     "label": "6 months",
     "value": 26
+  },
+  {
+    "label": "12 months",
+    "value": 52
   }
 ]
