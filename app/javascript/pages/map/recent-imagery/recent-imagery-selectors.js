@@ -37,7 +37,7 @@ export const getAllTiles = createSelector([getFilteredData], data => {
 });
 
 export const getTile = createSelector(
-  [getFilteredData, getSettings],
+  [getData, getSettings],
   (data, settings) => {
     if (!data || isEmpty(data)) return null;
 
