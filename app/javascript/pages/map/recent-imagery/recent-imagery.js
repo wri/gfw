@@ -19,6 +19,7 @@ import RecentImageryDrag from './recent-imagery-drag';
 import RecentImageryComponent from './recent-imagery-component';
 
 const LAYER_SLUG = 'sentinel_tiles';
+const MIN_ZOOM = 8;
 
 const mapStateToProps = ({ recentImagery }) => {
   const { active, showSettings, data, dataStatus, settings } = recentImagery;
@@ -140,20 +141,25 @@ class RecentImageryContainer extends PureComponent {
         });
       }
     };
-    map.addListener('dragend', loadNewTile);
-    map.addListener('zoom_changed', loadNewTile);
+    this.mapDragEvent = map.addListener('dragend', loadNewTile);
+    this.mapZoomEvent = map.addListener('zoom_changed', loadNewTile);
   }
 
   removeEvents() {
-    const { map } = this.middleView;
-    google.maps.event.clearListeners(map, 'dragend');
-    google.maps.event.clearListeners(map, 'zoom_changed');
+    google.maps.event.removeListener(this.mapDragEvent);
+    google.maps.event.removeListener(this.mapZoomEvent);
   }
 
   showLayer(url) {
+    const { map } = this.middleView;
+    const zoom = map.getZoom();
+
     this.middleView.toggleLayer(LAYER_SLUG, {
       urlTemplate: url
     });
+    if (zoom < MIN_ZOOM) {
+      map.setZoom(MIN_ZOOM);
+    }
   }
 
   removeLayer() {
