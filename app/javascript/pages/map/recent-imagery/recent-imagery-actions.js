@@ -111,6 +111,7 @@ const getMoreTiles = createThunkAction(
 );
 
 const resetData = createThunkAction('resetData', () => dispatch => {
+  dispatch(setRecentImageryShowSettings(false));
   dispatch(
     setRecentImageryData({
       data: {},

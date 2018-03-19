@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Legend module.
  *
@@ -283,7 +284,7 @@ define(
         enquire.register(
           `screen and (min-width:${window.gfw.config.GFW_MOBILE}px)`,
           {
-            match: function () {
+            match: function() {
               this.mobile = false;
             }.bind(this)
           }
@@ -291,7 +292,7 @@ define(
         enquire.register(
           `screen and (max-width:${window.gfw.config.GFW_MOBILE}px)`,
           {
-            match: function () {
+            match: function() {
               this.mobile = true;
             }.bind(this)
           }
@@ -336,7 +337,7 @@ define(
         // Append details template to layer.
         _.each(
           layers,
-          function (layer) {
+          function(layer) {
             layer.source =
               layer.slug === 'nothing' ? null : layer.source || layer.slug;
             if (this.detailsTemplates[layer.slug]) {
@@ -617,6 +618,9 @@ define(
         const layerSlug = $(e.currentTarget).data('slug');
         this.presenter.toggleLayer(layerSlug);
         this.removeSublayers(layerSlug);
+        window.dispatchEvent(
+          new CustomEvent('removeLayer', { detail: layerSlug })
+        );
       },
 
       showTooltip(e) {
@@ -649,7 +653,7 @@ define(
 
         if ($subLayers.length > 0) {
           const _this = this;
-          $subLayers.each(function () {
+          $subLayers.each(function() {
             const $item = $(this);
             const isChecked = $item.find('.checked').length > 0;
 
@@ -666,7 +670,7 @@ define(
 
         if ($subLayers.length > 0) {
           const _this = this;
-          $subLayers.each(function () {
+          $subLayers.each(function() {
             const $item = $(this);
             const isChecked = $item.find('.checked').length > 0;
 

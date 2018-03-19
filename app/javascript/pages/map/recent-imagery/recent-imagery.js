@@ -47,10 +47,18 @@ class RecentImageryContainer extends PureComponent {
     this.boundsPolygon = null;
     this.boundsPolygonInfowindow = null;
     this.activatedFromUrl = false;
+    this.removedFromUrl = false;
     window.addEventListener('isRecentImageryActivated', () => {
       const { active, toogleRecentImagery } = this.props;
       if (!active) {
         this.activatedFromUrl = true;
+        toogleRecentImagery();
+      }
+    });
+    window.addEventListener('removeLayer', e => {
+      const { active, toogleRecentImagery } = this.props;
+      if (e.detail === 'sentinel_tiles' && active) {
+        this.removedFromUrl = true;
         toogleRecentImagery();
       }
     });
@@ -150,8 +158,11 @@ class RecentImageryContainer extends PureComponent {
 
   removeLayer() {
     const { resetData } = this.props;
-    this.middleView.toggleLayer(LAYER_SLUG);
+    if (!this.removedFromUrl) {
+      this.middleView.toggleLayer(LAYER_SLUG);
+    }
     this.activatedFromUrl = false;
+    this.removedFromUrl = false;
     resetData();
   }
 
