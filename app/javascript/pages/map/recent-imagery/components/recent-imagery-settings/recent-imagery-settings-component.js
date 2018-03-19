@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import Slider from 'rc-slider/lib/Slider';
 import Icon from 'components/icon';
+import Slider from 'components/slider';
 import Carousel from 'components/carousel';
 import Dropdown from 'components/dropdown';
 import Datepicker from 'components/datepicker';
@@ -20,7 +20,7 @@ class RecentImagerySettings extends PureComponent {
     const {
       selectedTile,
       tiles,
-      settings: { styles, selectedTileIndex, date, weeks },
+      settings: { styles, selectedTileIndex, date, weeks, clouds },
       isDragging,
       connectDragSource,
       setRecentImagerySettings,
@@ -79,7 +79,26 @@ class RecentImagerySettings extends PureComponent {
           <div className="c-recent-imagery-settings__clouds__title">
             MAXIMUM CLOUD COVER PERCENTAGE
           </div>
-          <Slider />
+          <Slider
+            className="theme-slider-green"
+            settings={{
+              min: 0,
+              max: 100,
+              defaultValue: clouds,
+              marks: {
+                0: '0%',
+                25: '25%',
+                50: '50%',
+                75: '75%',
+                100: '100%'
+              },
+              marksOnTop: true,
+              step: 5,
+              dots: true,
+              tipFormatter: value => `${value}%`
+            }}
+            handleOnSliderChange={d => setRecentImagerySettings({ clouds: d })}
+          />
         </div>
         <div className="c-recent-imagery-settings__thumbnails">
           <div className="c-recent-imagery-settings__thumbnails__description">
