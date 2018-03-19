@@ -30,9 +30,9 @@ export const getAllTiles = createSelector([getFilteredData], data => {
     instrument: item.attributes.instrument,
     description: `${moment(item.attributes.date_time)
       .format('DD MMM YYYY')
-      .toUpperCase()} - ${item.attributes.cloud_score}% cloud coverage - ${
-      item.attributes.instrument
-    }`
+      .toUpperCase()} - ${format('.0f')(
+      item.attributes.cloud_score
+    )}% cloud coverage - ${item.attributes.instrument}`
   }));
 });
 
