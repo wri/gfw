@@ -129,6 +129,10 @@
       .slick-next {
         right: rem(20px);
       }
+
+      .slick-track {
+        min-height: rem(100px);
+      }
     }
   }
 }
