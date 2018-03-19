@@ -14,7 +14,9 @@ const getFilteredData = createSelector(
     if (!data || isEmpty(data)) return null;
 
     const { clouds } = settings;
-    return data.filter(item => item.attributes.cloud_score <= clouds);
+    return data.filter(
+      item => Math.round(item.attributes.cloud_score) <= clouds
+    );
   }
 );
 
