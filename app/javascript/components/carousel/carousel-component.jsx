@@ -7,7 +7,7 @@ import Icon from 'components/icon';
 import arrowIcon from 'assets/icons/arrow-down.svg';
 import { SCREEN_M, SCREEN_XL } from 'utils/constants';
 
-import './slider-styles.scss';
+import './carousel-styles.scss';
 
 const defaultSettings = {
   dots: true,
@@ -42,7 +42,7 @@ const defaultSettings = {
   ]
 };
 
-class Slider extends PureComponent {
+class Carousel extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const { className, children, settings } = this.props;
@@ -52,17 +52,17 @@ class Slider extends PureComponent {
     };
 
     return (
-      <div className={`c-slider ${className || ''}`}>
+      <div className={`c-carousel ${className || ''}`}>
         <SlickSlider {...sliderSettings}>{children}</SlickSlider>
       </div>
     );
   }
 }
 
-Slider.propTypes = {
+Carousel.propTypes = {
   children: PropTypes.node.isRequired,
   settings: PropTypes.object,
   className: PropTypes.string
 };
 
-export default Slider;
+export default Carousel;

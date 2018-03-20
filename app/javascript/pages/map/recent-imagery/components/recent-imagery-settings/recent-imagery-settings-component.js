@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import Icon from 'components/icon';
 import Slider from 'components/slider';
+import Carousel from 'components/carousel';
 import Dropdown from 'components/dropdown';
 import Datepicker from 'components/datepicker';
 import RecentImageryThumbnail from 'pages/map/recent-imagery/components/recent-imagery-thumbnail';
@@ -19,7 +20,7 @@ class RecentImagerySettings extends PureComponent {
     const {
       selectedTile,
       tiles,
-      settings: { styles, selectedTileIndex, date, weeks },
+      settings: { styles, selectedTileIndex, date, weeks, clouds },
       isDragging,
       connectDragSource,
       setRecentImagerySettings,
@@ -74,11 +75,34 @@ class RecentImagerySettings extends PureComponent {
             />
           </div>
         </div>
+        <div className="c-recent-imagery-settings__clouds">
+          <div className="c-recent-imagery-settings__clouds__title">
+            MAXIMUM CLOUD COVER PERCENTAGE
+          </div>
+          <Slider
+            className="theme-slider-green"
+            settings={{
+              defaultValue: clouds,
+              marks: {
+                0: '0%',
+                25: '25%',
+                50: '50%',
+                75: '75%',
+                100: '100%'
+              },
+              marksOnTop: true,
+              step: 5,
+              dots: true,
+              tipFormatter: value => `${value}%`
+            }}
+            handleOnSliderChange={d => setRecentImagerySettings({ clouds: d })}
+          />
+        </div>
         <div className="c-recent-imagery-settings__thumbnails">
           <div className="c-recent-imagery-settings__thumbnails__description">
             {selectedTile.description}
           </div>
-          <Slider
+          <Carousel
             settings={{
               dots: false,
               slidesToShow: 5,
@@ -98,7 +122,7 @@ class RecentImagerySettings extends PureComponent {
                   />
                 </div>
               ))}
-          </Slider>
+          </Carousel>
         </div>
       </div>
     );

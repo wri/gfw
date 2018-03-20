@@ -106,6 +106,7 @@
     "query-string": "^5.0.1",
     "rails-erb-loader": "^5.1.0",
     "raw-loader": "^0.5.1",
+    "rc-slider": "^8.6.1",
     "react": "^15.6.1",
     "react-dates": "^16.3.6",
     "react-dnd": "^2.5.4",
