@@ -82,8 +82,6 @@ class RecentImagerySettings extends PureComponent {
           <Slider
             className="theme-slider-green"
             settings={{
-              min: 0,
-              max: 100,
               defaultValue: clouds,
               marks: {
                 0: '0%',
