@@ -49,7 +49,8 @@
     position: relative;
     display: inline-block;
     width: 50%;
-    padding-left: rem(20px);
+    padding: 0 rem(20px);
+    vertical-align: top;
     z-index: 2;
 
     &__title {
@@ -74,6 +75,25 @@
     }
   }
 
+  &__clouds {
+    position: relative;
+    display: inline-block;
+    width: 50%;
+    padding: 0 rem(20px);
+    vertical-align: top;
+
+    &__title {
+      font-size: 11px;
+      font-weight: 500;
+      color: $warm-grey;
+      margin-bottom: rem(10px);
+    }
+
+    .c-slider {
+      padding: 0 rem(5px);
+    }
+  }
+
   &__thumbnails {
     position: relative;
     width: 100%;
@@ -91,7 +111,7 @@
       color: $slate;
     }
 
-    .c-slider {
+    .c-carousel {
       margin: 0;
 
       .slick-slide {
@@ -108,6 +128,10 @@
 
       .slick-next {
         right: rem(20px);
+      }
+
+      .slick-track {
+        min-height: rem(100px);
       }
     }
   }

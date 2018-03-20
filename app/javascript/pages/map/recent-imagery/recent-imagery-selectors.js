@@ -5,6 +5,7 @@ import { format } from 'd3-format';
 
 const getData = state => state.data || null;
 const getBbox = state => state.bbox || null;
+const getDataStatus = state => state.dataStatus || null;
 const getSettings = state => state.settings || null;
 
 const getFilteredData = createSelector(
@@ -36,7 +37,7 @@ export const getAllTiles = createSelector([getFilteredData], data => {
 });
 
 export const getTile = createSelector(
-  [getFilteredData, getSettings],
+  [getData, getSettings],
   (data, settings) => {
     if (!data || isEmpty(data)) return null;
 
@@ -62,15 +63,17 @@ export const getBounds = createSelector([getBbox], bbox => {
   return bbox.geometry.coordinates;
 });
 
-export const getSources = createSelector([getData], data => {
-  if (!data || isEmpty(data)) return null;
+export const getSources = createSelector(
+  [getData, getDataStatus],
+  (data, dataStatus) => {
+    if (!data || isEmpty(data)) return null;
 
-  const sources = [];
-  data.forEach(item => {
-    sources.push({ source: item.attributes.source });
-  });
-  return sources;
-});
+    const { tilesPerRequest, requestedTiles } = dataStatus;
+    return data
+      .slice(requestedTiles, requestedTiles + tilesPerRequest)
+      .map(item => ({ source: item.attributes.source }));
+  }
+);
 
 export const getDates = createSelector([getSettings], settings => {
   const { date, weeks } = settings;
