@@ -21,16 +21,17 @@ import RecentImageryComponent from './recent-imagery-component';
 const LAYER_SLUG = 'sentinel_tiles';
 
 const mapStateToProps = ({ recentImagery }) => {
-  const { active, showSettings, haveAllData, data, settings } = recentImagery;
+  const { active, showSettings, data, dataStatus, settings } = recentImagery;
   const selectorData = {
     data: data.tiles,
     bbox: data.bbox,
+    dataStatus,
     settings
   };
   return {
     active,
     showSettings,
-    haveAllData,
+    dataStatus,
     allTiles: getAllTiles(selectorData),
     tile: getTile(selectorData),
     bounds: getBounds(selectorData),
@@ -59,7 +60,7 @@ class RecentImageryContainer extends PureComponent {
     const {
       active,
       showSettings,
-      haveAllData,
+      dataStatus,
       tile,
       bounds,
       sources,
@@ -102,11 +103,14 @@ class RecentImageryContainer extends PureComponent {
       this.addBoundsPolygon(bounds, tile);
     }
     if (
-      !haveAllData &&
+      !dataStatus.haveAllData &&
       showSettings &&
-      (showSettings !== this.props.showSettings || isNewTile)
+      (showSettings !== this.props.showSettings ||
+        dataStatus.requestedTiles !== this.props.dataStatus.requestedTiles ||
+        dataStatus.requestFails !== this.props.dataStatus.requestFails ||
+        isNewTile)
     ) {
-      getMoreTiles({ sources });
+      getMoreTiles({ sources, dataStatus });
     }
   }
 
@@ -145,10 +149,10 @@ class RecentImageryContainer extends PureComponent {
   }
 
   removeLayer() {
-    const { setRecentImageryData } = this.props;
+    const { resetData } = this.props;
     this.middleView.toggleLayer(LAYER_SLUG);
     this.activatedFromUrl = false;
-    setRecentImageryData({ data: {} });
+    resetData();
   }
 
   updateLayer(url) {
@@ -197,21 +201,27 @@ class RecentImageryContainer extends PureComponent {
     let clickTimeout = null;
 
     google.maps.event.addListener(this.boundsPolygon, 'mouseover', () => {
-      this.boundsPolygon.setOptions({
-        fillColor: '#000000',
-        fillOpacity: 0.1,
-        strokeColor: '#000000',
-        strokeOpacity: 0.5,
-        strokeWeight: 1
-      });
-      this.boundsPolygonInfowindow.open(map);
+      const zoom = map.getZoom();
+      if (zoom < 10) {
+        this.boundsPolygon.setOptions({
+          fillColor: '#000000',
+          fillOpacity: 0.1,
+          strokeColor: '#000000',
+          strokeOpacity: 0.5,
+          strokeWeight: 1
+        });
+        this.boundsPolygonInfowindow.open(map);
+      }
     });
     google.maps.event.addListener(this.boundsPolygon, 'mouseout', () => {
-      this.boundsPolygon.setOptions({
-        fillColor: 'transparent',
-        strokeWeight: 0
-      });
-      this.boundsPolygonInfowindow.close();
+      const zoom = map.getZoom();
+      if (zoom < 10) {
+        this.boundsPolygon.setOptions({
+          fillColor: 'transparent',
+          strokeWeight: 0
+        });
+        this.boundsPolygonInfowindow.close();
+      }
     });
     google.maps.event.addListener(this.boundsPolygon, 'click', () => {
       clickTimeout = setTimeout(() => {
@@ -237,17 +247,17 @@ class RecentImageryContainer extends PureComponent {
 RecentImageryContainer.propTypes = {
   active: PropTypes.bool,
   showSettings: PropTypes.bool,
-  haveAllData: PropTypes.bool,
+  dataStatus: PropTypes.object,
   tile: PropTypes.object,
   bounds: PropTypes.array,
   sources: PropTypes.array,
   dates: PropTypes.object,
   settings: PropTypes.object,
   toogleRecentImagery: PropTypes.func,
-  setRecentImageryData: PropTypes.func,
   setRecentImageryShowSettings: PropTypes.func,
   getData: PropTypes.func,
-  getMoreTiles: PropTypes.func
+  getMoreTiles: PropTypes.func,
+  resetData: PropTypes.func
 };
 
 export { actions, reducers, initialState };

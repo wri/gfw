@@ -34,7 +34,7 @@ $w-control: 44px;
           position: relative;
           @media (min-width: $br-mobileMap){
             float: none;
-            width: 33.33333%;
+            width: 50%;
 
             &:first-child{
               border-left: none;
