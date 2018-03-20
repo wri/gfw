@@ -19,6 +19,7 @@ const mapStateToProps = ({ projects }) => {
   const projectData = {
     data: projects.data && projects.data.projects,
     latLngs: projects.data.latLngs,
+    images: projects.data.images,
     search: projects.search,
     categorySelected: projects.categorySelected
   };
@@ -40,10 +41,21 @@ class SectionProjectsContainer extends PureComponent {
     });
   };
 
+  handleGlobeClick = d => {
+    const { setSectionProjectsModal } = this.props;
+    if (!d.cluster || d.cluster.length === 1) {
+      setSectionProjectsModal({
+        isOpen: true,
+        data: d.cluster[0]
+      });
+    }
+  };
+
   render() {
     return createElement(SectionProjectsComponent, {
       ...this.props,
-      handleCardClick: this.handleCardClick
+      handleCardClick: this.handleCardClick,
+      handleGlobeClick: this.handleGlobeClick
     });
   }
 }

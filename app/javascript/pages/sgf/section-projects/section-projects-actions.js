@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
+import groupBy from 'lodash/groupBy';
 
 import { fetchSGFProjects } from 'services/projects';
 import { getCountriesProvider, getCountriesLatLng } from 'services/country';
-// import { getBucketObjects } from 'services/aws';
+import { getBucketObjects, getImageUrl } from 'services/aws';
 
 export const setProjectsLoading = createAction('setProjectsLoading');
 export const setProjectsData = createAction('setProjectsData');
@@ -21,7 +22,6 @@ export const fetchProjects = createThunkAction(
         .then(
           axios.spread((data, countries, latLngs) => {
             const { rows } = data.data;
-            // const images = getBucketObjects('2014 - Amazon Conservation Association');
             const dataParsed = rows.map(d => {
               const imagesPath = d.image.split('>');
               const itemCountries =
@@ -39,9 +39,7 @@ export const fetchProjects = createThunkAction(
                   ` - ${itemCountries.map(c => c.name).join(', ')}`}`,
                 year: d.year,
                 countries: d.country_iso_code,
-                image: `https://${
-                  imagesPath[1]
-                }.s3.amazonaws.com/${imagesPath.slice(2).join('/')}`,
+                imageKey: imagesPath[3],
                 blogSentence: d.blog_sentence,
                 blogLink: d.hyperlinks_for_blog_sentence,
                 latitude: d.latitude_average,
@@ -62,5 +60,32 @@ export const fetchProjects = createThunkAction(
           dispatch(setProjectsLoading({ loading: false, error: true }));
         });
     }
+  }
+);
+
+export const fetchProjectsImages = createThunkAction(
+  'fetchProjectsImages',
+  () => dispatch => {
+    getBucketObjects('gfw.blog', (err, imageData) => {
+      if (err) {
+        console.error(err);
+      } else {
+        const bucketContents = imageData.Contents;
+        const imageObjects = bucketContents.map(b => {
+          const urlParams = { Bucket: 'gfw.blog', Key: b.Key };
+          return {
+            key: b.Key,
+            folder: b.Key.split('/')[1],
+            url: getImageUrl(urlParams)
+          };
+        });
+        const imagesByKey = groupBy(imageObjects, 'folder');
+        dispatch(
+          setProjectsData({
+            images: imagesByKey
+          })
+        );
+      }
+    });
   }
 );

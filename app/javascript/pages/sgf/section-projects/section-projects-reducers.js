@@ -13,7 +13,10 @@ const setProjectsLoading = (state, { payload }) => ({
 
 const setProjectsData = (state, { payload }) => ({
   ...state,
-  data: payload
+  data: {
+    ...state.data,
+    ...payload
+  }
 });
 
 const setCategorySelected = (state, { payload }) => ({

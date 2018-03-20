@@ -14,14 +14,29 @@ const getProjects = state => state.data || null;
 const getCategory = state => state.categorySelected || null;
 const getSearch = state => state.search || null;
 const getLatLngs = state => state.latLngs || null;
+const getImages = state => state.images || null;
 
-export const getCategories = createSelector(getProjects, projects => {
+export const getProjectsWithImages = createSelector(
+  [getProjects, getImages],
+  (projects, images) => {
+    if (!projects || !projects.length || !images) return null;
+    return projects.map(p => ({
+      ...p,
+      image:
+        images[p.imageKey] &&
+        images[p.imageKey].length > 1 &&
+        images[p.imageKey][1].url
+    }));
+  }
+);
+
+export const getCategories = createSelector(getProjectsWithImages, projects => {
   if (!projects || !projects.length) return null;
   return sortBy(uniq(flatten(projects.map(p => p.categories))).filter(i => i));
 });
 
 export const getProjectsForGlobe = createSelector(
-  [getProjects, getCategories, getLatLngs],
+  [getProjectsWithImages, getCategories, getLatLngs],
   (projects, categories, latLngs) => {
     if (!projects || !categories) return null;
     let projectsForGlobe = [];
@@ -55,7 +70,7 @@ export const getProjectsForGlobe = createSelector(
 );
 
 export const getProjectsByCategory = createSelector(
-  [getProjects, getCategories],
+  [getProjectsWithImages, getCategories],
   (projects, categories) => {
     if (!projects || !categories) return null;
     const projectsByCategory = {};
@@ -97,7 +112,7 @@ export const getCategoriesList = createSelector(
 );
 
 export const getProjectsSelected = createSelector(
-  [getProjects, getProjectsByCategory, getCategory, getSearch],
+  [getProjectsWithImages, getProjectsByCategory, getCategory, getSearch],
   (allProjects, groupedProjects, category, search) => {
     if (!allProjects || !category) return null;
     const projects =
@@ -125,13 +140,15 @@ export const getGlobeProjectsSelected = createSelector(
 export const getGlobeClusters = createSelector(
   [getGlobeProjectsSelected],
   projects => {
-    if (!projects) return null;
+    if (!projects || !projects.length) return null;
     const groupedByLocation = groupBy(projects, 'iso');
     const mapPoints = Object.keys(groupedByLocation).map(iso => ({
       iso,
       latitude: groupedByLocation[iso][0].latitude,
       longitude: groupedByLocation[iso][0].longitude,
-      cluster: groupedByLocation[iso].length
+      ...(!!groupedByLocation[iso].length && {
+        cluster: groupedByLocation[iso]
+      })
     }));
     return mapPoints;
   }

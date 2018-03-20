@@ -1,36 +1,38 @@
 import AWS from 'aws-sdk';
 
 const creds = {
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION
+  accessKeyId: 'AKIAJ7B3NTBGNQ5UPZLQ',
+  secretAccessKey: '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'
 };
-
-export const connectAWSBucket = bucket =>
-  new AWS.S3({ params: { Bucket: bucket } });
 
 export const initS3 = () => {
   AWS.config.update(creds);
-  return new AWS.S3({ endpoint: 'gfw.blog.s3.amazonaws.com/SGF page' });
+  return new AWS.S3();
 };
 
 export const getImageUrl = params => {
   const s3 = initS3();
-  s3.getSignedUrl('getObject', params, (err, url) => url);
+  return s3.getSignedUrl('getObject', params);
 };
 
-export const getBucketObjects = bucket => {
+export const getBucketObjects = (bucket, callback) => {
   const s3 = initS3();
-  // debugger;
-  return s3.listObjects({ Bucket: bucket }, (err, data) => {
-    if (err) {
-      console.error(err);
-    } else {
-      const bucketContents = data.Contents;
-      bucketContents.map(b => {
-        const urlParams = { Bucket: bucket, Key: b.Key };
-        return s3.getSignedUrl('getObject', urlParams, (error, url) => url);
-      });
-    }
-  });
+  s3.listObjectsV2({ Bucket: bucket, Prefix: 'SGF page/' }, callback);
+  // , (err, data) => {
+  //   let files = [];
+  //   if (err) {
+  //     console.error(err);
+  //   } else {
+  //     const bucketContents = data.Contents;
+  //     files = bucketContents.map(b => {
+  //       const urlParams = { Bucket: bucket, Key: b.Key };
+  //       return {
+  //         key: b.Key,
+  //         url: s3.getSignedUrl('getObject', urlParams)
+  //       };
+  //     });
+  //     // console.log(files);
+  //   }
+  //   return files;
+  // });
 };
