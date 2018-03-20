@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 // import PropTypes from 'prop-types';
 
-import Slider from 'components/slider';
+import Carousel from 'components/carousel';
 import img1997 from 'pages/about/section-history/images/1997.jpg';
 import img2002 from 'pages/about/section-history/images/2002.jpg';
 import img2004 from 'pages/about/section-history/images/2004.jpg';
@@ -82,7 +82,7 @@ class SectionHistory extends PureComponent {
             <h3>History</h3>
           </div>
         </div>
-        <Slider
+        <Carousel
           className="timeline"
           settings={{
             slidesToShow: 1
@@ -104,7 +104,7 @@ class SectionHistory extends PureComponent {
                 </div>
               </div>
             ))}
-        </Slider>
+        </Carousel>
       </section>
     );
   }

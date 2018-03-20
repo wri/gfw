@@ -1,25 +1,43 @@
+/* eslint-disable no-undef */
+
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import moment from 'moment';
 import { getPolygonCenter } from 'utils/map';
 
 import actions from './recent-imagery-actions';
 import reducers, { initialState } from './recent-imagery-reducers';
-import { getDates } from './recent-imagery-selectors';
+import {
+  getAllTiles,
+  getTile,
+  getBounds,
+  getSources,
+  getDates
+} from './recent-imagery-selectors';
 import RecentImageryDrag from './recent-imagery-drag';
 import RecentImageryComponent from './recent-imagery-component';
 
 const LAYER_SLUG = 'sentinel_tiles';
 
 const mapStateToProps = ({ recentImagery }) => {
-  const { activated, data, settings } = recentImagery;
+  const { active, showSettings, data, dataStatus, settings } = recentImagery;
+  const selectorData = {
+    data: data.tiles,
+    bbox: data.bbox,
+    dataStatus,
+    settings
+  };
   return {
-    activated,
-    data,
-    settings,
-    dates: getDates()
+    active,
+    showSettings,
+    dataStatus,
+    allTiles: getAllTiles(selectorData),
+    tile: getTile(selectorData),
+    bounds: getBounds(selectorData),
+    sources: getSources(selectorData),
+    dates: getDates(selectorData),
+    settings
   };
 };
 
@@ -30,8 +48,8 @@ class RecentImageryContainer extends PureComponent {
     this.boundsPolygonInfowindow = null;
     this.activatedFromUrl = false;
     window.addEventListener('isRecentImageryActivated', () => {
-      const { activated, toogleRecentImagery } = this.props;
-      if (!activated) {
+      const { active, toogleRecentImagery } = this.props;
+      if (!active) {
         this.activatedFromUrl = true;
         toogleRecentImagery();
       }
@@ -39,46 +57,74 @@ class RecentImageryContainer extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { activated, data, dates, getTiles } = nextProps;
+    const {
+      active,
+      showSettings,
+      dataStatus,
+      tile,
+      bounds,
+      sources,
+      dates,
+      settings,
+      getData,
+      getMoreTiles
+    } = nextProps;
     const { map } = this.middleView;
-    if (activated && activated !== this.props.activated) {
-      getTiles({
+    const isNewTile =
+      tile && (!this.props.tile || tile.url !== this.props.tile.url);
+
+    if (
+      (active && active !== this.props.active) ||
+      !isEqual(settings.date, this.props.settings.date) ||
+      !isEqual(settings.weeks, this.props.settings.weeks)
+    ) {
+      getData({
         latitude: map.getCenter().lng(),
         longitude: map.getCenter().lat(),
         start: dates.start,
         end: dates.end
       });
     }
-    if (!activated && activated !== this.props.activated) {
+    if (!active && active !== this.props.active) {
       this.removeLayer();
       this.removeEvents();
       this.removeBoundsPolygon();
     }
-    if (data.url !== '' && !isEqual(data, this.props.data)) {
-      if (this.activatedFromUrl && this.props.data.url === '') {
-        this.updateLayer(data.url);
+    if (isNewTile) {
+      if (this.activatedFromUrl && !this.props.tile) {
+        this.updateLayer(tile.url);
         this.setEvents();
-      } else if (this.props.data.url === '') {
-        this.showLayer(data.url);
+      } else if (!this.props.tile) {
+        this.showLayer(tile.url);
         this.setEvents();
       } else {
-        this.updateLayer(data.url);
+        this.updateLayer(tile.url);
       }
-      this.addBoundsPolygon(data);
+      this.addBoundsPolygon(bounds, tile);
+    }
+    if (
+      !dataStatus.haveAllData &&
+      showSettings &&
+      (showSettings !== this.props.showSettings ||
+        dataStatus.requestedTiles !== this.props.dataStatus.requestedTiles ||
+        dataStatus.requestFails !== this.props.dataStatus.requestFails ||
+        isNewTile)
+    ) {
+      getMoreTiles({ sources, dataStatus });
     }
   }
 
   setEvents() {
-    const { dates, getTiles } = this.props;
     const { map } = this.middleView;
 
     const loadNewTile = () => {
-      const needNewTile = !google.maps.geometry.poly.containsLocation( // eslint-disable-line
+      const { dates, getData } = this.props;
+      const needNewTile = !google.maps.geometry.poly.containsLocation(
         map.getCenter(),
         this.boundsPolygon
       );
       if (needNewTile) {
-        getTiles({
+        getData({
           latitude: map.getCenter().lng(),
           longitude: map.getCenter().lat(),
           start: dates.start,
@@ -92,8 +138,8 @@ class RecentImageryContainer extends PureComponent {
 
   removeEvents() {
     const { map } = this.middleView;
-    google.maps.event.clearListeners(map, 'dragend'); // eslint-disable-line
-    google.maps.event.clearListeners(map, 'zoom_changed'); // eslint-disable-line
+    google.maps.event.clearListeners(map, 'dragend');
+    google.maps.event.clearListeners(map, 'zoom_changed');
   }
 
   showLayer(url) {
@@ -103,12 +149,10 @@ class RecentImageryContainer extends PureComponent {
   }
 
   removeLayer() {
-    const { setRecentImageryData } = this.props;
+    const { resetData } = this.props;
     this.middleView.toggleLayer(LAYER_SLUG);
     this.activatedFromUrl = false;
-    setRecentImageryData({
-      url: ''
-    });
+    resetData();
   }
 
   updateLayer(url) {
@@ -117,9 +161,9 @@ class RecentImageryContainer extends PureComponent {
     });
   }
 
-  addBoundsPolygon(data) {
+  addBoundsPolygon(bounds, tile) {
     const { map } = this.middleView;
-    const { bounds, cloudScore, dateTime, instrument } = data;
+    const { description } = tile;
 
     if (this.boundsPolygon !== null) {
       this.removeBoundsPolygon();
@@ -132,7 +176,7 @@ class RecentImageryContainer extends PureComponent {
       });
     });
 
-    this.boundsPolygon = new google.maps.Polygon({ // eslint-disable-line
+    this.boundsPolygon = new google.maps.Polygon({
       paths: coords,
       fillColor: 'transparent',
       strokeWeight: 0
@@ -145,43 +189,46 @@ class RecentImageryContainer extends PureComponent {
     if (this.boundsPolygonInfowindow !== null) {
       this.boundsPolygonInfowindow.close();
     }
-    this.boundsPolygonInfowindow = new google.maps.InfoWindow({ // eslint-disable-line
-      content: `<div class="recent-imagery-infowindow">
-        ${moment(dateTime)
-    .format('DD MMM YYYY')
-    .toUpperCase()} - ${cloudScore}% cloud coverage - ${instrument}
-      </div>`,
+    this.boundsPolygonInfowindow = new google.maps.InfoWindow({
+      content: `<div class="recent-imagery-infowindow">${description}</div>`,
       position: polygonCenter.top
     });
   }
 
   addBoundsPolygonEvents() {
+    const { setRecentImageryShowSettings } = this.props;
     const { map } = this.middleView;
     let clickTimeout = null;
 
-    google.maps.event.addListener(this.boundsPolygon, 'mouseover', () => { // eslint-disable-line
-      this.boundsPolygon.setOptions({
-        fillColor: '#000000',
-        fillOpacity: 0.1,
-        strokeColor: '#000000',
-        strokeOpacity: 0.5,
-        strokeWeight: 1
-      });
-      this.boundsPolygonInfowindow.open(map);
+    google.maps.event.addListener(this.boundsPolygon, 'mouseover', () => {
+      const zoom = map.getZoom();
+      if (zoom < 10) {
+        this.boundsPolygon.setOptions({
+          fillColor: '#000000',
+          fillOpacity: 0.1,
+          strokeColor: '#000000',
+          strokeOpacity: 0.5,
+          strokeWeight: 1
+        });
+        this.boundsPolygonInfowindow.open(map);
+      }
     });
-    google.maps.event.addListener(this.boundsPolygon, 'mouseout', () => { // eslint-disable-line
-      this.boundsPolygon.setOptions({
-        fillColor: 'transparent',
-        strokeWeight: 0
-      });
-      this.boundsPolygonInfowindow.close();
+    google.maps.event.addListener(this.boundsPolygon, 'mouseout', () => {
+      const zoom = map.getZoom();
+      if (zoom < 10) {
+        this.boundsPolygon.setOptions({
+          fillColor: 'transparent',
+          strokeWeight: 0
+        });
+        this.boundsPolygonInfowindow.close();
+      }
     });
-    google.maps.event.addListener(this.boundsPolygon, 'click', e => { // eslint-disable-line
+    google.maps.event.addListener(this.boundsPolygon, 'click', () => {
       clickTimeout = setTimeout(() => {
-        console.log(e); // eslint-disable-line
+        setRecentImageryShowSettings(true);
       }, 200);
     });
-    google.maps.event.addListener(this.boundsPolygon, 'dblclick', () => { // eslint-disable-line
+    google.maps.event.addListener(this.boundsPolygon, 'dblclick', () => {
       clearTimeout(clickTimeout);
     });
   }
@@ -198,12 +245,19 @@ class RecentImageryContainer extends PureComponent {
 }
 
 RecentImageryContainer.propTypes = {
-  activated: PropTypes.bool,
-  data: PropTypes.object,
+  active: PropTypes.bool,
+  showSettings: PropTypes.bool,
+  dataStatus: PropTypes.object,
+  tile: PropTypes.object,
+  bounds: PropTypes.array,
+  sources: PropTypes.array,
   dates: PropTypes.object,
+  settings: PropTypes.object,
   toogleRecentImagery: PropTypes.func,
-  setRecentImageryData: PropTypes.func,
-  getTiles: PropTypes.func
+  setRecentImageryShowSettings: PropTypes.func,
+  getData: PropTypes.func,
+  getMoreTiles: PropTypes.func,
+  resetData: PropTypes.func
 };
 
 export { actions, reducers, initialState };

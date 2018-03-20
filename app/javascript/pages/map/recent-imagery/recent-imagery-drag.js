@@ -2,12 +2,12 @@ import { DropTarget } from 'react-dnd';
 
 const dropTarget = {
   drop(props, monitor) {
-    const { setRecentImagerySettingsStyles } = props;
+    const { setRecentImagerySettings } = props;
     const item = monitor.getItem();
     const delta = monitor.getDifferenceFromInitialOffset();
     const top = Math.round(item.top + delta.y);
     const left = `calc(${item.left} + ${Math.round(delta.x)}px)`;
-    setRecentImagerySettingsStyles({ top, left });
+    setRecentImagerySettings({ styles: { top, left } });
   }
 };
 
