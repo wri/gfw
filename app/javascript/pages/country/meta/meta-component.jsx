@@ -7,9 +7,9 @@ class Meta extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const { page } = this.props;
-    return (
+    return page ? (
       <Helmet>
-        <title>{`${page ? `${page} | ` : ''}Global Forest Watch`}</title>
+        <title>{`${page} | Global Forest Watch`}</title>
         <meta
           name="description"
           content={`Data about forest change, tenure, forest related employment and land use in ${page}`}
@@ -22,7 +22,7 @@ class Meta extends PureComponent {
         />
         <meta property="og:url" content={window.location.href} />
       </Helmet>
-    );
+    ) : null;
   }
 }
 
