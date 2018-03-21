@@ -14,7 +14,9 @@ const getFilteredData = createSelector(
     if (!data || isEmpty(data)) return null;
 
     const { clouds } = settings;
-    return data.filter(item => item.attributes.cloud_score <= clouds);
+    return data.filter(
+      item => Math.round(item.attributes.cloud_score) <= clouds
+    );
   }
 );
 
@@ -30,9 +32,9 @@ export const getAllTiles = createSelector([getFilteredData], data => {
     instrument: item.attributes.instrument,
     description: `${moment(item.attributes.date_time)
       .format('DD MMM YYYY')
-      .toUpperCase()} - ${item.attributes.cloud_score}% cloud coverage - ${
-      item.attributes.instrument
-    }`
+      .toUpperCase()} - ${format('.0f')(
+      item.attributes.cloud_score
+    )}% cloud coverage - ${item.attributes.instrument}`
   }));
 });
 

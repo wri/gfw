@@ -7,7 +7,14 @@ import './recent-imagery-thumbnail-styles.scss';
 
 class RecentImageryThumbnail extends PureComponent {
   render() {
-    const { id, tile, selected, handleClick } = this.props;
+    const {
+      id,
+      tile,
+      selected,
+      handleClick,
+      handleMouseEnter,
+      handleMouseLeave
+    } = this.props;
 
     return (
       <div
@@ -18,6 +25,8 @@ class RecentImageryThumbnail extends PureComponent {
           backgroundImage: `url('${tile.thumbnail}')`
         }}
         onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         role="button"
         tabIndex={id}
       >
@@ -31,7 +40,9 @@ RecentImageryThumbnail.propTypes = {
   id: PropTypes.number.isRequired,
   tile: PropTypes.object.isRequired,
   selected: PropTypes.bool.isRequired,
-  handleClick: PropTypes.func.isRequired
+  handleClick: PropTypes.func.isRequired,
+  handleMouseEnter: PropTypes.func,
+  handleMouseLeave: PropTypes.func
 };
 
 export default RecentImageryThumbnail;

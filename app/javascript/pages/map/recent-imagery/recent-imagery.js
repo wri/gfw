@@ -18,8 +18,6 @@ import {
 import RecentImageryDrag from './recent-imagery-drag';
 import RecentImageryComponent from './recent-imagery-component';
 
-const LAYER_SLUG = 'sentinel_tiles';
-
 const mapStateToProps = ({ recentImagery }) => {
   const { active, showSettings, data, dataStatus, settings } = recentImagery;
   const selectorData = {
@@ -47,10 +45,18 @@ class RecentImageryContainer extends PureComponent {
     this.boundsPolygon = null;
     this.boundsPolygonInfowindow = null;
     this.activatedFromUrl = false;
+    this.removedFromUrl = false;
     window.addEventListener('isRecentImageryActivated', () => {
       const { active, toogleRecentImagery } = this.props;
       if (!active) {
         this.activatedFromUrl = true;
+        toogleRecentImagery();
+      }
+    });
+    window.addEventListener('removeLayer', e => {
+      const { active, toogleRecentImagery } = this.props;
+      if (e.detail === 'sentinel_tiles' && active) {
+        this.removedFromUrl = true;
         toogleRecentImagery();
       }
     });
@@ -119,6 +125,7 @@ class RecentImageryContainer extends PureComponent {
 
     const loadNewTile = () => {
       const { dates, getData } = this.props;
+      const zoom = map.getZoom();
       const needNewTile = !google.maps.geometry.poly.containsLocation(
         map.getCenter(),
         this.boundsPolygon
@@ -131,32 +138,49 @@ class RecentImageryContainer extends PureComponent {
           end: dates.end
         });
       }
+      if (zoom >= 10) {
+        this.boundsPolygon.setOptions({
+          fillColor: 'transparent',
+          strokeWeight: 0
+        });
+        this.boundsPolygonInfowindow.close();
+      }
     };
-    map.addListener('dragend', loadNewTile);
-    map.addListener('zoom_changed', loadNewTile);
+    this.mapDragEvent = map.addListener('dragend', loadNewTile);
+    this.mapZoomEvent = map.addListener('zoom_changed', loadNewTile);
   }
 
   removeEvents() {
-    const { map } = this.middleView;
-    google.maps.event.clearListeners(map, 'dragend');
-    google.maps.event.clearListeners(map, 'zoom_changed');
+    google.maps.event.removeListener(this.mapDragEvent);
+    google.maps.event.removeListener(this.mapZoomEvent);
   }
 
   showLayer(url) {
-    this.middleView.toggleLayer(LAYER_SLUG, {
+    const { map } = this.middleView;
+    const { settings: { layerSlug, minZoom } } = this.props;
+    const zoom = map.getZoom();
+
+    this.middleView.toggleLayer(layerSlug, {
       urlTemplate: url
     });
+    if (zoom < minZoom) {
+      map.setZoom(minZoom);
+    }
   }
 
   removeLayer() {
-    const { resetData } = this.props;
-    this.middleView.toggleLayer(LAYER_SLUG);
+    const { settings: { layerSlug }, resetData } = this.props;
+    if (!this.removedFromUrl) {
+      this.middleView.toggleLayer(layerSlug);
+    }
     this.activatedFromUrl = false;
+    this.removedFromUrl = false;
     resetData();
   }
 
   updateLayer(url) {
-    this.middleView.updateLayer(LAYER_SLUG, {
+    const { settings: { layerSlug } } = this.props;
+    this.middleView.updateLayer(layerSlug, {
       urlTemplate: url
     });
   }

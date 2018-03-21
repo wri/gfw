@@ -16,11 +16,25 @@ import RecentImageryDrag from './recent-imagery-settings-drag';
 import './recent-imagery-settings-styles.scss';
 
 class RecentImagerySettings extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      thumbnailsDescription: null
+    };
+  }
+
   render() {
     const {
       selectedTile,
       tiles,
-      settings: { styles, selectedTileIndex, date, weeks, clouds },
+      settings: {
+        styles,
+        thumbsToShow,
+        selectedTileIndex,
+        date,
+        weeks,
+        clouds
+      },
       isDragging,
       connectDragSource,
       setRecentImagerySettings,
@@ -100,13 +114,18 @@ class RecentImagerySettings extends PureComponent {
         </div>
         <div className="c-recent-imagery-settings__thumbnails">
           <div className="c-recent-imagery-settings__thumbnails__description">
-            {selectedTile.description}
+            {this.state.thumbnailsDescription || selectedTile.description}
           </div>
           <Carousel
             settings={{
+              slidesToShow: thumbsToShow,
+              infinite: tiles.length > thumbsToShow,
+              centerMode: tiles.length > thumbsToShow,
+              centerPadding: '20px',
+              responsive: null,
+              draggable: false,
               dots: false,
-              slidesToShow: 5,
-              centerPadding: '20px'
+              arrows: tiles.length > thumbsToShow
             }}
           >
             {tiles.length &&
@@ -118,6 +137,14 @@ class RecentImagerySettings extends PureComponent {
                     selected={selectedTileIndex === i}
                     handleClick={() => {
                       setRecentImagerySettings({ selectedTileIndex: i });
+                    }}
+                    handleMouseEnter={() => {
+                      this.setState({
+                        thumbnailsDescription: tile.description
+                      });
+                    }}
+                    handleMouseLeave={() => {
+                      this.setState({ thumbnailsDescription: null });
                     }}
                   />
                 </div>
