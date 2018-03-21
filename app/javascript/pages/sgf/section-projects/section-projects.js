@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { scroller } from 'react-scroll';
 
 import { actions as modalActions } from 'pages/sgf/section-projects/section-projects-modal';
 import * as sectionActions from './section-projects-actions';
@@ -10,27 +11,33 @@ import SectionProjectsComponent from './section-projects-component';
 import {
   getCategoriesList,
   getProjectsSelected,
-  getGlobeClusters
+  getGlobeClusters,
+  getCustomProjectsSelected
 } from './section-projects-selectors';
 
 const actions = { ...sectionActions, ...modalActions };
 
 const mapStateToProps = ({ projects }) => {
+  const filters = projects.customFilter;
   const projectData = {
     data: projects.data && projects.data.projects,
     latLngs: projects.data.latLngs,
     images: projects.data.images,
     search: projects.search,
-    categorySelected: projects.categorySelected
+    categorySelected: projects.categorySelected,
+    customFilter: filters
   };
 
   return {
-    data: getProjectsSelected(projectData),
+    data: filters.length
+      ? getCustomProjectsSelected(projectData)
+      : getProjectsSelected(projectData),
     globeData: getGlobeClusters(projectData),
     categories: getCategoriesList(projectData),
     categorySelected: projects.categorySelected,
     search: projects.search,
-    loading: projects.loading
+    loading: projects.loading,
+    customFilter: projects.customFilter
   };
 };
 
@@ -43,11 +50,19 @@ class SectionProjectsContainer extends PureComponent {
   };
 
   handleGlobeClick = d => {
-    const { setSectionProjectsModal } = this.props;
+    const { setSectionProjectsModal, setCustomFilter } = this.props;
     if (!d.cluster || d.cluster.length === 1) {
       setSectionProjectsModal({
         isOpen: true,
         data: d.cluster[0]
+      });
+    } else {
+      const projectIds = d.cluster.map(p => p.id);
+      setCustomFilter(projectIds);
+      scroller.scrollTo('project-cards', {
+        duration: 800,
+        smooth: true,
+        offset: -50
       });
     }
   };
@@ -62,7 +77,8 @@ class SectionProjectsContainer extends PureComponent {
 }
 
 SectionProjectsContainer.propTypes = {
-  setSectionProjectsModal: PropTypes.func
+  setSectionProjectsModal: PropTypes.func,
+  setCustomFilter: PropTypes.func
 };
 
 export { actions, reducers, initialState };

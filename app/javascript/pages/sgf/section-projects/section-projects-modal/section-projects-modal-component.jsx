@@ -61,8 +61,8 @@ class SectionProjectsModal extends PureComponent {
                 ))}
             </Slider>
           )}
-        {!data.images &&
-          data.image && (
+        {data.image &&
+          data.images.length === 1 && (
             <div className="image">
               <img src={data.image} alt="SGF project detail" />
             </div>

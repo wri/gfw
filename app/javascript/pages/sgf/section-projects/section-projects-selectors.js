@@ -15,6 +15,7 @@ const getCategory = state => state.categorySelected || null;
 const getSearch = state => state.search || null;
 const getLatLngs = state => state.latLngs || null;
 const getImages = state => state.images || null;
+const getCustomFilter = state => state.customFilter || null;
 
 export const getProjectsWithImages = createSelector(
   [getProjects, getImages],
@@ -123,6 +124,14 @@ export const getProjectsSelected = createSelector(
     return projects.filter(
       p => deburrUpper(p.title).indexOf(deburrUpper(search)) > -1
     );
+  }
+);
+
+export const getCustomProjectsSelected = createSelector(
+  [getProjectsWithImages, getCustomFilter],
+  (allProjects, filter) => {
+    if (!allProjects || !filter) return null;
+    return allProjects.filter(p => filter.indexOf(p.id) > -1);
   }
 );
 

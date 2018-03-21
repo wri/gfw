@@ -7,6 +7,7 @@ import ItemsList from 'components/items-list';
 import Search from 'components/search';
 import NoContent from 'components/no-content';
 import Loader from 'components/loader';
+import { Element as ScrollEl } from 'react-scroll';
 
 import './section-projects-styles.scss';
 
@@ -60,7 +61,7 @@ class SectionProjects extends PureComponent {
               )}
             </div>
           </div>
-          <div className="row project-cards">
+          <ScrollEl name="project-cards" className="row project-cards">
             {hasData &&
               !loading &&
               data.map(d => (
@@ -83,7 +84,7 @@ class SectionProjects extends PureComponent {
             {!loading &&
               !hasData && <NoContent message="No projects for that search" />}
             {loading && <Loader loading={loading} />}
-          </div>
+          </ScrollEl>
         </div>
         <ProjectsModal />
       </div>

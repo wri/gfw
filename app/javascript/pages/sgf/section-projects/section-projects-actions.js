@@ -10,6 +10,7 @@ import { getBucketObjects, getImageUrl } from 'services/aws';
 export const setProjectsLoading = createAction('setProjectsLoading');
 export const setProjectsData = createAction('setProjectsData');
 export const setCategorySelected = createAction('setCategorySelected');
+export const setCustomFilter = createAction('setCustomFilter');
 export const setSearch = createAction('setSearch');
 
 export const fetchProjects = createThunkAction(
@@ -74,7 +75,10 @@ export const fetchProjectsImages = createThunkAction(
         } else {
           const bucketContents = [];
           imageData.Contents.forEach(b => {
-            if (b.Key.slice(-1) !== '/' && b.Key.indexOf('.jpg') > -1) {
+            if (
+              b.Key.slice(-1) !== '/' &&
+              b.Key.toLowerCase().includes('.jpg')
+            ) {
               const urlParams = { Bucket: 'gfw.blog', Key: b.Key };
               bucketContents.push({
                 key: b.Key,
