@@ -18,9 +18,6 @@ import {
 import RecentImageryDrag from './recent-imagery-drag';
 import RecentImageryComponent from './recent-imagery-component';
 
-const LAYER_SLUG = 'sentinel_tiles';
-const MIN_ZOOM = 8;
-
 const mapStateToProps = ({ recentImagery }) => {
   const { active, showSettings, data, dataStatus, settings } = recentImagery;
   const selectorData = {
@@ -160,20 +157,21 @@ class RecentImageryContainer extends PureComponent {
 
   showLayer(url) {
     const { map } = this.middleView;
+    const { settings: { layerSlug, minZoom } } = this.props;
     const zoom = map.getZoom();
 
-    this.middleView.toggleLayer(LAYER_SLUG, {
+    this.middleView.toggleLayer(layerSlug, {
       urlTemplate: url
     });
-    if (zoom < MIN_ZOOM) {
-      map.setZoom(MIN_ZOOM);
+    if (zoom < minZoom) {
+      map.setZoom(minZoom);
     }
   }
 
   removeLayer() {
-    const { resetData } = this.props;
+    const { settings: { layerSlug }, resetData } = this.props;
     if (!this.removedFromUrl) {
-      this.middleView.toggleLayer(LAYER_SLUG);
+      this.middleView.toggleLayer(layerSlug);
     }
     this.activatedFromUrl = false;
     this.removedFromUrl = false;
@@ -181,7 +179,8 @@ class RecentImageryContainer extends PureComponent {
   }
 
   updateLayer(url) {
-    this.middleView.updateLayer(LAYER_SLUG, {
+    const { settings: { layerSlug } } = this.props;
+    this.middleView.updateLayer(layerSlug, {
       urlTemplate: url
     });
   }

@@ -15,8 +15,6 @@ import closeIcon from 'assets/icons/close.svg';
 import RecentImageryDrag from './recent-imagery-settings-drag';
 import './recent-imagery-settings-styles.scss';
 
-const CAROUSEL_SLIDES_TO_SHOW = 5;
-
 class RecentImagerySettings extends PureComponent {
   constructor(props) {
     super(props);
@@ -29,7 +27,14 @@ class RecentImagerySettings extends PureComponent {
     const {
       selectedTile,
       tiles,
-      settings: { styles, selectedTileIndex, date, weeks, clouds },
+      settings: {
+        styles,
+        thumbsToShow,
+        selectedTileIndex,
+        date,
+        weeks,
+        clouds
+      },
       isDragging,
       connectDragSource,
       setRecentImagerySettings,
@@ -113,14 +118,14 @@ class RecentImagerySettings extends PureComponent {
           </div>
           <Carousel
             settings={{
-              slidesToShow: CAROUSEL_SLIDES_TO_SHOW,
-              infinite: tiles.length > CAROUSEL_SLIDES_TO_SHOW,
-              centerMode: tiles.length > CAROUSEL_SLIDES_TO_SHOW,
+              slidesToShow: thumbsToShow,
+              infinite: tiles.length > thumbsToShow,
+              centerMode: tiles.length > thumbsToShow,
               centerPadding: '20px',
               responsive: null,
               draggable: false,
               dots: false,
-              arrows: tiles.length > CAROUSEL_SLIDES_TO_SHOW
+              arrows: tiles.length > thumbsToShow
             }}
           >
             {tiles.length &&
