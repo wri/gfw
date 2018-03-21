@@ -32,8 +32,13 @@ define(
             var isRecentImageryActivated = !!this.status
               .get('layerSpec')
               .getLayer({ slug: 'sentinel_tiles' });
-            if (isRecentImageryActivated && !!this.status.get('recentImagery')) {
-              this.view.fillParams(JSON.parse(atob(place.params.recentImagery)));
+            if (
+              isRecentImageryActivated &&
+              !!this.status.get('recentImagery')
+            ) {
+              this.view.fillParams(
+                JSON.parse(atob(place.params.recentImagery))
+              );
             }
           }
         },
@@ -45,7 +50,7 @@ define(
               .getLayer({ slug: 'sentinel_tiles' });
 
             if (isRecentImageryActivated) {
-              this.setSentinel(this.view.getParams());
+              this.setRecentImagery(this.view.getParams());
             }
           }
         },
@@ -70,20 +75,20 @@ define(
       },
 
       updateLayer: function(name, params) {
-        this.setSentinel(this.view.getParams());
+        this.setRecentImagery(this.view.getParams());
         mps.publish('Layer/update', [name]);
       },
 
-      setSentinel: function(value) {
+      setRecentImagery: function(value) {
         if (!!value) {
           value = btoa(JSON.stringify(value));
         }
 
         this.status.set('recentImagery', value);
-        this.publishSentinel();
+        this.publishRecentImagery();
       },
 
-      publishSentinel: function() {
+      publishRecentImagery: function() {
         mps.publish('Place/update', [{ go: false }]);
       },
 
