@@ -15,7 +15,7 @@ export const initialState = {
     },
     selectedTileIndex: 0,
     date: null,
-    weeks: 4,
+    weeks: 13,
     clouds: 25
   }
 };
