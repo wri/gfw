@@ -125,7 +125,6 @@ define(
       },
 
       getApiHost: function(dataset) {
-        debugger;
         return dataset === 'umd-loss-gain' ? APIURLV2 : APIURL;
       },
 

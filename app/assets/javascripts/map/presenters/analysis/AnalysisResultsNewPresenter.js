@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * The AnalysisResultsPresenter class for the AnalysisResultsView.
  *
@@ -31,7 +32,7 @@ define(
        */
       _subscriptions: [
         {
-          'Place/go': function (place) {
+          'Place/go': function(place) {
             const params = place.params;
             this.status.set(
               'baselayers_full',
@@ -41,14 +42,14 @@ define(
           }
         },
         {
-          'LayerNav/change': function (layerSpec) {
+          'LayerNav/change': function(layerSpec) {
             this.status.set('baselayers_full', layerSpec.getBaselayers(), {
               silent: true
             });
           }
         },
         {
-          'Analysis/results': function (status) {
+          'Analysis/results': function(status) {
             this.status.set(status, { silent: true });
             this.status.set(
               {
@@ -64,7 +65,7 @@ define(
           }
         },
         {
-          'Analysis/results-error': function (status) {
+          'Analysis/results-error': function(status) {
             this.status.set(status, { silent: true });
             this.view.renderError();
           }
@@ -143,14 +144,12 @@ define(
          * Exceptions
          */
         if (p.slug === 'umd-loss-gain') {
-          var results = type == 'country' ? results.total : results;
+          var results = type == 'country' ? results.totals : results;
           p.areaHa = this.roundNumber(results.areaHa || 0);
           p.alerts.totalAlerts = this.roundNumber(results.loss || 0);
           p.alerts.gainAlerts = this.roundNumber(results.gain || 0);
-          p.alerts.treeExtent = this.roundNumber(results.treeExtent || 0);
-          p.alerts.treeExtent2010 = this.roundNumber(
-            results.treeExtent2010 || 0
-          );
+          p.alerts.treeExtent = this.roundNumber(results.extent2000 || 0);
+          p.alerts.treeExtent2010 = this.roundNumber(results.extent2010 || 0);
 
           // Dates
           p.dates.lossDateRange = '{0}-{1}'.format(
