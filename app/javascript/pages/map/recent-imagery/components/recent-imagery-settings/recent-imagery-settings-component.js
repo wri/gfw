@@ -15,6 +15,8 @@ import closeIcon from 'assets/icons/close.svg';
 import RecentImageryDrag from './recent-imagery-settings-drag';
 import './recent-imagery-settings-styles.scss';
 
+const CAROUSEL_SLIDES_TO_SHOW = 5;
+
 class RecentImagerySettings extends PureComponent {
   constructor(props) {
     super(props);
@@ -113,9 +115,14 @@ class RecentImagerySettings extends PureComponent {
           </div>
           <Carousel
             settings={{
+              slidesToShow: CAROUSEL_SLIDES_TO_SHOW,
+              infinite: tiles.length > CAROUSEL_SLIDES_TO_SHOW,
+              centerMode: tiles.length > CAROUSEL_SLIDES_TO_SHOW,
+              centerPadding: '20px',
+              responsive: null,
+              draggable: false,
               dots: false,
-              slidesToShow: 5,
-              centerPadding: '20px'
+              arrows: tiles.length > CAROUSEL_SLIDES_TO_SHOW
             }}
           >
             {tiles.length &&
