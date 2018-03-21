@@ -11,7 +11,8 @@ class SectionProjectsModal extends PureComponent {
     return (
       <div className={className}>
         {ReactHtmlParser(html, {
-          transform: node => { // eslint-disable-line
+          transform: node => {
+            // eslint-disable-line
             if (node.name === 'a') {
               return (
                 <a
@@ -39,29 +40,33 @@ class SectionProjectsModal extends PureComponent {
           {data.title && <h1>{data.title}</h1>}
           <h2>{data.meta}</h2>
         </div>
-        {data.images && data.images.length > 1 ? (
-          <Slider
-            settings={{
-              slidesToShow: 1,
-              centerPadding: '0px',
-              centerMode: false,
-              arrows: false
-            }}
-          >
-            {data.images &&
-              data.images.map(c => (
-                <div
-                  className="image-background"
-                  key={c}
-                  style={{ backgroundImage: `url(${c})` }}
-                />
-              ))}
-          </Slider>
-        ) : (
-          <div className="image">
-            <img src={data.image} alt="SGF project detail" />
-          </div>
-        )}
+        {data.images &&
+          data.images.length > 1 && (
+            <Slider
+              className="modal-image-slider"
+              settings={{
+                slidesToShow: 1,
+                centerPadding: '0px',
+                centerMode: false,
+                arrows: false
+              }}
+            >
+              {data.images &&
+                data.images.map(c => (
+                  <div
+                    className="image-background"
+                    key={c}
+                    style={{ backgroundImage: `url(${c})` }}
+                  />
+                ))}
+            </Slider>
+          )}
+        {!data.images &&
+          data.image && (
+            <div className="image">
+              <img src={data.image} alt="SGF project detail" />
+            </div>
+          )}
         <div className="content">
           {data.description &&
             this.parseContent(data.description, 'description')}
