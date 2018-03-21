@@ -11,6 +11,8 @@ const SQL_QUERIES = {
     "SELECT SUM(area_poly_aoi) AS plantation_extent, {admin} AS region, {bound} AS label FROM data WHERE {location} AND thresh = 0 AND polyname = 'plantations' GROUP BY {type} ORDER BY plantation_extent DESC",
   multiRegionExtent:
     "SELECT {region} as region, SUM({extentYear}) as extent, SUM(area_gadm28) as total FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}' GROUP BY {region} ORDER BY {region}",
+  rankedExtent:
+    "SELECT polyname, SUM({extent_year}) as value, SUM(area_gadm28) as total_area, FROM data WHERE polyname='{polyname}' AND thresh={threshold} GROUP BY polyname, iso",
   gain:
     "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = 0",
   gainRanked:
@@ -82,6 +84,14 @@ export const getLocationsLoss = ({ country, region, indicator, threshold }) => {
 
 export const fetchLossRanked = ({ extentYear, indicator, threshold }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.lossRanked}`
+    .replace('{extent_year}', getExtentYear(extentYear))
+    .replace('{polyname}', indicator)
+    .replace('{threshold}', threshold);
+  return axios.get(url);
+};
+
+export const fetchExtentRanked = ({ extentYear, indicator, threshold }) => {
+  const url = `${REQUEST_URL}${SQL_QUERIES.rankedExtent}`
     .replace('{extent_year}', getExtentYear(extentYear))
     .replace('{polyname}', indicator)
     .replace('{threshold}', threshold);
