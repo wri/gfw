@@ -29,7 +29,8 @@ const mapStateToProps = ({ projects }) => {
     globeData: getGlobeClusters(projectData),
     categories: getCategoriesList(projectData),
     categorySelected: projects.categorySelected,
-    search: projects.search
+    search: projects.search,
+    loading: projects.loading
   };
 };
 

@@ -43,6 +43,14 @@
     }
   }
 
+  .image-background {
+    width: 100%;
+    height: rem(400px);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+
   .content {
     padding: rem(30px) calc(50% - 260px) rem(40px);
 

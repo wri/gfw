@@ -20,13 +20,15 @@ export const getProjectsWithImages = createSelector(
   [getProjects, getImages],
   (projects, images) => {
     if (!projects || !projects.length || !images) return null;
-    return projects.map(p => ({
-      ...p,
-      image:
-        images[p.imageKey] &&
-        images[p.imageKey].length > 1 &&
-        images[p.imageKey][1].url
-    }));
+    return projects.map(p => {
+      const imagesArray =
+        images[p.imageKey] && images[p.imageKey].map(i => i.url);
+      return {
+        ...p,
+        image: imagesArray && imagesArray[0],
+        images: imagesArray
+      };
+    });
   }
 );
 

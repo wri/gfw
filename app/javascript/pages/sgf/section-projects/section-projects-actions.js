@@ -66,26 +66,32 @@ export const fetchProjects = createThunkAction(
 export const fetchProjectsImages = createThunkAction(
   'fetchProjectsImages',
   () => dispatch => {
-    getBucketObjects('gfw.blog', (err, imageData) => {
-      if (err) {
-        console.error(err);
-      } else {
-        const bucketContents = imageData.Contents;
-        const imageObjects = bucketContents.map(b => {
-          const urlParams = { Bucket: 'gfw.blog', Key: b.Key };
-          return {
-            key: b.Key,
-            folder: b.Key.split('/')[1],
-            url: getImageUrl(urlParams)
-          };
-        });
-        const imagesByKey = groupBy(imageObjects, 'folder');
-        dispatch(
-          setProjectsData({
-            images: imagesByKey
-          })
-        );
-      }
-    });
+    getBucketObjects(
+      'gfw.blog',
+      (err, imageData) => {
+        if (err) {
+          console.error(err);
+        } else {
+          const bucketContents = [];
+          imageData.Contents.forEach(b => {
+            if (b.Key.slice(-1) !== '/' && b.Key.indexOf('.jpg') > -1) {
+              const urlParams = { Bucket: 'gfw.blog', Key: b.Key };
+              bucketContents.push({
+                key: b.Key,
+                folder: b.Key.split('/')[1],
+                url: getImageUrl(urlParams)
+              });
+            }
+          });
+          const imagesByKey = groupBy(bucketContents, 'folder');
+          dispatch(
+            setProjectsData({
+              images: imagesByKey
+            })
+          );
+        }
+      },
+      'SGF page compressed/'
+    );
   }
 );

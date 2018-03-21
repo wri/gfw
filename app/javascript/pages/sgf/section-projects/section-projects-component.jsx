@@ -6,6 +6,7 @@ import Card from 'components/card';
 import ItemsList from 'components/items-list';
 import Search from 'components/search';
 import NoContent from 'components/no-content';
+import Loader from 'components/loader';
 
 import './section-projects-styles.scss';
 
@@ -20,7 +21,8 @@ class SectionProjects extends PureComponent {
       search,
       setSearch,
       handleGlobeClick,
-      setSectionProjectsModal
+      setSectionProjectsModal,
+      loading
     } = this.props;
     const hasData = data && !!data.length;
     const hasCategories = categories && !!categories.length;
@@ -59,7 +61,8 @@ class SectionProjects extends PureComponent {
             </div>
           </div>
           <div className="row project-cards">
-            {hasData ? (
+            {hasData &&
+              !loading &&
               data.map(d => (
                 <div
                   key={d.id}
@@ -76,10 +79,10 @@ class SectionProjects extends PureComponent {
                     }
                   />
                 </div>
-              ))
-            ) : (
-              <NoContent message="No projects for that search" />
-            )}
+              ))}
+            {!loading &&
+              !hasData && <NoContent message="No projects for that search" />}
+            {loading && <Loader loading={loading} />}
           </div>
         </div>
         <ProjectsModal />
@@ -97,7 +100,8 @@ SectionProjects.propTypes = {
   search: PropTypes.string,
   setSearch: PropTypes.func.isRequired,
   handleGlobeClick: PropTypes.func,
-  setSectionProjectsModal: PropTypes.func
+  setSectionProjectsModal: PropTypes.func,
+  loading: PropTypes.bool
 };
 
 export default SectionProjects;

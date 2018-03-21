@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/modal';
 import ReactHtmlParser from 'react-html-parser';
+import Slider from 'components/slider';
 
 import './section-projects-modal-styles.scss';
 
@@ -38,7 +39,25 @@ class SectionProjectsModal extends PureComponent {
           {data.title && <h1>{data.title}</h1>}
           <h2>{data.meta}</h2>
         </div>
-        {data.image && (
+        {data.images && data.images.length > 1 ? (
+          <Slider
+            settings={{
+              slidesToShow: 1,
+              centerPadding: '0px',
+              centerMode: false,
+              arrows: false
+            }}
+          >
+            {data.images &&
+              data.images.map(c => (
+                <div
+                  className="image-background"
+                  key={c}
+                  style={{ backgroundImage: `url(${c})` }}
+                />
+              ))}
+          </Slider>
+        ) : (
           <div className="image">
             <img src={data.image} alt="SGF project detail" />
           </div>

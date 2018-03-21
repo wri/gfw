@@ -16,7 +16,8 @@ const setProjectsData = (state, { payload }) => ({
   data: {
     ...state.data,
     ...payload
-  }
+  },
+  loading: false
 });
 
 const setCategorySelected = (state, { payload }) => ({

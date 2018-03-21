@@ -1,8 +1,9 @@
 import AWS from 'aws-sdk';
 
 const creds = {
-  accessKeyId: 'AKIAJ7B3NTBGNQ5UPZLQ',
-  secretAccessKey: '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'
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION
 };
 
 export const initS3 = () => {
@@ -15,24 +16,7 @@ export const getImageUrl = params => {
   return s3.getSignedUrl('getObject', params);
 };
 
-export const getBucketObjects = (bucket, callback) => {
+export const getBucketObjects = (bucket, callback, prefix) => {
   const s3 = initS3();
-  s3.listObjectsV2({ Bucket: bucket, Prefix: 'SGF page/' }, callback);
-  // , (err, data) => {
-  //   let files = [];
-  //   if (err) {
-  //     console.error(err);
-  //   } else {
-  //     const bucketContents = data.Contents;
-  //     files = bucketContents.map(b => {
-  //       const urlParams = { Bucket: bucket, Key: b.Key };
-  //       return {
-  //         key: b.Key,
-  //         url: s3.getSignedUrl('getObject', urlParams)
-  //       };
-  //     });
-  //     // console.log(files);
-  //   }
-  //   return files;
-  // });
+  s3.listObjectsV2({ Bucket: bucket, Prefix: prefix }, callback);
 };
