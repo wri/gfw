@@ -56,7 +56,7 @@ class MapContainer extends PureComponent {
     if (isParentLoading !== this.props.isParentLoading && bounds) {
       this.boundMap(nextProps.bounds);
       this.setAreaHighlight();
-      this.updateLayers(layersKeys, settings);
+      this.updateLayers(layersKeys, this.props.layersKeys, settings);
       this.setEvents();
     }
 
