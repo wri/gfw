@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import ProjectsGLobe from 'components/globe-projects';
+import Globe from 'components/globe';
 import ProjectsModal from 'pages/about/section-projects/section-projects-modal';
 import ItemsList from 'components/items-list';
 import Button from 'components/button';
@@ -15,7 +15,7 @@ class SectionProjects extends PureComponent {
       categories,
       setCategorySelected,
       categorySelected,
-      setSectionProjectsModal
+      handleGlobeClick
     } = this.props;
     const hasCategories = categories && !!categories.length;
 
@@ -23,7 +23,11 @@ class SectionProjects extends PureComponent {
       <div className="l-section-projects">
         <div className="row">
           <div className="column small-12 large-6 project-globe">
-            <ProjectsGLobe data={projects} setModal={setSectionProjectsModal} />
+            <Globe
+              autorotate={false}
+              data={projects}
+              onClick={handleGlobeClick}
+            />
             <ProjectsModal />
           </div>
           <div className="column small-12 large-6 project-side">
@@ -64,7 +68,7 @@ SectionProjects.propTypes = {
   categories: PropTypes.array.isRequired,
   categorySelected: PropTypes.string.isRequired,
   setCategorySelected: PropTypes.func.isRequired,
-  setSectionProjectsModal: PropTypes.func.isRequired
+  handleGlobeClick: PropTypes.func.isRequired
 };
 
 export default SectionProjects;
