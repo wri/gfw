@@ -14,6 +14,7 @@ import * as primaryTreeCoverActions from 'pages/country/widget/widgets/widget-pr
 import * as treeLocatedActions from 'pages/country/widget/widgets/widget-tree-located/widget-tree-located-actions';
 import * as gainLocatedActions from 'pages/country/widget/widgets/widget-gain-located/widget-gain-located-actions';
 import * as lossLocatedActions from 'pages/country/widget/widgets/widget-loss-located/widget-loss-located-actions';
+import * as lossRankedActions from 'pages/country/widget/widgets/widget-loss-ranked/widget-loss-ranked-actions';
 import * as treeGainActions from 'pages/country/widget/widgets/widget-tree-gain/widget-tree-gain-actions';
 import * as FAOReforestationActions from 'pages/country/widget/widgets/widget-fao-reforestation/widget-fao-reforestation-actions';
 import * as FAODeforestationActions from 'pages/country/widget/widgets/widget-fao-deforestation/widget-fao-deforestation-actions';
@@ -36,6 +37,7 @@ const widgetActions = {
   ...treeLocatedActions.default,
   ...gainLocatedActions.default,
   ...lossLocatedActions.default,
+  ...lossRankedActions.default,
   ...treeGainActions.default,
   ...FAOReforestationActions.default,
   ...FAODeforestationActions.default,

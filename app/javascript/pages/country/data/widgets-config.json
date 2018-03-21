@@ -227,6 +227,34 @@
       "metaKey": "widget_tree_cover_gain",
       "layers": ["forestgain"],
       "sortOrder": {
+        "summary": 6,
+        "forest-change": 4
+      }
+    },
+    "settings": {
+      "indicator": "gadm28",
+      "threshold": 30,
+      "unit": "ha",
+      "extentYear": 2010,
+      "layers": ["forestgain"]
+    },
+    "enabled": true
+  },
+  "lossRanked": {
+    "title": "Tree cover loss",
+    "config": {
+      "size": "small",
+      "indicators": ["gadm28", "primary_forest", "ifl_2013", "wdpa", "primary_forest__wdpa",
+        "mining", "ifl_2013__wdpa", "primary_forest__mining", "ifl_2013__mining",
+        "plantations", "plantations__mining"],
+      "units": ["ha", "%"],
+      "categories": ["summary", "forest-change"],
+      "admins": ["country"],
+      "selectors": ["indicators", "thresholds", "extentYears", "units"],
+      "type": "loss",
+      "metaKey": "widget_tree_cover_loss",
+      "layers": ["loss"],
+      "sortOrder": {
         "summary": 5,
         "forest-change": 3
       }
@@ -236,7 +264,7 @@
       "threshold": 30,
       "unit": "ha",
       "extentYear": 2010,
-      "layers": ["forestgain"]
+      "layers": ["loss"]
     },
     "enabled": true
   },
