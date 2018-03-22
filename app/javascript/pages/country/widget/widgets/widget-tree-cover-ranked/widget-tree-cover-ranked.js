@@ -3,17 +3,20 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 
-import actions from './widget-loss-ranked-actions';
-import reducers, { initialState } from './widget-loss-ranked-reducers';
-import { getFilteredData, getSentence } from './widget-loss-ranked-selectors';
-import WidgetTreeLossRankedComponent from './widget-loss-ranked-component';
+import actions from './widget-tree-cover-ranked-actions';
+import reducers, { initialState } from './widget-tree-cover-ranked-reducers';
+import {
+  getFilteredData,
+  getSentence
+} from './widget-tree-cover-ranked-selectors';
+import WidgetTreeCoverRankedComponent from './widget-tree-cover-ranked-component';
 
 const mapStateToProps = (
-  { location, widgetLossRanked, countryData },
+  { location, widgetTreeCoverRanked, countryData },
   ownProps
 ) => {
   const { colors, locationNames, activeIndicator } = ownProps;
-  const { data: { loss }, settings } = widgetLossRanked;
+  const { data: { extent }, settings } = widgetTreeCoverRanked;
   let meta = countryData.countries;
   if (location.payload.subRegion) {
     meta = countryData.subRegions;
@@ -22,7 +25,7 @@ const mapStateToProps = (
   }
 
   const selectorData = {
-    data: loss,
+    data: extent,
     settings,
     location: location.payload,
     meta,
@@ -37,42 +40,42 @@ const mapStateToProps = (
   };
 };
 
-class WidgetLossRankedContainer extends PureComponent {
+class WidgetTreeCoverRankedContainer extends PureComponent {
   componentWillMount() {
-    const { settings, getLossRanked } = this.props;
-    getLossRanked({
+    const { settings, getTreeCoverRanked } = this.props;
+    getTreeCoverRanked({
       ...settings
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { settings, getLossRanked } = nextProps;
+    const { settings, getTreeCoverRanked } = nextProps;
     if (
       !isEqual(settings.indicator, this.props.settings.indicator) ||
       !isEqual(settings.threshold, this.props.settings.threshold) ||
-      !isEqual(settings.extentYear, this.props.settings.extentYear) ||
-      !isEqual(settings.startYear, this.props.settings.startYear) ||
-      !isEqual(settings.endYear, this.props.settings.endYear)
+      !isEqual(settings.extentYear, this.props.settings.extentYear)
     ) {
-      getLossRanked({
+      getTreeCoverRanked({
         ...settings
       });
     }
   }
 
   render() {
-    return createElement(WidgetTreeLossRankedComponent, {
+    return createElement(WidgetTreeCoverRankedComponent, {
       ...this.props,
       getSentence: this.getSentence
     });
   }
 }
 
-WidgetLossRankedContainer.propTypes = {
+WidgetTreeCoverRankedContainer.propTypes = {
   settings: PropTypes.object.isRequired,
-  getLossRanked: PropTypes.func.isRequired
+  getTreeCoverRanked: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };
 
-export default connect(mapStateToProps, actions)(WidgetLossRankedContainer);
+export default connect(mapStateToProps, actions)(
+  WidgetTreeCoverRankedContainer
+);
