@@ -6,6 +6,7 @@ import { handleActionTrack } from 'utils/analytics';
 
 import 'react-tippy/dist/tippy.css';
 import 'styles/styles.scss';
+import 'babel-polyfill';
 
 import reducers from './reducers';
 import router, { EMBED } from './router';
