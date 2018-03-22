@@ -113,6 +113,7 @@ define(
           {
             country: status.iso.country,
             region: status.iso.region,
+            subRegion: status.iso.subRegion,
             thresh: status.threshold,
             period: period,
 
