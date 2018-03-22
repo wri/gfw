@@ -250,7 +250,7 @@
       "units": ["ha", "%"],
       "categories": ["summary", "forest-change"],
       "admins": ["country"],
-      "selectors": ["indicators", "thresholds", "extentYears", "units"],
+      "selectors": ["indicators", "thresholds", "extentYears", "units", "startYears", "endYears"],
       "type": "loss",
       "metaKey": "widget_tree_cover_loss",
       "layers": ["loss"],
@@ -262,6 +262,8 @@
     "settings": {
       "indicator": "gadm28",
       "threshold": 30,
+      "startYear": 2001,
+      "endYear": 2016,
       "unit": "ha",
       "extentYear": 2010,
       "layers": ["loss"]

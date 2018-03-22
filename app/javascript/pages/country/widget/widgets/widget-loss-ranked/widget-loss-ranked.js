@@ -50,7 +50,9 @@ class WidgetTreeLossRankedContainer extends PureComponent {
     if (
       !isEqual(settings.indicator, this.props.settings.indicator) ||
       !isEqual(settings.threshold, this.props.settings.threshold) ||
-      !isEqual(settings.extentYear, this.props.settings.extentYear)
+      !isEqual(settings.extentYear, this.props.settings.extentYear) ||
+      !isEqual(settings.startYear, this.props.settings.startYear) ||
+      !isEqual(settings.endYear, this.props.settings.endYear)
     ) {
       getLossRanked({
         ...settings

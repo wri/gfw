@@ -1,6 +1,8 @@
 import { createSelector } from 'reselect';
 import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
+import groupBy from 'lodash/groupBy';
+import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
@@ -13,8 +15,38 @@ const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
 const getLocationNames = state => state.locationNames || null;
 
-export const getSortedData = createSelector(
+export const getSummedByYearsData = createSelector(
   [getData, getSettings],
+  (data, settings) => {
+    if (!data || !data.length) return null;
+    const filteredByYears = data.filter(
+      d => d.year >= settings.startYear && d.year <= settings.endYear
+    );
+    const groupedByIso = groupBy(filteredByYears, 'iso');
+    const isos = Object.keys(groupedByIso);
+    const mappedData = isos.map(i => {
+      const loss = sumBy(groupedByIso[i], 'loss') || 0;
+      const extent = groupedByIso[i][0].extent;
+      return {
+        id: i,
+        loss,
+        extent,
+        percentage: extent ? 100 * loss / extent : 0
+      };
+    });
+    return sortByKey(
+      uniqBy(mappedData, 'id'),
+      settings.unit === 'ha' ? 'loss' : 'percentage',
+      true
+    ).map((d, i) => ({
+      ...d,
+      rank: i + 1
+    }));
+  }
+);
+
+export const getSortedData = createSelector(
+  [getSummedByYearsData, getSettings],
   (data, settings) => {
     if (!data || !data.length) return null;
     return sortByKey(
@@ -95,7 +127,9 @@ export const getSentence = createSelector(
       loss ? format('.3s')(loss) : '0'
     }ha</strong> of tree cover ${regionPhrase}`;
     const secondSentence = loss
-      ? `, equivalent to a <strong>${areaPercent}%</strong> loss relative to <b>${
+      ? `, equivalent to a <strong>${
+        areaPercent
+      }%</strong> loss relative to <b>${
         settings.extentYear
       }</b> tree cover extent.`
       : '.';

@@ -21,10 +21,7 @@ const getLossRanked = createThunkAction(
               const loss = item.loss || 0;
               return {
                 ...item,
-                label: item.iso,
-                id: item.iso,
-                loss,
-                percentage: item.extent ? 100 * loss / item.extent : 0
+                loss
               };
             });
           }
