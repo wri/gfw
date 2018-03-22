@@ -13,7 +13,7 @@ const mapStateToProps = (
   ownProps
 ) => {
   const { colors, locationNames, activeIndicator } = ownProps;
-  const { data: { loss }, settings } = widgetLossRanked;
+  const { data, settings } = widgetLossRanked;
   let meta = countryData.countries;
   if (location.payload.subRegion) {
     meta = countryData.subRegions;
@@ -22,7 +22,7 @@ const mapStateToProps = (
   }
 
   const selectorData = {
-    data: loss,
+    data,
     settings,
     location: location.payload,
     meta,

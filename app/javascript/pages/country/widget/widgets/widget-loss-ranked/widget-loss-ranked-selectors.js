@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
+import isEmpty from 'lodash/isEmpty';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
@@ -18,20 +19,21 @@ const getLocationNames = state => state.locationNames || null;
 export const getSummedByYearsData = createSelector(
   [getData, getSettings],
   (data, settings) => {
-    if (!data || !data.length) return null;
-    const filteredByYears = data.filter(
+    if (isEmpty(data)) return null;
+    const { loss, extent } = data;
+    const filteredByYears = loss.filter(
       d => d.year >= settings.startYear && d.year <= settings.endYear
     );
     const groupedByIso = groupBy(filteredByYears, 'iso');
     const isos = Object.keys(groupedByIso);
     const mappedData = isos.map(i => {
-      const loss = sumBy(groupedByIso[i], 'loss') || 0;
-      const extent = groupedByIso[i][0].extent;
+      const isoLoss = sumBy(groupedByIso[i], 'loss') || 0;
+      const isoExtent = extent.find(e => e.iso === i).total_area;
       return {
         id: i,
-        loss,
+        loss: isoLoss,
         extent,
-        percentage: extent ? 100 * loss / extent : 0
+        percentage: isoExtent ? 100 * isoLoss / isoExtent : 0
       };
     });
     return sortByKey(
