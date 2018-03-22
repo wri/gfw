@@ -97,7 +97,7 @@
     "js-yaml": "3.9.1",
     "lodash": "4.17.4",
     "lory.js": "2.3.3",
-    "moment": "2.19.2",
+    "moment": "2.19.3",
     "numeral": "2.0.6",
     "path-complete-extname": "0.1.0",
     "postcss-loader": "2.0.6",
