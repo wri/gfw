@@ -124,14 +124,16 @@ export const getSentence = createSelector(
     const areaPercent =
       (locationData && format('.1f')(locationData.percentage)) || 0;
     const loss = locationData && locationData.loss;
-    const firstSentence = `Between 2001 to 2016, <span>${locationNames.current &&
+    const firstSentence = `Between <strong>${
+      settings.startYear
+    }</strong> and <strong>${
+      settings.endYear
+    }</strong>, <span>${locationNames.current &&
       locationNames.current.label}</span> lost <strong>${
       loss ? format('.3s')(loss) : '0'
     }ha</strong> of tree cover ${regionPhrase}`;
     const secondSentence = loss
-      ? `, equivalent to a <strong>${
-        areaPercent
-      }%</strong> loss relative to <b>${
+      ? `, equivalent to a <strong>${areaPercent}%</strong> loss relative to <b>${
         settings.extentYear
       }</b> tree cover extent.`
       : '.';
