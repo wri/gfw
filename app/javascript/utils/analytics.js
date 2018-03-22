@@ -38,7 +38,10 @@ export const handleActionTrack = state => nextDispatch => action => {
     };
 
     // use condition to find correct action
-    let event = GAEvents.find(e => !e.condition);
+    let event =
+      GAEvents &&
+      GAEvents.length &&
+      (GAEvents.filter(e => !e.condition)[0] || []);
     GAEvents.forEach(e => {
       if (e.condition && e.condition(payload)) {
         event = e;
