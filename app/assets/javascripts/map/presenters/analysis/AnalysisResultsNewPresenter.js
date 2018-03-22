@@ -76,9 +76,14 @@ define(
         const iso = this.status.get('iso');
 
         // Get regions if analysis has country
-        !!iso.country && iso.country != 'ALL'
-          ? this.getRegions()
-          : this.view.render();
+        if (!!iso.country && iso.country != 'ALL') {
+          this.getRegions();
+          if (!!iso.region) {
+            this.getSubRegions();
+          }
+        } else {
+          this.view.render();
+        }
       },
 
       getRegions() {
@@ -87,6 +92,20 @@ define(
         CountryService.getRegionsList({ iso: iso.country }).then(results => {
           this.status.set({
             regions: results
+          });
+          this.view.render();
+        });
+      },
+
+      getSubRegions() {
+        const iso = this.status.get('iso');
+
+        CountryService.getSubRegionsList({
+          iso: iso.country,
+          region: iso.region
+        }).then(results => {
+          this.status.set({
+            subRegions: results
           });
           this.view.render();
         });
