@@ -15,7 +15,8 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
   .content-panel {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
+    height: 100%;
   }
 
   .map-panel {
@@ -88,6 +89,7 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
   .widgets {
     position: relative;
     display: grid;
+    height: 100%;
     grid-template-columns: 1fr;
     grid-gap: 30px;
     grid-auto-flow: dense;

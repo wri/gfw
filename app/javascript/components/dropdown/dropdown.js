@@ -106,8 +106,9 @@ class DropdownContainer extends PureComponent {
     this.setState({ isOpen: !isOpen, inputValue: '' });
   };
 
-  handleClearSelection = clearSelection => {
-    clearSelection();
+  handleClearSelection = () => {
+    const { onChange } = this.props;
+    onChange();
     this.setState({ isOpen: false, showGroup: '' });
   };
 
@@ -173,7 +174,8 @@ DropdownContainer.propTypes = {
   searchable: PropTypes.bool,
   options: PropTypes.array,
   groupKey: PropTypes.string,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func
 };
 
 export default connect(mapStateToProps, null)(DropdownContainer);
