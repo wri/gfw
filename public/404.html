@@ -26,27 +26,25 @@
   </head>
 
   <body>
-    <div class="wrap">
-      <div id="headerGfw"></div>
-      <div class="layout-content">
-        <section class="header-static">
-          <div class="inner">
-            <header>
-              <h2>Page not found</h2>
-              <h3>You may have mistyped the address or the page may have moved.</h3>
-            </header>
-            <ul class="row row3">
-              <li><a href="http://stats.pingdom.com/me0q72oj01nt" class="btn white uppercase" target="_blank"/>current system status</a></li>
-              <li><a href="/" class="btn white uppercase"/>Go to Home</a></li>
-              <li><a href="/" class="btn white uppercase"/>GFW Interactive map</a></li>
-            </ul>
-          </div>
-        </section>
-      </div>
-      <div id="footerGfw"></div>
+    <div id="headerGfw"></div>
+    <div class="layout-content">
+      <section class="header-static">
+        <div class="inner">
+          <header>
+            <h2>Page not found</h2>
+            <h3>You may have mistyped the address or the page may have moved.</h3>
+          </header>
+          <ul class="row row3">
+            <li><a href="http://stats.pingdom.com/ghabapk9rihc" class="btn white uppercase" target="_blank"/>current system status</a></li>
+            <li><a href="/" class="btn white uppercase"/>Go to Home</a></li>
+            <li><a href="/" class="btn white uppercase"/>GFW Interactive map</a></li>
+          </ul>
+        </div>
+      </section>
     </div>
+    <div id="footerGfw"></div>
 
-    <script id="loader-gfw" data-current=".shape-house" src="http://gfw-assets.s3.amazonaws.com/static/gfw-assets.latest.js"></script>
+    <script id="loader-gfw" data-current=".shape-house" src="http://gfw-assets.s3.amazonaws.com/static/gfw-assets.nightly.js"></script>
 
     <script type="text/javascript">
       //Analytics
@@ -59,6 +57,40 @@
       ga('require', 'displayfeatures');
       ga('send', 'pageview');
       ga('push','_trackPageview');
+    </script>
+    <script type="text/javascript">
+      window.liveSettings = {
+        picker: '#transifexTranslateElement',
+        api_key: "9eda410a7db74687ba40771c56abd357",
+        detectlang: true,
+        site: 'gfw-global',
+        page: '400',
+        menuOptions:
+        {
+          options: [
+            {
+              title: 'logo',
+              url: '/'
+            },
+            {
+              title: 'map',
+              url: '/map',
+            },
+            {
+              title: 'countries',
+              url: '/countries',
+            },
+            {
+              title: 'blog',
+              url: 'http://blog.globalforestwatch.org/',
+            },
+            {
+              title: 'about',
+              url: '/about',
+            },
+          ]
+        }
+      };
     </script>
   </body>
 </html>
