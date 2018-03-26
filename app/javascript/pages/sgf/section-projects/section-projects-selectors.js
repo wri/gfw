@@ -38,6 +38,7 @@ export const getCategories = createSelector(getProjectsWithImages, projects => {
   return sortBy(uniq(flatten(projects.map(p => p.categories))).filter(i => i));
 });
 
+// A project may belong to many countries, we need a globe entry for each
 export const getProjectsForGlobe = createSelector(
   [getProjectsWithImages, getCategories, getLatLngs],
   (projects, categories, latLngs) => {
@@ -122,15 +123,18 @@ export const getProjectsSelected = createSelector(
       category === 'All' ? allProjects : groupedProjects[category];
     if (!search) return projects;
     return projects.filter(
-      p => deburrUpper(p.title).indexOf(deburrUpper(search)) > -1
+      p =>
+        deburrUpper(p.title).indexOf(deburrUpper(search)) > -1 ||
+        deburrUpper(p.meta).indexOf(deburrUpper(search)) > -1
     );
   }
 );
 
 export const getCustomProjectsSelected = createSelector(
-  [getProjectsWithImages, getCustomFilter],
+  [getProjectsSelected, getCustomFilter],
   (allProjects, filter) => {
-    if (!allProjects || !filter) return null;
+    if (!allProjects) return null;
+    if (!filter) return allProjects;
     return allProjects.filter(p => filter.indexOf(p.id) > -1);
   }
 );
@@ -143,16 +147,21 @@ export const getGlobeProjectsSelected = createSelector(
       category === 'All' ? allProjects : groupedProjects[category];
     if (!search) return projects;
     return projects.filter(
-      p => deburrUpper(p.title).indexOf(deburrUpper(search)) > -1
+      p =>
+        deburrUpper(p.title).indexOf(deburrUpper(search)) > -1 ||
+        deburrUpper(p.meta).indexOf(deburrUpper(search)) > -1
     );
   }
 );
 
 export const getGlobeClusters = createSelector(
-  [getGlobeProjectsSelected],
-  projects => {
-    if (!projects || !projects.length) return null;
-    const groupedByLocation = groupBy(projects, 'iso');
+  [getGlobeProjectsSelected, getCustomFilter],
+  (projects, filters) => {
+    if (!projects || !projects.length || !filters) return null;
+    const points = filters.length
+      ? projects.filter(p => filters.indexOf(p.id) > -1)
+      : projects;
+    const groupedByLocation = groupBy(points, 'iso');
     const mapPoints = Object.keys(groupedByLocation).map(iso => ({
       iso,
       latitude: groupedByLocation[iso][0].latitude,

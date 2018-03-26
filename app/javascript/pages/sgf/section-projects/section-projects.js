@@ -11,8 +11,7 @@ import SectionProjectsComponent from './section-projects-component';
 import {
   getCategoriesList,
   getProjectsSelected,
-  getGlobeClusters,
-  getCustomProjectsSelected
+  getGlobeClusters
 } from './section-projects-selectors';
 
 const actions = { ...sectionActions, ...modalActions };
@@ -29,12 +28,11 @@ const mapStateToProps = ({ projects }) => {
   };
 
   return {
-    data: filters.length
-      ? getCustomProjectsSelected(projectData)
-      : getProjectsSelected(projectData),
+    data: getProjectsSelected(projectData),
     globeData: getGlobeClusters(projectData),
     categories: getCategoriesList(projectData),
-    categorySelected: projects.categorySelected,
+    categorySelected:
+      filters && filters.length ? '' : projects.categorySelected,
     search: projects.search,
     loading: projects.loading,
     customFilter: projects.customFilter
