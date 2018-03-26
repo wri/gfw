@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/modal';
 import ReactHtmlParser from 'react-html-parser';
-import Slider from 'components/slider';
+import Carousel from 'components/carousel';
 
 import './section-projects-modal-styles.scss';
 
@@ -42,7 +42,7 @@ class SectionProjectsModal extends PureComponent {
         </div>
         {data.images &&
           data.images.length > 1 && (
-            <Slider
+            <Carousel
               className="modal-image-slider"
               settings={{
                 slidesToShow: 1,
@@ -59,7 +59,7 @@ class SectionProjectsModal extends PureComponent {
                     style={{ backgroundImage: `url(${c})` }}
                   />
                 ))}
-            </Slider>
+            </Carousel>
           )}
         {data.image &&
           data.images.length === 1 && (
