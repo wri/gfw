@@ -51,17 +51,22 @@ define(
         {
           'Analysis/results': function(status) {
             this.status.set(status, { silent: true });
-            this.status.set(
-              {
-                resource: _.clone(this.setAnalysisResource())
-              },
-              {
-                silent: true
-              }
-            );
+            if (!status.results) {
+              this.publishNotification('notification-empty-analysis');
+              this.view.renderError();
+            } else {
+              this.status.set(
+                {
+                  resource: _.clone(this.setAnalysisResource())
+                },
+                {
+                  silent: true
+                }
+              );
 
-            // Trigger change always
-            this.changeResource();
+              // Trigger change always
+              this.changeResource();
+            }
           }
         },
         {
