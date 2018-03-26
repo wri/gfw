@@ -136,7 +136,11 @@ class HeaderContainer extends PureComponent {
     let secondSentence = '';
     if (data.extent > 0) {
       firstSentence = `
-        In 2010, <b>${location}</b> had <b>${extent}ha</b> of tree cover, extending over <b>${percentageCover}%</b> of its land area.
+        In 2010, <b>${location}</b> had <b>${
+        extent
+      }ha</b> of tree cover, extending over <b>${
+        percentageCover
+      }%</b> of its land area.
       `;
     } else {
       firstSentence = `
@@ -145,14 +149,16 @@ class HeaderContainer extends PureComponent {
     }
     if (data.extent > 0 && data.totalLoss.area) {
       secondSentence = `
-        In ${
-          data.totalLoss.year
-        }, it lost <b>${lossWithOutPlantations}ha</b> of forest${
-          data.plantationsLoss.area ? ' excluding tree plantations' : ''
-        }, equivalent to <b>${emissionsWithoutPlantations}t</b> of CO₂ of emissions.
+        In ${data.totalLoss.year}, it lost <b>${
+        lossWithOutPlantations
+      }ha</b> of forest${
+        data.plantationsLoss.area ? ' excluding tree plantations' : ''
+      }, equivalent to <b>${
+        emissionsWithoutPlantations
+      }t</b> of CO₂ of emissions.
       `;
     }
-    return `${firstSentence} ${secondSentence}`;
+    return `${location ? firstSentence : ''} ${secondSentence}`;
   };
 
   render() {
