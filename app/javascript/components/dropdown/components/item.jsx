@@ -91,7 +91,7 @@ Item.propTypes = {
   optionsAction: PropTypes.func,
   optionsActionKey: PropTypes.string,
   activeValue: PropTypes.object,
-  activeLabel: PropTypes.string
+  activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 export default Item;

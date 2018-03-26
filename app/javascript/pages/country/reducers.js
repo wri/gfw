@@ -27,6 +27,8 @@ import * as widgetTreeLocatedComponent from 'pages/country/widget/widgets/widget
 import * as widgetGainLocatedComponent from 'pages/country/widget/widgets/widget-gain-located';
 import * as widgetLossLocatedComponent from 'pages/country/widget/widgets/widget-loss-located';
 import * as widgetTreeLossComponent from 'pages/country/widget/widgets/widget-tree-loss';
+import * as widgetLossRankedComponent from 'pages/country/widget/widgets/widget-loss-ranked';
+import * as widgetTreeCoverRankedComponent from 'pages/country/widget/widgets/widget-tree-cover-ranked';
 import * as widgetTreeLossPlantationsComponent from 'pages/country/widget/widgets/widget-tree-loss-plantations';
 import * as widgetFAOCoverComponent from 'pages/country/widget/widgets/widget-fao-cover';
 import * as widgetFAOReforestationComponent from 'pages/country/widget/widgets/widget-fao-reforestation';
@@ -61,6 +63,8 @@ const componentsReducers = {
   widgetGainLocated: handleActions(widgetGainLocatedComponent),
   widgetLossLocated: handleActions(widgetLossLocatedComponent),
   widgetTreeLoss: handleActions(widgetTreeLossComponent),
+  widgetLossRanked: handleActions(widgetLossRankedComponent),
+  widgetTreeCoverRanked: handleActions(widgetTreeCoverRankedComponent),
   widgetTreeLossPlantations: handleActions(widgetTreeLossPlantationsComponent),
   widgetFAOCover: handleActions(widgetFAOCoverComponent),
   widgetFAOReforestation: handleActions(widgetFAOReforestationComponent),

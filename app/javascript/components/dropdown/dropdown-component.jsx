@@ -52,7 +52,7 @@ class Dropdown extends PureComponent {
         onOuterClick={checkModalClosing}
         {...this.props}
       >
-        {({ getInputProps, getItemProps, getRootProps, clearSelection }) => (
+        {({ getInputProps, getItemProps, getRootProps }) => (
           <Selector
             isOpen={isOpen}
             arrowPosition={arrowPosition}
@@ -62,7 +62,7 @@ class Dropdown extends PureComponent {
             activeLabel={activeLabel}
             searchable={searchable}
             inputProps={() => buildInputProps(getInputProps)}
-            handleClearSelection={() => handleClearSelection(clearSelection)}
+            handleClearSelection={() => handleClearSelection()}
             {...getRootProps({ refKey: 'innerRef' })}
           >
             <Menu
@@ -155,7 +155,7 @@ Dropdown.propTypes = {
   checkModalClosing: PropTypes.func,
   items: PropTypes.array,
   activeValue: PropTypes.object,
-  activeLabel: PropTypes.string,
+  activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   highlightedIndex: PropTypes.number
 };
 
