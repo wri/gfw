@@ -33,14 +33,65 @@ export const getProjectsWithImages = createSelector(
   }
 );
 
-export const getCategories = createSelector(getProjectsWithImages, projects => {
+export const getCategories = createSelector(getProjects, projects => {
   if (!projects || !projects.length) return null;
   return sortBy(uniq(flatten(projects.map(p => p.categories))).filter(i => i));
 });
 
+export const getProjectsByCategory = createSelector(
+  [getProjectsWithImages, getCategories],
+  (projects, categories) => {
+    if (!projects || !categories) return null;
+    const projectsByCategory = {};
+    categories.forEach(c => {
+      projectsByCategory[c] = projects.filter(
+        p => p.categories.indexOf(c) > -1
+      );
+    });
+
+    return projectsByCategory;
+  }
+);
+
+export const getCategoriesList = createSelector(
+  getProjectsByCategory,
+  projects => {
+    if (!projects) return null;
+    const categories = Object.keys(projects).map(c => ({
+      label: c,
+      count: projects[c].length
+    }));
+
+    return [{ label: 'All', count: projects.length }, ...categories];
+  }
+);
+
+export const getProjectsList = createSelector(
+  [
+    getProjectsWithImages,
+    getProjectsByCategory,
+    getCategory,
+    getSearch,
+    getCustomFilter
+  ],
+  (allProjects, groupedProjects, category, search, filter) => {
+    if (!allProjects || !category) return null;
+    if (filter && filter.length) { return allProjects.filter(p => filter.indexOf(p.id) > -1); }
+    const projects =
+      category === 'All' ? allProjects : groupedProjects[category];
+    if (!search) return projects;
+    return projects.filter(
+      p =>
+        deburrUpper(p.title).indexOf(deburrUpper(search)) > -1 ||
+        deburrUpper(p.meta).indexOf(deburrUpper(search)) > -1 ||
+        deburrUpper(p.summary).indexOf(deburrUpper(search)) > -1
+    );
+  }
+);
+
 // A project may belong to many countries, we need a globe entry for each
 export const getProjectsForGlobe = createSelector(
-  [getProjectsWithImages, getCategories, getLatLngs],
+  [getProjectsList, getCategories, getLatLngs],
   (projects, categories, latLngs) => {
     if (!projects || !categories) return null;
     let projectsForGlobe = [];
@@ -73,89 +124,8 @@ export const getProjectsForGlobe = createSelector(
   }
 );
 
-export const getProjectsByCategory = createSelector(
-  [getProjectsWithImages, getCategories],
-  (projects, categories) => {
-    if (!projects || !categories) return null;
-    const projectsByCategory = {};
-    categories.forEach(c => {
-      projectsByCategory[c] = projects.filter(
-        p => p.categories.indexOf(c) > -1
-      );
-    });
-
-    return projectsByCategory;
-  }
-);
-
-export const getGlobeProjectsByCategory = createSelector(
-  [getProjectsForGlobe, getCategories],
-  (projects, categories) => {
-    if (!projects || !categories) return null;
-    const projectsByCategory = {};
-    categories.forEach(c => {
-      projectsByCategory[c] = projects.filter(
-        p => p.categories.indexOf(c) > -1
-      );
-    });
-    return projectsByCategory;
-  }
-);
-
-export const getCategoriesList = createSelector(
-  getProjectsByCategory,
-  projects => {
-    if (!projects) return null;
-    const categories = Object.keys(projects).map(c => ({
-      label: c,
-      count: projects[c].length
-    }));
-
-    return [{ label: 'All', count: projects.length }, ...categories];
-  }
-);
-
-export const getProjectsSelected = createSelector(
-  [getProjectsWithImages, getProjectsByCategory, getCategory, getSearch],
-  (allProjects, groupedProjects, category, search) => {
-    if (!allProjects || !category) return null;
-    const projects =
-      category === 'All' ? allProjects : groupedProjects[category];
-    if (!search) return projects;
-    return projects.filter(
-      p =>
-        deburrUpper(p.title).indexOf(deburrUpper(search)) > -1 ||
-        deburrUpper(p.meta).indexOf(deburrUpper(search)) > -1
-    );
-  }
-);
-
-export const getCustomProjectsSelected = createSelector(
-  [getProjectsSelected, getCustomFilter],
-  (allProjects, filter) => {
-    if (!allProjects) return null;
-    if (!filter) return allProjects;
-    return allProjects.filter(p => filter.indexOf(p.id) > -1);
-  }
-);
-
-export const getGlobeProjectsSelected = createSelector(
-  [getProjectsForGlobe, getGlobeProjectsByCategory, getCategory, getSearch],
-  (allProjects, groupedProjects, category, search) => {
-    if (!allProjects || !category) return null;
-    const projects =
-      category === 'All' ? allProjects : groupedProjects[category];
-    if (!search) return projects;
-    return projects.filter(
-      p =>
-        deburrUpper(p.title).indexOf(deburrUpper(search)) > -1 ||
-        deburrUpper(p.meta).indexOf(deburrUpper(search)) > -1
-    );
-  }
-);
-
 export const getGlobeClusters = createSelector(
-  [getGlobeProjectsSelected, getCustomFilter],
+  [getProjectsForGlobe, getCustomFilter],
   (projects, filters) => {
     if (!projects || !projects.length || !filters) return null;
     const points = filters.length
@@ -173,9 +143,3 @@ export const getGlobeClusters = createSelector(
     return mapPoints;
   }
 );
-
-export default {
-  getProjectsSelected,
-  getCategoriesList,
-  getSearch
-};

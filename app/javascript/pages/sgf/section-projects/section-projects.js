@@ -10,7 +10,7 @@ import reducers, { initialState } from './section-projects-reducers';
 import SectionProjectsComponent from './section-projects-component';
 import {
   getCategoriesList,
-  getProjectsSelected,
+  getProjectsList,
   getGlobeClusters
 } from './section-projects-selectors';
 
@@ -28,7 +28,7 @@ const mapStateToProps = ({ projects }) => {
   };
 
   return {
-    data: getProjectsSelected(projectData),
+    data: getProjectsList(projectData),
     globeData: getGlobeClusters(projectData),
     categories: getCategoriesList(projectData),
     categorySelected:
