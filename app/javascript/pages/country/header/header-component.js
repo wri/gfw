@@ -70,6 +70,7 @@ class Header extends PureComponent {
                 theme="theme-dropdown-dark"
                 placeholder="Country"
                 noItemsFound="No country found"
+                noSelectedValue="Country"
                 value={locationNames.country}
                 options={locationOptions.countries}
                 onChange={handleCountryChange}

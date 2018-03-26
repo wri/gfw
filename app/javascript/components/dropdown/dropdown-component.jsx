@@ -155,7 +155,7 @@ Dropdown.propTypes = {
   checkModalClosing: PropTypes.func,
   items: PropTypes.array,
   activeValue: PropTypes.object,
-  activeLabel: PropTypes.string,
+  activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   highlightedIndex: PropTypes.number
 };
 

@@ -62,7 +62,7 @@ Selector.propTypes = {
   onSelectorClick: PropTypes.func,
   clearable: PropTypes.bool,
   activeValue: PropTypes.object,
-  activeLabel: PropTypes.string,
+  activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   searchable: PropTypes.bool,
   inputProps: PropTypes.func,
   handleClearSelection: PropTypes.func,
