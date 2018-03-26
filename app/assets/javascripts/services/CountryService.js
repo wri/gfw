@@ -32,7 +32,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
     getCountryConfig:
       "/query/{countriesConfigDataset}?sql=SELECT iso, indepth FROM {countriesConfigTable} WHERE iso='{iso}'",
     getCountriesList:
-      '/query/{countriesDataset}?sql=SELECT name_engli as name, iso FROM {countriesTable}',
+      '/query/{countriesDataset}?sql=SELECT name_engli as name, iso FROM {countriesTable} ORDER BY name',
     showCountry:
       "/query/{countriesDataset}?sql=SELECT name_engli as name, iso, topojson FROM {countriesTable} WHERE iso='{iso}'",
     getRegionsList:
