@@ -170,18 +170,21 @@ class GlobeComponent extends React.Component {
     const context = canvas.getContext('2d');
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
-    const radius = 60;
+    const radius = 50;
 
     context.beginPath();
     context.fillStyle = 'white';
     context.strokeStyle = 'black';
-    context.font = '100px Fira Sans';
+    context.font = '60px Fira Sans';
     context.lineWidth = 10;
+    context.shadowBlur = 15;
+    context.shadowColor = '#000000aa';
     context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
     context.fill();
+    context.shadowColor = 'transparent';
     context.beginPath();
     context.fillStyle = 'black';
-    context.fillText(text, 125, 110);
+    context.fillText(text, 135, 95);
     context.fill();
 
     const texture = new THREE.Texture(canvas);
